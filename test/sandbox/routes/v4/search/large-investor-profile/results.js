@@ -15,6 +15,16 @@ exports.largeInvestorProfile = function (req, res) {
   const minimumEquityPercentageFilter = req.body.minimum_equity_percentage || []
   const desiredDealRoleFilter = req.body.desired_deal_role || []
 
+  const investableCapitalFilter = {
+    min: req.body.investable_capital_start,
+    max: req.body.investable_capital_end,
+  }
+
+  const globalAssetsUnderManagementFilter = {
+    min: req.body.global_assets_under_management_start,
+    max: req.body.global_assets_under_management_end,
+  }
+
   const filtered = largeCapitalProfile.results
     .filter(({ country_of_origin }) =>
       countryOfOriginFilter.length
@@ -106,6 +116,32 @@ exports.largeInvestorProfile = function (req, res) {
             desired_deal_roles.map((x) => x.id)
           ).length
         : true
+    )
+    .filter(({ investable_capital }) =>
+      investableCapitalFilter.min === undefined
+        ? true
+        : investable_capital &&
+          investable_capital >= investableCapitalFilter.min
+    )
+    .filter(({ investable_capital }) =>
+      investableCapitalFilter.max === undefined
+        ? true
+        : investable_capital &&
+          investable_capital <= investableCapitalFilter.max
+    )
+    .filter(({ global_assets_under_management }) =>
+      globalAssetsUnderManagementFilter.min === undefined
+        ? true
+        : global_assets_under_management &&
+          global_assets_under_management >=
+            globalAssetsUnderManagementFilter.min
+    )
+    .filter(({ global_assets_under_management }) =>
+      globalAssetsUnderManagementFilter.max === undefined
+        ? true
+        : global_assets_under_management &&
+          global_assets_under_management <=
+            globalAssetsUnderManagementFilter.max
     )
 
   res.json({

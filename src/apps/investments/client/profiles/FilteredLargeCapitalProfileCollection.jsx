@@ -9,6 +9,7 @@ import {
   RoutedTypeahead,
 } from '../../../../client/components/'
 import RoutedInputField from '../../../../client/components/RoutedInputField'
+import RoutedNumericRangeField from '../../../../client/components/RoutedNumericRangeField'
 import { TASK_GET_PROFILES_LIST, ID } from './state'
 import { INVESTMENTS__PROFILES_LOADED } from '../../../../client/actions'
 
@@ -26,6 +27,8 @@ const QS_PARAMS = {
   constructionRisk: 'construction_risk',
   minimumEquityPercentage: 'minimum_equity_percentage',
   desiredDealRole: 'desired_deal_role',
+  investableCapital: 'investable_capital',
+  globalAssetsUnderManagement: 'global_assets_under_management',
 }
 
 const resolveSelectedOptions = (values = [], options = []) =>
@@ -96,6 +99,20 @@ const LargeCapitalProfileCollection = ({
         return companyName ? [{ label: companyName, value: companyName }] : []
       }
 
+      const investableCapital = {
+        min: parseFloat(qsParams[`${QS_PARAMS.investableCapital}_min`]),
+        max: parseFloat(qsParams[`${QS_PARAMS.investableCapital}_max`]),
+      }
+
+      const globalAssetsUnderManagement = {
+        min: parseFloat(
+          qsParams[`${QS_PARAMS.globalAssetsUnderManagement}_min`]
+        ),
+        max: parseFloat(
+          qsParams[`${QS_PARAMS.globalAssetsUnderManagement}_max`]
+        ),
+      }
+
       return (
         <FilteredCollectionList
           count={count}
@@ -125,6 +142,8 @@ const LargeCapitalProfileCollection = ({
                 minimumEquityPercentage:
                   qsParams[QS_PARAMS.minimumEquityPercentage],
                 desiredDealRole: qsParams[QS_PARAMS.desiredDealRole],
+                investableCapital,
+                globalAssetsUnderManagement,
               },
               onSuccessDispatch: INVESTMENTS__PROFILES_LOADED,
             },
@@ -145,6 +164,8 @@ const LargeCapitalProfileCollection = ({
             selectedConstructionRisk,
             selectedMinimumEquityPercentage,
             selectedDesiredDealRole,
+            selectedInvestableCapital: investableCapital,
+            selectedGlobalAssetsUnderManagement: globalAssetsUnderManagement,
           }}
         >
           <CollectionFilters
@@ -193,6 +214,16 @@ const LargeCapitalProfileCollection = ({
               options={filterOptions.investorTypes}
               selectedOptions={selectedInvestorTypes}
               data-test="investor-type-filter"
+            />
+            <RoutedNumericRangeField
+              qsParam={QS_PARAMS.investableCapital}
+              id="LargeCapitalProfileCollection.investable-capital"
+              label="Investable capital"
+            />
+            <RoutedNumericRangeField
+              qsParam={QS_PARAMS.globalAssetsUnderManagement}
+              id="LargeCapitalProfileCollection.global-assets-under-management"
+              label="Global assets under management"
             />
             <RoutedTypeahead
               isMulti={true}
