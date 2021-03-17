@@ -60,35 +60,37 @@ const PersonalisedDashboard = ({
       <GridRow data-test="dashboard">
         <GridCol setWidth="one-third">
           <Aside>
-            <Task.Status
-              name={TASK_GET_OUTSTANDING_PROPOSITIONS}
-              id={ID}
-              progressMessage="Loading your reminders"
-              startOnRender={{
-                payload: { adviser },
-                onSuccessDispatch: OUTSTANDING_PROPOSITIONS__LOADED,
-              }}
+            <ToggleSection
+              label="Reminders"
+              id="investment-reminders-section"
+              badge={
+                outstandingPropositions.loaded && (
+                  <NotificationBadge
+                    label={`${outstandingPropositions.count}`}
+                  />
+                )
+              }
+              major={true}
+              isOpen={true}
+              appearance={APPEARANCES.PRIMARY}
+              data-test="investment-reminders-section"
             >
-              {() => (
-                <ToggleSection
-                  label="Reminders"
-                  id="investment-reminders-section"
-                  badge={
-                    <NotificationBadge
-                      label={`${outstandingPropositions.count}`}
-                    />
-                  }
-                  major={true}
-                  isOpen={true}
-                  appearance={APPEARANCES.PRIMARY}
-                  data-test="investment-reminders-section"
-                >
+              <Task.Status
+                name={TASK_GET_OUTSTANDING_PROPOSITIONS}
+                id={ID}
+                progressMessage="Loading your reminders"
+                startOnRender={{
+                  payload: { adviser },
+                  onSuccessDispatch: OUTSTANDING_PROPOSITIONS__LOADED,
+                }}
+              >
+                {() => (
                   <InvestmentReminders
                     outstandingPropositions={outstandingPropositions}
                   />
-                </ToggleSection>
-              )}
-            </Task.Status>
+                )}
+              </Task.Status>
+            </ToggleSection>
 
             <ToggleSection
               label="Investment project summary"
@@ -115,6 +117,7 @@ PersonalisedDashboard.propTypes = {
   adviser: PropTypes.object.isRequired,
   outstandingPropositions: PropTypes.shape({
     count: PropTypes.number.isRequired,
+    loaded: PropTypes.bool.isRequired,
     results: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string.isRequired,

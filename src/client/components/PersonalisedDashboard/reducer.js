@@ -4,6 +4,7 @@ const initialState = {
   outstandingPropositions: {
     count: 0,
     results: [],
+    loaded: false,
   },
 }
 
@@ -15,6 +16,7 @@ export default (state = initialState, { type, result }) => {
         outstandingPropositions: {
           results,
           count,
+          loaded: true,
         },
       }
     default:
