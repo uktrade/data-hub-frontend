@@ -19,20 +19,26 @@ export const investmentSummaryAsDataRanges = (investmentSummary) => {
       const oneYearAgo = subYears(now, 1)
       const oneYearAhead = addYears(now, 1)
 
-      let label, order
-      if (startDate <= now && endDate >= now) {
-        label = `Current financial year (${financial_year.label})`
-        order = 0
-      } else if (startDate <= oneYearAgo && endDate >= oneYearAgo) {
-        label = `Previous financial year (${financial_year.label})`
-        order = 1
-      } else if (startDate <= oneYearAhead && endDate >= oneYearAhead) {
-        label = 'Upcoming financial year'
-        order = 2
-      } else {
-        label = financial_year.label
-        order = 3
-      }
+      const { label, order } =
+        startDate <= now && endDate >= now
+          ? {
+              label: `Current financial year (${financial_year.label})`,
+              order: 0,
+            }
+          : startDate <= oneYearAgo && endDate >= oneYearAgo
+          ? {
+              label: `Previous financial year (${financial_year.label})`,
+              order: 1,
+            }
+          : startDate <= oneYearAhead && endDate >= oneYearAhead
+          ? {
+              label: 'Upcoming financial year',
+              order: 2,
+            }
+          : {
+              label: financial_year.label,
+              order: 3,
+            }
 
       return {
         label,
