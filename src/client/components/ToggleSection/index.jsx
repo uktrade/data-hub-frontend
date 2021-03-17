@@ -1,14 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { APPEARANCES } from '../../../common/constants'
+
 import multiInstance from '../../utils/multiinstance'
 import { TOGGLE_SECTION__TOGGLE } from '../../actions'
 
 import PrimaryToggleSection from './PrimaryToggleSection'
 import SecondaryToggleSection from './SecondaryToggleSection'
 
-const ToggleSection = ({ appearance = 'primary', ...props }) =>
-  appearance === 'primary' ? (
+const ToggleSection = ({ appearance = APPEARANCES.PRIMARY, ...props }) =>
+  appearance === APPEARANCES.PRIMARY ? (
     <PrimaryToggleSection {...props} />
   ) : (
     <SecondaryToggleSection {...props} />

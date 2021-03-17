@@ -1,6 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
+import { APPEARANCES } from '../../../common/constants'
+
 import usageReadme from '../usage.md'
 import exampleReadme from '../example.md'
 
@@ -23,7 +25,7 @@ storiesOf('ToggleSection', module)
       label="Toggle me"
       id="toggle.one"
       isOpen={true}
-      appearance="primary"
+      appearance={APPEARANCES.PRIMARY}
       badge={<NotificationBadge label="15" />}
     >
       <FormStateful>
@@ -45,7 +47,7 @@ storiesOf('ToggleSection', module)
         label="Toggle me"
         id="toggle.two"
         isOpen={true}
-        appearance="primary"
+        appearance={APPEARANCES.PRIMARY}
       >
         <FormStateful>
           {() => (
@@ -59,7 +61,11 @@ storiesOf('ToggleSection', module)
           )}
         </FormStateful>
       </ToggleSection>
-      <ToggleSection label="Toggle me" id="toggle.three" appearance="primary">
+      <ToggleSection
+        label="Toggle me"
+        id="toggle.three"
+        appearance={APPEARANCES.PRIMARY}
+      >
         <FormStateful>
           {() => (
             <FieldInput
@@ -79,7 +85,7 @@ storiesOf('ToggleSection', module)
       label="Toggle me"
       id="toggle.four"
       isOpen={true}
-      appearance="secondary"
+      appearance={APPEARANCES.SECONDARY}
     >
       <FormStateful>
         {() => (
@@ -100,7 +106,7 @@ storiesOf('ToggleSection', module)
         label="Toggle me"
         id="toggle.five"
         isOpen={true}
-        appearance="secondary"
+        appearance={APPEARANCES.SECONDARY}
       >
         <FormStateful>
           {() => (
@@ -114,7 +120,11 @@ storiesOf('ToggleSection', module)
           )}
         </FormStateful>
       </ToggleSection>
-      <ToggleSection label="Toggle me" id="toggle.six" appearance="secondary">
+      <ToggleSection
+        label="Toggle me"
+        id="toggle.six"
+        appearance={APPEARANCES.SECONDARY}
+      >
         <FormStateful>
           {() => (
             <FieldInput

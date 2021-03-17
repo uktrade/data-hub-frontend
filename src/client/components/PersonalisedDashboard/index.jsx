@@ -7,6 +7,8 @@ import { connect } from 'react-redux'
 import { BLUE } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
+import { APPEARANCES } from '../../../common/constants'
+
 import { OUTSTANDING_PROPOSITIONS__LOADED } from '../../actions'
 import NotificationBadge from '../NotificationBadge'
 import Task from '../Task'
@@ -78,7 +80,7 @@ const PersonalisedDashboard = ({
                   }
                   major={true}
                   isOpen={true}
-                  appearance="primary"
+                  appearance={APPEARANCES.PRIMARY}
                   data-test="investment-reminders-section"
                 >
                   <InvestmentReminders
@@ -92,7 +94,7 @@ const PersonalisedDashboard = ({
               label="Investment project summary"
               id="investment-project-summary-section"
               isOpen={true}
-              appearance="primary"
+              appearance={APPEARANCES.PRIMARY}
             >
               <InvestmentProjectSummary adviser={adviser} />
             </ToggleSection>

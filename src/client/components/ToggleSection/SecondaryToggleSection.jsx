@@ -2,12 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { BLACK, YELLOW } from 'govuk-colours'
+import { BLACK, BLUE, YELLOW } from 'govuk-colours'
+import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 
-import icon from './assets/search-gov.uk.svg'
+import icon from './assets/caret.svg'
 
 const ToggleContainer = styled('div')`
-  margin-bottom: 10px;
+  margin-bottom: ${SPACING.SCALE_2};
 `
 
 const StyledHeader = styled('div')`
@@ -28,10 +29,10 @@ const StyledButton = styled('button')`
     align-items: center;
     background: transparent;
     border: none;
-    font-size: 19px;
-    color: #005ea5;
+    font-size: ${FONT_SIZE.SIZE_19};
+    color: ${BLUE};
     cursor: pointer;
-    padding: 0 0 15px 0;
+    padding: 0 0 ${SPACING.SCALE_3}; 0;
 
     &::before {
       content: '';

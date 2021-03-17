@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { BLUE, GREY_3, RED } from 'govuk-colours'
-import { FONT_WEIGHTS } from '@govuk-react/constants'
+import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
-import icon from './assets/search-gov.uk.svg'
+import icon from './assets/caret.svg'
 
 const ToggleContainer = styled('div')`
   ${({ major }) => `
-    margin-bottom: 10px;
+    margin-bottom: ${SPACING.SCALE_2};
     border: solid 2px ${GREY_3};
     border-top-color: ${major ? RED : BLUE};
   `}
@@ -24,8 +24,8 @@ const StyledHeader = styled('div')`
 const StyledContent = styled('div')`
   ${({ isOpen }) => `
     display: ${isOpen ? 'block' : 'none'};
-    padding: 0 15px;
-    margin: 15px 0;
+    padding: 0 ${SPACING.SCALE_3};
+    margin: ${SPACING.SCALE_3} 0;
   `}
 `
 
@@ -35,8 +35,8 @@ const StyledButton = styled('button')`
     align-items: center;
     background: transparent;
     border: none;
-    font-size: 19px;
-    color: #005ea5;
+    font-size: ${FONT_SIZE.SIZE_19};
+    color: ${BLUE};
     cursor: pointer;
     font-weight: ${FONT_WEIGHTS.regular};
     padding: 13px 0;
@@ -63,7 +63,7 @@ const ButtonContent = styled('span')`
 `
 
 const BadgeContainer = styled('span')`
-  margin-left: 5px;
+  margin-left: ${SPACING.SCALE_1};
 `
 
 const PrimaryToggleSection = ({
