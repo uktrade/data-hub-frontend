@@ -124,6 +124,8 @@ describe('Companies business details', () => {
             Website: 'Not set',
             'Business description':
               'This is a dummy company for testing the One List',
+            Segment: 'HEP',
+            'Sub-segment': 'Sustain: Nurture & Grow',
           },
         })
       })
@@ -263,6 +265,8 @@ describe('Companies business details', () => {
             'Number of employees': 'Not set',
             Website: 'Not set',
             'Business description': 'This is a dummy company for testing',
+            Segment: 'No segment has been added',
+            'Sub-segment': 'No sub-segment has been added',
           },
         })
       })
@@ -409,6 +413,8 @@ describe('Companies business details', () => {
             Website: 'Not set',
             'Business description':
               'This is a dummy company for testing companies with DnB data',
+            Segment: 'No segment has been added',
+            'Sub-segment': 'No sub-segment has been added',
           },
         })
       })
@@ -562,6 +568,8 @@ describe('Companies business details', () => {
             Website: 'Not set',
             'Business description':
               'This is a dummy company for testing archived features',
+            Segment: 'No segment has been added',
+            'Sub-segment': 'No sub-segment has been added',
           },
         })
       })
@@ -692,6 +700,8 @@ describe('Companies business details', () => {
             'Number of employees': 'Not set',
             Website: 'Not set',
             'Business description': 'No description has been added',
+            Segment: 'No segment has been added',
+            'Sub-segment': 'No sub-segment has been added',
           },
         })
       })
