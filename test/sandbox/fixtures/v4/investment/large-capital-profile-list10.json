@@ -26,7 +26,6 @@
                 "asset_classes_of_interest"
             ],
             "incomplete_location_fields": [
-                "uk_region_locations",
                 "notes_on_locations",
                 "other_countries_being_considered"
             ],
@@ -37,6 +36,12 @@
             "required_checks_conducted": null,
             "required_checks_conducted_on": null,
             "required_checks_conducted_by": null,
+            "uk_region_locations": [
+                {
+                  "id": "7703f30f-20e0-49b7-b4e0-c23c80f5a205",
+                  "name": "Benzonia"
+                }
+            ],
             "deal_ticket_sizes": [
                 {
                     "id": "56492c50-aa12-404d-a14e-1eaae24ac6ee",
@@ -66,7 +71,6 @@
             "desired_deal_roles": [],
             "restrictions": [],
             "asset_classes_of_interest": [],
-            "uk_region_locations": [],
             "notes_on_locations": "",
             "other_countries_being_considered": []
         },
@@ -529,7 +533,6 @@
                 "asset_classes_of_interest"
             ],
             "incomplete_location_fields": [
-                "uk_region_locations",
                 "notes_on_locations",
                 "other_countries_being_considered"
             ],
@@ -541,6 +544,16 @@
                 "id": "9beab8fc-1094-49b4-97d0-37bc7a9de631",
                 "name": "Issues identified"
             },
+            "uk_region_locations": [
+                {
+                  "id": "7703f30f-20e0-49b7-b4e0-c23c80f5a205",
+                  "name": "Benzonia"
+                },
+                {
+                  "id": "924cd12a-6095-e211-a939-e4115bead28a",
+                  "name": "Jersey"
+                }
+            ],
             "required_checks_conducted_on": null,
             "required_checks_conducted_by": null,
             "deal_ticket_sizes": [],
@@ -557,7 +570,6 @@
                     "id": "9e619e8d-af51-4abf-a83a-5c139851de82"
                 }
             ],
-            "uk_region_locations": [],
             "notes_on_locations": "",
             "other_countries_being_considered": []
         },
@@ -586,7 +598,6 @@
                 "asset_classes_of_interest"
             ],
             "incomplete_location_fields": [
-                "uk_region_locations",
                 "notes_on_locations",
                 "other_countries_being_considered"
             ],
@@ -624,7 +635,12 @@
                     "id": "9e619e8d-af51-4abf-a83a-5c139851de82"
                 }
             ],
-            "uk_region_locations": [],
+            "uk_region_locations": [
+                {
+                  "id": "924cd12a-6095-e211-a939-e4115bead28a",
+                  "name": "Jersey"
+                }
+            ],
             "notes_on_locations": "",
             "other_countries_being_considered": []
         },

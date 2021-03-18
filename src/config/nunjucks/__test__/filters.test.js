@@ -310,7 +310,7 @@ describe('nunjucks filters', () => {
 
       context('when a format is specified', () => {
         it('should return date in that format', () => {
-          const formattedDate = filters.formatDate('1/5/2010', 'DD/MM/YY')
+          const formattedDate = filters.formatDate('1/5/2010', 'dd/MM/yy')
 
           expect(formattedDate).to.equal('05/01/10')
         })
@@ -340,7 +340,7 @@ describe('nunjucks filters', () => {
         it('should return datetime in that format', () => {
           const formattedDate = filters.formatDateTime(
             '2017-08-16T14:18:28',
-            'DD/MM/YY HH:mm'
+            'dd/MM/yy HH:mm'
           )
 
           expect(formattedDate).to.equal('16/08/17 14:18')

@@ -28,7 +28,10 @@ function transformAuditLogToListItem(labels = {}) {
 
     return {
       type: 'audit',
-      name: dateFns.format(logEntry.timestamp, DATE_TIME_MEDIUM_FORMAT),
+      name: dateFns.format(
+        dateFns.parseISO(logEntry.timestamp),
+        DATE_TIME_MEDIUM_FORMAT
+      ),
       contentMetaModifier: 'stacked',
       meta: [
         {

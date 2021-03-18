@@ -18,6 +18,7 @@ export function getLargeCapitalProfiles({
   desiredDealRole,
   investableCapital,
   globalAssetsUnderManagement,
+  ukRegionsOfInterest,
 }) {
   let offset = limit * (parseInt(page, 10) - 1) || 0
   return apiProxyAxios
@@ -36,6 +37,7 @@ export function getLargeCapitalProfiles({
       construction_risk: constructionRisk,
       minimum_equity_percentage: minimumEquityPercentage,
       desired_deal_role: desiredDealRole,
+      uk_region_location: ukRegionsOfInterest,
       ...(investorCompanyName
         ? { investor_company_name: investorCompanyName }
         : {}),
@@ -87,6 +89,7 @@ export const loadFilterOptions = () =>
     apiProxyAxios.get('/v4/metadata/capital-investment/construction-risk'),
     apiProxyAxios.get('/v4/metadata/capital-investment/equity-percentage'),
     apiProxyAxios.get('/v4/metadata/capital-investment/desired-deal-role'),
+    apiProxyAxios.get('/v4/metadata/uk-region'),
   ]).then(
     ([
       { data: countries },
@@ -101,6 +104,7 @@ export const loadFilterOptions = () =>
       { data: constructionRisks },
       { data: equityPercentages },
       { data: dealRoles },
+      { data: ukRegionsOfInterest },
     ]) => ({
       countries: countries.map(idName2valueLabel),
       assetClassesOfInterest: classes.map(idName2valueLabel),
@@ -117,5 +121,6 @@ export const loadFilterOptions = () =>
         'Min Equity %'
       ),
       desiredDealRole: dealRoles.map(idName2valueLabel),
+      ukRegionsOfInterest: ukRegionsOfInterest.map(idName2valueLabel),
     })
   )

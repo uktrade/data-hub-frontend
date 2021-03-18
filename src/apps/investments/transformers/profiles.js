@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
-const moment = require('moment')
+const { format, parseISO } = require('date-fns')
 const { companies } = require('../../../lib/urls')
+
+const { DATE_LONG_FORMAT } = require('../../../common/constants')
 
 function transformLargeCapitalProfiles({ investor_company, created_on }) {
   return {
@@ -10,7 +12,7 @@ function transformLargeCapitalProfiles({ investor_company, created_on }) {
     metadata: [
       {
         label: 'Updated on',
-        value: moment(created_on).format('D MMMM YYYY'),
+        value: format(new Date(parseISO(created_on)), DATE_LONG_FORMAT),
       },
     ],
   }

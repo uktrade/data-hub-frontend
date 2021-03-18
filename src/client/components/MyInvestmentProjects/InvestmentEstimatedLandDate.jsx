@@ -6,6 +6,7 @@ import { SPACING } from '@govuk-react/constants'
 import { YELLOW, BLACK } from 'govuk-colours'
 import { format } from 'date-fns'
 
+import { DATE_DAY_LONG_FORMAT } from '../../../common/constants'
 import { getDifferenceInDays } from '../../utils/date-utils'
 
 const StyledPanel = styled('div')`
@@ -28,7 +29,9 @@ const InvestmentEstimatedLandDate = ({ estimatedLandDate }) => (
   <StyledPanel>
     <StyledBody>Estimated land date</StyledBody>
     <StyledTitle>{getDifferenceInDays(estimatedLandDate)}</StyledTitle>
-    <StyledBody>{format(estimatedLandDate, 'ddd, DD MMM YYYY')}</StyledBody>
+    <StyledBody>
+      {format(new Date(estimatedLandDate), DATE_DAY_LONG_FORMAT)}
+    </StyledBody>
   </StyledPanel>
 )
 
