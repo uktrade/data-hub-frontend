@@ -1,6 +1,6 @@
 /* eslint camelcase: 0 */
 const { isArray, assign, compact, pickBy } = require('lodash')
-const { format } = require('date-fns')
+const { format, parseISO } = require('date-fns')
 
 const urls = require('../../../lib/urls')
 
@@ -30,7 +30,9 @@ function transformInvestmentProjectToListItem({
     { label: 'Sector', value: sector ? sector.name : '' },
     {
       label: 'Estimated land date',
-      value: estimated_land_date && format(estimated_land_date, 'MMMM YYYY'),
+      value:
+        estimated_land_date &&
+        format(parseISO(estimated_land_date), 'MMMM yyyy'),
     },
   ].filter((metadata) => metadata.value)
 

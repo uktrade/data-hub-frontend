@@ -1,9 +1,7 @@
 const { merge, cloneDeep } = require('lodash')
-const format = require('date-fns/format')
 const proxyquire = require('proxyquire')
 
 const paths = require('../../paths')
-const { DATE_TIME_MEDIUM_FORMAT } = require('../../../../common/constants')
 const investmentData = require('../../../../../test/unit/data/investment/investment-data.json')
 const investmentProjectStages = require('../../../../../test/unit/data/investment/investment-project-stages.json')
 
@@ -162,7 +160,7 @@ describe('Investment shared middleware', () => {
             },
             {
               label: 'Created on',
-              value: format(null, DATE_TIME_MEDIUM_FORMAT),
+              value: null,
             },
           ],
           nextStage: {

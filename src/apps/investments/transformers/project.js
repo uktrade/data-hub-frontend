@@ -168,7 +168,7 @@ function transformInvestmentForView({
     level_of_involvement,
     specific_programme,
     estimated_land_date: !isEmpty(estimated_land_date)
-      ? moment(estimated_land_date, 'YYYY-MM-DD').format('MMMM YYYY')
+      ? moment(estimated_land_date, 'YYYY-MM-DD').format('MMMM yyyy')
       : null,
     actual_land_date: !isEmpty(actual_land_date)
       ? {
@@ -213,7 +213,7 @@ function transformBriefInvestmentSummary(data) {
       .map((country) => country.name)
       .join(', '),
     estimated_land_date: !isEmpty(data.estimated_land_date)
-      ? moment(data.estimated_land_date, 'YYYY-MM-DD').format('MMMM YYYY')
+      ? moment(data.estimated_land_date, 'YYYY-MM-DD').format('MMMM yyyy')
       : null,
     total_investment: data.total_investment
       ? {
