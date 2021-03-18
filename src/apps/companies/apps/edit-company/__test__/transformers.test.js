@@ -1,22 +1,30 @@
-const { transformCompanyToForm } = require('../transformers');
+const { transformCompanyToForm } = require('../transformers')
 
 const companyMock = require('../../../../../../test/unit/data/companies/company-v4')
 
 describe('Company edit details transformer test', () => {
+  describe('It correctly transforms the company segment details to the form', () => {
+    it('has a duns number', () => {
+      const company = {
+        ...companyMock,
+      }
 
+      const actual = transformCompanyToForm(company)
 
+      expect(actual.segment).to.equal('hep')
+      expect(actual.sub_segment).to.equal('sustain_nurture_and_grow')
+    })
 
-    it('It correctly transforms the company segment details to the form', () => {
-        const company = {
-            ...companyMock,
-        }
-    
-        const actual = transformCompanyToForm(company);
-    
-        const expected = {
-            
-        }
+    it('does not have a duns number', () => {
+      const company = {
+        ...companyMock,
+        duns_number: '25565',
+      }
 
-        console.log(actual);
-    });
-});
+      const actual = transformCompanyToForm(company)
+
+      expect(actual.segment).to.equal('hep')
+      expect(actual.sub_segment).to.equal('sustain_nurture_and_grow')
+    })
+  })
+})
