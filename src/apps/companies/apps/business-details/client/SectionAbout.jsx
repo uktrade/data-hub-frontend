@@ -28,6 +28,27 @@ const TableDetails = styled('div')`
   }
 `
 
+const SEGMENTS = {
+  [null]: 'No Segment or not known',
+  hep: 'High Export Potential',
+  'non-hep': 'Non- High Export Potential',
+}
+const SUB_SEGMENTS = {
+  [null]: 'No Sub-Segment or not known',
+  sustain_nurture_and_grow: 'Sustain: Nurture & Grow',
+  sustain_develop_export_capability: 'Sustain: Develop Export Capability',
+  sustain_communicate_benefits: 'Sustain: Communicate Benefits',
+  sustain_increase_competitiveness: 'Sustain: Increase Competitiveness',
+  reassure_nurture_and_grow: 'Reassure: Nurture & Grow',
+  reassure_develop_export_capability: 'Reassure: Develop Export Capability',
+  reassure_leave_be: 'Reassure: Leave Be',
+  reassure_change_the_game: 'Reassure: Change the Game',
+  promote_develop_export_capability: 'Promote: Develop Export Capability',
+  promote_communicate_benefits: 'Promote: Communicate Benefits',
+  promote_change_the_game: 'Promote: Change the Game',
+  challenge: 'Challenge',
+}
+
 const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
   <SummaryTable
     caption={`About ${businessDetails.name}`}
@@ -123,11 +144,12 @@ const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
     </SummaryTable.Row>
 
     <SummaryTable.Row heading="Segment">
-      {businessDetails.segment || 'No segment has been added'}
+      {SEGMENTS[businessDetails.segment] || 'No segment has been added'}
     </SummaryTable.Row>
 
     <SummaryTable.Row heading="Sub-segment">
-      {businessDetails.sub_segment || 'No sub-segment has been added'}
+      {SUB_SEGMENTS[businessDetails.sub_segment] ||
+        'No sub-segment has been added'}
     </SummaryTable.Row>
   </SummaryTable>
 )
