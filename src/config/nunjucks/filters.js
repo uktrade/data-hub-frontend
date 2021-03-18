@@ -1,7 +1,7 @@
 const nunjucks = require('nunjucks')
 const moment = require('moment')
 require('moment-duration-format')
-const dateFns = require('date-fns')
+const { toDate, parseISO, isValid, format: dateFnsFormat } = require('date-fns')
 const Case = require('case')
 const numeral = require('numeral')
 const queryString = require('qs')
@@ -193,12 +193,12 @@ const filters = {
     if (!value) {
       return value
     }
-    const parsedDate = dateFns.parse(value)
 
-    if (!dateFns.isValid(parsedDate)) {
+    if (!isValid(new Date(value))) {
       return value
     }
-    return dateFns.format(parsedDate, format)
+
+    return dateFnsFormat(new Date(value), format)
   },
 
   formatDateTime: (value, format = DATE_TIME_MEDIUM_FORMAT) => {
@@ -206,13 +206,15 @@ const filters = {
       return value
     }
 
-    const parsedDate = dateFns.parse(value)
+    const parsedDate = toDate(parseISO(value))
 
-    if (!dateFns.isValid(parsedDate)) {
+    if (!isValid(parsedDate)) {
       return value
     }
 
-    return dateFns.format(parsedDate, format)
+    return dateFnsFormat(parsedDate, format)
+      .replace('AM', 'am')
+      .replace('PM', 'pm')
   },
 
   formatAddress: (address, join = ', ') => {

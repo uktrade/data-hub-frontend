@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 const { find, get } = require('lodash')
-const moment = require('moment')
+const { format } = require('date-fns')
 const { requiredChecks: types } = require('../constants')
 
 const {
@@ -8,11 +8,10 @@ const {
 } = require('../../../../../adviser/transformers')
 
 const parseDate = (dateStr) => {
-  const date = moment(dateStr, 'YYYY-MM-DD', true)
   return {
-    day: date.date(),
-    month: date.month() + 1,
-    year: date.year(),
+    day: parseInt(format(new Date(dateStr), 'd')),
+    month: parseInt(format(new Date(dateStr), 'M')),
+    year: parseInt(format(new Date(dateStr), 'yyyy')),
   }
 }
 

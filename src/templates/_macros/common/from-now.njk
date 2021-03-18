@@ -7,7 +7,7 @@
 {% macro FromNow(props) %}
   {%- if props.datetime -%}
     <time
-      datetime="{{ props.datetime | formatDateTime('YYYY-MM-DDTHH:mm:ssZ') }}"
+      datetime="{{ props.datetime | formatDateTime('yyyy-MM-dd HH:mm:ssxxxxx') }}"
       title="{{ props.datetime | formatDateTime }}"
     >{{ props.datetime | fromNow }}</time>
   {%- endif -%}

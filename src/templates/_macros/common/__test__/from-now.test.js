@@ -27,7 +27,7 @@ describe('FromNow macro', () => {
 
     it('should format datetime attribute to local datetime', () => {
       expect(this.component.getAttribute('datetime')).to.equal(
-        '2010-08-01T00:00:00+01:00'
+        '2010-08-01 00:00:00+01:00'
       )
     })
 
