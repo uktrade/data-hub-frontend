@@ -1,5 +1,5 @@
 import qs from 'qs'
-import dateFns from 'date-fns'
+import { format, parseISO } from 'date-fns'
 
 import {
   actualLandDateBeforeLabel,
@@ -89,7 +89,7 @@ const buildOptionsFilter = ({ options = [], value, categoryLabel = '' }) => {
 }
 
 const getDateLabel = (value) =>
-  value ? `${dateFns.format(value, 'D MMMM YYYY')}` : ''
+  value ? `${format(parseISO(value), 'd MMMM yyyy')}` : ''
 
 const buildDatesFilter = ({ value, categoryLabel = '' }) =>
   value ? [{ label: getDateLabel(value), value, categoryLabel }] : []
