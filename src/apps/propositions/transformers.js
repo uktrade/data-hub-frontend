@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 const { assign, capitalize, forEach, get, mapKeys, pickBy } = require('lodash')
-const { format, isValid } = require('date-fns')
+const { format, isValid, parseISO } = require('date-fns')
 
 const { transformDateObjectToDateString } = require('../transformers')
 const {
@@ -28,9 +28,9 @@ function transformPropositionResponseToForm({
     scope,
     adviser: get(adviser, 'id'),
     deadline: {
-      day: isValidDate ? format(deadline, 'DD') : '',
-      month: isValidDate ? format(deadline, 'MM') : '',
-      year: isValidDate ? format(deadline, 'YYYY') : '',
+      day: isValidDate ? format(parseISO(deadline), 'dd') : '',
+      month: isValidDate ? format(parseISO(deadline), 'MM') : '',
+      year: isValidDate ? format(parseISO(deadline), 'yyyy') : '',
     },
     investment_project: get(investment_project, 'id'),
   }

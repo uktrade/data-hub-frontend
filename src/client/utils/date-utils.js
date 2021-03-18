@@ -49,7 +49,7 @@ export const transformValueForAPI = ({ year, month, day = 1 }) => {
  */
 export const getDifferenceInDays = (dateIn) => {
   const today = endOfToday()
-  const difference = differenceInCalendarDays(dateIn, today)
+  const difference = differenceInCalendarDays(new Date(dateIn), today)
   return difference === 1
     ? difference + ' day'
     : difference < 0

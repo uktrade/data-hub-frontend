@@ -92,7 +92,7 @@
       {% if props.type === 'date' %}
         {% set value = props.value | formatDate %}
       {% elif props.type === 'dateMonthYear' %}
-        {% set value = props.value | formatDate('MMMM YYYY') %}
+        {% set value = props.value | formatDate('MMMM yyyy') %}
       {% elif props.type === 'datetime' %}
         {% set value = props.value | formatDateTime %}
       {% elif props.type === 'fromNow' %}

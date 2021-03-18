@@ -66,7 +66,7 @@ describe('Dashboard reminders', () => {
 
       cy.get('@outstandingProposition')
         .find('[data-test="outstanding-proposition-deadline"]')
-        .should('have.text', `Due ${format(new Date(), 'ddd, DD MMM YYYY')}`)
+        .should('have.text', `Due ${format(new Date(), 'dd MMM yyyy')}`)
 
       cy.get('@outstandingProposition')
         .find('[data-test="outstanding-proposition-countdown"]')
