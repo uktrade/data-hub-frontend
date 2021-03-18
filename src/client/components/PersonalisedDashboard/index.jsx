@@ -8,25 +8,46 @@ import { BLUE } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
 import { VARIANTS } from '../../../common/constants'
-
-import { OUTSTANDING_PROPOSITIONS__LOADED } from '../../actions'
 import NotificationBadge from '../NotificationBadge'
-import Task from '../Task'
 import ToggleSection from '../ToggleSection'
-
+import blueTheme from './blue-theme'
+import Task from '../Task'
 import Aside from './Aside'
 import Main from './Main'
-import blueTheme from './blue-theme'
 
 import {
+  Search,
+  Container,
+  DashboardTabs,
   InvestmentReminders,
   InvestmentProjectSummary,
-  Search,
-  DashboardTabs,
-  Container,
 } from '../../components'
 
-import { ID, TASK_GET_OUTSTANDING_PROPOSITIONS, state2props } from './state'
+import {
+  MY_INVESTMENTS__LIST_LOADED,
+  OUTSTANDING_PROPOSITIONS__LOADED,
+} from '../../actions'
+
+import {
+  ID as OUTSTANDING_PROPOSITIONS_ID,
+  TASK_GET_OUTSTANDING_PROPOSITIONS,
+} from './state'
+
+import {
+  ID as MY_INVESTMENT_PROJECTS_ID,
+  TASK_GET_MY_INVESTMENTS_LIST,
+} from '../MyInvestmentProjects/state'
+
+const state2props = (state) => {
+  return {
+    investmentProjects: {
+      ...state[MY_INVESTMENT_PROJECTS_ID],
+    },
+    outstandingPropositions: {
+      ...state[OUTSTANDING_PROPOSITIONS_ID],
+    },
+  }
+}
 
 const SearchBackground = styled('div')`
   background-color: ${BLUE};
@@ -47,82 +68,116 @@ const SearchContainer = styled(Container)`
 const PersonalisedDashboard = ({
   id,
   adviser,
-  outstandingPropositions,
   csrfToken,
-}) => (
-  <ThemeProvider theme={blueTheme}>
-    <SearchBackground data-test="search-data-hub">
-      <SearchContainer width="960">
-        <Search csrfToken={csrfToken} />
-      </SearchContainer>
-    </SearchBackground>
-    <Container width="1180">
-      <GridRow data-test="dashboard">
-        <GridCol setWidth="one-third">
-          <Aside>
-            <ToggleSection
-              label="Reminders"
-              id="investment-reminders-section"
-              badge={
-                !!outstandingPropositions.count && (
-                  <NotificationBadge
-                    label={`${outstandingPropositions.count}`}
-                  />
-                )
-              }
-              major={true}
-              isOpen={true}
-              variant={VARIANTS.PRIMARY}
-              data-test="investment-reminders-section"
-            >
-              <Task.Status
-                name={TASK_GET_OUTSTANDING_PROPOSITIONS}
-                id={ID}
-                progressMessage="Loading your reminders"
-                startOnRender={{
-                  payload: { adviser },
-                  onSuccessDispatch: OUTSTANDING_PROPOSITIONS__LOADED,
-                }}
+  investmentProjects,
+  outstandingPropositions,
+}) => {
+  const { page, filter, sort } = investmentProjects
+  const myInvestmentProjectTaskProps = {
+    name: TASK_GET_MY_INVESTMENTS_LIST,
+    id: MY_INVESTMENT_PROJECTS_ID,
+    progressMessage: 'Loading your investment projects',
+    startOnRender: {
+      payload: {
+        adviser,
+        page,
+        filter,
+        sort,
+      },
+      onSuccessDispatch: MY_INVESTMENTS__LIST_LOADED,
+    },
+  }
+  return (
+    <ThemeProvider theme={blueTheme}>
+      <SearchBackground data-test="search-data-hub">
+        <SearchContainer width="960">
+          <Search csrfToken={csrfToken} />
+        </SearchContainer>
+      </SearchBackground>
+      <Container width="1180">
+        <GridRow data-test="dashboard">
+          <GridCol setWidth="one-third">
+            <Aside>
+              <ToggleSection
+                label="Reminders"
+                id="investment-reminders-section"
+                badge={
+                  !!outstandingPropositions.count && (
+                    <NotificationBadge
+                      label={`${outstandingPropositions.count}`}
+                    />
+                  )
+                }
+                major={true}
+                isOpen={true}
+                variant={VARIANTS.PRIMARY}
+                data-test="investment-reminders-section"
               >
-                {() => (
-                  <InvestmentReminders
-                    outstandingPropositions={outstandingPropositions}
-                  />
-                )}
-              </Task.Status>
-            </ToggleSection>
+                <Task.Status
+                  name={TASK_GET_OUTSTANDING_PROPOSITIONS}
+                  id={OUTSTANDING_PROPOSITIONS_ID}
+                  progressMessage="Loading your reminders"
+                  startOnRender={{
+                    payload: { adviser },
+                    onSuccessDispatch: OUTSTANDING_PROPOSITIONS__LOADED,
+                  }}
+                >
+                  {() => (
+                    <InvestmentReminders
+                      outstandingPropositions={outstandingPropositions}
+                    />
+                  )}
+                </Task.Status>
+              </ToggleSection>
 
-            <ToggleSection
-              label="Investment project summary"
-              id="investment-project-summary-section"
-              isOpen={true}
-              variant={VARIANTS.PRIMARY}
-              data-test="investment-project-summary-section"
-            >
-              <InvestmentProjectSummary adviser={adviser} />
-            </ToggleSection>
-          </Aside>
-        </GridCol>
-        <GridCol setWidth="two-thirds">
-          <Main>
-            <DashboardTabs id={id} adviser={adviser} />
-          </Main>
-        </GridCol>
-      </GridRow>
-    </Container>
-  </ThemeProvider>
-)
+              <ToggleSection
+                label="Investment project summary"
+                id="investment-project-summary-section"
+                isOpen={true}
+                variant={VARIANTS.PRIMARY}
+                data-test="investment-project-summary-section"
+              >
+                <InvestmentProjectSummary adviser={adviser} />
+              </ToggleSection>
+            </Aside>
+          </GridCol>
+
+          <GridCol setWidth="two-thirds">
+            <Main>
+              <DashboardTabs
+                id={id}
+                adviser={adviser}
+                investmentProjects={investmentProjects}
+                myInvestmentProjectTaskProps={myInvestmentProjectTaskProps}
+              />
+            </Main>
+          </GridCol>
+        </GridRow>
+      </Container>
+    </ThemeProvider>
+  )
+}
 
 PersonalisedDashboard.propTypes = {
   id: PropTypes.string.isRequired,
+  csrfToken: PropTypes.string.isRequired,
   adviser: PropTypes.object.isRequired,
+  investmentProjects: PropTypes.shape({
+    results: PropTypes.array.isRequired,
+    count: PropTypes.number.isRequired,
+    itemsPerPage: PropTypes.number.isRequired,
+    page: PropTypes.number.isRequired,
+    sort: PropTypes.string.isRequired,
+    filter: PropTypes.string.isRequired,
+    showDetails: PropTypes.bool.isRequired,
+  }).isRequired,
   outstandingPropositions: PropTypes.shape({
     count: PropTypes.number.isRequired,
     results: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string.isRequired,
         investment_project: PropTypes.shape({
-          id: PropTypes.string.is_required,
+          id: PropTypes.string.isRequired,
           name: PropTypes.string.isRequired,
           project_code: PropTypes.string.isRequired,
         }),

@@ -2,9 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { ID, TASK_GET_MY_INVESTMENTS_LIST, state2props } from './state'
+import { state2props } from './state'
 import {
-  MY_INVESTMENTS__LIST_LOADED,
   MY_INVESTMENTS__PAGINATION_CLICK,
   MY_INVESTMENTS__FILTER_CHANGE,
   MY_INVESTMENTS__SORT_CHANGE,
@@ -24,16 +23,14 @@ import { STAGE_OPTIONS, SORT_OPTIONS } from './constants'
 const MyInvestmentProjects = ({
   results,
   count,
-  itemsPerPage,
   page,
-  filter,
-  sort,
+  itemsPerPage,
   onSortChange,
   onFilterChange,
   onPaginationClick,
   onShowDetailsChange,
-  adviser,
   showDetails,
+  myInvestmentProjectTaskProps,
 }) => (
   <article>
     <InvestmentListHeader>
@@ -55,20 +52,7 @@ const MyInvestmentProjects = ({
         onChange={(event) => onSortChange(event.target.value)}
       />
     </InvestmentListHeader>
-    <Task.Status
-      name={TASK_GET_MY_INVESTMENTS_LIST}
-      id={ID}
-      progressMessage="Loading your investment projects"
-      startOnRender={{
-        payload: {
-          adviser,
-          page,
-          filter,
-          sort,
-        },
-        onSuccessDispatch: MY_INVESTMENTS__LIST_LOADED,
-      }}
-    >
+    <Task.Status {...myInvestmentProjectTaskProps}>
       {() => {
         const totalPages = Math.ceil(count / itemsPerPage)
         return (
@@ -99,9 +83,6 @@ MyInvestmentProjects.propTypes = {
   onSortChange: PropTypes.func.isRequired,
   onPaginationClick: PropTypes.func.isRequired,
   onShowDetailsChange: PropTypes.func.isRequired,
-  adviser: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-  }).isRequired,
   showDetails: PropTypes.bool.isRequired,
 }
 
