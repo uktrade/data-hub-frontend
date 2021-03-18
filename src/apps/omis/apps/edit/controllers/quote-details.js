@@ -11,7 +11,7 @@ class EditQuoteDetailsController extends EditController {
     if (parsedDeliveryDate) {
       req.form.values.delivery_date = dateFns.format(
         parsedDeliveryDate,
-        'YYYY-MM-DD'
+        'yyyy-MM-dd'
       )
     } else {
       req.form.values.delivery_date = deliveryDateStr
