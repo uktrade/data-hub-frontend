@@ -83,8 +83,8 @@ import investmentSummaryReducer from './components/InvestmentProjectSummary/redu
 import { ID as DATA_SUMMARY_PICKER_ID } from './components/DataSummaryPicker/state'
 import dataSummaryPickerReducer from './components/DataSummaryPicker/reducer'
 
-import { ID as PERSONALISED_DASHBOARD_ID } from './components/PersonalisedDashboard/state'
-import personalisedDashboardReducer from './components/PersonalisedDashboard/reducer'
+import { ID as INVESTMENT_REMINDERS_ID } from './components/InvestmentReminders/state'
+import investmentRemindersReducer from './components/InvestmentReminders/reducer'
 
 import RoutedInput from './components/RoutedInput'
 
@@ -134,7 +134,7 @@ const store = createStore(
     [MY_INVESTMENT_PROJECTS_ID]: myInvestmentProjectsReducer,
     [INVESTMENT_SUMMARY_ID]: investmentSummaryReducer,
     [DATA_SUMMARY_PICKER_ID]: dataSummaryPickerReducer,
-    [PERSONALISED_DASHBOARD_ID]: personalisedDashboardReducer,
+    [INVESTMENT_REMINDERS_ID]: investmentRemindersReducer,
   }),
   {
     referrerUrl: window.document.referrer,
