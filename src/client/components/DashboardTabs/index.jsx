@@ -26,7 +26,7 @@ const DashboardTabs = ({
           label: 'My projects',
           content: (
             <MyInvestmentProjects
-              myInvestmentProjectTaskProps={myInvestmentProjectTaskProps}
+              taskProps={myInvestmentProjectTaskProps}
               {...investmentProjects}
             />
           ),

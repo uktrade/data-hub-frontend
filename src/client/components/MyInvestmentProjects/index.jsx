@@ -30,7 +30,7 @@ const MyInvestmentProjects = ({
   onPaginationClick,
   onShowDetailsChange,
   showDetails,
-  myInvestmentProjectTaskProps,
+  taskProps,
 }) => (
   <article>
     <InvestmentListHeader>
@@ -52,7 +52,7 @@ const MyInvestmentProjects = ({
         onChange={(event) => onSortChange(event.target.value)}
       />
     </InvestmentListHeader>
-    <Task.Status {...myInvestmentProjectTaskProps}>
+    <Task.Status {...taskProps}>
       {() => {
         const totalPages = Math.ceil(count / itemsPerPage)
         return (
