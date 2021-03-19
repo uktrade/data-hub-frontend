@@ -39,7 +39,10 @@
         }
       },
       "country_lost_to": null,
-      "country_investment_originates_from": null,
+      "country_investment_originates_from": {
+        "name": "Italy",
+        "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+      },
       "created_by": null,
       "delivery_partners": [
         {
@@ -156,6 +159,11 @@
       "comments": "",
       "level_of_involvement_simplified": "unspecified",
       "date_lost": null,
+      "latest_interaction": {
+        "date": "2021-03-16T00:00:00+00:00",
+        "subject": "A project interaction",
+        "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
+      },
       "name": "New metro system (legacy project)",
       "modified_on": "2016-01-05T19:00:00+00:00",
       "address_town": "London",
@@ -214,7 +222,10 @@
         }
       },
       "country_lost_to": null,
-      "country_investment_originates_from": null,
+      "country_investment_originates_from": {
+        "name": "Spain",
+        "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+      },
       "created_by": null,
       "delivery_partners": [],
       "fdi_type": {
@@ -306,6 +317,11 @@
       "comments": "",
       "level_of_involvement_simplified": "unspecified",
       "date_lost": null,
+      "latest_interaction": {
+        "date": "2021-03-16T00:00:00+00:00",
+        "subject": "A project interaction",
+        "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
+    },
       "name": "Fancy dress manufacturing",
       "modified_on": "2017-06-05T10:00:00+00:00",
       "address_town": null,
@@ -364,7 +380,10 @@
         }
       },
       "country_lost_to": null,
-      "country_investment_originates_from": null,
+      "country_investment_originates_from": {
+        "name": "France",
+        "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+      },
       "created_by": null,
       "delivery_partners": [],
       "fdi_type": {
@@ -474,6 +493,11 @@
       "comments": "",
       "level_of_involvement_simplified": "unspecified",
       "date_lost": null,
+      "latest_interaction": {
+        "date": "2021-03-16T00:00:00+00:00",
+        "subject": "A project interaction",
+        "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
+    },
       "name": "New rollercoaster",
       "modified_on": "2017-08-05T10:00:00+00:00",
       "address_town": null,
@@ -532,7 +556,10 @@
         }
       },
       "country_lost_to": null,
-      "country_investment_originates_from": null,
+      "country_investment_originates_from": {
+        "name": "Ireland",
+        "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+      },
       "created_by": null,
       "delivery_partners": [],
       "fdi_type": {
@@ -663,6 +690,11 @@
       "comments": "",
       "level_of_involvement_simplified": "unspecified",
       "date_lost": null,
+      "latest_interaction": {
+        "date": "2021-03-16T00:00:00+00:00",
+        "subject": "A project interaction",
+        "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
+    },
       "name": "New restaurant",
       "modified_on": "2017-06-15T15:30:00+00:00",
       "address_town": null,
@@ -724,7 +756,10 @@
         "id": "0950bdb8-5d95-e211-a939-e4115bead28a",
         "name": "Marshall Islands"
       },
-      "country_investment_originates_from": null,
+      "country_investment_originates_from": {
+        "name": "Scotland",
+        "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+      },
       "created_by": null,
       "delivery_partners": [],
       "fdi_type": {
@@ -834,6 +869,11 @@
       "comments": "",
       "level_of_involvement_simplified": "unspecified",
       "date_lost": "2018-01-01",
+      "latest_interaction": {
+        "date": "2021-03-16T00:00:00+00:00",
+        "subject": "A project interaction",
+        "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
+    },
       "name": "Wig factory",
       "modified_on": "2017-05-05T10:00:00+00:00",
       "address_town": null,
@@ -892,7 +932,10 @@
         }
       },
       "country_lost_to": null,
-      "country_investment_originates_from": null,
+      "country_investment_originates_from": {
+        "name": "Africa",
+        "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+      },
       "created_by": null,
       "delivery_partners": [],
       "fdi_type": {
@@ -984,6 +1027,11 @@
       "comments": "",
       "level_of_involvement_simplified": "unspecified",
       "date_lost": null,
+      "latest_interaction": {
+        "date": "2021-03-16T00:00:00+00:00",
+        "subject": "A project interaction",
+        "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
+    },
       "name": "New hotel (FDI)",
       "modified_on": "2017-06-05T10:00:00+00:00",
       "address_town": null,
@@ -1042,7 +1090,10 @@
         }
       },
       "country_lost_to": null,
-      "country_investment_originates_from": null,
+      "country_investment_originates_from": {
+        "name": "New Zealand",
+        "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+      },
       "created_by": null,
       "delivery_partners": [],
       "fdi_type": {
@@ -1152,6 +1203,11 @@
       "comments": "",
       "level_of_involvement_simplified": "unspecified",
       "date_lost": null,
+      "latest_interaction": {
+        "date": "2021-03-16T00:00:00+00:00",
+        "subject": "A project interaction",
+        "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
+    },
       "name": "Green tea plantation",
       "modified_on": "2017-11-08T10:00:00+00:00",
       "address_town": null,
@@ -1207,7 +1263,10 @@
         }
       },
       "country_lost_to": null,
-      "country_investment_originates_from": null,
+      "country_investment_originates_from": {
+        "name": "Poland",
+        "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+      },
       "created_by": null,
       "delivery_partners": [],
       "fdi_type": null,
@@ -1291,6 +1350,11 @@
       "comments": "",
       "level_of_involvement_simplified": "unspecified",
       "date_lost": null,
+      "latest_interaction": {
+        "date": "2021-03-16T00:00:00+00:00",
+        "subject": "A project interaction",
+        "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
+    },
       "name": "New hotel (Non-FDI)",
       "modified_on": "2017-07-05T10:00:00+00:00",
       "address_town": null,
@@ -1354,7 +1418,10 @@
         }
       },
       "country_lost_to": null,
-      "country_investment_originates_from": null,
+      "country_investment_originates_from": {
+        "name": "Germany",
+        "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+      },
       "created_by": null,
       "delivery_partners": [
         {
@@ -1476,6 +1543,11 @@
       "comments": "",
       "level_of_involvement_simplified": "unspecified",
       "date_lost": null,
+      "latest_interaction": {
+        "date": "2021-03-16T00:00:00+00:00",
+        "subject": "A project interaction",
+        "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
+    },
       "name": "New fruit machine",
       "modified_on": "2017-03-05T15:00:00+00:00",
       "address_town": "London",
@@ -1531,7 +1603,10 @@
         }
       },
       "country_lost_to": null,
-      "country_investment_originates_from": null,
+      "country_investment_originates_from": {
+        "name": "Brazil",
+        "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+      },
       "created_by": null,
       "delivery_partners": [],
       "fdi_type": {
@@ -1618,6 +1693,11 @@
       "comments": "",
       "level_of_involvement_simplified": "unspecified",
       "date_lost": null,
+      "latest_interaction": {
+        "date": "2021-03-16T00:00:00+00:00",
+        "subject": "A project interaction",
+        "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
+    },
       "name": "New hotel (commitment to invest)",
       "modified_on": "2017-06-07T10:00:00+00:00",
       "address_town": null,
