@@ -47,9 +47,10 @@ const DataSummaryPicker = ({
             onSelectDataRange(e.target.value)
           },
         }}
+        data-test="data-summary-select"
       >
         {dataRanges.map(({ label, name }) => (
-          <option value={name} key={name}>
+          <option value={name} key={name} data-test="data-summary-option">
             {label}
           </option>
         ))}
