@@ -146,7 +146,6 @@ const PersonalisedDashboard = ({
             <Main>
               <DashboardTabs
                 id={id}
-                adviser={adviser}
                 investmentProjects={investmentProjects}
                 myInvestmentProjectTaskProps={myInvestmentProjectTaskProps}
               />

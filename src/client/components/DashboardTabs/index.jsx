@@ -15,32 +15,30 @@ const DashboardTabs = ({
   id,
   investmentProjects,
   myInvestmentProjectTaskProps,
-}) => {
-  return (
-    <StyledDiv data-cy="dashboard-tabs">
-      <TabNav
-        id={`${id}.TabNav`}
-        label="Dashboard"
-        routed={true}
-        tabs={{
-          [urls.personalisedDashboard.myInvestmentProjects()]: {
-            label: 'My projects',
-            content: (
-              <MyInvestmentProjects
-                myInvestmentProjectTaskProps={myInvestmentProjectTaskProps}
-                {...investmentProjects}
-              />
-            ),
-          },
-          [urls.dashboard()]: {
-            label: 'My companies lists',
-            content: <CompanyLists />,
-          },
-        }}
-      />
-    </StyledDiv>
-  )
-}
+}) => (
+  <StyledDiv data-cy="dashboard-tabs">
+    <TabNav
+      id={`${id}.TabNav`}
+      label="Dashboard"
+      routed={true}
+      tabs={{
+        [urls.personalisedDashboard.myInvestmentProjects()]: {
+          label: 'My projects',
+          content: (
+            <MyInvestmentProjects
+              myInvestmentProjectTaskProps={myInvestmentProjectTaskProps}
+              {...investmentProjects}
+            />
+          ),
+        },
+        [urls.dashboard()]: {
+          label: 'My companies lists',
+          content: <CompanyLists />,
+        },
+      }}
+    />
+  </StyledDiv>
+)
 
 DashboardTabs.propTypes = {
   id: PropTypes.string.isRequired,
