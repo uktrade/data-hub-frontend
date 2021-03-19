@@ -104,6 +104,18 @@ describe('Company edit', () => {
           assert: assertFieldInput,
         },
         {
+          label: 'Export Segment (optional)',
+          value: company.segment,
+          optionsCount: 3,
+          assert: assertFieldSelect,
+        },
+        {
+          label: 'Export Sub-segment (optional)',
+          value: company.sub_segment,
+          optionsCount: 13,
+          assert: assertFieldSelect,
+        },
+        {
           label: 'Address',
           value: company.address,
           hint:
@@ -187,6 +199,18 @@ describe('Company edit', () => {
           assert: assertFieldInput,
         },
         {
+          label: 'Export Segment (optional)',
+          value: company.segment,
+          optionsCount: 3,
+          assert: assertFieldSelect,
+        },
+        {
+          label: 'Export Sub-segment (optional)',
+          value: company.sub_segment,
+          optionsCount: 13,
+          assert: assertFieldSelect,
+        },
+        {
           label: 'Address',
           value: company.address,
           hint:
@@ -256,6 +280,18 @@ describe('Company edit', () => {
           label: 'Business description (optional)',
           value: company.description,
           assert: assertFieldInput,
+        },
+        {
+          label: 'Export Segment (optional)',
+          value: company.segment,
+          optionsCount: 3,
+          assert: assertFieldSelect,
+        },
+        {
+          label: 'Export Sub-segment (optional)',
+          value: company.sub_segment,
+          optionsCount: 13,
+          assert: assertFieldSelect,
         },
         {
           label: 'Address',
