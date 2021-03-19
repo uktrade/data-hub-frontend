@@ -1,10 +1,8 @@
 import { OUTSTANDING_PROPOSITIONS__LOADED } from '../../actions'
 
 const initialState = {
-  outstandingPropositions: {
-    count: 0,
-    results: [],
-  },
+  count: 0,
+  results: [],
 }
 
 export default (state = initialState, { type, result }) => {
@@ -12,10 +10,8 @@ export default (state = initialState, { type, result }) => {
     case OUTSTANDING_PROPOSITIONS__LOADED:
       const { results, count } = result
       return {
-        outstandingPropositions: {
-          results,
-          count,
-        },
+        results,
+        count,
       }
     default:
       return state
