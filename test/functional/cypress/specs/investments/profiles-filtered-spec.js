@@ -1,5 +1,8 @@
 const urls = require('../../../../../src/lib/urls')
 
+const expandToggleSections = () =>
+  cy.get('[data-test="toggle-section-button"]').click({ multiple: true })
+
 const testTypeaheadFilter = ({
   selector,
   options = [],
@@ -12,6 +15,7 @@ const testTypeaheadFilter = ({
   context(`When ${optionsMessage} are selected`, () => {
     it(`There should be ${expectedNumberOfResults} items found`, () => {
       cy.visit(urls.investments.profiles.index())
+      expandToggleSections()
       cy.get(`[data-test="${selector}"]`).within((e) =>
         options.forEach((option) => cy.wrap(e).type(`${option}{enter}`))
       )
@@ -36,7 +40,7 @@ const testInputFilter = ({ selector, text, expectedNumberOfResults }) => {
   context(`When inputting text "${text}"`, () => {
     it(`There should be ${expectedNumberOfResults} items found`, () => {
       cy.visit(urls.investments.profiles.index())
-      // cy.get(`[placeholder="${placeholder}"]`).within((e) =>
+      expandToggleSections()
       cy.get(selector).within((e) => cy.wrap(e).type(text).blur())
       cy.contains(
         `${expectedNumberOfResults} Profile${
@@ -95,8 +99,8 @@ describe('Investor profiles filters', () => {
   })
 
   typeaheadFilterTestCases({
-    filterName: 'Asset class of interest',
-    selector: 'asset-class-of-interest-filter',
+    filterName: 'Asset class',
+    selector: 'asset-class-filter',
     cases: [
       {
         expectedNumberOfResults: 10,
@@ -341,7 +345,7 @@ describe('Investor profiles filters', () => {
   })
 
   typeaheadFilterTestCases({
-    filterName: 'Time horizon tenor',
+    filterName: 'Time horizon',
     selector: 'time-horizon-tenor-filter',
     cases: [
       {
@@ -363,7 +367,7 @@ describe('Investor profiles filters', () => {
   })
 
   typeaheadFilterTestCases({
-    filterName: 'Restrictions and Conditions',
+    filterName: 'Restrictions and conditions',
     selector: 'restrictions-conditions-filter',
     cases: [
       {
