@@ -21,8 +21,8 @@
   "transferred_to": null,
   "transfer_reason": "",
   "website": null,
-  "segment":"HEP",
-  "sub_segment":"Sustain: Nurture & Grow",
+  "export_segment":"hep",
+  "export_sub_segment":"sustain_nurture_and_grow",
   "business_type": {
     "name": "Company",
     "id": "98d14e94-5d95-e211-a939-e4115bead28a"

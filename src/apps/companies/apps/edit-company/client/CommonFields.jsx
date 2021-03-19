@@ -10,43 +10,41 @@ import {
 } from '../../../../../client/components'
 import { WEBSITE_REGEX } from '../../add-company/client/constants'
 
-const segments = [
-  { value: null, label: 'No Segment or not known' },
-  { value: 'hep', label: 'HEP' },
-  { value: 'non-hep', label: 'Non-HEP' },
+const export_segments = [
+  { value: 'hep', label: 'High export potential' },
+  { value: 'non-hep', label: 'Not high export potential' },
 ]
 
-const sub_segments = [
-  { value: null, label: 'No Sub-Segment or not known' },
-  { value: 'sustain_nurture_and_grow', label: 'Sustain: Nurture & Grow' },
+const export_sub_segments = [
+  { value: 'sustain_nurture_and_grow', label: 'Sustain: nurture & grow' },
   {
     value: 'sustain_develop_export_capability',
-    label: 'Sustain: Develop Export Capability',
+    label: 'Sustain: develop export capability',
   },
   {
     value: 'sustain_communicate_benefits',
-    label: 'Sustain: Communicate Benefits',
+    label: 'Sustain: communicate benefits',
   },
   {
     value: 'sustain_increase_competitiveness',
-    label: 'Sustain: Increase Competitiveness',
+    label: 'Sustain: increase competitiveness',
   },
-  { value: 'reassure_nurture_and_grow', label: 'Reassure: Nurture & Grow' },
+  { value: 'reassure_nurture_and_grow', label: 'Reassure: nurture & grow' },
   {
     value: 'reassure_develop_export_capability',
-    label: 'Reassure: Develop Export Capability',
+    label: 'Reassure: develop export capability',
   },
-  { value: 'reassure_leave_be', label: 'Reassure: Leave Be' },
-  { value: 'reassure_change_the_game', label: 'Reassure: Change the Game' },
+  { value: 'reassure_leave_be', label: 'Reassure: leave be' },
+  { value: 'reassure_change_the_game', label: 'Reassure: change the game' },
   {
     value: 'promote_develop_export_capability',
-    label: 'Promote: Develop Export Capability',
+    label: 'Promote: develop export capability',
   },
   {
     value: 'promote_communicate_benefits',
-    label: 'Promote: Communicate Benefits',
+    label: 'Promote: communicate benefits',
   },
-  { value: 'promote_change_the_game', label: 'Promote: Change the Game' },
+  { value: 'promote_change_the_game', label: 'Promote: change the game' },
   { value: 'challenge', label: 'Challenge' },
 ]
 
@@ -79,17 +77,17 @@ const CommonFields = ({ company, regions }) => (
     />
 
     <FieldSelect
-      name="segment"
-      label="Segment (optional)"
-      emptyOption="-- Select segment --"
-      options={segments}
+      name="export_segment"
+      label="Export Segment (optional)"
+      emptyOption="No export segment or not known"
+      options={export_segments}
     />
 
     <FieldSelect
-      name="sub_segment"
-      label="Sub-segment (optional)"
-      emptyOption="-- Select Sub-segment --"
-      options={sub_segments}
+      name="export_sub_segment"
+      label="Export Sub-segment (optional)"
+      emptyOption="No sub export segment or not known"
+      options={export_sub_segments}
     />
 
     <FieldAddress

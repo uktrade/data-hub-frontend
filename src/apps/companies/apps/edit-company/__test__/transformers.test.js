@@ -11,8 +11,8 @@ describe('Company edit details transformer test', () => {
 
       const actual = transformCompanyToForm(company)
 
-      expect(actual.segment).to.equal('hep')
-      expect(actual.sub_segment).to.equal('sustain_nurture_and_grow')
+      expect(actual.export_segment).to.equal('hep')
+      expect(actual.export_sub_segment).to.equal('sustain_nurture_and_grow')
     })
 
     it('does not have a duns number', () => {
@@ -23,8 +23,8 @@ describe('Company edit details transformer test', () => {
 
       const actual = transformCompanyToForm(company)
 
-      expect(actual.segment).to.equal('hep')
-      expect(actual.sub_segment).to.equal('sustain_nurture_and_grow')
+      expect(actual.export_segment).to.equal('hep')
+      expect(actual.export_sub_segment).to.equal('sustain_nurture_and_grow')
     })
   })
 })

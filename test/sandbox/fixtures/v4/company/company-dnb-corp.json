@@ -21,6 +21,8 @@
   "transferred_to": null,
   "transfer_reason": "",
   "website": null,
+  "export_segment": "non-hep",
+  "export_sub_segment": "reassure_change_the_game",
   "business_type": {
     "name": "Company",
     "id": "98d14e94-5d95-e211-a939-e4115bead28a"

@@ -7,6 +7,7 @@ import { get, isEmpty } from 'lodash'
 import { SPACING_POINTS, LINE_HEIGHT } from '@govuk-react/constants'
 import { currencyGBP } from '../../../../../client/utils/number-utils'
 import { NewWindowLink, SummaryTable } from '../../../../../client/components/'
+import { exportSegmentsLabels, exportSubSegmentsLabels } from '../../../labels'
 
 const TableDetails = styled('div')`
   display: flex;
@@ -27,27 +28,6 @@ const TableDetails = styled('div')`
     margin-bottom: 0;
   }
 `
-
-const SEGMENTS = {
-  [null]: 'No Segment or not known',
-  hep: 'High Export Potential',
-  'non-hep': 'Non- High Export Potential',
-}
-const SUB_SEGMENTS = {
-  [null]: 'No Sub-Segment or not known',
-  sustain_nurture_and_grow: 'Sustain: Nurture & Grow',
-  sustain_develop_export_capability: 'Sustain: Develop Export Capability',
-  sustain_communicate_benefits: 'Sustain: Communicate Benefits',
-  sustain_increase_competitiveness: 'Sustain: Increase Competitiveness',
-  reassure_nurture_and_grow: 'Reassure: Nurture & Grow',
-  reassure_develop_export_capability: 'Reassure: Develop Export Capability',
-  reassure_leave_be: 'Reassure: Leave Be',
-  reassure_change_the_game: 'Reassure: Change the Game',
-  promote_develop_export_capability: 'Promote: Develop Export Capability',
-  promote_communicate_benefits: 'Promote: Communicate Benefits',
-  promote_change_the_game: 'Promote: Change the Game',
-  challenge: 'Challenge',
-}
 
 const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
   <SummaryTable
@@ -144,12 +124,13 @@ const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
     </SummaryTable.Row>
 
     <SummaryTable.Row heading="Segment">
-      {SEGMENTS[businessDetails.segment] || 'No segment has been added'}
+      {exportSegmentsLabels[businessDetails.export_segment] ||
+        'No export segment or not known'}
     </SummaryTable.Row>
 
     <SummaryTable.Row heading="Sub-segment">
-      {SUB_SEGMENTS[businessDetails.sub_segment] ||
-        'No sub-segment has been added'}
+      {exportSubSegmentsLabels[businessDetails.export_sub_segment] ||
+        'No sub export segment or not known'}
     </SummaryTable.Row>
   </SummaryTable>
 )
