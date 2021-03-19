@@ -12,7 +12,7 @@ const StyledDiv = styled('div')`
 `
 
 const DashboardTabs = ({ id, adviser }) => (
-  <StyledDiv data-cy="dashboard-tabs">
+  <StyledDiv data-test="dashboard-tabs">
     <TabNav
       id={`${id}.TabNav`}
       label="Dashboard"

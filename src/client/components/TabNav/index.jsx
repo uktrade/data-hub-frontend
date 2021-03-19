@@ -192,7 +192,7 @@ const TabNav = ({
                 const Button = selected ? StyledSelectedButton : StyledButton
                 const tabId = createId(id, key, routed)
                 return (
-                  <StyledSpan key={tabId}>
+                  <StyledSpan key={tabId} data-test="tab-item">
                     <Button
                       role="tab"
                       focused={index === focusIndex}

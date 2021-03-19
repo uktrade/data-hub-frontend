@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
-import { BLACK, BUTTON_COLOUR, GREY_3, RED, YELLOW } from 'govuk-colours'
+import { BLACK, BUTTON_COLOUR, GREY_2, RED, YELLOW } from 'govuk-colours'
 import { format } from 'date-fns'
 
 import { DATE_DAY_LONG_FORMAT } from '../../../common/constants'
@@ -28,7 +28,7 @@ const RedPanel = styled(StyledPanel)`
   background-color: ${rgba(RED, 0.4)};
 `
 const GreyPanel = styled(StyledPanel)`
-  background-color: ${rgba(GREY_3, 0.5)};
+  background-color: ${rgba(GREY_2, 0.5)};
 `
 
 const StyledTitle = styled('h2')`
@@ -55,10 +55,14 @@ const InvestmentEstimatedLandDate = ({ estimatedLandDate }) => {
       : GreyPanel
 
   return (
-    <Panel>
-      <StyledBody>Estimated land date</StyledBody>
-      <StyledTitle>{getDifferenceInDaysLabel(estimatedLandDate)}</StyledTitle>
-      <StyledBody>
+    <Panel data-test="estimated-land-date">
+      <StyledBody data-test="estimated-land-date-label">
+        Estimated land date
+      </StyledBody>
+      <StyledTitle data-test="estimated-land-date-countdown">
+        {getDifferenceInDaysLabel(estimatedLandDate)}
+      </StyledTitle>
+      <StyledBody data-test="estimated-land-date-date">
         {format(new Date(estimatedLandDate), DATE_DAY_LONG_FORMAT)}
       </StyledBody>
     </Panel>
