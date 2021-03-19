@@ -26,12 +26,18 @@ import {
 import {
   MY_INVESTMENTS__LIST_LOADED,
   OUTSTANDING_PROPOSITIONS__LOADED,
+  INVESTMENT_SUMMARY_DATA_RANGES__LOADED,
 } from '../../actions'
 
 import {
   ID as OUTSTANDING_PROPOSITIONS_ID,
   TASK_GET_OUTSTANDING_PROPOSITIONS,
 } from './state'
+
+import {
+  ID as INVESTMENT_PROJECT_SUMMARY_DATA_RANGES,
+  TASK_GET_INVESTMENT_SUMMARY_DATA_RANGES,
+} from '../InvestmentProjectSummary/state'
 
 import {
   ID as MY_INVESTMENT_PROJECTS_ID,
@@ -45,6 +51,9 @@ const state2props = (state) => {
     },
     outstandingPropositions: {
       ...state[OUTSTANDING_PROPOSITIONS_ID],
+    },
+    investmentSummaryDataRanges: {
+      ...state[INVESTMENT_PROJECT_SUMMARY_DATA_RANGES],
     },
   }
 }
@@ -71,6 +80,7 @@ const PersonalisedDashboard = ({
   csrfToken,
   investmentProjects,
   outstandingPropositions,
+  investmentSummaryDataRanges,
 }) => {
   const { page, filter, sort } = investmentProjects
   const myInvestmentProjectTaskProps = {
@@ -137,7 +147,21 @@ const PersonalisedDashboard = ({
                 variant={VARIANTS.PRIMARY}
                 data-test="investment-project-summary-section"
               >
-                <InvestmentProjectSummary adviser={adviser} />
+                <Task.Status
+                  name={TASK_GET_INVESTMENT_SUMMARY_DATA_RANGES}
+                  id={INVESTMENT_PROJECT_SUMMARY_DATA_RANGES}
+                  progressMessage="Loading your investment projects"
+                  startOnRender={{
+                    payload: { adviser },
+                    onSuccessDispatch: INVESTMENT_SUMMARY_DATA_RANGES__LOADED,
+                  }}
+                >
+                  {() => (
+                    <InvestmentProjectSummary
+                      {...investmentSummaryDataRanges}
+                    />
+                  )}
+                </Task.Status>
               </ToggleSection>
             </Aside>
           </GridCol>

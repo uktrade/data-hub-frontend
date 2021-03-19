@@ -1,10 +1,14 @@
 import { INVESTMENT_SUMMARY_DATA_RANGES__LOADED } from '../../actions'
 
-export default (state = {}, { type, result }) => {
+const initialState = {
+  results: [],
+}
+
+export default (state = initialState, { type, result }) => {
   switch (type) {
     case INVESTMENT_SUMMARY_DATA_RANGES__LOADED:
       return {
-        investmentSummaryDataRanges: result,
+        results: result,
       }
     default:
       return state
