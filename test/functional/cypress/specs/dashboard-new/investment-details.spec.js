@@ -9,6 +9,8 @@ describe('Dashboard - Investment details', () => {
     cy.visit('/')
     cy.get('[data-test="tablist"] span:first-child button').click()
     cy.get('[data-test="investment-details"]').as('allDetails')
+    cy.get('[data-test="investment-details"]').eq(1).as('secondProjectDetails')
+    cy.get('[data-test="investment-details"]').eq(2).as('thirdProjectDetails')
     cy.get('[data-test="investment-details"]')
       .eq(0)
       .find('h3')
@@ -64,5 +66,20 @@ describe('Dashboard - Investment details', () => {
         interactions.detail('3fd90013-4bcb-4c39-b8df-df264471ea85')
       )
       .should('have.text', 'A project interaction')
+  })
+
+  context("when a project doesn't have a country of origin", () => {
+    it('should not contain a country of origin', () => {
+      cy.get('@secondProjectDetails').should('not.contain', 'Country of origin')
+    })
+  })
+  context("when a project doesn't have an interaction", () => {
+    it('should not contain an interaction', () => {
+      cy.get('@thirdProjectDetails').should('not.contain', 'Last interaction')
+      cy.get('@thirdProjectDetails').should(
+        'not.contain',
+        'Interaction subject'
+      )
+    })
   })
 })
