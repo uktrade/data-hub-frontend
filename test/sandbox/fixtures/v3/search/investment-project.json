@@ -222,10 +222,7 @@
         }
       },
       "country_lost_to": null,
-      "country_investment_originates_from": {
-        "name": "Spain",
-        "id": "82756b9a-5d95-e211-a939-e4115bead28a"
-      },
+      "country_investment_originates_from": null,
       "created_by": null,
       "delivery_partners": [],
       "fdi_type": {
@@ -321,7 +318,7 @@
         "date": "2021-03-16T00:00:00+00:00",
         "subject": "A project interaction",
         "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
-    },
+      },
       "name": "Fancy dress manufacturing",
       "modified_on": "2017-06-05T10:00:00+00:00",
       "address_town": null,
@@ -493,11 +490,7 @@
       "comments": "",
       "level_of_involvement_simplified": "unspecified",
       "date_lost": null,
-      "latest_interaction": {
-        "date": "2021-03-16T00:00:00+00:00",
-        "subject": "A project interaction",
-        "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
-    },
+      "latest_interaction": null,
       "name": "New rollercoaster",
       "modified_on": "2017-08-05T10:00:00+00:00",
       "address_town": null,
@@ -694,7 +687,7 @@
         "date": "2021-03-16T00:00:00+00:00",
         "subject": "A project interaction",
         "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
-    },
+      },
       "name": "New restaurant",
       "modified_on": "2017-06-15T15:30:00+00:00",
       "address_town": null,
@@ -873,7 +866,7 @@
         "date": "2021-03-16T00:00:00+00:00",
         "subject": "A project interaction",
         "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
-    },
+      },
       "name": "Wig factory",
       "modified_on": "2017-05-05T10:00:00+00:00",
       "address_town": null,
@@ -1031,7 +1024,7 @@
         "date": "2021-03-16T00:00:00+00:00",
         "subject": "A project interaction",
         "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
-    },
+      },
       "name": "New hotel (FDI)",
       "modified_on": "2017-06-05T10:00:00+00:00",
       "address_town": null,
@@ -1207,7 +1200,7 @@
         "date": "2021-03-16T00:00:00+00:00",
         "subject": "A project interaction",
         "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
-    },
+      },
       "name": "Green tea plantation",
       "modified_on": "2017-11-08T10:00:00+00:00",
       "address_town": null,
@@ -1354,7 +1347,7 @@
         "date": "2021-03-16T00:00:00+00:00",
         "subject": "A project interaction",
         "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
-    },
+      },
       "name": "New hotel (Non-FDI)",
       "modified_on": "2017-07-05T10:00:00+00:00",
       "address_town": null,
@@ -1547,7 +1540,7 @@
         "date": "2021-03-16T00:00:00+00:00",
         "subject": "A project interaction",
         "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
-    },
+      },
       "name": "New fruit machine",
       "modified_on": "2017-03-05T15:00:00+00:00",
       "address_town": "London",
@@ -1697,7 +1690,7 @@
         "date": "2021-03-16T00:00:00+00:00",
         "subject": "A project interaction",
         "id": "3fd90013-4bcb-4c39-b8df-df264471ea85"
-    },
+      },
       "name": "New hotel (commitment to invest)",
       "modified_on": "2017-06-07T10:00:00+00:00",
       "address_town": null,
