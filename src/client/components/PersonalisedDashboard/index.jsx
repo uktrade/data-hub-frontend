@@ -8,10 +8,9 @@ import { BLUE } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
 import { VARIANTS } from '../../../common/constants'
+import { ID as INVESTMENT_REMINDERS_ID } from '../InvestmentReminders/state'
 
-import { OUTSTANDING_PROPOSITIONS__LOADED } from '../../actions'
 import NotificationBadge from '../NotificationBadge'
-import Task from '../Task'
 import ToggleSection from '../ToggleSection'
 
 import Aside from './Aside'
@@ -25,8 +24,6 @@ import {
   DashboardTabs,
   Container,
 } from '../../components'
-
-import { ID, TASK_GET_OUTSTANDING_PROPOSITIONS, state2props } from './state'
 
 const SearchBackground = styled('div')`
   background-color: ${BLUE};
@@ -44,12 +41,14 @@ const SearchContainer = styled(Container)`
   }
 `
 
-const PersonalisedDashboard = ({
-  id,
-  adviser,
-  outstandingPropositions,
-  csrfToken,
-}) => (
+const state2props = (state) => {
+  const { count } = state[INVESTMENT_REMINDERS_ID]
+  return {
+    remindersCount: count,
+  }
+}
+
+const PersonalisedDashboard = ({ id, adviser, csrfToken, remindersCount }) => (
   <ThemeProvider theme={blueTheme}>
     <SearchBackground data-test="search-data-hub">
       <SearchContainer width="960">
@@ -64,10 +63,8 @@ const PersonalisedDashboard = ({
               label="Reminders"
               id="investment-reminders-section"
               badge={
-                !!outstandingPropositions.count && (
-                  <NotificationBadge
-                    label={`${outstandingPropositions.count}`}
-                  />
+                !!remindersCount && (
+                  <NotificationBadge label={`${remindersCount}`} />
                 )
               }
               major={true}
@@ -75,21 +72,7 @@ const PersonalisedDashboard = ({
               variant={VARIANTS.PRIMARY}
               data-test="investment-reminders-section"
             >
-              <Task.Status
-                name={TASK_GET_OUTSTANDING_PROPOSITIONS}
-                id={ID}
-                progressMessage="Loading your reminders"
-                startOnRender={{
-                  payload: { adviser },
-                  onSuccessDispatch: OUTSTANDING_PROPOSITIONS__LOADED,
-                }}
-              >
-                {() => (
-                  <InvestmentReminders
-                    outstandingPropositions={outstandingPropositions}
-                  />
-                )}
-              </Task.Status>
+              <InvestmentReminders adviser={adviser} />
             </ToggleSection>
 
             <ToggleSection
@@ -116,27 +99,8 @@ const PersonalisedDashboard = ({
 PersonalisedDashboard.propTypes = {
   id: PropTypes.string.isRequired,
   adviser: PropTypes.object.isRequired,
-  outstandingPropositions: PropTypes.shape({
-    count: PropTypes.number.isRequired,
-    results: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        investment_project: PropTypes.shape({
-          id: PropTypes.string.is_required,
-          name: PropTypes.string.isRequired,
-          project_code: PropTypes.string.isRequired,
-        }),
-        deadline: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        adviser: PropTypes.shape({
-          id: PropTypes.string.isRequired,
-          name: PropTypes.string.isRequired,
-          first_name: PropTypes.string.isRequired,
-          last_name: PropTypes.string.isRequired,
-        }),
-      })
-    ).isRequired,
-  }),
+  csrfToken: PropTypes.string.isRequired,
+  remindersCount: PropTypes.number.isRequired,
 }
 
 export default connect(state2props)(PersonalisedDashboard)
