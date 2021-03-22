@@ -8,7 +8,7 @@ import { companies, interactions } from '../../../lib/urls'
 
 const StyledDiv = styled('div')`
   background-color: ${GREY_3};
-  padding: ${SPACING.SCALE_3} ${SPACING.SCALE_2};
+  padding: 9px ${SPACING.SCALE_2} 8px ${SPACING.SCALE_2};
 `
 
 const StyledHeader = styled('h3')`
