@@ -187,7 +187,7 @@
     "babel-plugin-istanbul": "6.0.0",
     "browser-sync": "^2.26.14",
     "browserstack-local": "^1.4.8",
-    "chai": "^4.3.0",
+    "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
     "chai-subset": "^1.6.0",
     "chromedriver": "^89.0.0",
