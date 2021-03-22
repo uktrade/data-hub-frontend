@@ -11,12 +11,28 @@ import { Tag } from '../../components'
 import { companies, investments } from '../../../lib/urls'
 import InvestmentEstimatedLandDate from './InvestmentEstimatedLandDate'
 import InvestmentTimeline from './InvestmentTimeline'
+import InvestmentDetails from './InvestmentDetails'
 
 const ListItem = styled('li')`
   padding: ${SPACING.SCALE_3} 0;
   border-bottom: 2px solid ${GREY_1};
   &:last-child {
     border-bottom: none;
+  }
+`
+
+const Row = styled('div')`
+  margin-bottom: ${SPACING.SCALE_3};
+  ${MEDIA_QUERIES.LARGESCREEN} {
+    display: flex;
+    justify-content: space-between;
+  }
+`
+const Col = styled('div')`
+  margin-bottom: ${SPACING.SCALE_3};
+  ${MEDIA_QUERIES.LARGESCREEN} {
+    width: calc(50% - ${SPACING.SCALE_3});
+    margin-bottom: 0;
   }
 `
 
@@ -74,11 +90,6 @@ const StyledDetails = styled(Details)`
   }
 `
 
-const TimelineRow = styled('div')`
-  display: flex;
-  width: 100%;
-`
-
 const StyledInvestmentTimeline = styled(InvestmentTimeline)`
   display: none;
   width: 80%;
@@ -99,6 +110,9 @@ const InvestmentListItem = ({
   showDetails,
   investor_company,
   project_code,
+  sector,
+  country_investment_originates_from,
+  latest_interaction,
 }) => {
   return (
     <ListItem data-test="projects-list-item">
@@ -131,12 +145,22 @@ const InvestmentListItem = ({
         open={showDetails}
         data-test="project-details"
       >
-        <TimelineRow>
+        <Row>
           <StyledInvestmentTimeline stage={stage} />
           <StyledInvestmentEstimatedLandDate
             estimatedLandDate={estimated_land_date}
           />
-        </TimelineRow>
+        </Row>
+        <Row>
+          <Col>
+            <InvestmentDetails
+              investor={investor_company}
+              sector={sector}
+              countryOrigin={country_investment_originates_from}
+              latestInteraction={latest_interaction}
+            />
+          </Col>
+        </Row>
       </StyledDetails>
     </ListItem>
   )
