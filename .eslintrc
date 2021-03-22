@@ -3,7 +3,7 @@
   "extends": [
     "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended",
-    "prettier/react"
+    "prettier"
   ],
   "env": {
     "browser": true,
