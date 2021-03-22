@@ -23,9 +23,15 @@ const ListItem = styled('li')`
 
 const Row = styled('div')`
   margin-bottom: ${SPACING.SCALE_3};
+
   ${MEDIA_QUERIES.LARGESCREEN} {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  ${MEDIA_QUERIES.DESKTOP} {
+    flex-wrap: nowrap;
   }
 `
 const Col = styled('div')`
@@ -55,6 +61,7 @@ const ListItemHeaderTagContainer = styled('div')`
 const ListItemHeaderActionContainer = styled('div')`
   flex: 0 1 170px;
   box-sizing: border-box;
+  white-space: nowrap;
 
   a {
     width: 100%;
@@ -90,23 +97,30 @@ const StyledDetails = styled(Details)`
     height: 30px;
     clip-path: none;
     background: url(${icon}) 0 0 no-repeat;
-    transform: rotate(0);
   }
 `
 
 const StyledInvestmentTimeline = styled(InvestmentTimeline)`
   display: none;
-  flex: 1 0;
   box-sizing: border-box;
 
-  ${MEDIA_QUERIES.TABLET} {
-    display: block;
+  ${MEDIA_QUERIES.LARGESCREEN} {
+    display: flex;
+    flex: 1 0 100%;
+  }
+
+  ${MEDIA_QUERIES.DESKTOP} {
+    flex: 1 0 330px;
   }
 `
 
 const StyledInvestmentEstimatedLandDate = styled(InvestmentEstimatedLandDate)`
-  flex: 0 1 170px;
+  flex: 1 1 100%;
   box-sizing: border-box;
+
+  ${MEDIA_QUERIES.DESKTOP} {
+    flex: 0 1 170px;
+  }
 `
 
 const InvestmentListItem = ({

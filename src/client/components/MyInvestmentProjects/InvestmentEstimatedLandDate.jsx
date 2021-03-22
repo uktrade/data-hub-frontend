@@ -32,8 +32,7 @@ const GreyPanel = styled(StyledPanel)`
 `
 
 const StyledTitle = styled('h2')`
-  margin-top: ${SPACING.SCALE_4};
-  margin-bottom: ${SPACING.SCALE_4};
+  margin: ${SPACING.SCALE_1} 0;
   text-align: center;
   font-size: ${FONT_SIZE.SIZE_24};
   font-weight: ${FONT_WEIGHTS.bold};
