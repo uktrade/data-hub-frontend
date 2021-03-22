@@ -43,7 +43,7 @@ const StyledBody = styled('div')`
   font-size: ${FONT_SIZE.SIZE_14};
 `
 
-const InvestmentEstimatedLandDate = ({ estimatedLandDate }) => {
+const InvestmentEstimatedLandDate = ({ estimatedLandDate, ...props }) => {
   const difference = getDifferenceInDays(estimatedLandDate)
   const Panel =
     difference >= 90
@@ -55,7 +55,7 @@ const InvestmentEstimatedLandDate = ({ estimatedLandDate }) => {
       : GreyPanel
 
   return (
-    <Panel data-test="estimated-land-date">
+    <Panel data-test="estimated-land-date" {...props}>
       <StyledBody data-test="estimated-land-date-label">
         Estimated land date
       </StyledBody>

@@ -53,7 +53,11 @@ const ListItemHeaderTagContainer = styled('div')`
 `
 
 const ListItemHeaderActionContainer = styled('div')`
+  flex: 0 1 170px;
+  box-sizing: border-box;
+
   a {
+    width: 100%;
     margin-bottom: 0;
   }
 `
@@ -92,14 +96,17 @@ const StyledDetails = styled(Details)`
 
 const StyledInvestmentTimeline = styled(InvestmentTimeline)`
   display: none;
-  width: 80%;
+  flex: 1 0;
+  box-sizing: border-box;
+
   ${MEDIA_QUERIES.TABLET} {
     display: block;
   }
 `
 
 const StyledInvestmentEstimatedLandDate = styled(InvestmentEstimatedLandDate)`
-  width: 20%;
+  flex: 0 1 170px;
+  box-sizing: border-box;
 `
 
 const InvestmentListItem = ({
