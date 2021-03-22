@@ -1,6 +1,6 @@
-const { transformCompanyToBusinessDetails } = require('../transformers');
+const { transformCompanyToBusinessDetails } = require('../transformers')
 
-const companyMock = require('../../../../../../test/unit/data/companies/company-v4');
+const companyMock = require('../../../../../../test/unit/data/companies/company-v4')
 
 describe('Company business details transformers', () => {
   describe('#transformCompanyToBusinessDetails', () => {
