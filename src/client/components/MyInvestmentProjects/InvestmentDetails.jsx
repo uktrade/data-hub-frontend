@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import { GREY_3 } from 'govuk-colours'
-import { format, parseISO } from 'date-fns'
 import { SPACING, FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 
 import { companies, interactions } from '../../../lib/urls'
+import { format } from '../../utils/date-utils'
 
 const StyledDiv = styled('div')`
   background-color: ${GREY_3};
@@ -52,7 +52,7 @@ const InvestmentDetails = ({
         <>
           <li>
             <StyledSpan>Last interaction: </StyledSpan>
-            {format(new Date(parseISO(latestInteraction.date)), 'd MMM yyyy')}
+            {format(latestInteraction.date)}
           </li>
           <li>
             <StyledSpan>Interaction subject: </StyledSpan>
