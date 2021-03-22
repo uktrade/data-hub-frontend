@@ -6,9 +6,12 @@ import { MEDIA_QUERIES, SPACING, FONT_SIZE } from '@govuk-react/constants'
 
 const TimelineContainer = styled('div')`
   background-color: ${GREY_3};
-  padding: ${SPACING.SCALE_3};
+  padding: ${SPACING.SCALE_2};
   ${MEDIA_QUERIES.LARGESCREEN} {
-    padding: ${SPACING.SCALE_5};
+    padding: ${SPACING.SCALE_5} ${SPACING.SCALE_3};
+  }
+  ${MEDIA_QUERIES.DESKTOP} {
+    padding: ${SPACING.SCALE_5} ${SPACING.SCALE_4};
   }
 `
 
