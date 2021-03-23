@@ -13,9 +13,12 @@ import {
 import { rgba } from '../../utils/colors'
 
 const StyledPanel = styled('div')`
-  padding: ${SPACING.SCALE_4};
+  padding: ${SPACING.SCALE_2};
   color: ${BLACK};
   background-color: ${YELLOW};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
 
 const GreenPanel = styled(StyledPanel)`
@@ -32,7 +35,7 @@ const GreyPanel = styled(StyledPanel)`
 `
 
 const StyledTitle = styled('h2')`
-  margin: ${SPACING.SCALE_1} 0;
+  margin: 0;
   text-align: center;
   font-size: ${FONT_SIZE.SIZE_24};
   font-weight: ${FONT_WEIGHTS.bold};

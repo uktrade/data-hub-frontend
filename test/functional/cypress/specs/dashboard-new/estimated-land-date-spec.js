@@ -15,7 +15,7 @@ const assertEstimatedLandDate = ({ index, date, countdown, colour }) => {
 
   cy.get('@estimatedLandDate')
     .find('[data-test="estimated-land-date-date"]')
-    .should('have.text', format(date, 'E dd MMMM yyyy'))
+    .should('have.text', format(date, 'E, dd MMM yyyy'))
 }
 
 describe('Dashboard items - estimated land date', () => {

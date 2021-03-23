@@ -8,10 +8,7 @@ const TimelineContainer = styled('div')`
   background-color: ${GREY_3};
   padding: ${SPACING.SCALE_2};
   ${MEDIA_QUERIES.LARGESCREEN} {
-    padding: ${SPACING.SCALE_5} ${SPACING.SCALE_3};
-  }
-  ${MEDIA_QUERIES.DESKTOP} {
-    padding: ${SPACING.SCALE_5} ${SPACING.SCALE_4};
+    padding: ${SPACING.SCALE_5};
   }
 `
 
@@ -19,9 +16,9 @@ const StyledOl = styled('ol')`
   font-size: ${FONT_SIZE.SIZE_14};
   list-style-type: none;
   box-sizing: border-box;
-  padding: 0 0 0 ${SPACING.SCALE_4};
+  padding: 0 0 0 ${SPACING.SCALE_3};
   ${MEDIA_QUERIES.LARGESCREEN} {
-    padding: 0 ${SPACING.SCALE_4};
+    padding: 0 ${SPACING.SCALE_3};
     margin: 0;
     display: table;
     width: 100%;
@@ -45,7 +42,7 @@ const StyledLi = styled('li')`
     background-color: ${({ isStageComplete }) =>
       isStageComplete ? BLUE : WHITE};
     position: absolute;
-    left: -13px;
+    left: -12px;
   }
   span {
     display: block;

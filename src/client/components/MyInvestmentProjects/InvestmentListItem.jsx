@@ -4,7 +4,12 @@ import { Details } from 'govuk-react'
 import Button from '@govuk-react/button'
 import { BLUE, GREY_1 } from 'govuk-colours'
 import styled from 'styled-components'
-import { MEDIA_QUERIES, SPACING, FONT_SIZE } from '@govuk-react/constants'
+import {
+  MEDIA_QUERIES,
+  SPACING,
+  FONT_SIZE,
+  FONT_WEIGHTS,
+} from '@govuk-react/constants'
 
 import icon from './assets/search-gov.uk.svg'
 import { Tag } from '../../components'
@@ -51,6 +56,7 @@ const ListItemHeaderContainer = styled('div')`
 const ListItemHeader = styled('h2')`
   flex-grow: 1;
   font-size: ${FONT_SIZE.SIZE_19};
+  font-weight: ${FONT_WEIGHTS.bold};
   margin: 0;
 `
 
@@ -59,7 +65,7 @@ const ListItemHeaderTagContainer = styled('div')`
 `
 
 const ListItemHeaderActionContainer = styled('div')`
-  flex: 0 1 170px;
+  flex: 0 1 152px;
   box-sizing: border-box;
   white-space: nowrap;
 
@@ -110,16 +116,17 @@ const StyledInvestmentTimeline = styled(InvestmentTimeline)`
   }
 
   ${MEDIA_QUERIES.DESKTOP} {
-    flex: 1 0 330px;
+    flex: 1 0 348px;
   }
 `
 
 const StyledInvestmentEstimatedLandDate = styled(InvestmentEstimatedLandDate)`
   flex: 1 1 100%;
   box-sizing: border-box;
+  min-height: 93px;
 
   ${MEDIA_QUERIES.DESKTOP} {
-    flex: 0 1 170px;
+    flex: 0 1 152px;
   }
 `
 
