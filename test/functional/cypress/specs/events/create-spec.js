@@ -60,4 +60,18 @@ describe('Event create', () => {
       .eq(1)
       .should('contain', 'Australia')
   })
+
+  it('should contain help information relating to trade agreements', () => {
+    cy.get('[data-test="trade-agreement-text"]').should(
+      'have.text',
+      'If your Event is set up to focus on a Trade Agreement or contributes to implementing a Trade Agreement then select that the event relates to a Trade Agreement and the relevant Agreement(s)'
+    )
+    cy.get('[data-test="trade-agreement-link"]')
+      .should(
+        'have.attr',
+        'href',
+        'https://data-services-help.trade.gov.uk/data-hub/how-articles/recording-trade-agreement-activity/recording-trade-agreement-activity/'
+      )
+      .should('have.attr', 'aria-label', 'opens in a new tab')
+  })
 })
