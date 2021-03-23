@@ -10,12 +10,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
   && echo "Timezone: $(date +%z)"
 
 WORKDIR /usr/src/app
-WORKDIR /usr/src/app
 
 # Install dev packages
 COPY package.json .
 COPY package-lock.json .
-RUN npx npm-force-resolutions
 RUN npm install
 
 COPY . .
