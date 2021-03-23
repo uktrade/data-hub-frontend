@@ -9,6 +9,7 @@ import {
   FieldWrapper,
 } from '../../../../../client/components'
 import { WEBSITE_REGEX } from '../../add-company/client/constants'
+import { export_segments, export_sub_segments } from './constants'
 
 const websiteValidator = (value) =>
   value && !WEBSITE_REGEX.test(value) ? 'Enter a valid website URL' : null
@@ -36,6 +37,20 @@ const CommonFields = ({ company, regions }) => (
       label="Business description (optional)"
       name="description"
       type="text"
+    />
+
+    <FieldSelect
+      name="export_segment"
+      label="Export Segment (optional)"
+      emptyOption="No export segment or not known"
+      options={export_segments}
+    />
+
+    <FieldSelect
+      name="export_sub_segment"
+      label="Export Sub-segment (optional)"
+      emptyOption="No sub export segment or not known"
+      options={export_sub_segments}
     />
 
     <FieldAddress

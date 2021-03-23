@@ -18,6 +18,8 @@ const UNMATCHED_COMPANY_EDITABLE_FIELDS = [
   'sector',
   'headquarter_type',
   'address',
+  'export_segment',
+  'export_sub_segment',
 ]
 
 const MATCHED_COMPANY_EDITABLE_FIELDS = [
@@ -25,6 +27,8 @@ const MATCHED_COMPANY_EDITABLE_FIELDS = [
   'uk_region',
   'sector',
   'website',
+  'export_segment',
+  'export_sub_segment',
 ]
 
 const MATCHED_COMPANY_VERIFIABLE_FIELDS = [

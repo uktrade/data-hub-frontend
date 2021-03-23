@@ -61,8 +61,8 @@ describe('Company business details transformers', () => {
             'London',
           ],
           headquarter_type_label: 'Global HQ',
-          segment: 'HEP',
-          sub_segment: 'Sustain: Nurture & Grow',
+          export_segment: 'hep',
+          export_sub_segment: 'sustain_nurture_and_grow',
         }
 
         expect(actual).to.deep.equal(expected)
