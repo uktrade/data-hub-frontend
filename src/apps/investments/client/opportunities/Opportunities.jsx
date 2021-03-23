@@ -60,7 +60,7 @@ const incompleteRowsCount = (rows) => {
   return rows.filter(({ value }) => value === 'Incomplete').length
 }
 
-const renderRequiredFields = (fieldCount) => {
+const RequiredFields = ({ fieldCount }) => {
   if (fieldCount == 0) {
     return <StyledLabel color={GREEN}>Completed</StyledLabel>
   }
@@ -78,7 +78,7 @@ const Opportunities = () => (
           label: 'Details',
           content: (
             <>
-              {renderRequiredFields(incompleteRowsCount(detailsRows))}
+              <RequiredFields fieldCount={incompleteRowsCount(detailsRows)} />
               <ToggleSection
                 variant={VARIANTS.SECONDARY}
                 label="Opportunity details"
@@ -98,7 +98,9 @@ const Opportunities = () => (
                   ))}
                 </SummaryTable>
               </ToggleSection>
-              {renderRequiredFields(incompleteRowsCount(requirementsRows))}
+              <RequiredFields
+                fieldCount={incompleteRowsCount(requirementsRows)}
+              />
               <ToggleSection
                 variant={VARIANTS.SECONDARY}
                 label="Opportunity requirements"
