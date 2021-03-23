@@ -7,6 +7,7 @@ import { get, isEmpty } from 'lodash'
 import { SPACING_POINTS, LINE_HEIGHT } from '@govuk-react/constants'
 import { currencyGBP } from '../../../../../client/utils/number-utils'
 import { NewWindowLink, SummaryTable } from '../../../../../client/components/'
+import { exportSegmentsLabels, exportSubSegmentsLabels } from '../../../labels'
 
 const TableDetails = styled('div')`
   display: flex;
@@ -123,11 +124,13 @@ const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
     </SummaryTable.Row>
 
     <SummaryTable.Row heading="Segment">
-      {businessDetails.segment || 'No segment has been added'}
+      {exportSegmentsLabels[businessDetails.export_segment] ||
+        'No export segment or not known'}
     </SummaryTable.Row>
 
     <SummaryTable.Row heading="Sub-segment">
-      {businessDetails.sub_segment || 'No sub-segment has been added'}
+      {exportSubSegmentsLabels[businessDetails.export_sub_segment] ||
+        'No sub export segment or not known'}
     </SummaryTable.Row>
   </SummaryTable>
 )
