@@ -139,6 +139,47 @@ const globalFields = {
       return metadata.programmeOptions.map(transformObjectToOption)
     },
   },
+
+  tradeAgreements: {
+    macroName: 'MultipleChoiceField',
+    name: 'related_trade_agreements',
+    label: 'Related Trade Agreements',
+    initialOption: '-- Select related trade agreement --',
+    options: [
+      {
+        label: 'No Related Trade Agreement',
+        value: '',
+      },
+      {
+        label: 'Australia',
+        value: '50370070-71f9-4ada-ae2c-cd0a737ba5e2',
+      },
+      {
+        label: 'Canada',
+        value: '50cf99fd-1150-421d-9e1c-b23750ebf5ca',
+      },
+      {
+        label: 'India',
+        value: '95ca9dcb-0da5-4bc2-a139-3e5b55c882f7',
+      },
+      {
+        label: 'Japan',
+        value: '05587f64-b976-425e-8763-3557c7936632',
+      },
+      {
+        label: 'Mexico',
+        value: '09787712-0d94-4137-a5f3-3f9131e681f0',
+      },
+      {
+        label: 'New Zealand',
+        value: 'f42da892-2b03-4f88-8a61-9efd8b132776',
+      },
+      {
+        label: 'USA',
+        value: '20e08a38-95a8-4250-bd5b-9d7f0dfc9387',
+      },
+    ],
+  },
 }
 
 module.exports = {
