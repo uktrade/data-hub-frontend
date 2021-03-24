@@ -38,6 +38,12 @@
           "id": "d352a68f-aaf4-4c43-b39d-9bca67a8322e"
       }
   ],
+  "related_trade_agreements": [
+    {
+        "name": "UK - Japan",
+        "id": "3117da1b-a776-4b03-af7e-2487d931491c"
+    }
+  ],
   "start_date": "2021-01-01",
   "teams": [
       {

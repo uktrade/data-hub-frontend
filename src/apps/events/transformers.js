@@ -106,11 +106,13 @@ function transformEventResponseToViewRecord({
   organiser,
   teams,
   related_programmes,
+  related_trade_agreements,
   service,
   archived_documents_url_path,
 }) {
   teams = teams || []
   related_programmes = related_programmes || []
+  related_trade_agreements = related_trade_agreements || []
 
   const transformedEvent = {
     'Type of event': event_type,
@@ -153,6 +155,9 @@ function transformEventResponseToViewRecord({
     Organiser: organiser,
     'Other teams': otherTeams.map((x) => x.name),
     'Related programmes': related_programmes.map((item) => item.name),
+    'Related Trade Agreements': related_trade_agreements.map(
+      (item) => item.name
+    ),
     Service: service,
   })
 
