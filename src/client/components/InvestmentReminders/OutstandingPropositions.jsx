@@ -8,7 +8,7 @@ import { LINK_COLOUR, RED, TEXT } from 'govuk-colours'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
 import urls from '../../../lib/urls'
-import { getDifferenceInDays } from '../../utils/date-utils'
+import { getDifferenceInDaysLabel } from '../../utils/date-utils'
 
 const StyledSubHeading = styled(H3)`
   color: ${RED};
@@ -72,7 +72,7 @@ const OutstandingPropositions = ({ results, count }) => {
                 Due {format(new Date(deadline), 'd MMM yyyy')}
               </StyledDueDate>
               <StyledDueCountdown data-test="outstanding-proposition-countdown">
-                {getDifferenceInDays(deadline)}
+                {getDifferenceInDaysLabel(deadline)}
               </StyledDueCountdown>
             </StyledDeadline>
           </StyledListItem>

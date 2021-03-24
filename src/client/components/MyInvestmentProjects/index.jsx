@@ -74,6 +74,7 @@ const MyInvestmentProjects = ({
         return (
           <>
             <InvestmentList
+              data-test="my-investment-projects-list"
               items={results}
               isPaginated={totalPages > 1}
               showDetails={showDetails}

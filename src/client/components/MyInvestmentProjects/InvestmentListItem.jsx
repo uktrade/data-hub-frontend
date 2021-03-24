@@ -4,7 +4,12 @@ import { Details } from 'govuk-react'
 import Button from '@govuk-react/button'
 import { BLUE, GREY_1 } from 'govuk-colours'
 import styled from 'styled-components'
-import { MEDIA_QUERIES, SPACING, FONT_SIZE } from '@govuk-react/constants'
+import {
+  MEDIA_QUERIES,
+  SPACING,
+  FONT_SIZE,
+  FONT_WEIGHTS,
+} from '@govuk-react/constants'
 
 import icon from './assets/search-gov.uk.svg'
 import { Tag } from '../../components'
@@ -23,9 +28,15 @@ const ListItem = styled('li')`
 
 const Row = styled('div')`
   margin-bottom: ${SPACING.SCALE_3};
+
   ${MEDIA_QUERIES.LARGESCREEN} {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  ${MEDIA_QUERIES.DESKTOP} {
+    flex-wrap: nowrap;
   }
 `
 const Col = styled('div')`
@@ -45,6 +56,7 @@ const ListItemHeaderContainer = styled('div')`
 const ListItemHeader = styled('h2')`
   flex-grow: 1;
   font-size: ${FONT_SIZE.SIZE_19};
+  font-weight: ${FONT_WEIGHTS.bold};
   margin: 0;
 `
 
@@ -53,7 +65,12 @@ const ListItemHeaderTagContainer = styled('div')`
 `
 
 const ListItemHeaderActionContainer = styled('div')`
+  flex: 0 1 152px;
+  box-sizing: border-box;
+  white-space: nowrap;
+
   a {
+    width: 100%;
     margin-bottom: 0;
   }
 `
@@ -86,20 +103,31 @@ const StyledDetails = styled(Details)`
     height: 30px;
     clip-path: none;
     background: url(${icon}) 0 0 no-repeat;
-    transform: rotate(0);
   }
 `
 
 const StyledInvestmentTimeline = styled(InvestmentTimeline)`
   display: none;
-  width: 80%;
-  ${MEDIA_QUERIES.TABLET} {
-    display: block;
+  box-sizing: border-box;
+
+  ${MEDIA_QUERIES.LARGESCREEN} {
+    display: flex;
+    flex: 1 0 100%;
+  }
+
+  ${MEDIA_QUERIES.DESKTOP} {
+    flex: 1 0 348px;
   }
 `
 
 const StyledInvestmentEstimatedLandDate = styled(InvestmentEstimatedLandDate)`
-  width: 20%;
+  flex: 1 1 100%;
+  box-sizing: border-box;
+  min-height: 93px;
+
+  ${MEDIA_QUERIES.DESKTOP} {
+    flex: 0 1 152px;
+  }
 `
 
 const InvestmentListItem = ({

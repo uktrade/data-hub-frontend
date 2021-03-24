@@ -45,16 +45,19 @@ export const transformValueForAPI = ({ year, month, day = 1 }) => {
 }
 
 /**
- * Get the number of days left or days ago that an input date is as a string.
+ * Get the number of days to a given date as an integer.
  */
 export const getDifferenceInDays = (dateIn) => {
   const today = endOfToday()
-  const difference = differenceInCalendarDays(new Date(dateIn), today)
-  return difference === 1
-    ? difference + ' day'
-    : difference < 0
-    ? difference * -1 + ' days ago'
-    : difference + ' days'
+  return differenceInCalendarDays(new Date(dateIn), today)
+}
+
+/**
+ * Get the number of days left or days ago that an input date is as a string.
+ */
+export const getDifferenceInDaysLabel = (dateIn) => {
+  const difference = getDifferenceInDays(dateIn)
+  return Math.abs(difference) === 1 ? difference + ' day' : difference + ' days'
 }
 
 export const getFinancialYearStart = (date) =>

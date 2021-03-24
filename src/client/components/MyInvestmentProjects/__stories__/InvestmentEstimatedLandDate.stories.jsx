@@ -9,6 +9,7 @@ import { addDays, subDays, endOfToday } from 'date-fns'
 const today = endOfToday()
 const futureDate = addDays(today, 100)
 const tomorrow = addDays(today, 1)
+const twoMonthsAhead = addDays(today, 60)
 const pastDate = subDays(today, 10)
 
 storiesOf('InvestmentEstimatedLandDate', module)
@@ -27,6 +28,9 @@ storiesOf('InvestmentEstimatedLandDate', module)
   ))
   .add('estimatedLandDate is tomorrow', () => (
     <InvestmentEstimatedLandDate estimatedLandDate={tomorrow} />
+  ))
+  .add('estimatedLandDate is two months ahead', () => (
+    <InvestmentEstimatedLandDate estimatedLandDate={twoMonthsAhead} />
   ))
   .add('estimatedLandDate is in the past', () => (
     <InvestmentEstimatedLandDate estimatedLandDate={pastDate} />
