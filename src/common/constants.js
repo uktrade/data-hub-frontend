@@ -5,7 +5,7 @@ const EXCHANGE_RATE_GBP_TO_USD = parseFloat(
 )
 
 const DATE_LONG_FORMAT = 'd MMMM yyyy'
-const DATE_DAY_LONG_FORMAT = 'E dd MMMM yyyy'
+const DATE_DAY_LONG_FORMAT = 'E, dd MMM yyyy'
 const DATE_MEDIUM_FORMAT = 'd mmm yyyy'
 const DATE_TIME_MEDIUM_FORMAT = 'd MMM yyyy, h:mmaaa'
 
