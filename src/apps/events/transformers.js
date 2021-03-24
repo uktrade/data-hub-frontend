@@ -187,6 +187,9 @@ function transformEventResponseToFormBody(props = {}) {
 function transformEventFormBodyToApiRequest(props) {
   const teamsArray = castCompactArray(props.teams)
   const related_programmes = castCompactArray(props.related_programmes)
+  const related_trade_agreements = props.related_trade_agreements
+    ? castCompactArray(props.related_trade_agreements)
+    : null
   const teams = props.lead_team
     ? teamsArray.concat(props.lead_team)
     : teamsArray
@@ -198,6 +201,7 @@ function transformEventFormBodyToApiRequest(props) {
     teams: uniq(teams),
     organiser: organiser,
     related_programmes,
+    related_trade_agreements,
   })
 }
 
