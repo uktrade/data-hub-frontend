@@ -22,6 +22,23 @@ const eventFormConfig = ({
     },
     children: [
       {
+        macroName: 'MultipleChoiceField',
+        type: 'radio',
+        name: 'related_trade_agreements_exist',
+        label: 'Are there related Trade Agreements',
+        modifier: 'inline',
+        options: [
+          {
+            label: 'Yes',
+            value: 'true',
+          },
+          {
+            label: 'No',
+            value: 'false',
+          },
+        ],
+      },
+      {
         macroName: 'AddAnother',
         buttonName: 'add_related_trade_agreement',
         name: 'related_trade_agreements',
@@ -34,7 +51,7 @@ const eventFormConfig = ({
             options: [
               {
                 label: 'No Related Trade Agreement',
-                value: '',
+                value: '0b371c90-e48a-40ea-a536-0968fb181f6c',
               },
               {
                 label: 'Australia',
@@ -67,6 +84,11 @@ const eventFormConfig = ({
             ],
           }),
         ],
+        modifier: 'subfield',
+        condition: {
+          name: 'related_trade_agreements_exist',
+          value: 'true',
+        },
       },
       {
         macroName: 'TextField',
@@ -154,6 +176,7 @@ const eventFormConfig = ({
         classes: 'c-form-group c-form-group--no-filter',
         placeholder: 'Search organiser',
         multipleSelect: false,
+        optional: true,
         options: advisers,
         target: 'metadata',
       },
