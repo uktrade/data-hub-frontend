@@ -148,7 +148,7 @@ const globalFields = {
     options: [
       {
         label: 'No Related Trade Agreement',
-        value: '',
+        value: '0b371c90-e48a-40ea-a536-0968fb181f6c',
       },
       {
         label: 'Australia',

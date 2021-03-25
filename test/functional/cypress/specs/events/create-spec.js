@@ -44,4 +44,20 @@ describe('Event create', () => {
       .eq(1)
       .should('contain', 'Services')
   })
+
+  it('should allow a user to add multiple related trade agreements', () => {
+    cy.get(selectors.eventCreate.tradeAgreementExistsYes).click()
+    cy.get(selectors.eventCreate.relatedTradeAgreements).eq(0).select('Japan')
+    cy.get(selectors.eventCreate.addAnotherTradeAgreement).click()
+    cy.get(selectors.eventCreate.relatedTradeAgreements)
+      .eq(1)
+      .select('Australia')
+
+    cy.get(selectors.eventCreate.relatedTradeAgreements)
+      .eq(0)
+      .should('contain', 'Japan')
+    cy.get(selectors.eventCreate.relatedTradeAgreements)
+      .eq(1)
+      .should('contain', 'Australia')
+  })
 })
