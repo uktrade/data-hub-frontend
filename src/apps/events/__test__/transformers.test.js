@@ -143,7 +143,7 @@ describe('Event transformers', () => {
             name: 'Jeff Smith',
           },
           'Related programmes': ['Example Programme'],
-          'Related Trade Agreements': [],
+          'Related Trade Agreements': ['Japan'],
           'Event start date': {
             type: 'date',
             name: '2017-11-10',
@@ -256,7 +256,7 @@ describe('Event transformers', () => {
             name: 'Jeff Smith',
           },
           'Related programmes': ['Example Programme'],
-          'Related Trade Agreements': [],
+          'Related Trade Agreements': ['Japan'],
           'Event start date': {
             type: 'date',
             name: '2017-11-10',
