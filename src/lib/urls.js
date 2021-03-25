@@ -393,6 +393,7 @@ module.exports = {
     index: url('/omis'),
     export: url('/omis', '/export'),
     create: url('/omis/create?company=', ':companyId'),
+    reconciliation: url('/omis/reconciliation'),
     order: url('/omis', '/:orderId'),
     paymentReceipt: url('/omis', '/:orderId/payment-receipt'),
     quote: url('/omis', '/:orderId/quote'),
