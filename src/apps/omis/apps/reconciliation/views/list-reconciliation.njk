@@ -33,7 +33,7 @@
                 {{ item.reference }}
               </a>
             </td>
-            <td>{{ item.payment_due_date | formatDate('DD/MM/YYYY') }}</td>
+            <td>{{ item.payment_due_date | formatDate }}</td>
             <td>{{ item.company }}</td>
             <td align="right">{{ item.subtotal_cost | formatCurrency }}</td>
             <td align="right">{{ item.total_cost | formatCurrency }}</td>
