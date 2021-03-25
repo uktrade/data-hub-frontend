@@ -21,6 +21,7 @@ describe('Event Details', () => {
       Organiser: 'John Rogers',
       'Other teams': 'CBBC North West',
       'Related programmes': 'Grown in Britain',
+      'Related Trade Agreements': 'UK - Japan',
       Service: 'Events : UK Based',
       Documents: 'View files and documents (will open another website)',
     })
@@ -44,6 +45,7 @@ describe('Event Details', () => {
         Organiser: 'John Rogers',
         'Other teams': 'CBBC North West',
         'Related programmes': 'Grown in Britain',
+        'Related Trade Agreements': '',
         Service: 'Events : UK Based',
       })
     })
