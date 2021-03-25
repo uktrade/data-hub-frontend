@@ -11,7 +11,8 @@ exports.order = function (req, res) {
   if (
     // uk_region can be a string or an array of strings so we need to unify it
     // to allow the filter to work also when there are multiple regions selected.
-    _([req.body.uk_region]).flatten().indexOf(NORTH_WEST_REGION) >= 0
+    _([req.body.uk_region]).flatten().indexOf(NORTH_WEST_REGION) >= 0 ||
+    _([req.body.status]).flatten().indexOf('quote_accepted') >= 0
   ) {
     return res.json(filteredOrders)
   }
