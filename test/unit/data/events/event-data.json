@@ -38,6 +38,12 @@
       "name": "Example Programme"
     }
   ],
+  "related_trade_agreements": [
+    {
+      "id": "6bd5f509-548c-47d1-a5bd-3cf9056a75a1",
+      "name": "Japan"
+    }
+  ],
   "service": {
     "id": "9484b82b-3499-e211-a939-e4115bead28a",
     "name": "Account Management"
