@@ -18,6 +18,7 @@ import SecondaryButton from '../SecondaryButton'
 const StyledRoot = styled.div(
   {
     color: TEXT_COLOUR,
+    background: 'white',
     padding: RESPONSIVE_4.mobile,
     border: `${BORDER_WIDTH_MOBILE} solid ${ERROR_COLOUR}`,
     '&:focus': {
