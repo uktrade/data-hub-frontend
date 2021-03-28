@@ -90,7 +90,7 @@
     "connect-flash": "0.1.1",
     "connect-redis": "^5.1.0",
     "connected-react-router": "^6.9.1",
-    "constate": "^3.1.0",
+    "constate": "^3.2.0",
     "cookie-parser": "^1.4.5",
     "core-js": "^3.9.1",
     "css-loader": "^5.1.1",
