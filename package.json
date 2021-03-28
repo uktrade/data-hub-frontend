@@ -136,7 +136,7 @@
     "pure-uuid": "^1.6.2",
     "qs": "^6.9.6",
     "raven": "^2.6.2",
-    "react": "^17.0.1",
+    "react": "^17.0.2",
     "react-app-polyfill": "^2.0.0",
     "react-dom": "^16.13.1",
     "react-lines-ellipsis": "^0.14.1",
