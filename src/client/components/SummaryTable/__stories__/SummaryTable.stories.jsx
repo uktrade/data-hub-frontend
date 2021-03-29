@@ -17,5 +17,11 @@ storiesOf('SummaryTable', module).add('Default', () => (
       </Link>
     </SummaryTable.Row>
     <SummaryTable.Row heading="Business type">Company</SummaryTable.Row>
+    <SummaryTable.CurrencyRow heading="Annual turnover" value={1000000000000} />
+    <SummaryTable.ListRow
+      heading="UK regions"
+      value={['South West', 'North East']}
+    />
+    <SummaryTable.TextRow heading="Have required checks been completed?" />
   </SummaryTable>
 ))

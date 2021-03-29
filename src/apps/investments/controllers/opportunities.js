@@ -4,6 +4,9 @@ const renderOpportunitiesView = (req, res, next) => {
       .breadcrumb('UK Opportunities')
       .render('investments/views/opportunities', {
         heading: 'UK Opportunities',
+        props: {
+          opportunityId: req.params.opportunityId,
+        },
       })
   } catch (error) {
     next(error)
