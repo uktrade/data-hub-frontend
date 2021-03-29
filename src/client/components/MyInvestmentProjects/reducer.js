@@ -6,14 +6,18 @@ import {
   MY_INVESTMENTS__SHOW_DETAILS_CHANGE,
 } from '../../actions'
 
+const ALL_STAGES = 'all-stages'
+const DEFAULT_SORT = 'created_on:desc'
+
 const initialState = {
   count: 0,
   results: [],
   itemsPerPage: 10,
   page: 1,
-  sort: 'created_on:desc',
-  filter: 'all-stages',
+  sort: DEFAULT_SORT,
+  filter: ALL_STAGES,
   showDetails: false,
+  hasInvestmentProjects: false,
 }
 
 export default (
@@ -27,6 +31,9 @@ export default (
         ...state,
         results,
         count,
+        hasInvestmentProjects: !(
+          !results.length && state.filter === ALL_STAGES
+        ),
       }
     case MY_INVESTMENTS__SORT_CHANGE:
       return { ...state, sort, page }
