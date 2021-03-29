@@ -7,6 +7,9 @@ import { GREY_2 } from 'govuk-colours'
 import { typography } from '@govuk-react/lib'
 import { SPACING, FONT_SIZE, LINE_HEIGHT } from '@govuk-react/constants'
 
+import { currencyGBP } from '../../utils/number-utils'
+import Tag from '../Tag'
+
 const StyledTable = styled(Table)`
   & > tbody th {
     width: 30%;
@@ -29,6 +32,10 @@ const StyledCellList = styled('ul')`
   list-style: none;
   padding: 0;
   margin: 0;
+`
+
+const StyledTag = styled(Tag)`
+  float: right;
 `
 
 const SummaryTable = ({ caption, actions, children, ...rest }) => (
@@ -71,6 +78,32 @@ SummaryTable.Row = ({ heading, children }) => {
   )
 }
 
+SummaryTable.TextRow = ({ heading, value }) => (
+  <SummaryTable.Row heading={heading}>
+    {value ? value : <StyledTag>incomplete</StyledTag>}
+  </SummaryTable.Row>
+)
+
+SummaryTable.CurrencyRow = ({ heading, value }) => (
+  <SummaryTable.Row heading={heading}>
+    {value ? currencyGBP(value) : <StyledTag>incomplete</StyledTag>}
+  </SummaryTable.Row>
+)
+
+SummaryTable.ListRow = ({ heading, value }) => (
+  <SummaryTable.Row heading={heading}>
+    {value.length ? (
+      <ul>
+        {value.map((v, i) => (
+          <li key={`${heading}-${i}`}>{v}</li>
+        ))}
+      </ul>
+    ) : (
+      <StyledTag>incomplete</StyledTag>
+    )}
+  </SummaryTable.Row>
+)
+
 SummaryTable.propTypes = {
   caption: PropTypes.string,
   actions: PropTypes.node,
@@ -91,6 +124,36 @@ SummaryTable.Row.propTypes = {
 SummaryTable.Row.defaultProps = {
   heading: null,
   children: null,
+}
+
+SummaryTable.TextRow.propTypes = {
+  heading: PropTypes.string,
+  value: PropTypes.string,
+}
+
+SummaryTable.TextRow.defaultProps = {
+  heading: null,
+  value: null,
+}
+
+SummaryTable.CurrencyRow.propTypes = {
+  heading: PropTypes.string,
+  value: PropTypes.number,
+}
+
+SummaryTable.CurrencyRow.defaultProps = {
+  heading: null,
+  value: null,
+}
+
+SummaryTable.ListRow.propTypes = {
+  heading: PropTypes.string,
+  value: PropTypes.arrayOf(PropTypes.string),
+}
+
+SummaryTable.ListRow.defaultProps = {
+  heading: null,
+  value: [],
 }
 
 export default SummaryTable

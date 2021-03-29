@@ -1,5 +1,13 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
+import { TASK_GET_OPPORTUNITY_DETAILS, ID, state2props } from './state'
+import { INVESTMENT_OPPORTUNITY_DETAILS__LOADED } from '../../../../client/actions'
+
+import OpportunityDetails from './OpportunityDetails'
+
+import Task from '../../../../client/components/Task'
 import TabNav from '../../../../client/components/TabNav'
 import ToggleSection from '../../../../client/components/ToggleSection'
 import SummaryTable from '../../../../client/components/SummaryTable'
@@ -30,113 +38,84 @@ const StyledLabel = styled('label')`
   color: ${(props) => props.color};
 `
 
-// This is dummy data that will be removed once we hook up the API.
-// Data structure will most likely change.
-const detailsRows = [
-  { label: 'Opportunity description', value: 'Example Ltd' },
-  { label: 'UK location', value: 'Incomplete' },
-  { label: 'Promoters', value: 'Incomplete' },
-  {
-    label: 'Has this opportunity cleared the required checks?',
-    value: 'Incomplete',
-  },
-  { label: 'Lead DIT relationship manager', value: 'Incomplete' },
-  { label: 'Asset classes', value: 'Incomplete' },
-  { label: 'Value', value: 'Incomplete' },
-  { label: 'Construction risk', value: 'Incomplete' },
-]
-
-// This is dummy data that will be removed once we hook up the API.
-// Data structure will most likely change.
-const requirementsRows = [
-  { label: 'Total investment sought', value: 'Example Ltd' },
-  { label: 'Investment secured so far', value: 'Secured Ltd' },
-  { label: 'Types of investment', value: 'Investment Ltd' },
-  { label: 'Estimated return rate', value: 'Rate Ltd' },
-  { label: 'Timescales', value: 'Timescales Ltd' },
-]
-
-const incompleteRowsCount = (rows) => {
-  return rows.filter(({ value }) => value === 'Incomplete').length
-}
-
-const RequiredFields = ({ fieldCount }) => {
+const RequiredFields = (fieldCount) => {
   if (fieldCount == 0) {
     return <StyledLabel color={GREEN}>Completed</StyledLabel>
   }
   return <StyledLabel color={RED}>{fieldCount} fields required</StyledLabel>
 }
 
-const Opportunities = () => (
+const OpportunitySection = ({
+  incompleteFields,
+  toggleName,
+  toggleId,
+  children,
+}) => (
   <>
-    <TabNav
-      id="Opportunity.tabnav"
-      label="Dashboard"
-      selectedIndex={'details'}
-      tabs={{
-        details: {
-          label: 'Details',
-          content: (
-            <>
-              <RequiredFields fieldCount={incompleteRowsCount(detailsRows)} />
-              <ToggleSection
-                variant={VARIANTS.SECONDARY}
-                label="Opportunity details"
-                id="opportunity_details_toggle"
-              >
-                <SummaryTable
-                  actions={
-                    <Link key="details" href="https://example.com">
-                      Edit
-                    </Link>
-                  }
-                >
-                  {detailsRows.map(({ label, value }) => (
-                    <SummaryTable.Row key={label} heading={label}>
-                      {value}
-                    </SummaryTable.Row>
-                  ))}
-                </SummaryTable>
-              </ToggleSection>
-              <RequiredFields
-                fieldCount={incompleteRowsCount(requirementsRows)}
-              />
-              <ToggleSection
-                variant={VARIANTS.SECONDARY}
-                label="Opportunity requirements"
-                id="opportunity_requirements_toggle"
-              >
-                <SummaryTable
-                  actions={
-                    <Link key="requirements" href="https://example.com">
-                      Edit
-                    </Link>
-                  }
-                >
-                  {requirementsRows.map(({ label, value }) => (
-                    <SummaryTable.Row key={label} heading={label}>
-                      {value}
-                    </SummaryTable.Row>
-                  ))}
-                </SummaryTable>
-              </ToggleSection>
-            </>
-          ),
-        },
-      }}
-    />
-    <StyledToggle
+    {RequiredFields(incompleteFields)}
+    <ToggleSection
       variant={VARIANTS.SECONDARY}
-      label="Need to delete this opportunity?"
-      id="opportunity_delete_toggle"
-      fontSize={FONT_SIZE.SIZE_14}
+      label={toggleName}
+      id={toggleId}
     >
-      <StyledSpan>
-        To delete this opportunity, email{' '}
-        <Link>capitalinvestment@trade.gov.uk</Link>
-      </StyledSpan>
-    </StyledToggle>
+      {/* TODO: add an 'isEditing' conditional to display forms */}
+      <SummaryTable>{children}</SummaryTable>
+    </ToggleSection>
   </>
 )
 
-export default Opportunities
+const Opportunities = ({ opportunityId, details }) => {
+  const { detailsFields, incompleteDetailsFields } = details
+  return (
+    <Task.Status
+      name={TASK_GET_OPPORTUNITY_DETAILS}
+      id={ID}
+      startOnRender={{
+        payload: opportunityId,
+        onSuccessDispatch: INVESTMENT_OPPORTUNITY_DETAILS__LOADED,
+      }}
+    >
+      {() => (
+        <>
+          <TabNav
+            id="Opportunity.tabnav"
+            label="Dashboard"
+            selectedIndex={'details'}
+            tabs={{
+              details: {
+                label: 'Details',
+                content: (
+                  <>
+                    <OpportunitySection
+                      incompleteFields={incompleteDetailsFields}
+                      children={<OpportunityDetails details={detailsFields} />}
+                      toggleName="Opportunity details"
+                      toggleId="opportunity_details_toggle"
+                    />
+                    {/* TODO: Add requirements toggle with same pattern */}
+                  </>
+                ),
+              },
+            }}
+          />
+          <StyledToggle
+            variant={VARIANTS.SECONDARY}
+            label="Need to delete this opportunity?"
+            id="opportunity_delete_toggle"
+            fontSize={FONT_SIZE.SIZE_14}
+          >
+            <StyledSpan>
+              To delete this opportunity, email{' '}
+              <Link>capitalinvestment@trade.gov.uk</Link>
+            </StyledSpan>
+          </StyledToggle>
+        </>
+      )}
+    </Task.Status>
+  )
+}
+
+Opportunities.propTypes = {
+  opportunityId: PropTypes.string.isRequired,
+}
+export default connect(state2props)(Opportunities)
