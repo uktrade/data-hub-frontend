@@ -1,8 +1,11 @@
+const {
+  ZERO_INVESTMENT_PROJECTS,
+} = require('../../../../sandbox/constants/dashboard')
 const urls = require('../../../../../src/lib/urls')
 
 describe('Dashboard - no investment projects', () => {
   beforeEach(() => {
-    cy.setAdviserId('zero-investment-projects')
+    cy.setAdviserId(ZERO_INVESTMENT_PROJECTS)
     cy.setFeatureFlag(
       'layoutTesting:9010dd28-9798-e211-a939-e4115bead28a',
       true
@@ -42,13 +45,13 @@ describe('Dashboard - no investment projects', () => {
         )
     })
 
-    it('should have an image of the stage timeline and Estimated land date', () => {
+    it('should have an image of the stage timeline and estimated land date', () => {
       cy.get('@tabPanel')
         .find('img')
         .should(
           'have.attr',
           'alt',
-          'An image of the stage timeline and Estimated land date'
+          'An image of the stage timeline and estimated land date'
         )
     })
 

@@ -1,4 +1,5 @@
 let investmentProjects = require('../../../fixtures/v3/search/investment-project.json')
+const { ZERO_INVESTMENT_PROJECTS } = require('../../../constants/dashboard')
 const { addDays, subDays } = require('date-fns')
 
 exports.investmentProjects = function (req, res) {
@@ -26,7 +27,7 @@ exports.investmentProjects = function (req, res) {
     estimated_land_date: addDays(oneFortnightAgo, i * 14),
   }))
 
-  if (req.body.adviser === 'zero-investment-projects') {
+  if (req.body.adviser === ZERO_INVESTMENT_PROJECTS) {
     return res.json({
       count: 0,
       results: [],
