@@ -235,9 +235,17 @@ Cypress.Commands.overwrite(
 )
 
 Cypress.Commands.add('setUserDitTeam', (id) => {
-  return cy.request('PUT', `${Cypress.env('sandbox_url')}/whoami`, { id })
+  return cy.request('PUT', `${Cypress.env('sandbox_url')}/whoami`, { dit_team_id: id })
 })
 
 Cypress.Commands.add('resetUserDitTeam', () => {
+  return cy.request('POST', `${Cypress.env('sandbox_url')}/whoami`)
+})
+
+Cypress.Commands.add('setAdviserId', (id) => {
+  return cy.request('PUT', `${Cypress.env('sandbox_url')}/whoami`, { id })
+})
+
+Cypress.Commands.add('resetAdviserId', () => {
   return cy.request('POST', `${Cypress.env('sandbox_url')}/whoami`)
 })

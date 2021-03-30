@@ -5,6 +5,7 @@ import { SPACING, FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 
 import { companies, interactions } from '../../../lib/urls'
 import { format } from '../../utils/date-utils'
+import { DARK_GREY } from '../../utils/colors'
 
 const StyledDiv = styled('div')`
   background-color: ${GREY_3};
@@ -21,8 +22,7 @@ const StyledList = styled('ul')`
   font-size: ${FONT_SIZE.SIZE_16};
 `
 const StyledSpan = styled('span')`
-  /* This color is not in gov-react but is in the GDS design system */
-  color: #505a5f;
+  color: ${DARK_GREY};
 `
 
 const InvestmentDetails = ({
