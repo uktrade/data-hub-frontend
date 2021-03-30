@@ -468,9 +468,9 @@ app.post(
 )
 
 // Whoami endpoint
-app.get('/whoami/', user.whoami)
-app.put('/whoami', user.setUserDitTeam)
-app.post('/whoami', user.resetUserDitTeam)
+app.get('/whoami', user.whoami)
+app.put('/whoami', user.setWhoami)
+app.post('/whoami', user.resetWhoami)
 
 // Help centre endpoint
 app.get('/help-centre/announcement', helpCentre.announcement)
