@@ -184,17 +184,25 @@ function transformEventResponseToFormBody(props = {}) {
   })
 }
 
-function transformEventFormBodyToApiRequest(props) {
+function transformEventFormBodyToApiRequest(props, featureFlags) {
   const teamsArray = castCompactArray(props.teams)
   const related_programmes = castCompactArray(props.related_programmes)
-  let related_trade_agreements = null
-  if (props.related_trade_agreements_exist == 'true') {
-    related_trade_agreements = castCompactArray(props.related_trade_agreements)
-  } else if (props.related_trade_agreements_exist == 'false') {
+  let related_trade_agreements
+  if (featureFlags.relatedTradeAgreements) {
+    related_trade_agreements = null
+    if (props.related_trade_agreements_exist == 'true') {
+      related_trade_agreements = castCompactArray(
+        props.related_trade_agreements
+      )
+    } else if (props.related_trade_agreements_exist == 'false') {
+      related_trade_agreements = []
+    }
+  } else {
     related_trade_agreements = castCompactArray(
       '0b371c90-e48a-40ea-a536-0968fb181f6c'
     )
   }
+
   const teams = props.lead_team
     ? teamsArray.concat(props.lead_team)
     : teamsArray
