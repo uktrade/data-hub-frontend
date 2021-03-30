@@ -30,6 +30,7 @@ const ALLOWLIST = [
   '/v4/large-investor-profile',
   '/v3/search/investment_project',
   '/v4/search/large-investor-profile',
+  '/v4/large-capital-opportunity/:id',
 ]
 
 module.exports = (app) => {

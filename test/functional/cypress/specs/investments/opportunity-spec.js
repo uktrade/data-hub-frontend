@@ -32,10 +32,6 @@ describe('UK Opportunity', () => {
       'contain',
       'Opportunity details'
     )
-    cy.get('#opportunity_requirements_toggle').should(
-      'contain',
-      'Opportunity requirements'
-    )
     cy.get('#opportunity_delete_toggle').should(
       'contain',
       'Need to delete this opportunity?'
@@ -44,6 +40,5 @@ describe('UK Opportunity', () => {
 
   it('should display required field tags', () => {
     cy.get('#opportunities').should('contain', '7 fields required')
-    cy.get('#opportunities').should('contain', 'Completed')
   })
 })
