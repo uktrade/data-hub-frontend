@@ -26,7 +26,12 @@ exports.investmentProjects = function (req, res) {
     estimated_land_date: addDays(oneFortnightAgo, i * 14),
   }))
 
-  if (req.body.uk_region_location) {
+  if (req.body.adviser === 'zero-investment-projects') {
+    return res.json({
+      count: 0,
+      results: [],
+    })
+  } else if (req.body.uk_region_location) {
     var regionQuery = req.body.uk_region_location
     var regions = typeof regionQuery === 'string' ? [regionQuery] : regionQuery
     var ukRegionFilteredResults = _.filter(
