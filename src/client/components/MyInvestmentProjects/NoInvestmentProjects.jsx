@@ -1,6 +1,6 @@
 import React from 'react'
 import UnorderedList from '@govuk-react/unordered-list'
-import { H3 } from '@govuk-react/heading'
+import { H1, H3 } from '@govuk-react/heading'
 import styled from 'styled-components'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
@@ -56,9 +56,6 @@ const StyledUnorderedList = styled(UnorderedList)`
   ${MEDIA_QUERIES.TABLET} {
     margin-left: 7px;
     margin-bottom: 40px;
-    li::marker {
-      font-size: 30px;
-    }
   }
 `
 
@@ -71,13 +68,13 @@ const StyledListItem = styled('li')`
 
 const NoInvestmentProjects = () => (
   <StyledContainer>
-    <H3>No investment projects</H3>
+    <H3 as={H1}>No investment projects</H3>
     <StyledParagraph>
       View and track investment projects from your dashboard
     </StyledParagraph>
     <StyledImage
       src={TimelineImage}
-      alt="An image of the stage timeline and Estimated land date"
+      alt="An image of the stage timeline and estimated land date"
     />
     <div>
       <StyledParagraph>Once added, you'll be able to:</StyledParagraph>
