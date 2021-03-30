@@ -2,7 +2,7 @@ import { apiProxyAxios } from '../Task/utils'
 
 export const fetchMyInvestmentsList = ({
   limit = 10,
-  page,
+  page = 1,
   adviser,
   sort,
   filter,
