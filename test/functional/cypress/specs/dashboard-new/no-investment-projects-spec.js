@@ -2,6 +2,7 @@ const urls = require('../../../../../src/lib/urls')
 
 describe('Dashboard - no investment projects', () => {
   beforeEach(() => {
+    cy.setAdviserId('zero-investment-projects')
     cy.setFeatureFlag(
       'layoutTesting:9010dd28-9798-e211-a939-e4115bead28a',
       true
@@ -12,6 +13,7 @@ describe('Dashboard - no investment projects', () => {
   })
   after(() => {
     cy.resetFeatureFlags()
+    cy.resetAdviserId()
   })
 
   context('Tabbed navigation', () => {
@@ -26,7 +28,7 @@ describe('Dashboard - no investment projects', () => {
 
     it('should have a heading of `No investment projects`', () => {
       cy.get('@tabPanel')
-        .find('h3')
+        .find('h1')
         .should('have.text', 'No investment projects')
     })
 
