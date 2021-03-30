@@ -12,31 +12,29 @@ const StyledDiv = styled('div')`
   padding-top: 16px;
 `
 
-const DashboardTabs = ({ id, adviser, hasInvestmentProjects }) => {
-  return (
-    <StyledDiv data-test="dashboard-tabs">
-      <TabNav
-        id={`${id}.TabNav`}
-        label="Dashboard"
-        routed={true}
-        tabs={{
-          [urls.personalisedDashboard.myInvestmentProjects()]: {
-            label: 'My projects',
-            content: hasInvestmentProjects ? (
-              <MyInvestmentProjects adviser={adviser} />
-            ) : (
-              <NoInvestmentProjects />
-            ),
-          },
-          [urls.dashboard()]: {
-            label: 'My companies lists',
-            content: <CompanyLists />,
-          },
-        }}
-      />
-    </StyledDiv>
-  )
-}
+const DashboardTabs = ({ id, adviser, hasInvestmentProjects }) => (
+  <StyledDiv data-test="dashboard-tabs">
+    <TabNav
+      id={`${id}.TabNav`}
+      label="Dashboard"
+      routed={true}
+      tabs={{
+        [urls.personalisedDashboard.myInvestmentProjects()]: {
+          label: 'My projects',
+          content: hasInvestmentProjects ? (
+            <MyInvestmentProjects adviser={adviser} />
+          ) : (
+            <NoInvestmentProjects />
+          ),
+        },
+        [urls.dashboard()]: {
+          label: 'My companies lists',
+          content: <CompanyLists />,
+        },
+      }}
+    />
+  </StyledDiv>
+)
 
 DashboardTabs.propTypes = {
   id: PropTypes.string.isRequired,
