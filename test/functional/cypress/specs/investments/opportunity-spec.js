@@ -52,7 +52,11 @@ describe('UK Opportunity with missing data', () => {
   })
 })
 
+<<<<<<< HEAD
 describe('UK Opportunity with complete data', () => {
+=======
+describe('UK Opportunity with missing data', () => {
+>>>>>>> a24dcc6c4 (Add required details for capital investment project)
   before(() => {
     cy.visit(
       investments.opportunities.details(
