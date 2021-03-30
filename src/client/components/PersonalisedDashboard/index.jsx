@@ -79,8 +79,7 @@ const PersonalisedDashboard = ({
           startOnRender={{
             payload: {
               adviser,
-              page: 1,
-              sort: 'created_on:desc',
+              limit: 1,
             },
             onSuccessDispatch: MY_INVESTMENTS__LIST_LOADED,
           }}
