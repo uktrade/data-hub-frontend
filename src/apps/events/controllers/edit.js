@@ -57,6 +57,7 @@ async function getEditOptions(req, createdOn, currentAdviser) {
 async function renderEditPage(req, res, next) {
   try {
     const eventData = transformEventResponseToFormBody(res.locals.event)
+    const featureFlags = res.locals.features
 
     const eventId = get(eventData, 'id', '')
     const eventName = get(eventData, 'name')
@@ -73,7 +74,7 @@ async function renderEditPage(req, res, next) {
     )
 
     const eventForm = buildFormWithStateAndErrors(
-      eventFormConfig(assign({}, { eventId }, options)),
+      eventFormConfig(assign({}, { eventId }, options), featureFlags),
       mergedData,
       get(res.locals, 'form.errors.messages')
     )
