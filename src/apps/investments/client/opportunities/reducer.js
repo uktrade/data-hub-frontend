@@ -4,6 +4,7 @@ import transformInvestmentOpportunity from '../../transformers/opportunities'
 const initialState = {
   details: {
     incompleteDetailsFields: 0,
+    incompleteRequirementsFields: 0,
     detailsFields: {
       name: '',
       description: '',
@@ -17,6 +18,13 @@ const initialState = {
         value: 0,
       },
       constructionRisks: [],
+    },
+    requirementsFields: {
+      totalInvestmentSought: 0,
+      currentInvestmentSecured: 0,
+      investmentTypes: [],
+      returnRate: '',
+      timeHorizons: [],
     },
   },
 }

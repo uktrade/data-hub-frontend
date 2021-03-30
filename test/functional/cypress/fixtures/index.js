@@ -39,6 +39,8 @@ module.exports = {
     investmentWithLink: require('./investment/investment-with-link.json'),
     newHotelFdi: require('./investment/new-hotel-fdi'),
     stageWon: require('./investment/investment-stage-won.json'),
+    completeOpportunity: require('./investment/large-capital-opportunity-complete.json'),
+    incompleteOpportunity: require('./investment/large-capital-opportunity-incomplete.json'),
   },
   event: {
     oneDayExhibition: require('./event/one-day-exhibition'),

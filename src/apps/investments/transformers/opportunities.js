@@ -4,6 +4,7 @@ const getArrayNamesAndIds = (data) =>
 
 const transformInvestmentOpportunity = ({
   incomplete_details_fields,
+  incomplete_requirements_fields,
   name,
   description,
   uk_region_locations,
@@ -14,8 +15,14 @@ const transformInvestmentOpportunity = ({
   opportunity_value_type,
   opportunity_value,
   construction_risks,
+  total_investment_sought,
+  current_investment_secured,
+  investment_types,
+  estimated_return_rate,
+  time_horizons,
 }) => ({
   incompleteDetailsFields: incomplete_details_fields.length,
+  incompleteRequirementsFields: incomplete_requirements_fields.length,
   detailsFields: {
     name,
     description,
@@ -29,6 +36,13 @@ const transformInvestmentOpportunity = ({
       value: opportunity_value,
     },
     constructionRisks: getArrayNames(construction_risks),
+  },
+  requirementsFields: {
+    totalInvestmentSought: total_investment_sought,
+    currentInvestmentSecured: current_investment_secured,
+    investmentTypes: getArrayNames(investment_types),
+    returnRate: estimated_return_rate?.name,
+    timeHorizons: getArrayNames(time_horizons),
   },
 })
 
