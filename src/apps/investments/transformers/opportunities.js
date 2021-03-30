@@ -23,6 +23,8 @@ const transformInvestmentOpportunity = ({
 }) => ({
   incompleteDetailsFields: incomplete_details_fields.length,
   incompleteRequirementsFields: incomplete_requirements_fields.length,
+  isEditingDetails: false,
+  isEditingRequirements: false,
   detailsFields: {
     name,
     description,

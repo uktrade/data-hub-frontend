@@ -3,7 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { TASK_GET_OPPORTUNITY_DETAILS, ID, state2props } from './state'
-import { INVESTMENT_OPPORTUNITY_DETAILS__LOADED } from '../../../../client/actions'
+import {
+  INVESTMENT_OPPORTUNITY_DETAILS__LOADED,
+  INVESTMENT_OPPORTUNITY__EDIT_DETAILS,
+  INVESTMENT_OPPORTUNITY__EDIT_REQUIREMENTS,
+  INVESTMENT_OPPORTUNITY__CANCEL_EDIT,
+} from '../../../../client/actions'
 
 import OpportunityDetails from './OpportunityDetails'
 import OpportunityRequirements from './OpportunityRequirements'
@@ -12,10 +17,12 @@ import Task from '../../../../client/components/Task'
 import TabNav from '../../../../client/components/TabNav'
 import ToggleSection from '../../../../client/components/ToggleSection'
 import SummaryTable from '../../../../client/components/SummaryTable'
+import SecondaryButton from '../../../../client/components/SecondaryButton'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 
 import styled from 'styled-components'
 import { HIGHLIGHT_COLOUR, RED, GREEN } from 'govuk-colours'
+import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 
 import { VARIANTS } from '../../../../common/constants'
@@ -49,28 +56,52 @@ const RequiredFields = (fieldCount) => {
 const OpportunitySection = ({
   incompleteFields,
   toggleName,
-  toggleId,
+  idPrefix,
   children,
+  isEditing,
+  onEdit,
+  onCancel,
 }) => (
   <>
     {RequiredFields(incompleteFields)}
     <ToggleSection
       variant={VARIANTS.SECONDARY}
       label={toggleName}
-      id={toggleId}
+      id={`${idPrefix}_toggle`}
     >
-      {/* TODO: add an 'isEditing' conditional to display forms */}
-      <SummaryTable>{children}</SummaryTable>
+      {isEditing ? (
+        <>
+          <div>This will be a form</div>
+          <SecondaryButton onClick={onCancel} dataTest={`${idPrefix}_cancel`}>
+            Cancel
+          </SecondaryButton>
+        </>
+      ) : (
+        <>
+          <SummaryTable>{children}</SummaryTable>
+          <Button onClick={onEdit} dataTest={`${idPrefix}_button`}>
+            Edit
+          </Button>
+        </>
+      )}
     </ToggleSection>
   </>
 )
 
-const Opportunities = ({ opportunityId, details }) => {
+const Opportunities = ({
+  opportunityId,
+  details,
+  onDetailsEdit,
+  onRequirementsEdit,
+  onCancelEdit,
+}) => {
   const {
     detailsFields,
     requirementsFields,
     incompleteDetailsFields,
     incompleteRequirementsFields,
+    isEditingDetails,
+    isEditingRequirements,
   } = details
   return (
     <Task.Status
@@ -96,7 +127,10 @@ const Opportunities = ({ opportunityId, details }) => {
                       incompleteFields={incompleteDetailsFields}
                       children={<OpportunityDetails details={detailsFields} />}
                       toggleName="Opportunity details"
-                      toggleId="opportunity_details_toggle"
+                      idPrefix="opportunity_details"
+                      isEditing={isEditingDetails}
+                      onEdit={onDetailsEdit}
+                      onCancel={onCancelEdit}
                     />
                     <OpportunitySection
                       incompleteFields={incompleteRequirementsFields}
@@ -104,7 +138,10 @@ const Opportunities = ({ opportunityId, details }) => {
                         <OpportunityRequirements details={requirementsFields} />
                       }
                       toggleName="Opportunity requirements"
-                      toggleId="opportunity_requirements_toggle"
+                      idPrefix="opportunity_requirements"
+                      isEditing={isEditingRequirements}
+                      onEdit={onRequirementsEdit}
+                      onCancel={onCancelEdit}
                     />
                   </>
                 ),
@@ -131,4 +168,20 @@ const Opportunities = ({ opportunityId, details }) => {
 Opportunities.propTypes = {
   opportunityId: PropTypes.string.isRequired,
 }
-export default connect(state2props)(Opportunities)
+export default connect(state2props, (dispatch) => ({
+  onDetailsEdit: () => {
+    dispatch({
+      type: INVESTMENT_OPPORTUNITY__EDIT_DETAILS,
+    })
+  },
+  onRequirementsEdit: () => {
+    dispatch({
+      type: INVESTMENT_OPPORTUNITY__EDIT_REQUIREMENTS,
+    })
+  },
+  onCancelEdit: () => {
+    dispatch({
+      type: INVESTMENT_OPPORTUNITY__CANCEL_EDIT,
+    })
+  },
+}))(Opportunities)
