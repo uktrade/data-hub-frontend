@@ -1,9 +1,11 @@
 import React from 'react'
 
+import InsetText from '@govuk-react/inset-text'
+
 import { FieldRadios } from '../../../../../client/components'
 import { useFormContext } from '../../../../../client/components/Form/hooks'
 import { THEMES, KINDS } from '../../../constants'
-import { FieldHelp } from '../../../../../client/components'
+import { NewWindowLink } from '../../../../../client/components'
 
 const getOnChangeHandler = (fieldName, setFieldValue) => (e) => {
   setFieldValue('service', '')
@@ -95,14 +97,16 @@ const StepInteractionType = ({ isTradeAgreementInteractionEnabled }) => {
   return (
     <>
       {isTradeAgreementInteractionEnabled && (
-        <FieldHelp
-          helpSummary="Guidance regarding a Trade Agreement"
-          helpText="If your Interaction was set up to focus on a Trade Agreement or
+        <InsetText>
+          If your Interaction was set up to focus on a Trade Agreement or
           contributes to implementing a Trade Agreement, select 'Trade
-          Agreement’"
-          footerUrl="https://data-services-help.trade.gov.uk/data-hub/how-articles/trade-agreement-activity/recording-trade-agreement-activity/"
-          footerUrlDescription="See more guidance"
-        />
+          Agreement’.
+          <br />
+          <br />
+          <NewWindowLink href="https://data-services-help.trade.gov.uk/data-hub/how-articles/trade-agreement-activity/recording-trade-agreement-activity/">
+            See more guidance
+          </NewWindowLink>
+        </InsetText>
       )}
 
       <FieldRadios
