@@ -188,7 +188,7 @@ function transformEventFormBodyToApiRequest(props, featureFlags) {
   const teamsArray = castCompactArray(props.teams)
   const related_programmes = castCompactArray(props.related_programmes)
   let related_trade_agreements
-  if (featureFlags?.relatedTradeAgreements) {
+  if (featureFlags && featureFlags.relatedTradeAgreements) {
     castRelatedTradeAgreements()
   } else {
     related_trade_agreements = []
