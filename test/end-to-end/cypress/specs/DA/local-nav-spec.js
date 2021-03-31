@@ -12,8 +12,11 @@ const { assertLocalNav } = require('../../support/assertions')
 
 describe('DA Permission', () => {
   describe('activity', () => {
+    const company = fixtures.company.create.corp()
+
     before(() => {
-      cy.visit(companies.detail(fixtures.company.oneListCorp.id))
+      cy.loadFixture([company])
+      cy.visit(companies.detail(company))
     })
 
     it('should display DA only tabs', () => {
@@ -44,8 +47,13 @@ describe('DA Permission', () => {
   })
 
   describe('contact details', () => {
+    const company = fixtures.company.create.defaultCompany('local nav da')
+    const contact = fixtures.contact.create(company.pk)
+
     before(() => {
-      cy.visit(contacts.details(fixtures.contact.johnnyCakeman.id))
+      cy.loadFixture([company])
+      cy.loadFixture([contact])
+      cy.visit(contacts.details(contact.pk))
     })
 
     it('should display DA only tabs', () => {
@@ -54,12 +62,11 @@ describe('DA Permission', () => {
   })
 
   describe('investment projects', () => {
+    investmentProjectNewGolf = fixtures.investmentProject.create.newGolfCourseDA()
+
     before(() => {
-      cy.visit(
-        investments.projects.details(
-          fixtures.investmentProject.newGolfCourse.id
-        )
-      )
+      cy.loadFixture([investmentProjectNewGolf])
+      cy.visit(investments.projects.details(investmentProjectNewGolf.pk))
     })
 
     it('should display DA only tabs', () => {
