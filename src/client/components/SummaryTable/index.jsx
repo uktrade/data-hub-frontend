@@ -95,7 +95,7 @@ SummaryTable.ListRow = ({ heading, value }) => (
     {value.length ? (
       <ul>
         {value.map((v, i) => (
-          <li key={`${heading}-${i}`}>{v}</li>
+          <li key={`${heading}-${i}`}>{v.name}</li>
         ))}
       </ul>
     ) : (
@@ -148,7 +148,12 @@ SummaryTable.CurrencyRow.defaultProps = {
 
 SummaryTable.ListRow.propTypes = {
   heading: PropTypes.string,
-  value: PropTypes.arrayOf(PropTypes.string),
+  value: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      id: PropTypes.string,
+    })
+  ),
 }
 
 SummaryTable.ListRow.defaultProps = {

@@ -1,4 +1,3 @@
-const getArrayNames = (data) => data.map((d) => d.name)
 const getArrayNamesAndIds = (data) =>
   data.map((d) => ({ name: d.name, id: d.id }))
 
@@ -28,23 +27,23 @@ const transformInvestmentOpportunity = ({
   detailsFields: {
     name,
     description,
-    ukRegions: getArrayNames(uk_region_locations),
+    ukRegions: uk_region_locations,
     promoters: getArrayNamesAndIds(promoters),
     requiredChecks: required_checks_conducted?.name,
     leadRelationshipManager: lead_dit_relationship_manager?.name,
-    assetClasses: getArrayNames(asset_classes),
+    assetClasses: asset_classes,
     opportunityValue: {
       label: opportunity_value_type?.name || 'Opportunity value',
       value: opportunity_value,
     },
-    constructionRisks: getArrayNames(construction_risks),
+    constructionRisks: construction_risks,
   },
   requirementsFields: {
     totalInvestmentSought: total_investment_sought,
     currentInvestmentSecured: current_investment_secured,
-    investmentTypes: getArrayNames(investment_types),
+    investmentTypes: investment_types,
     returnRate: estimated_return_rate?.name,
-    timeHorizons: getArrayNames(time_horizons),
+    timeHorizons: time_horizons,
   },
 })
 
