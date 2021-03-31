@@ -16,7 +16,7 @@ const eventFormConfig = (
   featureFlags
 ) => {
   let children
-  if (featureFlags.relatedTradeAgreements) {
+  if (featureFlags?.relatedTradeAgreements) {
     children = [
       {
         macroName: 'MultipleChoiceField',
