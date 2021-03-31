@@ -4,11 +4,12 @@ const selectors = require('../../../../selectors')
 
 describe('DA add Investment Project interaction', () => {
   context('The browser URL has updated', () => {
+    investmentProjectNewGolf = fixtures.investmentProject.create.newGolfCourseDA()
+
     before(() => {
+      cy.loadFixture([investmentProjectNewGolf])
       cy.visit(
-        investments.projects.interactions.index(
-          fixtures.investmentProject.newGolfCourse.id
-        )
+        investments.projects.interactions.index(investmentProjectNewGolf.pk)
       )
     })
 
@@ -19,7 +20,7 @@ describe('DA add Investment Project interaction', () => {
         .should(
           'eq',
           investments.projects.interactions.createType(
-            fixtures.investmentProject.newGolfCourse.id,
+            investmentProjectNewGolf.pk,
             'investment',
             'interaction'
           )
@@ -28,12 +29,15 @@ describe('DA add Investment Project interaction', () => {
   })
 
   context('DA completes the form and clicks "Add interaction"', () => {
+    investmentProjectNewGolf = fixtures.investmentProject.create.newGolfCourseDA()
+
     before(() => {
+      cy.loadFixture([investmentProjectNewGolf])
       cy.server().route('POST', '/api-proxy/v3/interaction').as('post')
 
       cy.visit(
         investments.projects.interactions.createType(
-          fixtures.investmentProject.newGolfCourse.id,
+          investmentProjectNewGolf.pk,
           'investment',
           'interaction'
         )

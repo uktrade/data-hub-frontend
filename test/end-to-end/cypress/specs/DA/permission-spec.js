@@ -14,8 +14,11 @@ const { assertError } = require('../../support/assertions')
 describe('DA Permission', () => {
   describe('companies', () => {
     describe('exports', () => {
+      const company = fixtures.company.create.lambda('permission da')
+
       before(() => {
-        cy.visit(companies.exports.index(fixtures.company.lambdaPlc.id), {
+        cy.loadFixture([company])
+        cy.visit(companies.exports.index(company), {
           failOnStatusCode: false,
         })
       })
@@ -75,13 +78,13 @@ describe('DA Permission', () => {
 
   context('investment', () => {
     describe('investment document', () => {
+      investmentProjectNewGolf = fixtures.investmentProject.create.newGolfCourseDA()
+
       before(() => {
-        cy.visit(
-          investments.projects.documents(
-            fixtures.investmentProject.newGolfCourse.id
-          ),
-          { failOnStatusCode: false }
-        )
+        cy.loadFixture([investmentProjectNewGolf])
+        cy.visit(investments.projects.documents(investmentProjectNewGolf.pk), {
+          failOnStatusCode: false,
+        })
       })
 
       it('should prevent DA users from accessing the page', () => {
@@ -91,11 +94,12 @@ describe('DA Permission', () => {
     })
 
     describe('interaction', () => {
+      investmentProjectNewZoo = fixtures.investmentProject.create.newZooLEP()
+
       before(() => {
+        cy.loadFixture([investmentProjectNewZoo])
         cy.visit(
-          investments.projects.interactions.index(
-            fixtures.investmentProject.newZoo.id
-          ),
+          investments.projects.interactions.index(investmentProjectNewZoo.pk),
           { failOnStatusCode: false }
         )
       })
@@ -107,11 +111,12 @@ describe('DA Permission', () => {
     })
 
     describe('proposition', () => {
+      investmentProjectNewZoo = fixtures.investmentProject.create.newZooLEP()
+
       before(() => {
+        cy.loadFixture([investmentProjectNewZoo])
         cy.visit(
-          investments.projects.propositions(
-            fixtures.investmentProject.newZoo.id
-          ),
+          investments.projects.propositions(investmentProjectNewZoo.pk),
           { failOnStatusCode: false }
         )
       })
@@ -123,15 +128,13 @@ describe('DA Permission', () => {
     })
 
     describe('team', () => {
+      investmentProjectFancyDress = fixtures.investmentProject.create.fancyDressManufacturing()
+
       before(() => {
-        cy.visit(
-          investments.projects.team(
-            fixtures.investmentProject.fancyDressManufacturing.id
-          ),
-          {
-            failOnStatusCode: false,
-          }
-        )
+        cy.loadFixture([investmentProjectFancyDress])
+        cy.visit(investments.projects.team(investmentProjectFancyDress.pk), {
+          failOnStatusCode: false,
+        })
       })
 
       it("should prevent DA users from accessing a team they don't have access to", () => {
@@ -143,10 +146,13 @@ describe('DA Permission', () => {
 
   context('contacts', () => {
     describe('documents', () => {
+      const company = fixtures.company.create.defaultCompany('contact da')
+      const contact = fixtures.contact.create(company.pk)
+
       before(() => {
-        cy.visit(contacts.documents(fixtures.contact.johnnyCakeman.id), {
-          failOnStatusCode: false,
-        })
+        cy.loadFixture([company])
+        cy.loadFixture([contact])
+        cy.visit(contacts.documents(contact.pk), { failOnStatusCode: false })
       })
 
       it('should prevent DA users from accessing the page', () => {
@@ -156,11 +162,15 @@ describe('DA Permission', () => {
     })
 
     describe('interactions', () => {
+      const company = fixtures.company.create.defaultCompany('contact da')
+      const contact = fixtures.contact.create(company.pk)
+
       before(() => {
-        cy.visit(
-          contacts.contactInteractions(fixtures.contact.johnnyCakeman.id),
-          { failOnStatusCode: false }
-        )
+        cy.loadFixture([company])
+        cy.loadFixture([contact])
+        cy.visit(contacts.contactInteractions(contact.pk), {
+          failOnStatusCode: false,
+        })
       })
 
       it('should prevent DA users from accessing the page', () => {
