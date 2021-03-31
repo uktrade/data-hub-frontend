@@ -189,17 +189,7 @@ function transformEventFormBodyToApiRequest(props, featureFlags) {
   const related_programmes = castCompactArray(props.related_programmes)
   let related_trade_agreements
   if (featureFlags?.relatedTradeAgreements) {
-    if (props.related_trade_agreements_exist == 'true') {
-      if (props.related_trade_agreements.length === 0) {
-        related_trade_agreements = null
-      } else {
-        related_trade_agreements = castCompactArray(
-          props.related_trade_agreements
-        )
-      }
-    } else if (props.related_trade_agreements_exist == 'false') {
-      related_trade_agreements = []
-    }
+    castRelatedTradeAgreements()
   } else {
     related_trade_agreements = []
   }
@@ -217,6 +207,20 @@ function transformEventFormBodyToApiRequest(props, featureFlags) {
     related_programmes,
     related_trade_agreements,
   })
+
+  function castRelatedTradeAgreements() {
+    if (props.related_trade_agreements_exist === 'true') {
+      if (props.related_trade_agreements.length === 0) {
+        related_trade_agreements = null
+      } else {
+        related_trade_agreements = castCompactArray(
+          props.related_trade_agreements
+        )
+      }
+    } else if (props.related_trade_agreements_exist === 'false') {
+      related_trade_agreements = []
+    }
+  }
 }
 
 module.exports = {
