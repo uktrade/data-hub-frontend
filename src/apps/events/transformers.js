@@ -188,7 +188,7 @@ function transformEventFormBodyToApiRequest(props, featureFlags) {
   const teamsArray = castCompactArray(props.teams)
   const related_programmes = castCompactArray(props.related_programmes)
   let related_trade_agreements
-  if (featureFlags.relatedTradeAgreements) {
+  if (featureFlags?.relatedTradeAgreements) {
     if (props.related_trade_agreements_exist == 'true') {
       if (props.related_trade_agreements.length === 0) {
         related_trade_agreements = null

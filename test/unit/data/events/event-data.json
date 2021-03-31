@@ -38,6 +38,7 @@
       "name": "Example Programme"
     }
   ],
+  "related_trade_agreements_exist": true,
   "related_trade_agreements": [
     {
       "id": "6bd5f509-548c-47d1-a5bd-3cf9056a75a1",
