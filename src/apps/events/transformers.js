@@ -206,7 +206,7 @@ function transformEventFormBodyToApiRequest(props, featureFlags) {
   })
 
   function castRelatedTradeAgreements() {
-    return props.related_trade_agreements_exist === 'true'
+    return props.has_related_trade_agreements === 'true'
       ? props.related_trade_agreements.length === 0
         ? null
         : castCompactArray(props.related_trade_agreements)
