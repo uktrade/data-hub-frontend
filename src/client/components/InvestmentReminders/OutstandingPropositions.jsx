@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { format } from 'date-fns'
 
 import { H3 } from '@govuk-react/heading'
-import { LINK_COLOUR, RED, TEXT } from 'govuk-colours'
+import { LINK_COLOUR, RED, TEXT, GREY_1 } from 'govuk-colours'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
 import urls from '../../../lib/urls'
@@ -24,14 +24,18 @@ const StyledProjectLink = styled('a')`
   color: ${LINK_COLOUR};
 `
 
+const StyledProjectCode = styled('div')`
+  margin: ${SPACING.SCALE_2} 0;
+  font-size: ${FONT_SIZE.SIZE_16};
+  color: ${GREY_1};
+`
+
 const StyledDueDate = styled('span')`
-  margin-top: ${SPACING.SCALE_1};
   font-size: ${FONT_SIZE.SIZE_16};
   color: ${TEXT};
 `
 
 const StyledDueCountdown = styled('span')`
-  margin-top: ${SPACING.SCALE_1};
   text-align: right;
   font-size: ${FONT_SIZE.SIZE_16};
   color: ${TEXT};
@@ -44,7 +48,7 @@ const StyledList = styled('ul')`
 `
 
 const StyledListItem = styled('li')`
-  margin-bottom: ${SPACING.SCALE_3};
+  margin-bottom: ${SPACING.SCALE_4};
 `
 
 const StyledDeadline = styled('div')`
@@ -57,16 +61,18 @@ const OutstandingPropositions = ({ results, count }) => {
     <div data-test="outstanding-propositions">
       <StyledSubHeading>Outstanding propositions ({count})</StyledSubHeading>
       <StyledList data-test="outstanding-propositions-list">
-        {results.map(({ id, investment_project, deadline }) => (
+        {results.map(({ id, investment_project, name, deadline }) => (
           <StyledListItem key={id}>
             <StyledProjectLink
-              href={urls.investments.projects.proposition(
-                investment_project.id,
-                id
+              href={urls.investments.projects.propositions(
+                investment_project.id
               )}
             >
-              {investment_project.project_code}
+              {name}
             </StyledProjectLink>
+            <StyledProjectCode data-test="outstanding-proposition-project-code">
+              {investment_project.project_code}
+            </StyledProjectCode>
             <StyledDeadline>
               <StyledDueDate data-test="outstanding-proposition-deadline">
                 Due {format(new Date(deadline), 'dd MMM yyyy')}
