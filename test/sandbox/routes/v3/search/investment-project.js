@@ -2,6 +2,10 @@ let investmentProjects = require('../../../fixtures/v3/search/investment-project
 const { ZERO_INVESTMENT_PROJECTS } = require('../../../constants/dashboard')
 const { addDays, subDays } = require('date-fns')
 
+const STAGES = {
+  VERIFY_WIN: '49b8f6f3-0c50-4150-a965-2c974f3149e3',
+}
+
 exports.investmentProjects = function (req, res) {
   const today = new Date()
   const oneFortnightAgo = subDays(today, 14)
@@ -27,7 +31,10 @@ exports.investmentProjects = function (req, res) {
     estimated_land_date: addDays(oneFortnightAgo, i * 14),
   }))
 
-  if (req.body.adviser === ZERO_INVESTMENT_PROJECTS) {
+  if (
+    req.body.adviser === ZERO_INVESTMENT_PROJECTS ||
+    req.body.stage === STAGES.VERIFY_WIN
+  ) {
     return res.json({
       count: 0,
       results: [],
