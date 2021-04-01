@@ -12,6 +12,6 @@ it('Create UK Investment Opportunity page', () => {
     'eq',
     `${
       Cypress.config().baseUrl
-    }/investments/opportunities/new-large-capital-uk-opportunity-id`
+    }/investments/opportunities/new-large-capital-uk-opportunity-id/details`
   )
 })
