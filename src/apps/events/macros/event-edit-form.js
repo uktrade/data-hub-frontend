@@ -22,7 +22,7 @@ const eventFormConfig = (
           {
             macroName: 'MultipleChoiceField',
             type: 'radio',
-            name: 'related_trade_agreements_exist',
+            name: 'has_related_trade_agreements',
             label: 'Are there related Trade Agreements',
             modifier: 'inline',
             options: [
@@ -81,7 +81,7 @@ const eventFormConfig = (
             ],
             modifier: 'subfield',
             condition: {
-              name: 'related_trade_agreements_exist',
+              name: 'has_related_trade_agreements',
               value: 'true',
             },
           },
