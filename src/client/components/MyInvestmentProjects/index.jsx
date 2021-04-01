@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
+import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
 import { ID, TASK_GET_MY_INVESTMENTS_LIST, state2props } from './state'
 import {
@@ -13,13 +15,35 @@ import {
 import Task from '../Task'
 
 import InvestmentListShowDetails from './InvestmentListShowDetails'
-import InvestmentListHeader from './InvestmentListHeader'
 import InvestmentListFilter from './InvestmentListFilter'
 import InvestmentListSort from './InvestmentListSort'
 import InvestmentList from './InvestmentList'
 import Pagination from '../Pagination/'
 
 import { STAGE_OPTIONS, SORT_OPTIONS } from './constants'
+
+const StyledHeader = styled('header')`
+  select {
+    width: 100%;
+  }
+  ${MEDIA_QUERIES.TABLET} {
+    label:first-child {
+      margin-bottom: ${SPACING.SCALE_2};
+      span {
+        padding-right: ${SPACING.SCALE_2};
+      }
+    }
+  }
+  ${MEDIA_QUERIES.DESKTOP} {
+    display: inline-flex;
+    label:first-child {
+      margin: 0 ${SPACING.SCALE_6} 0 0;
+      span {
+        padding-right: 0;
+      }
+    }
+  }
+`
 
 const MyInvestmentProjects = ({
   results,
@@ -36,7 +60,7 @@ const MyInvestmentProjects = ({
   showDetails,
 }) => (
   <article>
-    <InvestmentListHeader>
+    <StyledHeader>
       {false && (
         <InvestmentListShowDetails
           onChange={(event) => onShowDetailsChange(event.target.checked)}
@@ -54,7 +78,7 @@ const MyInvestmentProjects = ({
         options={SORT_OPTIONS}
         onChange={(event) => onSortChange(event.target.value)}
       />
-    </InvestmentListHeader>
+    </StyledHeader>
     <Task.Status
       name={TASK_GET_MY_INVESTMENTS_LIST}
       id={ID}
