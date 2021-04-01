@@ -42,6 +42,8 @@ import CompanyLocalHeader from './components/CompanyLocalHeader'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 import Opportunities from '../apps/investments/client/opportunities/Opportunities.jsx'
 import IEBanner from '../apps/dashboard/client/IEBanner'
+import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
+import createUKInvestmentOpportunityTask from './components/CreateUKInvestmentOpportunity/tasks'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -185,6 +187,7 @@ function App() {
         [TASK_GET_OUTSTANDING_PROPOSITIONS]: fetchOutstandingPropositions,
         'Large investment profiles filters':
           investmentProfilesTasks.loadFilterOptions,
+        CREATE_INVESTMENT_OPPORTUNITY: createUKInvestmentOpportunityTask,
       }}
     >
       <Mount selector="#add-company-form">
@@ -279,6 +282,11 @@ function App() {
       </Mount>
       <Mount selector="#large-capital-profile-collection">
         {(props) => <LargeCapitalProfileCollection {...props} />}
+      </Mount>
+      <Mount selector="#create-uk-investment-opportunity">
+        {() => (
+          <CreateUKInvestmentOpportunity id="create-uk-investment-opportunity" />
+        )}
       </Mount>
       <Mount selector="#manage-adviser">
         {(props) => (
