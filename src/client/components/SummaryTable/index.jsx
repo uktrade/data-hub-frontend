@@ -95,7 +95,7 @@ SummaryTable.ListRow = ({ heading, value }) => (
     {value.length ? (
       <ul>
         {value.map((v, i) => (
-          <li key={`${heading}-${i}`}>{v.name}</li>
+          <li key={`${heading}-${i}`}>{v.label}</li>
         ))}
       </ul>
     ) : (
@@ -150,8 +150,8 @@ SummaryTable.ListRow.propTypes = {
   heading: PropTypes.string,
   value: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string,
-      id: PropTypes.string,
+      label: PropTypes.string,
+      value: PropTypes.string,
     })
   ),
 }

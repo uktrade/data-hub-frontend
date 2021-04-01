@@ -1,5 +1,10 @@
 const getArrayNamesAndIds = (data) =>
-  data.map((d) => ({ name: d.name, id: d.id }))
+  data.map((d) => ({ label: d.name, value: d.id }))
+
+const getNameAndId = (data) =>
+  data ? { value: data.id, label: data.name } : {}
+
+const idName2valueLabel = ({ id, name }) => ({ value: id, label: name })
 
 const transformInvestmentOpportunity = ({
   incomplete_details_fields,
@@ -27,23 +32,23 @@ const transformInvestmentOpportunity = ({
   detailsFields: {
     name,
     description,
-    ukRegions: uk_region_locations,
+    ukRegions: uk_region_locations.map(idName2valueLabel),
     promoters: getArrayNamesAndIds(promoters),
-    requiredChecks: required_checks_conducted?.name,
-    leadRelationshipManager: lead_dit_relationship_manager?.name,
-    assetClasses: asset_classes,
+    requiredChecks: getNameAndId(required_checks_conducted),
+    leadRelationshipManager: getNameAndId(lead_dit_relationship_manager),
+    assetClasses: asset_classes.map(idName2valueLabel),
     opportunityValue: {
       label: opportunity_value_type?.name || 'Opportunity value',
       value: opportunity_value,
     },
-    constructionRisks: construction_risks,
+    constructionRisks: construction_risks.map(idName2valueLabel),
   },
   requirementsFields: {
     totalInvestmentSought: total_investment_sought,
     currentInvestmentSecured: current_investment_secured,
-    investmentTypes: investment_types,
-    returnRate: estimated_return_rate?.name,
-    timeHorizons: time_horizons,
+    investmentTypes: investment_types.map(idName2valueLabel),
+    returnRate: getNameAndId(estimated_return_rate),
+    timeHorizons: time_horizons.map(idName2valueLabel),
   },
 })
 

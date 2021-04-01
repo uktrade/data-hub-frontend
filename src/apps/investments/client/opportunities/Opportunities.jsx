@@ -7,7 +7,6 @@ import {
   INVESTMENT_OPPORTUNITY_DETAILS__LOADED,
   INVESTMENT_OPPORTUNITY__EDIT_DETAILS,
   INVESTMENT_OPPORTUNITY__EDIT_REQUIREMENTS,
-  INVESTMENT_OPPORTUNITY__CANCEL_EDIT,
 } from '../../../../client/actions'
 
 import OpportunityDetails from './OpportunityDetails'
@@ -17,7 +16,6 @@ import Task from '../../../../client/components/Task'
 import TabNav from '../../../../client/components/TabNav'
 import ToggleSection from '../../../../client/components/ToggleSection'
 import SummaryTable from '../../../../client/components/SummaryTable'
-import SecondaryButton from '../../../../client/components/SecondaryButton'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 
 import styled from 'styled-components'
@@ -26,6 +24,7 @@ import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 
 import { VARIANTS } from '../../../../common/constants'
+import OpportunityDetailForm from './OpportunityDetailsForm'
 
 const StyledSpan = styled('span')`
   background: ${HIGHLIGHT_COLOUR};
@@ -58,9 +57,10 @@ const OpportunitySection = ({
   toggleName,
   idPrefix,
   children,
+  form,
   isEditing,
   onEdit,
-  onCancel,
+  formEnabled, // TODO: remove when there is a Requirements Form
 }) => (
   <>
     {RequiredFields(incompleteFields)}
@@ -70,18 +70,15 @@ const OpportunitySection = ({
       id={`${idPrefix}_toggle`}
     >
       {isEditing ? (
-        <>
-          <div>This will be a form</div>
-          <SecondaryButton onClick={onCancel} dataTest={`${idPrefix}_cancel`}>
-            Cancel
-          </SecondaryButton>
-        </>
+        <>{form}</>
       ) : (
         <>
           <SummaryTable>{children}</SummaryTable>
-          <Button onClick={onEdit} dataTest={`${idPrefix}_button`}>
-            Edit
-          </Button>
+          {formEnabled ? (
+            <Button onClick={onEdit} dataTest={`${idPrefix}_button`}>
+              Edit
+            </Button>
+          ) : null}
         </>
       )}
     </ToggleSection>
@@ -93,7 +90,6 @@ const Opportunities = ({
   details,
   onDetailsEdit,
   onRequirementsEdit,
-  onCancelEdit,
 }) => {
   const {
     detailsFields,
@@ -126,22 +122,25 @@ const Opportunities = ({
                     <OpportunitySection
                       incompleteFields={incompleteDetailsFields}
                       children={<OpportunityDetails details={detailsFields} />}
+                      form={
+                        <OpportunityDetailForm opportunityId={opportunityId} />
+                      }
                       toggleName="Opportunity details"
                       idPrefix="opportunity_details"
                       isEditing={isEditingDetails}
                       onEdit={onDetailsEdit}
-                      onCancel={onCancelEdit}
+                      formEnabled={true} // TODO: remove this conditional when Requirements form added
                     />
                     <OpportunitySection
                       incompleteFields={incompleteRequirementsFields}
                       children={
                         <OpportunityRequirements details={requirementsFields} />
                       }
+                      form={<div>This will be a form</div>}
                       toggleName="Opportunity requirements"
                       idPrefix="opportunity_requirements"
                       isEditing={isEditingRequirements}
                       onEdit={onRequirementsEdit}
-                      onCancel={onCancelEdit}
                     />
                   </>
                 ),
@@ -177,11 +176,6 @@ export default connect(state2props, (dispatch) => ({
   onRequirementsEdit: () => {
     dispatch({
       type: INVESTMENT_OPPORTUNITY__EDIT_REQUIREMENTS,
-    })
-  },
-  onCancelEdit: () => {
-    dispatch({
-      type: INVESTMENT_OPPORTUNITY__CANCEL_EDIT,
     })
   },
 }))(Opportunities)
