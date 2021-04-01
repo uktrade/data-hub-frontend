@@ -61,7 +61,7 @@ export const getDifferenceInDaysLabel = (dateIn) => {
 }
 
 export const getFinancialYearStart = (date) =>
-  date.getMonth() < 4 ? date.getFullYear() - 1 : date.getFullYear()
+  date.getMonth() < 3 ? date.getFullYear() - 1 : date.getFullYear()
 
 export const generateFinancialYearLabel = (yearStart) =>
   `${yearStart}-${(yearStart + 1).toString().slice(-2)}`

@@ -4,7 +4,7 @@ exports.investmentSummary = function (req, res) {
   const { annual_summaries, ...rest } = investmentSummary
   const now = new Date()
   const currentFinancialYearStart =
-    now.getMonth() < 4 ? now.getFullYear() - 1 : now.getFullYear()
+    now.getMonth() < 3 ? now.getFullYear() - 1 : now.getFullYear()
   const currentInvestmentSummary = {
     annual_summaries: annual_summaries.map(
       ({ financial_year, ...annualSummaryProps }, i) => {
