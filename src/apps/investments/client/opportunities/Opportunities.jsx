@@ -6,6 +6,7 @@ import { TASK_GET_OPPORTUNITY_DETAILS, ID, state2props } from './state'
 import { INVESTMENT_OPPORTUNITY_DETAILS__LOADED } from '../../../../client/actions'
 
 import OpportunityDetails from './OpportunityDetails'
+import OpportunityRequirements from './OpportunityRequirements'
 
 import Task from '../../../../client/components/Task'
 import TabNav from '../../../../client/components/TabNav'
@@ -65,7 +66,12 @@ const OpportunitySection = ({
 )
 
 const Opportunities = ({ opportunityId, details }) => {
-  const { detailsFields, incompleteDetailsFields } = details
+  const {
+    detailsFields,
+    requirementsFields,
+    incompleteDetailsFields,
+    incompleteRequirementsFields,
+  } = details
   return (
     <Task.Status
       name={TASK_GET_OPPORTUNITY_DETAILS}
@@ -92,7 +98,14 @@ const Opportunities = ({ opportunityId, details }) => {
                       toggleName="Opportunity details"
                       toggleId="opportunity_details_toggle"
                     />
-                    {/* TODO: Add requirements toggle with same pattern */}
+                    <OpportunitySection
+                      incompleteFields={incompleteRequirementsFields}
+                      children={
+                        <OpportunityRequirements details={requirementsFields} />
+                      }
+                      toggleName="Opportunity requirements"
+                      toggleId="opportunity_requirements_toggle"
+                    />
                   </>
                 ),
               },
