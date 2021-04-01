@@ -1,5 +1,10 @@
-var largeCapitalOpportunityList = require('../../../fixtures/v4/investment/large-capital-opportunity-list.json')
+var incompleteLargeCapitalOpportunity = require('../../../fixtures/v4/investment/large-capital-opportunity-incomplete.json')
+var completeLargeCapitalOpportunity = require('../../../fixtures/v4/investment/large-capital-opportunity-complete.json')
 
 exports.getLargeCapitalOpportunity = function (req, res) {
-  res.json(largeCapitalOpportunityList.results[0])
+  if (req.params.opportunityId == completeLargeCapitalOpportunity.id) {
+    res.json(completeLargeCapitalOpportunity)
+  } else {
+    res.json(incompleteLargeCapitalOpportunity)
+  }
 }
