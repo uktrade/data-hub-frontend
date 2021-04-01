@@ -22,7 +22,7 @@ import InvestmentDetails from './InvestmentDetails'
 import InvestmentNextSteps from './InvestmentNextSteps'
 
 const ListItem = styled('li')`
-  padding: ${SPACING.SCALE_3} 0;
+  padding: ${SPACING.SCALE_2} 0;
   border-bottom: 2px solid ${GREY_1};
   &:last-child {
     border-bottom: none;
