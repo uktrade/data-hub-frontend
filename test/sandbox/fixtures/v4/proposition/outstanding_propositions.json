@@ -1,12 +1,12 @@
 {
-    "count": 5,
+    "count": 3,
     "next": null,
     "previous": null,
     "results": [
         {
             "id": "3322750d-a645-4460-b584-8f9254459246",
             "investment_project": {
-                "name": "New restaurant",
+                "name": "University buildings",
                 "project_code": "DHP-00000004",
                 "id": "18750b26-a8c3-41b2-8d3a-fb0b930c2270"
             },
@@ -18,7 +18,7 @@
             },
             "deadline": "2021-04-01",
             "status": "ongoing",
-            "name": "List of cities",
+            "name": "Univeristy Proposition",
             "scope": "Parks and unemployment",
             "details": "Provided all materials.",
             "created_on": "2017-06-15T15:00:00Z",
@@ -39,7 +39,7 @@
         {
             "id": "45eef900-bd85-4679-824b-a74369cb6f18",
             "investment_project": {
-                "name": "New restaurant",
+                "name": "New restaurant with quite a big name going over two lines",
                 "project_code": "DHP-00000005",
                 "id": "18750b26-a8c3-41b2-8d3a-fb0b930c2270"
             },
@@ -51,7 +51,7 @@
             },
             "deadline": "2020-05-01",
             "status": "ongoing",
-            "name": "List of cities",
+            "name": "Park Proposal",
             "scope": "Parks",
             "details": "Initial scope was wrong.",
             "created_on": "2017-06-15T14:00:00Z",
@@ -72,7 +72,7 @@
         {
             "id": "74a7eafa-4582-4304-8027-022a75df4948",
             "investment_project": {
-                "name": "New restaurant",
+                "name": "Super Casino",
                 "project_code": "DHP-00000006",
                 "id": "18750b26-a8c3-41b2-8d3a-fb0b930c2270"
             },
@@ -83,72 +83,6 @@
                 "id": "5a644146-5298-4741-91f3-d5d7558adf47"
             },
             "deadline": "2020-05-05",
-            "status": "ongoing",
-            "name": "Superb prospect",
-            "scope": "Everything",
-            "details": "",
-            "created_on": "2017-06-15T12:00:00Z",
-            "created_by": {
-                "name": "Michael Wining",
-                "first_name": "Michael",
-                "last_name": "Wining",
-                "id": "d7493b4e-5d7b-4834-98d9-28b78a74052a"
-            },
-            "modified_on": "2017-06-15T12:00:00Z",
-            "modified_by": {
-                "name": "Michael Wining",
-                "first_name": "Michael",
-                "last_name": "Wining",
-                "id": "d7493b4e-5d7b-4834-98d9-28b78a74052a"
-            }
-        },
-        {
-            "id": "45eef900-bd85-4679-824b-a74369cb6f19",
-            "investment_project": {
-                "name": "University buildings",
-                "project_code": "DHP-00000007",
-                "id": "18750b26-a8c3-41b2-8d3a-fb0b930c2270"
-            },
-            "adviser": {
-                "name": "Paula Churing",
-                "first_name": "Paula",
-                "last_name": "Churing",
-                "id": "5a644146-5298-4741-91f3-d5d7558adf47"
-            },
-            "deadline": "2021-06-08",
-            "status": "ongoing",
-            "name": "List of cities",
-            "scope": "Parks",
-            "details": "Initial scope was wrong.",
-            "created_on": "2017-06-15T14:00:00Z",
-            "created_by": {
-                "name": "Michael Wining",
-                "first_name": "Michael",
-                "last_name": "Wining",
-                "id": "d7493b4e-5d7b-4834-98d9-28b78a74052a"
-            },
-            "modified_on": "2017-06-15T14:30:00Z",
-            "modified_by": {
-                "name": "Michael Wining",
-                "first_name": "Michael",
-                "last_name": "Wining",
-                "id": "d7493b4e-5d7b-4834-98d9-28b78a74052a"
-            }
-        },
-        {
-            "id": "74a7eafa-4582-4304-8027-022a75df4949",
-            "investment_project": {
-                "name": "Sports centre",
-                "project_code": "DHP-00000008",
-                "id": "18750b26-a8c3-41b2-8d3a-fb0b930c2270"
-            },
-            "adviser": {
-                "name": "Paula Churing",
-                "first_name": "Paula",
-                "last_name": "Churing",
-                "id": "5a644146-5298-4741-91f3-d5d7558adf47"
-            },
-            "deadline": "2021-06-09",
             "status": "ongoing",
             "name": "Superb prospect",
             "scope": "Everything",
