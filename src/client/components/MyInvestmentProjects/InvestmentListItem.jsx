@@ -13,8 +13,9 @@ import {
 
 import icon from './assets/search-gov.uk.svg'
 import { Tag } from '../../components'
-import { companies, investments } from '../../../lib/urls'
+import { investments } from '../../../lib/urls'
 import { STAGES } from './constants'
+import { investments } from '../../../lib/urls'
 import InvestmentEstimatedLandDate from './InvestmentEstimatedLandDate'
 import InvestmentTimeline from './InvestmentTimeline'
 import InvestmentDetails from './InvestmentDetails'
@@ -166,11 +167,11 @@ const InvestmentListItem = ({
         <ListItemHeaderActionContainer>
           <Button
             buttonColour={BLUE}
-            href={companies.interactions.create(investor_company.id)}
+            href={investments.projects.interactions.index(id)}
             as="a"
             data-test="add-interaction"
           >
-            Add interaction
+            View interactions
           </Button>
         </ListItemHeaderActionContainer>
       </ListItemHeaderContainer>
