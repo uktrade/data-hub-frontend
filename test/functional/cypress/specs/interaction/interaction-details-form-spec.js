@@ -305,6 +305,25 @@ describe('Interaction theme', () => {
     })
   })
 
+  context('when giving user guidance about trade agreement options', () => {
+    it('should permanently show a description about when to select trade agreement', () => {
+      cy.get('div [data-test="trade-agreement-guide"]').should(
+        'contain',
+        `If your Interaction was set up to focus on a Trade Agreement or contributes to implementing a Trade Agreement, select 'Trade Agreement’.`
+      )
+    })
+
+    it('should always have a see more guidance link', () => {
+      cy.get('div [data-test="trade-agreement-guide"]>a')
+        .should('contain', 'See more guidance')
+        .should(
+          'have.attr',
+          'href',
+          'https://data-services-help.trade.gov.uk/data-hub/how-articles/trade-agreement-activity/recording-trade-agreement-activity/'
+        )
+    })
+  })
+
   context('when creating an interaction', () => {
     beforeEach(() => {
       spyOnRequest()
