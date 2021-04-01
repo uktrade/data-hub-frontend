@@ -1,5 +1,6 @@
 const { assign, sortBy } = require('lodash')
 const { globalFields } = require('../../macros')
+const urls = require('../../../lib/urls')
 
 const eventFormConfig = (
   {
@@ -379,7 +380,7 @@ const eventFormConfig = (
     method: 'post',
     buttonText: eventId ? 'Save and return' : 'Add event',
     returnText: eventId ? 'Return without saving' : 'Cancel',
-    returnLink: eventId ? `/events/${eventId}` : '/events',
+    returnLink: eventId ? urls.events.details(eventId) : urls.events.index,
     hiddenFields: {
       id: eventId,
     },
