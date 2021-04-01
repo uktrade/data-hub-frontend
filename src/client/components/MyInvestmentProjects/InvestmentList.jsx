@@ -8,6 +8,7 @@ import InvestmentListItem from './InvestmentListItem'
 
 const StyledOrderedList = styled('ol')`
   margin-top: ${SPACING.SCALE_3};
+  border-top: 2px solid ${GREY_1};
   ${({ isPaginated }) => isPaginated && `border-bottom: 2px solid ${GREY_1};`}
 `
 
