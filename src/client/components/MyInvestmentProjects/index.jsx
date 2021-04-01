@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
+import { Paragraph } from 'govuk-react'
+import { GREY_1 } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
 import { ID, TASK_GET_MY_INVESTMENTS_LIST, state2props } from './state'
@@ -43,6 +45,11 @@ const StyledHeader = styled('header')`
       }
     }
   }
+`
+const StyledParagraph = styled(Paragraph)`
+  margin-top: ${SPACING.SCALE_3};
+  padding-top: ${SPACING.SCALE_3};
+  border-top: 2px solid ${GREY_1};
 `
 
 const MyInvestmentProjects = ({
@@ -97,17 +104,23 @@ const MyInvestmentProjects = ({
         const totalPages = Math.ceil(count / itemsPerPage)
         return (
           <>
-            <InvestmentList
-              data-test="my-investment-projects-list"
-              items={results}
-              isPaginated={totalPages > 1}
-              showDetails={showDetails}
-            />
-            <Pagination
-              totalPages={totalPages}
-              activePage={page}
-              onPageClick={onPaginationClick}
-            />
+            {results.length ? (
+              <>
+                <InvestmentList
+                  data-test="my-investment-projects-list"
+                  items={results}
+                  isPaginated={totalPages > 1}
+                  showDetails={showDetails}
+                />
+                <Pagination
+                  totalPages={totalPages}
+                  activePage={page}
+                  onPageClick={onPaginationClick}
+                />
+              </>
+            ) : (
+              <StyledParagraph>No investment projects</StyledParagraph>
+            )}
           </>
         )
       }}
