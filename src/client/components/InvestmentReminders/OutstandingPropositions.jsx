@@ -69,7 +69,7 @@ const OutstandingPropositions = ({ results, count }) => {
             </StyledProjectLink>
             <StyledDeadline>
               <StyledDueDate data-test="outstanding-proposition-deadline">
-                Due {format(new Date(deadline), 'd MMM yyyy')}
+                Due {format(new Date(deadline), 'dd MMM yyyy')}
               </StyledDueDate>
               <StyledDueCountdown data-test="outstanding-proposition-countdown">
                 {getDifferenceInDaysLabel(deadline)}

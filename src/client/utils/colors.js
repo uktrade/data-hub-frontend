@@ -18,3 +18,11 @@ export const hexToRgb = (colorHex) => {
  * Note that this currently only works with 6 digit hexes.
  */
 export const rgba = (colorHex, alpha) => `rgba(${hexToRgb(colorHex)},${alpha})`
+
+// The following colours are not included in either:
+// - https://github.com/penx/govuk-colours or
+// - https://github.com/govuk-react/govuk-react (which references govuk-colours)
+// Instead, the colours have been taken from:
+// - https://github.com/alphagov/govuk-frontend (referenced by GOV.UK Design System)
+export const DARK_GREY = '#505a5f'
+export const MID_GREY = '#b1b4b6'

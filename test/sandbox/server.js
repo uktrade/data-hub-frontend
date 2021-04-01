@@ -46,6 +46,7 @@ var v4ChCompany = require('./routes/v4/ch-company/company.js')
 var v4Company = require('./routes/v4/company/company.js')
 var v4CompanyList = require('./routes/v4/company-list/companyList.js')
 var v4Dnb = require('./routes/v4/dnb/index.js')
+var v4Investment = require('./routes/v4/investment/investment.js')
 var v4Adviser = require('./routes/v4/adviser/adviser.js')
 var v4Metadata = require('./routes/v4/metadata/index.js')
 var v4SearchCompany = require('./routes/v4/search/company.js')
@@ -443,6 +444,10 @@ app.patch(
   v4Company.largeInvestorProfilePatched
 )
 app.post('/v4/large-investor-profile', v4Company.largeInvestorProfilePostCreate)
+app.get(
+  '/v4/large-capital-opportunity/:opportunityId',
+  v4Investment.getLargeCapitalOpportunity
+)
 
 // V4 Proposition
 app.get('/v4/proposition', v4Proposition.propositions)
@@ -463,9 +468,9 @@ app.post(
 )
 
 // Whoami endpoint
-app.get('/whoami/', user.whoami)
-app.put('/whoami', user.setUserDitTeam)
-app.post('/whoami', user.resetUserDitTeam)
+app.get('/whoami', user.whoami)
+app.put('/whoami', user.setWhoami)
+app.post('/whoami', user.resetWhoami)
 
 // Help centre endpoint
 app.get('/help-centre/announcement', helpCentre.announcement)

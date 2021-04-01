@@ -90,6 +90,9 @@ import * as dnbCheck from '../apps/companies/apps/business-details/client/tasks'
 import { TASK_GET_PROFILES_LIST } from '../apps/investments/client/profiles/state'
 import * as investmentProfilesTasks from '../apps/investments/client/profiles/tasks'
 
+import { TASK_GET_OPPORTUNITY_DETAILS } from '../apps/investments/client/opportunities/state'
+import * as investmentOpportunitiesTasks from '../apps/investments/client/opportunities/tasks'
+
 import {
   TASK_GET_PROJECTS_LIST,
   TASK_GET_ADVISER_NAME,
@@ -98,7 +101,10 @@ import {
 import * as getInvestmentProjects from '../apps/investments/client/projects/tasks'
 
 import * as myInvestmentProjects from './components/MyInvestmentProjects/tasks'
-import { TASK_GET_MY_INVESTMENTS_LIST } from './components/MyInvestmentProjects/state'
+import {
+  TASK_GET_MY_INVESTMENTS_LIST,
+  TASK_CHECK_FOR_INVESTMENTS,
+} from './components/MyInvestmentProjects/state'
 
 import { fetchInvestmentSummaryDataRanges } from './components/InvestmentProjectSummary/tasks'
 import { TASK_GET_INVESTMENT_SUMMARY_DATA_RANGES } from './components/InvestmentProjectSummary/state'
@@ -162,6 +168,8 @@ function App() {
         [TASK_OPEN_CONTACT_FORM]: addInteractionFormTasks.openContactForm,
         [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
         [TASK_UPDATE_ADVISER]: manageAdviser.updateAdviser,
+        [TASK_GET_OPPORTUNITY_DETAILS]:
+          investmentOpportunitiesTasks.getOpportunityDetail,
         [DNB__CHECK_PENDING_REQUEST]: dnbCheck.checkIfPendingRequest,
         [TASK_GET_PROFILES_LIST]:
           investmentProfilesTasks.getLargeCapitalProfiles,
@@ -169,6 +177,8 @@ function App() {
         [TASK_GET_ADVISER_NAME]: getInvestmentProjects.getAdviserNames,
         [TASK_GET_INVESTMENTS_PROJECTS_METADATA]:
           getInvestmentProjects.getMetadata,
+        [TASK_CHECK_FOR_INVESTMENTS]:
+          myInvestmentProjects.fetchMyInvestmentsList,
         [TASK_GET_MY_INVESTMENTS_LIST]:
           myInvestmentProjects.fetchMyInvestmentsList,
         [TASK_GET_INVESTMENT_SUMMARY_DATA_RANGES]: fetchInvestmentSummaryDataRanges,
