@@ -542,14 +542,15 @@ describe('Investment theme', () => {
 
     it('should save the interaction', () => {
       submitForm(KINDS.INTERACTION, THEMES.INVESTMENT, {
-        service: 'Investment - Services',
+        service: 'Enquiry received',
+        subservice: 'General Investment Enquiry',
       })
 
       assertRequestBody(
         {
           ...COMMON_REQUEST_BODY,
           theme: 'investment',
-          service: '0596b92b-3499-e211-a939-e4115bead28a',
+          service: '3a0bba2b-3499-e211-a939-e4115bead28a',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           kind: 'interaction',
           event: null,
@@ -640,7 +641,8 @@ describe('Adding an interaction from a referral', () => {
     cy.contains('Continue').click()
 
     submitForm(KINDS.INTERACTION, THEMES.EXPORT, {
-      service: 'Referral to UKEF',
+      service: 'A Specific DIT Export Service or Funding',
+      subservice: 'Export Academy',
       contact: null,
     })
 
@@ -652,7 +654,7 @@ describe('Adding an interaction from a referral', () => {
         },
         contacts: [referral.contact.id], // Was prepopulated
         theme: 'export',
-        service: '43dd37db-325f-4cd4-9418-a62ab9c53dda',
+        service: 'e64d7719-0bd9-65df-55a9-f08d328bc467',
         communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
         were_countries_discussed: 'yes',
         kind: 'interaction',
@@ -764,13 +766,11 @@ describe('Filtering services based on theme & kind', () => {
       [
         '-- Select service --',
         'A Specific DIT Export Service or Funding',
+        'Account Management',
         'Enquiry or Referral Received',
-        'Export Relationship Management',
-        'Global Growth Service',
+        'Export Win',
         'Making Export Introductions',
         'Providing Export Advice & Information',
-        'Referral to UKEFRelationship Management',
-        'Trade - EnquiryTrade - Services',
       ].join('')
     )
   })
@@ -783,12 +783,9 @@ describe('Filtering services based on theme & kind', () => {
       [
         '-- Select service --',
         'A Specific DIT Export Service or Funding',
-        'Enquiry or Referral Received',
-        'Events - Overseas',
+        'Account Management',
         'Events',
-        'Export Relationship Management',
-        'Global Growth Service',
-        'Relationship Management',
+        'Export Win',
       ].join('')
     )
   })
@@ -800,15 +797,11 @@ describe('Filtering services based on theme & kind', () => {
       'have.text',
       [
         '-- Select service --',
+        'Account Management',
         'Enquiry received',
         'IST Specific Service',
-        'Investment - Aftercare Company Visit',
-        'Investment - Business Proposition',
-        'Investment - Company Visit',
-        'Investment - Services',
         'Making Investment Introductions',
         'Providing Investment Advice & Information',
-        'Relationship Management',
       ].join('')
     )
   })
@@ -820,22 +813,11 @@ describe('Filtering services based on theme & kind', () => {
       'have.text',
       [
         '-- Select service --',
-        'A Specific DIT Export Service or Funding',
-        'A Specific DIT Service',
         'A Specific Service',
+        'Account Management',
         'Enquiry or Referral Received',
-        'Global Growth Pilot (2017)',
-        'Global Growth Pilot (2017) – Diagnostic Output Report completed',
-        'Global Growth Pilot (2017) – Diagnostic completed',
-        'Global Growth Pilot (2017) – Export Growth Plan agreed with customer',
-        'Global Growth Pilot (2017) – GGP process complete',
-        'Investment - Aftercare Company Visit',
-        'Investment - Business Proposition',
-        'Investment - Company Visit',
-        'Investment - Services',
-        'Onward Referral',
-        'Relationship Management',
-        'Trade - EnquiryTrade - Services',
+        'Making Other Introductions',
+        'Providing Other Advice & Information',
       ].join('')
     )
   })
@@ -847,13 +829,9 @@ describe('Filtering services based on theme & kind', () => {
       'have.text',
       [
         '-- Select service --',
-        'A Specific DIT Service',
         'A Specific Service',
-        'Enquiry or Referral Received',
-        'Events - Overseas',
+        'Account Management',
         'Events',
-        'Global Growth Pilot (2017) – Eligible GGP customer',
-        'Relationship Management',
       ].join('')
     )
   })

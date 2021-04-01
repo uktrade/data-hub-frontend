@@ -60,7 +60,7 @@ const StepInteractionType = ({ isTradeAgreementInteractionEnabled }) => {
     onChange: getInvestmentOnChangeHandler(setFieldValue),
   }
   const tradeAgreementOption = {
-    label: 'Trade Agreement',
+    label: 'Trade agreement',
     value: THEMES.TRADE_AGREEMENT,
     onChange: getTradeAgreementOnChangeHandler(setFieldValue),
   }
