@@ -51,7 +51,7 @@ export const SORT_OPTIONS = [
 export const INCOMPLETE_FIELDS = {
   client_cannot_provide_total_investment:
     'Includes capital, operational and R&D expenditure',
-  number_new_jobs: 'New jobs',
+  number_new_jobs: 'Number of new jobs',
   strategic_drivers: 'Strategic drivers behind this investment',
   client_requirements: 'Client requirements',
   client_considering_other_countries:

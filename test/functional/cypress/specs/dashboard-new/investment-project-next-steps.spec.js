@@ -75,7 +75,7 @@ describe('Dashboard - Investment project next steps', () => {
           'Includes capital, operational and R&D expenditure'
         )
         .next()
-        .should('have.text', 'New jobs')
+        .should('have.text', 'Number of new jobs')
     })
     it('should display a link to the project details page', () => {
       cy.get('@lessThanThreeSteps')
@@ -126,7 +126,7 @@ describe('Dashboard - Investment project next steps', () => {
         .find('ul li')
         .should(
           'have.text',
-          'Client requirementsIncludes capital, operational and R&D expenditureNew jobsPlus 1 additional field'
+          'Client requirementsIncludes capital, operational and R&D expenditureNumber of new jobsPlus 1 additional field'
         )
     })
     it('should display a link to the project details page', () => {
