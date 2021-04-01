@@ -36,7 +36,7 @@ const CreateUKInvestmentOpportunity = ({
 
       return (
         <HardRedirect
-          to={`/investments/opportunities/${newOpportunityId}`}
+          to={`/investments/opportunities/${newOpportunityId}/details`}
           when={newOpportunityId}
         >
           <TaskLoadingBox name={TASK_NAME} id={id} when={newOpportunityId}>
