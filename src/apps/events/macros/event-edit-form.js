@@ -90,7 +90,7 @@ const eventFormConfig = (
         label: 'Event name',
       },
       assign({}, globalFields.eventTypes, {
-        options: eventTypes,
+        options: { ...eventTypes },
       }),
       {
         macroName: 'DateFieldset',
@@ -105,7 +105,7 @@ const eventFormConfig = (
       assign({}, globalFields.locationTypes, {
         label: 'Event location type',
         optional: true,
-        options: locationTypes,
+        options: { ...locationTypes },
       }),
       {
         macroName: 'TextField',
@@ -137,14 +137,14 @@ const eventFormConfig = (
       },
       assign({}, globalFields.countries, {
         name: 'address_country',
-        options: countries,
+        options: { ...countries },
       }),
       assign({}, globalFields.ukRegions, {
         condition: {
           name: 'address_country',
           value: '80756b9a-5d95-e211-a939-e4115bead28a',
         },
-        options: ukRegions,
+        options: { ...ukRegions },
       }),
       {
         macroName: 'TextField',
@@ -157,7 +157,7 @@ const eventFormConfig = (
         name: 'lead_team',
         label: 'Team hosting the event',
         optional: false,
-        options: teams,
+        options: { ...teams },
       }),
       assign({}, globalFields.serviceDeliveryServices, {
         options: sortBy(services, (option) => option.label),
@@ -170,7 +170,7 @@ const eventFormConfig = (
         classes: 'c-form-group c-form-group--no-filter',
         placeholder: 'Search organiser',
         multipleSelect: false,
-        options: advisers,
+        options: { ...advisers },
         target: 'metadata',
       },
       {
@@ -203,7 +203,7 @@ const eventFormConfig = (
             isLabelHidden: true,
             persistsConditionalValue: true,
             optional: true,
-            options: teams,
+            options: { ...teams },
           }),
         ],
         modifier: 'subfield',
@@ -223,7 +223,7 @@ const eventFormConfig = (
             label: 'Related programmes',
             isLabelHidden: true,
             optional: true,
-            options: programmes,
+            options: { ...programmes },
           }),
         ],
       },
@@ -236,7 +236,7 @@ const eventFormConfig = (
         label: 'Event name',
       },
       assign({}, globalFields.eventTypes, {
-        options: eventTypes,
+        options: { ...eventTypes },
       }),
       {
         macroName: 'DateFieldset',
@@ -251,7 +251,7 @@ const eventFormConfig = (
       assign({}, globalFields.locationTypes, {
         label: 'Event location type',
         optional: true,
-        options: locationTypes,
+        options: { ...locationTypes },
       }),
       {
         macroName: 'TextField',
@@ -283,14 +283,14 @@ const eventFormConfig = (
       },
       assign({}, globalFields.countries, {
         name: 'address_country',
-        options: countries,
+        options: { ...countries },
       }),
       assign({}, globalFields.ukRegions, {
         condition: {
           name: 'address_country',
           value: '80756b9a-5d95-e211-a939-e4115bead28a',
         },
-        options: ukRegions,
+        options: { ...ukRegions },
       }),
       {
         macroName: 'TextField',
@@ -303,7 +303,7 @@ const eventFormConfig = (
         name: 'lead_team',
         label: 'Team hosting the event',
         optional: false,
-        options: teams,
+        options: { ...teams },
       }),
       assign({}, globalFields.serviceDeliveryServices, {
         options: sortBy(services, (option) => option.label),
@@ -349,7 +349,7 @@ const eventFormConfig = (
             isLabelHidden: true,
             persistsConditionalValue: true,
             optional: true,
-            options: teams,
+            options: { ...teams },
           }),
         ],
         modifier: 'subfield',
@@ -369,7 +369,7 @@ const eventFormConfig = (
             label: 'Related programmes',
             isLabelHidden: true,
             optional: true,
-            options: programmes,
+            options: { ...programmes },
           }),
         ],
       },
