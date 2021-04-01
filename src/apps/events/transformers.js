@@ -187,13 +187,10 @@ function transformEventResponseToFormBody(props = {}) {
 function transformEventFormBodyToApiRequest(props, featureFlags) {
   const teamsArray = castCompactArray(props.teams)
   const related_programmes = castCompactArray(props.related_programmes)
-  let related_trade_agreements
-  if (featureFlags && featureFlags.relatedTradeAgreements) {
-    castRelatedTradeAgreements()
-  } else {
-    related_trade_agreements = []
-  }
-
+  const related_trade_agreements =
+    featureFlags && featureFlags.relatedTradeAgreements
+      ? castRelatedTradeAgreements()
+      : []
   const teams = props.lead_team
     ? teamsArray.concat(props.lead_team)
     : teamsArray
@@ -209,17 +206,11 @@ function transformEventFormBodyToApiRequest(props, featureFlags) {
   })
 
   function castRelatedTradeAgreements() {
-    if (props.related_trade_agreements_exist === 'true') {
-      if (props.related_trade_agreements.length === 0) {
-        related_trade_agreements = null
-      } else {
-        related_trade_agreements = castCompactArray(
-          props.related_trade_agreements
-        )
-      }
-    } else if (props.related_trade_agreements_exist === 'false') {
-      related_trade_agreements = []
-    }
+    return props.related_trade_agreements_exist === 'true'
+      ? props.related_trade_agreements.length === 0
+        ? null
+        : castCompactArray(props.related_trade_agreements)
+      : []
   }
 }
 
