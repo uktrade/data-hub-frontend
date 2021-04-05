@@ -141,7 +141,7 @@
     "react-dom": "^16.13.1",
     "react-lines-ellipsis": "^0.14.1",
     "react-markdown": "^5.0.3",
-    "react-redux": "^7.2.2",
+    "react-redux": "^7.2.3",
     "react-router-dom": "^5.1.2",
     "react-string-replace": "^0.4.4",
     "react-use": "^17.1.1",
