@@ -134,7 +134,7 @@
     "postcss-loader": "^4.1.0",
     "prop-types": "^15.6.2",
     "pure-uuid": "^1.6.2",
-    "qs": "^6.9.6",
+    "qs": "^6.10.1",
     "raven": "^2.6.2",
     "react": "^17.0.2",
     "react-app-polyfill": "^2.0.0",
