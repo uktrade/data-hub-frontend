@@ -2,13 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Timeline } from '../../components'
+import { STAGES } from './constants'
 
 const InvestmentTimeline = ({ stage, ...props }) => (
-  <Timeline
-    stages={['Prospect', 'Assign PM', 'Active', 'Verify win', 'Won']}
-    currentStage={stage.name}
-    {...props}
-  />
+  <Timeline stages={STAGES} currentStage={stage.name} {...props} />
 )
 
 InvestmentTimeline.propTypes = {
