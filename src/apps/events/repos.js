@@ -2,9 +2,11 @@ const config = require('../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
 const { search } = require('../../modules/search/services')
 
-function saveEvent(req, event) {
+function saveEvent(req, event, featureFlags) {
+  const version =
+    featureFlags && featureFlags.relatedTradeAgreements ? 'v4' : 'v3'
   const options = {
-    url: `${config.apiRoot}/v3/event`,
+    url: `${config.apiRoot}/${version}/event`,
     method: 'POST',
     body: event,
   }

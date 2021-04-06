@@ -58,5 +58,9 @@
   {
     "code": "capital-investments-filters",
     "is_active": true
+  },
+  {
+    "code": "relatedTradeAgreements",
+    "is_active": true
   }
 ]

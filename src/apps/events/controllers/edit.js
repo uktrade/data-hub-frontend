@@ -1,5 +1,5 @@
 /* eslint camelcase: 0 */
-const { assign, merge, get, pickBy } = require('lodash')
+const { merge, get, pickBy } = require('lodash')
 
 const { eventFormConfig } = require('../macros')
 const { transformEventResponseToFormBody } = require('../transformers')
@@ -73,7 +73,7 @@ async function renderEditPage(req, res, next) {
     )
 
     const eventForm = buildFormWithStateAndErrors(
-      eventFormConfig(assign({}, { eventId }, options)),
+      eventFormConfig({ eventId, ...options }, res.locals.features),
       mergedData,
       get(res.locals, 'form.errors.messages')
     )

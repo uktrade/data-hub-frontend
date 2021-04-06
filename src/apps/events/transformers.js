@@ -184,9 +184,13 @@ function transformEventResponseToFormBody(props = {}) {
   })
 }
 
-function transformEventFormBodyToApiRequest(props) {
+function transformEventFormBodyToApiRequest(props, featureFlags) {
   const teamsArray = castCompactArray(props.teams)
   const related_programmes = castCompactArray(props.related_programmes)
+  const related_trade_agreements =
+    featureFlags && featureFlags.relatedTradeAgreements
+      ? castRelatedTradeAgreements()
+      : []
   const teams = props.lead_team
     ? teamsArray.concat(props.lead_team)
     : teamsArray
@@ -198,7 +202,16 @@ function transformEventFormBodyToApiRequest(props) {
     teams: uniq(teams),
     organiser: organiser,
     related_programmes,
+    related_trade_agreements,
   })
+
+  function castRelatedTradeAgreements() {
+    return props.has_related_trade_agreements === 'true'
+      ? props.related_trade_agreements.length === 0
+        ? null
+        : castCompactArray(props.related_trade_agreements)
+      : []
+  }
 }
 
 module.exports = {

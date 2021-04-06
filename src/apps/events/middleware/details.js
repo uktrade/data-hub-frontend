@@ -7,10 +7,14 @@ const {
 const { fetchEvent, saveEvent } = require('../repos')
 
 async function postDetails(req, res, next) {
-  res.locals.requestBody = transformEventFormBodyToApiRequest(req.body)
+  const featureFlags = res.locals.features
+  res.locals.requestBody = transformEventFormBodyToApiRequest(
+    req.body,
+    featureFlags
+  )
 
   try {
-    const result = await saveEvent(req, res.locals.requestBody)
+    const result = await saveEvent(req, res.locals.requestBody, featureFlags)
 
     if (!res.locals.event) {
       req.flash('success', 'Event created')
