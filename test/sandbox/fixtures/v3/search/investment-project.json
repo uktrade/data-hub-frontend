@@ -2,6 +2,7 @@
   "count": 6023,
   "results": [
     {
+      "incomplete_fields": [],
       "actual_uk_regions": [
         {
           "id": "814cd12a-6095-e211-a939-e4115bead28a",
@@ -190,6 +191,39 @@
       "government_assistance": true
     },
     {
+      "incomplete_fields": [
+        "client_cannot_provide_total_investment",
+        "number_new_jobs",
+        "strategic_drivers",
+        "client_requirements",
+        "client_considering_other_countries",
+        "project_manager",
+        "project_assurance_adviser",
+        "client_cannot_provide_foreign_investment",
+        "government_assistance",
+        "number_safeguarded_jobs",
+        "r_and_d_budget",
+        "non_fdi_r_and_d_budget",
+        "new_tech_to_uk",
+        "export_revenue",
+        "address_1",
+        "address_town",
+        "address_postcode",
+        "actual_uk_regions",
+        "delivery_partners",
+        "actual_land_date",
+        "referral_source_activity_event",
+        "other_business_activity",
+        "referral_source_activity_marketing",
+        "referral_source_activity_website",
+        "fdi_type",
+        "total_investment",
+        "competitor_countries",
+        "uk_region_locations",
+        "foreign_equity_investment",
+        "average_salary",
+        "associated_non_fdi_r_and_d_project"
+      ],
       "actual_uk_regions": [],
       "archived_by": null,
       "associated_non_fdi_r_and_d_project": null,
@@ -345,6 +379,10 @@
       "government_assistance": true
     },
     {
+      "incomplete_fields": [
+        "client_cannot_provide_total_investment",
+        "number_new_jobs"
+      ],
       "actual_uk_regions": [],
       "archived_by": null,
       "associated_non_fdi_r_and_d_project": null,
@@ -517,6 +555,12 @@
       "government_assistance": true
     },
     {
+      "incomplete_fields": [
+        "client_cannot_provide_total_investment",
+        "number_new_jobs",
+        "strategic_drivers",
+        "client_requirements"
+      ],
       "actual_uk_regions": [],
       "archived_by": null,
       "associated_non_fdi_r_and_d_project": null,
@@ -714,6 +758,14 @@
       "government_assistance": true
     },
     {
+      "incomplete_fields": [
+        "client_cannot_provide_total_investment",
+        "number_new_jobs",
+        "strategic_drivers",
+        "client_requirements",
+        "client_considering_other_countries",
+        "project_manager"
+      ],
       "actual_uk_regions": [],
       "archived_by": null,
       "associated_non_fdi_r_and_d_project": null,
@@ -893,6 +945,25 @@
       "government_assistance": true
     },
     {
+      "incomplete_fields": [
+        "client_cannot_provide_total_investment",
+        "number_new_jobs",
+        "strategic_drivers",
+        "client_requirements",
+        "client_considering_other_countries",
+        "project_manager",
+        "project_assurance_adviser",
+        "client_cannot_provide_foreign_investment",
+        "government_assistance",
+        "number_safeguarded_jobs",
+        "r_and_d_budget",
+        "non_fdi_r_and_d_budget",
+        "new_tech_to_uk",
+        "export_revenue",
+        "address_1",
+        "address_town",
+        "address_postcode"
+      ],
       "actual_uk_regions": [],
       "archived_by": null,
       "associated_non_fdi_r_and_d_project": null,
@@ -1051,6 +1122,15 @@
       "government_assistance": true
     },
     {
+      "incomplete_fields": [
+        "client_cannot_provide_total_investment",
+        "number_new_jobs",
+        "strategic_drivers",
+        "client_requirements",
+        "client_considering_other_countries",
+        "project_manager",
+        "project_assurance_adviser"
+      ],
       "actual_uk_regions": [],
       "archived_by": null,
       "associated_non_fdi_r_and_d_project": null,
@@ -1227,6 +1307,24 @@
       "government_assistance": true
     },
     {
+      "incomplete_fields": [
+        "client_cannot_provide_total_investment",
+        "number_new_jobs",
+        "strategic_drivers",
+        "client_requirements",
+        "client_considering_other_countries",
+        "project_manager",
+        "project_assurance_adviser",
+        "client_cannot_provide_foreign_investment",
+        "government_assistance",
+        "number_safeguarded_jobs",
+        "r_and_d_budget",
+        "non_fdi_r_and_d_budget",
+        "new_tech_to_uk",
+        "export_revenue",
+        "address_1",
+        "address_town"
+      ],
       "actual_uk_regions": [],
       "archived_by": null,
       "associated_non_fdi_r_and_d_project": null,
@@ -1374,6 +1472,9 @@
       "government_assistance": null
     },
     {
+      "incomplete_fields": [
+        "client_cannot_provide_total_investment"
+      ],
       "actual_uk_regions": [
         {
           "id": "814cd12a-6095-e211-a939-e4115bead28a",
@@ -1567,6 +1668,24 @@
       "government_assistance": true
     },
     {
+      "incomplete_fields": [
+        "client_cannot_provide_total_investment",
+        "number_new_jobs",
+        "strategic_drivers",
+        "client_requirements",
+        "client_considering_other_countries",
+        "project_manager",
+        "project_assurance_adviser",
+        "client_cannot_provide_foreign_investment",
+        "government_assistance",
+        "number_safeguarded_jobs",
+        "r_and_d_budget",
+        "non_fdi_r_and_d_budget",
+        "new_tech_to_uk",
+        "export_revenue",
+        "address_1",
+        "address_town"
+      ],
       "actual_uk_regions": [],
       "archived_by": null,
       "associated_non_fdi_r_and_d_project": null,

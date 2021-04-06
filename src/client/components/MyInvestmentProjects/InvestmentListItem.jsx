@@ -14,9 +14,11 @@ import {
 import icon from './assets/search-gov.uk.svg'
 import { Tag } from '../../components'
 import { companies, investments } from '../../../lib/urls'
+import { STAGES } from './constants'
 import InvestmentEstimatedLandDate from './InvestmentEstimatedLandDate'
 import InvestmentTimeline from './InvestmentTimeline'
 import InvestmentDetails from './InvestmentDetails'
+import InvestmentNextSteps from './InvestmentNextSteps'
 
 const ListItem = styled('li')`
   padding: ${SPACING.SCALE_3} 0;
@@ -31,6 +33,7 @@ const Row = styled('div')`
 
   ${MEDIA_QUERIES.LARGESCREEN} {
     display: flex;
+    align-items: stretch;
     justify-content: space-between;
     flex-wrap: wrap;
   }
@@ -42,7 +45,8 @@ const Row = styled('div')`
 const Col = styled('div')`
   margin-bottom: ${SPACING.SCALE_3};
   ${MEDIA_QUERIES.LARGESCREEN} {
-    width: calc(50% - ${SPACING.SCALE_3});
+    width: ${({ fullWidth }) =>
+      fullWidth ? '100%' : `calc(50% - ${SPACING.SCALE_2})`};
     margin-bottom: 0;
   }
 `
@@ -141,7 +145,9 @@ const InvestmentListItem = ({
   sector,
   country_investment_originates_from,
   latest_interaction,
+  incomplete_fields,
 }) => {
+  const hasStepsToComplete = !!incomplete_fields.length
   return (
     <ListItem data-test="projects-list-item">
       <ListItemHeaderContainer>
@@ -180,7 +186,7 @@ const InvestmentListItem = ({
           />
         </Row>
         <Row>
-          <Col>
+          <Col fullWidth={!hasStepsToComplete}>
             <InvestmentDetails
               investor={investor_company}
               sector={sector}
@@ -188,6 +194,15 @@ const InvestmentListItem = ({
               latestInteraction={latest_interaction}
             />
           </Col>
+          {hasStepsToComplete && (
+            <Col>
+              <InvestmentNextSteps
+                nextSteps={incomplete_fields}
+                nextStage={STAGES[STAGES.indexOf(stage.name) + 1]}
+                projectId={id}
+              />
+            </Col>
+          )}
         </Row>
       </StyledDetails>
     </ListItem>

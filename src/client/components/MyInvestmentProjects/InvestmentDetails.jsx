@@ -8,6 +8,7 @@ import { format } from '../../utils/date-utils'
 import { DARK_GREY } from '../../utils/colors'
 
 const StyledDiv = styled('div')`
+  height: 100%;
   background-color: ${GREY_3};
   padding: 9px ${SPACING.SCALE_2} 8px ${SPACING.SCALE_2};
 `
