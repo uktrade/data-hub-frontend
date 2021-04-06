@@ -89,6 +89,8 @@ import dataSummaryPickerReducer from './components/DataSummaryPicker/reducer'
 import { ID as INVESTMENT_REMINDERS_ID } from './components/InvestmentReminders/state'
 import investmentRemindersReducer from './components/InvestmentReminders/reducer'
 
+import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
+
 import RoutedInput from './components/RoutedInput'
 
 const sagaMiddleware = createSagaMiddleware()
@@ -127,6 +129,7 @@ const store = createStore(
     ...DropdownMenu.reducerSpread,
     ...ToggleSection.reducerSpread,
     ...RoutedInput.reducerSpread,
+    ...CreateUKInvestmentOpportunity.reducerSpread,
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
     [INVESTEMENT_PROJECT_ADMIN_ID]: investmentProjectAdminReducer,

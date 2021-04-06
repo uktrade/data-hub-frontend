@@ -9,8 +9,9 @@ const StyledNotificationSpan = styled('span')`
   font-weight: ${FONT_WEIGHTS.bold};
   color: ${WHITE};
   display: inline-block;
+  height: 1em;
   min-width: 15px;
-  padding: 5px 8px 2px 8px;
+  padding: 0 6px 2px;
   border-radius: 75px;
   background-color: ${RED};
   text-align: center;
