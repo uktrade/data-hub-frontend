@@ -36,6 +36,7 @@ const StyledButton = styled('button')`
     background: transparent;
     border: none;
     font-size: ${FONT_SIZE.SIZE_19};
+    font-family: inherit;
     color: ${BLUE};
     cursor: pointer;
     font-weight: ${FONT_WEIGHTS.regular};
@@ -64,6 +65,7 @@ const ButtonContent = styled('span')`
 
 const BadgeContainer = styled('span')`
   margin-left: ${SPACING.SCALE_1};
+  padding: ${SPACING.SCALE_3} 0;
 `
 
 const PrimaryToggleSection = ({
