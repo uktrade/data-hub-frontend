@@ -7,7 +7,7 @@ export const fetchOutstandingPropositions = ({ adviser }) =>
         adviser_id: adviser.id,
         status: 'ongoing',
         sortby: 'deadline',
-        limit: 5,
+        limit: 3,
       },
     })
     .then(({ data }) => data)
