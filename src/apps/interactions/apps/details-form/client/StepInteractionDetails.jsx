@@ -415,57 +415,59 @@ const StepInteractionDetails = ({
         </>
       )}
 
-      {!values.id && values.theme !== THEMES.INVESTMENT && (
-        <>
-          <FieldRadios
-            inline={true}
-            name="were_countries_discussed"
-            legend="Were any countries discussed?"
-            required="Answer if any countries were discussed"
-            options={OPTIONS_YES_NO}
-          />
-          {values.were_countries_discussed === OPTION_YES && (
-            <>
-              <FieldTypeahead
-                name={EXPORT_INTEREST_STATUS.EXPORTING_TO}
-                label="Countries currently exporting to"
-                hint="Add all that you discussed"
-                placeholder="-- Search countries --"
-                options={countries}
-                validate={[
-                  validateRequiredCountries,
-                  validatedDuplicatedCountries,
-                ]}
-                isMulti={true}
-              />
-              <FieldTypeahead
-                name={EXPORT_INTEREST_STATUS.FUTURE_INTEREST}
-                label="Future countries of interest"
-                hint="Add all that you discussed"
-                placeholder="-- Search countries --"
-                options={countries}
-                validate={[
-                  validateRequiredCountries,
-                  validatedDuplicatedCountries,
-                ]}
-                isMulti={true}
-              />
-              <FieldTypeahead
-                name={EXPORT_INTEREST_STATUS.NOT_INTERESTED}
-                label="Countries not interested in"
-                hint="Add all that you discussed"
-                placeholder="-- Search countries --"
-                options={countries}
-                validate={[
-                  validateRequiredCountries,
-                  validatedDuplicatedCountries,
-                ]}
-                isMulti={true}
-              />
-            </>
-          )}
-        </>
-      )}
+      {!values.id &&
+        values.theme !== THEMES.INVESTMENT &&
+        values.theme !== THEMES.TRADE_AGREEMENT && (
+          <>
+            <FieldRadios
+              inline={true}
+              name="were_countries_discussed"
+              legend="Were any countries discussed?"
+              required="Answer if any countries were discussed"
+              options={OPTIONS_YES_NO}
+            />
+            {values.were_countries_discussed === OPTION_YES && (
+              <>
+                <FieldTypeahead
+                  name={EXPORT_INTEREST_STATUS.EXPORTING_TO}
+                  label="Countries currently exporting to"
+                  hint="Add all that you discussed"
+                  placeholder="-- Search countries --"
+                  options={countries}
+                  validate={[
+                    validateRequiredCountries,
+                    validatedDuplicatedCountries,
+                  ]}
+                  isMulti={true}
+                />
+                <FieldTypeahead
+                  name={EXPORT_INTEREST_STATUS.FUTURE_INTEREST}
+                  label="Future countries of interest"
+                  hint="Add all that you discussed"
+                  placeholder="-- Search countries --"
+                  options={countries}
+                  validate={[
+                    validateRequiredCountries,
+                    validatedDuplicatedCountries,
+                  ]}
+                  isMulti={true}
+                />
+                <FieldTypeahead
+                  name={EXPORT_INTEREST_STATUS.NOT_INTERESTED}
+                  label="Countries not interested in"
+                  hint="Add all that you discussed"
+                  placeholder="-- Search countries --"
+                  options={countries}
+                  validate={[
+                    validateRequiredCountries,
+                    validatedDuplicatedCountries,
+                  ]}
+                  isMulti={true}
+                />
+              </>
+            )}
+          </>
+        )}
     </>
   )
 }

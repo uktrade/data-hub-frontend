@@ -227,7 +227,7 @@ function submitForm(kind, theme, values) {
   cy.get('#interaction-details-form').within(() => {
     fillCommonFields(values)
 
-    if (theme !== THEMES.INVESTMENT) {
+    if (theme !== THEMES.INVESTMENT && theme !== THEMES.TRADE_AGREEMENT) {
       fillExportCountriesFields()
     }
 
@@ -250,11 +250,11 @@ function submitForm(kind, theme, values) {
         .next()
         .find('input')
         .type('456')
+      if (theme !== THEMES.TRADE_AGREEMENT) {
+        cy.contains(ELEMENT_IS_EVENT.legend).next().find('input').check('yes')
 
-      cy.contains(ELEMENT_IS_EVENT.legend).next().find('input').check('yes')
-
-      cy.get('#field-event-1').parent().selectTypeaheadOption('Sort event')
-      // Searching directly for 'event' string causes a false positive as it matches other elements.
+        cy.get('#field-event-1').parent().selectTypeaheadOption('Sort event')
+      }
     }
 
     cy.contains('Add interaction').click()
@@ -609,7 +609,6 @@ describe('Trade Agreement theme', () => {
         ELEMENT_SUBJECT,
         ELEMENT_NOTES,
         ELEMENT_FEEDBACK_POLICY,
-        ELEMENT_COUNTRIES,
         ELEMENT_STEP2_BUTTONS,
       ])
     })
@@ -625,7 +624,6 @@ describe('Trade Agreement theme', () => {
             'Select a communication channel',
             'Enter a subject',
             'Answer if the contact provided business intelligence',
-            'Answer if any countries were discussed',
           ].join('')
         )
     })
@@ -637,10 +635,10 @@ describe('Trade Agreement theme', () => {
       assertRequestBody(
         {
           ...COMMON_REQUEST_BODY,
-          theme: 'trade_agreement',
+          theme: THEMES.TRADE_AGREEMENT,
           service: '8d098d19-5988-4afd-8c0b-cc5652eccb26',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
-          kind: 'interaction',
+          kind: KINDS.INTERACTION,
           event: null,
           export_countries: [],
         },
