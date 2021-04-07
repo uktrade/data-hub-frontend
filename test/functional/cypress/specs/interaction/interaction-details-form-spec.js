@@ -264,18 +264,6 @@ function clickAddInteraction() {
   cy.contains('Add interaction').click()
 }
 
-function submitTradeAgreementInteractionForm(kind, theme, values) {
-  cy.get('#interaction-details-form').within(() => {
-    fillCommonFields(values)
-
-    cy.contains(ELEMENT_COMMUNICATION_CHANNEL.label)
-      .next()
-      .selectTypeaheadOption('Telephone')
-
-    clickAddInteraction()
-  })
-}
-
 function spyOnRequest(url = '/api-proxy/v3/interaction') {
   cy.server()
   cy.route('POST', url).as('interactionHttpRequest')
@@ -628,6 +616,7 @@ describe('Trade Agreement theme', () => {
         ELEMENT_STEP2_BUTTONS,
       ])
     })
+
     it('should validate the form', () => {
       cy.contains('button', 'Add interaction').click()
       cy.contains('h2', 'There is a problem')
@@ -644,23 +633,21 @@ describe('Trade Agreement theme', () => {
           ].join('')
         )
     })
+
     it('should save the interaction', () => {
-      submitTradeAgreementInteractionForm(
-        KINDS.INTERACTION,
-        THEMES.TRADE_AGREEMENT,
-        {
-          service: 'Trade Agreement Implementation Activity',
-          subservice: 'Civil Society meetings',
-        }
-      )
+      submitForm(KINDS.INTERACTION, THEMES.TRADE_AGREEMENT, {
+        service: 'Trade Agreement Implementation Activity',
+        subservice: 'Civil Society meetings',
+      })
+
       assertRequestBody(
         {
           ...COMMON_REQUEST_BODY,
-          theme: THEMES.TRADE_AGREEMENT,
-          service: '380bba2b-3499-e211-a939-e4115bead28a',
+          theme: 'trade_agreement',
+          service: '8d098d19-5988-4afd-8c0b-cc5652eccb26',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           were_countries_discussed: 'yes',
-          kind: KINDS.INTERACTION,
+          kind: 'interaction',
           event: null,
           export_countries: [
             {
