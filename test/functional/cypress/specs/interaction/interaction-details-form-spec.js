@@ -227,7 +227,7 @@ function submitForm(kind, theme, values) {
   cy.get('#interaction-details-form').within(() => {
     fillCommonFields(values)
 
-    if (theme !== THEMES.INVESTMENT && theme !== THEMES.TRADE_AGREEMENT) {
+    if (theme !== THEMES.INVESTMENT) {
       fillExportCountriesFields()
     }
 
@@ -250,14 +250,29 @@ function submitForm(kind, theme, values) {
         .next()
         .find('input')
         .type('456')
-      if (theme !== THEMES.TRADE_AGREEMENT) {
-        cy.contains(ELEMENT_IS_EVENT.legend).next().find('input').check('yes')
 
-        cy.get('#field-event-1').parent().selectTypeaheadOption('Sort event')
-      }
+      cy.contains(ELEMENT_IS_EVENT.legend).next().find('input').check('yes')
+
+      cy.get('#field-event-1').parent().selectTypeaheadOption('Sort event')
     }
 
-    cy.contains('Add interaction').click()
+    clickAddInteraction()
+  })
+}
+
+function clickAddInteraction() {
+  cy.contains('Add interaction').click()
+}
+
+function submitTradeAgreementInteractionForm(kind, theme, values) {
+  cy.get('#interaction-details-form').within(() => {
+    fillCommonFields(values)
+
+    cy.contains(ELEMENT_COMMUNICATION_CHANNEL.label)
+      .next()
+      .selectTypeaheadOption('Telephone')
+
+    clickAddInteraction()
   })
 }
 
@@ -628,10 +643,14 @@ describe('Trade Agreement theme', () => {
         )
     })
     it('should save the interaction', () => {
-      submitForm(KINDS.INTERACTION, THEMES.TRADE_AGREEMENT, {
-        service: 'Trade Agreement Implementation Activity',
-        subservice: 'Civil Society meetings',
-      })
+      submitTradeAgreementInteractionForm(
+        KINDS.INTERACTION,
+        THEMES.TRADE_AGREEMENT,
+        {
+          service: 'Trade Agreement Implementation Activity',
+          subservice: 'Civil Society meetings',
+        }
+      )
       assertRequestBody(
         {
           ...COMMON_REQUEST_BODY,
