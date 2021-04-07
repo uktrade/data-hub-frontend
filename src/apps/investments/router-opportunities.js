@@ -9,4 +9,13 @@ router.get(
   renderOpportunitiesView
 )
 
+router.get('/create', (req, res) => {
+  const heading = 'Create UK investment opportumity'
+  res
+    .breadcrumb(heading)
+    .render('investments/views/create/uk-investment-opportunity', {
+      heading,
+    })
+})
+
 module.exports = router

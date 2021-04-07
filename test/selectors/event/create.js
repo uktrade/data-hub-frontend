@@ -40,4 +40,7 @@ module.exports = {
   addAnotherProgramme: 'input[name="add_related_programme"]',
   saveEvent: 'button:contains("Add event")',
   saveAndReturn: 'button:contains("Save and return")',
+  relatedTradeAgreements: '[name="related_trade_agreements"]',
+  addAnotherTradeAgreement: 'input[name="add_related_trade_agreement"]',
+  tradeAgreementExistsYes: 'label[for="field-has_related_trade_agreements-1"]',
 }

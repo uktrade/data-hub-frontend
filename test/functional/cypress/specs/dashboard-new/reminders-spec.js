@@ -1,9 +1,9 @@
 const { format } = require('date-fns')
 const urls = require('../../../../../src/lib/urls')
 
-const NEW_RESTAURANT_PROJECT_CODE = 'DHP-00000004'
-const NEW_RESTAURANT_PROJECT_ID = '18750b26-a8c3-41b2-8d3a-fb0b930c2270'
-const LIST_OF_CITIES_PROPOSITON_ID = '3322750d-a645-4460-b584-8f9254459246'
+const UNIVERSITY_PROJECT_CODE = 'DHP-00000004'
+const UNIVERSITY_PROJECT_ID = '18750b26-a8c3-41b2-8d3a-fb0b930c2270'
+const UNIVERSITY_PROPOSITION_NAME = 'Univeristy Proposition'
 
 describe('Dashboard reminders', () => {
   beforeEach(() => {
@@ -34,7 +34,7 @@ describe('Dashboard reminders', () => {
   context('View reminders', () => {
     it('should contain a notification badge in the reminders heading', () => {
       cy.get('@investmentRemindersHeading').should('contain.text', 'Reminders')
-      cy.get('@investmentRemindersBadge').should('have.text', '5')
+      cy.get('@investmentRemindersBadge').should('have.text', '3')
     })
 
     it('should contain elements in the correct order', () => {
@@ -48,25 +48,26 @@ describe('Dashboard reminders', () => {
     it('should display each of the outstanding propositions', () => {
       cy.get('@outstandingPropositionsList')
         .find('li')
-        .should('have.length', '5')
+        .should('have.length', '3')
         .first()
         .as('outstandingProposition')
 
       cy.get('@outstandingProposition')
         .find('a')
-        .should('have.text', NEW_RESTAURANT_PROJECT_CODE)
+        .should('have.text', UNIVERSITY_PROPOSITION_NAME)
         .should(
           'have.attr',
           'href',
-          urls.investments.projects.proposition(
-            NEW_RESTAURANT_PROJECT_ID,
-            LIST_OF_CITIES_PROPOSITON_ID
-          )
+          urls.investments.projects.propositions(UNIVERSITY_PROJECT_ID)
         )
 
       cy.get('@outstandingProposition')
+        .find('[data-test="outstanding-proposition-project-code"]')
+        .should('have.text', UNIVERSITY_PROJECT_CODE)
+
+      cy.get('@outstandingProposition')
         .find('[data-test="outstanding-proposition-deadline"]')
-        .should('have.text', `Due ${format(new Date(), 'dd MMM yyyy')}`)
+        .should('have.text', `Due ${format(new Date(), 'E, dd MMM yyyy')}`)
 
       cy.get('@outstandingProposition')
         .find('[data-test="outstanding-proposition-countdown"]')
