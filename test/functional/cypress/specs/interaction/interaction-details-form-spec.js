@@ -624,6 +624,7 @@ describe('Trade Agreement theme', () => {
         ELEMENT_SUBJECT,
         ELEMENT_NOTES,
         ELEMENT_FEEDBACK_POLICY,
+        ELEMENT_COUNTRIES,
         ELEMENT_STEP2_BUTTONS,
       ])
     })
@@ -639,6 +640,7 @@ describe('Trade Agreement theme', () => {
             'Select a communication channel',
             'Enter a subject',
             'Answer if the contact provided business intelligence',
+            'Answer if any countries were discussed',
           ].join('')
         )
     })
@@ -655,11 +657,25 @@ describe('Trade Agreement theme', () => {
         {
           ...COMMON_REQUEST_BODY,
           theme: THEMES.TRADE_AGREEMENT,
-          service: '8d098d19-5988-4afd-8c0b-cc5652eccb26',
+          service: '380bba2b-3499-e211-a939-e4115bead28a',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
+          were_countries_discussed: 'yes',
           kind: KINDS.INTERACTION,
           event: null,
-          export_countries: [],
+          export_countries: [
+            {
+              country: '6e6a9ab2-5d95-e211-a939-e4115bead28a',
+              status: 'currently_exporting',
+            },
+            {
+              country: 'a05f66a0-5d95-e211-a939-e4115bead28a',
+              status: 'future_interest',
+            },
+            {
+              country: '83756b9a-5d95-e211-a939-e4115bead28a',
+              status: 'not_interested',
+            },
+          ],
         },
         (xhr) => {
           cy.location('pathname').should(
