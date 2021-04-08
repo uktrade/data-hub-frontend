@@ -70,7 +70,7 @@ describe('Event create', () => {
       .should(
         'have.attr',
         'href',
-        'https://data-services-help.trade.gov.uk/data-hub/how-articles/recording-trade-agreement-activity/recording-trade-agreement-activity/'
+        'https://data-services-help.trade.gov.uk/data-hub/how-articles/trade-agreement-activity/recording-trade-agreement-activity/'
       )
       .should('have.attr', 'aria-label', 'opens in a new tab')
   })
