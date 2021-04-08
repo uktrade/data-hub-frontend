@@ -6,6 +6,7 @@ import { FieldRadios } from '../../../../../client/components'
 import { useFormContext } from '../../../../../client/components/Form/hooks'
 import { THEMES, KINDS } from '../../../constants'
 import { NewWindowLink } from '../../../../../client/components'
+import urls from '../../../../../lib/urls'
 
 const getOnChangeHandler = (fieldName, setFieldValue) => (e) => {
   setFieldValue('service', '')
@@ -103,7 +104,9 @@ const StepInteractionType = ({ isTradeAgreementInteractionEnabled }) => {
           Agreement’.
           <br />
           <br />
-          <NewWindowLink href="https://data-services-help.trade.gov.uk/data-hub/how-articles/trade-agreement-activity/recording-trade-agreement-activity/">
+          <NewWindowLink
+            href={urls.external.helpCentre.tradeagreementGuidance()}
+          >
             See more guidance
           </NewWindowLink>
         </InsetText>

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { storiesOf } from '@storybook/react'
 import InteractionDetailsForm from '../apps/details-form/client/InteractionDetailsForm'
 
@@ -16,9 +16,9 @@ const DEFAULT_INTERACTION = {
 }
 
 const InteractionDetailsTemplate = (args) => (
-  <Fragment>
+  <>
     <InteractionDetailsForm {...args}></InteractionDetailsForm>
-  </Fragment>
+  </>
 )
 
 export const DefaulInteractionWithTradeAgreement = InteractionDetailsTemplate.bind(
