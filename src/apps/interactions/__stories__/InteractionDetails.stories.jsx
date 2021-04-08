@@ -15,43 +15,16 @@ const DEFAULT_INTERACTION = {
   isTradeAgreementInteractionEnabled: true,
 }
 
-const InteractionDetailsTemplate = (args) => (
-  <>
-    <InteractionDetailsForm {...args}></InteractionDetailsForm>
-  </>
-)
-
-export const DefaulInteractionWithTradeAgreement = InteractionDetailsTemplate.bind(
-  {}
-)
-DefaulInteractionWithTradeAgreement.args = {
-  ...DEFAULT_INTERACTION,
-  isTradeAgreementInteractionEnabled: true,
-}
-
-export const DefaulInteractionWithoutTradeAgreement = InteractionDetailsTemplate.bind(
-  {}
-)
-DefaulInteractionWithoutTradeAgreement.args = {
-  ...DEFAULT_INTERACTION,
-  isTradeAgreementInteractionEnabled: false,
-}
-
 storiesOf('Company Interactions', module)
   .addParameters({
     options: { theme: undefined },
   })
   .add('With Trade Agreement', () => (
-    <Fragment>
-      <DefaulInteractionWithTradeAgreement
-        {...DefaulInteractionWithTradeAgreement.args}
-      ></DefaulInteractionWithTradeAgreement>
-    </Fragment>
+    <InteractionDetailsForm {...DEFAULT_INTERACTION}></InteractionDetailsForm>
   ))
   .add('Without Trade Agreement', () => (
-    <Fragment>
-      <DefaulInteractionWithoutTradeAgreement
-        {...DefaulInteractionWithoutTradeAgreement.args}
-      ></DefaulInteractionWithoutTradeAgreement>
-    </Fragment>
+    <InteractionDetailsForm
+      {...DEFAULT_INTERACTION}
+      isTradeAgreementInteractionEnabled={false}
+    ></InteractionDetailsForm>
   ))
