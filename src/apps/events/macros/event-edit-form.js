@@ -23,7 +23,7 @@ const eventFormConfig = (
             macroName: 'MultipleChoiceField',
             type: 'radio',
             name: 'has_related_trade_agreements',
-            label: 'Are there related Trade Agreements',
+            label: 'Are there related Trade Agreements?',
             modifier: 'inline',
             options: [
               {
@@ -184,7 +184,7 @@ const eventFormConfig = (
             macroName: 'MultipleChoiceField',
             type: 'radio',
             name: 'event_shared',
-            label: 'Is this a shared event',
+            label: 'Is this a shared event?',
             optional: true,
             modifier: 'inline',
             options: [
@@ -337,7 +337,7 @@ const eventFormConfig = (
             macroName: 'MultipleChoiceField',
             type: 'radio',
             name: 'event_shared',
-            label: 'Is this a shared event',
+            label: 'Is this a shared event?',
             optional: true,
             modifier: 'inline',
             options: [
