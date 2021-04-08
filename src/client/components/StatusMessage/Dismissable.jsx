@@ -16,7 +16,7 @@ const DismissableStatusMessage = React.forwardRef(
     <StyledStatusMessage {...props} ref={ref}>
       {children}
       <TextLikeButton tabIndex={0} onClick={onDismiss} aria-label="dismiss">
-        {'\u{2715}'}
+        ✕
       </TextLikeButton>
     </StyledStatusMessage>
   )
