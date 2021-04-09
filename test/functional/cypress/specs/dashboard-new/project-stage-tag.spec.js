@@ -1,4 +1,4 @@
-import { investmentProjectsFactory } from '../../factories'
+import { investmentProjectFaker } from '../../fakers/investment-projects'
 
 describe('Dashboard - Investment project stages', () => {
   before(() => {
@@ -14,66 +14,66 @@ describe('Dashboard - Investment project stages', () => {
       body: {
         count: 10,
         results: [
-          investmentProjectsFactory({
+          investmentProjectFaker({
             stage: {
               id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
               name: 'Won',
             },
-          })[0],
-          investmentProjectsFactory({
+          }),
+          investmentProjectFaker({
             stage: {
               id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
               name: 'Prospect',
             },
-          })[0],
-          investmentProjectsFactory({
+          }),
+          investmentProjectFaker({
             stage: {
               id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
               name: 'Active',
             },
-          })[0],
-          investmentProjectsFactory({
+          }),
+          investmentProjectFaker({
             stage: {
               id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
               name: 'Active',
             },
-          })[0],
-          investmentProjectsFactory({
+          }),
+          investmentProjectFaker({
             stage: {
               id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
               name: 'Active',
             },
-          })[0],
-          investmentProjectsFactory({
+          }),
+          investmentProjectFaker({
             stage: {
               id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
               name: 'Assign PM',
             },
-          })[0],
-          investmentProjectsFactory({
+          }),
+          investmentProjectFaker({
             stage: {
               id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
               name: 'Active',
             },
-          })[0],
-          investmentProjectsFactory({
+          }),
+          investmentProjectFaker({
             stage: {
               id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
               name: 'Prospect',
             },
-          })[0],
-          investmentProjectsFactory({
+          }),
+          investmentProjectFaker({
             stage: {
               id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
               name: 'Verify win',
             },
-          })[0],
-          investmentProjectsFactory({
+          }),
+          investmentProjectFaker({
             stage: {
               id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
               name: 'Prospect',
             },
-          })[0],
+          }),
         ],
       },
     }).as('apiRequest')
