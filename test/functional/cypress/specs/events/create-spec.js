@@ -47,18 +47,23 @@ describe('Event create', () => {
 
   it('should allow a user to add multiple related trade agreements', () => {
     cy.get(selectors.eventCreate.tradeAgreementExistsYes).click()
-    cy.get(selectors.eventCreate.relatedTradeAgreements).eq(0).select('Japan')
+    cy.get(selectors.eventCreate.relatedTradeAgreements)
+      .eq(0)
+      .select('UK-Japan Comprehensive Economic Partnership Agreement')
     cy.get(selectors.eventCreate.addAnotherTradeAgreement).click()
     cy.get(selectors.eventCreate.relatedTradeAgreements)
       .eq(1)
-      .select('Australia')
+      .select('UK-Australia Mutual Recognition Agreement')
 
     cy.get(selectors.eventCreate.relatedTradeAgreements)
       .eq(0)
-      .should('contain', 'Japan')
+      .should(
+        'contain',
+        'UK-Japan Comprehensive Economic Partnership Agreement'
+      )
     cy.get(selectors.eventCreate.relatedTradeAgreements)
       .eq(1)
-      .should('contain', 'Australia')
+      .should('contain', 'UK-Australia Mutual Recognition Agreement')
   })
 
   it('should contain help information relating to trade agreements', () => {
