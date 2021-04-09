@@ -86,6 +86,8 @@ module.exports = {
     helpCentre: {
       pipeline: () =>
         'https://data-services-help.trade.gov.uk/data-hub/how-articles/account-management/my-pipeline/',
+      tradeagreementGuidance: () =>
+        'https://data-services-help.trade.gov.uk/data-hub/how-articles/trade-agreement-activity/recording-trade-agreement-activity/',
     },
   },
   dashboard: url('/'),

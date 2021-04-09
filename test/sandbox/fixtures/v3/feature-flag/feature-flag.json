@@ -60,6 +60,10 @@
     "is_active": true
   },
   {
+    "code": "trade-agreement-interaction",  
+    "is_active": true
+  }, 
+  {
     "code": "relatedTradeAgreements",
     "is_active": true
   }
