@@ -48,6 +48,7 @@ const ARCHIVED_REASON = {
 const THEMES = {
   EXPORT: 'export',
   INVESTMENT: 'investment',
+  TRADE_AGREEMENT: 'trade_agreement',
   OTHER: 'other',
 }
 
@@ -65,6 +66,7 @@ const SERVICE_CONTEXTS = {
   INVESTMENT_INTERACTION: 'investment_interaction',
   EXPORT_INTERACTION: 'export_interaction',
   OTHER_INTERACTION: 'other_interaction',
+  TRADE_AGREEMENT_INTERACTION: 'trade_agreement_interaction',
 }
 
 module.exports = {
