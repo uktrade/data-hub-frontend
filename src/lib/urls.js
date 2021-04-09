@@ -390,6 +390,7 @@ module.exports = {
       '/asset-class-interest'
     ),
     oneListTier: url('/api-proxy/v4/metadata', '/one-list-tier'),
+    tradeAgreement: url('/api-proxy/v4/metadata', '/trade-agreement'),
   },
   omis: {
     index: url('/omis'),
