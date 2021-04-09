@@ -23,7 +23,7 @@ const eventFormConfig = (
             macroName: 'MultipleChoiceField',
             type: 'radio',
             name: 'has_related_trade_agreements',
-            label: 'Are there related Trade Agreements?',
+            label: 'Does the Event relate to a Trade Agreement?',
             modifier: 'inline',
             options: [
               {
