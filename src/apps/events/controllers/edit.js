@@ -51,6 +51,7 @@ async function getEditOptions(req, createdOn, currentAdviser) {
     services: filterServiceNames(unfilteredServiceOptions),
     programmes: await getOptions(req, 'programme', { createdOn }),
     ukRegions: await getOptions(req, 'uk-region', { createdOn }),
+    tradeAgreements: await getOptions(req, 'trade-agreement', { createdOn }),
   }
 }
 
