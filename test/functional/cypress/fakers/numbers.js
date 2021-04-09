@@ -1,10 +1,15 @@
 import faker from 'faker'
 
-import { zeroPadNumber } from './utils'
+/**
+ * Pad a number with leading zeroes to ensure it has the given length
+ */
+const zeroPadNumber = (number, length) => `${number}`.padStart(length, '0')
 
 /**
  * Fakes a number string with a given length (zero-padded)
  */
 export const numberStringFaker = (length) =>
-  // TODO: the max number should be based on the length here
-  zeroPadNumber(faker.datatype.number({ max: 99999999 }, length))
+  zeroPadNumber(
+    faker.datatype.number({ max: parseInt(''.padStart(length, '9')) }),
+    length
+  )
