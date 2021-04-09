@@ -1,4 +1,9 @@
-import { randomChoice } from './utils'
+import faker from 'faker'
+import jsf from 'json-schema-faker'
+
+import apiSchema from '../../../api-schema.json'
+
+import { listFaker, randomChoice } from './utils'
 import { numberStringFaker } from './numbers'
 
 const investmentProjectStages = [
@@ -23,9 +28,7 @@ const investmentProjectStages = [
     name: 'Won',
   },
 ]
-
-export const investmentProjectStageFaker = () =>
-  randomChoice(investmentProjectStages)
+const investmentProjectStageFaker = () => randomChoice(investmentProjectStages)
 
 const incompleteFieldOptions = [
   'client_cannot_provide_total_investment',
@@ -60,8 +63,44 @@ const incompleteFieldOptions = [
   'average_salary',
   'associated_non_fdi_r_and_d_project',
 ]
+const incompleteFieldOptionFaker = () => randomChoice(incompleteFieldOptions)
 
-export const incompleteFieldOptionFaker = () =>
-  randomChoice(incompleteFieldOptions)
+const investmentProjectCodeFaker = () => `DHP-${numberStringFaker(8)}`
 
-export const investmentProjectCodeFaker = () => `DHP-${numberStringFaker(8)}`
+/**
+ * Generate fake data for a single investment project.
+ *
+ * Starts by generating data based on the json schema, adds some defaults and
+ * merges in overrides.
+ */
+const investmentProjectFaker = (overrides) => ({
+  ...jsf.generate(apiSchema.components.schemas.IProject),
+  id: faker.datatype.uuid(),
+  stage: investmentProjectStageFaker(),
+  investor_company: {
+    id: faker.datatype.uuid(),
+    name: faker.company.companyName(),
+  },
+  project_code: investmentProjectCodeFaker(),
+  incomplete_fields: [],
+  ...overrides,
+})
+
+/**
+ * Generate fake data for a list of investment project.
+ *
+ * The number of items is determined by the length (default is 1).
+ * Overrides are applied to all items in the list (default is {}).
+ */
+const investmentProjectListFaker = (length = 1, overrides = {}) =>
+  listFaker({ fakerFunction: investmentProjectFaker, length, overrides })
+
+export {
+  investmentProjectFaker,
+  investmentProjectListFaker,
+  investmentProjectCodeFaker,
+  investmentProjectStageFaker,
+  incompleteFieldOptionFaker,
+}
+
+export default investmentProjectListFaker

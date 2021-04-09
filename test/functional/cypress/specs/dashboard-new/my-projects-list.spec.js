@@ -1,30 +1,44 @@
 import urls from '../../../../../src/lib/urls'
-import { investmentProjectsFactory } from '../../factories'
-import { incompleteFieldOptionFaker } from '../../fakers'
+import {
+  investmentProjectFaker,
+  investmentProjectListFaker,
+  incompleteFieldOptionFaker,
+} from '../../fakers/investment-projects'
 
 describe('Dashboard - My projects list', () => {
-  const [project1] = investmentProjectsFactory({
+  const project1 = investmentProjectFaker({
     stage: {
       id: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
       name: 'Active',
     },
   })
-  const [project2] = investmentProjectsFactory({
+  const project2 = investmentProjectFaker({
     incomplete_fields: [incompleteFieldOptionFaker()],
   })
-  const [project3] = investmentProjectsFactory({
+  const project3 = investmentProjectFaker({
     name: 'My Special Project Name',
   })
-  const otherProjects = investmentProjectsFactory({}, 6)
+  const wonProjects = investmentProjectListFaker(3, {
+    stage: {
+      id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
+      name: 'Won',
+    },
+  })
+  const otherProjects = investmentProjectListFaker(2)
 
-  const myProjects = [project1, project2, project3, ...otherProjects]
+  const myProjects = [
+    project1,
+    project2,
+    project3,
+    ...wonProjects,
+    ...otherProjects,
+  ]
 
   before(() => {
     cy.setUserFeatures(['personalised-dashboard'])
     cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
-      statusCode: 200,
       body: {
-        count: 1,
+        count: myProjects.length,
         results: myProjects,
       },
     }).as('apiRequest')

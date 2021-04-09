@@ -8,8 +8,10 @@ const zeroPadNumber = (number, length) => `${number}`.padStart(length, '0')
 /**
  * Fakes a number string with a given length (zero-padded)
  */
-export const numberStringFaker = (length) =>
+const numberStringFaker = (length) =>
   zeroPadNumber(
     faker.datatype.number({ max: parseInt(''.padStart(length, '9')) }),
     length
   )
+
+export { numberStringFaker }
