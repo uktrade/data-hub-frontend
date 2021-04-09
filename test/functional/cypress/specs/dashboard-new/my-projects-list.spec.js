@@ -56,7 +56,7 @@ describe('Dashboard - My projects list', () => {
 
   it('should contain a status tag', () => {
     cy.get('@firstListItem')
-      .find('[data-test="project-status-tag"]')
+      .find('[data-test="project-stage-tag"]')
       .should('have.text', project1.stage.name)
   })
 

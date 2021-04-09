@@ -20,7 +20,7 @@ const investmentProjectFactory = (overrides) => ({
   ...overrides,
 })
 
-export const investmentProjectsFactory = (overrides, length = 1) => {
+export const investmentProjectsFactory = (overrides = {}, length = 1) => {
   let list = []
   for (let i = 0; i < length; i++) {
     list.push(investmentProjectFactory(overrides))
