@@ -1,13 +1,8 @@
-const {
-  ZERO_INVESTMENT_PROJECTS,
-} = require('../../../../sandbox/constants/dashboard')
 const urls = require('../../../../../src/lib/urls')
 
 describe('Dashboard - no investment projects', () => {
   before(() => {
-    cy.setAdviserId(ZERO_INVESTMENT_PROJECTS)
     cy.setUserFeatures(['personalised-dashboard'])
-    cy.visit('/')
   })
 
   after(() => {
@@ -15,8 +10,17 @@ describe('Dashboard - no investment projects', () => {
   })
 
   beforeEach(() => {
+    cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
+      body: {
+        count: 0,
+        results: [],
+      },
+    }).as('apiRequest')
+    cy.visit('/myinvestmentprojects')
+    cy.wait('@apiRequest')
     cy.get('[data-test="tablist"]').as('tabList')
     cy.get('[data-test="tabpanel"]').as('tabPanel')
+    cy.resetFeatureFlags()
   })
 
   context('Tabbed navigation', () => {
