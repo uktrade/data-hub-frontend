@@ -1,9 +1,44 @@
 const { companies, interactions } = require('../../../../../src/lib/urls')
 
+import { investmentProjectFaker } from '../../fakers/investment-projects'
+import { today } from '../../../../../src/client/utils/date-utils'
+
 describe('Dashboard - Investment details', () => {
+  const investmentProject = investmentProjectFaker({
+    sector: {
+      name: 'Aerospace : Aircraft Design',
+    },
+    investor_company: {
+      id: '1',
+      name: 'Foo Bar Baz',
+    },
+    latest_interaction: {
+      id: '1',
+      date: today(),
+      subject: 'A project interaction',
+    },
+    country_investment_originates_from: {
+      id: '1',
+      name: 'Italy',
+    },
+  })
+
+  const investmentProjects = [
+    investmentProject,
+    investmentProjectFaker(),
+    investmentProjectFaker(),
+  ]
+
   before(() => {
     cy.setUserFeatures(['personalised-dashboard'])
+    cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
+      body: {
+        count: investmentProjects.length,
+        results: investmentProjects,
+      },
+    }).as('apiRequest')
     cy.visit('/')
+    cy.wait('@apiRequest')
   })
 
   after(() => {
@@ -15,12 +50,17 @@ describe('Dashboard - Investment details', () => {
     cy.get('[data-test="investment-details"]').eq(0).as('firstProjectDetails')
     cy.get('[data-test="investment-details"]').eq(1).as('secondProjectDetails')
     cy.get('[data-test="investment-details"]').eq(2).as('thirdProjectDetails')
-    cy.get('@firstProjectDetails').find('dt').as('allTerms')
-    cy.get('@firstProjectDetails').find('dd').as('allDescriptions')
+    cy.get('@firstProjectDetails').find('dt').as('firstProjectTerms')
+    cy.get('@firstProjectDetails').find('dd').as('firstProjectDescriptions')
+    cy.get('@secondProjectDetails').find('li').as('secondProjectListItems')
+    cy.get('@thirdProjectDetails').find('li').as('thirdProjectListItems')
   })
 
   it('should have a details section for each project', () => {
-    cy.get('@allInvestmentDetails').should('have.length', 10)
+    cy.get('@allInvestmentDetails').should(
+      'have.length',
+      investmentProjects.length
+    )
   })
 
   it("should display 'Details' in a h3 header", () => {
@@ -28,65 +68,65 @@ describe('Dashboard - Investment details', () => {
   })
 
   it('should display the investor details with a link to the investor', () => {
-    cy.get('@allTerms')
-      .eq(0)
-      .should('have.text', 'Investor:')
-      .get('@allDescriptions')
+    cy.get('@firstProjectTerms').eq(0).should('have.text', 'Investor:')
+    cy.get('@firstProjectDescriptions')
       .eq(0)
       .children()
-      .should('have.text', 'Venus Ltd')
+      .should('have.text', investmentProject.investor_company.name)
+      .find('a')
       .should(
         'have.attr',
         'href',
-        companies.details('0f5216e0-849f-11e6-ae22-56b6b6499611')
+        companies.details(investmentProject.investor_company.id)
       )
   })
 
   it('should display the sector details', () => {
-    cy.get('@allTerms')
+    cy.get('@firstProjectTerms').eq(1).should('have.text', 'Sector:')
+    cy.get('@firstProjectDescriptions')
       .eq(1)
-      .should('have.text', 'Sector:')
-      .get('@allDescriptions')
-      .eq(1)
-      .should('have.text', 'Renewable Energy : Wind : Onshore')
+      .should('have.text', investmentProject.sector.name)
   })
 
   it('should display the country of origin details', () => {
-    cy.get('@allTerms')
+    cy.get('@firstProjectTerms').eq(2).should('have.text', 'Country of origin:')
+    cy.get('@firstProjectDescriptions')
       .eq(2)
-      .should('have.text', 'Country of origin:')
-      .get('@allDescriptions')
-      .eq(2)
-      .should('have.text', 'Italy')
+      .should(
+        'have.text',
+        investmentProject.country_investment_originates_from.name
+      )
   })
 
   it('should display the date of the last interaction', () => {
-    cy.get('@allTerms')
+    cy.get('@firstProjectTerms').eq(3).should('have.text', 'Last interaction:')
+    cy.get('@firstProjectDescriptions')
       .eq(3)
-      .should('have.text', 'Last interaction:')
-      .get('@allDescriptions')
-      .eq(3)
-      .should('have.text', '16 Mar 2021')
+      .should('have.text', investmentProject.latest_interaction.date)
   })
 
   it('should display the last interaction subject with a link to the interaction', () => {
-    cy.get('@allTerms')
+    cy.get('@firstProjectTerms')
       .eq(4)
       .should('have.text', 'Interaction subject:')
-      .get('@allDescriptions')
+    cy.get('@firstProjectDescriptions')
       .eq(4)
       .children()
-      .should('have.text', 'A project interaction')
+      .should('have.text', investmentProject.latest_interaction.subject)
+      .find('a')
       .should(
         'have.attr',
         'href',
-        interactions.detail('3fd90013-4bcb-4c39-b8df-df264471ea85')
+        interactions.detail(investmentProject.latest_interaction.id)
       )
   })
 
   context("when a project doesn't have a country of origin", () => {
     it('should not contain a country of origin', () => {
-      cy.get('@secondProjectDetails').should('not.contain', 'Country of origin')
+      cy.get('@secondProjectListItems').should(
+        'not.contain',
+        'Country of origin'
+      )
     })
   })
 
