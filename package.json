@@ -127,7 +127,7 @@
     "moment-duration-format": "^2.1.0",
     "morgan": "^1.10.0",
     "numeral": "^2.0.6",
-    "nunjucks": "^3.2.2",
+    "nunjucks": "^3.2.3",
     "nunjucks-markdown": "^2.0.1",
     "pluralize": "^8.0.0",
     "postcss-cli": "^7.1.2",
