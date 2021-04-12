@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import StatusMessage from '.'
+import TextLikeButton from '../TextLikeButton'
 
 const StyledStatusMessage = styled(StatusMessage)({
   display: 'flex',
@@ -14,7 +15,7 @@ const DismissableStatusMessage = React.forwardRef(
   ({ children, onDismiss, ...props }, ref) => (
     <StyledStatusMessage {...props} ref={ref}>
       {children}
-      <TextLikeButton tabIndex={0} onClick={onDismiss}>
+      <TextLikeButton tabIndex={0} onClick={onDismiss} aria-label="dismiss">
         {'\u{2715}'}
       </TextLikeButton>
     </StyledStatusMessage>
