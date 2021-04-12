@@ -73,7 +73,7 @@ const investmentProjectCodeFaker = () => `DHP-${numberStringFaker(8)}`
  * Starts by generating data based on the json schema, adds some defaults and
  * merges in overrides.
  */
-const investmentProjectFaker = (overrides) => ({
+const investmentProjectFaker = (overrides = {}) => ({
   ...jsf.generate(apiSchema.components.schemas.IProject),
   id: faker.datatype.uuid(),
   stage: investmentProjectStageFaker(),
@@ -92,7 +92,7 @@ const investmentProjectFaker = (overrides) => ({
  * The number of items is determined by the length (default is 1).
  * Overrides are applied to all items in the list (default is {}).
  */
-const investmentProjectListFaker = (length = 1, overrides = {}) =>
+const investmentProjectListFaker = (length = 1, overrides) =>
   listFaker({ fakerFunction: investmentProjectFaker, length, overrides })
 
 export {

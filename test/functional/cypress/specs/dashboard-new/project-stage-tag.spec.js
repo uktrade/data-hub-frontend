@@ -12,69 +12,29 @@ describe('Dashboard - Investment project stages', () => {
   beforeEach(() => {
     cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
       body: {
-        count: 10,
+        count: 5,
         results: [
-          investmentProjectFaker({
-            stage: {
-              id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
-              name: 'Won',
-            },
-          }),
-          investmentProjectFaker({
-            stage: {
-              id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
-              name: 'Prospect',
-            },
-          }),
-          investmentProjectFaker({
-            stage: {
-              id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
-              name: 'Active',
-            },
-          }),
-          investmentProjectFaker({
-            stage: {
-              id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
-              name: 'Active',
-            },
-          }),
-          investmentProjectFaker({
-            stage: {
-              id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
-              name: 'Active',
-            },
-          }),
-          investmentProjectFaker({
-            stage: {
-              id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
-              name: 'Assign PM',
-            },
-          }),
-          investmentProjectFaker({
-            stage: {
-              id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
-              name: 'Active',
-            },
-          }),
-          investmentProjectFaker({
-            stage: {
-              id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
-              name: 'Prospect',
-            },
-          }),
-          investmentProjectFaker({
-            stage: {
-              id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
-              name: 'Verify win',
-            },
-          }),
-          investmentProjectFaker({
-            stage: {
-              id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
-              name: 'Prospect',
-            },
-          }),
-        ],
+          {
+            id: '1',
+            name: 'Prospect',
+          },
+          {
+            id: '2',
+            name: 'Assign PM',
+          },
+          {
+            id: '3',
+            name: 'Active',
+          },
+          {
+            id: '4',
+            name: 'Verify win',
+          },
+          {
+            id: '5',
+            name: 'Won',
+          },
+        ].map((stage) => investmentProjectFaker({ stage })),
       },
     }).as('apiRequest')
     cy.visit('/')
@@ -83,18 +43,7 @@ describe('Dashboard - Investment project stages', () => {
   })
 
   it('should contain stages for each project', () => {
-    const expected = [
-      'Won',
-      'Prospect',
-      'Active',
-      'Active',
-      'Active',
-      'Assign PM',
-      'Active',
-      'Prospect',
-      'Verify win',
-      'Prospect',
-    ]
+    const expected = ['Prospect', 'Assign PM', 'Active', 'Verify win', 'Won']
 
     cy.get('[data-test="project-stage-tag"]').each(($el, i) => {
       return expect($el.text()).to.equal(expected[i])
