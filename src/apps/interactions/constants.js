@@ -22,6 +22,8 @@ const QUERY_FIELDS = [
   'policy_issue_types',
   'dit_participants__adviser',
   'company_one_list_group_tier',
+  'has_related_trade_agreements',
+  'related_trade_agreements',
 ]
 
 const QUERY_DATE_FIELDS = ['date_after', 'date_before']
@@ -35,6 +37,9 @@ const INTERACTION_NAMES = {
 }
 
 const SERVICE_DELIVERY_STATUS_COMPLETED = '47329c18-6095-e211-a939-e4115bead28a'
+
+const TRADE_AGREEMENT_IMPLEMENTATION_ACTIVITY =
+  'Trade Agreement Implementation Activity'
 
 const INTERACTION_STATUS = {
   DRAFT: 'draft',
@@ -77,6 +82,7 @@ module.exports = {
   GLOBAL_NAV_ITEM,
   INTERACTION_NAMES,
   SERVICE_DELIVERY_STATUS_COMPLETED,
+  TRADE_AGREEMENT_IMPLEMENTATION_ACTIVITY,
   INTERACTION_STATUS,
   ARCHIVED_REASON,
   THEMES,

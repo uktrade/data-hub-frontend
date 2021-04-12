@@ -105,6 +105,7 @@ const transformInteractionToValues = (interaction) => {
       'was_policy_feedback_provided',
       'were_countries_discussed',
       'is_event',
+      'has_related_trade_agreements',
     ]),
     ...transformValues(interaction, transformToID, [
       'service_delivery_status',
@@ -115,6 +116,7 @@ const transformInteractionToValues = (interaction) => {
       'event',
       'communication_channel',
       'policy_areas',
+      'related_trade_agreements',
     ]),
     ...transformServiceAnswers(interaction.service_answers),
   }
@@ -176,6 +178,7 @@ async function renderInteractionDetailsForm(req, res, next) {
       policyIssueTypes,
       communicationChannels,
       countries,
+      relatedTradeAgreements,
     ] = await Promise.all([
       getOptions(req, 'service', {
         transformer: transformServiceToOption,
@@ -185,6 +188,7 @@ async function renderInteractionDetailsForm(req, res, next) {
       getOptions(req, 'policy-issue-type'),
       getOptions(req, 'communication-channel'),
       getOptions(req, 'country'),
+      getOptions(req, 'trade-agreement'),
     ])
 
     res
@@ -212,6 +216,7 @@ async function renderInteractionDetailsForm(req, res, next) {
           countries,
           isTradeAgreementInteractionEnabled:
             features['trade-agreement-interaction'],
+          relatedTradeAgreements,
         },
       })
   } catch (error) {

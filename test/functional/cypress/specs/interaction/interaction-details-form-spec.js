@@ -21,6 +21,7 @@ const {
 const {
   KINDS,
   THEMES,
+  TRADE_AGREEMENT_IMPLEMENTATION_ACTIVITY,
 } = require('../../../../../src/apps/interactions/constants')
 
 const assertHeader = ({ element, text }) =>
@@ -53,6 +54,18 @@ const ELEMENT_SERVICE_GRANT_OFFERED = {
 }
 const ELEMENT_SERVICE_NET_RECEIPT = {
   label: 'Net receipt (optional)',
+}
+const ELEMENT_RELATED_TRADE_AGREEMENT = {
+  legend: 'Does this interaction relate to a Trade Agreement?',
+  assert: assertFieldRadiosWithLegend,
+  optionsCount: 2,
+}
+const ELEMENT_TRADE_AGREEMENTS = {
+  legend: 'Related Trade Agreements',
+  placeholder: '-- Search trade agreements --',
+}
+const ELEMENT_TRADE_AGREEMENT_ADD = {
+  text: 'Add another',
 }
 const ELEMENT_SERVICE = {
   emptyOption: '-- Select service --',
@@ -156,6 +169,7 @@ const COMMON_REQUEST_BODY = {
   company: { id: '0f5216e0-849f-11e6-ae22-56b6b6499611' },
   service_answers: {},
   status: 'complete',
+  related_trade_agreements: [],
 }
 
 function fillCommonFields({
@@ -223,12 +237,37 @@ function fillExportCountriesFields() {
     .selectTypeaheadOption('Germany')
 }
 
+function fillRelatedTradeAgreements() {
+  cy.contains(ELEMENT_RELATED_TRADE_AGREEMENT.legend)
+    .next()
+    .find('input')
+    .check('yes')
+
+  cy.contains(ELEMENT_TRADE_AGREEMENT_ADD.text).click()
+
+  cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
+    .parent()
+    .next()
+    .find("[data-test='trade-agreement-field-0']")
+    .selectTypeaheadOption('UK-Australia Mutual Recognition Agreement')
+
+  cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
+    .parent()
+    .next()
+    .find("[data-test='trade-agreement-field-1']")
+    .selectTypeaheadOption('UK-Mexico Trade Continuity Agreement')
+}
+
 function submitForm(kind, theme, values) {
   cy.get('#interaction-details-form').within(() => {
     fillCommonFields(values)
 
     if (theme !== THEMES.INVESTMENT) {
       fillExportCountriesFields()
+    }
+
+    if (values.service === TRADE_AGREEMENT_IMPLEMENTATION_ACTIVITY) {
+      fillRelatedTradeAgreements()
     }
 
     if (kind === KINDS.INTERACTION) {
@@ -634,7 +673,46 @@ describe('Trade Agreement theme', () => {
         )
     })
 
-    it('should save the interaction', () => {
+    it('should save the interaction for a specific service', () => {
+      submitForm(KINDS.INTERACTION, THEMES.TRADE_AGREEMENT, {
+        service: 'A Specific Service',
+        subservice: 'Export Academy',
+      })
+
+      assertRequestBody(
+        {
+          ...COMMON_REQUEST_BODY,
+          theme: 'trade_agreement',
+          service: '440b7770-62d2-e325-df93-cd7b62818405',
+          communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
+          were_countries_discussed: 'yes',
+          kind: 'interaction',
+          event: null,
+          export_countries: [
+            {
+              country: '6e6a9ab2-5d95-e211-a939-e4115bead28a',
+              status: 'currently_exporting',
+            },
+            {
+              country: 'a05f66a0-5d95-e211-a939-e4115bead28a',
+              status: 'future_interest',
+            },
+            {
+              country: '83756b9a-5d95-e211-a939-e4115bead28a',
+              status: 'not_interested',
+            },
+          ],
+        },
+        (xhr) => {
+          cy.location('pathname').should(
+            'eq',
+            urls.companies.interactions.detail(company.id, xhr.responseBody.id)
+          )
+        }
+      )
+    })
+
+    it('should save the interaction for trade agreements', () => {
       submitForm(KINDS.INTERACTION, THEMES.TRADE_AGREEMENT, {
         service: 'Trade Agreement Implementation Activity',
         subservice: 'Civil Society meetings',
@@ -662,6 +740,11 @@ describe('Trade Agreement theme', () => {
               country: '83756b9a-5d95-e211-a939-e4115bead28a',
               status: 'not_interested',
             },
+          ],
+          has_related_trade_agreements: 'yes',
+          related_trade_agreements: [
+            '50370070-71f9-4ada-ae2c-cd0a737ba5e2',
+            '09787712-0d94-4137-a5f3-3f9131e681f0',
           ],
         },
         (xhr) => {
