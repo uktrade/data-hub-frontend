@@ -5,6 +5,7 @@ import apiSchema from '../../../api-schema.json'
 
 import { listFaker, randomChoice } from './utils'
 import { numberStringFaker } from './numbers'
+import { relativeDateFaker } from './dates'
 
 const investmentProjectStages = [
   {
@@ -77,6 +78,7 @@ const investmentProjectFaker = (overrides = {}) => ({
   ...jsf.generate(apiSchema.components.schemas.IProject),
   id: faker.datatype.uuid(),
   stage: investmentProjectStageFaker(),
+  estimated_land_date: relativeDateFaker({ minDays: -100, maxDays: 365 }),
   investor_company: {
     id: faker.datatype.uuid(),
     name: faker.company.companyName(),
