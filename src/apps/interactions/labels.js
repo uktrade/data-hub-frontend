@@ -28,6 +28,9 @@ const interaction = {
     'Did the contact provide business intelligence?',
   service_delivery_status: 'Service status',
   grant_amount_offered: 'Grant offered',
+  has_related_trade_agreements:
+    'Does this interaction relate to a trade agreement?',
+  related_trade_agreements: 'Trade agreements',
   ...countriesDiscussed,
 }
 

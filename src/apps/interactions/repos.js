@@ -1,10 +1,15 @@
 const config = require('../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
 
-function fetchInteraction(req, interactionId) {
+function fetchInteraction(
+  req,
+  interactionId,
+  isTradeAgreementInteractionEnabled
+) {
+  const interactionVersion = isTradeAgreementInteractionEnabled ? 'v4' : 'v3'
   return authorisedRequest(
     req,
-    `${config.apiRoot}/v3/interaction/${interactionId}`
+    `${config.apiRoot}/${interactionVersion}/interaction/${interactionId}`
   )
 }
 
