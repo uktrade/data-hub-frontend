@@ -1,4 +1,5 @@
 import { addDays, format, subDays } from 'date-fns'
+import { investmentProjectFaker } from '../../fakers/investment-projects'
 
 const assertEstimatedLandDate = ({ index, date, countdown, colour }) => {
   cy.get('@projectListItems')
@@ -19,17 +20,35 @@ const assertEstimatedLandDate = ({ index, date, countdown, colour }) => {
 }
 
 describe('Dashboard items - estimated land date', () => {
+  const today = new Date()
+  const myProjects = [
+    subDays(today, 14),
+    today,
+    addDays(today, 29),
+    addDays(today, 89),
+    addDays(today, 90),
+  ].map((estimated_land_date) =>
+    investmentProjectFaker({ estimated_land_date })
+  )
+
   before(() => {
     cy.setUserFeatures(['personalised-dashboard'])
     cy.visit('/')
+
+  beforeEach(() => {
+    cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
+      body: {
+        count: myProjects.length,
+        results: myProjects,
+      },
+    }).as('apiRequest')
+    cy.visit('/')
+    cy.wait('@apiRequest')
+    cy.get('[data-test="projects-list-item"]').as('projectListItems')
   })
 
   after(() => {
     cy.resetUser()
-  })
-
-  beforeEach(() => {
-    cy.get('[data-test="projects-list-item"]').as('projectListItems')
   })
 
   context('My project list items - estimated land date', () => {
@@ -53,27 +72,27 @@ describe('Dashboard items - estimated land date', () => {
 
     it('should show a red panel when the project has less than 30 days remaining', () => {
       assertEstimatedLandDate({
-        index: 3,
-        date: addDays(new Date(), 28),
-        countdown: '28 days',
+        index: 2,
+        date: addDays(new Date(), 29),
+        countdown: '29 days',
         colour: 'rgba(212, 53, 28, 0.4)',
       })
     })
 
     it('should show an amber panel when the project has between 30 and 89 days remaining', () => {
       assertEstimatedLandDate({
-        index: 4,
-        date: addDays(new Date(), 42),
-        countdown: '42 days',
+        index: 3,
+        date: addDays(new Date(), 89),
+        countdown: '89 days',
         colour: 'rgba(255, 221, 0, 0.5)',
       })
     })
 
     it('should show a green panel when the project has more than 89 days remaining', () => {
       assertEstimatedLandDate({
-        index: 8,
-        date: addDays(new Date(), 98),
-        countdown: '98 days',
+        index: 4,
+        date: addDays(new Date(), 90),
+        countdown: '90 days',
         colour: 'rgba(0, 112, 60, 0.3)',
       })
     })
