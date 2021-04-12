@@ -3,9 +3,9 @@ import jsf from 'json-schema-faker'
 
 import apiSchema from '../../../api-schema.json'
 
-import { listFaker, randomChoice } from './utils'
-import { numberStringFaker } from './numbers'
 import { relativeDateFaker } from './dates'
+import { numberStringFaker } from './numbers'
+import { listFaker, randomChoice } from './utils'
 
 const investmentProjectStages = [
   {
@@ -89,7 +89,7 @@ const investmentProjectFaker = (overrides = {}) => ({
 })
 
 /**
- * Generate fake data for a list of investment project.
+ * Generate fake data for a list of investment projects.
  *
  * The number of items is determined by the length (default is 1).
  * Overrides are applied to all items in the list (default is {}).
