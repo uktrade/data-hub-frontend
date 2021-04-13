@@ -1,4 +1,5 @@
 import { addDays, format } from 'date-fns'
+import faker from 'faker'
 import urls from '../../../../../src/lib/urls'
 import {
   propositionFaker,
@@ -12,7 +13,7 @@ describe('Dashboard reminders', () => {
     investment_project: {
       name: 'University buildings',
       project_code: 'DHP-00007004',
-      id: '18750b26-a8c3-41b2-8d3a-fb0b930c2270',
+      id: faker.datatype.uuid(),
     },
     deadline: tomorrow,
   })
