@@ -20,13 +20,16 @@ describe('Dashboard - no investment projects', () => {
   })
 
   context('Tabbed navigation', () => {
-    it('should contain two tabs named My projects and My Companies lists', () => {
-      cy.get('@tabList').find('button').eq(0).should('have.text', 'My projects')
+    it('should contain two tabs named "Investment projects" and "Company lists"', () => {
+      cy.get('@tabList')
+        .find('button')
+        .eq(0)
+        .should('have.text', 'Investment projects')
 
       cy.get('@tabList')
         .find('button')
         .eq(1)
-        .should('have.text', 'My companies lists')
+        .should('have.text', 'Company lists')
     })
 
     it('should have a heading of `No investment projects`', () => {
