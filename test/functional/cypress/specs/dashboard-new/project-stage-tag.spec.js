@@ -1,4 +1,5 @@
 import { investmentProjectFaker } from '../../fakers/investment-projects'
+import { INVESTMENT_PROJECT_STAGES_LIST } from '../../fakers/constants'
 
 describe('Dashboard - Investment project stages', () => {
   before(() => {
@@ -13,28 +14,9 @@ describe('Dashboard - Investment project stages', () => {
     cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
       body: {
         count: 5,
-        results: [
-          {
-            id: '1',
-            name: 'Prospect',
-          },
-          {
-            id: '2',
-            name: 'Assign PM',
-          },
-          {
-            id: '3',
-            name: 'Active',
-          },
-          {
-            id: '4',
-            name: 'Verify win',
-          },
-          {
-            id: '5',
-            name: 'Won',
-          },
-        ].map((stage) => investmentProjectFaker({ stage })),
+        results: INVESTMENT_PROJECT_STAGES_LIST.map((stage) =>
+          investmentProjectFaker({ stage })
+        ),
       },
     }).as('apiRequest')
     cy.visit('/')

@@ -3,12 +3,13 @@ import jsf from 'json-schema-faker'
 
 import apiSchema from '../../../api-schema.json'
 
-import { investmentProjectStages } from './constants'
+import { INVESTMENT_PROJECT_STAGES_LIST } from './constants'
 import { relativeDateFaker } from './dates'
 import { numberStringFaker } from './numbers'
 import { listFaker, randomChoice } from './utils'
 
-const investmentProjectStageFaker = () => randomChoice(investmentProjectStages)
+const investmentProjectStageFaker = () =>
+  randomChoice(INVESTMENT_PROJECT_STAGES_LIST)
 
 const incompleteFieldOptions = [
   'client_cannot_provide_total_investment',

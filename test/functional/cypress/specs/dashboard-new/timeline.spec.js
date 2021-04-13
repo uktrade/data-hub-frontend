@@ -1,13 +1,11 @@
 import { investmentProjectFaker } from '../../fakers/investment-projects'
+import { INVESTMENT_PROJECT_STAGES } from '../../fakers/constants'
 
 describe('Dashboard timeline', () => {
   before(() => {
     cy.setUserFeatures(['personalised-dashboard'])
     const project = investmentProjectFaker({
-      stage: {
-        id: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
-        name: 'Active',
-      },
+      stage: INVESTMENT_PROJECT_STAGES.active,
     })
     cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
       body: {

@@ -1,7 +1,7 @@
 import faker from 'faker'
 import { snakeCase } from 'lodash'
 
-import { investmentProjectStages } from './constants'
+import { INVESTMENT_PROJECT_STAGES_LIST } from './constants'
 import {
   generateFinancialYearLabel,
   getFinancialYearStart,
@@ -25,11 +25,11 @@ const financialYearGenerator = (startYear) => ({
  */
 const annualSummaryTotalsFaker = () =>
   Object.fromEntries(
-    investmentProjectStages.map((stage) => [
+    INVESTMENT_PROJECT_STAGES_LIST.map((stage) => [
       snakeCase(stage.name),
       {
         label: stage.name,
-        id: faker.datatype.uuid(),
+        id: stage.id,
         value: faker.datatype.number({ min: 0, max: 50 }),
       },
     ])
