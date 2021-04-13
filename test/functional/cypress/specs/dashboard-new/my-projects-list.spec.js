@@ -4,13 +4,11 @@ import {
   investmentProjectListFaker,
   incompleteFieldOptionFaker,
 } from '../../fakers/investment-projects'
+import { INVESTMENT_PROJECT_STAGES } from '../../fakers/constants'
 
 describe('Dashboard - My projects list', () => {
   const project1 = investmentProjectFaker({
-    stage: {
-      id: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
-      name: 'Active',
-    },
+    stage: INVESTMENT_PROJECT_STAGES.active,
   })
   const project2 = investmentProjectFaker({
     incomplete_fields: [incompleteFieldOptionFaker()],
@@ -19,10 +17,7 @@ describe('Dashboard - My projects list', () => {
     name: 'My Special Project Name',
   })
   const wonProjects = investmentProjectListFaker(3, {
-    stage: {
-      id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
-      name: 'Won',
-    },
+    stage: INVESTMENT_PROJECT_STAGES.won,
   })
   const otherProjects = investmentProjectListFaker(2)
 
