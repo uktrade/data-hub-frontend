@@ -2,7 +2,6 @@ import urls from '../../../../../src/lib/urls'
 import {
   investmentProjectFaker,
   investmentProjectListFaker,
-  incompleteFieldOptionFaker,
 } from '../../fakers/investment-projects'
 import { INVESTMENT_PROJECT_STAGES } from '../../fakers/constants'
 
@@ -10,24 +9,9 @@ describe('Dashboard - My projects list', () => {
   const project1 = investmentProjectFaker({
     stage: INVESTMENT_PROJECT_STAGES.active,
   })
-  const project2 = investmentProjectFaker({
-    incomplete_fields: [incompleteFieldOptionFaker()],
-  })
-  const project3 = investmentProjectFaker({
-    name: 'My Special Project Name',
-  })
-  const wonProjects = investmentProjectListFaker(3, {
-    stage: INVESTMENT_PROJECT_STAGES.won,
-  })
   const otherProjects = investmentProjectListFaker(2)
 
-  const myProjects = [
-    project1,
-    project2,
-    project3,
-    ...wonProjects,
-    ...otherProjects,
-  ]
+  const myProjects = [project1, ...otherProjects]
 
   before(() => {
     cy.setUserFeatures(['personalised-dashboard'])

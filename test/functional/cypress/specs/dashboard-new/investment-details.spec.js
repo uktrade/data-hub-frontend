@@ -1,3 +1,5 @@
+import faker from 'faker'
+
 const { companies, interactions } = require('../../../../../src/lib/urls')
 
 import { investmentProjectFaker } from '../../fakers/investment-projects'
@@ -9,16 +11,16 @@ describe('Dashboard - Investment details', () => {
       name: 'Aerospace : Aircraft Design',
     },
     investor_company: {
-      id: '1',
+      id: faker.datatype.uuid(),
       name: 'Foo Bar Baz',
     },
     latest_interaction: {
-      id: '1',
+      id: faker.datatype.uuid(),
       date: today(),
       subject: 'A project interaction',
     },
     country_investment_originates_from: {
-      id: '1',
+      id: faker.datatype.uuid(),
       name: 'Italy',
     },
   })
