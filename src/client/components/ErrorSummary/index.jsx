@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { TEXT_COLOUR, ERROR_COLOUR, FOCUS_COLOUR } from 'govuk-colours'
+import { TEXT_COLOUR, ERROR_COLOUR } from 'govuk-colours'
 
 import { H2 } from '@govuk-react/heading'
 import Paragraph from '@govuk-react/paragraph'
@@ -15,7 +15,6 @@ import {
   FONT_SIZE,
   BORDER_WIDTH,
   BORDER_WIDTH_MOBILE,
-  FOCUS_WIDTH,
   LINE_HEIGHT,
   SPACING,
   MEDIA_QUERIES,
@@ -23,6 +22,8 @@ import {
 } from '@govuk-react/constants'
 
 import { spacing } from '@govuk-react/lib'
+
+import { focusMixin } from '../../styles'
 
 const StyledErrorText = styled(Link)({
   fontFamily: NTA_LIGHT,
@@ -55,10 +56,7 @@ const StyledErrorSummary = styled('div')(
     color: TEXT_COLOUR,
     padding: RESPONSIVE_4.mobile,
     border: `${BORDER_WIDTH_MOBILE} solid ${ERROR_COLOUR}`,
-    '&:focus': {
-      outline: `${FOCUS_WIDTH} solid ${FOCUS_COLOUR}`,
-      outlineOffset: '0',
-    },
+    ...focusMixin,
     [MEDIA_QUERIES.LARGESCREEN]: {
       padding: RESPONSIVE_4.tablet,
       border: `${BORDER_WIDTH} solid ${ERROR_COLOUR}`,
