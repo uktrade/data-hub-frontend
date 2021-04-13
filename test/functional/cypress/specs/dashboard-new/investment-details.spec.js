@@ -27,8 +27,8 @@ describe('Dashboard - Investment details', () => {
 
   const investmentProjects = [
     investmentProject,
-    investmentProjectFaker(),
-    investmentProjectFaker(),
+    investmentProjectFaker({ country_investment_originates_from: undefined }),
+    investmentProjectFaker({ latest_interaction: undefined }),
   ]
 
   before(() => {
