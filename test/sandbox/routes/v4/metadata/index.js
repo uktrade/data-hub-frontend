@@ -47,6 +47,7 @@ var capitalInvestmentEquityPercentage = require('../../../fixtures/v4/metadata/c
 var capitalInvestmentDesiredDealRoles = require('../../../fixtures/v4/metadata/capital-investment-desired-deal-roles.json')
 var capitalInvestmentAssetClassInterest = require('../../../fixtures/v4/metadata/capital-investment-asset-class-interest.json')
 var oneListTier = require('../../../fixtures/v4/metadata/one-list-tier.json')
+var tradeAgreement = require('../../../fixtures/v4/metadata/trade-agreement.json')
 
 exports.likelihoodToLand = function (req, res) {
   res.json(likelihoodToLand)
@@ -241,4 +242,8 @@ exports.capitalInvestmentAssetClassInterest = function (req, res) {
 
 exports.oneListTier = function (req, res) {
   res.json(oneListTier)
+}
+
+exports.tradeAgreement = function (req, res) {
+  res.json(tradeAgreement)
 }
