@@ -44,6 +44,11 @@ const metadataMock = {
     { id: '2', name: 'r2', disabled_on: yesterday },
     { id: '3', name: 'r3', disabled_on: null },
   ],
+  tradeAgreementOptions: [
+    { id: '1', name: 'ta1', disabled_on: null },
+    { id: '2', name: 'ta2', disabled_on: yesterday },
+    { id: '3', name: 'ta3', disabled_on: null },
+  ],
 }
 
 function getFormFieldOptions(res, fieldName) {
@@ -154,6 +159,8 @@ describe('Event edit controller', () => {
         .reply(200, metadataMock.regionOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, metadataMock.adviserOptions)
+        .get('/v4/metadata/trade-agreement')
+        .reply(200, metadataMock.tradeAgreementOptions)
     })
 
     context('when rendering the page', () => {

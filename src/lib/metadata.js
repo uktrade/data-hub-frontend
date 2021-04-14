@@ -96,6 +96,7 @@ const metadataItems = [
   ['investment-involvement', 'investmentInvolvementOptions'],
   ['export-experience-category', 'exportExperienceCategory'],
   ['likelihood-to-land', 'likelihoodToLandOptions'],
+  ['trade-agreement', 'tradeAgreementOptions'],
 ]
 
 const restrictedServiceKeys = [
