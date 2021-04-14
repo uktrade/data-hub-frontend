@@ -103,10 +103,10 @@ import {
 import * as getInvestmentProjects from '../apps/investments/client/projects/tasks'
 
 import * as myInvestmentProjects from './components/MyInvestmentProjects/tasks'
-import {
-  TASK_GET_MY_INVESTMENTS_LIST,
-  TASK_CHECK_FOR_INVESTMENTS,
-} from './components/MyInvestmentProjects/state'
+import { TASK_GET_MY_INVESTMENTS_LIST } from './components/MyInvestmentProjects/state'
+
+import * as personalisedDashboard from './components/PersonalisedDashboard/tasks'
+import { TASK_CHECK_FOR_INVESTMENTS } from './components/PersonalisedDashboard/state'
 
 import { fetchInvestmentSummaryDataRanges } from './components/InvestmentProjectSummary/tasks'
 import { TASK_GET_INVESTMENT_SUMMARY_DATA_RANGES } from './components/InvestmentProjectSummary/state'
@@ -179,8 +179,7 @@ function App() {
         [TASK_GET_ADVISER_NAME]: getInvestmentProjects.getAdviserNames,
         [TASK_GET_INVESTMENTS_PROJECTS_METADATA]:
           getInvestmentProjects.getMetadata,
-        [TASK_CHECK_FOR_INVESTMENTS]:
-          myInvestmentProjects.fetchMyInvestmentsList,
+        [TASK_CHECK_FOR_INVESTMENTS]: personalisedDashboard.checkForInvestments,
         [TASK_GET_MY_INVESTMENTS_LIST]:
           myInvestmentProjects.fetchMyInvestmentsList,
         [TASK_GET_INVESTMENT_SUMMARY_DATA_RANGES]: fetchInvestmentSummaryDataRanges,
