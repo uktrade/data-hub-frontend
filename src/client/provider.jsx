@@ -77,6 +77,9 @@ import investmentProfileReducer from '../apps/investments/client/profiles/reduce
 import { ID as INVESTMENT_PROJECTS_ID } from '../apps/investments/client/projects/state'
 import investmentProjectsReducer from '../apps/investments/client/projects/reducer'
 
+import { ID as CHECK_FOR_INVESTMENTS_ID } from './components/PersonalisedDashboard/state'
+import personalDashboardReducer from './components/PersonalisedDashboard/reducer'
+
 import { ID as MY_INVESTMENT_PROJECTS_ID } from './components/MyInvestmentProjects/state'
 import myInvestmentProjectsReducer from './components/MyInvestmentProjects/reducer'
 
@@ -139,6 +142,7 @@ const store = createStore(
     [INVESTMENT_PROFILES_ID]: investmentProfileReducer,
     [INVESTMENT_PROJECTS_ID]: investmentProjectsReducer,
     [MY_INVESTMENT_PROJECTS_ID]: myInvestmentProjectsReducer,
+    [CHECK_FOR_INVESTMENTS_ID]: personalDashboardReducer,
     [INVESTMENT_SUMMARY_ID]: investmentSummaryReducer,
     [DATA_SUMMARY_PICKER_ID]: dataSummaryPickerReducer,
     [INVESTMENT_REMINDERS_ID]: investmentRemindersReducer,
