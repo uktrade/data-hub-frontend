@@ -20,7 +20,7 @@ const DashboardTabs = ({ id, adviser, hasInvestmentProjects }) => (
       routed={true}
       tabs={{
         [urls.personalisedDashboard.myInvestmentProjects()]: {
-          label: 'My projects',
+          label: 'Investment projects',
           content: hasInvestmentProjects ? (
             <MyInvestmentProjects adviser={adviser} />
           ) : (
@@ -28,7 +28,7 @@ const DashboardTabs = ({ id, adviser, hasInvestmentProjects }) => (
           ),
         },
         [urls.dashboard()]: {
-          label: 'My companies lists',
+          label: 'Company lists',
           content: <CompanyLists />,
         },
       }}

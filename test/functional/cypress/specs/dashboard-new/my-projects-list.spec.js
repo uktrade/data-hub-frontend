@@ -1,7 +1,6 @@
 const urls = require('../../../../../src/lib/urls')
 
 const projectID = '5d341b34-1fc8-4638-b4b1-a0922ebf401e'
-const companyID = '0f5216e0-849f-11e6-ae22-56b6b6499611'
 
 describe('Dashboard - My projects list', () => {
   beforeEach(() => {
@@ -28,14 +27,14 @@ describe('Dashboard - My projects list', () => {
       .find('[data-test="project-status-tag"]')
       .should('have.text', 'Won')
   })
-  it('should contain a button to add an interaction', () => {
+  it('should contain a button to view interactions', () => {
     cy.get('@firstListItem')
       .find('[data-test="add-interaction"]')
-      .should('have.text', 'Add interaction')
+      .should('have.text', 'View interactions')
       .should(
         'have.attr',
         'href',
-        urls.companies.interactions.create(companyID)
+        urls.investments.projects.interactions.index(projectID)
       )
   })
 })
