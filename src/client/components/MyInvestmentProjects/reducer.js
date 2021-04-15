@@ -2,7 +2,6 @@ import {
   MY_INVESTMENTS__LIST_LOADED,
   MY_INVESTMENTS__SORT_CHANGE,
   MY_INVESTMENTS__FILTER_CHANGE,
-  MY_INVESTMENTS__CHECK_COMPLETE,
   MY_INVESTMENTS__PAGINATION_CLICK,
   MY_INVESTMENTS__SHOW_DETAILS_CHANGE,
 } from '../../actions'
@@ -18,7 +17,6 @@ const initialState = {
   sort: DEFAULT_SORT,
   filter: ALL_STAGES,
   showDetails: false,
-  hasInvestmentProjects: false,
 }
 
 export default (
@@ -26,11 +24,6 @@ export default (
   { type, result, page, filter, sort, showDetails }
 ) => {
   switch (type) {
-    case MY_INVESTMENTS__CHECK_COMPLETE:
-      return {
-        ...state,
-        hasInvestmentProjects: !!result.results.length,
-      }
     case MY_INVESTMENTS__LIST_LOADED:
       const { results, count } = result
       return {
