@@ -5,12 +5,7 @@ import styled from 'styled-components'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 
-import {
-  MEDIA_QUERIES,
-  SPACING,
-  FONT_SIZE,
-  FONT_WEIGHTS,
-} from '@govuk-react/constants'
+import { MEDIA_QUERIES, SPACING, FONT_SIZE } from '@govuk-react/constants'
 
 import { investments } from '../../../lib/urls'
 import { DARK_GREY } from '../../utils/colors'
@@ -33,7 +28,6 @@ const StyledParagraph = styled('p')`
   ${MEDIA_QUERIES.TABLET} {
     margin-bottom: 25px;
     font-size: ${FONT_SIZE.SIZE_24};
-    font-weight: ${FONT_WEIGHTS.bold};
   }
 `
 
@@ -62,7 +56,6 @@ const StyledUnorderedList = styled(UnorderedList)`
 const StyledListItem = styled('li')`
   ${MEDIA_QUERIES.TABLET} {
     font-size: ${FONT_SIZE.SIZE_24};
-    font-weight: ${FONT_WEIGHTS.bold};
   }
 `
 
@@ -83,12 +76,12 @@ const NoInvestmentProjects = () => (
         <StyledListItem>move projects onto the next stage</StyledListItem>
         <StyledListItem>view estimated land dates</StyledListItem>
         <StyledListItem>
-          view project summaries for the next financial year
+          view project summaries for the next financial year.
         </StyledListItem>
       </StyledUnorderedList>
     </div>
     <Button as={Link} href={investments.index()}>
-      View projects
+      Add project
     </Button>
   </StyledContainer>
 )
