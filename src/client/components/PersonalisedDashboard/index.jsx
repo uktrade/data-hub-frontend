@@ -8,7 +8,13 @@ import { BLUE } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
 import { VARIANTS } from '../../../common/constants'
+
 import { ID as INVESTMENT_REMINDERS_ID } from '../InvestmentReminders/state'
+import {
+  TASK_CHECK_FOR_INVESTMENTS,
+  ID as CHECK_FOR_INVESTMENTS_ID,
+} from './state'
+import { MY_INVESTMENTS__CHECK_COMPLETE } from '../../actions'
 
 import NotificationBadge from '../NotificationBadge'
 import ToggleSection from '../ToggleSection'
@@ -17,13 +23,6 @@ import Task from '../Task'
 import Aside from './Aside'
 import Main from './Main'
 import blueTheme from './blue-theme'
-
-import {
-  ID as CHECK_FOR_INVESTMENTS_ID,
-  TASK_CHECK_FOR_INVESTMENTS,
-} from '../MyInvestmentProjects/state'
-
-import { MY_INVESTMENTS__LIST_LOADED } from '../../actions'
 
 import {
   InvestmentReminders,
@@ -78,9 +77,8 @@ const PersonalisedDashboard = ({
         startOnRender={{
           payload: {
             adviser,
-            limit: 1,
           },
-          onSuccessDispatch: MY_INVESTMENTS__LIST_LOADED,
+          onSuccessDispatch: MY_INVESTMENTS__CHECK_COMPLETE,
         }}
       >
         {() => (

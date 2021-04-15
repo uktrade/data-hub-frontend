@@ -17,7 +17,6 @@ const initialState = {
   sort: DEFAULT_SORT,
   filter: ALL_STAGES,
   showDetails: false,
-  hasInvestmentProjects: false,
 }
 
 export default (
@@ -31,9 +30,6 @@ export default (
         ...state,
         results,
         count,
-        hasInvestmentProjects: !(
-          !results.length && state.filter === ALL_STAGES
-        ),
       }
     case MY_INVESTMENTS__SORT_CHANGE:
       return { ...state, sort, page }
