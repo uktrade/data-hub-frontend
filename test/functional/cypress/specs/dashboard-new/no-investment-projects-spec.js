@@ -82,14 +82,14 @@ describe('Dashboard - no investment projects', () => {
         .next()
         .should(
           'have.text',
-          'view project summaries for the next financial year'
+          'view project summaries for the next financial year.'
         )
     })
 
     it('should have a link to the investment projects page', () => {
       cy.get('@tabPanel')
         .find('a')
-        .should('have.text', 'View projects')
+        .should('have.text', 'Add project')
         .and('have.attr', 'href', urls.investments.index())
     })
   })

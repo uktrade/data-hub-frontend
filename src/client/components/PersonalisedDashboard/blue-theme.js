@@ -2,6 +2,9 @@ import { BLUE, WHITE } from 'govuk-colours'
 
 export default {
   tabNav: {
+    button: {
+      textDecoration: 'underline',
+    },
     selectedButton: {
       color: WHITE,
       background: BLUE,
