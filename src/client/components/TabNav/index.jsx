@@ -65,7 +65,8 @@ const StyledButton = styled(FocusableButton)({
   [MEDIA_QUERIES.TABLET]: {
     color: TEXT_COLOUR,
     fontSize: 19,
-    textDecoration: 'none',
+    textDecoration: ({ theme }) =>
+      get(theme, 'tabNav.button.textDecoration', 'none'),
     padding: `${SPACING_POINTS[2]}px ${SPACING_POINTS[4]}px`,
     margin: `${SPACING_POINTS[1]}px 0 ${SPACING_POINTS[1]}px`,
     background: GREY_4,
