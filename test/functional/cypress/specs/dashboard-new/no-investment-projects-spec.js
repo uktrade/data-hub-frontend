@@ -10,7 +10,7 @@ describe('Dashboard - no investment projects', () => {
       'layoutTesting:9010dd28-9798-e211-a939-e4115bead28a',
       true
     )
-    cy.visit('/myinvestmentprojects')
+    cy.visit('/')
     cy.get('[data-test="tablist"]').as('tabList')
     cy.get('[data-test="tabpanel"]').as('tabPanel')
   })
