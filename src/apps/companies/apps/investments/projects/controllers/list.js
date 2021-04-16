@@ -32,6 +32,8 @@ async function renderProjects(req, res, next) {
       )
     )
 
+    res.locals.title = `Investments - ${company.name} - Companies`
+
     res.render('companies/apps/investments/projects/views/list', {
       results,
       actionButtons,

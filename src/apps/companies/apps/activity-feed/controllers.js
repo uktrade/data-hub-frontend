@@ -27,6 +27,8 @@ async function renderActivityFeed(req, res, next) {
     dnbRelatedCompaniesCount,
   } = res.locals
 
+  res.locals.title = `Activities - ${company.name} - Companies`
+
   const breadcrumbs = [
     { link: urls.dashboard(), text: 'Home' },
     { link: urls.companies.index(), text: 'Companies' },

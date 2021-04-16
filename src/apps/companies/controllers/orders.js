@@ -33,6 +33,8 @@ async function renderOrders(req, res, next) {
       )
     )
 
+    res.locals.title = `Orders - ${company.name} - Companies`
+
     res.render('companies/views/orders', {
       results,
       actionButtons,

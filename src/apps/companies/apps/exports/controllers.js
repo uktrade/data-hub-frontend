@@ -57,6 +57,8 @@ function renderExports(req, res) {
     exportCountriesInformation,
   } = transformCompanyToExportDetailsView(company)
 
+  res.locals.title = `Export - ${company.name} - Companies`
+
   res.render('companies/apps/exports/views/index', {
     props: {
       isArchived,
