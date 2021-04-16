@@ -19,6 +19,13 @@ describe('Company add to pipeline form', () => {
       cy.visit(urls.companies.pipelineAdd(minimallyMinimal.id))
     })
 
+    it('should render a meta title', () => {
+      cy.title().should(
+        'eq',
+        'Add to your pipeline - Minimally Minimal Ltd - Companies - DIT Data Hub'
+      )
+    })
+
     it('should render the breadcrumbs', () => {
       assertBreadcrumbs({
         Home: urls.dashboard(),

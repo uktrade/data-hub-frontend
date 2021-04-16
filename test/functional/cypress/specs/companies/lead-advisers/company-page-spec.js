@@ -9,6 +9,13 @@ describe('Lead advisers', () => {
       cy.get(selectors.tabbedLocalNav().item(3)).click()
     })
 
+    it('should render a meta title', () => {
+      cy.title().should(
+        'eq',
+        'Lead adviser - Mars Exports Ltd - Companies - DIT Data Hub'
+      )
+    })
+
     it('should display the "Lead Adviser" tab in the navigation', () => {
       cy.get(selectors.tabbedLocalNav().item(3)).should(
         'contain',
