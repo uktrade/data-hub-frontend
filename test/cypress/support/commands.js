@@ -238,14 +238,17 @@ Cypress.Commands.add('setUserDitTeam', (id) => {
   return cy.request('PUT', `${Cypress.env('sandbox_url')}/whoami`, { dit_team_id: id })
 })
 
-Cypress.Commands.add('resetUserDitTeam', () => {
-  return cy.request('POST', `${Cypress.env('sandbox_url')}/whoami`)
+Cypress.Commands.add('setUserFeatures', (features) => {
+  return cy.request('PUT', `${Cypress.env('sandbox_url')}/whoami`, { features })
 })
 
 Cypress.Commands.add('setAdviserId', (id) => {
   return cy.request('PUT', `${Cypress.env('sandbox_url')}/whoami`, { id })
 })
 
+Cypress.Commands.add('resetUser', () => {
+  return cy.request('POST', `${Cypress.env('sandbox_url')}/whoami`)
+})
 Cypress.Commands.add('resetAdviserId', () => {
   return cy.request('POST', `${Cypress.env('sandbox_url')}/whoami`)
 })

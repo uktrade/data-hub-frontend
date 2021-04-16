@@ -8,17 +8,21 @@ exports.whoami = function (req, res) {
 }
 
 exports.setWhoami = function (req, res) {
+  if (req.body.id) {
+    whoami.id = req.body.id
+  }
   if (req.body.dit_team_id) {
     whoami.dit_team.id = req.body.dit_team_id
   }
-  if (req.body.id) {
-    whoami.id = req.body.id
+  if (req.body.features) {
+    whoami.features = req.body.features
   }
   res.json(whoami)
 }
 
 exports.resetWhoami = function (req, res) {
-  whoami.dit_team.id = defaultTeamId
   whoami.id = defaultAdviserId
+  whoami.dit_team.id = defaultTeamId
+  whoami.features = []
   res.json(whoami)
 }
