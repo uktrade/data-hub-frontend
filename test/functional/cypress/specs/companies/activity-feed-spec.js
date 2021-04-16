@@ -19,6 +19,13 @@ describe('Company activity feed', () => {
       cy.visit(urls.companies.activity.index(fixtures.company.venusLtd.id))
     })
 
+    it('should render a meta title', () => {
+      cy.title().should(
+        'eq',
+        'Activities - Venus Ltd - Companies - DIT Data Hub'
+      )
+    })
+
     it('should display the activity header', () => {
       cy.get(selectors.companyCollection().heading).should(
         'have.text',

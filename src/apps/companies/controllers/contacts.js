@@ -27,6 +27,8 @@ function renderContacts(req, res) {
         },
       ]
 
+  res.locals.title = `Contacts - ${company.name} - Companies`
+
   res.render('companies/views/contacts', {
     sortForm,
     filtersFields,
