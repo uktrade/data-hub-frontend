@@ -1,7 +1,7 @@
 import React from 'react'
 
-import SummaryTable from '../../../../client/components/SummaryTable'
-import Tag from '../../../../client/components/Tag'
+import SummaryTable from '../../../../../client/components/SummaryTable'
+import Tag from '../../../../../client/components/Tag'
 
 import Link from '@govuk-react/link'
 import styled from 'styled-components'

@@ -460,6 +460,10 @@ app.get(
   '/v4/large-capital-opportunity/:opportunityId',
   v4Investment.getLargeCapitalOpportunity
 )
+app.get(
+  '/v4/large-capital-opportunity',
+  v4Investment.getLargeCapitalOpportunityList
+)
 
 // V4 Proposition
 app.get('/v4/proposition', v4Proposition.propositions)

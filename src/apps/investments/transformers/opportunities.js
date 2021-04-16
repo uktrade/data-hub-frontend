@@ -1,8 +1,13 @@
+const { investments } = require('../../../lib/urls')
+const { format, parseISO } = require('date-fns')
+
+const { DATE_LONG_FORMAT } = require('../../../common/constants')
+
 const getArrayNames = (data) => data.map((d) => d.name)
 const getArrayNamesAndIds = (data) =>
   data.map((d) => ({ name: d.name, id: d.id }))
 
-const transformInvestmentOpportunity = ({
+export const transformInvestmentOpportunityDetails = ({
   incomplete_details_fields,
   incomplete_requirements_fields,
   name,
@@ -46,4 +51,32 @@ const transformInvestmentOpportunity = ({
   },
 })
 
-export default transformInvestmentOpportunity
+export function transformInvestmentOpportunitiesList({
+  name,
+  id,
+  uk_region_locations,
+  created_on,
+}) {
+  function filteredLocationBadge(locationList) {
+    var locationNamesArray = getArrayNames(locationList)
+    var locationBadgeText = []
+    if (locationNamesArray.length > 1) {
+      locationBadgeText.push({ text: 'Multiple UK sites' })
+    } else if (locationNamesArray.length == 1) {
+      locationBadgeText.push({ text: locationNamesArray[0].toString() })
+    }
+    return locationBadgeText
+  }
+  return {
+    headingText: name,
+    headingUrl: investments.opportunities.details(id),
+    itemId: id,
+    badges: filteredLocationBadge(uk_region_locations),
+    metadata: [
+      {
+        label: 'Updated on',
+        value: format(new Date(parseISO(created_on)), DATE_LONG_FORMAT),
+      },
+    ],
+  }
+}
