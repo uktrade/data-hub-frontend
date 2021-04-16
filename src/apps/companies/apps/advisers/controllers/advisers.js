@@ -23,6 +23,8 @@ function renderLeadAdvisers(req, res) {
   } = res.locals
   const { name, team, email } = companyToLeadITA(company) || {}
 
+  res.locals.title = `Lead adviser - ${company.name} - Companies`
+
   res.render('companies/views/lead-advisers', {
     props: {
       hasAccountManager: !!company.one_list_group_global_account_manager,

@@ -7,6 +7,10 @@ describe('Company OMIS Collections', () => {
     cy.visit(urls.companies.orders(fixtures.company.oneListCorp.id))
   })
 
+  it('should render a meta title', () => {
+    cy.title().should('eq', 'Orders - One List Corp - Companies - DIT Data Hub')
+  })
+
   it('should display a list of orders with the total result', () => {
     cy.get(selectors.entityCollection.collectionResult).should('contain', 264)
     cy.get(selectors.entityCollection.entities)

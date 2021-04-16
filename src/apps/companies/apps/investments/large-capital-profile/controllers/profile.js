@@ -142,6 +142,8 @@ const renderProfile = async (req, res, next) => {
       )
     }
 
+    res.locals.title = `Large capitail profile - ${company.name} - Companies`
+
     res.render(
       'companies/apps/investments/large-capital-profile/views/profile',
       {

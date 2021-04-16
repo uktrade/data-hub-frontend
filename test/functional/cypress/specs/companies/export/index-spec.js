@@ -62,6 +62,10 @@ describe('Company Export tab', () => {
         visitExportIndex(fixtures.company.dnbCorp.id)
       })
 
+      it('should render a meta title', () => {
+        cy.title().should('eq', 'Export - DnB Corp - Companies - DIT Data Hub')
+      })
+
       it('should render breadcrumbs', () => {
         assertBreadcrumbs({
           Home: '/',

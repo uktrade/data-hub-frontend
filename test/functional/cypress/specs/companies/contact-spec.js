@@ -8,6 +8,13 @@ describe('Companies Contact', () => {
       cy.visit(urls.companies.contacts(fixtures.company.archivedLtd.id))
     })
 
+    it('should render a meta title', () => {
+      cy.title().should(
+        'eq',
+        'Contacts - Archived Ltd - Companies - DIT Data Hub'
+      )
+    })
+
     it('should not display the "Add contact" button', () => {
       cy.get(
         selectors

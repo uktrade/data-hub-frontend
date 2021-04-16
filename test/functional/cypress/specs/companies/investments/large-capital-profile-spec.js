@@ -14,6 +14,13 @@ describe('Company Investments and Large capital profile', () => {
   context('when viewing the 3 tabs', () => {
     before(() => cy.visit(largeCapitalProfile))
 
+    it('should render a meta title', () => {
+      cy.title().should(
+        'eq',
+        'Large capitail profile - One List Corp - Companies - DIT Data Hub'
+      )
+    })
+
     it('should display an "Investments projects" tab with the correct URL', () => {
       cy.get(selectors.tabs.investmentProjects)
         .find('a')
