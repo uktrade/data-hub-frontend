@@ -9,7 +9,6 @@ describe('Dashboard - My projects list', () => {
       true
     )
     cy.visit('/')
-    cy.get('[data-test="tablist"] span:first-child button').click()
     cy.get('[data-test="projects-list-item"]').eq(0).as('firstListItem')
   })
   after(() => {

@@ -7,7 +7,6 @@ describe('Dashboard - Investment details', () => {
       true
     )
     cy.visit('/')
-    cy.get('[data-test="tablist"] span:first-child button').click()
     cy.get('[data-test="investment-details"]').as('allDetails')
     cy.get('[data-test="investment-details"]').eq(1).as('secondProjectDetails')
     cy.get('[data-test="investment-details"]').eq(2).as('thirdProjectDetails')

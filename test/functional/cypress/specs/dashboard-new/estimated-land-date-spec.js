@@ -25,7 +25,6 @@ describe('Dashboard items - estimated land date', () => {
       true
     )
     cy.visit('/')
-    cy.get('#dashboard\\.TabNav\\.tab\\._myinvestmentprojects').click()
     cy.get('[data-test="projects-list-item"]').as('projectListItems')
   })
 
