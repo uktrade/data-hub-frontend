@@ -23,6 +23,11 @@ import InvestmentNextSteps from './InvestmentNextSteps'
 const ListItem = styled('li')`
   padding: ${SPACING.SCALE_2} 0;
   border-bottom: 2px solid ${GREY_1};
+  details {
+    &[open] {
+      padding-bottom: ${SPACING.SCALE_5};
+    }
+  }
   &:last-child {
     border-bottom: none;
   }
