@@ -61,13 +61,15 @@ describe('Data Hub', () => {
     assert.equal(result, 0)
   })
 
-  // it('investments page', async () => {
-  //   await browser.url('/investments/projects')
-  //   await hideScrollBarIE()
-  //   await browser.imageDiff.take()
-  //   const result = await browser.imageDiff.validate()
-  //   assert.equal(result, 0)
-  // })
+  it('investments page', async () => {
+    await browser.url('/investments/projects')
+    await hideScrollBarIE()
+    const filter = await $('#field-stage')
+    await filter.waitForDisplayed({ timeout: 10000 })
+    await browser.imageDiff.take()
+    const result = await browser.imageDiff.validate()
+    assert.equal(result, 0)
+  })
 
   it('omis page', async () => {
     await browser.url('/omis')

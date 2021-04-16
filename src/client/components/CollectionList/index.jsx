@@ -29,6 +29,7 @@ const CollectionList = ({
   maxItemsToDownload,
   baseDownloadLink,
   entityName,
+  addItemUrl,
 }) => (
   <GridRow>
     <GridCol setWidth="full">
@@ -37,6 +38,8 @@ const CollectionList = ({
           <CollectionHeader
             totalItems={count}
             collectionName={collectionName}
+            addItemUrl={addItemUrl}
+            data-test="collection-header"
           />
         )}
 
@@ -113,6 +116,7 @@ CollectionList.propTypes = {
   }),
   maxItemsToDownload: PropTypes.number,
   onPageClick: PropTypes.func.isRequired,
+  addItemUrl: PropTypes.string,
 }
 
 export default CollectionList
