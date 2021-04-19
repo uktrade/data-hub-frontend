@@ -16,7 +16,7 @@ module.exports = {
       urls.pipeline.won(),
     ],
     spaBasePath(urls.dashboard.route),
-    layoutTesting('dashboard'),
+    layoutTesting('personalised-dashboard'),
     renderDashboard
   ),
 }

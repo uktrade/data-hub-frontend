@@ -1,14 +1,15 @@
 describe('Dashboard - no investment projects', () => {
-  beforeEach(() => {
-    cy.setFeatureFlag(
-      'layoutTesting:9010dd28-9798-e211-a939-e4115bead28a',
-      true
-    )
+  before(() => {
+    cy.setUserFeatures(['personalised-dashboard'])
     cy.visit('/')
-    cy.get('[data-test="tabpanel"]').find('select').eq(0).as('stageSelect')
   })
+
   after(() => {
-    cy.resetFeatureFlags()
+    cy.resetUser()
+  })
+
+  beforeEach(() => {
+    cy.get('[data-test="tabpanel"]').find('select').eq(0).as('stageSelect')
   })
 
   context('When a filter is applied and there are zero projects', () => {

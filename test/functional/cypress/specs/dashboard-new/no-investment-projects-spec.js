@@ -4,19 +4,19 @@ const {
 const urls = require('../../../../../src/lib/urls')
 
 describe('Dashboard - no investment projects', () => {
-  beforeEach(() => {
+  before(() => {
     cy.setAdviserId(ZERO_INVESTMENT_PROJECTS)
-    cy.setFeatureFlag(
-      'layoutTesting:9010dd28-9798-e211-a939-e4115bead28a',
-      true
-    )
+    cy.setUserFeatures(['personalised-dashboard'])
     cy.visit('/')
+  })
+
+  after(() => {
+    cy.resetUser()
+  })
+
+  beforeEach(() => {
     cy.get('[data-test="tablist"]').as('tabList')
     cy.get('[data-test="tabpanel"]').as('tabPanel')
-  })
-  after(() => {
-    cy.resetFeatureFlags()
-    cy.resetAdviserId()
   })
 
   context('Tabbed navigation', () => {

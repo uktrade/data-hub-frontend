@@ -19,17 +19,17 @@ const assertEstimatedLandDate = ({ index, date, countdown, colour }) => {
 }
 
 describe('Dashboard items - estimated land date', () => {
-  beforeEach(() => {
-    cy.setFeatureFlag(
-      'layoutTesting:9010dd28-9798-e211-a939-e4115bead28a',
-      true
-    )
+  before(() => {
+    cy.setUserFeatures(['personalised-dashboard'])
     cy.visit('/')
-    cy.get('[data-test="projects-list-item"]').as('projectListItems')
   })
 
   after(() => {
-    cy.resetFeatureFlags()
+    cy.resetUser()
+  })
+
+  beforeEach(() => {
+    cy.get('[data-test="projects-list-item"]').as('projectListItems')
   })
 
   context('My project list items - estimated land date', () => {
