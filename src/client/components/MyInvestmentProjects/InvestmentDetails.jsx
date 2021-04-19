@@ -19,11 +19,19 @@ const StyledHeader = styled('h3')`
   margin-bottom: 0;
 `
 
-const StyledList = styled('ul')`
+const StyledDL = styled('dl')`
   font-size: ${FONT_SIZE.SIZE_16};
 `
-const StyledSpan = styled('span')`
+
+const StyledDT = styled('dt')`
   color: ${DARK_GREY};
+  float: left;
+  clear: left;
+  margin-right: 5px;
+`
+
+const StyledDD = styled('dd')`
+  margin-left: 0px;
 `
 
 const InvestmentDetails = ({
@@ -34,36 +42,32 @@ const InvestmentDetails = ({
 }) => (
   <StyledDiv data-test="investment-details">
     <StyledHeader>Details</StyledHeader>
-    <StyledList>
-      <li>
-        <StyledSpan>Investor: </StyledSpan>
+    <StyledDL>
+      <StyledDT>Investor:</StyledDT>
+      <StyledDD>
         <a href={companies.details(investor.id)}>{investor.name}</a>
-      </li>
-      <li>
-        <StyledSpan>Sector: </StyledSpan>
-        {sector.name}
-      </li>
+      </StyledDD>
+      <StyledDT>Sector:</StyledDT>
+      <StyledDD>{sector.name}</StyledDD>
       {countryOrigin && (
-        <li>
-          <StyledSpan>Country of origin: </StyledSpan>
-          {countryOrigin.name}
-        </li>
+        <>
+          <StyledDT>Country of origin:</StyledDT>
+          <StyledDD>{countryOrigin.name}</StyledDD>
+        </>
       )}
       {latestInteraction && (
         <>
-          <li>
-            <StyledSpan>Last interaction: </StyledSpan>
-            {format(latestInteraction.date)}
-          </li>
-          <li>
-            <StyledSpan>Interaction subject: </StyledSpan>
+          <StyledDT>Last interaction:</StyledDT>
+          <StyledDD>{format(latestInteraction.date)}</StyledDD>
+          <StyledDT>Interaction subject:</StyledDT>
+          <StyledDD>
             <a href={interactions.detail(latestInteraction.id)}>
               {latestInteraction.subject}
             </a>
-          </li>
+          </StyledDD>
         </>
       )}
-    </StyledList>
+    </StyledDL>
   </StyledDiv>
 )
 
