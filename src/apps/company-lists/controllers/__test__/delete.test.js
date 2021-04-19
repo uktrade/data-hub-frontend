@@ -1,5 +1,3 @@
-const requestErrors = require('request-promise/errors')
-
 const config = require('../../../../config')
 const buildMiddlewareParameters = require('../../../../../test/unit/helpers/middleware-parameters-builder')
 const {
@@ -122,7 +120,7 @@ describe('Delete company list controller', () => {
         expect(middlewareParameters.resMock.send).to.not.be.called
         expect(middlewareParameters.nextSpy).to.be.called
         expect(middlewareParameters.nextSpy.firstCall.args[0]).to.be.instanceof(
-          requestErrors.StatusCodeError
+          Error
         )
       })
     })
