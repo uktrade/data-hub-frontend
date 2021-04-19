@@ -7,7 +7,6 @@ describe('Dashboard - Investment project next steps', () => {
       true
     )
     cy.visit('/')
-    cy.get('[data-test="tablist"] span:first-child button').click()
     cy.get('[data-test="investment-steps"]').as('nexSteps')
     cy.get('[data-test="project-details"]').eq(0).as('firstProjectDetails')
     cy.get('[data-test="investment-steps"]').eq(0).as('moreThanThreeSteps')

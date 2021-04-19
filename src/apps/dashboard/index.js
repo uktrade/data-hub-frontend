@@ -8,8 +8,8 @@ module.exports = {
   router: router.get(
     // These paths are handled by react-router
     [
-      urls.personalisedDashboard.myInvestmentProjects(),
       urls.dashboard(),
+      urls.companyLists.index(),
       urls.companies.referrals.list(),
       urls.pipeline.index(),
       urls.pipeline.active(),

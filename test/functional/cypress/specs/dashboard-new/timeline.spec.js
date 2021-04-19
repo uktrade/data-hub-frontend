@@ -5,7 +5,6 @@ describe('Dashboard timeline', () => {
       true
     )
     cy.visit('/')
-    cy.get('[data-test="tablist"] span:first-child button').click()
   })
   after(() => {
     cy.resetFeatureFlags()
