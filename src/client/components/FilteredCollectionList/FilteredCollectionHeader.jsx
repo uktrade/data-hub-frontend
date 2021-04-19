@@ -80,7 +80,9 @@ function FilteredCollectionHeader({
       <CollectionHeaderRow actions={actions}>
         <StyledDiv>
           <StyledHeaderText>
-            <StyledResultCount>{formattedTotal}</StyledResultCount>{' '}
+            <StyledResultCount data-test="collectionCount">
+              {formattedTotal}
+            </StyledResultCount>{' '}
             {counterSuffix}
           </StyledHeaderText>
           <FilterReset id="clear-filters">Remove all filters</FilterReset>
