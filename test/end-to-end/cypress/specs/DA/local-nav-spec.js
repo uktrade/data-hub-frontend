@@ -16,7 +16,7 @@ describe('DA Permission', () => {
 
     before(() => {
       cy.loadFixture([company])
-      cy.visit(companies.detail(company))
+      cy.visit(companies.detail(company.pk))
     })
 
     it('should display DA only tabs', () => {
@@ -62,11 +62,12 @@ describe('DA Permission', () => {
   })
 
   describe('investment projects', () => {
-    investmentProjectNewGolf = fixtures.investmentProject.create.newGolfCourseDA()
-
     before(() => {
-      cy.loadFixture([investmentProjectNewGolf])
-      cy.visit(investments.projects.details(investmentProjectNewGolf.pk))
+      cy.visit(
+        investments.projects.details(
+          fixtures.investmentProject.newGolfCourse.id
+        )
+      )
     })
 
     it('should display DA only tabs', () => {
