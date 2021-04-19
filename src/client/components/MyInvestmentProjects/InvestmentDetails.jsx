@@ -34,6 +34,13 @@ const StyledDD = styled('dd')`
   margin-left: 0px;
 `
 
+const Truncate = styled('span')`
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`
+
 const InvestmentDetails = ({
   investor,
   sector,
@@ -48,7 +55,9 @@ const InvestmentDetails = ({
         <a href={companies.details(investor.id)}>{investor.name}</a>
       </StyledDD>
       <StyledDT>Sector:</StyledDT>
-      <StyledDD>{sector.name}</StyledDD>
+      <StyledDD>
+        <Truncate>{sector.name}</Truncate>
+      </StyledDD>
       {countryOrigin && (
         <>
           <StyledDT>Country of origin:</StyledDT>
