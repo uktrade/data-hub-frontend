@@ -97,8 +97,92 @@ function newHotelCommitmentToInvest() {
   }
 }
 
+function newGolfCourseDA() {
+  return {
+    model: 'investment.investmentproject',
+    pk: uuidv4(),
+    fields: {
+      name: 'New golf course (DA)',
+      description: 'This is a dummy investment project for testing',
+      stage: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
+      status: 'ongoing',
+      estimated_land_date: '2020-03-01',
+      investment_type: '9c364e64-2b28-401b-b2df-50e08b0bca44',
+      investor_company: 'b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
+      client_contacts: ['7d43f9a2-868f-4d85-8e5f-631e5a8c9a3b'],
+      client_relationship_manager: '5a644146-5298-4741-91f3-d5d7558adf47',
+      referral_source_adviser: 'e83a608e-84a4-11e6-ae22-56b6b6499611',
+      referral_source_activity: '0c4f8e74-d34f-4aca-b764-a44cdc2d0087',
+      fdi_type: 'f8447013-cfdc-4f35-a146-6619665388b3',
+      sector: '559c37e5-5f95-e211-a939-e4115bead28a',
+      business_activities: ['a2dbd807-ae52-421c-8d1d-88adfc7a506b'],
+      client_cannot_provide_total_investment: false,
+      total_investment: 1100000.0,
+      client_cannot_provide_foreign_investment: false,
+      foreign_equity_investment: 250000.0,
+      government_assistance: false,
+      number_new_jobs: 50,
+      average_salary: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
+      site_decided: false,
+      client_considering_other_countries: false,
+      uk_region_locations: ['814cd12a-6095-e211-a939-e4115bead28a'],
+      client_requirements: 'Anywhere',
+      strategic_drivers: ['7cc42486-30bb-46d5-813d-6ad1c918ef08'],
+      project_manager: 'd7493b4e-5d7b-4834-98d9-28b78a74052a',
+      project_assurance_adviser: '7bad8082-4978-4fe8-a018-740257f01637',
+      created_on: '2017-08-16T10:00:00Z',
+      created_by: '5a644146-5298-4741-91f3-d5d7558adf47',
+      modified_on: '2017-09-18T13:00:00Z',
+      modified_by: '5a644146-5298-4741-91f3-d5d7558adf47',
+    },
+  }
+}
+
+function newZooLEP() {
+  return {
+    model: 'investment.investmentproject',
+    pk: uuidv4(),
+    fields: {
+      name: 'New zoo (LEP)',
+      description: 'This is a dummy investment project for testing',
+      stage: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
+      status: 'ongoing',
+      estimated_land_date: '2020-02-01',
+      investment_type: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
+      investor_company: 'b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
+      client_contacts: ['6791d583-7a52-418f-a0d3-d8d527f20d43'],
+      client_relationship_manager: '5a644146-5298-4741-91f3-d5d7558adf47',
+      referral_source_adviser: 'e83a608e-84a4-11e6-ae22-56b6b6499611',
+      referral_source_activity: '0c4f8e74-d34f-4aca-b764-a44cdc2d0087',
+      fdi_type: 'f8447013-cfdc-4f35-a146-6619665388b3',
+      sector: '034be3be-5329-e511-b6bc-e4115bead28a',
+      business_activities: ['a2dbd807-ae52-421c-8d1d-88adfc7a506b'],
+      client_cannot_provide_total_investment: false,
+      total_investment: 1100000.0,
+      client_cannot_provide_foreign_investment: false,
+      foreign_equity_investment: 250000.0,
+      government_assistance: false,
+      number_new_jobs: 50,
+      average_salary: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
+      site_decided: false,
+      client_considering_other_countries: false,
+      uk_region_locations: ['814cd12a-6095-e211-a939-e4115bead28a'],
+      client_requirements: 'Anywhere',
+      strategic_drivers: ['7cc42486-30bb-46d5-813d-6ad1c918ef08'],
+      project_manager: 'd7493b4e-5d7b-4834-98d9-28b78a74052a',
+      project_assurance_adviser: '7bad8082-4978-4fe8-a018-740257f01637',
+      created_on: '2017-08-16T10:00:00Z',
+      created_by: '5a644146-5298-4741-91f3-d5d7558adf47',
+      modified_on: '2017-09-18T13:00:00Z',
+      modified_by: '5a644146-5298-4741-91f3-d5d7558adf47',
+    },
+  }
+}
+
 module.exports = {
   newHotelFdi,
   fancyDressManufacturing,
   newHotelCommitmentToInvest,
+  newGolfCourseDA,
+  newZooLEP,
 }
