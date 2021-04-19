@@ -1,30 +1,27 @@
-const { isEmpty, get } = require('lodash')
+const { get, isEmpty } = require('lodash')
 
 /**
- * Allows a specific group of users to test a new layout. You need to set a feature flag in Django in the following
- * format: layoutTesting:1234 where 1234 is an id of a specific team. Once set all users that fall into that team will
- * be exposed to the new layout.
+ * Allows users with the given feature flag to trial a new layout.
  *
- * Features can also be enabled on a per-user basis through Django.
+ * Adding this middleware to a route will set a property / global variable
+ * called "isLayoutTesting" on res.locals, this variable can then be used to
+ * toggle layouts/components in any njk file.
  *
- * @param {String} queryParam - Sets a query param in the url. "Foo" results in ?layoutTesting=foo This is for tracking
- * via google analytics. Adding this middleware to a route will set a property/global variable called "isLayoutTesting"
- * on res.locals, this variable can then be used to toggle layouts/components in any njk file.
+ * The feature name is also added to the query string in the format
+ * `?layoutTesting={feature}` for tracking via google analytics.
+ *
+ * Flags can be enabled on a per-user basis through Django.
+ *
+ * @param {String} feature - the feature to toggle layout for.
  */
 
-module.exports = (queryParam) => (req, res, next) => {
-  const userTeamId = get(res.locals.user.dit_team, 'id')
-
-  res.locals.isLayoutTesting =
-    res.locals.user.features.includes('personalised-dashboard') ||
-    !!Object.keys(res.locals.features).filter(
-      (feature) =>
-        feature.includes('layoutTesting') &&
-        feature.split(':')[1] === userTeamId
-    ).length
+module.exports = (feature) => (req, res, next) => {
+  res.locals.isLayoutTesting = get(res.locals, 'user.features', []).includes(
+    feature
+  )
 
   if (res.locals.isLayoutTesting && isEmpty(req.query)) {
-    return res.redirect(`${req.originalUrl}?layoutTesting=${queryParam}`)
+    return res.redirect(`${req.originalUrl}?layoutTesting=${feature}`)
   } else {
     next()
   }

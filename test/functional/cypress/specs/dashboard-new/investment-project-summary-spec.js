@@ -4,18 +4,19 @@ import {
 } from '../../../../../src/client/utils/date-utils'
 
 describe('Investment projects summary', () => {
-  beforeEach(() => {
-    cy.setFeatureFlag(
-      'layoutTesting:9010dd28-9798-e211-a939-e4115bead28a',
-      true
-    )
+  before(() => {
+    cy.setUserFeatures(['personalised-dashboard'])
     cy.visit('/')
+  })
+
+  after(() => {
+    cy.resetUser()
+  })
+
+  beforeEach(() => {
     cy.get('[data-test="investment-project-summary-section"]').as(
       'investmentProjectsSummarySection'
     )
-  })
-  after(() => {
-    cy.resetFeatureFlags()
   })
 
   context('Date picker options', () => {

@@ -249,6 +249,3 @@ Cypress.Commands.add('setAdviserId', (id) => {
 Cypress.Commands.add('resetUser', () => {
   return cy.request('POST', `${Cypress.env('sandbox_url')}/whoami`)
 })
-Cypress.Commands.add('resetAdviserId', () => {
-  return cy.request('POST', `${Cypress.env('sandbox_url')}/whoami`)
-})
