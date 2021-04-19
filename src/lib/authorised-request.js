@@ -1,6 +1,5 @@
 const { isNil, isString, pickBy } = require('lodash')
-const request = require('request')
-const requestPromise = require('request-promise')
+const request = require('./request')
 
 const config = require('../config')
 const logger = require('../config/logger')
@@ -26,7 +25,7 @@ function stripScripts(key, value) {
   return value
 }
 
-function parseOptions(req, opts) {
+function parseConfig(req, opts) {
   const { token } = req.session
   const defaults = {
     headers: {
@@ -34,7 +33,6 @@ function parseOptions(req, opts) {
       ...getZipkinHeaders(req),
       ...(token ? { Authorization: `Bearer ${token}` } : null),
     },
-    json: true,
     method: 'GET',
     proxy: config.proxy,
   }
@@ -48,16 +46,15 @@ function parseOptions(req, opts) {
 
   return {
     ...defaults,
-    body: opts.body,
+    data: opts.body,
     method: opts.method || 'GET',
-    qs: pickBy(opts.qs, hasValue),
+    params: pickBy(opts.qs, hasValue),
     url: opts.url,
   }
 }
 
 function createResponseLogger(requestOpts) {
-  return (data) => {
-    const statusCode = (data && data.statusCode) || ''
+  return ({ statusCode = '', ...data }) => {
     const responseInfo = `Response ${statusCode} for ${requestOpts.method} to ${requestOpts.url}:`
     logger.debug(responseInfo, data)
     return data
@@ -69,26 +66,28 @@ function logRequest(opts) {
   logger.debug('with request data:', {
     headers: opts.headers,
     body: opts.body,
-    qs: opts.qs,
+    params: opts.params,
   })
 }
 
 // Accepts options as keys on an object or encoded as a url
 // Responses are parsed to remove any embedded XSS attempts with
 // script tags
-function authorisedRequest(req, opts) {
-  const requestOptions = parseOptions(req, opts)
+async function authorisedRequest(req, opts) {
+  const requestConfig = parseConfig(req, opts)
 
-  logRequest(requestOptions)
-  requestOptions.jsonReviver = stripScripts
+  logRequest(requestConfig)
+  requestConfig.jsonReviver = stripScripts
 
-  const r = requestPromise(requestOptions)
-
-  const logResponse = createResponseLogger(requestOptions)
-  return r.then(logResponse, (err) => {
+  const logResponse = createResponseLogger(requestConfig)
+  try {
+    const { data } = await request(requestConfig)
+    logResponse(data)
+    return data
+  } catch (err) {
     logResponse(err)
     throw err
-  })
+  }
 }
 
 // Accepts options as keys on an object or encoded as a url
@@ -96,11 +95,11 @@ function authorisedRequest(req, opts) {
 // See request-promise #90 does not work with streams
 // https://github.com/request/request-promise/issues/90
 function authorisedRawRequest(req, opts) {
-  const requestOptions = parseOptions(req, opts)
+  const requestConfig = parseConfig(req, opts)
 
-  logRequest(requestOptions)
+  logRequest(requestConfig)
 
-  return Promise.resolve(request(requestOptions))
+  return request(requestConfig)
 }
 
 // accept untrusted certificates for dev environments
