@@ -96,9 +96,6 @@ module.exports = {
     callback: url('/oauth/callback'),
     signout: url('/oauth/sign-out'),
   },
-  personalisedDashboard: {
-    myInvestmentProjects: url('/myinvestmentprojects'),
-  },
   companies: {
     index: url('/companies'),
     create: url('/companies', '/create'),
@@ -201,6 +198,7 @@ module.exports = {
     },
   },
   companyLists: {
+    index: url('/company-lists'),
     delete: url('/company-lists', '/:listId/delete'),
     rename: url('/company-lists', '/:listId/rename'),
   },
