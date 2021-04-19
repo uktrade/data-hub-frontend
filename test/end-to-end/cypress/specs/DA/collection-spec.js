@@ -35,15 +35,15 @@ describe('Collection', () => {
   })
 
   context('investment', () => {
-    //   describe('projects', () => {
-    //     before(() => {
-    //       cy.visit(investments.projects.index())
-    //     })
+    describe('projects', () => {
+      before(() => {
+        cy.visit(investments.projects.index())
+      })
 
-    //     it('should return the results summary for a investment collection', () => {
-    //       checkCollection()
-    //     })
-    //   })
+      it('should return the results summary for a investment collection', () => {
+        cy.get('[data-test="collectionCount"]').should('have.text', '1')
+      })
+    })
 
     describe('interaction', () => {
       before(() => {
