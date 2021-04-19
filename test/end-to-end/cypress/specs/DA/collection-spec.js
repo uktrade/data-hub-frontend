@@ -46,12 +46,11 @@ describe('Collection', () => {
     })
 
     describe('interaction', () => {
-      investmentProjectNewGolf = fixtures.investmentProject.create.newGolfCourseDA()
-
       before(() => {
-        cy.loadFixture([investmentProjectNewGolf])
         cy.visit(
-          investments.projects.interactions.index(investmentProjectNewGolf.pk)
+          investments.projects.interactions.index(
+            fixtures.investmentProject.newGolfCourse.id
+          )
         )
       })
 
@@ -61,11 +60,12 @@ describe('Collection', () => {
     })
 
     describe('proposition', () => {
-      investmentProjectNewGolf = fixtures.investmentProject.create.newGolfCourseDA()
-
       before(() => {
-        cy.loadFixture([investmentProjectNewGolf])
-        cy.visit(investments.projects.propositions(investmentProjectNewGolf.pk))
+        cy.visit(
+          investments.projects.propositions(
+            fixtures.investmentProject.newGolfCourse.id
+          )
+        )
       })
 
       it('should return the results summary for a proposition collection', () => {
@@ -74,11 +74,10 @@ describe('Collection', () => {
     })
 
     describe('team', () => {
-      investmentProjectNewGolf = fixtures.investmentProject.create.newGolfCourseDA()
-
       before(() => {
-        cy.loadFixture([investmentProjectNewGolf])
-        cy.visit(investments.projects.team(investmentProjectNewGolf.pk))
+        cy.visit(
+          investments.projects.team(fixtures.investmentProject.newGolfCourse.id)
+        )
       })
 
       it('should return the investment project team summary', () => {
