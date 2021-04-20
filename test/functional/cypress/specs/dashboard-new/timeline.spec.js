@@ -1,19 +1,19 @@
 describe('Dashboard timeline', () => {
   beforeEach(() => {
-    cy.setFeatureFlag(
-      'layoutTesting:9010dd28-9798-e211-a939-e4115bead28a',
-      true
-    )
+    cy.setUserFeatures(['personalised-dashboard'])
     cy.visit('/')
   })
+
   after(() => {
-    cy.resetFeatureFlags()
+    cy.resetUser()
   })
+
   it('should contain timeline stages', () => {
     cy.get('[data-test="timeline"]')
       .eq(0)
       .should('have.text', 'ProspectAssign PMActiveVerify winWon')
   })
+
   it('should indicate a current stage', () => {
     const expected = [
       'stage complete',

@@ -1,22 +1,22 @@
 const { companies, interactions } = require('../../../../../src/lib/urls')
 
 describe('Dashboard - Investment details', () => {
-  beforeEach(() => {
-    cy.setFeatureFlag(
-      'layoutTesting:9010dd28-9798-e211-a939-e4115bead28a',
-      true
-    )
+  before(() => {
+    cy.setUserFeatures(['personalised-dashboard'])
     cy.visit('/')
+  })
+
+  after(() => {
+    cy.resetUser()
+  })
+
+  beforeEach(() => {
     cy.get('[data-test="investment-details"]').as('allInvestmentDetails')
     cy.get('[data-test="investment-details"]').eq(0).as('firstProjectDetails')
     cy.get('[data-test="investment-details"]').eq(1).as('secondProjectDetails')
     cy.get('[data-test="investment-details"]').eq(2).as('thirdProjectDetails')
     cy.get('@firstProjectDetails').find('dt').as('allTerms')
     cy.get('@firstProjectDetails').find('dd').as('allDescriptions')
-  })
-
-  after(() => {
-    cy.resetFeatureFlags()
   })
 
   it('should have a details section for each project', () => {

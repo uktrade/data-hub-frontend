@@ -1,14 +1,13 @@
 describe('Dashboard - Investment project status', () => {
-  beforeEach(() => {
-    cy.setFeatureFlag(
-      'layoutTesting:9010dd28-9798-e211-a939-e4115bead28a',
-      true
-    )
+  before(() => {
+    cy.setUserFeatures(['personalised-dashboard'])
     cy.visit('/')
   })
+
   after(() => {
-    cy.resetFeatureFlags()
+    cy.resetUser()
   })
+
   it('should contain statuses for each project', () => {
     const expected = [
       'Won',

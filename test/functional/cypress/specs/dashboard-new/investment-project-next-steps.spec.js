@@ -1,21 +1,22 @@
 const { investments } = require('../../../../../src/lib/urls')
 
 describe('Dashboard - Investment project next steps', () => {
-  beforeEach(() => {
-    cy.setFeatureFlag(
-      'layoutTesting:9010dd28-9798-e211-a939-e4115bead28a',
-      true
-    )
+  before(() => {
+    cy.setUserFeatures(['personalised-dashboard'])
     cy.visit('/')
+  })
+
+  after(() => {
+    cy.resetUser()
+  })
+
+  beforeEach(() => {
     cy.get('[data-test="investment-steps"]').as('nexSteps')
     cy.get('[data-test="project-details"]').eq(0).as('firstProjectDetails')
     cy.get('[data-test="investment-steps"]').eq(0).as('moreThanThreeSteps')
     cy.get('[data-test="investment-steps"]').eq(1).as('lessThanThreeSteps')
     cy.get('[data-test="investment-steps"]').eq(2).as('oneAdditionalStep')
     cy.get('[data-test="investment-steps"]').eq(7).as('oneStep')
-  })
-  after(() => {
-    cy.resetFeatureFlags()
   })
 
   it('should contain next steps for all list items', () => {
