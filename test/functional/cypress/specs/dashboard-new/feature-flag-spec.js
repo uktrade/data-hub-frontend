@@ -14,7 +14,7 @@ describe('Dashboard - feature flag', () => {
     it('should NOT append a query param for GA tracking', () => {
       cy.url('[data-test="dashboard"]').should(
         'not.contain',
-        '?layoutTesting=personalised-dashboard'
+        '?featureTesting=personalised-dashboard'
       )
     })
   })
@@ -30,7 +30,7 @@ describe('Dashboard - feature flag', () => {
     it('should append a query param for GA tracking', () => {
       cy.url('[data-test="dashboard"]').should(
         'contain',
-        '?layoutTesting=personalised-dashboard'
+        '?featureTesting=personalised-dashboard'
       )
     })
   })
