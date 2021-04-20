@@ -6,12 +6,16 @@ const UNIVERSITY_PROJECT_ID = '18750b26-a8c3-41b2-8d3a-fb0b930c2270'
 const UNIVERSITY_PROPOSITION_NAME = 'Univeristy Proposition'
 
 describe('Dashboard reminders', () => {
-  beforeEach(() => {
-    cy.setFeatureFlag(
-      'layoutTesting:9010dd28-9798-e211-a939-e4115bead28a',
-      true
-    )
+  before(() => {
+    cy.setUserFeatures(['personalised-dashboard'])
     cy.visit('/')
+  })
+
+  after(() => {
+    cy.resetUser()
+  })
+
+  beforeEach(() => {
     cy.get('[data-test="investment-reminders"]').as('investmentReminders')
     cy.get('[data-test="investment-reminders-section"]')
       .as('investmentRemindersSection')
@@ -26,9 +30,6 @@ describe('Dashboard reminders', () => {
       .as('outstandingPropositions')
       .find('[data-test="outstanding-propositions-list"]')
       .as('outstandingPropositionsList')
-  })
-  after(() => {
-    cy.resetFeatureFlags()
   })
 
   context('View reminders', () => {
@@ -76,7 +77,7 @@ describe('Dashboard reminders', () => {
   })
 
   context('Toggle section', () => {
-    beforeEach(() => {
+    before(() => {
       cy.visit('/')
     })
 

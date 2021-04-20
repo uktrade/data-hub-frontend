@@ -1,12 +1,28 @@
 describe('Dashboard - feature flag', () => {
-  context('when a feature flag is set and your are in the testing team', () => {
-    beforeEach(() => {
-      cy.setUserDitTeam('1234')
-      cy.setFeatureFlag('layoutTesting:1234', true)
+  after(() => {
+    cy.resetUser()
+  })
+
+  context('when the user does not have the feature flag set', () => {
+    before(() => {
+      cy.resetUser()
       cy.visit('/')
     })
-    afterEach(() => {
-      cy.resetUserDitTeam()
+    it('should show the default dashboard layout', () => {
+      cy.get('[data-test="dashboard"]').should('not.exist')
+    })
+    it('should NOT append a query param for GA tracking', () => {
+      cy.url('[data-test="dashboard"]').should(
+        'not.contain',
+        '?featureTesting=personalised-dashboard'
+      )
+    })
+  })
+
+  context('when a user has the personalised-dashboard feature flag set', () => {
+    before(() => {
+      cy.setUserFeatures(['personalised-dashboard'])
+      cy.visit('/')
     })
     it('should show an alternative layout', () => {
       cy.get('[data-test="dashboard"]').should('be.visible')
@@ -14,60 +30,7 @@ describe('Dashboard - feature flag', () => {
     it('should append a query param for GA tracking', () => {
       cy.url('[data-test="dashboard"]').should(
         'contain',
-        '?layoutTesting=dashboard'
-      )
-    })
-  })
-
-  context(
-    'when a feature flag is set and your are NOT in the testing team',
-    () => {
-      beforeEach(() => {
-        cy.setFeatureFlag('layoutTesting:1234', true)
-        cy.visit('/')
-      })
-      it('should show the default dashboard layout', () => {
-        cy.get('[data-test="dashboard"]').should('not.exist')
-      })
-      it('should NOT append a query param for GA tracking', () => {
-        cy.url('[data-test="dashboard"]').should(
-          'not.contain',
-          '?layoutTesting=dashboard'
-        )
-      })
-    }
-  )
-
-  context('when a feature flag is set and your are NOT in any team', () => {
-    beforeEach(() => {
-      cy.setUserDitTeam(null)
-      cy.setFeatureFlag('layoutTesting:1234', true)
-      cy.visit('/')
-    })
-    it('should show the default dashboard layout', () => {
-      cy.get('[data-test="dashboard"]').should('not.exist')
-    })
-    it('should NOT append a query param for GA tracking', () => {
-      cy.url('[data-test="dashboard"]').should(
-        'not.contain',
-        '?layoutTesting=dashboard'
-      )
-    })
-  })
-
-  context('when there is no feature flag', () => {
-    beforeEach(() => {
-      cy.resetUserDitTeam()
-      cy.resetFeatureFlags()
-      cy.visit('/')
-    })
-    it('should show the default dashboard layout', () => {
-      cy.get('[data-test="dashboard"]').should('not.exist')
-    })
-    it('should NOT append a query param for GA tracking', () => {
-      cy.url('[data-test="dashboard"]').should(
-        'not.contain',
-        '?layoutTesting=dashboard'
+        '?featureTesting=personalised-dashboard'
       )
     })
   })
