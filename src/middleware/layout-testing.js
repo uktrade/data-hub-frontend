@@ -16,7 +16,7 @@ const { get, isEmpty } = require('lodash')
  */
 
 module.exports = (feature) => (req, res, next) => {
-  const userFeatures = get(res.locals, 'user.features', [])
+  const userFeatures = get(res.locals, 'user.active_features', [])
   res.locals.isLayoutTesting = userFeatures.includes(feature)
 
   if (res.locals.isLayoutTesting && isEmpty(req.query)) {
