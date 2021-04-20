@@ -239,7 +239,7 @@ Cypress.Commands.add('setUserDitTeam', (id) => {
 })
 
 Cypress.Commands.add('setUserFeatures', (features) => {
-  return cy.request('PUT', `${Cypress.env('sandbox_url')}/whoami`, { features })
+  return cy.request('PUT', `${Cypress.env('sandbox_url')}/whoami`, { active_features: features })
 })
 
 Cypress.Commands.add('setAdviserId', (id) => {

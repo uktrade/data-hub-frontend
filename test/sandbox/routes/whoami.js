@@ -14,8 +14,8 @@ exports.setWhoami = function (req, res) {
   if (req.body.dit_team_id) {
     whoami.dit_team.id = req.body.dit_team_id
   }
-  if (req.body.features) {
-    whoami.features = req.body.features
+  if (req.body.active_features) {
+    whoami.active_features = req.body.active_features
   }
   res.json(whoami)
 }
@@ -23,6 +23,6 @@ exports.setWhoami = function (req, res) {
 exports.resetWhoami = function (req, res) {
   whoami.id = defaultAdviserId
   whoami.dit_team.id = defaultTeamId
-  whoami.features = []
+  whoami.active_features = []
   res.json(whoami)
 }
