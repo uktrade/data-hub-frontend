@@ -16,9 +16,8 @@ const { get, isEmpty } = require('lodash')
  */
 
 module.exports = (feature) => (req, res, next) => {
-  res.locals.isLayoutTesting = get(res.locals, 'user.features', []).includes(
-    feature
-  )
+  const userFeatures = get(res.locals, 'user.features', [])
+  res.locals.isLayoutTesting = userFeatures.includes(feature)
 
   if (res.locals.isLayoutTesting && isEmpty(req.query)) {
     return res.redirect(`${req.originalUrl}?layoutTesting=${feature}`)

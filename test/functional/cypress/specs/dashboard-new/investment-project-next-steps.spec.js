@@ -4,7 +4,6 @@ describe('Dashboard - Investment project next steps', () => {
   before(() => {
     cy.setUserFeatures(['personalised-dashboard'])
     cy.visit('/')
-    cy.get('[data-test="tablist"] span:first-child button').click()
   })
 
   after(() => {
