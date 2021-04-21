@@ -2,7 +2,7 @@ const router = require('express').Router()
 const urls = require('../../lib/urls')
 const { renderDashboard } = require('./controllers')
 const spaBasePath = require('../../middleware/spa-base-path')
-const featureTesting = require('../../middleware/feature-testing')
+const userFeatures = require('../../middleware/user-features')
 
 module.exports = {
   router: router.get(
@@ -16,7 +16,7 @@ module.exports = {
       urls.pipeline.won(),
     ],
     spaBasePath(urls.dashboard.route),
-    featureTesting('personalised-dashboard'),
+    userFeatures('personalised-dashboard'),
     renderDashboard
   ),
 }
