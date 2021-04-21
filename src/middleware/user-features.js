@@ -1,5 +1,8 @@
 const { get, isEmpty } = require('lodash')
 
+const config = require('../config')
+const { authorisedRequest } = require('../lib/authorised-request')
+
 /**
  * Allows users with the given feature flag to trial a new feature.
  *
@@ -15,9 +18,12 @@ const { get, isEmpty } = require('lodash')
  * @param {String} feature - the feature to toggle layout for.
  */
 
-module.exports = (feature) => (req, res, next) => {
-  const userFeatures = get(res.locals, 'user.active_features', [])
-  res.locals.isFeatureTesting = userFeatures.includes(feature)
+module.exports = (feature) => async (req, res, next) => {
+  if (!res.locals.userFeatures) {
+    const user = await authorisedRequest(req, `${config.apiRoot}/whoami/`)
+    res.locals.userFeatures = get(user, 'active_features', [])
+  }
+  res.locals.isFeatureTesting = res.locals.userFeatures.includes(feature)
 
   if (res.locals.isFeatureTesting && isEmpty(req.query)) {
     return res.redirect(`${req.originalUrl}?featureTesting=${feature}`)
