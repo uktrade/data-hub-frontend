@@ -20,6 +20,11 @@ const StyledSubHeading = styled(H3)`
   margin-bottom: ${SPACING.SCALE_2};
 `
 
+const StyledSubHeadingEmpty = styled(StyledSubHeading)`
+  color: ${DARK_GREY};
+  margin: 0;
+`
+
 const StyledProjectLink = styled('a')`
   display: block;
   font-size: ${FONT_SIZE.SIZE_19};
@@ -61,37 +66,45 @@ const StyledDetails = styled('div')`
   padding-right: ${SPACING.SCALE_3};
 `
 
-const OutstandingPropositions = ({ results, count }) => {
-  return (
-    <div data-test="outstanding-propositions">
-      <StyledSubHeading>Outstanding propositions ({count})</StyledSubHeading>
-      <StyledList data-test="outstanding-propositions-list">
-        {results.map(({ id, investment_project, name, deadline }) => (
-          <StyledListItem key={id}>
-            <StyledDetails>
-              <StyledProjectLink
-                href={urls.investments.projects.propositions(
-                  investment_project.id
-                )}
-              >
-                {name}
-              </StyledProjectLink>
-              <StyledProjectCode data-test="outstanding-proposition-project-code">
-                {investment_project.project_code}
-              </StyledProjectCode>
-              <StyledDueDate data-test="outstanding-proposition-deadline">
-                Due {format(new Date(deadline), DATE_DAY_LONG_FORMAT)}
-              </StyledDueDate>
-            </StyledDetails>
-            <StyledDueCountdown data-test="outstanding-proposition-countdown">
-              {getDifferenceInDaysLabel(deadline)}
-            </StyledDueCountdown>
-          </StyledListItem>
-        ))}
-      </StyledList>
-    </div>
-  )
-}
+const OutstandingPropositions = ({ results, count }) => (
+  <>
+    {!!results.length ? (
+      <div data-test="outstanding-propositions">
+        <StyledSubHeading data-test="outstanding-propositions-heading">
+          Outstanding propositions ({count})
+        </StyledSubHeading>
+        <StyledList data-test="outstanding-propositions-list">
+          {results.map(({ id, investment_project, name, deadline }) => (
+            <StyledListItem key={id}>
+              <StyledDetails>
+                <StyledProjectLink
+                  href={urls.investments.projects.propositions(
+                    investment_project.id
+                  )}
+                >
+                  {name}
+                </StyledProjectLink>
+                <StyledProjectCode data-test="outstanding-proposition-project-code">
+                  {investment_project.project_code}
+                </StyledProjectCode>
+                <StyledDueDate data-test="outstanding-proposition-deadline">
+                  Due {format(new Date(deadline), DATE_DAY_LONG_FORMAT)}
+                </StyledDueDate>
+              </StyledDetails>
+              <StyledDueCountdown data-test="outstanding-proposition-countdown">
+                {getDifferenceInDaysLabel(deadline)}
+              </StyledDueCountdown>
+            </StyledListItem>
+          ))}
+        </StyledList>
+      </div>
+    ) : (
+      <StyledSubHeadingEmpty data-test="outstanding-propositions-empty">
+        Projects with propositions due soon will be displayed here.
+      </StyledSubHeadingEmpty>
+    )}
+  </>
+)
 
 OutstandingPropositions.propTypes = {
   count: PropTypes.number.isRequired,
