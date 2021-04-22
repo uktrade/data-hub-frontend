@@ -48,8 +48,11 @@ const StyledHeader = styled('header')`
 `
 const StyledParagraph = styled(Paragraph)`
   margin-top: ${SPACING.SCALE_3};
-  padding-top: ${SPACING.SCALE_3};
+`
+
+const StyledListContainer = styled('div')`
   border-top: 2px solid ${GREY_1};
+  margin-top: ${SPACING.SCALE_3};
 `
 
 const MyInvestmentProjects = ({
@@ -86,45 +89,47 @@ const MyInvestmentProjects = ({
         onChange={(event) => onSortChange(event.target.value)}
       />
     </StyledHeader>
-    <Task.Status
-      name={TASK_GET_MY_INVESTMENTS_LIST}
-      id={ID}
-      progressMessage="Loading your investment projects"
-      startOnRender={{
-        payload: {
-          adviser,
-          page,
-          filter,
-          sort,
-        },
-        onSuccessDispatch: MY_INVESTMENTS__LIST_LOADED,
-      }}
-    >
-      {() => {
-        const totalPages = Math.ceil(count / itemsPerPage)
-        return (
-          <>
-            {results.length ? (
-              <>
-                <InvestmentList
-                  data-test="my-investment-projects-list"
-                  items={results}
-                  isPaginated={totalPages > 1}
-                  showDetails={showDetails}
-                />
-                <Pagination
-                  totalPages={totalPages}
-                  activePage={page}
-                  onPageClick={onPaginationClick}
-                />
-              </>
-            ) : (
-              <StyledParagraph>No investment projects</StyledParagraph>
-            )}
-          </>
-        )
-      }}
-    </Task.Status>
+    <StyledListContainer>
+      <Task.Status
+        name={TASK_GET_MY_INVESTMENTS_LIST}
+        id={ID}
+        progressMessage="Loading your investment projects"
+        startOnRender={{
+          payload: {
+            adviser,
+            page,
+            filter,
+            sort,
+          },
+          onSuccessDispatch: MY_INVESTMENTS__LIST_LOADED,
+        }}
+      >
+        {() => {
+          const totalPages = Math.ceil(count / itemsPerPage)
+          return (
+            <>
+              {results.length ? (
+                <>
+                  <InvestmentList
+                    data-test="my-investment-projects-list"
+                    items={results}
+                    isPaginated={totalPages > 1}
+                    showDetails={showDetails}
+                  />
+                  <Pagination
+                    totalPages={totalPages}
+                    activePage={page}
+                    onPageClick={onPaginationClick}
+                  />
+                </>
+              ) : (
+                <StyledParagraph>No investment projects</StyledParagraph>
+              )}
+            </>
+          )
+        }}
+      </Task.Status>
+    </StyledListContainer>
   </article>
 )
 
