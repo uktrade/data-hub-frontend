@@ -100,7 +100,7 @@ const OutstandingPropositions = ({ results, count }) => (
       </div>
     ) : (
       <StyledSubHeadingEmpty data-test="outstanding-propositions-empty">
-        Projects with propositions due soon will be displayed here.
+        Projects with propositions due will be displayed here.
       </StyledSubHeadingEmpty>
     )}
   </>
