@@ -52,7 +52,6 @@ const DropdownToggleButton = styled(SecondaryButton)`
 
 export const DropdownButton = styled(SecondaryButton).attrs(() => ({
   tabIndex: 0,
-  role: 'option',
   forwardedAs: Link,
 }))`
   ${spacing.responsive({
