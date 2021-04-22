@@ -103,7 +103,7 @@ describe('Dashboard reminders', () => {
       cy.get('[data-test="outstanding-propositions-empty"]')
         .should(
           'have.text',
-          'Projects with propositions due soon will be displayed here.'
+          'Projects with propositions due will be displayed here.'
         )
         .should('have.css', 'color', 'rgb(80, 90, 95)')
     })
