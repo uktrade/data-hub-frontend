@@ -25,7 +25,7 @@ const StyledDL = styled('dl')({
 })
 
 const lineHeightMixin = {
-  lineHeight: '24px',
+  lineHeight: '1.5',
 }
 
 const StyledDT = styled('dt')({
