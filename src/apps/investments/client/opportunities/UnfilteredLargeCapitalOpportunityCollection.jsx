@@ -15,19 +15,17 @@ const LargeCapitalOpportunityCollection = ({
   onPageClick,
   isComplete,
 }) => {
-  const collectionListTask = {
-    name: TASK_GET_OPPORTUNITIES_LIST,
-    id: ID,
-    progressMessage: 'loading opportunities...',
-    startOnRender: {
-      payload: { page },
-      onSuccessDispatch: INVESTMENTS__OPPORTUNITIES_LOADED,
-    },
-  }
-
   return (
     <CollectionList
-      taskProps={collectionListTask}
+      taskProps={{
+        name: TASK_GET_OPPORTUNITIES_LIST,
+        id: ID,
+        progressMessage: 'loading opportunities...',
+        startOnRender: {
+          payload: { page },
+          onSuccessDispatch: INVESTMENTS__OPPORTUNITIES_LOADED,
+        },
+      }}
       collectionName="Opportunity"
       items={results}
       count={count}
