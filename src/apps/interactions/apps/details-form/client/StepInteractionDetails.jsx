@@ -198,29 +198,27 @@ const StepInteractionDetails = ({
 
       <InsetText>
         {values.theme === 'trade_agreement' && (
-          <>
+          <p>
             If your Interaction was set up to focus on a Trade Agreement or
             contributes to implementing a Trade Agreement, select 'Trade
             Agreement Implementation Activity
             <br />
             <br />
             <NewWindowLink
-              href={urls.external.helpCentre.tradeagreementGuidance}
+              href={urls.external.helpCentre.tradeagreementGuidance()}
             >
               See more guidance
             </NewWindowLink>
-          </>
+          </p>
         )}
-        {values.theme !== 'trade_agreement' && (
-          <>
-            If your contact provided business intelligence (eg issues impacting
-            the company or feedback on government policy), complete the business
-            intelligence section.
-            <br />
-            <br />
-            <NewWindowLink href={helpUrl(1)}>See more guidance</NewWindowLink>
-          </>
-        )}
+        <p>
+          If your contact provided business intelligence (eg issues impacting
+          the company or feedback on government policy), complete the business
+          intelligence section.
+          <br />
+          <br />
+          <NewWindowLink href={helpUrl(1)}>See more guidance</NewWindowLink>
+        </p>
       </InsetText>
 
       <FieldSelect
