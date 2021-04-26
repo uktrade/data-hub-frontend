@@ -14,30 +14,28 @@ const LargeCapitalOpportunityCollection = ({
   results,
   onPageClick,
   isComplete,
-}) => {
-  return (
-    <CollectionList
-      taskProps={{
-        name: TASK_GET_OPPORTUNITIES_LIST,
-        id: ID,
-        progressMessage: 'loading opportunities...',
-        startOnRender: {
-          payload: { page },
-          onSuccessDispatch: INVESTMENTS__OPPORTUNITIES_LOADED,
-        },
-      }}
-      collectionName="Opportunity"
-      items={results}
-      count={count}
-      onPageClick={onPageClick}
-      activePage={page}
-      isComplete={isComplete}
-      entityName="opportunity"
-      entityNamePlural="opportunities"
-      addItemUrl="/investments/opportunities/create"
-    />
-  )
-}
+}) => (
+  <CollectionList
+    taskProps={{
+      name: TASK_GET_OPPORTUNITIES_LIST,
+      id: ID,
+      progressMessage: 'loading opportunities...',
+      startOnRender: {
+        payload: { page },
+        onSuccessDispatch: INVESTMENTS__OPPORTUNITIES_LOADED,
+      },
+    }}
+    collectionName="Opportunity"
+    items={results}
+    count={count}
+    onPageClick={onPageClick}
+    activePage={page}
+    isComplete={isComplete}
+    entityName="opportunity"
+    entityNamePlural="opportunities"
+    addItemUrl="/investments/opportunities/create"
+  />
+)
 
 export default connect(state2props, (dispatch) => ({
   onPageClick: (page) => {
