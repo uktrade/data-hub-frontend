@@ -22,9 +22,7 @@ const StyledEntity = styled('div')`
   border: 1px solid ${GREY_2};
   ${FOCUSABLE};
 
-  ${({ isClickable }) =>
-    isClickable &&
-    `
+  &[role='button'] {
     cursor: pointer;
 
     h3 {
@@ -39,7 +37,7 @@ const StyledEntity = styled('div')`
         color: ${LINK_HOVER_COLOUR};
       }
     }
-  `}
+  }
 `
 
 const StyledHeading = styled(H3)`
@@ -57,15 +55,16 @@ const StyledInsetText = styled(InsetText)`
 `
 
 const EntityListItem = ({ id, onEntityClick, data, text, heading, meta }) => {
+  const isClickable = !!onEntityClick
   return (
     <StyledEntity
       key={`entity_${id}`}
-      tabIndex={onEntityClick ? 0 : undefined}
-      onClick={() => onEntityClick && onEntityClick(data)}
+      tabIndex={isClickable && 0}
+      role={isClickable && 'button'}
+      onClick={() => isClickable && onEntityClick(data)}
       onKeyDown={(e) =>
-        onEntityClick && e.keyCode === KEY_ENTER && onEntityClick(data)
+        isClickable && e.keyCode === KEY_ENTER && onEntityClick(data)
       }
-      isClickable={onEntityClick}
     >
       {heading && <StyledHeading>{heading}</StyledHeading>}
 
