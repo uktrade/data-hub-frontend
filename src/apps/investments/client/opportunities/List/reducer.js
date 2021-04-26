@@ -2,7 +2,6 @@ import {
   INVESTMENTS__OPPORTUNITIES_LOADED,
   INVESTMENTS__OPPORTUNITIES_SELECT_PAGE,
 } from '../../../../../client/actions'
-import { transformInvestmentOpportunitiesList } from '../../../transformers/opportunities'
 
 const initialState = {
   page: 1,
@@ -16,7 +15,7 @@ export default (state = initialState, { type, page, result }) => {
       return {
         ...state,
         count: result.count,
-        results: result?.results?.map(transformInvestmentOpportunitiesList),
+        results: result?.results,
         isComplete: true,
       }
     // TODO: Remove this after the feature flag capital-investments-filters
