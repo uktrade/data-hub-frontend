@@ -18,6 +18,7 @@ const DownloadDataHeader = ({
   count = 0,
   maxItems = 5000,
   entityName = '',
+  entityNamePlural = `${entityName}s`,
   ...props
 }) => {
   if (!count || !downloadLink) {
@@ -27,7 +28,7 @@ const DownloadDataHeader = ({
   if (count >= maxItems) {
     return (
       <CollectionHeaderRow {...props}>
-        Filter to fewer than {decimal(maxItems)} {entityName}s to download
+        Filter to fewer than {decimal(maxItems)} {entityNamePlural} to download
       </CollectionHeaderRow>
     )
   }
@@ -41,7 +42,9 @@ const DownloadDataHeader = ({
   return (
     <CollectionHeaderRow actions={[downloadAction]} {...props}>
       You can now download{' '}
-      {count === 1 ? `this ${entityName}` : `these ${count} ${entityName}s`}
+      {count === 1
+        ? `this ${entityName}`
+        : `these ${count} ${entityNamePlural}`}
     </CollectionHeaderRow>
   )
 }
@@ -51,6 +54,7 @@ DownloadDataHeader.propTypes = {
   count: PropTypes.number,
   maxItems: PropTypes.number,
   entityName: PropTypes.string,
+  entityNamePlural: PropTypes.string,
 }
 
 export default DownloadDataHeader

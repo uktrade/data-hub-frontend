@@ -6,7 +6,14 @@ import DownloadDataHeader from '..'
 const downloadDataHeaderStories = storiesOf('DownloadDataHeader', module)
 
 const BasicDownloadDataHeader = () => {
-  return <DownloadDataHeader count={5} downloadLink="/#dl" />
+  return (
+    <DownloadDataHeader
+      count={5}
+      entityName="entity"
+      entityNamePlural="entities"
+      downloadLink="/#dl"
+    />
+  )
 }
 
 const SingularDownloadDataHeader = () => {
