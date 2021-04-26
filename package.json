@@ -213,7 +213,7 @@
     "jsdom": "^16.5.3",
     "jsdom-global": "^3.0.2",
     "lint-staged": "^10.5.4",
-    "mocha": "^8.3.0",
+    "mocha": "^8.3.2",
     "mocha-circleci-reporter": "0.0.3",
     "mocha-multi": "^1.0.0",
     "mochapack": "^2.0.6",
