@@ -1,0 +1,73 @@
+{
+  "id": "57a0b5ea-ad56-49c9-b70e-0542153ea673",
+  "company": {
+    "name": "Venus Ltd",
+    "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+  },
+  "contacts": [
+    {
+      "name": "Tyson Morar",
+      "first_name": "Tyson",
+      "last_name": "Morar",
+      "job_title": "Product Metrics Associate",
+      "id": "e2eee6cd-acf6-454a-a4a8-f6c8fa604fde"
+    }
+  ],
+  "created_on": "2019-06-12T13:41:26.524110Z",
+  "created_by": null,
+  "event": null,
+  "is_event": null,
+  "status": "draft",
+  "kind": "interaction",
+  "modified_by": null,
+  "modified_on": "2019-06-12T14:19:05.473586Z",
+  "date": "2019-06-11",
+  "dit_adviser": {
+    "name": "Brendan Smith",
+    "first_name": "Brendan",
+    "last_name": "Smith",
+    "id": "8891ec72-b4ec-4977-9656-839346bc6011"
+  },
+  "dit_participants": [
+    {
+      "adviser": {
+        "name": "Brendan Smith",
+        "first_name": "Brendan",
+        "last_name": "Smith",
+        "id": "8891ec72-b4ec-4977-9656-839346bc6011"
+      },
+      "team": {
+        "name": "Digital Data Hub - Live Service",
+        "id": "3a48318c-9698-e211-a939-e4115bead28a"
+      }
+    }
+  ],
+  "dit_team": {
+    "name": "Digital Data Hub - Live Service",
+    "id": "3a48318c-9698-e211-a939-e4115bead28a"
+  },
+  "communication_channel": null,
+  "grant_amount_offered": null,
+  "investment_project": null,
+  "net_company_receipt": null,
+  "service": null,
+  "service_delivery_status": null,
+  "subject": "Cancelled meeting between Brendan Smith and Tyson Morar",
+  "theme": null,
+  "notes": "",
+  "archived_documents_url_path": "",
+  "policy_areas": [],
+  "policy_feedback_notes": "",
+  "policy_issue_types": [],
+  "was_policy_feedback_provided": false,
+  "location": "Windsor house",
+  "archived": true,
+  "archived_by": {
+    "name": "Lee Wilson",
+    "first_name": "Lee",
+    "last_name": "Wilson",
+    "id": "4ae885a0-6db4-4929-848d-ef9c84d5a085"
+  },
+  "archived_on": "2019-06-12T14:19:05.473413Z",
+  "archived_reason": "Client cancelled"
+}

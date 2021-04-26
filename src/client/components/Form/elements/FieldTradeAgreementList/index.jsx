@@ -122,7 +122,7 @@ const FieldTradeAgreementList = ({
 
   return (
     <>
-      <FieldWrapper {...{ name, label /*,legend, hint*/, error }}>
+      <FieldWrapper {...{ name, label, error }}>
         <StyledWrapper error={error}>
           {error && <ErrorText>{error}</ErrorText>}
           {internalValue.map((item, index) => (

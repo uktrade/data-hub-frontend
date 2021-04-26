@@ -1,0 +1,68 @@
+{  
+  "id":"ec4a46ef-6e50-4a5c-bba0-e311f0471312",
+  "company":{  
+     "name":"Venus Ltd",
+     "id":"0f5216e0-849f-11e6-ae22-56b6b6499611"
+  },
+  "contacts":[  
+     {  
+        "name":"Johnny Cakeman",
+        "first_name":"Johnny",
+        "last_name":"Cakeman",
+        "job_title":null,
+        "id":"9b1138ab-ec7b-497f-b8c3-27fed21694ef"
+     }
+  ],
+  "created_on":"2017-06-05T00:00:00Z",
+  "created_by":{  
+     "name":"Puck Head",
+     "first_name":"Puck",
+     "last_name":"Head",
+     "id":"e83a608e-84a4-11e6-ae22-56b6b6499611"
+  },
+  "event":{  
+     "name":"Grand exhibition",
+     "id":"bda12a57-433c-4a0c-a7ce-5ebd080e09e8"
+  },
+  "is_event":true,
+  "status": "complete",
+  "kind":"service_delivery",
+  "modified_by":{  
+     "name":"Puck Head",
+     "first_name":"Puck",
+     "last_name":"Head",
+     "id":"e83a608e-84a4-11e6-ae22-56b6b6499611"
+  },
+  "modified_on":"2017-06-05T00:00:00Z",
+  "date":"2017-09-05",
+  "dit_adviser":{  
+     "name":"Puck Head",
+     "first_name":"Puck",
+     "last_name":"Head",
+     "id":"e83a608e-84a4-11e6-ae22-56b6b6499611"
+  },
+  "dit_team":{  
+     "name":"CBBC North EAST",
+     "id":"602b971d-5df6-e511-888e-e4115bead28a"
+  },
+  "communication_channel":null,
+  "grant_amount_offered":null,
+  "investment_project":null,
+  "net_company_receipt":null,
+  "service":{  
+     "name":"Events - UK Based",
+     "id":"9584b82b-3499-e211-a939-e4115bead28a"
+  },
+  "service_delivery_status":null,
+  "subject":"Link to a document",
+  "notes":"This is a dummy service delivery for testing",
+  "archived_documents_url_path":"/documents/123",
+  "policy_areas":[  
+
+  ],
+  "policy_feedback_notes":"",
+  "policy_issue_types":[  
+
+  ],
+  "was_policy_feedback_provided":false
+}

@@ -1,0 +1,58 @@
+{
+  "id": "0dcb3748-c097-4f20-b84f-0114bbb1a8e0",
+  "company": {
+      "name": "Venus Ltd",
+      "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+  },
+  "contacts": [
+      {
+          "name": "Dean Cox",
+          "first_name": "Dean",
+          "last_name": "Cox",
+          "job_title": null,
+          "id": "952232d2-1d25-4c3a-bcac-2f3a30a94da9"
+      }
+  ],
+  "created_on": "2017-06-05T00:00:00Z",
+  "created_by": null,
+  "event": null,
+  "is_event": null,
+  "status": "complete",
+  "kind": "interaction",
+  "modified_by": null,
+  "modified_on": "2017-06-05T00:00:00Z",
+  "date": "2017-06-05",
+  "dit_adviser": {
+      "name": "John Rogers",
+      "first_name": "John",
+      "last_name": "Rogers",
+      "id": "7bad8082-4978-4fe8-a018-740257f01637"
+  },
+  "dit_team": {
+      "name": "British High Commission Wellington New Zealand",
+      "id": "197c51d4-9698-e211-a939-e4115bead28a"
+  },
+  "communication_channel": {
+      "name": "Email/Website",
+      "id": "70c226d7-5d95-e211-a939-e4115bead28a"
+  },
+  "grant_amount_offered": null,
+  "investment_project": {
+      "name": "New hotel (FDI)",
+      "project_code": "DHP-00000055",
+      "id": "721e2a04-21c3-4172-a321-4368463a4b2d"
+  },
+  "net_company_receipt": null,
+  "service": {
+      "name": "UKEF - EFA Advice",
+      "id": "46cd2e66-dc21-e311-a78e-e4115bead28a"
+  },
+  "service_delivery_status": null,
+  "subject": "No link to a document",
+  "notes": "This is a dummy interaction for testing",
+  "archived_documents_url_path": "",
+  "policy_areas": [],
+  "policy_feedback_notes": "",
+  "policy_issue_types": [],
+  "was_policy_feedback_provided": false
+}

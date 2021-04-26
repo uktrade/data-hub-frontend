@@ -169,6 +169,7 @@ const COMMON_REQUEST_BODY = {
   company: { id: '0f5216e0-849f-11e6-ae22-56b6b6499611' },
   service_answers: {},
   status: 'complete',
+  has_related_trade_agreements: 'no',
   related_trade_agreements: [],
 }
 
@@ -247,13 +248,11 @@ function fillRelatedTradeAgreements() {
 
   cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
     .parent()
-    .next()
     .find("[data-test='trade-agreement-field-0']")
     .selectTypeaheadOption('UK-Australia Mutual Recognition Agreement')
 
   cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
     .parent()
-    .next()
     .find("[data-test='trade-agreement-field-1']")
     .selectTypeaheadOption('UK-Mexico Trade Continuity Agreement')
 }
@@ -303,7 +302,7 @@ function clickAddInteraction() {
   cy.contains('Add interaction').click()
 }
 
-function spyOnRequest(url = '/api-proxy/v3/interaction') {
+function spyOnRequest(url = '/api-proxy/v4/interaction') {
   cy.server()
   cy.route('POST', url).as('interactionHttpRequest')
 }

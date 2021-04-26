@@ -47,6 +47,7 @@ var v4Company = require('./routes/v4/company/company.js')
 var v4CompanyList = require('./routes/v4/company-list/companyList.js')
 var v4Dnb = require('./routes/v4/dnb/index.js')
 var v4Investment = require('./routes/v4/investment/investment.js')
+var v4Interaction = require('./routes/v4/interaction/interaction.js')
 var v4Adviser = require('./routes/v4/adviser/adviser.js')
 var v4Metadata = require('./routes/v4/metadata/index.js')
 var v4SearchCompany = require('./routes/v4/search/company.js')
@@ -409,6 +410,16 @@ app.patch(
   '/v4/company/:companyId/update-one-list-core-team',
   v4Company.patchOneListCoreTeam
 )
+
+// V4 interactions
+app.get('/v4/interaction', v4Interaction.getInteractions)
+app.get('/v4/interaction/:interactionId', v4Interaction.getInteractionById)
+app.post('/v4/interaction', v4Interaction.createInteraction)
+app.post(
+  '/v4/interaction/:interactionId/archive',
+  v4Interaction.archiveInteraction
+)
+app.patch('/v4/interaction/:interactionId', v4Interaction.archiveInteraction)
 
 // V4 DnB
 app.post('/v4/dnb/company-create', v4Dnb.companyCreate)
