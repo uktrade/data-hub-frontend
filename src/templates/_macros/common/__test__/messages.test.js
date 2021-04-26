@@ -107,8 +107,12 @@ describe('MessageList macro', () => {
         })
       })
 
-      it('should render a parent ul element', () => {
-        expect(this.component.tagName.toLowerCase()).to.equal('ul')
+      it('should render a parent div element', () => {
+        expect(this.component.tagName.toLowerCase()).to.equal('div')
+      })
+
+      it('should render a role attribute', () => {
+        expect(this.component.getAttribute('role')).to.equal('alert')
       })
 
       it('should render correct amount of items', () => {
@@ -122,9 +126,9 @@ describe('MessageList macro', () => {
       })
 
       it('should be dismissable', () => {
-        expect(this.component.className.trim()).to.equal(
-          'c-message-list js-Messages'
-        )
+        expect(
+          this.component.querySelector('.c-message-list').className.trim()
+        ).to.equal('c-message-list js-Messages')
       })
     })
   })
@@ -137,7 +141,9 @@ describe('MessageList macro', () => {
           isDismissable: false,
         })
 
-        expect(component.className.trim()).to.equal('c-message-list')
+        expect(
+          component.querySelector('.c-message-list').className.trim()
+        ).to.equal('c-message-list')
       })
     })
   })
