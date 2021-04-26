@@ -115,6 +115,36 @@ const LARGE_INVESTMENT_PROFILE_QUERY_FIELDS = [
   'notes_on_locations',
 ]
 
+const LARGE_INVESTMENT_OPPORTUNITY_QUERY_FIELDS = [
+  'link',
+  'name',
+  'description',
+  'type__name',
+  'status__name',
+  'uk_region_locations_names',
+  'promoter_names',
+  'lead_dit_relationship_manager_name',
+  'other_dit_contact_names',
+  'required_checks_conducted__name',
+  'required_checks_conducted_by_name',
+  'required_checks_conducted_on',
+  'asset_class_names',
+  'opportunity_value_type__name',
+  'opportunity_value',
+  'construction_risks_names',
+  'total_investment_sought',
+  'current_investment_secured',
+  'investment_type_names',
+  'estimated_return_rate__name',
+  'time_horizons_names',
+  'sources_of_funding_names',
+  'dit_support_provided',
+  'funding_supporting_details',
+  'reasons_for_abandonment_names',
+  'why_abandoned',
+  'why_suspended',
+]
+
 const LARGE_INVESTMENT_PROFILE_QUERY_DATE = ['modified_on', 'created_on']
 
 const QUERY_FIELDS = [
@@ -166,4 +196,5 @@ module.exports = {
   LARGE_INVESTMENT_PROFILE_QUERY,
   LARGE_INVESTMENT_PROFILE_QUERY_FIELDS,
   LARGE_INVESTMENT_PROFILE_QUERY_DATE,
+  LARGE_INVESTMENT_OPPORTUNITY_QUERY_FIELDS,
 }
