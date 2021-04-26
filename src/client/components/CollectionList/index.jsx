@@ -29,6 +29,7 @@ const CollectionList = ({
   maxItemsToDownload,
   baseDownloadLink,
   entityName,
+  entityNamePlural,
   addItemUrl,
 }) => (
   <GridRow>
@@ -52,6 +53,7 @@ const CollectionList = ({
           data-test="download-data-header"
           baseDownloadLink={baseDownloadLink}
           entityName={entityName}
+          entityNamePlural={entityNamePlural}
         />
         {items.map(
           (

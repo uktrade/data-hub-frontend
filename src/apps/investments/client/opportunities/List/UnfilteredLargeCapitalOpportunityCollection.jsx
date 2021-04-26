@@ -32,7 +32,8 @@ const LargeCapitalOpportunityCollection = ({
       onPageClick={onPageClick}
       activePage={page}
       isComplete={isComplete}
-      entityName="opportunitie"
+      entityName="opportunity"
+      entityNamePlural="opportunities"
       addItemUrl="/investments/opportunities/create"
     />
   )
