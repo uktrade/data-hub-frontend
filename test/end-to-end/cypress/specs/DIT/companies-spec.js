@@ -53,7 +53,7 @@ describe('Contacts', () => {
 
     assertKeyValueTable('bodyMainContent', {
       'Job title': 'Coffee machine operator',
-      'Phone number': '(44) 0778877778800',
+      'Phone number': '(+44) 0778877778800',
       Address: '100 Path, A town, 12345, United States',
       Email: 'company.contact@dit.com',
       'Email marketing': 'Cannot be marketed to',
@@ -67,7 +67,7 @@ describe('Contacts', () => {
     cy.get(selectors.collection.items)
       .should('contain', 'Company Contact')
       .and('contain', 'Coffee machine operator')
-      .and('contain', '(44) 0778877778800')
+      .and('contain', '(+44) 0778877778800')
       .and('contain', 'company.contact@dit.com')
   })
 })

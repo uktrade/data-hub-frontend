@@ -9,7 +9,7 @@ describe('Contacts', () => {
     name: 'NewAddress',
     lastName: 'Contact',
     jobTitle: 'Coffee machine operator',
-    countryCode: '44',
+    countryCode: '+44',
     phone: '0778877778800',
     email: 'company.contact@dit.com',
     address1: 'Rua Candido Portinari',
@@ -27,7 +27,7 @@ describe('Contacts', () => {
 
     cy.get(selectors.contactCreate.details)
       .should('contain', 'Coffee machine operator')
-      .and('contain', '(44) 0778877778800')
+      .and('contain', '(+44) 0778877778800')
       .and('contain', 'company.contact@dit.com')
       .and('contain', 'Rua Candido Portinari, Numero 521, Campinas, Brazil')
   })
