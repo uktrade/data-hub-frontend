@@ -131,7 +131,7 @@ function exportSearch({ req, searchTerm = '', searchEntity, requestBody }) {
   let apiVersion
   if (
     searchEntity == 'large-investor-profile' ||
-    searchEntity == 'large-investor-opportunity' ||
+    searchEntity == 'large-capital-opportunity' ||
     searchEntity == 'company'
   ) {
     apiVersion = 'v4'
