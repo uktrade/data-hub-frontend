@@ -215,7 +215,7 @@ async function renderInteractionDetailsForm(req, res, next) {
           communicationChannels,
           countries,
           isTradeAgreementInteractionEnabled:
-            features['trade-agreement-interaction'],
+            features['trade-agreement-interaction-v4-endpoint'],
           relatedTradeAgreements,
         },
       })
