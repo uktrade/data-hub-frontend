@@ -129,7 +129,11 @@ function searchForeignCompanies({ req, searchTerm, page = 1, limit = 10 }) {
 
 function exportSearch({ req, searchTerm = '', searchEntity, requestBody }) {
   let apiVersion
-  if (searchEntity == 'large-investor-profile' || searchEntity == 'company') {
+  if (
+    searchEntity == 'large-investor-profile' ||
+    searchEntity == 'large-investor-opportunity' ||
+    searchEntity == 'company'
+  ) {
     apiVersion = 'v4'
   } else {
     apiVersion = 'v3'

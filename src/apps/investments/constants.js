@@ -91,6 +91,10 @@ const LARGE_INVESTMENT_PROFILE_QUERY = {
   sortby: 'created_on:asc',
 }
 
+const LARGE_INVESTMENT_OPPORTUNITY_QUERY = {
+  sortby: 'created_on:asc',
+}
+
 const LARGE_INVESTMENT_PROFILE_QUERY_FIELDS = [
   'link',
   'investor_company__name',
@@ -147,6 +151,8 @@ const LARGE_INVESTMENT_OPPORTUNITY_QUERY_FIELDS = [
 
 const LARGE_INVESTMENT_PROFILE_QUERY_DATE = ['modified_on', 'created_on']
 
+const LARGE_INVESTMENT_OPPORTUNITY_QUERY_DATE = ['modified_on', 'created_on']
+
 const QUERY_FIELDS = [
   'status',
   'adviser',
@@ -197,4 +203,6 @@ module.exports = {
   LARGE_INVESTMENT_PROFILE_QUERY_FIELDS,
   LARGE_INVESTMENT_PROFILE_QUERY_DATE,
   LARGE_INVESTMENT_OPPORTUNITY_QUERY_FIELDS,
+  LARGE_INVESTMENT_OPPORTUNITY_QUERY_DATE,
+  LARGE_INVESTMENT_OPPORTUNITY_QUERY,
 }
