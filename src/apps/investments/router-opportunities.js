@@ -44,7 +44,7 @@ router.get(
     LARGE_INVESTMENT_OPPORTUNITY_QUERY_FIELDS,
     LARGE_INVESTMENT_OPPORTUNITY_QUERY_DATE
   ),
-  exportCollection('large-investor-opportunity')
+  exportCollection('large-capital-opportunity')
 )
 
 module.exports = router

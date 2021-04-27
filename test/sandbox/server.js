@@ -369,7 +369,7 @@ app.post(
   v3SearchInvestmentProject.export
 )
 app.post(
-  '/v4/search/large-investor-opportunity/export',
+  '/v4/search/large-capital-opportunity/export',
   v3SearchInvestmentProject.export
 )
 app.post('/v3/search/interaction', v3SearchInteraction.interaction)
