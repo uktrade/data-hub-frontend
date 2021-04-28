@@ -62,8 +62,11 @@ import { ID as INVESTEMENT_PROJECT_ADMIN_ID } from '../apps/investments/views/ad
 
 import investmentProjectAdminReducer from '../apps/investments/views/admin/client/reducer'
 
-import { ID as INVESTMENT_OPPORTUNITIES_ID } from '../apps/investments/client/opportunities/state'
-import investmentOpportunitiesReducer from '../apps/investments/client/opportunities/reducer'
+import { ID as INVESTMENT_OPPORTUNITIES_LIST_ID } from '../apps/investments/client/opportunities/List/state'
+import investmentOpportunitiesListReducer from '../apps/investments/client/opportunities/List/reducer'
+
+import { ID as INVESTMENT_OPPORTUNITIES_DETAILS_ID } from '../apps/investments/client/opportunities/Details/state'
+import investmentOpportunitiesDetailsReducer from '../apps/investments/client/opportunities/Details/reducer'
 
 import { ID as MANAGE_ADVISER_ID } from '../apps/companies/apps/advisers/client/state'
 import manageAdviserReducer from '../apps/companies/apps/advisers/client/reducer'
@@ -138,7 +141,8 @@ const store = createStore(
     [INVESTEMENT_PROJECT_ADMIN_ID]: investmentProjectAdminReducer,
     [MANAGE_ADVISER_ID]: manageAdviserReducer,
     [DNB_CHECK_ID]: dnbCheckReducer,
-    [INVESTMENT_OPPORTUNITIES_ID]: investmentOpportunitiesReducer,
+    [INVESTMENT_OPPORTUNITIES_LIST_ID]: investmentOpportunitiesListReducer,
+    [INVESTMENT_OPPORTUNITIES_DETAILS_ID]: investmentOpportunitiesDetailsReducer,
     [INVESTMENT_PROFILES_ID]: investmentProfileReducer,
     [INVESTMENT_PROJECTS_ID]: investmentProjectsReducer,
     [MY_INVESTMENT_PROJECTS_ID]: myInvestmentProjectsReducer,

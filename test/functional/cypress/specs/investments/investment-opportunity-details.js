@@ -47,8 +47,8 @@ describe('UK Opportunity with missing data', () => {
   })
 
   it('should display required field tags', () => {
-    cy.get('#opportunities').should('contain', '7 fields required')
-    cy.get('#opportunities').should('contain', '3 fields required')
+    cy.get('#opportunity-details').should('contain', '7 fields required')
+    cy.get('#opportunity-details').should('contain', '3 fields required')
   })
 })
 
@@ -62,7 +62,7 @@ describe('UK Opportunity with complete data', () => {
   })
 
   it('should display required field tags', () => {
-    cy.get('#opportunities').should('contain', 'Complete')
-    cy.get('#opportunities').should('contain', 'Complete')
+    cy.get('#opportunity-details').should('contain', 'Complete')
+    cy.get('#opportunity-details').should('contain', 'Complete')
   })
 })

@@ -75,6 +75,10 @@ const INVESTMENT_TAB_ITEMS = [
     path: 'profiles',
     label: 'Investor profiles',
   },
+  {
+    path: 'opportunities',
+    label: 'UK Opportunities',
+  },
 ]
 
 const DEFAULT_COLLECTION_QUERY = {

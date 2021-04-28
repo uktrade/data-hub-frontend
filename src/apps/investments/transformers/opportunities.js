@@ -2,7 +2,7 @@ const getArrayNames = (data) => data.map((d) => d.name)
 const getArrayNamesAndIds = (data) =>
   data.map((d) => ({ name: d.name, id: d.id }))
 
-const transformInvestmentOpportunity = ({
+export const transformInvestmentOpportunityDetails = ({
   incomplete_details_fields,
   incomplete_requirements_fields,
   name,
@@ -45,5 +45,3 @@ const transformInvestmentOpportunity = ({
     timeHorizons: getArrayNames(time_horizons),
   },
 })
-
-export default transformInvestmentOpportunity
