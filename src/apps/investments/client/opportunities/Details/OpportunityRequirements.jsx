@@ -1,6 +1,6 @@
 import React from 'react'
 
-import SummaryTable from '../../../../client/components/SummaryTable'
+import SummaryTable from '../../../../../client/components/SummaryTable'
 
 const OpportunityRequirements = ({ details }) => {
   const {

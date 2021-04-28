@@ -1,10 +1,21 @@
 {% extends "_layouts/collection.njk" %}
 
 {% block content %}
-
-  {% component 'react-slot', {
-    id: 'opportunities',
-    props: props
-  } %}
-
+  <div id="investors-uk-opportunities-tab">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        {{ TabbedLocalNav({ items: investmentTabItems }) }}
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        {% component 'react-slot', {
+            id: 'unfiltered-large-capital-opportunity-collection',
+            props: props
+          }
+          %}
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -30,6 +30,7 @@ function CollectionHeader({
   totalItems,
   collectionName = 'result',
   addItemUrl,
+  ...rest
 }) {
   const formattedTotal = decimal(totalItems)
   const counterSuffix = pluralize(collectionName, totalItems)
@@ -46,7 +47,7 @@ function CollectionHeader({
   )
 
   return (
-    <CollectionHeaderRow primary={true} actions={actions}>
+    <CollectionHeaderRow primary={true} actions={actions} {...rest}>
       <StyledHeaderText>
         <StyledResultCount>{formattedTotal}</StyledResultCount>
         {` ${counterSuffix}`}

@@ -18,6 +18,7 @@ import AddRemoveFromListSection from '../apps/company-lists/client/AddRemoveFrom
 import DnbHierarchy from '../apps/companies/apps/dnb-hierarchy/client/DnbHierarchy'
 import LeadAdvisers from '../apps/companies/apps/advisers/client/LeadAdvisers'
 import LargeCapitalProfileCollection from '../apps/investments/client/profiles/LargeCapitalProfileCollection'
+import UnfilteredLargeCapitalOpportunityCollection from '../apps/investments/client/opportunities/List/UnfilteredLargeCapitalOpportunityCollection'
 import InvestmentEditHistory from '../apps/investments/client/InvestmentEditHistory'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
@@ -40,7 +41,7 @@ import Dashboard from './components/Dashboard'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyLocalHeader from './components/CompanyLocalHeader'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
-import Opportunities from '../apps/investments/client/opportunities/Opportunities.jsx'
+import Opportunities from '../apps/investments/client/opportunities/Details/Opportunities.jsx'
 import IEBanner from '../apps/dashboard/client/IEBanner'
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
 import createUKInvestmentOpportunityTask from './components/CreateUKInvestmentOpportunity/tasks'
@@ -92,8 +93,11 @@ import * as dnbCheck from '../apps/companies/apps/business-details/client/tasks'
 import { TASK_GET_PROFILES_LIST } from '../apps/investments/client/profiles/state'
 import * as investmentProfilesTasks from '../apps/investments/client/profiles/tasks'
 
-import { TASK_GET_OPPORTUNITY_DETAILS } from '../apps/investments/client/opportunities/state'
-import * as investmentOpportunitiesTasks from '../apps/investments/client/opportunities/tasks'
+import { TASK_GET_OPPORTUNITIES_LIST } from '../apps/investments/client/opportunities/List/state'
+import * as investmentOpportunitiesListTasks from '../apps/investments/client/opportunities/List/tasks'
+
+import { TASK_GET_OPPORTUNITY_DETAILS } from '../apps/investments/client/opportunities/Details/state'
+import * as investmentOpportunitiesDetailsTasks from '../apps/investments/client/opportunities/Details/tasks'
 
 import {
   TASK_GET_PROJECTS_LIST,
@@ -171,7 +175,9 @@ function App() {
         [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
         [TASK_UPDATE_ADVISER]: manageAdviser.updateAdviser,
         [TASK_GET_OPPORTUNITY_DETAILS]:
-          investmentOpportunitiesTasks.getOpportunityDetail,
+          investmentOpportunitiesDetailsTasks.getOpportunityDetail,
+        [TASK_GET_OPPORTUNITIES_LIST]:
+          investmentOpportunitiesListTasks.getOpportunities,
         [DNB__CHECK_PENDING_REQUEST]: dnbCheck.checkIfPendingRequest,
         [TASK_GET_PROFILES_LIST]:
           investmentProfilesTasks.getLargeCapitalProfiles,
@@ -282,6 +288,12 @@ function App() {
       <Mount selector="#large-capital-profile-collection">
         {(props) => <LargeCapitalProfileCollection {...props} />}
       </Mount>
+      <Mount selector="#unfiltered-large-capital-opportunity-collection">
+        {(props) => <UnfilteredLargeCapitalOpportunityCollection {...props} />}
+      </Mount>
+      <Mount selector="#opportunity-details">
+        {(props) => <Opportunities {...props} />}
+      </Mount>
       <Mount selector="#create-uk-investment-opportunity">
         {() => (
           <CreateUKInvestmentOpportunity id="create-uk-investment-opportunity" />
@@ -344,9 +356,6 @@ function App() {
         {(props) => <InvestmentProjectsCollection {...props} />}
       </Mount>
       <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
-      <Mount selector="#opportunities">
-        {(props) => <Opportunities {...props} />}
-      </Mount>
     </Provider>
   )
 }

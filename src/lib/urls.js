@@ -265,7 +265,10 @@ module.exports = {
       data: url('/investments', '/profiles/data'),
     },
     opportunities: {
+      index: url('/investments', '/opportunities'),
+      opportunity: url('/investments', '/opportunities/:opportunityId'),
       details: url('/investments', '/opportunities/:opportunityId/details'),
+      create: url('/investments', '/opportunities/create'),
     },
     editHistory: {
       index: url('/investments/projects', '/:investmentId/edit-history'),
