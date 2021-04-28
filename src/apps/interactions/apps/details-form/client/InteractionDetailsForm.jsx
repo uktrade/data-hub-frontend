@@ -103,16 +103,17 @@ const InteractionDetailsForm = ({
                 initialValues={initialValues}
                 submissionError={saveInteractionTask.errorMessage}
                 onSubmit={(values) => {
+                  const trade_agreements_not_applicable = !(
+                    values.service ===
+                      TRADE_AGREEMENT_IMPLEMENTATION_ACTIVITY &&
+                    values.has_related_trade_agreements
+                  )
                   let newValues = { ...values }
-                  if (
-                    !(
-                      values.service ===
-                        TRADE_AGREEMENT_IMPLEMENTATION_ACTIVITY &&
-                      values.has_related_trade_agreements
-                    )
-                  ) {
+
+                  if (trade_agreements_not_applicable) {
                     newValues.has_related_trade_agreements = OPTION_NO
                   }
+
                   saveInteractionTask.start({
                     payload: {
                       values: newValues,
