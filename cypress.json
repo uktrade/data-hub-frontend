@@ -6,8 +6,8 @@
   "screenshotOnRunFailure": false,
   "pluginsFile": "test/cypress/plugins/index.js",
   "supportFile": "test/cypress/support/index.js",
-  "defaultCommandTimeout": 20000,
-  "requestTimeout": 20000,
+  "defaultCommandTimeout": 5000,
+  "requestTimeout": 5000,
   "projectId": "w97se2",
   "env": {
     "codeCoverage": {

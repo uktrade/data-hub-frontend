@@ -99,7 +99,7 @@ const StepInteractionType = ({ isTradeAgreementInteractionEnabled }) => {
     <>
       {isTradeAgreementInteractionEnabled && (
         <InsetText data-test="trade-agreement-guide">
-          If your Interaction was set up to focus on a Trade Agreement or
+          If your interaction was set up to focus on a Trade Agreement or
           contributes to implementing a Trade Agreement, select 'Trade
           Agreement’.
           <br />
