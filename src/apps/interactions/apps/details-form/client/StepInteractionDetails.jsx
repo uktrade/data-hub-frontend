@@ -1,6 +1,6 @@
+import React from 'react'
 import _ from 'lodash'
 import qs from 'qs'
-import React from 'react'
 import { connect } from 'react-redux'
 import { H3 } from '@govuk-react/heading'
 import InsetText from '@govuk-react/inset-text'
@@ -22,6 +22,7 @@ import {
   FieldSelect,
   FieldTextarea,
   FieldTypeahead,
+  FieldTradeAgreementList,
 } from '../../../../../client/components'
 
 import { useFormContext } from '../../../../../client/components/Form/hooks'
@@ -29,6 +30,7 @@ import { useFormContext } from '../../../../../client/components/Form/hooks'
 import {
   SERVICE_CONTEXTS,
   SERVICE_DELIVERY_STATUS_COMPLETED,
+  TRADE_AGREEMENT_IMPLEMENTATION_ACTIVITY,
   THEMES,
   KINDS,
 } from '../../../constants'
@@ -164,6 +166,7 @@ const StepInteractionDetails = ({
   onOpenContactForm,
   activeEvents,
   activeEvent,
+  relatedTradeAgreements,
 }) => {
   const { values = {} } = useFormContext()
   const serviceContext = getServiceContext(
@@ -178,6 +181,8 @@ const StepInteractionDetails = ({
   const selectedServiceId = values.service_2nd_level || values.service
   const selectedService = services.find((s) => s.value === selectedServiceId)
   const isServiceDelivery = values.kind === KINDS.SERVICE_DELIVERY
+  const isTradeAgreementImplementationActivity =
+    values.service === TRADE_AGREEMENT_IMPLEMENTATION_ACTIVITY
 
   const helpUrl = (position) =>
     urls.external.policyFeedbackHelp +
@@ -239,6 +244,27 @@ const StepInteractionDetails = ({
               type="text"
               label="Net receipt (optional)"
               name="net_company_receipt"
+            />
+          )}
+        </>
+      )}
+
+      {isTradeAgreementImplementationActivity && values.service_2nd_level && (
+        <>
+          <FieldRadios
+            inline={true}
+            name="has_related_trade_agreements"
+            legend="Does this interaction relate to a Trade Agreement?"
+            required="Answer if this interaction relates to a trade agreement"
+            options={OPTIONS_YES_NO}
+          />
+          {values.has_related_trade_agreements === OPTION_YES && (
+            <FieldTradeAgreementList
+              name="related_trade_agreements"
+              label="Related Trade Agreements"
+              required="Select at least one Trade Agreement"
+              placeholder="-- Search trade agreements --"
+              options={relatedTradeAgreements}
             />
           )}
         </>
@@ -487,6 +513,7 @@ StepInteractionDetails.propTypes = {
   countries: typeaheadOptionsListProp.isRequired,
   activeEvents: typeaheadOptionsListProp,
   activeEvent: typeaheadOptionProp,
+  relatedTradeAgreements: typeaheadOptionsListProp.isRequired,
 }
 
 export default connect((state) => {

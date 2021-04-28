@@ -75,6 +75,8 @@ function getInteractionsRequestBody(req, res, next) {
     'was_policy_feedback_provided',
     'policy_areas',
     'policy_issue_types',
+    'has_related_trade_agreements',
+    'related_trade_agreements',
   ])
 
   req.body = {

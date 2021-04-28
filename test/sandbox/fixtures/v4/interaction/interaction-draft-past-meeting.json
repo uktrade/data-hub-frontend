@@ -1,0 +1,60 @@
+{
+  "id": "888c12ee-91db-4964-908e-0f18ce823096",
+  "company": {
+    "name": "Venus Ltd",
+    "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+  },
+  "contacts": [
+    {
+      "name": "Theodore Schaden|6e4b048d-5bb5-4868-9455-aa712f4ceffd",
+      "first_name": "Theodore",
+      "last_name": "Schaden|6e4b048d-5bb5-4868-9455-aa712f4ceffd",
+      "job_title": "Internal Assurance Officer",
+      "id": "71906039-858e-47ba-8016-f3c80da69ace"
+    }
+  ],
+  "created_on": "2019-05-22T13:43:23.967481Z",
+  "created_by": null,
+  "event": null,
+  "is_event": null,
+  "status": "draft",
+  "kind": "interaction",
+  "modified_by": null,
+  "modified_on": "2019-05-22T13:51:22.086306Z",
+  "date": "2019-05-20",
+  "dit_adviser": null,
+  "dit_participants": [
+    {
+      "adviser": {
+        "name": "Brendan Smith",
+        "first_name": "Brendan",
+        "last_name": "Smith",
+        "id": "8891ec72-b4ec-4977-9656-839346bc6011"
+      },
+      "team": {
+        "name": "Aberdeen City Council",
+        "id": "cff02898-9698-e211-a939-e4115bead28a"
+      }
+    }
+  ],
+  "dit_team": null,
+  "communication_channel": null,
+  "grant_amount_offered": null,
+  "investment_project": null,
+  "net_company_receipt": null,
+  "service": null,
+  "service_delivery_status": null,
+  "subject": "Past meeting between Brendan and Theodore",
+  "theme": null,
+  "notes": "",
+  "archived_documents_url_path": "",
+  "policy_areas": [],
+  "policy_feedback_notes": "",
+  "policy_issue_types": [],
+  "was_policy_feedback_provided": false,
+  "location": "Windsor House",
+  "archived": false,
+  "archived_by": null,
+  "archived_on": null,
+  "archived_reason": null
+}
