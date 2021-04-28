@@ -32,25 +32,26 @@
 {% macro MessageList(props) %}
   {% if props.items|length %}
     {% set isDismissable = props.isDismissable | default(true) %}
+    <div role="alert">
+      <ul class="c-message-list {{ 'js-Messages' if isDismissable }}" data-test="flash" tabindex="-1">
+        {% for type, messages in props.items -%}
 
-    <ul class="c-message-list {{ 'js-Messages' if isDismissable }}" data-test="flash" tabindex="-1" role="alert">
-      {% for type, messages in props.items -%}
+          {% set parts = type | split(':') %}
+          {% set partsLength = parts | length %}
+          {% set hasBody = true if partsLength > 1 and parts[1] == 'with-body' else false %}
 
-        {% set parts = type | split(':') %}
-        {% set partsLength = parts | length %}
-        {% set hasBody = true if partsLength > 1 and parts[1] == 'with-body' else false %}
-
-        {%- for text in messages %}
-          {{ Message({
-            hasBody: hasBody,
-            id: (text.id if hasBody),
-            heading: (text.heading if hasBody),
-            text: (text.body if hasBody else text),
-            type: (parts[0] if hasBody else type),
-            element: 'li'
-          }) }}
+          {%- for text in messages %}
+            {{ Message({
+              hasBody: hasBody,
+              id: (text.id if hasBody),
+              heading: (text.heading if hasBody),
+              text: (text.body if hasBody else text),
+              type: (parts[0] if hasBody else type),
+              element: 'li'
+            }) }}
+          {% endfor %}
         {% endfor %}
-      {% endfor %}
-    </ul>
+      </ul>
+    </div>
   {% endif %}
 {% endmacro %}
