@@ -11,7 +11,6 @@ import {
 } from '@govuk-react/constants'
 
 import { useField, useFormContext } from '../../hooks'
-import Typeahead from '../../../Typeahead/Typeahead'
 import SecondaryButton from '../../../SecondaryButton'
 import FieldWrapper from '../FieldWrapper'
 
@@ -28,7 +27,7 @@ const StyledWrapper = styled('div')`
   }
 `
 
-const StyledTypeahead = styled('div')`
+const StyledChildren = styled('div')`
   padding-bottom: ${SPACING.SCALE_1};
 `
 
@@ -38,20 +37,19 @@ const StyledLink = styled('div')`
   padding-bottom: ${SPACING.SCALE_1};
 `
 
-const FieldTradeAgreementList = ({
+const FieldAddAnother = ({
   name,
   validate,
   required,
   label,
-  initialValue,
-  options,
-  placeholder,
+  children,
+  'data-test-prefix': data_test_prefix,
 }) => {
-  const { value, error /*, touched, onBlur */ } = useField({
+  const { value, error } = useField({
     name,
     validate,
     required,
-    initialValue,
+    initialValue: null,
   })
 
   const ensureFieldIds = (unvalidatedValue) =>
@@ -95,9 +93,6 @@ const FieldTradeAgreementList = ({
     setInternalValue(newInternalValue)
   }
 
-  const findOptionByValue = (value_to_find) =>
-    options.find(({ value }) => value === value_to_find)
-
   const { setFieldValue } = useFormContext()
 
   useEffect(() => {
@@ -120,32 +115,24 @@ const FieldTradeAgreementList = ({
     setFieldValue(name, newFieldValue)
   }, [internalValue])
 
+  const childOnChangeHandler = (field_id) => (new_value) => {
+    setValueById(field_id, new_value)
+  }
+
   return (
     <>
       <FieldWrapper {...{ name, label, error }}>
         <StyledWrapper error={error}>
           {error && <ErrorText>{error}</ErrorText>}
           {internalValue.map((item, index) => (
-            <div
-              data-test={`trade-agreement-field-${index}`}
-              key={item.field_id}
-            >
-              <StyledTypeahead>
-                <Typeahead
-                  name={name}
-                  inputId={name}
-                  label={''}
-                  options={options}
-                  placeholder={placeholder}
-                  required={required}
-                  aria-label={label}
-                  value={findOptionByValue(item.value)}
-                  onChange={(new_value) => {
-                    setValueById(item.field_id, new_value)
-                  }}
-                  error={error}
-                />
-              </StyledTypeahead>
+            <div data-test={`${data_test_prefix}${index}`} key={item.field_id}>
+              <StyledChildren>
+                {children({
+                  onChange: childOnChangeHandler(item.field_id),
+                  value: item.value,
+                  error,
+                })}
+              </StyledChildren>
               {internalValue.length > 1 && (
                 <StyledLink>
                   <Link
@@ -177,30 +164,21 @@ const FieldTradeAgreementList = ({
   )
 }
 
-FieldTradeAgreementList.propTypes = {
+FieldAddAnother.propTypes = {
+  'data-test-prefix': PropTypes.string,
   name: PropTypes.string.isRequired,
-  validate: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.arrayOf(PropTypes.func),
-  ]),
   required: PropTypes.string,
   label: PropTypes.node,
-  hint: PropTypes.string,
-  legend: PropTypes.node,
-  initialValue: PropTypes.oneOfType([
+  children: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.arrayOf(PropTypes.object),
   ]),
-  options: PropTypes.arrayOf(PropTypes.object),
-  placeholder: PropTypes.string,
 }
 
-FieldTradeAgreementList.defaultProps = {
+FieldAddAnother.defaultProps = {
   validate: null,
   required: null,
   label: null,
-  legend: null,
-  initialValue: null,
 }
 
-export default FieldTradeAgreementList
+export default FieldAddAnother
