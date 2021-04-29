@@ -1,0 +1,38 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: weekly
+    time: "00:00"
+    timezone: Europe/London
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: govuk-colours
+    versions:
+    - ">= 0"
+  - dependency-name: govuk-frontend
+    versions:
+    - ">= 0"
+  - dependency-name: image-webpack-loader
+    versions:
+    - ">= 0"
+  - dependency-name: "@storybook/addon-a11y"
+    versions:
+    - ">= 0"
+  - dependency-name: "@storybook/addon-actions"
+    versions:
+    - ">= 0"
+  - dependency-name: "@storybook/addon-knobs"
+    versions:
+    - ">= 0"
+  - dependency-name: "@storybook/addons"
+    versions:
+    - ">= 0"
+  - dependency-name: "@storybook/react"
+    versions:
+    - ">= 0"
+  - dependency-name: cypress
+    versions:
+    - 6.1.0
+  rebase-strategy: disabled
