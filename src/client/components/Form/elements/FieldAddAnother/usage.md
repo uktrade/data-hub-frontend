@@ -3,7 +3,11 @@ FieldAddAnother
 
 ### Description
 
-This is a form component for inputting multiple trade agreements via typeaheads.
+This is a form component renders a list in a form. The fields of this list are specified by a function based as a child to the component that is called with the arguments `{onChange, value, error}`, where:
+ - onChange is the callback triggered by modification of the child component's value which takes the single argument `(new_value)`.
+ - value is the current value of that particular subfield
+ - error is the error of the whole FieldAddAnother component
+When onChange is triggered for a given subfield the field value is set to an array of objects with a key `value` containing the value of that field.
 
 ### Usage
 
