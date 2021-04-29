@@ -50,3 +50,4 @@ Prop | Required | Default | Type | Description
  `validate` | false | null | function or array of functions | Validation functions for input
  `children` | true | `````` | function | Function that returns components to be rendered for each item in the list
 `data-test-prefix` | false | `````` | string | Allows children to be selected via `[data-test='<data-test-prefix><index>']`
+`item-name` | true | `````` | string | For screen readers; What this field is a list of, for example if this were set to 'trade agreements' screen readers would read 'first trade agreement'

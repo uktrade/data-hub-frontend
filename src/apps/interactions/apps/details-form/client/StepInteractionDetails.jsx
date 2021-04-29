@@ -265,6 +265,7 @@ const StepInteractionDetails = ({
               label="Related Trade Agreements"
               data-test-prefix="trade-agreement-field-"
               required="Select at least one Trade Agreement"
+              item-name="trade agreement"
             >
               {({ value, onChange, error }) => (
                 <Typeahead
