@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import ordinal from 'ordinal'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
@@ -44,6 +45,7 @@ const FieldAddAnother = ({
   label,
   children,
   'data-test-prefix': data_test_prefix,
+  'item-name': aria_item_name,
 }) => {
   const { value, error } = useField({
     name,
@@ -122,7 +124,12 @@ const FieldAddAnother = ({
         <StyledWrapper error={error}>
           {error && <ErrorText>{error}</ErrorText>}
           {internalValue.map((item, index) => (
-            <div data-test={`${data_test_prefix}${index}`} key={item.field_id}>
+            <div
+              role="region"
+              aria-label={`${ordinal(index + 1)} ${aria_item_name}`}
+              data-test={`${data_test_prefix}${index}`}
+              key={item.field_id}
+            >
               <StyledChildren>
                 {children({
                   onChange: childOnChangeHandler(item.field_id),
@@ -134,6 +141,9 @@ const FieldAddAnother = ({
                 <StyledLink>
                   <Link
                     href="#"
+                    aria-label={`Remove ${ordinal(
+                      index + 1
+                    )} ${aria_item_name}`}
                     onClick={(event) => {
                       removeValueById(item.field_id)
                       event.preventDefault()
@@ -151,6 +161,9 @@ const FieldAddAnother = ({
                 appendNewFieldValue()
                 event.preventDefault()
               }}
+              aria-label={`Add a ${ordinal(
+                internalValue.length + 1
+              )} ${aria_item_name}`}
             >
               Add another
             </SecondaryButton>
@@ -163,6 +176,7 @@ const FieldAddAnother = ({
 
 FieldAddAnother.propTypes = {
   'data-test-prefix': PropTypes.string,
+  'item-name': PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   required: PropTypes.string,
   label: PropTypes.node,
