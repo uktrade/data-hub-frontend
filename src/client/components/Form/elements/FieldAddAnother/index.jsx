@@ -53,11 +53,11 @@ const FieldAddAnother = ({
   })
 
   const ensureFieldIds = (unvalidatedValue) =>
-    unvalidatedValue.map(({ value, label, field_id }) => {
+    unvalidatedValue.map(({ value, field_id }) => {
       if (field_id) {
-        return { value, label, field_id }
+        return { value, field_id }
       }
-      return { value, label, field_id: uuid() }
+      return { value, field_id: uuid() }
     })
 
   const [internalValue, setInternalValue] = useState(
@@ -104,10 +104,7 @@ const FieldAddAnother = ({
 
   useEffect(() => {
     let newFieldValue = internalValue
-      .map(({ value, label }) => ({
-        value,
-        label,
-      }))
+      .map(({ value }) => ({ value }))
       .filter(({ value }) => value)
     if (newFieldValue.length === 0) {
       newFieldValue = null
@@ -169,10 +166,11 @@ FieldAddAnother.propTypes = {
   name: PropTypes.string.isRequired,
   required: PropTypes.string,
   label: PropTypes.node,
-  children: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.arrayOf(PropTypes.object),
+  validate: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.arrayOf(PropTypes.func),
   ]),
+  children: PropTypes.func,
 }
 
 FieldAddAnother.defaultProps = {
