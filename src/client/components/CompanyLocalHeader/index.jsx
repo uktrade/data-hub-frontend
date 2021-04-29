@@ -158,7 +158,7 @@ const CompanyLocalHeader = ({
             </BadgeWrapper>
             {company.isUltimate && (
               <StyledDetails
-                summary="What does this mean?"
+                summary="What does Ultimate HQ mean?"
                 data-auto-id="metaList"
               >
                 This HQ is in control of all related company records for{' '}
