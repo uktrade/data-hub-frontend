@@ -15,13 +15,27 @@ When onChange is triggered for a given subfield the field value is set to an arr
 <FormStateful onSubmit={action('onSubmit')}>
   {(state) => (
     <FieldAddAnother
-      name="trade_agreement_list"
-      required="Please select a trade agreement"
-      label="Trade agreements"
-      initialValue={[{label: "First value", value: "value"}]}
-      options={[{label: "First value", value: "value"}]}
-      placeholder="-- Select an item --"
+      name="related_trade_agreements"
+      label="Related Trade Agreements"
+      data-test-prefix="trade-agreement-field-"
+      required="Select at least one Trade Agreement"
     >
+      {({ value, onChange, error }) => (
+        <Typeahead
+          name="related_trade_agreements"
+          inputId="related_trade_agreements"
+          label={''}
+          options={options}
+          placeholder="-- Search trade agreements --"
+          required="Select at least one Trade Agreement"
+          aria-label="Select a trade agreement"
+          value={options.find(
+            ({ value: option_value }) => option_value === value
+          )}
+          onChange={onChange}
+          error={error}
+        />
+      )}
     </FieldAddAnother>
   )}
 </FormStateful>
@@ -31,10 +45,8 @@ When onChange is triggered for a given subfield the field value is set to an arr
 Prop | Required | Default | Type | Description
 :--- | :------- | :------ | :--- | :----------
  `name` | true | `````` | string | Text for name attribute value
+ `required` | false | `````` | boolean | Text 'required' sets whether the input is required or not
  `label` | false | null | string | Text for the label element
- `placeholder` | false | null | string | Placeholder text for all typeaheads
- `required` | false | `````` | Boolean | Text 'required' sets wether the input is required or not
- `initialValue` | false | `````` | Text | Sets initial value of the input
- `options` | false | `````` | Array | This sets the data, if none is passed then it assumes you will use an async call to the api
- `validate` | false | null | function or array of functions | Validate functions for input
- 
+ `validate` | false | null | function or array of functions | Validation functions for input
+ `children` | true | `````` | function | Function that returns components to be rendered for each item in the list
+`data-test-prefix` | false | `````` | string | Allows children to be selected via `[data-test='<data-test-prefix><index>']`
