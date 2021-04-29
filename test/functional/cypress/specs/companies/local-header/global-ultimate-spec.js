@@ -54,7 +54,7 @@ describe('Local header for global ultimate company', () => {
 
     it('should display "What does this mean?" details', () => {
       cy.get(companyLocalHeader.metaList)
-        .should('contain', 'What does this mean?')
+        .should('contain', 'What does Ultimate HQ mean?')
         .should(
           'contain',
           'This HQ is in control of all related company records for DnB Global Ultimate'
