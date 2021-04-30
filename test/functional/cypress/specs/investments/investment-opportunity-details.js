@@ -1,5 +1,4 @@
 const {
-  assertTabbedLocalNav,
   assertLocalHeader,
   assertBreadcrumbs,
 } = require('../../support/assertions')
@@ -27,10 +26,6 @@ describe('UK Opportunity with missing data', () => {
     })
   })
 
-  it('should render the local navigation', () => {
-    assertTabbedLocalNav('Details')
-  })
-
   it('should display opportunity toggles', () => {
     cy.get('#opportunity_details_toggle').should(
       'contain',
@@ -50,6 +45,15 @@ describe('UK Opportunity with missing data', () => {
     cy.get('#opportunity-details').should('contain', '7 fields required')
     cy.get('#opportunity-details').should('contain', '3 fields required')
   })
+
+  it('should display the Edit button', () => {
+    cy.visit(
+      investments.opportunities.details(
+        fixtures.investment.completeOpportunity.id
+      )
+    )
+    cy.get('#opportunity-details').should('contain', 'Edit')
+  })
 })
 
 describe('UK Opportunity with complete data', () => {
@@ -64,5 +68,40 @@ describe('UK Opportunity with complete data', () => {
   it('should display required field tags', () => {
     cy.get('#opportunity-details').should('contain', 'Complete')
     cy.get('#opportunity-details').should('contain', 'Complete')
+  })
+
+  it('should display the Edit button', () => {
+    cy.visit(
+      investments.opportunities.details(
+        fixtures.investment.completeOpportunity.id
+      )
+    )
+    cy.get('#opportunity-details').should('contain', 'Edit')
+  })
+})
+
+describe('UK Opportunity edit details functionality', () => {
+  before(() => {
+    cy.visit(
+      investments.opportunities.details(
+        fixtures.investment.incompleteOpportunity.id
+      )
+    )
+  })
+
+  it('Should display the edit details form and submit the new data', () => {
+    cy.get(
+      '#opportunity_details_toggle > div > [data-test="toggle-section-button"]'
+    ).click()
+    cy.contains('Edit').click()
+    cy.get('input[name="name"]').type('Egg Shop')
+    cy.contains('Submit').click()
+    cy.intercept(
+      `PATCH', '/v4/large-capital-opportunity/${fixtures.investment.incompleteOpportunity.id}`,
+      (req) => {
+        expect(req.body).to.include('Egg Shop')
+      }
+    )
+    cy.get('#opportunity-details').should('contain', 'Edit')
   })
 })
