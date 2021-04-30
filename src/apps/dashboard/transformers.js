@@ -1,8 +1,8 @@
 /* eslint camelcase: 0 */
 const moment = require('moment')
 
-const formatHelpCentreAnnouncements = (feed = {}) => {
-  const { articles = [] } = feed
+const formatHelpCentreAnnouncements = ({ data = {} }) => {
+  const { articles = [] } = data
   return articles.map((item) => {
     if (item.title && item.html_url && item.created_at) {
       return {
