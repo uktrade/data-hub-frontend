@@ -1,6 +1,20 @@
 const router = require('express').Router()
 
 const {
+  LARGE_INVESTMENT_OPPORTUNITY_QUERY_FIELDS,
+  LARGE_INVESTMENT_OPPORTUNITY_QUERY_DATE,
+  LARGE_INVESTMENT_OPPORTUNITY_QUERY,
+} = require('./constants')
+
+const { setDefaultQuery } = require('../middleware')
+
+const { getRequestBody } = require('../../middleware/collection')
+
+const {
+  exportCollection,
+} = require('../../modules/search/middleware/collection')
+
+const {
   renderOpportunitiesView,
   renderOpportunityDetailsView,
 } = require('./controllers/opportunities')
@@ -22,5 +36,15 @@ router.get('/create', (req, res) => {
       heading,
     })
 })
+
+router.get(
+  '/export',
+  setDefaultQuery(LARGE_INVESTMENT_OPPORTUNITY_QUERY),
+  getRequestBody(
+    LARGE_INVESTMENT_OPPORTUNITY_QUERY_FIELDS,
+    LARGE_INVESTMENT_OPPORTUNITY_QUERY_DATE
+  ),
+  exportCollection('large-capital-opportunity')
+)
 
 module.exports = router
