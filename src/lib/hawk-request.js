@@ -80,7 +80,7 @@ async function sendHawkRequest(
   }
 
   const clientHeader = getHawkHeader(credentials, requestOptions)
-  requestOptions.headers.Authorization = { header: clientHeader.header }
+  requestOptions.headers.Authorization = clientHeader.header || clientHeader
 
   return createPromiseRequest(
     requestOptions,
