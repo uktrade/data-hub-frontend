@@ -4,7 +4,7 @@ const request = require('./request')
 
 function getHawkHeader(credentials, requestOptions) {
   if (config.isTest) {
-    return { header: 'hawk-test-header' }
+    return 'hawk-test-header'
   }
 
   const { url, method } = requestOptions
@@ -80,7 +80,7 @@ async function sendHawkRequest(
   }
 
   const clientHeader = getHawkHeader(credentials, requestOptions)
-  requestOptions.headers.Authorization = clientHeader.header
+  requestOptions.headers.Authorization = { header: clientHeader.header }
 
   return createPromiseRequest(
     requestOptions,
