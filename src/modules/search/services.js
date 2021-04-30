@@ -154,6 +154,7 @@ function exportSearch({ req, searchTerm = '', searchEntity, requestBody }) {
       ...requestBody,
       term: searchTerm,
     },
+    responseType: 'stream',
   }
 
   return authorisedRawRequest(req, options)

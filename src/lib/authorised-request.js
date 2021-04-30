@@ -27,12 +27,14 @@ function stripScripts(key, value) {
 
 function parseConfig(req, opts) {
   const { token } = req.session
+  const { responseType = 'json' } = opts
   const defaults = {
     headers: {
       ...opts.headers,
       ...getZipkinHeaders(req),
       ...(token ? { Authorization: `Bearer ${token}` } : null),
     },
+    responseType,
     method: 'GET',
     proxy: config.proxy,
   }
@@ -96,7 +98,6 @@ async function authorisedRequest(req, opts) {
 // https://github.com/request/request-promise/issues/90
 function authorisedRawRequest(req, opts) {
   const requestConfig = parseConfig(req, opts)
-
   logRequest(requestConfig)
 
   return request(requestConfig)
