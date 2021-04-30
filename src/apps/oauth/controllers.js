@@ -18,7 +18,6 @@ function getAccessToken(code) {
       client_secret: config.oauth.clientSecret,
       redirect_uri: config.oauth.redirectUri,
     },
-    json: true,
   }
 
   return request(options)
@@ -38,7 +37,6 @@ async function getSSOUserProfile(token) {
   const options = {
     url: config.oauth.userProfileUrl,
     headers: { Authorization: 'Bearer ' + token },
-    json: true,
   }
 
   try {
