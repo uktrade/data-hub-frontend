@@ -130,9 +130,9 @@ function searchForeignCompanies({ req, searchTerm, page = 1, limit = 10 }) {
 function exportSearch({ req, searchTerm = '', searchEntity, requestBody }) {
   let apiVersion
   if (
-    searchEntity == 'large-investor-profile' ||
-    searchEntity == 'large-capital-opportunity' ||
-    searchEntity == 'company'
+    ['large-investor-profile', 'large-capital-opportunity', 'company'].includes(
+      searchEntity
+    )
   ) {
     apiVersion = 'v4'
   } else {
