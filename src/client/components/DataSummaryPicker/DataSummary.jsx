@@ -44,12 +44,12 @@ const StyledDiv = styled('div')`
 const StyledYear = styled(StyledDiv)``
 
 const StyledTotal = styled(StyledDiv)`
-  font-weight: bold;
+  font-weight: ${FONT_WEIGHTS.bold};
   font-size: ${FONT_SIZE.SIZE_24};
 `
 
 const StyledSubject = styled(StyledDiv)`
-  font-weight: bold;
+  font-weight: ${FONT_WEIGHTS.bold};
 `
 
 const DataSummary = ({
