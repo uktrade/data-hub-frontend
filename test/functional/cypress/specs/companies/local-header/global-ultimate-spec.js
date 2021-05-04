@@ -52,9 +52,9 @@ describe('Local header for global ultimate company', () => {
       cy.get(companyLocalHeader.badge).contains('Ultimate HQ')
     })
 
-    it('should display "What does this mean?" details', () => {
+    it('should display "What does Ultimate HQ mean?" details', () => {
       cy.get(companyLocalHeader.metaList)
-        .should('contain', 'What does this mean?')
+        .should('contain', 'What does Ultimate HQ mean?')
         .should(
           'contain',
           'This HQ is in control of all related company records for DnB Global Ultimate'
@@ -136,9 +136,9 @@ describe('Local header for global ultimate company', () => {
       cy.get(companyLocalHeader.badge).contains('Ultimate HQ')
     })
 
-    it('should display "What does this mean?" details', () => {
+    it('should display "What does Ultimate HQ mean?" details', () => {
       cy.get(companyLocalHeader.metaList)
-        .should('contain', 'What does this mean?')
+        .should('contain', 'What does Ultimate HQ mean?')
         .should(
           'contain',
           'This HQ is in control of all related company records for DnB Global Ultimate'
@@ -222,9 +222,9 @@ describe('Local header for global ultimate company', () => {
       cy.get(companyLocalHeader.badge).contains('Ultimate HQ')
     })
 
-    it('should display "What does this mean?" details', () => {
+    it('should display "What does Ultimate HQ mean?" details', () => {
       cy.get(companyLocalHeader.metaList)
-        .should('contain', 'What does this mean?')
+        .should('contain', 'What does Ultimate HQ mean?')
         .should(
           'contain',
           'This HQ is in control of all related company records for DnB Global Ultimate'
@@ -312,9 +312,9 @@ describe('Local header for global ultimate company', () => {
         cy.get(companyLocalHeader.badge).contains('Ultimate HQ')
       })
 
-      it('should display "What does this mean?" details', () => {
+      it('should display "What does Ultimate HQ mean?" details', () => {
         cy.get(companyLocalHeader.metaList)
-          .should('contain', 'What does this mean?')
+          .should('contain', 'What does Ultimate HQ mean?')
           .should(
             'contain',
             'This HQ is in control of all related company records for DnB Global Ultimate'
@@ -403,9 +403,9 @@ describe('Local header for global ultimate company', () => {
         cy.get(companyLocalHeader.badge).contains('Ultimate HQ')
       })
 
-      it('should display "What does this mean?" details', () => {
+      it('should display "What does Ultimate HQ mean?" details', () => {
         cy.get(companyLocalHeader.metaList)
-          .should('contain', 'What does this mean?')
+          .should('contain', 'What does Ultimate HQ mean?')
           .should(
             'contain',
             'This HQ is in control of all related company records for DnB Global Ultimate'
@@ -490,9 +490,9 @@ describe('Local header for global ultimate company', () => {
       cy.get(companyLocalHeader.badge).contains('Ultimate HQ')
     })
 
-    it('should display "What does this mean?" details', () => {
+    it('should display "What does Ultimate HQ mean?" details', () => {
       cy.get(companyLocalHeader.metaList)
-        .should('contain', 'What does this mean?')
+        .should('contain', 'What does Ultimate HQ mean?')
         .should(
           'contain',
           'This HQ is in control of all related company records for DnB Global Ultimate'
@@ -581,9 +581,9 @@ describe('Local header for global ultimate company', () => {
       cy.get(companyLocalHeader.badge).contains('Ultimate HQ')
     })
 
-    it('should display "What does this mean?" details', () => {
+    it('should display "What does Ultimate HQ mean?" details', () => {
       cy.get(companyLocalHeader.metaList)
-        .should('contain', 'What does this mean?')
+        .should('contain', 'What does Ultimate HQ mean?')
         .should(
           'contain',
           'This HQ is in control of all related company records for DnB Global Ultimate'
@@ -665,9 +665,9 @@ describe('Local header for global ultimate company', () => {
       cy.get(companyLocalHeader.badge).contains('Ultimate HQ')
     })
 
-    it('should display "What does this mean?" details', () => {
+    it('should display "What does Ultimate HQ mean?" details', () => {
       cy.get(companyLocalHeader.metaList)
-        .should('contain', 'What does this mean?')
+        .should('contain', 'What does Ultimate HQ mean?')
         .should(
           'contain',
           'This HQ is in control of all related company records for DnB Global Ultimate'

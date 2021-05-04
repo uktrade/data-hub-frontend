@@ -34,6 +34,7 @@ const LargeCapitalOpportunityCollection = ({
     entityName="opportunity"
     entityNamePlural="opportunities"
     addItemUrl="/investments/opportunities/create"
+    baseDownloadLink="/investments/opportunities/export"
   />
 )
 
