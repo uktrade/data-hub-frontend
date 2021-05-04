@@ -26,10 +26,9 @@ const InvestmentProjectSummary = ({
   >
     {() => (
       <DataSummaryPicker
-        title="My project summary"
         subject="Project"
         description="Projects in the current financial year"
-        headers={['Stage', 'Amount']}
+        headers={['Stage', 'Projects']}
         dataRanges={investmentSummaryDataRanges}
       />
     )}
