@@ -1,35 +1,48 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { default as GovTable } from '@govuk-react/table'
+import { SPACING } from '@govuk-react/constants'
+import styled from 'styled-components'
 
-const DataTable = ({ data, headers, total }) => (
-  <GovTable>
+const StyledGovTable = styled(GovTable)`
+  margin-top: ${SPACING.SCALE_2};
+  margin-bottom: 23px;
+`
+
+const StyledGovTableCellHeader = styled(GovTable.CellHeader)`
+  font-weight: normal;
+  font-size: 15px;
+`
+
+const StyledGovTableCell = styled(GovTable.Cell)`
+  padding: 6px 0 6px 0;
+  line-height: 1.7;
+`
+
+const DataTable = ({ data, headers }) => (
+  <StyledGovTable data-test="investment-project-table">
     <GovTable.Row>
       {headers.map((header, i) => (
-        <GovTable.CellHeader key={i}>{header}</GovTable.CellHeader>
+        <StyledGovTableCellHeader setWidth={i === 0 ? '40%' : '60%'} key={i}>
+          {header}
+        </StyledGovTableCellHeader>
       ))}
     </GovTable.Row>
     {data.map(({ id, label, value, link }) => (
       <GovTable.Row key={id}>
-        <GovTable.Cell>{label}</GovTable.Cell>
-        <GovTable.Cell>
+        <StyledGovTableCell>
           {link ? (
             <a href={link} title={`View ${label}`}>
-              {value}
+              {label}
             </a>
           ) : (
-            value
+            label
           )}
-        </GovTable.Cell>
+        </StyledGovTableCell>
+        <StyledGovTableCell>{value}</StyledGovTableCell>
       </GovTable.Row>
     ))}
-    <GovTable.Row>
-      <GovTable.CellHeader>Total</GovTable.CellHeader>
-      <GovTable.Cell>
-        <strong>{total}</strong>
-      </GovTable.Cell>
-    </GovTable.Row>
-  </GovTable>
+  </StyledGovTable>
 )
 
 DataTable.propTypes = {
@@ -42,7 +55,6 @@ DataTable.propTypes = {
     })
   ).isRequired,
   headers: PropTypes.array.isRequired,
-  total: PropTypes.number.isRequired,
 }
 
 export default DataTable
