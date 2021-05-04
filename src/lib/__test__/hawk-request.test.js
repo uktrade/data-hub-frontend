@@ -72,11 +72,8 @@ describe('#hawkRequest: check sendHawkRequest', () => {
     this.configStub.hawkCredentials.dataHubBackend = testDataHubCredentials
     this.hawkRequest = rewire(modulePath)
     this.hawkRequest.__set__('config', this.configStub)
-    this.createPromiseRequestSpy = sinon.spy()
-    this.hawkRequest.__set__(
-      'createPromiseRequest',
-      this.createPromiseRequestSpy
-    )
+    this.hawkRequestPromiseSpy = sinon.spy()
+    this.hawkRequest.__set__('hawkRequestPromise', this.hawkRequestPromiseSpy)
 
     this.getHawkHeaderStub = sinon.stub().returns({
       artifacts: { fake: 'artifacts' },
@@ -90,9 +87,9 @@ describe('#hawkRequest: check sendHawkRequest', () => {
     await expect(this.hawkRequest()).to.be.rejectedWith(Error)
   })
 
-  it('calls createPromiseRequest', async () => {
+  it('calls hawkRequestPromise', async () => {
     await this.hawkRequest(config.apiRoot + '/v4/metadata/countries')
-    expect(this.createPromiseRequestSpy).to.have.been.calledOnceWith(
+    expect(this.hawkRequestPromiseSpy).to.have.been.calledOnceWith(
       testRequestOptions,
       testDataHubCredentials,
       {
@@ -102,7 +99,7 @@ describe('#hawkRequest: check sendHawkRequest', () => {
   })
 })
 
-describe('#hawkRequest: check createPromiseRequest', () => {
+describe('#hawkRequest: check hawkRequestPromise', () => {
   beforeEach(() => {
     this.configStub = sinon.stub()
     this.hawkRequest = rewire(modulePath)
@@ -117,9 +114,9 @@ describe('#hawkRequest: check createPromiseRequest', () => {
     this.hawkRequest.__set__('request', () =>
       Promise.resolve({ status: 200, data: { fake: 'reply' } })
     )
-    this.createPromiseRequest = this.hawkRequest.__get__('createPromiseRequest')
+    this.hawkRequestPromise = this.hawkRequest.__get__('hawkRequestPromise')
 
-    await this.createPromiseRequest(
+    await this.hawkRequestPromise(
       testRequestOptions,
       testDataHubCredentials,
       testClientHeaderArtifacts
@@ -130,10 +127,10 @@ describe('#hawkRequest: check createPromiseRequest', () => {
 
   it('fails when response status code is not 200', async () => {
     this.hawkRequest.__set__('request', () => Promise.resolve({ status: 500 }))
-    this.createPromiseRequest = this.hawkRequest.__get__('createPromiseRequest')
+    this.hawkRequestPromise = this.hawkRequest.__get__('hawkRequestPromise')
 
     await expect(
-      this.createPromiseRequest(
+      this.hawkRequestPromise(
         testRequestOptions,
         testDataHubCredentials,
         testClientHeaderArtifacts
@@ -143,13 +140,13 @@ describe('#hawkRequest: check createPromiseRequest', () => {
 
   it('fails when response is not valid', async () => {
     this.hawkRequest.__set__('request', () => Promise.resolve({ status: 401 }))
-    this.createPromiseRequest = this.hawkRequest.__get__('createPromiseRequest')
+    this.hawkRequestPromise = this.hawkRequest.__get__('hawkRequestPromise')
 
     const authenticateStub = sinon.stub().returns(true)
     this.hawkRequest.__set__('hawk.client.authenticate', authenticateStub)
 
     await expect(
-      this.createPromiseRequest(
+      this.hawkRequestPromise(
         testRequestOptions,
         testDataHubCredentials,
         testClientHeaderArtifacts
@@ -166,13 +163,13 @@ describe('#hawkRequest: check createPromiseRequest', () => {
 
   it('fails when authenticate throws', async () => {
     this.hawkRequest.__set__('request', () => Promise.resolve({ status: 200 }))
-    this.createPromiseRequest = this.hawkRequest.__get__('createPromiseRequest')
+    this.hawkRequestPromise = this.hawkRequest.__get__('hawkRequestPromise')
 
     const authenticateStub = sinon.stub().throws(Error)
     this.hawkRequest.__set__('hawk.client.authenticate', authenticateStub)
 
     await expect(
-      this.createPromiseRequest(
+      this.hawkRequestPromise(
         testRequestOptions,
         testDataHubCredentials,
         testClientHeaderArtifacts
