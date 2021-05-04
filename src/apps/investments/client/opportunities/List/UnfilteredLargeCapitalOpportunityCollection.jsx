@@ -25,7 +25,7 @@ const LargeCapitalOpportunityCollection = ({
         onSuccessDispatch: INVESTMENTS__OPPORTUNITIES_LOADED,
       },
     }}
-    collectionName="Opportunity"
+    collectionName="opportunity"
     items={results}
     count={count}
     onPageClick={onPageClick}
