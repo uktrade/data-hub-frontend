@@ -7,17 +7,9 @@ const {
   transformContactToOption,
   transformObjectToOption,
 } = require('../../../transformers')
-const { getOptions } = require('../../../../lib/options')
 
 const { OPTION_YES, OPTION_NO } = require('../../../constants')
 const urls = require('../../../../lib/urls')
-
-const transformServiceToOption = (service) => ({
-  value: service.id,
-  label: service.name,
-  contexts: service.contexts,
-  interaction_questions: service.interaction_questions,
-})
 
 const transformToTypeahead = (value) => {
   if (!value) {
@@ -171,26 +163,6 @@ async function renderInteractionDetailsForm(req, res, next) {
       features,
     } = res.locals
 
-    const [
-      services,
-      serviceDeliveryStatuses,
-      policyAreas,
-      policyIssueTypes,
-      communicationChannels,
-      countries,
-      relatedTradeAgreements,
-    ] = await Promise.all([
-      getOptions(req, 'service', {
-        transformer: transformServiceToOption,
-      }),
-      getOptions(req, 'service-delivery-status', { sorted: false }),
-      getOptions(req, 'policy-area'),
-      getOptions(req, 'policy-issue-type'),
-      getOptions(req, 'communication-channel'),
-      getOptions(req, 'country'),
-      getOptions(req, 'trade-agreement'),
-    ])
-
     res
       .breadcrumb(
         interaction
@@ -208,15 +180,8 @@ async function renderInteractionDetailsForm(req, res, next) {
             .filter((contact) => !contact.archived)
             .map(transformContactToOption),
           activeEventsEndpoint: urls.interactions.activeEvents.route,
-          services,
-          serviceDeliveryStatuses,
-          policyAreas,
-          policyIssueTypes,
-          communicationChannels,
-          countries,
           isTradeAgreementInteractionEnabled:
             features['trade-agreement-interaction-v4-endpoint'],
-          relatedTradeAgreements,
         },
       })
   } catch (error) {

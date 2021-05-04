@@ -81,6 +81,7 @@ import {
   TASK_GET_ACTIVE_EVENTS,
   TASK_SAVE_INTERACTION,
   TASK_OPEN_CONTACT_FORM,
+  TASK_GET_METADATA,
 } from '../apps/interactions/apps/details-form/client/state'
 import * as addInteractionFormTasks from '../apps/interactions/apps/details-form/client/tasks'
 
@@ -172,6 +173,7 @@ function App() {
         [TASK_GET_ACTIVE_EVENTS]: addInteractionFormTasks.fetchActiveEvents,
         [TASK_SAVE_INTERACTION]: addInteractionFormTasks.saveInteraction,
         [TASK_OPEN_CONTACT_FORM]: addInteractionFormTasks.openContactForm,
+        [TASK_GET_METADATA]: addInteractionFormTasks.fetchMetaData,
         [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
         [TASK_UPDATE_ADVISER]: manageAdviser.updateAdviser,
         [TASK_GET_OPPORTUNITY_DETAILS]:

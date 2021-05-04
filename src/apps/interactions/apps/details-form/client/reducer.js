@@ -2,9 +2,20 @@ import {
   TASK__ERROR,
   ADD_INTERACTION_FORM__SUBMIT,
   ADD_INTERACTION__GET_ACTIVE_EVENTS,
+  ADD_INTERACTION_FORM_METADATA,
 } from '../../../../../client/actions'
 
-export default (state = {}, { type, result }) => {
+const initialState = {
+  metaData: {
+    services: [],
+    serviceDeliveryStatuses: [],
+    relatedTradeAgreements: [],
+    policyAreas: [],
+    policyIssueTypes: [],
+  },
+}
+
+export default (state = initialState, { type, result }) => {
   switch (type) {
     case TASK__ERROR:
       return {
@@ -29,6 +40,14 @@ export default (state = {}, { type, result }) => {
       return {
         ...state,
         activeEvents: result,
+      }
+
+    case ADD_INTERACTION_FORM_METADATA:
+      return {
+        ...state,
+        metaData: {
+          ...result,
+        },
       }
 
     default:

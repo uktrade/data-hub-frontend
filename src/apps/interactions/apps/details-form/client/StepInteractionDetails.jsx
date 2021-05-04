@@ -9,6 +9,7 @@ import PropTypes from 'prop-types'
 import { GREY_1 } from 'govuk-colours'
 import styled from 'styled-components'
 
+import Task from '../../../../../client/components/Task'
 import { SPACING_POINTS } from '@govuk-react/constants'
 
 import {
@@ -42,9 +43,11 @@ import {
   OPTIONS_YES_NO,
 } from '../../../../constants'
 
-import { ADD_INTERACTION__GET_ACTIVE_EVENTS } from '../../../../../client/actions'
-import { ID, TASK_GET_ACTIVE_EVENTS } from './state'
-import Task from '../../../../../client/components/Task'
+import {
+  ADD_INTERACTION__GET_ACTIVE_EVENTS,
+  ADD_INTERACTION_FORM_METADATA,
+} from '../../../../../client/actions'
+import { ID, TASK_GET_ACTIVE_EVENTS, TASK_GET_METADATA } from './state'
 
 import urls from '../../../../../lib/urls'
 
@@ -174,6 +177,7 @@ const StepInteractionDetails = ({
     values.kind,
     values.investment_project
   )
+
   const servicesHierarchy = buildServicesHierarchy(
     services.filter((s) => s.contexts.includes(serviceContext))
   )
@@ -193,306 +197,317 @@ const StepInteractionDetails = ({
     })
 
   return (
-    <>
-      <H3 as="h2">Service</H3>
-
-      <InsetText>
-        If your contact provided business intelligence (eg issues impacting the
-        company or feedback on government policy), complete the business
-        intelligence section.
-        <br />
-        <br />
-        <NewWindowLink href={helpUrl(1)}>See more guidance</NewWindowLink>
-      </InsetText>
-
-      <FieldSelect
-        name="service"
-        emptyOption="-- Select service --"
-        options={servicesHierarchy}
-        required="Select a service"
-        aria-label="service"
-      />
-
-      {selectedService?.interaction_questions?.map((question) => (
-        <FieldRadios
-          name={`service_answers.${question.id}`}
-          legend={question.name}
-          required={`Give answer to "${question.name}"`}
-          options={question.answer_options.map(({ id, name }) => ({
-            label: name,
-            value: id,
-          }))}
-        />
-      ))}
-
-      {isServiceDelivery && isTapService(selectedService) && (
+    <Task.Status
+      name={TASK_GET_METADATA}
+      id={ID}
+      startOnRender={{
+        onSuccessDispatch: ADD_INTERACTION_FORM_METADATA,
+      }}
+    >
+      {() => (
         <>
+          <H3 as="h2">Service</H3>
+
+          <InsetText>
+            If your contact provided business intelligence (eg issues impacting
+            the company or feedback on government policy), complete the business
+            intelligence section.
+            <br />
+            <br />
+            <NewWindowLink href={helpUrl(1)}>See more guidance</NewWindowLink>
+          </InsetText>
+
           <FieldSelect
-            label="Service status (optional)"
-            name="service_delivery_status"
-            emptyOption="-- Select service status --"
-            options={serviceDeliveryStatuses}
+            name="service"
+            emptyOption="-- Select service --"
+            options={servicesHierarchy}
+            required="Select a service"
+            aria-label="service"
           />
-          <FieldInput
-            type="number"
-            label="Grant offered (optional)"
-            name="grant_amount_offered"
-          />
-          {values.service_delivery_status ===
-            SERVICE_DELIVERY_STATUS_COMPLETED && (
-            <FieldInput
-              type="text"
-              label="Net receipt (optional)"
-              name="net_company_receipt"
+
+          {selectedService?.interaction_questions?.map((question) => (
+            <FieldRadios
+              name={`service_answers.${question.id}`}
+              legend={question.name}
+              required={`Give answer to "${question.name}"`}
+              options={question.answer_options.map(({ id, name }) => ({
+                label: name,
+                value: id,
+              }))}
             />
-          )}
-        </>
-      )}
+          ))}
 
-      {isTradeAgreementImplementationActivity && values.service_2nd_level && (
-        <>
-          <FieldRadios
-            inline={true}
-            name="has_related_trade_agreements"
-            legend="Does this interaction relate to a Trade Agreement?"
-            required="Answer if this interaction relates to a trade agreement"
-            options={OPTIONS_YES_NO}
-          />
-          {values.has_related_trade_agreements === OPTION_YES && (
-            <FieldTradeAgreementList
-              name="related_trade_agreements"
-              label="Related Trade Agreements"
-              required="Select at least one Trade Agreement"
-              placeholder="-- Search trade agreements --"
-              options={relatedTradeAgreements}
-            />
-          )}
-        </>
-      )}
-
-      <H3 as="h2">Participants</H3>
-
-      <FieldTypeahead
-        name="contacts"
-        label="Contact(s)"
-        placeholder="-- Select contact --"
-        required="Select at least one contact"
-        options={contacts}
-        isMulti={true}
-        hint={
-          <>
-            If the contact you are looking for is not listed you can{' '}
-            <Link
-              onClick={onOpenContactForm}
-              href={urls.contacts.create(companyId, {
-                origin_url: window.location.pathname,
-                origin_type: 'interaction',
-              })}
-            >
-              add a new contact
-            </Link>
-            .
-          </>
-        }
-      />
-
-      <AdviserTypeAhead
-        name="dit_participants"
-        label="Adviser(s)"
-        required="Select at least one adviser"
-        isMulti={true}
-      />
-
-      <H3 as="h2">Details</H3>
-
-      <FieldDate
-        name="date"
-        label="Date of interaction"
-        required="Enter a valid date"
-      />
-
-      {!isServiceDelivery && (
-        <FieldTypeahead
-          name="communication_channel"
-          label="Communication channel"
-          options={communicationChannels}
-          placeholder="-- Select communication channel --"
-          required="Select a communication channel"
-        />
-      )}
-
-      {isServiceDelivery && (
-        <>
-          <FieldRadios
-            inline={true}
-            name="is_event"
-            legend="Is this an event?"
-            options={OPTIONS_YES_NO}
-            required="Answer if this was an event"
-          />
-          {values.is_event === OPTION_YES && (
-            <Task.Status
-              id={ID}
-              name={TASK_GET_ACTIVE_EVENTS}
-              startOnRender={{
-                onSuccessDispatch: ADD_INTERACTION__GET_ACTIVE_EVENTS,
-              }}
-            >
-              {() => (
-                <FieldTypeahead
-                  label="Event"
-                  name="event"
-                  placeholder="-- Select event --"
-                  required="Select a specific event"
-                  initialValue={activeEvent}
-                  options={activeEvents}
+          {isServiceDelivery && isTapService(selectedService) && (
+            <>
+              <FieldSelect
+                label="Service status (optional)"
+                name="service_delivery_status"
+                emptyOption="-- Select service status --"
+                options={serviceDeliveryStatuses}
+              />
+              <FieldInput
+                type="number"
+                label="Grant offered (optional)"
+                name="grant_amount_offered"
+              />
+              {values.service_delivery_status ===
+                SERVICE_DELIVERY_STATUS_COMPLETED && (
+                <FieldInput
+                  type="text"
+                  label="Net receipt (optional)"
+                  name="net_company_receipt"
                 />
               )}
-            </Task.Status>
+            </>
           )}
-        </>
-      )}
 
-      <H3 as="h2">Notes</H3>
+          {isTradeAgreementImplementationActivity && values.service_2nd_level && (
+            <>
+              <FieldRadios
+                inline={true}
+                name="has_related_trade_agreements"
+                legend="Does this interaction relate to a Trade Agreement?"
+                required="Answer if this interaction relates to a trade agreement"
+                options={OPTIONS_YES_NO}
+              />
+              {values.has_related_trade_agreements === OPTION_YES && (
+                <FieldTradeAgreementList
+                  name="related_trade_agreements"
+                  label="Related Trade Agreements"
+                  required="Select at least one Trade Agreement"
+                  placeholder="-- Search trade agreements --"
+                  options={relatedTradeAgreements}
+                />
+              )}
+            </>
+          )}
 
-      <FieldInput
-        type="text"
-        name="subject"
-        label="Subject"
-        required="Enter a subject"
-      />
-
-      <FieldTextarea
-        type="text"
-        name="notes"
-        label="Notes (optional)"
-        hint="Use this text box to record any details of the logistics of the interaction eg how meeting(s) came about and where or when they happened. These are for your records. Do not include comments about issues impacting the company or feedback on government policy. Include that information in the business intelligence section."
-      />
-
-      <FieldRadios
-        inline={true}
-        name="was_policy_feedback_provided"
-        legend="Did the contact provide business intelligence?"
-        options={OPTIONS_YES_NO}
-        required="Answer if the contact provided business intelligence"
-      />
-
-      {values.was_policy_feedback_provided === OPTION_YES && (
-        <>
-          <FieldCheckboxes
-            name="policy_issue_types"
-            legend="Policy issue types"
-            options={policyIssueTypes}
-            required="Select at least one policy issue type"
-          />
-
-          <FieldHelp
-            helpSummary="Help with policy issue types"
-            helpText="A policy type is the broad category/categories that the information fits into."
-            footerUrl={helpUrl(2)}
-            footerUrlDescription="See more guidance"
-          />
+          <H3 as="h2">Participants</H3>
 
           <FieldTypeahead
+            name="contacts"
+            label="Contact(s)"
+            placeholder="-- Select contact --"
+            required="Select at least one contact"
+            options={contacts}
             isMulti={true}
-            name="policy_areas"
-            label="Policy area(s)"
-            placeholder="-- Select policy area --"
-            options={policyAreas}
-            required="Select at least one policy area"
+            hint={
+              <>
+                If the contact you are looking for is not listed you can{' '}
+                <Link
+                  onClick={onOpenContactForm}
+                  href={urls.contacts.create(companyId, {
+                    origin_url: window.location.pathname,
+                    origin_type: 'interaction',
+                  })}
+                >
+                  add a new contact
+                </Link>
+                .
+              </>
+            }
           />
 
-          <FieldHelp
-            helpSummary="Help with policy area(s)"
-            helpText="A policy area is the specific area that the information fits into. Completing this enables the correct team(s) to find the information and input into their reports to support businesses and ministers effectively."
-            footerUrl={helpUrl(3)}
-            footerUrlDescription="See more guidance"
+          <AdviserTypeAhead
+            name="dit_participants"
+            label="Adviser(s)"
+            required="Select at least one adviser"
+            isMulti={true}
+          />
+
+          <H3 as="h2">Details</H3>
+
+          <FieldDate
+            name="date"
+            label="Date of interaction"
+            required="Enter a valid date"
+          />
+
+          {!isServiceDelivery && (
+            <FieldTypeahead
+              name="communication_channel"
+              label="Communication channel"
+              options={communicationChannels}
+              placeholder="-- Select communication channel --"
+              required="Select a communication channel"
+            />
+          )}
+
+          {isServiceDelivery && (
+            <>
+              <FieldRadios
+                inline={true}
+                name="is_event"
+                legend="Is this an event?"
+                options={OPTIONS_YES_NO}
+                required="Answer if this was an event"
+              />
+              {values.is_event === OPTION_YES && (
+                <Task.Status
+                  id={ID}
+                  name={TASK_GET_ACTIVE_EVENTS}
+                  startOnRender={{
+                    onSuccessDispatch: ADD_INTERACTION__GET_ACTIVE_EVENTS,
+                  }}
+                >
+                  {() => (
+                    <FieldTypeahead
+                      label="Event"
+                      name="event"
+                      placeholder="-- Select event --"
+                      required="Select a specific event"
+                      initialValue={activeEvent}
+                      options={activeEvents}
+                    />
+                  )}
+                </Task.Status>
+              )}
+            </>
+          )}
+
+          <H3 as="h2">Notes</H3>
+
+          <FieldInput
+            type="text"
+            name="subject"
+            label="Subject"
+            required="Enter a subject"
           />
 
           <FieldTextarea
-            name="policy_feedback_notes"
-            label="Business intelligence"
-            required="Enter business intelligence"
-            hint="Enter any comments the company made to you on areas such as issues impacting them or feedback on government policy. This information will be visible to other Data Hub users, the Business Intelligence Unit and may also be shared within DIT."
+            type="text"
+            name="notes"
+            label="Notes (optional)"
+            hint="Use this text box to record any details of the logistics of the interaction eg how meeting(s) came about and where or when they happened. These are for your records. Do not include comments about issues impacting the company or feedback on government policy. Include that information in the business intelligence section."
           />
 
-          <FieldHelp
-            helpSummary="Help with business intelligence"
-            helpText={
-              <>
-                Consider these questions when filling out this text box:
-                <p>What business intelligence did the company provide?</p>
-                <p>
-                  Why has the company raised this/these issue(s) and what are
-                  the impacts on the company, sector and wider economy?
-                </p>
-                <p>
-                  Did the company make any wider requests of DIT/HMG, including
-                  ministerial engagement or policy changes? If so, provide
-                  details.
-                </p>
-                Will the company be taking any further actions (eg investment
-                decisions or job creation/losses)? If so, provide details.
-              </>
-            }
-            footerUrl={helpUrl(4)}
-            footerUrlDescription="See more guidance"
-          />
-        </>
-      )}
-
-      {!values.id && values.theme !== THEMES.INVESTMENT && (
-        <>
           <FieldRadios
             inline={true}
-            name="were_countries_discussed"
-            legend="Were any countries discussed?"
-            required="Answer if any countries were discussed"
+            name="was_policy_feedback_provided"
+            legend="Did the contact provide business intelligence?"
             options={OPTIONS_YES_NO}
+            required="Answer if the contact provided business intelligence"
           />
-          {values.were_countries_discussed === OPTION_YES && (
+
+          {values.was_policy_feedback_provided === OPTION_YES && (
             <>
-              <FieldTypeahead
-                name={EXPORT_INTEREST_STATUS.EXPORTING_TO}
-                label="Countries currently exporting to"
-                hint="Add all that you discussed"
-                placeholder="-- Search countries --"
-                options={countries}
-                validate={[
-                  validateRequiredCountries,
-                  validatedDuplicatedCountries,
-                ]}
-                isMulti={true}
+              <FieldCheckboxes
+                name="policy_issue_types"
+                legend="Policy issue types"
+                options={policyIssueTypes}
+                required="Select at least one policy issue type"
               />
-              <FieldTypeahead
-                name={EXPORT_INTEREST_STATUS.FUTURE_INTEREST}
-                label="Future countries of interest"
-                hint="Add all that you discussed"
-                placeholder="-- Search countries --"
-                options={countries}
-                validate={[
-                  validateRequiredCountries,
-                  validatedDuplicatedCountries,
-                ]}
-                isMulti={true}
+
+              <FieldHelp
+                helpSummary="Help with policy issue types"
+                helpText="A policy type is the broad category/categories that the information fits into."
+                footerUrl={helpUrl(2)}
+                footerUrlDescription="See more guidance"
               />
+
               <FieldTypeahead
-                name={EXPORT_INTEREST_STATUS.NOT_INTERESTED}
-                label="Countries not interested in"
-                hint="Add all that you discussed"
-                placeholder="-- Search countries --"
-                options={countries}
-                validate={[
-                  validateRequiredCountries,
-                  validatedDuplicatedCountries,
-                ]}
                 isMulti={true}
+                name="policy_areas"
+                label="Policy area(s)"
+                placeholder="-- Select policy area --"
+                options={policyAreas}
+                required="Select at least one policy area"
               />
+
+              <FieldHelp
+                helpSummary="Help with policy area(s)"
+                helpText="A policy area is the specific area that the information fits into. Completing this enables the correct team(s) to find the information and input into their reports to support businesses and ministers effectively."
+                footerUrl={helpUrl(3)}
+                footerUrlDescription="See more guidance"
+              />
+
+              <FieldTextarea
+                name="policy_feedback_notes"
+                label="Business intelligence"
+                required="Enter business intelligence"
+                hint="Enter any comments the company made to you on areas such as issues impacting them or feedback on government policy. This information will be visible to other Data Hub users, the Business Intelligence Unit and may also be shared within DIT."
+              />
+
+              <FieldHelp
+                helpSummary="Help with business intelligence"
+                helpText={
+                  <>
+                    Consider these questions when filling out this text box:
+                    <p>What business intelligence did the company provide?</p>
+                    <p>
+                      Why has the company raised this/these issue(s) and what
+                      are the impacts on the company, sector and wider economy?
+                    </p>
+                    <p>
+                      Did the company make any wider requests of DIT/HMG,
+                      including ministerial engagement or policy changes? If so,
+                      provide details.
+                    </p>
+                    Will the company be taking any further actions (eg
+                    investment decisions or job creation/losses)? If so, provide
+                    details.
+                  </>
+                }
+                footerUrl={helpUrl(4)}
+                footerUrlDescription="See more guidance"
+              />
+            </>
+          )}
+
+          {!values.id && values.theme !== THEMES.INVESTMENT && (
+            <>
+              <FieldRadios
+                inline={true}
+                name="were_countries_discussed"
+                legend="Were any countries discussed?"
+                required="Answer if any countries were discussed"
+                options={OPTIONS_YES_NO}
+              />
+              {values.were_countries_discussed === OPTION_YES && (
+                <>
+                  <FieldTypeahead
+                    name={EXPORT_INTEREST_STATUS.EXPORTING_TO}
+                    label="Countries currently exporting to"
+                    hint="Add all that you discussed"
+                    placeholder="-- Search countries --"
+                    options={countries}
+                    validate={[
+                      validateRequiredCountries,
+                      validatedDuplicatedCountries,
+                    ]}
+                    isMulti={true}
+                  />
+                  <FieldTypeahead
+                    name={EXPORT_INTEREST_STATUS.FUTURE_INTEREST}
+                    label="Future countries of interest"
+                    hint="Add all that you discussed"
+                    placeholder="-- Search countries --"
+                    options={countries}
+                    validate={[
+                      validateRequiredCountries,
+                      validatedDuplicatedCountries,
+                    ]}
+                    isMulti={true}
+                  />
+                  <FieldTypeahead
+                    name={EXPORT_INTEREST_STATUS.NOT_INTERESTED}
+                    label="Countries not interested in"
+                    hint="Add all that you discussed"
+                    placeholder="-- Search countries --"
+                    options={countries}
+                    validate={[
+                      validateRequiredCountries,
+                      validatedDuplicatedCountries,
+                    ]}
+                    isMulti={true}
+                  />
+                </>
+              )}
             </>
           )}
         </>
       )}
-    </>
+    </Task.Status>
   )
 }
 
@@ -517,8 +532,26 @@ StepInteractionDetails.propTypes = {
 }
 
 export default connect((state) => {
-  const { activeEvents } = state[ID]
+  const {
+    activeEvents,
+    metaData: {
+      services,
+      serviceDeliveryStatuses,
+      relatedTradeAgreements,
+      policyAreas,
+      policyIssueTypes,
+      communicationChannels,
+      countries,
+    },
+  } = state[ID]
   return {
     activeEvents,
+    services,
+    serviceDeliveryStatuses,
+    relatedTradeAgreements,
+    policyAreas,
+    policyIssueTypes,
+    communicationChannels,
+    countries,
   }
 }, null)(StepInteractionDetails)

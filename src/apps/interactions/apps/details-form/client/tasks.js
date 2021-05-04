@@ -62,6 +62,18 @@ function transformServiceAnswers(values) {
     }, {})
 }
 
+const transformToValueLabel = ({ id, name }) => ({
+  value: id,
+  label: name,
+})
+
+const transformServiceToOption = (service) => ({
+  value: service.id,
+  label: service.name,
+  contexts: service.contexts,
+  interaction_questions: service.interaction_questions,
+})
+
 export function openContactForm({ values, currentStep, url }) {
   window.sessionStorage.setItem(
     STORE_ID,
@@ -166,3 +178,70 @@ export const fetchActiveEvents = () =>
     .get(urls.interactions.activeEventsData())
     .catch(catchApiError)
     .then(({ data }) => data)
+
+const fetchServiceDeliveryStatusMetaData = () =>
+  axios
+    .get('/api-proxy/v4/metadata/service-delivery-status')
+    .catch(catchApiError)
+    .then(({ data }) => ({ serviceDeliveryStatuses: data }))
+
+const fetchPolicyAreaMetaData = () =>
+  axios
+    .get('/api-proxy/v4/metadata/policy-area')
+    .catch(catchApiError)
+    .then(({ data }) => ({ policyAreas: data.map(transformToValueLabel) }))
+
+const fetchPolicyIssueTypesMetaData = () =>
+  axios
+    .get('/api-proxy/v4/metadata/policy-issue-type')
+    .catch(catchApiError)
+    .then(({ data }) => ({ policyIssueTypes: data.map(transformToValueLabel) }))
+
+const fetchCountriesMetaData = () =>
+  axios
+    .get('/api-proxy/v4/metadata/country')
+    .catch(catchApiError)
+    .then(({ data }) => ({ countries: data.map(transformToValueLabel) }))
+
+const fetchCommunicationChannelsMetaData = () =>
+  axios
+    .get('/api-proxy/v4/metadata/communication-channel')
+    .catch(catchApiError)
+    .then(({ data }) => ({
+      communicationChannels: data.map(transformToValueLabel),
+    }))
+
+const fetchServicesMetaData = () =>
+  axios
+    .get('/api-proxy/v4/metadata/service')
+    .catch(catchApiError)
+    .then(({ data }) => ({
+      services: data.map((service) => transformServiceToOption(service)),
+    }))
+
+const fetchTradeAgreementMetaData = () =>
+  axios
+    .get('/api-proxy/v4/metadata/trade-agreement')
+    .catch(catchApiError)
+    .then(({ data }) => ({
+      relatedTradeAgreements: data.map(transformToValueLabel),
+    }))
+
+export const fetchMetaData = () =>
+  Promise.all([
+    fetchServicesMetaData(),
+    fetchServiceDeliveryStatusMetaData(),
+    fetchTradeAgreementMetaData(),
+    fetchPolicyAreaMetaData(),
+    fetchPolicyIssueTypesMetaData(),
+    fetchCommunicationChannelsMetaData(),
+    fetchCountriesMetaData(),
+  ]).then((data) =>
+    data.reduce(
+      (acc, cur) => ({
+        ...acc,
+        ...cur,
+      }),
+      {}
+    )
+  )
