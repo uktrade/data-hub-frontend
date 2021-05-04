@@ -2,41 +2,54 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import pluralize from 'pluralize'
-import Button from '@govuk-react/button'
-import {
-  BODY_SIZES,
-  HEADING_SIZES,
-  SPACING,
-  FONT_WEIGHTS,
-} from '@govuk-react/constants'
+import { SPACING, FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
+import { BLUE } from 'govuk-colours'
+import { rgba } from '../../utils/colors'
 
-import PieChart from 'PieChart'
+import PieChart from '../PieChart'
 import DataTable from '../../../client/components/DataTable'
+
+const StyledContainer = styled('div')`
+  padding-top: ${SPACING.SCALE_1};
+`
 
 const StyledHeader = styled('h3')`
   font-weight: ${FONT_WEIGHTS.bold};
 `
 
-const TotalHeader = styled('h3')`
-  font-weight: ${FONT_WEIGHTS.bold};
-  display: table;
-  line-height: 40px;
-  margin-bottom: ${SPACING.SCALE_5};
+const StyledButton = styled('button')`
+  border: 0;
+  padding: 0;
+  color: ${BLUE};
+  background: none;
+  text-decoration: underline;
+  font-size: ${FONT_SIZE.SIZE_16};
 `
 
-const StyledTotal = styled('span')`
-  font-size: ${HEADING_SIZES.XLARGE}px;
-  display: table-cell;
-  padding: 0 ${SPACING.SCALE_1} 0 0;
-`
-const StyledTotalSubject = styled('span')`
-  vertical-align: top;
-  font-size: ${BODY_SIZES.SMALL}px;
-  line-height: 16px;
+const StyledProjectContainer = styled('div')`
+  width: 154px;
+  margin-top: 18px;
+  box-sizing: border-box;
+  background-color: ${rgba(BLUE, 0.25)};
+  padding: ${SPACING.SCALE_2};
+  font-size: ${FONT_SIZE.SIZE_16};
 `
 
-const StyledButton = styled(Button)`
-  margin-bottom: ${SPACING.SCALE_3};
+const StyledDiv = styled('div')`
+  text-align: center;
+  padding: 2px;
+  font-size: ${FONT_SIZE.SIZE_14};
+`
+
+const StyledYear = styled(StyledDiv)``
+
+const StyledTotal = styled(StyledDiv)`
+  font-weight: bold;
+  font-size: ${FONT_SIZE.SIZE_24};
+`
+
+const StyledSubject = styled(StyledDiv)`
+  font-weight: bold;
 `
 
 const DataSummary = ({
@@ -46,6 +59,7 @@ const DataSummary = ({
   onToggleAccessible = () => {},
   headers,
   data = [],
+  yearText,
   children,
 }) => {
   const total = data.reduce((prev, curr) => prev + curr.value, 0)
@@ -56,34 +70,40 @@ const DataSummary = ({
   }))
 
   return (
-    <>
-      <StyledHeader>{title}</StyledHeader>
+    <StyledContainer>
+      {title && <StyledHeader>{title}</StyledHeader>}
       {children}
-      <TotalHeader>
-        <StyledTotal>{total}</StyledTotal>
-        <StyledTotalSubject> {pluralize(subject, total)}</StyledTotalSubject>
-      </TotalHeader>
       {total > 0 && (
-        <StyledButton onClick={onToggleAccessible}>
-          {accessible ? 'Change to chart view' : 'Change to accessible view'}
+        <StyledButton onClick={onToggleAccessible} data-test="toggle-views">
+          {accessible
+            ? 'Change to chart view'
+            : 'Change to table and accessible view'}
         </StyledButton>
       )}
       {accessible || total === 0 ? (
-        <DataTable data={data} headers={headers} total={total} />
+        <>
+          <StyledProjectContainer data-test="investment-project-total">
+            <StyledYear>{yearText} year</StyledYear>
+            <StyledTotal>{total}</StyledTotal>
+            <StyledSubject>{pluralize(subject, total)}</StyledSubject>
+          </StyledProjectContainer>
+          <DataTable data={data} headers={headers} />
+        </>
       ) : (
-        <PieChart data={chartData} height={450} />
+        <PieChart data={chartData} height={420} />
       )}
-    </>
+    </StyledContainer>
   )
 }
 
 DataSummary.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   accessible: PropTypes.bool,
   onToggleAccessible: PropTypes.func,
   subject: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   headers: PropTypes.array.isRequired,
+  yearText: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
