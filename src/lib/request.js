@@ -31,7 +31,11 @@ const request = async (props) => {
     if (response) {
       throw new StatusCodeError(response.data, response.status)
     } else {
-      throw Error(error.toJSON().message)
+      if (error.toJSON) {
+        throw Error(error.toJSON().message)
+      } else {
+        throw Error(error)
+      }
     }
   }
 }
