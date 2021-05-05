@@ -9,22 +9,6 @@ function hasValue(value) {
   return !isNil(value)
 }
 
-function stripScript(text) {
-  const SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi
-  while (SCRIPT_REGEX.test(text)) {
-    logger.warn('Found script tag in response')
-    text = text.replace(SCRIPT_REGEX, '')
-  }
-  return text
-}
-
-function stripScripts(key, value) {
-  if (isString(value)) {
-    return stripScript(value)
-  }
-  return value
-}
-
 function parseConfig(req, opts) {
   const { token } = req.session
   const { responseType = 'json' } = opts
@@ -72,14 +56,11 @@ function logRequest(opts) {
   })
 }
 
-// Accepts options as keys on an object or encoded as a url
-// Responses are parsed to remove any embedded XSS attempts with
-// script tags
+// Accepts options as keys on an object or encoded as a url and transforms data
 async function authorisedRequest(req, opts) {
   const requestConfig = parseConfig(req, opts)
 
   logRequest(requestConfig)
-  requestConfig.jsonReviver = stripScripts
 
   const logResponse = createResponseLogger(requestConfig)
   try {
@@ -93,9 +74,6 @@ async function authorisedRequest(req, opts) {
 }
 
 // Accepts options as keys on an object or encoded as a url
-// Responses are not parsed for XSS attacks
-// See request-promise #90 does not work with streams
-// https://github.com/request/request-promise/issues/90
 function authorisedRawRequest(req, opts) {
   const requestConfig = parseConfig(req, opts)
   logRequest(requestConfig)
