@@ -373,6 +373,7 @@ describe('Interaction theme', () => {
       cy.contains('label', 'Export').click()
       cy.contains('label', 'A standard interaction').click()
       cy.contains('button', 'Continue').click()
+      cy.wait(100)
     })
 
     it('should render all form fields', () => {
