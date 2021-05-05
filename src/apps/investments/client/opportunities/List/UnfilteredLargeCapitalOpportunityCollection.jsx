@@ -9,10 +9,10 @@ import {
 } from '../../../../../client/actions'
 
 const LargeCapitalOpportunityCollection = ({
-  page,
   count,
   results,
   onPageClick,
+  activePage,
   isComplete,
 }) => (
   <CollectionList
@@ -21,7 +21,7 @@ const LargeCapitalOpportunityCollection = ({
       id: ID,
       progressMessage: 'loading opportunities...',
       startOnRender: {
-        payload: { page },
+        payload: { activePage },
         onSuccessDispatch: INVESTMENTS__OPPORTUNITIES_LOADED,
       },
     }}
@@ -29,7 +29,7 @@ const LargeCapitalOpportunityCollection = ({
     items={results}
     count={count}
     onPageClick={onPageClick}
-    activePage={page}
+    activePage={activePage}
     isComplete={isComplete}
     entityName="opportunity"
     entityNamePlural="opportunities"
