@@ -472,6 +472,7 @@ describe('Service delivery theme', () => {
       cy.contains('label', 'Export').click()
       cy.contains('label', 'A service that you have provided').click()
       cy.contains('button', 'Continue').click()
+      cy.wait(100)
     })
 
     it('should render all form fields', () => {
@@ -564,6 +565,7 @@ describe('Investment theme', () => {
 
       cy.contains('label', 'Investment').click()
       cy.contains('button', 'Continue').click()
+      cy.wait(100)
     })
 
     it('should render all form fields', () => {
@@ -635,6 +637,7 @@ describe('Trade Agreement theme', () => {
       cy.visit(urls.companies.interactions.create(company.id))
       cy.contains('label', 'Trade agreement').click()
       cy.contains('button', 'Continue').click()
+      cy.wait(100)
     })
     it('should render all form fields', () => {
       assertFormFields(cy.get('#interaction-details-form form div'), [
@@ -830,6 +833,7 @@ describe('Adding an interaction from a referral', () => {
     cy.contains('Export').click()
     cy.contains('A standard interaction').click()
     cy.contains('Continue').click()
+    cy.wait(100)
 
     submitForm(KINDS.INTERACTION, THEMES.EXPORT, {
       service: 'A Specific DIT Export Service or Funding',
