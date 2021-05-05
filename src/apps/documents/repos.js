@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 const config = require('../../config')
-const request = require('request')
+const request = require('../../lib/request')
 const fs = require('fs')
 
 const { authorisedRequest } = require('../../lib/authorised-request')
@@ -21,21 +21,19 @@ function buildApiUrl(url, fields) {
 }
 
 function createRequest(req, urls, file) {
-  request(
-    {
-      url: urls.s3Url,
-      method: 'PUT',
-      body: fs.readFileSync(file.path),
+  request({
+    url: urls.s3Url,
+    method: 'PUT',
+    data: fs.readFileSync(file.path),
+    headers: {
+      'Content-Type': 'application/octet-stream',
     },
-    (error, response) => {
-      if (!error && response.statusCode === 200) {
-        authorisedRequest(req, {
-          url: urls.api,
-          method: 'POST',
-        })
-      }
-    }
-  )
+  }).then(() => {
+    authorisedRequest(req, {
+      url: urls.api,
+      method: 'POST',
+    })
+  })
 }
 
 function getDocumentUploadS3Url(req, { file, url, fields, textFields = {} }) {
