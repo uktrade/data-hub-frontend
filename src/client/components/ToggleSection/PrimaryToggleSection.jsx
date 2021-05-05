@@ -25,7 +25,8 @@ const StyledContent = styled('div')`
   ${({ isOpen }) => `
     display: ${isOpen ? 'block' : 'none'};
     padding: 0 ${SPACING.SCALE_3};
-    margin: ${SPACING.SCALE_3} 0;
+    margin-top: ${SPACING.SCALE_1};
+    margin-bottom: ${SPACING.SCALE_3};
   `}
 `
 
@@ -40,7 +41,8 @@ const StyledButton = styled('button')`
     color: ${BLUE};
     cursor: pointer;
     font-weight: ${FONT_WEIGHTS.regular};
-    padding: 13px 0;
+    padding-top: ${SPACING.SCALE_2};
+    padding-bottom: ${SPACING.SCALE_2};
 
     &::before {
       content: '';
