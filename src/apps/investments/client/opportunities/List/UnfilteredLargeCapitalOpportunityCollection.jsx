@@ -14,6 +14,7 @@ const LargeCapitalOpportunityCollection = ({
   onPageClick,
   activePage,
   isComplete,
+  optionMetadata,
 }) => (
   <CollectionList
     taskProps={{
@@ -35,6 +36,7 @@ const LargeCapitalOpportunityCollection = ({
     entityNamePlural="opportunities"
     addItemUrl="/investments/opportunities/create"
     baseDownloadLink="/investments/opportunities/export"
+    sortOptions={optionMetadata.sortOptions}
   />
 )
 
