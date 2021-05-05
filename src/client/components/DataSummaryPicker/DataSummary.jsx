@@ -21,6 +21,7 @@ const StyledButton = styled('button')`
   border: 0;
   padding: 0;
   color: ${BLUE};
+  cursor: pointer;
   background: none;
   text-decoration: underline;
   font-size: ${FONT_SIZE.SIZE_16};
