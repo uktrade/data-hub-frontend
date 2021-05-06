@@ -47,6 +47,7 @@ storiesOf('ToggleSection', module)
         label="Toggle me"
         id="toggle.two"
         isOpen={true}
+        major={true}
         variant={VARIANTS.PRIMARY}
       >
         <FormStateful>
