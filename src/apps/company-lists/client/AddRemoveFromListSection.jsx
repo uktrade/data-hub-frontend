@@ -8,6 +8,7 @@ import PropTypes from 'prop-types'
 const AddRemoveFromListSection = ({
   list,
   companyId,
+  companyName,
   token,
   createNewListUrl,
   cancelLinkUrl,
@@ -47,7 +48,7 @@ const AddRemoveFromListSection = ({
       )}
       <AddRemoveFromListForm
         list={list}
-        companyId={companyId}
+        companyName={companyName}
         onSubmitHandler={onSubmit}
         createNewListUrl={createNewListUrl}
         cancelLinkUrl={cancelLinkUrl}
@@ -58,6 +59,7 @@ const AddRemoveFromListSection = ({
 
 AddRemoveFromListSection.propTypes = {
   list: PropTypes.object.isRequired,
+  ComapnyName: PropTypes.string.isRequired,
   companyId: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
   createNewListUrl: PropTypes.string.isRequired,
