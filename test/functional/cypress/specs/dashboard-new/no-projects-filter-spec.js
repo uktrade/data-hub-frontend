@@ -10,27 +10,26 @@ describe('Dashboard - no investment projects', () => {
     cy.resetUser()
   })
 
-  beforeEach(() => {
-    cy.get('[data-test="tabpanel"]').find('select').eq(0).as('stageSelect')
-    cy.intercept('POST', '/api-proxy/v3/search/investment_project', (req) => {
-      req.reply(
-        req.body.stage === INVESTMENT_PROJECT_STAGES.verifyWin.id
-          ? { body: { count: 0, results: [] } }
-          : {
-              body: {
-                count: 10,
-                results: investmentProjectListFaker(10),
-              },
-            }
-      )
-    }).as('apiRequest')
-    cy.visit('/myinvestmentprojects')
-    cy.wait('@apiRequest')
-
-    cy.get('[data-test="tabpanel"]').find('select').eq(0).as('stageSelect')
-  })
-
   context('When a filter is applied and there are zero projects', () => {
+    before(() => {
+      cy.intercept('POST', '/api-proxy/v3/search/investment_project', (req) => {
+        req.reply(
+          req.body.stage === INVESTMENT_PROJECT_STAGES.verifyWin.id
+            ? { body: { count: 0, results: [] } }
+            : {
+                body: {
+                  count: 10,
+                  results: investmentProjectListFaker(10),
+                },
+              }
+        )
+      }).as('apiRequest')
+      cy.visit('/')
+      cy.wait('@apiRequest')
+
+      cy.get('[data-test="tabpanel"]').find('select').eq(0).as('stageSelect')
+    })
+
     it('should display "No investment projects"', () => {
       cy.get('@stageSelect').select('Verify win')
       cy.wait('@apiRequest')

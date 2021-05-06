@@ -34,6 +34,7 @@ describe('Dashboard items - estimated land date', () => {
   before(() => {
     cy.setUserFeatures(['personalised-dashboard'])
     cy.visit('/')
+  })
 
   beforeEach(() => {
     cy.intercept('POST', '/api-proxy/v3/search/investment_project', {

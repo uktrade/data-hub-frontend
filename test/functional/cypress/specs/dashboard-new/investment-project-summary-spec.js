@@ -3,7 +3,7 @@ import {
   generateFinancialYearLabel,
 } from '../../../../../src/client/utils/date-utils'
 
-import { investmentProjectStages } from '../../fakers/constants'
+import { INVESTMENT_PROJECT_STAGES_LIST } from '../../fakers/constants'
 import { investmentProjectSummaryFaker } from '../../fakers/investment-project-summary'
 
 // Adviser id is currently set in the node layer, so we have to set to the
@@ -12,16 +12,14 @@ const MY_ADVISER_ID = '7d19d407-9aec-4d06-b190-d3f404627f21'
 
 describe('Investment projects summary', () => {
   const myInvestmentProjectSummary = investmentProjectSummaryFaker()
+  const currentAnnualTotals =
+    myInvestmentProjectSummary.annual_summaries[1].totals
+  const projectCount = Object.entries(currentAnnualTotals)
+    .map(([, stage]) => stage.value)
+    .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
 
   before(() => {
     cy.setUserFeatures(['personalised-dashboard'])
-  })
-
-  after(() => {
-    cy.resetUser()
-  })
-
-  beforeEach(() => {
     cy.intercept(
       'GET',
       `/api-proxy/v4/adviser/${MY_ADVISER_ID}/investment-summary`,
@@ -29,6 +27,13 @@ describe('Investment projects summary', () => {
     ).as('apiRequest')
     cy.visit('/')
     cy.wait('@apiRequest')
+  })
+
+  after(() => {
+    cy.resetUser()
+  })
+
+  beforeEach(() => {
     cy.get('[data-test="investment-project-summary-section"]').as(
       'investmentProjectsSummarySection'
     )
@@ -99,18 +104,18 @@ describe('Investment projects summary', () => {
       cy.get('[data-test="pie-chart"]').find('svg').should('exist')
     })
 
-    it('should display 7 projects', () => {
+    it('should display the correct project count', () => {
       cy.get('[data-test="pie-chart"]')
-        .should('contain', '7')
+        .should('contain', projectCount)
         .should('contain', 'Projects')
     })
 
-    it('should display a chart legend of all five stages', () => {
+    it('should display a chart legend of all the stages', () => {
       cy.get('[data-test="pie-chart"]')
         .should('contain', 'Prospect')
         .should('contain', 'Assign PM')
         .should('contain', 'Active')
-        .should('contain', 'Verify Win')
+        .should('contain', 'Verify win')
         .should('contain', 'Won')
     })
   })
@@ -130,18 +135,18 @@ describe('Investment projects summary', () => {
     it('should display project information within a blue box', () => {
       cy.get('[data-test="investment-project-total"]')
         .should('contain', 'Current year')
-        .should('contain', '7')
+        .should('contain', projectCount)
         .should('contain', 'Projects')
     })
 
-    it('should display a table with 6 rows and two columns', () => {
+    it('should display a table with rows for each stage', () => {
       const table = [
         ['Stage', 'Projects'],
-        ['Prospect', 3],
-        ['Assign PM', 0],
-        ['Active', 0],
-        ['Verify Win', 1],
-        ['Won', 3],
+        ['Prospect', currentAnnualTotals.prospect.value],
+        ['Assign PM', currentAnnualTotals.assign_pm.value],
+        ['Active', currentAnnualTotals.active.value],
+        ['Verify win', currentAnnualTotals.verify_win.value],
+        ['Won', currentAnnualTotals.won.value],
       ]
       cy.get('[data-test="investment-project-table"]')
         .find('tr')
@@ -154,13 +159,13 @@ describe('Investment projects summary', () => {
         })
     })
 
-    it('should have five hyperlinks, one for each stage', () => {
-      const IDS = investmentProjectStages.map((stage) => stage.id)
+    it('should have hyperlinks for each stage', () => {
+      const IDS = INVESTMENT_PROJECT_STAGES_LIST.map((stage) => stage.id)
       const TITLES = [
         'View Prospect',
         'View Assign PM',
         'View Active',
-        'View Verify Win',
+        'View Verify win',
         'View Won',
       ]
       cy.get('[data-test="investment-project-table"]')
