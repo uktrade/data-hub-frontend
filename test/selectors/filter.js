@@ -3,7 +3,7 @@ module.exports = {
   statusActive: '[for="field-archived-1"]',
   statusInactive: '[for="field-archived-2"]',
   ukRegion: '#group-field-uk_region',
-  usState: '#group-field-us_state',
+  usState: '#group-field-area',
   ukPostcode: '#field-uk_postcode',
   completedOnAfterTextInput: '#field-completed_on_after',
   country: '#group-field-country',
