@@ -51,7 +51,7 @@ export default class Interaction extends React.PureComponent {
           summary={`View ${transformed.typeText} details`}
           link={{
             url: transformed.url,
-            text: `Go to the ${transformed.typeText} detail page`,
+            text: `You can view more on the ${transformed.typeText} detail page`,
           }}
           showDetails={showDetails}
         >
