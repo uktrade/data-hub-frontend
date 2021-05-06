@@ -59,7 +59,7 @@ const AddRemoveFromListSection = ({
 
 AddRemoveFromListSection.propTypes = {
   list: PropTypes.object.isRequired,
-  ComapnyName: PropTypes.string.isRequired,
+  CompanyName: PropTypes.string.isRequired,
   companyId: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
   createNewListUrl: PropTypes.string.isRequired,
