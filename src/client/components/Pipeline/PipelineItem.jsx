@@ -107,10 +107,6 @@ const StyledLink = styled(Link)`
   text-decoration-line: none;
 `
 
-const StyledUnderlinedLink = styled(Link)`
-  margin-left: ${SPACING.SCALE_2};
-`
-
 const StyledLinkWrapper = styled('div')`
   a + a {
     margin-left: ${SPACING.SCALE_5};
@@ -203,9 +199,14 @@ const PipelineItemMeta = ({
       <Wrapper>
         {href ? <StyledLink href={href}>{value}</StyledLink> : value}
         {!archived && showArchived && (
-          <StyledUnderlinedLink href={urls.pipeline.archive(id)}>
-            Archive this project
-          </StyledUnderlinedLink>
+          <>
+            {' '}
+            You can{' '}
+            <Link href={urls.pipeline.archive(id)}>
+              archive this project
+            </Link>{' '}
+            if it’s no longer active
+          </>
         )}
       </Wrapper>
     </StyledListItem>
