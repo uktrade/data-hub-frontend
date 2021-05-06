@@ -55,6 +55,7 @@ async function renderAddRemoveForm(req, res, next) {
         props: {
           list: listsCompanyIsIn,
           companyId: company.id,
+          companyName: company.name,
           token: csrfToken,
           createNewListUrl: `/companies/${company.id}/lists/create`,
           cancelLinkUrl,

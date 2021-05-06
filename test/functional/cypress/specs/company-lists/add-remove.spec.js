@@ -29,7 +29,7 @@ describe('Adding and removing a company to a list', () => {
     it('should render options for list A', () => {
       cy.get(listSelectors.listA.legend).should(
         'have.text',
-        'On the "List A" list'
+        'Do you want to add Lambda plc to the List A list?'
       )
       cy.get(listSelectors.listA.radios).should('have.length', 2)
       cy.get(listSelectors.listA.labelYes).should('have.text', 'Yes')
@@ -41,7 +41,7 @@ describe('Adding and removing a company to a list', () => {
     it('should render options for list B', () => {
       cy.get(listSelectors.listB.legend).should(
         'have.text',
-        'On the "List B" list'
+        'Do you want to add Lambda plc to the List B list?'
       )
       cy.get(listSelectors.listB.radios).should('have.length', 2)
       cy.get(listSelectors.listB.labelYes).should('have.text', 'Yes')
@@ -53,7 +53,7 @@ describe('Adding and removing a company to a list', () => {
     it('should render options for list B', () => {
       cy.get(listSelectors.listC.legend).should(
         'have.text',
-        'On the "List C" list'
+        'Do you want to add Lambda plc to the List C list?'
       )
       cy.get(listSelectors.listC.radios).should('have.length', 2)
       cy.get(listSelectors.listC.labelYes).should('have.text', 'Yes')
