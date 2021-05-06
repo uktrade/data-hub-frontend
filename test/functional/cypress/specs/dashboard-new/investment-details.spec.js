@@ -54,8 +54,7 @@ describe('Dashboard - Investment details', () => {
     cy.get('[data-test="investment-details"]').eq(2).as('thirdProjectDetails')
     cy.get('@firstProjectDetails').find('dt').as('firstProjectTerms')
     cy.get('@firstProjectDetails').find('dd').as('firstProjectDescriptions')
-    cy.get('@secondProjectDetails').find('li').as('secondProjectListItems')
-    cy.get('@thirdProjectDetails').find('li').as('thirdProjectListItems')
+    cy.get('@secondProjectDetails').find('dt').as('secondProjectTerms')
   })
 
   it('should have a details section for each project', () => {
@@ -73,7 +72,6 @@ describe('Dashboard - Investment details', () => {
     cy.get('@firstProjectTerms').eq(0).should('have.text', 'Investor:')
     cy.get('@firstProjectDescriptions')
       .eq(0)
-      .children()
       .should('have.text', investmentProject.investor_company.name)
       .find('a')
       .should(
@@ -113,7 +111,6 @@ describe('Dashboard - Investment details', () => {
       .should('have.text', 'Interaction subject:')
     cy.get('@firstProjectDescriptions')
       .eq(4)
-      .children()
       .should('have.text', investmentProject.latest_interaction.subject)
       .find('a')
       .should(
@@ -125,10 +122,7 @@ describe('Dashboard - Investment details', () => {
 
   context("when a project doesn't have a country of origin", () => {
     it('should not contain a country of origin', () => {
-      cy.get('@secondProjectListItems').should(
-        'not.contain',
-        'Country of origin'
-      )
+      cy.get('@secondProjectTerms').should('not.contain', 'Country of origin')
     })
   })
 
