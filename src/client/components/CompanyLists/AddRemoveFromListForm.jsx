@@ -16,6 +16,7 @@ const AddRemoveFromListForm = ({
   onSubmitHandler,
   createNewListUrl,
   cancelLinkUrl,
+  companyName,
 }) => {
   const { companyId, companyLists } = list
   const initState = companyLists.reduce((obj, { listId, isAdded }) => {
@@ -28,7 +29,7 @@ const AddRemoveFromListForm = ({
         <div key={listId}>
           <FieldRadios
             name={listId}
-            legend={`On the "${listName}" list`}
+            legend={`Do you want to add ${companyName} to the ${listName} list?`}
             options={[
               {
                 label: 'Yes',
