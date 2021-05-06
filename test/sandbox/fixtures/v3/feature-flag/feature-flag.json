@@ -68,7 +68,7 @@
     "is_active": true
   },
   {
-    "code": "stateFilter",
+    "code": "state-filter",
     "is_active": true
   }
 ]
