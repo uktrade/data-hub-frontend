@@ -35,7 +35,7 @@ async function renderCompanyList(req, res, next) {
       sectorOptions,
     })
 
-    if (!res.locals.features.stateFilter) {
+    if (!res.locals.features['state-filter']) {
       filtersFields = filtersFields.filter(
         (macroField) => macroField.label !== 'US state'
       )
