@@ -11,6 +11,7 @@ import {
 const LargeCapitalOpportunityCollection = ({
   count,
   results,
+  payload,
   onPageClick,
   activePage,
   isComplete,
@@ -22,7 +23,7 @@ const LargeCapitalOpportunityCollection = ({
       id: ID,
       progressMessage: 'loading opportunities...',
       startOnRender: {
-        payload: { activePage },
+        payload: { payload, activePage },
         onSuccessDispatch: INVESTMENTS__OPPORTUNITIES_LOADED,
       },
     }}
