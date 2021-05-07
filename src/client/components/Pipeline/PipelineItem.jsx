@@ -113,6 +113,10 @@ const StyledLinkWrapper = styled('div')`
   }
 `
 
+const ArchiveMessage = styled('div')`
+  margin-top: 10px;
+`
+
 function buildMetaList({
   company,
   potential_value,
@@ -198,17 +202,14 @@ const PipelineItemMeta = ({
       <StyledLabel>{label}</StyledLabel>
       <Wrapper>
         {href ? <StyledLink href={href}>{value}</StyledLink> : value}
-        {!archived && showArchived && (
-          <>
-            {' '}
-            You can{' '}
-            <Link href={urls.pipeline.archive(id)}>
-              archive this project
-            </Link>{' '}
-            if it’s no longer active
-          </>
-        )}
       </Wrapper>
+      {!archived && showArchived && (
+        <ArchiveMessage>
+          You can{' '}
+          <Link href={urls.pipeline.archive(id)}>archive this project</Link> if
+          it’s no longer active
+        </ArchiveMessage>
+      )}
     </StyledListItem>
   )
 }
