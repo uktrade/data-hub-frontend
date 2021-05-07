@@ -162,8 +162,8 @@ const InvestmentListItem = ({
         <ListItemHeaderTagContainer>
           <Tag
             colour="grey"
-            data-test="project-status-tag"
-            aria-label="project status"
+            data-test="project-stage-tag"
+            aria-label="project stage"
           >
             {stage.name}
           </Tag>

@@ -84,37 +84,35 @@ const PersonalisedDashboard = ({
         {() => (
           <GridRow data-test="dashboard">
             {hasInvestmentProjects && (
-              <>
-                <GridCol setWidth="one-third">
-                  <Aside>
-                    <ToggleSection
-                      label="Reminders"
-                      id="investment-reminders-section"
-                      badge={
-                        !!remindersCount && (
-                          <NotificationBadge label={`${remindersCount}`} />
-                        )
-                      }
-                      major={true}
-                      isOpen={true}
-                      variant={VARIANTS.PRIMARY}
-                      data-test="investment-reminders-section"
-                    >
-                      <InvestmentReminders adviser={adviser} />
-                    </ToggleSection>
+              <GridCol setWidth="one-third">
+                <Aside>
+                  <ToggleSection
+                    label="Reminders"
+                    id="investment-reminders-section"
+                    badge={
+                      !!remindersCount && (
+                        <NotificationBadge label={`${remindersCount}`} />
+                      )
+                    }
+                    major={true}
+                    isOpen={true}
+                    variant={VARIANTS.PRIMARY}
+                    data-test="investment-reminders-section"
+                  >
+                    <InvestmentReminders adviser={adviser} />
+                  </ToggleSection>
 
-                    <ToggleSection
-                      label="Investment project summary"
-                      id="investment-project-summary-section"
-                      isOpen={true}
-                      variant={VARIANTS.PRIMARY}
-                      data-test="investment-project-summary-section"
-                    >
-                      <InvestmentProjectSummary adviser={adviser} />
-                    </ToggleSection>
-                  </Aside>
-                </GridCol>
-              </>
+                  <ToggleSection
+                    label="Investment project summary"
+                    id="investment-project-summary-section"
+                    isOpen={true}
+                    variant={VARIANTS.PRIMARY}
+                    data-test="investment-project-summary-section"
+                  >
+                    <InvestmentProjectSummary adviser={adviser} />
+                  </ToggleSection>
+                </Aside>
+              </GridCol>
             )}
             <GridCol setWidth={hasInvestmentProjects ? 'two-thirds' : 'full'}>
               <Main>

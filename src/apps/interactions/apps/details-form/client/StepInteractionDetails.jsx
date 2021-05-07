@@ -202,7 +202,11 @@ const StepInteractionDetails = ({
         intelligence section.
         <br />
         <br />
-        <NewWindowLink href={helpUrl(1)}>See more guidance</NewWindowLink>
+        Read more{' '}
+        <NewWindowLink href={helpUrl(1)}>
+          information and guidance
+        </NewWindowLink>{' '}
+        on this section.
       </InsetText>
 
       <FieldSelect

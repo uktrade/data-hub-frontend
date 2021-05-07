@@ -3,7 +3,6 @@ import { throttle } from 'lodash'
 import axios from 'axios'
 import styled from 'styled-components'
 import { H2, Button, Link } from 'govuk-react'
-import { WHITE, LIGHT_BLUE_50 } from 'govuk-colours'
 import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
 
 import { contacts } from '../../../../../../lib/urls'
@@ -18,16 +17,9 @@ import {
 
 import { useFormContext } from '../../../../../../client/components/Form/hooks'
 
-const StyledPanel = styled(Panel)`
-  a:link,
-  a:visited {
-    color: ${WHITE};
-  }
-  a:hover {
-    color: ${LIGHT_BLUE_50};
-  }
-  margin-bottom: ${SPACING.SCALE_4};
-`
+const StyledPanel = styled(Panel)({
+  marginBottom: SPACING.SCALE_4,
+})
 
 const StepReferralDetails = ({
   cancelUrl,

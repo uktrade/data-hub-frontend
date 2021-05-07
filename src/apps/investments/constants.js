@@ -77,7 +77,7 @@ const INVESTMENT_TAB_ITEMS = [
   },
   {
     path: 'opportunities',
-    label: 'UK Opportunities',
+    label: 'UK opportunities',
   },
 ]
 
