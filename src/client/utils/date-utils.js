@@ -1,5 +1,9 @@
 import moment from 'moment'
-import { endOfToday, differenceInCalendarDays } from 'date-fns'
+import {
+  endOfToday,
+  format as formatFNS,
+  differenceInCalendarDays,
+} from 'date-fns'
 
 const DATE_FORMAT_LONG = 'YYYY-MM-DD'
 const DATE_FORMAT_SHORT = 'YYYY-MM'
@@ -21,6 +25,10 @@ const normaliseAndFormatDate = (year, month, day) => {
 
 export const format = (dateStr) => {
   return moment(dateStr).format('DD MMM YYYY')
+}
+
+export const today = () => {
+  return formatFNS(new Date(), 'dd MMM yyyy')
 }
 
 export const formatWithTime = (dateTimeStr) => {
