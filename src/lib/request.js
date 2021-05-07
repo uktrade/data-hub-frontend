@@ -7,6 +7,7 @@ class StatusCodeError extends Error {
   constructor(message, statusCode) {
     super(message)
 
+    this.message = `${statusCode} - ${JSON.stringify(message)}`
     this.error = message
     this.statusCode = statusCode
 
