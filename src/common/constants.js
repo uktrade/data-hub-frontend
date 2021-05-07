@@ -12,6 +12,7 @@ const DATE_TIME_MEDIUM_FORMAT = 'd MMM yyyy, h:mmaaa'
 const VARIANTS = {
   PRIMARY: 'primary',
   SECONDARY: 'secondary,',
+  TERTIARY: 'tertiary',
 }
 
 module.exports = {
