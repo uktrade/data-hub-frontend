@@ -191,6 +191,7 @@ const PipelineItemMeta = ({
   value,
   href,
   subtle,
+  name,
   id,
   archived,
   showArchived,
@@ -206,8 +207,13 @@ const PipelineItemMeta = ({
       {!archived && showArchived && (
         <ArchiveMessage>
           You can{' '}
-          <Link href={urls.pipeline.archive(id)}>archive this project</Link> if
-          it’s no longer active
+          <Link
+            href={urls.pipeline.archive(id)}
+            aria-label={`Archive the "${name}" project`}
+          >
+            archive this project
+          </Link>{' '}
+          if it’s no longer active
         </ArchiveMessage>
       )}
     </StyledListItem>
@@ -244,6 +250,7 @@ const PipelineItem = ({
               ({ label, value, href, subtle, showArchived }) => (
                 <PipelineItemMeta
                   key={label}
+                  name={name}
                   label={label}
                   value={value}
                   href={href}
