@@ -193,7 +193,7 @@
     "chromedriver": "^90.0.0",
     "cypress": "^6.8.0",
     "cypress-image-diff-js": "1.10.0",
-    "eslint": "^7.22.0",
+    "eslint": "^7.26.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
