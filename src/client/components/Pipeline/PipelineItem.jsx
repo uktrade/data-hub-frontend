@@ -107,14 +107,14 @@ const StyledLink = styled(Link)`
   text-decoration-line: none;
 `
 
-const StyledUnderlinedLink = styled(Link)`
-  margin-left: ${SPACING.SCALE_2};
-`
-
 const StyledLinkWrapper = styled('div')`
   a + a {
     margin-left: ${SPACING.SCALE_5};
   }
+`
+
+const ArchiveMessage = styled('div')`
+  margin-top: 10px;
 `
 
 function buildMetaList({
@@ -191,6 +191,7 @@ const PipelineItemMeta = ({
   value,
   href,
   subtle,
+  name,
   id,
   archived,
   showArchived,
@@ -202,12 +203,19 @@ const PipelineItemMeta = ({
       <StyledLabel>{label}</StyledLabel>
       <Wrapper>
         {href ? <StyledLink href={href}>{value}</StyledLink> : value}
-        {!archived && showArchived && (
-          <StyledUnderlinedLink href={urls.pipeline.archive(id)}>
-            Archive this project
-          </StyledUnderlinedLink>
-        )}
       </Wrapper>
+      {!archived && showArchived && (
+        <ArchiveMessage>
+          You can{' '}
+          <Link
+            href={urls.pipeline.archive(id)}
+            aria-label={`Archive the "${name}" project`}
+          >
+            archive this project
+          </Link>{' '}
+          if it’s no longer active
+        </ArchiveMessage>
+      )}
     </StyledListItem>
   )
 }
@@ -242,6 +250,7 @@ const PipelineItem = ({
               ({ label, value, href, subtle, showArchived }) => (
                 <PipelineItemMeta
                   key={label}
+                  name={name}
                   label={label}
                   value={value}
                   href={href}
