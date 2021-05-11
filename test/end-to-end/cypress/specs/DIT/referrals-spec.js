@@ -72,6 +72,7 @@ describe('Referrals', () => {
       cy.get(selectors.createInteractionContext.button).click()
 
       cy.get(formSelectors.service).select('Export Win')
+      cy.get(formSelectors.hasRelatedTradeAgreementsNo).click()
       cy.get(formSelectors.contact).selectTypeaheadOption('Johnny Cakeman')
       cy.get(formSelectors.communicationChannel).selectTypeaheadOption(
         'Email/Website'

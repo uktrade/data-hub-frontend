@@ -26,6 +26,7 @@ describe('Interaction', () => {
       const formSelectors = selectors.interactionForm
 
       cy.get(formSelectors.service).select('Export Win')
+      cy.get(formSelectors.hasRelatedTradeAgreementsNo).click()
       cy.get(formSelectors.contact).selectTypeaheadOption('Johnny Cakeman')
       cy.get(formSelectors.communicationChannel).selectTypeaheadOption(
         'Email/Website'
@@ -65,6 +66,7 @@ describe('Interaction', () => {
         const formSelectors = selectors.interactionForm
 
         cy.get(formSelectors.service).select('Export Win')
+        cy.get(formSelectors.hasRelatedTradeAgreementsNo).click()
         cy.get(formSelectors.contact).selectTypeaheadOption('Johnny Cakeman')
         cy.get(formSelectors.communicationChannel).selectTypeaheadOption(
           'Email/Website'
@@ -171,6 +173,7 @@ describe('Service delivery', () => {
     const formSelectors = selectors.interactionForm
 
     cy.get(formSelectors.service).select('Export Win')
+    cy.get(formSelectors.hasRelatedTradeAgreementsNo).click()
     cy.get(formSelectors.contact).selectTypeaheadOption('Johnny Cakeman')
     cy.get(formSelectors.eventNo).click()
     cy.get(formSelectors.subject).type(subject)
