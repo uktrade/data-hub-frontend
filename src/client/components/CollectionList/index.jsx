@@ -82,7 +82,7 @@ const CollectionList = ({
                     <CollectionItem {...item} key={i} />
                   ))}
                   <Pagination
-                    totalPages={Math.ceil(count / itemsPerPage)}
+                    totalPages={totalPages}
                     onPageClick={onPageClick}
                     activePage={activePage}
                   />
