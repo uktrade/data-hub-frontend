@@ -22,18 +22,19 @@ function DnbCompanyRenderer(props) {
   const { data } = props
   const companyId = get(data, 'datahub_company.id')
   const isOutOfBusiness = get(data, 'dnb_company.is_out_of_business')
+  const companyName = get(data, 'dnb_company.primary_name')
   const isClickable = !companyId && !isOutOfBusiness
 
   return (
     <EntityListItem
       onEntityClick={isClickable ? onEntityClick : null}
-      text={getDnbEntityText(companyId, isOutOfBusiness)}
+      text={getDnbEntityText(companyId, isOutOfBusiness, companyName)}
       {...props}
     />
   )
 }
 
-function getDnbEntityText(companyId, isOutOfBusiness) {
+function getDnbEntityText(companyId, isOutOfBusiness, companyName) {
   if (isOutOfBusiness) {
     return 'This company has stopped trading and is no longer in business.'
   }
@@ -41,9 +42,14 @@ function getDnbEntityText(companyId, isOutOfBusiness) {
   if (companyId) {
     return (
       <>
-        This company is already on Data Hub.{' '}
-        <Link href={`/companies/${companyId}`}>Go to the company page</Link> to
-        record activity.
+        This company is already on Data Hub. You can{' '}
+        <Link
+          href={`/companies/${companyId}`}
+          aria-label={`record activity on ${companyName}`}
+        >
+          record activity
+        </Link>{' '}
+        on the company page.
       </>
     )
   }
