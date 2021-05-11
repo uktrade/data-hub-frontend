@@ -138,11 +138,27 @@ const SecondaryToggleSection = styled(BaseToggleSection)`
   }
 `
 
+const TertiaryToggleSection = styled(BaseToggleSection)`
+  ${ToggleButton} {
+    padding: 0;
+  }
+
+  ${ButtonContent} {
+    text-decoration: underline;
+  }
+
+  ${ToggleContent} {
+    padding-bottom: ${SPACING.SCALE_2};
+  }
+`
+
 const ToggleSection = ({ variant = VARIANTS.PRIMARY, ...props }) =>
   variant === VARIANTS.PRIMARY ? (
     <PrimaryToggleSection {...props} />
-  ) : (
+  ) : variant === VARIANTS.SECONDARY ? (
     <SecondaryToggleSection {...props} />
+  ) : (
+    <TertiaryToggleSection {...props} />
   )
 
 ToggleSection.propTypes = {

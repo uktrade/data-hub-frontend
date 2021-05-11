@@ -11,7 +11,7 @@ import { DARK_GREY } from '../../utils/colors'
 const StyledDiv = styled('div')({
   height: '100%',
   backgroundColor: GREY_3,
-  padding: `9px ${SPACING.SCALE_2} 8px ${SPACING.SCALE_2}`,
+  padding: `9px ${SPACING.SCALE_2} ${SPACING.SCALE_1} ${SPACING.SCALE_2}`,
 })
 
 const StyledHeader = styled('h3')({
