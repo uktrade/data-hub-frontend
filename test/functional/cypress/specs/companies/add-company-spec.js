@@ -71,6 +71,40 @@ describe('Add company form', () => {
     Cypress.Cookies.preserveOnce('datahub.sid')
   })
 
+  context(
+    'when viewing a company in the list thats already in Data Hub',
+    () => {
+      it('should show that the company is already in Data Hub', () => {
+        gotoUKCompanySearchResultsPage()
+        cy.get('[data-test="entity-list"] li')
+          .eq(1)
+          .find('h3')
+          .should('have.text', 'Some matched company')
+          .next()
+          .should(
+            'have.text',
+            'Trading name(s) Some matched company trading nameLocation at 123 Fake Street, Brighton, BN1 4SE'
+          )
+          .next()
+          .should(
+            'have.text',
+            'This company is already on Data Hub. You can record activity on the company page.'
+          )
+          .find('a')
+          .should(
+            'have.attr',
+            'href',
+            urls.companies.detail('0fb3379c-341c-4da4-b825-bf8d47b26baa')
+          )
+          .should(
+            'have.attr',
+            'aria-label',
+            'record activity on Some matched company'
+          )
+      })
+    }
+  )
+
   context('when viewing the "Add company form"', () => {
     before(() => {
       cy.visit(urls.companies.create())
