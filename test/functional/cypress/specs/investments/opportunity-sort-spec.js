@@ -4,10 +4,9 @@ const { investments } = require('../../../../../src/lib/urls')
 describe('Investment Opportunity Collections Sort', () => {
   beforeEach(() => {
     cy.visit(investments.opportunities.index())
-    cy.get('#unfiltered-large-capital-opportunity-collection').should(
-      'contain',
-      '12 opportunities'
-    )
+    cy.get('#unfiltered-large-capital-opportunity-collection')
+      .should('contain', '12 opportunities')
+      .and('contain', 'Page 1 of 2')
     cy.intercept('/api-proxy/v4/search/large-capital-opportunity').as(
       'sortResults'
     )
@@ -38,5 +37,9 @@ describe('Investment Opportunity Collections Sort', () => {
     cy.wait('@sortResults').then((xhr) => {
       expect(xhr.request.body.sortby).to.eq('name:asc')
     })
+
+    cy.get('#unfiltered-large-capital-opportunity-collection')
+      .should('contain', '9 opportunities')
+      .and('contain', 'Page 1 of 1')
   })
 })
