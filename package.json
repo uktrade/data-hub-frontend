@@ -173,7 +173,7 @@
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.5",
     "@uktrade/client-matrix-js": "^1.0.107",
-    "@uktrade/wdio-image-diff-js": "1.9.1",
+    "@uktrade/wdio-image-diff-js": "1.9.2",
     "@vue/test-utils": "^1.2.0",
     "@wdio/browserstack-service": "^6.12.1",
     "@wdio/cli": "^6.12.1",
