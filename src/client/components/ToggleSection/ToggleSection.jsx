@@ -16,31 +16,29 @@ const ToggleHeader = styled('div')`
 `
 
 const ToggleButton = styled('button')`
-  ${({ isOpen }) => `
-    display: flex;
-    align-items: center;
-    background: transparent;
-    border: none;
-    font-size: ${FONT_SIZE.SIZE_19};
-    font-family: inherit;
-    color: ${BLUE};
-    cursor: pointer;
-    padding: 0 0 ${SPACING.SCALE_3}; 0;
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  font-size: ${FONT_SIZE.SIZE_19};
+  font-family: inherit;
+  color: ${BLUE};
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+  &:focus {
+    outline: none;
+    text-decoration: none;
+  }
+`
 
-    &::before {
-      content: '';
-      background: url(${icon}) 0 0 no-repeat;
-      width: 30px;
-      height: 30px;
-      transform: ${isOpen ? `rotate(0deg)` : `rotate(180deg)`};
-    }
-    &:hover {
-      text-decoration: underline;
-    }
-    &:focus {
-      outline: none;
-      text-decoration: none;
-    }
+const ToggleButtonIcon = styled('img')`
+  width: 18px;
+  height: 18px;
+  margin-right: ${SPACING.SCALE_2};
+  ${({ isOpen }) => `
+    transform: ${isOpen ? `rotate(0deg)` : `rotate(180deg)`};
   `}
 `
 
@@ -48,7 +46,6 @@ const ButtonContent = styled('span')``
 
 const BadgeContainer = styled('span')`
   margin-left: ${SPACING.SCALE_1};
-  padding: ${SPACING.SCALE_3} 0;
 `
 
 const ToggleContent = styled('div')`
@@ -73,6 +70,11 @@ const BaseToggleSection = ({
         onClick={() => open(!isOpen)}
         isOpen={isOpen}
       >
+        <ToggleButtonIcon
+          src={icon}
+          onClick={() => open(!isOpen)}
+          isOpen={isOpen}
+        />
         <ButtonContent data-test="toggle-section-button-content">
           {label}
         </ButtonContent>
@@ -85,29 +87,18 @@ const BaseToggleSection = ({
 
 const PrimaryToggleSection = styled(BaseToggleSection)`
   ${({ major }) => `
-    margin-bottom: ${SPACING.SCALE_2};
     border: solid 2px ${GREY_3};
     border-top-color: ${major ? RED : BLUE};
   `}
 
   ${ToggleHeader} {
     background-color: ${GREY_3};
+    padding-top: ${SPACING.SCALE_3};
+    padding-bottom: ${SPACING.SCALE_3};
   }
 
   ${ToggleButton} {
-    ${({ isOpen }) => `
-      font-weight: ${FONT_WEIGHTS.regular};
-      padding-top: ${SPACING.SCALE_2};
-      padding-bottom: ${SPACING.SCALE_2};
-
-      &::before {
-        content: '';
-        background: url(${icon}) 7px 0 no-repeat;
-        width: 44px;
-        height: 30px;
-        transform: ${isOpen ? `rotate(0deg)` : `rotate(180deg)`};
-      }
-    `}
+    font-weight: ${FONT_WEIGHTS.regular};
   }
 
   ${ButtonContent} {
@@ -116,7 +107,6 @@ const PrimaryToggleSection = styled(BaseToggleSection)`
 
   ${BadgeContainer} {
     margin-left: ${SPACING.SCALE_1};
-    padding: ${SPACING.SCALE_3} 0;
   }
 
   ${ToggleContent} {
@@ -148,17 +138,17 @@ const TertiaryToggleSection = styled(BaseToggleSection)`
   }
 
   ${ToggleContent} {
-    padding-bottom: ${SPACING.SCALE_2};
+    padding: ${SPACING.SCALE_2} 0;
   }
 `
 
-const ToggleSection = ({ variant = VARIANTS.PRIMARY, ...props }) =>
-  variant === VARIANTS.PRIMARY ? (
-    <PrimaryToggleSection {...props} />
+const ToggleSection = ({ variant, ...props }) =>
+  variant === VARIANTS.TERTIARY ? (
+    <TertiaryToggleSection {...props} />
   ) : variant === VARIANTS.SECONDARY ? (
     <SecondaryToggleSection {...props} />
   ) : (
-    <TertiaryToggleSection {...props} />
+    <PrimaryToggleSection {...props} />
   )
 
 ToggleSection.propTypes = {
