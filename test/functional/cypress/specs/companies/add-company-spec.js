@@ -99,7 +99,7 @@ describe('Add company form', () => {
           .should(
             'have.attr',
             'aria-label',
-            'record activity on Some matched company'
+            'Go to Some matched company details page to record activity'
           )
       })
     }
