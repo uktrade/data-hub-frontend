@@ -78,9 +78,9 @@ const InvestmentDetails = ({
           <StyledDD>{format(latestInteraction.date)}</StyledDD>
           <StyledDT>Interaction subject:</StyledDT>
           <StyledDD>
-            <a href={interactions.detail(latestInteraction.id)}>
-              {latestInteraction.subject}
-            </a>
+            <Link href={interactions.detail(latestInteraction.id)}>
+              <Truncate>{latestInteraction.subject}</Truncate>
+            </Link>
           </StyledDD>
         </>
       )}
