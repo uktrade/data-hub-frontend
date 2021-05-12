@@ -71,7 +71,7 @@ const ListItemHeader = styled('h2')`
 `
 
 const ListItemHeaderTagContainer = styled('div')`
-  padding: 0 ${SPACING.SCALE_4};
+  padding: 0 ${SPACING.SCALE_5};
 `
 
 const ListItemHeaderActionContainer = styled('div')`
