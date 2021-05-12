@@ -42,14 +42,13 @@ function getDnbEntityText(companyId, isOutOfBusiness, companyName) {
   if (companyId) {
     return (
       <>
-        This company is already on Data Hub. You can{' '}
+        This company is already on Data Hub. You can record activity{' '}
         <Link
           href={`/companies/${companyId}`}
-          aria-label={`record activity on ${companyName}`}
+          aria-label={`Go to ${companyName} details page to record activity`}
         >
-          record activity
-        </Link>{' '}
-        on the company page.
+          on the company page.
+        </Link>
       </>
     )
   }
