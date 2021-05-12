@@ -30,7 +30,7 @@ const interaction = {
   grant_amount_offered: 'Grant offered',
   has_related_trade_agreements:
     'Does this interaction relate to a trade agreement?',
-  related_trade_agreements: 'Trade agreements',
+  related_trade_agreements: 'Trade agreement(s)',
   ...countriesDiscussed,
 }
 
@@ -55,6 +55,9 @@ const serviceDelivery = {
   is_event: 'Is this an event?',
   was_policy_feedback_provided:
     'Did the contact provide business intelligence?',
+  has_related_trade_agreements:
+    'Does this interaction relate to a trade agreement?',
+  related_trade_agreements: 'Trade agreement(s)',
   ...countriesDiscussed,
 }
 

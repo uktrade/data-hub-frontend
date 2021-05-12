@@ -60,8 +60,8 @@ const ELEMENT_RELATED_TRADE_AGREEMENT = {
   optionsCount: 2,
 }
 const ELEMENT_TRADE_AGREEMENTS = {
-  legend: 'Related Trade Agreements',
-  placeholder: '-- Search trade agreements --',
+  legend: 'Related named trade agreement(s)',
+  placeholder: '-- Select named trade agreement --',
 }
 const ELEMENT_TRADE_AGREEMENT_ADD = {
   text: 'Add another',
@@ -353,13 +353,13 @@ describe('Interaction theme', () => {
     it('should permanently show a description about when to select trade agreement', () => {
       cy.get('div [data-test="trade-agreement-guide"]').should(
         'contain',
-        `Select ‘Trade agreement’ if your interaction was set up to focus on, or contributes to, implementing a trade agreement.`
+        `Select ‘Trade agreement’ if your interaction was set up to focus on, or contributes to, implementing a trade agreement.Read more information and guidance (opens in a new window or tab) on this section.`
       )
     })
 
     it('should always have a see more guidance link', () => {
       cy.get('div [data-test="trade-agreement-guide"]>a')
-        .should('contain', 'Read more information and guidance on this section')
+        .should('contain', 'information and guidance')
         .should(
           'have.attr',
           'href',
