@@ -194,10 +194,10 @@ const LargeCapitalProfileCollection = ({
             >
               <RoutedTypeahead
                 isMulti={true}
-                legend="Asset class"
+                legend="Sector of interest"
                 name="asset-class"
                 qsParam={QS_PARAMS.assetClassesOfInterest}
-                placeholder="Search asset class"
+                placeholder="Search sector of interest"
                 options={filterOptions.assetClassesOfInterest}
                 selectedOptions={selectedAssetClassesOfInterest}
                 data-test="asset-class-filter"
@@ -238,12 +238,12 @@ const LargeCapitalProfileCollection = ({
               <RoutedNumericRangeField
                 qsParam={QS_PARAMS.globalAssetsUnderManagement}
                 id="LargeCapitalProfileCollection.global-assets-under-management"
-                label="Global assets under management"
+                label="Global assets under management £"
               />
               <RoutedNumericRangeField
                 qsParam={QS_PARAMS.investableCapital}
                 id="LargeCapitalProfileCollection.investable-capital"
-                label="Investable capital"
+                label="Investable capital £"
               />
               <RoutedTypeahead
                 isMulti={true}
