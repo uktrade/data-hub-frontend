@@ -74,6 +74,7 @@ const BaseToggleSection = ({
           src={icon}
           onClick={() => open(!isOpen)}
           isOpen={isOpen}
+          alt="Toggle details"
         />
         <ButtonContent data-test="toggle-section-button-content">
           {label}
@@ -99,6 +100,7 @@ const PrimaryToggleSection = styled(BaseToggleSection)`
 
   ${ToggleButton} {
     font-weight: ${FONT_WEIGHTS.regular};
+    margin-left: ${SPACING.SCALE_2};
   }
 
   ${ButtonContent} {
