@@ -76,9 +76,10 @@ async function callbackOAuth(req, res, next) {
 
   try {
     const responseData = await getAccessToken(req.query.code)
-    const userProfile = await getSSOUserProfile(responseData.access_token)
+    const accessToken = get(responseData, 'data.access_token')
+    const userProfile = await getSSOUserProfile(accessToken)
 
-    set(req, 'session.token', responseData.data.access_token)
+    set(req, 'session.token', accessToken)
     set(req, 'session.userProfile', userProfile.data)
     return res.redirect(req.session.returnTo || '/')
   } catch (error) {
