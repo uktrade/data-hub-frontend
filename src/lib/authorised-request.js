@@ -1,6 +1,5 @@
 const { isNil, isString, pickBy } = require('lodash')
-const request = require('request')
-const requestPromise = require('request-promise')
+const request = require('./request')
 
 const config = require('../config')
 const logger = require('../config/logger')
@@ -10,31 +9,16 @@ function hasValue(value) {
   return !isNil(value)
 }
 
-function stripScript(text) {
-  const SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi
-  while (SCRIPT_REGEX.test(text)) {
-    logger.warn('Found script tag in response')
-    text = text.replace(SCRIPT_REGEX, '')
-  }
-  return text
-}
-
-function stripScripts(key, value) {
-  if (isString(value)) {
-    return stripScript(value)
-  }
-  return value
-}
-
-function parseOptions(req, opts) {
+function parseConfig(req, opts) {
   const { token } = req.session
+  const { responseType = 'json' } = opts
   const defaults = {
     headers: {
       ...opts.headers,
       ...getZipkinHeaders(req),
       ...(token ? { Authorization: `Bearer ${token}` } : null),
     },
-    json: true,
+    responseType,
     method: 'GET',
     proxy: config.proxy,
   }
@@ -48,16 +32,15 @@ function parseOptions(req, opts) {
 
   return {
     ...defaults,
-    body: opts.body,
+    data: opts.body,
     method: opts.method || 'GET',
-    qs: pickBy(opts.qs, hasValue),
+    params: pickBy(opts.qs, hasValue),
     url: opts.url,
   }
 }
 
 function createResponseLogger(requestOpts) {
-  return (data) => {
-    const statusCode = (data && data.statusCode) || ''
+  return ({ statusCode = '', ...data }) => {
     const responseInfo = `Response ${statusCode} for ${requestOpts.method} to ${requestOpts.url}:`
     logger.debug(responseInfo, data)
     return data
@@ -69,38 +52,33 @@ function logRequest(opts) {
   logger.debug('with request data:', {
     headers: opts.headers,
     body: opts.body,
-    qs: opts.qs,
+    params: opts.params,
   })
 }
 
-// Accepts options as keys on an object or encoded as a url
-// Responses are parsed to remove any embedded XSS attempts with
-// script tags
-function authorisedRequest(req, opts) {
-  const requestOptions = parseOptions(req, opts)
+// Accepts options as keys on an object or encoded as a url and transforms data
+async function authorisedRequest(req, opts) {
+  const requestConfig = parseConfig(req, opts)
 
-  logRequest(requestOptions)
-  requestOptions.jsonReviver = stripScripts
+  logRequest(requestConfig)
 
-  const r = requestPromise(requestOptions)
-
-  const logResponse = createResponseLogger(requestOptions)
-  return r.then(logResponse, (err) => {
+  const logResponse = createResponseLogger(requestConfig)
+  try {
+    const { data } = await request(requestConfig)
+    logResponse(data)
+    return data
+  } catch (err) {
     logResponse(err)
     throw err
-  })
+  }
 }
 
 // Accepts options as keys on an object or encoded as a url
-// Responses are not parsed for XSS attacks
-// See request-promise #90 does not work with streams
-// https://github.com/request/request-promise/issues/90
 function authorisedRawRequest(req, opts) {
-  const requestOptions = parseOptions(req, opts)
+  const requestConfig = parseConfig(req, opts)
+  logRequest(requestConfig)
 
-  logRequest(requestOptions)
-
-  return Promise.resolve(request(requestOptions))
+  return request(requestConfig)
 }
 
 // accept untrusted certificates for dev environments

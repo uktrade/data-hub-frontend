@@ -5,7 +5,7 @@ const {
 const { omit } = require('lodash')
 
 describe('#formatHelpCentreAnnouncements', () => {
-  const mockResponse = {
+  const mockData = {
     count: 3,
     articles: [
       {
@@ -71,24 +71,24 @@ describe('#formatHelpCentreAnnouncements', () => {
       heading: 'Recording policy feedback on Data Hub',
       link:
         'https://helpcentre.com/hc/en-gb/articles/360001431697-Recording-policy-feedback-on-Data-Hub',
-      date: `${moment(mockResponse.articles[0].created_at).fromNow()}`,
+      date: `${moment(mockData.articles[0].created_at).fromNow()}`,
     },
     {
       heading: 'Improvements to company data in Data Hub - April 2019',
       link:
         'https://helpcentre.com/hc/en-gb/articles/360001412918-Improvements-to-company-data-in-Data-Hub-April-2019',
-      date: `${moment(mockResponse.articles[1].created_at).fromNow()}`,
+      date: `${moment(mockData.articles[1].created_at).fromNow()}`,
     },
     {
       heading: 'Recording multiple DIT advisers against interactions',
       link:
         'https://helpcentre.com/hc/en-gb/articles/360001345138-Recording-multiple-DIT-advisers-against-interactions',
-      date: `${moment(mockResponse.articles[2].created_at).fromNow()}`,
+      date: `${moment(mockData.articles[2].created_at).fromNow()}`,
     },
   ]
   context('Successful API response', () => {
     beforeEach(() => {
-      this.transformed = formatHelpCentreAnnouncements(mockResponse)
+      this.transformed = formatHelpCentreAnnouncements({ data: mockData })
     })
     it('should format Help centre articles', () => {
       expect(this.transformed).to.deep.equal(expected)
@@ -97,9 +97,11 @@ describe('#formatHelpCentreAnnouncements', () => {
 
   context('malformed api responses', () => {
     it('should return empty array', () => {
-      expect(formatHelpCentreAnnouncements({})).to.deep.equal([])
-      expect(formatHelpCentreAnnouncements(undefined)).to.deep.equal([])
-      expect(formatHelpCentreAnnouncements([])).to.deep.equal([])
+      expect(formatHelpCentreAnnouncements({ data: {} })).to.deep.equal([])
+      expect(formatHelpCentreAnnouncements({ data: undefined })).to.deep.equal(
+        []
+      )
+      expect(formatHelpCentreAnnouncements({ data: [] })).to.deep.equal([])
       expect(
         formatHelpCentreAnnouncements(omit(expected, ['articles']))
       ).to.deep.equal([])
