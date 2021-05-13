@@ -40,6 +40,7 @@ import DeletePipelineItemForm from '../apps/my-pipeline/client/DeletePipelineIte
 import Dashboard from './components/Dashboard'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyLocalHeader from './components/CompanyLocalHeader'
+import CompaniesCollection from '../apps/companies/client/CompaniesCollection.jsx'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 import Opportunities from '../apps/investments/client/opportunities/Details/Opportunities.jsx'
 import IEBanner from '../apps/dashboard/client/IEBanner'
@@ -354,6 +355,9 @@ function App() {
       <Mount selector="#footer">{() => <Footer />}</Mount>
       <Mount selector="#investment-projects-collection">
         {(props) => <InvestmentProjectsCollection {...props} />}
+      </Mount>
+      <Mount selector="#companies-collection">
+        {(props) => <CompaniesCollection {...props} />}
       </Mount>
       <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
     </Provider>
