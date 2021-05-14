@@ -1,10 +1,10 @@
 const { get, pick } = require('lodash')
-const rp = require('request-promise')
 
 const GLOBAL_NAV_ITEMS = require('../global-nav-items')
 
 const { isPermittedRoute } = require('../middleware')
 const config = require('../../config')
+const request = require('../../lib/request')
 const { formatHelpCentreAnnouncements } = require('./transformers')
 
 async function renderDashboard(req, res, next) {
@@ -16,13 +16,10 @@ async function renderDashboard(req, res, next) {
     let articleFeed
 
     try {
-      const helpCentreArticleFeed = await rp({
-        uri: config.helpCentre.apiFeed,
-        auth: {
-          bearer: config.helpCentre.token,
-        },
-        qs: { test: req.query.test },
-        json: true,
+      const helpCentreArticleFeed = await request({
+        url: config.helpCentre.apiFeed,
+        headers: { Authorization: `Bearer ${config.helpCentre.token}` },
+        params: { test: req.query.test },
         timeout: 1000,
       })
       articleFeed = formatHelpCentreAnnouncements(helpCentreArticleFeed) || []
