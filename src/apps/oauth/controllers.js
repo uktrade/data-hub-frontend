@@ -1,9 +1,9 @@
+const request = require('request-promise')
 const queryString = require('qs')
 const { v4: uuid } = require('uuid')
 
 const { get, set, isUndefined } = require('lodash')
 
-const request = require('../../lib/request')
 const { saveSession } = require('../../lib/session-helper')
 const config = require('../../config')
 
@@ -11,13 +11,14 @@ function getAccessToken(code) {
   const options = {
     method: 'POST',
     url: config.oauth.tokenFetchUrl,
-    data: {
+    formData: {
       code,
       grant_type: 'authorization_code',
       client_id: config.oauth.clientId,
       client_secret: config.oauth.clientSecret,
       redirect_uri: config.oauth.redirectUri,
     },
+    json: true,
   }
 
   return request(options)
@@ -37,6 +38,7 @@ async function getSSOUserProfile(token) {
   const options = {
     url: config.oauth.userProfileUrl,
     headers: { Authorization: 'Bearer ' + token },
+    json: true,
   }
 
   try {
@@ -75,12 +77,11 @@ async function callbackOAuth(req, res, next) {
   }
 
   try {
-    const responseData = await getAccessToken(req.query.code)
-    const accessToken = get(responseData, 'data.access_token')
-    const userProfile = await getSSOUserProfile(accessToken)
+    const data = await getAccessToken(req.query.code)
+    const userProfile = await getSSOUserProfile(data.access_token)
 
-    set(req, 'session.token', accessToken)
-    set(req, 'session.userProfile', userProfile.data)
+    set(req, 'session.token', data.access_token)
+    set(req, 'session.userProfile', userProfile)
     return res.redirect(req.session.returnTo || '/')
   } catch (error) {
     return next(error)

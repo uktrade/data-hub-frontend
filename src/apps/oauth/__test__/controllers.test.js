@@ -472,7 +472,9 @@ describe('OAuth controller', () => {
 
         it('should handle error as expected', () => {
           expect(this.nextSpy).to.have.been.calledOnce
-          expect(this.nextSpy.args[0][0].message).to.equal(this.returnedError)
+          expect(this.nextSpy.args[0][0].message).to.equal(
+            `Error: ${this.returnedError}`
+          )
         })
 
         it('token should be undefined', () => {
