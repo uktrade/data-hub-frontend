@@ -21,7 +21,6 @@ const {
 const {
   KINDS,
   THEMES,
-  TRADE_AGREEMENT_IMPLEMENTATION_ACTIVITY,
 } = require('../../../../../src/apps/interactions/constants')
 
 const assertHeader = ({ element, text }) =>
@@ -56,13 +55,13 @@ const ELEMENT_SERVICE_NET_RECEIPT = {
   label: 'Net receipt (optional)',
 }
 const ELEMENT_RELATED_TRADE_AGREEMENT = {
-  legend: 'Does this interaction relate to a Trade Agreement?',
+  legend: 'Does this interaction relate to a named trade agreement?',
   assert: assertFieldRadiosWithLegend,
   optionsCount: 2,
 }
 const ELEMENT_TRADE_AGREEMENTS = {
-  legend: 'Related Trade Agreements',
-  placeholder: '-- Search trade agreements --',
+  legend: 'Related named trade agreement(s)',
+  placeholder: '-- Select named trade agreement --',
 }
 const ELEMENT_TRADE_AGREEMENT_ADD = {
   text: 'Add another',
@@ -169,8 +168,11 @@ const COMMON_REQUEST_BODY = {
   company: { id: '0f5216e0-849f-11e6-ae22-56b6b6499611' },
   service_answers: {},
   status: 'complete',
-  has_related_trade_agreements: 'no',
-  related_trade_agreements: [],
+  has_related_trade_agreements: 'yes',
+  related_trade_agreements: [
+    '50370070-71f9-4ada-ae2c-cd0a737ba5e2',
+    '09787712-0d94-4137-a5f3-3f9131e681f0',
+  ],
 }
 
 function fillCommonFields({
@@ -188,6 +190,23 @@ function fillCommonFields({
       .last()
       .select(subservice)
   }
+
+  cy.contains(ELEMENT_RELATED_TRADE_AGREEMENT.legend)
+    .next()
+    .find('input')
+    .check('yes')
+
+  cy.contains(ELEMENT_TRADE_AGREEMENT_ADD.text).click()
+
+  cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
+    .parent()
+    .find("[data-test='trade-agreement-field-0']")
+    .selectTypeaheadOption('UK-Australia Mutual Recognition Agreement')
+
+  cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
+    .parent()
+    .find("[data-test='trade-agreement-field-1']")
+    .selectTypeaheadOption('UK-Mexico Trade Continuity Agreement')
 
   if (contact) {
     cy.contains(ELEMENT_CONTACT.label)
@@ -238,35 +257,12 @@ function fillExportCountriesFields() {
     .selectTypeaheadOption('Germany')
 }
 
-function fillRelatedTradeAgreements() {
-  cy.contains(ELEMENT_RELATED_TRADE_AGREEMENT.legend)
-    .next()
-    .find('input')
-    .check('yes')
-
-  cy.contains(ELEMENT_TRADE_AGREEMENT_ADD.text).click()
-
-  cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
-    .parent()
-    .find("[data-test='trade-agreement-field-0']")
-    .selectTypeaheadOption('UK-Australia Mutual Recognition Agreement')
-
-  cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
-    .parent()
-    .find("[data-test='trade-agreement-field-1']")
-    .selectTypeaheadOption('UK-Mexico Trade Continuity Agreement')
-}
-
 function submitForm(kind, theme, values) {
   cy.get('#interaction-details-form').within(() => {
     fillCommonFields(values)
 
     if (theme !== THEMES.INVESTMENT) {
       fillExportCountriesFields()
-    }
-
-    if (values.service === TRADE_AGREEMENT_IMPLEMENTATION_ACTIVITY) {
-      fillRelatedTradeAgreements()
     }
 
     if (kind === KINDS.INTERACTION) {
@@ -319,9 +315,16 @@ function objectDiff(a, b) {
 function assertRequestBody(expectedBody, callback) {
   cy.wait('@interactionHttpRequest').then((xhr) => {
     // eslint-disable-next-line no-console
-    console.log(
+    cy.log(
       'Request body fields that differ',
       objectDiff(xhr.requestBody, expectedBody)
+    )
+
+    expect(xhr.requestBody.has_related_trade_agreements).to.equal(
+      expectedBody.has_related_trade_agreements
+    )
+    expect(xhr.requestBody.related_trade_agreements).to.deep.equal(
+      expectedBody.related_trade_agreements
     )
 
     expect(xhr.requestBody).to.deep.equal(expectedBody)
@@ -350,13 +353,13 @@ describe('Interaction theme', () => {
     it('should permanently show a description about when to select trade agreement', () => {
       cy.get('div [data-test="trade-agreement-guide"]').should(
         'contain',
-        `If your interaction was set up to focus on a Trade Agreement or contributes to implementing a Trade Agreement, select 'Trade Agreement’.`
+        `Select ‘Trade agreement’ if your interaction was set up to focus on, or contributes to, implementing a trade agreement.Read more information and guidance (opens in a new window or tab) on this section.`
       )
     })
 
     it('should always have a see more guidance link', () => {
       cy.get('div [data-test="trade-agreement-guide"]>a')
-        .should('contain', 'See more guidance')
+        .should('contain', 'information and guidance')
         .should(
           'have.attr',
           'href',
@@ -380,6 +383,7 @@ describe('Interaction theme', () => {
         ELEMENT_SERVICE_HEADER,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
+        ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
         ELEMENT_ADVISER,
@@ -412,6 +416,7 @@ describe('Interaction theme', () => {
           'have.text',
           [
             'Select a service',
+            'Answer if this interaction relates to a named trade agreement',
             'Select at least one contact',
             'Select a communication channel',
             'Enter a subject',
@@ -478,6 +483,7 @@ describe('Service delivery theme', () => {
         ELEMENT_SERVICE_HEADER,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
+        ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
         ELEMENT_ADVISER,
@@ -501,6 +507,7 @@ describe('Service delivery theme', () => {
           'have.text',
           [
             'Select a service',
+            'Answer if this interaction relates to a named trade agreement',
             'Select at least one contact',
             'Answer if this was an event',
             'Enter a subject',
@@ -516,41 +523,40 @@ describe('Service delivery theme', () => {
         subservice: 'Tradeshow Access Programme (TAP)',
       })
 
-      assertRequestBody(
-        {
-          ...COMMON_REQUEST_BODY,
-          theme: 'export',
-          service: '380bba2b-3499-e211-a939-e4115bead28a',
-          is_event: 'yes',
-          were_countries_discussed: 'yes',
-          service_delivery_status: '47329c18-6095-e211-a939-e4115bead28a',
-          grant_amount_offered: '123',
-          net_company_receipt: '456',
-          event: '0010f189-9331-4916-818a-231bf2f4882b',
-          kind: 'service_delivery',
-          communication_channel: null,
-          export_countries: [
-            {
-              country: '6e6a9ab2-5d95-e211-a939-e4115bead28a',
-              status: 'currently_exporting',
-            },
-            {
-              country: 'a05f66a0-5d95-e211-a939-e4115bead28a',
-              status: 'future_interest',
-            },
-            {
-              country: '83756b9a-5d95-e211-a939-e4115bead28a',
-              status: 'not_interested',
-            },
-          ],
-        },
-        (xhr) => {
-          cy.location('pathname').should(
-            'eq',
-            urls.companies.interactions.detail(company.id, xhr.responseBody.id)
-          )
-        }
-      )
+      const expectedBody = {
+        ...COMMON_REQUEST_BODY,
+        theme: 'export',
+        service: '380bba2b-3499-e211-a939-e4115bead28a',
+        is_event: 'yes',
+        were_countries_discussed: 'yes',
+        service_delivery_status: '47329c18-6095-e211-a939-e4115bead28a',
+        grant_amount_offered: '123',
+        net_company_receipt: '456',
+        event: '0010f189-9331-4916-818a-231bf2f4882b',
+        kind: 'service_delivery',
+        communication_channel: null,
+        export_countries: [
+          {
+            country: '6e6a9ab2-5d95-e211-a939-e4115bead28a',
+            status: 'currently_exporting',
+          },
+          {
+            country: 'a05f66a0-5d95-e211-a939-e4115bead28a',
+            status: 'future_interest',
+          },
+          {
+            country: '83756b9a-5d95-e211-a939-e4115bead28a',
+            status: 'not_interested',
+          },
+        ],
+      }
+
+      assertRequestBody(expectedBody, (xhr) => {
+        cy.location('pathname').should(
+          'eq',
+          urls.companies.interactions.detail(company.id, xhr.responseBody.id)
+        )
+      })
     })
   })
 })
@@ -570,6 +576,7 @@ describe('Investment theme', () => {
         ELEMENT_SERVICE_HEADER,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
+        ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
         ELEMENT_ADVISER,
@@ -592,6 +599,7 @@ describe('Investment theme', () => {
           'have.text',
           [
             'Select a service',
+            'Answer if this interaction relates to a named trade agreement',
             'Select at least one contact',
             'Select a communication channel',
             'Enter a subject',
@@ -640,6 +648,7 @@ describe('Trade Agreement theme', () => {
         ELEMENT_SERVICE_HEADER,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
+        ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
         ELEMENT_ADVISER,
@@ -663,6 +672,7 @@ describe('Trade Agreement theme', () => {
           'have.text',
           [
             'Select a service',
+            'Answer if this interaction relates to a named trade agreement',
             'Select at least one contact',
             'Select a communication channel',
             'Enter a subject',
@@ -739,11 +749,6 @@ describe('Trade Agreement theme', () => {
               country: '83756b9a-5d95-e211-a939-e4115bead28a',
               status: 'not_interested',
             },
-          ],
-          has_related_trade_agreements: 'yes',
-          related_trade_agreements: [
-            '50370070-71f9-4ada-ae2c-cd0a737ba5e2',
-            '09787712-0d94-4137-a5f3-3f9131e681f0',
           ],
         },
         (xhr) => {

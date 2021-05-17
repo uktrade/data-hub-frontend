@@ -99,16 +99,17 @@ const StepInteractionType = ({ isTradeAgreementInteractionEnabled }) => {
     <>
       {isTradeAgreementInteractionEnabled && (
         <InsetText data-test="trade-agreement-guide">
-          If your interaction was set up to focus on a Trade Agreement or
-          contributes to implementing a Trade Agreement, select 'Trade
-          Agreement’.
+          Select ‘Trade agreement’ if your interaction was set up to focus on,
+          or contributes to, implementing a trade agreement.
           <br />
           <br />
+          Read more{' '}
           <NewWindowLink
             href={urls.external.helpCentre.tradeagreementGuidance()}
           >
-            See more guidance
-          </NewWindowLink>
+            information and guidance
+          </NewWindowLink>{' '}
+          on this section.
         </InsetText>
       )}
 
