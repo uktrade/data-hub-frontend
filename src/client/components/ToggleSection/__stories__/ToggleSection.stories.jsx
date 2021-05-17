@@ -1,8 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
-import { VARIANTS } from '../../../../common/constants'
-
 import usageReadme from '../usage.md'
 import exampleReadme from '../example.md'
 
@@ -10,7 +8,11 @@ import FieldInput from '../../Form/elements/FieldInput'
 import FormStateful from '../../Form/FormStateful'
 
 import NotificationBadge from 'NotificationBadge'
-import ToggleSection from 'ToggleSection'
+import {
+  DashboardToggleSection,
+  NoHighlightToggleSection,
+  ToggleSection,
+} from 'ToggleSection'
 
 storiesOf('ToggleSection', module)
   .addParameters({
@@ -20,12 +22,105 @@ storiesOf('ToggleSection', module)
       sidebar: usageReadme,
     },
   })
-  .add('Primary - Single (with badge)', () => (
-    <ToggleSection
+  .add('Default - Single', () => (
+    <ToggleSection label="Toggle me" id="toggle.four" isOpen={true}>
+      <FormStateful>
+        {() => (
+          <FieldInput
+            label="Text"
+            hint="Some hint"
+            name="testField"
+            required="Enter text"
+            type="text"
+          />
+        )}
+      </FormStateful>
+    </ToggleSection>
+  ))
+  .add('Default - Multiple', () => (
+    <>
+      <ToggleSection label="Toggle me" id="toggle.five" isOpen={true}>
+        <FormStateful>
+          {() => (
+            <FieldInput
+              label="Text"
+              hint="Some hint"
+              name="testField"
+              required="Enter text"
+              type="text"
+            />
+          )}
+        </FormStateful>
+      </ToggleSection>
+      <ToggleSection label="Toggle me" id="toggle.six">
+        <FormStateful>
+          {() => (
+            <FieldInput
+              label="Text"
+              hint="Some hint"
+              name="testField"
+              required="Enter text"
+              type="text"
+            />
+          )}
+        </FormStateful>
+      </ToggleSection>
+    </>
+  ))
+  .add('No Highlight - Single', () => (
+    <NoHighlightToggleSection label="Toggle me" id="toggle.seven" isOpen={true}>
+      <FormStateful>
+        {() => (
+          <FieldInput
+            label="Text"
+            hint="Some hint"
+            name="testField"
+            required="Enter text"
+            type="text"
+          />
+        )}
+      </FormStateful>
+    </NoHighlightToggleSection>
+  ))
+  .add('No Highlight - Multiple', () => (
+    <>
+      <NoHighlightToggleSection
+        label="Toggle me"
+        id="toggle.eight"
+        isOpen={true}
+      >
+        <FormStateful>
+          {() => (
+            <FieldInput
+              label="Text"
+              hint="Some hint"
+              name="testField"
+              required="Enter text"
+              type="text"
+            />
+          )}
+        </FormStateful>
+      </NoHighlightToggleSection>
+      <NoHighlightToggleSection label="Toggle me" id="toggle.nine">
+        <FormStateful>
+          {() => (
+            <FieldInput
+              label="Text"
+              hint="Some hint"
+              name="testField"
+              required="Enter text"
+              type="text"
+            />
+          )}
+        </FormStateful>
+      </NoHighlightToggleSection>
+    </>
+  ))
+  .add('Dashboard - Single (with badge)', () => (
+    <DashboardToggleSection
       label="Toggle me"
       id="toggle.one"
       isOpen={true}
-      variant={VARIANTS.PRIMARY}
       badge={<NotificationBadge label="15" />}
     >
       <FormStateful>
@@ -39,16 +134,15 @@ storiesOf('ToggleSection', module)
           />
         )}
       </FormStateful>
-    </ToggleSection>
+    </DashboardToggleSection>
   ))
-  .add('Primary - Multiple', () => (
+  .add('Dashboard - Multiple', () => (
     <>
-      <ToggleSection
+      <DashboardToggleSection
         label="Toggle me"
         id="toggle.two"
         isOpen={true}
         major={true}
-        variant={VARIANTS.PRIMARY}
       >
         <FormStateful>
           {() => (
@@ -61,12 +155,8 @@ storiesOf('ToggleSection', module)
             />
           )}
         </FormStateful>
-      </ToggleSection>
-      <ToggleSection
-        label="Toggle me"
-        id="toggle.three"
-        variant={VARIANTS.PRIMARY}
-      >
+      </DashboardToggleSection>
+      <DashboardToggleSection label="Toggle me" id="toggle.three">
         <FormStateful>
           {() => (
             <FieldInput
@@ -78,124 +168,6 @@ storiesOf('ToggleSection', module)
             />
           )}
         </FormStateful>
-      </ToggleSection>
-    </>
-  ))
-  .add('Secondary - Single', () => (
-    <ToggleSection
-      label="Toggle me"
-      id="toggle.four"
-      isOpen={true}
-      variant={VARIANTS.SECONDARY}
-    >
-      <FormStateful>
-        {() => (
-          <FieldInput
-            label="Text"
-            hint="Some hint"
-            name="testField"
-            required="Enter text"
-            type="text"
-          />
-        )}
-      </FormStateful>
-    </ToggleSection>
-  ))
-  .add('Secondary - Multiple', () => (
-    <>
-      <ToggleSection
-        label="Toggle me"
-        id="toggle.five"
-        isOpen={true}
-        variant={VARIANTS.SECONDARY}
-      >
-        <FormStateful>
-          {() => (
-            <FieldInput
-              label="Text"
-              hint="Some hint"
-              name="testField"
-              required="Enter text"
-              type="text"
-            />
-          )}
-        </FormStateful>
-      </ToggleSection>
-      <ToggleSection
-        label="Toggle me"
-        id="toggle.six"
-        variant={VARIANTS.SECONDARY}
-      >
-        <FormStateful>
-          {() => (
-            <FieldInput
-              label="Text"
-              hint="Some hint"
-              name="testField"
-              required="Enter text"
-              type="text"
-            />
-          )}
-        </FormStateful>
-      </ToggleSection>
-    </>
-  ))
-  .add('Tertiary - Single', () => (
-    <ToggleSection
-      label="Toggle me"
-      id="toggle.seven"
-      isOpen={true}
-      variant={VARIANTS.TERTIARY}
-    >
-      <FormStateful>
-        {() => (
-          <FieldInput
-            label="Text"
-            hint="Some hint"
-            name="testField"
-            required="Enter text"
-            type="text"
-          />
-        )}
-      </FormStateful>
-    </ToggleSection>
-  ))
-  .add('Tertiary - Multiple', () => (
-    <>
-      <ToggleSection
-        label="Toggle me"
-        id="toggle.eight"
-        isOpen={true}
-        variant={VARIANTS.TERTIARY}
-      >
-        <FormStateful>
-          {() => (
-            <FieldInput
-              label="Text"
-              hint="Some hint"
-              name="testField"
-              required="Enter text"
-              type="text"
-            />
-          )}
-        </FormStateful>
-      </ToggleSection>
-      <ToggleSection
-        label="Toggle me"
-        id="toggle.nine"
-        variant={VARIANTS.TERTIARY}
-      >
-        <FormStateful>
-          {() => (
-            <FieldInput
-              label="Text"
-              hint="Some hint"
-              name="testField"
-              required="Enter text"
-              type="text"
-            />
-          )}
-        </FormStateful>
-      </ToggleSection>
+      </DashboardToggleSection>
     </>
   ))
