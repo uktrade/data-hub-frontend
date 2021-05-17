@@ -10,7 +10,6 @@ import {
   FONT_WEIGHTS,
 } from '@govuk-react/constants'
 
-import { VARIANTS } from '../../../common/constants'
 import { investments } from '../../../lib/urls'
 import { STAGES } from './constants'
 
@@ -18,7 +17,7 @@ import InvestmentEstimatedLandDate from './InvestmentEstimatedLandDate'
 import InvestmentTimeline from './InvestmentTimeline'
 import InvestmentDetails from './InvestmentDetails'
 import InvestmentNextSteps from './InvestmentNextSteps'
-import ToggleSection from '../ToggleSection'
+import { NoHighlightToggleSection } from '../ToggleSection'
 import Tag from '../Tag'
 
 const ListItem = styled('li')`
@@ -148,10 +147,9 @@ const InvestmentListItem = ({
           </Button>
         </ListItemHeaderActionContainer>
       </ListItemHeaderContainer>
-      <ToggleSection
+      <NoHighlightToggleSection
         id={id}
         label={project_code}
-        variant={VARIANTS.TERTIARY}
         data-test="project-details"
       >
         <Row>
@@ -179,7 +177,7 @@ const InvestmentListItem = ({
             </Col>
           )}
         </Row>
-      </ToggleSection>
+      </NoHighlightToggleSection>
     </ListItem>
   )
 }

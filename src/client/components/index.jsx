@@ -51,7 +51,11 @@ export { default as SecondaryButton } from './SecondaryButton'
 export { default as ReadMore } from './ReadMore'
 export { default as RoutedAdvisersTypeahead } from './RoutedAdvisersTypeahead'
 export { default as RoutedTypeahead } from './RoutedTypeahead'
-export { default as ToggleSection } from './ToggleSection'
+export {
+  DashboardToggleSection,
+  NoHighlightToggleSection,
+  ToggleSection,
+} from './ToggleSection'
 export { default as RoutedDateField } from './RoutedDateField'
 export { default as RoutedPagination } from './RoutedPagination'
 export { default as FilteredCollectionList } from './FilteredCollectionList'
