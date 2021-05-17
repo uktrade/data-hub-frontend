@@ -1,6 +1,6 @@
 /* eslint-disable */
 /**
- * Adds a Cypress command whith nice logging. In particular, solves the problem
+ * Adds a Cypress command with nice logging. In particular, solves the problem
  * when the created shapshot doesn't highlight the selected DOM element.
  * @param {Object} options
  * @param {String} options.name - The command name
@@ -248,4 +248,29 @@ Cypress.Commands.add('setAdviserId', (id) => {
 
 Cypress.Commands.add('resetUser', () => {
   return cy.request('POST', `${Cypress.env('sandbox_url')}/whoami`)
+})
+
+Cypress.Commands.add('initA11y', (options = {}) => {
+  cy.injectAxe();
+  cy.configureAxe(options)
+})
+
+Cypress.Commands.add('runA11y', (context = null, options = null) => {
+  cy.checkA11y(context, options, (violations) => {
+    const hasOneErr = violations.length === 1
+    const msg = `${violations.length} a11y violation${hasOneErr ? '' : 's'}` +
+      `${hasOneErr ? 'was' : 'were'} detected`
+
+    cy.task('log', msg)
+    cy.task('log',   violations.map(
+      ({ id, impact, description, help, helpUrl, nodes }) => ({
+        id,
+        impact,
+        description,
+        help,
+        helpUrl,
+        nodes: nodes.length,
+      })
+    ))
+  })
 })
