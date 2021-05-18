@@ -63,6 +63,7 @@ describe('With Zipkin headers', () => {
 
     expect(requestStub.firstCall.lastArg.headers).deep.equals({
       Authorization: 'Bearer fake-token',
+      'Content-Type': 'application/json',
       'x-b3-spanid': 'fake-span-id',
       'x-b3-traceid': 'fake-trace-id',
     })
