@@ -1,4 +1,4 @@
-const rp = require('request-promise')
+const request = require('../../lib/request')
 const { trim } = require('lodash')
 
 const hawkRequest = require('../../lib/hawk-request')
@@ -14,8 +14,8 @@ function lookupAddress(postcode) {
       .replace('{postcode}', formattedPostcode)
       .replace('{api-key}', postcodeKey)
 
-    rp({ url, json: true })
-      .then((data) => {
+    request(url)
+      .then(({ data }) => {
         const parsed = parsePostcodeResult(data, postcode.toLocaleUpperCase())
         resolve(parsed)
       })

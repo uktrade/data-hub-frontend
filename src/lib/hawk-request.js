@@ -1,67 +1,64 @@
-const request = require('request')
 const hawk = require('@hapi/hawk')
 const config = require('../config')
+const request = require('./request')
 
 function getHawkHeader(credentials, requestOptions) {
   if (config.isTest) {
     return 'hawk-test-header'
   }
 
-  const { uri, method } = requestOptions
+  const { url, method } = requestOptions
 
   // Generate Authorization request header
   // Ensure backend is using same protocol for hash generation
-  return hawk.client.header(uri, method, {
+  return hawk.client.header(url, method, {
     credentials,
     payload: '',
     contentType: '',
   })
 }
 
-function createPromiseRequest(
-  requestOptions,
-  credentials,
-  clientHeaderArtifacts
-) {
-  return new Promise((resolve, reject) => {
-    request(requestOptions, (err, response, responseBody) => {
-      if (err) {
-        return reject(new Error(err))
-      }
-      if (!config.isTest) {
-        let isValid = false
-        try {
-          // Authenticate the server's response must use raw response body here
-          isValid = hawk.client.authenticate(
-            response,
-            credentials,
-            clientHeaderArtifacts,
-            { payload: responseBody }
-          )
-        } catch (e) {
-          const err = new Error('Unable to validate response')
-          err.rootError = e
-          return reject(err)
-        }
+async function hawkRequest(requestOptions, credentials, clientHeaderArtifacts) {
+  const response = await request(requestOptions)
 
-        if (!isValid) {
-          return reject(new Error('Invalid response'))
-        }
-      }
-      const body = JSON.parse(responseBody)
-
-      const statusCode = response.statusCode
-      if (statusCode >= 200 && statusCode < 300) {
-        return resolve(body)
-      }
-      const error = new Error(
-        `Got a ${statusCode} response code for ${requestOptions.uri}`
+  if (!config.isTest) {
+    let isValid = false
+    try {
+      // Authenticate the server's response must use raw response body here
+      isValid = hawk.client.authenticate(
+        response,
+        credentials,
+        clientHeaderArtifacts,
+        { payload: JSON.stringify(response.data || {}) }
       )
-      error.responseBody = body
+    } catch (e) {
+      const err = new Error('Unable to validate response')
+      err.rootError = e
+      throw err
+    }
 
-      return reject(error)
-    })
-  })
+    if (!isValid) {
+      throw new Error('Invalid response')
+    }
+  }
+
+  if (response.status < 200 || response.status >= 300) {
+    const error = new Error(
+      `Got a ${response.status} response code for ${requestOptions.uri}`
+    )
+    error.responseBody = response.data
+    throw error
+  }
+
+  return response.data
+}
+
+function hawkRequestPromise(...params) {
+  return new Promise((resolve, reject) =>
+    hawkRequest(...params)
+      .then((response) => resolve(response))
+      .catch((error) => reject(new Error(error)))
+  )
 }
 
 async function sendHawkRequest(
@@ -72,7 +69,7 @@ async function sendHawkRequest(
     throw new Error('Uri is required')
   }
   const requestOptions = {
-    uri,
+    url: uri,
     method: 'GET',
     headers: {
       accept: 'application/json',
@@ -80,13 +77,9 @@ async function sendHawkRequest(
   }
 
   const clientHeader = getHawkHeader(credentials, requestOptions)
-  requestOptions.headers.Authorization = clientHeader.header
+  requestOptions.headers.Authorization = clientHeader.header || clientHeader
 
-  return createPromiseRequest(
-    requestOptions,
-    credentials,
-    clientHeader.artifacts
-  )
+  return hawkRequestPromise(requestOptions, credentials, clientHeader.artifacts)
 }
 
 module.exports = sendHawkRequest

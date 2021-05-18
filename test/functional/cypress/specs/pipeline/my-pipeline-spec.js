@@ -43,7 +43,7 @@ function assertPipelineItem(
           'href',
           urls.pipeline.unarchive(result.id)
         )
-        cy.contains('Archive this project').should('not.exist')
+        cy.contains('archive this').should('not.exist')
         cy.get('span[aria-label="Likelihood to succeed"]').within(() => {
           cy.contains('Archived')
             .should('have.backgroundColour', TAG_COLOURS.grey.background)
@@ -63,7 +63,7 @@ function assertPipelineItem(
           'href',
           urls.pipeline.edit(result.id)
         )
-        cy.contains('Archive this project').should(
+        cy.contains('archive this').should(
           'have.attr',
           'href',
           urls.pipeline.archive(result.id)
@@ -75,7 +75,7 @@ function assertPipelineItem(
           'href',
           urls.pipeline.edit(result.id)
         )
-        cy.contains('Archive this project').should(
+        cy.contains('archive this').should(
           'have.attr',
           'href',
           urls.pipeline.archive(result.id)

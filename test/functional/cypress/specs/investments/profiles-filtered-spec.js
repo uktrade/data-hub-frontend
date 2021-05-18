@@ -99,7 +99,7 @@ describe('Investor profiles filters', () => {
   })
 
   typeaheadFilterTestCases({
-    filterName: 'Asset class',
+    filterName: 'Sector of interest',
     selector: 'asset-class-filter',
     cases: [
       {
@@ -184,8 +184,8 @@ describe('Investor profiles filters', () => {
   })
 
   inputFilterTestCases({
-    filterName: 'Investable capital min',
-    selector: '[aria-label="Investable capital min"]',
+    filterName: 'Investable capital £ min',
+    selector: '[aria-label="Investable capital £ min"]',
     cases: [
       {
         text: '1000',
@@ -207,8 +207,8 @@ describe('Investor profiles filters', () => {
   })
 
   inputFilterTestCases({
-    filterName: 'Investable capital max',
-    selector: '[aria-label="Investable capital max"]',
+    filterName: 'Investable capital £ max',
+    selector: '[aria-label="Investable capital £ max"]',
     cases: [
       {
         text: '999',
@@ -230,8 +230,8 @@ describe('Investor profiles filters', () => {
   })
 
   inputFilterTestCases({
-    filterName: 'Global assets under management min',
-    selector: '[aria-label="Global assets under management min"]',
+    filterName: 'Global assets under management £ min',
+    selector: '[aria-label="Global assets under management £ min"]',
     cases: [
       {
         text: '1000',
@@ -253,8 +253,8 @@ describe('Investor profiles filters', () => {
   })
 
   inputFilterTestCases({
-    filterName: 'Global assets under management max',
-    selector: '[aria-label="Global assets under management max"]',
+    filterName: 'Global assets under management £ max',
+    selector: '[aria-label="Global assets under management £ max"]',
     cases: [
       {
         text: '999',

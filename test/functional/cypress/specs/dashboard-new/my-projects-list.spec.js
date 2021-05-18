@@ -1,11 +1,29 @@
-const urls = require('../../../../../src/lib/urls')
-
-const projectID = '5d341b34-1fc8-4638-b4b1-a0922ebf401e'
+import urls from '../../../../../src/lib/urls'
+import {
+  investmentProjectFaker,
+  investmentProjectListFaker,
+} from '../../fakers/investment-projects'
+import { INVESTMENT_PROJECT_STAGES } from '../../fakers/constants'
 
 describe('Dashboard - My projects list', () => {
+  const project1 = investmentProjectFaker({
+    stage: INVESTMENT_PROJECT_STAGES.active,
+  })
+  const otherProjects = investmentProjectListFaker(2)
+
+  const myProjects = [project1, ...otherProjects]
+
   before(() => {
     cy.setUserFeatures(['personalised-dashboard'])
+    cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
+      body: {
+        count: myProjects.length,
+        results: myProjects,
+      },
+    }).as('apiRequest')
     cy.visit('/')
+    cy.wait('@apiRequest')
+    cy.get('[data-test="tablist"] span:first-child button').click()
   })
 
   after(() => {
@@ -19,15 +37,19 @@ describe('Dashboard - My projects list', () => {
   it('should contain a project title which links to the project', () => {
     cy.get('@firstListItem')
       .find('[data-test="project-header"]')
-      .should('have.text', 'New metro system (legacy project)')
+      .should('have.text', project1.name)
       .find('a')
-      .should('have.attr', 'href', urls.investments.projects.details(projectID))
+      .should(
+        'have.attr',
+        'href',
+        urls.investments.projects.details(project1.id)
+      )
   })
 
   it('should contain a status tag', () => {
     cy.get('@firstListItem')
-      .find('[data-test="project-status-tag"]')
-      .should('have.text', 'Won')
+      .find('[data-test="project-stage-tag"]')
+      .should('have.text', project1.stage.name)
   })
 
   it('should contain a button to view interactions', () => {
@@ -37,7 +59,7 @@ describe('Dashboard - My projects list', () => {
       .should(
         'have.attr',
         'href',
-        urls.investments.projects.interactions.index(projectID)
+        urls.investments.projects.interactions.index(project1.id)
       )
   })
 })

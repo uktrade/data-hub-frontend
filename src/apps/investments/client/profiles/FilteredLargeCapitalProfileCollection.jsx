@@ -9,6 +9,7 @@ import {
   RoutedTypeahead,
   ToggleSection,
 } from '../../../../client/components/'
+import { VARIANTS } from '../../../../common/constants'
 import RoutedInputField from '../../../../client/components/RoutedInputField'
 import RoutedNumericRangeField from '../../../../client/components/RoutedNumericRangeField'
 import { TASK_GET_PROFILES_LIST, ID } from './state'
@@ -189,14 +190,14 @@ const LargeCapitalProfileCollection = ({
             <ToggleSection
               id="FilteredLargeCapitalProfileCollection.core-filters"
               label="Core filters"
-              variant="SECONDARY"
+              variant={VARIANTS.SECONDARY}
             >
               <RoutedTypeahead
                 isMulti={true}
-                legend="Asset class"
+                legend="Sector of interest"
                 name="asset-class"
                 qsParam={QS_PARAMS.assetClassesOfInterest}
-                placeholder="Search asset class"
+                placeholder="Search sector of interest"
                 options={filterOptions.assetClassesOfInterest}
                 selectedOptions={selectedAssetClassesOfInterest}
                 data-test="asset-class-filter"
@@ -222,7 +223,7 @@ const LargeCapitalProfileCollection = ({
             <ToggleSection
               id="FilteredLargeCapitalProfileCollection.investor-details-filters"
               label="Investor details"
-              variant="SECONDARY"
+              variant={VARIANTS.SECONDARY}
             >
               <RoutedTypeahead
                 isMulti={true}
@@ -237,12 +238,12 @@ const LargeCapitalProfileCollection = ({
               <RoutedNumericRangeField
                 qsParam={QS_PARAMS.globalAssetsUnderManagement}
                 id="LargeCapitalProfileCollection.global-assets-under-management"
-                label="Global assets under management"
+                label="Global assets under management £"
               />
               <RoutedNumericRangeField
                 qsParam={QS_PARAMS.investableCapital}
                 id="LargeCapitalProfileCollection.investable-capital"
-                label="Investable capital"
+                label="Investable capital £"
               />
               <RoutedTypeahead
                 isMulti={true}
@@ -258,7 +259,7 @@ const LargeCapitalProfileCollection = ({
             <ToggleSection
               id="FilteredLargeCapitalProfileCollection.investor-requirements-filters"
               label="Investor requirements"
-              variant="SECONDARY"
+              variant={VARIANTS.SECONDARY}
             >
               <RoutedTypeahead
                 isMulti={true}
@@ -344,7 +345,7 @@ const LargeCapitalProfileCollection = ({
             <ToggleSection
               id="FilteredLargeCapitalProfileCollection.location-filters"
               label="Location"
-              variant="SECONDARY"
+              variant={VARIANTS.SECONDARY}
             >
               <RoutedTypeahead
                 isMulti={true}

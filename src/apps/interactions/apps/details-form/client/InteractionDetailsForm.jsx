@@ -23,8 +23,6 @@ import {
   addMessage,
   addMessageWithBody,
 } from '../../../../../client/utils/flash-messages'
-import { TRADE_AGREEMENT_IMPLEMENTATION_ACTIVITY } from '../../../constants'
-import { OPTION_NO } from '../../../../constants'
 
 const getReturnLink = (
   companyId,
@@ -103,20 +101,9 @@ const InteractionDetailsForm = ({
                 initialValues={initialValues}
                 submissionError={saveInteractionTask.errorMessage}
                 onSubmit={(values) => {
-                  const trade_agreements_not_applicable = !(
-                    values.service ===
-                      TRADE_AGREEMENT_IMPLEMENTATION_ACTIVITY &&
-                    values.has_related_trade_agreements
-                  )
-                  let newValues = { ...values }
-
-                  if (trade_agreements_not_applicable) {
-                    newValues.has_related_trade_agreements = OPTION_NO
-                  }
-
                   saveInteractionTask.start({
                     payload: {
-                      values: newValues,
+                      values,
                       companyId,
                       referralId,
                       isTradeAgreementInteractionEnabled,
