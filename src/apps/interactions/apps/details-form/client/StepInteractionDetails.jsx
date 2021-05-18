@@ -259,15 +259,6 @@ const StepInteractionDetails = ({
           required="Answer if this interaction relates to a named trade agreement"
           options={OPTIONS_YES_NO}
         />
-        {values.has_related_trade_agreements === OPTION_YES && (
-          <FieldTradeAgreementList
-            name="related_trade_agreements"
-            label="Related named trade agreement(s)"
-            required="Select at least one named trade agreement"
-            placeholder="-- Select named trade agreement --"
-            options={relatedTradeAgreements}
-          />
-        )}
 
         {values.has_related_trade_agreements === OPTION_YES && (
           <FieldAddAnother
