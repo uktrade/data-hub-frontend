@@ -42,7 +42,7 @@ storiesOf('Forms/FieldAddAnother', module)
         <>
           <FieldAddAnother
             name="related_trade_agreements"
-            label="Related Trade Agreements"
+            label="Related named trade agreement(s)"
             data-test-prefix="trade-agreement-field-"
             required="Select at least one Trade Agreement"
             item-name="trade agreement"

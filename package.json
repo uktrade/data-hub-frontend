@@ -129,7 +129,6 @@
     "numeral": "^2.0.6",
     "nunjucks": "^3.2.3",
     "nunjucks-markdown": "^2.0.1",
-    "ordinal": "^1.0.3",
     "pluralize": "^8.0.0",
     "postcss-cli": "^7.1.2",
     "postcss-loader": "^4.1.0",
