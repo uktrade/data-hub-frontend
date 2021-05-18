@@ -9,11 +9,13 @@ import {
 } from '../../../../../client/actions'
 
 const LargeCapitalOpportunityCollection = ({
-  page,
   count,
   results,
+  payload,
   onPageClick,
+  activePage,
   isComplete,
+  optionMetadata,
 }) => (
   <CollectionList
     taskProps={{
@@ -21,20 +23,21 @@ const LargeCapitalOpportunityCollection = ({
       id: ID,
       progressMessage: 'loading opportunities...',
       startOnRender: {
-        payload: { page },
+        payload: { payload, activePage },
         onSuccessDispatch: INVESTMENTS__OPPORTUNITIES_LOADED,
       },
     }}
-    collectionName="Opportunity"
+    collectionName="opportunity"
     items={results}
     count={count}
     onPageClick={onPageClick}
-    activePage={page}
+    activePage={activePage}
     isComplete={isComplete}
     entityName="opportunity"
     entityNamePlural="opportunities"
     addItemUrl="/investments/opportunities/create"
     baseDownloadLink="/investments/opportunities/export"
+    sortOptions={optionMetadata.sortOptions}
   />
 )
 

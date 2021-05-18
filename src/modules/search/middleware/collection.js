@@ -33,7 +33,9 @@ function exportCollection(searchEntity) {
       req,
     })
       .then((apiReq) => {
-        return apiReq.pipe(res)
+        res.set('Content-Type', apiReq.headers['content-type'])
+        res.set('Content-Disposition', apiReq.headers['content-disposition'])
+        return apiReq.data.pipe(res)
       })
       .catch((error) => {
         return next(error)

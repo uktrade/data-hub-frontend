@@ -21,5 +21,6 @@ module.exports = {
     return `article > ol > li:nth-child(${entityRow}) div.c-meta-list__item:nth-child(${badgeNum}) .c-badge`
   },
   sort: '#field-sortby',
+  sortBy: '[name="sortBy"] > select',
   totalValue: '.c-collection__total-cost__value',
 }

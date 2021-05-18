@@ -3,18 +3,30 @@ import {
   generateFinancialYearLabel,
 } from '../../../../../src/client/utils/date-utils'
 
-const PROSPECT_ID = '8a320cc9-ae2e-443e-9d26-2f36452c2ced'
-const ASSIGN_PM_ID = 'c9864359-fb1a-4646-a4c1-97d10189fc03'
-const ACTIVE_ID = '7606cc19-20da-4b74-aba1-2cec0d753ad8'
-const VERIFY_WIN_ID = '49b8f6f3-0c50-4150-a965-2c974f3149e3'
-const WON_ID = '945ea6d1-eee3-4f5b-9144-84a75b71b8e6'
+import { INVESTMENT_PROJECT_STAGES_LIST } from '../../fakers/constants'
+import { investmentProjectSummaryFaker } from '../../fakers/investment-project-summary'
 
-const ADVISER_ID = 'e83a608e-84a4-11e6-ae22-56b6b6499622'
+// Adviser id is currently set in the node layer, so we have to set to the
+// value in sandbox
+const MY_ADVISER_ID = '7d19d407-9aec-4d06-b190-d3f404627f21'
 
 describe('Investment projects summary', () => {
+  const myInvestmentProjectSummary = investmentProjectSummaryFaker()
+  const currentAnnualTotals =
+    myInvestmentProjectSummary.annual_summaries[1].totals
+  const projectCount = Object.entries(currentAnnualTotals)
+    .map(([, stage]) => stage.value)
+    .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+
   before(() => {
     cy.setUserFeatures(['personalised-dashboard'])
+    cy.intercept(
+      'GET',
+      `/api-proxy/v4/adviser/${MY_ADVISER_ID}/investment-summary`,
+      { body: myInvestmentProjectSummary }
+    ).as('apiRequest')
     cy.visit('/')
+    cy.wait('@apiRequest')
   })
 
   after(() => {
@@ -44,7 +56,6 @@ describe('Investment projects summary', () => {
 
     it('should display a date select with options in the correct order', () => {
       const yearStart = getFinancialYearStart(new Date())
-
       const expectedOptions = [
         {
           label: `Current financial year (${generateFinancialYearLabel(
@@ -88,20 +99,23 @@ describe('Investment projects summary', () => {
         'Change to table and accessible view'
       )
     })
+
     it('should display an SVG representing a chart', () => {
       cy.get('[data-test="pie-chart"]').find('svg').should('exist')
     })
-    it('should display 7 projects', () => {
+
+    it('should display the correct project count', () => {
       cy.get('[data-test="pie-chart"]')
-        .should('contain', '7')
+        .should('contain', projectCount)
         .should('contain', 'Projects')
     })
-    it('should display a chart legend of all five stages', () => {
+
+    it('should display a chart legend of all the stages', () => {
       cy.get('[data-test="pie-chart"]')
         .should('contain', 'Prospect')
         .should('contain', 'Assign PM')
         .should('contain', 'Active')
-        .should('contain', 'Verify Win')
+        .should('contain', 'Verify win')
         .should('contain', 'Won')
     })
   })
@@ -110,26 +124,29 @@ describe('Investment projects summary', () => {
     before(() => {
       cy.get('[data-test="toggle-views"]').click()
     })
+
     it('should display a button "Change to chart view"', () => {
       cy.get('[data-test="toggle-views"]').should(
         'contain',
         'Change to chart view'
       )
     })
+
     it('should display project information within a blue box', () => {
       cy.get('[data-test="investment-project-total"]')
         .should('contain', 'Current year')
-        .should('contain', '7')
+        .should('contain', projectCount)
         .should('contain', 'Projects')
     })
-    it('should display a table with 6 rows and two columns', () => {
+
+    it('should display a table with rows for each stage', () => {
       const table = [
         ['Stage', 'Projects'],
-        ['Prospect', 3],
-        ['Assign PM', 0],
-        ['Active', 0],
-        ['Verify Win', 1],
-        ['Won', 3],
+        ['Prospect', currentAnnualTotals.prospect.value],
+        ['Assign PM', currentAnnualTotals.assign_pm.value],
+        ['Active', currentAnnualTotals.active.value],
+        ['Verify win', currentAnnualTotals.verify_win.value],
+        ['Won', currentAnnualTotals.won.value],
       ]
       cy.get('[data-test="investment-project-table"]')
         .find('tr')
@@ -141,13 +158,14 @@ describe('Investment projects summary', () => {
             })
         })
     })
-    it('should have five hyperlinks, one for each stage', () => {
-      const IDS = [PROSPECT_ID, ASSIGN_PM_ID, ACTIVE_ID, VERIFY_WIN_ID, WON_ID]
+
+    it('should have hyperlinks for each stage', () => {
+      const IDS = INVESTMENT_PROJECT_STAGES_LIST.map((stage) => stage.id)
       const TITLES = [
         'View Prospect',
         'View Assign PM',
         'View Active',
-        'View Verify Win',
+        'View Verify win',
         'View Won',
       ]
       cy.get('[data-test="investment-project-table"]')
@@ -158,7 +176,7 @@ describe('Investment projects summary', () => {
             .should(
               'have.attr',
               'href',
-              `/investments/projects?stage=${IDS[i]}&adviser=${ADVISER_ID}`
+              `/investments/projects?stage=${IDS[i]}&adviser=${MY_ADVISER_ID}`
             )
             .should('have.attr', 'title', TITLES[i])
         })

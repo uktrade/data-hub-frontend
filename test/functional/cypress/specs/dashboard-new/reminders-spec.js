@@ -1,41 +1,65 @@
-const { format } = require('date-fns')
-const urls = require('../../../../../src/lib/urls')
-
-const UNIVERSITY_PROJECT_CODE = 'DHP-00000004'
-const UNIVERSITY_PROJECT_ID = '18750b26-a8c3-41b2-8d3a-fb0b930c2270'
-const UNIVERSITY_PROPOSITION_NAME = 'Univeristy Proposition'
+import { addDays, format } from 'date-fns'
+import faker from 'faker'
+import urls from '../../../../../src/lib/urls'
+import {
+  propositionFaker,
+  propositionListFaker,
+} from '../../fakers/propositions'
 
 describe('Dashboard reminders', () => {
+  const tomorrow = addDays(new Date(), 1)
+  const proposition1 = propositionFaker({
+    name: 'University Proposition',
+    investment_project: {
+      name: 'University buildings',
+      project_code: 'DHP-00007004',
+      id: faker.datatype.uuid(),
+    },
+    deadline: tomorrow,
+  })
+  const myPropositions = [proposition1, ...propositionListFaker(2)]
+
+  before(() => {
+    cy.setUserFeatures(['personalised-dashboard'])
+  })
+
+  after(() => {
+    cy.resetUser()
+  })
+
+  beforeEach(() => {
+    cy.get('[data-test="investment-reminders"]').as('investmentReminders')
+    cy.get('[data-test="investment-reminders-section"]')
+      .as('investmentRemindersSection')
+      .find('[data-test="toggle-section-button"]')
+      .as('investmentRemindersToggleButton')
+      .find('[data-test="toggle-section-button-content"]')
+      .as('investmentRemindersHeading')
+  })
+
   context('View reminders', () => {
     before(() => {
-      cy.setUserFeatures(['personalised-dashboard'])
+      cy.intercept('GET', '/api-proxy/v4/proposition', {
+        body: {
+          count: myPropositions.length,
+          results: myPropositions,
+        },
+      }).as('apiRequest')
       cy.visit('/')
-    })
-
-    after(() => {
-      cy.resetUser()
+      cy.wait('@apiRequest')
     })
 
     beforeEach(() => {
-      cy.get('[data-test="investment-reminders"]').as('investmentReminders')
-      cy.get('[data-test="investment-reminders-section"]')
-        .find('[data-test="toggle-section-button-content"]')
-        .as('investmentRemindersHeading')
-      cy.get('[data-test="investment-reminders-section"]')
-        .find('[data-test="notification-badge"]')
-        .as('investmentRemindersBadge')
-      cy.get('[data-test="outstanding-propositions-heading"]').as(
-        'outstandingPropositionsHeading'
-      )
       cy.get('[data-test="outstanding-propositions"]')
         .as('outstandingPropositions')
         .find('[data-test="outstanding-propositions-list"]')
         .as('outstandingPropositionsList')
+      cy.get('[data-test="notification-badge"]').as('notificationBadge')
     })
 
     it('should contain a notification badge in the reminders heading', () => {
       cy.get('@investmentRemindersHeading').should('contain.text', 'Reminders')
-      cy.get('@investmentRemindersBadge').should('have.text', '3')
+      cy.get('@notificationBadge').should('have.text', '3')
     })
 
     it('should contain elements in the correct order', () => {
@@ -47,7 +71,7 @@ describe('Dashboard reminders', () => {
     })
 
     it('should contain a heading', () => {
-      cy.get('@outstandingPropositionsHeading')
+      cy.get('[data-test="outstanding-propositions-heading"]')
         .should('have.text', 'Outstanding propositions (3)')
         .should('have.css', 'color', 'rgb(212, 53, 28)')
     })
@@ -61,30 +85,31 @@ describe('Dashboard reminders', () => {
 
       cy.get('@outstandingProposition')
         .find('a')
-        .should('have.text', UNIVERSITY_PROPOSITION_NAME)
+        .should('have.text', proposition1.name)
         .should(
           'have.attr',
           'href',
-          urls.investments.projects.propositions(UNIVERSITY_PROJECT_ID)
+          urls.investments.projects.propositions(
+            proposition1.investment_project.id
+          )
         )
 
       cy.get('@outstandingProposition')
         .find('[data-test="outstanding-proposition-project-code"]')
-        .should('have.text', UNIVERSITY_PROJECT_CODE)
+        .should('have.text', proposition1.investment_project.project_code)
 
       cy.get('@outstandingProposition')
         .find('[data-test="outstanding-proposition-deadline"]')
-        .should('have.text', `Due ${format(new Date(), 'E, dd MMM yyyy')}`)
+        .should('have.text', `Due ${format(tomorrow, 'E, dd MMM yyyy')}`)
 
       cy.get('@outstandingProposition')
         .find('[data-test="outstanding-proposition-countdown"]')
-        .should('have.text', '0 days')
+        .should('have.text', '1 day')
     })
   })
 
   context('View empty reminders', () => {
     before(() => {
-      cy.setUserFeatures(['personalised-dashboard'])
       cy.intercept('GET', '/api-proxy/v4/proposition', {
         body: {
           count: 0,
@@ -93,10 +118,6 @@ describe('Dashboard reminders', () => {
       }).as('apiRequest')
       cy.visit('/')
       cy.wait('@apiRequest')
-    })
-
-    after(() => {
-      cy.resetUser()
     })
 
     it('should contain a heading', () => {
@@ -121,16 +142,7 @@ describe('Dashboard reminders', () => {
 
   context('Toggle section', () => {
     before(() => {
-      cy.setUserFeatures(['personalised-dashboard'])
       cy.visit('/')
-      cy.get('[data-test="investment-reminders"]').as('investmentReminders')
-      cy.get('[data-test="investment-reminders-section"]')
-        .find('[data-test="toggle-section-button"]')
-        .as('investmentRemindersToggleButton')
-    })
-
-    after(() => {
-      cy.resetUser()
     })
 
     it('should be in a togglable section that starts opened', () => {

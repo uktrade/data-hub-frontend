@@ -5,10 +5,11 @@ const { format, parseISO } = require('date-fns')
 
 const { DATE_LONG_FORMAT } = require('../../../../../common/constants')
 
-export function getOpportunities() {
+export function getOpportunities({ activePage, payload }) {
   return apiProxyAxios
-    .get('/v4/large-capital-opportunity')
+    .post('/v4/search/large-capital-opportunity', { ...payload })
     .then(({ data } = data) => {
+      const offset = activePage * 10 - 10
       const getArrayNames = (data) => data.map((d) => d.name)
       function transformInvestmentOpportunitiesList({
         name,
@@ -36,7 +37,9 @@ export function getOpportunities() {
       }
       return {
         count: data.count,
-        results: data.results.map(transformInvestmentOpportunitiesList),
+        results: data.results
+          .slice(offset, offset + 10)
+          .map(transformInvestmentOpportunitiesList),
       }
     })
 }

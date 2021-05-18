@@ -20,6 +20,9 @@ const {
 const { renderCompanyList } = require('./controllers/list')
 const { renderDetails } = require('./controllers/details')
 
+// New react view (in progress) - to replace 'renderCompanyList' when finished
+const { renderCompaniesView } = require('./controllers/companies')
+
 const { renderBusinessDetails } = require('./apps/business-details/controllers')
 
 const { renderOrders } = require('./controllers/orders')
@@ -98,6 +101,8 @@ router.get(
   getCollection('company', ENTITIES, transformCompanyToListItem),
   renderCompanyList
 )
+// New react route (to replace the old companies list route above when complete)
+router.get(urls.companies.react.index.route, renderCompaniesView)
 
 router.get(
   urls.companies.export.route,

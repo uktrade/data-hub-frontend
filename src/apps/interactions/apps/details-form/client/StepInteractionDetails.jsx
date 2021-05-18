@@ -31,7 +31,6 @@ import { useFormContext } from '../../../../../client/components/Form/hooks'
 import {
   SERVICE_CONTEXTS,
   SERVICE_DELIVERY_STATUS_COMPLETED,
-  TRADE_AGREEMENT_IMPLEMENTATION_ACTIVITY,
   THEMES,
   KINDS,
 } from '../../../constants'
@@ -182,8 +181,6 @@ const StepInteractionDetails = ({
   const selectedServiceId = values.service_2nd_level || values.service
   const selectedService = services.find((s) => s.value === selectedServiceId)
   const isServiceDelivery = values.kind === KINDS.SERVICE_DELIVERY
-  const isTradeAgreementImplementationActivity =
-    values.service === TRADE_AGREEMENT_IMPLEMENTATION_ACTIVITY
 
   const helpUrl = (position) =>
     urls.external.policyFeedbackHelp +
@@ -203,7 +200,11 @@ const StepInteractionDetails = ({
         intelligence section.
         <br />
         <br />
-        <NewWindowLink href={helpUrl(1)}>See more guidance</NewWindowLink>
+        Read more{' '}
+        <NewWindowLink href={helpUrl(1)}>
+          information and guidance
+        </NewWindowLink>{' '}
+        on this section.
       </InsetText>
 
       <FieldSelect
@@ -250,43 +251,51 @@ const StepInteractionDetails = ({
         </>
       )}
 
-      {isTradeAgreementImplementationActivity && values.service_2nd_level && (
-        <>
-          <FieldRadios
-            inline={true}
-            name="has_related_trade_agreements"
-            legend="Does this interaction relate to a Trade Agreement?"
-            required="Answer if this interaction relates to a trade agreement"
-            options={OPTIONS_YES_NO}
+      <>
+        <FieldRadios
+          inline={true}
+          name="has_related_trade_agreements"
+          legend="Does this interaction relate to a named trade agreement?"
+          required="Answer if this interaction relates to a named trade agreement"
+          options={OPTIONS_YES_NO}
+        />
+        {values.has_related_trade_agreements === OPTION_YES && (
+          <FieldTradeAgreementList
+            name="related_trade_agreements"
+            label="Related named trade agreement(s)"
+            required="Select at least one named trade agreement"
+            placeholder="-- Select named trade agreement --"
+            options={relatedTradeAgreements}
           />
-          {values.has_related_trade_agreements === OPTION_YES && (
-            <FieldAddAnother
-              name="related_trade_agreements"
-              label="Related Trade Agreements"
-              data-test-prefix="trade-agreement-field-"
-              required="Select at least one Trade Agreement"
-              item-name="trade agreement"
-            >
-              {({ value, onChange, error }) => (
-                <Typeahead
-                  name="related_trade_agreements"
-                  inputId="related_trade_agreements"
-                  label={''}
-                  options={relatedTradeAgreements}
-                  placeholder="-- Search trade agreements --"
-                  required="Select at least one Trade Agreement"
-                  aria-label="Select a trade agreement"
-                  value={relatedTradeAgreements.find(
-                    ({ value: option_value }) => option_value === value
-                  )}
-                  onChange={onChange}
-                  error={error}
-                />
-              )}
-            </FieldAddAnother>
-          )}
-        </>
-      )}
+        )}
+
+        {values.has_related_trade_agreements === OPTION_YES && (
+          <FieldAddAnother
+            name="related_trade_agreements"
+            label="Related Trade Agreements"
+            data-test-prefix="trade-agreement-field-"
+            required="Select at least one Trade Agreement"
+            item-name="trade agreement"
+          >
+            {({ value, onChange, error }) => (
+              <Typeahead
+                name="related_trade_agreements"
+                inputId="related_trade_agreements"
+                label={''}
+                options={relatedTradeAgreements}
+                placeholder="-- Search trade agreements --"
+                required="Select at least one Trade Agreement"
+                aria-label="Select a trade agreement"
+                value={relatedTradeAgreements.find(
+                  ({ value: option_value }) => option_value === value
+                )}
+                onChange={onChange}
+                error={error}
+              />
+            )}
+          </FieldAddAnother>
+        )}
+      </>
 
       <H3 as="h2">Participants</H3>
 

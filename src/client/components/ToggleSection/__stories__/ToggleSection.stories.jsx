@@ -47,6 +47,7 @@ storiesOf('ToggleSection', module)
         label="Toggle me"
         id="toggle.two"
         isOpen={true}
+        major={true}
         variant={VARIANTS.PRIMARY}
       >
         <FormStateful>
@@ -124,6 +125,65 @@ storiesOf('ToggleSection', module)
         label="Toggle me"
         id="toggle.six"
         variant={VARIANTS.SECONDARY}
+      >
+        <FormStateful>
+          {() => (
+            <FieldInput
+              label="Text"
+              hint="Some hint"
+              name="testField"
+              required="Enter text"
+              type="text"
+            />
+          )}
+        </FormStateful>
+      </ToggleSection>
+    </>
+  ))
+  .add('Tertiary - Single', () => (
+    <ToggleSection
+      label="Toggle me"
+      id="toggle.seven"
+      isOpen={true}
+      variant={VARIANTS.TERTIARY}
+    >
+      <FormStateful>
+        {() => (
+          <FieldInput
+            label="Text"
+            hint="Some hint"
+            name="testField"
+            required="Enter text"
+            type="text"
+          />
+        )}
+      </FormStateful>
+    </ToggleSection>
+  ))
+  .add('Tertiary - Multiple', () => (
+    <>
+      <ToggleSection
+        label="Toggle me"
+        id="toggle.eight"
+        isOpen={true}
+        variant={VARIANTS.TERTIARY}
+      >
+        <FormStateful>
+          {() => (
+            <FieldInput
+              label="Text"
+              hint="Some hint"
+              name="testField"
+              required="Enter text"
+              type="text"
+            />
+          )}
+        </FormStateful>
+      </ToggleSection>
+      <ToggleSection
+        label="Toggle me"
+        id="toggle.nine"
+        variant={VARIANTS.TERTIARY}
       >
         <FormStateful>
           {() => (
