@@ -80,6 +80,9 @@ import investmentProfileReducer from '../apps/investments/client/profiles/reduce
 import { ID as INVESTMENT_PROJECTS_ID } from '../apps/investments/client/projects/state'
 import investmentProjectsReducer from '../apps/investments/client/projects/reducer'
 
+import { ID as COMPANIES_ID } from '../apps/companies/client/state'
+import companiesReducer from '../apps/companies/client/reducer'
+
 import { ID as CHECK_FOR_INVESTMENTS_ID } from './components/PersonalisedDashboard/state'
 import personalDashboardReducer from './components/PersonalisedDashboard/reducer'
 
@@ -119,6 +122,7 @@ const store = createStore(
     router: connectRouter(history),
     tasks,
     [COMPANY_LISTS_STATE_ID]: companyListsReducer,
+    [COMPANIES_ID]: companiesReducer,
     [EXPORTS_HISTORY_ID]: exportsHistoryReducer,
     [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
     [REFERRALS_SEND_ID]: referralsSendReducer,
