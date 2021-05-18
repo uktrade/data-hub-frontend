@@ -263,7 +263,7 @@ const StepInteractionDetails = ({
         {values.has_related_trade_agreements === OPTION_YES && (
           <FieldAddAnother
             name="related_trade_agreements"
-            label="Related Trade Agreements"
+            label="Related named trade agreement(s)"
             data-test-prefix="trade-agreement-field-"
             required="Select at least one Trade Agreement"
             item-name="trade agreement"
@@ -272,7 +272,7 @@ const StepInteractionDetails = ({
               <Typeahead
                 name="related_trade_agreements"
                 inputId="related_trade_agreements"
-                label={''}
+                label=""
                 options={relatedTradeAgreements}
                 placeholder="-- Search trade agreements --"
                 required="Select at least one Trade Agreement"

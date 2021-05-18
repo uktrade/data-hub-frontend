@@ -16,7 +16,7 @@ When onChange is triggered for a given subfield the field value is set to an arr
   {(state) => (
     <FieldAddAnother
       name="related_trade_agreements"
-      label="Related Trade Agreements"
+      label="Related named trade agreement(s)"
       data-test-prefix="trade-agreement-field-"
       required="Select at least one Trade Agreement"
     >

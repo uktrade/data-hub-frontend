@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import ordinal from 'ordinal'
+import { indexToOrdinal } from '../../../../../client/utils/number-utils'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
@@ -126,7 +126,7 @@ const FieldAddAnother = ({
           {internalValue.map((item, index) => (
             <div
               role="region"
-              aria-label={`${ordinal(index + 1)} ${aria_item_name}`}
+              aria-label={`${indexToOrdinal(index + 1)} ${aria_item_name}`}
               data-test={`${data_test_prefix}${index}`}
               key={item.field_id}
             >
@@ -141,8 +141,8 @@ const FieldAddAnother = ({
                 <StyledLink>
                   <Link
                     href="#"
-                    aria-label={`Remove ${ordinal(
-                      index + 1
+                    aria-label={`Remove ${indexToOrdinal(
+                      index
                     )} ${aria_item_name}`}
                     onClick={(event) => {
                       removeValueById(item.field_id)
@@ -161,8 +161,8 @@ const FieldAddAnother = ({
                 appendNewFieldValue()
                 event.preventDefault()
               }}
-              aria-label={`Add a ${ordinal(
-                internalValue.length + 1
+              aria-label={`Add a ${indexToOrdinal(
+                internalValue.length
               )} ${aria_item_name}`}
             >
               Add another
