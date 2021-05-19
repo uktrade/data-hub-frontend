@@ -22,7 +22,8 @@ import {
   FieldSelect,
   FieldTextarea,
   FieldTypeahead,
-  FieldTradeAgreementList,
+  FieldAddAnother,
+  Typeahead,
 } from '../../../../../client/components'
 
 import { useFormContext } from '../../../../../client/components/Form/hooks'
@@ -258,14 +259,32 @@ const StepInteractionDetails = ({
           required="Answer if this interaction relates to a named trade agreement"
           options={OPTIONS_YES_NO}
         />
+
         {values.has_related_trade_agreements === OPTION_YES && (
-          <FieldTradeAgreementList
+          <FieldAddAnother
             name="related_trade_agreements"
             label="Related named trade agreement(s)"
-            required="Select at least one named trade agreement"
-            placeholder="-- Select named trade agreement --"
-            options={relatedTradeAgreements}
-          />
+            data-test-prefix="trade-agreement-field-"
+            required="Select at least one Trade Agreement"
+            item-name="trade agreement"
+          >
+            {({ value, onChange, error }) => (
+              <Typeahead
+                name="related_trade_agreements"
+                inputId="related_trade_agreements"
+                label=""
+                options={relatedTradeAgreements}
+                placeholder="-- Search trade agreements --"
+                required="Select at least one Trade Agreement"
+                aria-label="Select a trade agreement"
+                value={relatedTradeAgreements.find(
+                  ({ value: option_value }) => option_value === value
+                )}
+                onChange={onChange}
+                error={error}
+              />
+            )}
+          </FieldAddAnother>
         )}
       </>
 
