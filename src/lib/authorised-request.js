@@ -14,6 +14,7 @@ function parseConfig(req, opts) {
   const { responseType = 'json' } = opts
   const defaults = {
     headers: {
+      ...(responseType == 'json' ? { 'Content-Type': 'application/json' } : {}),
       ...opts.headers,
       ...getZipkinHeaders(req),
       ...(token ? { Authorization: `Bearer ${token}` } : null),

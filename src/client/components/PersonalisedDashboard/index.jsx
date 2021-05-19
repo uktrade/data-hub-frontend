@@ -7,8 +7,6 @@ import { connect } from 'react-redux'
 import { BLUE } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
-import { VARIANTS } from '../../../common/constants'
-
 import { ID as INVESTMENT_REMINDERS_ID } from '../InvestmentReminders/state'
 import {
   TASK_CHECK_FOR_INVESTMENTS,
@@ -17,7 +15,7 @@ import {
 import { MY_INVESTMENTS__CHECK_COMPLETE } from '../../actions'
 
 import NotificationBadge from '../NotificationBadge'
-import ToggleSection from '../ToggleSection'
+import { DashboardToggleSection } from '../ToggleSection'
 import Task from '../Task'
 
 import Aside from './Aside'
@@ -86,7 +84,7 @@ const PersonalisedDashboard = ({
             {hasInvestmentProjects && (
               <GridCol setWidth="one-third">
                 <Aside>
-                  <ToggleSection
+                  <DashboardToggleSection
                     label="Reminders"
                     id="investment-reminders-section"
                     badge={
@@ -96,21 +94,19 @@ const PersonalisedDashboard = ({
                     }
                     major={true}
                     isOpen={true}
-                    variant={VARIANTS.PRIMARY}
                     data-test="investment-reminders-section"
                   >
                     <InvestmentReminders adviser={adviser} />
-                  </ToggleSection>
+                  </DashboardToggleSection>
 
-                  <ToggleSection
+                  <DashboardToggleSection
                     label="Investment project summary"
                     id="investment-project-summary-section"
                     isOpen={true}
-                    variant={VARIANTS.PRIMARY}
                     data-test="investment-project-summary-section"
                   >
                     <InvestmentProjectSummary adviser={adviser} />
-                  </ToggleSection>
+                  </DashboardToggleSection>
                 </Aside>
               </GridCol>
             )}
