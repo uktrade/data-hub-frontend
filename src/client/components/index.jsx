@@ -38,7 +38,7 @@ export { default as FieldInput } from './Form/elements/FieldInput'
 export { default as FieldCheckboxes } from './Form/elements/FieldCheckboxes'
 export { default as FieldDate } from './Form/elements/FieldDate'
 export { default as FieldTypeahead } from './Form/elements/FieldTypeahead'
-export { default as FieldTradeAgreementList } from './Form/elements/FieldTradeAgreementList'
+export { default as FieldAddAnother } from './Form/elements/FieldAddAnother'
 export { default as FieldSelect } from './Form/elements/FieldSelect'
 export { default as FieldTextarea } from './Form/elements/FieldTextarea'
 export { default as FieldUneditable } from './Form/elements/FieldUneditable'
@@ -51,7 +51,11 @@ export { default as SecondaryButton } from './SecondaryButton'
 export { default as ReadMore } from './ReadMore'
 export { default as RoutedAdvisersTypeahead } from './RoutedAdvisersTypeahead'
 export { default as RoutedTypeahead } from './RoutedTypeahead'
-export { default as ToggleSection } from './ToggleSection'
+export {
+  DashboardToggleSection,
+  NoHighlightToggleSection,
+  ToggleSection,
+} from './ToggleSection'
 export { default as RoutedDateField } from './RoutedDateField'
 export { default as RoutedPagination } from './RoutedPagination'
 export { default as FilteredCollectionList } from './FilteredCollectionList'

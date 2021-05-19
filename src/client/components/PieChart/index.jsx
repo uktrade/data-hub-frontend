@@ -8,69 +8,70 @@ import {
   GRASS_GREEN,
   GREY_2,
 } from 'govuk-colours'
-import { FONT_WEIGHTS } from '@govuk-react/constants'
+import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import { ResponsivePie } from '@nivo/pie'
+import styled from 'styled-components'
 
-const segmentColours = [BLUE, TURQUOISE, GREEN, YELLOW, GRASS_GREEN]
+const segmentColours = [BLUE, TURQUOISE, GREEN, GRASS_GREEN, YELLOW]
 
-const CentredMetric = ({ dataWithArc, centerX, centerY }) => {
+const StyledPieContainer = styled('div')`
+  padding-top: ${SPACING.SCALE_3};
+  ${({ height }) => `height: ${height}px`}
+`
+
+const centredText = (text, fontSize, x, y) => (
+  <text
+    x={x}
+    y={y}
+    textAnchor="middle"
+    dominantBaseline="central"
+    style={{
+      fontSize: `${fontSize}px`,
+      fontWeight: FONT_WEIGHTS.bold,
+    }}
+  >
+    {text}
+  </text>
+)
+
+const CentredProjectTotal = ({ dataWithArc, centerX, centerY }) => {
   const total = dataWithArc.reduce(
     (accumulator, datum) => accumulator + datum.value,
     0
   )
 
-  const customY1 = centerY - 20
-  const customY2 = centerY + 20
   return (
     <>
-      <text
-        x={centerX}
-        y={customY1}
-        textAnchor="middle"
-        dominantBaseline="central"
-        style={{
-          fontSize: '80px',
-          fontWeight: FONT_WEIGHTS.bold,
-        }}
-      >
-        {total}
-      </text>
-      <text
-        x={centerX}
-        y={customY2}
-        textAnchor="middle"
-        dominantBaseline="central"
-        style={{
-          fontSize: '20px',
-          fontWeight: FONT_WEIGHTS.bold,
-        }}
-      >
-        Projects
-      </text>
+      {centredText(total, 80, centerX, centerY - 20)}
+      {centredText('Projects', 20, centerX, centerY + 30)}
     </>
   )
 }
 
 const PieChart = ({ data, height }) => (
-  <div style={{ height }}>
+  <StyledPieContainer height={height} data-test="pie-chart">
     <ResponsivePie
       theme={{
         fontSize: '16px',
       }}
       data={data}
       colors={segmentColours}
-      margin={{ top: 30, right: 0, bottom: 150, left: 0 }}
+      margin={{ top: 20, bottom: 150 }}
       startAngle={-90}
       innerRadius={0.75}
-      borderWidth={1}
-      borderColor="transparent"
-      radialLabelsSkipAngle={10}
-      radialLabel={(d) => d.value}
-      radialLabelsLinkColor={GREY_2}
-      radialLabelsTextColor={GREY_2}
-      radialLabelsLinkStrokeWidth={3}
-      enableSliceLabels={false}
-      layers={['slices', 'radialLabels', CentredMetric, 'legends']}
+      padAngle={0}
+      enableArcLabels={false}
+      arcLinkLabel="value"
+      arcLinkLabelsSkipAngle={10}
+      arcLinkLabelsOffset={3}
+      arcLinkLabelsColor={GREY_2}
+      arcLinkLabelsTextColor={GREY_2}
+      arcLinkLabelsThickness={3}
+      arcLinkLabelsDiagonalLength={9}
+      arcLinkLabelsStraightLength={12}
+      arcLinkLabelsTextOffset={2}
+      isInteractive={false}
+      layers={['arcs', 'arcLinkLabels', 'legends', CentredProjectTotal]}
       legends={[
         {
           anchor: 'bottom-left',
@@ -79,13 +80,13 @@ const PieChart = ({ data, height }) => (
           itemWidth: 100,
           itemHeight: 18,
           itemTextColor: '#999',
-          itemsSpacing: 5,
+          itemsSpacing: 8,
           symbolSize: 18,
           symbolShape: 'square',
         },
       ]}
     />
-  </div>
+  </StyledPieContainer>
 )
 
 PieChart.propTypes = {

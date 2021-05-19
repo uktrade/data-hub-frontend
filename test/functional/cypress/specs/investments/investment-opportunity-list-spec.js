@@ -33,17 +33,17 @@ describe('Investment opportunities', () => {
       cy.get('[data-test="collection-header"]')
         .find('a')
         .should('have.attr', 'href', investments.opportunities.create())
-        .should('have.text', 'Add Opportunity')
+        .should('have.text', 'Add opportunity')
     })
 
-    it('should display 4 profiles', () => {
-      cy.get('h3').should('have.length', 4)
+    it('should display 10 profiles', () => {
+      cy.get('h3').should('have.length', 10)
     })
 
     it('should display download profile text', () => {
       cy.get('[data-test="download-data-header"]').should(
         'contain',
-        'You can now download these 4 opportunities'
+        'You can now download these 12 opportunities'
       )
     })
 

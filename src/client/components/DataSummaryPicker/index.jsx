@@ -16,13 +16,17 @@ import Select from '../../../client/components/Select'
 import DataSummary from './DataSummary'
 
 const StyledSelect = styled(Select)`
+  display: block;
+  margin-bottom: 0;
   font-size: ${BODY_SIZES.XSMALL}px;
-  margin-bottom: ${SPACING.SCALE_5};
   span {
-    font-size: ${BODY_SIZES.SMALL}px;
+    font-size: ${BODY_SIZES.MEDIUM}px;
+    padding-bottom: 7px;
   }
   select {
-    font-size: ${BODY_SIZES.SMALL}px;
+    width: 100%;
+    margin-bottom: ${SPACING.SCALE_3};
+    font-size: ${BODY_SIZES.MEDIUM}px;
   }
 `
 
@@ -37,15 +41,16 @@ const DataSummaryPicker = ({
   )
   const data = get(selectedDataRange, 'range', [])
 
+  // This will be either 'Current', 'Previous' or 'Upcoming'
+  const yearText = get(selectedDataRange, 'label', '')?.split(' ')[0]
+
   return (
-    <DataSummary data={data} {...props}>
+    <DataSummary data={data} yearText={yearText} {...props}>
       <StyledSelect
         name="sortBy"
         label="Date range"
         input={{
-          onChange: (e) => {
-            onSelectDataRange(e.target.value)
-          },
+          onChange: (e) => onSelectDataRange(e.target.value),
         }}
         data-test="data-summary-select"
       >
@@ -60,7 +65,7 @@ const DataSummaryPicker = ({
 }
 
 DataSummaryPicker.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   subject: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   headers: PropTypes.array.isRequired,

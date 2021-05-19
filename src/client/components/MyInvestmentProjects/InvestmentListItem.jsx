@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Details } from 'govuk-react'
 import Button from '@govuk-react/button'
 import { BLUE, GREY_1 } from 'govuk-colours'
 import styled from 'styled-components'
@@ -11,14 +10,15 @@ import {
   FONT_WEIGHTS,
 } from '@govuk-react/constants'
 
-import icon from './assets/search-gov.uk.svg'
-import { Tag } from '../../components'
 import { investments } from '../../../lib/urls'
 import { STAGES } from './constants'
+
 import InvestmentEstimatedLandDate from './InvestmentEstimatedLandDate'
 import InvestmentTimeline from './InvestmentTimeline'
 import InvestmentDetails from './InvestmentDetails'
 import InvestmentNextSteps from './InvestmentNextSteps'
+import { NoHighlightToggleSection } from '../ToggleSection'
+import Tag from '../Tag'
 
 const ListItem = styled('li')`
   padding: ${SPACING.SCALE_2} 0;
@@ -70,7 +70,7 @@ const ListItemHeader = styled('h2')`
 `
 
 const ListItemHeaderTagContainer = styled('div')`
-  padding: 0 ${SPACING.SCALE_4};
+  padding: 0 ${SPACING.SCALE_5};
 `
 
 const ListItemHeaderActionContainer = styled('div')`
@@ -81,37 +81,6 @@ const ListItemHeaderActionContainer = styled('div')`
   a {
     width: 100%;
     margin-bottom: 0;
-  }
-`
-
-const StyledDetails = styled(Details)`
-  padding: 0;
-  margin: 0;
-  > div {
-    border: none;
-    padding: 0;
-    margin-bottom: ${SPACING.SCALE_2};
-  }
-  summary {
-    padding-left: ${SPACING.SCALE_5};
-    &::before {
-      clip-path: none;
-      background: url(${icon}) 0 0 no-repeat;
-      width: 30px;
-      height: 30px;
-      border: none;
-      transform: rotate(180deg);
-    }
-    span {
-      display: inline-block;
-    }
-  }
-  &[open] summary::before {
-    border: none;
-    width: 30px;
-    height: 30px;
-    clip-path: none;
-    background: url(${icon}) 0 0 no-repeat;
   }
 `
 
@@ -144,7 +113,6 @@ const InvestmentListItem = ({
   name,
   stage,
   estimated_land_date,
-  showDetails,
   investor_company,
   project_code,
   sector,
@@ -162,8 +130,8 @@ const InvestmentListItem = ({
         <ListItemHeaderTagContainer>
           <Tag
             colour="grey"
-            data-test="project-status-tag"
-            aria-label="project status"
+            data-test="project-stage-tag"
+            aria-label="project stage"
           >
             {stage.name}
           </Tag>
@@ -179,9 +147,9 @@ const InvestmentListItem = ({
           </Button>
         </ListItemHeaderActionContainer>
       </ListItemHeaderContainer>
-      <StyledDetails
-        summary={project_code}
-        open={showDetails}
+      <NoHighlightToggleSection
+        id={id}
+        label={project_code}
         data-test="project-details"
       >
         <Row>
@@ -209,7 +177,7 @@ const InvestmentListItem = ({
             </Col>
           )}
         </Row>
-      </StyledDetails>
+      </NoHighlightToggleSection>
     </ListItem>
   )
 }

@@ -7,8 +7,6 @@ import { connect } from 'react-redux'
 import { BLUE } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
-import { VARIANTS } from '../../../common/constants'
-
 import { ID as INVESTMENT_REMINDERS_ID } from '../InvestmentReminders/state'
 import {
   TASK_CHECK_FOR_INVESTMENTS,
@@ -17,7 +15,7 @@ import {
 import { MY_INVESTMENTS__CHECK_COMPLETE } from '../../actions'
 
 import NotificationBadge from '../NotificationBadge'
-import ToggleSection from '../ToggleSection'
+import { DashboardToggleSection } from '../ToggleSection'
 import Task from '../Task'
 
 import Aside from './Aside'
@@ -84,37 +82,33 @@ const PersonalisedDashboard = ({
         {() => (
           <GridRow data-test="dashboard">
             {hasInvestmentProjects && (
-              <>
-                <GridCol setWidth="one-third">
-                  <Aside>
-                    <ToggleSection
-                      label="Reminders"
-                      id="investment-reminders-section"
-                      badge={
-                        !!remindersCount && (
-                          <NotificationBadge label={`${remindersCount}`} />
-                        )
-                      }
-                      major={true}
-                      isOpen={true}
-                      variant={VARIANTS.PRIMARY}
-                      data-test="investment-reminders-section"
-                    >
-                      <InvestmentReminders adviser={adviser} />
-                    </ToggleSection>
+              <GridCol setWidth="one-third">
+                <Aside>
+                  <DashboardToggleSection
+                    label="Reminders"
+                    id="investment-reminders-section"
+                    badge={
+                      !!remindersCount && (
+                        <NotificationBadge label={`${remindersCount}`} />
+                      )
+                    }
+                    major={true}
+                    isOpen={true}
+                    data-test="investment-reminders-section"
+                  >
+                    <InvestmentReminders adviser={adviser} />
+                  </DashboardToggleSection>
 
-                    <ToggleSection
-                      label="Investment project summary"
-                      id="investment-project-summary-section"
-                      isOpen={true}
-                      variant={VARIANTS.PRIMARY}
-                      data-test="investment-project-summary-section"
-                    >
-                      <InvestmentProjectSummary adviser={adviser} />
-                    </ToggleSection>
-                  </Aside>
-                </GridCol>
-              </>
+                  <DashboardToggleSection
+                    label="Investment project summary"
+                    id="investment-project-summary-section"
+                    isOpen={true}
+                    data-test="investment-project-summary-section"
+                  >
+                    <InvestmentProjectSummary adviser={adviser} />
+                  </DashboardToggleSection>
+                </Aside>
+              </GridCol>
             )}
             <GridCol setWidth={hasInvestmentProjects ? 'two-thirds' : 'full'}>
               <Main>
