@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { indexToOrdinal } from '../../../../../client/utils/number-utils'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
@@ -11,7 +12,6 @@ import {
 } from '@govuk-react/constants'
 
 import { useField, useFormContext } from '../../hooks'
-import Typeahead from '../../../Typeahead/Typeahead'
 import SecondaryButton from '../../../SecondaryButton'
 import FieldWrapper from '../FieldWrapper'
 
@@ -28,7 +28,7 @@ const StyledWrapper = styled('div')`
   }
 `
 
-const StyledTypeahead = styled('div')`
+const StyledChildren = styled('div')`
   padding-bottom: ${SPACING.SCALE_1};
 `
 
@@ -38,28 +38,28 @@ const StyledLink = styled('div')`
   padding-bottom: ${SPACING.SCALE_1};
 `
 
-const FieldTradeAgreementList = ({
+const FieldAddAnother = ({
   name,
   validate,
   required,
   label,
-  initialValue,
-  options,
-  placeholder,
+  children,
+  'data-test-prefix': data_test_prefix,
+  'item-name': aria_item_name,
 }) => {
-  const { value, error /*, touched, onBlur */ } = useField({
+  const { value, error } = useField({
     name,
     validate,
     required,
-    initialValue,
+    initialValue: null,
   })
 
   const ensureFieldIds = (unvalidatedValue) =>
-    unvalidatedValue.map(({ value, label, field_id }) => {
+    unvalidatedValue.map(({ value, field_id }) => {
       if (field_id) {
-        return { value, label, field_id }
+        return { value, field_id }
       }
-      return { value, label, field_id: uuid() }
+      return { value, field_id: uuid() }
     })
 
   const [internalValue, setInternalValue] = useState(
@@ -95,9 +95,6 @@ const FieldTradeAgreementList = ({
     setInternalValue(newInternalValue)
   }
 
-  const findOptionByValue = (value_to_find) =>
-    options.find(({ value }) => value === value_to_find)
-
   const { setFieldValue } = useFormContext()
 
   useEffect(() => {
@@ -109,16 +106,17 @@ const FieldTradeAgreementList = ({
 
   useEffect(() => {
     let newFieldValue = internalValue
-      .map(({ value, label }) => ({
-        value,
-        label,
-      }))
+      .map(({ value }) => ({ value }))
       .filter(({ value }) => value)
     if (newFieldValue.length === 0) {
       newFieldValue = null
     }
     setFieldValue(name, newFieldValue)
   }, [internalValue])
+
+  const childOnChangeHandler = (field_id) => (new_value) => {
+    setValueById(field_id, new_value)
+  }
 
   return (
     <>
@@ -127,29 +125,25 @@ const FieldTradeAgreementList = ({
           {error && <ErrorText>{error}</ErrorText>}
           {internalValue.map((item, index) => (
             <div
-              data-test={`trade-agreement-field-${index}`}
+              role="region"
+              aria-label={`${indexToOrdinal(index + 1)} ${aria_item_name}`}
+              data-test={`${data_test_prefix}${index}`}
               key={item.field_id}
             >
-              <StyledTypeahead>
-                <Typeahead
-                  name={name}
-                  inputId={name}
-                  label={''}
-                  options={options}
-                  placeholder={placeholder}
-                  required={required}
-                  aria-label={label}
-                  value={findOptionByValue(item.value)}
-                  onChange={(new_value) => {
-                    setValueById(item.field_id, new_value)
-                  }}
-                  error={error}
-                />
-              </StyledTypeahead>
+              <StyledChildren>
+                {children({
+                  onChange: childOnChangeHandler(item.field_id),
+                  value: item.value,
+                  error,
+                })}
+              </StyledChildren>
               {internalValue.length > 1 && (
                 <StyledLink>
                   <Link
                     href="#"
+                    aria-label={`Remove ${indexToOrdinal(
+                      index
+                    )} ${aria_item_name}`}
                     onClick={(event) => {
                       removeValueById(item.field_id)
                       event.preventDefault()
@@ -167,6 +161,9 @@ const FieldTradeAgreementList = ({
                 appendNewFieldValue()
                 event.preventDefault()
               }}
+              aria-label={`Add a ${indexToOrdinal(
+                internalValue.length
+              )} ${aria_item_name}`}
             >
               Add another
             </SecondaryButton>
@@ -177,30 +174,23 @@ const FieldTradeAgreementList = ({
   )
 }
 
-FieldTradeAgreementList.propTypes = {
+FieldAddAnother.propTypes = {
+  'data-test-prefix': PropTypes.string,
+  'item-name': PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  required: PropTypes.string,
+  label: PropTypes.node,
   validate: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.arrayOf(PropTypes.func),
   ]),
-  required: PropTypes.string,
-  label: PropTypes.node,
-  hint: PropTypes.string,
-  legend: PropTypes.node,
-  initialValue: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.arrayOf(PropTypes.object),
-  ]),
-  options: PropTypes.arrayOf(PropTypes.object),
-  placeholder: PropTypes.string,
+  children: PropTypes.func,
 }
 
-FieldTradeAgreementList.defaultProps = {
+FieldAddAnother.defaultProps = {
   validate: null,
   required: null,
   label: null,
-  legend: null,
-  initialValue: null,
 }
 
-export default FieldTradeAgreementList
+export default FieldAddAnother
