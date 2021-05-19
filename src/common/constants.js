@@ -9,12 +9,6 @@ const DATE_DAY_LONG_FORMAT = 'E, dd MMM yyyy'
 const DATE_MEDIUM_FORMAT = 'd mmm yyyy'
 const DATE_TIME_MEDIUM_FORMAT = 'd MMM yyyy, h:mmaaa'
 
-const VARIANTS = {
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-  TERTIARY: 'tertiary',
-}
-
 module.exports = {
   EXCHANGE_RATE_USD_TO_GBP,
   EXCHANGE_RATE_GBP_TO_USD,
@@ -22,5 +16,4 @@ module.exports = {
   DATE_LONG_FORMAT,
   DATE_MEDIUM_FORMAT,
   DATE_TIME_MEDIUM_FORMAT,
-  VARIANTS,
 }

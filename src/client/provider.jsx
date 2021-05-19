@@ -34,7 +34,7 @@ import TabNav from './components/TabNav'
 
 import ReferralList from './components/ReferralList'
 
-import ToggleSection from './components/ToggleSection'
+import ToggleSection from './components/ToggleSection/BaseToggleSection'
 
 import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/ExportWins/state'
 import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/reducer'
