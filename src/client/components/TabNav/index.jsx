@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Route } from 'react-router-dom'
 import styled from 'styled-components'
 import { get } from 'lodash'
@@ -14,14 +14,11 @@ import {
 import { MEDIA_QUERIES, SPACING_POINTS } from '@govuk-react/constants'
 
 import multiInstance from '../../utils/multiinstance'
-import focusable from '../../utils/focusable'
 import { TAB_NAV__SELECT, TAB_NAV__FOCUS } from '../../actions'
 import reducer from './reducer'
 
 const LEFT_ARROW_KEY = 37
 const RIGHT_ARROW_KEY = 39
-
-const FocusableButton = focusable('button')
 
 const focusStyle = {
   '&:focus': {
@@ -59,7 +56,7 @@ const buttonStyle = {
   background: 'transparent',
 }
 
-const StyledButton = styled(FocusableButton)({
+const StyledButton = styled('button')({
   ...buttonStyle,
   ...focusStyle,
   [MEDIA_QUERIES.TABLET]: {
@@ -75,7 +72,7 @@ const StyledButton = styled(FocusableButton)({
   },
 })
 
-const StyledSelectedButton = styled(FocusableButton)({
+const StyledSelectedButton = styled('button')({
   ...buttonStyle,
   '&:focus': {
     outline: `3px solid ${FOCUS_COLOUR}`,
@@ -156,6 +153,12 @@ const TabNav = ({
   routed,
 }) => {
   const tabKeys = Object.keys(tabs)
+  const tablistRef = useRef()
+
+  useEffect(() => {
+    tablistRef.current?.querySelectorAll('[role=tab]')[focusIndex]?.focus()
+  }, [focusIndex, selectedIndex])
+
   return (
     <Route>
       {({ location: { pathname }, history }) => {
@@ -165,13 +168,20 @@ const TabNav = ({
         return (
           <>
             <StyledTablist
-              tabindex={0}
+              tabIndex={-1}
               role="tablist"
+              ref={tablistRef}
               data-test="tablist"
               aria-label={label}
               onKeyUp={({ keyCode }) => {
                 const totalTabs = tabKeys.length
-                const currentFocusIndex = focusIndex || 0
+                const foundIndex = tabKeys.indexOf(selectedIndex?.toString())
+                const currentFocusIndex =
+                  focusIndex !== undefined
+                    ? focusIndex
+                    : selectedIndex === undefined || foundIndex === -1
+                    ? 0
+                    : foundIndex
 
                 if (keyCode === RIGHT_ARROW_KEY) {
                   onFocusChange((currentFocusIndex + 1) % totalTabs)
@@ -190,13 +200,13 @@ const TabNav = ({
                 const selected = isSelectedValid
                   ? key === selectedIndex
                   : key.length > 1 && selectedIndex.startsWith(key)
+
                 const Button = selected ? StyledSelectedButton : StyledButton
                 const tabId = createId(id, key, routed)
                 return (
                   <StyledSpan key={tabId} data-test="tab-item">
                     <Button
                       role="tab"
-                      focused={index === focusIndex}
                       aria-selected={selected}
                       id={tabId}
                       tabIndex={
@@ -209,11 +219,12 @@ const TabNav = ({
                           ? 0
                           : -1
                       }
-                      onClick={() =>
-                        selected || routed
-                          ? (history.push(key), onFocusChange(index))
-                          : onChange(key, index)
-                      }
+                      onClick={() => {
+                        onChange(key, index)
+                        if (routed && !selected) {
+                          history.push(key)
+                        }
+                      }}
                     >
                       {label}
                     </Button>
@@ -221,7 +232,12 @@ const TabNav = ({
                 )
               })}
             </StyledTablist>
-            <StyledTabpanel role="tabpanel" tabIndex={0} data-test="tabpanel">
+            <StyledTabpanel
+              role="tabpanel"
+              tabIndex={-1}
+              aria-labelledby={createId(id, selectedIndex)}
+              data-test="tabpanel"
+            >
               {getContent(tabs, tabKeys, selectedIndex)}
             </StyledTabpanel>
           </>
