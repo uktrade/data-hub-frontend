@@ -18,8 +18,6 @@ import styled from 'styled-components'
 import { HIGHLIGHT_COLOUR, RED, GREEN } from 'govuk-colours'
 import Link from '@govuk-react/link'
 
-import { VARIANTS } from '../../../../../common/constants'
-
 const StyledSpan = styled('span')`
   background: ${HIGHLIGHT_COLOUR};
 `
@@ -54,11 +52,7 @@ const OpportunitySection = ({
 }) => (
   <>
     {RequiredFields(incompleteFields)}
-    <ToggleSection
-      variant={VARIANTS.SECONDARY}
-      label={toggleName}
-      id={toggleId}
-    >
+    <ToggleSection label={toggleName} id={toggleId}>
       {/* TODO: add an 'isEditing' conditional to display forms */}
       <SummaryTable>{children}</SummaryTable>
     </ToggleSection>
@@ -111,7 +105,6 @@ const Opportunities = ({
           }}
         />
         <StyledToggle
-          variant={VARIANTS.SECONDARY}
           label="Need to delete this opportunity?"
           id="opportunity_delete_toggle"
           fontSize={FONT_SIZE.SIZE_14}

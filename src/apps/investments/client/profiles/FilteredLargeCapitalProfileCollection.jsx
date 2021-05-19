@@ -9,7 +9,6 @@ import {
   RoutedTypeahead,
   ToggleSection,
 } from '../../../../client/components/'
-import { VARIANTS } from '../../../../common/constants'
 import RoutedInputField from '../../../../client/components/RoutedInputField'
 import RoutedNumericRangeField from '../../../../client/components/RoutedNumericRangeField'
 import { TASK_GET_PROFILES_LIST, ID } from './state'
@@ -190,7 +189,6 @@ const LargeCapitalProfileCollection = ({
             <ToggleSection
               id="FilteredLargeCapitalProfileCollection.core-filters"
               label="Core filters"
-              variant={VARIANTS.SECONDARY}
             >
               <RoutedTypeahead
                 isMulti={true}
@@ -223,7 +221,6 @@ const LargeCapitalProfileCollection = ({
             <ToggleSection
               id="FilteredLargeCapitalProfileCollection.investor-details-filters"
               label="Investor details"
-              variant={VARIANTS.SECONDARY}
             >
               <RoutedTypeahead
                 isMulti={true}
@@ -259,7 +256,6 @@ const LargeCapitalProfileCollection = ({
             <ToggleSection
               id="FilteredLargeCapitalProfileCollection.investor-requirements-filters"
               label="Investor requirements"
-              variant={VARIANTS.SECONDARY}
             >
               <RoutedTypeahead
                 isMulti={true}
@@ -345,7 +341,6 @@ const LargeCapitalProfileCollection = ({
             <ToggleSection
               id="FilteredLargeCapitalProfileCollection.location-filters"
               label="Location"
-              variant={VARIANTS.SECONDARY}
             >
               <RoutedTypeahead
                 isMulti={true}
