@@ -22,6 +22,7 @@ const {
 } = require('../middleware')
 const { getCommon, getDetails } = require('./controllers/details')
 const { renderContactList } = require('./controllers/list')
+const { renderContactsView } = require('./controllers/contacts')
 const { postDetails, editDetails } = require('./controllers/edit')
 const { archiveContact, unarchiveContact } = require('./controllers/archive')
 const { renderDocuments } = require('./controllers/documents')
@@ -40,6 +41,9 @@ router.get(
   getCollection('contact', ENTITIES, transformContactToListItem),
   renderContactList
 )
+
+// New react route (to replace the old companies list route above when complete)
+router.get(urls.contacts.react.index.route, renderContactsView)
 
 router.get(
   '/export',
