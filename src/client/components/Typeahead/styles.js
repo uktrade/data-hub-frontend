@@ -59,6 +59,20 @@ const defaultStyles = {
     borderRadius: 0,
     border: `1px solid ${BLACK}`,
     borderTop: 0,
+    ul: {
+      padding: 0,
+      margin: 0,
+      li: {
+        borderBottom: `1px solid ${BLACK}`,
+        '&:last-child': {
+          border: 'none',
+        },
+      },
+    },
+  }),
+  menuList: (styles) => ({
+    ...styles,
+    padding: 0,
   }),
   placeholder: (styles) => ({
     ...styles,
