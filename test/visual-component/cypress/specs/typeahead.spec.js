@@ -21,13 +21,6 @@ describe('Single select', () => {
       .should('be.visible')
       .compareSnapshot('typeahead-single-pre-selected-option')
   })
-
-  it('should render the small typeahead correctly', () => {
-    cy.visit('/iframe.html?id=typeahead-single-select--small')
-    cy.get('#root')
-      .should('be.visible')
-      .compareSnapshot('typeahead-single-select-small')
-  })
 })
 
 describe('Multi select', () => {

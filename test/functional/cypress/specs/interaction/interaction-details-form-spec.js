@@ -286,7 +286,7 @@ function submitForm(kind, theme, values) {
 
       cy.contains(ELEMENT_IS_EVENT.legend).next().find('input').check('yes')
 
-      cy.get('#field-event-1').parent().selectTypeaheadOption('Sort event')
+      cy.get('#event').parent().selectTypeaheadOption('Sort event')
     }
 
     clickAddInteraction()
