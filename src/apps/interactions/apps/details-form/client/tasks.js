@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { omit, pick } from 'lodash'
+import { omit, pick, sortBy } from 'lodash'
 
 import urls from '../../../../../lib/urls'
 import { catchApiError } from '../../../../../client/components/Task/utils'
@@ -22,6 +22,9 @@ function transformOption(option) {
   }
   return option.value
 }
+
+const isDisabled = (item) =>
+  !item.disabled_on || Date.parse(item.disabled_on) > Date.now()
 
 function transformArrayOfOptions(options) {
   if (!options || !options.length) {
@@ -183,7 +186,9 @@ const fetchServiceDeliveryStatusMetaData = () =>
   axios
     .get('/api-proxy/v4/metadata/service-delivery-status')
     .catch(catchApiError)
-    .then(({ data }) => ({ serviceDeliveryStatuses: data }))
+    .then(({ data }) => ({
+      serviceDeliveryStatuses: data.map(transformToValueLabel),
+    }))
 
 const fetchPolicyAreaMetaData = () =>
   axios
@@ -216,7 +221,12 @@ const fetchServicesMetaData = () =>
     .get('/api-proxy/v4/metadata/service')
     .catch(catchApiError)
     .then(({ data }) => ({
-      services: data.map((service) => transformServiceToOption(service)),
+      services: sortBy(
+        data
+          .filter(isDisabled)
+          .map((service) => transformServiceToOption(service)),
+        'label'
+      ),
     }))
 
 const fetchTradeAgreementMetaData = () =>
@@ -227,6 +237,7 @@ const fetchTradeAgreementMetaData = () =>
       relatedTradeAgreements: data.map(transformToValueLabel),
     }))
 
+//All this stuff should be sorted alphabetically aside from 'service-delivery-status'
 export const fetchMetaData = () =>
   Promise.all([
     fetchServicesMetaData(),
