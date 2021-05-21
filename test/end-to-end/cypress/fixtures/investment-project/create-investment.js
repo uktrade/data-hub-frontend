@@ -14,6 +14,8 @@ function newHotelFdi() {
       investor_company: '0f5216e0-849f-11e6-ae22-56b6b6499611',
       client_contacts: ['952232d2-1d25-4c3a-bcac-2f3a30a94da9'],
       client_relationship_manager: 'e83a608e-84a4-11e6-ae22-56b6b6499611',
+      country_investment_originates_from:
+        '80756b9a-5d95-e211-a939-e4115bead28a',
       referral_source_adviser: 'e83a608e-84a4-11e6-ae22-56b6b6499611',
       referral_source_activity: 'aba8f653-264f-48d8-950e-07f9c418c7b0',
       fdi_type: 'f8447013-cfdc-4f35-a146-6619665388b3',
