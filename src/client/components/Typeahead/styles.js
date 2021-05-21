@@ -110,7 +110,7 @@ const defaultStyles = {
   }),
   indicatorSeparator: (styles) => ({
     ...styles,
-    backgroundColor: WHITE,
+    display: 'none',
   }),
 }
 
