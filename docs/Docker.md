@@ -92,6 +92,10 @@ Ensure both env vars have been set:
     make visual-tests       // runs the tests inside the container
     make stop-mock          // stop and remove the containers
 
+### Start the Accessibility tests
+    make start-mock          // bring up the containers
+    make a11y-tests          // run the tests inside the container
+
 ## Start the Unit tests
 
 ### Build the Frontend and run the Unit tests

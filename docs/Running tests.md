@@ -196,6 +196,16 @@ Updating the baseline consists in 2 steps:
 
 There is work to be done to allow update of a given baseline image rather than only have the option to update all of them at once.
 
+## Accessibility tests
+The aim of this suite is to ensure our HTML pages are usable by as many people as possible.
+
+  4 Tabs:
+  
+  1. cd test/sandbox && npm install && npx nodemon .
+  2. redis-server
+  3. npm run develop
+  4. npm run test:a11y
+
 ## Cypress code coverage
 
 As part of cypress test suites (functional and e2e), code coverage reports can be generated.
