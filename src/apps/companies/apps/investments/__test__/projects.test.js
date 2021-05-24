@@ -15,12 +15,12 @@ describe('Company investments project controlle', () => {
         getCompanyInvestmentProjects: this.getCompanyInvestmentProjectsStub,
       },
       '../../../../../investments/transformers': {
-        transformInvestmentProjectToListItem: this
-          .transformInvestmentProjectToListItemSpy,
+        transformInvestmentProjectToListItem:
+          this.transformInvestmentProjectToListItemSpy,
       },
       '../../../../../../modules/api/transformers': {
-        transformApiResponseToCollection: this
-          .transformApiResponseToCollectionSpy,
+        transformApiResponseToCollection:
+          this.transformApiResponseToCollectionSpy,
       },
     })
   })

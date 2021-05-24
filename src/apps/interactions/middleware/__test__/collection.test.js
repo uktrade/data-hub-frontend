@@ -183,9 +183,8 @@ describe('interaction collection middleware', () => {
 
         middleware = proxyquire('../collection', {
           '../repos': {
-            getInteractionsForEntity: getInteractionsForEntityStub.rejects(
-              error
-            ),
+            getInteractionsForEntity:
+              getInteractionsForEntityStub.rejects(error),
           },
         })
 

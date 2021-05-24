@@ -72,9 +72,8 @@ function transformToApi(body) {
   } else {
     formatted.estimated_land_date = null
   }
-  formatted.actual_land_date = transformDateObjectToDateString(
-    'actual_land_date'
-  )(body)
+  formatted.actual_land_date =
+    transformDateObjectToDateString('actual_land_date')(body)
 
   return assign({}, body, formatted)
 }

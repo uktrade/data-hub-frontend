@@ -44,10 +44,10 @@ describe('investment associated controller', () => {
         ],
       },
       '../transformers': {
-        transformInvestmentProjectToListItem: this
-          .transformInvestmentProjectToListItemStub,
-        transformInvestmentListItemToDisableMetaLinks: this
-          .transformInvestmentListItemToDisableMetaLinksStub,
+        transformInvestmentProjectToListItem:
+          this.transformInvestmentProjectToListItemStub,
+        transformInvestmentListItemToDisableMetaLinks:
+          this.transformInvestmentListItemToDisableMetaLinksStub,
       },
     })
 

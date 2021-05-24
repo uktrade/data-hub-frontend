@@ -78,7 +78,8 @@ describe('DA Permission', () => {
 
   context('investment', () => {
     describe('investment document', () => {
-      investmentProjectNewGolf = fixtures.investmentProject.create.newGolfCourseDA()
+      investmentProjectNewGolf =
+        fixtures.investmentProject.create.newGolfCourseDA()
 
       before(() => {
         cy.loadFixture([investmentProjectNewGolf])
@@ -128,7 +129,8 @@ describe('DA Permission', () => {
     })
 
     describe('team', () => {
-      investmentProjectFancyDress = fixtures.investmentProject.create.fancyDressManufacturing()
+      investmentProjectFancyDress =
+        fixtures.investmentProject.create.fancyDressManufacturing()
 
       before(() => {
         cy.loadFixture([investmentProjectFancyDress])

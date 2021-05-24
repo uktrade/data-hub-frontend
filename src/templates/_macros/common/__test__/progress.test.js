@@ -17,9 +17,8 @@ describe('Progress component', () => {
       currentStageName: 'three',
       currentStageIndex: 2,
     })
-    const progressStageLiElems = component.querySelectorAll(
-      '.c-progress__stage'
-    )
+    const progressStageLiElems =
+      component.querySelectorAll('.c-progress__stage')
     expect(component.className).to.contain('c-progress')
     expect(component.firstElementChild.className).to.contain('c-progress-bar')
 
@@ -58,9 +57,8 @@ describe('Progress component', () => {
       currentStageIndex: 0,
     })
 
-    const progressStageLiElems = component.querySelectorAll(
-      '.c-progress__stage'
-    )
+    const progressStageLiElems =
+      component.querySelectorAll('.c-progress__stage')
     expect(component.className).to.contain('c-progress')
     expect(component.firstElementChild.className).to.contain('c-progress-bar')
     expect(progressStageLiElems[0].firstElementChild.textContent).to.contain(

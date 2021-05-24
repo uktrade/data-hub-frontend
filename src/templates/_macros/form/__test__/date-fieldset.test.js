@@ -152,9 +152,9 @@ describe('DateFieldset component', () => {
         const inputsValues = Array.from(
           this.component.querySelectorAll('input')
         ).map((x) => x.value)
-        const labels = Array.from(
-          this.component.querySelectorAll('label')
-        ).map((x) => x.textContent.trim())
+        const labels = Array.from(this.component.querySelectorAll('label')).map(
+          (x) => x.textContent.trim()
+        )
 
         expect(labels[0]).to.equal('Day')
         expect(inputsValues[0]).to.equal('01')
@@ -176,9 +176,9 @@ describe('DateFieldset component', () => {
       const inputsValues = Array.from(
         this.component.querySelectorAll('input')
       ).map((x) => x.value)
-      const labels = Array.from(
-        this.component.querySelectorAll('label')
-      ).map((x) => x.textContent.trim())
+      const labels = Array.from(this.component.querySelectorAll('label')).map(
+        (x) => x.textContent.trim()
+      )
 
       expect(labels[0]).to.equal('Day')
       expect(inputsValues[0]).to.equal('')

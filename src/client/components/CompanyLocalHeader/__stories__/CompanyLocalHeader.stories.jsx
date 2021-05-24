@@ -38,8 +38,7 @@ storiesOf('Company Local Header', module)
             'success:with-body': [
               {
                 heading: 'Business details verified.',
-                body:
-                  'Thanks for helping to improve the quality of records on Data Hub!',
+                body: 'Thanks for helping to improve the quality of records on Data Hub!',
                 id: 'message-company-matched',
               },
             ],

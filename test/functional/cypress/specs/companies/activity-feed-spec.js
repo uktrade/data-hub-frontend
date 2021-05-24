@@ -192,8 +192,7 @@ describe('Company activity feed', () => {
       const exportEnquiry = [
         {
           th: 'Comment',
-          td:
-            'We export fish products to South Korea. In 2011 we were issued an approved exporter authorisation number by HMRC to be able to export to South Korea. Does this number still stand for exporting to South Korea in 2021 or do we need a new number? Lorem... Read More',
+          td: 'We export fish products to South Korea. In 2011 we were issued an approved exporter authorisation number by HMRC to be able to export to South Korea. Does this number still stand for exporting to South Korea in 2021 or do we need a new number? Lorem... Read More',
         },
         {
           th: 'Name',

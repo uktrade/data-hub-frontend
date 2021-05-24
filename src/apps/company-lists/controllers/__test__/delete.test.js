@@ -42,8 +42,8 @@ describe('Delete company list controller', () => {
       })
 
       it('passes props to react-slot', () => {
-        const actualProps = middlewareParameters.resMock.render.getCall(0)
-          .args[1].props
+        const actualProps =
+          middlewareParameters.resMock.render.getCall(0).args[1].props
         expect(actualProps).to.be.deep.equal({
           companyList: companyList,
           returnUrl: '/',

@@ -32,8 +32,7 @@ const feedbackFormConfig = (browserInfo) => ({
       type: 'textarea',
       name: 'description',
       label: 'Description',
-      hint:
-        'If you were having a problem, explain what you did, what happened and what you expected to happen. If you want to provide feedback or a suggestion, describe it here.',
+      hint: 'If you were having a problem, explain what you did, what happened and what you expected to happen. If you want to provide feedback or a suggestion, describe it here.',
     },
     {
       macroName: 'TextField',

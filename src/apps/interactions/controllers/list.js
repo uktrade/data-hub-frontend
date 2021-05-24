@@ -120,11 +120,8 @@ async function renderInteractionList(req, res, next) {
       userAgent: res.locals.userAgent,
     })
 
-    const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(
-      req,
-      filtersFields,
-      query
-    )
+    const filtersFieldsWithSelectedOptions =
+      await buildFieldsWithSelectedEntities(req, filtersFields, query)
     const selectedFilters = await buildSelectedFiltersSummary(
       filtersFieldsWithSelectedOptions,
       query

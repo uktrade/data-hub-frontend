@@ -21,9 +21,8 @@ describe('Investment project transformers', () => {
 
     context('when called with a fully populated investment', () => {
       beforeEach(() => {
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          this.investmentData
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(this.investmentData)
       })
 
       it('should return the required properties', () => {
@@ -47,9 +46,8 @@ describe('Investment project transformers', () => {
           strategic_drivers: [],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should return an empty string for strategic drivers', () => {
@@ -66,9 +64,8 @@ describe('Investment project transformers', () => {
           strategic_drivers: [{ id: 'sd1', name: 'strategic driver 1' }],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should return the strategic driver', () => {
@@ -88,9 +85,8 @@ describe('Investment project transformers', () => {
           ],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should return the strategic drivers as a string list', () => {
@@ -107,9 +103,8 @@ describe('Investment project transformers', () => {
           client_requirements: 'Client requirement',
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should return the client requirement', () => {
@@ -126,9 +121,8 @@ describe('Investment project transformers', () => {
           client_requirements: '',
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should return the client requirement', () => {
@@ -145,9 +139,8 @@ describe('Investment project transformers', () => {
           competitor_countries: [],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should return an empty string for competitor countries', () => {
@@ -164,9 +157,8 @@ describe('Investment project transformers', () => {
           competitor_countries: [{ id: 'c1', name: 'country 1' }],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should return the competitor country', () => {
@@ -186,9 +178,8 @@ describe('Investment project transformers', () => {
           ],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should return the competitor countries as a string list', () => {
@@ -205,9 +196,8 @@ describe('Investment project transformers', () => {
           uk_region_locations: [],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should return an empty string for uk region locations', () => {
@@ -224,9 +214,8 @@ describe('Investment project transformers', () => {
           uk_region_locations: [{ id: 'rl1', name: 'region location 1' }],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should return the uk region location', () => {
@@ -246,9 +235,8 @@ describe('Investment project transformers', () => {
           ],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should return the uk region locations as a string list', () => {
@@ -265,9 +253,8 @@ describe('Investment project transformers', () => {
           actual_uk_regions: [],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should return an empty string for actual uk regions', () => {
@@ -284,9 +271,8 @@ describe('Investment project transformers', () => {
           actual_uk_regions: [{ id: 'a1', name: 'region 1' }],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should return the uk region location', () => {
@@ -306,9 +292,8 @@ describe('Investment project transformers', () => {
           ],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should return theactual uk regions as a string list', () => {
@@ -326,9 +311,8 @@ describe('Investment project transformers', () => {
           uk_company: null,
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should set the investment details to display a link to find a company', () => {
@@ -351,9 +335,8 @@ describe('Investment project transformers', () => {
           },
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should set the investment details to display the company name', () => {
@@ -387,9 +370,8 @@ describe('Investment project transformers', () => {
           delivery_partners: [],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should return an empty string for delivery partners', () => {
@@ -406,9 +388,8 @@ describe('Investment project transformers', () => {
           delivery_partners: [{ id: 'dp1', name: 'Delivery partner 1' }],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should return the delivery partner', () => {
@@ -428,9 +409,8 @@ describe('Investment project transformers', () => {
           ],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
-          data
-        )
+        this.transformedInvestmentRequirements =
+          transformInvestmentRequirementsForView(data)
       })
 
       it('should return the delivery partners as a string list', () => {

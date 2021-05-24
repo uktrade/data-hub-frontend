@@ -47,12 +47,10 @@ const renderProfile = async (req, res, next) => {
             requiredCheckMD,
             profile.investorDetails
           )
-          profile.investorDetails.requiredChecks.cleared.advisers = transformAdvisers(
-            adviserMD.results
-          )
-          profile.investorDetails.requiredChecks.issuesIdentified.advisers = transformAdvisers(
-            adviserMD.results
-          )
+          profile.investorDetails.requiredChecks.cleared.advisers =
+            transformAdvisers(adviserMD.results)
+          profile.investorDetails.requiredChecks.issuesIdentified.advisers =
+            transformAdvisers(adviserMD.results)
         }
       )
     } else if (editType === INVESTOR_REQUIREMENTS) {
@@ -80,37 +78,30 @@ const renderProfile = async (req, res, next) => {
             desiredDealRoles,
           } = profile.investorRequirements
 
-          profile.investorRequirements.dealTicketSizes.items = transformCheckboxes(
-            dealTicketSizeMD,
-            dealTicketSizes
-          )
+          profile.investorRequirements.dealTicketSizes.items =
+            transformCheckboxes(dealTicketSizeMD, dealTicketSizes)
 
           const energyAndInfrastructureMD = assetClassesMD.filter(
             (item) =>
               item.sector === assetClassSectors.ENERGY_AND_INFRASTRUCTURE
           )
 
-          profile.investorRequirements.assetClasses.energyAndInfrastructure.items = transformCheckboxes(
-            energyAndInfrastructureMD,
-            assetClasses.energyAndInfrastructure
-          )
+          profile.investorRequirements.assetClasses.energyAndInfrastructure.items =
+            transformCheckboxes(
+              energyAndInfrastructureMD,
+              assetClasses.energyAndInfrastructure
+            )
 
           const realEstateMD = assetClassesMD.filter(
             (item) => item.sector === assetClassSectors.REAL_ESTATE
           )
-          profile.investorRequirements.assetClasses.realEstate.items = transformCheckboxes(
-            realEstateMD,
-            assetClasses.realEstate
-          )
+          profile.investorRequirements.assetClasses.realEstate.items =
+            transformCheckboxes(realEstateMD, assetClasses.realEstate)
 
-          profile.investorRequirements.investmentTypes.items = transformCheckboxes(
-            investmentTypeMD,
-            investmentTypes
-          )
-          profile.investorRequirements.minimumReturnRate.items = transformRadioButtons(
-            minimumReturnRateMD,
-            minimumReturnRate
-          )
+          profile.investorRequirements.investmentTypes.items =
+            transformCheckboxes(investmentTypeMD, investmentTypes)
+          profile.investorRequirements.minimumReturnRate.items =
+            transformRadioButtons(minimumReturnRateMD, minimumReturnRate)
           profile.investorRequirements.timeHorizons.items = transformCheckboxes(
             timeHorizonMD,
             timeHorizons
@@ -119,18 +110,15 @@ const renderProfile = async (req, res, next) => {
             restrictionMD,
             restrictions
           )
-          profile.investorRequirements.constructionRisks.items = transformCheckboxes(
-            constructionRiskMD,
-            constructionRisks
-          )
-          profile.investorRequirements.minimumEquityPercentage.items = transformRadioButtons(
-            minimumEquityPercentageMD,
-            minimumEquityPercentage
-          )
-          profile.investorRequirements.desiredDealRoles.items = transformCheckboxes(
-            desiredDealRoleMD,
-            desiredDealRoles
-          )
+          profile.investorRequirements.constructionRisks.items =
+            transformCheckboxes(constructionRiskMD, constructionRisks)
+          profile.investorRequirements.minimumEquityPercentage.items =
+            transformRadioButtons(
+              minimumEquityPercentageMD,
+              minimumEquityPercentage
+            )
+          profile.investorRequirements.desiredDealRoles.items =
+            transformCheckboxes(desiredDealRoleMD, desiredDealRoles)
         }
       )
     } else if (editType === LOCATION) {

@@ -52,7 +52,8 @@ const CreateUKInvestmentOpportunity = ({
                 if (name) {
                   task.start({
                     payload: name,
-                    onSuccessDispatch: CREATE_UK_INVESTMENT_OPPORTUNITY__SUCCESS,
+                    onSuccessDispatch:
+                      CREATE_UK_INVESTMENT_OPPORTUNITY__SUCCESS,
                   })
                 }
               }}

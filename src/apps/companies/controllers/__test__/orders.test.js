@@ -18,8 +18,8 @@ describe('Company orders controller', () => {
         transformOrderToListItem: this.transformOrderToListItemSpy,
       },
       '../../../modules/api/transformers': {
-        transformApiResponseToCollection: this
-          .transformApiResponseToCollectionSpy,
+        transformApiResponseToCollection:
+          this.transformApiResponseToCollectionSpy,
       },
     })
   })

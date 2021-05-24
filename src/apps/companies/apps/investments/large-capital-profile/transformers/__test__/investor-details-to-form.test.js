@@ -58,8 +58,7 @@ describe('Large capital profile, Investor details API to form', () => {
           value: '4',
         },
         {
-          text:
-            'Checks not required - See Investor Screening Report (ISR) guidance',
+          text: 'Checks not required - See Investor Screening Report (ISR) guidance',
           value: '3',
         },
       ]
@@ -105,8 +104,7 @@ describe('Large capital profile, Investor details API to form', () => {
           value: '2',
         },
         notRequired: {
-          text:
-            'Checks not required - See Investor Screening Report (ISR) guidance',
+          text: 'Checks not required - See Investor Screening Report (ISR) guidance',
           value: '3',
         },
         notYetChecked: {
@@ -156,8 +154,7 @@ describe('Large capital profile, Investor details API to form', () => {
           },
         },
         notRequired: {
-          text:
-            'Checks not required - See Investor Screening Report (ISR) guidance',
+          text: 'Checks not required - See Investor Screening Report (ISR) guidance',
           value: '3',
         },
         notYetChecked: {
@@ -171,8 +168,7 @@ describe('Large capital profile, Investor details API to form', () => {
       this.investorDetails = {
         requiredChecks: {
           type: {
-            name:
-              'Checks not required - See Investor Screening Report (ISR) guidance',
+            name: 'Checks not required - See Investor Screening Report (ISR) guidance',
             id: '3',
           },
         },
@@ -194,8 +190,7 @@ describe('Large capital profile, Investor details API to form', () => {
         },
         notRequired: {
           checked: true,
-          text:
-            'Checks not required - See Investor Screening Report (ISR) guidance',
+          text: 'Checks not required - See Investor Screening Report (ISR) guidance',
           value: '3',
         },
         notYetChecked: {
@@ -230,8 +225,7 @@ describe('Large capital profile, Investor details API to form', () => {
           value: '2',
         },
         notRequired: {
-          text:
-            'Checks not required - See Investor Screening Report (ISR) guidance',
+          text: 'Checks not required - See Investor Screening Report (ISR) guidance',
           value: '3',
         },
         notYetChecked: {

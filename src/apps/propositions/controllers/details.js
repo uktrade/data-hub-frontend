@@ -6,9 +6,8 @@ function renderDetailsPage(req, res, next) {
   try {
     const { proposition } = res.locals
     const breadcrumb = capitalize(lowerCase(proposition.name))
-    const propositionViewRecord = transformPropositionResponseToViewRecord(
-      proposition
-    )
+    const propositionViewRecord =
+      transformPropositionResponseToViewRecord(proposition)
     return res
       .breadcrumb(breadcrumb)
       .title(proposition.name)

@@ -153,8 +153,7 @@ describe('Company Investments - Large capital profile - Investor details', () =>
               value: '81fafe5a-ed32-4f46-bdc5-2cafedf828e8',
             },
             notRequired: {
-              text:
-                'Checks not required - See Investor Screening Report (ISR) guidance',
+              text: 'Checks not required - See Investor Screening Report (ISR) guidance',
               value: 'e6f66f9d-ed12-4bfd-9dd0-ac7e44f35034',
             },
           },

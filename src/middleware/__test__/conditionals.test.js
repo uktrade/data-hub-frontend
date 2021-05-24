@@ -2,38 +2,38 @@ const sinon = require('sinon')
 const { allFeaturesOr404, allPermissionsOr403 } = require('../conditionals')
 const { NotFoundError, NotAuthorizedError } = require('../errors')
 
-const testCase = ({ uut, stubDescription, expectedError, localsStub }) => ({
-  localsStubParams,
-  params,
-  expectError,
-}) => {
-  const quote = (a) => a.map((x) => `"${x}"`).join(', ')
+const testCase =
+  ({ uut, stubDescription, expectedError, localsStub }) =>
+  ({ localsStubParams, params, expectError }) => {
+    const quote = (a) => a.map((x) => `"${x}"`).join(', ')
 
-  const xpectedNextArgMsg = expectError ? `"${expectedError}"` : 'no arguments'
-  const paramsMsg = params.length ? `params ${quote(params)}` : `no params`
-  const msg =
-    `Should call next() with ${xpectedNextArgMsg}, when ` +
-    `called with ${paramsMsg} and ${stubDescription} are ` +
-    `${quote(localsStubParams)}.`
+    const xpectedNextArgMsg = expectError
+      ? `"${expectedError}"`
+      : 'no arguments'
+    const paramsMsg = params.length ? `params ${quote(params)}` : `no params`
+    const msg =
+      `Should call next() with ${xpectedNextArgMsg}, when ` +
+      `called with ${paramsMsg} and ${stubDescription} are ` +
+      `${quote(localsStubParams)}.`
 
-  const res = { locals: localsStub(localsStubParams) }
-  const next = sinon.spy()
+    const res = { locals: localsStub(localsStubParams) }
+    const next = sinon.spy()
 
-  it(msg, () => {
-    uut(...params)(null, res, next)
+    it(msg, () => {
+      uut(...params)(null, res, next)
 
-    const arg = next.firstCall.args[0]
-    expect(next).to.have.been.called
+      const arg = next.firstCall.args[0]
+      expect(next).to.have.been.called
 
-    if (expectError) {
-      expect(arg).to.be.instanceof(Error)
-      expect(arg.message).to.equal(expectedError.message)
-      expect(arg.statusCode).to.equal(expectedError.statusCode)
-    } else {
-      expect(arg).not.to.be.ok // A.K.A. falsy
-    }
-  })
-}
+      if (expectError) {
+        expect(arg).to.be.instanceof(Error)
+        expect(arg.message).to.equal(expectedError.message)
+        expect(arg.statusCode).to.equal(expectedError.statusCode)
+      } else {
+        expect(arg).not.to.be.ok // A.K.A. falsy
+      }
+    })
+  }
 
 const testCase404 = testCase({
   uut: allFeaturesOr404,

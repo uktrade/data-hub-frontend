@@ -27,10 +27,10 @@ describe('Investment team details controller', () => {
 
     this.controller = proxyquire('../details', {
       '../../transformers': {
-        transformProjectManagementForView: this
-          .transformProjectManagementForViewStub,
-        transformClientRelationshipManagementForView: this
-          .transformClientRelationshipManagementForViewStub,
+        transformProjectManagementForView:
+          this.transformProjectManagementForViewStub,
+        transformClientRelationshipManagementForView:
+          this.transformClientRelationshipManagementForViewStub,
         transformTeamMembersForView: this.transformTeamMembersForViewStub,
       },
     })

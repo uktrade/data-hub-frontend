@@ -33,8 +33,8 @@ describe('Proposition details controller', () => {
 
     this.controller = proxyquire('../details', {
       '../transformers': {
-        transformPropositionResponseToViewRecord: this
-          .transformPropositionResponseToViewRecordStub,
+        transformPropositionResponseToViewRecord:
+          this.transformPropositionResponseToViewRecordStub,
       },
     })
   })

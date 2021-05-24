@@ -35,9 +35,8 @@ describe('AddAnother component', () => {
   })
 
   it('should render a component with an "Add another" button', () => {
-    const addAnotherButton = this.component.querySelectorAll(
-      'input[type=submit]'
-    )
+    const addAnotherButton =
+      this.component.querySelectorAll('input[type=submit]')
 
     expect(addAnotherButton[0].value).to.equal('Add another')
   })
