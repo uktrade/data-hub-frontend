@@ -79,8 +79,7 @@ describe('Send a referral form', () => {
             element,
             label: 'Adviser',
             placeholder: 'Search for an adviser',
-            hint:
-              "This can be an adviser at post, a sector specialist or an international trade advisor. If you're not sure, you can find the right team and person on Digital Workspace (opens in a new window or tab).",
+            hint: "This can be an adviser at post, a sector specialist or an international trade advisor. If you're not sure, you can find the right team and person on Digital Workspace (opens in a new window or tab).",
           })
         })
 
@@ -92,8 +91,7 @@ describe('Send a referral form', () => {
           return assertFieldTextarea({
             element,
             label: 'Notes',
-            hint:
-              "Include reasons you're referring this company and any specific opportunities.",
+            hint: "Include reasons you're referring this company and any specific opportunities.",
           })
         })
 
@@ -102,8 +100,7 @@ describe('Send a referral form', () => {
             element,
             label: 'Company contact (optional)',
             placeholder: 'Select a contact',
-            hint:
-              'Who should the recipient of the referral talk to? If the contact you are looking for is not listed you can add a new contact.',
+            hint: 'Who should the recipient of the referral talk to? If the contact you are looking for is not listed you can add a new contact.',
           })
         })
       })

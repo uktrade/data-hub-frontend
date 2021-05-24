@@ -119,8 +119,9 @@ describe('investment status controller', () => {
 
       it('should indicate there is an error for status', () => {
         const statusForm = this.res.render.getCall(0).args[1].statusForm
-        const actualStatusError = find(statusForm.children, { name: 'status' })
-          .error
+        const actualStatusError = find(statusForm.children, {
+          name: 'status',
+        }).error
 
         expect(actualStatusError).to.equal(this.messages.status)
       })

@@ -37,10 +37,8 @@ describe('Update the project stage', () => {
         Home: urls.dashboard(),
         Investments: urls.investments.index(),
         Projects: urls.investments.projects.index(),
-        [fixtures.investment.newHotelFdi
-          .name]: urls.investments.projects.project(
-          fixtures.investment.newHotelFdi.id
-        ),
+        [fixtures.investment.newHotelFdi.name]:
+          urls.investments.projects.project(fixtures.investment.newHotelFdi.id),
         Admin: null,
       })
     })

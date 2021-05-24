@@ -507,23 +507,20 @@ describe('Form state middleware', () => {
         })
 
         it('should not remove state for step 1', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps[
-            '/step-1'
-          ]
+          const actual =
+            this.req.session['multi-step']['/base/step-1'].steps['/step-1']
           expect(actual).to.exist
         })
 
         it('should remove state for step 3', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps[
-            '/step-3'
-          ]
+          const actual =
+            this.req.session['multi-step']['/base/step-1'].steps['/step-3']
           expect(actual).to.be.undefined
         })
 
         it('should remove state for step 5', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps[
-            '/step-5'
-          ]
+          const actual =
+            this.req.session['multi-step']['/base/step-1'].steps['/step-5']
           expect(actual).to.be.undefined
         })
 
@@ -550,23 +547,20 @@ describe('Form state middleware', () => {
         })
 
         it('should not remove state for step 1', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps[
-            '/step-1'
-          ]
+          const actual =
+            this.req.session['multi-step']['/base/step-1'].steps['/step-1']
           expect(actual).to.exist
         })
 
         it('should not remove state for step 3', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps[
-            '/step-3'
-          ]
+          const actual =
+            this.req.session['multi-step']['/base/step-1'].steps['/step-3']
           expect(actual).to.exist
         })
 
         it('should not remove state for step 5', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps[
-            '/step-5'
-          ]
+          const actual =
+            this.req.session['multi-step']['/base/step-1'].steps['/step-5']
           expect(actual).to.exist
         })
 
@@ -615,9 +609,8 @@ describe('Form state middleware', () => {
           })
 
           it('should not remove state for step 1', () => {
-            const actual = this.req.session['multi-step']['/base/step-1'].steps[
-              '/step-1'
-            ]
+            const actual =
+              this.req.session['multi-step']['/base/step-1'].steps['/step-1']
             expect(actual).to.exist
           })
 
@@ -647,23 +640,20 @@ describe('Form state middleware', () => {
           })
 
           it('should not remove state for step 1', () => {
-            const actual = this.req.session['multi-step']['/base/step-1'].steps[
-              '/step-1'
-            ]
+            const actual =
+              this.req.session['multi-step']['/base/step-1'].steps['/step-1']
             expect(actual).to.exist
           })
 
           it('should not remove state for step 3', () => {
-            const actual = this.req.session['multi-step']['/base/step-1'].steps[
-              '/step-3'
-            ]
+            const actual =
+              this.req.session['multi-step']['/base/step-1'].steps['/step-3']
             expect(actual).to.exist
           })
 
           it('should not remove state for step 5', () => {
-            const actual = this.req.session['multi-step']['/base/step-1'].steps[
-              '/step-5'
-            ]
+            const actual =
+              this.req.session['multi-step']['/base/step-1'].steps['/step-5']
             expect(actual).to.exist
           })
 
@@ -706,23 +696,20 @@ describe('Form state middleware', () => {
         })
 
         it('should not remove state for step 1', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps[
-            '/step-1'
-          ]
+          const actual =
+            this.req.session['multi-step']['/base/step-1'].steps['/step-1']
           expect(actual).to.exist
         })
 
         it('should remove state for step 3', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps[
-            '/step-3'
-          ]
+          const actual =
+            this.req.session['multi-step']['/base/step-1'].steps['/step-3']
           expect(actual).to.be.undefined
         })
 
         it('should not remove state for step 5', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps[
-            '/step-5'
-          ]
+          const actual =
+            this.req.session['multi-step']['/base/step-1'].steps['/step-5']
           expect(actual).to.exist
         })
 
@@ -743,23 +730,20 @@ describe('Form state middleware', () => {
         })
 
         it('should not remove state for step 1', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps[
-            '/step-1'
-          ]
+          const actual =
+            this.req.session['multi-step']['/base/step-1'].steps['/step-1']
           expect(actual).to.exist
         })
 
         it('should not remove state for step 3', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps[
-            '/step-3'
-          ]
+          const actual =
+            this.req.session['multi-step']['/base/step-1'].steps['/step-3']
           expect(actual).to.exist
         })
 
         it('should not remove state for step 5', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps[
-            '/step-5'
-          ]
+          const actual =
+            this.req.session['multi-step']['/base/step-1'].steps['/step-5']
           expect(actual).to.exist
         })
 

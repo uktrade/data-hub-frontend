@@ -155,7 +155,8 @@ const InteractionDetailsForm = ({
                                 companyId,
                                 url: e.target.href,
                               },
-                              onSuccessDispatch: ADD_INTERACTION_FORM__CONTACT_FORM_OPENED,
+                              onSuccessDispatch:
+                                ADD_INTERACTION_FORM__CONTACT_FORM_OPENED,
                             })
                           }}
                           {...props}

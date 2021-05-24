@@ -32,10 +32,8 @@ async function findAttendee(req, res, next) {
       return next()
     }
 
-    const transformListItemToAttendeeSearchResult = await createContactItemToAttendeeSearchResult(
-      req,
-      event
-    )
+    const transformListItemToAttendeeSearchResult =
+      await createContactItemToAttendeeSearchResult(req, event)
 
     const contactsResponse = await search({
       req,

@@ -19,5 +19,8 @@ const randomReferral = () => ({
 
 const randomReferrals = (length) => Array(length).fill(null).map(randomReferral)
 
-export default (delay = 1000, length = 10) => () =>
-  new Promise((resolve) => setTimeout(resolve, delay, randomReferrals(length)))
+export default (delay = 1000, length = 10) =>
+  () =>
+    new Promise((resolve) =>
+      setTimeout(resolve, delay, randomReferrals(length))
+    )

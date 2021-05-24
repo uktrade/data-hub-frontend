@@ -18,11 +18,8 @@ function getCountriesFields(company) {
 
 module.exports = {
   transformCompanyToExportDetailsView: (company) => {
-    const {
-      exportToCountries,
-      futureInterestCountries,
-      noInterestCountries,
-    } = getCountriesFields(company)
+    const { exportToCountries, futureInterestCountries, noInterestCountries } =
+      getCountriesFields(company)
 
     const exportWinCategory = {
       name: exportDetailsLabels.exportExperienceCategory,

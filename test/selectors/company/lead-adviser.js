@@ -8,8 +8,7 @@ module.exports = {
       '#lead-advisers > div > table > tbody > tr:nth-child(1) > th:nth-child(2)',
     emailHeader:
       '#lead-advisers > div > table > tbody > tr:nth-child(1) > th:nth-child(3)',
-    team:
-      '#lead-advisers > div > table > tbody > tr:nth-child(2) > td:nth-child(1)',
+    team: '#lead-advisers > div > table > tbody > tr:nth-child(2) > td:nth-child(1)',
     leadIta:
       '#lead-advisers > div > table > tbody > tr:nth-child(2) > td:nth-child(2)',
     email:

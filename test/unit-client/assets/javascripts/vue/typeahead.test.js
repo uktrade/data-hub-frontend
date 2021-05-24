@@ -2,8 +2,8 @@ const Vue = require('vue')
 const { mount } = require('@vue/test-utils')
 const axios = require('axios')
 
-const Typeahead = require('../../../../../assets/javascripts/vue/typeahead.vue')
-  .default
+const Typeahead =
+  require('../../../../../assets/javascripts/vue/typeahead.vue').default
 const { highlight } = require('../../../../../assets/javascripts/vue/filters')
 
 const XHR = require('../../../../../assets/javascripts/lib/xhr')
@@ -133,8 +133,9 @@ describe('Typeahead', () => {
       })
 
       it('should render the selected options as hidden fields', () => {
-        const element = component.find('input[type="hidden"][name="adviser"]')
-          .element
+        const element = component.find(
+          'input[type="hidden"][name="adviser"]'
+        ).element
         expect(element.value).to.equal('1234')
       })
     })

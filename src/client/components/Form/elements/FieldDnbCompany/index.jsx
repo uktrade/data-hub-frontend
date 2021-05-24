@@ -55,13 +55,8 @@ const FieldDnbCompany = ({
 }) => {
   const { values, goBack, validateForm, setIsLoading } = useFormContext()
   const { findCompany } = useDnbSearch(apiEndpoint)
-  const {
-    onEntitySearch,
-    searching,
-    searched,
-    error,
-    entities,
-  } = useEntitySearch(findCompany)
+  const { onEntitySearch, searching, searched, error, entities } =
+    useEntitySearch(findCompany)
 
   function onSearchClick(e) {
     e.preventDefault()

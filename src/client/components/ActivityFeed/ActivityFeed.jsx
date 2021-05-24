@@ -80,9 +80,8 @@ export default class ActivityFeed extends React.Component {
 
     this.onActivityTypeFilterChange = this.onActivityTypeFilterChange.bind(this)
     this.onShowDetailsClick = this.onShowDetailsClick.bind(this)
-    this.showActivitiesFromAllCompanies = this.showActivitiesFromAllCompanies.bind(
-      this
-    )
+    this.showActivitiesFromAllCompanies =
+      this.showActivitiesFromAllCompanies.bind(this)
   }
 
   onActivityTypeFilterChange(e) {

@@ -1,6 +1,7 @@
 const proxyquire = require('proxyquire')
 
-const contactMock = require('../../../../../../test/unit/data/contacts/contacts.json')[0]
+const contactMock =
+  require('../../../../../../test/unit/data/contacts/contacts.json')[0]
 const invoiceMock = require('../../../../../../test/unit/data/omis/invoice.json')
 const paymentsMock = require('../../../../../../test/unit/data/omis/payments.json')
 const assigneesMock = require('../../../../../../test/unit/data/omis/assignees.json')

@@ -59,11 +59,10 @@ function transformInvestmentValueForView({
     return boolean ? pos : neg
   }
 
-  const europeanOrGlobalHeadquartersBusinessActivities = business_activities.filter(
-    (activity) => {
+  const europeanOrGlobalHeadquartersBusinessActivities =
+    business_activities.filter((activity) => {
       return /^(european|global) headquarters$/i.test(activity.name)
-    }
-  )
+    })
 
   return {
     total_investment: transformInvestmentAmount(

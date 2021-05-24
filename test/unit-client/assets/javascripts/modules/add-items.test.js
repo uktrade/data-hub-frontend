@@ -1,7 +1,7 @@
 /* eslint-disable no-new */
 const Vue = require('vue')
-const Typeahead = require('../../../../../assets/javascripts/vue/typeahead.vue')
-  .default
+const Typeahead =
+  require('../../../../../assets/javascripts/vue/typeahead.vue').default
 const AddAnotherFragment = require('../../../../../assets/javascripts/modules/add-items')
 
 const selectMarkup = `<div id="group-field-adviser" class="c-form-group js-adviser">
@@ -290,9 +290,8 @@ describe('Add another', function () {
         })
 
         it('should add a remove button to any new fragments', function () {
-          const addButtonElement = this.wrapper.querySelector(
-            '.js-AddItems__add'
-          )
+          const addButtonElement =
+            this.wrapper.querySelector('.js-AddItems__add')
           addButtonElement.click()
 
           expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(3)

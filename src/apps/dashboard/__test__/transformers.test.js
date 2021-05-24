@@ -10,8 +10,7 @@ describe('#formatHelpCentreAnnouncements', () => {
     articles: [
       {
         id: 360001431697,
-        url:
-          'https://helpcentre.com/api/v2/help_center/en-gb/articles/360001431697-Recording-policy-feedback-on-Data-Hub.json',
+        url: 'https://helpcentre.com/api/v2/help_center/en-gb/articles/360001431697-Recording-policy-feedback-on-Data-Hub.json',
         html_url:
           'https://helpcentre.com/hc/en-gb/articles/360001431697-Recording-policy-feedback-on-Data-Hub',
         author_id: 7837434105,
@@ -29,8 +28,7 @@ describe('#formatHelpCentreAnnouncements', () => {
       },
       {
         id: 360001412918,
-        url:
-          'https://helpcentre.com/api/v2/help_center/en-gb/articles/360001412918-Improvements-to-company-data-in-Data-Hub-April-2019.json',
+        url: 'https://helpcentre.com/api/v2/help_center/en-gb/articles/360001412918-Improvements-to-company-data-in-Data-Hub-April-2019.json',
         html_url:
           'https://helpcentre.com/hc/en-gb/articles/360001412918-Improvements-to-company-data-in-Data-Hub-April-2019',
         author_id: 17979367345,
@@ -46,8 +44,7 @@ describe('#formatHelpCentreAnnouncements', () => {
       },
       {
         id: 360001345138,
-        url:
-          'https://helpcentre.com/api/v2/help_center/en-gb/articles/360001345138-Recording-multiple-DIT-advisers-against-interactions.json',
+        url: 'https://helpcentre.com/api/v2/help_center/en-gb/articles/360001345138-Recording-multiple-DIT-advisers-against-interactions.json',
         html_url:
           'https://helpcentre.com/hc/en-gb/articles/360001345138-Recording-multiple-DIT-advisers-against-interactions',
         author_id: 9903012689,
@@ -69,20 +66,17 @@ describe('#formatHelpCentreAnnouncements', () => {
   const expected = [
     {
       heading: 'Recording policy feedback on Data Hub',
-      link:
-        'https://helpcentre.com/hc/en-gb/articles/360001431697-Recording-policy-feedback-on-Data-Hub',
+      link: 'https://helpcentre.com/hc/en-gb/articles/360001431697-Recording-policy-feedback-on-Data-Hub',
       date: `${moment(mockData.articles[0].created_at).fromNow()}`,
     },
     {
       heading: 'Improvements to company data in Data Hub - April 2019',
-      link:
-        'https://helpcentre.com/hc/en-gb/articles/360001412918-Improvements-to-company-data-in-Data-Hub-April-2019',
+      link: 'https://helpcentre.com/hc/en-gb/articles/360001412918-Improvements-to-company-data-in-Data-Hub-April-2019',
       date: `${moment(mockData.articles[1].created_at).fromNow()}`,
     },
     {
       heading: 'Recording multiple DIT advisers against interactions',
-      link:
-        'https://helpcentre.com/hc/en-gb/articles/360001345138-Recording-multiple-DIT-advisers-against-interactions',
+      link: 'https://helpcentre.com/hc/en-gb/articles/360001345138-Recording-multiple-DIT-advisers-against-interactions',
       date: `${moment(mockData.articles[2].created_at).fromNow()}`,
     },
   ]

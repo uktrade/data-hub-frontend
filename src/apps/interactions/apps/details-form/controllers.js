@@ -162,14 +162,8 @@ const getInitialFormValues = (req, res) => {
 
 async function renderInteractionDetailsForm(req, res, next) {
   try {
-    const {
-      company,
-      interaction,
-      referral,
-      investment,
-      contact,
-      features,
-    } = res.locals
+    const { company, interaction, referral, investment, contact, features } =
+      res.locals
 
     const [
       services,

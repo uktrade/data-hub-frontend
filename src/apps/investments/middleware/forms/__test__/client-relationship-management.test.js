@@ -66,7 +66,8 @@ describe('Investment form middleware - client relationship management', () => {
 
     context('when the global account manager is not set', () => {
       it('should populate the form state with the existing client relationship management', async () => {
-        this.resMock.locals.investment.investor_company.one_list_group_global_account_manager = null
+        this.resMock.locals.investment.investor_company.one_list_group_global_account_manager =
+          null
 
         const expectedFormState = {
           client_relationship_manager:
@@ -204,8 +205,8 @@ describe('Investment form middleware - client relationship management', () => {
             stubRequest,
             investmentData.id,
             {
-              client_relationship_manager: this.body
-                .client_relationship_manager,
+              client_relationship_manager:
+                this.body.client_relationship_manager,
             }
           )
           done()
