@@ -1,10 +1,6 @@
 let investmentProjects = require('../../../fixtures/v3/search/investment-project.json')
-const { addDays, subDays } = require('date-fns')
 
 exports.investmentProjects = function (req, res) {
-  const today = new Date()
-  const oneFortnightAgo = subDays(today, 14)
-
   const hasFilters = !!(
     req.body.actual_land_date_before ||
     req.body.actual_land_date_after ||
@@ -20,17 +16,13 @@ exports.investmentProjects = function (req, res) {
     req.body.likelihood_to_land ||
     req.body.level_of_involvement_simplified
   )
-
-  const currentResults = investmentProjects.results.map((result, i) => ({
-    ...result,
-    estimated_land_date: addDays(oneFortnightAgo, i * 14),
-  }))
+  const results = investmentProjects.results
 
   if (req.body.uk_region_location) {
     var regionQuery = req.body.uk_region_location
     var regions = typeof regionQuery === 'string' ? [regionQuery] : regionQuery
     var ukRegionFilteredResults = _.filter(
-      currentResults,
+      results,
       function (investmentProject) {
         return _.intersection(
           regions,
@@ -47,12 +39,12 @@ exports.investmentProjects = function (req, res) {
   } else if (hasFilters) {
     return res.json({
       count: 12,
-      results: currentResults,
+      results,
     })
   } else {
     return res.json({
       ...investmentProjects,
-      results: currentResults,
+      results,
     })
   }
 }
