@@ -1,5 +1,6 @@
 const axios = require('axios')
 const { isString } = require('lodash')
+const { StatusCodeError } = require('./errors')
 
 const logger = require('../config/logger')
 
@@ -23,24 +24,6 @@ const stripScript = (text) => {
     text = text.replace(SCRIPT_REGEX, '')
   }
   return text
-}
-
-/**
- * This error is thrown when a response gives a bad status code.
- */
-class StatusCodeError extends Error {
-  constructor(message, statusCode) {
-    super(message)
-
-    this.message = `${statusCode} - ${JSON.stringify(message)}`
-    this.error = message
-    this.statusCode = statusCode
-
-    // Maintains proper stack trace for where our error was thrown
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, StatusCodeError)
-    }
-  }
 }
 
 /**
