@@ -261,16 +261,18 @@ describe('Interaction details', () => {
     })
 
     it('should not render the "Complete interaction" button', () => {
-      const completeInteraction = selectors.interaction.details.interaction.actions.completeInteraction(
-        params
-      )
+      const completeInteraction =
+        selectors.interaction.details.interaction.actions.completeInteraction(
+          params
+        )
       cy.get(completeInteraction).should('not.exist')
     })
 
     it('should render the "Edit interaction" button', () => {
-      const editInteraction = selectors.interaction.details.interaction.actions.editInteraction(
-        params
-      )
+      const editInteraction =
+        selectors.interaction.details.interaction.actions.editInteraction(
+          params
+        )
       cy.get(editInteraction).should('be.visible')
       cy.get(editInteraction).should('have.text', 'Edit service delivery')
     })
@@ -332,16 +334,18 @@ describe('Interaction details', () => {
     })
 
     it('should not render the "Complete interaction" button', () => {
-      const completeInteraction = selectors.interaction.details.interaction.actions.completeInteraction(
-        params
-      )
+      const completeInteraction =
+        selectors.interaction.details.interaction.actions.completeInteraction(
+          params
+        )
       cy.get(completeInteraction).should('not.exist')
     })
 
     it('should render the "Edit interaction" button', () => {
-      const editInteraction = selectors.interaction.details.interaction.actions.editInteraction(
-        params
-      )
+      const editInteraction =
+        selectors.interaction.details.interaction.actions.editInteraction(
+          params
+        )
       cy.get(editInteraction).should('be.visible')
       cy.get(editInteraction).should('have.text', 'Edit interaction')
     })

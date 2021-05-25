@@ -21,12 +21,14 @@ describe('Proposition details middleware', () => {
         fetchProposition: this.fetchPropositionStub.resolves(propositionData),
       },
       '../transformers': {
-        transformPropositionFormBodyToApiRequest: this.transformPropositionFormBodyToApiRequestStub.returns(
-          transformed
-        ),
-        transformPropositionResponseToViewRecord: this.transformPropositionResponseToViewRecordStub.returns(
-          transformed
-        ),
+        transformPropositionFormBodyToApiRequest:
+          this.transformPropositionFormBodyToApiRequestStub.returns(
+            transformed
+          ),
+        transformPropositionResponseToViewRecord:
+          this.transformPropositionResponseToViewRecordStub.returns(
+            transformed
+          ),
       },
     })
 

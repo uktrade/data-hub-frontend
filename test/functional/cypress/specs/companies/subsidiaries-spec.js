@@ -98,10 +98,10 @@ describe('Companies subsidiaries', () => {
         assertBreadcrumbs({
           Home: urls.dashboard(),
           Companies: urls.companies.index(),
-          [fixtures.company.dnBGlobalUltimateAndGlobalHq
-            .name]: urls.companies.detail(
-            fixtures.company.dnBGlobalUltimateAndGlobalHq.id
-          ),
+          [fixtures.company.dnBGlobalUltimateAndGlobalHq.name]:
+            urls.companies.detail(
+              fixtures.company.dnBGlobalUltimateAndGlobalHq.id
+            ),
           'Business details': urls.companies.businessDetails(
             fixtures.company.dnBGlobalUltimateAndGlobalHq.id
           ),

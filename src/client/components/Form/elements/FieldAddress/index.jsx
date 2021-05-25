@@ -35,12 +35,8 @@ const FieldAddress = ({
   onSelectUKAddress,
 }) => {
   const findAddress = usePostcodeLookup(apiEndpoint)
-  const {
-    onAddressSearch,
-    isSubmitting,
-    error,
-    addressList,
-  } = useAddressSearch(findAddress)
+  const { onAddressSearch, isSubmitting, error, addressList } =
+    useAddressSearch(findAddress)
   const {
     values: { postcode },
     setFieldValue,

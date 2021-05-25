@@ -71,9 +71,8 @@ const SendReferralForm = ({
                   <MultiInstanceForm
                     id={STATE_ID}
                     onSubmit={(values) => {
-                      const receivingAdviserTeamName = values.adviser.label?.split(
-                        ', '
-                      )[1]
+                      const receivingAdviserTeamName =
+                        values.adviser.label?.split(', ')[1]
                       pushData({
                         event: 'send_referral',
                         sendingAdviserTeam: sendingAdviserTeamName,

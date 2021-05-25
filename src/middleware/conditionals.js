@@ -13,11 +13,13 @@ const { NotAuthorizedError, NotFoundError } = require('./errors')
  * // ...and the request will never get here.
  * router.get('/feature-foobarbaz', handler)
  */
-const allFeaturesOr404 = (...features) => (req, res, next) =>
-  next(
-    difference(features, Object.keys(res.locals.features)).length &&
-      new NotFoundError()
-  )
+const allFeaturesOr404 =
+  (...features) =>
+  (req, res, next) =>
+    next(
+      difference(features, Object.keys(res.locals.features)).length &&
+        new NotFoundError()
+    )
 
 /**
  * @function allPermissionsOr403
@@ -30,11 +32,13 @@ const allFeaturesOr404 = (...features) => (req, res, next) =>
  * // ...and the request will never get here.
  * router.get('/only-for-foobarbaz', handler)
  */
-const allPermissionsOr403 = (...permissions) => (req, res, next) =>
-  next(
-    difference(permissions, res.locals.user.permissions).length &&
-      new NotAuthorizedError()
-  )
+const allPermissionsOr403 =
+  (...permissions) =>
+  (req, res, next) =>
+    next(
+      difference(permissions, res.locals.user.permissions).length &&
+        new NotAuthorizedError()
+    )
 
 module.exports = {
   allFeaturesOr404,

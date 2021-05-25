@@ -44,9 +44,8 @@ describe('Investment project transformers', () => {
         ],
       }
 
-      const transformedItem = transformInvestmentListItemToDisableMetaLinks(
-        item
-      )
+      const transformedItem =
+        transformInvestmentListItemToDisableMetaLinks(item)
       expect(transformedItem.meta[0].isInert).to.equal(true)
     })
   })

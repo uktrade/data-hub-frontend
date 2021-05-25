@@ -74,9 +74,8 @@ describe('Contact transformers', () => {
       'when the contact object parameter contains a valid contact',
       () => {
         beforeEach(() => {
-          this.transformedContact = transformContactToListItem(
-            contactSearchResult
-          )
+          this.transformedContact =
+            transformContactToListItem(contactSearchResult)
         })
 
         it('should return a transformed contact list item', () => {

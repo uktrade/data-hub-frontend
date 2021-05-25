@@ -35,12 +35,8 @@ describe('groupExportCountries', () => {
   context('With countries for each status', () => {
     context('With randomly generated countries', () => {
       it('Should separate out the countries and order them alphabetially', () => {
-        const {
-          future,
-          current,
-          noInterest,
-          exportCountries,
-        } = generateExportCountries()
+        const { future, current, noInterest, exportCountries } =
+          generateExportCountries()
 
         const buckets = groupExportCountries(exportCountries)
 
@@ -74,12 +70,8 @@ describe('groupExportCountries', () => {
   context('With unexpected statuses', () => {
     it('Should only return the known statuses and order them alphabetically', () => {
       const FAKE_STATUS = 'fake-status'
-      const {
-        future,
-        current,
-        noInterest,
-        exportCountries,
-      } = generateExportCountries()
+      const { future, current, noInterest, exportCountries } =
+        generateExportCountries()
 
       exportCountries.push(
         ...generateCountries(2).map(createExportCountry(FAKE_STATUS))

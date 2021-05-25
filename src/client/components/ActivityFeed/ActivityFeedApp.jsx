@@ -72,15 +72,13 @@ export default class ActivityFeedApp extends React.Component {
     })
 
     try {
-      const {
-        activities: newActivities,
-        total,
-      } = await ActivityFeedApp.fetchActivities(
-        apiEndpoint,
-        from,
-        size,
-        queryParams
-      )
+      const { activities: newActivities, total } =
+        await ActivityFeedApp.fetchActivities(
+          apiEndpoint,
+          from,
+          size,
+          queryParams
+        )
 
       const allActivities = activities.concat(newActivities)
 

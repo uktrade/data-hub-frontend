@@ -732,9 +732,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
     'when transforming a draft and not showing document information',
     () => {
       beforeEach(() => {
-        this.transformed = transformInteractionResponseToViewRecord(
-          mcokDraftPastMeeting
-        )
+        this.transformed =
+          transformInteractionResponseToViewRecord(mcokDraftPastMeeting)
       })
 
       it('should transform to display format', () => {

@@ -145,8 +145,7 @@ describe('Investment shared middleware', () => {
           meta: [
             {
               label: 'Status',
-              url:
-                '/investments/projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7/status',
+              url: '/investments/projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7/status',
               urlLabel: 'change',
               value: '',
             },

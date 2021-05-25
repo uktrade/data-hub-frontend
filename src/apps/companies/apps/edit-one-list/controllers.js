@@ -20,9 +20,10 @@ async function renderEditOneList(req, res) {
     ? company.one_list_group_tier.id
     : null
 
-  const oneListGroupGlobalAccountManager = company.one_list_group_global_account_manager
-    ? parseAdviserData([company.one_list_group_global_account_manager])[0]
-    : null
+  const oneListGroupGlobalAccountManager =
+    company.one_list_group_global_account_manager
+      ? parseAdviserData([company.one_list_group_global_account_manager])[0]
+      : null
 
   const oneListCoreTeam = oneListTeam
     ? parseAdviserData(getTeamMembers(oneListTeam))

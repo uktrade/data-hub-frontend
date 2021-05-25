@@ -44,9 +44,8 @@ describe('CollectionFilters macro', () => {
         '#group-field-who-are-you'
       )
       const renderedFilter2 = component.querySelector('#group-field-fav-colour')
-      const rendererFilter1Inputs = renderedFilter1.querySelectorAll(
-        '[type=radio]'
-      )
+      const rendererFilter1Inputs =
+        renderedFilter1.querySelectorAll('[type=radio]')
       const rendererFilter2Options = renderedFilter2.querySelectorAll('option')
 
       expect(component.className).not.to.contain('js-vue-wrapper')

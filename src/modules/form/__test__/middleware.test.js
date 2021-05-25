@@ -85,16 +85,15 @@ describe('#postDetails', () => {
     })
 
     it('should set the step completed to false', () => {
-      const actual = this.req.session['multi-step']['/base/step-1'].steps[
-        '/step-1'
-      ].completed
+      const actual =
+        this.req.session['multi-step']['/base/step-1'].steps['/step-1']
+          .completed
       expect(actual).to.be.false
     })
 
     it('should not set the next path', () => {
-      const actual = this.req.session['multi-step']['/base/step-1'].steps[
-        '/step-1'
-      ].nextPath
+      const actual =
+        this.req.session['multi-step']['/base/step-1'].steps['/step-1'].nextPath
       expect(actual).to.be.undefined
     })
 
@@ -153,16 +152,15 @@ describe('#postDetails', () => {
     })
 
     it('should set the step completed to true', () => {
-      const actual = this.req.session['multi-step']['/base/step-1'].steps[
-        '/step-1'
-      ].completed
+      const actual =
+        this.req.session['multi-step']['/base/step-1'].steps['/step-1']
+          .completed
       expect(actual).to.be.true
     })
 
     it('should set the next path', () => {
-      const actual = this.req.session['multi-step']['/base/step-1'].steps[
-        '/step-1'
-      ].nextPath
+      const actual =
+        this.req.session['multi-step']['/base/step-1'].steps['/step-1'].nextPath
       expect(actual).to.equal('/step-2')
     })
 
@@ -322,16 +320,15 @@ describe('#postDetails', () => {
     })
 
     it('should set the step completed to false', () => {
-      const actual = this.req.session['multi-step']['/base/step-1'].steps[
-        '/step-1'
-      ].completed
+      const actual =
+        this.req.session['multi-step']['/base/step-1'].steps['/step-1']
+          .completed
       expect(actual).to.be.false
     })
 
     it('should not set the next path', () => {
-      const actual = this.req.session['multi-step']['/base/step-1'].steps[
-        '/step-1'
-      ].nextPath
+      const actual =
+        this.req.session['multi-step']['/base/step-1'].steps['/step-1'].nextPath
       expect(actual).to.be.undefined
     })
 
@@ -414,16 +411,15 @@ describe('#postDetails', () => {
     })
 
     it('should set the step completed to false', () => {
-      const actual = this.req.session['multi-step']['/base/step-1'].steps[
-        '/step-1'
-      ].completed
+      const actual =
+        this.req.session['multi-step']['/base/step-1'].steps['/step-1']
+          .completed
       expect(actual).to.be.false
     })
 
     it('should not set the next path', () => {
-      const actual = this.req.session['multi-step']['/base/step-1'].steps[
-        '/step-1'
-      ].nextPath
+      const actual =
+        this.req.session['multi-step']['/base/step-1'].steps['/step-1'].nextPath
       expect(actual).to.be.undefined
     })
 

@@ -14,9 +14,8 @@ function getDetailsHandler(req, res, next) {
   try {
     const { investment } = res.locals
 
-    const clientRelationshipManagementData = transformClientRelationshipManagementForView(
-      investment
-    )
+    const clientRelationshipManagementData =
+      transformClientRelationshipManagementForView(investment)
     const projectManagementData = transformProjectManagementForView(investment)
     const teamMembersData = investment.team_members.map(
       transformTeamMembersForView

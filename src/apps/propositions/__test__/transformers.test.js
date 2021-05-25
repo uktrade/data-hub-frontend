@@ -63,9 +63,8 @@ describe('Proposition transformers', () => {
   describe('#transformPropositionResponsetoViewRecord', () => {
     context('when provided a fully populated proposition', () => {
       beforeEach(() => {
-        this.transformed = transformPropositionResponseToViewRecord(
-          mockProposition
-        )
+        this.transformed =
+          transformPropositionResponseToViewRecord(mockProposition)
       })
 
       it('should transform to display format', () => {
@@ -85,15 +84,13 @@ describe('Proposition transformers', () => {
             'il_fullxfull.826924229_2xdo.jpg',
             {
               name: 'Download',
-              url:
-                '/investments/projects/65e77d82-8ebb-4ee7-b6ac-8c5945c512db/propositions/7d68565a-fc0e-422c-8ce3-df92cd40a64a/download/1a85b301-56ae-4073-97db-a42604c40bea',
+              url: '/investments/projects/65e77d82-8ebb-4ee7-b6ac-8c5945c512db/propositions/7d68565a-fc0e-422c-8ce3-df92cd40a64a/download/1a85b301-56ae-4073-97db-a42604c40bea',
             },
           ],
           'File 2': [
             'totally_not_a_virus.zip',
             {
-              name:
-                "The file didn't pass virus scanning, contact your administrator",
+              name: "The file didn't pass virus scanning, contact your administrator",
               type: 'error',
             },
           ],
@@ -101,8 +98,7 @@ describe('Proposition transformers', () => {
             '780-rainbow-teacosy-1.jpg',
             {
               name: 'Download',
-              url:
-                '/investments/projects/65e77d82-8ebb-4ee7-b6ac-8c5945c512db/propositions/7d68565a-fc0e-422c-8ce3-df92cd40a64a/download/1eab8de6-0a9a-4152-95d0-a3eca9ef6a8f',
+              url: '/investments/projects/65e77d82-8ebb-4ee7-b6ac-8c5945c512db/propositions/7d68565a-fc0e-422c-8ce3-df92cd40a64a/download/1eab8de6-0a9a-4152-95d0-a3eca9ef6a8f',
             },
           ],
         })
@@ -115,9 +111,8 @@ describe('Proposition transformers', () => {
         beforeEach(() => {
           mockProposition.status = 'Abandoned'
           mockProposition.details = 'the world is a stage'
-          this.transformed = transformPropositionResponseToViewRecord(
-            mockProposition
-          )
+          this.transformed =
+            transformPropositionResponseToViewRecord(mockProposition)
         })
 
         it('should not transform it to a collection with only word objects', () => {
@@ -134,9 +129,8 @@ describe('Proposition transformers', () => {
         beforeEach(() => {
           mockProposition.status = 'Abandoned'
           mockProposition.details = 'http://the-world-is-a-stage'
-          this.transformed = transformPropositionResponseToViewRecord(
-            mockProposition
-          )
+          this.transformed =
+            transformPropositionResponseToViewRecord(mockProposition)
         })
 
         it('should transform it to a collection with a single link object', () => {
@@ -162,9 +156,8 @@ describe('Proposition transformers', () => {
         beforeEach(() => {
           mockProposition.status = 'Abandoned'
           mockProposition.details = 'http://the-world-is-a-stage\n'
-          this.transformed = transformPropositionResponseToViewRecord(
-            mockProposition
-          )
+          this.transformed =
+            transformPropositionResponseToViewRecord(mockProposition)
         })
 
         it('should transform it to a collection with a single link object', () => {
@@ -187,9 +180,8 @@ describe('Proposition transformers', () => {
         beforeEach(() => {
           mockProposition.status = 'Abandoned'
           mockProposition.details = 'http://bazzinga\r'
-          this.transformed = transformPropositionResponseToViewRecord(
-            mockProposition
-          )
+          this.transformed =
+            transformPropositionResponseToViewRecord(mockProposition)
         })
 
         it('should transform it to a collection with a link object with http, and an empty word object', () => {
@@ -209,9 +201,8 @@ describe('Proposition transformers', () => {
         beforeEach(() => {
           mockProposition.status = 'Abandoned'
           mockProposition.details = 'https://and-we-are-the-actors'
-          this.transformed = transformPropositionResponseToViewRecord(
-            mockProposition
-          )
+          this.transformed =
+            transformPropositionResponseToViewRecord(mockProposition)
         })
 
         it('should transform it to a collection with a link object with https', () => {
@@ -235,9 +226,8 @@ describe('Proposition transformers', () => {
           mockProposition.status = 'Abandoned'
           mockProposition.details =
             'https://world-is-a-stage and we are the actors'
-          this.transformed = transformPropositionResponseToViewRecord(
-            mockProposition
-          )
+          this.transformed =
+            transformPropositionResponseToViewRecord(mockProposition)
         })
 
         it('should transform it to a collection with a link object for the url and a word object for the rest of the words in the string', () => {
@@ -262,9 +252,8 @@ describe('Proposition transformers', () => {
           mockProposition.status = 'Abandoned'
           mockProposition.details =
             'in this universe https://world-is-a-stage and we are the actors www.yahoo.com of the play http://third.link lorem ipsum'
-          this.transformed = transformPropositionResponseToViewRecord(
-            mockProposition
-          )
+          this.transformed =
+            transformPropositionResponseToViewRecord(mockProposition)
         })
 
         it('should transform it to a collection with a link object for the url and a word object for the rest of the words in the string', () => {
@@ -306,9 +295,8 @@ describe('Proposition transformers', () => {
           mockProposition.status = 'Abandoned'
           mockProposition.details =
             'the world https://is-a-stage and we are the actors'
-          this.transformed = transformPropositionResponseToViewRecord(
-            mockProposition
-          )
+          this.transformed =
+            transformPropositionResponseToViewRecord(mockProposition)
         })
 
         it('should transform it to a collection with a link object for the url and a word object for the rest of the words in the string', () => {
@@ -331,9 +319,8 @@ describe('Proposition transformers', () => {
           mockProposition.status = 'Abandoned'
           mockProposition.details =
             'the world https://is-a-stage and we are the actors, find more quotes at http://padding-quotes#123 and put them here'
-          this.transformed = transformPropositionResponseToViewRecord(
-            mockProposition
-          )
+          this.transformed =
+            transformPropositionResponseToViewRecord(mockProposition)
         })
 
         it('should transform it to a collection with two link objects for the urls and a word object for the rest of the words in the string', () => {
@@ -364,9 +351,8 @@ describe('Proposition transformers', () => {
   describe('#transformPropositionListItemToHaveUrlPrefix', () => {
     context('when there is a leading forward slash', () => {
       it('should set the URL prefix without a leading forward slash', () => {
-        const actualProposition = transformPropositionListItemToHaveUrlPrefix(
-          '/url'
-        )(mockProposition)
+        const actualProposition =
+          transformPropositionListItemToHaveUrlPrefix('/url')(mockProposition)
         const expectedProposition = assign({}, mockProposition, {
           urlPrefix: 'url',
         })
@@ -377,9 +363,8 @@ describe('Proposition transformers', () => {
 
     context('when there is not a leading forward slash', () => {
       it('should set the complete URL prefix', () => {
-        const actualProposition = transformPropositionListItemToHaveUrlPrefix(
-          'url'
-        )(mockProposition)
+        const actualProposition =
+          transformPropositionListItemToHaveUrlPrefix('url')(mockProposition)
         const expectedProposition = assign({}, mockProposition, {
           urlPrefix: 'url',
         })
@@ -390,9 +375,10 @@ describe('Proposition transformers', () => {
 
     context('when there is not a return link', () => {
       it('should not set the complete URL prefix', () => {
-        const actualProposition = transformPropositionListItemToHaveUrlPrefix(
-          undefined
-        )(mockProposition)
+        const actualProposition =
+          transformPropositionListItemToHaveUrlPrefix(undefined)(
+            mockProposition
+          )
         const expectedProposition = assign({}, mockProposition)
 
         expect(actualProposition).to.deep.equal(expectedProposition)

@@ -353,8 +353,7 @@ describe('Company Investments - Large capital profile - Investor requirements', 
                   value: '4170d99a-02fc-46ee-8fd4-3fe786717708',
                 },
                 {
-                  text:
-                    'Energy / Infrastructure / Real Estate Funds (UKEIREFs)',
+                  text: 'Energy / Infrastructure / Real Estate Funds (UKEIREFs)',
                   value: '24826b7c-e3df-4a76-80d4-4fe2661b838e',
                 },
                 {

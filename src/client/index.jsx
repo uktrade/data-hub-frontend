@@ -190,7 +190,8 @@ function App() {
         [TASK_CHECK_FOR_INVESTMENTS]: personalisedDashboard.checkForInvestments,
         [TASK_GET_MY_INVESTMENTS_LIST]:
           myInvestmentProjects.fetchMyInvestmentsList,
-        [TASK_GET_INVESTMENT_SUMMARY_DATA_RANGES]: fetchInvestmentSummaryDataRanges,
+        [TASK_GET_INVESTMENT_SUMMARY_DATA_RANGES]:
+          fetchInvestmentSummaryDataRanges,
         [TASK_GET_OUTSTANDING_PROPOSITIONS]: fetchOutstandingPropositions,
         'Large investment profiles filters':
           investmentProfilesTasks.loadFilterOptions,

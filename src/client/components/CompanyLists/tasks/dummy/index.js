@@ -22,12 +22,16 @@ const randomList = ({ length, max = 10, id }) =>
         })),
     }))
 
-export const listsTaskFactory = ({ delay, lists, length }) => () =>
-  new Promise((resolve) =>
-    setTimeout(resolve, delay, lists || randomLists(length))
-  )
+export const listsTaskFactory =
+  ({ delay, lists, length }) =>
+  () =>
+    new Promise((resolve) =>
+      setTimeout(resolve, delay, lists || randomLists(length))
+    )
 
-export const listTaskFactory = ({ delay, ...rest } = {}) => (id) =>
-  new Promise((resolve) =>
-    setTimeout(resolve, delay, randomList({ id, ...rest }))
-  )
+export const listTaskFactory =
+  ({ delay, ...rest } = {}) =>
+  (id) =>
+    new Promise((resolve) =>
+      setTimeout(resolve, delay, randomList({ id, ...rest }))
+    )

@@ -138,8 +138,7 @@ function renderMetaList(req, res) {
       {
         label: 'Status',
         value: 'Ongoing',
-        url:
-          '/investments/projects/5d341b34-1fc8-4638-b4b1-a0922ebf401e/status',
+        url: '/investments/projects/5d341b34-1fc8-4638-b4b1-a0922ebf401e/status',
         urlLabel: 'change',
       },
       { label: 'Project code', value: 'DHP-00000009' },
