@@ -61,7 +61,7 @@ const CollectionItem = ({
   const summaryMessage = type ? `View ${type} details` : 'View details'
 
   return (
-    <ItemWrapper>
+    <ItemWrapper data-test="collection-item">
       {badges && (
         <StyledBadgesWrapper>
           {badges.map((badge) => (
