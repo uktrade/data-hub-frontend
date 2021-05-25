@@ -32,30 +32,33 @@ import PropTypes from 'prop-types'
  * const state3 = idAwareReducer(state2, { type: 'INC', id: 'foo' })
  * // {foo: 2, bar: 1}
  */
-export const reducerDecorator = (reducer, actionPattern) => (
-  state = {},
-  { id, type, ...action }
-) => {
-  const handleAction = {
-    String: () => type.startsWith(actionPattern),
-    Object: () => Object.values(actionPattern).includes(type),
-    Array: () => actionPattern.includes(type),
-    RegExp: () => type.match(actionPattern),
-  }[Object.prototype.toString.apply(actionPattern).slice(8, -1)]?.()
+export const reducerDecorator =
+  (reducer, actionPattern) =>
+  (state = {}, { id, type, ...action }) => {
+    const handleAction = {
+      String: () => type.startsWith(actionPattern),
+      Object: () => Object.values(actionPattern).includes(type),
+      Array: () => actionPattern.includes(type),
+      RegExp: () => type.match(actionPattern),
+    }[Object.prototype.toString.apply(actionPattern).slice(8, -1)]?.()
 
-  if (handleAction && id) {
-    const nextState = reducer(state[id], { type, ...action })
-    return isEmpty(nextState) ? omit(state, id) : { ...state, [id]: nextState }
+    if (handleAction && id) {
+      const nextState = reducer(state[id], { type, ...action })
+      return isEmpty(nextState)
+        ? omit(state, id)
+        : { ...state, [id]: nextState }
+    }
+    return state
   }
-  return state
-}
 
-const interceptDispatch = (dispatch, id) => ({ type, ...action }) =>
-  dispatch({
-    ...action,
-    type,
-    id,
-  })
+const interceptDispatch =
+  (dispatch, id) =>
+  ({ type, ...action }) =>
+    dispatch({
+      ...action,
+      type,
+      id,
+    })
 
 /**
  * An _id aware_ wrapper of `react-redux.connect`

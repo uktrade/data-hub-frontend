@@ -35,11 +35,8 @@ async function renderCompanyList(req, res, next) {
       sectorOptions,
     })
 
-    const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(
-      req,
-      filtersFields,
-      req.query
-    )
+    const filtersFieldsWithSelectedOptions =
+      await buildFieldsWithSelectedEntities(req, filtersFields, req.query)
     const selectedFilters = await buildSelectedFiltersSummary(
       filtersFieldsWithSelectedOptions,
       req.query

@@ -13,26 +13,22 @@ const data = {
     {
       heading:
         'Interactions - Recording Multiple Advisors - Changes Coming in April',
-      link:
-        'https://www.help-centre.com/hc/en-gb/articles/360001412918-April-2019-improvements-to-company-page-data',
+      link: 'https://www.help-centre.com/hc/en-gb/articles/360001412918-April-2019-improvements-to-company-page-data',
       date: '21 hours ago',
     },
     {
       heading: 'Interactions',
-      link:
-        'https://www.help-centre.com/hc/en-gb/articles/360001412918-April-2019-improvements-to-company-page-data',
+      link: 'https://www.help-centre.com/hc/en-gb/articles/360001412918-April-2019-improvements-to-company-page-data',
       date: '22 hours ago',
     },
     {
       heading: 'Interactions 2',
-      link:
-        'https://www.help-centre.com/hc/en-gb/articles/360001412918-April-2019-improvements-to-company-page-data',
+      link: 'https://www.help-centre.com/hc/en-gb/articles/360001412918-April-2019-improvements-to-company-page-data',
       date: '1 day ago',
     },
     {
       heading: 'Interactions 3',
-      link:
-        'https://www.help-centre.com/hc/en-gb/articles/360001412918-April-2019-improvements-to-company-page-data',
+      link: 'https://www.help-centre.com/hc/en-gb/articles/360001412918-April-2019-improvements-to-company-page-data',
       date: '2 days ago',
     },
   ],

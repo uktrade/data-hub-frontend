@@ -33,10 +33,8 @@ async function populateForm(req, res, next) {
     const investment = transformFromApi(res.locals.investment)
     const createdOn = get(investment, 'created_on')
 
-    const {
-      equityCompany,
-      equityCompanyInvestment,
-    } = await getEquityCompanyDetails(req, equityCompanyId)
+    const { equityCompany, equityCompanyInvestment } =
+      await getEquityCompanyDetails(req, equityCompanyId)
 
     const contacts = get(equityCompany, 'contacts', []).map(
       transformContactToOption

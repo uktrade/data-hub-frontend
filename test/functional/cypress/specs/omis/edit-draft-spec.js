@@ -4,8 +4,7 @@ const selectors = require('../../../../selectors')
 describe('Omis Edit Draft', () => {
   const data = {
     contact: {
-      name:
-        'Kameron Durgan|1f19804c-8156-4bd7-80c0-5291d9c776f9, Regional Security Engineer',
+      name: 'Kameron Durgan|1f19804c-8156-4bd7-80c0-5291d9c776f9, Regional Security Engineer',
       email: 'Kameron_Durgan1f19804c-8156-4bd7-80c0-5291d9c776f983@yahoo.com',
     },
     country: 'Argentina',

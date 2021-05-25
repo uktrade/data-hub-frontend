@@ -56,9 +56,8 @@ describe('Global transformers', () => {
 
     context('when valid key', () => {
       it('should return a function', () => {
-        const actual = this.transformers.transformDateObjectToDateString(
-          'start_date'
-        )
+        const actual =
+          this.transformers.transformDateObjectToDateString('start_date')
 
         expect(actual).to.be.a('function')
       })
@@ -95,20 +94,20 @@ describe('Global transformers', () => {
           start_date_month: '09',
           start_date_day: '25',
         }
-        const actual = this.transformers.transformDateObjectToDateString(
-          'start_date'
-        )(dateObj)
+        const actual =
+          this.transformers.transformDateObjectToDateString('start_date')(
+            dateObj
+          )
 
         expect(actual).to.equal('2017-09-25')
       })
 
       it('should return partial date string for object', () => {
-        const actualYearMonth = this.transformers.transformDateObjectToDateString(
-          'start_date'
-        )({
-          start_date_year: '2017',
-          start_date_month: '09',
-        })
+        const actualYearMonth =
+          this.transformers.transformDateObjectToDateString('start_date')({
+            start_date_year: '2017',
+            start_date_month: '09',
+          })
         const actualYear = this.transformers.transformDateObjectToDateString(
           'start_date'
         )({
@@ -134,9 +133,8 @@ describe('Global transformers', () => {
       })
 
       it('should return empty date object for invalid date', () => {
-        const actual = this.transformers.transformDateStringToDateObject(
-          '12345-098-11'
-        )
+        const actual =
+          this.transformers.transformDateStringToDateObject('12345-098-11')
 
         expect(actual).to.deep.equal({
           year: '',
@@ -148,9 +146,8 @@ describe('Global transformers', () => {
 
     context('when valid date string', () => {
       it('should return correct date object from date string', () => {
-        const actual = this.transformers.transformDateStringToDateObject(
-          '2017-09-25'
-        )
+        const actual =
+          this.transformers.transformDateStringToDateObject('2017-09-25')
 
         expect(actual).to.deep.equal({
           year: '2017',

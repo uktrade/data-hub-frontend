@@ -142,7 +142,8 @@ const store = createStore(
     [MANAGE_ADVISER_ID]: manageAdviserReducer,
     [DNB_CHECK_ID]: dnbCheckReducer,
     [INVESTMENT_OPPORTUNITIES_LIST_ID]: investmentOpportunitiesListReducer,
-    [INVESTMENT_OPPORTUNITIES_DETAILS_ID]: investmentOpportunitiesDetailsReducer,
+    [INVESTMENT_OPPORTUNITIES_DETAILS_ID]:
+      investmentOpportunitiesDetailsReducer,
     [INVESTMENT_PROFILES_ID]: investmentProfileReducer,
     [INVESTMENT_PROJECTS_ID]: investmentProjectsReducer,
     [MY_INVESTMENT_PROJECTS_ID]: myInvestmentProjectsReducer,

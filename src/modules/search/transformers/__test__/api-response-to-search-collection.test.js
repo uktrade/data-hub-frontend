@@ -17,8 +17,8 @@ describe('Search transformers', () => {
       '../api-response-to-search-collection',
       {
         '../../api/transformers': {
-          transformApiResponseToCollection: this
-            .transformApiResponseToCollectionStub,
+          transformApiResponseToCollection:
+            this.transformApiResponseToCollectionStub,
         },
         '../builders': {
           buildSearchAggregation: this.buildSearchAggregationStub,

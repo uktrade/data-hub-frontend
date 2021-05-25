@@ -282,9 +282,8 @@ describe('Event transformers', () => {
             end_date: '2017-11-11',
           })
 
-          this.transformedEvent = transformEventResponseToViewRecord(
-            eventWithDates
-          )
+          this.transformedEvent =
+            transformEventResponseToViewRecord(eventWithDates)
         })
 
         it('should include a single date', () => {
@@ -304,9 +303,8 @@ describe('Event transformers', () => {
             end_date: null,
           })
 
-          this.transformedEvent = transformEventResponseToViewRecord(
-            eventWithNoEndDate
-          )
+          this.transformedEvent =
+            transformEventResponseToViewRecord(eventWithNoEndDate)
         })
 
         it('should format the start date', () => {
@@ -331,9 +329,8 @@ describe('Event transformers', () => {
             end_date: '2017-11-11',
           })
 
-          this.transformedEvent = transformEventResponseToViewRecord(
-            eventWithNoStartDate
-          )
+          this.transformedEvent =
+            transformEventResponseToViewRecord(eventWithNoStartDate)
         })
 
         it('should format the end date', () => {
@@ -364,9 +361,8 @@ describe('Event transformers', () => {
             teams: [lead_team],
           })
 
-          this.transformedEvent = transformEventResponseToViewRecord(
-            eventWithNoTeams
-          )
+          this.transformedEvent =
+            transformEventResponseToViewRecord(eventWithNoTeams)
         })
 
         it('should indicate there are no other teams', () => {
@@ -392,9 +388,8 @@ describe('Event transformers', () => {
             ],
           })
 
-          this.transformedEvent = transformEventResponseToViewRecord(
-            eventWithTwoTeams
-          )
+          this.transformedEvent =
+            transformEventResponseToViewRecord(eventWithTwoTeams)
         })
 
         it('should display the other team', () => {
@@ -424,9 +419,8 @@ describe('Event transformers', () => {
             ],
           })
 
-          this.transformedEvent = transformEventResponseToViewRecord(
-            eventWithThreeTeams
-          )
+          this.transformedEvent =
+            transformEventResponseToViewRecord(eventWithThreeTeams)
         })
 
         it('should include a list of other teams', () => {
@@ -453,9 +447,8 @@ describe('Event transformers', () => {
             ],
           })
 
-          this.transformedEvent = transformEventResponseToViewRecord(
-            eventWithThreeTeams
-          )
+          this.transformedEvent =
+            transformEventResponseToViewRecord(eventWithThreeTeams)
         })
 
         it('should include a list of other teams', () => {

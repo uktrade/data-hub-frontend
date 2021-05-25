@@ -10,8 +10,7 @@ const expectedRows = {
       text: '14 Aug 2019',
     },
     {
-      text:
-        'Here is a long interaction title some more text some more text some more text almost finished some more text nearly there more text finished',
+      text: 'Here is a long interaction title some more text some more text some more text almost finished some more text nearly there more text finished',
       linksTo: '/interactions/79d92719-7402-45b6-b3d7-eff559d6b282',
       shouldHaveEllipsis: true,
     },
@@ -28,8 +27,7 @@ const expectedRows = {
       text: '15 Aug 2019',
     },
     {
-      text:
-        'Here is a long interaction title some more text some more text some more text almost finished some more text nearly there more text finished',
+      text: 'Here is a long interaction title some more text some more text some more text almost finished some more text nearly there more text finished',
       linksTo: '/interactions/79d92719-7402-45b6-b3d7-eff559d6b282',
       shouldHaveEllipsis: true,
     },
@@ -46,8 +44,7 @@ const expectedRows = {
       text: '21 Mar 2019',
     },
     {
-      text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       linksTo: '/interactions/86f92719-7402-45b6-b3d7-eff559d6b678',
       shouldHaveEllipsis: true,
     },
@@ -64,8 +61,7 @@ const expectedRows = {
       text: '21 Feb 2019',
     },
     {
-      text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       linksTo: '/interactions/86f92719-7402-45b6-b3d7-eff559d6b678',
       shouldHaveEllipsis: true,
     },

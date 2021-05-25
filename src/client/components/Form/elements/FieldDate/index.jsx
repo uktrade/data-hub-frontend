@@ -46,18 +46,20 @@ const StyledList = styled('div')({
   display: 'flex',
 })
 
-const getValidator = (required, format) => ({ day, month, year }) => {
-  const isLong = format === FORMAT_LONG
-  const isValid = isLong
-    ? isDateValid(year, month, day)
-    : isShortDateValid(year, month)
+const getValidator =
+  (required, format) =>
+  ({ day, month, year }) => {
+    const isLong = format === FORMAT_LONG
+    const isValid = isLong
+      ? isDateValid(year, month, day)
+      : isShortDateValid(year, month)
 
-  const isDateEmpty = isLong ? !day && !month && !year : !month && !year
+    const isDateEmpty = isLong ? !day && !month && !year : !month && !year
 
-  return !isValid && (!isDateEmpty || required)
-    ? required || 'Enter a valid date'
-    : null
-}
+    return !isValid && (!isDateEmpty || required)
+      ? required || 'Enter a valid date'
+      : null
+  }
 
 const getDefaultInitialValue = (format) => {
   return format === FORMAT_LONG

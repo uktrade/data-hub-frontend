@@ -162,11 +162,8 @@ function countriesToTypeaheadOptions(countries = []) {
 function renderExportEditCountries(req, res) {
   const { company } = res.locals
   const exportCountries = groupExportCountries(company.export_countries)
-  const {
-    EXPORTING_TO,
-    FUTURE_INTEREST,
-    NOT_INTERESTED,
-  } = EXPORT_INTEREST_STATUS
+  const { EXPORTING_TO, FUTURE_INTEREST, NOT_INTERESTED } =
+    EXPORT_INTEREST_STATUS
 
   res
     .breadcrumb(company.name, urls.companies.detail(company.id))

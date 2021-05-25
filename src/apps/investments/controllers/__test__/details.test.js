@@ -9,8 +9,8 @@ describe('Investment details controller', () => {
 
     this.controller = proxyquire('../details', {
       '../transformers': {
-        transformInvestmentRequirementsForView: this
-          .transformInvestmentRequirementsForViewStub,
+        transformInvestmentRequirementsForView:
+          this.transformInvestmentRequirementsForViewStub,
         transformInvestmentForView: sinon.stub(),
         transformInvestmentValueForView: sinon.stub(),
       },

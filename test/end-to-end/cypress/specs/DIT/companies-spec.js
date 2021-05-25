@@ -133,9 +133,8 @@ describe('Export', () => {
 
     context('With emptyUkRegionLtd (which does not have UK Region set)', () => {
       beforeEach(() => {
-        const emptyUkRegion = fixtures.company.create.emptyUkRegion(
-          'empty uk region'
-        )
+        const emptyUkRegion =
+          fixtures.company.create.emptyUkRegion('empty uk region')
         cy.loadFixture([emptyUkRegion])
         cy.visit(companies.exports.edit(emptyUkRegion.pk))
       })

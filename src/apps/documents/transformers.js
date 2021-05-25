@@ -26,8 +26,7 @@ function getDownloadLinkOrState(file, proposition_id, investment_project_id) {
           }
         : {
             type: 'error',
-            name:
-              "The file didn't pass virus scanning, contact your administrator",
+            name: "The file didn't pass virus scanning, contact your administrator",
           }
     },
     not_virus_scanned: () => 'File not virus scanned',

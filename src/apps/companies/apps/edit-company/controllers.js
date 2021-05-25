@@ -16,19 +16,14 @@ async function renderEditCompanyForm(req, res, next) {
   try {
     const { company } = res.locals
 
-    const [
-      turnoverRanges,
-      employeeRanges,
-      regions,
-      sectors,
-      headquarterTypes,
-    ] = await Promise.all([
-      getOptions(req, 'turnover', { sorted: false }),
-      getOptions(req, 'employee-range', { sorted: false }),
-      getOptions(req, 'uk-region', { sorted: false }),
-      getOptions(req, 'sector', { sorted: false }),
-      getHeadquarterOptions(req),
-    ])
+    const [turnoverRanges, employeeRanges, regions, sectors, headquarterTypes] =
+      await Promise.all([
+        getOptions(req, 'turnover', { sorted: false }),
+        getOptions(req, 'employee-range', { sorted: false }),
+        getOptions(req, 'uk-region', { sorted: false }),
+        getOptions(req, 'sector', { sorted: false }),
+        getHeadquarterOptions(req),
+      ])
 
     res
       .breadcrumb(company.name, urls.companies.detail(company.id))

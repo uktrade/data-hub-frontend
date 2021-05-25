@@ -36,14 +36,14 @@ describe('company subsidiaries controller', () => {
     })
 
     it('should render the correct template', () => {
-      const templateName = this.middlewareParameters.resMock.render.firstCall
-        .args[0]
+      const templateName =
+        this.middlewareParameters.resMock.render.firstCall.args[0]
       expect(templateName).to.equal(expectedTemplate)
     })
 
     it('should set the heading', () => {
-      const actual = this.middlewareParameters.resMock.render.firstCall.args[1]
-        .heading
+      const actual =
+        this.middlewareParameters.resMock.render.firstCall.args[1].heading
       expect(actual).to.equal(expectedHeading)
     })
 
@@ -71,7 +71,8 @@ describe('company subsidiaries controller', () => {
         this.middlewareParameters.nextSpy
       )
 
-      this.subsidiaries = this.middlewareParameters.resMock.render.firstCall.args[1].subsidiaries
+      this.subsidiaries =
+        this.middlewareParameters.resMock.render.firstCall.args[1].subsidiaries
     })
 
     commonTests({
@@ -95,8 +96,7 @@ describe('company subsidiaries controller', () => {
       expect(this.subsidiaries.actionButtons).to.deep.equal([
         {
           label: 'Link a subsidiary',
-          url:
-            '/companies/72fda78f-bdc3-44dc-9c22-c8ac82f7bda4/subsidiaries/link',
+          url: '/companies/72fda78f-bdc3-44dc-9c22-c8ac82f7bda4/subsidiaries/link',
         },
       ])
     })
@@ -123,7 +123,8 @@ describe('company subsidiaries controller', () => {
         this.middlewareParameters.nextSpy
       )
 
-      this.subsidiaries = this.middlewareParameters.resMock.render.firstCall.args[1].subsidiaries
+      this.subsidiaries =
+        this.middlewareParameters.resMock.render.firstCall.args[1].subsidiaries
     })
 
     commonTests({
@@ -173,7 +174,8 @@ describe('company subsidiaries controller', () => {
         this.middlewareParameters.nextSpy
       )
 
-      this.subsidiaries = this.middlewareParameters.resMock.render.firstCall.args[1].subsidiaries
+      this.subsidiaries =
+        this.middlewareParameters.resMock.render.firstCall.args[1].subsidiaries
     })
 
     commonTests({
@@ -197,8 +199,7 @@ describe('company subsidiaries controller', () => {
       expect(this.subsidiaries.actionButtons).to.deep.equal([
         {
           label: 'Link a subsidiary',
-          url:
-            '/companies/72fda78f-bdc3-44dc-9c22-c8ac82f7bda4/subsidiaries/link',
+          url: '/companies/72fda78f-bdc3-44dc-9c22-c8ac82f7bda4/subsidiaries/link',
         },
       ])
     })

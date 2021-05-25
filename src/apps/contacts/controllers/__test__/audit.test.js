@@ -23,8 +23,8 @@ describe('Contact audit controller', () => {
         getContactAuditLog: this.getContactAuditLogStub,
       },
       '../../../modules/api/transformers': {
-        transformApiResponseToCollection: this
-          .transformApiResponseToCollectionStub,
+        transformApiResponseToCollection:
+          this.transformApiResponseToCollectionStub,
       },
       '../../audit/transformers': {
         transformAuditLogToListItem: this.transformAuditLogToListItemStub,

@@ -15,9 +15,8 @@ describe('Audit transformers', () => {
       query: {},
     }
 
-    this.transformer = this.transformers.transformAuditLogToListItem(
-      contactAuditLabels
-    )
+    this.transformer =
+      this.transformers.transformAuditLogToListItem(contactAuditLabels)
   })
 
   it('should return a formatted audit history item when there are changes', () => {

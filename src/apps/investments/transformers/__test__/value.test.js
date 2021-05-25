@@ -135,8 +135,7 @@ describe('Investment project transformers', () => {
             actions: [
               {
                 label: 'Edit project',
-                url:
-                  '/investments/projects/1/edit-associated?term=DHP-00000460',
+                url: '/investments/projects/1/edit-associated?term=DHP-00000460',
                 test: 'edit-associated-link',
               },
               {
@@ -225,8 +224,7 @@ describe('Investment project transformers', () => {
               actions: [
                 {
                   label: 'Edit project',
-                  url:
-                    '/investments/projects/1/edit-associated?term=DHP-00000460',
+                  url: '/investments/projects/1/edit-associated?term=DHP-00000460',
                   test: 'edit-associated-link',
                 },
                 {
@@ -269,8 +267,7 @@ describe('Investment project transformers', () => {
               new_tech_to_uk: true,
               export_revenue: true,
               sector: {
-                name:
-                  'Renewable Energy : Wind : Renewable energy: Wind: Onshore',
+                name: 'Renewable Energy : Wind : Renewable energy: Wind: Onshore',
               },
               investor_company: {
                 name: 'Venus Ltd',
@@ -349,9 +346,8 @@ describe('Investment project transformers', () => {
           new_tech_to_uk: 'false',
           export_revenue: 'false',
         }
-        this.transformedData = transformInvestmentValueFormBodyToApiRequest(
-          formData
-        )
+        this.transformedData =
+          transformInvestmentValueFormBodyToApiRequest(formData)
       })
 
       it('transforms and returns the entire object', () => {
@@ -390,9 +386,8 @@ describe('Investment project transformers', () => {
           new_tech_to_uk: 'false',
           export_revenue: 'false',
         }
-        this.transformedData = transformInvestmentValueFormBodyToApiRequest(
-          formData
-        )
+        this.transformedData =
+          transformInvestmentValueFormBodyToApiRequest(formData)
       })
 
       it('sets the total investment value to null', () => {
@@ -433,9 +428,8 @@ describe('Investment project transformers', () => {
             new_tech_to_uk: 'false',
             export_revenue: 'false',
           }
-          this.transformedData = transformInvestmentValueFormBodyToApiRequest(
-            formData
-          )
+          this.transformedData =
+            transformInvestmentValueFormBodyToApiRequest(formData)
         })
 
         it('sets the foreign total investment value to null', () => {
@@ -467,9 +461,8 @@ describe('Investment project transformers', () => {
           number_safeguarded_jobs: '',
           fdi_value: '',
         }
-        this.transformedData = transformInvestmentValueFormBodyToApiRequest(
-          formData
-        )
+        this.transformedData =
+          transformInvestmentValueFormBodyToApiRequest(formData)
       })
 
       it('sets numerical fields to null', () => {

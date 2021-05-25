@@ -216,7 +216,8 @@ describe('OMIS list transformers', () => {
   })
 
   describe('#transformSubscriberToView', () => {
-    const subscriber = require('../../../../test/unit/data/omis/subscribers.json')[0]
+    const subscriber =
+      require('../../../../test/unit/data/omis/subscribers.json')[0]
     const subscriberWithTeam = merge({}, subscriber, {
       dit_team: {
         uk_region: {
@@ -238,18 +239,16 @@ describe('OMIS list transformers', () => {
     context('when given a qualified result', () => {
       context('when the subscriber is not the current user', () => {
         it('should return just the name', () => {
-          const actual = this.transformers.transformSubscriberToView()(
-            subscriber
-          )
+          const actual =
+            this.transformers.transformSubscriberToView()(subscriber)
 
           expect(actual).to.equal('Puck Head')
         })
 
         context('when the subscriber has a UK region', () => {
           it('should return the name and Uk region', () => {
-            const actual = this.transformers.transformSubscriberToView()(
-              subscriberWithTeam
-            )
+            const actual =
+              this.transformers.transformSubscriberToView()(subscriberWithTeam)
 
             expect(actual).to.equal('Puck Head, London')
           })
