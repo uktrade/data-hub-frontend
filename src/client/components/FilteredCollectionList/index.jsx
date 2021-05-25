@@ -33,7 +33,7 @@ const FilteredCollectionList = ({
 }) => {
   const totalPages = Math.ceil(count / itemsPerPage)
   return (
-    <GridRow>
+    <GridRow data-test="collection-list">
       {children}
       <GridCol setWidth="two-thirds">
         <article>
