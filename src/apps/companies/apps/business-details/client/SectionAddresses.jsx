@@ -11,6 +11,14 @@ const StyledAddressList = styled('ul')`
 `
 
 const Address = ({ address, isRegistered }) => {
+  const renderUsArea = (address) => {
+    if (
+      address.country.id === '81756b9a-5d95-e211-a939-e4115bead28a' &&
+      address.area &&
+      address.area.name
+    )
+      return <li>{address.area.name}</li>
+  }
   return (
     <Table.Cell>
       {isRegistered && <Badge>Registered</Badge>}
@@ -20,6 +28,7 @@ const Address = ({ address, isRegistered }) => {
         {address.town && <li>{address.town}</li>}
         {address.county && <li>{address.county}</li>}
         {address.postcode && <li>{address.postcode}</li>}
+        {renderUsArea(address)}
         {address.country && <li>{address.country.name}</li>}
       </StyledAddressList>
     </Table.Cell>
