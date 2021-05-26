@@ -1,6 +1,6 @@
 import { COMPANIES__LOADED } from '../../../client/actions'
 
-import { transformCompanyToListItem } from '../transformers'
+import { transformCompanyToCollectionListItem } from '../transformers'
 
 const initialState = {
   results: [],
@@ -13,7 +13,7 @@ export default (state = initialState, { type, result }) => {
       return {
         ...state,
         count: result.count,
-        results: result.results?.map(transformCompanyToListItem),
+        results: result.results?.map(transformCompanyToCollectionListItem),
         isComplete: true,
       }
     default:

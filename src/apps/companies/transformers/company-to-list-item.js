@@ -4,9 +4,6 @@ const { get } = require('lodash')
 const labels = require('../labels')
 const urls = require('../../../lib/urls')
 
-const { addressToString } = require('../../../common/addresses')
-const { formatLongDate, formatMediumDateTime } = require('../../../common/date')
-
 module.exports = function transformCompanyToListItem({
   id,
   name,
@@ -25,27 +22,19 @@ module.exports = function transformCompanyToListItem({
   }
 
   const meta = []
-  const metadata = []
-  const badges = []
 
   if (trading_names && trading_names.length) {
     meta.push({
       label: labels.hqLabels.trading_names,
       value: trading_names,
     })
-    metadata.push({
-      label: labels.hqLabels.trading_names,
-      value: trading_names.join(', '),
-    })
   }
 
   if (sector) {
-    const sectorMeta = {
+    meta.push({
       label: 'Sector',
       value: get(sector, 'name'),
-    }
-    meta.push(sectorMeta)
-    metadata.push(sectorMeta)
+    })
   }
 
   if (address && address.country) {
@@ -54,7 +43,6 @@ module.exports = function transformCompanyToListItem({
       type: 'badge',
       value: get(address, 'country.name'),
     })
-    badges.push({ text: get(address, 'country.name') })
   }
 
   if (uk_based) {
@@ -63,40 +51,23 @@ module.exports = function transformCompanyToListItem({
       type: 'badge',
       value: get(uk_region, 'name'),
     })
-    badges.push({ text: get(uk_region, 'name') })
   }
 
   if (headquarter_type) {
-    const hqLabel = labels.hqLabels[get(headquarter_type, 'name')]
     meta.push({
       label: 'Headquarter type',
       type: 'badge',
-      value: hqLabel,
+      value: labels.hqLabels[get(headquarter_type, 'name')],
     })
   }
 
   if (global_headquarters) {
     const { name: ghqName, id: ghqId } = global_headquarters
-    const globalHqMeta = {
+
+    meta.push({
       label: 'Global HQ',
       value: ghqName,
       url: urls.companies.detail(ghqId),
-    }
-
-    meta.push(globalHqMeta)
-    metadata.push(globalHqMeta)
-  }
-
-  if (latest_interaction_date) {
-    meta.push({
-      type: 'date',
-      label: 'Last interaction date',
-      value: latest_interaction_date,
-    })
-    metadata.push({
-      type: 'date',
-      label: 'Last interaction date',
-      value: formatLongDate(latest_interaction_date),
     })
   }
 
@@ -106,10 +77,13 @@ module.exports = function transformCompanyToListItem({
     value: address,
   })
 
-  metadata.push({
-    label: labels.address.companyAddress,
-    value: addressToString(address),
-  })
+  if (latest_interaction_date) {
+    meta.push({
+      type: 'date',
+      label: 'Last interaction date',
+      value: latest_interaction_date,
+    })
+  }
 
   return {
     id,
@@ -122,11 +96,5 @@ module.exports = function transformCompanyToListItem({
       label: 'Updated on',
     },
     type: 'company',
-    // For react collection list:
-    headingUrl: urls.companies.detail(id),
-    headingText: name,
-    subheading: `Updated on ${formatMediumDateTime(modified_on)}`,
-    badges: badges.filter((item) => item.text),
-    metadata: metadata.filter((item) => item.value),
   }
 }

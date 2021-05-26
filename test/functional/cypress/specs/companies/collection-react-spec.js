@@ -20,8 +20,36 @@ describe('Company Collections - React', () => {
       name: 'Energy',
     },
   })
-  const otherCompanies = companyListFaker(9)
-  const companyList = [company1, ...otherCompanies]
+  const company2 = companyFaker({
+    trading_names: ['Company Corp', 'Company Ltd'],
+    headquarter_type: {
+      id: 'ukhq-id',
+      name: 'ukhq',
+    },
+    uk_region: {
+      id: '874cd12a-6095-e211-a939-e4115bead28a',
+      name: 'London',
+    },
+  })
+  const company3 = companyFaker({
+    address: {
+      line_1: '123 Fake Street',
+      line_2: 'Fake Borough',
+      town: 'New York',
+      postcode: '12345',
+    },
+    headquarter_type: {
+      id: 'ghq-id',
+      name: 'ghq',
+    },
+    global_headquarters: {
+      id: 'company-id',
+      name: 'Company Ltd, New York',
+    },
+    uk_region: null,
+  })
+  const otherCompanies = companyListFaker(7)
+  const companyList = [company1, company2, company3, ...otherCompanies]
 
   before(() => {
     cy.intercept('POST', '/api-proxy/v4/search/company', {
@@ -40,6 +68,8 @@ describe('Company Collections - React', () => {
     cy.get('[data-test="collection-list"]').as('collectionList')
     cy.get('[data-test="collection-item"]').as('collectionItems')
     cy.get('@collectionItems').eq(0).as('firstListItem')
+    cy.get('@collectionItems').eq(1).as('secondListItem')
+    cy.get('@collectionItems').eq(2).as('thirdListItem')
   })
 
   it('should render breadcrumbs', () => {
@@ -69,5 +99,32 @@ describe('Company Collections - React', () => {
         'contain',
         'Level 6, Avenue K Tower, 156 Jalan Ampang, Kuala Lumpur, 50450, Malaysia'
       )
+  })
+
+  it('should contain trading names', () => {
+    cy.get('@secondListItem')
+      .find('[data-test="metadata"]')
+      .should('contain', 'Company Corp, Company Ltd')
+  })
+
+  it('should contain UK HQ Badge', () => {
+    cy.get('@secondListItem')
+      .find('[data-test="badge"]')
+      .should('contain', 'UK HQ')
+  })
+
+  it('should contain UK Region Badge', () => {
+    cy.get('@secondListItem')
+      .find('[data-test="badge"]')
+      .should('contain', 'London')
+  })
+
+  it('should contain Global HQ Badge', () => {
+    cy.get('@thirdListItem')
+      .find('[data-test="badge"]')
+      .should('contain', 'Global HQ')
+    cy.get('@thirdListItem')
+      .find('[data-test="metadata"]')
+      .should('contain', company3.global_headquarters.name)
   })
 })
