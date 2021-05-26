@@ -208,6 +208,64 @@ describe('Companies business details', () => {
   )
 
   context(
+    'when viewing business details for a US company with administrative area information',
+    () => {
+      before(() => {
+        cy.visit(urls.companies.businessDetails(fixtures.company.usCompany.id))
+      })
+
+      it('should display the state in the address', () => {
+        assertAddress({
+          address: [
+            '12 First Street',
+            'New York',
+            '765413',
+            'Texas',
+            'United States',
+          ],
+          registeredAddress: [
+            '12 First Street',
+            'New York',
+            '765413',
+            'Texas',
+            'United States',
+          ],
+        })
+      })
+    }
+  )
+
+  context(
+    'when viewing business details for a Canadian company with administrative area information',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.businessDetails(fixtures.company.canadianCompany.id)
+        )
+      })
+
+      it('should display province in the address', () => {
+        assertAddress({
+          address: [
+            '12 Second Street',
+            'Ottawa',
+            '765413',
+            'Ontario',
+            'Canada',
+          ],
+          registeredAddress: [
+            '12 Second Street',
+            'Ottawa',
+            '765413',
+            'Ontario',
+            'Canada',
+          ],
+        })
+      })
+    }
+  )
+
+  context(
     'when viewing business details for a Data Hub company on the One List in the UK',
     () => {
       before(() => {

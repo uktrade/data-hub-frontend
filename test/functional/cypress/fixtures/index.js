@@ -21,6 +21,8 @@ module.exports = {
     withContacts: require('../../../../test/sandbox/fixtures/v4/company/company-with-contacts.json'),
     oneListTierDita: require('../../../../test/sandbox/fixtures/v4/company/company-one-list-tier-d-ita.json'),
     addInteractionError: require('../../../../test/sandbox/fixtures/v4/company/company-validation-error.json'),
+    usCompany: require('../../../../test/sandbox/fixtures/v4/company/company-us-state.json'),
+    canadianCompany: require('../../../../test/sandbox/fixtures/v4/company/company-canada-province.json'),
   },
   contact: {
     deanCox: require('./contact/dean-cox'),
