@@ -13,8 +13,6 @@ const CompaniesCollection = ({
   selectedFilters,
   ...props
 }) => {
-  payload.page = parseInt(payload.page) || 1
-
   const collectionListTask = {
     name: TASK_GET_COMPANIES_LIST,
     id: ID,
