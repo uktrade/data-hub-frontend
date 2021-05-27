@@ -1,33 +1,36 @@
 import React from 'react'
-import Select, { components as comps } from 'react-select'
+import Select from 'react-select'
+import { components } from 'react-select'
 import AsyncSelect from 'react-select/async'
 import defaultStyles, { errorStyles } from './styles'
 import Highlighter from './Highlighter'
 
+const { Input, Option, NoOptionsMessage, MenuList } = components
+
 export const filterOption = ({ label = '' }, query) =>
   label.toLowerCase().includes(query.toLowerCase())
 
-const Option = ({
+const CustomOption = ({
   selectProps: { inputValue },
   data: { label },
   ariaProps,
   ...props
 }) => (
   <li {...ariaProps}>
-    <comps.Option {...props}>
+    <Option {...props}>
       <Highlighter searchStr={inputValue} optionLabel={label} />
-    </comps.Option>
+    </Option>
   </li>
 )
 
-const NoOptionsMessage = ({ children, ...props }) => (
+const CustomNoOptionsMessage = ({ children, ...props }) => (
   <li>
-    <comps.NoOptionsMessage {...props}>{children}</comps.NoOptionsMessage>
+    <NoOptionsMessage {...props}>{children}</NoOptionsMessage>
   </li>
 )
 
-const MenuList = ({ children, selectProps, ...props }) => (
-  <comps.MenuList {...props}>
+const CustomMenuList = ({ children, selectProps, ...props }) => (
+  <MenuList {...props}>
     <ul id={selectProps['data-aria-id']} role="listbox">
       {Array.isArray(children)
         ? children.map((child, i) =>
@@ -42,12 +45,12 @@ const MenuList = ({ children, selectProps, ...props }) => (
           )
         : children}
     </ul>
-  </comps.MenuList>
+  </MenuList>
 )
 
-const Input = ({ children, selectProps, inputProps, ...props }) => (
+const CustomInput = ({ children, selectProps, inputProps, ...props }) => (
   <>
-    <comps.Input
+    <Input
       {...props}
       aria-owns={selectProps['data-aria-id']}
       aria-autocomplete="list"
@@ -78,7 +81,12 @@ const Typeahead = ({ options, styles, error, name, ...props }) => {
       ...(error ? errorStyles : defaultStyles),
       ...styles,
     },
-    components: { Option, MenuList, Input, NoOptionsMessage },
+    components: {
+      Option: CustomOption,
+      MenuList: CustomMenuList,
+      Input: CustomInput,
+      NoOptionsMessage: CustomNoOptionsMessage,
+    },
     filterOption,
     'data-aria-id': `autocomplete-${name}`,
     inputId: name,
@@ -88,23 +96,15 @@ const Typeahead = ({ options, styles, error, name, ...props }) => {
   return (
     <>
       {options ? (
-        <>
-          <Select {...customisedProps} options={options} />
-          <AssistiveText name={name} />
-        </>
+        <Select {...customisedProps} options={options} />
       ) : (
-        <>
-          <AsyncSelect {...customisedProps} />
-          <AssistiveText name={name} />
-        </>
+        <AsyncSelect {...customisedProps} />
       )}
+      <AssistiveText name={name} />
     </>
   )
 }
 
 Typeahead.propTypes = Select.propTypes
-Option.propTypes = comps.Option.propTypes
-MenuList.propTypes = comps.MenuList.propTypes
-Input.propTypes = comps.Input.propTypes
 
 export default Typeahead
