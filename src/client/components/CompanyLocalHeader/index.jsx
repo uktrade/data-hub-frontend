@@ -14,7 +14,7 @@ import LocalHeaderHeading from '../../../client/components/LocalHeader/LocalHead
 import Badge from '../../../client/components/Badge'
 import StatusMessage from '../../../client/components/StatusMessage'
 import { format } from '../../utils/date-utils'
-import formatAddress from '../../../client/utils/formatAddress'
+import { addressToString } from '../../../client/utils/addresses'
 import urls from '../../../lib/urls'
 import ConnectedDropdownMenu from '../DropdownMenu/ConnectedDropdownMenu'
 import { DropdownButton } from '../DropdownMenu'
@@ -120,14 +120,7 @@ const CompanyLocalHeader = ({
               {company.name}
             </LocalHeaderHeading>
             <StyledAddress data-auto-id="address">
-              {formatAddress([
-                company.address.line_1,
-                company.address.line_2,
-                company.address.town,
-                company.address.county,
-                company.address.postcode,
-                company.address.country?.name,
-              ])}
+              {addressToString(company.address)}
             </StyledAddress>
           </GridCol>
           <GridCol setWith="one-third">

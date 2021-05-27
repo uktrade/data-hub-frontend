@@ -1,12 +1,12 @@
-const { get } = require('lodash')
+import { get } from 'lodash'
 
-const labels = require('../labels')
-const urls = require('../../../lib/urls')
+import labels from '../labels'
+import urls from '../../../lib/urls'
 
-const { addressToString } = require('../../../common/addresses')
-const { formatLongDate, formatMediumDateTime } = require('../../../common/date')
+import { addressToString } from '../../../client/utils/addresses'
+import { format, formatWithTime } from '../../../client/utils/date-utils'
 
-module.exports = function transformCompanyToListItem({
+const transformCompanyToListItem = ({
   id,
   name,
   sector,
@@ -17,7 +17,7 @@ module.exports = function transformCompanyToListItem({
   headquarter_type,
   global_headquarters,
   latest_interaction_date,
-} = {}) {
+} = {}) => {
   if (!id) {
     return
   }
@@ -47,7 +47,7 @@ module.exports = function transformCompanyToListItem({
   if (latest_interaction_date) {
     metadata.push({
       label: 'Last interaction date',
-      value: formatLongDate(latest_interaction_date),
+      value: format(latest_interaction_date),
     })
   }
 
@@ -66,7 +66,7 @@ module.exports = function transformCompanyToListItem({
 
   return {
     id,
-    subheading: `Updated on ${formatMediumDateTime(modified_on)}`,
+    subheading: `Updated on ${formatWithTime(modified_on)}`,
     headingText: name,
     headingUrl: urls.companies.detail(id),
     badges,
@@ -74,3 +74,10 @@ module.exports = function transformCompanyToListItem({
     type: 'company',
   }
 }
+
+const transformResponseToCompanyCollection = ({ count, results = [] }) => ({
+  count,
+  results: results.map(transformCompanyToListItem),
+})
+
+export { transformResponseToCompanyCollection }

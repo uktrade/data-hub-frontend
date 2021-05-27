@@ -4,7 +4,7 @@ export const TASK_GET_COMPANIES_LIST = 'TASK_GET_COMPANIES_LIST'
 
 export const ID = 'companiesList'
 
-const searchParamProps = ({ page = 1 }) => ({ page })
+const searchParamProps = ({ page = 1 }) => ({ page: parseInt(page, 10) })
 
 const collectionListPayload = (paramProps) => {
   return Object.fromEntries(
