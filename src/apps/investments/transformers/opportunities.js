@@ -1,6 +1,10 @@
-const getArrayNames = (data) => data.map((d) => d.name)
 const getArrayNamesAndIds = (data) =>
-  data.map((d) => ({ name: d.name, id: d.id }))
+  data.map((d) => ({ label: d.name, value: d.id }))
+
+const getNameAndId = (data) =>
+  data ? { value: data.id, label: data.name } : {}
+
+const idNameToValueLabel = ({ id, name }) => ({ value: id, label: name })
 
 export const transformInvestmentOpportunityDetails = ({
   incomplete_details_fields,
@@ -23,25 +27,27 @@ export const transformInvestmentOpportunityDetails = ({
 }) => ({
   incompleteDetailsFields: incomplete_details_fields.length,
   incompleteRequirementsFields: incomplete_requirements_fields.length,
+  isEditingDetails: false,
+  isEditingRequirements: false,
   detailsFields: {
     name,
     description,
-    ukRegions: getArrayNames(uk_region_locations),
+    ukRegions: uk_region_locations.map(idNameToValueLabel),
     promoters: getArrayNamesAndIds(promoters),
-    requiredChecks: required_checks_conducted?.name,
-    leadRelationshipManager: lead_dit_relationship_manager?.name,
-    assetClasses: getArrayNames(asset_classes),
+    requiredChecks: getNameAndId(required_checks_conducted),
+    leadRelationshipManager: getNameAndId(lead_dit_relationship_manager),
+    assetClasses: asset_classes.map(idNameToValueLabel),
     opportunityValue: {
       label: opportunity_value_type?.name || 'Opportunity value',
       value: opportunity_value,
     },
-    constructionRisks: getArrayNames(construction_risks),
+    constructionRisks: construction_risks.map(idNameToValueLabel),
   },
   requirementsFields: {
     totalInvestmentSought: total_investment_sought,
     currentInvestmentSecured: current_investment_secured,
-    investmentTypes: getArrayNames(investment_types),
-    returnRate: estimated_return_rate?.name,
-    timeHorizons: getArrayNames(time_horizons),
+    investmentTypes: investment_types.map(idNameToValueLabel),
+    returnRate: getNameAndId(estimated_return_rate),
+    timeHorizons: time_horizons.map(idNameToValueLabel),
   },
 })
