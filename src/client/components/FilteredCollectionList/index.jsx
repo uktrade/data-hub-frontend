@@ -29,10 +29,11 @@ const FilteredCollectionList = ({
   selectedFilters,
   baseDownloadLink = null,
   entityName,
+  entityNamePlural,
 }) => {
   const totalPages = Math.ceil(count / itemsPerPage)
   return (
-    <GridRow>
+    <GridRow data-test="collection-list">
       {children}
       <GridCol setWidth="two-thirds">
         <article>
@@ -53,14 +54,15 @@ const FilteredCollectionList = ({
               data-test="download-data-header"
               baseDownloadLink={baseDownloadLink}
               entityName={entityName}
+              entityNamePlural={entityNamePlural}
             />
           )}
           <Task.Status {...taskProps}>
             {() =>
               isComplete && (
                 <>
-                  {results.map((item, i) => (
-                    <CollectionItem {...item} key={i} />
+                  {results.map((item) => (
+                    <CollectionItem {...item} key={item.id} />
                   ))}
                   <RoutedPagination
                     qsParamName="page"

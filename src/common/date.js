@@ -1,5 +1,9 @@
-const format = require('date-fns/format')
-const { DATE_LONG_FORMAT, DATE_MEDIUM_FORMAT } = require('./constants')
+const { format } = require('date-fns')
+const {
+  DATE_LONG_FORMAT,
+  DATE_MEDIUM_FORMAT,
+  DATE_TIME_MEDIUM_FORMAT,
+} = require('./constants')
 
 function formatLongDate(dateString = []) {
   if (dateString) {
@@ -15,6 +19,12 @@ function formatMediumDate(dateString = []) {
   }
 
   return null
+}
+
+function formatMediumDateTime(dateString) {
+  if (dateString) {
+    return format(parseDateString(dateString), DATE_TIME_MEDIUM_FORMAT)
+  }
 }
 
 function parseDateString(dateString) {
@@ -51,6 +61,7 @@ function transformValueForApi({ year, month, day = 1 }) {
 module.exports = {
   formatLongDate,
   formatMediumDate,
+  formatMediumDateTime,
   parseDateString,
   transformValueForApi,
 }

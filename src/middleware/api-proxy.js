@@ -33,6 +33,7 @@ const ALLOWLIST = [
   '/v4/search/large-investor-profile',
   '/v4/large-capital-opportunity/:id',
   '/v4/large-capital-opportunity',
+  '/v4/search/company',
   '/v4/search/large-capital-opportunity',
 ]
 
