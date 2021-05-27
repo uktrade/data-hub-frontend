@@ -13,7 +13,7 @@ const StyledItemLabel = styled('span')`
 
 function MetadataItem({ label, children }) {
   return (
-    <StyledMetaWrapper>
+    <StyledMetaWrapper data-test="metadata-item">
       {label && <StyledItemLabel>{label}</StyledItemLabel>} {children}
     </StyledMetaWrapper>
   )

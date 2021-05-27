@@ -14,7 +14,7 @@ const StyledBadge = styled('span')`
 `
 
 const Badge = ({ label, borderColour, children }) => (
-  <StyledBadge borderColour={borderColour}>
+  <StyledBadge data-test="badge" borderColour={borderColour}>
     {label && <VisuallyHidden>{label}</VisuallyHidden>}
     {children}
   </StyledBadge>

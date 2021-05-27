@@ -17,7 +17,7 @@ const StyledMetadataWrapper = styled('div')`
 
 const Metadata = ({ rows }) =>
   rows && (
-    <StyledMetadataWrapper>
+    <StyledMetadataWrapper data-test="metadata">
       {rows.map(({ label, value }) => (
         <MetadataItem key={label} label={label}>
           {value}

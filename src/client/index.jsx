@@ -92,6 +92,9 @@ import * as manageAdviser from '../apps/companies/apps/advisers/client/tasks'
 import { DNB__CHECK_PENDING_REQUEST } from '../apps/companies/apps/business-details/client/state'
 import * as dnbCheck from '../apps/companies/apps/business-details/client/tasks'
 
+import { TASK_GET_COMPANIES_LIST } from '../apps/companies/client/state'
+import { getCompanies } from '../apps/companies/client/tasks'
+
 import { TASK_GET_PROFILES_LIST } from '../apps/investments/client/profiles/state'
 import * as investmentProfilesTasks from '../apps/investments/client/profiles/tasks'
 
@@ -194,6 +197,7 @@ function App() {
         [TASK_GET_PROFILES_LIST]:
           investmentProfilesTasks.getLargeCapitalProfiles,
         [TASK_GET_PROJECTS_LIST]: getInvestmentProjects.getProjects,
+        [TASK_GET_COMPANIES_LIST]: getCompanies,
         [TASK_GET_ADVISER_NAME]: getInvestmentProjects.getAdviserNames,
         [TASK_GET_INVESTMENTS_PROJECTS_METADATA]:
           getInvestmentProjects.getMetadata,
