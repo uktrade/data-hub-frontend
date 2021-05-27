@@ -1,12 +1,6 @@
 import axios from 'axios'
 
-function handleError(error) {
-  const message = error.response.data.detail
-  return Promise.reject({
-    message,
-    ...error,
-  })
-}
+const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
 function getCompanies({ limit = 10, page, ...rest }) {
   let offset = limit * (parseInt(page, 10) - 1) || 0
