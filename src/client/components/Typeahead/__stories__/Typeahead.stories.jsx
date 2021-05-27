@@ -4,7 +4,6 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 
 import Typeahead from '../Typeahead'
-import SmallTypeahead from '../SmallTypeahead'
 
 const options = [
   { value: '1234', label: 'Chocolate - mint' },
@@ -69,19 +68,6 @@ storiesOf('Typeahead/Single select', module)
         options={options}
         placeholder="Search..."
         defaultValue={options[2]}
-        aria-label="search"
-      />
-    </>
-  ))
-  .add('Small', () => (
-    <>
-      <label htmlFor="test_4">Search</label>
-      <SmallTypeahead
-        isMulti={false}
-        closeMenuOnSelect={false}
-        name="test_4"
-        options={options}
-        placeholder="Search..."
         aria-label="search"
       />
     </>
