@@ -97,8 +97,12 @@ import * as investmentProfilesTasks from '../apps/investments/client/profiles/ta
 
 import { TASK_GET_OPPORTUNITIES_LIST } from '../apps/investments/client/opportunities/List/state'
 import * as investmentOpportunitiesListTasks from '../apps/investments/client/opportunities/List/tasks'
-
-import { TASK_GET_OPPORTUNITY_DETAILS } from '../apps/investments/client/opportunities/Details/state'
+import {
+  TASK_SAVE_OPPORTUNITY_DETAILS,
+  TASK_GET_OPPORTUNITY_DETAILS,
+  TASK_GET_OPPORTUNITY_DETAILS_METADATA,
+  TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA,
+} from '../apps/investments/client/opportunities/Details/state'
 import * as investmentOpportunitiesDetailsTasks from '../apps/investments/client/opportunities/Details/tasks'
 
 import {
@@ -176,10 +180,16 @@ function App() {
         [TASK_OPEN_CONTACT_FORM]: addInteractionFormTasks.openContactForm,
         [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
         [TASK_UPDATE_ADVISER]: manageAdviser.updateAdviser,
+        [TASK_SAVE_OPPORTUNITY_DETAILS]:
+          investmentOpportunitiesDetailsTasks.saveOpportunityDetails,
         [TASK_GET_OPPORTUNITY_DETAILS]:
-          investmentOpportunitiesDetailsTasks.getOpportunityDetail,
+          investmentOpportunitiesDetailsTasks.getOpportunityDetails,
         [TASK_GET_OPPORTUNITIES_LIST]:
           investmentOpportunitiesListTasks.getOpportunities,
+        [TASK_GET_OPPORTUNITY_DETAILS_METADATA]:
+          investmentOpportunitiesDetailsTasks.getDetailsMetadata,
+        [TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA]:
+          investmentOpportunitiesDetailsTasks.getRequirementsMetadata,
         [DNB__CHECK_PENDING_REQUEST]: dnbCheck.checkIfPendingRequest,
         [TASK_GET_PROFILES_LIST]:
           investmentProfilesTasks.getLargeCapitalProfiles,

@@ -464,6 +464,10 @@ app.get(
   '/v4/large-capital-opportunity/:opportunityId',
   v4Investment.getLargeCapitalOpportunity
 )
+app.patch(
+  '/v4/large-capital-opportunity/:opportunityId',
+  v4Investment.saveOpportunityDetails
+)
 app.get(
   '/v4/large-capital-opportunity',
   v4Investment.getLargeCapitalOpportunityList

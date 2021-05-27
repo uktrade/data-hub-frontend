@@ -17,3 +17,7 @@ exports.getLargeCapitalOpportunityList = function (req, res) {
   }
   res.json(largeCapitalOpportunityList)
 }
+
+exports.saveOpportunityDetails = function (req, res) {
+  res.json(completeLargeCapitalOpportunity)
+}
