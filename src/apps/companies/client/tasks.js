@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { transformResponseToCompanyCollection } from './transformers'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
@@ -11,7 +12,7 @@ function getCompanies({ limit = 10, page, ...rest }) {
       offset,
       ...rest,
     })
-    .then(({ data }) => data, handleError)
+    .then(({ data }) => transformResponseToCompanyCollection(data), handleError)
 }
 
 export { getCompanies }
