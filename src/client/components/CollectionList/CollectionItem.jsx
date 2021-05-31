@@ -6,7 +6,6 @@ import { H3 } from '@govuk-react/heading'
 import Link from '@govuk-react/link'
 import { HEADING_SIZES, SPACING } from '@govuk-react/constants'
 import { GREY_2 } from 'govuk-colours'
-import Details from '@govuk-react/details'
 import Badge from '../Badge/'
 import Metadata from '../../components/Metadata/'
 
@@ -46,20 +45,13 @@ const StyledSubheading = styled('h4')`
   margin: -${SPACING.SCALE_3} 0 ${SPACING.SCALE_2} 0;
 `
 
-const StyledDetails = styled(Details)`
-  margin: ${SPACING.SCALE_3} 0 0 0;
-`
-
 const CollectionItem = ({
   headingText,
   subheading,
   headingUrl,
   badges,
   metadata,
-  type,
 }) => {
-  const summaryMessage = type ? `View ${type} details` : 'View details'
-
   return (
     <ItemWrapper data-test="collection-item">
       {badges && (
@@ -82,15 +74,7 @@ const CollectionItem = ({
 
       {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
 
-      {metadata && metadata.length > 4 ? (
-        <>
-          <StyledDetails summary={summaryMessage}>
-            <Metadata rows={metadata} />
-          </StyledDetails>
-        </>
-      ) : (
-        <Metadata rows={metadata} />
-      )}
+      <Metadata rows={metadata} />
     </ItemWrapper>
   )
 }
