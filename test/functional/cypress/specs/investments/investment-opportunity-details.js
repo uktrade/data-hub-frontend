@@ -94,12 +94,16 @@ describe('UK Opportunity edit details functionality', () => {
       '#opportunity_details_toggle > div > [data-test="toggle-section-button"]'
     ).click()
     cy.contains('Edit').click()
-    cy.get('input[name="name"]').type('Egg Shop')
+    cy.get('#name').type('Egg Shop')
+    cy.get('#description').type('A very good description')
+    cy.get('#opportunityValue').type('123456')
     cy.contains('Submit').click()
     cy.intercept(
       `PATCH', '/v4/large-capital-opportunity/${fixtures.investment.incompleteOpportunity.id}`,
       (req) => {
         expect(req.body).to.include('Egg Shop')
+        expect(req.body).to.include('A very good description')
+        expect(req.body).to.include('123456')
       }
     )
     cy.get('#opportunity-details').should('contain', 'Edit')
