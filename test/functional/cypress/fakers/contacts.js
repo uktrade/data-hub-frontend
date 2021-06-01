@@ -3,6 +3,7 @@ import jsf from 'json-schema-faker'
 
 import apiSchema from '../../../api-schema.json'
 import { listFaker } from './utils'
+import { userFaker } from './users'
 
 const UK = {
   NAME: 'United Kingdom',
@@ -24,25 +25,14 @@ const DIT_TEAM_NAMES = [
   'Healthcare UK',
 ]
 
-const getFakePerson = () => {
-  const first_name = faker.name.firstName()
-  const last_name = faker.name.lastName()
-  return {
-    id: faker.datatype.uuid(),
-    first_name,
-    last_name,
-    name: `${first_name} ${last_name}`,
-  }
-}
-
 const contactFaker = (overrides = {}) => ({
   ...jsf.generate(apiSchema.components.schemas.Contact),
   id: faker.datatype.uuid(),
   job_title: faker.name.jobTitle(),
-  ...getFakePerson(),
+  ...userFaker(),
   adviser: {
     id: faker.datatype.uuid(),
-    ...getFakePerson(),
+    ...userFaker(),
   },
   company: {
     id: faker.datatype.uuid(),
@@ -81,7 +71,7 @@ const contactFaker = (overrides = {}) => ({
   archived_by: null,
   created_on: faker.date.past(),
   created_by: {
-    ...getFakePerson(),
+    ...userFaker(),
     dit_team: {
       name: faker.random.arrayElement(DIT_TEAM_NAMES),
       id: faker.datatype.uuid(),
