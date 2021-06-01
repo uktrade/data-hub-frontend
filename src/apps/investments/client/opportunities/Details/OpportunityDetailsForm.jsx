@@ -11,6 +11,7 @@ import {
   Main,
   Step,
   FieldInput,
+  FieldTextarea,
   FormStateful,
 } from '../../../../../client/components'
 
@@ -43,6 +44,19 @@ function OpportunityDetailsForm(state) {
                     name="name"
                     type="text"
                     required="Please enter a name to continue"
+                  />
+                  <FieldTextarea
+                    label="Opportunity description"
+                    name="description"
+                    type="text"
+                    required="Please enter a description to continue"
+                  />
+                  <FieldInput
+                    label="Gross development value (GDV)"
+                    hint="Enter the total amount in GB pounds"
+                    name="opportunityValue"
+                    type="number"
+                    required="Please enter a value to continue"
                   />
                 </Step>
               </Main>
