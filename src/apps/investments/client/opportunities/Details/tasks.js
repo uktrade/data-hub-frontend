@@ -54,6 +54,8 @@ export function saveOpportunityDetails({ values, opportunityId }) {
   return apiProxyAxios
     .patch(`v4/large-capital-opportunity/${opportunityId}`, {
       name: values.name,
+      description: values.description,
+      opportunity_value: values.opportunityValue,
     })
     .then(({ data }) => {
       return data
