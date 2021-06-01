@@ -35,14 +35,14 @@ async function renderCompanyList(req, res, next) {
       sectorOptions,
     })
 
-    const filtersFieldsWithSelectedOptions =
-      await buildFieldsWithSelectedEntities(req, filtersFields, req.query)
-
     if (!res.locals.features['state-filter']) {
       filtersFields = filtersFields.filter(
         (macroField) => macroField.label !== 'US state'
       )
     }
+
+    const filtersFieldsWithSelectedOptions =
+      await buildFieldsWithSelectedEntities(req, filtersFields, req.query)
 
     const selectedFilters = await buildSelectedFiltersSummary(
       filtersFieldsWithSelectedOptions,
