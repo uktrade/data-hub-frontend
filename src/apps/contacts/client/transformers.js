@@ -26,10 +26,6 @@ export const transformContactToListItem = ({
   telephone_number,
   email,
 } = {}) => {
-  if (!id || (!first_name && !last_name)) {
-    return
-  }
-
   const telephoneNumber = getTelephoneNumber(
     telephone_countrycode,
     telephone_number
