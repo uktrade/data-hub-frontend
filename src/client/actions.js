@@ -9,6 +9,8 @@
  * describing what it does, concatenated by double underscore.
  */
 export const COMPANIES__LOADED = 'COMPANIES__LOADED'
+export const COMPANIES__SET_COMPANIES_METADATA =
+  'COMPANIES__SET_COMPANIES_METADATA'
 
 export const COMPANY_LISTS__LISTS_LOADED = 'COMPANY_LISTS__LISTS_LOADED'
 export const COMPANY_LISTS__SELECT = 'COMPANY_LISTS__SELECT'
