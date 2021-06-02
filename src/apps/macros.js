@@ -5,6 +5,7 @@ const {
   transformStringToOption,
   transformHQCodeToLabelledOption,
 } = require('./transformers')
+const { US_COUNTRY_ID } = require('./constants.js')
 
 const foreignOtherCompanyOptions = [
   'Charity',
@@ -44,10 +45,7 @@ const globalFields = {
     initialOption: '-- Select US state --',
     options() {
       return metadata.administrativeAreaOptions
-        .filter(
-          (states) =>
-            states.country.id == '81756b9a-5d95-e211-a939-e4115bead28a'
-        )
+        .filter((states) => states.country.id === US_COUNTRY_ID)
         .map(transformObjectToOption)
     },
   },
