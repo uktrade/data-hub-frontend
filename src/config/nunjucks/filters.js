@@ -228,7 +228,7 @@ const filters = {
       address.town,
       address.county,
       address.postcode,
-      address.area && isAddressAreaEnabled ? address.area.name : undefined,
+      address.area && isAddressAreaEnabled ? address.area.name : null,
       address.country.name,
     ]).join(join)
   },

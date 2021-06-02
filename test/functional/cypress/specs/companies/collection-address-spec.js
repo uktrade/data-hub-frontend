@@ -13,11 +13,10 @@ describe('Company Collection Address', () => {
       town: 'Culver City',
       county: 'CA',
       postcode: '90232',
-      // area: {
-      //   id: '81756b9a-5d95-e211-a939-e4115bead28b',
-      //   name: 'California'
-      // },
-      area: 'California',
+      area: {
+        id: '81756b9a-5d95-e211-a939-e4115bead28b',
+        name: 'California',
+      },
       country: {
         id: '81756b9a-5d95-e211-a939-e4115bead28a',
         name: 'United States',
@@ -53,7 +52,6 @@ describe('Company Collection Address', () => {
 
   it('should contain california displaying area for an US address', () => {
     cy.get('@firstListItem')
-      .debug()
       .find('[data-test="metadata"]')
       .should(
         'contain',
