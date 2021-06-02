@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+
 const {
   formatAddress,
   formatDateTime,
@@ -17,6 +18,7 @@ function transformCompanyToDnbHierarchyList({
   modified_on,
   headquarter_type,
   is_global_ultimate,
+  isAddressAreaEnabled,
 } = {}) {
   if (!id) {
     return
@@ -66,7 +68,7 @@ function transformCompanyToDnbHierarchyList({
   if (address) {
     metadata.push({
       label: labels.address.companyAddress,
-      value: formatAddress(address),
+      value: formatAddress(isAddressAreaEnabled, address),
     })
   }
 

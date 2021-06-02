@@ -217,7 +217,8 @@ const filters = {
       .replace('PM', 'pm')
   },
 
-  formatAddress: (address, join = ', ') => {
+  formatAddress: (isAddressAreaEnabled, address, join = ', ') => {
+    // console.log('########## feature flag', isAddressAreaEnabled)
     if (address) {
       return compact([
         address.line_1,

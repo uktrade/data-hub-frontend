@@ -49,7 +49,7 @@ function removeCurrentCompany(dunsNumber, { count, results }) {
 
 async function fetchDnbHierarchyHandler(req, res, next) {
   try {
-    const { company } = res.locals
+    const { company, features } = res.locals
     const { page } = req.query
 
     const { count, results } = removeCurrentCompany(
@@ -64,7 +64,12 @@ async function fetchDnbHierarchyHandler(req, res, next) {
 
     res.json({
       count,
-      results: results.map(transformCompanyToDnbHierarchyList),
+      results: results.map((item) =>
+        transformCompanyToDnbHierarchyList({
+          ...item,
+          isAddressAreaEnabled: features['address-area-company-search'],
+        })
+      ),
     })
   } catch (error) {
     next(error)
