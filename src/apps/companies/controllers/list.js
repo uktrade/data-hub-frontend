@@ -22,6 +22,7 @@ const exportOptions = {
 
 async function renderCompanyList(req, res, next) {
   try {
+    const { features } = res.locals
     const { user } = req.session
     const queryString = QUERY_STRING
     const sortForm = merge({}, companySortForm, {
@@ -35,8 +36,11 @@ async function renderCompanyList(req, res, next) {
       sectorOptions,
     })
 
-    const filtersFieldsWithSelectedOptions =
-      await buildFieldsWithSelectedEntities(req, filtersFields, req.query)
+    const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(
+      req,
+      filtersFields,
+      req.query
+    )
     const selectedFilters = await buildSelectedFiltersSummary(
       filtersFieldsWithSelectedOptions,
       req.query
@@ -49,6 +53,9 @@ async function renderCompanyList(req, res, next) {
     )
 
     res.render('_layouts/collection', {
+      features: {
+        isAddressAreaEnabled: features['address-area-company-search'],
+      },
       sortForm,
       filtersFields: filtersFieldsWithSelectedOptions,
       selectedFilters,

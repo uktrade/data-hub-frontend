@@ -217,19 +217,20 @@ const filters = {
       .replace('PM', 'pm')
   },
 
-  formatAddress: (isAddressAreaEnabled, address, join = ', ') => {
-    // console.log('########## feature flag', isAddressAreaEnabled)
-    if (address) {
-      return compact([
-        address.line_1,
-        address.line_2,
-        address.town,
-        address.county,
-        address.postcode,
-        address.area ? address.area.name : undefined,
-        address.country.name,
-      ]).join(join)
+  formatAddress: (address, join = ', ', isAddressAreaEnabled = false) => {
+    if (!address) {
+      return
     }
+
+    return compact([
+      address.line_1,
+      address.line_2,
+      address.town,
+      address.county,
+      address.postcode,
+      address.area && isAddressAreaEnabled ? address.area.name : undefined,
+      address.country.name,
+    ]).join(join)
   },
 
   humanizeDuration: (value, measurement = 'minutes') => {
