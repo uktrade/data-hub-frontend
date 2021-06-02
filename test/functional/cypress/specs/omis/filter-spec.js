@@ -6,8 +6,7 @@ describe('OMIS Collections Filter', () => {
   })
 
   beforeEach(() => {
-    cy.server()
-    cy.route('/omis?*').as('filterResults')
+    cy.intercept('/omis?*').as('filterResults')
   })
 
   it('should filter by region', () => {

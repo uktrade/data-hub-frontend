@@ -298,8 +298,7 @@ function clickAddInteraction() {
 }
 
 function spyOnRequest(url = '/api-proxy/v4/interaction') {
-  cy.server()
-  cy.route('POST', url).as('interactionHttpRequest')
+  cy.intercept('POST', url).as('interactionHttpRequest')
 }
 
 function objectDiff(a, b) {

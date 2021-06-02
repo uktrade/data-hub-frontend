@@ -13,8 +13,7 @@ describe('Company Collections Filter', () => {
   })
 
   beforeEach(() => {
-    cy.server()
-    cy.route('/companies?*').as('filterResults')
+    cy.intercept('/companies?*').as('filterResults')
   })
 
   it('should filter by name', () => {
