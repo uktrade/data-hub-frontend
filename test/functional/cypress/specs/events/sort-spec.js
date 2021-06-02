@@ -2,8 +2,7 @@ const selectors = require('../../../../selectors')
 
 describe('Event Collections Sort', () => {
   beforeEach(() => {
-    cy.server()
-    cy.route('/events?*').as('sortResults')
+    cy.intercept('/events?*').as('sortResults')
     cy.visit('/events')
     cy.get(selectors.entityCollection.entities)
       .children()

@@ -3,8 +3,7 @@ const fixtures = require('../../fixtures')
 
 describe('Contact Collections Sort', () => {
   beforeEach(() => {
-    cy.server()
-    cy.route('/contacts?*').as('sortResults')
+    cy.intercept('/contacts?*').as('sortResults')
     cy.visit('/contacts?sortby=collectionTest')
     cy.get(selectors.entityCollection.entities)
       .children()
