@@ -38,7 +38,6 @@ describe('OMIS Collections Filter', () => {
       .trigger('change')
       .type('2008-12-12')
       .trigger('change')
-    cy.wait('@filterResults')
     cy.wait('@filterResults').then((xhr) => {
       expect(xhr.response.url).to.contain('completed_on_after=2008-12-12')
     })
