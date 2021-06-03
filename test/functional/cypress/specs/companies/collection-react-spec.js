@@ -79,6 +79,13 @@ describe('Company Collections - React', () => {
     })
   })
 
+  it('should have a link to add company', () => {
+    cy.get('[data-test="add-collection-item-button"]')
+      .should('exist')
+      .should('contain', 'Add Company')
+      .should('have.attr', 'href', '/companies/create')
+  })
+
   it('should display a list of companies', () => {
     cy.get('@collectionList').should('have.length', 1)
     cy.get('@collectionItems').should('have.length', companyList.length)
