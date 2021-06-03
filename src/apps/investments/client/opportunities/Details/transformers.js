@@ -1,8 +1,5 @@
 const { formatMediumDateTime } = require('../../../../../client/utils/date')
 
-const getArrayNamesAndIds = (data) =>
-  data.map((d) => ({ label: d.name, value: d.id }))
-
 const getNameAndId = (data) =>
   data ? { value: data.id, label: data.name } : {}
 
@@ -17,7 +14,10 @@ export const transformInvestmentOpportunityDetails = ({
   uk_region_locations,
   promoters,
   required_checks_conducted,
+  required_checks_conducted_by,
+  required_checks_conducted_on,
   lead_dit_relationship_manager,
+  other_dit_contacts,
   asset_classes,
   opportunity_value_type,
   opportunity_value,
@@ -39,10 +39,14 @@ export const transformInvestmentOpportunityDetails = ({
     name,
     description,
     ukRegions: uk_region_locations.map(idNameToValueLabel),
-    promoters: getArrayNamesAndIds(promoters),
-    requiredChecks: getNameAndId(required_checks_conducted),
+    promoters: promoters.map(idNameToValueLabel),
+    requiredChecksConducted: getNameAndId(required_checks_conducted),
+    requiredChecksConductedBy: getNameAndId(required_checks_conducted_by),
+    requiredChecksConductedOn: required_checks_conducted_on,
     leadRelationshipManager: getNameAndId(lead_dit_relationship_manager),
+    otherDitContacts: other_dit_contacts.map(idNameToValueLabel),
     assetClasses: asset_classes.map(idNameToValueLabel),
+    valueType: getNameAndId(opportunity_value_type),
     opportunityValue: {
       label: opportunity_value_type?.name || 'Opportunity value',
       value: opportunity_value,

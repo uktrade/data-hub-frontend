@@ -15,13 +15,21 @@ const assertLocalHeaderDetails = (index, label, value) => {
     .and('contain', value)
 }
 
-const assertTableValues = (values, tableElement) => {
+const assertRequirementTableValues = (values, tableElement) => {
   cy.get('#opportunity_requirements_toggle')
     .find(tableElement)
     .as('requirementElements')
 
   values.forEach((value, index) => {
     cy.get('@requirementElements').eq(index).should('have.text', value)
+  })
+}
+
+const assertDetailsTableValues = (values, tableElement) => {
+  cy.get('#opportunity_details_toggle').find(tableElement).as('detailsElements')
+
+  values.forEach((value, index) => {
+    cy.get('@detailsElements').eq(index).should('have.text', value)
   })
 }
 
@@ -64,18 +72,53 @@ describe('UK Opportunity with missing data', () => {
       'contain',
       'Opportunity requirements'
     )
-    cy.get('#opportunity_delete_toggle').should(
-      'contain',
-      'Need to delete this opportunity?'
-    )
   })
   it('should display required field tags', () => {
-    cy.get('#opportunity-details').should('contain', '7 fields required')
-    cy.get('#opportunity-details').should('contain', '5 fields required')
+    cy.get('#opportunity_details_toggle').should(
+      'contain',
+      '7 fields incomplete'
+    )
+    cy.get('#opportunity_requirements_toggle').should(
+      'contain',
+      '5 fields incomplete'
+    )
   })
   context('The details section', () => {
-    it('should display the Edit button', () => {
-      cy.get('#opportunity-details').should('contain', 'Edit')
+    before(() => {
+      cy.contains('Opportunity details').click({ force: true })
+    })
+    it('should show ten rows of data', () => {
+      cy.get('#opportunity_details_toggle')
+        .find('tr')
+        .should('have.length', '10')
+    })
+    it('should display the correct table headings', () => {
+      assertDetailsTableValues(
+        [
+          'Opportunity name',
+          'Opportunity description',
+          'UK location',
+          'Promoters',
+          'Has this opportunity cleared the required checks?',
+          'Lead DIT relationship manager',
+          'Other DIT contacts',
+          'Asset classes',
+          'Opportunity value',
+          'Construction risk',
+        ],
+        'th'
+      )
+    })
+    it('should display the name only, with all other rows incomplete', () => {
+      cy.get('#opportunity_details_toggle')
+        .find('td:contains("incomplete")')
+        .should('have.length', '9')
+      cy.get('#opportunity_details_toggle')
+        .find('td:contains("Battersea power station regeneration")')
+        .should('exist')
+    })
+    it('should display the "Edit" button', () => {
+      cy.get('#opportunity_details_toggle').should('contain', 'Edit')
     })
   })
   context('The requirements section', () => {
@@ -88,7 +131,7 @@ describe('UK Opportunity with missing data', () => {
         .should('have.length', '5')
     })
     it('should display the correct table headings', () => {
-      assertTableValues(
+      assertRequirementTableValues(
         [
           'Total investment sought',
           'Current investment secured',
@@ -152,6 +195,23 @@ describe('UK Opportunity with complete data', () => {
     before(() => {
       cy.contains('Opportunity details').click({ force: true })
     })
+    it('Should show data in all fields', () => {
+      assertDetailsTableValues(
+        [
+          'Battersea power station regeneration',
+          'Here is a lengthy description of an investment opportunity.',
+          'Benzonia',
+          'Lambda plc',
+          'Cleared',
+          'Travis Greene',
+          'John Rogers',
+          'BiofuelNuclear',
+          '£12,345,789',
+          'Greenfield (construction risk)',
+        ],
+        'td'
+      )
+    })
     it('should display the Edit button', () => {
       cy.get('#opportunity_details_toggle').should('contain', 'Edit')
     })
@@ -161,7 +221,7 @@ describe('UK Opportunity with complete data', () => {
       cy.contains('Opportunity requirements').click({ force: true })
     })
     it('Should show data in all fields', () => {
-      assertTableValues(
+      assertRequirementTableValues(
         [
           '£24,000,000',
           '£120,000',
@@ -175,35 +235,5 @@ describe('UK Opportunity with complete data', () => {
     it('should display the "Edit" button', () => {
       cy.get('#opportunity_requirements_toggle').should('contain', 'Edit')
     })
-  })
-})
-
-describe('UK Opportunity edit details functionality', () => {
-  before(() => {
-    cy.visit(
-      investments.opportunities.details(
-        fixtures.investment.incompleteOpportunity.id
-      )
-    )
-  })
-
-  it('Should display the edit details form and submit the new data', () => {
-    cy.get(
-      '#opportunity_details_toggle > div > [data-test="toggle-section-button"]'
-    ).click()
-    cy.contains('Edit').click()
-    cy.get('#name').type('Egg Shop')
-    cy.get('#description').type('A very good description')
-    cy.get('#opportunityValue').type('123456')
-    cy.contains('Submit').click()
-    cy.intercept(
-      `PATCH', '/v4/large-capital-opportunity/${fixtures.investment.incompleteOpportunity.id}`,
-      (req) => {
-        expect(req.body).to.include('Egg Shop')
-        expect(req.body).to.include('A very good description')
-        expect(req.body).to.include('123456')
-      }
-    )
-    cy.get('#opportunity-details').should('contain', 'Edit')
   })
 })

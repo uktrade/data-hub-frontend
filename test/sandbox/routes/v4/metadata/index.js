@@ -47,6 +47,7 @@ var capitalInvestmentConstructionRisks = require('../../../fixtures/v4/metadata/
 var capitalInvestmentEquityPercentage = require('../../../fixtures/v4/metadata/capital-investment-equity-percentage.json')
 var capitalInvestmentDesiredDealRoles = require('../../../fixtures/v4/metadata/capital-investment-desired-deal-roles.json')
 var capitalInvestmentAssetClassInterest = require('../../../fixtures/v4/metadata/capital-investment-asset-class-interest.json')
+var capitalInvestmentValueTypes = require('../../../fixtures/metadata/capital-investment-opportunity-value-types.json')
 var oneListTier = require('../../../fixtures/v4/metadata/one-list-tier.json')
 var tradeAgreement = require('../../../fixtures/v4/metadata/trade-agreement.json')
 
@@ -207,6 +208,10 @@ exports.capitalInvestmentInvestorType = function (req, res) {
 
 exports.capitalInvestmentRequiredChecks = function (req, res) {
   res.json(capitalInvestmentRequiredChecks)
+}
+
+exports.capitalInvestmentValueTypes = function (req, res) {
+  res.json(capitalInvestmentValueTypes)
 }
 
 exports.capitalInvestmentDealTicketSize = function (req, res) {

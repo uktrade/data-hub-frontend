@@ -16,8 +16,9 @@ const OpportunityDetails = ({ details }) => {
     description,
     ukRegions,
     promoters,
-    requiredChecks,
+    requiredChecksConducted,
     leadRelationshipManager,
+    otherDitContacts,
     assetClasses,
     opportunityValue,
     constructionRisks,
@@ -46,11 +47,15 @@ const OpportunityDetails = ({ details }) => {
       </SummaryTable.Row>
       <SummaryTable.TextRow
         heading="Has this opportunity cleared the required checks?"
-        value={requiredChecks.label}
+        value={requiredChecksConducted.label}
       />
       <SummaryTable.TextRow
         heading="Lead DIT relationship manager"
         value={leadRelationshipManager.label}
+      />
+      <SummaryTable.ListRow
+        heading="Other DIT contacts"
+        value={otherDitContacts}
       />
       <SummaryTable.ListRow heading="Asset classes" value={assetClasses} />
       <SummaryTable.CurrencyRow

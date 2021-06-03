@@ -276,6 +276,10 @@ app.get(
   v4Metadata.capitalInvestmentInvestmentTypes
 )
 app.get(
+  '/v4/metadata/large-capital-opportunity/opportunity-value-type',
+  v4Metadata.capitalInvestmentValueTypes
+)
+app.get(
   '/v4/metadata/capital-investment/return-rate',
   v4Metadata.capitalInvestmentMinimumReturnRate
 )
