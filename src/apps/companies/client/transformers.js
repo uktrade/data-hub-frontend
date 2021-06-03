@@ -71,7 +71,6 @@ const transformCompanyToListItem = ({
     headingUrl: urls.companies.detail(id),
     badges,
     metadata: metadata.filter((item) => item.value),
-    type: 'company',
   }
 }
 
