@@ -127,6 +127,9 @@ import { TASK_GET_INVESTMENT_SUMMARY_DATA_RANGES } from './components/Investment
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
 import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentReminders/state'
 
+import { getContacts } from '../apps/contacts/client/tasks'
+import { TASK_GET_CONTACTS_LIST } from '../apps/contacts/client/state'
+
 import Footer from '../client/components/Footer'
 
 function parseProps(domNode) {
@@ -210,6 +213,7 @@ function App() {
         'Large investment profiles filters':
           investmentProfilesTasks.loadFilterOptions,
         CREATE_INVESTMENT_OPPORTUNITY: createUKInvestmentOpportunityTask,
+        [TASK_GET_CONTACTS_LIST]: getContacts,
       }}
     >
       <Mount selector="#add-company-form">
