@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import Details from '@govuk-react/details'
 import { H2 } from '@govuk-react/heading'
 import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
 import InsetText from '@govuk-react/inset-text'
-import { CollectionList } from '../../../../../../client/components/'
+import { CollectionList, Metadata } from '../../../../../../client/components/'
 import { connect } from 'react-redux'
 
 import { state2props } from './state'
@@ -15,6 +16,20 @@ import {
 const Wrapper = styled('div')`
   margin-top: ${SPACING.SCALE_3};
 `
+
+const StyledDetails = styled(Details)`
+  margin: ${SPACING.SCALE_3} 0 0 0;
+`
+
+const metadataRenderer = (metadata) => {
+  return metadata && metadata.length > 4 ? (
+    <StyledDetails summary="View details">
+      <Metadata rows={metadata} />
+    </StyledDetails>
+  ) : (
+    <Metadata rows={metadata} />
+  )
+}
 
 function ExportsHistory({
   count,
@@ -49,6 +64,7 @@ function ExportsHistory({
         onPageClick={onPageClick}
         activePage={activePage}
         isComplete={isComplete}
+        metadataRenderer={metadataRenderer}
       />
     </Wrapper>
   )
