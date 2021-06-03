@@ -2,7 +2,6 @@ const selectors = require('../../../../selectors')
 
 describe('Company Collections Sort', () => {
   beforeEach(() => {
-    cy.intercept('/companies?*').as('sortResults')
     cy.visit('/companies?sortby=collectionTest')
     cy.get(selectors.entityCollection.entities)
       .children()
@@ -11,13 +10,14 @@ describe('Company Collections Sort', () => {
       'contain',
       '100,172 companies'
     )
+    cy.intercept('/companies?*').as('sortResults')
   })
 
   it('should sort by AZ', () => {
     cy.get(selectors.entityCollection.sort).select('name:asc')
 
     cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.response.url).to.contain('?custom=true&sortby=name:asc')
+      expect(xhr.response.url).to.contain('?custom=true&sortby=name%3Aasc')
     })
 
     cy.get(selectors.entityCollection.entities)
@@ -30,7 +30,9 @@ describe('Company Collections Sort', () => {
     cy.get(selectors.entityCollection.sort).select('modified_on:asc')
 
     cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.response.url).to.contain('?custom=true&sortby=modified_on:asc')
+      expect(xhr.response.url).to.contain(
+        '?custom=true&sortby=modified_on%3Aasc'
+      )
     })
 
     cy.get(selectors.entityCollection.entities)
@@ -47,7 +49,7 @@ describe('Company Collections Sort', () => {
 
     cy.wait('@sortResults').then((xhr) => {
       expect(xhr.response.url).to.contain(
-        '?custom=true&sortby=modified_on:desc'
+        '?custom=true&sortby=modified_on%3Adesc'
       )
     })
 
