@@ -78,7 +78,7 @@ describe('Company Export tab - Edit exports', () => {
         cy.contains('Save and return').click()
 
         cy.wait('@' + XHR_ALIAS).then((xhr) => {
-          expect(xhr.url).to.contain(minimallyMinimal.id)
+          expect(xhr.response.url).to.contain(minimallyMinimal.id)
           expect(xhr.request.body.export_experience_category).to.equal(
             '73023b55-9568-4e3f-a134-53ec58451d3f'
           )
@@ -136,7 +136,7 @@ describe('Company Export tab - Edit exports', () => {
         cy.contains('Save and return').click()
 
         cy.wait('@' + XHR_ALIAS).then((xhr) => {
-          expect(xhr.url).to.contain(dnbLimited.id)
+          expect(xhr.response.url).to.contain(dnbLimited.id)
           expect(xhr.request.body.export_experience_category).to.equal(null)
         })
       })

@@ -17,7 +17,7 @@ describe('Company Collections Sort', () => {
     cy.get(selectors.entityCollection.sort).select('name:asc')
 
     cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.url).to.contain('?custom=true&sortby=name:asc')
+      expect(xhr.response.url).to.contain('?custom=true&sortby=name:asc')
     })
 
     cy.get(selectors.entityCollection.entities)
@@ -30,7 +30,7 @@ describe('Company Collections Sort', () => {
     cy.get(selectors.entityCollection.sort).select('modified_on:asc')
 
     cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.url).to.contain('?custom=true&sortby=modified_on:asc')
+      expect(xhr.response.url).to.contain('?custom=true&sortby=modified_on:asc')
     })
 
     cy.get(selectors.entityCollection.entities)
@@ -46,7 +46,9 @@ describe('Company Collections Sort', () => {
     cy.get(selectors.entityCollection.sort).select('modified_on:desc')
 
     cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.url).to.contain('?custom=true&sortby=modified_on:desc')
+      expect(xhr.response.url).to.contain(
+        '?custom=true&sortby=modified_on:desc'
+      )
     })
 
     cy.get(selectors.entityCollection.entities)

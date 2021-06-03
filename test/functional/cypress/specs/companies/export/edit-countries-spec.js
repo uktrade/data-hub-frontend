@@ -90,7 +90,7 @@ describe('Company Export tab - Edit export countries', () => {
       cy.contains('Save and return').click()
 
       cy.wait('@' + XHR_ALIAS).then((xhr) => {
-        expect(xhr.url).to.contain(lambdaPlc.id)
+        expect(xhr.response.url).to.contain(lambdaPlc.id)
         expect(xhr.request.body.export_countries).to.deep.equal(
           getExportCountries([
             { name: 'Spain', status: 'currently_exporting' },
@@ -143,7 +143,7 @@ describe('Company Export tab - Edit export countries', () => {
       cy.contains('Save and return').click()
 
       cy.wait('@' + XHR_ALIAS).then((xhr) => {
-        expect(xhr.url).to.contain(dnbCorp.id)
+        expect(xhr.response.url).to.contain(dnbCorp.id)
         expect(xhr.request.body.export_countries).to.deep.equal(
           getExportCountries([
             { name: 'Spain', status: 'currently_exporting' },
@@ -170,7 +170,7 @@ describe('Company Export tab - Edit export countries', () => {
       cy.contains('Save and return').click()
 
       cy.wait('@' + XHR_ALIAS).then((xhr) => {
-        expect(xhr.url).to.contain(oneListCorp.id)
+        expect(xhr.response.url).to.contain(oneListCorp.id)
         expect(xhr.request.body.export_countries).to.deep.equal([])
         cy.url().should('contain', urls.companies.exports.index(oneListCorp.id))
       })
