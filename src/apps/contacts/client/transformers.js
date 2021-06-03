@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { get, pickBy, compact, assign } = require('lodash')
+const { get, compact } = require('lodash')
 
 const { formatWithTime } = require('../../../client/utils/date-utils')
 const { contactMetaItemLabels } = require('../labels')
@@ -39,12 +39,12 @@ export const transformContactToListItem = ({
     { label: 'company_uk_region', value: get(company_uk_region, 'name') },
     { label: 'telephone', value: telephoneNumber },
     { label: 'email', value: email },
-  ].map(({ label, value, type, badgeModifier }) => {
-    if (!value) return
-    return assign({}, pickBy({ value, type, badgeModifier }), {
+  ]
+    .filter((item) => item.value)
+    .map(({ label, value }) => ({
       label: contactMetaItemLabels[label],
-    })
-  })
+      value,
+    }))
 
   const badges = [
     { text: primary ? 'Primary' : null },
@@ -53,7 +53,6 @@ export const transformContactToListItem = ({
 
   return {
     id,
-    type: 'contacts',
     metadata: compact(metadata),
     headingUrl: urls.contacts.details(id),
     badges: badges.filter((item) => item.text),
