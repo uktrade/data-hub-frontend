@@ -18,7 +18,9 @@ describe('Contact Collections Sort', () => {
     cy.get(selectors.entityCollection.sort).select('address_country.name:asc')
 
     cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.url).to.contain('?custom=true&sortby=address_country.name:asc')
+      expect(xhr.response.url).to.contain(
+        '?custom=true&sortby=address_country.name:asc'
+      )
     })
 
     cy.get(selectors.entityCollection.entities)
@@ -31,7 +33,7 @@ describe('Contact Collections Sort', () => {
     cy.get(selectors.entityCollection.sort).select('last_name:asc')
 
     cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.url).to.contain('?custom=true&sortby=last_name:asc')
+      expect(xhr.response.url).to.contain('?custom=true&sortby=last_name:asc')
     })
 
     cy.get(selectors.entityCollection.entities)
@@ -44,7 +46,9 @@ describe('Contact Collections Sort', () => {
     cy.get(selectors.entityCollection.sort).select('company.name:asc')
 
     cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.url).to.contain('?custom=true&sortby=company.name:asc')
+      expect(xhr.response.url).to.contain(
+        '?custom=true&sortby=company.name:asc'
+      )
     })
 
     cy.get(selectors.entityCollection.entities)
@@ -57,7 +61,7 @@ describe('Contact Collections Sort', () => {
     cy.get(selectors.entityCollection.sort).select('modified_on:asc')
 
     cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.url).to.contain('?custom=true&sortby=modified_on:asc')
+      expect(xhr.response.url).to.contain('?custom=true&sortby=modified_on:asc')
     })
 
     cy.get(selectors.entityCollection.entities)
@@ -70,7 +74,9 @@ describe('Contact Collections Sort', () => {
     cy.get(selectors.entityCollection.sort).select('modified_on:desc')
 
     cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.url).to.contain('?custom=true&sortby=modified_on:desc')
+      expect(xhr.response.url).to.contain(
+        '?custom=true&sortby=modified_on:desc'
+      )
     })
 
     cy.get(selectors.entityCollection.entities)
@@ -83,7 +89,7 @@ describe('Contact Collections Sort', () => {
     cy.get(selectors.entityCollection.sort).select('created_on:desc')
 
     cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.url).to.contain('?custom=true&sortby=created_on:desc')
+      expect(xhr.response.url).to.contain('?custom=true&sortby=created_on:desc')
     })
 
     cy.get(selectors.entityCollection.entities)
@@ -96,7 +102,7 @@ describe('Contact Collections Sort', () => {
     cy.get(selectors.entityCollection.sort).select('created_on:asc')
 
     cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.url).to.contain('?custom=true&sortby=created_on:asc')
+      expect(xhr.response.url).to.contain('?custom=true&sortby=created_on:asc')
     })
 
     cy.get(selectors.entityCollection.entities)

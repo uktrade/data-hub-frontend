@@ -40,7 +40,7 @@ describe('OMIS Collections Filter', () => {
       .trigger('change')
     cy.wait('@filterResults')
     cy.wait('@filterResults').then((xhr) => {
-      expect(xhr.url).to.contain('completed_on_after=2008-12-12')
+      expect(xhr.response.url).to.contain('completed_on_after=2008-12-12')
     })
   })
 
@@ -59,7 +59,7 @@ describe('OMIS Collections Filter', () => {
       .type('{esc}')
 
     cy.wait('@filterResults').then((xhr) => {
-      expect(xhr.url).to.contain(
+      expect(xhr.response.url).to.contain(
         'primary_market=80756b9a-5d95-e211-a939-e4115bead28a'
       )
     })

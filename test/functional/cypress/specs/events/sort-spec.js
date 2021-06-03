@@ -14,7 +14,7 @@ describe('Event Collections Sort', () => {
     cy.get(selectors.entityCollection.sort).select('name:asc')
 
     cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.url).to.contain('?custom=true&sortby=name:asc')
+      expect(xhr.response.url).to.contain('?custom=true&sortby=name:asc')
     })
 
     cy.get(selectors.entityCollection.entities)
@@ -27,7 +27,7 @@ describe('Event Collections Sort', () => {
     cy.get(selectors.entityCollection.sort).select('modified_on:asc')
 
     cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.url).to.contain('?custom=true&sortby=modified_on:asc')
+      expect(xhr.response.url).to.contain('?custom=true&sortby=modified_on:asc')
     })
 
     cy.get(selectors.entityCollection.entities)
@@ -40,7 +40,7 @@ describe('Event Collections Sort', () => {
     cy.get(selectors.entityCollection.sort).select('start_date:asc')
 
     cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.url).to.contain('?custom=true&sortby=start_date:asc')
+      expect(xhr.response.url).to.contain('?custom=true&sortby=start_date:asc')
     })
 
     cy.get(selectors.entityCollection.entities)
@@ -53,7 +53,7 @@ describe('Event Collections Sort', () => {
     cy.get(selectors.entityCollection.sort).select('start_date:desc')
 
     cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.url).to.contain('?custom=true&sortby=start_date:desc')
+      expect(xhr.response.url).to.contain('?custom=true&sortby=start_date:desc')
     })
 
     cy.get(selectors.entityCollection.entities)
