@@ -28,9 +28,6 @@ function getMetadataOptions(url) {
 
 /**
  * Get the hq type options as a list of values and labels
- *
- * Specifying a searchString uses the autocomplete feature to only show
- * matching results.
  */
 function getHeadquarterTypeOptions(url) {
   const hqTypes = {
