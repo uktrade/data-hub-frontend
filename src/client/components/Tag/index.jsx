@@ -7,6 +7,7 @@ import TAG_COLOURS from './colours'
 const StyledTag = styled(GovUkTag)`
   background-color: ${(props) => TAG_COLOURS[props.colour].background};
   color: ${(props) => TAG_COLOURS[props.colour].colour};
+  white-space: nowrap;
 `
 
 const Tag = ({ colour, children, ...props }) => (
