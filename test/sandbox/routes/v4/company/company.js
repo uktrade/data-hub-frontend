@@ -22,6 +22,8 @@ var companyList = require('../../../fixtures/v4/user/company-list.json')
 var companyOneListTierDIta = require('../../../fixtures/v4/company/company-one-list-tier-d-ita.json')
 var companyWithValidationError = require('../../../fixtures/v4/company/company-validation-error.json')
 var companyAudit = require('../../../fixtures/v4/company-audit/company-audit.json')
+var companyUsState = require('../../../fixtures/v4/company/company-us-state.json')
+var companyCanadianProvince = require('../../../fixtures/v4/company/company-canada-province.json')
 var exportWins = require('../../../fixtures/v4/company-export-wins/export-wins.json')
 var exportWinsPage1 = require('../../../fixtures/v4/company-export-wins/export-wins-page-1.json')
 var exportWinsPage2 = require('../../../fixtures/v4/company-export-wins/export-wins-page-2.json')
@@ -119,6 +121,8 @@ exports.company = function (req, res) {
     'w2c34b41-1d5a-4b4b-7685-7c53ff2868dg': companyOneListTierDIta,
     '4e6a4edb-55e3-4461-a88d-84d329ee7eb8': companyWithValidationError,
     '6df487c5-7c75-4672-8907-f74b49e6c635': companyWithExternalActivities,
+    'b2c34b41-1d5a-4b4b-9249-7c53ff2868ab': companyUsState,
+    'b319d019-444a-4d2f-9e76-c70f84bb22f6': companyCanadianProvince,
     'not-managed': _.assign({}, company, {
       name: 'Not Managed Company',
       id: 'not-managed',

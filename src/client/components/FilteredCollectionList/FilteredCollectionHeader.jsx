@@ -70,6 +70,7 @@ function FilteredCollectionHeader({
       href={addItemUrl}
       buttonColour={GREY_3}
       buttonTextColour={BLACK}
+      data-test="add-collection-item-button"
     >
       Add {collectionName}
     </Button>
@@ -205,6 +206,10 @@ function FilteredCollectionHeader({
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedUkRegionsOfInterest}
           qsParamName="uk_regions_of_interest"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedHeadquarterTypes}
+          qsParamName="headquarter_type"
         />
         <RoutedFilterChips
           selectedOptions={
