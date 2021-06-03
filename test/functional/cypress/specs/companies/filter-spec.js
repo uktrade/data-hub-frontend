@@ -216,4 +216,21 @@ describe('Company Collections Filter', () => {
       )
     })
   })
+
+  it('should filter by us state', () => {
+    const { usState, typeahead } = selectors.filter
+    cy.get(typeahead(usState).selectedOption)
+      .click()
+      .get(typeahead(usState).textInput)
+      .type('New York')
+      .get(typeahead(usState).options)
+      .should('have.length', 1)
+      .get(typeahead(usState).textInput)
+      .type('{enter}')
+      .type('{esc}')
+
+    cy.wait('@filterResults').then((xhr) => {
+      expect(xhr.url).to.contain('area=aa65b701-244a-41fc-bd31-0a546303106a')
+    })
+  })
 })
