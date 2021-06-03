@@ -51,6 +51,7 @@ const CollectionItem = ({
   headingUrl,
   badges,
   metadata,
+  metadataRenderer,
 }) => {
   return (
     <ItemWrapper data-test="collection-item">
@@ -74,7 +75,11 @@ const CollectionItem = ({
 
       {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
 
-      <Metadata rows={metadata} />
+      {metadataRenderer ? (
+        metadataRenderer(metadata)
+      ) : (
+        <Metadata rows={metadata} />
+      )}
     </ItemWrapper>
   )
 }
@@ -96,6 +101,7 @@ CollectionItem.propTypes = {
     })
   ),
   type: PropTypes.string,
+  metadataRenderer: PropTypes.func,
 }
 
 CollectionItem.defaultProps = {
@@ -103,7 +109,6 @@ CollectionItem.defaultProps = {
   subheading: null,
   metadata: null,
   headingUrl: null,
-  type: null,
 }
 
 export default CollectionItem
