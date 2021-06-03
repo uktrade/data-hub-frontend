@@ -1,0 +1,173 @@
+{
+  "id": "b2c34b41-1d5a-4b4b-9249-7c53ff2868ab",
+  "reference_code": "",
+  "name": "Texports Ltd",
+  "trading_names": [],
+  "uk_based": false,
+  "company_number": null,
+  "vat_number": "",
+  "duns_number": null,
+  "created_on": "2017-10-16T11:00:00Z",
+  "modified_on": "2017-11-16T11:00:00Z",
+  "archived": false,
+  "archived_documents_url_path": "",
+  "archived_on": null,
+  "archived_reason": null,
+  "archived_by": null,
+  "description": "This is a dummy company for testing",
+  "transferred_by": null,
+  "transferred_on": null,
+  "transferred_to": null,
+  "transfer_reason": "",
+  "website": null,
+  "business_type": {
+    "name": "Company",
+    "id": "98d14e94-5d95-e211-a939-e4115bead28a"
+  },
+  "one_list_group_tier": null,
+  "contacts": [
+    {
+      "id": "6791d583-7a52-418f-a0d3-d8d527f20d43",
+      "title": null,
+      "first_name": "Benjamina",
+      "last_name": "Clarksoon",
+      "name": "Benjamina Clarksoon",
+      "job_title": null,
+      "company": {
+        "name": "Mars Exports Ltd",
+        "id": "b2c34b41-1d5a-4b4b-9249-7c53ff2868dd"
+      },
+      "adviser": null,
+      "primary": false,
+      "telephone_countrycode": "1",
+      "telephone_number": "5551212",
+      "email": "benjamina@clarksoon.com",
+      "address_same_as_company": false,
+      "address_1": "7 usa drive",
+      "address_2": null,
+      "address_town": "washington",
+      "address_county": null,
+      "address_country": {
+        "name": "United States",
+        "id": "81756b9a-5d95-e211-a939-e4115bead28a"
+      },
+      "address_postcode": "ne38 0px",
+      "telephone_alternative": null,
+      "email_alternative": null,
+      "notes": "This is a dummy contact for testing",
+      "accepts_dit_email_marketing": false,
+      "archived": false,
+      "archived_documents_url_path": "",
+      "archived_on": null,
+      "archived_reason": null,
+      "archived_by": null,
+      "created_on": "2017-04-28T15:00:00Z",
+      "modified_on": "2016-04-05T00:00:00Z"
+    },
+    {
+      "id": "7d43f9a2-868f-4d85-8e5f-631e5a8c9a3b",
+      "title": null,
+      "first_name": "Mark",
+      "last_name": "Halomi",
+      "name": "Mark Halomi",
+      "job_title": null,
+      "company": {
+        "name": "Mars Exports Ltd",
+        "id": "b2c34b41-1d5a-4b4b-9249-7c53ff2868dd"
+      },
+      "adviser": null,
+      "primary": false,
+      "telephone_countrycode": "1",
+      "telephone_number": "45457676",
+      "email": "mark@halomi.com",
+      "address_same_as_company": false,
+      "address_1": "24 sunny beach place",
+      "address_2": null,
+      "address_town": "california",
+      "address_county": null,
+      "address_country": {
+        "name": "United States",
+        "id": "81756b9a-5d95-e211-a939-e4115bead28a"
+      },
+      "address_postcode": "90001",
+      "telephone_alternative": null,
+      "email_alternative": null,
+      "notes": "This is a dummy contact for testing",
+      "accepts_dit_email_marketing": false,
+      "archived": false,
+      "archived_documents_url_path": "",
+      "archived_on": null,
+      "archived_reason": null,
+      "archived_by": null,
+      "created_on": "2017-04-28T15:00:00Z",
+      "modified_on": "2017-06-05T00:00:00Z"
+    }
+  ],
+  "employee_range": {
+    "name": "500+",
+    "id": "41afd8d0-5d95-e211-a939-e4115bead28a"
+  },
+  "number_of_employees": null,
+  "is_number_of_employees_estimated": null,
+  "export_to_countries": [
+    {
+      "name": "France",
+      "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+    },
+    {
+      "name": "Germany",
+      "id": "83756b9a-5d95-e211-a939-e4115bead28a"
+    }
+  ],
+  "future_interest_countries": [
+    {
+      "name": "Yemen",
+      "id": "37afd8d0-5d95-e211-a939-e4115bead28a"
+    }
+  ],
+  "headquarter_type": null,
+  "one_list_group_global_account_manager": null,
+  "global_headquarters": null,
+  "sector": {
+    "name": "Retail",
+    "id": "355f977b-8ac3-e211-a646-e4115bead28a"
+  },
+  "turnover_range": {
+    "name": "£33.5M+",
+    "id": "7a4cd12a-6095-e211-a939-e4115bead28a"
+  },
+  "turnover": null,
+  "is_turnover_estimated": null,
+  "uk_region": null,
+  "export_experience_category": null,
+  "address": {
+    "line_1": "12 First Street",
+    "line_2": "",
+    "town": "New York",
+    "county": "",
+    "postcode": "765413",
+    "country": {
+      "name": "United States",
+      "id": "81756b9a-5d95-e211-a939-e4115bead28a"
+    },
+    "area": {
+      "id": "foobarTX",
+      "name": "Texas"
+    }
+  },
+  "registered_address": {
+    "line_1": "12 First Street",
+    "line_2": "",
+    "town": "New York",
+    "county": "",
+    "postcode": "765413",
+    "country": {
+      "name": "United States",
+      "id": "81756b9a-5d95-e211-a939-e4115bead28a"
+    },
+    "area": {
+      "id": "foobarTX",
+      "name": "Texas"
+    }
+  }
+}
