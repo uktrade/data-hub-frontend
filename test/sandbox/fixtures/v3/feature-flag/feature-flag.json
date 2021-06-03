@@ -66,5 +66,9 @@
   {
     "code": "relatedTradeAgreements",
     "is_active": true
+  },
+  {
+    "code": "state-filter",
+    "is_active": true
   }
 ]

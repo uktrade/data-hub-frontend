@@ -329,6 +329,7 @@ module.exports = {
     employeeRange: url('/api-proxy/v4/metadata', '/employee-range'),
     country: url('/api-proxy/v4/metadata', '/country'),
     ukRegion: url('/api-proxy/v4/metadata', '/uk-region'),
+    administrativeArea: url('/api-proxy/v4/metadata', '/administrative-area'),
     referralSourceWebsite: url(
       '/api-proxy/v4/metadata',
       '/referral-source-website'

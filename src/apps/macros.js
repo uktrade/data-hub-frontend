@@ -5,6 +5,7 @@ const {
   transformStringToOption,
   transformHQCodeToLabelledOption,
 } = require('./transformers')
+const { US_COUNTRY_ID } = require('./constants.js')
 
 const foreignOtherCompanyOptions = [
   'Charity',
@@ -34,6 +35,18 @@ const globalFields = {
     initialOption: '-- Select region --',
     options() {
       return metadata.regionOptions.map(transformObjectToOption)
+    },
+  },
+
+  usStates: {
+    macroName: 'MultipleChoiceField',
+    name: 'us_state',
+    label: 'US State',
+    initialOption: '-- Select US state --',
+    options() {
+      return metadata.administrativeAreaOptions
+        .filter((states) => states.country.id === US_COUNTRY_ID)
+        .map(transformObjectToOption)
     },
   },
 
