@@ -207,6 +207,10 @@ function FilteredCollectionHeader({
           qsParamName="uk_regions_of_interest"
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedHeadquarterTypes}
+          qsParamName="headquarter_type"
+        />
+        <RoutedFilterChips
           selectedOptions={
             selectedFilters.selectedInvestableCapital?.min
               ? [
