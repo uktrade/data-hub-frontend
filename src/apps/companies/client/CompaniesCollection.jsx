@@ -58,6 +58,7 @@ const CompaniesCollection = ({
       baseDownloadLink="/companies/export"
       entityName="company"
       entityNamePlural="companies"
+      addItemUrl="/companies/create"
     >
       <CollectionFilters taskProps={collectionListMetadataTask}>
         <RoutedCheckboxGroupField
