@@ -14,12 +14,10 @@ const collectionListPayload = (paramProps) => {
 export const state2props = ({ router, ...state }) => {
   const queryProps = qs.parse(router.location.search.slice(1))
   const filteredQueryProps = collectionListPayload(queryProps)
-  const obj = {
+  return {
     ...state[ID],
     selectedFilters: {},
     payload: filteredQueryProps,
     optionMetadata: { sortOptions: [] },
   }
-
-  return obj
 }
