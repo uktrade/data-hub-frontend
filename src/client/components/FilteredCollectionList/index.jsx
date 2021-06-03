@@ -30,6 +30,7 @@ const FilteredCollectionList = ({
   baseDownloadLink = null,
   entityName,
   entityNamePlural,
+  addItemUrl,
 }) => {
   const totalPages = Math.ceil(count / itemsPerPage)
   return (
@@ -42,6 +43,7 @@ const FilteredCollectionList = ({
               totalItems={count}
               collectionName={collectionName}
               selectedFilters={selectedFilters}
+              addItemUrl={addItemUrl}
             />
           )}
           {sortOptions && (

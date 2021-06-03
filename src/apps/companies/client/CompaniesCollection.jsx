@@ -1,10 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { COMPANIES__LOADED } from '../../../client/actions'
-import { FilteredCollectionList } from '../../../client/components'
+import urls from '../../../lib/urls'
+import {
+  COMPANIES__LOADED,
+  COMPANIES__SET_COMPANIES_METADATA,
+} from '../../../client/actions'
+import {
+  CollectionFilters,
+  FilteredCollectionList,
+  RoutedCheckboxGroupField,
+} from '../../../client/components'
 
-import { TASK_GET_COMPANIES_LIST, ID, state2props } from './state'
+import {
+  ID,
+  TASK_GET_COMPANIES_LIST,
+  TASK_GET_COMPANIES_METADATA,
+  state2props,
+} from './state'
 
 const CompaniesCollection = ({
   payload,
@@ -23,6 +36,18 @@ const CompaniesCollection = ({
     },
   }
 
+  const collectionListMetadataTask = {
+    name: TASK_GET_COMPANIES_METADATA,
+    id: ID,
+    progressMessage: 'loading metadata',
+    startOnRender: {
+      payload: {
+        headquarterTypeOptions: urls.metadata.headquarterType(),
+      },
+      onSuccessDispatch: COMPANIES__SET_COMPANIES_METADATA,
+    },
+  }
+
   return (
     <FilteredCollectionList
       {...props}
@@ -33,7 +58,19 @@ const CompaniesCollection = ({
       baseDownloadLink="/companies/export"
       entityName="company"
       entityNamePlural="companies"
-    ></FilteredCollectionList>
+      addItemUrl="/companies/create"
+    >
+      <CollectionFilters taskProps={collectionListMetadataTask}>
+        <RoutedCheckboxGroupField
+          legend="Type"
+          name="headquarter_type"
+          qsParam="headquarter_type"
+          options={optionMetadata.headquarterTypeOptions}
+          selectedOptions={selectedFilters.selectedHeadquarterTypes}
+          data-test="headquarter-type-filter"
+        />
+      </CollectionFilters>
+    </FilteredCollectionList>
   )
 }
 

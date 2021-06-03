@@ -98,6 +98,9 @@ import dataSummaryPickerReducer from './components/DataSummaryPicker/reducer'
 import { ID as INVESTMENT_REMINDERS_ID } from './components/InvestmentReminders/state'
 import investmentRemindersReducer from './components/InvestmentReminders/reducer'
 
+import { ID as CONTACTS_ID } from '../apps/contacts/client/state'
+import contactsReducer from '../apps/contacts/client/reducer'
+
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
 
 import RoutedInput from './components/RoutedInput'
@@ -155,6 +158,7 @@ const store = createStore(
     [INVESTMENT_SUMMARY_ID]: investmentSummaryReducer,
     [DATA_SUMMARY_PICKER_ID]: dataSummaryPickerReducer,
     [INVESTMENT_REMINDERS_ID]: investmentRemindersReducer,
+    [CONTACTS_ID]: contactsReducer,
   }),
   {
     referrerUrl: window.document.referrer,
