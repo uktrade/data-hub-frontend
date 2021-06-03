@@ -52,37 +52,35 @@ const CollectionItem = ({
   badges,
   metadata,
   metadataRenderer,
-}) => {
-  return (
-    <ItemWrapper data-test="collection-item">
-      {badges && (
-        <StyledBadgesWrapper>
-          {badges.map((badge) => (
-            <Badge key={badge.text} borderColour={badge.borderColour}>
-              {badge.text}
-            </Badge>
-          ))}
-        </StyledBadgesWrapper>
-      )}
+}) => (
+  <ItemWrapper data-test="collection-item">
+    {badges && (
+      <StyledBadgesWrapper>
+        {badges.map((badge) => (
+          <Badge key={badge.text} borderColour={badge.borderColour}>
+            {badge.text}
+          </Badge>
+        ))}
+      </StyledBadgesWrapper>
+    )}
 
-      {headingUrl ? (
-        <StyledLinkHeader>
-          <Link href={headingUrl}>{headingText}</Link>
-        </StyledLinkHeader>
-      ) : (
-        <StyledHeader>{headingText}</StyledHeader>
-      )}
+    {headingUrl ? (
+      <StyledLinkHeader>
+        <Link href={headingUrl}>{headingText}</Link>
+      </StyledLinkHeader>
+    ) : (
+      <StyledHeader>{headingText}</StyledHeader>
+    )}
 
-      {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
+    {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
 
-      {metadataRenderer ? (
-        metadataRenderer(metadata)
-      ) : (
-        <Metadata rows={metadata} />
-      )}
-    </ItemWrapper>
-  )
-}
+    {metadataRenderer ? (
+      metadataRenderer(metadata)
+    ) : (
+      <Metadata rows={metadata} />
+    )}
+  </ItemWrapper>
+)
 
 CollectionItem.propTypes = {
   headingUrl: PropTypes.string,
@@ -102,13 +100,6 @@ CollectionItem.propTypes = {
   ),
   type: PropTypes.string,
   metadataRenderer: PropTypes.func,
-}
-
-CollectionItem.defaultProps = {
-  badges: null,
-  subheading: null,
-  metadata: null,
-  headingUrl: null,
 }
 
 export default CollectionItem
