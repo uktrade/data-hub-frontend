@@ -41,6 +41,12 @@ async function renderCompanyList(req, res, next) {
       )
     }
 
+    if (!res.locals.features['province-filter']) {
+      filtersFields = filtersFields.filter(
+        (macroField) => macroField.label !== 'Canadian Province'
+      )
+    }
+
     const filtersFieldsWithSelectedOptions =
       await buildFieldsWithSelectedEntities(req, filtersFields, req.query)
 
