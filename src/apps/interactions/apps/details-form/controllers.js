@@ -162,8 +162,7 @@ const getInitialFormValues = (req, res) => {
 
 async function renderInteractionDetailsForm(req, res, next) {
   try {
-    const { company, interaction, referral, investment, contact, features } =
-      res.locals
+    const { company, interaction, referral, investment, contact } = res.locals
 
     const [
       services,
@@ -208,8 +207,6 @@ async function renderInteractionDetailsForm(req, res, next) {
           policyIssueTypes,
           communicationChannels,
           countries,
-          isTradeAgreementInteractionEnabled:
-            features['trade-agreement-interaction-v4-endpoint'],
           relatedTradeAgreements,
         },
       })
