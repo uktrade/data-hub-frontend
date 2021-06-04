@@ -1,4 +1,5 @@
 import axios from 'axios'
+import transformInvestmentProjectToListItem from './transformers'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
@@ -11,7 +12,13 @@ function getProjects({ limit = 10, page, ...rest }) {
       offset,
       ...rest,
     })
-    .then(({ data }) => data, handleError)
+    .then(
+      ({ data }) => ({
+        count: data.count,
+        results: data.results.map(transformInvestmentProjectToListItem),
+      }),
+      handleError
+    )
 }
 
 /**
