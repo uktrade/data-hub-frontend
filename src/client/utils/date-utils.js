@@ -5,10 +5,8 @@ import {
   differenceInCalendarDays,
 } from 'date-fns'
 
-// These are the dateFns formats
-export const DATE_FORMAT_LONG = 'dd MMM yyyy' // 01 Jun 2021
-export const DATE_FORMAT_LONG_NO_DAY = 'MMMM yyyy' // June 2021
-export const DATE_TIME_FORMAT = 'd MMM yyyy, h:mmaaa' // 1 Jun 2021, 2:45pm
+export const DATE_FORMAT_LONG = 'YYYY-MM-DD'
+export const DATE_FORMAT_SHORT = 'YYYY-MM'
 
 const padZero = (value) => {
   const parsedValue = parseInt(value, 10)
@@ -25,23 +23,26 @@ const normaliseAndFormatDate = (year, month, day) => {
   return day ? `${yearAndMonth}-${padZero(day)}` : yearAndMonth
 }
 
-export const format = (dateStr) => moment(dateStr).format('DD MMM YYYY')
-
-export const today = () => {
-  return formatFNS(new Date(), 'yyyy-MM-dd')
+export const format = (dateStr) => {
+  return moment(dateStr).format('DD MMM YYYY')
 }
 
-export const formatWithTime = (dateTimeStr) =>
-  format(dateTimeStr, DATE_TIME_FORMAT)
+export const today = () => {
+  return formatFNS(new Date(), 'dd MMM yyyy')
+}
 
-export const isDateValid = (year, month, day, format = 'YYYY-MM-DD') => {
+export const formatWithTime = (dateTimeStr) => {
+  return moment(dateTimeStr).format('D MMM YYYY, h:mma')
+}
+
+export const isDateValid = (year, month, day, format = DATE_FORMAT_LONG) => {
   const date = normaliseAndFormatDate(year, month, day)
-
   return moment(date, format, true).isValid()
 }
 
-export const isShortDateValid = (year, month) =>
-  isDateValid(year, month, null, 'YYYY-MM')
+export const isShortDateValid = (year, month) => {
+  return isDateValid(year, month, null, DATE_FORMAT_SHORT)
+}
 
 export const transformValueForAPI = ({ year, month, day = 1 }) => {
   if (year && month && day) {

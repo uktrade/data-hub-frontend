@@ -1,8 +1,5 @@
 /* eslint camelcase: 0 */
-import {
-  format,
-  DATE_FORMAT_LONG_NO_DAY,
-} from '../../../../client/utils/date-utils'
+import { format, DATE_FORMAT_SHORT } from '../../../../client/utils/date-utils'
 
 import urls from '../../../../lib/urls'
 
@@ -29,8 +26,7 @@ const transformInvestmentProjectToListItem = ({
     {
       label: 'Estimated land date',
       value:
-        estimated_land_date &&
-        format(estimated_land_date, DATE_FORMAT_LONG_NO_DAY),
+        estimated_land_date && format(estimated_land_date, DATE_FORMAT_SHORT),
     },
   ].filter((metadata) => metadata.value)
 
