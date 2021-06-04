@@ -23,8 +23,8 @@ const normaliseAndFormatDate = (year, month, day) => {
   return day ? `${yearAndMonth}-${padZero(day)}` : yearAndMonth
 }
 
-export const format = (dateStr) => {
-  return moment(dateStr).format('DD MMM YYYY')
+export const format = (dateStr, dateFormat = 'DD MMM YYYY') => {
+  return moment(dateStr).format(dateFormat)
 }
 
 export const today = () => {
