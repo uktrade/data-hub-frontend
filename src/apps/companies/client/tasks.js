@@ -36,10 +36,12 @@ function getHeadquarterTypeOptions(url) {
     ehq: 'European HQ',
   }
   return getMetadataOptions(url).then((items) =>
-    items.map(({ value, label }) => ({
-      value,
-      label: hqTypes[label] || label,
-    }))
+    items
+      .map(({ value, label }) => ({
+        value,
+        label: hqTypes[label] || label,
+      }))
+      .sort((item1, item2) => item1.label > item2.label)
   )
 }
 
