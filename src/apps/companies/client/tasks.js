@@ -46,6 +46,24 @@ function getHeadquarterTypeOptions(url) {
 }
 
 /**
+ * Get the top-level sector options as a list of values and labels
+ *
+ * Specifying a searchString uses the autocomplete feature to only show
+ * matching results.
+ */
+function getSectorOptions(url, searchString) {
+  return axios
+    .get(url, {
+      params: searchString ? { autocomplete: searchString } : {},
+    })
+    .then(({ data }) =>
+      data
+        .filter(({ level }) => level === 0)
+        .map(({ id, name }) => ({ value: id, label: name }))
+    )
+}
+
+/**
  * Get the options for each of the given metadata urls.
  *
  * Waits until all urls have been fetched before generating a result.
@@ -58,7 +76,9 @@ function getCompaniesMetadata(metadataUrls) {
   const optionCategories = Object.keys(metadataUrls)
   return Promise.all(
     optionCategories.map((name) =>
-      name == 'headquarterTypeOptions'
+      name == 'sectorOptions'
+        ? getSectorOptions(metadataUrls[name])
+        : name == 'headquarterTypeOptions'
         ? getHeadquarterTypeOptions(metadataUrls[name])
         : getMetadataOptions(metadataUrls[name])
     ),
