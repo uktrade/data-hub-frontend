@@ -5,11 +5,16 @@ export const TASK_GET_COMPANIES_METADATA = 'TASK_GET_COMPANIES_METADATA'
 
 export const ID = 'companiesList'
 
-import { headquarterTypeLabel } from './labels'
+import { companyNameLabel, headquarterTypeLabel } from './labels'
 
-const searchParamProps = ({ page = 1, headquarter_type = false }) => ({
+const searchParamProps = ({
+  page = 1,
+  headquarter_type = false,
+  name = false,
+}) => ({
   page: parseInt(page, 10),
   headquarter_type,
+  name,
 })
 
 const collectionListPayload = (paramProps) => {
@@ -40,7 +45,7 @@ const buildOptionsFilter = ({ options = [], value, categoryLabel = '' }) => {
 export const state2props = ({ router, ...state }) => {
   const queryProps = qs.parse(router.location.search.slice(1))
   const filteredQueryProps = collectionListPayload(queryProps)
-  const { headquarter_type = [] } = queryProps
+  const { headquarter_type = [], name } = queryProps
   const { metadata } = state[ID]
 
   const selectedFilters = {
@@ -49,6 +54,15 @@ export const state2props = ({ router, ...state }) => {
       value: headquarter_type,
       categoryLabel: headquarterTypeLabel,
     }),
+    selectedName: name
+      ? [
+          {
+            value: name,
+            label: name,
+            categoryLabel: companyNameLabel,
+          },
+        ]
+      : [],
   }
   return {
     ...state[ID],
