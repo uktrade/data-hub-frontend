@@ -7,6 +7,14 @@ const { assertKeyValueTable } = require('../../support/assertions')
 const today = Cypress.moment()
 
 const createEvent = () => {
+  cy.get(selectors.eventCreate.tradeAgreementExistsYes).click()
+  cy.get(selectors.eventCreate.relatedTradeAgreements)
+    .eq(0)
+    .select('UK-Australia Mutual Recognition Agreement')
+  cy.get(selectors.eventCreate.addAnotherTradeAgreement).click()
+  cy.get(selectors.eventCreate.relatedTradeAgreements)
+    .eq(1)
+    .select('UK-India Free Trade Agreement')
   cy.get(selectors.eventCreate.eventName).type('Eventful event')
   cy.get(selectors.eventCreate.eventType).select('Account management')
   cy.get(selectors.eventCreate.startDateDay).type(today.format('DD'))
@@ -47,7 +55,10 @@ describe('Event', () => {
 
     it('should throw validation messages for required fields', () => {
       cy.get(selectors.eventCreate.saveEvent).click()
-
+      cy.get(selectors.eventCreate.tradeAgreementError).should(
+        'contain',
+        'This field is required.'
+      )
       cy.get(selectors.eventCreate.nameError).should(
         'contain',
         'This field may not be blank.'
@@ -145,7 +156,9 @@ describe('Event', () => {
       cy.contains('Add attendee').click()
       cy.get('input').type('John')
       cy.contains('button', 'Search').click()
-      cy.get('main li > a').should('contain', 'Johnny Cakeman').click()
+      cy.get('[data-test="item-contact-0"] a')
+        .should('contain', 'Johnny Cakeman')
+        .click()
       cy.contains('Event attendee added')
     })
     it('Should not be able to add a duplicate attendee', () => {

@@ -60,14 +60,6 @@
     "is_active": true
   },
   {
-    "code": "trade-agreement-interaction-v4-endpoint",
-    "is_active": true
-  },
-  {
-    "code": "relatedTradeAgreements",
-    "is_active": true
-  },
-  {
     "code": "state-filter",
     "is_active": true
   }
