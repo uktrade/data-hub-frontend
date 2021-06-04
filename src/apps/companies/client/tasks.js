@@ -41,7 +41,7 @@ function getHeadquarterTypeOptions(url) {
         value,
         label: hqTypes[label] || label,
       }))
-      .sort((item1, item2) => item1.label > item2.label)
+      .sort((item1, item2) => (item1.label > item2.label ? 1 : -1))
   )
 }
 

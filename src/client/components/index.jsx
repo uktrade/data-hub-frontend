@@ -51,7 +51,6 @@ export { default as ReadMore } from './ReadMore'
 export { default as RoutedAdvisersTypeahead } from './RoutedAdvisersTypeahead'
 export { default as RoutedInputField } from './RoutedInputField'
 export { default as RoutedTypeahead } from './RoutedTypeahead'
-export { default as RoutedInputField } from './RoutedInputField'
 export {
   DashboardToggleSection,
   NoHighlightToggleSection,
