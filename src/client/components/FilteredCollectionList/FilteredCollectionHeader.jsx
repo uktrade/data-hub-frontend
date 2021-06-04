@@ -124,6 +124,10 @@ function FilteredCollectionHeader({
           qsParamName="investor_company_name"
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedName}
+          qsParamName="name"
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedDealTicketSize}
           qsParamName="deal_ticket_size"
         />
