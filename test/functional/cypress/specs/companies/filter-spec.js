@@ -231,7 +231,9 @@ describe('Company Collections Filter', () => {
       .type('{esc}')
 
     cy.wait('@filterResults').then((xhr) => {
-      expect(xhr.url).to.contain('area=aa65b701-244a-41fc-bd31-0a546303106a')
+      expect(xhr.response.url).to.contain(
+        'area=aa65b701-244a-41fc-bd31-0a546303106a'
+      )
     })
   })
 })
