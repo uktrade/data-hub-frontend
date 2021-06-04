@@ -25,6 +25,7 @@ describe('Investments Collections Filter', () => {
       // to `companies.index()` when ready
       cy.visit(companies.react.index())
       cy.get('[data-test="headquarter-type-filter"]').as('hqTypeFilter')
+      cy.get('[data-test="company-name-filter"]').as('companyNameFilter')
     })
 
     it('should filter by Headquarter Type', () => {
@@ -47,6 +48,16 @@ describe('Investments Collections Filter', () => {
       assertChipExists({ label: 'Global HQ', position: 1 })
 
       testRemoveChip({ element: '@hqTypeFilter' })
+    })
+
+    it('should filter by Company Name', () => {
+      cy.get('@companyNameFilter').type('Test Company{enter}').blur()
+
+      cy.get('@companyNameFilter').should('have.value', 'Test Company')
+      assertChipExists({ label: 'Test Company', position: 1 })
+
+      testRemoveChip({ element: '@companyNameFilter' })
+      cy.get('@companyNameFilter').should('have.value', '')
     })
   })
 

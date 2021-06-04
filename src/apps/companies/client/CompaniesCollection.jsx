@@ -10,6 +10,7 @@ import {
   CollectionFilters,
   FilteredCollectionList,
   RoutedCheckboxGroupField,
+  RoutedInputField,
 } from '../../../client/components'
 
 import {
@@ -68,6 +69,14 @@ const CompaniesCollection = ({
           options={optionMetadata.headquarterTypeOptions}
           selectedOptions={selectedFilters.selectedHeadquarterTypes}
           data-test="headquarter-type-filter"
+        />
+        <RoutedInputField
+          id="CompanyCollection.name"
+          qsParam="name"
+          name="name"
+          label="Company name"
+          placeholder="Search company name"
+          data-test="company-name-filter"
         />
       </CollectionFilters>
     </FilteredCollectionList>
