@@ -13,8 +13,7 @@ describe('Company Collections Filter', () => {
   })
 
   beforeEach(() => {
-    cy.server()
-    cy.route('/companies?*').as('filterResults')
+    cy.intercept('/companies?*').as('filterResults')
   })
 
   it('should filter by name', () => {
@@ -38,7 +37,7 @@ describe('Company Collections Filter', () => {
     cy.get(selectors.filter.statusActive).click()
 
     cy.wait('@filterResults').then((xhr) => {
-      expect(xhr.url).to.contain(
+      expect(xhr.response.url).to.contain(
         '?sortby=collectionTest&custom=true&name=FilterByCompany&archived=false'
       )
     })
@@ -52,7 +51,7 @@ describe('Company Collections Filter', () => {
     cy.get(selectors.filter.statusInactive).click()
 
     cy.wait('@filterResults').then((xhr) => {
-      expect(xhr.url).to.contain(
+      expect(xhr.response.url).to.contain(
         '?sortby=collectionTest&custom=true&name=FilterByCompany&archived=false&archived=true'
       )
     })
@@ -66,7 +65,7 @@ describe('Company Collections Filter', () => {
     cy.get(selectors.filter.firstInteractionDate).click()
 
     cy.wait('@filterResults').then((xhr) => {
-      expect(xhr.url).to.contain('interaction_between=0')
+      expect(xhr.response.url).to.contain('interaction_between=0')
     })
 
     cy.get(selectors.entityCollection.entities)
@@ -96,7 +95,7 @@ describe('Company Collections Filter', () => {
       .type('{esc}')
 
     cy.wait('@filterResults').then((xhr) => {
-      expect(xhr.url).to.contain(
+      expect(xhr.response.url).to.contain(
         'sector_descends=af959812-6095-e211-a939-e4115bead28a'
       )
     })
@@ -117,7 +116,9 @@ describe('Company Collections Filter', () => {
       .type('{esc}')
 
     cy.wait('@filterResults').then((xhr) => {
-      expect(xhr.url).to.contain('country=80756b9a-5d95-e211-a939-e4115bead28a')
+      expect(xhr.response.url).to.contain(
+        'country=80756b9a-5d95-e211-a939-e4115bead28a'
+      )
     })
   })
 
@@ -136,7 +137,7 @@ describe('Company Collections Filter', () => {
       .type('{esc}')
 
     cy.wait('@filterResults').then((xhr) => {
-      expect(xhr.url).to.contain(
+      expect(xhr.response.url).to.contain(
         'export_to_countries=9f5f66a0-5d95-e211-a939-e4115bead28a'
       )
     })
@@ -157,7 +158,7 @@ describe('Company Collections Filter', () => {
       .type('{esc}')
 
     cy.wait('@filterResults').then((xhr) => {
-      expect(xhr.url).to.contain(
+      expect(xhr.response.url).to.contain(
         'future_interest_countries=a25f66a0-5d95-e211-a939-e4115bead28a'
       )
     })
@@ -171,7 +172,7 @@ describe('Company Collections Filter', () => {
     cy.get(selectors.filter.ukPostcode).clear().type(POSTCODE).type('{enter}')
 
     cy.wait('@filterResults').then((xhr) => {
-      expect(xhr.url).to.contain(`uk_postcode=${POSTCODE}`)
+      expect(xhr.response.url).to.contain(`uk_postcode=${POSTCODE}`)
     })
 
     cy.get(selectors.entityCollection.entities)
@@ -192,7 +193,7 @@ describe('Company Collections Filter', () => {
     cy.get(typeahead(leadIta).selectedOption).type('{enter}').type('{esc}')
 
     cy.wait('@filterResults').then((xhr) => {
-      expect(xhr.url).to.contain(
+      expect(xhr.response.url).to.contain(
         'one_list_group_global_account_manager=2c42c516-9898-e211-a939-e4115bead28a'
       )
     })
@@ -211,7 +212,7 @@ describe('Company Collections Filter', () => {
       .type('{esc}')
 
     cy.wait('@filterResults').then((xhr) => {
-      expect(xhr.url).to.contain(
+      expect(xhr.response.url).to.contain(
         'uk_region=824cd12a-6095-e211-a939-e4115bead28a'
       )
     })
@@ -230,7 +231,9 @@ describe('Company Collections Filter', () => {
       .type('{esc}')
 
     cy.wait('@filterResults').then((xhr) => {
-      expect(xhr.url).to.contain('area=aa65b701-244a-41fc-bd31-0a546303106a')
+      expect(xhr.response.url).to.contain(
+        'area=aa65b701-244a-41fc-bd31-0a546303106a'
+      )
     })
   })
 })
