@@ -5,8 +5,8 @@ import {
   differenceInCalendarDays,
 } from 'date-fns'
 
-const DATE_FORMAT_LONG = 'YYYY-MM-DD'
-const DATE_FORMAT_SHORT = 'YYYY-MM'
+export const DATE_FORMAT_LONG = 'YYYY-MM-DD'
+export const DATE_FORMAT_SHORT = 'YYYY-MM'
 
 const padZero = (value) => {
   const parsedValue = parseInt(value, 10)
@@ -23,8 +23,8 @@ const normaliseAndFormatDate = (year, month, day) => {
   return day ? `${yearAndMonth}-${padZero(day)}` : yearAndMonth
 }
 
-export const format = (dateStr) => {
-  return moment(dateStr).format('DD MMM YYYY')
+export const format = (dateStr, dateFormat = 'DD MMM YYYY') => {
+  return moment(dateStr).format(dateFormat)
 }
 
 export const today = () => {
