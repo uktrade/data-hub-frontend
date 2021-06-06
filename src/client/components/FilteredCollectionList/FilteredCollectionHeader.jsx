@@ -224,6 +224,14 @@ function FilteredCollectionHeader({
           qsParamName="company_uk_region"
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedName}
+          qsParamName="name"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedCompanyName}
+          qsParamName="company_name"
+        />
+        <RoutedFilterChips
           selectedOptions={
             selectedFilters.selectedInvestableCapital?.min
               ? [

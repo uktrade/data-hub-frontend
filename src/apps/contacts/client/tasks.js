@@ -8,6 +8,8 @@ const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 export const getContacts = ({
   limit = 10,
   page = 1,
+  name,
+  company_name,
   company_sector_descends,
   address_country,
   company_uk_region,
@@ -16,6 +18,8 @@ export const getContacts = ({
     .post('/api-proxy/v3/search/contact', {
       limit,
       offset: limit * (page - 1),
+      name,
+      company_name,
       company_sector_descends,
       address_country,
       company_uk_region,
@@ -39,7 +43,6 @@ const getMetadataOptions = (url) =>
     .then(({ data }) =>
       data.map(({ id, name }) => ({ value: id, label: name }))
     )
-
 
 export const getContactsMetaData = () =>
   Promise.all([

@@ -57,6 +57,22 @@ const ContactsCollection = ({
       entityName="contact"
     >
       <CollectionFilters taskProps={collectionListMetadataTask}>
+        <RoutedInputField
+          id="ContactsCollection.name"
+          qsParam="name"
+          name="name"
+          label="Contact name"
+          placeholder="Search contact name"
+          data-test="contact-name-filter"
+        />
+        <RoutedInputField
+          id="ContactsCollection.company-name"
+          qsParam="company_name"
+          name="company_name"
+          label="Company name"
+          placeholder="Search company name"
+          data-test="company-name-filter"
+        />
         <RoutedTypeahead
           isMulti={true}
           legend="Sector"
