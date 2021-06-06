@@ -212,6 +212,18 @@ function FilteredCollectionHeader({
           qsParamName="headquarter_type"
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedCompanySectors}
+          qsParamName="company_sector_descends"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedAddressCountries}
+          qsParamName="address_country"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedCompanyUkRegions}
+          qsParamName="company_uk_region"
+        />
+        <RoutedFilterChips
           selectedOptions={
             selectedFilters.selectedInvestableCapital?.min
               ? [
