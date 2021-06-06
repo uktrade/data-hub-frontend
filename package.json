@@ -117,7 +117,7 @@
     "govuk-react": "^0.7.0",
     "govuk_frontend_toolkit": "^9.0.0",
     "history": "^4.10.1",
-    "hmpo-form-wizard": "^11.9.0",
+    "hmpo-form-wizard": "^11.10.0",
     "html5shiv": "^3.7.3",
     "http-proxy-middleware": "^2.0.0",
     "image-webpack-loader": "^6.0.0",
