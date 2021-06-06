@@ -218,7 +218,7 @@
     "mocha": "^8.3.2",
     "mocha-circleci-reporter": "0.0.3",
     "mocha-multi": "^1.0.0",
-    "mochapack": "^2.0.6",
+    "mochapack": "^2.1.2",
     "nock": "^13.1.0",
     "nodemon": "^2.0.7",
     "npm-run-all": "^4.1.3",
