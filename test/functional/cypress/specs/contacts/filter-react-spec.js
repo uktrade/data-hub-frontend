@@ -44,9 +44,31 @@ describe('Contacts Collections Filter', () => {
   context('when the url contains no state', () => {
     beforeEach(() => {
       cy.visit(urls.contacts.react.index())
+      cy.get('[data-test="contact-name-filter"]').as('contactNameFilter')
+      cy.get('[data-test="company-name-filter"]').as('companyNameFilter')
       cy.get('[data-test="sector-filter"]').as('sectorFilter')
       cy.get('[data-test="country-filter"]').as('countryFilter')
       cy.get('[data-test="uk-region-filter"]').as('ukRegionFilter')
+    })
+
+    it('should filter by Contact name', () => {
+      cy.get('@contactNameFilter').type('David Jones{enter}')
+
+      cy.get('@contactNameFilter').should('have.value', 'David Jones')
+      assertChipExists({ label: 'David Jones', position: 1 })
+
+      testRemoveChip({ element: '@contactNameFilter' })
+      cy.get('@contactNameFilter').should('have.value', '')
+    })
+
+    it('should filter by Company name', () => {
+      cy.get('@companyNameFilter').type('Diaego{enter}')
+
+      cy.get('@companyNameFilter').should('have.value', 'Diaego')
+      assertChipExists({ label: 'Diaego', position: 1 })
+
+      testRemoveChip({ element: '@companyNameFilter' })
+      cy.get('@companyNameFilter').should('have.value', '')
     })
 
     it('should filter by sector', () => {

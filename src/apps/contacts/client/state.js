@@ -9,6 +9,8 @@ import {
   SECTOR,
   COUNTRY,
   UK_REGION,
+  CONTACTS_NAME,
+  COMPANY_NAME,
 } from './labels'
 
 const buildOptionsFilter = ({ options = [], value, categoryLabel }) =>
@@ -25,7 +27,7 @@ const getFilteredQueryParams = (router) => {
   const filteredQueryParams = omitBy({ ...qs.parse(queryParams) }, isEmpty)
   return {
     ...filteredQueryParams,
-    page: parseInt(filteredQueryParams.page || 1, 10)
+    page: parseInt(filteredQueryParams.page || 1, 10),
   }
 }
 
@@ -34,6 +36,24 @@ export const state2props = ({ router, ...state }) => {
   const { metadata } = state[ID]
 
   const selectedFilters = {
+    selectedName: filteredQueryParams.name
+      ? [
+          {
+            value: filteredQueryParams.name,
+            label: filteredQueryParams.name,
+            categoryLabel: CONTACTS_NAME,
+          },
+        ]
+      : [],
+    selectedCompanyName: filteredQueryParams.company_name
+      ? [
+          {
+            value: filteredQueryParams.company_name,
+            label: filteredQueryParams.company_name,
+            categoryLabel: COMPANY_NAME,
+          },
+        ]
+      : [],
     selectedCompanySectors: buildOptionsFilter({
       options: metadata.sectorOptions,
       value: filteredQueryParams.company_sector_descends,
