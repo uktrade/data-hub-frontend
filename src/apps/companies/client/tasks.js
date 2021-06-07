@@ -1,4 +1,12 @@
 import axios from 'axios'
+
+import urls from '../../../lib/urls'
+import {
+  getHeadquarterTypeOptions,
+  getMetadataOptions,
+  getSectorOptions,
+} from '../../../client/metadata'
+
 import { transformResponseToCompanyCollection } from './transformers'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
@@ -12,82 +20,28 @@ function getCompanies({ limit = 10, page, ...rest }) {
       offset,
       ...rest,
     })
-    .then(({ data }) => transformResponseToCompanyCollection(data), handleError)
+    .then(({ data }) => transformResponseToCompanyCollection(data))
+    .catch(handleError)
 }
 
 /**
- * Get metadata options as a list of values and labels
- */
-function getMetadataOptions(url) {
-  return axios
-    .get(url)
-    .then(({ data }) =>
-      data.map(({ id, name }) => ({ value: id, label: name }))
-    )
-}
-
-/**
- * Get the hq type options as a list of values and labels
- */
-function getHeadquarterTypeOptions(url) {
-  const hqTypes = {
-    ukhq: 'UK HQ',
-    ghq: 'Global HQ',
-    ehq: 'European HQ',
-  }
-  return getMetadataOptions(url).then((items) =>
-    items
-      .map(({ value, label }) => ({
-        value,
-        label: hqTypes[label] || label,
-      }))
-      .sort((item1, item2) => (item1.label > item2.label ? 1 : -1))
-  )
-}
-
-/**
- * Get the top-level sector options as a list of values and labels
- *
- * Specifying a searchString uses the autocomplete feature to only show
- * matching results.
- */
-function getSectorOptions(url, searchString) {
-  return axios
-    .get(url, {
-      params: searchString ? { autocomplete: searchString } : {},
-    })
-    .then(({ data }) =>
-      data
-        .filter(({ level }) => level === 0)
-        .map(({ id, name }) => ({ value: id, label: name }))
-    )
-}
-
-/**
- * Get the options for each of the given metadata urls.
+ * Get the options for each of the metadata urls.
  *
  * Waits until all urls have been fetched before generating a result.
  *
- * @param {object} metadataUrls - a lookup of category names to the api url
- *
  * @returns {promise} - the promise containing a list of options for each category
  */
-function getCompaniesMetadata(metadataUrls) {
-  const optionCategories = Object.keys(metadataUrls)
-  return Promise.all(
-    optionCategories.map((name) =>
-      name == 'sectorOptions'
-        ? getSectorOptions(metadataUrls[name])
-        : name == 'headquarterTypeOptions'
-        ? getHeadquarterTypeOptions(metadataUrls[name])
-        : getMetadataOptions(metadataUrls[name])
-    ),
-    handleError
-  ).then((results) =>
-    Object.fromEntries(
-      results.map((options, index) => [optionCategories[index], options])
-    )
-  )
+function getCompaniesMetadata() {
+  return Promise.all([
+    getSectorOptions(urls.metadata.sector()),
+    getHeadquarterTypeOptions(urls.metadata.headquarterType()),
+    getMetadataOptions(urls.metadata.ukRegion()),
+  ])
+    .then(([sectorOptions, headquarterTypeOptions]) => ({
+      sectorOptions,
+      headquarterTypeOptions,
+    }))
+    .catch(handleError)
 }
 
 export { getCompanies, getCompaniesMetadata }
