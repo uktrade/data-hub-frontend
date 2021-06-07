@@ -108,8 +108,22 @@ function FilteredCollectionHeader({
           qsParamName="sector_descends"
         />
         <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedCountries}
+          selectedOptions={selectedFilters.selectedInvestmentOriginCountries}
           qsParamName="country_investment_originates_from"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedCountries}
+          qsParamName="country"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedExportToCountries}
+          qsParamName="export_to_countries"
+          showCategoryLabels={true}
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedFutureCountriesOfInterest}
+          qsParamName="future_interest_countries"
+          showCategoryLabels={true}
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedCountryOfOrigin}
