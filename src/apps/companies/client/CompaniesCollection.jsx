@@ -10,6 +10,8 @@ import {
   CollectionFilters,
   FilteredCollectionList,
   RoutedCheckboxGroupField,
+  RoutedInputField,
+  RoutedTypeahead,
 } from '../../../client/components'
 
 import {
@@ -43,6 +45,7 @@ const CompaniesCollection = ({
     startOnRender: {
       payload: {
         headquarterTypeOptions: urls.metadata.headquarterType(),
+        sectorOptions: urls.metadata.sector(),
       },
       onSuccessDispatch: COMPANIES__SET_COMPANIES_METADATA,
     },
@@ -68,6 +71,24 @@ const CompaniesCollection = ({
           options={optionMetadata.headquarterTypeOptions}
           selectedOptions={selectedFilters.selectedHeadquarterTypes}
           data-test="headquarter-type-filter"
+        />
+        <RoutedInputField
+          id="CompanyCollection.name"
+          qsParam="name"
+          name="name"
+          label="Company name"
+          placeholder="Search company name"
+          data-test="company-name-filter"
+        />
+        <RoutedTypeahead
+          isMulti={true}
+          legend="Sector"
+          name="sector"
+          qsParam="sector_descends"
+          placeholder="Search sectors"
+          options={optionMetadata.sectorOptions}
+          selectedOptions={selectedFilters.selectedSectors}
+          data-test="sector-filter"
         />
       </CollectionFilters>
     </FilteredCollectionList>
