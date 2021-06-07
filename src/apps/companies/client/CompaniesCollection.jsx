@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import urls from '../../../lib/urls'
 import {
   COMPANIES__LOADED,
   COMPANIES__SET_COMPANIES_METADATA,
@@ -43,10 +42,7 @@ const CompaniesCollection = ({
     id: ID,
     progressMessage: 'loading metadata',
     startOnRender: {
-      payload: {
-        headquarterTypeOptions: urls.metadata.headquarterType(),
-        sectorOptions: urls.metadata.sector(),
-      },
+      payload: {},
       onSuccessDispatch: COMPANIES__SET_COMPANIES_METADATA,
     },
   }
@@ -89,6 +85,46 @@ const CompaniesCollection = ({
           options={optionMetadata.sectorOptions}
           selectedOptions={selectedFilters.selectedSectors}
           data-test="sector-filter"
+        />
+        <RoutedTypeahead
+          isMulti={true}
+          legend="Country"
+          name="country"
+          qsParam="country"
+          placeholder="Search country"
+          options={optionMetadata.countryOptions}
+          selectedOptions={selectedFilters.selectedCountries}
+          data-test="country-filter"
+        />
+        <RoutedTypeahead
+          isMulti={true}
+          legend="UK Region"
+          name="uk_region"
+          qsParam="uk_region"
+          placeholder="Search UK regions"
+          options={optionMetadata.ukRegionOptions}
+          selectedOptions={selectedFilters.selectedUkRegions}
+          data-test="uk-region-filter"
+        />
+        <RoutedTypeahead
+          isMulti={true}
+          legend="Currently exporting to"
+          name="export_to_countries"
+          qsParam="export_to_countries"
+          placeholder="Search country"
+          options={optionMetadata.countryOptions}
+          selectedOptions={selectedFilters.selectedExportToCountries}
+          data-test="currently-exporting-to-country-filter"
+        />
+        <RoutedTypeahead
+          isMulti={true}
+          legend="Future countries of interest"
+          name="future_interest_countries"
+          qsParam="future_interest_countries"
+          placeholder="Search country"
+          options={optionMetadata.countryOptions}
+          selectedOptions={selectedFilters.selectedFutureCountriesOfInterest}
+          data-test="future-countries-of-interest-filter"
         />
       </CollectionFilters>
     </FilteredCollectionList>
