@@ -219,20 +219,47 @@ describe('Company Collections Filter', () => {
   })
 
   it('should filter by us state', () => {
-    const { usState, typeahead } = selectors.filter
-    cy.get(typeahead(usState).selectedOption)
+    const { area, typeahead } = selectors.filter
+    cy.get(typeahead(area).selectedOption)
+      .first()
       .click()
-      .get(typeahead(usState).textInput)
+      .get(typeahead(area).textInput)
+      .first()
       .type('New York')
-      .get(typeahead(usState).options)
+      .get(typeahead(area).options)
+      .first()
       .should('have.length', 1)
-      .get(typeahead(usState).textInput)
+      .get(typeahead(area).textInput)
+      .first()
       .type('{enter}')
       .type('{esc}')
 
     cy.wait('@filterResults').then((xhr) => {
       expect(xhr.response.url).to.contain(
         'area=aa65b701-244a-41fc-bd31-0a546303106a'
+      )
+    })
+  })
+
+  it('should filter by canadian province', () => {
+    const { area, typeahead } = selectors.filter
+    cy.get(typeahead(area).selectedOption)
+      .eq(1)
+      .click()
+      .get(typeahead(area).textInput)
+      .eq(1)
+      .type('Alberta')
+      .get(typeahead(area).options)
+      .eq(1)
+      .should('have.length', 1)
+      .get(typeahead(area).textInput)
+      .eq(1)
+      .type('{enter}')
+      .type('{esc}')
+
+    cy.wait('@filterResults').then((xhr) => {
+      expect(xhr.response.url).to.contain(
+        'area=75e337c3-23c9-4294-8085-6b1e8c43eb07'
       )
     })
   })
