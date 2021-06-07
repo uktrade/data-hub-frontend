@@ -133,7 +133,7 @@ import { TASK_GET_INVESTMENT_SUMMARY_DATA_RANGES } from './components/Investment
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
 import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentReminders/state'
 
-import { getContacts, getContactsMetaData } from '../apps/contacts/client/tasks'
+import { getContacts, getContactsMetadata } from '../apps/contacts/client/tasks'
 import {
   TASK_GET_CONTACTS_LIST,
   TASK_GET_CONTACTS_METADATA,
@@ -224,7 +224,7 @@ function App() {
           investmentProfilesTasks.loadFilterOptions,
         CREATE_INVESTMENT_OPPORTUNITY: createUKInvestmentOpportunityTask,
         [TASK_GET_CONTACTS_LIST]: getContacts,
-        [TASK_GET_CONTACTS_METADATA]: getContactsMetaData,
+        [TASK_GET_CONTACTS_METADATA]: getContactsMetadata,
       }}
     >
       <Mount selector="#add-company-form">

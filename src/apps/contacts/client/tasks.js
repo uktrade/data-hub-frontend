@@ -44,7 +44,7 @@ const getMetadataOptions = (url) =>
       data.map(({ id, name }) => ({ value: id, label: name }))
     )
 
-export const getContactsMetaData = () =>
+export const getContactsMetadata = () =>
   Promise.all([
     getMetadataSectionOptions(urls.metadata.sector()),
     getMetadataOptions(urls.metadata.country()),
