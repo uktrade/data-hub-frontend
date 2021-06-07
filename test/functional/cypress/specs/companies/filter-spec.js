@@ -171,9 +171,7 @@ describe('Company Collections Filter', () => {
     cy.get(selectors.filter.ukPostcode).should('be.visible')
     cy.get(selectors.filter.ukPostcode).clear().type(POSTCODE).type('{enter}')
 
-    cy.wait('@filterResults').then((xhr) => {
-      expect(xhr.response.url).to.contain(`uk_postcode=${POSTCODE}`)
-    })
+    cy.url().should('include', `uk_postcode=${POSTCODE}`)
 
     cy.get(selectors.entityCollection.entities)
       .children()
