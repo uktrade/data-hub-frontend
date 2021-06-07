@@ -1,3 +1,4 @@
+import { omitBy, isEmpty } from 'lodash'
 import qs from 'qs'
 
 export const TASK_GET_COMPANIES_LIST = 'TASK_GET_COMPANIES_LIST'
@@ -5,27 +6,15 @@ export const TASK_GET_COMPANIES_METADATA = 'TASK_GET_COMPANIES_METADATA'
 
 export const ID = 'companiesList'
 
-import { companyNameLabel, headquarterTypeLabel, sectorLabel } from './labels'
+import * as labels from './labels'
 
-const parseVariablePropType = (prop) =>
-  prop ? (Array.isArray(prop) ? prop : [prop]) : prop
-
-const searchParamProps = ({
-  page = 1,
-  headquarter_type = false,
-  name = false,
-  sector_descends = false,
-}) => ({
-  page: parseInt(page, 10),
-  headquarter_type,
-  name,
-  sector_descends: parseVariablePropType(sector_descends),
-})
-
-const collectionListPayload = (paramProps) => {
-  return Object.fromEntries(
-    Object.entries(searchParamProps(paramProps)).filter((v) => v[1])
-  )
+const getFilteredQueryParams = (router) => {
+  const queryParams = router.location.search.slice(1)
+  const filteredQueryParams = omitBy({ ...qs.parse(queryParams) }, isEmpty)
+  return {
+    ...filteredQueryParams,
+    page: parseInt(filteredQueryParams.page || 1, 10),
+  }
 }
 
 /**
@@ -49,7 +38,7 @@ const buildOptionsFilter = ({ options = [], value, categoryLabel = '' }) => {
  */
 export const state2props = ({ router, ...state }) => {
   const queryProps = qs.parse(router.location.search.slice(1))
-  const filteredQueryProps = collectionListPayload(queryProps)
+  const filteredQueryProps = getFilteredQueryParams(router)
   const { headquarter_type = [], name, sector_descends = [] } = queryProps
   const { metadata } = state[ID]
 
@@ -57,21 +46,21 @@ export const state2props = ({ router, ...state }) => {
     selectedHeadquarterTypes: buildOptionsFilter({
       options: metadata.headquarterTypeOptions,
       value: headquarter_type,
-      categoryLabel: headquarterTypeLabel,
+      categoryLabel: labels.HEADQUARTER_TYPE,
     }),
     selectedName: name
       ? [
           {
             value: name,
             label: name,
-            categoryLabel: companyNameLabel,
+            categoryLabel: labels.COMPANY_NAME,
           },
         ]
       : [],
     selectedSectors: buildOptionsFilter({
       options: metadata.sectorOptions,
       value: sector_descends,
-      categoryLabel: sectorLabel,
+      categoryLabel: labels.SECTOR,
     }),
   }
   return {
