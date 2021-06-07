@@ -1,4 +1,10 @@
 import axios from 'axios'
+
+import {
+  getMetadataOptions,
+  getSectorOptions,
+} from '../../../../client/metadata'
+
 import transformInvestmentProjectToListItem from './transformers'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
@@ -18,35 +24,6 @@ function getProjects({ limit = 10, page, ...rest }) {
         results: data.results.map(transformInvestmentProjectToListItem),
       }),
       handleError
-    )
-}
-
-/**
- * Get metadata options as a list of values and labels
- */
-function getMetadataOptions(url) {
-  return axios
-    .get(url)
-    .then(({ data }) =>
-      data.map(({ id, name }) => ({ value: id, label: name }))
-    )
-}
-
-/**
- * Get the top-level sector options as a list of values and labels
- *
- * Specifying a searchString uses the autocomplete feature to only show
- * matching results.
- */
-function getSectorOptions(url, searchString) {
-  return axios
-    .get(url, {
-      params: searchString ? { autocomplete: searchString } : {},
-    })
-    .then(({ data }) =>
-      data
-        .filter(({ level }) => level === 0)
-        .map(({ id, name }) => ({ value: id, label: name }))
     )
 }
 
