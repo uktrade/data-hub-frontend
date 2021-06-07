@@ -36,11 +36,31 @@ function getHeadquarterTypeOptions(url) {
     ehq: 'European HQ',
   }
   return getMetadataOptions(url).then((items) =>
-    items.map(({ value, label }) => ({
-      value,
-      label: hqTypes[label] || label,
-    }))
+    items
+      .map(({ value, label }) => ({
+        value,
+        label: hqTypes[label] || label,
+      }))
+      .sort((item1, item2) => (item1.label > item2.label ? 1 : -1))
   )
+}
+
+/**
+ * Get the top-level sector options as a list of values and labels
+ *
+ * Specifying a searchString uses the autocomplete feature to only show
+ * matching results.
+ */
+function getSectorOptions(url, searchString) {
+  return axios
+    .get(url, {
+      params: searchString ? { autocomplete: searchString } : {},
+    })
+    .then(({ data }) =>
+      data
+        .filter(({ level }) => level === 0)
+        .map(({ id, name }) => ({ value: id, label: name }))
+    )
 }
 
 /**
@@ -56,7 +76,9 @@ function getCompaniesMetadata(metadataUrls) {
   const optionCategories = Object.keys(metadataUrls)
   return Promise.all(
     optionCategories.map((name) =>
-      name == 'headquarterTypeOptions'
+      name == 'sectorOptions'
+        ? getSectorOptions(metadataUrls[name])
+        : name == 'headquarterTypeOptions'
         ? getHeadquarterTypeOptions(metadataUrls[name])
         : getMetadataOptions(metadataUrls[name])
     ),
