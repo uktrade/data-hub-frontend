@@ -11,7 +11,10 @@ import {
   UK_REGION,
   CONTACTS_NAME,
   COMPANY_NAME,
+  STATUS,
 } from './labels'
+
+import { STATUS_OPTIONS } from './metadata'
 
 const buildOptionsFilter = ({ options = [], value, categoryLabel }) =>
   options
@@ -30,6 +33,13 @@ const getFilteredQueryParams = (router) => {
     page: parseInt(filteredQueryParams.page || 1, 10),
   }
 }
+
+const transformArchivedToAPI = (params) => ({
+  ...params,
+  archived: params.archived?.length === 1
+    ? params.archived[0] === 'true'
+    : undefined,
+})
 
 export const state2props = ({ router, ...state }) => {
   const filteredQueryParams = getFilteredQueryParams(router)
@@ -69,14 +79,20 @@ export const state2props = ({ router, ...state }) => {
       value: filteredQueryParams.company_uk_region,
       categoryLabel: UK_REGION,
     }),
+    selectedStatus: buildOptionsFilter({
+      options: STATUS_OPTIONS,
+      value: filteredQueryParams.archived,
+      categoryLabel: STATUS,
+    }),
   }
 
   return {
     ...state[ID],
     selectedFilters,
-    payload: filteredQueryParams,
+    payload: transformArchivedToAPI(filteredQueryParams),
     optionMetadata: {
       sortOptions: [],
+      statusOptions: STATUS_OPTIONS,
       ...metadata,
     },
   }
