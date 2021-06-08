@@ -1,6 +1,6 @@
 const { BLACK, GREY_1 } = require('govuk-colours')
 const { sortBy } = require('lodash')
-const moment = require('moment')
+const { format, parseISO } = require('date-fns')
 
 const LIKELIHOOD_TO_SUCCEED = require('../../../../../src/client/components/Pipeline/constants')
 const inProgress = require('../../../../sandbox/fixtures/v4/pipeline-item/in-progress.json')
@@ -30,7 +30,7 @@ function assertPipelineItem(
       )
       cy.contains('Created')
       cy.contains(expectedDate)
-      cy.contains(moment(result.created_on).format('DD MMM Y'))
+      cy.contains(format(parseISO(result.created_on), 'dd MMM y'))
       if (result.archived) {
         cy.contains(result.name).should('have.colour', GREY_1)
         cy.contains('Delete').should(
@@ -49,7 +49,7 @@ function assertPipelineItem(
             .should('have.backgroundColour', TAG_COLOURS.grey.background)
             .should('have.colour', TAG_COLOURS.grey.colour)
         })
-        cy.contains(moment(result.archived_on).format('DD MMM Y')).siblings(
+        cy.contains(format(parseISO(result.archived_on), 'dd MMM y')).siblings(
           () => {
             cy.contains('Archived')
           }
