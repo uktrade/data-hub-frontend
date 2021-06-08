@@ -36,11 +36,21 @@ function getCompaniesMetadata() {
     getSectorOptions(urls.metadata.sector()),
     getHeadquarterTypeOptions(urls.metadata.headquarterType()),
     getMetadataOptions(urls.metadata.ukRegion()),
+    getMetadataOptions(urls.metadata.country()),
   ])
-    .then(([sectorOptions, headquarterTypeOptions]) => ({
-      sectorOptions,
-      headquarterTypeOptions,
-    }))
+    .then(
+      ([
+        sectorOptions,
+        headquarterTypeOptions,
+        ukRegionOptions,
+        countryOptions,
+      ]) => ({
+        sectorOptions,
+        headquarterTypeOptions,
+        ukRegionOptions,
+        countryOptions,
+      })
+    )
     .catch(handleError)
 }
 

@@ -11,6 +11,8 @@ import { testTypeahead, testRemoveChip } from '../../support/tests'
 const GLOBAL_HQ_ID = '43281c5e-92a4-4794-867b-b4d5f801e6f3'
 const ADVANCED_ENGINEERING_SECTOR_ID = 'af959812-6095-e211-a939-e4115bead28a'
 const TEST_COMPANY_NAME_QUERY = 'Test Company'
+const UK_COUNTRY_ID = '80756b9a-5d95-e211-a939-e4115bead28a'
+const SOUTH_EAST_UK_REGION_ID = '884cd12a-6095-e211-a939-e4115bead28a'
 
 describe('Investments Collections Filter', () => {
   context('when the url contains no state', () => {
@@ -21,6 +23,14 @@ describe('Investments Collections Filter', () => {
       cy.get('[data-test="headquarter-type-filter"]').as('hqTypeFilter')
       cy.get('[data-test="company-name-filter"]').as('companyNameFilter')
       cy.get('[data-test="sector-filter"]').as('sectorFilter')
+      cy.get('[data-test="country-filter"]').as('countryFilter')
+      cy.get('[data-test="uk-region-filter"]').as('ukRegionFilter')
+      cy.get('[data-test="currently-exporting-to-country-filter"]').as(
+        'currentlyExportingToFilter'
+      )
+      cy.get('[data-test="future-countries-of-interest-filter"]').as(
+        'futureCountriesOfInterestFilter'
+      )
     })
 
     it('should filter by Headquarter Type', () => {
@@ -71,6 +81,66 @@ describe('Investments Collections Filter', () => {
         placeholder: 'Search sectors',
       })
     })
+
+    it('should filter by country', () => {
+      testTypeahead({
+        element: '@countryFilter',
+        legend: 'Country',
+        placeholder: 'Search country',
+        input: 'hond',
+        expectedOption: 'Honduras',
+      })
+
+      testRemoveChip({
+        element: '@countryFilter',
+        placeholder: 'Search country',
+      })
+    })
+
+    it('should filter by UK region', () => {
+      testTypeahead({
+        element: '@ukRegionFilter',
+        legend: 'UK Region',
+        placeholder: 'Search UK regions',
+        input: 'york',
+        expectedOption: 'Yorkshire and The Humber',
+      })
+
+      testRemoveChip({
+        element: '@ukRegionFilter',
+        placeholder: 'Search UK regions',
+      })
+    })
+
+    it('should filter by currently exporting to country', () => {
+      testTypeahead({
+        element: '@currentlyExportingToFilter',
+        legend: 'Currently exporting to',
+        placeholder: 'Search country',
+        input: 'arg',
+        expectedOption: 'Argentina',
+      })
+
+      testRemoveChip({
+        element: '@currentlyExportingToFilter',
+        placeholder: 'Search country',
+      })
+    })
+
+    it('should filter by future countries of interest', () => {
+      testTypeahead({
+        element: '@futureCountriesOfInterestFilter',
+        legend: 'Future countries of interest',
+        placeholder: 'Search country',
+        input: 'guat',
+        expectedOption: 'Guatemala',
+      })
+
+      testRemoveChip({
+        element: '@futureCountriesOfInterestFilter',
+        placeholder: 'Search country',
+      })
+    })
   })
 
   context('when the url contains state', () => {
@@ -82,17 +152,39 @@ describe('Investments Collections Filter', () => {
           headquarter_type: GLOBAL_HQ_ID,
           name: TEST_COMPANY_NAME_QUERY,
           sector_descends: ADVANCED_ENGINEERING_SECTOR_ID,
+          uk_region: SOUTH_EAST_UK_REGION_ID,
+          country: UK_COUNTRY_ID,
+          export_to_countries: UK_COUNTRY_ID,
+          future_interest_countries: UK_COUNTRY_ID,
         },
       })
       cy.get('[data-test="headquarter-type-filter"]').as('hqTypeFilter')
       cy.get('[data-test="company-name-filter"]').as('companyNameFilter')
       cy.get('[data-test="sector-filter"]').as('sectorFilter')
+      cy.get('[data-test="country-filter"]').as('countryFilter')
+      cy.get('[data-test="uk-region-filter"]').as('ukRegionFilter')
+      cy.get('[data-test="currently-exporting-to-country-filter"]').as(
+        'currentlyExportingToFilter'
+      )
+      cy.get('[data-test="future-countries-of-interest-filter"]').as(
+        'futureCountriesOfInterestFilter'
+      )
     })
 
     it('should set the selected filter values and filter indicators', () => {
       assertChipExists({ position: 1, label: 'Advanced Engineering' })
-      assertChipExists({ position: 2, label: 'Global HQ' })
-      assertChipExists({ position: 3, label: TEST_COMPANY_NAME_QUERY })
+      assertChipExists({ position: 2, label: 'United Kingdom' })
+      assertChipExists({
+        position: 3,
+        label: 'Currently exporting to: United Kingdom',
+      })
+      assertChipExists({
+        position: 4,
+        label: 'Future country of interest: United Kingdom',
+      })
+      assertChipExists({ position: 5, label: 'South East' })
+      assertChipExists({ position: 6, label: 'Global HQ' })
+      assertChipExists({ position: 7, label: TEST_COMPANY_NAME_QUERY })
       assertCheckboxGroupOption({
         element: '@hqTypeFilter',
         value: GLOBAL_HQ_ID,
@@ -100,18 +192,32 @@ describe('Investments Collections Filter', () => {
       })
       cy.get('@companyNameFilter').should('have.value', TEST_COMPANY_NAME_QUERY)
       cy.get('@sectorFilter').should('contain', 'Advanced Engineering')
+      cy.get('@countryFilter').should('contain', 'United Kingdom')
+      cy.get('@ukRegionFilter').should('contain', 'South East')
+      cy.get('@currentlyExportingToFilter').should('contain', 'United Kingdom')
+      cy.get('@futureCountriesOfInterestFilter').should(
+        'contain',
+        'United Kingdom'
+      )
     })
 
     it('should clear all filters', () => {
       cy.get('#filter-chips').find('button').as('chips')
       cy.get('#clear-filters').as('clearFilters')
-      cy.get('@chips').should('have.length', 3)
+      cy.get('@chips').should('have.length', 7)
       cy.get('@clearFilters').click()
       cy.get('@chips').should('have.length', 0)
 
       assertCheckboxGroupNoneSelected('@hqTypeFilter')
       cy.get('@companyNameFilter').should('have.value', '')
       cy.get('@sectorFilter').should('contain', 'Search sectors')
+      cy.get('@countryFilter').should('contain', 'Search country')
+      cy.get('@ukRegionFilter').should('contain', 'Search UK regions')
+      cy.get('@currentlyExportingToFilter').should('contain', 'Search country')
+      cy.get('@futureCountriesOfInterestFilter').should(
+        'contain',
+        'Search country'
+      )
     })
   })
 })
