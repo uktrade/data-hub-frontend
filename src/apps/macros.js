@@ -5,7 +5,7 @@ const {
   transformStringToOption,
   transformHQCodeToLabelledOption,
 } = require('./transformers')
-const { US_COUNTRY_ID } = require('./constants.js')
+const { US_COUNTRY_ID, CANADA_COUNTRY_ID } = require('./constants.js')
 
 const foreignOtherCompanyOptions = [
   'Charity',
@@ -46,6 +46,18 @@ const globalFields = {
     options() {
       return metadata.administrativeAreaOptions
         .filter((states) => states.country.id === US_COUNTRY_ID)
+        .map(transformObjectToOption)
+    },
+  },
+
+  canadaProvinces: {
+    macroName: 'MultipleChoiceField',
+    name: 'canada_province',
+    label: 'Canadian Province',
+    initialOption: '-- Select Canadian Province --',
+    options() {
+      return metadata.administrativeAreaOptions
+        .filter((states) => states.country.id === CANADA_COUNTRY_ID)
         .map(transformObjectToOption)
     },
   },
