@@ -39,10 +39,23 @@ const buildOptionsFilter = ({ options = [], value, categoryLabel = '' }) => {
 export const state2props = ({ router, ...state }) => {
   const queryProps = qs.parse(router.location.search.slice(1))
   const filteredQueryProps = getFilteredQueryParams(router)
-  const { headquarter_type = [], name, sector_descends = [] } = queryProps
+  const {
+    country = [],
+    headquarter_type = [],
+    name,
+    sector_descends = [],
+    uk_region = [],
+    export_to_countries = [],
+    future_interest_countries = [],
+  } = queryProps
   const { metadata } = state[ID]
 
   const selectedFilters = {
+    selectedCountries: buildOptionsFilter({
+      options: metadata.countryOptions,
+      value: country,
+      categoryLabel: labels.COUNTRY,
+    }),
     selectedHeadquarterTypes: buildOptionsFilter({
       options: metadata.headquarterTypeOptions,
       value: headquarter_type,
@@ -61,6 +74,21 @@ export const state2props = ({ router, ...state }) => {
       options: metadata.sectorOptions,
       value: sector_descends,
       categoryLabel: labels.SECTOR,
+    }),
+    selectedUkRegions: buildOptionsFilter({
+      options: metadata.ukRegionOptions,
+      value: uk_region,
+      categoryLabel: labels.UK_REGION,
+    }),
+    selectedExportToCountries: buildOptionsFilter({
+      options: metadata.countryOptions,
+      value: export_to_countries,
+      categoryLabel: labels.CURRENTLY_EXPORTING_TO,
+    }),
+    selectedFutureCountriesOfInterest: buildOptionsFilter({
+      options: metadata.countryOptions,
+      value: future_interest_countries,
+      categoryLabel: labels.FUTURE_COUNTRIES_OF_INTEREST,
     }),
   }
   return {
