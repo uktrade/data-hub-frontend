@@ -7,6 +7,7 @@ export const TASK_GET_COMPANIES_METADATA = 'TASK_GET_COMPANIES_METADATA'
 export const ID = 'companiesList'
 
 import * as labels from './labels'
+import { COMPANY_STATUS_OPTIONS } from './metadata'
 
 const getFilteredQueryParams = (router) => {
   const queryParams = router.location.search.slice(1)
@@ -45,6 +46,7 @@ export const state2props = ({ router, ...state }) => {
     name,
     sector_descends = [],
     uk_region = [],
+    archived = [],
     export_to_countries = [],
     future_interest_countries = [],
   } = queryProps
@@ -80,6 +82,11 @@ export const state2props = ({ router, ...state }) => {
       value: uk_region,
       categoryLabel: labels.UK_REGION,
     }),
+    selectedCompanyStatuses: buildOptionsFilter({
+      options: COMPANY_STATUS_OPTIONS,
+      value: archived,
+      categoryLabel: labels.COMPANY_STATUS,
+    }),
     selectedExportToCountries: buildOptionsFilter({
       options: metadata.countryOptions,
       value: export_to_countries,
@@ -94,7 +101,11 @@ export const state2props = ({ router, ...state }) => {
   return {
     ...state[ID],
     payload: filteredQueryProps,
-    optionMetadata: { sortOptions: [], ...metadata },
+    optionMetadata: {
+      sortOptions: [],
+      companyStatuses: COMPANY_STATUS_OPTIONS,
+      ...metadata,
+    },
     selectedFilters,
   }
 }
