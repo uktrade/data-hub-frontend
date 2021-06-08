@@ -25,7 +25,7 @@ const transformInvestmentProjectToListItem = ({
     { label: 'Sector', value: sector ? sector.name : '' },
     {
       label: 'Estimated land date',
-      value: estimated_land_date && format(estimated_land_date, 'MMMM YYYY'),
+      value: estimated_land_date && format(estimated_land_date, 'MMMM yyyy'),
     },
   ].filter((metadata) => metadata.value)
 
