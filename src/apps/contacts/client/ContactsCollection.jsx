@@ -11,6 +11,7 @@ import {
   RoutedInputField,
   CollectionFilters,
   FilteredCollectionList,
+  RoutedCheckboxGroupField,
 } from '../../../client/components'
 
 import {
@@ -102,6 +103,14 @@ const ContactsCollection = ({
           options={optionMetadata.ukRegionOptions}
           selectedOptions={selectedFilters.selectedCompanyUkRegions}
           data-test="uk-region-filter"
+        />
+        <RoutedCheckboxGroupField
+          legend="Status"
+          name="archived"
+          qsParam="archived"
+          options={optionMetadata.statusOptions}
+          selectedOptions={selectedFilters.selectedStatus}
+          data-test="status-filter"
         />
       </CollectionFilters>
     </FilteredCollectionList>

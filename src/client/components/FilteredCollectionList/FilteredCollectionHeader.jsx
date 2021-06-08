@@ -242,6 +242,10 @@ function FilteredCollectionHeader({
           qsParamName="name"
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedStatus}
+          qsParamName="archived"
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedCompanyName}
           qsParamName="company_name"
         />
