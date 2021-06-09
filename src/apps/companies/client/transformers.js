@@ -66,12 +66,13 @@ const transformCompanyToListItem = ({
 
   return {
     id,
-    subheading: `Updated on ${formatWithTime(modified_on)}`,
+    subheading: modified_on
+      ? `Updated on ${formatWithTime(modified_on)}`
+      : undefined,
     headingText: name,
     headingUrl: urls.companies.detail(id),
     badges,
     metadata: metadata.filter((item) => item.value),
-    type: 'company',
   }
 }
 

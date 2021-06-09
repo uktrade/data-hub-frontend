@@ -31,6 +31,7 @@ const CollectionList = ({
   entityName,
   entityNamePlural,
   addItemUrl,
+  metadataRenderer,
 }) => {
   const totalPages = Math.ceil(count / itemsPerPage)
   return (
@@ -59,7 +60,7 @@ const CollectionList = ({
           />
           {items.map(
             (
-              { headingText, headingUrl, subheading, badges, metadata, type },
+              { headingText, headingUrl, subheading, badges, metadata },
               index
             ) => (
               <CollectionItem
@@ -69,7 +70,7 @@ const CollectionList = ({
                 subheading={subheading}
                 badges={badges}
                 metadata={metadata}
-                type={type}
+                metadataRenderer={metadataRenderer}
               />
             )
           )}
@@ -122,6 +123,7 @@ CollectionList.propTypes = {
   maxItemsToDownload: PropTypes.number,
   onPageClick: PropTypes.func.isRequired,
   addItemUrl: PropTypes.string,
+  metadataRenderer: PropTypes.func,
 }
 
 export default CollectionList

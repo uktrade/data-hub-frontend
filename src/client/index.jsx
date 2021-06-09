@@ -42,6 +42,7 @@ import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyLocalHeader from './components/CompanyLocalHeader'
 import CompaniesCollection from '../apps/companies/client/CompaniesCollection.jsx'
 import ContactsCollection from '../apps/contacts/client/ContactsCollection.jsx'
+import InteractionsCollection from '../apps/interactions/client/InteractionsCollection'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 import Opportunities from '../apps/investments/client/opportunities/Details/Opportunities.jsx'
 import IEBanner from '../apps/dashboard/client/IEBanner'
@@ -92,8 +93,14 @@ import * as manageAdviser from '../apps/companies/apps/advisers/client/tasks'
 import { DNB__CHECK_PENDING_REQUEST } from '../apps/companies/apps/business-details/client/state'
 import * as dnbCheck from '../apps/companies/apps/business-details/client/tasks'
 
-import { TASK_GET_COMPANIES_LIST } from '../apps/companies/client/state'
-import { getCompanies } from '../apps/companies/client/tasks'
+import {
+  TASK_GET_COMPANIES_LIST,
+  TASK_GET_COMPANIES_METADATA,
+} from '../apps/companies/client/state'
+import {
+  getCompanies,
+  getCompaniesMetadata,
+} from '../apps/companies/client/tasks'
 
 import { TASK_GET_PROFILES_LIST } from '../apps/investments/client/profiles/state'
 import * as investmentProfilesTasks from '../apps/investments/client/profiles/tasks'
@@ -126,6 +133,12 @@ import { TASK_GET_INVESTMENT_SUMMARY_DATA_RANGES } from './components/Investment
 
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
 import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentReminders/state'
+
+import { getContacts, getContactsMetadata } from '../apps/contacts/client/tasks'
+import {
+  TASK_GET_CONTACTS_LIST,
+  TASK_GET_CONTACTS_METADATA,
+} from '../apps/contacts/client/state'
 
 import Footer from '../client/components/Footer'
 
@@ -198,6 +211,7 @@ function App() {
           investmentProfilesTasks.getLargeCapitalProfiles,
         [TASK_GET_PROJECTS_LIST]: getInvestmentProjects.getProjects,
         [TASK_GET_COMPANIES_LIST]: getCompanies,
+        [TASK_GET_COMPANIES_METADATA]: getCompaniesMetadata,
         [TASK_GET_ADVISER_NAME]: getInvestmentProjects.getAdviserNames,
         [TASK_GET_INVESTMENTS_PROJECTS_METADATA]:
           getInvestmentProjects.getMetadata,
@@ -210,6 +224,8 @@ function App() {
         'Large investment profiles filters':
           investmentProfilesTasks.loadFilterOptions,
         CREATE_INVESTMENT_OPPORTUNITY: createUKInvestmentOpportunityTask,
+        [TASK_GET_CONTACTS_LIST]: getContacts,
+        [TASK_GET_CONTACTS_METADATA]: getContactsMetadata,
       }}
     >
       <Mount selector="#add-company-form">
@@ -377,6 +393,9 @@ function App() {
       </Mount>
       <Mount selector="#contacts-collection">
         {(props) => <ContactsCollection {...props} />}
+      </Mount>
+      <Mount selector="#interactions-collection">
+        {(props) => <InteractionsCollection {...props} />}
       </Mount>
       <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
     </Provider>

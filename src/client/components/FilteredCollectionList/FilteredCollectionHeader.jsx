@@ -70,6 +70,7 @@ function FilteredCollectionHeader({
       href={addItemUrl}
       buttonColour={GREY_3}
       buttonTextColour={BLACK}
+      data-test="add-collection-item-button"
     >
       Add {collectionName}
     </Button>
@@ -107,8 +108,22 @@ function FilteredCollectionHeader({
           qsParamName="sector_descends"
         />
         <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedCountries}
+          selectedOptions={selectedFilters.selectedInvestmentOriginCountries}
           qsParamName="country_investment_originates_from"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedCountries}
+          qsParamName="country"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedExportToCountries}
+          qsParamName="export_to_countries"
+          showCategoryLabels={true}
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedFutureCountriesOfInterest}
+          qsParamName="future_interest_countries"
+          showCategoryLabels={true}
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedCountryOfOrigin}
@@ -205,6 +220,30 @@ function FilteredCollectionHeader({
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedUkRegionsOfInterest}
           qsParamName="uk_regions_of_interest"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedHeadquarterTypes}
+          qsParamName="headquarter_type"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedCompanySectors}
+          qsParamName="company_sector_descends"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedAddressCountries}
+          qsParamName="address_country"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedCompanyUkRegions}
+          qsParamName="company_uk_region"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedName}
+          qsParamName="name"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedCompanyName}
+          qsParamName="company_name"
         />
         <RoutedFilterChips
           selectedOptions={
