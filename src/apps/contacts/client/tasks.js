@@ -10,6 +10,7 @@ export const getContacts = ({
   limit = 10,
   page = 1,
   name,
+  archived,
   company_name,
   company_sector_descends,
   address_country,
@@ -25,7 +26,7 @@ export const getContacts = ({
       address_country,
       company_uk_region,
       sortby: 'modified_on:desc',
-      archived: false,
+      archived,
     })
     .then(({ data }) => transformResponseToCollection(data), handleError)
 

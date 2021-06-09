@@ -1,8 +1,10 @@
+import { clickCheckboxGroupOption } from '../../support/actions'
 import urls from '../../../../../src/lib/urls'
 
 import {
   assertChipExists,
   assertTypeaheadHints,
+  assertCheckboxGroupOption,
   assertTypeaheadOptionSelected,
 } from '../../support/assertions'
 import { selectFirstTypeaheadOption } from '../../support/actions'
@@ -49,6 +51,7 @@ describe('Contacts Collections Filter', () => {
       cy.get('[data-test="sector-filter"]').as('sectorFilter')
       cy.get('[data-test="country-filter"]').as('countryFilter')
       cy.get('[data-test="uk-region-filter"]').as('ukRegionFilter')
+      cy.get('[data-test="status-filter"]').as('statusFilter')
     })
 
     it('should filter by Contact name', () => {
@@ -114,6 +117,35 @@ describe('Contacts Collections Filter', () => {
         element: '@ukRegionFilter',
         placeholder: 'Search UK regions',
       })
+    })
+
+    it('should filter by status', () => {
+      cy.get('@statusFilter')
+        .find('label')
+        .as('statusOptions')
+        .should('have.length', 2)
+      cy.get('@statusOptions')
+        .eq(0)
+        .should('contain', 'Active')
+        .find('input')
+        .should('have.value', 'false')
+      cy.get('@statusOptions')
+        .eq(1)
+        .should('contain', 'Inactive')
+        .find('input')
+        .should('have.value', 'true')
+      clickCheckboxGroupOption({
+        element: '@statusFilter',
+        value: 'false',
+      })
+      assertCheckboxGroupOption({
+        element: '@statusFilter',
+        value: 'false',
+        checked: true,
+      })
+      assertChipExists({ label: 'Active', position: 1 })
+
+      testRemoveChip({ element: '@statusFilter' })
     })
   })
 
