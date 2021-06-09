@@ -22,6 +22,7 @@ const exportOptions = {
 
 async function renderCompanyList(req, res, next) {
   try {
+    const { features } = res.locals
     const { user } = req.session
     const queryString = QUERY_STRING
     const sortForm = merge({}, companySortForm, {
@@ -62,6 +63,9 @@ async function renderCompanyList(req, res, next) {
     )
 
     res.render('_layouts/collection', {
+      features: {
+        isAddressAreaEnabled: features['address-area-company-search'],
+      },
       sortForm,
       filtersFields: filtersFieldsWithSelectedOptions,
       selectedFilters,
