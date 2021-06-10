@@ -11,14 +11,9 @@ import { transformResponseToCompanyCollection } from './transformers'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
-const getCompanies = ({ limit = 10, page, archived, ...rest }) => {
+const getCompanies = ({ limit = 10, page, ...rest }) => {
   const offset = limit * (parseInt(page, 10) - 1) || 0
   let options = { limit, offset, ...rest }
-
-  // The archived param only needs to be present when a single option is picked
-  if (archived && archived.length === 1) {
-    options.archived = archived[0] === 'true'
-  }
 
   return axios
     .post('/api-proxy/v4/search/company', options)
