@@ -135,10 +135,14 @@ import { fetchOutstandingPropositions } from './components/InvestmentReminders/t
 import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentReminders/state'
 
 import { getContacts, getContactsMetadata } from '../apps/contacts/client/tasks'
+import { getInteractions } from '../apps/interactions/client/tasks'
+
 import {
   TASK_GET_CONTACTS_LIST,
   TASK_GET_CONTACTS_METADATA,
 } from '../apps/contacts/client/state'
+
+import { TASK_GET_INTERACTIONS_LIST } from '../apps/interactions/client/state'
 
 import Footer from '../client/components/Footer'
 
@@ -226,6 +230,7 @@ function App() {
         CREATE_INVESTMENT_OPPORTUNITY: createUKInvestmentOpportunityTask,
         [TASK_GET_CONTACTS_LIST]: getContacts,
         [TASK_GET_CONTACTS_METADATA]: getContactsMetadata,
+        [TASK_GET_INTERACTIONS_LIST]: getInteractions,
       }}
     >
       <Mount selector="#add-company-form">
