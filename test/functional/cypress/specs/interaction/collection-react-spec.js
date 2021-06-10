@@ -67,7 +67,7 @@ const interactionsList = [
 const assertInteractionDetails = ({
   listType,
   listItemNumber,
-  badgeLabel = 'interaction',
+  badgeLabel = 'Interaction',
   hasPolicyFeedback = false,
   hasMultipleContacts = false,
   hasMultipleAdvisers = false,
