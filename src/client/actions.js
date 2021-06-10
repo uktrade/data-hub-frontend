@@ -8,6 +8,9 @@
  * The name should be the name of the component the action relates to and a verb
  * describing what it does, concatenated by double underscore.
  */
+
+export const INTERACTIONS__LOADED = 'INTERACTIONS__LOADED'
+
 export const COMPANIES__LOADED = 'COMPANIES__LOADED'
 export const COMPANIES__SET_COMPANIES_METADATA =
   'COMPANIES__SET_COMPANIES_METADATA'
