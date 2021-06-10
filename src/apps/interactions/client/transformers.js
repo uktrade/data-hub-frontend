@@ -26,7 +26,7 @@ const formatParticipants = (dit_participants) =>
 
 const getbadgeLabel = (type, hasFeedback = false) => {
   const badges = {
-    interaction: 'interaction',
+    interaction: 'Interaction',
     service_delivery: 'Service delivery',
   }
   return [
