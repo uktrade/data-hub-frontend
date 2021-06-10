@@ -1,25 +1,9 @@
-import { COMPANY_STATUS_OPTIONS } from './metadata'
+import {
+  buildOptionsFilter,
+  buildInputFieldFilter,
+} from '../../../client/filters'
 import * as labels from './labels'
-
-const buildOptionsFilter = ({
-  options = [],
-  value = [],
-  categoryLabel = '',
-}) => {
-  const optionsFilter = options.filter((option) => value.includes(option.value))
-  if (categoryLabel) {
-    return optionsFilter.map(({ value, label }) => ({
-      value,
-      label,
-      categoryLabel,
-    }))
-  } else {
-    return optionsFilter
-  }
-}
-
-const buildInputFieldFilter = ({ value, categoryLabel }) =>
-  value ? [{ value, label: value, categoryLabel }] : []
+import { COMPANY_STATUS_OPTIONS } from './metadata'
 
 export const buildSelectedFilters = (queryParams, metadata) => {
   return {
