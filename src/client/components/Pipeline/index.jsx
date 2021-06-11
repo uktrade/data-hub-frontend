@@ -56,7 +56,7 @@ const SubTabs = styled(TabNav)`
 
 export default function Pipeline() {
   return (
-    <div data-auto-id="pipelineSubTabNav">
+    <div data-test="pipelineSubTabNav">
       <SubTabs
         id="PipelineSubTabs"
         label="Pipeline statuses"
