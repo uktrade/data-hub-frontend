@@ -42,7 +42,6 @@ const CompaniesCollection = ({
     id: ID,
     progressMessage: 'loading metadata',
     startOnRender: {
-      payload: {},
       onSuccessDispatch: COMPANIES__SET_COMPANIES_METADATA,
     },
   }
@@ -105,6 +104,14 @@ const CompaniesCollection = ({
           options={optionMetadata.ukRegionOptions}
           selectedOptions={selectedFilters.selectedUkRegions}
           data-test="uk-region-filter"
+        />
+        <RoutedCheckboxGroupField
+          legend="Status"
+          name="archived"
+          qsParam="archived"
+          options={optionMetadata.companyStatuses}
+          selectedOptions={selectedFilters.selectedCompanyStatuses}
+          data-test="company-status-filter"
         />
         <RoutedTypeahead
           isMulti={true}

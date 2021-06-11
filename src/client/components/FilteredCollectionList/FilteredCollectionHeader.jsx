@@ -250,6 +250,10 @@ function FilteredCollectionHeader({
           qsParamName="company_name"
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedCompanyStatuses}
+          qsParamName="archived"
+        />
+        <RoutedFilterChips
           selectedOptions={
             selectedFilters.selectedInvestableCapital?.min
               ? [
