@@ -19,7 +19,7 @@ function assertPipelineItem(
   if (!result) {
     throw Error('Given data is out of range')
   }
-  cy.get('[data-auto-id="pipelineSubTabNav"]')
+  cy.get('[data-test="pipelineSubTabNav"]')
     .get(`ol > li:nth-child(${index + 1})`)
     .within(() => {
       cy.contains('Company')
@@ -166,7 +166,7 @@ describe('My pipeline app', () => {
     })
 
     it('should render the sub tab nav', () => {
-      cy.get('[data-auto-id="pipelineSubTabNav"]').within(() => {
+      cy.get('[data-test="pipelineSubTabNav"]').within(() => {
         cy.contains('To do').should('have.attr', 'aria-selected', 'true')
         cy.contains('In progress')
         cy.contains('Done')
@@ -184,7 +184,7 @@ describe('My pipeline app', () => {
     })
 
     it('should render the sub tab nav', () => {
-      cy.get('[data-auto-id="pipelineSubTabNav"]').within(() => {
+      cy.get('[data-test="pipelineSubTabNav"]').within(() => {
         cy.contains('To do').should('have.attr', 'aria-selected', 'true')
         cy.contains('In progress')
         cy.contains('Done')
@@ -216,7 +216,7 @@ describe('My pipeline app', () => {
     })
 
     it('should render the sub tab nav', () => {
-      cy.get('[data-auto-id="pipelineSubTabNav"]').within(() => {
+      cy.get('[data-test="pipelineSubTabNav"]').within(() => {
         cy.contains('To do')
         cy.contains('In progress').should('have.attr', 'aria-selected', 'true')
         cy.contains('Done')
@@ -248,7 +248,7 @@ describe('My pipeline app', () => {
     })
 
     it('should render the sub tab nav', () => {
-      cy.get('[data-auto-id="pipelineSubTabNav"]').within(() => {
+      cy.get('[data-test="pipelineSubTabNav"]').within(() => {
         cy.contains('To do')
         cy.contains('In progress')
         cy.contains('Done').should('have.attr', 'aria-selected', 'true')

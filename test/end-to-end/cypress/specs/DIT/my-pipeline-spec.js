@@ -2,7 +2,7 @@ const urls = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures')
 const formSelectors = require('../../../../selectors/pipeline-form')
 
-const tabPanelSelector = '[data-auto-id="pipelineSubTabNav"] [role="tabpanel"]'
+const tabPanelSelector = '[data-test="pipelineSubTabNav"] [role="tabpanel"]'
 
 function addAssertion(assertion) {
   return (content) => ({

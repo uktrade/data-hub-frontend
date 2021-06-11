@@ -16,7 +16,7 @@ const SectionOneList = ({ businessDetails, isArchived, isDnbCompany, urls }) =>
     <>
       <SummaryTable
         caption="Global Account Manager – One List"
-        data-auto-id="oneListDetailsContainer"
+        data-test="oneListDetailsContainer"
         actions={
           !isArchived &&
           !isDnbCompany && <Link href={urls.companyEdit}>Edit</Link>

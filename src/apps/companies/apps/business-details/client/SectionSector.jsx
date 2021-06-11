@@ -7,7 +7,7 @@ import { SummaryTable } from '../../../../../client/components/'
 const SectionSector = ({ businessDetails, isArchived, urls }) => (
   <SummaryTable
     caption="DIT sector"
-    data-auto-id="sectorDetailsContainer"
+    data-test="sectorDetailsContainer"
     actions={
       !isArchived && <Link href={`${urls.companyEdit}#sector`}>Edit</Link>
     }
