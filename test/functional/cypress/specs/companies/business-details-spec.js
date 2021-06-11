@@ -16,7 +16,7 @@ const HIERARCHY_STRINGS = {
 }
 
 const assertSummaryTable = ({ dataTest, heading, showEditLink, content }) => {
-  const summaryTableSelector = `[data-auto-id="${dataTest}"]`
+  const summaryTableSelector = `[data-test="${dataTest}"]`
 
   cy.get(summaryTableSelector).find('caption').should('contain', heading)
   cy.get(summaryTableSelector)
@@ -32,9 +32,9 @@ const assertSummaryTable = ({ dataTest, heading, showEditLink, content }) => {
 
 const assertAddress = ({ address, registeredAddress }) => {
   const addressSelector1 =
-    '[data-auto-id="addressesDetailsContainer"] td:nth-child(1)'
+    '[data-test="addressesDetailsContainer"] td:nth-child(1)'
   const addressSelector2 =
-    '[data-auto-id="addressesDetailsContainer"] td:nth-child(2)'
+    '[data-test="addressesDetailsContainer"] td:nth-child(2)'
 
   if (address) {
     cy.get(addressSelector1).contains('Registered').should('not.exist')
