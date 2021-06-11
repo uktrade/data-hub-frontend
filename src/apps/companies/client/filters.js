@@ -25,6 +25,10 @@ export const buildSelectedFilters = (queryParams, metadata) => ({
     value: queryParams.sector_descends,
     categoryLabel: labels.SECTOR,
   }),
+  selectedUkPostcode: buildInputFieldFilter({
+    value: queryParams.uk_postcode,
+    categoryLabel: labels.UK_POSTCODE,
+  }),
   selectedUkRegions: buildOptionsFilter({
     options: metadata.ukRegionOptions,
     value: queryParams.uk_region,

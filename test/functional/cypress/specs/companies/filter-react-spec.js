@@ -11,6 +11,7 @@ import { testTypeahead, testRemoveChip } from '../../support/tests'
 const GLOBAL_HQ_ID = '43281c5e-92a4-4794-867b-b4d5f801e6f3'
 const ADVANCED_ENGINEERING_SECTOR_ID = 'af959812-6095-e211-a939-e4115bead28a'
 const TEST_COMPANY_NAME_QUERY = 'Test Company'
+const TEST_POSTCODE_QUERY = 'AB1 2CD, EF3 4GH'
 const UK_COUNTRY_ID = '80756b9a-5d95-e211-a939-e4115bead28a'
 const SOUTH_EAST_UK_REGION_ID = '884cd12a-6095-e211-a939-e4115bead28a'
 
@@ -24,6 +25,7 @@ describe('Investments Collections Filter', () => {
       cy.get('[data-test="company-name-filter"]').as('companyNameFilter')
       cy.get('[data-test="sector-filter"]').as('sectorFilter')
       cy.get('[data-test="country-filter"]').as('countryFilter')
+      cy.get('[data-test="uk-postcode-filter"]').as('ukPostcodeFilter')
       cy.get('[data-test="uk-region-filter"]').as('ukRegionFilter')
       cy.get('[data-test="company-status-filter"]').as('statusFilter')
       cy.get('[data-test="currently-exporting-to-country-filter"]').as(
@@ -62,7 +64,7 @@ describe('Investments Collections Filter', () => {
         .blur()
 
       cy.get('@companyNameFilter').should('have.value', TEST_COMPANY_NAME_QUERY)
-      assertChipExists({ label: 'Test Company', position: 1 })
+      assertChipExists({ label: TEST_COMPANY_NAME_QUERY, position: 1 })
 
       testRemoveChip({ element: '@companyNameFilter' })
       cy.get('@companyNameFilter').should('have.value', '')
@@ -98,10 +100,20 @@ describe('Investments Collections Filter', () => {
       })
     })
 
+    it('should filter by UK Postcode', () => {
+      cy.get('@ukPostcodeFilter').type(`${TEST_POSTCODE_QUERY}{enter}`).blur()
+
+      cy.get('@ukPostcodeFilter').should('have.value', TEST_POSTCODE_QUERY)
+      assertChipExists({ label: TEST_POSTCODE_QUERY, position: 1 })
+
+      testRemoveChip({ element: '@ukPostcodeFilter' })
+      cy.get('@ukPostcodeFilter').should('have.value', '')
+    })
+
     it('should filter by UK region', () => {
       testTypeahead({
         element: '@ukRegionFilter',
-        legend: 'UK Region',
+        legend: 'UK region',
         placeholder: 'Search UK regions',
         input: 'york',
         expectedOption: 'Yorkshire and The Humber',
@@ -182,6 +194,7 @@ describe('Investments Collections Filter', () => {
           headquarter_type: GLOBAL_HQ_ID,
           name: TEST_COMPANY_NAME_QUERY,
           sector_descends: ADVANCED_ENGINEERING_SECTOR_ID,
+          uk_postcode: TEST_POSTCODE_QUERY,
           uk_region: SOUTH_EAST_UK_REGION_ID,
           archived: ['true'],
           country: UK_COUNTRY_ID,
@@ -193,6 +206,7 @@ describe('Investments Collections Filter', () => {
       cy.get('[data-test="company-name-filter"]').as('companyNameFilter')
       cy.get('[data-test="sector-filter"]').as('sectorFilter')
       cy.get('[data-test="country-filter"]').as('countryFilter')
+      cy.get('[data-test="uk-postcode-filter"]').as('ukPostcodeFilter')
       cy.get('[data-test="uk-region-filter"]').as('ukRegionFilter')
       cy.get('[data-test="company-status-filter"]').as('statusFilter')
       cy.get('[data-test="currently-exporting-to-country-filter"]').as(
@@ -212,12 +226,13 @@ describe('Investments Collections Filter', () => {
       })
       assertChipExists({
         position: 4,
-        label: 'Future country of interest: United Kingdom',
+        label: 'Future countries of interest: United Kingdom',
       })
-      assertChipExists({ position: 5, label: 'South East' })
-      assertChipExists({ position: 6, label: 'Global HQ' })
-      assertChipExists({ position: 7, label: TEST_COMPANY_NAME_QUERY })
-      assertChipExists({ position: 8, label: 'Inactive' })
+      assertChipExists({ position: 5, label: TEST_POSTCODE_QUERY })
+      assertChipExists({ position: 6, label: 'South East' })
+      assertChipExists({ position: 7, label: 'Global HQ' })
+      assertChipExists({ position: 8, label: TEST_COMPANY_NAME_QUERY })
+      assertChipExists({ position: 9, label: 'Inactive' })
       assertCheckboxGroupOption({
         element: '@hqTypeFilter',
         value: GLOBAL_HQ_ID,
@@ -225,6 +240,7 @@ describe('Investments Collections Filter', () => {
       })
       cy.get('@companyNameFilter').should('have.value', TEST_COMPANY_NAME_QUERY)
       cy.get('@sectorFilter').should('contain', 'Advanced Engineering')
+      cy.get('@ukPostcodeFilter').should('have.value', TEST_POSTCODE_QUERY)
       cy.get('@countryFilter').should('contain', 'United Kingdom')
       cy.get('@ukRegionFilter').should('contain', 'South East')
       assertCheckboxGroupOption({
@@ -242,7 +258,7 @@ describe('Investments Collections Filter', () => {
     it('should clear all filters', () => {
       cy.get('#filter-chips').find('button').as('chips')
       cy.get('#clear-filters').as('clearFilters')
-      cy.get('@chips').should('have.length', 8)
+      cy.get('@chips').should('have.length', 9)
       cy.get('@clearFilters').click()
       cy.get('@chips').should('have.length', 0)
 
@@ -250,6 +266,7 @@ describe('Investments Collections Filter', () => {
       cy.get('@companyNameFilter').should('have.value', '')
       cy.get('@sectorFilter').should('contain', 'Search sectors')
       cy.get('@countryFilter').should('contain', 'Search country')
+      cy.get('@ukPostcodeFilter').should('have.value', '')
       cy.get('@ukRegionFilter').should('contain', 'Search UK regions')
       assertCheckboxGroupNoneSelected('@statusFilter')
       cy.get('@currentlyExportingToFilter').should('contain', 'Search country')

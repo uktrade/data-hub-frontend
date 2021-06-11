@@ -9,6 +9,9 @@ import { format, formatWithTime } from '../../../client/utils/date-utils'
 export const transformArchivedToApi = (archived) =>
   archived?.length === 1 ? archived[0] === 'true' : undefined
 
+export const transformPostcodeToApi = (postcode) =>
+  postcode && postcode.split(',').map((postcode) => postcode.trim())
+
 const transformCompanyToListItem = ({
   id,
   name,

@@ -13,6 +13,7 @@ import {
   RoutedTypeahead,
 } from '../../../client/components'
 
+import * as labels from './labels'
 import {
   ID,
   TASK_GET_COMPANIES_LIST,
@@ -60,7 +61,7 @@ const CompaniesCollection = ({
     >
       <CollectionFilters taskProps={collectionListMetadataTask}>
         <RoutedCheckboxGroupField
-          legend="Type"
+          legend={labels.HEADQUARTER_TYPE}
           name="headquarter_type"
           qsParam="headquarter_type"
           options={optionMetadata.headquarterTypeOptions}
@@ -71,13 +72,13 @@ const CompaniesCollection = ({
           id="CompanyCollection.name"
           qsParam="name"
           name="name"
-          label="Company name"
+          label={labels.COMPANY_NAME}
           placeholder="Search company name"
           data-test="company-name-filter"
         />
         <RoutedTypeahead
           isMulti={true}
-          legend="Sector"
+          legend={labels.SECTOR}
           name="sector"
           qsParam="sector_descends"
           placeholder="Search sectors"
@@ -87,7 +88,7 @@ const CompaniesCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend="Country"
+          legend={labels.COUNTRY}
           name="country"
           qsParam="country"
           placeholder="Search country"
@@ -95,9 +96,17 @@ const CompaniesCollection = ({
           selectedOptions={selectedFilters.selectedCountries}
           data-test="country-filter"
         />
+        <RoutedInputField
+          id="CompanyCollection.postcode"
+          qsParam="uk_postcode"
+          name="uk_postcode"
+          label={labels.UK_POSTCODE}
+          placeholder="Search UK postcode"
+          data-test="uk-postcode-filter"
+        />
         <RoutedTypeahead
           isMulti={true}
-          legend="UK Region"
+          legend={labels.UK_REGION}
           name="uk_region"
           qsParam="uk_region"
           placeholder="Search UK regions"
@@ -106,7 +115,7 @@ const CompaniesCollection = ({
           data-test="uk-region-filter"
         />
         <RoutedCheckboxGroupField
-          legend="Status"
+          legend={labels.COMPANY_STATUS}
           name="archived"
           qsParam="archived"
           options={optionMetadata.companyStatuses}
@@ -115,7 +124,7 @@ const CompaniesCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend="Currently exporting to"
+          legend={labels.CURRENTLY_EXPORTING_TO}
           name="export_to_countries"
           qsParam="export_to_countries"
           placeholder="Search country"
@@ -125,7 +134,7 @@ const CompaniesCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend="Future countries of interest"
+          legend={labels.FUTURE_COUNTRIES_OF_INTEREST}
           name="future_interest_countries"
           qsParam="future_interest_countries"
           placeholder="Search country"
