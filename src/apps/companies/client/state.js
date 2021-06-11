@@ -8,7 +8,7 @@ export const ID = 'companiesList'
 
 import { buildSelectedFilters } from './filters'
 import { COMPANY_STATUS_OPTIONS } from './metadata'
-import { transformArchivedToApi } from './transformers'
+import { transformArchivedToApi, transformPostcodeToApi } from './transformers'
 
 const parseQueryString = (queryString) => {
   const queryStringObject = omitBy({ ...qs.parse(queryString) }, isEmpty)
@@ -25,6 +25,7 @@ export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
   const queryParams = parseQueryString(queryString)
   const archived = transformArchivedToApi(queryParams.archived)
+  const ukPostcode = transformPostcodeToApi(queryParams.uk_postcode)
 
   const { metadata } = state[ID]
 
@@ -35,6 +36,7 @@ export const state2props = ({ router, ...state }) => {
     payload: {
       ...queryParams,
       archived,
+      uk_postcode: ukPostcode,
     },
     optionMetadata: {
       sortOptions: [],
