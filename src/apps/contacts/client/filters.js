@@ -1,4 +1,9 @@
 import {
+  buildOptionsFilter,
+  buildInputFieldFilter,
+} from '../../../client/filters'
+
+import {
   SECTOR,
   COUNTRY,
   UK_REGION,
@@ -8,26 +13,6 @@ import {
 } from './labels'
 
 import { STATUS_OPTIONS } from './metadata'
-
-const buildOptionsFilter = ({ options = [], value, categoryLabel }) =>
-  options
-    .filter((option) => value && value.includes(option.value))
-    .map(({ value, label }) => ({
-      value,
-      label,
-      categoryLabel,
-    }))
-
-const buildInputFieldFilter = ({ value, label, categoryLabel }) =>
-  value
-    ? [
-        {
-          value,
-          label,
-          categoryLabel,
-        },
-      ]
-    : []
 
 export const buildSelectedFilters = (
   {
@@ -52,7 +37,6 @@ export const buildSelectedFilters = (
   }),
   selectedCompanyName: buildInputFieldFilter({
     value: company_name,
-    label: company_name,
     categoryLabel: COMPANY_NAME,
   }),
   selectedCompanySectors: buildOptionsFilter({

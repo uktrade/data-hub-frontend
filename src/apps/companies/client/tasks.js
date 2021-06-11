@@ -11,18 +11,33 @@ import { transformResponseToCompanyCollection } from './transformers'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
-function getCompanies({ limit = 10, page, ...rest }) {
-  let offset = limit * (parseInt(page, 10) - 1) || 0
-
-  return axios
+const getCompanies = ({
+  limit = 10,
+  page,
+  headquarter_type,
+  name,
+  sector_descends,
+  country,
+  uk_region,
+  archived,
+  export_to_countries,
+  future_interest_countries,
+}) =>
+  axios
     .post('/api-proxy/v4/search/company', {
       limit,
-      offset,
-      ...rest,
+      offset: limit * (parseInt(page, 10) - 1) || 0,
+      headquarter_type,
+      name,
+      sector_descends,
+      country,
+      uk_region,
+      archived,
+      export_to_countries,
+      future_interest_countries,
     })
     .then(({ data }) => transformResponseToCompanyCollection(data))
     .catch(handleError)
-}
 
 /**
  * Get the options for each of the metadata urls.
@@ -31,8 +46,8 @@ function getCompanies({ limit = 10, page, ...rest }) {
  *
  * @returns {promise} - the promise containing a list of options for each category
  */
-function getCompaniesMetadata() {
-  return Promise.all([
+const getCompaniesMetadata = () =>
+  Promise.all([
     getSectorOptions(urls.metadata.sector()),
     getHeadquarterTypeOptions(urls.metadata.headquarterType()),
     getMetadataOptions(urls.metadata.ukRegion()),
@@ -52,6 +67,5 @@ function getCompaniesMetadata() {
       })
     )
     .catch(handleError)
-}
 
 export { getCompanies, getCompaniesMetadata }

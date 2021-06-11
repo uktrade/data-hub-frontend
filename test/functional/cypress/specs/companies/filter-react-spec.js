@@ -25,6 +25,7 @@ describe('Investments Collections Filter', () => {
       cy.get('[data-test="sector-filter"]').as('sectorFilter')
       cy.get('[data-test="country-filter"]').as('countryFilter')
       cy.get('[data-test="uk-region-filter"]').as('ukRegionFilter')
+      cy.get('[data-test="company-status-filter"]').as('statusFilter')
       cy.get('[data-test="currently-exporting-to-country-filter"]').as(
         'currentlyExportingToFilter'
       )
@@ -112,6 +113,35 @@ describe('Investments Collections Filter', () => {
       })
     })
 
+    it('should filter by status', () => {
+      cy.get('@statusFilter')
+        .find('label')
+        .as('statusOptions')
+        .should('have.length', 2)
+      cy.get('@statusOptions')
+        .eq(0)
+        .should('contain', 'Active')
+        .find('input')
+        .should('have.value', 'false')
+      cy.get('@statusOptions')
+        .eq(1)
+        .should('contain', 'Inactive')
+        .find('input')
+        .should('have.value', 'true')
+      clickCheckboxGroupOption({
+        element: '@statusFilter',
+        value: 'false',
+      })
+      assertCheckboxGroupOption({
+        element: '@statusFilter',
+        value: 'false',
+        checked: true,
+      })
+      assertChipExists({ label: 'Active', position: 1 })
+
+      testRemoveChip({ element: '@statusFilter' })
+    })
+
     it('should filter by currently exporting to country', () => {
       testTypeahead({
         element: '@currentlyExportingToFilter',
@@ -153,6 +183,7 @@ describe('Investments Collections Filter', () => {
           name: TEST_COMPANY_NAME_QUERY,
           sector_descends: ADVANCED_ENGINEERING_SECTOR_ID,
           uk_region: SOUTH_EAST_UK_REGION_ID,
+          archived: ['true'],
           country: UK_COUNTRY_ID,
           export_to_countries: UK_COUNTRY_ID,
           future_interest_countries: UK_COUNTRY_ID,
@@ -163,6 +194,7 @@ describe('Investments Collections Filter', () => {
       cy.get('[data-test="sector-filter"]').as('sectorFilter')
       cy.get('[data-test="country-filter"]').as('countryFilter')
       cy.get('[data-test="uk-region-filter"]').as('ukRegionFilter')
+      cy.get('[data-test="company-status-filter"]').as('statusFilter')
       cy.get('[data-test="currently-exporting-to-country-filter"]').as(
         'currentlyExportingToFilter'
       )
@@ -185,6 +217,7 @@ describe('Investments Collections Filter', () => {
       assertChipExists({ position: 5, label: 'South East' })
       assertChipExists({ position: 6, label: 'Global HQ' })
       assertChipExists({ position: 7, label: TEST_COMPANY_NAME_QUERY })
+      assertChipExists({ position: 8, label: 'Inactive' })
       assertCheckboxGroupOption({
         element: '@hqTypeFilter',
         value: GLOBAL_HQ_ID,
@@ -194,6 +227,11 @@ describe('Investments Collections Filter', () => {
       cy.get('@sectorFilter').should('contain', 'Advanced Engineering')
       cy.get('@countryFilter').should('contain', 'United Kingdom')
       cy.get('@ukRegionFilter').should('contain', 'South East')
+      assertCheckboxGroupOption({
+        element: '@statusFilter',
+        value: 'true',
+        checked: true,
+      })
       cy.get('@currentlyExportingToFilter').should('contain', 'United Kingdom')
       cy.get('@futureCountriesOfInterestFilter').should(
         'contain',
@@ -204,7 +242,7 @@ describe('Investments Collections Filter', () => {
     it('should clear all filters', () => {
       cy.get('#filter-chips').find('button').as('chips')
       cy.get('#clear-filters').as('clearFilters')
-      cy.get('@chips').should('have.length', 7)
+      cy.get('@chips').should('have.length', 8)
       cy.get('@clearFilters').click()
       cy.get('@chips').should('have.length', 0)
 
@@ -213,6 +251,7 @@ describe('Investments Collections Filter', () => {
       cy.get('@sectorFilter').should('contain', 'Search sectors')
       cy.get('@countryFilter').should('contain', 'Search country')
       cy.get('@ukRegionFilter').should('contain', 'Search UK regions')
+      assertCheckboxGroupNoneSelected('@statusFilter')
       cy.get('@currentlyExportingToFilter').should('contain', 'Search country')
       cy.get('@futureCountriesOfInterestFilter').should(
         'contain',

@@ -42,7 +42,6 @@ const ContactsCollection = ({
     id: ID,
     progressMessage: 'loading metadata',
     startOnRender: {
-      payload: {},
       onSuccessDispatch: CONTACTS__METADATA_LOADED,
     },
   }
