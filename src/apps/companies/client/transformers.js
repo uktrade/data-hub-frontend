@@ -6,8 +6,15 @@ import urls from '../../../lib/urls'
 import { addressToString } from '../../../client/utils/addresses'
 import { format, formatWithTime } from '../../../client/utils/date-utils'
 
-export const transformArchivedToApi = (archived) =>
-  archived?.length === 1 ? archived[0] === 'true' : undefined
+export const transformArchivedToApi = (archivedParam) => {
+  const archived = Array.isArray(archivedParam)
+    ? archivedParam
+    : archivedParam && [archivedParam]
+  return archived?.length === 1 ? archived[0] === 'true' : undefined
+}
+
+export const transformPostcodeToApi = (postcode) =>
+  postcode && postcode.split(',').map((postcode) => postcode.trim())
 
 const transformCompanyToListItem = ({
   id,

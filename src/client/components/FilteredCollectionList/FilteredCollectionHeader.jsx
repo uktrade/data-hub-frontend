@@ -168,6 +168,11 @@ function FilteredCollectionHeader({
           qsParamName="desired_deal_role"
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedUkPostcode}
+          qsParamName="uk_postcode"
+          showCategoryLabels={true}
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedUkRegions}
           qsParamName="uk_region"
         />
