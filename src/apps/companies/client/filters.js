@@ -5,7 +5,11 @@ import {
 import * as labels from './labels'
 import { COMPANY_STATUS_OPTIONS } from './metadata'
 
-export const buildSelectedFilters = (queryParams, metadata) => ({
+export const buildSelectedFilters = ({
+  queryParams,
+  metadata,
+  selectedLeadItaOrGlobalAccountManagers,
+}) => ({
   selectedCountries: buildOptionsFilter({
     options: metadata.countryOptions,
     value: queryParams.country,
@@ -49,4 +53,10 @@ export const buildSelectedFilters = (queryParams, metadata) => ({
     value: queryParams.future_interest_countries,
     categoryLabel: labels.FUTURE_COUNTRIES_OF_INTEREST,
   }),
+  selectedLeadItaOrGlobalAccountManagers:
+    selectedLeadItaOrGlobalAccountManagers.map(({ advisers }) => ({
+      label: advisers.name,
+      value: advisers.id,
+      categoryLabel: labels.LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER,
+    })),
 })

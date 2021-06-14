@@ -95,6 +95,7 @@ import * as dnbCheck from '../apps/companies/apps/business-details/client/tasks'
 
 import {
   TASK_GET_COMPANIES_LIST,
+  TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME,
   TASK_GET_COMPANIES_METADATA,
 } from '../apps/companies/client/state'
 import {
@@ -117,7 +118,7 @@ import * as investmentOpportunitiesDetailsTasks from '../apps/investments/client
 
 import {
   TASK_GET_PROJECTS_LIST,
-  TASK_GET_ADVISER_NAME,
+  TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME,
   TASK_GET_INVESTMENTS_PROJECTS_METADATA,
 } from '../apps/investments/client/projects/state'
 import * as getInvestmentProjects from '../apps/investments/client/projects/tasks'
@@ -136,6 +137,8 @@ import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentRemind
 
 import { getContacts, getContactsMetadata } from '../apps/contacts/client/tasks'
 import { getInteractions } from '../apps/interactions/client/tasks'
+
+import { getAdviserNames } from './advisers'
 
 import {
   TASK_GET_CONTACTS_LIST,
@@ -216,7 +219,9 @@ function App() {
         [TASK_GET_PROJECTS_LIST]: getInvestmentProjects.getProjects,
         [TASK_GET_COMPANIES_LIST]: getCompanies,
         [TASK_GET_COMPANIES_METADATA]: getCompaniesMetadata,
-        [TASK_GET_ADVISER_NAME]: getInvestmentProjects.getAdviserNames,
+        [TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME]: getAdviserNames,
+        [TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME]:
+          getAdviserNames,
         [TASK_GET_INVESTMENTS_PROJECTS_METADATA]:
           getInvestmentProjects.getMetadata,
         [TASK_CHECK_FOR_INVESTMENTS]: personalisedDashboard.checkForInvestments,

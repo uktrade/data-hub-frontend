@@ -3,6 +3,8 @@ import qs from 'qs'
 
 export const TASK_GET_COMPANIES_LIST = 'TASK_GET_COMPANIES_LIST'
 export const TASK_GET_COMPANIES_METADATA = 'TASK_GET_COMPANIES_METADATA'
+export const TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME =
+  'TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME'
 
 export const ID = 'companiesList'
 
@@ -27,9 +29,13 @@ export const state2props = ({ router, ...state }) => {
   const archived = transformArchivedToApi(queryParams.archived)
   const ukPostcode = transformPostcodeToApi(queryParams.uk_postcode)
 
-  const { metadata } = state[ID]
+  const { metadata, selectedLeadItaOrGlobalAccountManagers } = state[ID]
 
-  const selectedFilters = buildSelectedFilters(queryParams, metadata)
+  const selectedFilters = buildSelectedFilters({
+    queryParams,
+    metadata,
+    selectedLeadItaOrGlobalAccountManagers,
+  })
 
   return {
     ...state[ID],
