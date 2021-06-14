@@ -3,8 +3,10 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import { Route } from 'react-router-dom'
 import { GridRow, GridCol } from 'govuk-react'
+import { isEmpty } from 'lodash'
+import qs from 'qs'
 
 import Task from '../Task'
 
@@ -31,52 +33,70 @@ const FilteredCollectionList = ({
   entityName,
   entityNamePlural,
   addItemUrl,
+  defaultQueryParams,
 }) => {
   const totalPages = Math.ceil(count / itemsPerPage)
   return (
-    <GridRow data-test="collection-list">
-      {children}
-      <GridCol setWidth="two-thirds">
-        <article>
-          {isComplete && (
-            <FilteredCollectionHeader
-              totalItems={count}
-              collectionName={collectionName}
-              selectedFilters={selectedFilters}
-              addItemUrl={addItemUrl}
-            />
-          )}
-          {sortOptions && (
-            <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
-          )}
-          {baseDownloadLink && (
-            <RoutedDownloadDataHeader
-              count={count}
-              maxItems={maxItemsToDownload}
-              data-test="download-data-header"
-              baseDownloadLink={baseDownloadLink}
-              entityName={entityName}
-              entityNamePlural={entityNamePlural}
-            />
-          )}
-          <Task.Status {...taskProps}>
-            {() =>
-              isComplete && (
-                <>
-                  {results.map((item) => (
-                    <CollectionItem {...item} key={item.id} />
-                  ))}
-                  <RoutedPagination
-                    qsParamName="page"
+    <Route>
+      {({ history, location }) => {
+        const qsParams = qs.parse(location.search.slice(1))
+        if (defaultQueryParams && isEmpty(qsParams)) {
+          history.push({
+            search: qs.stringify({
+              ...defaultQueryParams,
+            }),
+          })
+        }
+        return (
+          <GridRow data-test="collection-list">
+            {children}
+            <GridCol setWidth="two-thirds">
+              <article>
+                {isComplete && (
+                  <FilteredCollectionHeader
+                    totalItems={count}
+                    collectionName={collectionName}
+                    selectedFilters={selectedFilters}
+                    addItemUrl={addItemUrl}
+                  />
+                )}
+                {sortOptions && (
+                  <CollectionSort
+                    sortOptions={sortOptions}
                     totalPages={totalPages}
                   />
-                </>
-              )
-            }
-          </Task.Status>
-        </article>
-      </GridCol>
-    </GridRow>
+                )}
+                {baseDownloadLink && (
+                  <RoutedDownloadDataHeader
+                    count={count}
+                    maxItems={maxItemsToDownload}
+                    data-test="download-data-header"
+                    baseDownloadLink={baseDownloadLink}
+                    entityName={entityName}
+                    entityNamePlural={entityNamePlural}
+                  />
+                )}
+                <Task.Status {...taskProps}>
+                  {() =>
+                    isComplete && (
+                      <>
+                        {results.map((item) => (
+                          <CollectionItem {...item} key={item.id} />
+                        ))}
+                        <RoutedPagination
+                          qsParamName="page"
+                          totalPages={totalPages}
+                        />
+                      </>
+                    )
+                  }
+                </Task.Status>
+              </article>
+            </GridCol>
+          </GridRow>
+        )
+      }}
+    </Route>
   )
 }
 
@@ -108,6 +128,7 @@ FilteredCollectionList.propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
   }),
+  defaultQueryParams: PropTypes.object,
 }
 
 export default FilteredCollectionList
