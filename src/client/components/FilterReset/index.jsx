@@ -17,7 +17,7 @@ const FilterReset = ({ children, ...props }) => (
         <StyledButtonLink
           {...props}
           onClick={() => {
-            history.push(pathname)
+            history.push(`${pathname}?page=1`)
           }}
         >
           {children}

@@ -55,6 +55,10 @@ const ContactsCollection = ({
       selectedFilters={selectedFilters}
       baseDownloadLink="/contacts/export"
       entityName="contact"
+      defaultQueryParams={{
+        archived: ['false'],
+        page: 1,
+      }}
     >
       <CollectionFilters taskProps={collectionListMetadataTask}>
         <RoutedInputField
