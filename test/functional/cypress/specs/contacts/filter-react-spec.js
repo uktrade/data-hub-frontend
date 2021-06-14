@@ -1,28 +1,12 @@
-import { clickCheckboxGroupOption } from '../../support/actions'
 import urls from '../../../../../src/lib/urls'
+import qs from 'qs'
 
 import {
   assertChipExists,
   assertTypeaheadHints,
-  assertCheckboxGroupOption,
   assertTypeaheadOptionSelected,
 } from '../../support/assertions'
 import { selectFirstTypeaheadOption } from '../../support/actions'
-
-const FILTERS = {
-  SECTOR: {
-    NAME: 'Aerospace',
-    ID: '9538cecc-5f95-e211-a939-e4115bead28a',
-  },
-  COUNTRY: {
-    NAME: 'United Kingdom',
-    ID: '80756b9a-5d95-e211-a939-e4115bead28a',
-  },
-  UK_REGION: {
-    NAME: 'Jersey',
-    ID: '924cd12a-6095-e211-a939-e4115bead28a',
-  },
-}
 
 const testTypeahead = ({
   element,
@@ -36,150 +20,257 @@ const testTypeahead = ({
   assertTypeaheadOptionSelected({ element, expectedOption })
 }
 
-const testRemoveChip = ({ element, placeholder = null }) => {
-  cy.get('#filter-chips').as('filterChips').find('button').click()
-  cy.get('@filterChips').should('be.empty')
-  placeholder && cy.get(element).should('contain', placeholder)
+const removeChip = (dataValue) => {
+  cy.get('#filter-chips').find(`[data-value="${dataValue}"]`).click()
+}
+
+const assertChipsEmpty = () => {
+  cy.get('#filter-chips').should('be.empty')
+}
+
+const assertFieldEmpty = (element) => {
+  cy.get(element).should('have.value', '')
 }
 
 describe('Contacts Collections Filter', () => {
-  context('when the url contains no state', () => {
-    beforeEach(() => {
-      cy.visit(urls.contacts.react.index())
-      cy.get('[data-test="contact-name-filter"]').as('contactNameFilter')
-      cy.get('[data-test="company-name-filter"]').as('companyNameFilter')
-      cy.get('[data-test="sector-filter"]').as('sectorFilter')
-      cy.get('[data-test="country-filter"]').as('countryFilter')
-      cy.get('[data-test="uk-region-filter"]').as('ukRegionFilter')
-      cy.get('[data-test="status-filter"]').as('statusFilter')
-    })
-
-    it('should filter by Contact name', () => {
-      cy.get('@contactNameFilter').type('David Jones{enter}')
-
-      cy.get('@contactNameFilter').should('have.value', 'David Jones')
+  context('Contact', () => {
+    const element = '[data-test="contact-name-filter"]'
+    it('should filter from the url', () => {
+      const queryParams = qs.stringify({ name: 'David Jones' })
+      cy.visit(`${urls.contacts.react.index()}?${queryParams}`)
+      cy.get(element).should('have.value', 'David Jones')
       assertChipExists({ label: 'David Jones', position: 1 })
-
-      testRemoveChip({ element: '@contactNameFilter' })
-      cy.get('@contactNameFilter').should('have.value', '')
     })
-
-    it('should filter by Company name', () => {
-      cy.get('@companyNameFilter').type('Diaego{enter}')
-
-      cy.get('@companyNameFilter').should('have.value', 'Diaego')
-      assertChipExists({ label: 'Diaego', position: 1 })
-
-      testRemoveChip({ element: '@companyNameFilter' })
-      cy.get('@companyNameFilter').should('have.value', '')
+    it('should filter from user input', () => {
+      cy.visit(urls.contacts.react.index())
+      cy.get(element)
+        .type('David Jones{enter}')
+        .url()
+        .should('include', 'name=David%20Jones')
+      assertChipExists({ label: 'David Jones', position: 1 })
+      assertChipExists({ label: 'Active', position: 2 })
     })
+    it('should remove the chips', () => {
+      cy.visit(urls.contacts.react.index())
+      cy.get(element).type('David Jones{enter}')
+      removeChip('David Jones')
+      removeChip('false') // Active
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
 
-    it('should filter by sector', () => {
+  context('Company', () => {
+    const element = '[data-test="company-name-filter"]'
+    it('should filter from the url', () => {
+      cy.visit(urls.contacts.react.index(), {
+        qs: {
+          company_name: 'Tesco',
+        },
+      })
+      cy.get(element)
+        .should('have.value', 'Tesco')
+        .url()
+        .should('include', 'name=Tesco')
+      assertChipExists({ label: 'Tesco', position: 1 })
+    })
+    it('should filter from user input', () => {
+      cy.visit(urls.contacts.react.index())
+      cy.get(element)
+        .type('Tesco{enter}')
+        .url()
+        .should('include', 'company_name=Tesco')
+      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Tesco', position: 2 })
+    })
+    it('should remove the chips', () => {
+      cy.visit(urls.contacts.react.index())
+      cy.get(element).type('Tesco{enter}')
+      removeChip('Tesco')
+      removeChip('false') // Active
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
+  context('Sector', () => {
+    const element = '[data-test="sector-filter"]'
+    const aerospace = '9538cecc-5f95-e211-a939-e4115bead28a'
+    it('should filter from the url', () => {
+      cy.visit(urls.contacts.react.index(), {
+        qs: {
+          company_sector_descends: aerospace,
+        },
+      })
+      cy.get(element).should('contain', 'Aerospace')
+      assertChipExists({ label: 'Aerospace', position: 1 })
+    })
+    it('should filter from user input', () => {
+      cy.visit(urls.contacts.react.index())
       testTypeahead({
-        element: '@sectorFilter',
+        element,
         legend: 'Sector',
         placeholder: 'Search sectors',
         input: 'aero',
         expectedOption: 'Aerospace',
       })
-
-      testRemoveChip({
-        element: '@sectorFilter',
-        placeholder: 'Search sectors',
-      })
+      assertChipExists({ label: 'Aerospace', position: 1 })
+      assertChipExists({ label: 'Active', position: 2 })
     })
+    it('should remove the chips', () => {
+      cy.visit(urls.contacts.react.index())
+      selectFirstTypeaheadOption({
+        element,
+        input: 'aero',
+      })
+      removeChip(aerospace)
+      removeChip('false') // Active
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
 
-    it('should filter by country', () => {
+  context('Country', () => {
+    const element = '[data-test="country-filter"]'
+    const brazil = 'b05f66a0-5d95-e211-a939-e4115bead28a'
+    it('should filter from the url', () => {
+      cy.visit(urls.contacts.react.index(), {
+        qs: {
+          address_country: brazil,
+        },
+      })
+      cy.get(element).should('contain', 'Brazil')
+      assertChipExists({ label: 'Brazil', position: 1 })
+    })
+    it('should filter from user input', () => {
+      cy.visit(urls.contacts.react.index())
       testTypeahead({
-        element: '@countryFilter',
+        element,
         legend: 'Country of origin',
         placeholder: 'Search countries',
         input: 'bra',
         expectedOption: 'Brazil',
       })
-
-      testRemoveChip({
-        element: '@countryFilter',
-        placeholder: 'Search countries',
-      })
+      assertChipExists({ label: 'Brazil', position: 1 })
+      assertChipExists({ label: 'Active', position: 2 })
     })
-
-    it('should filter by uk region', () => {
-      testTypeahead({
-        element: '@ukRegionFilter',
-        legend: 'UK Region',
-        placeholder: 'Search UK region',
-        input: 'sou',
-        expectedOption: 'South East',
+    it('should remove the chips', () => {
+      cy.visit(urls.contacts.react.index())
+      selectFirstTypeaheadOption({
+        element,
+        input: 'bra',
       })
-
-      testRemoveChip({
-        element: '@ukRegionFilter',
-        placeholder: 'Search UK regions',
-      })
-    })
-
-    it('should filter by status', () => {
-      cy.get('@statusFilter')
-        .find('label')
-        .as('statusOptions')
-        .should('have.length', 2)
-      cy.get('@statusOptions')
-        .eq(0)
-        .should('contain', 'Active')
-        .find('input')
-        .should('have.value', 'false')
-      cy.get('@statusOptions')
-        .eq(1)
-        .should('contain', 'Inactive')
-        .find('input')
-        .should('have.value', 'true')
-      clickCheckboxGroupOption({
-        element: '@statusFilter',
-        value: 'false',
-      })
-      assertCheckboxGroupOption({
-        element: '@statusFilter',
-        value: 'false',
-        checked: true,
-      })
-      assertChipExists({ label: 'Active', position: 1 })
-
-      testRemoveChip({ element: '@statusFilter' })
+      removeChip(brazil)
+      removeChip('false') // Active
+      assertChipsEmpty()
+      assertFieldEmpty(element)
     })
   })
 
-  context('when the url contains state', () => {
-    beforeEach(() => {
+  context('UK Region', () => {
+    const element = '[data-test="uk-region-filter"]'
+    const jersey = '924cd12a-6095-e211-a939-e4115bead28a'
+    it('should filter from the url', () => {
       cy.visit(urls.contacts.react.index(), {
         qs: {
-          company_sector_descends: FILTERS.SECTOR.ID,
-          address_country: FILTERS.COUNTRY.ID,
-          company_uk_region: FILTERS.UK_REGION.ID,
+          company_uk_region: jersey,
         },
       })
-      cy.get('[data-test="sector-filter"]').as('sectorFilter')
-      cy.get('[data-test="country-filter"]').as('countryFilter')
-      cy.get('[data-test="uk-region-filter"]').as('ukRegionFilter')
+      cy.get(element).should('contain', 'Jersey')
+      assertChipExists({ label: 'Jersey', position: 1 })
     })
-    it('should set the selected filter values and filter indicators', () => {
-      assertChipExists({ position: 1, label: FILTERS.SECTOR.NAME })
-      cy.get('@sectorFilter').should('contain', FILTERS.SECTOR.NAME)
-      assertChipExists({ position: 2, label: FILTERS.COUNTRY.NAME })
-      cy.get('@countryFilter').should('contain', FILTERS.COUNTRY.NAME)
-      assertChipExists({ position: 3, label: FILTERS.UK_REGION.NAME })
-      cy.get('@ukRegionFilter').should('contain', FILTERS.UK_REGION.NAME)
+    it('should filter from user input', () => {
+      cy.visit(urls.contacts.react.index())
+      testTypeahead({
+        element,
+        legend: 'UK Region',
+        placeholder: 'Search UK region',
+        input: 'jer',
+        expectedOption: 'Jersey',
+      })
+      assertChipExists({ label: 'Jersey', position: 1 })
+      assertChipExists({ label: 'Active', position: 2 })
     })
+    it('should remove the chips', () => {
+      cy.visit(urls.contacts.react.index())
+      selectFirstTypeaheadOption({
+        element,
+        input: 'jer',
+      })
+      removeChip(jersey)
+      removeChip('false') // Active
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
 
-    it('should clear all filters', () => {
-      cy.get('#filter-chips').find('button').as('chips')
-      cy.get('#clear-filters').as('clearFilters')
-      cy.get('@chips').should('have.length', 3)
-      cy.get('@clearFilters').click()
-      cy.get('@chips').should('have.length', 0)
-      cy.get('@sectorFilter').should('contain', 'Search sectors')
-      cy.get('@countryFilter').should('contain', 'Search countries')
-      cy.get('@ukRegionFilter').should('contain', 'Search UK regions')
+  context('Status (active/inactive)', () => {
+    beforeEach(() => {
+      cy.visit(urls.contacts.react.index())
+      cy.get('[data-test="status-filter"]').find('input').eq(0).as('active')
+      cy.get('[data-test="status-filter"]').find('input').eq(1).as('inactive')
+    })
+    it('should filter by Active Status (the default)', () => {
+      cy.get('@active').should('be.checked')
+      cy.get('@inactive').should('not.be.checked')
+      cy.url().should('include', 'archived%5B0%5D=false')
+      assertChipExists({ label: 'Active', position: 1 })
+    })
+    it('should filter by Active Status (explicit query params)', () => {
+      const queryParams = qs.stringify({ archived: ['false'] })
+      cy.visit(`${urls.contacts.react.index()}?${queryParams}`)
+      cy.get('@active').should('be.checked')
+      cy.get('@inactive').should('not.be.checked')
+      assertChipExists({ label: 'Active', position: 1 })
+    })
+    it('should filter by Inactive Status', () => {
+      const queryParams = qs.stringify({ archived: ['true'] })
+      cy.visit(`${urls.contacts.react.index()}?${queryParams}`)
+      cy.get('@active').should('not.be.checked')
+      cy.get('@inactive').should('be.checked')
+      assertChipExists({ label: 'Inactive', position: 1 })
+    })
+    it('should filter by both Active and Inactive statuses (no filter)', () => {
+      const queryParams = qs.stringify({ archived: ['false', 'true'] })
+      cy.visit(`${urls.contacts.react.index()}?${queryParams}`)
+      cy.get('@active').should('be.checked')
+      cy.get('@inactive').should('be.checked')
+      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Inactive', position: 2 })
+    })
+  })
+
+  context('Remove all filters', () => {
+    before(() => {
+      const queryParams = qs.stringify({
+        page: 1,
+        name: 'David Jones',
+        company_name: 'Tesco',
+        company_sector_descends: 'af959812-6095-e211-a939-e4115bead28a',
+        address_country: '80756b9a-5d95-e211-a939-e4115bead28a',
+        company_uk_region: '924cd12a-6095-e211-a939-e4115bead28a',
+        archived: ['false', 'true'],
+      })
+      cy.visit(`${urls.contacts.react.index()}?${queryParams}`)
+      cy.get('[data-test=filter-chips]').children().as('filterChips')
+    })
+    it('should remove all filters and chips', () => {
+      cy.get('@filterChips').should('have.length', 7)
+      cy.get('[data-test=clear-filters]').click()
+      cy.get('@filterChips').should('have.length', 0)
+      cy.get('[data-test="contact-name-filter"]').should('have.value', '')
+      cy.get('[data-test="company-name-filter"]').should('have.value', '')
+      cy.get('[data-test="sector-filter"]').should('have.value', '')
+      cy.get('[data-test="country-filter"]').should('have.value', '')
+      cy.get('[data-test="uk-region-filter"]').should('have.value', '')
+      cy.get('[data-test="status-filter"]')
+        .find('input')
+        .eq(0)
+        .should('not.be.checked')
+      cy.get('[data-test="status-filter"]')
+        .find('input')
+        .eq(1)
+        .should('not.be.checked')
     })
   })
 })
