@@ -86,11 +86,13 @@ function FilteredCollectionHeader({
             </StyledResultCount>{' '}
             {counterSuffix}
           </StyledHeaderText>
-          <FilterReset id="clear-filters">Remove all filters</FilterReset>
+          <FilterReset data-test="clear-filters" id="clear-filters">
+            Remove all filters
+          </FilterReset>
         </StyledDiv>
       </CollectionHeaderRow>
 
-      <CollectionHeaderRow id="filter-chips">
+      <CollectionHeaderRow data-test="filter-chips" id="filter-chips">
         {/*
         FIXME: This is supposed to be a generic component,
         thus the chips should not be hardcoded here
