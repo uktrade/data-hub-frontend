@@ -29,7 +29,10 @@ export const testTypeahead = ({
  * Tests that clicking the first indicator button clears a filter element
  */
 export const testRemoveChip = ({ element, placeholder = null }) => {
-  cy.get('#filter-chips').as('filterChips').find('button').click()
+  cy.get('#filter-chips')
+    .as('filterChips')
+    .find('button')
+    .click({ multiple: true })
   cy.get('@filterChips').should('be.empty')
   placeholder && cy.get(element).should('contain', placeholder)
 }
