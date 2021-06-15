@@ -13,7 +13,7 @@ import {
 
 import {
   TASK_GET_PROJECTS_LIST,
-  TASK_GET_ADVISER_NAME,
+  TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME,
   TASK_GET_INVESTMENTS_PROJECTS_METADATA,
   ID,
   state2props,
@@ -44,7 +44,7 @@ const ProjectsCollection = ({
     },
   }
   const adviserListTask = {
-    name: TASK_GET_ADVISER_NAME,
+    name: TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME,
     id: ID,
     progressMessage: 'loading advisers',
     startOnRender: {

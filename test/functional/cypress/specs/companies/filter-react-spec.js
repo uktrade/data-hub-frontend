@@ -1,6 +1,9 @@
 import { companies } from '../../../../../src/lib/urls'
 
-import { clickCheckboxGroupOption } from '../../support/actions'
+import {
+  clickCheckboxGroupOption,
+  selectFirstAdvisersTypeaheadOption,
+} from '../../support/actions'
 import {
   assertCheckboxGroupOption,
   assertCheckboxGroupNoneSelected,
@@ -17,6 +20,8 @@ const TEST_POSTCODE_TWO = 'EF3 4GH'
 const TEST_POSTCODE_QUERY = `${TEST_POSTCODE_ONE}, ${TEST_POSTCODE_TWO}`
 const UK_COUNTRY_ID = '80756b9a-5d95-e211-a939-e4115bead28a'
 const SOUTH_EAST_UK_REGION_ID = '884cd12a-6095-e211-a939-e4115bead28a'
+const ADVISER_ID = '7d19d407-9aec-4d06-b190-d3f404627f21'
+const ADVISER_NAME = 'Jimmy West'
 
 describe('Investments Collections Filter', () => {
   context('when the url contains no state', () => {
@@ -36,6 +41,9 @@ describe('Investments Collections Filter', () => {
       )
       cy.get('[data-test="future-countries-of-interest-filter"]').as(
         'futureCountriesOfInterestFilter'
+      )
+      cy.get('[data-test="lead-ita-global-account-manager-filter"]').as(
+        'leadItaGlobalAccountManagerFilter'
       )
       cy.intercept('POST', '/api-proxy/v4/search/company').as('apiRequest')
     })
@@ -245,6 +253,28 @@ describe('Investments Collections Filter', () => {
         placeholder: 'Search country',
       })
     })
+
+    it('should filter by lead ITA or Global Account Manager', () => {
+      cy.get('@leadItaGlobalAccountManagerFilter')
+        .should('contain', 'Search adviser')
+        .find('legend')
+        .should('have.text', 'Lead ITA or Global Account Manager')
+
+      selectFirstAdvisersTypeaheadOption({
+        element: '@leadItaGlobalAccountManagerFilter',
+        input: 'puc',
+      })
+      cy.get('@leadItaGlobalAccountManagerFilter').should(
+        'contain',
+        'Puck Head'
+      )
+      assertChipExists({ label: 'Puck Head', position: 1 })
+
+      testRemoveChip({
+        element: '@leadItaGlobalAccountManagerFilter',
+        placeholder: 'Search adviser',
+      })
+    })
   })
 
   context('when the url contains state', () => {
@@ -265,6 +295,7 @@ describe('Investments Collections Filter', () => {
           country: UK_COUNTRY_ID,
           export_to_countries: UK_COUNTRY_ID,
           future_interest_countries: UK_COUNTRY_ID,
+          one_list_group_global_account_manager: ADVISER_ID,
         },
       })
       cy.get('[data-test="headquarter-type-filter"]').as('hqTypeFilter')
@@ -279,6 +310,9 @@ describe('Investments Collections Filter', () => {
       )
       cy.get('[data-test="future-countries-of-interest-filter"]').as(
         'futureCountriesOfInterestFilter'
+      )
+      cy.get('[data-test="lead-ita-global-account-manager-filter"]').as(
+        'leadItaGlobalAccountManagerFilter'
       )
       cy.intercept('POST', '/api-proxy/v4/search/company').as('apiRequest')
     })
@@ -298,6 +332,7 @@ describe('Investments Collections Filter', () => {
         expect(body.archived).to.be.true
         expect(body.export_to_countries).to.equal(UK_COUNTRY_ID)
         expect(body.future_interest_countries).to.equal(UK_COUNTRY_ID)
+        expect(body.one_list_group_global_account_manager).to.equal(ADVISER_ID)
       })
     })
 
@@ -317,6 +352,10 @@ describe('Investments Collections Filter', () => {
       assertChipExists({ position: 7, label: 'Global HQ' })
       assertChipExists({ position: 8, label: TEST_COMPANY_NAME_QUERY })
       assertChipExists({ position: 9, label: 'Inactive' })
+      assertChipExists({
+        position: 10,
+        label: `Lead ITA or Global Account Manager: ${ADVISER_NAME}`,
+      })
       assertCheckboxGroupOption({
         element: '@hqTypeFilter',
         value: GLOBAL_HQ_ID,
@@ -337,12 +376,16 @@ describe('Investments Collections Filter', () => {
         'contain',
         'United Kingdom'
       )
+      cy.get('@leadItaGlobalAccountManagerFilter').should(
+        'contain',
+        ADVISER_NAME
+      )
     })
 
     it('should clear all filters', () => {
       cy.get('#filter-chips').find('button').as('chips')
       cy.get('#clear-filters').as('clearFilters')
-      cy.get('@chips').should('have.length', 9)
+      cy.get('@chips').should('have.length', 10)
       cy.get('@clearFilters').click()
 
       cy.wait('@apiRequest').then(({ request }) => {
@@ -356,6 +399,7 @@ describe('Investments Collections Filter', () => {
         expect(body.archived).to.equal(undefined)
         expect(body.export_to_countries).to.equal(undefined)
         expect(body.future_interest_countries).to.equal(undefined)
+        expect(body.one_list_group_global_account_manager).to.equal(undefined)
       })
 
       cy.get('@chips').should('have.length', 0)
@@ -371,6 +415,10 @@ describe('Investments Collections Filter', () => {
       cy.get('@futureCountriesOfInterestFilter').should(
         'contain',
         'Search country'
+      )
+      cy.get('@leadItaGlobalAccountManagerFilter').should(
+        'contain',
+        'Search adviser'
       )
     })
   })
