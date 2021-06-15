@@ -3,43 +3,14 @@ import qs from 'qs'
 
 import {
   assertChipExists,
-  assertTypeaheadHints,
-  assertTypeaheadOptionSelected,
+  assertChipsEmpty,
+  assertFieldEmpty,
+  assertQueryParams,
 } from '../../support/assertions'
-import { selectFirstTypeaheadOption } from '../../support/actions'
 
-const testTypeahead = ({
-  element,
-  legend,
-  placeholder,
-  input,
-  expectedOption,
-}) => {
-  assertTypeaheadHints({ element, legend, placeholder })
-  selectFirstTypeaheadOption({ element, input })
-  assertTypeaheadOptionSelected({ element, expectedOption })
-}
+import { selectFirstTypeaheadOption, removeChip } from '../../support/actions'
 
-const removeChip = (dataValue) => {
-  cy.get('[data-test=filter-chips]').find(`[data-value="${dataValue}"]`).click()
-}
-
-const assertChipsEmpty = () => {
-  cy.get('[data-test=filter-chips]').should('be.empty')
-}
-
-const assertFieldEmpty = (element) => {
-  cy.get(element).should('have.value', '')
-}
-
-const assertQueryParams = (key, value) => {
-  cy.url().should(
-    'include',
-    qs.stringify({
-      [key]: value,
-    })
-  )
-}
+import { testTypeahead } from '../../support/tests'
 
 describe('Contacts Collections Filter', () => {
   context('Contact', () => {

@@ -28,3 +28,10 @@ export const selectFirstTypeaheadOption = ({ element, input }) => {
   cy.get(element).find('[class*="menu"] ul > li:first-child').click()
   cy.get(element).click()
 }
+
+/**
+ * Removes a specific chip based on the data-value
+ */
+export const removeChip = (dataValue) => {
+  cy.get('[data-test=filter-chips]').find(`[data-value="${dataValue}"]`).click()
+}
