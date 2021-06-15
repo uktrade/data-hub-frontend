@@ -21,15 +21,24 @@ const testTypeahead = ({
 }
 
 const removeChip = (dataValue) => {
-  cy.get('#filter-chips').find(`[data-value="${dataValue}"]`).click()
+  cy.get('[data-test=filter-chips]').find(`[data-value="${dataValue}"]`).click()
 }
 
 const assertChipsEmpty = () => {
-  cy.get('#filter-chips').should('be.empty')
+  cy.get('[data-test=filter-chips]').should('be.empty')
 }
 
 const assertFieldEmpty = (element) => {
   cy.get(element).should('have.value', '')
+}
+
+const assertQueryParams = (key, value) => {
+  cy.url().should(
+    'include',
+    qs.stringify({
+      [key]: value,
+    })
+  )
 }
 
 describe('Contacts Collections Filter', () => {
@@ -43,10 +52,8 @@ describe('Contacts Collections Filter', () => {
     })
     it('should filter from user input', () => {
       cy.visit(urls.contacts.react.index())
-      cy.get(element)
-        .type('David Jones{enter}')
-        .url()
-        .should('include', 'name=David%20Jones')
+      cy.get(element).type('David Jones{enter}')
+      assertQueryParams('name', 'David Jones')
       assertChipExists({ label: 'David Jones', position: 1 })
       assertChipExists({ label: 'Active', position: 2 })
     })
@@ -68,18 +75,13 @@ describe('Contacts Collections Filter', () => {
           company_name: 'Tesco',
         },
       })
-      cy.get(element)
-        .should('have.value', 'Tesco')
-        .url()
-        .should('include', 'name=Tesco')
+      cy.get(element).should('have.value', 'Tesco')
       assertChipExists({ label: 'Tesco', position: 1 })
     })
     it('should filter from user input', () => {
       cy.visit(urls.contacts.react.index())
-      cy.get(element)
-        .type('Tesco{enter}')
-        .url()
-        .should('include', 'company_name=Tesco')
+      cy.get(element).type('Tesco{enter}')
+      assertQueryParams('company_name', 'Tesco')
       assertChipExists({ label: 'Active', position: 1 })
       assertChipExists({ label: 'Tesco', position: 2 })
     })
@@ -114,6 +116,7 @@ describe('Contacts Collections Filter', () => {
         input: 'aero',
         expectedOption: 'Aerospace',
       })
+      assertQueryParams('company_sector_descends', [aerospace])
       assertChipExists({ label: 'Aerospace', position: 1 })
       assertChipExists({ label: 'Active', position: 2 })
     })
@@ -151,6 +154,7 @@ describe('Contacts Collections Filter', () => {
         input: 'bra',
         expectedOption: 'Brazil',
       })
+      assertQueryParams('address_country', [brazil])
       assertChipExists({ label: 'Brazil', position: 1 })
       assertChipExists({ label: 'Active', position: 2 })
     })
@@ -188,6 +192,7 @@ describe('Contacts Collections Filter', () => {
         input: 'jer',
         expectedOption: 'Jersey',
       })
+      assertQueryParams('company_uk_region', [jersey])
       assertChipExists({ label: 'Jersey', position: 1 })
       assertChipExists({ label: 'Active', position: 2 })
     })
@@ -213,7 +218,7 @@ describe('Contacts Collections Filter', () => {
     it('should filter by Active Status (the default)', () => {
       cy.get('@active').should('be.checked')
       cy.get('@inactive').should('not.be.checked')
-      cy.url().should('include', 'archived%5B0%5D=false')
+      assertQueryParams('archived', ['false'])
       assertChipExists({ label: 'Active', position: 1 })
     })
     it('should filter by Active Status (explicit query params)', () => {
