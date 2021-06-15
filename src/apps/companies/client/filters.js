@@ -2,8 +2,7 @@ import {
   buildOptionsFilter,
   buildInputFieldFilter,
 } from '../../../client/filters'
-import * as labels from './labels'
-import { COMPANY_STATUS_OPTIONS } from './metadata'
+import { LABELS, FILTER_OPTIONS } from './constants'
 
 export const buildSelectedFilters = ({
   queryParams,
@@ -13,50 +12,50 @@ export const buildSelectedFilters = ({
   selectedCountries: buildOptionsFilter({
     options: metadata.countryOptions,
     value: queryParams.country,
-    categoryLabel: labels.COUNTRY,
+    categoryLabel: LABELS.country,
   }),
   selectedHeadquarterTypes: buildOptionsFilter({
     options: metadata.headquarterTypeOptions,
     value: queryParams.headquarter_type,
-    categoryLabel: labels.HEADQUARTER_TYPE,
+    categoryLabel: LABELS.headquarterType,
   }),
   selectedName: buildInputFieldFilter({
     value: queryParams.name,
-    categoryLabel: labels.COMPANY_NAME,
+    categoryLabel: LABELS.companyName,
   }),
   selectedSectors: buildOptionsFilter({
     options: metadata.sectorOptions,
     value: queryParams.sector_descends,
-    categoryLabel: labels.SECTOR,
+    categoryLabel: LABELS.sector,
   }),
   selectedUkPostcode: buildInputFieldFilter({
     value: queryParams.uk_postcode,
-    categoryLabel: labels.UK_POSTCODE,
+    categoryLabel: LABELS.ukPostcode,
   }),
   selectedUkRegions: buildOptionsFilter({
     options: metadata.ukRegionOptions,
     value: queryParams.uk_region,
-    categoryLabel: labels.UK_REGION,
+    categoryLabel: LABELS.ukRegion,
   }),
   selectedCompanyStatuses: buildOptionsFilter({
-    options: COMPANY_STATUS_OPTIONS,
+    options: FILTER_OPTIONS.companyStatuses,
     value: queryParams.archived,
-    categoryLabel: labels.COMPANY_STATUS,
+    categoryLabel: LABELS.companyStatus,
   }),
   selectedExportToCountries: buildOptionsFilter({
     options: metadata.countryOptions,
     value: queryParams.export_to_countries,
-    categoryLabel: labels.CURRENTLY_EXPORTING_TO,
+    categoryLabel: LABELS.currentlyExportingTo,
   }),
   selectedFutureCountriesOfInterest: buildOptionsFilter({
     options: metadata.countryOptions,
     value: queryParams.future_interest_countries,
-    categoryLabel: labels.FUTURE_COUNTRIES_OF_INTEREST,
+    categoryLabel: LABELS.futureCountriesOfInterest,
   }),
   selectedLeadItaOrGlobalAccountManagers:
     selectedLeadItaOrGlobalAccountManagers.map(({ advisers }) => ({
       label: advisers.name,
       value: advisers.id,
-      categoryLabel: labels.LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER,
+      categoryLabel: LABELS.leadItaOrGlobalAccountManager,
     })),
 })
