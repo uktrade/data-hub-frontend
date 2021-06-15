@@ -71,6 +71,10 @@ const CompaniesCollection = ({
       entityName="company"
       entityNamePlural="companies"
       addItemUrl="/companies/create"
+      defaultQueryParams={{
+        archived: ['false'],
+        page: 1,
+      }}
     >
       <CollectionFilters taskProps={collectionListMetadataTask}>
         <RoutedCheckboxGroupField
