@@ -2,6 +2,7 @@
   "count":2,
   "results":[  
      {  
+        "id":"98d14e94-5d95-e211-a939-e4115bead28b",
         "archived_by":null,
         "business_type":{  
            "id":"98d14e94-5d95-e211-a939-e4115bead28a",
@@ -90,6 +91,8 @@
         "registered_address_county":"London"
      },
      {  
+
+      "id":"98d14e94-5d95-e211-a939-e4115bead28c",
       "archived_by":null,
       "business_type":{  
          "id":"98d14e94-5d95-e211-a939-e4115bead28a",
