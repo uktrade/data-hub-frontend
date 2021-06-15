@@ -31,7 +31,7 @@ Once the "Image for tests" has been updated, you will need to [follow the instru
 2. Update Node on your local env to match the versions in the buildpack
 3. Update all files below with the correct versions identified above:
    - `package.json`
-   - `Dockerfile`
+   - `Dockerfile.dependencies`
    - `test/Dockerfile`
    - `test/visual/Dockerfile`
    - `test/sandbox/Dockerfile`

@@ -1,5 +1,5 @@
 # E2E docker image used to run tests locally
-FROM node:12.18.0
+FROM node:14.17.0
 
 # Install visual test dependencies
 RUN apt-get update
