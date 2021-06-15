@@ -1,4 +1,5 @@
 const { keys, forEach, isObject } = require('lodash')
+const qs = require('qs')
 
 const selectors = require('../../../selectors')
 
@@ -467,6 +468,32 @@ const assertChipExists = ({ label, position }) => {
 }
 
 /**
+ * Asserts there are no chips
+ */
+const assertChipsEmpty = () => {
+  cy.get('[data-test=filter-chips]').should('be.empty')
+}
+
+/**
+ * Asserts the field is empty
+ */
+const assertFieldEmpty = (element) => {
+  cy.get(element).should('have.value', '')
+}
+
+/**
+ * Asserts the key-value pair are defined within the query params
+ */
+const assertQueryParams = (key, value) => {
+  cy.url().should(
+    'include',
+    qs.stringify({
+      [key]: value,
+    })
+  )
+}
+
+/**
  * Assert that child elements exist in the expected order
  */
 const assertElementsInOrder = ({ parentElement, expectedIdentifiers }) => {
@@ -510,5 +537,8 @@ module.exports = {
   assertTypeaheadHints,
   assertTypeaheadOptionSelected,
   assertChipExists,
+  assertChipsEmpty,
+  assertFieldEmpty,
+  assertQueryParams,
   assertElementsInOrder,
 }
