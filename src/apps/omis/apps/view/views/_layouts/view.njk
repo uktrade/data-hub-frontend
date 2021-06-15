@@ -46,7 +46,7 @@
 
     {%- if order.status === 'quote_awaiting_acceptance' -%}
       <br>
-      (expire{{ 'd' if quote.expired else 's' }} {{ FromNow({ datetime: quote.expires_on }) }})
+      (expire{{ 'd' if order.quote.expired else 's' }} {{ FromNow({ datetime: order.quote.expires_on }) }})
     {%- endif -%}
 
     {% if order.status === 'complete' and order.completed_on %}
