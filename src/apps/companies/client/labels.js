@@ -7,3 +7,5 @@ export const UK_REGION = 'UK region'
 export const COMPANY_STATUS = 'Status'
 export const CURRENTLY_EXPORTING_TO = 'Currently exporting to'
 export const FUTURE_COUNTRIES_OF_INTEREST = 'Future countries of interest'
+export const LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER =
+  'Lead ITA or Global Account Manager'

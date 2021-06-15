@@ -23,6 +23,7 @@ const getCompanies = ({
   archived,
   export_to_countries,
   future_interest_countries,
+  one_list_group_global_account_manager,
 }) =>
   axios
     .post('/api-proxy/v4/search/company', {
@@ -37,6 +38,7 @@ const getCompanies = ({
       archived,
       export_to_countries,
       future_interest_countries,
+      one_list_group_global_account_manager,
     })
     .then(({ data }) => transformResponseToCompanyCollection(data))
     .catch(handleError)

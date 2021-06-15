@@ -27,24 +27,6 @@ function getProjects({ limit = 10, page, ...rest }) {
     )
 }
 
-function getAdviserNames(adviser) {
-  if (!adviser) {
-    return []
-  }
-
-  const advisers = Array.isArray(adviser) ? adviser : [adviser]
-
-  return axios
-    .all(advisers.map((adviser) => axios.get(`/api-proxy/adviser/${adviser}/`)))
-    .then(
-      axios.spread((...responses) =>
-        responses.map(({ data }) => ({
-          advisers: data,
-        }))
-      )
-    )
-}
-
 /**
  * Get the options for each of the given metadata urls.
  *
@@ -70,4 +52,4 @@ function getMetadata(metadataUrls) {
   )
 }
 
-export { getProjects, getAdviserNames, getMetadata }
+export { getProjects, getMetadata }

@@ -262,6 +262,13 @@ function FilteredCollectionHeader({
         />
         <RoutedFilterChips
           selectedOptions={
+            selectedFilters.selectedLeadItaOrGlobalAccountManagers
+          }
+          qsParamName="one_list_group_global_account_manager"
+          showCategoryLabels={true}
+        />
+        <RoutedFilterChips
+          selectedOptions={
             selectedFilters.selectedInvestableCapital?.min
               ? [
                   {

@@ -4,10 +4,12 @@ import { connect } from 'react-redux'
 import {
   COMPANIES__LOADED,
   COMPANIES__SET_COMPANIES_METADATA,
+  COMPANIES__SELECTED_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER,
 } from '../../../client/actions'
 import {
   CollectionFilters,
   FilteredCollectionList,
+  RoutedAdvisersTypeahead,
   RoutedCheckboxGroupField,
   RoutedInputField,
   RoutedTypeahead,
@@ -16,6 +18,7 @@ import {
 import * as labels from './labels'
 import {
   ID,
+  TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME,
   TASK_GET_COMPANIES_LIST,
   TASK_GET_COMPANIES_METADATA,
   state2props,
@@ -44,6 +47,16 @@ const CompaniesCollection = ({
     progressMessage: 'loading metadata',
     startOnRender: {
       onSuccessDispatch: COMPANIES__SET_COMPANIES_METADATA,
+    },
+  }
+
+  const leadItaGlobalAccountManagerTask = {
+    name: TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME,
+    id: ID,
+    progressMessage: 'loading advisers',
+    startOnRender: {
+      payload: payload.one_list_group_global_account_manager,
+      onSuccessDispatch: COMPANIES__SELECTED_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER,
     },
   }
 
@@ -109,7 +122,7 @@ const CompaniesCollection = ({
           legend={labels.UK_REGION}
           name="uk_region"
           qsParam="uk_region"
-          placeholder="Search UK regions"
+          placeholder="Search UK region"
           options={optionMetadata.ukRegionOptions}
           selectedOptions={selectedFilters.selectedUkRegions}
           data-test="uk-region-filter"
@@ -141,6 +154,19 @@ const CompaniesCollection = ({
           options={optionMetadata.countryOptions}
           selectedOptions={selectedFilters.selectedFutureCountriesOfInterest}
           data-test="future-countries-of-interest-filter"
+        />
+        <RoutedAdvisersTypeahead
+          isMulti={true}
+          taskProps={leadItaGlobalAccountManagerTask}
+          legend={labels.LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER}
+          name="one_list_group_global_account_manager"
+          qsParam="one_list_group_global_account_manager"
+          placeholder="Search adviser"
+          noOptionsMessage={() => <>No advisers found</>}
+          selectedOptions={
+            selectedFilters.selectedLeadItaOrGlobalAccountManagers
+          }
+          data-test="lead-ita-global-account-manager-filter"
         />
       </CollectionFilters>
     </FilteredCollectionList>
