@@ -35,11 +35,17 @@ describe('Contacts Collections Filter', () => {
     })
 
     it('should filter from user input', () => {
-      cy.intercept('POST', '/api-proxy/v3/search/contact').as('apiRequest')
       cy.visit(urls.contacts.react.index())
-      cy.wait('@apiRequest') // initial request
-      cy.wait('@apiRequest') // requests again, but with archived=false
 
+      // Make sure the API has made all the initial calls by checking that the
+      // default archived (active) param has been set. Alternatively you could
+      // wait for the apiRequest to happen twice
+      cy.get('[data-test="status-filter"]')
+        .find('input')
+        .eq(0)
+        .should('be.checked')
+
+      cy.intercept('POST', '/api-proxy/v3/search/contact').as('apiRequest')
       cy.get(element).type(`${contactNameQuery}{enter}`)
 
       cy.wait('@apiRequest').then(({ request }) => {
