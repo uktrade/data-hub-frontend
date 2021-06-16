@@ -17,31 +17,20 @@ Engines in `package.json` needs updating:
   },
 ```
 
-## Data Hub Docker images
-
-- [Image for local development](../Dockerfile)
-- [Image for tests (used by CircleCI)](../test/Dockerfile)
-- [Image for visual tests](../test/visual/Dockerfile)
-
-Once the "Image for tests" has been updated, you will need to [follow the instructions to build and push](./Running tests.md) a new version of the image.
-
 # Steps to follow for an upgrade
 
 1. Update the `manifest.yml` to match the latest release number (See above)
 2. Update Node on your local env to match the versions in the buildpack
 3. Update all files below with the correct versions identified above:
    - `package.json`
-   - `Dockerfile`
-   - `test/Dockerfile`
+   - `Dockerfile.dependencies`
    - `test/visual/Dockerfile`
    - `test/sandbox/Dockerfile`
    - Step two of the native readme
 4. Install the dependencies with `npm ci`
 5. Run the unit tests to check the app `npm run test:unit` and then start the app `npm run develop` and do some quick smoke tests to ensure the app works
-6. Update the image used by CircleCI as found here: `./Running tests.md` (I hold off publising the `:latest` tag until I am sure it has worked, so stop before this `docker push ukti/data-hub-frontend-test:latest`)
-7. Update the `&docker_data_hub_base` alias in the CircleCI config file (`.circleci/config.yml`) to match the version created in the previous step.
-8. Commit your changes, push the branch and then create a Draft PR - to get the tests running which will confirm the image above works correctly
-9. Create a build in Jenkins to deploy to an environment (UAT is probably best here) so we can test the buildpack
-10. Once the tests pass and the deployment works, mark the PR as ready for review (if you haven't already, publish the `:latest` tag from step 6)
-11. Switch back the Node version so you can carry on with other tickets whilst waiting for the PR to be approved and merged ;-)
-12. Once the PR has been merged, do a release to production to finish the process.
+6. Commit your changes, push the branch and then create a Draft PR to get the tests running
+7. Create a build in Jenkins to deploy to an environment (UAT or Demo are probably best here) so we can test the buildpack.
+8. Once the tests pass and the deployment works, mark the PR as ready for review
+9. Switch back the Node version so you can carry on with other tickets whilst waiting for the PR to be approved and merged ;-)
+10. Once the PR has been merged, do a release to production to finish the process.
