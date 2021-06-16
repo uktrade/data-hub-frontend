@@ -12,7 +12,39 @@ import { selectFirstTypeaheadOption, removeChip } from '../../support/actions'
 
 import { testTypeahead } from '../../support/tests'
 
+const visitWithDefaultQueryParams = () => {
+  const queryParams = qs.stringify({ archived: ['false'], page: 1 })
+  cy.visit(`${urls.contacts.react.index()}?${queryParams}`)
+}
+
 describe('Contacts Collections Filter', () => {
+  context('Default Params', () => {
+    it('should set the default params', () => {
+      cy.intercept('POST', '/api-proxy/v3/search/contact').as('apiRequest')
+      cy.visit(urls.contacts.react.index())
+
+      // Initial call to the api without default params - note that we should
+      // really avoid this call
+      cy.wait('@apiRequest')
+
+      // Second call to the api with default params
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body).to.deep.equal({
+          name: contactNameQuery,
+          limit: 10,
+          offset: 0,
+          sortby: 'modified_on:desc',
+          archived: false,
+        })
+      })
+
+      cy.get('[data-test="status-filter"]')
+        .find('input')
+        .eq(0)
+        .should('be.checked')
+    })
+  })
+
   context('Contact', () => {
     const element = '[data-test="contact-name-filter"]'
     const contactNameQuery = 'David Jones'
@@ -35,17 +67,10 @@ describe('Contacts Collections Filter', () => {
     })
 
     it('should filter from user input', () => {
-      cy.visit(urls.contacts.react.index())
-
-      // Make sure the API has made all the initial calls by checking that the
-      // default archived (active) param has been set. Alternatively you could
-      // wait for the apiRequest to happen twice
-      cy.get('[data-test="status-filter"]')
-        .find('input')
-        .eq(0)
-        .should('be.checked')
-
       cy.intercept('POST', '/api-proxy/v3/search/contact').as('apiRequest')
+      visitWithDefaultQueryParams()
+      cy.wait('@apiRequest')
+
       cy.get(element).type(`${contactNameQuery}{enter}`)
 
       cy.wait('@apiRequest').then(({ request }) => {
