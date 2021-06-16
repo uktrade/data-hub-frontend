@@ -2,23 +2,27 @@ const { get, merge, sumBy } = require('lodash')
 
 const { transformSubscriberToView } = require('../../transformers')
 
-function renderWorkOrder(req, res) {
+function renderWorkOrder(req, res, next) {
   const order = res.locals.order
   const assignees = res.locals.assignees
   const subscribers = get(res.locals, 'subscribers', []).map(
     transformSubscriberToView(get(res.locals, 'user.id'))
   )
+  try {
+    const values = merge({}, order, {
+      assignees,
+      subscribers,
+      contact: res.locals.contact,
+      quote: res.locals.quote,
+      estimatedTimeSum: sumBy(assignees, 'estimated_time'),
+    })
 
-  const values = merge({}, order, {
-    assignees,
-    subscribers,
-    contact: res.locals.contact,
-    estimatedTimeSum: sumBy(assignees, 'estimated_time'),
-  })
-
-  res.render('omis/apps/view/views/work-order', {
-    values,
-  })
+    res.render('omis/apps/view/views/work-order', {
+      values,
+    })
+  } catch (e) {
+    next(e)
+  }
 }
 
 function renderQuote(req, res) {

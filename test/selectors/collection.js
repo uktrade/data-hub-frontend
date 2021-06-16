@@ -4,6 +4,7 @@ module.exports = {
   items: '.c-entity-list__item',
   itemsHeader: '.c-entity-list__item .c-entity__header',
   itemsList: '.c-entity-list__item .c-meta-list',
+  itemLink: '.c-entity__title > a',
   error: 'h3',
   contentTable: (table) => {
     return `.c-details-container__content > table:nth-child(${table})`
