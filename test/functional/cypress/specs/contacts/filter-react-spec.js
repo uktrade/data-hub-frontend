@@ -15,24 +15,57 @@ import { testTypeahead } from '../../support/tests'
 describe('Contacts Collections Filter', () => {
   context('Contact', () => {
     const element = '[data-test="contact-name-filter"]'
+    const contactNameQuery = 'David Jones'
+
     it('should filter from the url', () => {
-      const queryParams = qs.stringify({ name: 'David Jones' })
+      cy.intercept('POST', '/api-proxy/v3/search/contact').as('apiRequest')
+
+      const queryParams = qs.stringify({ name: contactNameQuery })
       cy.visit(`${urls.contacts.react.index()}?${queryParams}`)
-      cy.get(element).should('have.value', 'David Jones')
-      assertChipExists({ label: 'David Jones', position: 1 })
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body).to.deep.equal({
+          name: contactNameQuery,
+          limit: 10,
+          offset: 0,
+          sortby: 'modified_on:desc',
+        })
+      })
+      cy.get(element).should('have.value', contactNameQuery)
+      assertChipExists({ label: contactNameQuery, position: 1 })
     })
+
     it('should filter from user input', () => {
+      cy.intercept('POST', '/api-proxy/v3/search/contact').as('apiRequest')
       cy.visit(urls.contacts.react.index())
-      cy.get(element).type('David Jones{enter}')
-      assertQueryParams('name', 'David Jones')
-      assertChipExists({ label: 'David Jones', position: 1 })
+      cy.wait('@apiRequest') // initial request
+      cy.wait('@apiRequest') // requests again, but with archived=false
+
+      cy.get(element).type(`${contactNameQuery}{enter}`)
+
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body).to.deep.equal({
+          name: contactNameQuery,
+          limit: 10,
+          offset: 0,
+          sortby: 'modified_on:desc',
+          archived: false,
+        })
+      })
+
+      assertQueryParams('name', contactNameQuery)
+      assertChipExists({ label: contactNameQuery, position: 1 })
       assertChipExists({ label: 'Active', position: 2 })
-    })
-    it('should remove the chips', () => {
-      cy.visit(urls.contacts.react.index())
-      cy.get(element).type('David Jones{enter}')
-      removeChip('David Jones')
+
+      removeChip(contactNameQuery)
+      cy.wait('@apiRequest')
       removeChip('false') // Active
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body).to.deep.equal({
+          limit: 10,
+          offset: 0,
+          sortby: 'modified_on:desc',
+        })
+      })
       assertChipsEmpty()
       assertFieldEmpty(element)
     })
