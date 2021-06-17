@@ -1,3 +1,12 @@
+export const LABELS = {
+  status: 'Status',
+  sector: 'Sector',
+  country: 'Country',
+  ukRegion: 'UK region',
+  contactName: 'Contact name',
+  companyName: 'Company name',
+}
+
 export const STATUS_OPTIONS = [
   { label: 'Active', value: 'false' },
   { label: 'Inactive', value: 'true' },

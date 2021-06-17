@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { LABELS } from './constants'
 
 import {
   CONTACTS__LOADED,
@@ -66,7 +67,7 @@ const ContactsCollection = ({
           id="ContactsCollection.name"
           qsParam="name"
           name="name"
-          label="Contact name"
+          label={LABELS.contactName}
           placeholder="Search contact name"
           data-test="contact-name-filter"
         />
@@ -74,13 +75,13 @@ const ContactsCollection = ({
           id="ContactsCollection.company-name"
           qsParam="company_name"
           name="company_name"
-          label="Company name"
+          label={LABELS.companyName}
           placeholder="Search company name"
           data-test="company-name-filter"
         />
         <RoutedTypeahead
           isMulti={true}
-          legend="Sector"
+          legend={LABELS.sector}
           name="sector"
           qsParam="company_sector_descends"
           placeholder="Search sectors"
@@ -90,7 +91,7 @@ const ContactsCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend="Country of origin"
+          legend={LABELS.country}
           name="country"
           qsParam="address_country"
           placeholder="Search countries"
@@ -100,7 +101,7 @@ const ContactsCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend="UK Region"
+          legend={LABELS.ukRegion}
           name="uk_region"
           qsParam="company_uk_region"
           placeholder="Search UK regions"
@@ -109,7 +110,7 @@ const ContactsCollection = ({
           data-test="uk-region-filter"
         />
         <RoutedCheckboxGroupField
-          legend="Status"
+          legend={LABELS.status}
           name="archived"
           qsParam="archived"
           options={optionMetadata.statusOptions}
