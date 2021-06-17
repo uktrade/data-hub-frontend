@@ -10,10 +10,13 @@ import {
   assertQueryParams,
 } from '../../support/assertions'
 
+import { contactsListFaker } from '../../fakers/contacts'
+
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
     // Default query params
     archived: ['false'],
+    sortby: 'modified_on:desc',
     page: 1,
     ...queryParams,
   })
@@ -29,7 +32,13 @@ const activeStatusFlag = 'false'
 describe('Contacts Collections Filter', () => {
   context('Default Params', () => {
     it('should set the default params', () => {
-      cy.intercept('POST', '/api-proxy/v3/search/contact').as('apiRequest')
+      const contactsList = contactsListFaker(10)
+      cy.intercept('POST', '/api-proxy/v3/search/contact', {
+        body: {
+          count: contactsList.length,
+          results: contactsList,
+        },
+      }).as('apiRequest')
 
       // No default params, these are programmatically added
       cy.visit(urls.contacts.react.index())
@@ -52,6 +61,11 @@ describe('Contacts Collections Filter', () => {
         .find('input')
         .eq(0)
         .should('be.checked')
+
+      cy.get('[data-test="status-filter"]')
+        .find('input')
+        .eq(1)
+        .should('not.be.checked')
     })
   })
 
@@ -292,7 +306,7 @@ describe('Contacts Collections Filter', () => {
 
       testTypeahead({
         element,
-        legend: 'UK Region',
+        legend: 'UK region',
         placeholder: 'Search UK region',
         input: 'jer',
         expectedOption: 'Jersey',
@@ -322,12 +336,6 @@ describe('Contacts Collections Filter', () => {
       cy.visit(urls.contacts.react.index())
       cy.get('[data-test="status-filter"]').find('input').eq(0).as('active')
       cy.get('[data-test="status-filter"]').find('input').eq(1).as('inactive')
-    })
-    it('should filter by Active Status (the default)', () => {
-      cy.get('@active').should('be.checked')
-      cy.get('@inactive').should('not.be.checked')
-      assertQueryParams('archived', ['false'])
-      assertChipExists({ label: 'Active', position: 1 })
     })
     it('should filter by Active Status (explicit query params)', () => {
       const queryString = buildQueryString({ archived: ['false'] })
