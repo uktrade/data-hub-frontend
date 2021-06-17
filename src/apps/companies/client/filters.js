@@ -2,7 +2,7 @@ import {
   buildOptionsFilter,
   buildInputFieldFilter,
 } from '../../../client/filters'
-import { LABELS, FILTER_OPTIONS } from './constants'
+import { LABELS, COMPANY_STATUS_OPTIONS } from './constants'
 
 export const buildSelectedFilters = ({
   queryParams,
@@ -38,7 +38,7 @@ export const buildSelectedFilters = ({
     categoryLabel: LABELS.ukRegion,
   }),
   selectedCompanyStatuses: buildOptionsFilter({
-    options: FILTER_OPTIONS.companyStatuses,
+    options: COMPANY_STATUS_OPTIONS,
     value: queryParams.archived,
     categoryLabel: LABELS.companyStatus,
   }),

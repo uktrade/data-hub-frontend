@@ -9,7 +9,7 @@ export const TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME =
 export const ID = 'companiesList'
 
 import { buildSelectedFilters } from './filters'
-import { FILTER_OPTIONS, SORT_OPTIONS } from './constants'
+import { COMPANY_STATUS_OPTIONS, SORT_OPTIONS } from './constants'
 import { transformArchivedToApi, transformPostcodeToApi } from './transformers'
 
 const parseQueryString = (queryString) => {
@@ -46,7 +46,7 @@ export const state2props = ({ router, ...state }) => {
     },
     optionMetadata: {
       sortOptions: SORT_OPTIONS,
-      companyStatusOptions: FILTER_OPTIONS.companyStatuses,
+      companyStatusOptions: COMPANY_STATUS_OPTIONS,
       ...metadata,
     },
     selectedFilters,
