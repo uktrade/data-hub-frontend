@@ -11,12 +11,10 @@ export const LABELS = {
   leadItaOrGlobalAccountManager: 'Lead ITA or Global Account Manager',
 }
 
-export const FILTER_OPTIONS = {
-  companyStatuses: [
-    { label: 'Active', value: 'false' },
-    { label: 'Inactive', value: 'true' },
-  ],
-}
+export const COMPANY_STATUS_OPTIONS = [
+  { label: 'Active', value: 'false' },
+  { label: 'Inactive', value: 'true' },
+]
 
 export const SORT_OPTIONS = [
   {
