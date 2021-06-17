@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { INTERACTIONS__LOADED } from '../../../client/actions'
-import { INTERACTION, SERVICE_DELIVERY, KIND } from './constants'
+import { LABELS, KIND_OPTIONS } from './constants'
 
 import {
   FilteredCollectionList,
@@ -30,7 +30,7 @@ const InteractionCollection = ({
   return (
     <FilteredCollectionList
       {...props}
-      collectionName={INTERACTION.label}
+      collectionName={KIND_OPTIONS.interaction.label}
       sortOptions={optionMetadata.sortOptions}
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}
@@ -43,17 +43,17 @@ const InteractionCollection = ({
     >
       <CollectionFilters>
         <RoutedCheckboxGroupField
-          legend={KIND}
+          legend={LABELS.KIND}
           name="kind"
           qsParam="kind"
           options={[
             {
-              label: INTERACTION.label,
-              value: INTERACTION.value,
+              label: KIND_OPTIONS.interaction.label,
+              value: KIND_OPTIONS.interaction.value,
             },
             {
-              label: SERVICE_DELIVERY.label,
-              value: SERVICE_DELIVERY.value,
+              label: KIND_OPTIONS.serviceDelivery.label,
+              value: KIND_OPTIONS.serviceDelivery.value,
             },
           ]}
           selectedOptions={selectedFilters.selectedKind}
