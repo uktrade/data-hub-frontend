@@ -1,10 +1,14 @@
-export const KIND = 'Kind'
-
-export const INTERACTION = {
-  label: 'Interaction',
-  value: 'interaction',
+export const LABELS = {
+  kind: 'Kind',
 }
-export const SERVICE_DELIVERY = {
-  label: 'Service delivery',
-  value: 'service_delivery',
+
+export const KIND_OPTIONS = {
+  interaction: {
+    label: 'Interaction',
+    value: 'interaction',
+  },
+  serviceDelivery: {
+    label: 'Service delivery',
+    value: 'service_delivery',
+  },
 }

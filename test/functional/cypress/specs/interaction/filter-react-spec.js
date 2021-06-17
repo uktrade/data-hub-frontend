@@ -12,11 +12,6 @@ import {
   assertCheckboxGroupOption,
 } from '../../support/assertions'
 
-import {
-  INTERACTION,
-  SERVICE_DELIVERY,
-} from '../../../../../src/apps/interactions/client/constants'
-
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
     // Default query params
@@ -74,7 +69,7 @@ describe('Interactions Collections Filter', () => {
 
       clickCheckboxGroupOption({
         element,
-        value: INTERACTION.value,
+        value: 'interaction',
       })
       assertPayload('@apiRequest', {
         ...taskParams,
@@ -82,7 +77,7 @@ describe('Interactions Collections Filter', () => {
       })
       clickCheckboxGroupOption({
         element,
-        value: SERVICE_DELIVERY.value,
+        value: 'service_delivery',
       })
       assertPayload('@apiRequest', {
         ...taskParams,
@@ -90,8 +85,8 @@ describe('Interactions Collections Filter', () => {
       })
 
       assertQueryParams('kind', ['interaction', 'service_delivery'])
-      assertChipExists({ label: INTERACTION.label, position: 1 })
-      assertChipExists({ label: SERVICE_DELIVERY.label, position: 2 })
+      assertChipExists({ label: 'Interaction', position: 1 })
+      assertChipExists({ label: 'Service delivery', position: 2 })
       removeChip('interaction')
       cy.wait('@apiRequest')
       removeChip('service_delivery')

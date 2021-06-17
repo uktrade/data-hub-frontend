@@ -1,4 +1,4 @@
-import { INTERACTION, SERVICE_DELIVERY, KIND } from './constants'
+import { KIND_OPTIONS, LABELS } from './constants'
 
 const buildOptionsFilter = ({ options = [], value, categoryLabel }) =>
   options
@@ -12,10 +12,16 @@ const buildOptionsFilter = ({ options = [], value, categoryLabel }) =>
 export const buildSelectedFilters = ({ kind }, {}) => ({
   selectedKind: buildOptionsFilter({
     options: [
-      { label: INTERACTION.label, value: INTERACTION.value },
-      { label: SERVICE_DELIVERY.label, value: SERVICE_DELIVERY.value },
+      {
+        label: KIND_OPTIONS.interaction.label,
+        value: KIND_OPTIONS.interaction.value,
+      },
+      {
+        label: KIND_OPTIONS.serviceDelivery.label,
+        value: KIND_OPTIONS.serviceDelivery.value,
+      },
     ],
     value: kind,
-    categoryLabel: KIND,
+    categoryLabel: LABELS.kind,
   }),
 })
