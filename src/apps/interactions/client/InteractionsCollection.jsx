@@ -43,7 +43,7 @@ const InteractionCollection = ({
     >
       <CollectionFilters>
         <RoutedCheckboxGroupField
-          legend={LABELS.KIND}
+          legend={LABELS.kind}
           name="kind"
           qsParam="kind"
           options={[
