@@ -50,12 +50,12 @@ describe('Interactions Collections Filter', () => {
       })
       assertCheckboxGroupOption({
         element,
-        value: INTERACTION.value,
+        value: 'Interaction',
         checked: true,
       })
       assertCheckboxGroupOption({
         element,
-        value: SERVICE_DELIVERY.value,
+        value: 'Service delivery',
         checked: true,
       })
       assertChipExists({ label: 'Interaction', position: 1 })
