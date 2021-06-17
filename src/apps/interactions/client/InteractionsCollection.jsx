@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { INTERACTIONS__LOADED } from '../../../client/actions'
-import { INTERACTION, SERVICE_DELIVERY } from './constants'
+import { INTERACTION, SERVICE_DELIVERY, KIND } from './constants'
 
 import {
   FilteredCollectionList,
@@ -43,7 +43,7 @@ const InteractionCollection = ({
     >
       <CollectionFilters>
         <RoutedCheckboxGroupField
-          legend="Kind"
+          legend={KIND}
           name="kind"
           qsParam="kind"
           options={[
