@@ -506,6 +506,10 @@ const assertElementsInOrder = ({ parentElement, expectedIdentifiers }) => {
   }
 }
 
+/**
+ * Assert the expected payload to the API
+ */
+
 const assertPayload = (apiRequest, expectedParams) => {
   cy.wait(apiRequest).then(({ request }) => {
     expect(request.body).to.deep.equal(expectedParams)

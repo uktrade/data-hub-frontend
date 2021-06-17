@@ -2,25 +2,29 @@ import { omitBy, isEmpty } from 'lodash'
 import qs from 'qs'
 
 export const TASK_GET_INTERACTIONS_LIST = 'TASK_GET_INTERACTIONS_LIST'
+
 export const ID = 'interactionsList'
 
-const getFilteredQueryParams = (router) => {
-  const queryParams = router.location.search.slice(1)
-  const filteredQueryParams = omitBy({ ...qs.parse(queryParams) }, isEmpty)
+import { buildSelectedFilters } from './filters'
+
+const parseQueryString = (queryString) => {
+  const queryStringObject = omitBy({ ...qs.parse(queryString) }, isEmpty)
   return {
-    ...filteredQueryParams,
-    page: parseInt(filteredQueryParams.page || 1, 10),
+    ...queryStringObject,
+    page: parseInt(queryStringObject.page || 1, 10),
   }
 }
 
 export const state2props = ({ router, ...state }) => {
-  const filteredQueryParams = getFilteredQueryParams(router)
+  const queryString = router.location.search.slice(1)
+  const queryStringObject = parseQueryString(queryString)
   const { metadata } = state[ID]
+  const selectedFilters = buildSelectedFilters(queryStringObject, metadata)
 
   return {
     ...state[ID],
-    selectedFilters: {},
-    payload: filteredQueryParams,
+    selectedFilters,
+    payload: queryStringObject,
     optionMetadata: {
       sortOptions: [],
       ...metadata,
