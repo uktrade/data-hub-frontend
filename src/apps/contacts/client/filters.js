@@ -3,7 +3,7 @@ import {
   buildInputFieldFilter,
 } from '../../../client/filters'
 
-import { STATUS_OPTIONS } from './constants'
+import { STATUS_OPTIONS, LABELS } from './constants'
 
 export const buildSelectedFilters = (
   {
@@ -24,30 +24,30 @@ export const buildSelectedFilters = (
   selectedName: buildInputFieldFilter({
     value: name,
     label: name,
-    categoryLabel: 'Contact name',
+    categoryLabel: LABELS.contactName,
   }),
   selectedCompanyName: buildInputFieldFilter({
     value: company_name,
-    categoryLabel: 'Company name',
+    categoryLabel: LABELS.companyName,
   }),
   selectedCompanySectors: buildOptionsFilter({
     options: sectorOptions,
     value: company_sector_descends,
-    categoryLabel: 'Sector',
+    categoryLabel: LABELS.sector,
   }),
   selectedAddressCountries: buildOptionsFilter({
     options: countryOptions,
     value: address_country,
-    categoryLabel: 'Country',
+    categoryLabel: LABELS.country,
   }),
   selectedCompanyUkRegions: buildOptionsFilter({
     options: ukRegionOptions,
     value: company_uk_region,
-    categoryLabel: 'UK region',
+    categoryLabel: LABELS.ukRegion,
   }),
   selectedStatus: buildOptionsFilter({
     options: statusOptions,
     value: archived,
-    categoryLabel: 'Status',
+    categoryLabel: LABELS.status,
   }),
 })
