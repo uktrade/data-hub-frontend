@@ -7,26 +7,27 @@ import { getMetadataOptions, getSectorOptions } from '../../../client/metadata'
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 
 export const getContacts = ({
-  limit = 10,
-  page = 1,
+  page,
   name,
+  limit = 10,
+  sortby,
   archived,
   company_name,
-  company_sector_descends,
   address_country,
   company_uk_region,
+  company_sector_descends,
 }) =>
   axios
     .post('/api-proxy/v3/search/contact', {
-      limit,
-      offset: limit * (page - 1),
       name,
+      limit,
+      sortby,
+      archived,
       company_name,
-      company_sector_descends,
       address_country,
       company_uk_region,
-      sortby: 'modified_on:desc',
-      archived,
+      company_sector_descends,
+      offset: limit * (page - 1),
     })
     .then(({ data }) => transformResponseToCollection(data), handleError)
 
