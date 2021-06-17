@@ -1,7 +1,7 @@
 export const LABELS = {
   status: 'Status',
   sector: 'Sector',
-  country: 'Country',
+  country: 'Country of origin',
   ukRegion: 'UK region',
   contactName: 'Contact name',
   companyName: 'Company name',
