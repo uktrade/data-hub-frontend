@@ -506,6 +506,12 @@ const assertElementsInOrder = ({ parentElement, expectedIdentifiers }) => {
   }
 }
 
+const assertPayload = (apiRequest, expectedParams) => {
+  cy.wait(apiRequest).then(({ request }) => {
+    expect(request.body).to.deep.equal(expectedParams)
+  })
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
@@ -541,4 +547,5 @@ module.exports = {
   assertFieldEmpty,
   assertQueryParams,
   assertElementsInOrder,
+  assertPayload,
 }

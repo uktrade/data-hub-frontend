@@ -15,7 +15,7 @@ import {
   RoutedTypeahead,
 } from '../../../client/components'
 
-import * as labels from './labels'
+import { LABELS } from './constants'
 import {
   ID,
   TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME,
@@ -71,10 +71,14 @@ const CompaniesCollection = ({
       entityName="company"
       entityNamePlural="companies"
       addItemUrl="/companies/create"
+      defaultQueryParams={{
+        archived: ['false'],
+        page: 1,
+      }}
     >
       <CollectionFilters taskProps={collectionListMetadataTask}>
         <RoutedCheckboxGroupField
-          legend={labels.HEADQUARTER_TYPE}
+          legend={LABELS.headquarterType}
           name="headquarter_type"
           qsParam="headquarter_type"
           options={optionMetadata.headquarterTypeOptions}
@@ -85,13 +89,13 @@ const CompaniesCollection = ({
           id="CompanyCollection.name"
           qsParam="name"
           name="name"
-          label={labels.COMPANY_NAME}
+          label={LABELS.companyName}
           placeholder="Search company name"
           data-test="company-name-filter"
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={labels.SECTOR}
+          legend={LABELS.sector}
           name="sector"
           qsParam="sector_descends"
           placeholder="Search sector"
@@ -101,7 +105,7 @@ const CompaniesCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={labels.COUNTRY}
+          legend={LABELS.country}
           name="country"
           qsParam="country"
           placeholder="Search country"
@@ -113,13 +117,13 @@ const CompaniesCollection = ({
           id="CompanyCollection.postcode"
           qsParam="uk_postcode"
           name="uk_postcode"
-          label={labels.UK_POSTCODE}
+          label={LABELS.ukPostcode}
           placeholder="Search UK postcode"
           data-test="uk-postcode-filter"
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={labels.UK_REGION}
+          legend={LABELS.ukRegion}
           name="uk_region"
           qsParam="uk_region"
           placeholder="Search UK region"
@@ -128,16 +132,16 @@ const CompaniesCollection = ({
           data-test="uk-region-filter"
         />
         <RoutedCheckboxGroupField
-          legend={labels.COMPANY_STATUS}
+          legend={LABELS.companyStatus}
           name="archived"
           qsParam="archived"
-          options={optionMetadata.companyStatuses}
+          options={optionMetadata.companyStatusOptions}
           selectedOptions={selectedFilters.selectedCompanyStatuses}
           data-test="company-status-filter"
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={labels.CURRENTLY_EXPORTING_TO}
+          legend={LABELS.currentlyExportingTo}
           name="export_to_countries"
           qsParam="export_to_countries"
           placeholder="Search country"
@@ -147,7 +151,7 @@ const CompaniesCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={labels.FUTURE_COUNTRIES_OF_INTEREST}
+          legend={LABELS.futureCountriesOfInterest}
           name="future_interest_countries"
           qsParam="future_interest_countries"
           placeholder="Search country"
@@ -158,7 +162,7 @@ const CompaniesCollection = ({
         <RoutedAdvisersTypeahead
           isMulti={true}
           taskProps={leadItaGlobalAccountManagerTask}
-          legend={labels.LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER}
+          legend={LABELS.leadItaOrGlobalAccountManager}
           name="one_list_group_global_account_manager"
           qsParam="one_list_group_global_account_manager"
           placeholder="Search adviser"
