@@ -24,15 +24,18 @@ describe('Contact Collections Sort', () => {
 
     it('should have all sort options', () => {
       cy.get('[data-test="sortby"] option').then((options) => {
-        const sortOptions = [...options].map((o) => o.value)
+        const sortOptions = [...options].map((o) => ({
+          value: o.value,
+          label: o.label,
+        }))
         expect(sortOptions).to.deep.eq([
-          'created_on:desc',
-          'created_on:asc',
-          'modified_on:desc',
-          'modified_on:asc',
-          'last_name:asc',
-          'address_country.name:asc',
-          'company.name:asc',
+          { value: 'created_on:desc', label: 'Recently created' },
+          { value: 'created_on:asc', label: 'Oldest' },
+          { value: 'modified_on:desc', label: 'Recently updated' },
+          { value: 'modified_on:asc', label: 'Least recently updated' },
+          { value: 'last_name:asc', label: 'Last name A-Z' },
+          { value: 'address_country.name:asc', label: 'Country A-Z' },
+          { value: 'company.name:asc', label: 'Company A-Z' },
         ])
       })
     })
