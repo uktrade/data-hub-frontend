@@ -98,6 +98,10 @@ function FilteredCollectionHeader({
         thus the chips should not be hardcoded here
         */}
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedKind}
+          qsParamName="kind"
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedStages}
           qsParamName="stage"
         />
