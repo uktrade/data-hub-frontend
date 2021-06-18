@@ -34,7 +34,7 @@ const CompaniesCollection = ({
   const collectionListTask = {
     name: TASK_GET_COMPANIES_LIST,
     id: ID,
-    progressMessage: 'loading companies',
+    progressMessage: 'Loading companies',
     startOnRender: {
       payload,
       onSuccessDispatch: COMPANIES__LOADED,
@@ -44,7 +44,7 @@ const CompaniesCollection = ({
   const collectionListMetadataTask = {
     name: TASK_GET_COMPANIES_METADATA,
     id: ID,
-    progressMessage: 'loading metadata',
+    progressMessage: 'Loading filters',
     startOnRender: {
       onSuccessDispatch: COMPANIES__SET_COMPANIES_METADATA,
     },
@@ -53,7 +53,7 @@ const CompaniesCollection = ({
   const leadItaGlobalAccountManagerTask = {
     name: TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME,
     id: ID,
-    progressMessage: 'loading advisers',
+    progressMessage: 'Loading advisers',
     startOnRender: {
       payload: payload.one_list_group_global_account_manager,
       onSuccessDispatch: COMPANIES__SELECTED_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER,
@@ -63,7 +63,7 @@ const CompaniesCollection = ({
   return (
     <FilteredCollectionList
       {...props}
-      collectionName="Company"
+      collectionName="company"
       sortOptions={optionMetadata.sortOptions}
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}

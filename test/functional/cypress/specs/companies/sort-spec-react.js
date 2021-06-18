@@ -22,7 +22,7 @@ describe('Contact Collections Sort', () => {
         expect(sortOptions).to.deep.eq([
           ['modified_on:desc', 'Recently updated'],
           ['modified_on:asc', 'Least recently updated'],
-          ['name:asc', 'Company name: A-Z'],
+          ['name:asc', 'Company A-Z'],
           ['latest_interaction_date:desc', 'Last interaction date'],
         ])
       })
@@ -53,7 +53,7 @@ describe('Contact Collections Sort', () => {
       })
     })
 
-    it('should sort by "Company name: A-Z"', () => {
+    it('should sort by "Company A-Z"', () => {
       cy.get(element).select('name:asc')
       cy.wait('@apiRequest')
       cy.wait('@apiRequest').then(({ request }) => {

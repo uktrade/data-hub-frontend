@@ -82,7 +82,7 @@ describe('Company Collections - React', () => {
   it('should have a link to add company', () => {
     cy.get('[data-test="add-collection-item-button"]')
       .should('exist')
-      .should('contain', 'Add Company')
+      .should('contain', 'Add company')
       .should('have.attr', 'href', '/companies/create')
   })
 

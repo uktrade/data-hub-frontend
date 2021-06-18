@@ -570,7 +570,7 @@ describe('Companies Collections Filter', () => {
       const adviserId = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
       const southEastRegionId = '884cd12a-6095-e211-a939-e4115bead28a'
       const advancedEngineeringSectorId = 'af959812-6095-e211-a939-e4115bead28a'
-      const queryParams = qs.stringify({
+      const queryString = qs.stringify({
         page: 1,
         headquarter_type: globalHqTypeId,
         name: 'Tesco',
@@ -584,7 +584,7 @@ describe('Companies Collections Filter', () => {
         one_list_group_global_account_manager: [adviserId],
       })
       cy.intercept('POST', companySearchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryParams}`)
+      cy.visit(`${urls.companies.react.index()}?${queryString}`)
       cy.wait('@apiRequest')
       cy.get('[data-test=filter-chips]').children().as('filterChips')
     })

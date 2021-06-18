@@ -16,10 +16,14 @@ const StyledRowWrapper = styled('div')`
 
 const StyledActions = styled('div')`
   width: 100%;
+  margin-top: ${SPACING.SCALE_2};
+
   ${MEDIA_QUERIES.TABLET} {
-    width: 0;
+    margin-top: 0;
+    margin-left: ${SPACING.SCALE_1};
     display: flex;
     justify-content: flex-end;
+    flex-basis: 0;
     flex-grow: 1;
   }
 `
