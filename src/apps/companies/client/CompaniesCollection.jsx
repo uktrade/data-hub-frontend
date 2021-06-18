@@ -44,7 +44,7 @@ const CompaniesCollection = ({
   const collectionListMetadataTask = {
     name: TASK_GET_COMPANIES_METADATA,
     id: ID,
-    progressMessage: 'Loading metadata',
+    progressMessage: 'Loading filters',
     startOnRender: {
       onSuccessDispatch: COMPANIES__SET_COMPANIES_METADATA,
     },
