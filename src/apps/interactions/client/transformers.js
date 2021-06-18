@@ -4,6 +4,8 @@ const { get } = require('lodash')
 const { format } = require('../../../client/utils/date-utils')
 const urls = require('../../../lib/urls')
 
+import { LABELS } from './constants'
+
 const formatContacts = (contacts) =>
   contacts.length > 1
     ? 'Multiple contacts'
@@ -26,8 +28,8 @@ const formatParticipants = (dit_participants) =>
 
 const getbadgeLabel = (type, hasFeedback = false) => {
   const badges = {
-    interaction: 'Interaction',
-    service_delivery: 'Service delivery',
+    interaction: LABELS.interaction,
+    service_delivery: LABELS.serviceDelivery,
   }
   return [
     {

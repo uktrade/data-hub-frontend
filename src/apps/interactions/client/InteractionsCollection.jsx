@@ -2,8 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { INTERACTIONS__LOADED } from '../../../client/actions'
+import { LABELS, KIND_OPTIONS } from './constants'
 
-import { FilteredCollectionList } from '../../../client/components'
+import {
+  FilteredCollectionList,
+  RoutedCheckboxGroupField,
+  CollectionFilters,
+} from '../../../client/components'
 
 import { ID, state2props, TASK_GET_INTERACTIONS_LIST } from './state'
 
@@ -22,17 +27,31 @@ const InteractionCollection = ({
       onSuccessDispatch: INTERACTIONS__LOADED,
     },
   }
-
   return (
     <FilteredCollectionList
       {...props}
-      collectionName="Interaction"
+      collectionName="interaction"
       sortOptions={optionMetadata.sortOptions}
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}
       baseDownloadLink="/interactions/export"
       entityName="interactions"
-    ></FilteredCollectionList>
+      defaultQueryParams={{
+        sortby: 'date:desc',
+        page: 1,
+      }}
+    >
+      <CollectionFilters>
+        <RoutedCheckboxGroupField
+          legend={LABELS.kind}
+          name="kind"
+          qsParam="kind"
+          options={KIND_OPTIONS}
+          selectedOptions={selectedFilters.selectedKind}
+          data-test="status-filter"
+        />
+      </CollectionFilters>
+    </FilteredCollectionList>
   )
 }
 
