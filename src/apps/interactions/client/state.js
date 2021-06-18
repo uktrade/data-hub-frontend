@@ -8,23 +8,23 @@ export const ID = 'interactionsList'
 import { buildSelectedFilters } from './filters'
 
 const parseQueryString = (queryString) => {
-  const queryStringObject = omitBy({ ...qs.parse(queryString) }, isEmpty)
+  const queryProps = omitBy({ ...qs.parse(queryString) }, isEmpty)
   return {
-    ...queryStringObject,
-    page: parseInt(queryStringObject.page || 1, 10),
+    ...queryProps,
+    page: parseInt(queryProps.page || 1, 10),
   }
 }
 
 export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
-  const queryStringObject = parseQueryString(queryString)
+  const queryProps = parseQueryString(queryString)
   const { metadata } = state[ID]
-  const selectedFilters = buildSelectedFilters(queryStringObject, metadata)
+  const selectedFilters = buildSelectedFilters(queryProps, metadata)
 
   return {
     ...state[ID],
     selectedFilters,
-    payload: queryStringObject,
+    payload: queryProps,
     optionMetadata: {
       sortOptions: [],
       ...metadata,

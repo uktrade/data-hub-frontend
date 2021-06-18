@@ -30,7 +30,7 @@ const InteractionCollection = ({
   return (
     <FilteredCollectionList
       {...props}
-      collectionName={KIND_OPTIONS.interaction.label}
+      collectionName="interaction"
       sortOptions={optionMetadata.sortOptions}
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}
@@ -46,16 +46,7 @@ const InteractionCollection = ({
           legend={LABELS.kind}
           name="kind"
           qsParam="kind"
-          options={[
-            {
-              label: KIND_OPTIONS.interaction.label,
-              value: KIND_OPTIONS.interaction.value,
-            },
-            {
-              label: KIND_OPTIONS.serviceDelivery.label,
-              value: KIND_OPTIONS.serviceDelivery.value,
-            },
-          ]}
+          options={KIND_OPTIONS}
           selectedOptions={selectedFilters.selectedKind}
           data-test="status-filter"
         />
