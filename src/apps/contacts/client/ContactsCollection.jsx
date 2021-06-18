@@ -31,7 +31,7 @@ const ContactsCollection = ({
   const collectionListTask = {
     name: TASK_GET_CONTACTS_LIST,
     id: ID,
-    progressMessage: 'loading contacts',
+    progressMessage: 'Loading contacts',
     startOnRender: {
       payload,
       onSuccessDispatch: CONTACTS__LOADED,
@@ -41,7 +41,7 @@ const ContactsCollection = ({
   const collectionListMetadataTask = {
     name: TASK_GET_CONTACTS_METADATA,
     id: ID,
-    progressMessage: 'loading metadata',
+    progressMessage: 'Loading filters',
     startOnRender: {
       onSuccessDispatch: CONTACTS__METADATA_LOADED,
     },
@@ -50,7 +50,7 @@ const ContactsCollection = ({
   return (
     <FilteredCollectionList
       {...props}
-      collectionName="Contacts"
+      collectionName="contacts"
       sortOptions={optionMetadata.sortOptions}
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}
@@ -104,7 +104,7 @@ const ContactsCollection = ({
           legend={LABELS.ukRegion}
           name="uk_region"
           qsParam="company_uk_region"
-          placeholder="Search UK regions"
+          placeholder="Search UK region"
           options={optionMetadata.ukRegionOptions}
           selectedOptions={selectedFilters.selectedCompanyUkRegions}
           data-test="uk-region-filter"
