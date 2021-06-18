@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { H3 } from '@govuk-react/heading'
 import Link from '@govuk-react/link'
-import { HEADING_SIZES, SPACING } from '@govuk-react/constants'
+import { HEADING_SIZES, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import { GREY_2 } from 'govuk-colours'
 import Badge from '../Badge/'
 import Metadata from '../../components/Metadata/'
@@ -15,12 +15,17 @@ const ItemWrapper = styled('div')`
 `
 
 const StyledBadgesWrapper = styled('div')`
-  float: right;
+  margin-bottom: ${SPACING.SCALE_2};
+
   & > * {
     margin-right: ${SPACING.SCALE_1};
     &:last-child {
       margin-right: 0;
     }
+  }
+
+  ${MEDIA_QUERIES.TABLET} {
+    float: right;
   }
 `
 

@@ -26,7 +26,7 @@ export const SORT_OPTIONS = [
     value: 'modified_on:asc',
   },
   {
-    name: 'Company name: A-Z',
+    name: 'Company A-Z',
     value: 'name:asc',
   },
   {
