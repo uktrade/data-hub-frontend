@@ -19,7 +19,7 @@ const buildQueryString = (queryParams = {}) =>
     ...queryParams,
   })
 
-const taskParams = {
+const minimumPayload = {
   limit: 10,
   offset: 0,
   sortby: 'date:desc',
@@ -31,7 +31,7 @@ describe('Interactions Collections Filter', () => {
       cy.intercept('POST', '/api-proxy/v3/search/interaction').as('apiRequest')
       cy.visit(interactions.react())
       cy.wait('@apiRequest').then(({ request }) => {
-        expect(request.body).to.deep.equal(taskParams)
+        expect(request.body).to.deep.equal(minimumPayload)
       })
     })
   })
@@ -45,17 +45,17 @@ describe('Interactions Collections Filter', () => {
       cy.visit(`${interactions.react()}?${queryParams}`)
 
       assertPayload('@apiRequest', {
-        ...taskParams,
+        ...minimumPayload,
         kind: ['interaction', 'service_delivery'],
       })
       assertCheckboxGroupOption({
         element,
-        value: 'Interaction',
+        value: 'interaction',
         checked: true,
       })
       assertCheckboxGroupOption({
         element,
-        value: 'Service delivery',
+        value: 'service_delivery',
         checked: true,
       })
       assertChipExists({ label: 'Interaction', position: 1 })
@@ -72,7 +72,7 @@ describe('Interactions Collections Filter', () => {
         value: 'interaction',
       })
       assertPayload('@apiRequest', {
-        ...taskParams,
+        ...minimumPayload,
         kind: ['interaction'],
       })
       clickCheckboxGroupOption({
@@ -80,7 +80,7 @@ describe('Interactions Collections Filter', () => {
         value: 'service_delivery',
       })
       assertPayload('@apiRequest', {
-        ...taskParams,
+        ...minimumPayload,
         kind: ['interaction', 'service_delivery'],
       })
 
@@ -90,7 +90,7 @@ describe('Interactions Collections Filter', () => {
       removeChip('interaction')
       cy.wait('@apiRequest')
       removeChip('service_delivery')
-      assertPayload('@apiRequest', taskParams)
+      assertPayload('@apiRequest', minimumPayload)
       assertChipsEmpty()
       assertFieldEmpty(element)
     })
