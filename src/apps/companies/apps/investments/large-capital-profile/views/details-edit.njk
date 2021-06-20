@@ -20,7 +20,7 @@
         text: 'Investor type'
       },
       attributes: {
-        'data-auto-id': 'investorType'
+        'data-test': 'investorType'
       },
       items: profile.investorDetails.investorType.items
     })
@@ -37,7 +37,7 @@
         text: 'Enter value in US dollars'
       },
       attributes: {
-        'data-auto-id': 'globalAssetsUnderManagement'
+        'data-test': 'globalAssetsUnderManagement'
       },
       value: profile.investorDetails.globalAssetsUnderManagement.value
     })
@@ -54,7 +54,7 @@
         text: 'Enter value in US dollars'
       },
       attributes: {
-        'data-auto-id': 'investableCapital'
+        'data-test': 'investableCapital'
       },
       value: profile.investorDetails.investableCapital.value
     })
@@ -71,7 +71,7 @@
         classes: 'investor-description'
       },
       attributes: {
-        'data-auto-id': 'investorDescription'
+        'data-test': 'investorDescription'
       },
       value: profile.investorDetails.investorDescription.value
     })
@@ -93,7 +93,7 @@
           text: 'For example, 12 11 2015'
         },
         attributes: {
-          'data-auto-id': ('requiredChecks' + props.text) | camelCase
+          'data-test': ('requiredChecks' + props.text) | camelCase
         },
         items: [
           {
@@ -143,7 +143,7 @@
         }
       },
       attributes: {
-        'data-auto-id': 'requiredChecks'
+        'data-test': 'requiredChecks'
       },
       items: [
         {
