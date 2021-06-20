@@ -6,7 +6,7 @@
  #}
 {% macro TabbedLocalNav(props) %}
   {% if props %}
-    <nav class="govuk-tabs" aria-label="local navigation" data-auto-id="tabbedLocalNav">
+    <nav class="govuk-tabs" aria-label="local navigation" data-test="tabbedLocalNav">
       <ul class="govuk-tabs__list govuk-tabs__list--full">
         {% for item in props.items %}
           <li class="govuk-tabs__list-item govuk-tabs__list-item--full">

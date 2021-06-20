@@ -28,7 +28,7 @@ const Main = ({ children, ...props }) => (
     {...props}
     role="main"
     id="main-content"
-    data-auto-id="bodyMainContent"
+    data-test="bodyMainContent"
   >
     <InnerContainer>{children}</InnerContainer>
   </OuterContainer>

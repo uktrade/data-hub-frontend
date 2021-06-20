@@ -1,12 +1,12 @@
 <div class="c-details-container"
   {% if props.dataAutoId %}
-    data-auto-id="{{ props.dataAutoId }}"
+    data-test="{{ props.dataAutoId }}"
   {% endif %}
 >
   {% if props.heading %}
     <h2 class="govuk-heading-m" style="margin-bottom: 0"
     {% if props.dataAutoId %}
-      data-auto-id="{{ props.dataAutoId }}-heading"
+      data-test="{{ props.dataAutoId }}-heading"
     {% endif %}
     >{{ props.heading }}</h2>
   {% endif %}
@@ -18,7 +18,7 @@
   {% if caller %}
     <div class="c-details-container__content"
     {% if props.dataAutoId %}
-      data-auto-id="{{ props.dataAutoId }}-content"
+      data-test="{{ props.dataAutoId }}-content"
     {% endif %}
     >
       {{ caller() }}

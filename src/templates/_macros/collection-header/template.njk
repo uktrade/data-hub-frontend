@@ -33,7 +33,7 @@
         {% endif %}
 
         {% for actionButton in actionButtons %}
-          <a class="govuk-button govuk-button--secondary" href="{{ actionButton.url }}" data-auto-id="{{ actionButton.label }}">{{ actionButton.label }}</a>
+          <a class="govuk-button govuk-button--secondary" href="{{ actionButton.url }}" data-test="{{ actionButton.label }}">{{ actionButton.label }}</a>
         {% endfor %}
       </div>
     {% endif %}
