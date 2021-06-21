@@ -9,7 +9,7 @@ const {
 describe('Event attendee search', () => {
   beforeEach(() => {
     cy.visit(urls.events.find(fixtures.event.oneDayExhibition.id))
-    cy.get('[data-auto-id="bodyMainContent"] h2')
+    cy.get('[data-test="bodyMainContent"] h2')
       .as('header')
       .next()
       .as('form')

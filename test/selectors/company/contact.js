@@ -1,5 +1,5 @@
 module.exports = {
-  add: '[data-auto-id="Add contact"]',
+  add: '[data-test="Add contact"]',
   name: '#field-first_name',
   lastName: '#field-last_name',
   jobTitle: '#field-job_title',

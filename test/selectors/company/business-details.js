@@ -1,7 +1,7 @@
 module.exports = () => {
   return {
     hierarchy: '[data-test="businessHierarchyDetailsContainer"]',
-    unarchiveLink: '[data-auto-id="bodyMainContent"] .c-message a',
+    unarchiveLink: '[data-test="bodyMainContent"] .c-message a',
     whereDoesInformation: '[data-test="businessDetailsWhereDoesInformation"]',
     address: (cellNumber) => {
       const cellSelector = `[data-test="addressesDetailsContainer"] tr td:nth-child(${cellNumber})`
