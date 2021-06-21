@@ -39,7 +39,7 @@ const InteractionCollection = ({
   const adviserListTask = {
     name: TASK_GET_INTERACTIONS_ADVISER_NAME,
     id: ID,
-    progressMessage: 'loading advisers',
+    progressMessage: 'Loading advisers',
     startOnRender: {
       payload: payload.adviser,
       onSuccessDispatch: INTERACTIONS_SELECTED_ADVISERS,
@@ -71,7 +71,7 @@ const InteractionCollection = ({
         <RoutedAdvisersTypeahead
           taskProps={adviserListTask}
           isMulti={true}
-          legend="Advisers"
+          legend={LABELS.advisers}
           name="adviser"
           qsParam="adviser"
           placeholder="Search advisers"
