@@ -12,7 +12,7 @@ describe('LEP add Investment Project interaction', () => {
       )
     })
     it('should have the correct url', () => {
-      cy.get('[data-auto-id="Add interaction"]')
+      cy.get('[data-test="Add interaction"]')
         .click()
         .location('pathname')
         .should(

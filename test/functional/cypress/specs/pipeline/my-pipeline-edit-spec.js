@@ -28,10 +28,7 @@ describe('Pipeline edit form', () => {
     })
 
     it('should render the heading', () => {
-      cy.get('[data-auto-id="localHeader"] h1').should(
-        'have.text',
-        'Edit project'
-      )
+      cy.get('[data-test="localHeader"] h1').should('have.text', 'Edit project')
     })
 
     it('should render 404 error message', () => {
@@ -55,7 +52,7 @@ describe('Pipeline edit form', () => {
       })
 
       it('should render the heading', () => {
-        cy.get('[data-auto-id="localHeader"] h1').should(
+        cy.get('[data-test="localHeader"] h1').should(
           'have.text',
           `Edit project`
         )
@@ -142,7 +139,7 @@ describe('Pipeline edit form', () => {
       })
 
       it('should render the heading', () => {
-        cy.get('[data-auto-id="localHeader"] h1').should(
+        cy.get('[data-test="localHeader"] h1').should(
           'have.text',
           'Edit project'
         )

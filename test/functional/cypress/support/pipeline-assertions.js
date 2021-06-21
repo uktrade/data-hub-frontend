@@ -14,7 +14,7 @@ function getItems(acc, item) {
 }
 
 function assertSummaryTable({ dataAutoId, caption, content }) {
-  cy.get(`[data-auto-id="${dataAutoId}"]`)
+  cy.get(`[data-test="${dataAutoId}"]`)
     .find('caption')
     .should('contain', caption)
 

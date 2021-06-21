@@ -1,7 +1,7 @@
 const urls = require('../../../src/lib/urls')
 
 module.exports = () => {
-  const bodyMainContentSelector = '[data-auto-id="bodyMainContent"]'
+  const bodyMainContentSelector = '[data-test="bodyMainContent"]'
 
   return {
     interaction: {
