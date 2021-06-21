@@ -42,6 +42,7 @@ import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyLocalHeader from './components/CompanyLocalHeader'
 import CompaniesCollection from '../apps/companies/client/CompaniesCollection.jsx'
 import ContactsCollection from '../apps/contacts/client/ContactsCollection.jsx'
+import EventsCollection from '../apps/events/client/EventsCollection.jsx'
 import InteractionsCollection from '../apps/interactions/client/InteractionsCollection'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 import Opportunities from '../apps/investments/client/opportunities/Details/Opportunities.jsx'
@@ -403,6 +404,9 @@ function App() {
       </Mount>
       <Mount selector="#contacts-collection">
         {(props) => <ContactsCollection {...props} />}
+      </Mount>
+      <Mount selector="#events-collection">
+        {(props) => <EventsCollection {...props} />}
       </Mount>
       <Mount selector="#interactions-collection">
         {(props) => <InteractionsCollection {...props} />}
