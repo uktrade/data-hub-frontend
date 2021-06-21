@@ -19,7 +19,7 @@
 {% block main_grid_right_column %}
   {{ super() }}
 
-  {% call DetailsContainer({ heading: 'Investment project summary', dataAutoId: 'summaryContainer' }) %}
+  {% call DetailsContainer({ heading: 'Investment project summary', dataTest: 'summaryContainer' }) %}
     {% component 'key-value-table', items=details, variant='striped' %}
     {{ renderButton('details', 'Edit summary', true) }}
   {% endcall %}
@@ -40,7 +40,7 @@
 
   {% endcall %}
 
-  {% call DetailsContainer({ heading: 'Value', dataAutoId: 'valueContainer' }) %}
+  {% call DetailsContainer({ heading: 'Value', dataTest: 'valueContainer' }) %}
     {% if values | length > 1 %}
       {% component 'key-value-table', items=values, variant='striped' %}
       {{ renderButton('value', 'Edit value', true) }}

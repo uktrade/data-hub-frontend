@@ -78,8 +78,8 @@
 
 {% if items | length %}
   <table class="table--key-value{{ ' table--' + variant if variant }}"
-    {% if dataAutoId %}
-      data-test="{{ dataAutoId }}"
+    {% if dataTest %}
+      data-test="{{ dataTest }}"
     {% endif %}
   >
     <tbody>

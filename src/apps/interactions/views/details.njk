@@ -6,7 +6,7 @@
 {% set kindPath = interaction.kind | kebabCase %}
 
 {% block main_grid_right_column %}
-  {% component 'key-value-table', variant='striped', items=interactionViewRecord, dataAutoId='interactionDetails' %}
+  {% component 'key-value-table', variant='striped', items=interactionViewRecord, dataTest='interactionDetails' %}
 
   <div class="c-form-actions">
     {% if canComplete %}
