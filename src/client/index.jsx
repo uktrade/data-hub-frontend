@@ -176,6 +176,7 @@ import {
 
 import Footer from '../client/components/Footer'
 
+import ContactForm from '../client/components/ContactForm'
 import resourceTasks from '../client/components/Resource/tasks'
 
 function parseProps(domNode) {
@@ -455,6 +456,7 @@ function App() {
         {(props) => <InteractionsCollection {...props} />}
       </Mount>
       <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
+      <Mount selector="#contact-form" children={ContactForm} />
     </Provider>
   )
 }
