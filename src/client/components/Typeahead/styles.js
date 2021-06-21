@@ -75,6 +75,7 @@ const defaultStyles = {
     padding: 0,
   }),
   placeholder: (styles) => ({
+    whiteSpace: 'nowrap',
     ...styles,
     fontSize: FONT_SIZE.SIZE_16,
     color: GREY_1,
