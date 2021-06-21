@@ -29,7 +29,9 @@ describe('Companies add company transformers', () => {
       it('should transform the request body', () => {
         expect(actual).to.deep.equal({
           address: {
-            area: 'area',
+            area: {
+              id: 'area',
+            },
             country: {
               id: 'country',
             },
@@ -67,13 +69,15 @@ describe('Companies add company transformers', () => {
           uk_region: '2',
           area: 'area',
           sector: '3',
-        })
+              })
       })
 
       it('should transform the request body with empty strings', () => {
         expect(actual).to.deep.equal({
           address: {
-            area: 'area',
+            area: {
+              id: 'area',
+            },
             country: {
               id: 'country',
             },
@@ -108,6 +112,7 @@ describe('Companies add company transformers', () => {
           postcode: 'postcode',
           area: 'area',
           country: 'country',
+          area: 'area',
         },
         '123'
       )
@@ -124,7 +129,9 @@ describe('Companies add company transformers', () => {
             town: 'town',
             county: 'county',
             postcode: 'postcode',
-            area: 'area',
+            area: {
+              id: 'area',
+            },
             country: 'country',
           },
         })

@@ -25,7 +25,7 @@ const transformFormData = (
       county: county || '',
       postcode: postcode,
       country: countryAsObject ? { id: country } : country,
-      area: area,
+      area: { id: area },
     },
   }
 }
