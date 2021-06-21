@@ -28,10 +28,6 @@ const transformCompanyToListItem = ({
   global_headquarters,
   latest_interaction_date,
 } = {}) => {
-  if (!id) {
-    return
-  }
-
   const metadata = [
     {
       label: 'Sector',

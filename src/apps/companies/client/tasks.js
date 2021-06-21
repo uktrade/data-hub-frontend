@@ -29,7 +29,7 @@ const getCompanies = ({
   axios
     .post('/api-proxy/v4/search/company', {
       limit,
-      offset: limit * (parseInt(page, 10) - 1) || 0,
+      offset: limit * (page - 1) || 0,
       headquarter_type,
       name,
       sector_descends,

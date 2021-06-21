@@ -37,6 +37,7 @@ const ALLOWLIST = [
   '/v4/search/company',
   '/v4/search/large-capital-opportunity',
   '/v3/search/interaction',
+  '/v3/search/event',
 ]
 
 module.exports = (app) => {
