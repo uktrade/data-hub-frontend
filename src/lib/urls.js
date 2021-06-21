@@ -227,6 +227,10 @@ module.exports = {
     ),
   },
   events: {
+    // React routes (Work in progress) - to be released on completion
+    react: {
+      index: url('/events', '/react'),
+    },
     index: url('/events'),
     create: url('/events/create'),
     details: url('/events', '/:eventId/details'),
