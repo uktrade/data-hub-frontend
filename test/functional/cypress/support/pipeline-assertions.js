@@ -13,12 +13,10 @@ function getItems(acc, item) {
   return acc
 }
 
-function assertSummaryTable({ dataAutoId, caption, content }) {
-  cy.get(`[data-test="${dataAutoId}"]`)
-    .find('caption')
-    .should('contain', caption)
+function assertSummaryTable({ dataTest, caption, content }) {
+  cy.get(`[data-test="${dataTest}"]`).find('caption').should('contain', caption)
 
-  assertKeyValueTable(dataAutoId, content)
+  assertKeyValueTable(dataTest, content)
 }
 
 const STATUS_ITEMS = STATUS_VALUES.reduce(getItems, {})
@@ -71,7 +69,7 @@ module.exports = {
       }
 
       assertSummaryTable({
-        dataAutoId: 'bodyMainContent',
+        dataTest: 'bodyMainContent',
         caption: 'Project details',
         content,
       })
