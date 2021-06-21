@@ -127,15 +127,13 @@ describe('Interactions Collections Filter', () => {
     })
 
     it('should filter from user input and remove chips', () => {
-      const queryParams = buildQueryString()
+      const queryString = buildQueryString()
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
-      cy.visit(`${interactions.react()}?${queryParams}`)
+      cy.visit(`${interactions.react()}?${queryString}`)
       cy.wait('@apiRequest')
 
       selectFirstAdvisersTypeaheadOption({ element, input: adviserName })
-      cy.wait('@apiRequest').then(({ request }) => {
-        expect(request.body).to.deep.equal(expectedPayload)
-      })
+      assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('adviser', [adviserId])
       assertChipExists({
         label: adviserName,

@@ -11,5 +11,6 @@ export const buildSelectedFilters = ({ queryParams, selectedAdvisers }) => ({
   selectedAdvisers: selectedAdvisers.map(({ advisers }) => ({
     label: advisers.name,
     value: advisers.id,
+    categoryLabel: LABELS.advisers,
   })),
 })
