@@ -116,6 +116,7 @@ const transformFormToChangeRequest = (company, formValues) => {
 // The API expects to receive only the values that have changed.
 const transformFormToDnbChangeRequest = (company, formValues) => {
   const obj = transformFormToChangeRequest(company, formValues)
+
   const address = omitBy(
     {
       line_1: obj.address1,
@@ -131,7 +132,6 @@ const transformFormToDnbChangeRequest = (company, formValues) => {
   delete obj.address1
   delete obj.address2
   delete obj.city
-  delete obj.area
   delete obj.county
   delete obj.area
   delete obj.postcode
@@ -159,6 +159,7 @@ const transformFormToDnbChangeRequest = (company, formValues) => {
   if (!isEmpty(address)) {
     dnbChangeRequest.address = address
   }
+
   return dnbChangeRequest
 }
 
