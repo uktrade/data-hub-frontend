@@ -25,7 +25,7 @@ module.exports = {
     header: '[data-test="assign-team-members-header"]',
     typeahead: '[data-typeahead-type="adviser"]',
     teamRole: '[data-test="team-role"]',
-    save: '[data-auto-id="team-members-save"]',
+    save: '[data-test="submit"]',
     table: '[data-test="project-specialist-team-members-content"]',
   },
 }
