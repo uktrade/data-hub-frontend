@@ -104,6 +104,9 @@ import contactsReducer from '../apps/contacts/client/reducer'
 import { ID as INTERACTIONS_ID } from '../apps/interactions/client/state'
 import interactionsReducer from '../apps/interactions/client/reducer'
 
+import { ID as EVENTS_ID } from '../apps/events/client/state'
+import eventsReducer from '../apps/events/client/reducer'
+
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
 
 import RoutedInput from './components/RoutedInput'
@@ -163,6 +166,7 @@ const store = createStore(
     [INVESTMENT_REMINDERS_ID]: investmentRemindersReducer,
     [CONTACTS_ID]: contactsReducer,
     [INTERACTIONS_ID]: interactionsReducer,
+    [EVENTS_ID]: eventsReducer,
   }),
   {
     referrerUrl: window.document.referrer,

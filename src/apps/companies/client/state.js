@@ -13,10 +13,10 @@ import { COMPANY_STATUS_OPTIONS, SORT_OPTIONS } from './constants'
 import { transformArchivedToApi, transformPostcodeToApi } from './transformers'
 
 const parseQueryString = (queryString) => {
-  const queryStringObject = omitBy({ ...qs.parse(queryString) }, isEmpty)
+  const queryParams = omitBy({ ...qs.parse(queryString) }, isEmpty)
   return {
-    ...queryStringObject,
-    page: parseInt(queryStringObject.page || 1, 10),
+    ...queryParams,
+    page: parseInt(queryParams.page || 1, 10),
   }
 }
 
