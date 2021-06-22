@@ -146,7 +146,10 @@ import {
   TASK_GET_CONTACTS_METADATA,
 } from '../apps/contacts/client/state'
 
-import { TASK_GET_INTERACTIONS_LIST } from '../apps/interactions/client/state'
+import {
+  TASK_GET_INTERACTIONS_LIST,
+  TASK_GET_INTERACTIONS_ADVISER_NAME,
+} from '../apps/interactions/client/state'
 
 import Footer from '../client/components/Footer'
 
@@ -237,6 +240,7 @@ function App() {
         [TASK_GET_CONTACTS_LIST]: getContacts,
         [TASK_GET_CONTACTS_METADATA]: getContactsMetadata,
         [TASK_GET_INTERACTIONS_LIST]: getInteractions,
+        [TASK_GET_INTERACTIONS_ADVISER_NAME]: getAdviserNames,
       }}
     >
       <Mount selector="#add-company-form">

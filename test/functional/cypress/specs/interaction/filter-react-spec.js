@@ -2,7 +2,11 @@ import qs from 'qs'
 
 import { interactions } from '../../../../../src/lib/urls'
 
-import { clickCheckboxGroupOption, removeChip } from '../../support/actions'
+import {
+  clickCheckboxGroupOption,
+  removeChip,
+  selectFirstAdvisersTypeaheadOption,
+} from '../../support/actions'
 import {
   assertQueryParams,
   assertPayload,
@@ -25,10 +29,12 @@ const minimumPayload = {
   sortby: 'date:desc',
 }
 
+const interactionsSearchEndpoint = '/api-proxy/v3/search/interaction'
+
 describe('Interactions Collections Filter', () => {
   context('Default Params', () => {
     it('should set the default params', () => {
-      cy.intercept('POST', '/api-proxy/v3/search/interaction').as('apiRequest')
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
       cy.visit(interactions.react())
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body).to.deep.equal(minimumPayload)
@@ -38,7 +44,7 @@ describe('Interactions Collections Filter', () => {
   context('Interaction Kind', () => {
     const element = '[data-test="status-filter"]'
     it('should filter from the url', () => {
-      cy.intercept('POST', '/api-proxy/v3/search/interaction').as('apiRequest')
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
       const queryParams = buildQueryString({
         kind: ['interaction', 'service_delivery'],
       })
@@ -63,7 +69,7 @@ describe('Interactions Collections Filter', () => {
 
     it('should filter from user input and remove the chips', () => {
       const queryString = buildQueryString()
-      cy.intercept('POST', '/api-proxy/v3/search/interaction').as('apiRequest')
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
       cy.visit(`${interactions.react()}?${queryString}`)
       cy.wait('@apiRequest')
 
@@ -91,6 +97,52 @@ describe('Interactions Collections Filter', () => {
       cy.wait('@apiRequest')
       removeChip('service_delivery')
       assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
+  context('Advisers', () => {
+    const element = '[data-test="adviser-filter"]'
+    const adviserId = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
+    const adviserName = 'Puck Head'
+    const expectedPayload = {
+      offset: 0,
+      limit: 10,
+      sortby: 'date:desc',
+      dit_participants__adviser: [adviserId],
+    }
+
+    it('should filter from the url', () => {
+      const queryParams = buildQueryString({
+        adviser: [adviserId],
+      })
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.visit(`${interactions.react()}?${queryParams}`)
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body).to.deep.equal(expectedPayload)
+      })
+      cy.get(element).should('contain', adviserName)
+      assertChipExists({ label: adviserName, position: 1 })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.visit(`${interactions.react()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      selectFirstAdvisersTypeaheadOption({ element, input: adviserName })
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('adviser', [adviserId])
+      assertChipExists({
+        label: adviserName,
+        position: 1,
+      })
+      removeChip(adviserId)
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body).to.deep.equal(minimumPayload)
+      })
       assertChipsEmpty()
       assertFieldEmpty(element)
     })
