@@ -2,7 +2,7 @@ const { expect } = require('chai')
 const urls = require('../../../../../src/lib/urls')
 
 const csvHeadings = {
-  companies: `Name,Link,Sector,Country,UK region,Countries exported to,Countries of interest,Archived,Date created,Number of employees,Annual turnover,Headquarter type`,
+  companies: `Name,Link,Sector,Country,Area,UK region,Countries exported to,Countries of interest,Archived,Date created,Number of employees,Annual turnover,Headquarter type`,
   contacts: `Name,Job title,Date created,Archived,Link,Company,Company sector,Company link,Company UK region,Country,Postcode,Phone number,Email address,Accepts DIT email marketing,Date of latest interaction,Teams of latest interaction,Created by team`,
   interactions: `Date,Type,Service,Subject,Link,Company,Company link,Company country,Company UK region,Company sector,Contacts,Advisers,Event,Communication channel,Service delivery status,Net company receipt,Policy issue types,Policy areas,Policy feedback notes`,
   investment_projects: `Date created,Project reference,Project name,Investor company,Investor company town or city,Country of origin,Investment type,Status,Stage,Link,Actual land date,Estimated land date,FDI value,Sector,Date of latest interaction,Project manager,Client relationship manager,Global account manager,Project assurance adviser,Other team members,Delivery partners,Possible UK regions,Actual UK regions,Specific investment programme,Referral source activity,Referral source activity website,Total investment,New jobs,Average salary of new jobs,Safeguarded jobs,Level of involvement,R&D budget,Associated non-FDI R&D project,New to world tech,Likelihood to land,FDI type,Foreign equity investment,GVA multiplier,GVA`,
