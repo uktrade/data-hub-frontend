@@ -2,6 +2,8 @@ import { omitBy, isEmpty } from 'lodash'
 import qs from 'qs'
 
 export const TASK_GET_INTERACTIONS_LIST = 'TASK_GET_INTERACTIONS_LIST'
+export const TASK_GET_INTERACTIONS_ADVISER_NAME =
+  'TASK_GET_INTERACTIONS_ADVISER_NAME'
 
 export const ID = 'interactionsList'
 
@@ -17,17 +19,23 @@ const parseQueryString = (queryString) => {
 
 export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
-  const queryProps = parseQueryString(queryString)
-  const { metadata } = state[ID]
-  const selectedFilters = buildSelectedFilters(queryProps, metadata)
+  const queryParams = parseQueryString(queryString)
+
+  const { selectedAdvisers, metadata } = state[ID]
+
+  const selectedFilters = buildSelectedFilters({
+    queryParams,
+    metadata,
+    selectedAdvisers,
+  })
 
   return {
     ...state[ID],
-    selectedFilters,
-    payload: queryProps,
+    payload: queryParams,
     optionMetadata: {
       sortOptions: [],
       ...metadata,
     },
+    selectedFilters,
   }
 }
