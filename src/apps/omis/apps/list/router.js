@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const urls = require('../../../../lib/urls')
 
 const { ENTITIES } = require('../../../search/constants')
 
@@ -12,6 +13,7 @@ const { setDefaultQuery } = require('../../../middleware')
 const { getRequestBody } = require('../../../../middleware/collection')
 
 const { renderList } = require('./controllers')
+const { renderOrdersView } = require('./orders')
 const { setRequestBody } = require('./middleware')
 const { transformOrderToListItem } = require('../../transformers')
 
@@ -26,6 +28,9 @@ router.get(
   getCollection('order', ENTITIES, transformOrderToListItem),
   renderList
 )
+
+// New react route (to replace the old companies list route above when complete)
+router.get(urls.omis.react.index.route, renderOrdersView)
 
 router.get(
   '/export',
