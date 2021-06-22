@@ -60,7 +60,7 @@ async function postEditCompany(req, res, next) {
     const dataHubChanges = transformFormToApi(company, req.body)
 
     const dnbChanges = company.duns_number
-      ? transformFormToDnbChangeRequest(company, req.body)
+      ? transformFormToDnbChangeRequest(company, req.body, res)
       : {}
 
     // No changes

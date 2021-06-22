@@ -77,12 +77,16 @@ async function postAddDnbCompanyInvestigation(req, res, next) {
   try {
     // 1. Saves a stubbed record in Data Hub.
     // 2. Sends a single notification to request an investigation.
-    const stubCompany = transformToDnbStubCompany(body)
+    const stubCompany = transformToDnbStubCompany(body, res)
     const company = await saveCompany(req, stubCompany)
 
     // 1. Creates a record which is proxied through to the DnB Service.
     // 2. Generates an excel spreadsheet for the support team to investigate.
-    const create = transformToCreateDnbCompanyInvestigation(body, company.id)
+    const create = transformToCreateDnbCompanyInvestigation(
+      body,
+      company.id,
+      res
+    )
     await createDnbCompanyInvestigation(req, create)
 
     req.flash('success', 'Company added to Data Hub')

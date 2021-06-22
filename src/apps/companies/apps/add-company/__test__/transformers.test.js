@@ -9,21 +9,24 @@ describe('Companies add company transformers', () => {
       let actual
 
       beforeEach(() => {
-        actual = transformToDnbStubCompany({
-          business_type: '1',
-          name: 'name',
-          website: 'website',
-          telephone_number: '123',
-          address1: 'line 1',
-          address2: 'line 2',
-          city: 'town',
-          county: 'county',
-          postcode: 'postcode',
-          country: 'country',
-          uk_region: '2',
-          sector: '3',
-          area: 'area',
-        })
+        actual = transformToDnbStubCompany(
+          {
+            business_type: '1',
+            name: 'name',
+            website: 'website',
+            telephone_number: '123',
+            address1: 'line 1',
+            address2: 'line 2',
+            city: 'town',
+            county: 'county',
+            postcode: 'postcode',
+            country: 'country',
+            uk_region: '2',
+            sector: '3',
+            area: 'area',
+          },
+          { locals: { features: { 'address-area-company-search': true } } }
+        )
       })
 
       it('should transform the request body', () => {
@@ -55,21 +58,24 @@ describe('Companies add company transformers', () => {
       let actual
 
       beforeEach(() => {
-        actual = transformToDnbStubCompany({
-          business_type: '1',
-          name: 'name',
-          website: 'website',
-          telephone_number: '123',
-          address1: 'line 1',
-          address2: null,
-          city: 'town',
-          county: null,
-          postcode: 'postcode',
-          country: 'country',
-          uk_region: '2',
-          area: 'area',
-          sector: '3',
-              })
+        actual = transformToDnbStubCompany(
+          {
+            business_type: '1',
+            name: 'name',
+            website: 'website',
+            telephone_number: '123',
+            address1: 'line 1',
+            address2: null,
+            city: 'town',
+            county: null,
+            postcode: 'postcode',
+            country: 'country',
+            uk_region: '2',
+            sector: '3',
+            area: 'area',
+          },
+          { locals: { features: { 'address-area-company-search': true } } }
+        )
       })
 
       it('should transform the request body with empty strings', () => {
@@ -84,6 +90,52 @@ describe('Companies add company transformers', () => {
             county: '',
             line_1: 'line 1',
             line_2: '',
+            postcode: 'postcode',
+            town: 'town',
+          },
+          business_type: '1',
+          name: 'name',
+          sector: '3',
+          telephone_number: '123',
+          uk_region: '2',
+          website: 'website',
+        })
+      })
+    })
+
+    context('when address-area-company-search feature flag is false', () => {
+      let actual
+
+      beforeEach(() => {
+        actual = transformToDnbStubCompany(
+          {
+            business_type: '1',
+            name: 'name',
+            website: 'website',
+            telephone_number: '123',
+            address1: 'line 1',
+            address2: 'line 2',
+            city: 'town',
+            county: 'county',
+            postcode: 'postcode',
+            country: 'country',
+            uk_region: '2',
+            sector: '3',
+            area: 'area',
+          },
+          { locals: { features: { 'address-area-company-search': false } } }
+        )
+      })
+
+      it('should omit the area field', () => {
+        expect(actual).to.deep.equal({
+          address: {
+            country: {
+              id: 'country',
+            },
+            county: 'county',
+            line_1: 'line 1',
+            line_2: 'line 2',
             postcode: 'postcode',
             town: 'town',
           },
@@ -114,7 +166,8 @@ describe('Companies add company transformers', () => {
           country: 'country',
           area: 'area',
         },
-        '123'
+        '123',
+        { locals: { features: { 'address-area-company-search': true } } }
       )
 
       it('should transform the request body', () => {
@@ -132,6 +185,42 @@ describe('Companies add company transformers', () => {
             area: {
               id: 'area',
             },
+            country: 'country',
+          },
+        })
+      })
+    })
+
+    context('when address-area-company-search feature flag is false', () => {
+      let actual = transformToCreateDnbCompanyInvestigation(
+        {
+          name: 'name',
+          website: 'website',
+          telephone_number: '123',
+          address1: 'line 1',
+          address2: 'line 2',
+          city: 'town',
+          county: 'county',
+          postcode: 'postcode',
+          country: 'country',
+          area: 'area',
+        },
+        '123',
+        { locals: { features: { 'address-area-company-search': false } } }
+      )
+
+      it('should omit the area field', () => {
+        expect(actual).to.deep.equal({
+          company: '123',
+          name: 'name',
+          website: 'website',
+          telephone_number: '123',
+          address: {
+            line_1: 'line 1',
+            line_2: 'line 2',
+            town: 'town',
+            county: 'county',
+            postcode: 'postcode',
             country: 'country',
           },
         })

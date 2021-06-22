@@ -12,6 +12,7 @@ const transformFormData = (
     country,
     area,
   },
+  res,
   countryAsObject = true
 ) => {
   return {
@@ -25,23 +26,25 @@ const transformFormData = (
       county: county || '',
       postcode: postcode,
       country: countryAsObject ? { id: country } : country,
-      area: { id: area },
+      ...(res.locals.features['address-area-company-search'] && {
+        area: { id: area },
+      }),
     },
   }
 }
 
-const transformToDnbStubCompany = (formData) => {
+const transformToDnbStubCompany = (formData, res) => {
   return {
-    ...transformFormData(formData),
+    ...transformFormData(formData, res),
     business_type: formData.business_type,
     uk_region: formData.uk_region,
     sector: formData.sector,
   }
 }
 
-const transformToCreateDnbCompanyInvestigation = (formData, companyId) => {
+const transformToCreateDnbCompanyInvestigation = (formData, companyId, res) => {
   return {
-    ...transformFormData(formData, false),
+    ...transformFormData(formData, res, false),
     company: companyId,
   }
 }
