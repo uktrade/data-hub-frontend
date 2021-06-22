@@ -17,10 +17,6 @@ const transformEventToListItem = ({
   uk_region,
   disabled_on,
 } = {}) => {
-  if (!id) {
-    return
-  }
-
   const metadata = [
     {
       label: 'Type',

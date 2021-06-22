@@ -110,6 +110,10 @@ function FilteredCollectionHeader({
           qsParamName="adviser"
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedOrganisers}
+          qsParamName="organiser"
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedSectors}
           qsParamName="sector_descends"
         />

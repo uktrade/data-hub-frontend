@@ -1,4 +1,9 @@
-export const LABELS = {}
+export const LABELS = {
+  eventName: 'Event name',
+  organiser: 'Organiser',
+  country: 'Country',
+  ukRegion: 'UK region',
+}
 
 export const SORT_OPTIONS = [
   {

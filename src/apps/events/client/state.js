@@ -2,6 +2,8 @@ import { omitBy, isEmpty } from 'lodash'
 import qs from 'qs'
 
 export const TASK_GET_EVENTS_LIST = 'TASK_GET_EVENTS_LIST'
+export const TASK_GET_EVENTS_METADATA = 'TASK_GET_EVENTS_METADATA'
+export const TASK_GET_EVENTS_ORGANISER_NAME = 'TASK_GET_EVENTS_ORGANISER_NAME'
 
 export const ID = 'eventsList'
 
@@ -23,11 +25,12 @@ export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
   const queryParams = parseQueryString(queryString)
 
-  const { metadata } = state[ID]
+  const { metadata, selectedOrganisers } = state[ID]
 
   const selectedFilters = buildSelectedFilters({
     queryParams,
     metadata,
+    selectedOrganisers,
   })
 
   return {
