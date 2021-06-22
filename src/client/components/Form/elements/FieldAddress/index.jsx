@@ -12,11 +12,14 @@ import styled from 'styled-components'
 import { useFormContext } from '../../hooks'
 import useAddressSearch from '../../../AddressSearch/useAddressSearch'
 import usePostcodeLookup from '../../../AddressSearch/usePostcodeLookup'
+import useAdministrativeAreaLookup, {
+  filterAreaDataByCountry,
+} from '../../../AdministrativeAreaSearch/useAdministrativeAreaLookup'
+import useAdministrativeAreaSearch from '../../../AdministrativeAreaSearch/useAdministrativeAreaSearch'
 import FieldInput from '../FieldInput'
 import FieldUneditable from '../FieldUneditable'
 import FieldWrapper from '../FieldWrapper'
 import StatusMessage from '../../../StatusMessage'
-import axios from 'axios'
 import { transformObjectToOption } from '../../../../../apps/transformers'
 import FieldSelect from '../FieldSelect'
 
@@ -41,44 +44,49 @@ const FieldAddress = ({
   apiEndpoint,
   onSelectUKAddress,
 }) => {
+  const findAdministrativeAreas = useAdministrativeAreaLookup()
   const findAddress = usePostcodeLookup(apiEndpoint)
   const { onAddressSearch, isSubmitting, error, addressList } =
     useAddressSearch(findAddress)
+  const {
+    onAdministrativeAreaSearch,
+    administrativeAreaSearchError,
+    administrativeAreaList,
+    isAreaFilterSubmitting,
+  } = useAdministrativeAreaSearch(findAdministrativeAreas)
   const {
     values: { postcode },
     setFieldValue,
     validateForm,
     setIsLoading,
   } = useFormContext()
-
   const [usStates, setUsStates] = useState([])
   const [canadaProvinces, setCanadaProvinces] = useState([])
-  useEffect(() => setIsLoading(isSubmitting), [isSubmitting])
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios('/api-proxy/v4/metadata/administrative-area')
 
+  useEffect(
+    () => setIsLoading(isSubmitting && isAreaFilterSubmitting),
+    [isSubmitting, isAreaFilterSubmitting]
+  )
+
+  useEffect(() => {
+    onAdministrativeAreaSearch()
+  }, [])
+
+  useEffect(() => {
+    if (administrativeAreaList) {
       setUsStates(
-        result.data
-          .filter(
-            (administrativeAreas) =>
-              administrativeAreas.country.id === UNITED_STATES_ID
-          )
-          .map((states) => transformObjectToOption(states))
+        filterAreaDataByCountry(administrativeAreaList, UNITED_STATES_ID).map(
+          (states) => transformObjectToOption(states)
+        )
       )
 
       setCanadaProvinces(
-        result.data
-          .filter(
-            (administrativeAreas) =>
-              administrativeAreas.country.id === CANADA_ID
-          )
-          .map((states) => transformObjectToOption(states))
+        filterAreaDataByCountry(administrativeAreaList, CANADA_ID).map(
+          (states) => transformObjectToOption(states)
+        )
       )
     }
-
-    fetchData()
-  }, [])
+  }, [administrativeAreaList])
 
   const isUK = country.name === UNITED_KINGDOM
   const isUS = country.name === UNITED_STATES
@@ -145,7 +153,6 @@ const FieldAddress = ({
             required="Enter postcode"
             maxLength={10}
           />
-
           <Button
             onClick={onSearchClick}
             buttonColour={GREY_3}
@@ -154,14 +161,12 @@ const FieldAddress = ({
           >
             Find UK address
           </Button>
-
           {error && (
             <StatusMessage>
               Error occurred while searching for an address. Enter the address
               manually.
             </StatusMessage>
           )}
-
           {addressList && addressList.length > 0 && (
             <FormGroup>
               <Select label="Select an address" onChange={onAddressSelect}>
@@ -204,6 +209,11 @@ const FieldAddress = ({
       />
       {renderUsStateField()}
       {renderCanadaProvinceField()}
+      {administrativeAreaSearchError && (
+        <StatusMessage>
+          Error occurred while retrieving Administrative Areas.
+        </StatusMessage>
+      )}
       <FieldInput type="text" name="county" label="County (optional)" />
       <FieldUneditable name="country" label="Country">
         {country.name}
