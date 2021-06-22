@@ -104,8 +104,12 @@ import {
   getCompaniesMetadata,
 } from '../apps/companies/client/tasks'
 
-import { TASK_GET_EVENTS_LIST } from '../apps/events/client/state'
-import { getEvents } from '../apps/events/client/tasks'
+import {
+  TASK_GET_EVENTS_LIST,
+  TASK_GET_EVENTS_ORGANISER_NAME,
+  TASK_GET_EVENTS_METADATA,
+} from '../apps/events/client/state'
+import { getEvents, getEventsMetadata } from '../apps/events/client/tasks'
 
 import { TASK_GET_PROFILES_LIST } from '../apps/investments/client/profiles/state'
 import * as investmentProfilesTasks from '../apps/investments/client/profiles/tasks'
@@ -245,6 +249,8 @@ function App() {
         [TASK_GET_INTERACTIONS_LIST]: getInteractions,
         [TASK_GET_INTERACTIONS_ADVISER_NAME]: getAdviserNames,
         [TASK_GET_EVENTS_LIST]: getEvents,
+        [TASK_GET_EVENTS_METADATA]: getEventsMetadata,
+        [TASK_GET_EVENTS_ORGANISER_NAME]: getAdviserNames,
       }}
     >
       <Mount selector="#add-company-form">

@@ -1,6 +1,6 @@
 import {
   COMPANIES__LOADED,
-  COMPANIES__SET_COMPANIES_METADATA,
+  COMPANIES__METADATA_LOADED,
   COMPANIES__SELECTED_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER,
 } from '../../../client/actions'
 
@@ -19,7 +19,7 @@ export default (state = initialState, { type, result }) => {
         ...result,
         isComplete: true,
       }
-    case COMPANIES__SET_COMPANIES_METADATA:
+    case COMPANIES__METADATA_LOADED:
       return {
         ...state,
         metadata: result,
