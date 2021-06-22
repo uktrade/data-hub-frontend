@@ -66,7 +66,7 @@ describe('Event Collections Sort', () => {
       })
     })
 
-    it('should sort by "Least recently updated"', () => {
+    it('should sort by "Latest start date"', () => {
       cy.get(element).select('start_date:desc')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('start_date:desc')
