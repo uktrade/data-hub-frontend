@@ -9,7 +9,7 @@ module.exports = {
   investorDetails: {
     incompleteFields: '[data-test=investorDetails] .incomplete-fields',
     summary: '[data-test=investorDetails] summary',
-    edit: '[data-test=submit]',
+    edit: '[data-test="investorDetails"] [data-test=submit]',
     save: '[data-test=investorDetailsSave]',
     investorType: '[data-test=investorType]',
     globalAssetsUnderManagement: '[data-test=globalAssetsUnderManagement]',
@@ -74,7 +74,7 @@ module.exports = {
   investorRequirements: {
     incompleteFields: '[data-test=investorRequirements] .incomplete-fields',
     summary: '[data-test=investorRequirements] summary',
-    edit: '[data-test=submit]',
+    edit: '[data-test="investorRequirements"] [data-test=submit]',
     save: '[data-test=investorRequirementsSave]',
     dealTicketSize: {
       name: '[data-test=dealTicketSizes] legend',
@@ -302,7 +302,7 @@ module.exports = {
   location: {
     incompleteFields: '[data-test=location] .incomplete-fields',
     summary: '[data-test=location] summary',
-    edit: '[data-test=submit]',
+    edit: '[data-test="location"] [data-test=submit]',
     save: '[data-test=locationSave]',
     taskList: {
       ukLocationsOfInterest: {
