@@ -71,6 +71,7 @@ const EventsCollection = ({
       addItemUrl="/events/create"
       defaultQueryParams={{
         page: 1,
+        sortby: 'modified_on:desc',
       }}
     >
       <CollectionFilters taskProps={collectionListMetadataTask}>

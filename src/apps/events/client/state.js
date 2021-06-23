@@ -11,10 +11,10 @@ import { buildSelectedFilters } from './filters'
 import { SORT_OPTIONS } from './constants'
 
 const parseQueryString = (queryString) => {
-  const queryStringObject = omitBy({ ...qs.parse(queryString) }, isEmpty)
+  const queryParams = omitBy({ ...qs.parse(queryString) }, isEmpty)
   return {
-    ...queryStringObject,
-    page: parseInt(queryStringObject.page || 1, 10),
+    ...queryParams,
+    page: parseInt(queryParams.page || 1, 10),
   }
 }
 
