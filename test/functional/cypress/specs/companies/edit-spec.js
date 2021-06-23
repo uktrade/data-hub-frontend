@@ -173,7 +173,7 @@ describe('Company edit', () => {
     })
   })
 
-  context('when editing unmatched foreign company NOT on the One List', () => {
+  context('when editing unmatched US company NOT on the One List', () => {
     const company = fixtures.company.marsExportsLtd
 
     before(() => {

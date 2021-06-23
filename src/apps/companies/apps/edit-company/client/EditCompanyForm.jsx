@@ -24,6 +24,7 @@ function EditCompanyForm({
   headquarterTypes,
   oneListEmail,
   isOnOneList,
+  features,
 }) {
   async function onSubmit(values, isPristine) {
     if (isPristine) {
@@ -59,6 +60,7 @@ function EditCompanyForm({
               headquarterTypes={headquarterTypes}
               oneListEmail={oneListEmail}
               sectors={sectors}
+              features={features}
             />
           ) : (
             <CompanyUnmatched
@@ -70,6 +72,7 @@ function EditCompanyForm({
               oneListEmail={oneListEmail}
               sectors={sectors}
               turnoverRanges={turnoverRanges}
+              features={features}
             />
           )}
 
@@ -89,6 +92,7 @@ EditCompanyForm.propTypes = {
   isOnOneList: PropTypes.bool.isRequired,
   csrfToken: PropTypes.string.isRequired,
   company: PropTypes.object.isRequired,
+  features: PropTypes.object,
   formInitialValues: PropTypes.object.isRequired,
   turnoverRanges: PropTypes.arrayOf(
     PropTypes.shape({

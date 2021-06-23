@@ -43,18 +43,22 @@ const FieldAddress = ({
   country,
   apiEndpoint,
   onSelectUKAddress,
+  features,
 }) => {
+  const areaFieldEnabled =
+    features && features['edit-business-details-area-fields']
   const findAdministrativeAreas = useAdministrativeAreaLookup()
-  const findAddress = usePostcodeLookup(apiEndpoint)
-  const { onAddressSearch, isSubmitting, error, addressList } =
-    useAddressSearch(findAddress)
-
   const {
     onAdministrativeAreaSearch,
     administrativeAreaSearchError,
     administrativeAreaList,
     isAreaFilterSubmitting,
   } = useAdministrativeAreaSearch(findAdministrativeAreas)
+
+  const findAddress = usePostcodeLookup(apiEndpoint)
+  const { onAddressSearch, isSubmitting, error, addressList } =
+    useAddressSearch(findAddress)
+
   const {
     values: { postcode },
     setFieldValue,
@@ -64,13 +68,14 @@ const FieldAddress = ({
   const [usStates, setUsStates] = useState([])
   const [canadaProvinces, setCanadaProvinces] = useState([])
 
-  useEffect(
-    () => setIsLoading(isSubmitting && isAreaFilterSubmitting),
-    [isSubmitting, isAreaFilterSubmitting]
-  )
+  useEffect(() => {
+    setIsLoading(isSubmitting && isAreaFilterSubmitting)
+  }, [isSubmitting, isAreaFilterSubmitting])
 
   useEffect(() => {
-    onAdministrativeAreaSearch()
+    if (areaFieldEnabled) {
+      onAdministrativeAreaSearch()
+    }
   }, [])
 
   useEffect(() => {
@@ -208,13 +213,19 @@ const FieldAddress = ({
         label="Town or city"
         required="Enter town or city"
       />
-      {renderUsStateField()}
-      {renderCanadaProvinceField()}
-      {administrativeAreaSearchError && (
-        <StatusMessage>
-          Error occurred while retrieving Administrative Areas.
-        </StatusMessage>
+
+      {areaFieldEnabled && (
+        <>
+          {renderUsStateField()}
+          {renderCanadaProvinceField()}
+          {administrativeAreaSearchError && (
+            <StatusMessage>
+              Error occurred while retrieving Administrative Areas.
+            </StatusMessage>
+          )}
+        </>
       )}
+
       <FieldInput type="text" name="county" label="County (optional)" />
       <FieldUneditable name="country" label="Country">
         {country.name}
