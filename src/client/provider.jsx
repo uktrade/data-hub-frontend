@@ -107,6 +107,9 @@ import interactionsReducer from '../apps/interactions/client/reducer'
 import { ID as EVENTS_ID } from '../apps/events/client/state'
 import eventsReducer from '../apps/events/client/reducer'
 
+import { ID as ORDERS_ID } from '../apps/omis/client/state'
+import ordersReducer from '../apps/omis/client/reducer'
+
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
 
 import RoutedInput from './components/RoutedInput'
@@ -167,6 +170,7 @@ const store = createStore(
     [CONTACTS_ID]: contactsReducer,
     [INTERACTIONS_ID]: interactionsReducer,
     [EVENTS_ID]: eventsReducer,
+    [ORDERS_ID]: ordersReducer,
   }),
   {
     referrerUrl: window.document.referrer,
