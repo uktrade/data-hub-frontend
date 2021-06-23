@@ -12,6 +12,8 @@ const QUERY_FIELDS_MAP = {
   interestedIn: 'future_interest_countries',
   lastInteractionDate: 'interaction_between',
   ukPostcode: 'uk_postcode',
+  usState: 'us_state',
+  canadianProvince: 'canadian_province',
   area: 'area',
 }
 

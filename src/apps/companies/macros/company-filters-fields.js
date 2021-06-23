@@ -47,7 +47,7 @@ const companyFiltersFields = function ({ sectorOptions }) {
     },
     {
       macroName: 'Typeahead',
-      name: QUERY_FIELDS_MAP.area,
+      name: QUERY_FIELDS_MAP.usState,
       isAsync: false,
       placeholder: 'Search US state',
       useSubLabel: false,
@@ -58,7 +58,7 @@ const companyFiltersFields = function ({ sectorOptions }) {
     },
     {
       macroName: 'Typeahead',
-      name: QUERY_FIELDS_MAP.area,
+      name: QUERY_FIELDS_MAP.canadianProvince,
       isAsync: false,
       placeholder: 'Search Canadian Province',
       useSubLabel: false,
