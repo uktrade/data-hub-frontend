@@ -251,6 +251,84 @@ describe('Company edit', () => {
     })
   })
 
+  context('when editing unmatched Canadian company NOT on the One List', () => {
+    const company = fixtures.company.canadianCompany
+
+    before(() => {
+      cy.visit(urls.companies.edit(company.id))
+    })
+
+    describeCompanyEditForm({
+      company,
+      elements: [
+        {
+          label: 'Trading name (optional)',
+          value: company.trading_names[0],
+          assert: assertFieldInput,
+        },
+        {
+          label: 'Website (optional)',
+          value: company.website,
+          assert: assertFieldInput,
+        },
+        {
+          label: 'Business description (optional)',
+          value: company.description,
+          assert: assertFieldInput,
+        },
+        {
+          label: 'Export Segment (optional)',
+          value: company.segment,
+          optionsCount: 3,
+          assert: assertFieldSelect,
+        },
+        {
+          label: 'Export Sub-segment (optional)',
+          value: company.sub_segment,
+          optionsCount: 13,
+          assert: assertFieldSelect,
+        },
+        {
+          label: 'Address',
+          value: company.address,
+          hint:
+            'This should be the address for this particular office of the' +
+            ' business. If you need to record activity or a contact for a' +
+            ' different address, please add a new company record to Data Hub.',
+          assert: assertFieldAddress,
+        },
+        {
+          ukBased: company.uk_based,
+          assert: assertRegisteredAddress,
+        },
+        {
+          label: 'Annual turnover (optional)',
+          hint: 'Amount in GBP',
+          value: company.turnover_range.name,
+          assert: assertFieldRadios,
+          optionsCount: 4,
+        },
+        {
+          label: 'Number of employees (optional)',
+          value: company.employee_range.name,
+          assert: assertFieldRadios,
+          optionsCount: 5,
+        },
+        {
+          label: 'DIT sector',
+          value: company.sector.name,
+          optionsCount: 256,
+          assert: assertFieldSelect,
+        },
+        {
+          label: 'Business hierarchy',
+          optionsCount: 4,
+          assert: assertFieldRadios,
+        },
+      ],
+    })
+  })
+
   context('when editing matched UK company NOT on the One List', () => {
     const company = fixtures.company.dnbLtd
 

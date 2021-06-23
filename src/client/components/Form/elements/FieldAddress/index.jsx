@@ -120,7 +120,6 @@ const FieldAddress = ({
     setFieldValue('county', address.county)
     setFieldValue('country', country.id)
     setFieldValue('area', address.area)
-    setFieldValue('country', country.id)
 
     if (onSelectUKAddress) {
       onSelectUKAddress(address)
@@ -128,7 +127,7 @@ const FieldAddress = ({
   }
 
   const renderUsStateField = () => {
-    if (isUS && usStates.length > 0) {
+    if (isUS && usStates?.length > 0) {
       return (
         <FieldSelect type="text" name="area" label="State" options={usStates} />
       )
