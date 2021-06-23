@@ -40,6 +40,7 @@ describe('Event Collections Sort', () => {
 
     it('should sort by "Event name A-Z"', () => {
       cy.get(element).select('name:asc')
+      cy.wait('@apiRequest')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('name:asc')
       })
@@ -54,6 +55,7 @@ describe('Event Collections Sort', () => {
 
     it('should sort by "Least recently updated"', () => {
       cy.get(element).select('modified_on:asc')
+      cy.wait('@apiRequest')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('modified_on:asc')
       })
@@ -61,6 +63,7 @@ describe('Event Collections Sort', () => {
 
     it('should sort by "Earliest start date"', () => {
       cy.get(element).select('start_date:asc')
+      cy.wait('@apiRequest')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('start_date:asc')
       })
@@ -68,6 +71,7 @@ describe('Event Collections Sort', () => {
 
     it('should sort by "Latest start date"', () => {
       cy.get(element).select('start_date:desc')
+      cy.wait('@apiRequest')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('start_date:desc')
       })
