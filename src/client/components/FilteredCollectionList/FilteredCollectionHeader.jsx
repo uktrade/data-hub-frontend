@@ -112,6 +112,7 @@ function FilteredCollectionHeader({
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedOrganisers}
           qsParamName="organiser"
+          showCategoryLabels={true}
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedSectors}

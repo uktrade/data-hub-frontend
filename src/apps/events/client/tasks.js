@@ -19,7 +19,7 @@ const getEvents = ({
   axios
     .post('/api-proxy/v3/search/event', {
       limit,
-      offset: limit * (parseInt(page, 10) - 1) || 0,
+      offset: limit * (page - 1) || 0,
       sortby,
       name,
       organiser,
