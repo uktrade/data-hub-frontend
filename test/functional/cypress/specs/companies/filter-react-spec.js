@@ -511,7 +511,7 @@ describe('Companies Collections Filter', () => {
   context('Remove all filters', () => {
     before(() => {
       const globalHqTypeId = '43281c5e-92a4-4794-867b-b4d5f801e6f3'
-      const ukCountryId = '7d19d407-9aec-4d06-b190-d3f404627f21'
+      const ukCountryId = '80756b9a-5d95-e211-a939-e4115bead28a'
       const adviserId = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
       const southEastRegionId = '884cd12a-6095-e211-a939-e4115bead28a'
       const advancedEngineeringSectorId = 'af959812-6095-e211-a939-e4115bead28a'
@@ -535,7 +535,7 @@ describe('Companies Collections Filter', () => {
     })
 
     it('should remove all filters and chips', () => {
-      cy.get('@filterChips').should('have.length', 7)
+      cy.get('@filterChips').should('have.length', 10)
       cy.get('[data-test=clear-filters]').click()
       cy.get('@filterChips').should('have.length', 0)
       assertCheckboxGroupNoneSelected('[data-test="headquarter-type-filter"]')

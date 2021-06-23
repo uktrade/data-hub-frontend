@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import {
   COMPANIES__LOADED,
-  COMPANIES__SET_COMPANIES_METADATA,
+  COMPANIES__METADATA_LOADED,
   COMPANIES__SELECTED_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER,
 } from '../../../client/actions'
 import {
@@ -46,7 +46,7 @@ const CompaniesCollection = ({
     id: ID,
     progressMessage: 'Loading filters',
     startOnRender: {
-      onSuccessDispatch: COMPANIES__SET_COMPANIES_METADATA,
+      onSuccessDispatch: COMPANIES__METADATA_LOADED,
     },
   }
 
@@ -73,6 +73,7 @@ const CompaniesCollection = ({
       addItemUrl="/companies/create"
       defaultQueryParams={{
         archived: ['false'],
+        sortby: 'modified_on:desc',
         page: 1,
       }}
     >
