@@ -48,6 +48,7 @@ const FieldAddress = ({
   const findAddress = usePostcodeLookup(apiEndpoint)
   const { onAddressSearch, isSubmitting, error, addressList } =
     useAddressSearch(findAddress)
+
   const {
     onAdministrativeAreaSearch,
     administrativeAreaSearchError,
