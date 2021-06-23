@@ -33,14 +33,14 @@ const minimumPayload = {
 
 const interactionsSearchEndpoint = '/api-proxy/v3/search/interaction'
 const adviserAutocompleteEndpoint = '/api-proxy/adviser/?autocomplete=*'
-const adviserEndpoint =
-  '/api-proxy/adviser/7d19d407-9aec-4d06-b190-d3f404627f21'
+const adviserId = '7d19d407-9aec-4d06-b190-d3f404627f21'
+const adviserEndpoint = `/api-proxy/adviser/${adviserId}`
 
 const advisersFilter = '[data-test="adviser-filter"]'
 const myInteractionsFilter = '[data-test="my-interactions-filter"]'
 
 const adviser = {
-  id: '7d19d407-9aec-4d06-b190-d3f404627f21',
+  id: adviserId,
   name: 'Barry Oling',
   is_active: true,
   last_login: null,
