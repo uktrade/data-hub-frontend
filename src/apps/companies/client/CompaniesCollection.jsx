@@ -73,6 +73,7 @@ const CompaniesCollection = ({
       addItemUrl="/companies/create"
       defaultQueryParams={{
         archived: ['false'],
+        sortby: 'modified_on:desc',
         page: 1,
       }}
     >
