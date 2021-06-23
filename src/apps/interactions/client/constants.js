@@ -3,6 +3,7 @@ export const LABELS = {
   interaction: 'Interaction',
   serviceDelivery: 'Service delivery',
   advisers: 'Advisers',
+  myInteractions: 'My interactions',
 }
 
 export const KIND_OPTIONS = [
