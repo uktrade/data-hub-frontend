@@ -66,7 +66,7 @@ describe('Company activity feed', () => {
     })
 
     it('should display the badge', () => {
-      cy.get(companyLocalHeader.badge).should('have.text', 'Global HQ')
+      cy.get(companyLocalHeader.badge).first().should('have.text', 'Global HQ')
     })
 
     it('should display the One List tier', () => {
