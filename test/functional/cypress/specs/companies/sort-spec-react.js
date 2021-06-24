@@ -34,7 +34,7 @@ describe('Contact Collections Sort', () => {
 
     beforeEach(() => {
       cy.intercept('POST', companySearchEndpoint).as('apiRequest')
-      cy.visit(urls.companies.react.index())
+      cy.visit(`${urls.companies.react.index()}?page=1`)
       cy.wait('@apiRequest')
     })
 
@@ -47,7 +47,6 @@ describe('Contact Collections Sort', () => {
 
     it('should sort by "Least recently updated"', () => {
       cy.get(element).select('modified_on:asc')
-      cy.wait('@apiRequest')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('modified_on:asc')
       })
@@ -55,7 +54,6 @@ describe('Contact Collections Sort', () => {
 
     it('should sort by "Company A-Z"', () => {
       cy.get(element).select('name:asc')
-      cy.wait('@apiRequest')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('name:asc')
       })
@@ -63,7 +61,6 @@ describe('Contact Collections Sort', () => {
 
     it('should sort by "Last interaction date"', () => {
       cy.get(element).select('latest_interaction_date:desc')
-      cy.wait('@apiRequest')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('latest_interaction_date:desc')
       })
