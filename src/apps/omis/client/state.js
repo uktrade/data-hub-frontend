@@ -6,6 +6,7 @@ import { SORT_OPTIONS } from './constants'
 
 export const ID = 'ordersList'
 export const TASK_GET_ORDERS_LIST = 'TASK_GET_ORDERS_LIST'
+export const TASK_GET_ORDERS_METADATA = 'TASK_GET_ORDERS_METADATA'
 
 const parseQueryString = (queryString) => {
   const queryParams = omitBy({ ...qs.parse(queryString) }, isEmpty)
@@ -19,10 +20,7 @@ export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
   const queryParams = parseQueryString(queryString)
   const { metadata } = state[ID]
-  const selectedFilters = buildSelectedFilters({
-    queryParams,
-    metadata,
-  })
+  const selectedFilters = buildSelectedFilters(queryParams, metadata)
   return {
     ...state[ID],
     payload: { ...queryParams },

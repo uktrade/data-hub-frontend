@@ -1,4 +1,7 @@
-import { ORDERS__LOADED } from '../../../client/actions'
+import {
+  ORDERS__LOADED,
+  ORDERS__METADATA_LOADED,
+} from '../../../client/actions'
 
 const initialState = {
   results: [],
@@ -13,6 +16,11 @@ export default (state = initialState, { type, result }) => {
         ...state,
         ...result,
         isComplete: true,
+      }
+    case ORDERS__METADATA_LOADED:
+      return {
+        ...state,
+        metadata: result,
       }
     default:
       return state
