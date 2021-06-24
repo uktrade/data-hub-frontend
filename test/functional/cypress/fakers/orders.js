@@ -4,14 +4,9 @@ import jsf from 'json-schema-faker'
 import apiSchema from '../../../api-schema.json'
 import { listFaker } from './utils'
 import { userFaker } from './users'
-
-const ukRegions = ['London', 'South East', 'North West']
-
-const sectorNames = [
-  'Advanced Engineering',
-  'Biotechnology and Pharmaceuticals',
-  'Creative and Media',
-]
+import { countryFaker } from './countries'
+import { ukRegionFaker } from './regions'
+import { sectorFaker } from './sectors'
 
 const status = [
   'draft',
@@ -33,29 +28,6 @@ const references = [
   'YWA437/20',
 ]
 
-const countries = [
-  {
-    id: faker.datatype.uuid(),
-    name: 'Zimbabwe',
-  },
-  {
-    id: faker.datatype.uuid(),
-    name: 'Thailand',
-  },
-  {
-    id: faker.datatype.uuid(),
-    name: 'Taiwan',
-  },
-  {
-    id: faker.datatype.uuid(),
-    name: 'St Lucia',
-  },
-  {
-    id: faker.datatype.uuid(),
-    name: 'The Bahamas',
-  },
-]
-
 const orderFaker = (overrides = {}) => ({
   ...jsf.generate(apiSchema.components.schemas.Order),
   id: faker.datatype.uuid(),
@@ -68,17 +40,10 @@ const orderFaker = (overrides = {}) => ({
   contact: {
     ...userFaker(),
   },
-  sector: {
-    name: faker.random.arrayElement(sectorNames),
-    id: faker.datatype.uuid(),
-    ancestors: [],
-  },
-  uk_region: {
-    name: faker.random.arrayElement(ukRegions),
-    id: faker.datatype.uuid(),
-  },
+  sector: sectorFaker(),
+  uk_region: ukRegionFaker(),
   status: faker.random.arrayElement(status),
-  primary_market: faker.random.arrayElement(countries),
+  primary_market: countryFaker(),
   created_on: faker.date.past(),
   modified_on: faker.date.past(),
   delivery_date: faker.random.arrayElement([null, faker.date.future()]),
