@@ -418,6 +418,7 @@ module.exports = {
     reconciliation: url('/omis/reconciliation'),
     order: url('/omis', '/:orderId'),
     paymentReceipt: url('/omis', '/:orderId/payment-receipt'),
+    workOrder: url('/omis', '/:orderId/work-order'),
     quote: url('/omis', '/:orderId/quote'),
     edit: {
       quote: url('/omis', '/:orderId/edit/quote-details'),
