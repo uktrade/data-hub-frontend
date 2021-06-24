@@ -20,6 +20,7 @@ function getAddress(dnb_company) {
       dnb_company.address_line_2,
       dnb_company.address_town,
       dnb_company.address_county,
+      dnb_company.address_area_name,
       dnb_company.address_postcode,
     ]).join(', '),
   }
