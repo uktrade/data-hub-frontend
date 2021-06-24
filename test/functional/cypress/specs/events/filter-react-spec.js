@@ -220,16 +220,16 @@ describe('events Collections Filter', () => {
         page: 1,
         name: 'Big Event',
         country: [ukCountryId],
-        uk_region: southEastRegionId,
+        uk_region: [southEastRegionId],
         organiser: [adviserId],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`${urls.events.react.index()}?${queryString}`)
       cy.wait('@apiRequest')
-      cy.get('[data-test=filter-chips]').children().as('filterChips')
     })
 
     it('should remove all filters and chips', () => {
+      cy.get('[data-test=filter-chips]').children().as('filterChips')
       cy.get('@filterChips').should('have.length', 4)
       cy.get('[data-test=clear-filters]').click()
       cy.get('@filterChips').should('have.length', 0)
