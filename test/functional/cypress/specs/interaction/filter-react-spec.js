@@ -42,14 +42,6 @@ const myInteractionsFilter = '[data-test="my-interactions-filter"]'
 const adviser = {
   id: adviserId,
   name: 'Barry Oling',
-  is_active: true,
-  last_login: null,
-  first_name: 'Barry',
-  last_name: 'Oling',
-  email: 'sewuvar@vonudi.gov',
-  contact_email: '',
-  telephone_number: '',
-  dit_team: null,
 }
 
 describe('Interactions Collections Filter', () => {
@@ -124,9 +116,7 @@ describe('Interactions Collections Filter', () => {
 
   context('Advisers', () => {
     const expectedPayload = {
-      offset: 0,
-      limit: 10,
-      sortby: 'date:desc',
+      ...minimumPayload,
       dit_participants__adviser: [adviser.id],
     }
 
@@ -150,7 +140,10 @@ describe('Interactions Collections Filter', () => {
         expectedOption: adviser.name,
       })
       assertChipExists({ label: adviser.name, position: 1 })
-      // Asserts the "My interactions" filter checkbox as this should be checked if the adviser chosen is the same as the current user.
+      /*
+       Asserts the "My interactions" filter checkbox as this should
+      be checked if the adviser chosen is the same as the current user.
+      */
       assertCheckboxGroupOption({
         element: myInteractionsFilter,
         value: adviser.id,
@@ -181,7 +174,10 @@ describe('Interactions Collections Filter', () => {
         element: advisersFilter,
         expectedOption: adviser.name,
       })
-      // Asserts the "My interactions" filter checkbox as this should be checked if the adviser chosen is the same as the current user.
+      /*
+       Asserts the "My interactions" filter checkbox as this should
+      be checked if the adviser chosen is the same as the current user.
+      */
       assertCheckboxGroupOption({
         element: myInteractionsFilter,
         value: adviser.id,
@@ -208,7 +204,10 @@ describe('Interactions Collections Filter', () => {
       cy.intercept('GET', adviserEndpoint, adviser).as('adviserApiRequest')
       cy.visit(`${interactions.react()}?${queryString}`)
       cy.wait('@adviserApiRequest')
-      // Asserts the "Adviser typeahead" filter is selected with the current user as this is the same as selecting "My interactions".
+      /*
+      Asserts the "Adviser typeahead" filter is selected with the
+      current user as this is the same as selecting "My interactions".
+      */
       assertTypeaheadOptionSelected({
         element: advisersFilter,
         expectedOption: adviser.name,
