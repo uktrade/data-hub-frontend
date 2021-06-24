@@ -1,3 +1,12 @@
+export const LABELS = {
+  status: 'Status',
+  sector: 'Sector',
+  ukRegion: 'UK region',
+  country: 'Country of origin',
+  contactName: 'Contact name',
+  companyName: 'Company name',
+}
+
 export const SORT_OPTIONS = [
   { value: 'created_on:desc', name: 'Recently created' },
   { value: 'created_on:asc', name: 'Oldest' },
