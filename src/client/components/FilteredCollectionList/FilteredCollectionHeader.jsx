@@ -137,6 +137,10 @@ function FilteredCollectionHeader({
           qsParamName="country"
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedPrimaryMarkets}
+          qsParamName="primary_market"
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedExportToCountries}
           qsParamName="export_to_countries"
           showCategoryLabels={true}
@@ -270,6 +274,10 @@ function FilteredCollectionHeader({
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedStatus}
           qsParamName="archived"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedContactName}
+          qsParamName="contact_name"
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedCompanyName}

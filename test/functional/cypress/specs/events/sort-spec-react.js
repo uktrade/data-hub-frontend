@@ -1,4 +1,4 @@
-import urls from '../../../../../src/lib/urls'
+import { events } from '../../../../../src/lib/urls'
 
 const searchEndpoint = '/api-proxy/v3/search/event'
 
@@ -6,7 +6,7 @@ describe('Event Collections Sort', () => {
   context('Default sort', () => {
     before(() => {
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(urls.events.react.index())
+      cy.visit(events.react.index())
     })
 
     it('should apply the default sort', () => {
@@ -34,13 +34,12 @@ describe('Event Collections Sort', () => {
 
     beforeEach(() => {
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(urls.events.react.index())
+      cy.visit(`${events.react.index()}?page=1`)
       cy.wait('@apiRequest')
     })
 
     it('should sort by "Event name A-Z"', () => {
       cy.get(element).select('name:asc')
-      cy.wait('@apiRequest')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('name:asc')
       })
@@ -55,7 +54,6 @@ describe('Event Collections Sort', () => {
 
     it('should sort by "Least recently updated"', () => {
       cy.get(element).select('modified_on:asc')
-      cy.wait('@apiRequest')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('modified_on:asc')
       })
@@ -63,7 +61,6 @@ describe('Event Collections Sort', () => {
 
     it('should sort by "Earliest start date"', () => {
       cy.get(element).select('start_date:asc')
-      cy.wait('@apiRequest')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('start_date:asc')
       })
@@ -71,7 +68,6 @@ describe('Event Collections Sort', () => {
 
     it('should sort by "Latest start date"', () => {
       cy.get(element).select('start_date:desc')
-      cy.wait('@apiRequest')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('start_date:desc')
       })
