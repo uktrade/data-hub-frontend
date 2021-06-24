@@ -4,6 +4,8 @@ export const LABELS = {
   serviceDelivery: 'Service delivery',
   advisers: 'Advisers',
   myInteractions: 'My interactions',
+  dateAfter: 'From',
+  dateBefore: 'To',
 }
 
 export const KIND_OPTIONS = [
