@@ -1,16 +1,15 @@
 module.exports = () => {
   return {
-    metaList: '[data-auto-id="metaList"]',
-    companyName: '[data-auto-id="heading"]',
-    address: '[data-auto-id="address"]',
-    badge: '[data-auto-id="badge"]',
+    metaList: '[data-test="metaList"]',
+    companyName: '[data-test="heading"]',
+    address: '[data-test="address"]',
+    badge: '[data-test="badge"]',
     description: {
-      paragraph: (number) =>
-        `[data-auto-id="description"] p:nth-child(${number})`,
+      paragraph: (number) => `[data-test="description"] p:nth-child(${number})`,
     },
-    archivedMessage: '[data-auto-id="archivedMessage"]',
-    investigationMessage: '[data-auto-id="investigationMessage"]',
-    accountPlanMessage: '[data-auto-id="accountPlanMessage"]',
-    flashMessageList: '[data-auto-id="flash"]',
+    archivedMessage: '[data-test="archivedMessage"]',
+    investigationMessage: '[data-test="investigationMessage"]',
+    accountPlanMessage: '[data-test="accountPlanMessage"]',
+    flashMessageList: '[data-test="flash"]',
   }
 }

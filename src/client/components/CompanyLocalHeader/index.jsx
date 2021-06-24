@@ -116,10 +116,10 @@ const CompanyLocalHeader = ({
       <LocalHeader breadcrumbs={breadcrumbs} flashMessages={flashMessages}>
         <GridRow>
           <GridCol setWidth="two-thirds">
-            <LocalHeaderHeading data-auto-id="heading">
+            <LocalHeaderHeading data-test="heading">
               {company.name}
             </LocalHeaderHeading>
-            <StyledAddress data-auto-id="address">
+            <StyledAddress data-test="address">
               {addressToString(company.address)}
             </StyledAddress>
           </GridCol>
@@ -144,7 +144,7 @@ const CompanyLocalHeader = ({
           <TypeWrapper>
             <BadgeWrapper>
               <Badge>
-                <BadgeText data-auto-id="badge">
+                <BadgeText data-test="badge">
                   {company.isUltimate ? 'Ultimate HQ' : 'Global HQ'}
                 </BadgeText>
               </Badge>
@@ -152,7 +152,7 @@ const CompanyLocalHeader = ({
             {company.isUltimate && (
               <StyledDetails
                 summary="What does Ultimate HQ mean?"
-                data-auto-id="metaList"
+                data-test="metaList"
               >
                 This HQ is in control of all related company records for{' '}
                 {company.name}.
@@ -161,7 +161,7 @@ const CompanyLocalHeader = ({
           </TypeWrapper>
         )}
         {(dnbRelatedCompaniesCount > 0 || company.hasManagedAccountDetails) && (
-          <StyledDescription data-auto-id="description">
+          <StyledDescription data-test="description">
             {dnbRelatedCompaniesCount > 0 && (
               <p>
                 Data Hub contains{' '}
@@ -213,7 +213,7 @@ const CompanyLocalHeader = ({
 
       {company.archived && (
         <StyledMain>
-          <StatusMessage data-auto-id="archivedMessage">
+          <StatusMessage data-test="archivedMessage">
             {company.archived_by
               ? `This company was archived on ${format(
                   company.archived_on
@@ -233,7 +233,7 @@ const CompanyLocalHeader = ({
       )}
 
       {company.pending_dnb_investigation && (
-        <StyledMain data-auto-id="investigationMessage">
+        <StyledMain data-test="investigationMessage">
           <StatusMessage>
             This company record is based on information that has not yet been
             validated. This information is currently being checked by the Data
@@ -243,7 +243,7 @@ const CompanyLocalHeader = ({
       )}
 
       {company.account_plan_url && (
-        <StyledMainMuted data-auto-id="accountPlanMessage">
+        <StyledMainMuted data-test="accountPlanMessage">
           <StatusMessage>
             <a href={company.account_plan_url} target="_blank">
               Go to Sharepoint to view the account plan
@@ -271,7 +271,7 @@ const CompanyLocalHeader = ({
               )}
             <StyledDetailsMuted
               summary="What is an account plan?"
-              data-auto-id="metaList"
+              data-test="metaList"
             >
               All businesses on the One List are expected to have an account
               plan, to ensure that the wider virtual team understands the

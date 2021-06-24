@@ -8,7 +8,7 @@ const SectionRegion = ({ businessDetails, isArchived, isBasedInUK, urls }) =>
   isBasedInUK ? (
     <SummaryTable
       caption="DIT region"
-      data-auto-id="regionDetailsContainer"
+      data-test="regionDetailsContainer"
       actions={
         !isArchived && <Link href={`${urls.companyEdit}#uk_region`}>Edit</Link>
       }

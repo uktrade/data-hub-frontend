@@ -14,6 +14,6 @@ describe('Filtered collection list', () => {
     cy.get(selectors.collection.itemLink).click()
 
     cy.url().should('contain', urls.omis.order(quoteAwaitOrder.id))
-    cy.get('[data-auto-id="localHeader"]').should('contain', 'NM275/21')
+    cy.get('[data-test="localHeader"]').should('contain', 'NM275/21')
   })
 })

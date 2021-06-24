@@ -108,7 +108,7 @@ const CompanyBusinessDetails = ({
       {isDnbCompany && (
         <Details
           summary="Are these business details right?"
-          data-auto-id="businessDetailsWhereDoesInformation"
+          data-test="businessDetailsWhereDoesInformation"
         >
           <p>
             Most business details have been verified by trusted third-parties to

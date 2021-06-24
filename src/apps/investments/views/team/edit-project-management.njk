@@ -7,9 +7,9 @@
 {% block main_grid_right_column %}
   {% call DetailsContainer({ 
     heading: 'Assign project management', 
-    dataAutoId: 'assign-project-management' 
+    dataTest: 'assign-project-management' 
   }) %}
-    {% component 'key-value-table', items=briefInvestmentSummary, variant='striped', dataAutoId="project-management-table"%}
+    {% component 'key-value-table', items=briefInvestmentSummary, variant='striped', dataTest="project-management-table"%}
   {% endcall %}
 
   {% call Form(form) %}

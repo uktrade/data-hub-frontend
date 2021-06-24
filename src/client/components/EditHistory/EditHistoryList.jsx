@@ -29,7 +29,7 @@ function EditHistoryList({
   getValue,
 }) {
   return (
-    <div data-auto-id="editHistory">
+    <div data-test="editHistory">
       {items.map(({ timestamp, changes, changedBy }) => (
         <StyledListContainer key={timestamp}>
           <StyledUpdatedOn>

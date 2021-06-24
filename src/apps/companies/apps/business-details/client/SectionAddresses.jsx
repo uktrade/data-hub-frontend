@@ -49,7 +49,7 @@ const SectionAddresses = ({
 }) => (
   <SummaryTable
     caption="Addresses"
-    data-auto-id="addressesDetailsContainer"
+    data-test="addressesDetailsContainer"
     actions={
       !isDnbCompany &&
       !isArchived && (

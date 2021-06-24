@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Main = ({ children }) => (
-  <main role="main" id="main-content" data-auto-id="bodyMainContent">
+  <main role="main" id="main-content" data-test="bodyMainContent">
     {children}
   </main>
 )
