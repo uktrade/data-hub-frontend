@@ -5,6 +5,7 @@ import {
   INTERACTIONS__LOADED,
   INTERACTIONS_SELECTED_ADVISERS,
 } from '../../../client/actions'
+
 import { LABELS, KIND_OPTIONS } from './constants'
 
 import {
@@ -25,6 +26,7 @@ const InteractionCollection = ({
   payload,
   optionMetadata,
   selectedFilters,
+  currentAdviserId,
   ...props
 }) => {
   const collectionListTask = {
@@ -68,6 +70,7 @@ const InteractionCollection = ({
           selectedOptions={selectedFilters.selectedKind}
           data-test="status-filter"
         />
+
         <RoutedAdvisersTypeahead
           taskProps={adviserListTask}
           isMulti={true}
@@ -78,6 +81,14 @@ const InteractionCollection = ({
           noOptionsMessage={() => <>No advisers found</>}
           selectedOptions={selectedFilters.selectedAdvisers}
           data-test="adviser-filter"
+        />
+
+        <RoutedCheckboxGroupField
+          name="dit_participants__adviser"
+          qsParam="adviser"
+          options={[{ label: LABELS.myInteractions, value: currentAdviserId }]}
+          selectedOptions={selectedFilters.selectedMyInteractions}
+          data-test="my-interactions-filter"
         />
       </CollectionFilters>
     </FilteredCollectionList>
