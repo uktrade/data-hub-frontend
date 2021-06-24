@@ -12,6 +12,7 @@ import {
   FilteredCollectionList,
   RoutedCheckboxGroupField,
   RoutedAdvisersTypeahead,
+  RoutedDateField,
   CollectionFilters,
 } from '../../../client/components'
 
@@ -82,13 +83,24 @@ const InteractionCollection = ({
           selectedOptions={selectedFilters.selectedAdvisers}
           data-test="adviser-filter"
         />
-
         <RoutedCheckboxGroupField
           name="dit_participants__adviser"
           qsParam="adviser"
           options={[{ label: LABELS.myInteractions, value: currentAdviserId }]}
           selectedOptions={selectedFilters.selectedMyInteractions}
           data-test="my-interactions-filter"
+        />
+        <RoutedDateField
+          label={LABELS.dateAfter}
+          name="date_after"
+          qsParamName="date_after"
+          data-test="date-after-filter"
+        />
+        <RoutedDateField
+          label={LABELS.dateBefore}
+          name="date_before"
+          qsParamName="date_before"
+          data-test="date-before-filter"
         />
       </CollectionFilters>
     </FilteredCollectionList>

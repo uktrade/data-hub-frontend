@@ -519,6 +519,18 @@ const assertPayload = (apiRequest, expectedParams) => {
   })
 }
 
+/**
+ * Assert that the label and value exist on the date input
+ */
+
+const assertDateInput = ({ element, label, value }) => {
+  cy.get(element)
+    .find('label')
+    .should('contain', label)
+    .next()
+    .should('have.attr', 'value', value)
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
@@ -555,4 +567,5 @@ module.exports = {
   assertQueryParams,
   assertElementsInOrder,
   assertPayload,
+  assertDateInput,
 }
