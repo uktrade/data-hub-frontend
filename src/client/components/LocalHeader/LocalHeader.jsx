@@ -26,11 +26,7 @@ const BreadcrumbsWrapper = styled(Breadcrumbs)`
   margin-top: 0;
 `
 const LocalHeader = ({ breadcrumbs, flashMessages, heading, children }) => (
-  <StyledHeader
-    aria-label="local header"
-    data-auto-id="localHeader"
-    role="region"
-  >
+  <StyledHeader aria-label="local header" data-test="localHeader" role="region">
     <StyledMain>
       <BreadcrumbsWrapper>
         {breadcrumbs?.map((breadcrumb) =>

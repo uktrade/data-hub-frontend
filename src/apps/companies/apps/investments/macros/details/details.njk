@@ -1,6 +1,6 @@
 {% macro details(props) %}
   <details class="govuk-details govuk-details--dit" {{ "open" if props.open }}
-    data-auto-id={{props.summaryText | camelCase }}>
+    data-test={{props.summaryText | camelCase }}>
     <summary class="govuk-details__summary">
       <span class="govuk-details__summary-text">{{ props.summaryText }}</span>
       <div class="incomplete-fields">

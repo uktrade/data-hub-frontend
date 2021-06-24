@@ -15,8 +15,8 @@ const HIERARCHY_STRINGS = {
     'This hierarchy information is manually recorded (linked) by Data Hub users. This means it can be different from the Dun & Bradstreet hierarchy, which in the future will replace this manually recorded information.',
 }
 
-const assertSummaryTable = ({ dataAutoId, heading, showEditLink, content }) => {
-  const summaryTableSelector = `[data-auto-id="${dataAutoId}"]`
+const assertSummaryTable = ({ dataTest, heading, showEditLink, content }) => {
+  const summaryTableSelector = `[data-test="${dataTest}"]`
 
   cy.get(summaryTableSelector).find('caption').should('contain', heading)
   cy.get(summaryTableSelector)
@@ -25,16 +25,16 @@ const assertSummaryTable = ({ dataAutoId, heading, showEditLink, content }) => {
 
   if (typeof content !== 'undefined') {
     Array.isArray(content)
-      ? assertValueTable(dataAutoId, content)
-      : assertKeyValueTable(dataAutoId, content)
+      ? assertValueTable(dataTest, content)
+      : assertKeyValueTable(dataTest, content)
   }
 }
 
 const assertAddress = ({ address, registeredAddress }) => {
   const addressSelector1 =
-    '[data-auto-id="addressesDetailsContainer"] td:nth-child(1)'
+    '[data-test="addressesDetailsContainer"] td:nth-child(1)'
   const addressSelector2 =
-    '[data-auto-id="addressesDetailsContainer"] td:nth-child(2)'
+    '[data-test="addressesDetailsContainer"] td:nth-child(2)'
 
   if (address) {
     cy.get(addressSelector1).contains('Registered').should('not.exist')
@@ -114,7 +114,7 @@ describe('Companies business details', () => {
 
       it('should display the "About" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'aboutDetailsContainer',
+          dataTest: 'aboutDetailsContainer',
           heading: 'About One List Corp',
           showEditLink: true,
           content: {
@@ -132,7 +132,7 @@ describe('Companies business details', () => {
 
       it('should display the "Addresses" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'addressesDetailsContainer',
+          dataTest: 'addressesDetailsContainer',
           heading: 'Addresses',
           showEditLink: false,
         })
@@ -158,7 +158,7 @@ describe('Companies business details', () => {
 
       it('should display the "DIT sector" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'sectorDetailsContainer',
+          dataTest: 'sectorDetailsContainer',
           heading: 'DIT sector',
           showEditLink: true,
           content: ['Retail'],
@@ -167,7 +167,7 @@ describe('Companies business details', () => {
 
       it('should display the "Global Account Manager - One List" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'oneListDetailsContainer',
+          dataTest: 'oneListDetailsContainer',
           heading: 'Global Account Manager – One List',
           showEditLink: false,
           content: {
@@ -180,7 +180,7 @@ describe('Companies business details', () => {
 
       it('should display the "Business hierarchy" details container heading', () => {
         assertSummaryTable({
-          dataAutoId: 'businessHierarchyDetailsContainer',
+          dataTest: 'businessHierarchyDetailsContainer',
           heading: 'Business hierarchy',
           showEditLink: true,
           content: {
@@ -312,7 +312,7 @@ describe('Companies business details', () => {
 
       it('should display the "About" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'aboutDetailsContainer',
+          dataTest: 'aboutDetailsContainer',
           heading: 'About Venus Ltd',
           showEditLink: true,
           content: {
@@ -331,7 +331,7 @@ describe('Companies business details', () => {
 
       it('should display the "Addresses" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'addressesDetailsContainer',
+          dataTest: 'addressesDetailsContainer',
           heading: 'Addresses',
           showEditLink: true,
         })
@@ -351,7 +351,7 @@ describe('Companies business details', () => {
 
       it('should display the "DIT region" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'regionDetailsContainer',
+          dataTest: 'regionDetailsContainer',
           heading: 'DIT region',
           showEditLink: true,
           content: ['North West'],
@@ -360,7 +360,7 @@ describe('Companies business details', () => {
 
       it('should display the "DIT sector" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'sectorDetailsContainer',
+          dataTest: 'sectorDetailsContainer',
           heading: 'DIT sector',
           showEditLink: true,
           content: ['Retail'],
@@ -369,7 +369,7 @@ describe('Companies business details', () => {
 
       it('should display the "Global Account Manager - One List" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'oneListDetailsContainer',
+          dataTest: 'oneListDetailsContainer',
           heading: 'Global Account Manager – One List',
           showEditLink: true,
           content: {
@@ -382,7 +382,7 @@ describe('Companies business details', () => {
 
       it('should display the "Business hierarchy" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'businessHierarchyDetailsContainer',
+          dataTest: 'businessHierarchyDetailsContainer',
           heading: 'Business hierarchy',
           showEditLink: true,
           content: {
@@ -398,7 +398,7 @@ describe('Companies business details', () => {
 
       it('should display the "Documents from CDMS" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'documentsDetailsContainer',
+          dataTest: 'documentsDetailsContainer',
           heading: 'Documents from CDMS',
           showEditLink: false,
           content: ['View files and documents (opens in a new window or tab)'],
@@ -459,7 +459,7 @@ describe('Companies business details', () => {
 
       it('should display the "About" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'aboutDetailsContainer',
+          dataTest: 'aboutDetailsContainer',
           heading: 'About DnB Corp',
           showEditLink: true,
           content: {
@@ -479,7 +479,7 @@ describe('Companies business details', () => {
 
       it('should display the "Addresses" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'addressesDetailsContainer',
+          dataTest: 'addressesDetailsContainer',
           heading: 'Addresses',
           showEditLink: false,
         })
@@ -500,7 +500,7 @@ describe('Companies business details', () => {
 
       it('should display the "DIT sector" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'sectorDetailsContainer',
+          dataTest: 'sectorDetailsContainer',
           heading: 'DIT sector',
           showEditLink: true,
           content: ['Retail'],
@@ -515,7 +515,7 @@ describe('Companies business details', () => {
 
       it('should display the "Business hierarchy" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'businessHierarchyDetailsContainer',
+          dataTest: 'businessHierarchyDetailsContainer',
           heading: 'Business hierarchy',
           showEditLink: false,
           content: [
@@ -615,7 +615,7 @@ describe('Companies business details', () => {
 
       it('should display the "About" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'aboutDetailsContainer',
+          dataTest: 'aboutDetailsContainer',
           heading: 'About Archived Ltd',
           showEditLink: false,
           content: {
@@ -634,7 +634,7 @@ describe('Companies business details', () => {
 
       it('should display the "Addresses" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'addressesDetailsContainer',
+          dataTest: 'addressesDetailsContainer',
           heading: 'Addresses',
           showEditLink: false,
         })
@@ -655,7 +655,7 @@ describe('Companies business details', () => {
 
       it('should display the "DIT sector" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'sectorDetailsContainer',
+          dataTest: 'sectorDetailsContainer',
           heading: 'DIT sector',
           showEditLink: false,
           content: ['Retail'],
@@ -664,7 +664,7 @@ describe('Companies business details', () => {
 
       it('should display the "Global Account Manager - One List" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'oneListDetailsContainer',
+          dataTest: 'oneListDetailsContainer',
           heading: 'Global Account Manager – One List',
           showEditLink: false,
           content: {
@@ -677,7 +677,7 @@ describe('Companies business details', () => {
 
       it('should display the "Business hierarchy" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'businessHierarchyDetailsContainer',
+          dataTest: 'businessHierarchyDetailsContainer',
           heading: 'Business hierarchy',
           showEditLink: false,
           content: {
@@ -749,7 +749,7 @@ describe('Companies business details', () => {
 
       it('should display the "About" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'aboutDetailsContainer',
+          dataTest: 'aboutDetailsContainer',
           heading: 'About Minimally Minimal Ltd',
           showEditLink: true,
           content: {
@@ -766,7 +766,7 @@ describe('Companies business details', () => {
 
       it('should display the "Addresses" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'addressesDetailsContainer',
+          dataTest: 'addressesDetailsContainer',
           heading: 'Addresses',
           showEditLink: true,
         })
@@ -781,7 +781,7 @@ describe('Companies business details', () => {
 
       it('should display the "DIT region" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'regionDetailsContainer',
+          dataTest: 'regionDetailsContainer',
           heading: 'DIT region',
           showEditLink: true,
           content: ['Not set'],
@@ -790,7 +790,7 @@ describe('Companies business details', () => {
 
       it('should display the "DIT sector" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'sectorDetailsContainer',
+          dataTest: 'sectorDetailsContainer',
           heading: 'DIT sector',
           showEditLink: true,
           content: ['Advanced Engineering'],
@@ -805,7 +805,7 @@ describe('Companies business details', () => {
 
       it('should display the "Business hierarchy" details container', () => {
         assertSummaryTable({
-          dataAutoId: 'businessHierarchyDetailsContainer',
+          dataTest: 'businessHierarchyDetailsContainer',
           heading: 'Business hierarchy',
           showEditLink: true,
           content: {

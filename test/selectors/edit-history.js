@@ -1,6 +1,6 @@
 module.exports = {
   change: (changeIndex) => {
-    const change = `[data-auto-id=editHistory] div:nth-child(${changeIndex})`
+    const change = `[data-test=editHistory] div:nth-child(${changeIndex})`
     return {
       change,
       updated: `${change} > p`,

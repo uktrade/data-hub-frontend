@@ -22,7 +22,7 @@ const InteractionReferralDetails = ({
   return (
     <StyledSummaryTable
       caption="This interaction is linked to a referral"
-      data-auto-id="interactionDetailsContainer"
+      data-test="interactionDetailsContainer"
     >
       <SummaryTable.Row heading="Subject">
         <Link href={urls.companies.referrals.details(companyId, id)}>

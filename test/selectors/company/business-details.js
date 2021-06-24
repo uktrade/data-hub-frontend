@@ -1,11 +1,10 @@
 module.exports = () => {
   return {
-    hierarchy: '[data-auto-id="businessHierarchyDetailsContainer"]',
-    unarchiveLink: '[data-auto-id="bodyMainContent"] .c-message a',
-    whereDoesInformation:
-      '[data-auto-id="businessDetailsWhereDoesInformation"]',
+    hierarchy: '[data-test="businessHierarchyDetailsContainer"]',
+    unarchiveLink: '[data-test="bodyMainContent"] .c-message a',
+    whereDoesInformation: '[data-test="businessDetailsWhereDoesInformation"]',
     address: (cellNumber) => {
-      const cellSelector = `[data-auto-id="addressesDetailsContainer"] tr td:nth-child(${cellNumber})`
+      const cellSelector = `[data-test="addressesDetailsContainer"] tr td:nth-child(${cellNumber})`
       return {
         badge: (badgeNumber) => {
           return `${cellSelector} div div:nth-child(${badgeNumber}) span.c-badge`

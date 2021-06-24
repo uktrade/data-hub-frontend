@@ -5,7 +5,7 @@ exports.interaction = {
     editInteraction: ({ companyId, interactionId }) =>
       `[href="/companies/${companyId}/interactions/${interactionId}/edit"]`,
   },
-  whyCanINotComplete: '[data-auto-id="interactionDetailsWhyCanINotComplete"]',
+  whyCanINotComplete: '[data-test="interactionDetailsWhyCanINotComplete"]',
   referralDetails: '#interaction-referral-details',
 }
 

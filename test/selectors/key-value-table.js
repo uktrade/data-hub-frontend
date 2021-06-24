@@ -1,5 +1,5 @@
-module.exports = (dataAutoId) => {
-  const tableSelector = `[data-auto-id="${dataAutoId}"]`
+module.exports = (dataTest) => {
+  const tableSelector = `[data-test="${dataTest}"]`
   return {
     keyCell: (rowNumber) => {
       return `${tableSelector} tr:nth-child(${rowNumber}) th`

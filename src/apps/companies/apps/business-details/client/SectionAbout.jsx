@@ -32,7 +32,7 @@ const TableDetails = styled('div')`
 const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
   <SummaryTable
     caption={`About ${businessDetails.name}`}
-    data-auto-id="aboutDetailsContainer"
+    data-test="aboutDetailsContainer"
     actions={!isArchived && <Link href={urls.companyEdit}>Edit</Link>}
   >
     <SummaryTable.Row heading="VAT number">

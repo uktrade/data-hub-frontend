@@ -1,5 +1,5 @@
 module.exports = {
-  add: '[data-auto-id="Add event"]',
+  add: '[data-test="Add event"]',
   eventName: '#field-name',
   nameError: 'label[for=field-name] span:nth-child(2)',
   eventType: 'select[name="event_type"]',

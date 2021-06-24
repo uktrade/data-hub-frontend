@@ -68,7 +68,7 @@
             data-test="submit"
             class="govuk-button js-prevent-multiple-submits {{ buttonModifiers }}"
             {{ 'disabled="disabled"' if props.disableFormAction }}
-            {% if buttonDataAttr %}data-auto-id="{{ buttonDataAttr }}"{% endif %}
+            {% if buttonDataAttr %}data-test="{{ buttonDataAttr }}"{% endif %}
           >
             {{ buttonText }}
           </button>

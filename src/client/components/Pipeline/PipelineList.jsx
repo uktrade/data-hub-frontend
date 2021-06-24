@@ -44,7 +44,7 @@ const PipelineList = ({
               {pluralize('project', items.length, true)}
             </StyledItemsCounter>
             {items.length ? (
-              <StyledOrderedList data-auto-id="pipelineList">
+              <StyledOrderedList data-test="pipelineList">
                 {items.map((item) => (
                   <ListItem key={item.id}>
                     <PipelineItem item={item} />

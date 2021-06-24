@@ -4,7 +4,7 @@
 
   {% call DetailsContainer({ 
     heading: 'Client relationship management',
-    dataAutoId: 'client-relationship-management'
+    dataTest: 'client-relationship-management'
   }) %}
     {% component 'data-table', {
       columns: clientRelationshipManagementLabels.view,
@@ -15,7 +15,7 @@
 
   {% call DetailsContainer({ 
     heading: 'Project management',
-    dataAutoId: 'project-management'
+    dataTest: 'project-management'
   }) %}
     {% if stage == 'Prospect' %}
       {{ Message({
@@ -45,7 +45,7 @@
     {% endif %}
   {% endcall %}
 
-  {% call DetailsContainer({ heading: 'Project specialist and team members', dataAutoId: 'project-specialist-team-members' }) %}
+  {% call DetailsContainer({ heading: 'Project specialist and team members', dataTest: 'project-specialist-team-members' }) %}
     {% component 'data-table', {
       columns: teamMembersLabels.view,
       data: teamMembersData
@@ -54,7 +54,7 @@
     <a href="edit-team-members" class="govuk-button govuk-button--secondary" data-test="project-specialist-team-members-button">Change</a>
   {% endcall %}
 
-  {% call DetailsContainer({ heading: 'Success verifier', dataAutoId: 'success-verifier' }) %}
+  {% call DetailsContainer({ heading: 'Success verifier', dataTest: 'success-verifier' }) %}
     {{ Message({
       type: 'muted',
       text: 'Will be assigned during "Verify win" stage.'

@@ -1,5 +1,5 @@
 module.exports = () => {
-  const localHeaderSelector = '[data-auto-id="localHeader"]'
+  const localHeaderSelector = '[data-test="localHeader"]'
   return {
     metaList: `${localHeaderSelector} .c-meta-list`,
     heading: `${localHeaderSelector} h1`,

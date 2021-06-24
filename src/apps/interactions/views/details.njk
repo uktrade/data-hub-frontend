@@ -6,7 +6,7 @@
 {% set kindPath = interaction.kind | kebabCase %}
 
 {% block main_grid_right_column %}
-  {% component 'key-value-table', variant='striped', items=interactionViewRecord, dataAutoId='interactionDetails' %}
+  {% component 'key-value-table', variant='striped', items=interactionViewRecord, dataTest='interactionDetails' %}
 
   <div class="c-form-actions">
     {% if canComplete %}
@@ -42,7 +42,7 @@
           If you think the information is incomplete or incorrect, <a href="/support">get in touch using the support form</a>.
         </p>',
       attributes: {
-        'data-auto-id': 'interactionDetailsWhyCanINotComplete'
+        'data-test': 'interactionDetailsWhyCanINotComplete'
       }
     }) }}
   {% endif %}
