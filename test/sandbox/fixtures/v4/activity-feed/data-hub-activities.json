@@ -83,6 +83,55 @@
         "sort": [
           1560787348796
         ]
+      },
+      {
+        "_index": "activities__feed_id_datahub",
+        "_type": "_doc",
+        "_id": "dit:DataHubInvestmentProject:d9e25847-6199-e211-a939-e4115bead28a:Add",
+        "_score": null,
+        "_source": {
+           "actor":{
+              "dit:emailAddress":"CDMS\\CDMSInstall",
+              "id":"dit:DataHubAdviser:419fe8a8-3e95-e211-a939-e4115bead28a",
+              "name":"CDMSInstall Last name",
+              "type":[
+                 "Person",
+                 "dit:Adviser"
+              ]
+           },
+           "generator":{
+              "name":"dit:dataHub",
+              "type":"Application"
+           },
+           "id":"dit:DataHubInvestmentProject:d9e25847-6199-e211-a939-e4115bead28a:Add",
+           "object":{
+              "attributedTo":[
+                 {
+                    "dit:companiesHouseNumber":null,
+                    "dit:dunsNumber":"656147733",
+                    "id":"dit:DataHubCompany:81ee3ac7-a098-e211-a939-e4115bead28a",
+                    "name":"ASUSTEK COMPUTER INCORPORATION",
+                    "type":[
+                       "Organization",
+                       "dit:Company"
+                    ]
+                 }
+              ],
+              "dit:investmentType":{
+                 "name":"FDI"
+              },
+              "dit:numberNewJobs":20,
+              "id":"dit:DataHubInvestmentProject:d9e25847-6199-e211-a939-e4115bead28a",
+              "name":"Asus UK expansion",
+              "startTime":"2011-11-23T00:00:00Z",
+              "type":[
+                 "dit:InvestmentProject"
+              ],
+              "url":"https://www.datahub.trade.gov.uk/investments/projects/d9e25847-6199-e211-a939-e4115bead28a"
+           },
+           "published":"2011-11-23T00:00:00Z",
+           "type":"Add"
+        }
       }
     ]
   }
