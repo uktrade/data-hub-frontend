@@ -15,6 +15,7 @@ const getEvents = ({
   organiser,
   country,
   uk_region,
+  event_type,
 }) =>
   axios
     .post('/api-proxy/v3/search/event', {
@@ -25,6 +26,7 @@ const getEvents = ({
       organiser,
       country,
       uk_region,
+      event_type,
     })
     .then(({ data }) => transformResponseToEventCollection(data))
     .catch(handleError)
