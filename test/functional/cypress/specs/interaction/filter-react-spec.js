@@ -6,6 +6,7 @@ import {
   clickCheckboxGroupOption,
   removeChip,
   selectFirstAdvisersTypeaheadOption,
+  inputDateValue,
 } from '../../support/actions'
 
 import {
@@ -16,6 +17,7 @@ import {
   assertFieldEmpty,
   assertCheckboxGroupOption,
   assertTypeaheadOptionSelected,
+  assertDateInput,
 } from '../../support/assertions'
 
 const buildQueryString = (queryParams = {}) =>
@@ -241,6 +243,65 @@ describe('Interactions Collections Filter', () => {
       assertPayload('@apiRequest', minimumPayload)
       assertChipsEmpty()
       assertFieldEmpty(myInteractionsFilter)
+    })
+  })
+
+  context('Dates', () => {
+    const dateAfter = '[data-test="date-after-filter"]'
+    const dateBefore = '[data-test="date-before-filter"]'
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        date_after: '2021-06-24',
+        date_before: '2023-06-24',
+      })
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.visit(`${interactions.react()}?${queryString}`)
+      assertPayload('@apiRequest', {
+        ...minimumPayload,
+        date_after: '2021-06-24',
+        date_before: '2023-06-24',
+      })
+      assertDateInput({
+        element: dateAfter,
+        label: 'From',
+        value: '2021-06-24',
+      })
+      assertDateInput({
+        element: dateBefore,
+        label: 'To',
+        value: '2023-06-24',
+      })
+      assertChipExists({ label: 'From: 24 June 2021', position: 1 })
+      assertChipExists({ label: 'To: 24 June 2023', position: 2 })
+    })
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.visit(`${interactions.react()}?${queryString}`)
+      cy.wait('@apiRequest')
+      inputDateValue({
+        element: dateAfter,
+        value: '2021-06-24',
+      })
+      inputDateValue({
+        element: dateBefore,
+        value: '2023-06-24',
+      })
+      cy.wait('@apiRequest')
+      assertPayload('@apiRequest', {
+        ...minimumPayload,
+        date_after: '2021-06-24',
+        date_before: '2023-06-24',
+      })
+      assertChipExists({ label: 'From: 24 June 2021', position: 1 })
+      assertChipExists({ label: 'To: 24 June 2023', position: 2 })
+      removeChip('2021-06-24')
+      cy.wait('@apiRequest')
+      removeChip('2023-06-24')
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(dateBefore)
+      assertFieldEmpty(dateAfter)
     })
   })
 })

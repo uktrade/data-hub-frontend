@@ -55,13 +55,13 @@ describe('Viewing the team of a project', () => {
     assertViewHeader({ project: projectWithCompleteTeam })
 
     it('should display expected data', () => {
-      cy.get('[data-auto-id="client-relationship-management-heading"]').should(
+      cy.get('[data-test="client-relationship-management-heading"]').should(
         'have.text',
         'Client relationship management'
       )
 
       assertTable({
-        element: '[data-auto-id="client-relationship-management-content"]',
+        element: '[data-test="client-relationship-management-content"]',
         headings: ['Role', 'Adviser', 'Team'],
         rows: [
           [
@@ -72,13 +72,13 @@ describe('Viewing the team of a project', () => {
         ],
       })
 
-      cy.get('[data-auto-id="project-management-heading"]').should(
+      cy.get('[data-test="project-management-heading"]').should(
         'have.text',
         'Project management'
       )
 
       assertTable({
-        element: '[data-auto-id="project-management-content"]',
+        element: '[data-test="project-management-content"]',
         headings: ['Role', 'Adviser', 'Team'],
         rows: [
           [
@@ -94,13 +94,13 @@ describe('Viewing the team of a project', () => {
         ],
       })
 
-      cy.get('[data-auto-id="project-specialist-team-members-heading"]').should(
+      cy.get('[data-test="project-specialist-team-members-heading"]').should(
         'have.text',
         'Project specialist and team members'
       )
 
       assertTable({
-        element: '[data-auto-id="project-specialist-team-members-content"]',
+        element: '[data-test="project-specialist-team-members-content"]',
         headings: ['Role', 'Adviser', 'Team'],
         rows: [
           [
@@ -116,12 +116,12 @@ describe('Viewing the team of a project', () => {
         ],
       })
 
-      cy.get('[data-auto-id="success-verifier-heading"]').should(
+      cy.get('[data-test="success-verifier-heading"]').should(
         'have.text',
         'Success verifier'
       )
 
-      cy.get('[data-auto-id="success-verifier-content"]').should(
+      cy.get('[data-test="success-verifier-content"]').should(
         'have.text',
         'Will be assigned during "Verify win" stage.'
       )
@@ -137,13 +137,13 @@ describe('Viewing the team of a project', () => {
     assertViewHeader({ project: projectWithGlobalManager })
 
     it('should display expected data', () => {
-      cy.get('[data-auto-id="client-relationship-management-heading"]').should(
+      cy.get('[data-test="client-relationship-management-heading"]').should(
         'have.text',
         'Client relationship management'
       )
 
       assertTable({
-        element: '[data-auto-id="client-relationship-management-content"]',
+        element: '[data-test="client-relationship-management-content"]',
         headings: ['Role', 'Adviser', 'Team'],
         rows: [
           [

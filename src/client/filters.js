@@ -1,3 +1,8 @@
+import { format, parseISO } from 'date-fns'
+
+const getDateLabel = (value) =>
+  value ? `${format(parseISO(value), 'd MMMM yyyy')}` : ''
+
 export const buildOptionsFilter = ({
   options = [],
   value = [],
@@ -17,3 +22,6 @@ export const buildOptionsFilter = ({
 
 export const buildInputFieldFilter = ({ value, categoryLabel }) =>
   value ? [{ value, label: value, categoryLabel }] : []
+
+export const buildDatesFilter = ({ value, categoryLabel = '' }) =>
+  value ? [{ label: getDateLabel(value), value, categoryLabel }] : []

@@ -35,3 +35,10 @@ export const selectFirstTypeaheadOption = ({ element, input }) => {
 export const removeChip = (dataValue) => {
   cy.get('[data-test=filter-chips]').find(`[data-value="${dataValue}"]`).click()
 }
+
+/**
+ * Adds a date to the any given date input field
+ */
+export const inputDateValue = ({ element, value }) => {
+  cy.get(element).type(value)
+}

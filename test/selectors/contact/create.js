@@ -1,7 +1,7 @@
 const msgCls = '.c-form-group__error-message'
 
 module.exports = {
-  add: '[data-auto-id="Add contact"]',
+  add: '[data-test="Add contact"]',
   addContact: '.c-form-actions .govuk-button',
   name: '#field-first_name',
   lastName: '#field-last_name',

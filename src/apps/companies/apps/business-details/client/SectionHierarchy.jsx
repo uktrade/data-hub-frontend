@@ -208,7 +208,7 @@ const SectionHierarchy = ({
   return (
     <SummaryTable
       caption="Business hierarchy"
-      data-auto-id="businessHierarchyDetailsContainer"
+      data-test="businessHierarchyDetailsContainer"
       actions={
         !isArchived &&
         showDataHubHierarchy && (

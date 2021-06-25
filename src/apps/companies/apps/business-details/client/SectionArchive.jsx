@@ -37,7 +37,7 @@ const SectionArchive = ({ isArchived, isDnbCompany, urls }) => {
   }
 
   return (
-    <div data-auto-id="archiveCompanyContainer">
+    <div data-test="archiveCompanyContainer">
       <StyledSectionHeader>Archive company</StyledSectionHeader>
 
       <p>Archive this company if it is no longer required or active.</p>

@@ -7,7 +7,7 @@ const SectionDocuments = ({ urls }) =>
   urls.archivedDocument ? (
     <SummaryTable
       caption="Documents from CDMS"
-      data-auto-id="documentsDetailsContainer"
+      data-test="documentsDetailsContainer"
     >
       <SummaryTable.Row>
         <NewWindowLink href={urls.archivedDocument}>

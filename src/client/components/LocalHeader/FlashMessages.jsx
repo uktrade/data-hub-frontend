@@ -51,7 +51,7 @@ const FlashMessages = ({ flashMessages }) => {
   const flashMessagesFromStorage = getMessages()
   clearMessages()
   return !isEmpty(flashMessages) || flashMessagesFromStorage ? (
-    <UnorderedList listStyleType="none" data-auto-id="flash">
+    <UnorderedList listStyleType="none" data-test="flash">
       {Object.entries(
         !isEmpty(flashMessages) ? flashMessages : flashMessagesFromStorage
       ).map(([type, messages]) => {

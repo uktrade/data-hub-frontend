@@ -31,23 +31,26 @@ const assertCollection = (headerCountSelector, collectionItemsSelector) => {
     })
 }
 
-const assertKeyValueTable = (dataAutoId, expected) => {
+const assertKeyValueTable = (dataTest, expected) => {
   forEach(keys(expected), (key, i) => {
     const rowNumber = i + 1
-    cy.get(selectors.keyValueTable(dataAutoId).keyCell(rowNumber)).should(
+    cy.get(selectors.keyValueTable(dataTest).keyCell(rowNumber)).should(
       'have.text',
       key
     )
 
     if (expected[key].href) {
-      cy.get(
-        selectors.keyValueTable(dataAutoId).valueCellLink(rowNumber)
-      ).should('have.attr', 'href', expected[key].href)
-      cy.get(
-        selectors.keyValueTable(dataAutoId).valueCellLink(rowNumber)
-      ).should('have.text', expected[key].name)
+      cy.get(selectors.keyValueTable(dataTest).valueCellLink(rowNumber)).should(
+        'have.attr',
+        'href',
+        expected[key].href
+      )
+      cy.get(selectors.keyValueTable(dataTest).valueCellLink(rowNumber)).should(
+        'have.text',
+        expected[key].name
+      )
     } else {
-      cy.get(selectors.keyValueTable(dataAutoId).valueCell(rowNumber)).should(
+      cy.get(selectors.keyValueTable(dataTest).valueCell(rowNumber)).should(
         'have.text',
         expected[key]
       )

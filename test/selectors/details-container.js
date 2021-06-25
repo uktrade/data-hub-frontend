@@ -1,5 +1,5 @@
-module.exports = (dataAutoId) => {
-  const containerSelector = `[data-auto-id="${dataAutoId}"]`
+module.exports = (dataTest) => {
+  const containerSelector = `[data-test="${dataTest}"]`
   return {
     container: containerSelector,
     heading: `${containerSelector} h2`,

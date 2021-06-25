@@ -98,6 +98,16 @@ function FilteredCollectionHeader({
         thus the chips should not be hardcoded here
         */}
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedDatesAfter}
+          qsParamName="date_after"
+          showCategoryLabels={true}
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedDatesBefore}
+          qsParamName="date_before"
+          showCategoryLabels={true}
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedKind}
           qsParamName="kind"
         />
@@ -125,6 +135,10 @@ function FilteredCollectionHeader({
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedCountries}
           qsParamName="country"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedPrimaryMarkets}
+          qsParamName="primary_market"
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedExportToCountries}
@@ -260,6 +274,10 @@ function FilteredCollectionHeader({
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedStatus}
           qsParamName="archived"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedContactName}
+          qsParamName="contact_name"
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedCompanyName}

@@ -46,7 +46,7 @@ export default function PipeLineFilterSort({
   return (
     <StyledSortFilter>
       <Checkbox
-        data-auto-id="pipeline-filter-archive"
+        data-test="pipeline-filter-archive"
         aria-label="show archived projects"
         onChange={() => {
           onClick(!includeArchive)

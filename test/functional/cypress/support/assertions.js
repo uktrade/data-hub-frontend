@@ -3,32 +3,35 @@ const qs = require('qs')
 
 const selectors = require('../../../selectors')
 
-const assertKeyValueTable = (dataAutoId, expected) => {
+const assertKeyValueTable = (dataTest, expected) => {
   forEach(keys(expected), (key, i) => {
     const rowNumber = i + 1
 
     if (expected[key] === null) {
-      cy.get(selectors.keyValueTable(dataAutoId).valueCell(rowNumber)).should(
+      cy.get(selectors.keyValueTable(dataTest).valueCell(rowNumber)).should(
         'have.text',
         key
       )
     } else if (expected[key].href) {
-      cy.get(selectors.keyValueTable(dataAutoId).keyCell(rowNumber)).should(
+      cy.get(selectors.keyValueTable(dataTest).keyCell(rowNumber)).should(
         'have.text',
         key
       )
-      cy.get(
-        selectors.keyValueTable(dataAutoId).valueCellLink(rowNumber)
-      ).should('have.attr', 'href', expected[key].href)
-      cy.get(
-        selectors.keyValueTable(dataAutoId).valueCellLink(rowNumber)
-      ).should('have.text', expected[key].name)
+      cy.get(selectors.keyValueTable(dataTest).valueCellLink(rowNumber)).should(
+        'have.attr',
+        'href',
+        expected[key].href
+      )
+      cy.get(selectors.keyValueTable(dataTest).valueCellLink(rowNumber)).should(
+        'have.text',
+        expected[key].name
+      )
     } else {
-      cy.get(selectors.keyValueTable(dataAutoId).keyCell(rowNumber)).should(
+      cy.get(selectors.keyValueTable(dataTest).keyCell(rowNumber)).should(
         'have.text',
         key
       )
-      cy.get(selectors.keyValueTable(dataAutoId).valueCell(rowNumber)).should(
+      cy.get(selectors.keyValueTable(dataTest).valueCell(rowNumber)).should(
         'have.text',
         expected[key]
       )
@@ -36,10 +39,10 @@ const assertKeyValueTable = (dataAutoId, expected) => {
   })
 }
 
-const assertValueTable = (dataAutoId, expected) => {
+const assertValueTable = (dataTest, expected) => {
   forEach(expected, (expectedValue, i) => {
     const rowNumber = i + 1
-    cy.get(selectors.keyValueTable(dataAutoId).valueCell(rowNumber)).should(
+    cy.get(selectors.keyValueTable(dataTest).valueCell(rowNumber)).should(
       'have.text',
       expectedValue
     )
@@ -532,6 +535,18 @@ const assertPayload = (apiRequest, expectedParams) => {
   })
 }
 
+/**
+ * Assert that the label and value exist on the date input
+ */
+
+const assertDateInput = ({ element, label, value }) => {
+  cy.get(element)
+    .find('label')
+    .should('contain', label)
+    .next()
+    .should('have.attr', 'value', value)
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
@@ -568,4 +583,5 @@ module.exports = {
   assertQueryParams,
   assertElementsInOrder,
   assertPayload,
+  assertDateInput,
 }

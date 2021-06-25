@@ -147,8 +147,11 @@ import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentRemind
 import { getContacts, getContactsMetadata } from '../apps/contacts/client/tasks'
 import { getInteractions } from '../apps/interactions/client/tasks'
 
-import { TASK_GET_ORDERS_LIST } from '../apps/omis/client/state'
-import { getOrders } from '../apps/omis/client/tasks'
+import {
+  TASK_GET_ORDERS_LIST,
+  TASK_GET_ORDERS_METADATA,
+} from '../apps/omis/client/state'
+import { getOrders, getOrdersMetadata } from '../apps/omis/client/tasks'
 
 import { getAdviserNames } from './advisers'
 
@@ -255,6 +258,7 @@ function App() {
         [TASK_GET_EVENTS_LIST]: getEvents,
         [TASK_GET_EVENTS_METADATA]: getEventsMetadata,
         [TASK_GET_EVENTS_ORGANISER_NAME]: getAdviserNames,
+        [TASK_GET_ORDERS_METADATA]: getOrdersMetadata,
         [TASK_GET_ORDERS_LIST]: getOrders,
       }}
     >

@@ -23,7 +23,7 @@ function assertHeader() {
   })
 
   it('should render the heading', () => {
-    cy.get('[data-auto-id="localHeader"] h1').should(
+    cy.get('[data-test="localHeader"] h1').should(
       'have.text',
       'Archive project'
     )

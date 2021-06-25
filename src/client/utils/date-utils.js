@@ -25,9 +25,8 @@ const normaliseAndFormatDate = (year, month, day) => {
   return day ? `${yearAndMonth}-${padZero(day)}` : yearAndMonth
 }
 
-export const format = (dateStr, dateFormat = 'dd MMM yyyy') => {
-  return formatFNS(parseISO(dateStr), dateFormat)
-}
+export const format = (dateStr, dateFormat = 'dd MMM yyyy') =>
+  dateStr ? formatFNS(parseISO(dateStr), dateFormat) : null
 
 export const today = () => {
   return formatFNS(new Date(), 'dd MMM yyyy')
