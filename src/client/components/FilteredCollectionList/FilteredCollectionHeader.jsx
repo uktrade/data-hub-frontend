@@ -206,6 +206,10 @@ function FilteredCollectionHeader({
           qsParamName="status"
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedStatuses}
+          qsParamName="status"
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedInvestmentTypes}
           qsParamName="investment_type"
         />
