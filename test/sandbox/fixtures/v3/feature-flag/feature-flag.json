@@ -66,5 +66,9 @@
   {
     "code": "province-filter",
     "is_active": true
+  },
+  {
+    "code": "edit-business-details-area-fields",
+    "is_active": true
   }
 ]

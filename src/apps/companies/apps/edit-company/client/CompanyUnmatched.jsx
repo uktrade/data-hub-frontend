@@ -18,9 +18,10 @@ const CompanyUnmatched = ({
   isOnOneList,
   turnoverRanges,
   employeeRanges,
+  features,
 }) => (
   <>
-    <CommonFields company={company} regions={regions} />
+    <CommonFields company={company} regions={regions} features={features} />
 
     <FieldRadios
       label="Annual turnover (optional)"
@@ -62,6 +63,7 @@ const CompanyUnmatched = ({
 
 CompanyUnmatched.propTypes = {
   company: PropTypes.object.isRequired,
+  features: PropTypes.object,
   regions: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
