@@ -1,7 +1,7 @@
 import { find } from 'lodash'
 
 import { format, formatWithTime } from '../../../client/utils/date-utils'
-import { ORDER_STATES } from './constants'
+import { STATUSES } from './constants'
 import { omis } from '../../../lib/urls'
 
 export const transformOrderToListItem = ({
@@ -17,7 +17,7 @@ export const transformOrderToListItem = ({
   delivery_date,
   primary_market,
 } = {}) => {
-  const orderState = find(ORDER_STATES, { value: status })
+  const orderState = find(STATUSES, { value: status })
 
   const metadata = [
     {

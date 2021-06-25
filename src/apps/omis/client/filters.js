@@ -5,7 +5,12 @@ import {
 
 import { LABELS } from './constants'
 
-export const buildSelectedFilters = (queryParams, metadata) => ({
+export const buildSelectedFilters = (queryParams, metadata, statusOptions) => ({
+  selectedStatuses: buildOptionsFilter({
+    options: statusOptions,
+    value: queryParams.status,
+    categoryLabel: LABELS.status,
+  }),
   selectedCompanyName: buildInputFieldFilter({
     value: queryParams.company_name,
     categoryLabel: LABELS.companyName,
