@@ -2,7 +2,8 @@ import urls from '../../../../../src/lib/urls'
 import qs from 'qs'
 
 import { randomChoice } from '../../fakers/utils'
-import { eventTypeListFaker } from '../../fakers/event-types'
+import eventTypes from '../../fixtures/metadata/event-types.json'
+
 import {
   clickCheckboxGroupOption,
   removeChip,
@@ -37,8 +38,6 @@ const searchEndpoint = '/api-proxy/v3/search/event'
 const eventTypeEndpoint = '/api-proxy/v4/metadata/event-type'
 
 describe('events Collections Filter', () => {
-  const eventTypes = eventTypeListFaker(10)
-
   context('Default Params', () => {
     it('should set the default params', () => {
       cy.intercept('POST', searchEndpoint).as('apiRequest')
@@ -221,10 +220,10 @@ describe('events Collections Filter', () => {
 
   context('Event Type', () => {
     const element = '[data-test="event-type-filter"] fieldset'
-    const { id: eventTypeId, name: eventTypeLabel } = randomChoice(eventTypes)
+    const eventType = randomChoice(eventTypes)
 
     it('should filter from the url', () => {
-      const queryString = buildQueryString({ event_type: [eventTypeId] })
+      const queryString = buildQueryString({ event_type: [eventType.id] })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.intercept('GET', eventTypeEndpoint, eventTypes).as(
         'eventTypeApiRequest'
@@ -233,10 +232,10 @@ describe('events Collections Filter', () => {
       cy.wait('@eventTypeApiRequest')
       assertPayload('@apiRequest', {
         ...minimumPayload,
-        event_type: [eventTypeId],
+        event_type: [eventType.id],
       })
-      assertCheckboxGroupOption({ element, value: eventTypeId })
-      assertChipExists({ label: eventTypeLabel, position: 1 })
+      assertCheckboxGroupOption({ element, value: eventType.id })
+      assertChipExists({ label: eventType.name, position: 1 })
     })
 
     it('should filter from user input and remove the chip', () => {
@@ -249,20 +248,20 @@ describe('events Collections Filter', () => {
       cy.wait('@eventTypeApiRequest')
       cy.wait('@apiRequest')
 
-      clickCheckboxGroupOption({ element, value: eventTypeId })
+      clickCheckboxGroupOption({ element, value: eventType.id })
       assertPayload('@apiRequest', {
         ...minimumPayload,
-        event_type: [eventTypeId],
+        event_type: [eventType.id],
       })
-      assertQueryParams('event_type', [eventTypeId])
-      assertChipExists({ label: eventTypeLabel, position: 1 })
+      assertQueryParams('event_type', [eventType.id])
+      assertChipExists({ label: eventType.name, position: 1 })
 
-      removeChip(eventTypeId)
+      removeChip(eventType.id)
       assertPayload('@apiRequest', minimumPayload)
       assertChipsEmpty()
       assertCheckboxGroupOption({
         element,
-        value: eventTypeId,
+        value: eventType.id,
         checked: false,
       })
     })
@@ -273,14 +272,14 @@ describe('events Collections Filter', () => {
       const ukCountryId = '80756b9a-5d95-e211-a939-e4115bead28a'
       const adviserId = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
       const southEastRegionId = '884cd12a-6095-e211-a939-e4115bead28a'
-      const { id: eventTypeId } = randomChoice(eventTypes)
+      const eventType = randomChoice(eventTypes)
       const queryString = qs.stringify({
         page: 1,
         name: 'Big Event',
         country: [ukCountryId],
         uk_region: [southEastRegionId],
         organiser: [adviserId],
-        event_type: [eventTypeId],
+        event_type: [eventType.id],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.intercept('GET', eventTypeEndpoint, eventTypes).as(
