@@ -33,10 +33,12 @@ const getEventsMetadata = () =>
   Promise.all([
     getMetadataOptions(urls.metadata.country()),
     getMetadataOptions(urls.metadata.ukRegion()),
+    getMetadataOptions(urls.metadata.eventType()),
   ])
-    .then(([countryOptions, ukRegionOptions]) => ({
+    .then(([countryOptions, ukRegionOptions, eventTypeOptions]) => ({
       countryOptions,
       ukRegionOptions,
+      eventTypeOptions,
     }))
     .catch(handleError)
 

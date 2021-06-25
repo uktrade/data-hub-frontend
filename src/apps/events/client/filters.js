@@ -28,4 +28,9 @@ export const buildSelectedFilters = ({
     value: queryParams.uk_region,
     categoryLabel: LABELS.ukRegion,
   }),
+  selectedEventTypes: buildOptionsFilter({
+    options: metadata.eventTypeOptions,
+    value: queryParams.event_type,
+    categoryLabel: LABELS.eventType,
+  }),
 })

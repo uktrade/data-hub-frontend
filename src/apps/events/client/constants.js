@@ -3,6 +3,7 @@ export const LABELS = {
   organiser: 'Organiser',
   country: 'Country',
   ukRegion: 'UK region',
+  eventType: 'Type of event',
 }
 
 export const SORT_OPTIONS = [
