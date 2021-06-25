@@ -140,8 +140,91 @@ describe('Collection middleware', () => {
         )
       })
 
-      it('should set sort on the request body', () => {
+      it('should remove unknown parameter from the request body', () => {
         expect(this.req.body.random).to.be.undefined
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.be.calledOnce
+      })
+    })
+
+    context('when supplied with us state', () => {
+      beforeEach(() => {
+        this.req = {
+          ...this.req,
+          query: {
+            us_state: ['state name', 'other state name'],
+          },
+        }
+
+        this.middleware.getRequestBody(['area'])(
+          this.req,
+          this.res,
+          this.nextSpy
+        )
+      })
+
+      it('should convert the us state parameter into area', () => {
+        expect(this.req.body.area).to.deep.equal([
+          'state name',
+          'other state name',
+        ])
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.be.calledOnce
+      })
+    })
+
+    context('when supplied with canadian province', () => {
+      beforeEach(() => {
+        this.req = {
+          ...this.req,
+          query: {
+            canadian_province: 'province name',
+          },
+        }
+
+        this.middleware.getRequestBody(['area'])(
+          this.req,
+          this.res,
+          this.nextSpy
+        )
+      })
+
+      it('should convert the canadian province parameter into area', () => {
+        expect(this.req.body.area).to.deep.equal(['province name'])
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.be.calledOnce
+      })
+    })
+
+    context('when supplied with a us state and a canadian province', () => {
+      beforeEach(() => {
+        this.req = {
+          ...this.req,
+          query: {
+            us_state: 'state name',
+            canadian_province: ['province name', 'second province name'],
+          },
+        }
+
+        this.middleware.getRequestBody(['area'])(
+          this.req,
+          this.res,
+          this.nextSpy
+        )
+      })
+
+      it('should convert the us and canadian province parameters into one area parameter', () => {
+        expect(this.req.body.area).to.deep.equal([
+          'state name',
+          'province name',
+          'second province name',
+        ])
       })
 
       it('should call next', () => {
