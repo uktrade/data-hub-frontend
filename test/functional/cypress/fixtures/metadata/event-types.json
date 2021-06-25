@@ -1,0 +1,52 @@
+[
+   {
+      "id":"85f2f48f-0ecb-4a3a-b7d2-8106b8733769",
+      "name":"Account management",
+      "disabled_on":null
+   },
+   {
+      "id":"2fade471-e868-4ea9-b125-945eb90ae5d4",
+      "name":"Exhibition",
+      "disabled_on":null
+   },
+   {
+      "id":"1889641d-a021-4b6a-bbbe-20f501b8fdf4",
+      "name":"Inward mission",
+      "disabled_on":null
+   },
+   {
+      "id":"e49ef1b7-3b35-4138-9219-b201461d2eb9",
+      "name":"Legacy service",
+      "disabled_on":null
+   },
+   {
+      "id":"fac620b8-d4c3-45a6-9922-bd65f51ef59f",
+      "name":"MVS",
+      "disabled_on":null
+   },
+   {
+      "id":"6031f993-a689-49af-9a11-942a8413a779",
+      "name":"Outward mission",
+      "disabled_on":null
+   },
+   {
+      "id":"ef7faeb4-46e1-4afc-aac7-387cf7161374",
+      "name":"Post local service",
+      "disabled_on":null
+   },
+   {
+      "id":"771f654d-e6b1-4fad-8a89-b6ac44147830",
+      "name":"Seminar",
+      "disabled_on":null
+   },
+   {
+      "id":"9c0fbb9b-f188-4dfa-9ee7-b3500ed7e8f4",
+      "name":"TPU - opportunity",
+      "disabled_on":null
+   },
+   {
+      "id":"91dbf298-84b3-4aa9-af7d-540721e5127c",
+      "name":"UK region local service",
+      "disabled_on":null
+   }
+]
