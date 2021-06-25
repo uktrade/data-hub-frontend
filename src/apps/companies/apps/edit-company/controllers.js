@@ -15,6 +15,7 @@ const { isItaTierDAccount } = require('../../../../lib/is-tier-type-company')
 async function renderEditCompanyForm(req, res, next) {
   try {
     const { company } = res.locals
+    const features = res.locals.features
 
     const [turnoverRanges, employeeRanges, regions, sectors, headquarterTypes] =
       await Promise.all([
@@ -44,6 +45,7 @@ async function renderEditCompanyForm(req, res, next) {
           regions,
           sectors,
           headquarterTypes,
+          features,
         },
       })
   } catch (error) {

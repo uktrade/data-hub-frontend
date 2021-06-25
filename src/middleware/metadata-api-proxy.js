@@ -52,6 +52,7 @@ const ALLOWLIST = [
   '/v4/metadata/capital-investment/asset-class-interest',
   '/v4/metadata/one-list-tier',
   '/v4/metadata/trade-agreement',
+  '/v4/metadata/administrative-area',
 ]
 
 module.exports = (app) => {
