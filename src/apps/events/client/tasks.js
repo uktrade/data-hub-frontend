@@ -15,6 +15,7 @@ const getEvents = ({
   organiser,
   country,
   uk_region,
+  event_type,
 }) =>
   axios
     .post('/api-proxy/v3/search/event', {
@@ -25,6 +26,7 @@ const getEvents = ({
       organiser,
       country,
       uk_region,
+      event_type,
     })
     .then(({ data }) => transformResponseToEventCollection(data))
     .catch(handleError)
@@ -33,10 +35,12 @@ const getEventsMetadata = () =>
   Promise.all([
     getMetadataOptions(urls.metadata.country()),
     getMetadataOptions(urls.metadata.ukRegion()),
+    getMetadataOptions(urls.metadata.eventType()),
   ])
-    .then(([countryOptions, ukRegionOptions]) => ({
+    .then(([countryOptions, ukRegionOptions, eventTypeOptions]) => ({
       countryOptions,
       ukRegionOptions,
+      eventTypeOptions,
     }))
     .catch(handleError)
 

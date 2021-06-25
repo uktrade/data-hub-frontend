@@ -10,6 +10,7 @@ import {
   CollectionFilters,
   FilteredCollectionList,
   RoutedAdvisersTypeahead,
+  RoutedCheckboxGroupField,
   RoutedInputField,
   RoutedTypeahead,
 } from '../../../client/components'
@@ -113,6 +114,14 @@ const EventsCollection = ({
           noOptionsMessage={() => <>No organisers found</>}
           selectedOptions={selectedFilters.selectedOrganisers}
           data-test="organiser-filter"
+        />
+        <RoutedCheckboxGroupField
+          legend={LABELS.eventType}
+          name="event_type"
+          qsParam="event_type"
+          options={optionMetadata.eventTypeOptions}
+          selectedOptions={selectedFilters.selectedEventTypes}
+          data-test="event-type-filter"
         />
       </CollectionFilters>
     </FilteredCollectionList>
