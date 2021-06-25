@@ -12,6 +12,7 @@ import {
   RoutedInputField,
   CollectionFilters,
   FilteredCollectionList,
+  RoutedCheckboxGroupField,
 } from '../../../client/components'
 
 import {
@@ -63,6 +64,14 @@ const OrdersCollection = ({
       }}
     >
       <CollectionFilters taskProps={collectionListMetadataTask}>
+        <RoutedCheckboxGroupField
+          legend={LABELS.status}
+          name="status"
+          qsParam="status"
+          options={optionMetadata.statusOptions}
+          selectedOptions={selectedFilters.selectedStatuses}
+          data-test="status-filter"
+        />
         <RoutedInputField
           id="OrdersCollection.company-name"
           qsParam="company_name"

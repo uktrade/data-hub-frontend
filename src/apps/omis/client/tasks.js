@@ -9,6 +9,7 @@ const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 export const getOrders = ({
   page,
   limit = 10,
+  status,
   sortby,
   uk_region,
   company_name,
@@ -20,6 +21,7 @@ export const getOrders = ({
     .post('/api-proxy/v3/search/order', {
       offset: limit * (page - 1),
       limit,
+      status,
       sortby,
       uk_region,
       company_name,
