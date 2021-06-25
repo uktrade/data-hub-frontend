@@ -1,6 +1,11 @@
 import React from 'react'
 import { useSelector, shallowEqual } from 'react-redux'
+import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import Button from '@govuk-react/button'
+import Link from '@govuk-react/link'
+import { SPACING } from '@govuk-react/constants'
+import url from '../../../../../lib/urls'
 
 import { TASK_SAVE_OPPORTUNITY_REQUIREMENTS, ID, 
   TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA } from './state'
@@ -11,11 +16,11 @@ import { INVESTMENT_OPPORTUNITY__REQUIREMENTS_METADATA_LOADED,
 import Task from '../../../../../client/components/Task'
 import {
   Main,
-  Step,
   FieldInput,
   FormStateful,
   FieldCheckboxes,
   FieldRadios,
+  FormActions,
 } from '../../../../../client/components'
 import { 
   TOTAL_INVESTMENT_SOUGHT_FIELD_NAME,
@@ -25,11 +30,14 @@ import {
   TIME_HORIZONS_FIELD_NAME,
 } from '../Details/constants'
 
+const StyledP = styled('p')`
+  margin-bottom: ${SPACING.SCALE_5};
+`
 const formatInitialValue = (value) => {
   return value == null ? '£' : value
 }
 
-const IS_NUMBER = /^[0-9]*$/ // Input validation to eliminates XSS
+const IS_NUMBER = /^[0-9]*$/ // Input validation to eliminates input script injection
 
 const OpportunityRequirementsForm = ({ opportunityId }) => {
 
@@ -83,7 +91,6 @@ const OpportunityRequirementsForm = ({ opportunityId }) => {
                  <>
                    <Main>
                      <Task.Status name={TASK_SAVE_OPPORTUNITY_REQUIREMENTS} id={ID} />
-                     <Step name="updateOpportunityRequirements">
                        <FieldInput
                          label="Total investment sought"
                          hint="Enter value in GB pounds"
@@ -111,36 +118,44 @@ const OpportunityRequirementsForm = ({ opportunityId }) => {
                        />
 
                        <FieldCheckboxes
-                        legend="Types of investment"
-                        name={INVESTMENT_TYPES_FIELD_NAME}
-                        initialValue={investmentTypesValues.map(obj => obj.value)}
-                        options={investmentTypesOptions}
-                        required="Select an option to continue"
+                         legend="Types of investment"
+                         name={INVESTMENT_TYPES_FIELD_NAME}
+                         initialValue={investmentTypesValues.map(obj => obj.value)}
+                         options={investmentTypesOptions}
+                         required="Select an option to continue"
                        />
 
-                       <p>If the type of investment you wish to select is not shown above, then please request it from <a href="mailto: capitalinvestment@trade.gov.uk">capitalinvestment@trade.gov.uk</a>.</p>
+                       <StyledP>
+                         If the type of investment you wish to select is not shown above, then please request it 
+                         from <Link>capitalinvestment@trade.gov.uk</Link>.
+                       </StyledP>
 
                        <FieldRadios
-                        legend="Estimated return rate"
-                        name={ESTIMATED_RETURN_RATE_FIELD_NAME}
-                        initialValue={returnRateValues && returnRateValues.value}
-                        options={returnRatesOptions}
-                        required="Select an option to continue"
+                         legend="Estimated return rate"
+                         name={ESTIMATED_RETURN_RATE_FIELD_NAME}
+                         initialValue={returnRateValues && returnRateValues.value}
+                         options={returnRatesOptions}
+                         required="Select an option to continue"
                        />
 
                        <FieldRadios
-                        legend="Timescales"
-                        name={TIME_HORIZONS_FIELD_NAME}
-                        // FTB: time_horizons is array selections but it requires to refactor into object string.
-                        initialValue={timeHorizonsValues.length && timeHorizonsValues[0].value}
-                        options={timeScalesOptions}
-                        required="Select an option to continue"
+                         legend="Timescales"
+                         name={TIME_HORIZONS_FIELD_NAME}
+                         // TODO: Modify initialValue logic after refactoring endpoint data type response.
+                         initialValue={timeHorizonsValues.length ? timeHorizonsValues[0].value : ''}
+                         options={timeScalesOptions}
+                         required="Select an option to continue"
                        />
 
-                     </Step>
+                     <FormActions>
+                        <Button>Save</Button>
+                        <Link href={url.investments.opportunities.details(opportunityId)}>Cancel</Link>
+                     </FormActions>
+
                    </Main>
                  </>
                )}
+
              </FormStateful>
            )}
          </Task>

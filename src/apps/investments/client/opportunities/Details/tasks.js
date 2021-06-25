@@ -69,7 +69,7 @@ export function saveOpportunityRequirements({ values, opportunityId }) {
       current_investment_secured: values.current_investment_secured,
       investment_types: values.investment_types,
       estimated_return_rate: values.estimated_return_rate,
-      time_horizons: [values.time_horizons],
+      time_horizons: [values.time_horizons], // TODO: Remove array bracket after refactoring endpoint.
     })
     .then(({ data }) => {
       return data
