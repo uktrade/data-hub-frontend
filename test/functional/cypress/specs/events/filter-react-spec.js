@@ -2,7 +2,7 @@ import urls from '../../../../../src/lib/urls'
 import qs from 'qs'
 
 import { randomChoice } from '../../fakers/utils'
-import eventTypes from '../../fixtures/metadata/event-types.json'
+import { eventTypeListFaker } from '../../fakers/event-types'
 
 import {
   clickCheckboxGroupOption,
@@ -38,6 +38,8 @@ const searchEndpoint = '/api-proxy/v3/search/event'
 const eventTypeEndpoint = '/api-proxy/v4/metadata/event-type'
 
 describe('events Collections Filter', () => {
+  const eventTypes = eventTypeListFaker(10)
+
   context('Default Params', () => {
     it('should set the default params', () => {
       cy.intercept('POST', searchEndpoint).as('apiRequest')
