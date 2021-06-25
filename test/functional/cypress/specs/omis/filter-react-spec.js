@@ -1,22 +1,25 @@
 import { omis } from '../../../../../src/lib/urls'
 import qs from 'qs'
 
-import { removeChip } from '../../support/actions'
+import { randomChoice } from '../../fakers/utils'
+
+import { removeChip, clickCheckboxGroupOption } from '../../support/actions'
+
 import { testTypeahead } from '../../support/tests'
+
 import {
   assertPayload,
   assertChipExists,
   assertChipsEmpty,
   assertFieldEmpty,
   assertQueryParams,
+  assertCheckboxGroupOption,
 } from '../../support/assertions'
-
-const sortby = 'created_on:desc'
 
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
     // Default query params
-    sortby,
+    sortby: 'created_on:desc',
     page: 1,
     ...queryParams,
   })
@@ -24,8 +27,35 @@ const buildQueryString = (queryParams = {}) =>
 const minimumPayload = {
   limit: 10,
   offset: 0,
-  sortby,
+  sortby: 'created_on:desc',
 }
+
+const statuses = [
+  {
+    value: 'draft',
+    label: 'Draft',
+  },
+  {
+    value: 'quote_awaiting_acceptance',
+    label: 'Quote awaiting acceptance',
+  },
+  {
+    value: 'quote_accepted',
+    label: 'Quote accepted',
+  },
+  {
+    value: 'paid',
+    label: 'Payment received',
+  },
+  {
+    value: 'complete',
+    label: 'Completed',
+  },
+  {
+    value: 'cancelled',
+    label: 'Cancelled',
+  },
+]
 
 const searchEndpoint = '/api-proxy/v3/search/order'
 
@@ -43,6 +73,47 @@ describe('Orders Collections Filter', () => {
 
       // Second call to the api with default params
       assertPayload('@apiRequest', minimumPayload)
+    })
+  })
+
+  context('Status', () => {
+    const element = '[data-test="status-filter"] fieldset'
+    const { value, label } = randomChoice(statuses)
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({ status: value })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${omis.react.index()}?${queryString}`)
+      assertPayload('@apiRequest', {
+        ...minimumPayload,
+        status: value,
+      })
+      assertCheckboxGroupOption({ element, value })
+      assertChipExists({ label, position: 1 })
+    })
+
+    it('should filter from user input and remove the chip', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      clickCheckboxGroupOption({ element, value })
+      assertPayload('@apiRequest', {
+        ...minimumPayload,
+        status: [value],
+      })
+      assertQueryParams('status', [value])
+      assertChipExists({ label, position: 1 })
+
+      removeChip(value)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertCheckboxGroupOption({
+        element,
+        value,
+        checked: false,
+      })
     })
   })
 
@@ -253,13 +324,18 @@ describe('Orders Collections Filter', () => {
         primary_market: '80756b9a-5d95-e211-a939-e4115bead28a',
         uk_region: '924cd12a-6095-e211-a939-e4115bead28a',
       })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`${omis.react.index()}?${queryString}`)
-      cy.get('[data-test=filter-chips]').children().as('filterChips')
+      cy.wait('@apiRequest')
     })
+
+    it('should have all the chips', () => {
+      cy.get('[data-test=filter-chips]').children().should('have.length', 5)
+    })
+
     it('should remove all filters and chips', () => {
-      cy.get('@filterChips').should('have.length', 5)
       cy.get('[data-test=clear-filters]').click()
-      cy.get('@filterChips').should('have.length', 0)
+      cy.get('[data-test=filter-chips]').children().should('have.length', 0)
       cy.get('[data-test="contact-name-filter"]').should('have.value', '')
       cy.get('[data-test="company-name-filter"]').should('have.value', '')
       cy.get('[data-test="sector-filter"]').should('have.value', '')
