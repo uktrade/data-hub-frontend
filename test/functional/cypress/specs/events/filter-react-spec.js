@@ -1,11 +1,17 @@
 import urls from '../../../../../src/lib/urls'
 import qs from 'qs'
 
+import { randomChoice } from '../../fakers/utils'
+import { eventTypeListFaker } from '../../fakers/event-types'
+
 import {
+  clickCheckboxGroupOption,
   removeChip,
   selectFirstAdvisersTypeaheadOption,
 } from '../../support/actions'
 import {
+  assertCheckboxGroupOption,
+  assertCheckboxGroupNoneSelected,
   assertChipExists,
   assertChipsEmpty,
   assertFieldEmpty,
@@ -29,8 +35,11 @@ const minimumPayload = {
 }
 
 const searchEndpoint = '/api-proxy/v3/search/event'
+const eventTypeEndpoint = '/api-proxy/v4/metadata/event-type'
 
 describe('events Collections Filter', () => {
+  const eventTypes = eventTypeListFaker(10)
+
   context('Default Params', () => {
     it('should set the default params', () => {
       cy.intercept('POST', searchEndpoint).as('apiRequest')
@@ -211,26 +220,81 @@ describe('events Collections Filter', () => {
     })
   })
 
+  context('Event Type', () => {
+    const element = '[data-test="event-type-filter"] fieldset'
+    const eventType = randomChoice(eventTypes)
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({ event_type: [eventType.id] })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.intercept('GET', eventTypeEndpoint, eventTypes).as(
+        'eventTypeApiRequest'
+      )
+      cy.visit(`${urls.events.react.index()}?${queryString}`)
+      cy.wait('@eventTypeApiRequest')
+      assertPayload('@apiRequest', {
+        ...minimumPayload,
+        event_type: [eventType.id],
+      })
+      assertCheckboxGroupOption({ element, value: eventType.id })
+      assertChipExists({ label: eventType.name, position: 1 })
+    })
+
+    it('should filter from user input and remove the chip', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.intercept('GET', eventTypeEndpoint, eventTypes).as(
+        'eventTypeApiRequest'
+      )
+      cy.visit(`${urls.events.react.index()}?${queryString}`)
+      cy.wait('@eventTypeApiRequest')
+      cy.wait('@apiRequest')
+
+      clickCheckboxGroupOption({ element, value: eventType.id })
+      assertPayload('@apiRequest', {
+        ...minimumPayload,
+        event_type: [eventType.id],
+      })
+      assertQueryParams('event_type', [eventType.id])
+      assertChipExists({ label: eventType.name, position: 1 })
+
+      removeChip(eventType.id)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertCheckboxGroupOption({
+        element,
+        value: eventType.id,
+        checked: false,
+      })
+    })
+  })
+
   context('Remove all filters', () => {
     before(() => {
       const ukCountryId = '80756b9a-5d95-e211-a939-e4115bead28a'
       const adviserId = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
       const southEastRegionId = '884cd12a-6095-e211-a939-e4115bead28a'
+      const eventType = randomChoice(eventTypes)
       const queryString = qs.stringify({
         page: 1,
         name: 'Big Event',
         country: [ukCountryId],
         uk_region: [southEastRegionId],
         organiser: [adviserId],
+        event_type: [eventType.id],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.intercept('GET', eventTypeEndpoint, eventTypes).as(
+        'eventTypeApiRequest'
+      )
       cy.visit(`${urls.events.react.index()}?${queryString}`)
+      cy.wait('@eventTypeApiRequest')
       cy.wait('@apiRequest')
     })
 
     it('should remove all filters and chips', () => {
       cy.get('[data-test=filter-chips]').children().as('filterChips')
-      cy.get('@filterChips').should('have.length', 4)
+      cy.get('@filterChips').should('have.length', 5)
       cy.get('[data-test=clear-filters]').click()
       cy.get('@filterChips').should('have.length', 0)
       cy.get('[data-test="event-name-filter"]').should('have.value', '')
@@ -243,6 +307,7 @@ describe('events Collections Filter', () => {
         'contain',
         'Search organiser'
       )
+      assertCheckboxGroupNoneSelected('[data-test="event-type-filter"]')
     })
   })
 })

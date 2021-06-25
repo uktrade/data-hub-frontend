@@ -214,6 +214,11 @@ function FilteredCollectionHeader({
           qsParamName="investment_type"
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedEventTypes}
+          qsParamName="event_type"
+          showCategoryLabels={true}
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedLikelihoodToLands}
           qsParamName="likelihood_to_land"
           showCategoryLabels={true}
