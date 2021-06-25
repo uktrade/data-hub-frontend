@@ -14,11 +14,12 @@ const CompanyMatched = ({
   headquarterTypes,
   oneListEmail,
   isOnOneList,
+  features,
 }) => (
   <>
     <FieldInput label="Company name" name="name" type="text" />
 
-    <CommonFields company={company} regions={regions} />
+    <CommonFields company={company} regions={regions} features={features} />
 
     <FieldInput
       label="Annual turnover (optional)"
@@ -62,6 +63,7 @@ const CompanyMatched = ({
 
 CompanyMatched.propTypes = {
   company: PropTypes.object.isRequired,
+  features: PropTypes.object,
   regions: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,

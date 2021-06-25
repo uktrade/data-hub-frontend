@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { BLACK, GREY_3 } from 'govuk-colours'
 import { Search } from '@govuk-react/icons'
@@ -12,12 +12,22 @@ import styled from 'styled-components'
 import { useFormContext } from '../../hooks'
 import useAddressSearch from '../../../AddressSearch/useAddressSearch'
 import usePostcodeLookup from '../../../AddressSearch/usePostcodeLookup'
+import useAdministrativeAreaLookup, {
+  filterAreaDataByCountry,
+} from '../../../AdministrativeAreaSearch/useAdministrativeAreaLookup'
+import useAdministrativeAreaSearch from '../../../AdministrativeAreaSearch/useAdministrativeAreaSearch'
 import FieldInput from '../FieldInput'
 import FieldUneditable from '../FieldUneditable'
 import FieldWrapper from '../FieldWrapper'
 import StatusMessage from '../../../StatusMessage'
+import { transformObjectToOption } from '../../../../../apps/transformers'
+import FieldSelect from '../FieldSelect'
 
 const UNITED_KINGDOM = 'United Kingdom'
+const UNITED_STATES = 'United States'
+const UNITED_STATES_ID = '81756b9a-5d95-e211-a939-e4115bead28a'
+const CANADA = 'Canada'
+const CANADA_ID = '5daf72a6-5d95-e211-a939-e4115bead28a'
 
 const StyledFieldPostcode = styled(FieldInput)`
   ${MEDIA_QUERIES.TABLET} {
@@ -33,20 +43,60 @@ const FieldAddress = ({
   country,
   apiEndpoint,
   onSelectUKAddress,
+  features,
 }) => {
+  const areaFieldEnabled =
+    features && features['edit-business-details-area-fields']
+  const findAdministrativeAreas = useAdministrativeAreaLookup()
+  const {
+    onAdministrativeAreaSearch,
+    administrativeAreaSearchError,
+    administrativeAreaList,
+    isAreaFilterSubmitting,
+  } = useAdministrativeAreaSearch(findAdministrativeAreas)
+
   const findAddress = usePostcodeLookup(apiEndpoint)
   const { onAddressSearch, isSubmitting, error, addressList } =
     useAddressSearch(findAddress)
+
   const {
     values: { postcode },
     setFieldValue,
     validateForm,
     setIsLoading,
   } = useFormContext()
+  const [usStates, setUsStates] = useState([])
+  const [canadaProvinces, setCanadaProvinces] = useState([])
 
-  useEffect(() => setIsLoading(isSubmitting), [isSubmitting])
+  useEffect(() => {
+    setIsLoading(isSubmitting && isAreaFilterSubmitting)
+  }, [isSubmitting, isAreaFilterSubmitting])
+
+  useEffect(() => {
+    if (areaFieldEnabled) {
+      onAdministrativeAreaSearch()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (administrativeAreaList) {
+      setUsStates(
+        filterAreaDataByCountry(administrativeAreaList, UNITED_STATES_ID).map(
+          (states) => transformObjectToOption(states)
+        )
+      )
+
+      setCanadaProvinces(
+        filterAreaDataByCountry(administrativeAreaList, CANADA_ID).map(
+          (states) => transformObjectToOption(states)
+        )
+      )
+    }
+  }, [administrativeAreaList])
 
   const isUK = country.name === UNITED_KINGDOM
+  const isUS = country.name === UNITED_STATES
+  const isCanada = country.name === CANADA
 
   function onSearchClick(e) {
     e.preventDefault()
@@ -69,9 +119,31 @@ const FieldAddress = ({
     setFieldValue('city', address.city)
     setFieldValue('county', address.county)
     setFieldValue('country', country.id)
+    setFieldValue('area', address.area)
 
     if (onSelectUKAddress) {
       onSelectUKAddress(address)
+    }
+  }
+
+  const renderUsStateField = () => {
+    if (isUS && usStates?.length > 0) {
+      return (
+        <FieldSelect type="text" name="area" label="State" options={usStates} />
+      )
+    }
+  }
+
+  const renderCanadaProvinceField = () => {
+    if (isCanada && canadaProvinces?.length > 0) {
+      return (
+        <FieldSelect
+          type="text"
+          name="area"
+          label="Province"
+          options={canadaProvinces}
+        />
+      )
     }
   }
 
@@ -86,7 +158,6 @@ const FieldAddress = ({
             required="Enter postcode"
             maxLength={10}
           />
-
           <Button
             onClick={onSearchClick}
             buttonColour={GREY_3}
@@ -95,14 +166,12 @@ const FieldAddress = ({
           >
             Find UK address
           </Button>
-
           {error && (
             <StatusMessage>
               Error occurred while searching for an address. Enter the address
               manually.
             </StatusMessage>
           )}
-
           {addressList && addressList.length > 0 && (
             <FormGroup>
               <Select label="Select an address" onChange={onAddressSelect}>
@@ -143,8 +212,20 @@ const FieldAddress = ({
         label="Town or city"
         required="Enter town or city"
       />
-      <FieldInput type="text" name="county" label="County (optional)" />
 
+      {areaFieldEnabled && (
+        <>
+          {renderUsStateField()}
+          {renderCanadaProvinceField()}
+          {administrativeAreaSearchError && (
+            <StatusMessage>
+              Error occurred while retrieving Administrative Areas.
+            </StatusMessage>
+          )}
+        </>
+      )}
+
+      <FieldInput type="text" name="county" label="County (optional)" />
       <FieldUneditable name="country" label="Country">
         {country.name}
       </FieldUneditable>
