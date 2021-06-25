@@ -1,3 +1,12 @@
+export const LABELS = {
+  status: 'Order status',
+  sector: 'Sector',
+  ukRegion: 'UK region',
+  country: 'Country of origin',
+  contactName: 'Contact name',
+  companyName: 'Company name',
+}
+
 export const SORT_OPTIONS = [
   { value: 'created_on:desc', name: 'Recently created' },
   { value: 'created_on:asc', name: 'Oldest' },
@@ -7,7 +16,7 @@ export const SORT_OPTIONS = [
   { value: 'delivery_date:desc', name: 'Latest delivery date' },
 ]
 
-export const ORDER_STATES = [
+export const STATUSES = [
   {
     value: 'draft',
     label: 'Draft',
