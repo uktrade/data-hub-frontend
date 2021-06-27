@@ -7,6 +7,13 @@ import Checkbox from '../Checkbox'
 import FieldWrapper from '../Form/elements/FieldWrapper'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
+  ${({ overflow }) =>
+    overflow &&
+    `fieldset > div {
+    overflow-y: ${overflow};
+    max-height: 400px;
+    }
+  `}
   label {
     font-weight: normal;
     margin-bottom: 4px;
