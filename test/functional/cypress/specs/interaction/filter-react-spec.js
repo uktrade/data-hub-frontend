@@ -20,6 +20,8 @@ import {
   assertDateInput,
 } from '../../support/assertions'
 
+import { servicesListFaker } from '../../fakers/services'
+
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
     // Default query params
@@ -35,6 +37,7 @@ const minimumPayload = {
 
 const interactionsSearchEndpoint = '/api-proxy/v3/search/interaction'
 const adviserAutocompleteEndpoint = '/api-proxy/adviser/?autocomplete=*'
+const serviceMetadataEndpoint = '/api-proxy/v4/metadata/service'
 const adviserId = '7d19d407-9aec-4d06-b190-d3f404627f21'
 const adviserEndpoint = `/api-proxy/adviser/${adviserId}`
 
@@ -45,6 +48,7 @@ const adviser = {
   id: adviserId,
   name: 'Barry Oling',
 }
+const services = servicesListFaker(10)
 
 describe('Interactions Collections Filter', () => {
   context('Default Params', () => {
@@ -302,6 +306,53 @@ describe('Interactions Collections Filter', () => {
       assertChipsEmpty()
       assertFieldEmpty(dateBefore)
       assertFieldEmpty(dateAfter)
+    })
+  })
+
+  context('Service', () => {
+    const element = '[data-test="service-filter"]'
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        service: [services[0].id],
+      })
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.intercept('GET', serviceMetadataEndpoint, services).as(
+        'metaApiRequest'
+      )
+      cy.visit(`${interactions.react()}?${queryString}`)
+      cy.wait('@metaApiRequest')
+      assertPayload('@apiRequest', {
+        ...minimumPayload,
+        service: [services[0].id],
+      })
+      assertCheckboxGroupOption({
+        element,
+        value: services[0].id,
+        checked: true,
+      })
+      assertChipExists({ label: services[0].name, position: 1 })
+    })
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.intercept('GET', serviceMetadataEndpoint, services).as(
+        'metaApiRequest'
+      )
+      cy.visit(`${interactions.react()}?${queryString}`)
+      cy.wait('@apiRequest')
+      cy.wait('@metaApiRequest')
+      clickCheckboxGroupOption({
+        element,
+        value: services[0].id,
+      })
+      assertPayload('@apiRequest', {
+        ...minimumPayload,
+        service: [services[0].id],
+      })
+      assertChipExists({ label: services[0].name, position: 1 })
+      removeChip(services[0].id)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
     })
   })
 })

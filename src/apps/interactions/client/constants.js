@@ -6,6 +6,7 @@ export const LABELS = {
   myInteractions: 'My interactions',
   dateAfter: 'From',
   dateBefore: 'To',
+  service: 'Service',
 }
 
 export const KIND_OPTIONS = [
