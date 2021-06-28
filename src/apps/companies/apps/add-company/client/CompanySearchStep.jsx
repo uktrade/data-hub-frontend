@@ -56,7 +56,12 @@ function getDnbEntityText(companyId, isOutOfBusiness, companyName) {
   return null
 }
 
-function CompanySearchStep({ countryName, countryIsoCode, csrfToken }) {
+function CompanySearchStep({
+  countryName,
+  countryIsoCode,
+  csrfToken,
+  features,
+}) {
   const { setFieldValue, goForward } = useFormContext()
   return (
     <Step name="companySearch" forwardButton={null} backButton={null}>
@@ -72,6 +77,7 @@ function CompanySearchStep({ countryName, countryIsoCode, csrfToken }) {
           setFieldValue('cannotFind', true)
           goForward()
         }}
+        features={features}
       />
     </Step>
   )
