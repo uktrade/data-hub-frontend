@@ -11,6 +11,7 @@ import {
   FilteredCollectionList,
   RoutedAdvisersTypeahead,
   RoutedCheckboxGroupField,
+  RoutedDateField,
   RoutedInputField,
   RoutedTypeahead,
 } from '../../../client/components'
@@ -84,6 +85,29 @@ const EventsCollection = ({
           placeholder="Search event name"
           data-test="event-name-filter"
         />
+        <RoutedAdvisersTypeahead
+          isMulti={true}
+          taskProps={organisersTask}
+          legend={LABELS.organiser}
+          name="organiser"
+          qsParam="organiser"
+          placeholder="Search organiser"
+          noOptionsMessage={() => <>No organisers found</>}
+          selectedOptions={selectedFilters.selectedOrganisers}
+          data-test="organiser-filter"
+        />
+        <RoutedDateField
+          label={LABELS.startDateAfter}
+          name="start_date_after"
+          qsParamName="start_date_after"
+          data-test="start-date-after-filter"
+        />
+        <RoutedDateField
+          label={LABELS.startDateBefore}
+          name="start_date_before"
+          qsParamName="start_date_before"
+          data-test="start-date-before-filter"
+        />
         <RoutedTypeahead
           isMulti={true}
           legend={LABELS.country}
@@ -103,17 +127,6 @@ const EventsCollection = ({
           options={optionMetadata.ukRegionOptions}
           selectedOptions={selectedFilters.selectedUkRegions}
           data-test="uk-region-filter"
-        />
-        <RoutedAdvisersTypeahead
-          isMulti={true}
-          taskProps={organisersTask}
-          legend={LABELS.organiser}
-          name="organiser"
-          qsParam="organiser"
-          placeholder="Search organiser"
-          noOptionsMessage={() => <>No organisers found</>}
-          selectedOptions={selectedFilters.selectedOrganisers}
-          data-test="organiser-filter"
         />
         <RoutedCheckboxGroupField
           legend={LABELS.eventType}
