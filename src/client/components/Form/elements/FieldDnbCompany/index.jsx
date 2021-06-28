@@ -52,9 +52,10 @@ const FieldDnbCompany = ({
   entityRenderer,
   onCannotFind,
   searchResultsMessage,
+  features,
 }) => {
   const { values, goBack, validateForm, setIsLoading } = useFormContext()
-  const { findCompany } = useDnbSearch(apiEndpoint)
+  const { findCompany } = useDnbSearch(apiEndpoint, features)
   const { onEntitySearch, searching, searched, error, entities } =
     useEntitySearch(findCompany)
 
