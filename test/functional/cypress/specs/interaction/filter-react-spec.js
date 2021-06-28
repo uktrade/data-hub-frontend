@@ -48,7 +48,8 @@ const adviser = {
   id: adviserId,
   name: 'Barry Oling',
 }
-const services = servicesListFaker(10)
+const services = servicesListFaker(1)
+const [service] = services
 
 describe('Interactions Collections Filter', () => {
   context('Default Params', () => {
@@ -313,7 +314,7 @@ describe('Interactions Collections Filter', () => {
     const element = '[data-test="service-filter"]'
     it('should filter from the url', () => {
       const queryString = buildQueryString({
-        service: [services[0].id],
+        service: [service.id],
       })
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
       cy.intercept('GET', serviceMetadataEndpoint, services).as(
@@ -323,14 +324,14 @@ describe('Interactions Collections Filter', () => {
       cy.wait('@metaApiRequest')
       assertPayload('@apiRequest', {
         ...minimumPayload,
-        service: [services[0].id],
+        service: [service.id],
       })
       assertCheckboxGroupOption({
         element,
-        value: services[0].id,
+        value: service.id,
         checked: true,
       })
-      assertChipExists({ label: services[0].name, position: 1 })
+      assertChipExists({ label: service.name, position: 1 })
     })
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
@@ -343,14 +344,14 @@ describe('Interactions Collections Filter', () => {
       cy.wait('@metaApiRequest')
       clickCheckboxGroupOption({
         element,
-        value: services[0].id,
+        value: service.id,
       })
       assertPayload('@apiRequest', {
         ...minimumPayload,
-        service: [services[0].id],
+        service: [service.id],
       })
-      assertChipExists({ label: services[0].name, position: 1 })
-      removeChip(services[0].id)
+      assertChipExists({ label: service.name, position: 1 })
+      removeChip(service.id)
       assertPayload('@apiRequest', minimumPayload)
       assertChipsEmpty()
     })

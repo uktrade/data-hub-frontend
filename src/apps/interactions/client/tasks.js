@@ -8,12 +8,13 @@ import { getMetadataOptions } from '../../../client/metadata'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 
+const sortServiceOptions = (options) =>
+  options.sort((a, b) => (a.label > b.label ? 1 : b.label > a.label ? -1 : 0))
+
 const getInteractionsMetadata = () =>
   Promise.all([getMetadataOptions(urls.metadata.service())])
     .then(([serviceOptions]) => ({
-      serviceOptions: serviceOptions.sort((a, b) =>
-        a.label > b.label ? 1 : b.label > a.label ? -1 : 0
-      ),
+      serviceOptions: sortServiceOptions(serviceOptions),
     }))
     .catch(handleError)
 
