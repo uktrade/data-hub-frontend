@@ -73,6 +73,14 @@ const OrdersCollection = ({
           data-test="status-filter"
         />
         <RoutedInputField
+          id="OrdersCollection.reference"
+          qsParam="reference"
+          name="reference"
+          label={LABELS.reference}
+          placeholder="Search order reference"
+          data-test="reference-filter"
+        />
+        <RoutedInputField
           id="OrdersCollection.company-name"
           qsParam="company_name"
           name="company_name"

@@ -11,6 +11,10 @@ export const buildSelectedFilters = (queryParams, metadata, statusOptions) => ({
     value: queryParams.status,
     categoryLabel: LABELS.status,
   }),
+  selectedOrderReference: buildInputFieldFilter({
+    value: queryParams.reference,
+    categoryLabel: LABELS.reference,
+  }),
   selectedCompanyName: buildInputFieldFilter({
     value: queryParams.company_name,
     categoryLabel: LABELS.companyName,
