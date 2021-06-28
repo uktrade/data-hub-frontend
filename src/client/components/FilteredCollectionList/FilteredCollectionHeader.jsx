@@ -224,6 +224,16 @@ function FilteredCollectionHeader({
           showCategoryLabels={true}
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedStartDateAfter}
+          qsParamName="start_date_after"
+          showCategoryLabels={true}
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedStartDateBefore}
+          qsParamName="start_date_before"
+          showCategoryLabels={true}
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedEstimatedLandDatesBefore}
           qsParamName="estimated_land_date_before"
           showCategoryLabels={true}
