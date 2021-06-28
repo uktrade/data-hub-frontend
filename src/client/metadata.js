@@ -6,15 +6,27 @@ const HQ_TYPE_LABELS = {
   ehq: 'European HQ',
 }
 
+const filterDisabledOption = ({ disabled_on }) =>
+  disabled_on ? Date.parse(disabled_on) > Date.now() : true
+
+const transformMetadataOption = ({ id, name }) => ({
+  value: id,
+  label: name,
+})
+
 /**
- * Get metadata options as a list of values and labels
+ * Get a filtered list of metadata options
+ * @url the metadata endpoint
+ * @filterDisabled whether to filter each option based on its
+ * disabled_on key, defaulting to true
  */
-const getMetadataOptions = (url) =>
-  axios
-    .get(url)
-    .then(({ data }) =>
-      data.map(({ id, name }) => ({ value: id, label: name }))
-    )
+async function getMetadataOptions(url, { filterDisabled = true } = {}) {
+  const { data } = await axios.get(url)
+
+  return filterDisabled
+    ? data.filter(filterDisabledOption).map(transformMetadataOption)
+    : data.map(transformMetadataOption)
+}
 
 /**
  * Get the hq type options as a list of values and labels

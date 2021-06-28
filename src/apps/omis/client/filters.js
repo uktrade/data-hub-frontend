@@ -24,8 +24,8 @@ export const buildSelectedFilters = (queryParams, metadata, statusOptions) => ({
     value: queryParams.sector_descends,
     categoryLabel: LABELS.sector,
   }),
-  selectedPrimaryMarkets: buildOptionsFilter({
-    options: metadata.countryOptions,
+  selectedOmisMarkets: buildOptionsFilter({
+    options: metadata.omisMarketOptions,
     value: queryParams.primary_market,
     categoryLabel: LABELS.country,
   }),

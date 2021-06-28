@@ -229,7 +229,7 @@ describe('Orders Collections Filter', () => {
     })
   })
 
-  context('Primary market (AKA country)', () => {
+  context('Primary market (AKA Omis Market)', () => {
     const element = '[data-test="country-filter"]'
     const brazilId = 'b05f66a0-5d95-e211-a939-e4115bead28a'
     const expectedPayload = {
@@ -273,21 +273,21 @@ describe('Orders Collections Filter', () => {
 
   context('UK Region', () => {
     const element = '[data-test="uk-region-filter"]'
-    const jerseyId = '924cd12a-6095-e211-a939-e4115bead28a'
+    const londonId = '874cd12a-6095-e211-a939-e4115bead28a'
     const expectedPayload = {
       ...minimumPayload,
-      uk_region: [jerseyId],
+      uk_region: [londonId],
     }
 
     it('should filter from the url', () => {
       const queryString = buildQueryString({
-        uk_region: [jerseyId],
+        uk_region: [londonId],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`${omis.react.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
-      cy.get(element).should('contain', 'Jersey')
-      assertChipExists({ label: 'Jersey', position: 1 })
+      cy.get(element).should('contain', 'London')
+      assertChipExists({ label: 'London', position: 1 })
     })
 
     it('should filter from user input and remove the chips', () => {
@@ -300,14 +300,14 @@ describe('Orders Collections Filter', () => {
         element,
         legend: 'UK region',
         placeholder: 'Search UK region',
-        input: 'jer',
-        expectedOption: 'Jersey',
+        input: 'lon',
+        expectedOption: 'London',
       })
       assertPayload('@apiRequest', expectedPayload)
-      assertQueryParams('uk_region', [jerseyId])
-      assertChipExists({ label: 'Jersey', position: 1 })
+      assertQueryParams('uk_region', [londonId])
+      assertChipExists({ label: 'London', position: 1 })
 
-      removeChip(jerseyId)
+      removeChip(londonId)
       assertPayload('@apiRequest', minimumPayload)
       assertChipsEmpty()
       assertFieldEmpty(element)
@@ -322,7 +322,7 @@ describe('Orders Collections Filter', () => {
         company_name: 'Tesco',
         sector_descends: 'af959812-6095-e211-a939-e4115bead28a',
         primary_market: '80756b9a-5d95-e211-a939-e4115bead28a',
-        uk_region: '924cd12a-6095-e211-a939-e4115bead28a',
+        uk_region: '874cd12a-6095-e211-a939-e4115bead28a',
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`${omis.react.index()}?${queryString}`)

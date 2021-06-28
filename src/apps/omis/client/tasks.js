@@ -34,12 +34,12 @@ export const getOrders = ({
 export const getOrdersMetadata = () =>
   Promise.all([
     getSectorOptions(metadata.sector()),
-    getMetadataOptions(metadata.country()),
+    getMetadataOptions(metadata.omisMarket()),
     getMetadataOptions(metadata.ukRegion()),
   ])
-    .then(([sectorOptions, countryOptions, ukRegionOptions]) => ({
+    .then(([sectorOptions, omisMarketOptions, ukRegionOptions]) => ({
       sectorOptions,
-      countryOptions,
+      omisMarketOptions,
       ukRegionOptions,
     }))
     .catch(handleError)
