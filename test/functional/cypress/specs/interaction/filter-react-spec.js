@@ -20,7 +20,7 @@ import {
   assertDateInput,
 } from '../../support/assertions'
 
-import { servicesListFaker } from '../../fakers/services'
+import { serviceFaker } from '../../fakers/services'
 
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
@@ -48,8 +48,6 @@ const adviser = {
   id: adviserId,
   name: 'Barry Oling',
 }
-const services = servicesListFaker(1)
-const [service] = services
 
 describe('Interactions Collections Filter', () => {
   context('Default Params', () => {
@@ -312,20 +310,23 @@ describe('Interactions Collections Filter', () => {
 
   context('Service', () => {
     const element = '[data-test="service-filter"]'
+    const service = serviceFaker()
+    const expectedPayload = {
+      ...minimumPayload,
+      service: [service.id],
+    }
+
     it('should filter from the url', () => {
       const queryString = buildQueryString({
         service: [service.id],
       })
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
-      cy.intercept('GET', serviceMetadataEndpoint, services).as(
+      cy.intercept('GET', serviceMetadataEndpoint, [service]).as(
         'metaApiRequest'
       )
       cy.visit(`${interactions.react()}?${queryString}`)
       cy.wait('@metaApiRequest')
-      assertPayload('@apiRequest', {
-        ...minimumPayload,
-        service: [service.id],
-      })
+      assertPayload('@apiRequest', expectedPayload)
       assertCheckboxGroupOption({
         element,
         value: service.id,
@@ -336,7 +337,7 @@ describe('Interactions Collections Filter', () => {
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
-      cy.intercept('GET', serviceMetadataEndpoint, services).as(
+      cy.intercept('GET', serviceMetadataEndpoint, [service]).as(
         'metaApiRequest'
       )
       cy.visit(`${interactions.react()}?${queryString}`)
@@ -346,10 +347,7 @@ describe('Interactions Collections Filter', () => {
         element,
         value: service.id,
       })
-      assertPayload('@apiRequest', {
-        ...minimumPayload,
-        service: [service.id],
-      })
+      assertPayload('@apiRequest', expectedPayload)
       assertChipExists({ label: service.name, position: 1 })
       removeChip(service.id)
       assertPayload('@apiRequest', minimumPayload)
