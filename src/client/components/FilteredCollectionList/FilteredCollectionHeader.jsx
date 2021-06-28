@@ -137,7 +137,7 @@ function FilteredCollectionHeader({
           qsParamName="country"
         />
         <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedPrimaryMarkets}
+          selectedOptions={selectedFilters.selectedOmisMarkets}
           qsParamName="primary_market"
         />
         <RoutedFilterChips
