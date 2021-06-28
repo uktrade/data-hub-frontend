@@ -1,4 +1,5 @@
 import {
+  buildDatesFilter,
   buildInputFieldFilter,
   buildOptionsFilter,
 } from '../../../client/filters'
@@ -32,5 +33,13 @@ export const buildSelectedFilters = ({
     options: metadata.eventTypeOptions,
     value: queryParams.event_type,
     categoryLabel: LABELS.eventType,
+  }),
+  selectedStartDateBefore: buildDatesFilter({
+    value: queryParams.start_date_before,
+    categoryLabel: LABELS.startDateBefore,
+  }),
+  selectedStartDateAfter: buildDatesFilter({
+    value: queryParams.start_date_after,
+    categoryLabel: LABELS.startDateAfter,
   }),
 })
