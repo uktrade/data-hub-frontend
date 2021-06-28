@@ -56,9 +56,10 @@ const OrdersCollection = ({
       sortOptions={optionMetadata.sortOptions}
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}
-      entityName="order"
-      entityNamePlural="order"
       addItemUrl="/omis/create"
+      entityName="order"
+      entityNamePlural="orders"
+      baseDownloadLink="/omis/export"
       defaultQueryParams={{
         page: 1,
         sortby: 'created_on:desc',
