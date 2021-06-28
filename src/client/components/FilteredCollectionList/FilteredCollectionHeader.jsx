@@ -108,6 +108,10 @@ function FilteredCollectionHeader({
           showCategoryLabels={true}
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedOrderReference}
+          qsParamName="reference"
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedKind}
           qsParamName="kind"
         />

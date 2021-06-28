@@ -6,6 +6,10 @@ import {
 import { LABELS } from './constants'
 
 export const buildSelectedFilters = (queryParams, metadata, statusOptions) => ({
+  selectedOrderReference: buildInputFieldFilter({
+    value: queryParams.reference,
+    categoryLabel: LABELS.reference,
+  }),
   selectedStatuses: buildOptionsFilter({
     options: statusOptions,
     value: queryParams.status,

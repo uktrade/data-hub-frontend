@@ -117,6 +117,41 @@ describe('Orders Collections Filter', () => {
     })
   })
 
+  context('Order reference', () => {
+    const element = '[data-test="reference-filter"]'
+    const reference = 'FAR365/21'
+    const expectedPayload = {
+      ...minimumPayload,
+      reference,
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({ reference })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${omis.react.index()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      cy.get(element).should('have.value', reference)
+      assertChipExists({ label: reference, position: 1 })
+    })
+
+    it('should filter from user input and remove the chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      cy.get(element).type(`${reference}{enter}`)
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('reference', reference)
+      assertChipExists({ label: reference, position: 1 })
+
+      removeChip(reference)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
   context('Company', () => {
     const element = '[data-test="company-name-filter"]'
     const name = 'Tesco'
@@ -318,6 +353,7 @@ describe('Orders Collections Filter', () => {
     before(() => {
       const queryString = buildQueryString({
         page: 1,
+        reference: 'FAR365/21',
         contact_name: 'David Jones',
         company_name: 'Tesco',
         sector_descends: 'af959812-6095-e211-a939-e4115bead28a',
@@ -330,12 +366,13 @@ describe('Orders Collections Filter', () => {
     })
 
     it('should have all the chips', () => {
-      cy.get('[data-test=filter-chips]').children().should('have.length', 5)
+      cy.get('[data-test=filter-chips]').children().should('have.length', 6)
     })
 
     it('should remove all filters and chips', () => {
       cy.get('[data-test=clear-filters]').click()
       cy.get('[data-test=filter-chips]').children().should('have.length', 0)
+      cy.get('[data-test="reference-filter"]').should('have.value', '')
       cy.get('[data-test="contact-name-filter"]').should('have.value', '')
       cy.get('[data-test="company-name-filter"]').should('have.value', '')
       cy.get('[data-test="sector-filter"]').should('have.value', '')
