@@ -104,8 +104,8 @@ const OrdersCollection = ({
           name="primary_market"
           qsParam="primary_market"
           placeholder="Search countries"
-          options={optionMetadata.countryOptions}
-          selectedOptions={selectedFilters.selectedPrimaryMarkets}
+          options={optionMetadata.omisMarketOptions}
+          selectedOptions={selectedFilters.selectedOmisMarkets}
           data-test="country-filter"
         />
         <RoutedTypeahead
