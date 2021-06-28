@@ -1,8 +1,15 @@
 import { omis } from '../../../../../src/lib/urls'
 import qs from 'qs'
 
-import { removeChip, clickCheckboxGroupOption } from '../../support/actions'
-import { assertCheckboxGroupNoneSelected } from '../../support/assertions'
+import {
+  removeChip,
+  inputDateValue,
+  clickCheckboxGroupOption,
+} from '../../support/actions'
+import {
+  assertDateInput,
+  assertCheckboxGroupNoneSelected,
+} from '../../support/assertions'
 import { testTypeahead } from '../../support/tests'
 import { randomChoice } from '../../fakers/utils'
 
@@ -148,6 +155,202 @@ describe('Orders Collections Filter', () => {
       assertPayload('@apiRequest', minimumPayload)
       assertChipsEmpty()
       assertFieldEmpty(element)
+    })
+  })
+
+  context('Completed date (from/to)', () => {
+    const fromElement = '[data-test="completed-on-after-filter"]'
+    const fromDate = '2020-01-25'
+    const formattedFromDate = '25 January 2020'
+    const toElement = '[data-test="completed-on-before-filter"]'
+    const toDate = '2021-06-24'
+    const formattedToDate = '24 June 2021'
+    const expectedPayload = {
+      ...minimumPayload,
+      completed_on_after: fromDate,
+      completed_on_before: toDate,
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        completed_on_after: fromDate,
+        completed_on_before: toDate,
+      })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${omis.react.index()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      assertChipExists({
+        label: `Completed date from: ${formattedFromDate}`,
+        position: 1,
+      })
+      assertChipExists({
+        label: `Completed date to: ${formattedToDate}`,
+        position: 2,
+      })
+      assertDateInput({
+        element: fromElement,
+        label: 'Completed date from',
+        value: fromDate,
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'Completed date to',
+        value: toDate,
+      })
+    })
+
+    it('should filter from user input and remove the chip', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      inputDateValue({
+        element: fromElement,
+        value: fromDate,
+      })
+      cy.wait('@apiRequest')
+      inputDateValue({
+        element: toElement,
+        value: toDate,
+      })
+      assertPayload('@apiRequest', expectedPayload)
+
+      assertQueryParams('completed_on_after', fromDate)
+      assertQueryParams('completed_on_before', toDate)
+      assertChipExists({
+        label: `Completed date from: ${formattedFromDate}`,
+        position: 1,
+      })
+      assertChipExists({
+        label: `Completed date to: ${formattedToDate}`,
+        position: 2,
+      })
+      assertDateInput({
+        element: fromElement,
+        label: 'Completed date from',
+        value: fromDate,
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'Completed date to',
+        value: toDate,
+      })
+
+      removeChip(fromDate)
+      cy.wait('@apiRequest')
+      removeChip(toDate)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+
+      assertDateInput({
+        element: fromElement,
+        label: 'Completed date from',
+        value: '',
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'Completed date to',
+        value: '',
+      })
+    })
+  })
+
+  context('Expected delivery date (from/to)', () => {
+    const fromElement = '[data-test="delivery-date-after-filter"]'
+    const fromDate = '2020-01-25'
+    const formattedFromDate = '25 January 2020'
+    const toElement = '[data-test="deliver-date-before-filter"]'
+    const toDate = '2021-06-24'
+    const formattedToDate = '24 June 2021'
+    const expectedPayload = {
+      ...minimumPayload,
+      delivery_date_after: fromDate,
+      delivery_date_before: toDate,
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        delivery_date_after: fromDate,
+        delivery_date_before: toDate,
+      })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${omis.react.index()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      assertChipExists({
+        label: `Expected delivery date from: ${formattedFromDate}`,
+        position: 1,
+      })
+      assertChipExists({
+        label: `Expected delivery date to: ${formattedToDate}`,
+        position: 2,
+      })
+      assertDateInput({
+        element: fromElement,
+        label: 'Expected delivery date from',
+        value: fromDate,
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'Expected delivery date to',
+        value: toDate,
+      })
+    })
+
+    it('should filter from user input and remove the chip', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      inputDateValue({
+        element: fromElement,
+        value: fromDate,
+      })
+      cy.wait('@apiRequest')
+      inputDateValue({
+        element: toElement,
+        value: toDate,
+      })
+      assertPayload('@apiRequest', expectedPayload)
+
+      assertQueryParams('delivery_date_after', fromDate)
+      assertQueryParams('delivery_date_before', toDate)
+      assertChipExists({
+        label: `Expected delivery date from: ${formattedFromDate}`,
+        position: 1,
+      })
+      assertChipExists({
+        label: `Expected delivery date to: ${formattedToDate}`,
+        position: 2,
+      })
+      assertDateInput({
+        element: fromElement,
+        label: 'Expected delivery date from',
+        value: fromDate,
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'Expected delivery date to',
+        value: toDate,
+      })
+
+      removeChip(fromDate)
+      cy.wait('@apiRequest')
+      removeChip(toDate)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+
+      assertDateInput({
+        element: fromElement,
+        label: 'Expected delivery date from',
+        value: '',
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'Expected delivery date to',
+        value: '',
+      })
     })
   })
 
