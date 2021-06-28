@@ -1,11 +1,10 @@
 import { omis } from '../../../../../src/lib/urls'
 import qs from 'qs'
 
-import { randomChoice } from '../../fakers/utils'
-
 import { removeChip, clickCheckboxGroupOption } from '../../support/actions'
-
+import { assertCheckboxGroupNoneSelected } from '../../support/assertions'
 import { testTypeahead } from '../../support/tests'
+import { randomChoice } from '../../fakers/utils'
 
 import {
   assertPayload,
@@ -353,6 +352,7 @@ describe('Orders Collections Filter', () => {
     before(() => {
       const queryString = buildQueryString({
         page: 1,
+        status: 'paid',
         reference: 'FAR365/21',
         contact_name: 'David Jones',
         company_name: 'Tesco',
@@ -366,12 +366,13 @@ describe('Orders Collections Filter', () => {
     })
 
     it('should have all the chips', () => {
-      cy.get('[data-test=filter-chips]').children().should('have.length', 6)
+      cy.get('[data-test=filter-chips]').children().should('have.length', 7)
     })
 
     it('should remove all filters and chips', () => {
       cy.get('[data-test=clear-filters]').click()
       cy.get('[data-test=filter-chips]').children().should('have.length', 0)
+      assertCheckboxGroupNoneSelected('[data-test="status-filter"]')
       cy.get('[data-test="reference-filter"]').should('have.value', '')
       cy.get('[data-test="contact-name-filter"]').should('have.value', '')
       cy.get('[data-test="company-name-filter"]').should('have.value', '')
