@@ -14,6 +14,13 @@ const gotoOverseasCompanySearchPage = () => {
   cy.get(selectors.companyAdd.continueButton).click()
 }
 
+const gotoUsCompanySearchPage = () => {
+  cy.visit(urls.companies.create())
+  cy.get(selectors.companyAdd.form).find('[type="radio"]').check('overseas')
+  cy.get(selectors.companyAdd.form).find('select').select('United States')
+  cy.get(selectors.companyAdd.continueButton).click()
+}
+
 const gotoOverseasCompanySearchResultsPage = () => {
   gotoOverseasCompanySearchPage()
   cy.get(selectors.companyAdd.entitySearch.companyNameField).type('a company')
@@ -571,6 +578,71 @@ describe('Add company form', () => {
         'be.visible'
       )
       cy.get(selectors.companyAdd.form).contains('Poland')
+    })
+
+    it('should hide the UK-related fields', () => {
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.address.findUkAddress
+      ).should('not.exist')
+    })
+  })
+
+  context('when manually adding a new overseas company', () => {
+    before(() => {
+      gotoUsCompanySearchPage()
+
+      cy.get(selectors.companyAdd.entitySearch.cannotFind.summary).click()
+      cy.get(
+        selectors.companyAdd.entitySearch.cannotFind.stillCannotFind
+      ).click()
+    })
+
+    it('should display the manual entry form', () => {
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.charity)
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType
+          .governmentDepartmentOrOtherPublicBody
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType
+          .limitedCompany
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType
+          .limitedPartnership
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType.partnership
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType.soleTrader
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.newCompanyRecordForm.website).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).should(
+        'be.visible'
+      )
+      // cy.get(selectors.companyAdd.newCompanyRecordForm.address.area)
+      cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.form).contains('United States')
     })
 
     it('should hide the UK-related fields', () => {
