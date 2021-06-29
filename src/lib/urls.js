@@ -81,15 +81,22 @@ module.exports = {
     digitalWorkspace: {
       teams:
         'https://people.trade.gov.uk/teams/department-for-international-trade',
+      privacyPolicy:
+        'https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/data-hub-privacy-policy/',
     },
-    policyFeedbackHelp:
-      'https://data-services-help.trade.gov.uk/data-hub/how-articles/interactions-and-service-delivery/record-business-intelligence-interaction/',
     helpCentre: {
+      accessibilityStatement: () =>
+        'https://data-services-help.trade.gov.uk/data-hub/how-articles/data-hub-accessibility-statement/data-hub-accessibility-statement/',
+      dhHomepage: () => 'https://data-services-help.trade.gov.uk/data-hub/',
       pipeline: () =>
         'https://data-services-help.trade.gov.uk/data-hub/how-articles/account-management/my-pipeline/',
+      policyFeedback: () =>
+        'https://data-services-help.trade.gov.uk/data-hub/how-articles/interactions-and-service-delivery/record-business-intelligence-interaction/',
       tradeagreementGuidance: () =>
         'https://data-services-help.trade.gov.uk/data-hub/how-articles/trade-agreement-activity/recording-trade-agreement-activity/',
     },
+    copyright:
+      'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',
   },
   dashboard: url('/'),
   oauth: {
