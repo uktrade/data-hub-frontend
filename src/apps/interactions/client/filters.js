@@ -2,7 +2,11 @@ import { KIND_OPTIONS, LABELS } from './constants'
 
 import { buildOptionsFilter, buildDatesFilter } from '../../../client/filters'
 
-export const buildSelectedFilters = ({ queryParams, selectedAdvisers }) => ({
+export const buildSelectedFilters = (
+  queryParams,
+  metadata,
+  selectedAdvisers
+) => ({
   selectedKind: buildOptionsFilter({
     options: KIND_OPTIONS,
     value: queryParams.kind,
@@ -25,5 +29,10 @@ export const buildSelectedFilters = ({ queryParams, selectedAdvisers }) => ({
   selectedDatesBefore: buildDatesFilter({
     value: queryParams.date_before,
     categoryLabel: LABELS.dateBefore,
+  }),
+  selectedService: buildOptionsFilter({
+    options: metadata.serviceOptions,
+    value: queryParams.service,
+    categoryLabel: LABELS.service,
   }),
 })

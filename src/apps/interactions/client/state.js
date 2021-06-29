@@ -4,6 +4,7 @@ import qs from 'qs'
 export const TASK_GET_INTERACTIONS_LIST = 'TASK_GET_INTERACTIONS_LIST'
 export const TASK_GET_INTERACTIONS_ADVISER_NAME =
   'TASK_GET_INTERACTIONS_ADVISER_NAME'
+export const TASK_GET_INTERACTIONS_METADATA = 'TASK_GET_INTERACTIONS_METADATA'
 
 export const ID = 'interactionsList'
 
@@ -21,13 +22,13 @@ export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
   const queryParams = parseQueryString(queryString)
 
-  const { selectedAdvisers, metadata } = state[ID]
+  const { metadata, selectedAdvisers } = state[ID]
 
-  const selectedFilters = buildSelectedFilters({
+  const selectedFilters = buildSelectedFilters(
     queryParams,
     metadata,
-    selectedAdvisers,
-  })
+    selectedAdvisers
+  )
 
   return {
     ...state[ID],

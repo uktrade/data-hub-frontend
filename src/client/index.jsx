@@ -145,7 +145,10 @@ import { fetchOutstandingPropositions } from './components/InvestmentReminders/t
 import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentReminders/state'
 
 import { getContacts, getContactsMetadata } from '../apps/contacts/client/tasks'
-import { getInteractions } from '../apps/interactions/client/tasks'
+import {
+  getInteractions,
+  getInteractionsMetadata,
+} from '../apps/interactions/client/tasks'
 
 import {
   TASK_GET_ORDERS_LIST,
@@ -163,6 +166,7 @@ import {
 import {
   TASK_GET_INTERACTIONS_LIST,
   TASK_GET_INTERACTIONS_ADVISER_NAME,
+  TASK_GET_INTERACTIONS_METADATA,
 } from '../apps/interactions/client/state'
 
 import Footer from '../client/components/Footer'
@@ -255,6 +259,7 @@ function App() {
         [TASK_GET_CONTACTS_METADATA]: getContactsMetadata,
         [TASK_GET_INTERACTIONS_LIST]: getInteractions,
         [TASK_GET_INTERACTIONS_ADVISER_NAME]: getAdviserNames,
+        [TASK_GET_INTERACTIONS_METADATA]: getInteractionsMetadata,
         [TASK_GET_EVENTS_LIST]: getEvents,
         [TASK_GET_EVENTS_METADATA]: getEventsMetadata,
         [TASK_GET_EVENTS_ORGANISER_NAME]: getAdviserNames,
