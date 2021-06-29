@@ -17,6 +17,10 @@ export const getOrders = ({
   contact_name,
   primary_market,
   sector_descends,
+  completed_on_after,
+  completed_on_before,
+  delivery_date_after,
+  delivery_date_before,
 }) =>
   axios
     .post('/api-proxy/v3/search/order', {
@@ -30,6 +34,10 @@ export const getOrders = ({
       contact_name,
       primary_market,
       sector_descends,
+      completed_on_after,
+      completed_on_before,
+      delivery_date_after,
+      delivery_date_before,
     })
     .then(({ data }) => transformResponseToCollection(data), handleError)
 

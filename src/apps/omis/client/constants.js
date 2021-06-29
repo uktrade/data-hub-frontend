@@ -6,6 +6,10 @@ export const LABELS = {
   country: 'Country of origin',
   contactName: 'Contact name',
   companyName: 'Company name',
+  completedOnAfter: 'Completed date from',
+  completedOnBefore: 'Completed date to',
+  deliveryDateAfter: 'Expected delivery date from',
+  deliveryDateBefore: 'Expected delivery date to',
 }
 
 export const SORT_OPTIONS = [
