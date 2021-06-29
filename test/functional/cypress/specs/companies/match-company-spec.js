@@ -18,6 +18,26 @@ const performSearch = (companyName = 'some company') => {
 }
 
 describe('Match a company', () => {
+  context('when viewing a US company', () => {
+    before(() => {
+      cy.visit(urls.companies.match.index(fixtures.company.usCompany.id))
+    })
+
+    it('should render the Data Hub record, including the state', () => {
+      cy.contains('Data Hub business details (un-verified)')
+        .should('match', 'h2')
+        .next()
+        .find('dl')
+        .then(($el) =>
+          assertSummaryList($el, {
+            'Company name': 'Texports Ltd',
+            'Located at':
+              '12 First Street, New York, 765413, Texas, United States',
+          })
+        )
+    })
+  })
+
   context('when viewing "Search for verified business details" page', () => {
     before(() => {
       cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))

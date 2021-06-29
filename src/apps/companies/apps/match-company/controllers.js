@@ -49,7 +49,12 @@ function getCountryCode(company, countries) {
   )
 }
 
-function parseAddress(dnbCompany, countries, prefix = '') {
+function parseAddress(
+  dnbCompany,
+  countries,
+  prefix = '',
+  isAddressAreaEnabled = false
+) {
   return Object.values(
     pick(
       {
@@ -58,12 +63,16 @@ function parseAddress(dnbCompany, countries, prefix = '') {
           get(dnbCompany, `${prefix}country`),
           countries
         ),
+        [`${prefix}area`]: isAddressAreaEnabled
+          ? get(dnbCompany, `${prefix}area.name`)
+          : null,
       },
       [
         `${prefix}line_1`,
         `${prefix}line_2`,
         `${prefix}town`,
         `${prefix}postcode`,
+        isAddressAreaEnabled ? `${prefix}area` : null,
         `${prefix}country`,
       ]
     )
@@ -141,6 +150,8 @@ async function renderFindCompanyForm(req, res, next) {
   try {
     const { company } = res.locals
     const countries = await getCountries(req)
+    const isAddressAreaEnabled =
+      res.locals.features['address-area-unverifed-match']
 
     res
       .breadcrumb(company.name, urls.companies.detail(company.id))
@@ -149,7 +160,12 @@ async function renderFindCompanyForm(req, res, next) {
         props: {
           company: {
             ...pick(company, ['id', 'name']),
-            address: parseAddress(company.address, countries),
+            address: parseAddress(
+              company.address,
+              countries,
+              '',
+              isAddressAreaEnabled
+            ),
             postcode: get(company, 'address.postcode'),
             countryCode: getCountryCode(company, countries),
           },
