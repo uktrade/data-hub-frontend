@@ -183,7 +183,7 @@ const StepInteractionDetails = ({
   const isServiceDelivery = values.kind === KINDS.SERVICE_DELIVERY
 
   const helpUrl = (position) =>
-    urls.external.policyFeedbackHelp +
+    urls.external.helpCentre.policyFeedback() +
     '?' +
     qs.stringify({
       ..._.pick(values, ['theme', 'kind']),
