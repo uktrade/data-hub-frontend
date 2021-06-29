@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  * Tests for: ./src/apps/companies/apps/add-company/client/AddCompanyForm.jsx
  */
@@ -6,6 +7,9 @@ const selectors = require('../../../../selectors')
 const fixtures = require('../../fixtures')
 const { assertBreadcrumbs } = require('../../support/assertions')
 const urls = require('../../../../../src/lib/urls')
+const { endOfYesterday } = require('date-fns')
+
+const yesterday = endOfYesterday()
 
 const gotoOverseasCompanySearchPage = () => {
   cy.visit(urls.companies.create())
@@ -24,6 +28,14 @@ const gotoUsCompanySearchPage = () => {
 const gotoOverseasCompanySearchResultsPage = () => {
   gotoOverseasCompanySearchPage()
   cy.get(selectors.companyAdd.entitySearch.companyNameField).type('a company')
+  cy.get(selectors.companyAdd.entitySearch.searchButton).click()
+}
+
+const gotoUsCompanySearchResultsPage = () => {
+  gotoUsCompanySearchPage()
+  cy.get(selectors.companyAdd.entitySearch.companyNameField).type(
+    'a US company'
+  )
   cy.get(selectors.companyAdd.entitySearch.searchButton).click()
 }
 
@@ -587,14 +599,54 @@ describe('Add company form', () => {
     })
   })
 
-  context('when manually adding a new overseas company', () => {
-    before(() => {
-      gotoUsCompanySearchPage()
+  // eslint-disable-next-line mocha/no-exclusive-tests
+  context.only('when manually adding a new US company', () => {
+    const adminstrativeAreaMock = [
+      {
+        id: '8ad3f33a-ace8-40ec-bd2c-638fdc3024ea',
+        name: 'Alabama',
+        disabled_on: null,
+      },
+      {
+        id: 'aa65b701-244a-41fc-bd31-0a546303106a',
+        name: 'New York',
+        disabled_on: yesterday,
+      },
+      {
+        id: 'c35c119a-bc4d-4e48-9ace-167dbe8cb695',
+        name: 'Texas',
+        disabled_on: null,
+      },
+    ]
 
+    before(() => {
+      cy.intercept(
+        'GET',
+        `/api-proxy/v4/metadata/adminstrative-area`,
+        // `${config.apiRoot}/v4/metadata/adminstrative-area`,
+        (req) => {
+          req.reply(adminstrativeAreaMock)
+        }
+      ).as('administrativeArea')
+      // cy.visit('/')
+      // cy.wait('@administrativeArea')
+
+      // gotoUsCompanySearchPage()
+      cy.visit(urls.companies.create())
+      cy.get(selectors.companyAdd.form).find('[type="radio"]').check('overseas')
+      cy.get(selectors.companyAdd.form).find('select').select('United States')
+      cy.get(selectors.companyAdd.continueButton).click()
+      cy.get(selectors.companyAdd.entitySearch.companyNameField).type(
+        'a US company'
+      )
+      cy.get(selectors.companyAdd.entitySearch.searchButton).click()
+
+      // gotoUsCompanySearchResultsPage()
       cy.get(selectors.companyAdd.entitySearch.cannotFind.summary).click()
       cy.get(
         selectors.companyAdd.entitySearch.cannotFind.stillCannotFind
       ).click()
+      cy.wait('@administrativeArea')
     })
 
     it('should display the manual entry form', () => {
@@ -638,18 +690,16 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).should(
         'be.visible'
       )
-      // cy.get(selectors.companyAdd.newCompanyRecordForm.address.area)
+      cy.get(selectors.companyAdd.newCompanyRecordForm.area).should(
+        'be.visible'
+      )
       cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).should(
         'be.visible'
       )
       cy.get(selectors.companyAdd.form).contains('United States')
     })
 
-    it('should hide the UK-related fields', () => {
-      cy.get(
-        selectors.companyAdd.newCompanyRecordForm.address.findUkAddress
-      ).should('not.exist')
-    })
+    it('should not show a disabled field', () => {})
   })
 
   context('when "UK" is selected for the company location', () => {
