@@ -4,7 +4,7 @@ import { listFaker } from './utils'
 const serviceFaker = (overrides = {}) => ({
   id: faker.datatype.uuid(),
   name: faker.name.jobArea(),
-  disabled_on: faker.date.past(),
+  disabled_on: null,
   contexts: [
     'investment_project_interaction',
     'event',
