@@ -26,7 +26,7 @@ const getInteractions = ({
   service,
   date_before,
   date_after,
-  sortby,
+  sortby = 'date:desc',
 }) =>
   axios
     .post('/api-proxy/v3/search/interaction', {
