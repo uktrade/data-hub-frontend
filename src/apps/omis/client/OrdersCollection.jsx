@@ -8,6 +8,7 @@ import {
 } from '../../../client/actions'
 
 import {
+  RoutedDateField,
   RoutedTypeahead,
   RoutedInputField,
   CollectionFilters,
@@ -71,6 +72,30 @@ const OrdersCollection = ({
           options={optionMetadata.statusOptions}
           selectedOptions={selectedFilters.selectedStatuses}
           data-test="status-filter"
+        />
+        <RoutedDateField
+          label={LABELS.completedOnAfter}
+          name="completed_on_after"
+          qsParamName="completed_on_after"
+          data-test="completed-on-after-filter"
+        />
+        <RoutedDateField
+          label={LABELS.completedOnBefore}
+          name="completed_on_before"
+          qsParamName="completed_on_before"
+          data-test="completed-on-before-filter"
+        />
+        <RoutedDateField
+          label={LABELS.deliveryDateAfter}
+          name="delivery_date_after"
+          qsParamName="delivery_date_after"
+          data-test="delivery-date-after-filter"
+        />
+        <RoutedDateField
+          label={LABELS.deliveryDateBefore}
+          name="delivery_date_before"
+          qsParamName="delivery_date_before"
+          data-test="deliver-date-before-filter"
         />
         <RoutedInputField
           id="OrdersCollection.reference"

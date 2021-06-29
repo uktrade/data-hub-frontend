@@ -108,6 +108,29 @@ function FilteredCollectionHeader({
           showCategoryLabels={true}
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedCompletedOnAfter}
+          qsParamName="completed_on_after"
+          showCategoryLabels={true}
+        />
+
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedCompletedOnBefore}
+          qsParamName="completed_on_before"
+          showCategoryLabels={true}
+        />
+
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedDeliveryDateAfter}
+          qsParamName="delivery_date_after"
+          showCategoryLabels={true}
+        />
+
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedDeliveryDateBefore}
+          qsParamName="delivery_date_before"
+          showCategoryLabels={true}
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedOrderReference}
           qsParamName="reference"
         />
