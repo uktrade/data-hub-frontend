@@ -20,6 +20,13 @@ const gotoOverseasCompanySearchResultsPage = () => {
   cy.get(selectors.companyAdd.entitySearch.searchButton).click()
 }
 
+const gotoUsCompanySearchPage = () => {
+  cy.visit(urls.companies.create())
+  cy.get(selectors.companyAdd.form).find('[type="radio"]').check('overseas')
+  cy.get(selectors.companyAdd.form).find('select').select('United States')
+  cy.get(selectors.companyAdd.continueButton).click()
+}
+
 const gotoUKCompanySearchResultsPage = () => {
   cy.visit(urls.companies.create())
   cy.get(selectors.companyAdd.form).find('[type="radio"]').check('GB')
@@ -32,6 +39,14 @@ const gotoAddUKCompanyPage = (listItem) => {
   gotoUKCompanySearchResultsPage()
   cy.get(listItem).click()
   cy.get(selectors.companyAdd.continueButton).click()
+}
+
+const gotoUsCompanySearchResultsPage = () => {
+  gotoUsCompanySearchPage()
+  cy.get(selectors.companyAdd.entitySearch.companyNameField).type(
+    'a US company'
+  )
+  cy.get(selectors.companyAdd.entitySearch.searchButton).click()
 }
 
 const gotoManualAddUKCompanyPage = () => {
@@ -650,6 +665,67 @@ describe('Add company form', () => {
         .next()
         .find('select option:selected')
         .should('have.text', '-- Select DIT region --')
+    })
+  })
+
+  context('when manually adding a new US company', () => {
+    before(() => {
+      gotoUsCompanySearchResultsPage()
+
+      cy.get(selectors.companyAdd.entitySearch.cannotFind.summary).click()
+      cy.get(
+        selectors.companyAdd.entitySearch.cannotFind.stillCannotFind
+      ).click()
+    })
+
+    it('should display the manual entry form', () => {
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.charity)
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType
+          .governmentDepartmentOrOtherPublicBody
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType
+          .limitedCompany
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType
+          .limitedPartnership
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType.partnership
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType.soleTrader
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.newCompanyRecordForm.website).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.newCompanyRecordForm.area).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.form).contains('United States')
     })
   })
 })
