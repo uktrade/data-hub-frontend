@@ -20,6 +20,8 @@ import {
   assertDateInput,
 } from '../../support/assertions'
 
+import { serviceFaker } from '../../fakers/services'
+
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
     // Default query params
@@ -35,6 +37,7 @@ const minimumPayload = {
 
 const interactionsSearchEndpoint = '/api-proxy/v3/search/interaction'
 const adviserAutocompleteEndpoint = '/api-proxy/adviser/?autocomplete=*'
+const serviceMetadataEndpoint = '/api-proxy/v4/metadata/service'
 const adviserId = '7d19d407-9aec-4d06-b190-d3f404627f21'
 const adviserEndpoint = `/api-proxy/adviser/${adviserId}`
 
@@ -302,6 +305,53 @@ describe('Interactions Collections Filter', () => {
       assertChipsEmpty()
       assertFieldEmpty(dateBefore)
       assertFieldEmpty(dateAfter)
+    })
+  })
+
+  context('Service', () => {
+    const element = '[data-test="service-filter"]'
+    const service = serviceFaker()
+    const expectedPayload = {
+      ...minimumPayload,
+      service: [service.id],
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        service: [service.id],
+      })
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.intercept('GET', serviceMetadataEndpoint, [service]).as(
+        'metaApiRequest'
+      )
+      cy.visit(`${interactions.react()}?${queryString}`)
+      cy.wait('@metaApiRequest')
+      assertPayload('@apiRequest', expectedPayload)
+      assertCheckboxGroupOption({
+        element,
+        value: service.id,
+        checked: true,
+      })
+      assertChipExists({ label: service.name, position: 1 })
+    })
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.intercept('GET', serviceMetadataEndpoint, [service]).as(
+        'metaApiRequest'
+      )
+      cy.visit(`${interactions.react()}?${queryString}`)
+      cy.wait('@apiRequest')
+      cy.wait('@metaApiRequest')
+      clickCheckboxGroupOption({
+        element,
+        value: service.id,
+      })
+      assertPayload('@apiRequest', expectedPayload)
+      assertChipExists({ label: service.name, position: 1 })
+      removeChip(service.id)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
     })
   })
 })

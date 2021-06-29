@@ -1,14 +1,29 @@
 import axios from 'axios'
 
+import urls from '../../../lib/urls'
+
 import { transformResponseToCollection } from './transformers'
+
+import { getMetadataOptions } from '../../../client/metadata'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 
-export const getInteractions = ({
+const sortServiceOptions = (options) =>
+  options.sort((a, b) => (a.label > b.label ? 1 : b.label > a.label ? -1 : 0))
+
+const getInteractionsMetadata = () =>
+  Promise.all([getMetadataOptions(urls.metadata.service())])
+    .then(([serviceOptions]) => ({
+      serviceOptions: sortServiceOptions(serviceOptions),
+    }))
+    .catch(handleError)
+
+const getInteractions = ({
   limit = 10,
   page = 1,
   kind,
   adviser,
+  service,
   date_before,
   date_after,
 }) =>
@@ -21,5 +36,8 @@ export const getInteractions = ({
       sortby: 'date:desc',
       date_before,
       date_after,
+      service,
     })
     .then(({ data }) => transformResponseToCollection(data), handleError)
+
+export { getInteractions, getInteractionsMetadata }
