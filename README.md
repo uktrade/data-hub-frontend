@@ -31,6 +31,7 @@ and be provided with a back end server to provide the API, data storage and sear
 - [Single sign-on](./docs/Single%20sign-on.md)
 - [Making changes](#making-changes)
 - [Formatting markdown files](#formatting-markdown-files)
+- [Managing Dependabot PRs](./docs/Dependabot.md)
 
 ## Getting started
 
