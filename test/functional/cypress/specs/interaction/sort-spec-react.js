@@ -18,10 +18,13 @@ describe('Interactions Collections Sort', () => {
 
     it('should have all sort options', () => {
       cy.get('[data-test="sortby"] option').then((options) => {
-        const sortOptions = [...options].map((o) => [o.value, o.text])
+        const sortOptions = [...options].map((o) => ({
+          value: o.value,
+          label: o.label,
+        }))
         expect(sortOptions).to.deep.eq([
-          ['date:desc', 'Recently created'],
-          ['subject', 'Subject A-Z'],
+          { value: 'date:desc', label: 'Recently created' },
+          { value: 'subject', label: 'Subject A-Z' },
         ])
       })
     })
@@ -37,14 +40,14 @@ describe('Interactions Collections Sort', () => {
     })
 
     it('should sort by "Recently created"', () => {
-      cy.get(element).select('date:desc')
+      cy.get(element).select('Recently created')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('date:desc')
       })
     })
 
     it('should sort by "Subject A-Z"', () => {
-      cy.get(element).select('subject')
+      cy.get(element).select('Subject A-Z')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('subject')
       })
