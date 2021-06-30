@@ -56,6 +56,17 @@ const StyledDiv = styled('div')`
   }
 `
 
+const RoutedFilterChipsCollection = ({ selectedFilters }) => (
+  <>
+    {Object.keys(selectedFilters).map((key) => (
+      <RoutedFilterChips
+        key={key}
+        selectedOptions={selectedFilters[key].options}
+        qsParamName={selectedFilters[key].queryParam}
+      />
+    ))}
+  </>
+)
 function FilteredCollectionHeader({
   totalItems,
   collectionName = 'result',
@@ -93,6 +104,7 @@ function FilteredCollectionHeader({
       </CollectionHeaderRow>
 
       <CollectionHeaderRow data-test="filter-chips" id="filter-chips">
+        <RoutedFilterChipsCollection selectedFilters={selectedFilters} />
         {/*
         FIXME: This is supposed to be a generic component,
         thus the chips should not be hardcoded here
@@ -411,11 +423,18 @@ FilteredCollectionHeader.propTypes = {
   totalItems: PropTypes.number.isRequired,
   collectionName: PropTypes.string.isRequired,
   addItemUrl: PropTypes.string,
-  // FIXME: This doesn't reflect the reality
-  selectedFilters: PropTypes.shape({
-    label: PropTypes.string,
-    value: PropTypes.string,
-  }),
+  selectedFilters: PropTypes.objectOf(
+    PropTypes.shape({
+      queryParam: PropTypes.string.isRequired,
+      options: PropTypes.arrayOf(
+        PropTypes.shape({
+          value: PropTypes.string.isRequired,
+          label: PropTypes.string,
+          categoryLabel: PropTypes.string,
+        })
+      ),
+    })
+  ),
 }
 
 export default FilteredCollectionHeader
