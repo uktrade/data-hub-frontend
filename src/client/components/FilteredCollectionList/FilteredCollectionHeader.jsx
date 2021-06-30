@@ -128,18 +128,6 @@ function FilteredCollectionHeader({
           qsParamName="kind"
         />
         <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedStages}
-          qsParamName="stage"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedAdvisers}
-          qsParamName="adviser"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedInvestmentOriginCountries}
-          qsParamName="country_investment_originates_from"
-        />
-        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedCountryOfOrigin}
           qsParamName="country_of_origin"
         />
@@ -180,44 +168,6 @@ function FilteredCollectionHeader({
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedDesiredDealRole}
           qsParamName="desired_deal_role"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedProjectStatuses}
-          qsParamName="status"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedInvestmentTypes}
-          qsParamName="investment_type"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedLikelihoodToLands}
-          qsParamName="likelihood_to_land"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedEstimatedLandDatesBefore}
-          qsParamName="estimated_land_date_before"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedEstimatedLandDatesAfter}
-          qsParamName="estimated_land_date_after"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedActualLandDatesBefore}
-          qsParamName="actual_land_date_before"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedActualLandDatesAfter}
-          qsParamName="actual_land_date_after"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedInvolvementLevels}
-          qsParamName="level_of_involvement_simplified"
-          showCategoryLabels={true}
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedInvestorTypes}
