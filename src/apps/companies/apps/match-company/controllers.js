@@ -81,6 +81,9 @@ function parseAddress(
 
 async function renderMatchConfirmation(req, res, next) {
   try {
+    const isAddressAreaEnabled =
+      res.locals.features['address-area-unverifed-match']
+
     const { company } = res.locals
     const { dunsNumber } = req.params
     const countries = await getCountries(req)
@@ -104,16 +107,27 @@ async function renderMatchConfirmation(req, res, next) {
           company: {
             ...pick(company, ['id', 'name', 'trading_names']),
             ...pick(company, ['name']),
-            address: parseAddress(company.address, countries),
+            address: parseAddress(
+              company.address,
+              countries,
+              '',
+              isAddressAreaEnabled
+            ),
           },
           dnbCompany: {
             ...pick(dnbCompany, ['primary_name', 'duns_number']),
             datahub_company_id: dataHubCompanyId,
-            address: parseAddress(dnbCompany, countries, 'address_'),
+            address: parseAddress(
+              dnbCompany,
+              countries,
+              'address_',
+              isAddressAreaEnabled
+            ),
             registered_address: parseAddress(
               dnbCompany,
               countries,
-              'registered_address_'
+              'registered_address_',
+              isAddressAreaEnabled
             ),
           },
         },
@@ -191,6 +205,9 @@ async function findDnbCompany(req, res, next) {
 
 async function renderCannotFindMatch(req, res, next) {
   try {
+    const isAddressAreaEnabled =
+      res.locals.features['address-area-unverifed-match']
+
     const { company } = res.locals
     const countries = await getCountries(req)
 
@@ -199,7 +216,12 @@ async function renderCannotFindMatch(req, res, next) {
       props: {
         company: {
           ...pick(company, ['id', 'name']),
-          address: parseAddress(company.address, countries),
+          address: parseAddress(
+            company.address,
+            countries,
+            '',
+            isAddressAreaEnabled
+          ),
         },
       },
     })

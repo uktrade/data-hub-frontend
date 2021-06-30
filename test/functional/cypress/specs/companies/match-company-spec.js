@@ -18,23 +18,73 @@ const performSearch = (companyName = 'some company') => {
 }
 
 describe('Match a company', () => {
-  context('when viewing a US company', () => {
-    before(() => {
-      cy.visit(urls.companies.match.index(fixtures.company.usCompany.id))
+  context('US company', () => {
+    context('when viewing a US company', () => {
+      before(() => {
+        cy.visit(urls.companies.match.index(fixtures.company.usCompany.id))
+      })
+
+      it('should render the Data Hub record, including the state', () => {
+        cy.contains('Data Hub business details (un-verified)')
+          .should('match', 'h2')
+          .next()
+          .find('dl')
+          .then(($el) =>
+            assertSummaryList($el, {
+              'Company name': 'Texports Ltd',
+              'Located at':
+                '12 First Street, New York, 765413, Texas, United States',
+            })
+          )
+      })
     })
 
-    it('should render the Data Hub record, including the state', () => {
-      cy.contains('Data Hub business details (un-verified)')
-        .should('match', 'h2')
-        .next()
-        .find('dl')
-        .then(($el) =>
-          assertSummaryList($el, {
-            'Company name': 'Texports Ltd',
-            'Located at':
-              '12 First Street, New York, 765413, Texas, United States',
-          })
-        )
+    context(
+      'when an unmatched US company from the search results is clicked',
+      () => {
+        before(() => {
+          cy.visit(urls.companies.match.index(fixtures.company.usCompany.id))
+          performSearch()
+          cy.contains('Some unmatched company').click()
+        })
+
+        it('should display the state', () => {
+          cy.contains('Data Hub business details (un-verified)')
+            .should('match', 'h2')
+            .next()
+            .find('dl')
+            .then(($el) =>
+              assertSummaryList($el, {
+                'Company name': 'Texports Ltd',
+                'Located at':
+                  '12 First Street, New York, 765413, Texas, United States',
+              })
+            )
+        })
+      }
+    )
+
+    context(`when "I still can't find what I'm looking for" is clicked`, () => {
+      before(() => {
+        cy.visit(urls.companies.match.index(fixtures.company.usCompany.id))
+        performSearch()
+        cy.contains("I can't find what I'm looking for").click()
+        cy.contains("I still can't find what I'm looking for").click()
+      })
+
+      it('should contain the Data Hub record', () => {
+        cy.contains('Data Hub business details (un-verified)')
+          .should('match', 'h2')
+          .next()
+          .find('dl')
+          .then(($el) =>
+            assertSummaryList($el, {
+              'Company name': 'Texports Ltd',
+              'Located at':
+                '12 First Street, New York, 765413, Texas, United States',
+            })
+          )
+      })
     })
   })
 
