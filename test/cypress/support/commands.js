@@ -1,3 +1,5 @@
+import '@testing-library/cypress/add-commands'
+
 /* eslint-disable */
 /**
  * Adds a Cypress command with nice logging. In particular, solves the problem
