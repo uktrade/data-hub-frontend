@@ -80,7 +80,7 @@ const InteractionCollection = ({
           name="kind"
           qsParam="kind"
           options={KIND_OPTIONS}
-          selectedOptions={selectedFilters.selectedKind}
+          selectedOptions={selectedFilters.kind.options}
           data-test="status-filter"
         />
 
@@ -92,14 +92,14 @@ const InteractionCollection = ({
           qsParam="adviser"
           placeholder="Search advisers"
           noOptionsMessage={() => <>No advisers found</>}
-          selectedOptions={selectedFilters.selectedAdvisers}
+          selectedOptions={selectedFilters.advisers.options}
           data-test="adviser-filter"
         />
         <RoutedCheckboxGroupField
           name="dit_participants__adviser"
           qsParam="adviser"
           options={[{ label: LABELS.myInteractions, value: currentAdviserId }]}
-          selectedOptions={selectedFilters.selectedMyInteractions}
+          selectedOptions={selectedFilters.myInteractions.options}
           data-test="my-interactions-filter"
         />
         <RoutedDateField
@@ -120,7 +120,7 @@ const InteractionCollection = ({
           name="service"
           qsParam="service"
           options={optionMetadata.serviceOptions}
-          selectedOptions={selectedFilters.selectedService}
+          selectedOptions={selectedFilters.service.options}
           data-test="service-filter"
         />
       </CollectionFilters>

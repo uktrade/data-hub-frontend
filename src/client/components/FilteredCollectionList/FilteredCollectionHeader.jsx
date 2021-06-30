@@ -110,24 +110,6 @@ function FilteredCollectionHeader({
         thus the chips should not be hardcoded here
         */}
         <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedService}
-          qsParamName="service"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedDatesAfter}
-          qsParamName="date_after"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedDatesBefore}
-          qsParamName="date_before"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedKind}
-          qsParamName="kind"
-        />
-        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedCountryOfOrigin}
           qsParamName="country_of_origin"
         />
