@@ -4,7 +4,7 @@ import urls from '../../../lib/urls'
 
 import { transformResponseToCollection } from './transformers'
 
-import { getMetadataOptions } from '../../../client/metadata'
+import { getMetadataOptions, getSectorOptions } from '../../../client/metadata'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 
@@ -12,9 +12,13 @@ const sortServiceOptions = (options) =>
   options.sort((a, b) => (a.label > b.label ? 1 : b.label > a.label ? -1 : 0))
 
 const getInteractionsMetadata = () =>
-  Promise.all([getMetadataOptions(urls.metadata.service())])
-    .then(([serviceOptions]) => ({
+  Promise.all([
+    getMetadataOptions(urls.metadata.service()),
+    getSectorOptions(urls.metadata.sector()),
+  ])
+    .then(([serviceOptions, sectorOptions]) => ({
       serviceOptions: sortServiceOptions(serviceOptions),
+      sectorOptions,
     }))
     .catch(handleError)
 
@@ -27,6 +31,7 @@ const getInteractions = ({
   date_before,
   date_after,
   sortby = 'date:desc',
+  sector_descends,
 }) =>
   axios
     .post('/api-proxy/v3/search/interaction', {
@@ -38,6 +43,7 @@ const getInteractions = ({
       date_before,
       date_after,
       service,
+      sector_descends,
     })
     .then(({ data }) => transformResponseToCollection(data), handleError)
 
