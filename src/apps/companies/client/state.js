@@ -8,7 +8,7 @@ export const TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME =
 
 export const ID = 'companiesList'
 
-import { buildSelectedFilters } from './filters'
+import { buildFilters } from './filters'
 import { COMPANY_STATUS_OPTIONS, SORT_OPTIONS } from './constants'
 import { transformArchivedToApi, transformPostcodeToApi } from './transformers'
 
@@ -31,11 +31,11 @@ export const state2props = ({ router, ...state }) => {
 
   const { metadata, selectedLeadItaOrGlobalAccountManagers } = state[ID]
 
-  const selectedFilters = buildSelectedFilters({
+  const selectedFilters = buildFilters(
     queryParams,
     metadata,
-    selectedLeadItaOrGlobalAccountManagers,
-  })
+    selectedLeadItaOrGlobalAccountManagers
+  )
 
   return {
     ...state[ID],
