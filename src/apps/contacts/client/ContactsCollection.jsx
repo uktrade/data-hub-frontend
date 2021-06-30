@@ -86,7 +86,7 @@ const ContactsCollection = ({
           qsParam="company_sector_descends"
           placeholder="Search sectors"
           options={optionMetadata.sectorOptions}
-          selectedOptions={selectedFilters.selectedCompanySectors}
+          selectedOptions={selectedFilters.companySectors.options}
           data-test="sector-filter"
         />
         <RoutedTypeahead
@@ -96,7 +96,7 @@ const ContactsCollection = ({
           qsParam="address_country"
           placeholder="Search countries"
           options={optionMetadata.countryOptions}
-          selectedOptions={selectedFilters.selectedAddressCountries}
+          selectedOptions={selectedFilters.addressCountries.options}
           data-test="country-filter"
         />
         <RoutedTypeahead
@@ -106,7 +106,7 @@ const ContactsCollection = ({
           qsParam="company_uk_region"
           placeholder="Search UK region"
           options={optionMetadata.ukRegionOptions}
-          selectedOptions={selectedFilters.selectedCompanyUkRegions}
+          selectedOptions={selectedFilters.companyUkRegions.options}
           data-test="uk-region-filter"
         />
         <RoutedCheckboxGroupField
@@ -114,7 +114,7 @@ const ContactsCollection = ({
           name="archived"
           qsParam="archived"
           options={optionMetadata.statusOptions}
-          selectedOptions={selectedFilters.selectedStatus}
+          selectedOptions={selectedFilters.statuses.options}
           data-test="status-filter"
         />
       </CollectionFilters>

@@ -1,7 +1,7 @@
 import { omitBy, isEmpty } from 'lodash'
 import qs from 'qs'
 
-import { buildSelectedFilters } from './filters'
+import { buildFilters } from './filters'
 import { transformArchivedToApi } from './transformers'
 import { STATUS_OPTIONS, SORT_OPTIONS } from './constants'
 
@@ -22,7 +22,7 @@ export const state2props = ({ router, ...state }) => {
   const queryParams = parseQueryString(queryString)
   const archived = transformArchivedToApi(queryParams.archived)
   const metadata = state[ID].metadata
-  const selectedFilters = buildSelectedFilters(queryParams, metadata)
+  const selectedFilters = buildFilters(queryParams, metadata)
   return {
     ...state[ID],
     payload: {
