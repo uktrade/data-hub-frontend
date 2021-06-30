@@ -136,11 +136,6 @@ function FilteredCollectionHeader({
           qsParamName="adviser"
         />
         <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedOrganisers}
-          qsParamName="organiser"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedInvestmentOriginCountries}
           qsParamName="country_investment_originates_from"
         />
@@ -195,23 +190,8 @@ function FilteredCollectionHeader({
           qsParamName="investment_type"
         />
         <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedEventTypes}
-          qsParamName="event_type"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedLikelihoodToLands}
           qsParamName="likelihood_to_land"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedStartDateAfter}
-          qsParamName="start_date_after"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedStartDateBefore}
-          qsParamName="start_date_before"
           showCategoryLabels={true}
         />
         <RoutedFilterChips
