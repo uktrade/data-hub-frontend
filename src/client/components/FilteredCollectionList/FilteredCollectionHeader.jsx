@@ -318,36 +318,12 @@ function FilteredCollectionHeader({
           qsParamName="headquarter_type"
         />
         <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedCompanySectors}
-          qsParamName="company_sector_descends"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedAddressCountries}
-          qsParamName="address_country"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedCompanyUkRegions}
-          qsParamName="company_uk_region"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedName}
-          qsParamName="name"
-        />
-        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedStatus}
           qsParamName="archived"
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedContactName}
           qsParamName="contact_name"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedCompanyName}
-          qsParamName="company_name"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedCompanyStatuses}
-          qsParamName="archived"
         />
         <RoutedFilterChips
           selectedOptions={
