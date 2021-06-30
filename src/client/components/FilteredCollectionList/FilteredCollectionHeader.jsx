@@ -145,20 +145,6 @@ function FilteredCollectionHeader({
           qsParamName="country_investment_originates_from"
         />
         <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedCountries}
-          qsParamName="country"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedExportToCountries}
-          qsParamName="export_to_countries"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedFutureCountriesOfInterest}
-          qsParamName="future_interest_countries"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedCountryOfOrigin}
           qsParamName="country_of_origin"
         />
@@ -199,11 +185,6 @@ function FilteredCollectionHeader({
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedDesiredDealRole}
           qsParamName="desired_deal_role"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedUkPostcode}
-          qsParamName="uk_postcode"
-          showCategoryLabels={true}
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedProjectStatuses}
@@ -269,21 +250,6 @@ function FilteredCollectionHeader({
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedUkRegionsOfInterest}
           qsParamName="uk_regions_of_interest"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedHeadquarterTypes}
-          qsParamName="headquarter_type"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedStatus}
-          qsParamName="archived"
-        />
-        <RoutedFilterChips
-          selectedOptions={
-            selectedFilters.selectedLeadItaOrGlobalAccountManagers
-          }
-          qsParamName="one_list_group_global_account_manager"
-          showCategoryLabels={true}
         />
         <RoutedFilterChips
           selectedOptions={
