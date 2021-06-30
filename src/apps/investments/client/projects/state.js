@@ -1,198 +1,44 @@
+import { omitBy, isEmpty } from 'lodash'
 import qs from 'qs'
-import { format, parseISO } from 'date-fns'
+
+import { buildFilters } from './filters'
 
 import {
-  actualLandDateBeforeLabel,
-  actualLandDateAfterLabel,
-  adviserLabel,
-  countryLabel,
-  estimatedLandDateBeforeLabel,
-  estimatedLandDateAfterLabel,
-  investmentTypeLabel,
-  involvementLevelLabel,
-  involvementLevelOptions,
-  likelihoodToLandLabel,
-  projectStatusLabel,
-  projectStatusOptions,
-  sectorLabel,
-  sortOptions,
-  ukRegionLabel,
-  stageLabel,
-} from './metadata'
+  SORT_OPTIONS,
+  PROJECT_STATUS_OPTIONS,
+  INVOLVEMENT_LEVEL_OPTIONS,
+} from './constants'
 
+export const ID = 'projectsList'
 export const TASK_GET_PROJECTS_LIST = 'TASK_GET_PROJECTS_LIST'
 export const TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME =
   'TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME'
 export const TASK_GET_INVESTMENTS_PROJECTS_METADATA =
   'TASK_GET_INVESTMENTS_PROJECTS_METADATA'
 
-export const ID = 'projectsList'
-
-const parseVariablePropType = (prop) =>
-  prop ? (Array.isArray(prop) ? prop : [prop]) : prop
-
-const searchParamProps = ({
-  sortby = 'created_on:desc',
-  page = 1,
-  adviser = false,
-  sector_descends = false,
-  country_investment_originates_from = false,
-  uk_region_location = false,
-  stage = false,
-  status = false,
-  investment_type = false,
-  likelihood_to_land = false,
-  estimated_land_date_before = null,
-  estimated_land_date_after = null,
-  actual_land_date_before = null,
-  actual_land_date_after = null,
-  level_of_involvement_simplified = false,
-}) => ({
-  adviser: parseVariablePropType(adviser),
-  sector_descends: parseVariablePropType(sector_descends),
-  country_investment_originates_from: parseVariablePropType(
-    country_investment_originates_from
-  ),
-  uk_region_location: parseVariablePropType(uk_region_location),
-  stage: parseVariablePropType(stage),
-  status: parseVariablePropType(status),
-  investment_type: parseVariablePropType(investment_type),
-  likelihood_to_land: parseVariablePropType(likelihood_to_land),
-  estimated_land_date_before,
-  estimated_land_date_after,
-  actual_land_date_before,
-  actual_land_date_after,
-  level_of_involvement_simplified,
-  sortby,
-  page,
-})
-
-const collectionListPayload = (paramProps) => {
-  return Object.fromEntries(
-    Object.entries(searchParamProps(paramProps)).filter((v) => v[1])
-  )
-}
-
-/**
- * Build the options filter to include value, label and category label
- */
-const buildOptionsFilter = ({ options = [], value, categoryLabel = '' }) => {
-  const optionsFilter = options.filter((option) => value.includes(option.value))
-  if (categoryLabel) {
-    return optionsFilter.map(({ value, label }) => ({
-      value,
-      label,
-      categoryLabel,
-    }))
-  } else {
-    return optionsFilter
+const parseQueryString = (queryString) => {
+  const queryParams = omitBy({ ...qs.parse(queryString) }, isEmpty)
+  return {
+    ...queryParams,
+    page: parseInt(queryParams.page || 1, 10),
   }
 }
 
-const getDateLabel = (value) =>
-  value ? `${format(parseISO(value), 'd MMMM yyyy')}` : ''
-
-const buildDatesFilter = ({ value, categoryLabel = '' }) =>
-  value ? [{ label: getDateLabel(value), value, categoryLabel }] : []
-
-/**
- * Convert both location and redux state to investment projects props
- *
- * Selected filters are built from the page's query props as well as the
- * selected advisers in state.
- */
 export const state2props = ({ router, ...state }) => {
-  const queryProps = qs.parse(router.location.search.slice(1))
-  const filteredQueryProps = collectionListPayload(queryProps)
-  const { selectedAdvisers, metadata } = state.projectsList
-  const {
-    sector_descends = [],
-    country_investment_originates_from = [],
-    uk_region_location = [],
-    stage = [],
-    status = [],
-    investment_type = [],
-    likelihood_to_land = [],
-    estimated_land_date_before,
-    estimated_land_date_after,
-    actual_land_date_before,
-    actual_land_date_after,
-    level_of_involvement_simplified = [],
-  } = queryProps
-
-  const selectedFilters = {
-    selectedAdvisers: selectedAdvisers.map(({ advisers }) => ({
-      label: advisers.name,
-      value: advisers.id,
-      categoryLabel: adviserLabel,
-    })),
-    selectedSectors: buildOptionsFilter({
-      options: metadata.sectorOptions,
-      value: sector_descends,
-      categoryLabel: sectorLabel,
-    }),
-    selectedInvestmentOriginCountries: buildOptionsFilter({
-      options: metadata.countryOptions,
-      value: country_investment_originates_from,
-      categoryLabel: countryLabel,
-    }),
-    selectedUkRegions: buildOptionsFilter({
-      options: metadata.ukRegionOptions,
-      value: uk_region_location,
-      categoryLabel: ukRegionLabel,
-    }),
-    selectedStages: buildOptionsFilter({
-      options: metadata.projectStageOptions,
-      value: stage,
-      categoryLabel: stageLabel,
-    }),
-    selectedProjectStatuses: buildOptionsFilter({
-      options: projectStatusOptions,
-      value: status,
-      categoryLabel: projectStatusLabel,
-    }),
-    selectedInvestmentTypes: buildOptionsFilter({
-      options: metadata.investmentTypeOptions,
-      value: investment_type,
-      categoryLabel: investmentTypeLabel,
-    }),
-    selectedLikelihoodToLands: buildOptionsFilter({
-      options: metadata.likelihoodToLandOptions,
-      value: likelihood_to_land,
-      categoryLabel: likelihoodToLandLabel,
-    }),
-    selectedEstimatedLandDatesBefore: buildDatesFilter({
-      value: estimated_land_date_before,
-      categoryLabel: estimatedLandDateBeforeLabel,
-    }),
-    selectedEstimatedLandDatesAfter: buildDatesFilter({
-      value: estimated_land_date_after,
-      categoryLabel: estimatedLandDateAfterLabel,
-    }),
-    selectedActualLandDatesBefore: buildDatesFilter({
-      value: actual_land_date_before,
-      categoryLabel: actualLandDateBeforeLabel,
-    }),
-    selectedActualLandDatesAfter: buildDatesFilter({
-      value: actual_land_date_after,
-      categoryLabel: actualLandDateAfterLabel,
-    }),
-    selectedInvolvementLevels: buildOptionsFilter({
-      options: involvementLevelOptions,
-      value: level_of_involvement_simplified,
-      categoryLabel: involvementLevelLabel,
-    }),
-  }
+  const queryString = router.location.search.slice(1)
+  const queryParams = parseQueryString(queryString)
+  const { metadata, selectedAdvisers } = state[ID]
+  const selectedFilters = buildFilters(queryParams, metadata, selectedAdvisers)
 
   return {
     ...state[ID],
-    payload: filteredQueryProps,
+    payload: { ...queryParams },
+    selectedFilters,
     optionMetadata: {
-      sortOptions,
-      projectStatusOptions,
-      involvementLevelOptions,
+      sortOptions: SORT_OPTIONS,
+      projectStatusOptions: PROJECT_STATUS_OPTIONS,
+      involvementLevelOptions: INVOLVEMENT_LEVEL_OPTIONS,
       ...metadata,
     },
-    selectedFilters,
   }
 }
