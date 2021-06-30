@@ -7,7 +7,7 @@ export const TASK_GET_EVENTS_ORGANISER_NAME = 'TASK_GET_EVENTS_ORGANISER_NAME'
 
 export const ID = 'eventsList'
 
-import { buildSelectedFilters } from './filters'
+import { buildFilters } from './filters'
 import { SORT_OPTIONS } from './constants'
 
 const parseQueryString = (queryString) => {
@@ -27,11 +27,11 @@ export const state2props = ({ router, ...state }) => {
 
   const { metadata, selectedOrganisers } = state[ID]
 
-  const selectedFilters = buildSelectedFilters({
+  const selectedFilters = buildFilters(
     queryParams,
     metadata,
-    selectedOrganisers,
-  })
+    selectedOrganisers
+  )
 
   return {
     ...state[ID],
