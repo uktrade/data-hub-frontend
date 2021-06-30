@@ -13,6 +13,7 @@ import {
   FilteredCollectionList,
   RoutedCheckboxGroupField,
   RoutedAdvisersTypeahead,
+  RoutedTypeahead,
   RoutedDateField,
   CollectionFilters,
 } from '../../../client/components'
@@ -122,6 +123,16 @@ const InteractionCollection = ({
           options={optionMetadata.serviceOptions}
           selectedOptions={selectedFilters.service.options}
           data-test="service-filter"
+        />
+        <RoutedTypeahead
+          isMulti={true}
+          legend={LABELS.sector}
+          name="sector"
+          qsParam="sector_descends"
+          placeholder="Search sectors"
+          options={optionMetadata.sectorOptions}
+          selectedOptions={selectedFilters.selectedSector}
+          data-test="sector-filter"
         />
       </CollectionFilters>
     </FilteredCollectionList>

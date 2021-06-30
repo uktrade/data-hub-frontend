@@ -20,6 +20,8 @@ import {
   assertDateInput,
 } from '../../support/assertions'
 
+import { testTypeahead } from '../../support/tests'
+
 import { serviceFaker } from '../../fakers/services'
 
 const buildQueryString = (queryParams = {}) =>
@@ -359,6 +361,54 @@ describe('Interactions Collections Filter', () => {
       removeChip(service.id)
       assertPayload('@apiRequest', minimumPayload)
       assertChipsEmpty()
+    })
+  })
+  context('Sector', () => {
+    const element = '[data-test="sector-filter"]'
+    const aerospaceId = '9538cecc-5f95-e211-a939-e4115bead28a'
+    const expectedPayload = {
+      sector_descends: [aerospaceId],
+      limit: 10,
+      offset: 0,
+      sortby: 'date:desc',
+    }
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        sector_descends: [aerospaceId],
+      })
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.visit(`${interactions.react()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      cy.get(element).should('contain', 'Aerospace')
+      assertChipExists({ label: 'Aerospace', position: 1 })
+    })
+    it('should filter from user input and remove the chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.visit(`${interactions.react()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      testTypeahead({
+        element,
+        legend: 'Sector',
+        placeholder: 'Search sectors',
+        input: 'aero',
+        expectedOption: 'Aerospace',
+      })
+
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body).to.deep.equal(expectedPayload)
+      })
+
+      assertQueryParams('sector_descends', [aerospaceId])
+      assertChipExists({ label: 'Aerospace', position: 1 })
+
+      removeChip(aerospaceId)
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body).to.deep.equal(minimumPayload)
+      })
+      assertChipsEmpty()
+      assertFieldEmpty(element)
     })
   })
 })

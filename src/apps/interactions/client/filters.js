@@ -53,4 +53,12 @@ export const buildSelectedFilters = (
       categoryLabel: LABELS.service,
     }),
   },
+  service: {
+    queryParam: 'service',
+    options: buildOptionsFilter({
+      options: metadata.serviceOptions,
+      value: queryParams.service,
+      categoryLabel: LABELS.service,
+    }),
+  },
 })
