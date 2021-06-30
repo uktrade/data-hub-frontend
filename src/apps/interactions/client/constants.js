@@ -13,3 +13,8 @@ export const KIND_OPTIONS = [
   { label: LABELS.interaction, value: 'interaction' },
   { label: LABELS.serviceDelivery, value: 'service_delivery' },
 ]
+
+export const SORT_OPTIONS = [
+  { value: 'date:desc', name: 'Recently created' },
+  { value: 'subject', name: 'Subject A-Z' },
+]
