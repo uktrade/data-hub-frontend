@@ -4,7 +4,7 @@ import urls from '../../../lib/urls'
 
 import { transformResponseToCollection } from './transformers'
 
-import { getMetadataOptions, getSectorOptions } from '../../../client/metadata'
+import { getMetadataOptions } from '../../../client/metadata'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 
@@ -14,7 +14,11 @@ const sortServiceOptions = (options) =>
 const getInteractionsMetadata = () =>
   Promise.all([
     getMetadataOptions(urls.metadata.service()),
-    getSectorOptions(urls.metadata.sector()),
+    getMetadataOptions(urls.metadata.sector(), {
+      params: {
+        level__lte: '0',
+      },
+    }),
   ])
     .then(([serviceOptions, sectorOptions]) => ({
       serviceOptions: sortServiceOptions(serviceOptions),
