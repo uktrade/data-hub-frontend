@@ -41,6 +41,14 @@ function getCountryName(country, countries) {
   )
 }
 
+function getAreaName(area) {
+  if (typeof area === 'string') {
+    return area
+  } else {
+    return get(area, 'name')
+  }
+}
+
 function getCountryCode(company, countries) {
   const companyID = get(company, 'address.country.id')
   return get(
@@ -64,7 +72,7 @@ function parseAddress(
           countries
         ),
         [`${prefix}area`]: isAddressAreaEnabled
-          ? get(dnbCompany, `${prefix}area.name`)
+          ? getAreaName(get(dnbCompany, `${prefix}area`))
           : null,
       },
       [

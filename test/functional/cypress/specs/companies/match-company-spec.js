@@ -45,7 +45,7 @@ describe('Match a company', () => {
         before(() => {
           cy.visit(urls.companies.match.index(fixtures.company.usCompany.id))
           performSearch()
-          cy.contains('Some unmatched company').click()
+          cy.contains('Some unmatched US company').click()
         })
 
         it('should display the state', () => {
@@ -58,6 +58,23 @@ describe('Match a company', () => {
                 'Company name': 'Texports Ltd',
                 'Located at':
                   '12 First Street, New York, 765413, Texas, United States',
+              })
+            )
+            .parent()
+            .parent()
+            .next()
+            .should(
+              'have.text',
+              'Data Hub business details (after verification)'
+            )
+            .and('match', 'h2')
+            .next()
+            .find('dl')
+            .then(($el) =>
+              assertSummaryList($el, {
+                'Company name': 'Some unmatched US company',
+                'Located at':
+                  '256 Square Street, Austin, 765413, Texas, United States',
               })
             )
         })
