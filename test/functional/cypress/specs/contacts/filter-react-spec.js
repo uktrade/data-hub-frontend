@@ -376,9 +376,8 @@ describe('Contacts Collections Filter', () => {
       cy.get('[data-test=filter-chips]').children().as('filterChips')
     })
     it('should remove all filters and chips', () => {
-      cy.get('@filterChips').should('have.length', 7)
       cy.get('[data-test=clear-filters]').click()
-      cy.get('@filterChips').should('have.length', 0)
+      cy.get('[data-test=filter-chips]').children().should('have.length', 0)
       cy.get('[data-test="contact-name-filter"]').should('have.value', '')
       cy.get('[data-test="company-name-filter"]').should('have.value', '')
       cy.get('[data-test="sector-filter"]').should('have.value', '')
