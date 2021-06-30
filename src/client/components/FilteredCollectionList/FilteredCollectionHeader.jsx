@@ -124,33 +124,6 @@ function FilteredCollectionHeader({
           showCategoryLabels={true}
         />
         <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedCompletedOnAfter}
-          qsParamName="completed_on_after"
-          showCategoryLabels={true}
-        />
-
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedCompletedOnBefore}
-          qsParamName="completed_on_before"
-          showCategoryLabels={true}
-        />
-
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedDeliveryDateAfter}
-          qsParamName="delivery_date_after"
-          showCategoryLabels={true}
-        />
-
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedDeliveryDateBefore}
-          qsParamName="delivery_date_before"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedOrderReference}
-          qsParamName="reference"
-        />
-        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedKind}
           qsParamName="kind"
         />
@@ -168,20 +141,12 @@ function FilteredCollectionHeader({
           showCategoryLabels={true}
         />
         <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedSectors}
-          qsParamName="sector_descends"
-        />
-        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedInvestmentOriginCountries}
           qsParamName="country_investment_originates_from"
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedCountries}
           qsParamName="country"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedOmisMarkets}
-          qsParamName="primary_market"
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedExportToCountries}
@@ -241,15 +206,7 @@ function FilteredCollectionHeader({
           showCategoryLabels={true}
         />
         <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedUkRegions}
-          qsParamName="uk_region"
-        />
-        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedProjectStatuses}
-          qsParamName="status"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedStatuses}
           qsParamName="status"
         />
         <RoutedFilterChips
@@ -320,10 +277,6 @@ function FilteredCollectionHeader({
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedStatus}
           qsParamName="archived"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedContactName}
-          qsParamName="contact_name"
         />
         <RoutedFilterChips
           selectedOptions={
