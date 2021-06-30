@@ -8,6 +8,7 @@ import {
 } from '../../../client/actions'
 
 import {
+  RoutedDateField,
   RoutedTypeahead,
   RoutedInputField,
   CollectionFilters,
@@ -55,9 +56,10 @@ const OrdersCollection = ({
       sortOptions={optionMetadata.sortOptions}
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}
-      entityName="order"
-      entityNamePlural="order"
       addItemUrl="/omis/create"
+      entityName="order"
+      entityNamePlural="orders"
+      baseDownloadLink="/omis/export"
       defaultQueryParams={{
         page: 1,
         sortby: 'created_on:desc',
@@ -71,6 +73,38 @@ const OrdersCollection = ({
           options={optionMetadata.statusOptions}
           selectedOptions={selectedFilters.selectedStatuses}
           data-test="status-filter"
+        />
+        <RoutedDateField
+          label={LABELS.completedOnAfter}
+          name="completed_on_after"
+          qsParamName="completed_on_after"
+          data-test="completed-on-after-filter"
+        />
+        <RoutedDateField
+          label={LABELS.completedOnBefore}
+          name="completed_on_before"
+          qsParamName="completed_on_before"
+          data-test="completed-on-before-filter"
+        />
+        <RoutedDateField
+          label={LABELS.deliveryDateAfter}
+          name="delivery_date_after"
+          qsParamName="delivery_date_after"
+          data-test="delivery-date-after-filter"
+        />
+        <RoutedDateField
+          label={LABELS.deliveryDateBefore}
+          name="delivery_date_before"
+          qsParamName="delivery_date_before"
+          data-test="deliver-date-before-filter"
+        />
+        <RoutedInputField
+          id="OrdersCollection.reference"
+          qsParam="reference"
+          name="reference"
+          label={LABELS.reference}
+          placeholder="Search order reference"
+          data-test="reference-filter"
         />
         <RoutedInputField
           id="OrdersCollection.company-name"
@@ -104,8 +138,8 @@ const OrdersCollection = ({
           name="primary_market"
           qsParam="primary_market"
           placeholder="Search countries"
-          options={optionMetadata.countryOptions}
-          selectedOptions={selectedFilters.selectedPrimaryMarkets}
+          options={optionMetadata.omisMarketOptions}
+          selectedOptions={selectedFilters.selectedOmisMarkets}
           data-test="country-filter"
         />
         <RoutedTypeahead

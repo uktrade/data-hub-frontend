@@ -12,10 +12,15 @@ export const getOrders = ({
   status,
   sortby,
   uk_region,
+  reference,
   company_name,
   contact_name,
   primary_market,
   sector_descends,
+  completed_on_after,
+  completed_on_before,
+  delivery_date_after,
+  delivery_date_before,
 }) =>
   axios
     .post('/api-proxy/v3/search/order', {
@@ -24,22 +29,27 @@ export const getOrders = ({
       status,
       sortby,
       uk_region,
+      reference,
       company_name,
       contact_name,
       primary_market,
       sector_descends,
+      completed_on_after,
+      completed_on_before,
+      delivery_date_after,
+      delivery_date_before,
     })
     .then(({ data }) => transformResponseToCollection(data), handleError)
 
 export const getOrdersMetadata = () =>
   Promise.all([
     getSectorOptions(metadata.sector()),
-    getMetadataOptions(metadata.country()),
+    getMetadataOptions(metadata.omisMarket()),
     getMetadataOptions(metadata.ukRegion()),
   ])
-    .then(([sectorOptions, countryOptions, ukRegionOptions]) => ({
+    .then(([sectorOptions, omisMarketOptions, ukRegionOptions]) => ({
       sectorOptions,
-      countryOptions,
+      omisMarketOptions,
       ukRegionOptions,
     }))
     .catch(handleError)

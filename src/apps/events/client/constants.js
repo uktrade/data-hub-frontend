@@ -1,6 +1,8 @@
 export const LABELS = {
   eventName: 'Event name',
   organiser: 'Organiser',
+  startDateAfter: 'From',
+  startDateBefore: 'To',
   country: 'Country',
   ukRegion: 'UK region',
   eventType: 'Type of event',

@@ -278,9 +278,9 @@ describe('Contacts Collections Filter', () => {
 
   context('UK Region', () => {
     const element = '[data-test="uk-region-filter"]'
-    const jerseyId = '924cd12a-6095-e211-a939-e4115bead28a'
+    const londonId = '874cd12a-6095-e211-a939-e4115bead28a'
     const expectedPayload = {
-      company_uk_region: [jerseyId],
+      company_uk_region: [londonId],
       limit: 10,
       offset: 0,
       archived: false,
@@ -288,15 +288,15 @@ describe('Contacts Collections Filter', () => {
     }
     it('should filter from the url', () => {
       const queryString = buildQueryString({
-        company_uk_region: [jerseyId],
+        company_uk_region: [londonId],
       })
       cy.intercept('POST', '/api-proxy/v3/search/contact').as('apiRequest')
       cy.visit(`${urls.contacts.react.index()}?${queryString}`)
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body).to.deep.equal(expectedPayload)
       })
-      cy.get(element).should('contain', 'Jersey')
-      assertChipExists({ label: 'Jersey', position: 1 })
+      cy.get(element).should('contain', 'London')
+      assertChipExists({ label: 'London', position: 1 })
     })
     it('should filter from user input and remove the chips', () => {
       const queryString = buildQueryString()
@@ -308,19 +308,19 @@ describe('Contacts Collections Filter', () => {
         element,
         legend: 'UK region',
         placeholder: 'Search UK region',
-        input: 'jer',
-        expectedOption: 'Jersey',
+        input: 'lon',
+        expectedOption: 'London',
       })
 
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body).to.deep.equal(expectedPayload)
       })
 
-      assertQueryParams('company_uk_region', [jerseyId])
-      assertChipExists({ label: 'Jersey', position: 1 })
+      assertQueryParams('company_uk_region', [londonId])
+      assertChipExists({ label: 'London', position: 1 })
       assertChipExists({ label: 'Active', position: 2 })
 
-      removeChip(jerseyId)
+      removeChip(londonId)
       cy.wait('@apiRequest')
       removeChip(activeStatusFlag)
       cy.wait('@apiRequest').then(({ request }) => {
@@ -369,7 +369,7 @@ describe('Contacts Collections Filter', () => {
         company_name: 'Tesco',
         company_sector_descends: 'af959812-6095-e211-a939-e4115bead28a',
         address_country: '80756b9a-5d95-e211-a939-e4115bead28a',
-        company_uk_region: '924cd12a-6095-e211-a939-e4115bead28a',
+        company_uk_region: '874cd12a-6095-e211-a939-e4115bead28a',
         archived: ['false', 'true'],
       })
       cy.visit(`${urls.contacts.react.index()}?${queryString}`)

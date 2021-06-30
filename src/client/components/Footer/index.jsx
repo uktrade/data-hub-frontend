@@ -93,7 +93,7 @@ export default function Footer() {
           </li>
           <li>
             <FooterLink
-              href="https://data-services-help.trade.gov.uk/data-hub/"
+              href={urls.external.helpCentre.dhHomepage()}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -102,7 +102,7 @@ export default function Footer() {
           </li>
           <li>
             <FooterLink
-              href="https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/data-hub-privacy-policy/"
+              href={urls.external.digitalWorkspace.privacyPolicy}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -111,7 +111,7 @@ export default function Footer() {
           </li>
           <li>
             <FooterLink
-              href="https://data-services-help.trade.gov.uk/accessibility-statement/"
+              href={urls.external.helpCentre.accessibilityStatement()}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -120,7 +120,7 @@ export default function Footer() {
           </li>
         </StyleList>
         <CopyrightLink
-          href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"
+          href={urls.external.copyright}
           target="_blank"
           rel="noopener noreferrer"
         >

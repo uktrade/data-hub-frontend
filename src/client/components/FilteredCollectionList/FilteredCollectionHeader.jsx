@@ -98,6 +98,10 @@ function FilteredCollectionHeader({
         thus the chips should not be hardcoded here
         */}
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedService}
+          qsParamName="service"
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedDatesAfter}
           qsParamName="date_after"
           showCategoryLabels={true}
@@ -106,6 +110,33 @@ function FilteredCollectionHeader({
           selectedOptions={selectedFilters.selectedDatesBefore}
           qsParamName="date_before"
           showCategoryLabels={true}
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedCompletedOnAfter}
+          qsParamName="completed_on_after"
+          showCategoryLabels={true}
+        />
+
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedCompletedOnBefore}
+          qsParamName="completed_on_before"
+          showCategoryLabels={true}
+        />
+
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedDeliveryDateAfter}
+          qsParamName="delivery_date_after"
+          showCategoryLabels={true}
+        />
+
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedDeliveryDateBefore}
+          qsParamName="delivery_date_before"
+          showCategoryLabels={true}
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedOrderReference}
+          qsParamName="reference"
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedKind}
@@ -137,7 +168,7 @@ function FilteredCollectionHeader({
           qsParamName="country"
         />
         <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedPrimaryMarkets}
+          selectedOptions={selectedFilters.selectedOmisMarkets}
           qsParamName="primary_market"
         />
         <RoutedFilterChips
@@ -221,6 +252,16 @@ function FilteredCollectionHeader({
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedLikelihoodToLands}
           qsParamName="likelihood_to_land"
+          showCategoryLabels={true}
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedStartDateAfter}
+          qsParamName="start_date_after"
+          showCategoryLabels={true}
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedStartDateBefore}
+          qsParamName="start_date_before"
           showCategoryLabels={true}
         />
         <RoutedFilterChips
