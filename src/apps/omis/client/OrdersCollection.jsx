@@ -104,7 +104,7 @@ const OrdersCollection = ({
           label={LABELS.deliveryDateBefore}
           name="delivery_date_before"
           qsParamName="delivery_date_before"
-          data-test="deliver-date-before-filter"
+          data-test="delivery-date-before-filter"
         />
         <RoutedInputField
           id="OrdersCollection.company-name"
@@ -134,10 +134,10 @@ const OrdersCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={LABELS.country}
+          legend={LABELS.primaryMarket}
           name="primary_market"
           qsParam="primary_market"
-          placeholder="Search countries"
+          placeholder="Search country"
           options={optionMetadata.omisMarketOptions}
           selectedOptions={selectedFilters.omisMarkets.options}
           data-test="country-filter"

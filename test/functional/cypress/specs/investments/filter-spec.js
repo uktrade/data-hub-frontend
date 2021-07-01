@@ -167,7 +167,7 @@ describe('Investments Collections Filter', () => {
     it('should filter by uk region', () => {
       testTypeahead({
         element: '@ukRegionFilter',
-        legend: 'UK Region',
+        legend: 'UK region',
         placeholder: 'Search UK region',
         input: 'sou',
         expectedOption: 'South East',
