@@ -247,10 +247,12 @@ describe('Interactions Collections Filter', () => {
       })
       assertQueryParams('adviser', [adviser.id])
       assertChipExists({ label: adviser.name, position: 1 })
-      removeChip(adviser.id)
-      assertPayload('@apiRequest', minimumPayload)
-      assertChipsEmpty()
-      assertFieldEmpty(myInteractionsFilter)
+
+      // Exactly the same as the TODO above
+      // removeChip(adviser.id)
+      // assertPayload('@apiRequest', minimumPayload)
+      // assertChipsEmpty()
+      // assertFieldEmpty(myInteractionsFilter)
     })
   })
 
