@@ -56,17 +56,19 @@ const StyledDiv = styled('div')`
   }
 `
 
-const RoutedFilterChipsCollection = ({ selectedFilters }) => (
-  <>
-    {Object.keys(selectedFilters).map((key) => (
-      <RoutedFilterChips
-        key={key}
-        selectedOptions={selectedFilters[key].options}
-        qsParamName={selectedFilters[key].queryParam}
-      />
-    ))}
-  </>
-)
+const RoutedFilterChipsCollection = ({ selectedFilters }) => {
+  return (
+    <>
+      {Object.keys(selectedFilters).map((key) => (
+        <RoutedFilterChips
+          key={key}
+          selectedOptions={selectedFilters[key].options}
+          qsParamName={selectedFilters[key].queryParam}
+        />
+      ))}
+    </>
+  )
+}
 function FilteredCollectionHeader({
   totalItems,
   collectionName = 'result',
@@ -105,122 +107,6 @@ function FilteredCollectionHeader({
 
       <CollectionHeaderRow data-test="filter-chips" id="filter-chips">
         <RoutedFilterChipsCollection selectedFilters={selectedFilters} />
-        {/*
-        FIXME: This is supposed to be a generic component,
-        thus the chips should not be hardcoded here
-        */}
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedCountryOfOrigin}
-          qsParamName="country_of_origin"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedAssetClassesOfInterest}
-          qsParamName="asset_classes_of_interest"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedInvestorCompanyName}
-          qsParamName="investor_company_name"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedDealTicketSize}
-          qsParamName="deal_ticket_size"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedMinimumReturnRate}
-          qsParamName="minimum_return_rate"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedTimeHorizon}
-          qsParamName="time_horizon"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedRestrictions}
-          qsParamName="restriction"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedConstructionRisk}
-          qsParamName="construction_risk"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedMinimumEquityPercentage}
-          qsParamName="minimum_equity_percentage"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedDesiredDealRole}
-          qsParamName="desired_deal_role"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedInvestorTypes}
-          qsParamName="investor_type"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedRequiredChecksConducted}
-          qsParamName="required_checks_conducted"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedUkRegionsOfInterest}
-          qsParamName="uk_regions_of_interest"
-        />
-        <RoutedFilterChips
-          selectedOptions={
-            selectedFilters.selectedInvestableCapital?.min
-              ? [
-                  {
-                    categoryLabel: 'Investable capital min',
-                    label: selectedFilters.selectedInvestableCapital.min,
-                  },
-                ]
-              : []
-          }
-          qsParamName="investable_capital_min"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={
-            selectedFilters.selectedInvestableCapital?.max
-              ? [
-                  {
-                    categoryLabel: 'Investable capital max',
-                    label: selectedFilters.selectedInvestableCapital.max,
-                  },
-                ]
-              : []
-          }
-          qsParamName="investable_capital_max"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={
-            selectedFilters.selectedGlobalAssetsUnderManagement?.min
-              ? [
-                  {
-                    categoryLabel: 'Global assets under management min',
-                    label:
-                      selectedFilters.selectedGlobalAssetsUnderManagement.min,
-                  },
-                ]
-              : []
-          }
-          qsParamName="global_assets_under_management_min"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={
-            selectedFilters.selectedGlobalAssetsUnderManagement?.max
-              ? [
-                  {
-                    categoryLabel: 'Global assets under management max',
-                    label:
-                      selectedFilters.selectedGlobalAssetsUnderManagement.max,
-                  },
-                ]
-              : []
-          }
-          qsParamName="global_assets_under_management_max"
-          showCategoryLabels={true}
-        />
       </CollectionHeaderRow>
     </CollectionHeaderRowContainer>
   )
