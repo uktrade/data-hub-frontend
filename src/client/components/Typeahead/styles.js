@@ -40,8 +40,11 @@ const defaultStyles = {
   }),
   noOptionsMessage: (styles) => ({
     ...styles,
-    fontSize: FONT_SIZE.SIZE_19,
+    fontSize: FONT_SIZE.SIZE_16,
     color: GREY_1,
+    [MEDIA_QUERIES.TABLET]: {
+      fontSize: FONT_SIZE.SIZE_19,
+    },
   }),
   control: (styles, { isFocused }) => ({
     ...styles,
