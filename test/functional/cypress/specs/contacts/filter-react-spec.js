@@ -136,8 +136,8 @@ describe('Contacts Collections Filter', () => {
         expect(request.body).to.deep.equal(expectedPayload)
       })
       cy.get(element).should('have.value', name)
-      assertChipExists({ label: 'Active', position: 1 })
-      assertChipExists({ label: name, position: 2 })
+      assertChipExists({ label: name, position: 1 })
+      assertChipExists({ label: 'Active', position: 2 })
     })
     it('should filter from user input and remove the chips', () => {
       const queryString = buildQueryString()
@@ -152,8 +152,8 @@ describe('Contacts Collections Filter', () => {
       })
 
       assertQueryParams('company_name', name)
-      assertChipExists({ label: 'Active', position: 1 })
-      assertChipExists({ label: name, position: 2 })
+      assertChipExists({ label: name, position: 1 })
+      assertChipExists({ label: 'Active', position: 2 })
 
       removeChip(name)
       cy.wait('@apiRequest')
