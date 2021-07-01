@@ -71,8 +71,16 @@ const OrdersCollection = ({
           name="status"
           qsParam="status"
           options={optionMetadata.statusOptions}
-          selectedOptions={selectedFilters.selectedStatuses}
+          selectedOptions={selectedFilters.statuses.options}
           data-test="status-filter"
+        />
+        <RoutedInputField
+          id="OrdersCollection.reference"
+          qsParam="reference"
+          name="reference"
+          label={LABELS.reference}
+          placeholder="Search order reference"
+          data-test="reference-filter"
         />
         <RoutedDateField
           label={LABELS.completedOnAfter}
@@ -99,14 +107,6 @@ const OrdersCollection = ({
           data-test="deliver-date-before-filter"
         />
         <RoutedInputField
-          id="OrdersCollection.reference"
-          qsParam="reference"
-          name="reference"
-          label={LABELS.reference}
-          placeholder="Search order reference"
-          data-test="reference-filter"
-        />
-        <RoutedInputField
           id="OrdersCollection.company-name"
           qsParam="company_name"
           name="company_name"
@@ -129,7 +129,7 @@ const OrdersCollection = ({
           qsParam="sector_descends"
           placeholder="Search sectors"
           options={optionMetadata.sectorOptions}
-          selectedOptions={selectedFilters.selectedSectors}
+          selectedOptions={selectedFilters.sectors.options}
           data-test="sector-filter"
         />
         <RoutedTypeahead
@@ -139,7 +139,7 @@ const OrdersCollection = ({
           qsParam="primary_market"
           placeholder="Search countries"
           options={optionMetadata.omisMarketOptions}
-          selectedOptions={selectedFilters.selectedOmisMarkets}
+          selectedOptions={selectedFilters.omisMarkets.options}
           data-test="country-filter"
         />
         <RoutedTypeahead
@@ -149,7 +149,7 @@ const OrdersCollection = ({
           qsParam="uk_region"
           placeholder="Search UK regions"
           options={optionMetadata.ukRegionOptions}
-          selectedOptions={selectedFilters.selectedUkRegions}
+          selectedOptions={selectedFilters.ukRegions.options}
           data-test="uk-region-filter"
         />
       </CollectionFilters>

@@ -158,22 +158,106 @@ const LargeCapitalProfileCollection = ({
           baseDownloadLink="/investments/profiles/export"
           entityName="profile"
           selectedFilters={{
-            selectedCountryOfOrigin: selectedCountries,
-            selectedAssetClassesOfInterest,
-            selectedInvestorCompanyName: resolveSelectedInvestorCompanyName(),
-            selectedInvestorTypes,
-            selectedRequiredChecksConducted,
-            selectedDealTicketSize,
-            selectedInvestmentTypes,
-            selectedMinimumReturnRate,
-            selectedTimeHorizon,
-            selectedRestrictions,
-            selectedConstructionRisk,
-            selectedMinimumEquityPercentage,
-            selectedDesiredDealRole,
-            selectedInvestableCapital: investableCapital,
-            selectedGlobalAssetsUnderManagement: globalAssetsUnderManagement,
-            selectedUkRegionsOfInterest,
+            countryOfOrigin: {
+              queryParam: QS_PARAMS.countryOfOrigin,
+              options: selectedCountries,
+            },
+            assetClassesOfInterest: {
+              queryParam: QS_PARAMS.assetClassesOfInterest,
+              options: selectedAssetClassesOfInterest,
+            },
+            investorCompanyName: {
+              queryParam: QS_PARAMS.investorCompanyName,
+              options: resolveSelectedInvestorCompanyName(),
+            },
+            investorTypes: {
+              queryParam: QS_PARAMS.investorTypes,
+              options: selectedInvestorTypes,
+            },
+            requiredChecksConducted: {
+              queryParam: QS_PARAMS.requiredChecksConducted,
+              options: selectedRequiredChecksConducted,
+            },
+            dealTicketSize: {
+              queryParam: QS_PARAMS.dealTicketSize,
+              options: selectedDealTicketSize,
+            },
+            investmentTypes: {
+              queryParam: QS_PARAMS.investmentTypes,
+              options: selectedInvestmentTypes,
+            },
+            minimumReturnRate: {
+              queryParam: QS_PARAMS.minimumReturnRate,
+              options: selectedMinimumReturnRate,
+            },
+            timeHorizon: {
+              queryParam: QS_PARAMS.timeHorizon,
+              options: selectedTimeHorizon,
+            },
+            restrictions: {
+              queryParam: QS_PARAMS.restrictions,
+              options: selectedRestrictions,
+            },
+            constructionRisk: {
+              queryParam: QS_PARAMS.constructionRisk,
+              options: selectedConstructionRisk,
+            },
+            minimumEquityPercentage: {
+              queryParam: QS_PARAMS.minimumEquityPercentage,
+              options: selectedMinimumEquityPercentage,
+            },
+            desiredDealRole: {
+              queryParam: QS_PARAMS.desiredDealRole,
+              options: selectedDesiredDealRole,
+            },
+            investableCapitalMin: {
+              queryParam: 'investable_capital_min',
+              options: investableCapital.min
+                ? [
+                    {
+                      categoryLabel: 'Investable capital min',
+                      label: investableCapital.min,
+                    },
+                  ]
+                : [],
+            },
+            investableCapitalMax: {
+              queryParam: 'investable_capital_max',
+              options: investableCapital.max
+                ? [
+                    {
+                      categoryLabel: 'Investable capital max',
+                      label: investableCapital.max,
+                    },
+                  ]
+                : [],
+            },
+            globalAssetsUnderManagementMin: {
+              queryParam: 'global_assets_under_management_min',
+              options: globalAssetsUnderManagement.min
+                ? [
+                    {
+                      categoryLabel: 'Global assets under management min',
+                      label: globalAssetsUnderManagement.min,
+                    },
+                  ]
+                : [],
+            },
+            globalAssetsUnderManagementMax: {
+              queryParam: 'global_assets_under_management_max',
+              options: globalAssetsUnderManagement.max
+                ? [
+                    {
+                      categoryLabel: 'Global assets under management max',
+                      label: globalAssetsUnderManagement.max,
+                    },
+                  ]
+                : [],
+            },
+            ukRegionsOfInterest: {
+              queryParam: QS_PARAMS.ukRegionsOfInterest,
+              options: selectedUkRegionsOfInterest,
+            },
           }}
         >
           <CollectionFilters

@@ -93,7 +93,7 @@ const EventsCollection = ({
           qsParam="organiser"
           placeholder="Search organiser"
           noOptionsMessage={() => <>No organisers found</>}
-          selectedOptions={selectedFilters.selectedOrganisers}
+          selectedOptions={selectedFilters.organisers.options}
           data-test="organiser-filter"
         />
         <RoutedDateField
@@ -115,7 +115,7 @@ const EventsCollection = ({
           qsParam="country"
           placeholder="Search country"
           options={optionMetadata.countryOptions}
-          selectedOptions={selectedFilters.selectedCountries}
+          selectedOptions={selectedFilters.countries.options}
           data-test="country-filter"
         />
         <RoutedTypeahead
@@ -125,7 +125,7 @@ const EventsCollection = ({
           qsParam="uk_region"
           placeholder="Search UK region"
           options={optionMetadata.ukRegionOptions}
-          selectedOptions={selectedFilters.selectedUkRegions}
+          selectedOptions={selectedFilters.ukRegions.options}
           data-test="uk-region-filter"
         />
         <RoutedCheckboxGroupField
@@ -133,7 +133,7 @@ const EventsCollection = ({
           name="event_type"
           qsParam="event_type"
           options={optionMetadata.eventTypeOptions}
-          selectedOptions={selectedFilters.selectedEventTypes}
+          selectedOptions={selectedFilters.eventTypes.options}
           data-test="event-type-filter"
         />
       </CollectionFilters>
