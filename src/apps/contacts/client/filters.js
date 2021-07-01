@@ -5,49 +5,52 @@ import {
 
 import { STATUS_OPTIONS, LABELS } from './constants'
 
-export const buildSelectedFilters = (
-  {
-    name,
-    company_name,
-    company_sector_descends,
-    address_country,
-    company_uk_region,
-    archived,
+export const buildSelectedFilters = (queryParams, metadata) => ({
+  name: {
+    queryParam: 'name',
+    options: buildInputFieldFilter({
+      value: queryParams.name,
+      label: queryParams.name,
+      categoryLabel: LABELS.contactName,
+    }),
   },
-  {
-    sectorOptions,
-    countryOptions,
-    ukRegionOptions,
-    statusOptions = STATUS_OPTIONS,
-  }
-) => ({
-  selectedName: buildInputFieldFilter({
-    value: name,
-    label: name,
-    categoryLabel: LABELS.contactName,
-  }),
-  selectedCompanyName: buildInputFieldFilter({
-    value: company_name,
-    categoryLabel: LABELS.companyName,
-  }),
-  selectedCompanySectors: buildOptionsFilter({
-    options: sectorOptions,
-    value: company_sector_descends,
-    categoryLabel: LABELS.sector,
-  }),
-  selectedAddressCountries: buildOptionsFilter({
-    options: countryOptions,
-    value: address_country,
-    categoryLabel: LABELS.country,
-  }),
-  selectedCompanyUkRegions: buildOptionsFilter({
-    options: ukRegionOptions,
-    value: company_uk_region,
-    categoryLabel: LABELS.ukRegion,
-  }),
-  selectedStatus: buildOptionsFilter({
-    options: statusOptions,
-    value: archived,
-    categoryLabel: LABELS.status,
-  }),
+  companyName: {
+    queryParam: 'company_name',
+    options: buildInputFieldFilter({
+      value: queryParams.company_name,
+      categoryLabel: LABELS.companyName,
+    }),
+  },
+  companySectors: {
+    queryParam: 'company_sector_descends',
+    options: buildOptionsFilter({
+      options: metadata.sectorOptions,
+      value: queryParams.company_sector_descends,
+      categoryLabel: LABELS.sector,
+    }),
+  },
+  addressCountries: {
+    queryParam: 'address_country',
+    options: buildOptionsFilter({
+      options: metadata.countryOptions,
+      value: queryParams.address_country,
+      categoryLabel: LABELS.country,
+    }),
+  },
+  companyUkRegions: {
+    queryParam: 'company_uk_region',
+    options: buildOptionsFilter({
+      options: metadata.ukRegionOptions,
+      value: queryParams.company_uk_region,
+      categoryLabel: LABELS.ukRegion,
+    }),
+  },
+  statuses: {
+    queryParam: 'archived',
+    options: buildOptionsFilter({
+      options: STATUS_OPTIONS,
+      value: queryParams.archived,
+      categoryLabel: LABELS.status,
+    }),
+  },
 })

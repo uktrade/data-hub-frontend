@@ -22,9 +22,7 @@ const parseQueryString = (queryString) => {
 export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
   const queryParams = parseQueryString(queryString)
-
   const { metadata, selectedAdvisers } = state[ID]
-
   const selectedFilters = buildSelectedFilters(
     queryParams,
     metadata,
