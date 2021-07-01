@@ -5,7 +5,11 @@ import {
 } from '../../../client/filters'
 import { LABELS } from './constants'
 
-export const buildFilters = (queryParams, metadata, selectedOrganisers) => ({
+export const buildSelectedFilters = (
+  queryParams,
+  metadata,
+  selectedOrganisers
+) => ({
   name: {
     queryParam: 'name',
     options: buildInputFieldFilter({

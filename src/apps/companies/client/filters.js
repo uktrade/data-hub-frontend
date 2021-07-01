@@ -4,7 +4,7 @@ import {
 } from '../../../client/filters'
 import { LABELS, COMPANY_STATUS_OPTIONS } from './constants'
 
-export const buildFilters = (
+export const buildSelectedFilters = (
   queryParams,
   metadata,
   selectedLeadItaOrGlobalAccountManagers

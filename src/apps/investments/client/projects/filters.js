@@ -9,7 +9,11 @@ import {
   INVOLVEMENT_LEVEL_OPTIONS,
 } from './constants'
 
-export const buildFilters = (queryParams, metadata, selectedAdvisers) => ({
+export const buildSelectedFilters = (
+  queryParams,
+  metadata,
+  selectedAdvisers
+) => ({
   stages: {
     queryParam: 'stage',
     options: buildOptionsFilter({
