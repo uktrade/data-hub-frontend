@@ -2,7 +2,7 @@ import urls from '../../../../../src/lib/urls'
 import qs from 'qs'
 
 import { randomChoice } from '../../fakers/utils'
-import { eventTypeListFaker } from '../../fakers/event-types'
+import { eventTypeFaker, eventTypeListFaker } from '../../fakers/event-types'
 
 import {
   clickCheckboxGroupOption,
@@ -40,7 +40,8 @@ const searchEndpoint = '/api-proxy/v3/search/event'
 const eventTypeEndpoint = '/api-proxy/v4/metadata/event-type'
 
 describe('events Collections Filter', () => {
-  const eventTypes = eventTypeListFaker(10)
+  const disabledEventType = eventTypeFaker({ disabled_on: '2020-01-01' })
+  const eventTypes = [disabledEventType, ...eventTypeListFaker(2)]
 
   context('Default Params', () => {
     it('should set the default params', () => {
@@ -252,6 +253,7 @@ describe('events Collections Filter', () => {
       cy.wait('@eventTypeApiRequest')
       cy.wait('@apiRequest')
 
+      cy.get(element).find('label').should('have.length', eventTypes.length)
       clickCheckboxGroupOption({ element, value: eventType.id })
       assertPayload('@apiRequest', {
         ...minimumPayload,
