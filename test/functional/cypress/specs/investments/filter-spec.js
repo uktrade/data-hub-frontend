@@ -175,7 +175,7 @@ describe('Investments Collections Filter', () => {
 
       testRemoveChip({
         element: '@ukRegionFilter',
-        placeholder: 'Search UK regions',
+        placeholder: 'Search UK region',
       })
     })
 
@@ -415,7 +415,7 @@ describe('Investments Collections Filter', () => {
       cy.get('@adviserFilter').should('contain', 'Search advisers')
       cy.get('@sectorFilter').should('contain', 'Search sectors')
       cy.get('@countryFilter').should('contain', 'Search countries')
-      cy.get('@ukRegionFilter').should('contain', 'Search UK regions')
+      cy.get('@ukRegionFilter').should('contain', 'Search UK region')
       assertCheckboxGroupNoneSelected('@stageFilter')
       assertCheckboxGroupNoneSelected('@myProjectsFilter')
       assertCheckboxGroupNoneSelected('@projectStatusFilter')
