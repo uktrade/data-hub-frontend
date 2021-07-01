@@ -8,7 +8,7 @@ export const TASK_GET_INTERACTIONS_METADATA = 'TASK_GET_INTERACTIONS_METADATA'
 
 export const ID = 'interactionsList'
 
-import { buildFilters } from './filters'
+import { buildSelectedFilters } from './filters'
 import { SORT_OPTIONS } from './constants'
 
 const parseQueryString = (queryString) => {
@@ -23,7 +23,11 @@ export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
   const queryParams = parseQueryString(queryString)
   const { metadata, selectedAdvisers } = state[ID]
-  const selectedFilters = buildFilters(queryParams, metadata, selectedAdvisers)
+  const selectedFilters = buildSelectedFilters(
+    queryParams,
+    metadata,
+    selectedAdvisers
+  )
 
   return {
     ...state[ID],

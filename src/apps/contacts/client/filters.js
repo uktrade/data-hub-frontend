@@ -5,7 +5,7 @@ import {
 
 import { STATUS_OPTIONS, LABELS } from './constants'
 
-export const buildFilters = (queryParams, metadata) => ({
+export const buildSelectedFilters = (queryParams, metadata) => ({
   name: {
     queryParam: 'name',
     options: buildInputFieldFilter({

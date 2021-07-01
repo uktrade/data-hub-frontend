@@ -6,7 +6,7 @@ import {
 
 import { LABELS, STATUSES } from './constants'
 
-export const buildFilters = (queryParams, metadata) => ({
+export const buildSelectedFilters = (queryParams, metadata) => ({
   statuses: {
     queryParam: 'status',
     options: buildOptionsFilter({

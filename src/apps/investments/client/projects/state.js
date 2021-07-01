@@ -1,7 +1,7 @@
 import { omitBy, isEmpty } from 'lodash'
 import qs from 'qs'
 
-import { buildFilters } from './filters'
+import { buildSelectedFilters } from './filters'
 
 import {
   SORT_OPTIONS,
@@ -28,7 +28,11 @@ export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
   const queryParams = parseQueryString(queryString)
   const { metadata, selectedAdvisers } = state[ID]
-  const selectedFilters = buildFilters(queryParams, metadata, selectedAdvisers)
+  const selectedFilters = buildSelectedFilters(
+    queryParams,
+    metadata,
+    selectedAdvisers
+  )
 
   return {
     ...state[ID],
