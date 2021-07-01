@@ -39,7 +39,7 @@ const getEventsMetadata = () =>
   Promise.all([
     getMetadataOptions(urls.metadata.country()),
     getMetadataOptions(urls.metadata.ukRegion()),
-    getMetadataOptions(urls.metadata.eventType()),
+    getMetadataOptions(urls.metadata.eventType(), { filterDisabled: false }),
   ])
     .then(([countryOptions, ukRegionOptions, eventTypeOptions]) => ({
       countryOptions,
