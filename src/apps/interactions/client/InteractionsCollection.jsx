@@ -36,7 +36,7 @@ const InteractionCollection = ({
   const collectionListTask = {
     name: TASK_GET_INTERACTIONS_LIST,
     id: ID,
-    progressMessage: 'loading interactions',
+    progressMessage: 'Loading interactions',
     startOnRender: {
       payload,
       onSuccessDispatch: INTERACTIONS__LOADED,

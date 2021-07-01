@@ -135,10 +135,10 @@ const ProjectsCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend="UK Region"
+          legend="UK region"
           name="uk_region"
           qsParam="uk_region_location"
-          placeholder="Search UK regions"
+          placeholder="Search UK region"
           options={optionMetadata.ukRegionOptions}
           selectedOptions={selectedFilters.ukRegions.options}
           data-test="uk-region-filter"
