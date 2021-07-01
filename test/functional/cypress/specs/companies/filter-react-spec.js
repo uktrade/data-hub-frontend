@@ -385,7 +385,8 @@ describe('Companies Collections Filter', () => {
       cy.visit(`${urls.companies.react.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', 'Brazil')
-      assertChipExists({ label: 'Brazil', position: 1 })
+      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Brazil', position: 2 })
     })
 
     it('should filter from user input and remove chips', () => {
@@ -403,8 +404,8 @@ describe('Companies Collections Filter', () => {
       })
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('export_to_countries', [brazilCountryId])
-      assertChipExists({ label: 'Brazil', position: 1 })
-      assertChipExists({ label: 'Active', position: 2 })
+      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Brazil', position: 2 })
       removeChip(brazilCountryId)
       cy.wait('@apiRequest')
       removeChip(activeStatusFlag)
@@ -433,7 +434,8 @@ describe('Companies Collections Filter', () => {
       cy.visit(`${urls.companies.react.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', 'Brazil')
-      assertChipExists({ label: 'Brazil', position: 1 })
+      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Brazil', position: 2 })
     })
 
     it('should filter from user input and remove chips', () => {
@@ -451,8 +453,8 @@ describe('Companies Collections Filter', () => {
       })
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('future_interest_countries', [brazilCountryId])
-      assertChipExists({ label: 'Brazil', position: 1 })
-      assertChipExists({ label: 'Active', position: 2 })
+      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Brazil', position: 2 })
       removeChip(brazilCountryId)
       cy.wait('@apiRequest')
       removeChip(activeStatusFlag)
