@@ -432,4 +432,58 @@ describe('Interactions Collections Filter', () => {
       assertChipsEmpty()
     })
   })
+  context('Policy area(s)', () => {
+    const element = '[data-test="policy-area-filter"]'
+    const policyArea = policyAreaFaker()
+    const expectedPayload = {
+      ...minimumPayload,
+      policy_areas: [policyArea.id],
+    }
+
+    it('should filter from the url', () => {
+      const expectedPayload = {
+        ...minimumPayload,
+        policy_areas: [policyArea.id],
+      }
+      const queryString = buildQueryString({
+        policy_areas: [policyArea.id],
+      })
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.intercept('GET', policyAreaMetadataEndpoint, [policyArea]).as(
+        'metaApiRequest'
+      )
+      cy.visit(`${interactions.react()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      cy.wait('@metaApiRequest')
+      assertCheckboxGroupOption({
+        element,
+        value: policyArea.id,
+        checked: true,
+      })
+      assertChipExists({ label: policyArea.name, position: 1 })
+    })
+
+    it('should filter from user input and remove the chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.intercept('GET', policyAreaMetadataEndpoint, [policyArea]).as(
+        'metaApiRequest'
+      )
+      cy.visit(`${interactions.react()}?${queryString}`)
+      cy.wait('@apiRequest')
+      cy.wait('@metaApiRequest')
+
+      clickCheckboxGroupOption({
+        element,
+        value: policyArea.id,
+      })
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('policy_areas', [policyArea.id])
+      assertChipExists({ label: policyArea.name, position: 1 })
+      removeChip(policyArea.id)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
 })

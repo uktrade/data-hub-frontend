@@ -151,6 +151,15 @@ const InteractionCollection = ({
           selectedOptions={selectedFilters.businessIntelligence.options}
           data-test="business-intelligence-filter"
         />
+        <RoutedCheckboxGroupField
+          overflow="scroll"
+          legend={LABELS.policyAreas}
+          name="policy_areas"
+          qsParam="policy_areas"
+          options={optionMetadata.policyAreaOptions}
+          selectedOptions={selectedFilters.policyArea.options}
+          data-test="policy-area-filter"
+        />
       </CollectionFilters>
     </FilteredCollectionList>
   )
