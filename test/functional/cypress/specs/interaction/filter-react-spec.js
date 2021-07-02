@@ -238,12 +238,7 @@ describe('Interactions Collections Filter', () => {
         element: myInteractionsFilter,
         value: adviser.id,
       })
-      cy.get(myInteractionsFilter)
-        .find(`input[value="${adviser.id}"]`)
-        .parent()
-        .click()
       cy.wait('@adviserApiRequest')
-
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('adviser', [adviser.id])
       assertChipExists({ label: adviser.name, position: 1 })
