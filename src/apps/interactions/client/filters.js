@@ -1,4 +1,4 @@
-import { KIND_OPTIONS, LABELS } from './constants'
+import { KIND_OPTIONS, BUSINESS_INTELLIGENCE_OPTION, LABELS } from './constants'
 
 import { buildOptionsFilter, buildDatesFilter } from '../../../client/filters'
 
@@ -51,6 +51,14 @@ export const buildSelectedFilters = (
       options: metadata.sectorOptions,
       value: queryParams.sector_descends,
       categoryLabel: LABELS.sector,
+    }),
+  },
+  businessIntelligence: {
+    queryParam: 'was_policy_feedback_provided',
+    options: buildOptionsFilter({
+      options: BUSINESS_INTELLIGENCE_OPTION,
+      value: queryParams.was_policy_feedback_provided,
+      categoryLabel: LABELS.businessIntelligence,
     }),
   },
 })
