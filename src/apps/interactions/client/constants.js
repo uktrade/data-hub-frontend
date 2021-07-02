@@ -7,6 +7,7 @@ export const LABELS = {
   dateAfter: 'From',
   dateBefore: 'To',
   service: 'Service',
+  sector: 'Sector',
 }
 
 export const KIND_OPTIONS = [

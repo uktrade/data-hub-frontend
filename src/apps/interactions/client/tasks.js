@@ -12,9 +12,17 @@ const sortServiceOptions = (options) =>
   options.sort((a, b) => (a.label > b.label ? 1 : b.label > a.label ? -1 : 0))
 
 const getInteractionsMetadata = () =>
-  Promise.all([getMetadataOptions(urls.metadata.service())])
-    .then(([serviceOptions]) => ({
+  Promise.all([
+    getMetadataOptions(urls.metadata.service()),
+    getMetadataOptions(urls.metadata.sector(), {
+      params: {
+        level__lte: '0',
+      },
+    }),
+  ])
+    .then(([serviceOptions, sectorOptions]) => ({
       serviceOptions: sortServiceOptions(serviceOptions),
+      sectorOptions,
     }))
     .catch(handleError)
 
@@ -27,6 +35,7 @@ const getInteractions = ({
   date_before,
   date_after,
   sortby = 'date:desc',
+  sector_descends,
 }) =>
   axios
     .post('/api-proxy/v3/search/interaction', {
@@ -38,6 +47,7 @@ const getInteractions = ({
       date_before,
       date_after,
       service,
+      sector_descends,
     })
     .then(({ data }) => transformResponseToCollection(data), handleError)
 

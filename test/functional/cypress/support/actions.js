@@ -17,7 +17,7 @@ export const selectFirstAdvisersTypeaheadOption = ({ element, input }) =>
  * Clicks the checkbox option with the given value
  */
 export const clickCheckboxGroupOption = ({ element, value }) => {
-  cy.get(element).find(`input[value="${value}"]`).click()
+  cy.get(element).find(`input[value="${value}"]`).parent().click()
 }
 
 /**
