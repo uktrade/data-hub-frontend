@@ -4,6 +4,7 @@ services:
     build: ../data-hub-api
     volumes:
       - ../data-hub-api:/app
+    command: /app/start.sh
 
   celery:
     build: ../data-hub-api
