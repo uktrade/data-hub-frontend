@@ -61,4 +61,12 @@ export const buildSelectedFilters = (
       categoryLabel: LABELS.businessIntelligence,
     }),
   },
+  policyArea: {
+    queryParam: 'policy_areas',
+    options: buildOptionsFilter({
+      options: metadata.policyAreaOptions,
+      value: queryParams.policy_areas,
+      categoryLabel: LABELS.policyAreas,
+    }),
+  },
 })
