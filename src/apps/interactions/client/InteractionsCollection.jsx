@@ -7,7 +7,7 @@ import {
   INTERACTIONS__METADATA_LOADED,
 } from '../../../client/actions'
 
-import { LABELS, KIND_OPTIONS } from './constants'
+import { LABELS, KIND_OPTIONS, BUSINESS_INTELLIGENCE_OPTION } from './constants'
 
 import {
   FilteredCollectionList,
@@ -142,6 +142,14 @@ const InteractionCollection = ({
           options={optionMetadata.sectorOptions}
           selectedOptions={selectedFilters.sectors.options}
           data-test="sector-filter"
+        />
+        <RoutedCheckboxGroupField
+          legend={LABELS.businessIntelligence}
+          name="was_policy_feedback_provided"
+          qsParam="was_policy_feedback_provided"
+          options={BUSINESS_INTELLIGENCE_OPTION}
+          selectedOptions={selectedFilters.businessIntelligence.options}
+          data-test="business-intelligence-filter"
         />
       </CollectionFilters>
     </FilteredCollectionList>

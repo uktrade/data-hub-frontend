@@ -36,6 +36,7 @@ const getInteractions = ({
   date_after,
   sortby = 'date:desc',
   sector_descends,
+  was_policy_feedback_provided,
 }) =>
   axios
     .post('/api-proxy/v3/search/interaction', {
@@ -48,6 +49,7 @@ const getInteractions = ({
       date_after,
       service,
       sector_descends,
+      was_policy_feedback_provided,
     })
     .then(({ data }) => transformResponseToCollection(data), handleError)
 

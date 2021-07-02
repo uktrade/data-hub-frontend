@@ -8,11 +8,19 @@ export const LABELS = {
   dateBefore: 'To',
   service: 'Service',
   sector: 'Sector',
+  businessIntelligence: 'Business intelligence',
 }
 
 export const KIND_OPTIONS = [
   { label: LABELS.interaction, value: 'interaction' },
   { label: LABELS.serviceDelivery, value: 'service_delivery' },
+]
+
+export const BUSINESS_INTELLIGENCE_OPTION = [
+  {
+    label: 'Includes business intelligence',
+    value: 'true',
+  },
 ]
 
 export const SORT_OPTIONS = [
