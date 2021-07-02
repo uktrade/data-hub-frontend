@@ -1,3 +1,4 @@
+const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 
 const urls = require('../../../../../src/lib/urls')
@@ -150,8 +151,9 @@ describe('Event', () => {
 
   describe('Add attendee', () => {
     before(() => {
-      cy.visit(urls.events.index())
-      cy.contains('One-day exhibition').click()
+      const event = fixtures.event.create.defaultEvent()
+      cy.loadFixture([event])
+      cy.visit(urls.events.details(event.pk))
     })
     it('Should add an interaction with the attendee', () => {
       cy.contains('a', 'Attendees').click()
