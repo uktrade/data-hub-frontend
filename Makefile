@@ -11,7 +11,7 @@ ifdef CI
 	start-command = up --build --force-recreate -d
 	cypress-args = -- --parallel --record --key $(CYPRESS_DASHBOARD_KEY) --ci-build-id $(CIRCLE_BUILD_NUM)
 else
-	start-command = up --build --force-recreate
+	start-command = up
 	cypress-args =
 endif
 
@@ -60,19 +60,23 @@ stop-storybook:
 	$(docker-storybook) down -v --remove-orphans
 
 lint:
+ifdef CI
 	$(docker-base) build frontend
+endif
 	$(docker-base) run --no-deps --rm frontend bash -c 'mkdir -p reports && npm run lint:sass && npm run lint:js -- --format junit --output-file reports/eslint.xml'
 
 unit-tests:
-	$(docker-base) build frontend
 ifdef CI
+	$(docker-base) build frontend
 	$(docker-base) run --no-deps --rm frontend bash -c 'npx nyc --reporter=lcov --reporter=json --report-dir=coverage npm run test:unit -- --reporter mocha-circleci-reporter'
 else
 	$(docker-base) run --no-deps --rm frontend bash -c 'npm run test:unit'
 endif
 
 unit-client-tests:
+ifdef CI
 	$(docker-base) build frontend
+endif
 	$(docker-base) run --no-deps --rm frontend bash -c 'npm run test:unit-client -- --reporter mocha-circleci-reporter'
 
 functional-tests:
