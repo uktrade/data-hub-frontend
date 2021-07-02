@@ -13,6 +13,7 @@ import {
   FilteredCollectionList,
   RoutedCheckboxGroupField,
   RoutedAdvisersTypeahead,
+  RoutedTypeahead,
   RoutedDateField,
   CollectionFilters,
 } from '../../../client/components'
@@ -60,6 +61,15 @@ const InteractionCollection = ({
     },
   }
 
+  const myInteractionsSelected = selectedFilters.advisers.options
+    .map(({ value }) => value)
+    .includes(currentAdviserId)
+
+  const myInteractionsOption = {
+    label: LABELS.myInteractions,
+    value: currentAdviserId,
+  }
+
   return (
     <FilteredCollectionList
       {...props}
@@ -98,8 +108,8 @@ const InteractionCollection = ({
         <RoutedCheckboxGroupField
           name="dit_participants__adviser"
           qsParam="adviser"
-          options={[{ label: LABELS.myInteractions, value: currentAdviserId }]}
-          selectedOptions={selectedFilters.myInteractions.options}
+          options={[myInteractionsOption]}
+          selectedOptions={myInteractionsSelected ? [myInteractionsOption] : []}
           data-test="my-interactions-filter"
         />
         <RoutedDateField
@@ -122,6 +132,16 @@ const InteractionCollection = ({
           options={optionMetadata.serviceOptions}
           selectedOptions={selectedFilters.service.options}
           data-test="service-filter"
+        />
+        <RoutedTypeahead
+          isMulti={true}
+          legend={LABELS.sector}
+          name="sector"
+          qsParam="sector_descends"
+          placeholder="Search sectors"
+          options={optionMetadata.sectorOptions}
+          selectedOptions={selectedFilters.sectors.options}
+          data-test="sector-filter"
         />
       </CollectionFilters>
     </FilteredCollectionList>

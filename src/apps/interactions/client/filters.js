@@ -23,14 +23,6 @@ export const buildSelectedFilters = (
       categoryLabel: LABELS.advisers,
     })),
   },
-  myInteractions: {
-    queryParam: 'adviser',
-    options: selectedAdvisers.map(({ advisers }) => ({
-      label: advisers.name,
-      value: advisers.id,
-      categoryLabel: LABELS.advisers,
-    })),
-  },
   datesAfter: {
     queryParam: 'date_after',
     options: buildDatesFilter({
@@ -51,6 +43,14 @@ export const buildSelectedFilters = (
       options: metadata.serviceOptions,
       value: queryParams.service,
       categoryLabel: LABELS.service,
+    }),
+  },
+  sectors: {
+    queryParam: 'sector_descends',
+    options: buildOptionsFilter({
+      options: metadata.sectorOptions,
+      value: queryParams.sector_descends,
+      categoryLabel: LABELS.sector,
     }),
   },
 })
