@@ -23,6 +23,7 @@ import {
 import { testTypeahead } from '../../support/tests'
 
 import { serviceFaker } from '../../fakers/services'
+import { policyAreaFaker } from '../../fakers/policy-area'
 
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
@@ -40,6 +41,7 @@ const minimumPayload = {
 const interactionsSearchEndpoint = '/api-proxy/v3/search/interaction'
 const adviserAutocompleteEndpoint = '/api-proxy/adviser/?autocomplete=*'
 const serviceMetadataEndpoint = '/api-proxy/v4/metadata/service'
+const policyAreaMetadataEndpoint = '/api-proxy/v4/metadata/policy-area'
 const myAdviserId = '7d19d407-9aec-4d06-b190-d3f404627f21'
 const myAdviserEndpoint = `/api-proxy/adviser/${myAdviserId}`
 
