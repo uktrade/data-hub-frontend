@@ -4,9 +4,11 @@ services:
     build: ../data-hub-api
     volumes:
       - ../data-hub-api:/app
+    env_file: ../data-hub-api/.env
     command: /app/start.sh
 
   celery:
     build: ../data-hub-api
     volumes:
       - ../data-hub-api:/app
+    env_file: ../data-hub-api/.env

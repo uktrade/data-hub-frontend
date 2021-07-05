@@ -51,7 +51,7 @@ services:
       - celery
       - mock-sso
     entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://mi-postgres:5432 -wait tcp://es:9200 -wait tcp://redis:6379 -timeout 5m
-    command: /app/setup-uat.sh || echo "all ood"
+    command: /app/setup-uat.sh || echo "all good"
 
   celery:
     image: gcr.io/sre-docker-registry/github.com/uktrade/data-hub-api:develop
@@ -68,15 +68,15 @@ services:
     image: postgres:10
     environment:
       POSTGRES_DB: datahub
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: datahub
 
   mi-postgres:
     image: postgres:9.6
     environment:
-      POSTGRES_DB: datahub
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mi
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mi
 
   es:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.13.1
