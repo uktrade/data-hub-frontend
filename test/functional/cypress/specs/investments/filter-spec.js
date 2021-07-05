@@ -138,14 +138,14 @@ describe('Investments Collections Filter', () => {
       testTypeahead({
         element: '@sectorFilter',
         legend: 'Sector',
-        placeholder: 'Search sectors',
+        placeholder: 'Search sector',
         input: 'adv',
         expectedOption: 'Advanced Engineering',
       })
 
       testRemoveChip({
         element: '@sectorFilter',
-        placeholder: 'Search sectors',
+        placeholder: 'Search sector',
       })
     })
 
@@ -413,7 +413,7 @@ describe('Investments Collections Filter', () => {
         .find('input')
         .should('have.attr', 'value', '')
       cy.get('@adviserFilter').should('contain', 'Search advisers')
-      cy.get('@sectorFilter').should('contain', 'Search sectors')
+      cy.get('@sectorFilter').should('contain', 'Search sector')
       cy.get('@countryFilter').should('contain', 'Search countries')
       cy.get('@ukRegionFilter').should('contain', 'Search UK region')
       assertCheckboxGroupNoneSelected('@stageFilter')
