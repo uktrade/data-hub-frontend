@@ -43,7 +43,7 @@ start-e2e-dit:
 	OAUTH2_DEV_TOKEN=ditStaffToken $(docker-e2e) $(start-command)
 start-dev:
 	@echo "*** To stop this stack run 'make stop-dev' ***"
-	@echo "*** IMPORTANT This will now use ../data-hub-api/.env for `api` and `celery` services ***"
+	@echo "*** IMPORTANT This will now use ../data-hub-api/.env for 'api' and 'celery' services ***"
 	$(MAKE) -C ../data-hub-api start-dev
 	$(docker-dev) $(start-command)
 start-storybook:
