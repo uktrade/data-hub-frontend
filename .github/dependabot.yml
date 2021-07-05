@@ -39,4 +39,12 @@ updates:
   # ignore all GitHub linguist patch updates
   - dependency-name: "github-linguist"
     update-types: ["version-update:semver-patch"]
+
+  # The latest versions of these dependencies cause issues with IE
+  - dependency-name: core-js
+    versions:
+    - "> 3.9.1"
+  - dependency-name: react-markdown
+    versions:
+    - "> 5.0.3"
   rebase-strategy: disabled
