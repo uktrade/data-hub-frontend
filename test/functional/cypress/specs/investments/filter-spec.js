@@ -117,7 +117,7 @@ describe('Investments Collections Filter', () => {
 
     it('should filter by advisers', () => {
       cy.get('@adviserFilter')
-        .should('contain', 'Search advisers')
+        .should('contain', 'Search adviser')
         .find('legend')
         .should('have.text', 'Advisers')
 
@@ -130,7 +130,7 @@ describe('Investments Collections Filter', () => {
 
       testRemoveChip({
         element: '@adviserFilter',
-        placeholder: 'Search advisers',
+        placeholder: 'Search adviser',
       })
     })
 
@@ -412,7 +412,7 @@ describe('Investments Collections Filter', () => {
       cy.get('@estimatedDateBeforeFilter')
         .find('input')
         .should('have.attr', 'value', '')
-      cy.get('@adviserFilter').should('contain', 'Search advisers')
+      cy.get('@adviserFilter').should('contain', 'Search adviser')
       cy.get('@sectorFilter').should('contain', 'Search sector')
       cy.get('@countryFilter').should('contain', 'Search countries')
       cy.get('@ukRegionFilter').should('contain', 'Search UK region')
