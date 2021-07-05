@@ -446,10 +446,6 @@ describe('Interactions Collections Filter', () => {
     }
 
     it('should filter from the url', () => {
-      const expectedPayload = {
-        ...minimumPayload,
-        policy_areas: [policyArea.id],
-      }
       const queryString = buildQueryString({
         policy_areas: [policyArea.id],
       })
