@@ -77,7 +77,7 @@ export const buildSelectedFilters = (queryParams, metadata) => ({
     options: buildOptionsFilter({
       options: metadata.omisMarketOptions,
       value: queryParams.primary_market,
-      categoryLabel: LABELS.country,
+      categoryLabel: LABELS.primaryMarket,
     }),
   },
   ukRegions: {
