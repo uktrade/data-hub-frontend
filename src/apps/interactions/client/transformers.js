@@ -78,3 +78,7 @@ export const transformResponseToCollection = ({ count, results = [] }) => ({
   count,
   results: results.map(transformInteractionToListItem),
 })
+
+export const transformWasPolicyfeedBackProvidedToApi = (
+  wasPolicyfeedbackProvided
+) => wasPolicyfeedbackProvided && wasPolicyfeedbackProvided[0] === 'true'

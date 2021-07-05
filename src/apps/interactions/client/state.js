@@ -10,6 +10,7 @@ export const ID = 'interactionsList'
 
 import { buildSelectedFilters } from './filters'
 import { SORT_OPTIONS } from './constants'
+import { transformWasPolicyfeedBackProvidedToApi } from './transformers'
 
 const parseQueryString = (queryString) => {
   const queryProps = omitBy({ ...qs.parse(queryString) }, isEmpty)
@@ -31,7 +32,12 @@ export const state2props = ({ router, ...state }) => {
 
   return {
     ...state[ID],
-    payload: queryParams,
+    payload: {
+      ...queryParams,
+      was_policy_feedback_provided: transformWasPolicyfeedBackProvidedToApi(
+        queryParams.was_policy_feedback_provided
+      ),
+    },
     optionMetadata: {
       sortOptions: SORT_OPTIONS,
       ...metadata,
