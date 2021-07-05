@@ -160,6 +160,14 @@ const InteractionCollection = ({
           selectedOptions={selectedFilters.policyArea.options}
           data-test="policy-area-filter"
         />
+        <RoutedCheckboxGroupField
+          legend={LABELS.policyIssueType}
+          name="policy_issue_types"
+          qsParam="policy_issue_types"
+          options={optionMetadata.policyIssueTypeOptions}
+          selectedOptions={selectedFilters.policyIssueType.options}
+          data-test="policy-issue-type-filter"
+        />
       </CollectionFilters>
     </FilteredCollectionList>
   )
