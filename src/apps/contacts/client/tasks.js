@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import { transformResponseToCollection } from './transformers'
 import urls from '../../../lib/urls'
-import { getMetadataOptions, getSectorOptions } from '../../../client/metadata'
+import { getMetadataOptions } from '../../../client/metadata'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 
@@ -33,7 +33,11 @@ export const getContacts = ({
 
 export const getContactsMetadata = () =>
   Promise.all([
-    getSectorOptions(urls.metadata.sector()),
+    getMetadataOptions(urls.metadata.sector(), {
+      params: {
+        level__lte: '0',
+      },
+    }),
     getMetadataOptions(urls.metadata.country()),
     getMetadataOptions(urls.metadata.ukRegion()),
   ])

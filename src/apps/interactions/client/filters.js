@@ -1,4 +1,4 @@
-import { KIND_OPTIONS, LABELS } from './constants'
+import { KIND_OPTIONS, BUSINESS_INTELLIGENCE_OPTION, LABELS } from './constants'
 
 import { buildOptionsFilter, buildDatesFilter } from '../../../client/filters'
 
@@ -16,14 +16,6 @@ export const buildSelectedFilters = (
     }),
   },
   advisers: {
-    queryParam: 'adviser',
-    options: selectedAdvisers.map(({ advisers }) => ({
-      label: advisers.name,
-      value: advisers.id,
-      categoryLabel: LABELS.advisers,
-    })),
-  },
-  myInteractions: {
     queryParam: 'adviser',
     options: selectedAdvisers.map(({ advisers }) => ({
       label: advisers.name,
@@ -51,6 +43,22 @@ export const buildSelectedFilters = (
       options: metadata.serviceOptions,
       value: queryParams.service,
       categoryLabel: LABELS.service,
+    }),
+  },
+  sectors: {
+    queryParam: 'sector_descends',
+    options: buildOptionsFilter({
+      options: metadata.sectorOptions,
+      value: queryParams.sector_descends,
+      categoryLabel: LABELS.sector,
+    }),
+  },
+  businessIntelligence: {
+    queryParam: 'was_policy_feedback_provided',
+    options: buildOptionsFilter({
+      options: BUSINESS_INTELLIGENCE_OPTION,
+      value: queryParams.was_policy_feedback_provided,
+      categoryLabel: LABELS.businessIntelligence,
     }),
   },
 })
