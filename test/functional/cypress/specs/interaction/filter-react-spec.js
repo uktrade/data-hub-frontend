@@ -23,6 +23,7 @@ import {
 import { testTypeahead } from '../../support/tests'
 
 import { serviceFaker } from '../../fakers/services'
+import { policyAreaFaker } from '../../fakers/policy-area'
 
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
@@ -40,6 +41,7 @@ const minimumPayload = {
 const interactionsSearchEndpoint = '/api-proxy/v3/search/interaction'
 const adviserAutocompleteEndpoint = '/api-proxy/adviser/?autocomplete=*'
 const serviceMetadataEndpoint = '/api-proxy/v4/metadata/service'
+const policyAreaMetadataEndpoint = '/api-proxy/v4/metadata/policy-area'
 const myAdviserId = '7d19d407-9aec-4d06-b190-d3f404627f21'
 const myAdviserEndpoint = `/api-proxy/adviser/${myAdviserId}`
 
@@ -430,6 +432,60 @@ describe('Interactions Collections Filter', () => {
       removeChip('true')
       assertPayload('@apiRequest', minimumPayload)
       assertChipsEmpty()
+    })
+  })
+  context('Policy area(s)', () => {
+    const element = '[data-test="policy-area-filter"]'
+    const policyArea = policyAreaFaker()
+    const expectedPayload = {
+      ...minimumPayload,
+      policy_areas: [policyArea.id],
+    }
+
+    it('should filter from the url', () => {
+      const expectedPayload = {
+        ...minimumPayload,
+        policy_areas: [policyArea.id],
+      }
+      const queryString = buildQueryString({
+        policy_areas: [policyArea.id],
+      })
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.intercept('GET', policyAreaMetadataEndpoint, [policyArea]).as(
+        'metaApiRequest'
+      )
+      cy.visit(`${interactions.react()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      cy.wait('@metaApiRequest')
+      assertCheckboxGroupOption({
+        element,
+        value: policyArea.id,
+        checked: true,
+      })
+      assertChipExists({ label: policyArea.name, position: 1 })
+    })
+
+    it('should filter from user input and remove the chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.intercept('GET', policyAreaMetadataEndpoint, [policyArea]).as(
+        'metaApiRequest'
+      )
+      cy.visit(`${interactions.react()}?${queryString}`)
+      cy.wait('@apiRequest')
+      cy.wait('@metaApiRequest')
+
+      clickCheckboxGroupOption({
+        element,
+        value: policyArea.id,
+      })
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('policy_areas', [policyArea.id])
+      assertChipExists({ label: policyArea.name, position: 1 })
+      removeChip(policyArea.id)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
     })
   })
 })

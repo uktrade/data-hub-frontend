@@ -9,6 +9,7 @@ export const LABELS = {
   service: 'Service',
   sector: 'Sector',
   businessIntelligence: 'Business intelligence',
+  policyAreas: 'Policy area(s)',
 }
 
 export const KIND_OPTIONS = [
