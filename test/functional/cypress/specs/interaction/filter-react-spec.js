@@ -394,4 +394,42 @@ describe('Interactions Collections Filter', () => {
       assertFieldEmpty(element)
     })
   })
+
+  context('Business intelligence', () => {
+    const element = '[data-test="business-intelligence-filter"]'
+    const expectedPayload = {
+      ...minimumPayload,
+      was_policy_feedback_provided: true,
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        was_policy_feedback_provided: ['true'],
+      })
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.visit(`${interactions.react()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      assertCheckboxGroupOption({
+        element,
+        value: 'true',
+        checked: true,
+      })
+      assertChipExists({ label: 'Includes business intelligence', position: 1 })
+    })
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.visit(`${interactions.react()}?${queryString}`)
+      cy.wait('@apiRequest')
+      clickCheckboxGroupOption({
+        element,
+        value: 'true',
+      })
+      assertPayload('@apiRequest', expectedPayload)
+      assertChipExists({ label: 'Includes business intelligence', position: 1 })
+      removeChip('true')
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+    })
+  })
 })
