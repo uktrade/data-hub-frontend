@@ -108,7 +108,7 @@ const ProjectsCollection = ({
           legend="Advisers"
           name="adviser"
           qsParam="adviser"
-          placeholder="Search advisers"
+          placeholder="Search adviser"
           noOptionsMessage={() => <>No advisers found</>}
           selectedOptions={selectedFilters.advisers.options}
           data-test="adviser-filter"
@@ -118,7 +118,7 @@ const ProjectsCollection = ({
           legend="Sector"
           name="sector"
           qsParam="sector_descends"
-          placeholder="Search sectors"
+          placeholder="Search sector"
           options={optionMetadata.sectorOptions}
           selectedOptions={selectedFilters.sectors.options}
           data-test="sector-filter"
