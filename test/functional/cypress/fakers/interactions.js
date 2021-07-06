@@ -8,11 +8,13 @@ import teamFaker from './team'
 
 const interactionFaker = (overrides = {}) => ({
   ...jsf.generate(apiSchema.components.schemas.Interaction),
-  company: {
-    trading_names: [],
-    name: faker.company.companyName(),
-    id: faker.datatype.uuid(),
-  },
+  companies: [
+    {
+      trading_names: [],
+      name: faker.company.companyName(),
+      id: faker.datatype.uuid(),
+    },
+  ],
   contacts: [userFaker()],
   dit_participants: [
     {

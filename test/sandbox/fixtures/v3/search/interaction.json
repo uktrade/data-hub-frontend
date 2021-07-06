@@ -2,11 +2,13 @@
     "count": 1332,
     "results": [
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "72c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Telephone"
@@ -73,11 +75,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "72c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Telephone"
@@ -142,11 +146,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -207,11 +213,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "74c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Letter/Fax"
@@ -266,11 +274,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -325,11 +335,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "74c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Letter/Fax"
@@ -408,11 +420,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "74c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Letter/Fax"
@@ -467,11 +481,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -526,11 +542,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -585,11 +603,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "70c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Email/Website"
@@ -644,11 +664,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "74c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Letter/Fax"
@@ -703,11 +725,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "74c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Letter/Fax"
@@ -762,11 +786,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a5d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Face to Face"
@@ -831,11 +857,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -890,11 +918,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -949,11 +979,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -1008,11 +1040,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a5d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Face to Face"
@@ -1067,11 +1101,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -1126,11 +1162,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "72c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Telephone"
@@ -1185,11 +1223,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -1244,11 +1284,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "70c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Email/Website"
@@ -1303,11 +1345,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a7d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Video/Teleconf."
@@ -1362,11 +1406,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -1431,11 +1477,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "70c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Email/Website"
@@ -1490,11 +1538,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "74c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Letter/Fax"
@@ -1549,11 +1599,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "72c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Telephone"
@@ -1608,11 +1660,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a8d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Social Media"
@@ -1667,11 +1721,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a7d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Video/Teleconf."
@@ -1726,11 +1782,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "72c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Telephone"
@@ -1785,11 +1843,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "72c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Telephone"
@@ -1844,11 +1904,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -1903,11 +1965,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a7d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Video/Teleconf."
@@ -1962,11 +2026,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -2021,11 +2087,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -2080,11 +2148,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a8d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Social Media"
@@ -2149,11 +2219,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -2208,11 +2280,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "74c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Letter/Fax"
@@ -2277,11 +2351,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a8d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Social Media"
@@ -2336,11 +2412,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "74c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Letter/Fax"
@@ -2395,11 +2473,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a7d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Video/Teleconf."
@@ -2454,11 +2534,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "74c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Letter/Fax"
@@ -2513,11 +2595,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -2572,11 +2656,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a8d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Social Media"
@@ -2631,11 +2717,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "70c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Email/Website"
@@ -2690,11 +2778,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a5d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Face to Face"
@@ -2749,11 +2839,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -2808,11 +2900,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a8d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Social Media"
@@ -2867,11 +2961,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "74c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Letter/Fax"
@@ -2926,11 +3022,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -2985,11 +3083,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "74c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Letter/Fax"
@@ -3044,11 +3144,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -3103,11 +3205,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "70c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Email/Website"
@@ -3162,11 +3266,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -3221,11 +3327,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -3280,11 +3388,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -3339,11 +3449,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -3398,11 +3510,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "74c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Letter/Fax"
@@ -3457,11 +3571,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "72c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Telephone"
@@ -3516,11 +3632,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "74c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Letter/Fax"
@@ -3585,11 +3703,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "70c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Email/Website"
@@ -3644,11 +3764,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -3703,11 +3825,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "74c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Letter/Fax"
@@ -3762,11 +3886,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -3824,11 +3950,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a5d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Face to Face"
@@ -3883,11 +4011,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "72c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Telephone"
@@ -3942,11 +4072,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "74c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Letter/Fax"
@@ -4001,11 +4133,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "70c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Email/Website"
@@ -4060,11 +4194,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a5d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Face to Face"
@@ -4119,11 +4255,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a5d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Face to Face"
@@ -4178,11 +4316,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+             "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -4237,11 +4377,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -4296,11 +4438,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a5d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Face to Face"
@@ -4355,11 +4499,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a5d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Face to Face"
@@ -4414,11 +4560,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -4473,11 +4621,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a5d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Face to Face"
@@ -4532,11 +4682,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "74c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Letter/Fax"
@@ -4591,11 +4743,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -4650,11 +4804,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a7d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Video/Teleconf."
@@ -4709,11 +4865,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "74c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Letter/Fax"
@@ -4768,11 +4926,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a8d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Social Media"
@@ -4827,11 +4987,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a7d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Video/Teleconf."
@@ -4886,11 +5048,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -4945,11 +5109,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -5004,11 +5170,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -5063,11 +5231,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -5122,11 +5292,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a5d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Face to Face"
@@ -5181,11 +5353,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "70c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Email/Website"
@@ -5240,11 +5414,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -5299,11 +5475,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a8d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Social Media"
@@ -5358,11 +5536,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -5417,11 +5597,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a8d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Social Media"
@@ -5476,11 +5658,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -5535,11 +5719,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "72c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Telephone"
@@ -5594,11 +5780,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "a5d71fdd-5d95-e211-a939-e4115bead28a",
                 "name": "Face to Face"
@@ -5653,11 +5841,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "70c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Email/Website"
@@ -5712,11 +5902,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -5771,11 +5963,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "c5df0ca8-2471-425c-836e-4a733e74c29a",
-                "name": "Krajcik - Johns|6e2bbd0e-b702-4a44-8621-7f30d38b5e14",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "c5df0ca8-2471-425c-836e-4a733e74c29a",
+                  "name": "Krajcik - Johns|6e2bbd0e-b702-4a44-8621-7f30d38b5e14",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -5834,11 +6028,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": null,
             "contacts": [
                 {
@@ -5893,11 +6089,13 @@
             "kind": "service_delivery"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "74c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Letter/Fax"
@@ -5952,11 +6150,13 @@
             "kind": "interaction"
         },
         {
-            "company": {
-                "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-                "name": "Venus Ltd",
-                "trading_names": []
-            },
+            "companies": [
+                {
+                  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+                  "name": "Venus Ltd",
+                  "trading_names": []
+                }
+            ],
             "communication_channel": {
                 "id": "70c226d7-5d95-e211-a939-e4115bead28a",
                 "name": "Email/Website"

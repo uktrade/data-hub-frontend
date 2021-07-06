@@ -140,7 +140,7 @@ const getInitialFormValues = (req, res) => {
   return {
     theme,
     kind,
-    company: company.id,
+    companies: [company.id],
     investment_project: investmentId,
     date: {
       day: formatWithoutParsing(date, 'dd'),

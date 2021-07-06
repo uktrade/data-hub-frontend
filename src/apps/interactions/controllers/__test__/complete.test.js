@@ -163,7 +163,7 @@ describe('Interaction details controller', () => {
 
       it('should redirect to the interactions', () => {
         expect(middlewareParameters.resMock.redirect).calledOnceWithExactly(
-          urls.companies.interactions.index(draftPastMeeting.company.id)
+          urls.companies.interactions.index(draftPastMeeting.companies[0].id)
         )
       })
 
@@ -342,7 +342,7 @@ describe('Interaction details controller', () => {
 
         it('should redirect to the interactions', () => {
           expect(middlewareParameters.resMock.redirect).calledOnceWithExactly(
-            urls.companies.interactions.index(draftPastMeeting.company.id)
+            urls.companies.interactions.index(draftPastMeeting.companies[0].id)
           )
         })
 
@@ -453,7 +453,7 @@ describe('Interaction details controller', () => {
 
       it('should redirect to the interaction create journey', () => {
         const expectedPath = urls.companies.interactions.edit(
-          draftPastMeeting.company.id,
+          draftPastMeeting.companies[0].id,
           draftPastMeeting.id
         )
         expect(middlewareParameters.resMock.redirect).calledOnceWithExactly(

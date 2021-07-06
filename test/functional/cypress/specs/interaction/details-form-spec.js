@@ -164,7 +164,7 @@ const COMMON_REQUEST_BODY = {
   policy_issue_types: ['688ac22e-89d4-4d1f-bf0b-013588bf63a7'],
   policy_areas: ['583c0bb6-d3c5-4e4b-8f25-e861c1e8d9c9'],
   policy_feedback_notes: 'Some policy feedback notes',
-  company: { id: '0f5216e0-849f-11e6-ae22-56b6b6499611' },
+  companies: ['0f5216e0-849f-11e6-ae22-56b6b6499611'],
   service_answers: {},
   status: 'complete',
   has_related_trade_agreements: 'yes',
@@ -842,9 +842,7 @@ describe('Adding an interaction from a referral', () => {
     assertRequestBody(
       {
         ...COMMON_REQUEST_BODY,
-        company: {
-          id: referral.company.id,
-        },
+        companies: [referral.company.id],
         contacts: [referral.contact.id], // Was prepopulated
         theme: 'export',
         service: 'e64d7719-0bd9-65df-55a9-f08d328bc467',

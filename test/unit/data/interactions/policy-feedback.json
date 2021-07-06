@@ -1,9 +1,11 @@
 {
   "id": "af4aac84-4d6a-47df-a733-5a54e3008c32",
-  "company": {
+  "companies": [
+    {
       "name": "Venus Ltd",
       "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
-  },
+    }
+  ],
   "contact": {
       "name": "Cleve Wisoky",
       "id": "7701587b-e88f-4f39-874f-0bd06321f7df"
@@ -60,5 +62,5 @@
   "policy_areas": [{
     "name": "p a 1",
     "id": "pa1"
-  }],
+  }]
 }

@@ -7,7 +7,10 @@ async function getInteractionDetails(req, res, next, interactionId) {
     res.locals.interaction = interaction
 
     if (!res.locals.company) {
-      res.locals.company = await getDitCompany(req, interaction.company.id)
+      const companies = await Promise.all(
+        interaction.companies.map((company) => getDitCompany(req, company.id))
+      )
+      res.locals.company = companies[0]
     }
 
     next()

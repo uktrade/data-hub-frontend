@@ -13,8 +13,9 @@ function renderDetailsPage(req, res, next) {
       isComplete
     )
     const referral = interaction.company_referral
-    if (referral) {
-      referral.companyId = interaction.company.id
+    const hasCompany = interaction.companies && interaction.companies.length
+    if (referral && hasCompany) {
+      referral.companyId = interaction.companies[0].id
     }
     const canComplete =
       interaction.status === INTERACTION_STATUS.DRAFT &&
