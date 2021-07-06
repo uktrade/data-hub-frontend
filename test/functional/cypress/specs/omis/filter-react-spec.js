@@ -1,11 +1,17 @@
 import { omis } from '../../../../../src/lib/urls'
 import qs from 'qs'
 
-import { randomChoice } from '../../fakers/utils'
-
-import { removeChip, clickCheckboxGroupOption } from '../../support/actions'
-
+import {
+  removeChip,
+  inputDateValue,
+  clickCheckboxGroupOption,
+} from '../../support/actions'
+import {
+  assertDateInput,
+  assertCheckboxGroupNoneSelected,
+} from '../../support/assertions'
 import { testTypeahead } from '../../support/tests'
+import { randomChoice } from '../../fakers/utils'
 
 import {
   assertPayload,
@@ -117,6 +123,237 @@ describe('Orders Collections Filter', () => {
     })
   })
 
+  context('Order reference', () => {
+    const element = '[data-test="reference-filter"]'
+    const reference = 'FAR365/21'
+    const expectedPayload = {
+      ...minimumPayload,
+      reference,
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({ reference })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${omis.react.index()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      cy.get(element).should('have.value', reference)
+      assertChipExists({ label: reference, position: 1 })
+    })
+
+    it('should filter from user input and remove the chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      cy.get(element).type(`${reference}{enter}`)
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('reference', reference)
+      assertChipExists({ label: reference, position: 1 })
+
+      removeChip(reference)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
+  context('Completed date (from/to)', () => {
+    const fromElement = '[data-test="completed-on-after-filter"]'
+    const fromDate = '2020-01-25'
+    const formattedFromDate = '25 January 2020'
+    const toElement = '[data-test="completed-on-before-filter"]'
+    const toDate = '2021-06-24'
+    const formattedToDate = '24 June 2021'
+    const expectedPayload = {
+      ...minimumPayload,
+      completed_on_after: fromDate,
+      completed_on_before: toDate,
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        completed_on_after: fromDate,
+        completed_on_before: toDate,
+      })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${omis.react.index()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      assertChipExists({
+        label: `Completed date from: ${formattedFromDate}`,
+        position: 1,
+      })
+      assertChipExists({
+        label: `Completed date to: ${formattedToDate}`,
+        position: 2,
+      })
+      assertDateInput({
+        element: fromElement,
+        label: 'Completed date from',
+        value: fromDate,
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'Completed date to',
+        value: toDate,
+      })
+    })
+
+    it('should filter from user input and remove the chip', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      inputDateValue({
+        element: fromElement,
+        value: fromDate,
+      })
+      cy.wait('@apiRequest')
+      inputDateValue({
+        element: toElement,
+        value: toDate,
+      })
+      assertPayload('@apiRequest', expectedPayload)
+
+      assertQueryParams('completed_on_after', fromDate)
+      assertQueryParams('completed_on_before', toDate)
+      assertChipExists({
+        label: `Completed date from: ${formattedFromDate}`,
+        position: 1,
+      })
+      assertChipExists({
+        label: `Completed date to: ${formattedToDate}`,
+        position: 2,
+      })
+      assertDateInput({
+        element: fromElement,
+        label: 'Completed date from',
+        value: fromDate,
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'Completed date to',
+        value: toDate,
+      })
+
+      removeChip(fromDate)
+      cy.wait('@apiRequest')
+      removeChip(toDate)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+
+      assertDateInput({
+        element: fromElement,
+        label: 'Completed date from',
+        value: '',
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'Completed date to',
+        value: '',
+      })
+    })
+  })
+
+  context('Expected delivery date (from/to)', () => {
+    const fromElement = '[data-test="delivery-date-after-filter"]'
+    const fromDate = '2020-01-25'
+    const formattedFromDate = '25 January 2020'
+    const toElement = '[data-test="delivery-date-before-filter"]'
+    const toDate = '2021-06-24'
+    const formattedToDate = '24 June 2021'
+    const expectedPayload = {
+      ...minimumPayload,
+      delivery_date_after: fromDate,
+      delivery_date_before: toDate,
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        delivery_date_after: fromDate,
+        delivery_date_before: toDate,
+      })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${omis.react.index()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      assertChipExists({
+        label: `Expected delivery date from: ${formattedFromDate}`,
+        position: 1,
+      })
+      assertChipExists({
+        label: `Expected delivery date to: ${formattedToDate}`,
+        position: 2,
+      })
+      assertDateInput({
+        element: fromElement,
+        label: 'Expected delivery date from',
+        value: fromDate,
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'Expected delivery date to',
+        value: toDate,
+      })
+    })
+
+    it('should filter from user input and remove the chip', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      inputDateValue({
+        element: fromElement,
+        value: fromDate,
+      })
+      cy.wait('@apiRequest')
+      inputDateValue({
+        element: toElement,
+        value: toDate,
+      })
+      assertPayload('@apiRequest', expectedPayload)
+
+      assertQueryParams('delivery_date_after', fromDate)
+      assertQueryParams('delivery_date_before', toDate)
+      assertChipExists({
+        label: `Expected delivery date from: ${formattedFromDate}`,
+        position: 1,
+      })
+      assertChipExists({
+        label: `Expected delivery date to: ${formattedToDate}`,
+        position: 2,
+      })
+      assertDateInput({
+        element: fromElement,
+        label: 'Expected delivery date from',
+        value: fromDate,
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'Expected delivery date to',
+        value: toDate,
+      })
+
+      removeChip(fromDate)
+      cy.wait('@apiRequest')
+      removeChip(toDate)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+
+      assertDateInput({
+        element: fromElement,
+        label: 'Expected delivery date from',
+        value: '',
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'Expected delivery date to',
+        value: '',
+      })
+    })
+  })
+
   context('Company', () => {
     const element = '[data-test="company-name-filter"]'
     const name = 'Tesco'
@@ -214,7 +451,7 @@ describe('Orders Collections Filter', () => {
       testTypeahead({
         element,
         legend: 'Sector',
-        placeholder: 'Search sectors',
+        placeholder: 'Search sector',
         input: 'aero',
         expectedOption: 'Aerospace',
       })
@@ -255,8 +492,8 @@ describe('Orders Collections Filter', () => {
 
       testTypeahead({
         element,
-        legend: 'Country of origin',
-        placeholder: 'Search countries',
+        legend: 'Market (country)',
+        placeholder: 'Search country',
         input: 'bra',
         expectedOption: 'Brazil',
       })
@@ -318,6 +555,8 @@ describe('Orders Collections Filter', () => {
     before(() => {
       const queryString = buildQueryString({
         page: 1,
+        status: 'paid',
+        reference: 'FAR365/21',
         contact_name: 'David Jones',
         company_name: 'Tesco',
         sector_descends: 'af959812-6095-e211-a939-e4115bead28a',
@@ -330,12 +569,14 @@ describe('Orders Collections Filter', () => {
     })
 
     it('should have all the chips', () => {
-      cy.get('[data-test=filter-chips]').children().should('have.length', 5)
+      cy.get('[data-test=filter-chips]').children().should('have.length', 7)
     })
 
     it('should remove all filters and chips', () => {
       cy.get('[data-test=clear-filters]').click()
       cy.get('[data-test=filter-chips]').children().should('have.length', 0)
+      assertCheckboxGroupNoneSelected('[data-test="status-filter"]')
+      cy.get('[data-test="reference-filter"]').should('have.value', '')
       cy.get('[data-test="contact-name-filter"]').should('have.value', '')
       cy.get('[data-test="company-name-filter"]').should('have.value', '')
       cy.get('[data-test="sector-filter"]').should('have.value', '')

@@ -1,17 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
 
-import { FONT_WEIGHTS } from '@govuk-react/constants'
 import Input from '@govuk-react/input'
 
 import FieldWrapper from '../Form/elements/FieldWrapper'
-
-const StyledFieldWrapper = styled(FieldWrapper)`
-  label {
-    font-weight: ${FONT_WEIGHTS.regular};
-  }
-`
 
 /**
  * A Date Input Field
@@ -32,7 +24,7 @@ const DateField = ({
   useEffect(() => setValue(initialValue), [initialValue])
 
   return (
-    <StyledFieldWrapper {...{ name, label, legend, hint }} {...props}>
+    <FieldWrapper {...{ name, label, legend, hint }} {...props}>
       <Input
         id={`field-${name}-1`}
         key={name}
@@ -45,7 +37,7 @@ const DateField = ({
           onChange(e)
         }}
       />
-    </StyledFieldWrapper>
+    </FieldWrapper>
   )
 }
 

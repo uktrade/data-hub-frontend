@@ -13,6 +13,8 @@ const getEvents = ({
   sortby = 'modified_on:desc',
   name,
   organiser,
+  start_date_before,
+  start_date_after,
   country,
   uk_region,
   event_type,
@@ -24,6 +26,8 @@ const getEvents = ({
       sortby,
       name,
       organiser,
+      start_date_before,
+      start_date_after,
       country,
       uk_region,
       event_type,
@@ -35,7 +39,7 @@ const getEventsMetadata = () =>
   Promise.all([
     getMetadataOptions(urls.metadata.country()),
     getMetadataOptions(urls.metadata.ukRegion()),
-    getMetadataOptions(urls.metadata.eventType()),
+    getMetadataOptions(urls.metadata.eventType(), { filterDisabled: false }),
   ])
     .then(([countryOptions, ukRegionOptions, eventTypeOptions]) => ({
       countryOptions,

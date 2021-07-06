@@ -2,9 +2,14 @@ export const LABELS = {
   status: 'Order status',
   sector: 'Sector',
   ukRegion: 'UK region',
-  country: 'Country of origin',
+  reference: 'Order reference',
+  primaryMarket: 'Market (country)',
   contactName: 'Contact name',
   companyName: 'Company name',
+  completedOnAfter: 'Completed date from',
+  completedOnBefore: 'Completed date to',
+  deliveryDateAfter: 'Expected delivery date from',
+  deliveryDateBefore: 'Expected delivery date to',
 }
 
 export const SORT_OPTIONS = [

@@ -107,6 +107,7 @@ function AddCompanyForm({
               countryName={countryName}
               countryIsoCode={countryIsoCode}
               csrfToken={csrfToken}
+              features={features}
             />
 
             {!values.cannotFind && (

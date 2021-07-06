@@ -8,6 +8,7 @@ import {
 } from '../../../client/actions'
 
 import {
+  RoutedDateField,
   RoutedTypeahead,
   RoutedInputField,
   CollectionFilters,
@@ -55,9 +56,10 @@ const OrdersCollection = ({
       sortOptions={optionMetadata.sortOptions}
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}
-      entityName="order"
-      entityNamePlural="order"
       addItemUrl="/omis/create"
+      entityName="order"
+      entityNamePlural="orders"
+      baseDownloadLink="/omis/export"
       defaultQueryParams={{
         page: 1,
         sortby: 'created_on:desc',
@@ -69,8 +71,40 @@ const OrdersCollection = ({
           name="status"
           qsParam="status"
           options={optionMetadata.statusOptions}
-          selectedOptions={selectedFilters.selectedStatuses}
+          selectedOptions={selectedFilters.statuses.options}
           data-test="status-filter"
+        />
+        <RoutedInputField
+          id="OrdersCollection.reference"
+          qsParam="reference"
+          name="reference"
+          label={LABELS.reference}
+          placeholder="Search order reference"
+          data-test="reference-filter"
+        />
+        <RoutedDateField
+          label={LABELS.completedOnAfter}
+          name="completed_on_after"
+          qsParamName="completed_on_after"
+          data-test="completed-on-after-filter"
+        />
+        <RoutedDateField
+          label={LABELS.completedOnBefore}
+          name="completed_on_before"
+          qsParamName="completed_on_before"
+          data-test="completed-on-before-filter"
+        />
+        <RoutedDateField
+          label={LABELS.deliveryDateAfter}
+          name="delivery_date_after"
+          qsParamName="delivery_date_after"
+          data-test="delivery-date-after-filter"
+        />
+        <RoutedDateField
+          label={LABELS.deliveryDateBefore}
+          name="delivery_date_before"
+          qsParamName="delivery_date_before"
+          data-test="delivery-date-before-filter"
         />
         <RoutedInputField
           id="OrdersCollection.company-name"
@@ -93,19 +127,19 @@ const OrdersCollection = ({
           legend={LABELS.sector}
           name="sector_descends"
           qsParam="sector_descends"
-          placeholder="Search sectors"
+          placeholder="Search sector"
           options={optionMetadata.sectorOptions}
-          selectedOptions={selectedFilters.selectedSectors}
+          selectedOptions={selectedFilters.sectors.options}
           data-test="sector-filter"
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={LABELS.country}
+          legend={LABELS.primaryMarket}
           name="primary_market"
           qsParam="primary_market"
-          placeholder="Search countries"
+          placeholder="Search country"
           options={optionMetadata.omisMarketOptions}
-          selectedOptions={selectedFilters.selectedOmisMarkets}
+          selectedOptions={selectedFilters.omisMarkets.options}
           data-test="country-filter"
         />
         <RoutedTypeahead
@@ -113,9 +147,9 @@ const OrdersCollection = ({
           legend={LABELS.ukRegion}
           name="uk_region"
           qsParam="uk_region"
-          placeholder="Search UK regions"
+          placeholder="Search UK region"
           options={optionMetadata.ukRegionOptions}
-          selectedOptions={selectedFilters.selectedUkRegions}
+          selectedOptions={selectedFilters.ukRegions.options}
           data-test="uk-region-filter"
         />
       </CollectionFilters>

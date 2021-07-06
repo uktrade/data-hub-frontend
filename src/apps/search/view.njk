@@ -16,7 +16,8 @@
 {% block main_grid_right_column %}
   {{
     CollectionContent(results | assign({
-      actionButtons: actionButtons
+      actionButtons: actionButtons,
+      features: features
     }))
   }}
 {% endblock %}

@@ -2,10 +2,11 @@ import urls from '../../../../../src/lib/urls'
 import qs from 'qs'
 
 import { randomChoice } from '../../fakers/utils'
-import { eventTypeListFaker } from '../../fakers/event-types'
+import { eventTypeFaker, eventTypeListFaker } from '../../fakers/event-types'
 
 import {
   clickCheckboxGroupOption,
+  inputDateValue,
   removeChip,
   selectFirstAdvisersTypeaheadOption,
 } from '../../support/actions'
@@ -14,6 +15,7 @@ import {
   assertCheckboxGroupNoneSelected,
   assertChipExists,
   assertChipsEmpty,
+  assertDateInput,
   assertFieldEmpty,
   assertPayload,
   assertQueryParams,
@@ -38,7 +40,8 @@ const searchEndpoint = '/api-proxy/v3/search/event'
 const eventTypeEndpoint = '/api-proxy/v4/metadata/event-type'
 
 describe('events Collections Filter', () => {
-  const eventTypes = eventTypeListFaker(10)
+  const disabledEventType = eventTypeFaker({ disabled_on: '2020-01-01' })
+  const eventTypes = [disabledEventType, ...eventTypeListFaker(2)]
 
   context('Default Params', () => {
     it('should set the default params', () => {
@@ -250,6 +253,7 @@ describe('events Collections Filter', () => {
       cy.wait('@eventTypeApiRequest')
       cy.wait('@apiRequest')
 
+      cy.get(element).find('label').should('have.length', eventTypes.length)
       clickCheckboxGroupOption({ element, value: eventType.id })
       assertPayload('@apiRequest', {
         ...minimumPayload,
@@ -269,11 +273,99 @@ describe('events Collections Filter', () => {
     })
   })
 
+  context('From / To Dates', () => {
+    const fromElement = '[data-test="start-date-after-filter"]'
+    const fromDate = '2020-01-01'
+    const formattedFromDate = '1 January 2020'
+    const toElement = '[data-test="start-date-before-filter"]'
+    const toDate = '2021-10-05'
+    const formattedToDate = '5 October 2021'
+    const expectedPayload = {
+      ...minimumPayload,
+      start_date_after: fromDate,
+      start_date_before: toDate,
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        start_date_after: fromDate,
+        start_date_before: toDate,
+      })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.events.react.index()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      assertChipExists({ label: `From: ${formattedFromDate}`, position: 1 })
+      assertChipExists({ label: `To: ${formattedToDate}`, position: 2 })
+      assertDateInput({
+        element: fromElement,
+        label: 'From',
+        value: fromDate,
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'To',
+        value: toDate,
+      })
+    })
+
+    it('should filter from user input and remove the chip', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.events.react.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      inputDateValue({
+        element: fromElement,
+        value: fromDate,
+      })
+      cy.wait('@apiRequest')
+      inputDateValue({
+        element: toElement,
+        value: toDate,
+      })
+      assertPayload('@apiRequest', expectedPayload)
+
+      assertQueryParams('start_date_after', fromDate)
+      assertQueryParams('start_date_before', toDate)
+      assertChipExists({ label: `From: ${formattedFromDate}`, position: 1 })
+      assertChipExists({ label: `To: ${formattedToDate}`, position: 2 })
+      assertDateInput({
+        element: fromElement,
+        label: 'From',
+        value: fromDate,
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'To',
+        value: toDate,
+      })
+
+      removeChip(fromDate)
+      cy.wait('@apiRequest')
+      removeChip(toDate)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+
+      assertDateInput({
+        element: fromElement,
+        label: 'From',
+        value: '',
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'To',
+        value: '',
+      })
+    })
+  })
+
   context('Remove all filters', () => {
     before(() => {
       const ukCountryId = '80756b9a-5d95-e211-a939-e4115bead28a'
       const adviserId = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
       const southEastRegionId = '884cd12a-6095-e211-a939-e4115bead28a'
+      const fromDate = '2020-01-01'
+      const toDate = '2021-10-05'
       const eventType = randomChoice(eventTypes)
       const queryString = qs.stringify({
         page: 1,
@@ -282,6 +374,8 @@ describe('events Collections Filter', () => {
         uk_region: [southEastRegionId],
         organiser: [adviserId],
         event_type: [eventType.id],
+        start_date_after: fromDate,
+        start_date_before: toDate,
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.intercept('GET', eventTypeEndpoint, eventTypes).as(
@@ -294,7 +388,7 @@ describe('events Collections Filter', () => {
 
     it('should remove all filters and chips', () => {
       cy.get('[data-test=filter-chips]').children().as('filterChips')
-      cy.get('@filterChips').should('have.length', 5)
+      cy.get('@filterChips').should('have.length', 7)
       cy.get('[data-test=clear-filters]').click()
       cy.get('@filterChips').should('have.length', 0)
       cy.get('[data-test="event-name-filter"]').should('have.value', '')
@@ -307,6 +401,16 @@ describe('events Collections Filter', () => {
         'contain',
         'Search organiser'
       )
+      assertDateInput({
+        element: '[data-test="start-date-after-filter"]',
+        label: 'From',
+        value: '',
+      })
+      assertDateInput({
+        element: '[data-test="start-date-before-filter"]',
+        label: 'To',
+        value: '',
+      })
       assertCheckboxGroupNoneSelected('[data-test="event-type-filter"]')
     })
   })

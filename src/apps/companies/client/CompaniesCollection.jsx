@@ -83,7 +83,7 @@ const CompaniesCollection = ({
           name="headquarter_type"
           qsParam="headquarter_type"
           options={optionMetadata.headquarterTypeOptions}
-          selectedOptions={selectedFilters.selectedHeadquarterTypes}
+          selectedOptions={selectedFilters.headquarterTypes.options}
           data-test="headquarter-type-filter"
         />
         <RoutedInputField
@@ -101,7 +101,7 @@ const CompaniesCollection = ({
           qsParam="sector_descends"
           placeholder="Search sector"
           options={optionMetadata.sectorOptions}
-          selectedOptions={selectedFilters.selectedSectors}
+          selectedOptions={selectedFilters.sectors.options}
           data-test="sector-filter"
         />
         <RoutedTypeahead
@@ -111,7 +111,7 @@ const CompaniesCollection = ({
           qsParam="country"
           placeholder="Search country"
           options={optionMetadata.countryOptions}
-          selectedOptions={selectedFilters.selectedCountries}
+          selectedOptions={selectedFilters.countries.options}
           data-test="country-filter"
         />
         <RoutedInputField
@@ -129,7 +129,7 @@ const CompaniesCollection = ({
           qsParam="uk_region"
           placeholder="Search UK region"
           options={optionMetadata.ukRegionOptions}
-          selectedOptions={selectedFilters.selectedUkRegions}
+          selectedOptions={selectedFilters.ukRegions.options}
           data-test="uk-region-filter"
         />
         <RoutedCheckboxGroupField
@@ -137,7 +137,7 @@ const CompaniesCollection = ({
           name="archived"
           qsParam="archived"
           options={optionMetadata.companyStatusOptions}
-          selectedOptions={selectedFilters.selectedCompanyStatuses}
+          selectedOptions={selectedFilters.companyStatuses.options}
           data-test="company-status-filter"
         />
         <RoutedTypeahead
@@ -147,7 +147,7 @@ const CompaniesCollection = ({
           qsParam="export_to_countries"
           placeholder="Search country"
           options={optionMetadata.countryOptions}
-          selectedOptions={selectedFilters.selectedExportToCountries}
+          selectedOptions={selectedFilters.exportToCountries.options}
           data-test="currently-exporting-to-country-filter"
         />
         <RoutedTypeahead
@@ -157,7 +157,7 @@ const CompaniesCollection = ({
           qsParam="future_interest_countries"
           placeholder="Search country"
           options={optionMetadata.countryOptions}
-          selectedOptions={selectedFilters.selectedFutureCountriesOfInterest}
+          selectedOptions={selectedFilters.futureCountriesOfInterest.options}
           data-test="future-countries-of-interest-filter"
         />
         <RoutedAdvisersTypeahead
@@ -169,7 +169,7 @@ const CompaniesCollection = ({
           placeholder="Search adviser"
           noOptionsMessage={() => <>No advisers found</>}
           selectedOptions={
-            selectedFilters.selectedLeadItaOrGlobalAccountManagers
+            selectedFilters.leadItaOrGlobalAccountManagers.options
           }
           data-test="lead-ita-global-account-manager-filter"
         />

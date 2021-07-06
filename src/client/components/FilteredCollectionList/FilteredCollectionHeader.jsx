@@ -56,6 +56,19 @@ const StyledDiv = styled('div')`
   }
 `
 
+const RoutedFilterChipsCollection = ({ selectedFilters }) => {
+  return (
+    <>
+      {Object.keys(selectedFilters).map((key) => (
+        <RoutedFilterChips
+          key={key}
+          selectedOptions={selectedFilters[key].options}
+          qsParamName={selectedFilters[key].queryParam}
+        />
+      ))}
+    </>
+  )
+}
 function FilteredCollectionHeader({
   totalItems,
   collectionName = 'result',
@@ -93,274 +106,7 @@ function FilteredCollectionHeader({
       </CollectionHeaderRow>
 
       <CollectionHeaderRow data-test="filter-chips" id="filter-chips">
-        {/*
-        FIXME: This is supposed to be a generic component,
-        thus the chips should not be hardcoded here
-        */}
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedDatesAfter}
-          qsParamName="date_after"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedDatesBefore}
-          qsParamName="date_before"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedKind}
-          qsParamName="kind"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedStages}
-          qsParamName="stage"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedAdvisers}
-          qsParamName="adviser"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedOrganisers}
-          qsParamName="organiser"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedSectors}
-          qsParamName="sector_descends"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedInvestmentOriginCountries}
-          qsParamName="country_investment_originates_from"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedCountries}
-          qsParamName="country"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedOmisMarkets}
-          qsParamName="primary_market"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedExportToCountries}
-          qsParamName="export_to_countries"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedFutureCountriesOfInterest}
-          qsParamName="future_interest_countries"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedCountryOfOrigin}
-          qsParamName="country_of_origin"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedAssetClassesOfInterest}
-          qsParamName="asset_classes_of_interest"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedInvestorCompanyName}
-          qsParamName="investor_company_name"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedDealTicketSize}
-          qsParamName="deal_ticket_size"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedMinimumReturnRate}
-          qsParamName="minimum_return_rate"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedTimeHorizon}
-          qsParamName="time_horizon"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedRestrictions}
-          qsParamName="restriction"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedConstructionRisk}
-          qsParamName="construction_risk"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedMinimumEquityPercentage}
-          qsParamName="minimum_equity_percentage"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedDesiredDealRole}
-          qsParamName="desired_deal_role"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedUkPostcode}
-          qsParamName="uk_postcode"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedUkRegions}
-          qsParamName="uk_region"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedProjectStatuses}
-          qsParamName="status"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedStatuses}
-          qsParamName="status"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedInvestmentTypes}
-          qsParamName="investment_type"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedEventTypes}
-          qsParamName="event_type"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedLikelihoodToLands}
-          qsParamName="likelihood_to_land"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedEstimatedLandDatesBefore}
-          qsParamName="estimated_land_date_before"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedEstimatedLandDatesAfter}
-          qsParamName="estimated_land_date_after"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedActualLandDatesBefore}
-          qsParamName="actual_land_date_before"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedActualLandDatesAfter}
-          qsParamName="actual_land_date_after"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedInvolvementLevels}
-          qsParamName="level_of_involvement_simplified"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedInvestorTypes}
-          qsParamName="investor_type"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedRequiredChecksConducted}
-          qsParamName="required_checks_conducted"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedUkRegionsOfInterest}
-          qsParamName="uk_regions_of_interest"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedHeadquarterTypes}
-          qsParamName="headquarter_type"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedCompanySectors}
-          qsParamName="company_sector_descends"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedAddressCountries}
-          qsParamName="address_country"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedCompanyUkRegions}
-          qsParamName="company_uk_region"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedName}
-          qsParamName="name"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedStatus}
-          qsParamName="archived"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedContactName}
-          qsParamName="contact_name"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedCompanyName}
-          qsParamName="company_name"
-        />
-        <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedCompanyStatuses}
-          qsParamName="archived"
-        />
-        <RoutedFilterChips
-          selectedOptions={
-            selectedFilters.selectedLeadItaOrGlobalAccountManagers
-          }
-          qsParamName="one_list_group_global_account_manager"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={
-            selectedFilters.selectedInvestableCapital?.min
-              ? [
-                  {
-                    categoryLabel: 'Investable capital min',
-                    label: selectedFilters.selectedInvestableCapital.min,
-                  },
-                ]
-              : []
-          }
-          qsParamName="investable_capital_min"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={
-            selectedFilters.selectedInvestableCapital?.max
-              ? [
-                  {
-                    categoryLabel: 'Investable capital max',
-                    label: selectedFilters.selectedInvestableCapital.max,
-                  },
-                ]
-              : []
-          }
-          qsParamName="investable_capital_max"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={
-            selectedFilters.selectedGlobalAssetsUnderManagement?.min
-              ? [
-                  {
-                    categoryLabel: 'Global assets under management min',
-                    label:
-                      selectedFilters.selectedGlobalAssetsUnderManagement.min,
-                  },
-                ]
-              : []
-          }
-          qsParamName="global_assets_under_management_min"
-          showCategoryLabels={true}
-        />
-        <RoutedFilterChips
-          selectedOptions={
-            selectedFilters.selectedGlobalAssetsUnderManagement?.max
-              ? [
-                  {
-                    categoryLabel: 'Global assets under management max',
-                    label:
-                      selectedFilters.selectedGlobalAssetsUnderManagement.max,
-                  },
-                ]
-              : []
-          }
-          qsParamName="global_assets_under_management_max"
-          showCategoryLabels={true}
-        />
+        <RoutedFilterChipsCollection selectedFilters={selectedFilters} />
       </CollectionHeaderRow>
     </CollectionHeaderRowContainer>
   )
@@ -370,11 +116,18 @@ FilteredCollectionHeader.propTypes = {
   totalItems: PropTypes.number.isRequired,
   collectionName: PropTypes.string.isRequired,
   addItemUrl: PropTypes.string,
-  // FIXME: This doesn't reflect the reality
-  selectedFilters: PropTypes.shape({
-    label: PropTypes.string,
-    value: PropTypes.string,
-  }),
+  selectedFilters: PropTypes.objectOf(
+    PropTypes.shape({
+      queryParam: PropTypes.string.isRequired,
+      options: PropTypes.arrayOf(
+        PropTypes.shape({
+          value: PropTypes.string.isRequired,
+          label: PropTypes.string,
+          categoryLabel: PropTypes.string,
+        })
+      ),
+    })
+  ),
 }
 
 export default FilteredCollectionHeader

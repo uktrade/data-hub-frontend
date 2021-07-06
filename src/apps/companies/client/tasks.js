@@ -4,7 +4,6 @@ import urls from '../../../lib/urls'
 import {
   getHeadquarterTypeOptions,
   getMetadataOptions,
-  getSectorOptions,
 } from '../../../client/metadata'
 
 import { transformResponseToCompanyCollection } from './transformers'
@@ -54,7 +53,11 @@ const getCompanies = ({
  */
 const getCompaniesMetadata = () =>
   Promise.all([
-    getSectorOptions(urls.metadata.sector()),
+    getMetadataOptions(urls.metadata.sector(), {
+      params: {
+        level__lte: '0',
+      },
+    }),
     getHeadquarterTypeOptions(urls.metadata.headquarterType()),
     getMetadataOptions(urls.metadata.ukRegion()),
     getMetadataOptions(urls.metadata.country()),

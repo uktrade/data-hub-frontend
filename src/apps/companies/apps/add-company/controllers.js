@@ -36,7 +36,11 @@ async function renderAddCompanyForm(req, res, next) {
           organisationTypes,
           regions,
           sectors,
-          features,
+          features: {
+            isAddressAreaEnabled:
+              res.locals.features['address-area-company-search'],
+            ...features,
+          },
         },
       })
   } catch (error) {
