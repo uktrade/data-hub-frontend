@@ -57,12 +57,12 @@ function getCountryCode(company, countries) {
   )
 }
 
-function parseAddress(
+function parseAddress({
   dnbCompany,
   countries,
   prefix = '',
-  isAddressAreaEnabled = false
-) {
+  isAddressAreaEnabled = false,
+}) {
   return Object.values(
     pick(
       {
@@ -115,28 +115,27 @@ async function renderMatchConfirmation(req, res, next) {
           company: {
             ...pick(company, ['id', 'name', 'trading_names']),
             ...pick(company, ['name']),
-            address: parseAddress(
-              company.address,
+            address: parseAddress({
+              dnbCompany: company.address,
               countries,
-              '',
-              isAddressAreaEnabled
-            ),
+              isAddressAreaEnabled,
+            }),
           },
           dnbCompany: {
             ...pick(dnbCompany, ['primary_name', 'duns_number']),
             datahub_company_id: dataHubCompanyId,
-            address: parseAddress(
+            address: parseAddress({
               dnbCompany,
               countries,
-              'address_',
-              isAddressAreaEnabled
-            ),
-            registered_address: parseAddress(
+              prefix: 'address_',
+              isAddressAreaEnabled,
+            }),
+            registered_address: parseAddress({
               dnbCompany,
               countries,
-              'registered_address_',
-              isAddressAreaEnabled
-            ),
+              prefix: 'registered_address_',
+              isAddressAreaEnabled,
+            }),
           },
         },
       })
@@ -182,12 +181,12 @@ async function renderFindCompanyForm(req, res, next) {
         props: {
           company: {
             ...pick(company, ['id', 'name']),
-            address: parseAddress(
-              company.address,
+            address: parseAddress({
+              dnbCompany: company.address,
               countries,
-              '',
-              isAddressAreaEnabled
-            ),
+              prefix: '',
+              isAddressAreaEnabled,
+            }),
             postcode: get(company, 'address.postcode'),
             countryCode: getCountryCode(company, countries),
           },
@@ -224,12 +223,12 @@ async function renderCannotFindMatch(req, res, next) {
       props: {
         company: {
           ...pick(company, ['id', 'name']),
-          address: parseAddress(
-            company.address,
+          address: parseAddress({
+            dnbCompany: company.address,
             countries,
-            '',
-            isAddressAreaEnabled
-          ),
+            prefix: '',
+            isAddressAreaEnabled,
+          }),
         },
       },
     })
