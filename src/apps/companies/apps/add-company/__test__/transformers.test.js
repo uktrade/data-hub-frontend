@@ -164,7 +164,6 @@ describe('Companies add company transformers', () => {
           postcode: 'postcode',
           area: 'area',
           country: 'country',
-          area: 'area',
         },
         '123',
         { locals: { features: { 'address-area-company-search': true } } }
