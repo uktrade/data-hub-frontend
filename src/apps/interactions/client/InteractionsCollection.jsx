@@ -168,6 +168,15 @@ const InteractionCollection = ({
           selectedOptions={selectedFilters.policyIssueType.options}
           data-test="policy-issue-type-filter"
         />
+        <RoutedCheckboxGroupField
+          overflow="scroll"
+          legend={LABELS.companyOneListGroupTier}
+          name="company_one_list_group_tier"
+          qsParam="company_one_list_group_tier"
+          options={optionMetadata.companyOneListTierOptions}
+          selectedOptions={selectedFilters.companyOneListGroupTier.options}
+          data-test="company-one-list-group-tier-filter"
+        />
       </CollectionFilters>
     </FilteredCollectionList>
   )
