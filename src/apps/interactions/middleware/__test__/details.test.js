@@ -1,7 +1,7 @@
 const proxyquire = require('proxyquire')
 
 const buildMiddlewareParameters = require('../../../../../test/unit/helpers/middleware-parameters-builder')
-const interactionData = require('../../../../../test/unit/data/interactions/new-interaction')
+const interactionData = require('../../../../../test/unit/data/interactions/interaction.json')
 
 const modulePath = '../details'
 
@@ -40,10 +40,10 @@ describe('Interaction details middleware', () => {
 
     context('when provided an interaction with a company associated', () => {
       before(async () => {
-        this.company = sinon.mock()
+        this.companies = sinon.mock()
         this.interaction = {
           ...interactionData,
-          company: this.company,
+          companies: [this.company],
         }
         this.fetchInteractionStub.resolves(this.interaction)
 
@@ -60,13 +60,18 @@ describe('Interaction details middleware', () => {
           this.middlewareParameters.resMock.locals.interaction
         ).to.deep.equal(this.interaction)
       })
+      it('should set interaction company data on locals', () => {
+        expect(this.middlewareParameters.resMock.locals.company).to.deep.equal(
+          this.interaction.companies[0]
+        )
+      })
     })
 
     context('when provided an investment interaction with no company', () => {
       before(async () => {
         this.interaction = {
           ...interactionData,
-          company: null,
+          companies: null,
           contact: {
             id: '4444',
           },
@@ -75,9 +80,11 @@ describe('Interaction details middleware', () => {
         this.fetchInteractionStub.resolves(this.interaction)
 
         this.getContactStub.resolves({
-          company: {
-            id: '1234',
-          },
+          companies: [
+            {
+              id: '1234',
+            },
+          ],
         })
 
         this.company = sinon.mock()

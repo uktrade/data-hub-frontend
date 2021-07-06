@@ -51,7 +51,7 @@ describe('Create attendee controller', () => {
           .reply(200, contact)
           .post('/v3/interaction', {
             contacts: ['59c815d1-91d0-4d1f-b980-1d04157a298f'],
-            company: '0fb3379c-341c-4da4-b825-bf8d47b26baa',
+            companies: ['0fb3379c-341c-4da4-b825-bf8d47b26baa'],
             date: '2017-11-10',
             dit_participants: [{ adviser: '999' }],
             event: '31a9f8bd-7796-4af4-8f8c-25450860e2d1',

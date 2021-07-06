@@ -32,7 +32,7 @@ async function createAttendee(req, res, next) {
 
     const serviceDelivery = {
       contacts: [contact.id],
-      company: get(contact, 'company.id'),
+      companies: [get(contact, 'company.id')],
       date: event.start_date,
       dit_participants: [
         {

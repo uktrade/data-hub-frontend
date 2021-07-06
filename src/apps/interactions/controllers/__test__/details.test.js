@@ -2,6 +2,7 @@ const buildMiddlewareParameters = require('../../../../../test/unit/helpers/midd
 const draftFutureMeeting = require('../../../../../test/unit/data/interactions/draft-future-meeting.json')
 const draftPastMeeting = require('../../../../../test/unit/data/interactions/draft-past-meeting.json')
 const interaction = require('../../../../../test/unit/data/interactions/interaction.json')
+const interactionWithReferral = require('../../../../../test/unit/data/interactions/interaction-with-referral.json')
 const serviceDelivery = require('../../../../../test/unit/data/interactions/service-delivery.json')
 
 const { detailsController } = require('../index')
@@ -58,6 +59,67 @@ describe('Interaction details controller', () => {
       it('should render the template with canEdit as true', () => {
         expect(middlewareParameters.resMock.render.firstCall.args[1].canEdit).to
           .be.true
+      })
+    })
+
+    context('when rendering a complete company referral interaction', () => {
+      beforeEach(() => {
+        middlewareParameters = buildMiddlewareParameters({
+          interaction: interactionWithReferral,
+          requestParams: {
+            id: '1234',
+          },
+        })
+
+        detailsController.renderDetailsPage(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy
+        )
+      })
+
+      it('should set the breadcrumb', () => {
+        expect(middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly(
+          'Interaction'
+        )
+        expect(middlewareParameters.resMock.breadcrumb).to.have.been.calledOnce
+      })
+
+      it('should set the title', () => {
+        expect(middlewareParameters.resMock.title).to.be.calledWith(
+          'This is an automated interaction'
+        )
+      })
+
+      it('should render the interaction details template', () => {
+        expect(middlewareParameters.resMock.render).to.be.calledWith(
+          'interactions/views/details'
+        )
+      })
+
+      it('should render the template with interaction data', () => {
+        expect(
+          middlewareParameters.resMock.render.firstCall.args[1]
+            .interactionViewRecord
+        ).to.exist
+      })
+
+      it('should render the template with canComplete as false', () => {
+        expect(
+          middlewareParameters.resMock.render.firstCall.args[1].canComplete
+        ).to.be.false
+      })
+
+      it('should render the template with canEdit as true', () => {
+        expect(middlewareParameters.resMock.render.firstCall.args[1].canEdit).to
+          .be.true
+      })
+
+      it('should render the template with a referral', () => {
+        expect(
+          middlewareParameters.resMock.render.firstCall.args[1].referral
+            .companyId
+        ).to.equal('0f5216e0-849f-11e6-ae22-56b6b6499611')
       })
     })
 

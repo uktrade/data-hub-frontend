@@ -122,7 +122,7 @@ const assertInteractionDetails = ({
       .eq(listItemNumber)
       .find('[data-test="metadata-item"]')
       .eq(2)
-      .should('have.text', `Company ${listType.company.name}`)
+      .should('have.text', `Company ${listType.companies[0].name}`)
   })
   it('should display adviser details', () => {
     cy.get('@collectionItems')

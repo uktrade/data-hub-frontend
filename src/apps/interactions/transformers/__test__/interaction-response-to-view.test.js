@@ -409,7 +409,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
       this.transformed = transformInteractionResponseToViewRecord(
         {
           ...mockInteraction,
-          company: null,
+          companies: null,
         },
         true
       )

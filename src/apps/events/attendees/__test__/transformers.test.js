@@ -12,10 +12,12 @@ describe('#transformEventToAttendeeListItem', () => {
 
   context('when the contact is missing', () => {
     beforeEach(() => {
-      this.serviceDelivery.company = {
-        id: '2222',
-        name: 'Test company',
-      }
+      this.serviceDelivery.companies = [
+        {
+          id: '2222',
+          name: 'Test company',
+        },
+      ]
       this.result = transformServiceDeliveryToAttendeeListItem(
         this.serviceDelivery
       )
@@ -60,10 +62,12 @@ describe('#transformEventToAttendeeListItem', () => {
 
   context('when a valid company is provided', () => {
     beforeEach(() => {
-      this.serviceDelivery.company = {
-        id: '2222',
-        name: 'Test company',
-      }
+      this.serviceDelivery.companies = [
+        {
+          id: '2222',
+          name: 'Test company',
+        },
+      ]
     })
 
     context('when a valid contact is provided without a job title', () => {

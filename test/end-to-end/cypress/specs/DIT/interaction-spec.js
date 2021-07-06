@@ -46,7 +46,7 @@ describe('Interaction', () => {
       cy.get('[data-test="collection-item"]')
         .should('contain', 'Some interesting interaction')
         .and('contain', 'Johnny Cakeman')
-        .and('contain', 'Venus Ltd')
+        .and('contain', 'interaction testing')
         .and(
           'contain',
           'DIT Staff, UKTI Team East Midlands - International Trade Team'
@@ -189,7 +189,7 @@ describe('Service delivery', () => {
     cy.get('[data-test="collection-item"]')
       .should('contain', 'Some interesting service delivery')
       .and('contain', 'Johnny Cakeman')
-      .and('contain', 'Venus Ltd')
+      .and('contain', 'interaction testing')
       .and(
         'contain',
         'DIT Staff, UKTI Team East Midlands - International Trade Team'
