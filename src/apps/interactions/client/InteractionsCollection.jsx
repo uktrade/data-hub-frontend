@@ -100,7 +100,7 @@ const InteractionCollection = ({
           legend={LABELS.advisers}
           name="adviser"
           qsParam="adviser"
-          placeholder="Search advisers"
+          placeholder="Search adviser"
           noOptionsMessage={() => <>No advisers found</>}
           selectedOptions={selectedFilters.advisers.options}
           data-test="adviser-filter"
@@ -138,7 +138,7 @@ const InteractionCollection = ({
           legend={LABELS.sector}
           name="sector"
           qsParam="sector_descends"
-          placeholder="Search sectors"
+          placeholder="Search sector"
           options={optionMetadata.sectorOptions}
           selectedOptions={selectedFilters.sectors.options}
           data-test="sector-filter"
