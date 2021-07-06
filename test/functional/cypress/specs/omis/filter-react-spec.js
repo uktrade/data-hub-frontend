@@ -260,7 +260,7 @@ describe('Orders Collections Filter', () => {
     const fromElement = '[data-test="delivery-date-after-filter"]'
     const fromDate = '2020-01-25'
     const formattedFromDate = '25 January 2020'
-    const toElement = '[data-test="deliver-date-before-filter"]'
+    const toElement = '[data-test="delivery-date-before-filter"]'
     const toDate = '2021-06-24'
     const formattedToDate = '24 June 2021'
     const expectedPayload = {
@@ -451,7 +451,7 @@ describe('Orders Collections Filter', () => {
       testTypeahead({
         element,
         legend: 'Sector',
-        placeholder: 'Search sectors',
+        placeholder: 'Search sector',
         input: 'aero',
         expectedOption: 'Aerospace',
       })
@@ -492,8 +492,8 @@ describe('Orders Collections Filter', () => {
 
       testTypeahead({
         element,
-        legend: 'Country of origin',
-        placeholder: 'Search countries',
+        legend: 'Market (country)',
+        placeholder: 'Search country',
         input: 'bra',
         expectedOption: 'Brazil',
       })

@@ -1,9 +1,6 @@
 import axios from 'axios'
 
-import {
-  getMetadataOptions,
-  getSectorOptions,
-} from '../../../../client/metadata'
+import { getMetadataOptions } from '../../../../client/metadata'
 
 import transformInvestmentProjectToListItem from './transformers'
 
@@ -41,7 +38,11 @@ function getMetadata(metadataUrls) {
   return Promise.all(
     optionCategories.map((name) =>
       name == 'sectorOptions'
-        ? getSectorOptions(metadataUrls[name])
+        ? getMetadataOptions(metadataUrls[name], {
+            params: {
+              level__lte: '0',
+            },
+          })
         : getMetadataOptions(metadataUrls[name])
     ),
     handleError

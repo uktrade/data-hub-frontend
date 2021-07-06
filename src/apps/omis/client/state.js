@@ -20,7 +20,7 @@ export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
   const queryParams = parseQueryString(queryString)
   const { metadata } = state[ID]
-  const selectedFilters = buildSelectedFilters(queryParams, metadata, STATUSES)
+  const selectedFilters = buildSelectedFilters(queryParams, metadata)
   return {
     ...state[ID],
     payload: { ...queryParams },

@@ -27,11 +27,11 @@ export const state2props = ({ router, ...state }) => {
 
   const { metadata, selectedOrganisers } = state[ID]
 
-  const selectedFilters = buildSelectedFilters({
+  const selectedFilters = buildSelectedFilters(
     queryParams,
     metadata,
-    selectedOrganisers,
-  })
+    selectedOrganisers
+  )
 
   return {
     ...state[ID],

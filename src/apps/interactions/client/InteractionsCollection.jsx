@@ -7,12 +7,13 @@ import {
   INTERACTIONS__METADATA_LOADED,
 } from '../../../client/actions'
 
-import { LABELS, KIND_OPTIONS } from './constants'
+import { LABELS, KIND_OPTIONS, BUSINESS_INTELLIGENCE_OPTION } from './constants'
 
 import {
   FilteredCollectionList,
   RoutedCheckboxGroupField,
   RoutedAdvisersTypeahead,
+  RoutedTypeahead,
   RoutedDateField,
   CollectionFilters,
 } from '../../../client/components'
@@ -35,7 +36,7 @@ const InteractionCollection = ({
   const collectionListTask = {
     name: TASK_GET_INTERACTIONS_LIST,
     id: ID,
-    progressMessage: 'loading interactions',
+    progressMessage: 'Loading interactions',
     startOnRender: {
       payload,
       onSuccessDispatch: INTERACTIONS__LOADED,
@@ -60,6 +61,15 @@ const InteractionCollection = ({
     },
   }
 
+  const myInteractionsSelected = selectedFilters.advisers.options
+    .map(({ value }) => value)
+    .includes(currentAdviserId)
+
+  const myInteractionsOption = {
+    label: LABELS.myInteractions,
+    value: currentAdviserId,
+  }
+
   return (
     <FilteredCollectionList
       {...props}
@@ -80,7 +90,7 @@ const InteractionCollection = ({
           name="kind"
           qsParam="kind"
           options={KIND_OPTIONS}
-          selectedOptions={selectedFilters.selectedKind}
+          selectedOptions={selectedFilters.kind.options}
           data-test="status-filter"
         />
 
@@ -90,16 +100,16 @@ const InteractionCollection = ({
           legend={LABELS.advisers}
           name="adviser"
           qsParam="adviser"
-          placeholder="Search advisers"
+          placeholder="Search adviser"
           noOptionsMessage={() => <>No advisers found</>}
-          selectedOptions={selectedFilters.selectedAdvisers}
+          selectedOptions={selectedFilters.advisers.options}
           data-test="adviser-filter"
         />
         <RoutedCheckboxGroupField
           name="dit_participants__adviser"
           qsParam="adviser"
-          options={[{ label: LABELS.myInteractions, value: currentAdviserId }]}
-          selectedOptions={selectedFilters.selectedMyInteractions}
+          options={[myInteractionsOption]}
+          selectedOptions={myInteractionsSelected ? [myInteractionsOption] : []}
           data-test="my-interactions-filter"
         />
         <RoutedDateField
@@ -120,8 +130,52 @@ const InteractionCollection = ({
           name="service"
           qsParam="service"
           options={optionMetadata.serviceOptions}
-          selectedOptions={selectedFilters.selectedService}
+          selectedOptions={selectedFilters.service.options}
           data-test="service-filter"
+        />
+        <RoutedTypeahead
+          isMulti={true}
+          legend={LABELS.sector}
+          name="sector"
+          qsParam="sector_descends"
+          placeholder="Search sector"
+          options={optionMetadata.sectorOptions}
+          selectedOptions={selectedFilters.sectors.options}
+          data-test="sector-filter"
+        />
+        <RoutedCheckboxGroupField
+          legend={LABELS.businessIntelligence}
+          name="was_policy_feedback_provided"
+          qsParam="was_policy_feedback_provided"
+          options={BUSINESS_INTELLIGENCE_OPTION}
+          selectedOptions={selectedFilters.businessIntelligence.options}
+          data-test="business-intelligence-filter"
+        />
+        <RoutedCheckboxGroupField
+          overflow="scroll"
+          legend={LABELS.policyAreas}
+          name="policy_areas"
+          qsParam="policy_areas"
+          options={optionMetadata.policyAreaOptions}
+          selectedOptions={selectedFilters.policyArea.options}
+          data-test="policy-area-filter"
+        />
+        <RoutedCheckboxGroupField
+          legend={LABELS.policyIssueType}
+          name="policy_issue_types"
+          qsParam="policy_issue_types"
+          options={optionMetadata.policyIssueTypeOptions}
+          selectedOptions={selectedFilters.policyIssueType.options}
+          data-test="policy-issue-type-filter"
+        />
+        <RoutedCheckboxGroupField
+          overflow="scroll"
+          legend={LABELS.companyOneListGroupTier}
+          name="company_one_list_group_tier"
+          qsParam="company_one_list_group_tier"
+          options={optionMetadata.companyOneListTierOptions}
+          selectedOptions={selectedFilters.companyOneListGroupTier.options}
+          data-test="company-one-list-group-tier-filter"
         />
       </CollectionFilters>
     </FilteredCollectionList>

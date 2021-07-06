@@ -3,7 +3,7 @@ export const LABELS = {
   sector: 'Sector',
   ukRegion: 'UK region',
   reference: 'Order reference',
-  country: 'Country of origin',
+  primaryMarket: 'Market (country)',
   contactName: 'Contact name',
   companyName: 'Company name',
   completedOnAfter: 'Completed date from',

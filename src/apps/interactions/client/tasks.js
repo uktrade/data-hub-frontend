@@ -12,10 +12,32 @@ const sortServiceOptions = (options) =>
   options.sort((a, b) => (a.label > b.label ? 1 : b.label > a.label ? -1 : 0))
 
 const getInteractionsMetadata = () =>
-  Promise.all([getMetadataOptions(urls.metadata.service())])
-    .then(([serviceOptions]) => ({
-      serviceOptions: sortServiceOptions(serviceOptions),
-    }))
+  Promise.all([
+    getMetadataOptions(urls.metadata.service()),
+    getMetadataOptions(urls.metadata.sector(), {
+      params: {
+        level__lte: '0',
+      },
+    }),
+    getMetadataOptions(urls.metadata.policyArea()),
+    getMetadataOptions(urls.metadata.policyIssueType()),
+    getMetadataOptions(urls.metadata.oneListTier()),
+  ])
+    .then(
+      ([
+        serviceOptions,
+        sectorOptions,
+        policyAreaOptions,
+        policyIssueTypeOptions,
+        companyOneListTierOptions,
+      ]) => ({
+        serviceOptions: sortServiceOptions(serviceOptions),
+        sectorOptions,
+        policyAreaOptions,
+        policyIssueTypeOptions,
+        companyOneListTierOptions,
+      })
+    )
     .catch(handleError)
 
 const getInteractions = ({
@@ -27,6 +49,11 @@ const getInteractions = ({
   date_before,
   date_after,
   sortby = 'date:desc',
+  sector_descends,
+  was_policy_feedback_provided,
+  policy_areas,
+  policy_issue_types,
+  company_one_list_group_tier,
 }) =>
   axios
     .post('/api-proxy/v3/search/interaction', {
@@ -38,6 +65,11 @@ const getInteractions = ({
       date_before,
       date_after,
       service,
+      sector_descends,
+      was_policy_feedback_provided,
+      policy_areas,
+      policy_issue_types,
+      company_one_list_group_tier,
     })
     .then(({ data }) => transformResponseToCollection(data), handleError)
 

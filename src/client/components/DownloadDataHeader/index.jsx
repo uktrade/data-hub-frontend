@@ -3,14 +3,16 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { Button } from 'govuk-react'
-import { SPACING_POINTS } from '@govuk-react/constants'
+import { MEDIA_QUERIES, SPACING_POINTS } from '@govuk-react/constants'
 
 import { decimal } from '../../utils/number-utils'
 import CollectionHeaderRow from '../CollectionList/CollectionHeaderRow'
 
 const StyledLink = styled('a')`
   margin-bottom: 0;
-  margin-left: ${SPACING_POINTS[2]}px;
+  ${MEDIA_QUERIES.TABLET}: {
+    margin-left: ${SPACING_POINTS[2]}px;
+  },
 `
 
 const DownloadDataHeader = ({

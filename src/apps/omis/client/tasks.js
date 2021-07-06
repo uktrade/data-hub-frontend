@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { getMetadataOptions, getSectorOptions } from '../../../client/metadata'
+import { getMetadataOptions } from '../../../client/metadata'
 import { transformResponseToCollection } from './transformers'
 import { metadata } from '../../../lib/urls'
 
@@ -43,7 +43,11 @@ export const getOrders = ({
 
 export const getOrdersMetadata = () =>
   Promise.all([
-    getSectorOptions(metadata.sector()),
+    getMetadataOptions(metadata.sector(), {
+      params: {
+        level__lte: '0',
+      },
+    }),
     getMetadataOptions(metadata.omisMarket()),
     getMetadataOptions(metadata.ukRegion()),
   ])
