@@ -2592,7 +2592,7 @@
     {
         "id": "4a6f5211-9e54-42e9-ba25-7c67be785d1a",
         "name": "Puerto Rico",
-        "disabled_on": "1991-25-08T00:00:00.000Z",
+        "disabled_on": "1991-08-25T00:00:00.000Z",
         "country": {
             "name": "United States",
             "id": "81756b9a-5d95-e211-a939-e4115bead28a"

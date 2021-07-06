@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /**
  * Tests for: ./src/apps/companies/apps/add-company/client/AddCompanyForm.jsx
  */
@@ -7,9 +6,6 @@ const selectors = require('../../../../selectors')
 const fixtures = require('../../fixtures')
 const { assertBreadcrumbs } = require('../../support/assertions')
 const urls = require('../../../../../src/lib/urls')
-const { endOfYesterday } = require('date-fns')
-
-const yesterday = endOfYesterday()
 
 const gotoOverseasCompanySearchPage = () => {
   cy.visit(urls.companies.create())
@@ -31,6 +27,7 @@ const gotoOverseasCompanySearchResultsPage = () => {
   cy.get(selectors.companyAdd.entitySearch.searchButton).click()
 }
 
+/* eslint-disable no-unused-vars */
 const gotoUsCompanySearchResultsPage = () => {
   gotoUsCompanySearchPage()
   cy.get(selectors.companyAdd.entitySearch.companyNameField).type(
