@@ -24,6 +24,7 @@ import { testTypeahead } from '../../support/tests'
 
 import { serviceFaker } from '../../fakers/services'
 import { policyAreaFaker } from '../../fakers/policy-area'
+import { policyIssueTypeFaker } from '../../fakers/policy-issue-type'
 
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
@@ -42,6 +43,8 @@ const interactionsSearchEndpoint = '/api-proxy/v3/search/interaction'
 const adviserAutocompleteEndpoint = '/api-proxy/adviser/?autocomplete=*'
 const serviceMetadataEndpoint = '/api-proxy/v4/metadata/service'
 const policyAreaMetadataEndpoint = '/api-proxy/v4/metadata/policy-area'
+const policyIssueTypeMetadataEndpoint =
+  '/api-proxy/v4/metadata/policy-issue-type'
 const myAdviserId = '7d19d407-9aec-4d06-b190-d3f404627f21'
 const myAdviserEndpoint = `/api-proxy/adviser/${myAdviserId}`
 
@@ -443,10 +446,6 @@ describe('Interactions Collections Filter', () => {
     }
 
     it('should filter from the url', () => {
-      const expectedPayload = {
-        ...minimumPayload,
-        policy_areas: [policyArea.id],
-      }
       const queryString = buildQueryString({
         policy_areas: [policyArea.id],
       })
@@ -483,6 +482,57 @@ describe('Interactions Collections Filter', () => {
       assertQueryParams('policy_areas', [policyArea.id])
       assertChipExists({ label: policyArea.name, position: 1 })
       removeChip(policyArea.id)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
+  context('Policy issue types', () => {
+    const element = '[data-test="policy-issue-type-filter"]'
+    const policyIssueType = policyIssueTypeFaker()
+    const expectedPayload = {
+      ...minimumPayload,
+      policy_issue_types: [policyIssueType.id],
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        policy_issue_types: [policyIssueType.id],
+      })
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.intercept('GET', policyIssueTypeMetadataEndpoint, [
+        policyIssueType,
+      ]).as('metaApiRequest')
+      cy.visit(`${interactions.react()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      cy.wait('@metaApiRequest')
+      assertCheckboxGroupOption({
+        element,
+        value: policyIssueType.id,
+        checked: true,
+      })
+      assertChipExists({ label: policyIssueType.name, position: 1 })
+    })
+
+    it('should filter from user input and remove the chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.intercept('GET', policyIssueTypeMetadataEndpoint, [
+        policyIssueType,
+      ]).as('metaApiRequest')
+      cy.visit(`${interactions.react()}?${queryString}`)
+      cy.wait('@apiRequest')
+      cy.wait('@metaApiRequest')
+
+      clickCheckboxGroupOption({
+        element,
+        value: policyIssueType.id,
+      })
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('policy_issue_types', [policyIssueType.id])
+      assertChipExists({ label: policyIssueType.name, position: 1 })
+      removeChip(policyIssueType.id)
       assertPayload('@apiRequest', minimumPayload)
       assertChipsEmpty()
       assertFieldEmpty(element)

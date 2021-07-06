@@ -69,4 +69,12 @@ export const buildSelectedFilters = (
       categoryLabel: LABELS.policyAreas,
     }),
   },
+  policyIssueType: {
+    queryParam: 'policy_issue_types',
+    options: buildOptionsFilter({
+      options: metadata.policyIssueTypeOptions,
+      value: queryParams.policy_issue_types,
+      categoryLabel: LABELS.policyIssueType,
+    }),
+  },
 })
