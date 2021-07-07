@@ -14,25 +14,9 @@ const gotoOverseasCompanySearchPage = () => {
   cy.get(selectors.companyAdd.continueButton).click()
 }
 
-const gotoUsCompanySearchPage = () => {
-  cy.visit(urls.companies.create())
-  cy.get(selectors.companyAdd.form).find('[type="radio"]').check('overseas')
-  cy.get(selectors.companyAdd.form).find('select').select('United States')
-  cy.get(selectors.companyAdd.continueButton).click()
-}
-
 const gotoOverseasCompanySearchResultsPage = () => {
   gotoOverseasCompanySearchPage()
   cy.get(selectors.companyAdd.entitySearch.companyNameField).type('a company')
-  cy.get(selectors.companyAdd.entitySearch.searchButton).click()
-}
-
-/* eslint-disable no-unused-vars */
-const gotoUsCompanySearchResultsPage = () => {
-  gotoUsCompanySearchPage()
-  cy.get(selectors.companyAdd.entitySearch.companyNameField).type(
-    'a US company'
-  )
   cy.get(selectors.companyAdd.entitySearch.searchButton).click()
 }
 
