@@ -35,7 +35,7 @@ const ProjectsCollection = ({
   const collectionListTask = {
     name: TASK_GET_PROJECTS_LIST,
     id: ID,
-    progressMessage: 'loading projects',
+    progressMessage: 'Loading projects',
     startOnRender: {
       payload,
       onSuccessDispatch: INVESTMENTS__PROJECTS_LOADED,
@@ -44,7 +44,7 @@ const ProjectsCollection = ({
   const adviserListTask = {
     name: TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME,
     id: ID,
-    progressMessage: 'loading advisers',
+    progressMessage: 'Loading advisers',
     startOnRender: {
       payload: payload.adviser,
       onSuccessDispatch: INVESTMENTS__PROJECTS_SELECTED_ADVISERS,
@@ -53,7 +53,7 @@ const ProjectsCollection = ({
   const collectionListMetadataTask = {
     name: TASK_GET_INVESTMENTS_PROJECTS_METADATA,
     id: ID,
-    progressMessage: 'loading metadata',
+    progressMessage: 'Loading filters',
     startOnRender: {
       payload: {
         projectStageOptions: urls.metadata.investmentProjectStage(),
@@ -74,7 +74,7 @@ const ProjectsCollection = ({
   return (
     <FilteredCollectionList
       {...props}
-      collectionName="Project"
+      collectionName="project"
       sortOptions={optionMetadata.sortOptions}
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}
@@ -105,7 +105,7 @@ const ProjectsCollection = ({
         <RoutedAdvisersTypeahead
           taskProps={adviserListTask}
           isMulti={true}
-          legend="Advisers"
+          legend="Adviser"
           name="adviser"
           qsParam="adviser"
           placeholder="Search adviser"
@@ -128,7 +128,7 @@ const ProjectsCollection = ({
           legend="Country of origin"
           name="country"
           qsParam="country_investment_originates_from"
-          placeholder="Search countries"
+          placeholder="Search country"
           options={optionMetadata.countryOptions}
           selectedOptions={selectedFilters.countries.options}
           data-test="country-filter"
