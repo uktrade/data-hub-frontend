@@ -32,8 +32,6 @@ const ProjectsCollection = ({
   selectedFilters,
   ...props
 }) => {
-  payload.page = parseInt(payload.page) || 1
-
   const collectionListTask = {
     name: TASK_GET_PROJECTS_LIST,
     id: ID,
@@ -68,7 +66,7 @@ const ProjectsCollection = ({
       onSuccessDispatch: INVESTMENTS__SET_PROJECTS_METADATA,
     },
   }
-  const myProjectsSelected = selectedFilters.selectedAdvisers
+  const myProjectsSelected = selectedFilters.advisers.options
     .map(({ value }) => value)
     .includes(currentAdviserId)
   const myProjectsOption = { label: 'My Projects', value: currentAdviserId }
@@ -82,6 +80,10 @@ const ProjectsCollection = ({
       selectedFilters={selectedFilters}
       baseDownloadLink="/investments/projects/export"
       entityName="project"
+      defaultQueryParams={{
+        page: 1,
+        sortby: 'created_on:desc',
+      }}
     >
       <CollectionFilters taskProps={collectionListMetadataTask}>
         <RoutedCheckboxGroupField
@@ -89,7 +91,7 @@ const ProjectsCollection = ({
           name="stage"
           qsParam="stage"
           options={optionMetadata.projectStageOptions}
-          selectedOptions={selectedFilters.selectedStages}
+          selectedOptions={selectedFilters.stages.options}
           data-test="stage-filter"
         />
         <RoutedCheckboxGroupField
@@ -108,7 +110,7 @@ const ProjectsCollection = ({
           qsParam="adviser"
           placeholder="Search advisers"
           noOptionsMessage={() => <>No advisers found</>}
-          selectedOptions={selectedFilters.selectedAdvisers}
+          selectedOptions={selectedFilters.advisers.options}
           data-test="adviser-filter"
         />
         <RoutedTypeahead
@@ -118,7 +120,7 @@ const ProjectsCollection = ({
           qsParam="sector_descends"
           placeholder="Search sectors"
           options={optionMetadata.sectorOptions}
-          selectedOptions={selectedFilters.selectedSectors}
+          selectedOptions={selectedFilters.sectors.options}
           data-test="sector-filter"
         />
         <RoutedTypeahead
@@ -128,17 +130,17 @@ const ProjectsCollection = ({
           qsParam="country_investment_originates_from"
           placeholder="Search countries"
           options={optionMetadata.countryOptions}
-          selectedOptions={selectedFilters.selectedInvestmentOriginCountries}
+          selectedOptions={selectedFilters.countries.options}
           data-test="country-filter"
         />
         <RoutedTypeahead
           isMulti={true}
-          legend="UK Region"
+          legend="UK region"
           name="uk_region"
           qsParam="uk_region_location"
-          placeholder="Search UK regions"
+          placeholder="Search UK region"
           options={optionMetadata.ukRegionOptions}
-          selectedOptions={selectedFilters.selectedUkRegions}
+          selectedOptions={selectedFilters.ukRegions.options}
           data-test="uk-region-filter"
         />
         <RoutedCheckboxGroupField
@@ -146,7 +148,7 @@ const ProjectsCollection = ({
           name="project_status"
           qsParam="status"
           options={optionMetadata.projectStatusOptions}
-          selectedOptions={selectedFilters.selectedProjectStatuses}
+          selectedOptions={selectedFilters.statuses.options}
           data-test="project-status-filter"
         />
         <RoutedCheckboxGroupField
@@ -154,7 +156,7 @@ const ProjectsCollection = ({
           name="investment_type"
           qsParam="investment_type"
           options={optionMetadata.investmentTypeOptions}
-          selectedOptions={selectedFilters.selectedInvestmentTypes}
+          selectedOptions={selectedFilters.investmentTypes.options}
           data-test="investment-type-filter"
         />
         <RoutedCheckboxGroupField
@@ -162,7 +164,7 @@ const ProjectsCollection = ({
           name="likelihood_to_land"
           qsParam="likelihood_to_land"
           options={optionMetadata.likelihoodToLandOptions}
-          selectedOptions={selectedFilters.selectedLikelihoodToLands}
+          selectedOptions={selectedFilters.likelihoodToLand.options}
           data-test="likelihood-to-land-filter"
         />
         <RoutedDateField
@@ -194,7 +196,7 @@ const ProjectsCollection = ({
           name="involvement_level"
           qsParam="level_of_involvement_simplified"
           options={optionMetadata.involvementLevelOptions}
-          selectedOptions={selectedFilters.selectedInvolvementLevels}
+          selectedOptions={selectedFilters.involvementLevels.options}
           data-test="involvement-level-filter"
         />
       </CollectionFilters>

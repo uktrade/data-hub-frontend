@@ -20,9 +20,13 @@ const transformMetadataOption = ({ id, name }) => ({
  * @filterDisabled whether to filter each option based on its
  * disabled_on key, defaulting to true
  */
-async function getMetadataOptions(url, { filterDisabled = true } = {}) {
-  const { data } = await axios.get(url)
-
+async function getMetadataOptions(
+  url,
+  { filterDisabled = true, params = {} } = {}
+) {
+  const { data } = await axios.get(url, {
+    params,
+  })
   return filterDisabled
     ? data.filter(filterDisabledOption).map(transformMetadataOption)
     : data.map(transformMetadataOption)
@@ -41,21 +45,4 @@ const getHeadquarterTypeOptions = (url) =>
       .sort((item1, item2) => (item1.label > item2.label ? 1 : -1))
   )
 
-/**
- * Get the top-level sector options as a list of values and labels
- *
- * Specifying a searchString uses the autocomplete feature to only show
- * matching results.
- */
-const getSectorOptions = (url, searchString) =>
-  axios
-    .get(url, {
-      params: searchString ? { autocomplete: searchString } : {},
-    })
-    .then(({ data }) =>
-      data
-        .filter(({ level }) => level === 0)
-        .map(({ id, name }) => ({ value: id, label: name }))
-    )
-
-export { getMetadataOptions, getHeadquarterTypeOptions, getSectorOptions }
+export { getMetadataOptions, getHeadquarterTypeOptions }

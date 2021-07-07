@@ -71,8 +71,16 @@ const OrdersCollection = ({
           name="status"
           qsParam="status"
           options={optionMetadata.statusOptions}
-          selectedOptions={selectedFilters.selectedStatuses}
+          selectedOptions={selectedFilters.statuses.options}
           data-test="status-filter"
+        />
+        <RoutedInputField
+          id="OrdersCollection.reference"
+          qsParam="reference"
+          name="reference"
+          label={LABELS.reference}
+          placeholder="Search order reference"
+          data-test="reference-filter"
         />
         <RoutedDateField
           label={LABELS.completedOnAfter}
@@ -96,15 +104,7 @@ const OrdersCollection = ({
           label={LABELS.deliveryDateBefore}
           name="delivery_date_before"
           qsParamName="delivery_date_before"
-          data-test="deliver-date-before-filter"
-        />
-        <RoutedInputField
-          id="OrdersCollection.reference"
-          qsParam="reference"
-          name="reference"
-          label={LABELS.reference}
-          placeholder="Search order reference"
-          data-test="reference-filter"
+          data-test="delivery-date-before-filter"
         />
         <RoutedInputField
           id="OrdersCollection.company-name"
@@ -129,17 +129,17 @@ const OrdersCollection = ({
           qsParam="sector_descends"
           placeholder="Search sectors"
           options={optionMetadata.sectorOptions}
-          selectedOptions={selectedFilters.selectedSectors}
+          selectedOptions={selectedFilters.sectors.options}
           data-test="sector-filter"
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={LABELS.country}
+          legend={LABELS.primaryMarket}
           name="primary_market"
           qsParam="primary_market"
-          placeholder="Search countries"
+          placeholder="Search country"
           options={optionMetadata.omisMarketOptions}
-          selectedOptions={selectedFilters.selectedOmisMarkets}
+          selectedOptions={selectedFilters.omisMarkets.options}
           data-test="country-filter"
         />
         <RoutedTypeahead
@@ -147,9 +147,9 @@ const OrdersCollection = ({
           legend={LABELS.ukRegion}
           name="uk_region"
           qsParam="uk_region"
-          placeholder="Search UK regions"
+          placeholder="Search UK region"
           options={optionMetadata.ukRegionOptions}
-          selectedOptions={selectedFilters.selectedUkRegions}
+          selectedOptions={selectedFilters.ukRegions.options}
           data-test="uk-region-filter"
         />
       </CollectionFilters>
