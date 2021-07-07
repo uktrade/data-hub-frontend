@@ -27,5 +27,5 @@ services:
       MOCK_SSO_SCOPE: data-hub:internal-front-end
       MOCK_SSO_TOKEN: 123
       MOCK_SSO_EMAIL_USER_ID: test@gov.uk
-
+      MOCK_SSO_USERNAME: test@gov.uk
 
