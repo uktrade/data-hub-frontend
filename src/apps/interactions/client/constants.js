@@ -2,7 +2,7 @@ export const LABELS = {
   kind: 'Kind',
   interaction: 'Interaction',
   serviceDelivery: 'Service delivery',
-  advisers: 'Advisers',
+  advisers: 'Adviser',
   myInteractions: 'My interactions',
   dateAfter: 'From',
   dateBefore: 'To',
