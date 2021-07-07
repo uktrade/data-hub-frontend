@@ -1,5 +1,6 @@
 describe('Entire feed', () => {
   it('should render the entire feed component correctly', () => {
+    cy.visit('/')
     cy.visit('/iframe.html?id=activityfeed--entire-feed')
     cy.get('#root').should('be.visible').compareSnapshot('entire-feed')
   })
