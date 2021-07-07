@@ -1,24 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import MultiChoice from '@govuk-react/multi-choice'
 import { GREY_2, YELLOW } from 'govuk-colours'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+import { FONT_SIZE } from '@govuk-react/constants'
 
 import Checkbox from '../Checkbox'
 import FieldWrapper from '../Form/elements/FieldWrapper'
 
-const StyledFieldWrapper = styled(FieldWrapper)`
-  ${({ overflow }) =>
-    overflow &&
-    `fieldset > div {
-    overflow-y: ${overflow};
-    max-height: 400px;
-    }
-  `}
+const checkboxGroupElementStyles = css`
   label {
     font-weight: normal;
     margin-bottom: 4px;
+    padding-left: 0;
   }
-  label:not(:first-child) {
+  li label {
     padding-left: 20px;
   }
   input {
@@ -54,6 +49,42 @@ const StyledFieldWrapper = styled(FieldWrapper)`
   }
 `
 
+const StyledFieldWrapper = styled(FieldWrapper)`
+  ${({ visibleHeight }) =>
+    visibleHeight
+      ? `
+      fieldset > div {
+        overflow-y: scroll;
+        max-height: ${visibleHeight}px;
+        padding-left: 10px;
+        margin-left: -10px;
+        /* Taken from Gov.uk, these rules allow us to retain a permanent scrollbar */
+        &::-webkit-scrollbar {
+          -webkit-appearance: none;
+          width: 7px;
+        }
+        &::-webkit-scrollbar-thumb {
+          border-radius: 4px;
+          background-color: rgba(0, 0, 0, 0.5);
+          -webkit-box-shadow: 0 0 1px rgb(255 255 255 / 87%);
+        }
+      }
+      ${checkboxGroupElementStyles}`
+      : checkboxGroupElementStyles}
+`
+
+const SelectedCount = styled('span')`
+  font-size: ${FONT_SIZE.SIZE_14};
+  display: block;
+  padding: 5px 0;
+`
+
+const StyledList = styled('ul')`
+  padding: 0;
+  margin: 0;
+  list-style: none;
+`
+
 /**
  * Check box group field - shows a number of options as checkboxes
  *
@@ -74,6 +105,7 @@ const CheckboxGroupField = ({
   selectedOptions = [],
   onChange = () => null,
   id,
+  visibleHeight = 0,
   ...props
 }) => {
   const [options, setOptions] = useState(initialOptions)
@@ -90,6 +122,7 @@ const CheckboxGroupField = ({
 
   return (
     <StyledFieldWrapper
+      visibleHeight={visibleHeight}
       legend={legend}
       name={name}
       hint={hint}
@@ -99,45 +132,54 @@ const CheckboxGroupField = ({
       {loading ? (
         'Loading...'
       ) : (
-        <MultiChoice>
-          {options.map((option, i) => {
-            const {
-              value: optionValue,
-              label: optionLabel,
-              ...optionProps
-            } = option
-            const checked = selectedOptions
-              .map(({ value }) => value)
-              .includes(optionValue)
-            const otherOptions = [
-              ...selectedOptions.filter(
-                ({ value: otherOptionValue }) =>
-                  otherOptionValue !== optionValue
-              ),
-            ]
-            const handleChange = (event) => {
-              if (event.target.checked) {
-                onChange([...otherOptions, option])
-              } else {
-                onChange(otherOptions)
-              }
-            }
-            return (
-              <Checkbox
-                id={`field-${name}-${i + 1}`}
-                key={optionValue}
-                name={name}
-                initialChecked={checked}
-                value={optionValue}
-                onChange={handleChange}
-                aria-label={optionLabel}
-                {...optionProps}
-              >
-                {optionLabel}
-              </Checkbox>
-            )
-          })}
-        </MultiChoice>
+        <>
+          {visibleHeight > 0 && selectedOptions.length > 0 && (
+            <SelectedCount>{`${selectedOptions.length} selected`}</SelectedCount>
+          )}
+          <MultiChoice>
+            <StyledList>
+              {options.map((option, i) => {
+                const {
+                  value: optionValue,
+                  label: optionLabel,
+                  ...optionProps
+                } = option
+                const checked = selectedOptions
+                  .map(({ value }) => value)
+                  .includes(optionValue)
+                const otherOptions = [
+                  ...selectedOptions.filter(
+                    ({ value: otherOptionValue }) =>
+                      otherOptionValue !== optionValue
+                  ),
+                ]
+                const handleChange = (event) => {
+                  if (event.target.checked) {
+                    onChange([...otherOptions, option])
+                  } else {
+                    onChange(otherOptions)
+                  }
+                }
+                return (
+                  <li>
+                    <Checkbox
+                      id={`field-${name}-${i + 1}`}
+                      key={optionValue}
+                      name={name}
+                      initialChecked={checked}
+                      value={optionValue}
+                      onChange={handleChange}
+                      aria-label={optionLabel}
+                      {...optionProps}
+                    >
+                      {optionLabel}
+                    </Checkbox>
+                  </li>
+                )
+              })}
+            </StyledList>
+          </MultiChoice>
+        </>
       )}
     </StyledFieldWrapper>
   )
