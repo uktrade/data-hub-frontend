@@ -10,6 +10,8 @@ export const LABELS = {
   sector: 'Sector',
   businessIntelligence: 'Business intelligence',
   policyAreas: 'Policy area(s)',
+  policyIssueType: 'Policy issue type',
+  companyOneListGroupTier: 'Company One List Group Tier',
 }
 
 export const KIND_OPTIONS = [
