@@ -93,7 +93,13 @@ const InteractionCollection = ({
           selectedOptions={selectedFilters.kind.options}
           data-test="status-filter"
         />
-
+        <RoutedCheckboxGroupField
+          name="dit_participants__adviser"
+          qsParam="adviser"
+          options={[myInteractionsOption]}
+          selectedOptions={myInteractionsSelected ? [myInteractionsOption] : []}
+          data-test="my-interactions-filter"
+        />
         <RoutedAdvisersTypeahead
           taskProps={adviserListTask}
           isMulti={true}
@@ -104,13 +110,6 @@ const InteractionCollection = ({
           noOptionsMessage={() => <>No advisers found</>}
           selectedOptions={selectedFilters.advisers.options}
           data-test="adviser-filter"
-        />
-        <RoutedCheckboxGroupField
-          name="dit_participants__adviser"
-          qsParam="adviser"
-          options={[myInteractionsOption]}
-          selectedOptions={myInteractionsSelected ? [myInteractionsOption] : []}
-          data-test="my-interactions-filter"
         />
         <RoutedDateField
           label={LABELS.dateAfter}
