@@ -7,20 +7,27 @@ const fixtures = require('../../fixtures')
 const { assertBreadcrumbs } = require('../../support/assertions')
 const urls = require('../../../../../src/lib/urls')
 
-const gotoOverseasCompanySearchPage = () => {
+const goToOverseasCompanySearchPage = () => {
   cy.visit(urls.companies.create())
   cy.get(selectors.companyAdd.form).find('[type="radio"]').check('overseas')
   cy.get(selectors.companyAdd.form).find('select').select('Poland')
   cy.get(selectors.companyAdd.continueButton).click()
 }
 
-const gotoOverseasCompanySearchResultsPage = () => {
-  gotoOverseasCompanySearchPage()
+const goToOverseasCompanySearchResultsPage = () => {
+  goToOverseasCompanySearchPage()
   cy.get(selectors.companyAdd.entitySearch.companyNameField).type('a company')
   cy.get(selectors.companyAdd.entitySearch.searchButton).click()
 }
 
-const gotoUKCompanySearchResultsPage = () => {
+const goToUSCompanySearchPage = () => {
+  cy.visit(urls.companies.create())
+  cy.get(selectors.companyAdd.form).find('[type="radio"]').check('overseas')
+  cy.get(selectors.companyAdd.form).find('select').select('United States')
+  cy.get(selectors.companyAdd.continueButton).click()
+}
+
+const goToUKCompanySearchResultsPage = () => {
   cy.visit(urls.companies.create())
   cy.get(selectors.companyAdd.form).find('[type="radio"]').check('GB')
   cy.get(selectors.companyAdd.continueButton).click()
@@ -28,20 +35,28 @@ const gotoUKCompanySearchResultsPage = () => {
   cy.get(selectors.companyAdd.entitySearch.searchButton).click()
 }
 
-const gotoAddUKCompanyPage = (listItem) => {
-  gotoUKCompanySearchResultsPage()
+const goToAddUKCompanyPage = (listItem) => {
+  goToUKCompanySearchResultsPage()
   cy.get(listItem).click()
   cy.get(selectors.companyAdd.continueButton).click()
 }
 
-const gotoManualAddUKCompanyPage = () => {
-  gotoUKCompanySearchResultsPage()
+const goToUSCompanySearchResultsPage = () => {
+  goToUSCompanySearchPage()
+  cy.get(selectors.companyAdd.entitySearch.companyNameField).type(
+    'a US company'
+  )
+  cy.get(selectors.companyAdd.entitySearch.searchButton).click()
+}
+
+const goToManualAddUKCompanyPage = () => {
+  goToUKCompanySearchResultsPage()
   cy.get(selectors.companyAdd.entitySearch.cannotFind.summary).click()
   cy.get(selectors.companyAdd.entitySearch.cannotFind.stillCannotFind).click()
 }
 
-const gotoUKCompanySectorAndRegionPage = () => {
-  gotoManualAddUKCompanyPage()
+const goToUKCompanySectorAndRegionPage = () => {
+  goToManualAddUKCompanyPage()
   cy.get(
     selectors.companyAdd.newCompanyRecordForm.organisationType.limitedCompany
   ).click()
@@ -75,7 +90,7 @@ describe('Add company form', () => {
     'when viewing a company in the list thats already in Data Hub',
     () => {
       it('should show that the company is already in Data Hub', () => {
-        gotoUKCompanySearchResultsPage()
+        goToUKCompanySearchResultsPage()
         cy.get('[data-test="entity-list"] li')
           .eq(1)
           .find('h3')
@@ -172,7 +187,7 @@ describe('Add company form', () => {
 
   context('when an overseas country is picked', () => {
     before(() => {
-      gotoOverseasCompanySearchPage()
+      goToOverseasCompanySearchPage()
     })
 
     it('should display the "Find the company" heading', () => {
@@ -226,7 +241,7 @@ describe('Add company form', () => {
 
   context('when an overseas company is searched', () => {
     before(() => {
-      gotoOverseasCompanySearchResultsPage()
+      goToOverseasCompanySearchResultsPage()
     })
 
     it('should display the entity search results', () => {
@@ -241,7 +256,7 @@ describe('Add company form', () => {
 
   context('when a company is picked that does not exist on Data Hub', () => {
     before(() => {
-      gotoOverseasCompanySearchResultsPage()
+      goToOverseasCompanySearchResultsPage()
       cy.contains('Some unmatched company').click()
     })
 
@@ -280,7 +295,7 @@ describe('Add company form', () => {
 
   context('when adding a company that does not exist on Data Hub', () => {
     beforeEach(() => {
-      gotoOverseasCompanySearchResultsPage()
+      goToOverseasCompanySearchResultsPage()
       cy.contains('Some unmatched company').click()
       cy.get(selectors.companyAdd.continueButton).click()
     })
@@ -331,7 +346,7 @@ describe('Add company form', () => {
 
   context('when manually adding a new UK-based company', () => {
     beforeEach(() => {
-      gotoManualAddUKCompanyPage()
+      goToManualAddUKCompanyPage()
     })
 
     it('should display the manual entry form', () => {
@@ -461,7 +476,7 @@ describe('Add company form', () => {
 
   context('when valid details are submitted for a new UK company', () => {
     beforeEach(() => {
-      gotoUKCompanySectorAndRegionPage()
+      goToUKCompanySectorAndRegionPage()
     })
 
     it('should render the region and sector fields', () => {
@@ -493,7 +508,7 @@ describe('Add company form', () => {
 
   context('when a valid sector and region are submitted', () => {
     before(() => {
-      gotoUKCompanySectorAndRegionPage()
+      goToUKCompanySectorAndRegionPage()
       cy.get(selectors.companyAdd.newCompanyRecordForm.region).select('London')
       cy.get(selectors.companyAdd.newCompanyRecordForm.sector).select(
         'Advanced Engineering'
@@ -518,7 +533,7 @@ describe('Add company form', () => {
 
   context('when manually adding a new overseas company', () => {
     before(() => {
-      gotoOverseasCompanySearchResultsPage()
+      goToOverseasCompanySearchResultsPage()
 
       cy.get(selectors.companyAdd.entitySearch.cannotFind.summary).click()
       cy.get(
@@ -583,7 +598,7 @@ describe('Add company form', () => {
   context('when "UK" is selected for the company location', () => {
     beforeEach(() => {
       const { results } = selectors.companyAdd.entitySearch
-      gotoAddUKCompanyPage(results.someCompanyName)
+      goToAddUKCompanyPage(results.someCompanyName)
     })
 
     it('should render an "Add a company" H1 element', () => {
@@ -642,7 +657,7 @@ describe('Add company form', () => {
   context('when a UK company postcode is unknown', () => {
     before(() => {
       const { results } = selectors.companyAdd.entitySearch
-      gotoAddUKCompanyPage(results.companyUnknownPostcode)
+      goToAddUKCompanyPage(results.companyUnknownPostcode)
     })
 
     it('should prompt the user to select a "Region"', () => {
@@ -650,6 +665,67 @@ describe('Add company form', () => {
         .next()
         .find('select option:selected')
         .should('have.text', '-- Select DIT region --')
+    })
+  })
+
+  context('when manually adding a new US company', () => {
+    before(() => {
+      goToUSCompanySearchResultsPage()
+
+      cy.get(selectors.companyAdd.entitySearch.cannotFind.summary).click()
+      cy.get(
+        selectors.companyAdd.entitySearch.cannotFind.stillCannotFind
+      ).click()
+    })
+
+    it('should display the manual entry form', () => {
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.charity)
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType
+          .governmentDepartmentOrOtherPublicBody
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType
+          .limitedCompany
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType
+          .limitedPartnership
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType.partnership
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType.soleTrader
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.newCompanyRecordForm.website).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.newCompanyRecordForm.area).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.form).contains('United States')
     })
   })
 })
