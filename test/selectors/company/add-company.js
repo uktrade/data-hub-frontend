@@ -51,6 +51,7 @@ module.exports = {
     area: 'select#area',
     region: 'select#uk_region',
     sector: 'select#sector',
+    area: 'select#area',
   },
   companyDetails: {
     subheader: 'form h2',
