@@ -100,7 +100,7 @@ const InteractionCollection = ({
           legend={LABELS.advisers}
           name="adviser"
           qsParam="adviser"
-          placeholder="Search advisers"
+          placeholder="Search adviser"
           noOptionsMessage={() => <>No advisers found</>}
           selectedOptions={selectedFilters.advisers.options}
           data-test="adviser-filter"
@@ -138,7 +138,7 @@ const InteractionCollection = ({
           legend={LABELS.sector}
           name="sector"
           qsParam="sector_descends"
-          placeholder="Search sectors"
+          placeholder="Search sector"
           options={optionMetadata.sectorOptions}
           selectedOptions={selectedFilters.sectors.options}
           data-test="sector-filter"
@@ -159,6 +159,23 @@ const InteractionCollection = ({
           options={optionMetadata.policyAreaOptions}
           selectedOptions={selectedFilters.policyArea.options}
           data-test="policy-area-filter"
+        />
+        <RoutedCheckboxGroupField
+          legend={LABELS.policyIssueType}
+          name="policy_issue_types"
+          qsParam="policy_issue_types"
+          options={optionMetadata.policyIssueTypeOptions}
+          selectedOptions={selectedFilters.policyIssueType.options}
+          data-test="policy-issue-type-filter"
+        />
+        <RoutedCheckboxGroupField
+          overflow="scroll"
+          legend={LABELS.companyOneListGroupTier}
+          name="company_one_list_group_tier"
+          qsParam="company_one_list_group_tier"
+          options={optionMetadata.companyOneListTierOptions}
+          selectedOptions={selectedFilters.companyOneListGroupTier.options}
+          data-test="company-one-list-group-tier-filter"
         />
       </CollectionFilters>
     </FilteredCollectionList>
