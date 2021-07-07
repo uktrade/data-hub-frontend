@@ -15,15 +15,15 @@ describe('Company activity feed', () => {
     })
 
     it('should display the activity header', () => {
-      cy.findByText('Activities')
+      cy.findByRole('heading', { name: 'Activities' })
     })
 
     it('should display "Add interaction" button', () => {
-      cy.findByRole('button', { name: /Add interaction/i }).should('exist')
+      cy.findByRole('button', { name: 'Add interaction' }).should('exist')
     })
 
     it('should display "Refer this company" button', () => {
-      cy.findByRole('button', { name: /Refer this company/i }).should('exist')
+      cy.findByRole('button', { name: 'Refer this company' }).should('exist')
     })
 
     it('should display the "There are no activities to show." message', () => {
