@@ -197,7 +197,7 @@ describe('Contacts Collections Filter', () => {
       testTypeahead({
         element,
         legend: 'Sector',
-        placeholder: 'Search sectors',
+        placeholder: 'Search sector',
         input: 'aero',
         expectedOption: 'Aerospace',
       })
@@ -251,8 +251,8 @@ describe('Contacts Collections Filter', () => {
 
       testTypeahead({
         element,
-        legend: 'Country of origin',
-        placeholder: 'Search countries',
+        legend: 'Country',
+        placeholder: 'Search country',
         input: 'bra',
         expectedOption: 'Brazil',
       })

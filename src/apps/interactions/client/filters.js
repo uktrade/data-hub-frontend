@@ -69,4 +69,20 @@ export const buildSelectedFilters = (
       categoryLabel: LABELS.policyAreas,
     }),
   },
+  policyIssueType: {
+    queryParam: 'policy_issue_types',
+    options: buildOptionsFilter({
+      options: metadata.policyIssueTypeOptions,
+      value: queryParams.policy_issue_types,
+      categoryLabel: LABELS.policyIssueType,
+    }),
+  },
+  companyOneListGroupTier: {
+    queryParam: 'company_one_list_group_tier',
+    options: buildOptionsFilter({
+      options: metadata.companyOneListTierOptions,
+      value: queryParams.company_one_list_group_tier,
+      categoryLabel: LABELS.policyIssueType,
+    }),
+  },
 })

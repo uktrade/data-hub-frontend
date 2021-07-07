@@ -20,12 +20,24 @@ const getInteractionsMetadata = () =>
       },
     }),
     getMetadataOptions(urls.metadata.policyArea()),
+    getMetadataOptions(urls.metadata.policyIssueType()),
+    getMetadataOptions(urls.metadata.oneListTier()),
   ])
-    .then(([serviceOptions, sectorOptions, policyAreaOptions]) => ({
-      serviceOptions: sortServiceOptions(serviceOptions),
-      sectorOptions,
-      policyAreaOptions,
-    }))
+    .then(
+      ([
+        serviceOptions,
+        sectorOptions,
+        policyAreaOptions,
+        policyIssueTypeOptions,
+        companyOneListTierOptions,
+      ]) => ({
+        serviceOptions: sortServiceOptions(serviceOptions),
+        sectorOptions,
+        policyAreaOptions,
+        policyIssueTypeOptions,
+        companyOneListTierOptions,
+      })
+    )
     .catch(handleError)
 
 const getInteractions = ({
@@ -40,6 +52,8 @@ const getInteractions = ({
   sector_descends,
   was_policy_feedback_provided,
   policy_areas,
+  policy_issue_types,
+  company_one_list_group_tier,
 }) =>
   axios
     .post('/api-proxy/v3/search/interaction', {
@@ -54,6 +68,8 @@ const getInteractions = ({
       sector_descends,
       was_policy_feedback_provided,
       policy_areas,
+      policy_issue_types,
+      company_one_list_group_tier,
     })
     .then(({ data }) => transformResponseToCollection(data), handleError)
 
