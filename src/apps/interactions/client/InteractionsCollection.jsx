@@ -78,7 +78,7 @@ const InteractionCollection = ({
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}
       baseDownloadLink="/interactions/export"
-      entityName="interactions"
+      entityName="interaction"
       defaultQueryParams={{
         sortby: 'date:desc',
         page: 1,
