@@ -595,6 +595,80 @@ describe('Add company form', () => {
     })
   })
 
+  context('when manually adding a new US company', () => {
+    before(() => {
+      cy.visit(urls.companies.create())
+      cy.get(selectors.companyAdd.form).find('[type="radio"]').check('overseas')
+      cy.get(selectors.companyAdd.form).find('select').select('United States')
+      cy.get(selectors.companyAdd.continueButton).click()
+      cy.get(selectors.companyAdd.entitySearch.companyNameField).type(
+        'a US company'
+      )
+      cy.get(selectors.companyAdd.entitySearch.searchButton).click()
+
+      cy.get(selectors.companyAdd.entitySearch.cannotFind.summary).click()
+      cy.get(
+        selectors.companyAdd.entitySearch.cannotFind.stillCannotFind
+      ).click()
+    })
+
+    it('should display the manual entry form', () => {
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.charity)
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType
+          .governmentDepartmentOrOtherPublicBody
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType
+          .limitedCompany
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType
+          .limitedPartnership
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType.partnership
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(
+        selectors.companyAdd.newCompanyRecordForm.organisationType.soleTrader
+      )
+        .parent()
+        .should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.newCompanyRecordForm.website).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.newCompanyRecordForm.area).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.form).contains('United States')
+    })
+
+    it('should not show a disabled state', () => {
+      cy.get(selectors.companyAdd.newCompanyRecordForm.area)
+        .contains('Disabled US State')
+        .should('not.exist')
+    })
+  })
+
   context('when "UK" is selected for the company location', () => {
     beforeEach(() => {
       const { results } = selectors.companyAdd.entitySearch
