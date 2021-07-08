@@ -50,7 +50,7 @@ storiesOf('Filters/Checkbox', module)
   ))
   .add('Overflow with scroll', () => (
     <CheckboxGroupField
-      visibleHeight={215}
+      maxScrollHeight={215}
       name="countries"
       legend="What are your favourite countries?"
       options={[
