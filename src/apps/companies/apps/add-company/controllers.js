@@ -26,6 +26,8 @@ async function renderAddCompanyForm(req, res, next) {
       getOptions(req, 'sector'),
     ])
 
+    const features = res.locals.features
+
     res
       .breadcrumb('Add company')
       .render('companies/apps/add-company/views/client-container', {
@@ -39,6 +41,7 @@ async function renderAddCompanyForm(req, res, next) {
               res.locals.features['address-area-company-search'],
             areaFormField:
               res.locals.features['edit-business-details-area-fields'],
+            ...features,
           },
         },
       })
