@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { BLACK, GREY_3 } from 'govuk-colours'
+import { HEADING_SIZES, SPACING } from '@govuk-react/constants'
+import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
+import { H2 } from '@govuk-react/heading'
 import Button from '@govuk-react/button'
 import styled from 'styled-components'
 import pluralize from 'pluralize'
-import { H2 } from '@govuk-react/heading'
-import { BLACK, GREY_3 } from 'govuk-colours'
-import { HEADING_SIZES, SPACING } from '@govuk-react/constants'
 
 import {
   CollectionHeaderRow,
@@ -56,6 +57,14 @@ const StyledDiv = styled('div')`
   }
 `
 
+const StyledSummary = styled('div')`
+  font-size: ${FONT_SIZE.SIZE_16};
+`
+
+const StyledSummaryTotal = styled('span')`
+  font-weight: ${FONT_WEIGHTS.bold};
+`
+
 const RoutedFilterChipsCollection = ({ selectedFilters }) => {
   return (
     <>
@@ -71,6 +80,7 @@ const RoutedFilterChipsCollection = ({ selectedFilters }) => {
 }
 function FilteredCollectionHeader({
   totalItems,
+  summary,
   collectionName = 'result',
   addItemUrl = null,
   selectedFilters,
@@ -104,6 +114,14 @@ function FilteredCollectionHeader({
           </FilterReset>
         </StyledDiv>
       </CollectionHeaderRow>
+      {summary && (
+        <StyledSummary data-test="summary">
+          Total value:{' '}
+          <StyledSummaryTotal>
+            £{decimal(summary.total_subtotal_cost / 100)}
+          </StyledSummaryTotal>
+        </StyledSummary>
+      )}
       <CollectionHeaderRow data-test="filter-chips" id="filter-chips">
         <RoutedFilterChipsCollection selectedFilters={selectedFilters} />
       </CollectionHeaderRow>
@@ -113,6 +131,7 @@ function FilteredCollectionHeader({
 
 FilteredCollectionHeader.propTypes = {
   totalItems: PropTypes.number.isRequired,
+  summary: PropTypes.object,
   collectionName: PropTypes.string.isRequired,
   addItemUrl: PropTypes.string,
   selectedFilters: PropTypes.objectOf(

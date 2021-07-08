@@ -38,6 +38,9 @@ describe('Orders (OMIS) Collection List Page - React', () => {
       body: {
         count: ordersList.length,
         results: ordersList,
+        summary: {
+          total_subtotal_cost: 23218.0,
+        },
       },
     }).as('apiRequest')
     cy.visit(omis.react.index())
@@ -67,6 +70,12 @@ describe('Orders (OMIS) Collection List Page - React', () => {
       .should('exist')
       .should('contain', 'Add order')
       .should('have.attr', 'href', '/omis/create')
+  })
+
+  it('should have the total value', () => {
+    cy.get('[data-test="summary"]')
+      .should('exist')
+      .should('contain', 'Total value: £232.18')
   })
 
   it('should display a list of contacts', () => {
