@@ -10,12 +10,13 @@ services:
       - /usr/src/app/node_modules
 
   lb_web:
-    image: gcr.io/sre-docker-registry/github.com/uktrade/legal-basis-api
+    image: gcr.io/sre-docker-registry/github.com/uktrade/legal-basis-api:latest
     environment:
       DJANGO_DATABASE_HOST: db
       DJANGO_ENV: test
       DJANGO_SECRET_KEY: 4c1nzrs&8^g+t$tt**wl7u8)0p8ql3vr28rjn1mdcnr*crjz*#
       DATABASE_URL: postgres://postgres@127.0.0.1:5432/legal-basis
+      DJANGO_SETTINGS_MODULE: server.settings
       AUTHBROKER_URL: https://sso.trade.gov.uk/
       AUTHBROKER_CLIENT_ID: client_id
       AUTHBROKER_CLIENT_SECRET: client_secret
@@ -25,6 +26,9 @@ services:
       ACTIVITY_STREAM_ID: fake_id
       ACTIVITY_STREAM_KEY: fake_key
       REDIS_URL: redis://redis/
+      MAXEMAIL_BASE_URL: dummyURL
+      MAXEMAIL_USERNAME: dummyUser
+      MAXEMAIL_PASSWORD: dummyPassword
       ELASTIC_APM_DISABLE_SEND: 1
     depends_on:
       - lb_db
@@ -34,6 +38,9 @@ services:
 
   lb_db:
     image: postgres:9.6.9-alpine
+    restart: unless-stopped
+    ports: 
+      - "5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: legal-basis
