@@ -123,6 +123,7 @@ const OpportunityRequirementsForm = ({ opportunityId }) => {
                          initialValue={investmentTypesValues.map(obj => obj.value)}
                          options={investmentTypesOptions}
                          required="Select an option to continue"
+                         data-test="types-of-investment"
                        />
 
                        <StyledP>
@@ -136,6 +137,7 @@ const OpportunityRequirementsForm = ({ opportunityId }) => {
                          initialValue={returnRateValues && returnRateValues.value}
                          options={returnRatesOptions}
                          required="Select an option to continue"
+                         data-test="estimated-return-rate"
                        />
 
                        <FieldRadios
@@ -145,10 +147,11 @@ const OpportunityRequirementsForm = ({ opportunityId }) => {
                          initialValue={timeHorizonsValues.length ? timeHorizonsValues[0].value : ''}
                          options={timeScalesOptions}
                          required="Select an option to continue"
+                         data-test="timescales"
                        />
 
                      <FormActions>
-                        <Button>Save</Button>
+                        <Button data-test="edit-button">Save</Button>
                         <Link href={url.investments.opportunities.details(opportunityId)}>Cancel</Link>
                      </FormActions>
 

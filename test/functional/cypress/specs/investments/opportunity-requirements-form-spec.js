@@ -8,10 +8,9 @@ const {
 } = require('../../support/assertions')
 const fixtures = require('../../fixtures')
 const { investments } = require('../../../../../src/lib/urls')
-const { cy } = require('date-fns/locale')
 
-const capitalOpportunitiesCompleteRequirements = require('../../fixtures/investment/large-capital-opportunity-complete.json')
-const capitalOpportunitiesIncompleteRequirements = require('../../fixtures/investment/large-capital-opportunity-incomplete.json')
+const capitalOpportunitiesCompleteRequirements = require('../../../../sandbox/fixtures/v4/investment/large-capital-opportunity-complete.json')
+const capitalOpportunitiesIncompleteRequirements = require('../../../../sandbox/fixtures/v4/investment/large-capital-opportunity-incomplete.json')
 
 const { transformInvestmentOpportunityDetails } = require('../../../../../src/apps/investments/client/opportunities/Details/transformers')
 
@@ -34,29 +33,38 @@ const assertSelectFieldRadios = ({ element, legend, value }) =>
           .next()
     )
 
-const navigateToForm = ({ opportunity }) => {
+const navigateToForm = (opportunity) => {
   cy.visit(investments.opportunities.details(opportunity.id))
 }
 
 const testOpportunityRequirementsForm = ({ opportunity }) => {
   const requirementsFields = transformInvestmentOpportunityDetails(opportunity)
   before(() => {
-    navigateToForm({ requirementsFields })
-    cy.get('[data-test="investment-opportunity-details"]').select('Opportunity requirements')
-    cy.contains('Edit').click()
+    navigateToForm(opportunity)
+    cy.get(
+      '#opportunity_requirements_toggle > div > [data-test="toggle-section-button"]'
+    ).click()
   })
 
   it('should render breadcrumbs', () => {
     assertBreadcrumbs({
       Home: '/',
       Investments: '/investments',
-      Opportunities: investments.opportunities.details(opportunity.id),
+      'UK Opportunities': investments.opportunities.index(),
       [opportunity.name]: null,
     })
   })
 
   it('should render the header', () => {
     assertLocalHeader(opportunity.name)
+    cy.get('#localHeaderDetails')
+        .contains('li', 'Status')
+  })
+
+  it('should display the Edit button', () => {
+    cy.get(
+      '#opportunity_requirements_toggle > div > [data-test="toggle-section-button"]'
+      ).click()
   })
 
   it('should render expected form fields with existing values', () => {
@@ -96,8 +104,7 @@ const testOpportunityRequirementsForm = ({ opportunity }) => {
 
 describe('Edit the capital opportunity requirements', () => {
   context('When editing capital opportunities without existing requirements data', () => {
-    // testOpportunityRequirementsForm({ opportunity:  capitalOpportunitiesIncompleteRequirements })
-    testOpportunityRequirementsForm({ opportunity: capitalOpportunitiesCompleteRequirements })
+    testOpportunityRequirementsForm({ opportunity:  capitalOpportunitiesIncompleteRequirements })
 
     it('should allow the user to fill in all fields', () => {
       cy.get('[data-test="total_investment_sought"]').type('100')
@@ -118,8 +125,7 @@ describe('Edit the capital opportunity requirements', () => {
   })
 
   context('When making changes that miss-out required fields', () => {
-    // testOpportunityRequirementsForm({ opportunity: capitalOpportunitiesIncompleteRequirements })
-    testOpportunityRequirementsForm({ opportunity: capitalOpportunitiesCompleteRequirements })
+    testOpportunityRequirementsForm({ opportunity: capitalOpportunitiesIncompleteRequirements })
 
     it('should highlight errorneous from input', () => {
       cy.get('[data-test="values"]')
@@ -137,8 +143,7 @@ describe('Edit the capital opportunity requirements', () => {
   })
 
   context('When no changes without existing requirements data', () => {
-    // testOpportunityRequirementsForm({ opportunity: capitalOpportunitiesIncompleteRequirements })
-    testOpportunityRequirementsForm({ opportunity: capitalOpportunitiesCompleteRequirements })
+    testOpportunityRequirementsForm({ opportunity: capitalOpportunitiesIncompleteRequirements })
     
     it('should allow to user to cancel and edit functionality', () => {
       cy.contains('Cancel').click()
