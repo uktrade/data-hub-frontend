@@ -39,6 +39,7 @@ const MATCHED_COMPANY_VERIFIABLE_FIELDS = [
   'vat_number',
   'address1',
   'address2',
+  'area',
   'city',
   'county',
   'postcode',
@@ -113,7 +114,7 @@ const transformFormToChangeRequest = (company, formValues) => {
 }
 
 // The API expects to receive only the values that have changed.
-const transformFormToDnbChangeRequest = (company, formValues) => {
+const transformFormToDnbChangeRequest = (company, formValues, res) => {
   const obj = transformFormToChangeRequest(company, formValues)
 
   const address = omitBy(
@@ -123,6 +124,9 @@ const transformFormToDnbChangeRequest = (company, formValues) => {
       town: obj.city,
       county: obj.county,
       postcode: obj.postcode,
+      ...(res.locals.features['address-area-company-search'] && {
+        area: { id: obj.area },
+      }),
     },
     (fieldValue) => isEmpty(fieldValue)
   )
@@ -131,6 +135,7 @@ const transformFormToDnbChangeRequest = (company, formValues) => {
   delete obj.address2
   delete obj.city
   delete obj.county
+  delete obj.area
   delete obj.postcode
 
   const tradingNames = omitBy(
