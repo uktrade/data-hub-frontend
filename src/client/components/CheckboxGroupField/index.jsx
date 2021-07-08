@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import MultiChoice from '@govuk-react/multi-choice'
+import PropTypes from 'prop-types'
 import { GREY_2, YELLOW } from 'govuk-colours'
 import styled, { css } from 'styled-components'
-import { FONT_SIZE } from '@govuk-react/constants'
+import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 
 import Checkbox from '../Checkbox'
 import FieldWrapper from '../Form/elements/FieldWrapper'
@@ -50,12 +51,12 @@ const checkboxGroupElementStyles = css`
 `
 
 const StyledFieldWrapper = styled(FieldWrapper)`
-  ${({ visibleHeight }) =>
-    visibleHeight
+  ${({ maxScrollHeight }) =>
+    maxScrollHeight
       ? `
       fieldset > div {
         overflow-y: scroll;
-        max-height: ${visibleHeight}px;
+        max-height: ${maxScrollHeight}px;
         padding-left: 10px;
         margin-left: -10px;
         /* Taken from Gov.uk, these rules allow us to retain a permanent scrollbar */
@@ -76,7 +77,7 @@ const StyledFieldWrapper = styled(FieldWrapper)`
 const SelectedCount = styled('span')`
   font-size: ${FONT_SIZE.SIZE_14};
   display: block;
-  padding: 5px 0;
+  padding: ${SPACING.SCALE_1} 0;
 `
 
 const StyledList = styled('ul')`
@@ -95,7 +96,9 @@ const StyledList = styled('ul')`
  * @param {Func} loadOptions - function to load options
  * @param {Array} selectedOptions - the options that have been selected
  * @param {Func} onChange - callback function that passes on the selected options
+ * @param {number} maxScrollHeight - sets the visible area for the checkboxes before the overflow is set
  */
+
 const CheckboxGroupField = ({
   legend,
   name,
@@ -105,7 +108,7 @@ const CheckboxGroupField = ({
   selectedOptions = [],
   onChange = () => null,
   id,
-  visibleHeight = 0,
+  maxScrollHeight = 0,
   ...props
 }) => {
   const [options, setOptions] = useState(initialOptions)
@@ -122,7 +125,7 @@ const CheckboxGroupField = ({
 
   return (
     <StyledFieldWrapper
-      visibleHeight={visibleHeight}
+      maxScrollHeight={maxScrollHeight}
       legend={legend}
       name={name}
       hint={hint}
@@ -133,7 +136,7 @@ const CheckboxGroupField = ({
         'Loading...'
       ) : (
         <>
-          {visibleHeight > 0 && selectedOptions.length > 0 && (
+          {maxScrollHeight > 0 && selectedOptions.length > 0 && (
             <SelectedCount>{`${selectedOptions.length} selected`}</SelectedCount>
           )}
           <MultiChoice>
@@ -183,6 +186,28 @@ const CheckboxGroupField = ({
       )}
     </StyledFieldWrapper>
   )
+}
+
+CheckboxGroupField.propTypes = {
+  legend: PropTypes.string,
+  name: PropTypes.string,
+  hint: PropTypes.string,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string,
+      label: PropTypes.string,
+    })
+  ).isRequired,
+  loadOptions: PropTypes.func,
+  selectedOptions: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string,
+      label: PropTypes.string,
+    })
+  ).isRequired,
+  onChange: PropTypes.func,
+  id: PropTypes.string,
+  maxScrollHeight: PropTypes.number,
 }
 
 export default CheckboxGroupField
