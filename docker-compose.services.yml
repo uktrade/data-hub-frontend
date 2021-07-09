@@ -1,4 +1,5 @@
 version: '3'
+
 services:
   mock-third-party-services:
     build: ./test/sandbox
@@ -9,31 +10,39 @@ services:
       # Ensures that the local node_modules dir is not used in the container
       - /usr/src/app/node_modules
 
-  lb_web:
-    image: gcr.io/sre-docker-registry/github.com/uktrade/legal-basis-api
+  lbweb:
+    image: gcr.io/sre-docker-registry/github.com/uktrade/legal-basis-api:latest
     environment:
       DJANGO_DATABASE_HOST: db
       DJANGO_ENV: test
       DJANGO_SECRET_KEY: 4c1nzrs&8^g+t$tt**wl7u8)0p8ql3vr28rjn1mdcnr*crjz*#
-      DATABASE_URL: postgres://postgres@127.0.0.1:5432/legal-basis
+      DATABASE_URL: postgres://postgres@lbdb:5432/legal-basis
+      DJANGO_SETTINGS_MODULE: server.settings
       AUTHBROKER_URL: https://sso.trade.gov.uk/
       AUTHBROKER_CLIENT_ID: client_id
       AUTHBROKER_CLIENT_SECRET: client_secret
-      DOMAIN_NAME: trade.gov.uk
+      DOMAIN_NAME: lbweb
       TLS_EMAIL: webmaster@trade.gov.uk
       ACTIVITY_STREAM_URL: https://localhost/v3/
       ACTIVITY_STREAM_ID: fake_id
       ACTIVITY_STREAM_KEY: fake_key
       REDIS_URL: redis://redis/
+      MAXEMAIL_BASE_URL: dummyURL
+      MAXEMAIL_USERNAME: dummyUser
+      MAXEMAIL_PASSWORD: dummyPassword
       ELASTIC_APM_DISABLE_SEND: 1
-    depends_on:
-      - lb_db
     ports:
-      - "8555:8000"
-    command: ./start.sh
+      - 8001:8001
+    depends_on:
+      - lbdb
+    command:  >
+      bash -c "sleep 5 && python manage.py migrate &&
+      python manage.py collectstatic --noinput &&
+      python -Wd manage.py runserver 0.0.0.0:8001"
 
-  lb_db:
+  lbdb:
     image: postgres:9.6.9-alpine
+    restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: legal-basis
