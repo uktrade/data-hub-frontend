@@ -11,32 +11,30 @@ describe('Company OMIS Collections', () => {
     cy.title().should('eq', 'Orders - One List Corp - Companies - DIT Data Hub')
   })
 
-  it('should display a list of orders with the total result', () => {
-    cy.get(selectors.entityCollection.collectionResult).should('contain', 264)
+  it('should display a single order with the total result', () => {
+    cy.get(selectors.entityCollection.collectionResult).should('contain', 1)
     cy.get(selectors.entityCollection.entities)
       .children()
-      .should('have.length', 100)
+      .should('have.length', 1)
   })
 
   it('should display total value of orders', () => {
-    cy.get(selectors.entityCollection.totalValue).should(
-      'contain',
-      '£12,803.29'
-    )
+    cy.get(selectors.entityCollection.totalValue).should('contain', '£1,100')
   })
 
   it('should contain status and country badge', () => {
     cy.get(selectors.entityCollection.badge(1, 1)).should('contain', 'Draft')
-    cy.get(selectors.entityCollection.badge(1, 2)).should('contain', 'Algeria')
+    cy.get(selectors.entityCollection.badge(1, 2)).should('contain', 'Serbia')
   })
 
   it('should contain company info', () => {
     cy.get(selectors.entityCollection.entity(1))
-      .should('contain', 'Samsung')
-      .and('contain', '29 Apr 2019')
-      .and('contain', 'Alysia Tolley')
-      .and('contain', 'Yorkshire and The Humber')
-      .and('contain', 'ICT')
+      .should('contain', 'Updated on 12 Jul 2021, 4:18pm')
+      .and('contain', 'FOOBARBAZ LTD')
+      .and('contain', '22 Jun 2021, 12:31pm')
+      .and('contain', 'Andy Pipkin')
+      .and('contain', 'South East')
+      .and('contain', 'Aerospace')
   })
 
   it('should display Add Order button', () => {
