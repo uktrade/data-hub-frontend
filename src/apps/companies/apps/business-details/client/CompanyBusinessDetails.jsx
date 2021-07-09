@@ -21,7 +21,8 @@ import { StatusMessage } from '../../../../../client/components/'
 import { ID as CHECK_PENDING_REQUEST_ID, state2props } from './state'
 import { DNB__CHECK_PENDING_REQUEST } from '../../../../../client/actions'
 import Task from '../../../../../client/components/Task'
-import { format } from '../../../../../client/utils/date-utils'
+
+const { format } = require('../../../../../client/utils/date')
 
 const StyledRoot = styled('div')`
   & > table {

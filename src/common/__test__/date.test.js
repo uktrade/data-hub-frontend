@@ -1,4 +1,4 @@
-const { parseDateString } = require('../date')
+const { parseDateString } = require('../../client/utils/date')
 
 describe('Date tests', () => {
   describe('parse human dates', () => {

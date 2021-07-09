@@ -2,7 +2,7 @@ import { get } from 'lodash'
 
 import urls from '../../../lib/urls'
 
-import { format, formatWithTime } from '../../../client/utils/date-utils'
+const { format, formatMediumDateTime } = require('../../../client/utils/date')
 
 const transformEventToListItem = ({
   id,
@@ -61,7 +61,7 @@ const transformEventToListItem = ({
     headingText: name,
     headingUrl: urls.events.details(id),
     subheading: modified_on
-      ? `Updated on ${formatWithTime(modified_on)}`
+      ? `Updated on ${formatMediumDateTime(modified_on)}`
       : undefined,
     badges: badges.filter((item) => item.text),
     metadata: metadata.filter((item) => item.value),

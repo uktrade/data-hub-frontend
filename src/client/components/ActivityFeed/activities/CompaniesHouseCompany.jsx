@@ -13,8 +13,9 @@ import {
 import { DefaultItemRenderer } from './card/item-renderers'
 
 import CardUtils from './card/CardUtils'
-import { format } from '../../../utils/date-utils'
 import { ACTIVITY_TYPE, SOURCE_TYPES } from '../constants'
+
+const { format } = require('../../../utils/date')
 
 export default class CompaniesHouseCompany extends React.PureComponent {
   static propTypes = {

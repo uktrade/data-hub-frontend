@@ -14,10 +14,11 @@ import VisuallyHidden from '@govuk-react/visually-hidden'
 import React from 'react'
 import LinesEllipsis from 'react-lines-ellipsis'
 import styled from 'styled-components'
-import { format } from '../../utils/date-utils'
 
 import urls from '../../../lib/urls'
 import SecondaryButton from '../SecondaryButton'
+
+const { format } = require('../../utils/date')
 
 const StyledButtonLink = styled.a({
   whiteSpace: 'nowrap',

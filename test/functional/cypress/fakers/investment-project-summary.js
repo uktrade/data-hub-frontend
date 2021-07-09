@@ -2,10 +2,11 @@ import faker from 'faker'
 import { snakeCase } from 'lodash'
 
 import { INVESTMENT_PROJECT_STAGES_LIST } from './constants'
-import {
+
+const {
   generateFinancialYearLabel,
   getFinancialYearStart,
-} from '../../../../src/client/utils/date-utils'
+} = require('../../../../src/client/utils/date')
 
 // Adviser id is currently set in the node layer, so we have to set to the
 // value in sandbox

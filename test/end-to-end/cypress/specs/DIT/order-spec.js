@@ -1,11 +1,10 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
-
-import { format } from 'date-fns'
-
+const { formatWithoutParsing } = require('../../../../../src/client/utils/date')
 const { omis } = require('../../../../../src/lib/urls')
+const { DATE_MEDIUM_FORMAT } = require('../../../../../src/common/constants')
 
-const today = format(new Date(), 'd MMM yyyy')
+const today = formatWithoutParsing(new Date(), DATE_MEDIUM_FORMAT)
 
 describe('Order', () => {
   const company = fixtures.company.create.defaultCompany('order testing')

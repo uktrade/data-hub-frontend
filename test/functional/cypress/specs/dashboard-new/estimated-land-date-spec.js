@@ -1,4 +1,10 @@
-import { addDays, format, subDays } from 'date-fns'
+const {
+  addDays,
+  formatWithoutParsing,
+  subtractDays,
+} = require('../../../../../src/client/utils/date')
+const { DATE_DAY_LONG_FORMAT } = require('../../../../../src/common/constants')
+
 import { investmentProjectFaker } from '../../fakers/investment-projects'
 
 const assertEstimatedLandDate = ({ index, date, countdown, colour }) => {
@@ -16,13 +22,13 @@ const assertEstimatedLandDate = ({ index, date, countdown, colour }) => {
 
   cy.get('@estimatedLandDate')
     .find('[data-test="estimated-land-date-date"]')
-    .should('have.text', format(date, 'E, dd MMM yyyy'))
+    .should('have.text', formatWithoutParsing(date, DATE_DAY_LONG_FORMAT))
 }
 
 describe('Dashboard items - estimated land date', () => {
   const today = new Date()
   const myProjects = [
-    subDays(today, 14),
+    subtractDays(today, 14),
     today,
     addDays(today, 29),
     addDays(today, 89),
@@ -56,7 +62,7 @@ describe('Dashboard items - estimated land date', () => {
     it('should show a grey panel when the project has under 0 days remaining', () => {
       assertEstimatedLandDate({
         index: 0,
-        date: subDays(new Date(), 14),
+        date: subtractDays(new Date(), 14),
         countdown: '-14 days',
         colour: 'rgba(191, 193, 195, 0.5)',
       })

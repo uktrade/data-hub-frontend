@@ -13,11 +13,12 @@ import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 import LocalHeaderHeading from '../../../client/components/LocalHeader/LocalHeaderHeading'
 import Badge from '../../../client/components/Badge'
 import StatusMessage from '../../../client/components/StatusMessage'
-import { format } from '../../utils/date-utils'
 import { addressToString } from '../../../client/utils/addresses'
 import urls from '../../../lib/urls'
 import ConnectedDropdownMenu from '../DropdownMenu/ConnectedDropdownMenu'
 import { DropdownButton } from '../DropdownMenu'
+
+const { format } = require('../../utils/date')
 
 const StyledAddress = styled('p')`
   margin-top: ${SPACING.SCALE_2};
