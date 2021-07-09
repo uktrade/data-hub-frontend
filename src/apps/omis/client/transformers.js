@@ -1,8 +1,9 @@
 import { find } from 'lodash'
 
-import { format, formatWithTime } from '../../../client/utils/date-utils'
 import { STATUSES } from './constants'
 import { omis } from '../../../lib/urls'
+
+const { format, formatMediumDateTime } = require('../../../client/utils/date')
 
 export const transformOrderToListItem = ({
   id,
@@ -26,7 +27,7 @@ export const transformOrderToListItem = ({
     },
     {
       label: 'Created',
-      value: created_on ? formatWithTime(created_on) : null,
+      value: created_on ? formatMediumDateTime(created_on) : null,
     },
     {
       label: 'Contact',
@@ -58,7 +59,7 @@ export const transformOrderToListItem = ({
     headingText: reference,
     headingUrl: omis.workOrder(id),
     subheading: modified_on
-      ? `Updated on ${formatWithTime(modified_on)}`
+      ? `Updated on ${formatMediumDateTime(modified_on)}`
       : null,
   }
 

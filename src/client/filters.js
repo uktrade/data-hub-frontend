@@ -1,7 +1,6 @@
-import { format, parseISO } from 'date-fns'
+const { formatLongDate } = require('./utils/date')
 
-const getDateLabel = (value) =>
-  value ? `${format(parseISO(value), 'd MMMM yyyy')}` : ''
+const getDateLabel = (value) => (value ? `${formatLongDate(value)}` : '')
 
 export const buildOptionsFilter = ({
   options = [],

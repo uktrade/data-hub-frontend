@@ -1,5 +1,5 @@
 /* global JSON:true */
-const format = require('date-fns/format')
+const { format } = require('../../client/utils/date')
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)

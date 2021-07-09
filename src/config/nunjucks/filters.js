@@ -1,12 +1,12 @@
 const nunjucks = require('nunjucks')
 const {
-  toDate,
-  parseISO,
-  isValid,
-  format: dateFnsFormat,
-  formatDistanceToNowStrict,
-  minutesToHours,
-} = require('date-fns')
+  formatWithoutParsing,
+  isUnparsedDateValid,
+  isDateValid,
+  format,
+  getDifferenceInWords,
+  convertMinutesToHours,
+} = require('../../client/utils/date')
 const Case = require('case')
 const numeral = require('numeral')
 const queryString = require('qs')
@@ -44,7 +44,7 @@ const {
 } = require('lodash')
 require('numeral/locales/en-gb')
 const {
-  DATE_LONG_FORMAT,
+  DATE_LONG_FORMAT_1,
   DATE_TIME_MEDIUM_FORMAT,
 } = require('../../common/constants')
 
@@ -194,32 +194,28 @@ const filters = {
     return number.toLocaleString(locales)
   },
 
-  formatDate: (value, format = DATE_LONG_FORMAT) => {
+  formatDate: (value, format = DATE_LONG_FORMAT_1) => {
     if (!value) {
       return value
     }
 
-    if (!isValid(new Date(value))) {
+    if (!isUnparsedDateValid(new Date(value))) {
       return value
     }
 
-    return dateFnsFormat(new Date(value), format)
+    return formatWithoutParsing(new Date(value), format)
   },
 
-  formatDateTime: (value, format = DATE_TIME_MEDIUM_FORMAT) => {
+  formatDateTime: (value, dateFormat = DATE_TIME_MEDIUM_FORMAT) => {
     if (!value) {
       return value
     }
 
-    const parsedDate = toDate(parseISO(value))
-
-    if (!isValid(parsedDate)) {
+    if (!isDateValid(value)) {
       return value
     }
 
-    return dateFnsFormat(parsedDate, format)
-      .replace('AM', 'am')
-      .replace('PM', 'pm')
+    return format(value, dateFormat).replace('AM', 'am').replace('PM', 'pm')
   },
 
   formatAddress: (address, join = ', ', isAddressAreaEnabled = false) => {
@@ -241,14 +237,14 @@ const filters = {
   humanizeDuration: (value, measurement = 'minutes') => {
     let asHours = value
     if (measurement == 'minutes') {
-      asHours = minutesToHours(value)
+      asHours = convertMinutesToHours(value)
     }
     const hoursSuffix = pluralise('hour', asHours)
     return asHours + ' ' + hoursSuffix
   },
 
   fromNow: (value) => {
-    return formatDistanceToNowStrict(parseISO(value))
+    return getDifferenceInWords(value)
   },
 
   arrayToLabelValues: (items) => {

@@ -4,7 +4,8 @@ import labels from '../labels'
 import urls from '../../../lib/urls'
 
 import { addressToString } from '../../../client/utils/addresses'
-import { format, formatWithTime } from '../../../client/utils/date-utils'
+
+const { format, formatMediumDateTime } = require('../../../client/utils/date')
 
 export const transformArchivedToApi = (archivedParam) => {
   const archived = Array.isArray(archivedParam)
@@ -73,7 +74,7 @@ const transformCompanyToListItem = ({
   return {
     id,
     subheading: modified_on
-      ? `Updated on ${formatWithTime(modified_on)}`
+      ? `Updated on ${formatMediumDateTime(modified_on)}`
       : undefined,
     headingText: name,
     headingUrl: urls.companies.detail(id),

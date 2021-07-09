@@ -1,4 +1,9 @@
-import { addDays, format } from 'date-fns'
+const {
+  addDays,
+  formatWithoutParsing,
+} = require('../../../../../src/client/utils/date')
+const { DATE_DAY_LONG_FORMAT } = require('../../../../../src/common/constants')
+
 import faker from 'faker'
 import urls from '../../../../../src/lib/urls'
 import {
@@ -100,7 +105,10 @@ describe('Dashboard reminders', () => {
 
       cy.get('@outstandingProposition')
         .find('[data-test="outstanding-proposition-deadline"]')
-        .should('have.text', `Due ${format(tomorrow, 'E, dd MMM yyyy')}`)
+        .should(
+          'have.text',
+          `Due ${formatWithoutParsing(tomorrow, DATE_DAY_LONG_FORMAT)}`
+        )
 
       cy.get('@outstandingProposition')
         .find('[data-test="outstanding-proposition-countdown"]')

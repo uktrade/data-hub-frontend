@@ -4,11 +4,14 @@ const controller = require('../value')
 const { investmentTypes } = require('../../../types')
 const paths = require('../../../paths')
 const config = require('../../../../../config')
-const { endOfToday, endOfYesterday, subMonths } = require('date-fns')
+const {
+  getYesterday,
+  subtractMonths,
+} = require('../../../../../client/utils/date')
 
 const gvaMessage = gvaMessages.capitalExpenditureAndPrimarySectorRequired
-const yesterday = endOfYesterday()
-const lastMonth = subMonths(endOfToday(), 1)
+const yesterday = getYesterday()
+const lastMonth = subtractMonths(new Date(), 1)
 
 const metadataMock = {
   salaryRangeOptions: [

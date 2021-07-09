@@ -1,5 +1,4 @@
 const { get, pick } = require('lodash')
-const format = require('date-fns/format')
 const { KINDS, THEMES } = require('../../constants')
 const { getActiveEvents } = require('../../../events/repos')
 const {
@@ -7,6 +6,7 @@ const {
   transformObjectToOption,
 } = require('../../../transformers')
 const { getOptions } = require('../../../../lib/options')
+const { formatWithoutParsing } = require('../../../../client/utils/date')
 
 const { OPTION_YES, OPTION_NO } = require('../../../constants')
 const urls = require('../../../../lib/urls')
@@ -143,9 +143,9 @@ const getInitialFormValues = (req, res) => {
     company: company.id,
     investment_project: investmentId,
     date: {
-      day: format(date, 'dd'),
-      month: format(date, 'MM'),
-      year: format(date, 'yyyy'),
+      day: formatWithoutParsing(date, 'dd'),
+      month: formatWithoutParsing(date, 'MM'),
+      year: formatWithoutParsing(date, 'yyyy'),
     },
     contacts:
       referral && referral.contact

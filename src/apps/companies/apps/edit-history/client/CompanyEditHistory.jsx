@@ -4,9 +4,7 @@ import { isBoolean, isNumber } from 'lodash'
 import { convertUsdToGbp } from '../../../../../common/currency'
 
 import EditHistory from '../../../../../client/components/EditHistory/EditHistory'
-import { formatWithTime } from '../../../../../client/utils/date-utils'
 import { currencyGBP } from '../../../../../client/utils/number-utils'
-import { isValid, parseISO } from 'date-fns'
 
 import {
   ARCHIVED,
@@ -18,11 +16,12 @@ import {
   NOT_SET,
 } from '../constants'
 
-const CURRENCY_FIELDS = ['Turnover']
+const {
+  formatMediumDateTime,
+  isDateValid,
+} = require('../../../../../client/utils/date')
 
-function isDate(dateStr) {
-  return isValid(parseISO(dateStr))
-}
+const CURRENCY_FIELDS = ['Turnover']
 
 function getValueFromBoolean(value, field) {
   if (
@@ -50,15 +49,15 @@ function getValue(value, field) {
       : value.toString()
   }
 
-  if (isDate(value)) {
-    return formatWithTime(value)
+  if (isDateValid(value)) {
+    return formatMediumDateTime(value)
   }
 
   return value || NOT_SET
 }
 
 function getUpdatedBy(timestamp, changedBy) {
-  const formattedTime = formatWithTime(timestamp)
+  const formattedTime = formatMediumDateTime(timestamp)
   return changedBy === AUTOMATIC_UPDATE
     ? `Automatically updated on ${formattedTime}`
     : `Updated on ${formattedTime} by ${changedBy}`

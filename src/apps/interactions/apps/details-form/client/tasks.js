@@ -7,7 +7,8 @@ import getContactFromQuery from '../../../../../client/utils/getContactFromQuery
 import { INTERACTION_STATUS } from '../../../constants'
 import { EXPORT_INTEREST_STATUS_VALUES, OPTION_NO } from '../../../../constants'
 import { ID as STORE_ID } from './state'
-import { transformValueForApi } from '../../../../../common/date'
+
+const { transformValueForAPI } = require('../../../../../client/utils/date')
 
 const FIELDS_TO_OMIT = [
   'currently_exporting',
@@ -113,7 +114,7 @@ export function saveInteraction({ values, companyId, referralId }) {
     dit_participants: values.dit_participants.map((a) => ({
       adviser: a.value,
     })),
-    date: transformValueForApi(values.date),
+    date: transformValueForAPI(values.date),
     policy_areas: transformArrayOfOptions(values.policy_areas),
     communication_channel: transformOption(values.communication_channel),
     event: transformOption(values.event),

@@ -11,9 +11,10 @@ import { ID as STATE_ID } from './state'
 import SecondaryButton from '../../../../../../client/components/SecondaryButton'
 import { SummaryTable, FormActions } from '../../../../../../client/components/'
 import Task from '../../../../../../client/components/Task'
-import { format } from '../../../../../../client/utils/date-utils'
 
 import { REFERRAL_DETAILS } from '../../../../../../client/actions'
+
+const { format } = require('../../../../../../client/utils/date')
 
 export const AdviserDetails = ({ name, email, team }) => (
   <>

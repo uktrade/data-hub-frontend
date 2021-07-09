@@ -1,7 +1,7 @@
-import {
+const {
   getFinancialYearStart,
   generateFinancialYearLabel,
-} from '../../../../../src/client/utils/date-utils'
+} = require('../../../../../src/client/utils/date')
 
 import { INVESTMENT_PROJECT_STAGES_LIST } from '../../fakers/constants'
 import { investmentProjectSummaryFaker } from '../../fakers/investment-project-summary'

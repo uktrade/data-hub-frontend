@@ -1,16 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { isBoolean, isNumber } from 'lodash'
-import { formatWithTime } from '../../../client/utils/date-utils'
-import { isValid, parseISO } from 'date-fns'
 
 import { CHANGE_TYPE_TEXT, TRUE, FALSE, NOT_SET } from '../constants'
 
 import EditHistory from '../../../client/components/EditHistory/EditHistory'
 
-function isDate(dateStr) {
-  return isValid(parseISO(dateStr))
-}
+const {
+  formatMediumDateTime,
+  isDateValid,
+} = require('../../../client/utils/date')
 
 function getValue(value) {
   if (isBoolean(value)) {
@@ -22,15 +21,15 @@ function getValue(value) {
     return value.toString()
   }
 
-  if (isDate(value)) {
-    return formatWithTime(value)
+  if (isDateValid(value)) {
+    return formatMediumDateTime(value)
   }
 
   return value || NOT_SET
 }
 
 function getUpdatedBy(timestamp, changedBy) {
-  const formattedTime = formatWithTime(timestamp)
+  const formattedTime = formatMediumDateTime(timestamp)
   return `Updated on ${formattedTime} by ${changedBy}`
 }
 

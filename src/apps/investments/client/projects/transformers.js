@@ -1,5 +1,5 @@
 /* eslint camelcase: 0 */
-import { format } from '../../../../client/utils/date-utils'
+const { format } = require('../../../../client/utils/date')
 
 import urls from '../../../../lib/urls'
 

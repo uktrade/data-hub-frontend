@@ -1,4 +1,5 @@
-import { addDays } from 'date-fns'
+const { addDays } = require('../../../../src/client/utils/date')
+
 import faker from 'faker'
 
 const relativeDateFaker = ({ minDays, maxDays }) =>
