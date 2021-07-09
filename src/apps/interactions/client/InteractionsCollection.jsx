@@ -124,7 +124,7 @@ const InteractionCollection = ({
           data-test="date-before-filter"
         />
         <RoutedCheckboxGroupField
-          overflow="scroll"
+          maxScrollHeight={350}
           legend={LABELS.service}
           name="service"
           qsParam="service"
@@ -151,7 +151,7 @@ const InteractionCollection = ({
           data-test="business-intelligence-filter"
         />
         <RoutedCheckboxGroupField
-          overflow="scroll"
+          maxScrollHeight={345}
           legend={LABELS.policyAreas}
           name="policy_areas"
           qsParam="policy_areas"
@@ -168,7 +168,7 @@ const InteractionCollection = ({
           data-test="policy-issue-type-filter"
         />
         <RoutedCheckboxGroupField
-          overflow="scroll"
+          maxScrollHeight={370}
           legend={LABELS.companyOneListGroupTier}
           name="company_one_list_group_tier"
           qsParam="company_one_list_group_tier"
