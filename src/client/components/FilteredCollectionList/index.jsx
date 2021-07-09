@@ -20,6 +20,7 @@ import {
 
 const FilteredCollectionList = ({
   results = [],
+  summary = null,
   itemsPerPage = 10,
   sortOptions = null,
   taskProps,
@@ -55,6 +56,7 @@ const FilteredCollectionList = ({
                 {isComplete && (
                   <FilteredCollectionHeader
                     totalItems={count}
+                    summary={summary}
                     collectionName={collectionName}
                     selectedFilters={selectedFilters}
                     addItemUrl={addItemUrl}
@@ -128,6 +130,7 @@ FilteredCollectionList.propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
   }),
+  summary: PropTypes.object,
   defaultQueryParams: PropTypes.object,
 }
 
