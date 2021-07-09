@@ -71,7 +71,7 @@ describe('Orders Collections Filter', () => {
       cy.intercept('POST', searchEndpoint).as('apiRequest')
 
       // No default query params, these are programmatically added
-      cy.visit(omis.react.index())
+      cy.visit(omis.index())
 
       // First call to the api without default query params
       // we shouldn't be making this call
@@ -89,7 +89,7 @@ describe('Orders Collections Filter', () => {
     it('should filter from the url', () => {
       const queryString = buildQueryString({ status: value })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       assertPayload('@apiRequest', {
         ...minimumPayload,
         status: value,
@@ -101,7 +101,7 @@ describe('Orders Collections Filter', () => {
     it('should filter from user input and remove the chip', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
       clickCheckboxGroupOption({ element, value })
@@ -134,7 +134,7 @@ describe('Orders Collections Filter', () => {
     it('should filter from the url', () => {
       const queryString = buildQueryString({ reference })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('have.value', reference)
       assertChipExists({ label: reference, position: 1 })
@@ -143,7 +143,7 @@ describe('Orders Collections Filter', () => {
     it('should filter from user input and remove the chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
       cy.get(element).type(`${reference}{enter}`)
@@ -177,7 +177,7 @@ describe('Orders Collections Filter', () => {
         completed_on_before: toDate,
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       assertChipExists({
         label: `Completed date from: ${formattedFromDate}`,
@@ -202,7 +202,7 @@ describe('Orders Collections Filter', () => {
     it('should filter from user input and remove the chip', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
       inputDateValue({
@@ -275,7 +275,7 @@ describe('Orders Collections Filter', () => {
         delivery_date_before: toDate,
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       assertChipExists({
         label: `Expected delivery date from: ${formattedFromDate}`,
@@ -300,7 +300,7 @@ describe('Orders Collections Filter', () => {
     it('should filter from user input and remove the chip', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
       inputDateValue({
@@ -365,7 +365,7 @@ describe('Orders Collections Filter', () => {
     it('should filter from the url', () => {
       const queryString = buildQueryString({ company_name: name })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('have.value', name)
       assertChipExists({ label: name, position: 1 })
@@ -374,7 +374,7 @@ describe('Orders Collections Filter', () => {
     it('should filter from user input and remove the chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
       cy.get(element).type(`${name}{enter}`)
@@ -400,7 +400,7 @@ describe('Orders Collections Filter', () => {
     it('should filter from the url', () => {
       const queryString = buildQueryString({ contact_name: name })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('have.value', name)
       assertChipExists({ label: name, position: 1 })
@@ -409,7 +409,7 @@ describe('Orders Collections Filter', () => {
     it('should filter from user input and remove the chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
       cy.get(element).type(`${name}{enter}`)
@@ -436,7 +436,7 @@ describe('Orders Collections Filter', () => {
         sector_descends: [aerospaceId],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', 'Aerospace')
       assertChipExists({ label: 'Aerospace', position: 1 })
@@ -445,7 +445,7 @@ describe('Orders Collections Filter', () => {
     it('should filter from user input and remove the chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
       testTypeahead({
@@ -478,7 +478,7 @@ describe('Orders Collections Filter', () => {
         primary_market: [brazilId],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', 'Brazil')
       assertChipExists({ label: 'Brazil', position: 1 })
@@ -487,7 +487,7 @@ describe('Orders Collections Filter', () => {
     it('should filter from user input and remove the chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
       testTypeahead({
@@ -521,7 +521,7 @@ describe('Orders Collections Filter', () => {
         uk_region: [londonId],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', 'London')
       assertChipExists({ label: 'London', position: 1 })
@@ -530,7 +530,7 @@ describe('Orders Collections Filter', () => {
     it('should filter from user input and remove the chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
       testTypeahead({
@@ -564,7 +564,7 @@ describe('Orders Collections Filter', () => {
         uk_region: '874cd12a-6095-e211-a939-e4115bead28a',
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
       cy.wait('@apiRequest')
     })
 
