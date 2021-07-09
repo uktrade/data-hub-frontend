@@ -33,7 +33,6 @@ const queueDataExportTest = ({ name, url, headingKey }) => {
 
 describe('exporting data', () => {
   queueDataExportTest({ name: 'companies' })
-  queueDataExportTest({ name: 'contacts' })
   queueDataExportTest({ name: 'interactions' })
   queueDataExportTest({
     name: 'investment projects',
