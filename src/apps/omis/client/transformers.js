@@ -65,7 +65,12 @@ export const transformOrderToListItem = ({
   return retVal
 }
 
-export const transformResponseToCollection = ({ count, results = [] }) => ({
+export const transformResponseToCollection = ({
   count,
+  results = [],
+  summary,
+}) => ({
+  count,
+  summary,
   results: results.map(transformOrderToListItem),
 })

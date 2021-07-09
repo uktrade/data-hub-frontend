@@ -48,3 +48,35 @@ storiesOf('Filters/Checkbox', module)
       options={options}
     />
   ))
+  .add('Overflow with scroll', () => (
+    <CheckboxGroupField
+      maxScrollHeight={215}
+      name="countries"
+      legend="What are your favourite countries?"
+      options={[
+        ...options,
+        {
+          label: 'Spain',
+          value: 'sp',
+        },
+        {
+          label: 'New Zealand',
+          value: 'nz',
+        },
+        {
+          label: 'China',
+          value: 'ch',
+        },
+      ]}
+      selectedOptions={[
+        {
+          label: 'Italy',
+          value: 'it',
+        },
+        {
+          label: 'Poland',
+          value: 'pl',
+        },
+      ]}
+    />
+  ))
