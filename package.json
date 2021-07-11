@@ -91,7 +91,7 @@
     "connect-flash": "0.1.1",
     "connect-redis": "^6.0.0",
     "connected-react-router": "^6.9.1",
-    "constate": "^3.2.0",
+    "constate": "^3.3.0",
     "cookie-parser": "^1.4.5",
     "core-js": "^3.9.1",
     "css-loader": "^5.2.6",
