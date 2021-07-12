@@ -387,10 +387,8 @@ describe('events Collections Filter', () => {
     })
 
     it('should remove all filters and chips', () => {
-      cy.get('[data-test=filter-chips]').children().as('filterChips')
-      cy.get('@filterChips').should('have.length', 7)
       cy.get('[data-test=clear-filters]').click()
-      cy.get('@filterChips').should('have.length', 0)
+      cy.get('[data-test=filter-chips]').children().should('have.length', 0)
       cy.get('[data-test="event-name-filter"]').should('have.value', '')
       cy.get('[data-test="country-filter"]').should('contain', 'Search country')
       cy.get('[data-test="uk-region-filter"]').should(

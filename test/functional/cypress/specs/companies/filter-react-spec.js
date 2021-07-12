@@ -537,9 +537,8 @@ describe('Companies Collections Filter', () => {
     })
 
     it('should remove all filters and chips', () => {
-      cy.get('@filterChips').should('have.length', 10)
       cy.get('[data-test=clear-filters]').click()
-      cy.get('@filterChips').should('have.length', 0)
+      cy.get('[data-test=filter-chips]').children().should('have.length', 0)
       assertCheckboxGroupNoneSelected('[data-test="headquarter-type-filter"]')
       cy.get('[data-test="company-name-filter"]').should('have.value', '')
       cy.get('[data-test="sector-filter"]').should('contain', 'Search sector')
