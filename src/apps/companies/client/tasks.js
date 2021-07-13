@@ -8,6 +8,9 @@ import {
 
 import { transformResponseToCompanyCollection } from './transformers'
 
+const usa = '81756b9a-5d95-e211-a939-e4115bead28a'
+const canada = '5daf72a6-5d95-e211-a939-e4115bead28a'
+
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
 const getCompanies = ({
@@ -19,13 +22,16 @@ const getCompanies = ({
   country,
   uk_postcode,
   uk_region,
+  us_state = [],
+  canadian_province = [],
   archived,
   export_to_countries,
   future_interest_countries,
   one_list_group_global_account_manager,
   sortby = 'modified_on:desc',
-}) =>
-  axios
+}) => {
+  const administrativeAreas = [...us_state, ...canadian_province]
+  return axios
     .post('/api-proxy/v4/search/company', {
       limit,
       offset: limit * (page - 1) || 0,
@@ -35,6 +41,9 @@ const getCompanies = ({
       country,
       uk_postcode,
       uk_region,
+      administrative_area: administrativeAreas.length
+        ? administrativeAreas
+        : undefined,
       archived,
       export_to_countries,
       future_interest_countries,
@@ -43,6 +52,7 @@ const getCompanies = ({
     })
     .then(({ data }) => transformResponseToCompanyCollection(data))
     .catch(handleError)
+}
 
 /**
  * Get the options for each of the metadata urls.
@@ -60,6 +70,12 @@ const getCompaniesMetadata = () =>
     }),
     getHeadquarterTypeOptions(urls.metadata.headquarterType()),
     getMetadataOptions(urls.metadata.ukRegion()),
+    getMetadataOptions(urls.metadata.administrativeArea(), {
+      params: { country: usa },
+    }),
+    getMetadataOptions(urls.metadata.administrativeArea(), {
+      params: { country: canada },
+    }),
     getMetadataOptions(urls.metadata.country()),
   ])
     .then(
@@ -67,11 +83,15 @@ const getCompaniesMetadata = () =>
         sectorOptions,
         headquarterTypeOptions,
         ukRegionOptions,
+        usStateOptions,
+        canadianProvinceOptions,
         countryOptions,
       ]) => ({
         sectorOptions,
         headquarterTypeOptions,
         ukRegionOptions,
+        usStateOptions,
+        canadianProvinceOptions,
         countryOptions,
       })
     )

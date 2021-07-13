@@ -55,6 +55,22 @@ export const buildSelectedFilters = (
       categoryLabel: LABELS.ukRegion,
     }),
   },
+  usStates: {
+    queryParam: 'us_state',
+    options: buildOptionsFilter({
+      options: metadata.usStateOptions,
+      value: queryParams.us_state,
+      categoryLabel: LABELS.usState,
+    }),
+  },
+  canadianProvinces: {
+    queryParam: 'canadian_province',
+    options: buildOptionsFilter({
+      options: metadata.canadianProvinceOptions,
+      value: queryParams.canadian_province,
+      categoryLabel: LABELS.canadianProvince,
+    }),
+  },
   companyStatuses: {
     queryParam: 'archived',
     options: buildOptionsFilter({
