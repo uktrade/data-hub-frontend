@@ -3,6 +3,8 @@ export const LABELS = {
   companyName: 'Company name',
   sector: 'Sector',
   country: 'Country',
+  usState: 'US state',
+  canadianProvince: 'Canadian province',
   ukPostcode: 'UK postcode',
   ukRegion: 'UK region',
   companyStatus: 'Status',
