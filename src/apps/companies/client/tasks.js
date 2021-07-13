@@ -7,7 +7,9 @@ import {
 } from '../../../client/metadata'
 
 import { transformResponseToCompanyCollection } from './transformers'
-import { COUNTRIES } from './constants'
+
+const usa = '81756b9a-5d95-e211-a939-e4115bead28a'
+const canada = '5daf72a6-5d95-e211-a939-e4115bead28a'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
@@ -69,10 +71,10 @@ const getCompaniesMetadata = () =>
     getHeadquarterTypeOptions(urls.metadata.headquarterType()),
     getMetadataOptions(urls.metadata.ukRegion()),
     getMetadataOptions(urls.metadata.administrativeArea(), {
-      params: { country: COUNTRIES.usa },
+      params: { country: usa },
     }),
     getMetadataOptions(urls.metadata.administrativeArea(), {
-      params: { country: COUNTRIES.canada },
+      params: { country: canada },
     }),
     getMetadataOptions(urls.metadata.country()),
   ])
