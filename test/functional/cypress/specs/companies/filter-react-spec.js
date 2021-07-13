@@ -17,6 +17,11 @@ import {
 } from '../../support/assertions'
 import { testTypeahead } from '../../support/tests'
 
+import {
+  administrativeAreaListFaker,
+  administrativeAreaFaker,
+} from '../../fakers/administrative-areas'
+
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
     // Default query params
@@ -34,6 +39,10 @@ const minimumPayload = {
 const activeStatusFlag = 'false'
 const inactiveStatusFlag = 'true'
 const companySearchEndpoint = '/api-proxy/v4/search/company'
+const usaCountryId = '81756b9a-5d95-e211-a939-e4115bead28a'
+const canadaCountryId = '5daf72a6-5d95-e211-a939-e4115bead28a'
+const usStatesEndpoint = `/api-proxy/v4/metadata/administrative-area?country=${usaCountryId}`
+const canadianProvincesEndpoint = `/api-proxy/v4/metadata/administrative-area?country=${canadaCountryId}`
 
 describe('Companies Collections Filter', () => {
   context('Default Params', () => {
@@ -236,6 +245,124 @@ describe('Companies Collections Filter', () => {
       assertChipExists({ label: 'Brazil', position: 1 })
       assertChipExists({ label: 'Active', position: 2 })
       removeChip(brazilCountryId)
+      cy.wait('@apiRequest')
+      removeChip(activeStatusFlag)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
+  context('US State', () => {
+    const element = '[data-test="us-state-filter"]'
+    const state = administrativeAreaFaker()
+    const usStates = [state, ...administrativeAreaListFaker(20)]
+
+    const expectedPayload = {
+      offset: 0,
+      limit: 10,
+      archived: false,
+      sortby: 'modified_on:desc',
+      administrative_area: [state.id],
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        us_state: [state.id],
+      })
+      cy.intercept('GET', usStatesEndpoint, usStates).as('usStatesApiRequest')
+      cy.intercept('POST', companySearchEndpoint).as('apiRequest')
+      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.wait('@usStatesApiRequest')
+      assertPayload('@apiRequest', expectedPayload)
+      cy.get(element).should('contain', state.name)
+      assertChipExists({ label: `US state: ${state.name}`, position: 1 })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('GET', usStatesEndpoint, usStates).as('usStatesApiRequest')
+      cy.intercept('POST', companySearchEndpoint).as('apiRequest')
+      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.wait('@usStatesApiRequest')
+      cy.wait('@apiRequest')
+
+      testTypeahead({
+        element,
+        legend: 'US state',
+        placeholder: 'Search US state',
+        input: state.name,
+        expectedOption: state.name,
+      })
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('us_state', [state.id])
+      assertChipExists({ label: `US state: ${state.name}`, position: 1 })
+      assertChipExists({ label: 'Active', position: 2 })
+      removeChip(state.id)
+      cy.wait('@apiRequest')
+      removeChip(activeStatusFlag)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
+  context('Canadian Province', () => {
+    const element = '[data-test="canadian-province-filter"]'
+    const province = administrativeAreaFaker()
+    const provinces = [province, ...administrativeAreaListFaker(10)]
+
+    const expectedPayload = {
+      offset: 0,
+      limit: 10,
+      archived: false,
+      sortby: 'modified_on:desc',
+      administrative_area: [province.id],
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        canadian_province: [province.id],
+      })
+      cy.intercept('GET', canadianProvincesEndpoint, provinces).as(
+        'canadianProvincesApiRequest'
+      )
+      cy.intercept('POST', companySearchEndpoint).as('apiRequest')
+      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.wait('@canadianProvincesApiRequest')
+      assertPayload('@apiRequest', expectedPayload)
+      cy.get(element).should('contain', province.name)
+      assertChipExists({
+        label: `Canadian province: ${province.name}`,
+        position: 1,
+      })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('GET', canadianProvincesEndpoint, provinces).as(
+        'canadianProvincesApiRequest'
+      )
+      cy.intercept('POST', companySearchEndpoint).as('apiRequest')
+      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.wait('@canadianProvincesApiRequest')
+      cy.wait('@apiRequest')
+
+      testTypeahead({
+        element,
+        legend: 'Canadian province',
+        placeholder: 'Search Canadian province',
+        input: province.name,
+        expectedOption: province.name,
+      })
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('canadian_province', [province.id])
+      assertChipExists({
+        label: `Canadian province: ${province.name}`,
+        position: 1,
+      })
+      assertChipExists({ label: 'Active', position: 2 })
+      removeChip(province.id)
       cy.wait('@apiRequest')
       removeChip(activeStatusFlag)
       assertPayload('@apiRequest', minimumPayload)
@@ -517,6 +644,8 @@ describe('Companies Collections Filter', () => {
       const adviserId = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
       const southEastRegionId = '884cd12a-6095-e211-a939-e4115bead28a'
       const advancedEngineeringSectorId = 'af959812-6095-e211-a939-e4115bead28a'
+      const usStates = administrativeAreaListFaker(20)
+      const canadianProvinces = administrativeAreaListFaker(10)
       const queryString = qs.stringify({
         page: 1,
         headquarter_type: globalHqTypeId,
@@ -529,14 +658,23 @@ describe('Companies Collections Filter', () => {
         export_to_countries: [ukCountryId],
         future_interest_countries: [ukCountryId],
         one_list_group_global_account_manager: [adviserId],
+        us_state: [usStates[0].id],
+        canadian_province: [canadianProvinces[0].id],
       })
+      cy.intercept('GET', usStatesEndpoint, usStates).as('usStatesApiRequest')
+      cy.intercept('GET', canadianProvincesEndpoint, canadianProvinces).as(
+        'canadianProvincesApiRequest'
+      )
       cy.intercept('POST', companySearchEndpoint).as('apiRequest')
       cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.wait('@usStatesApiRequest')
+      cy.wait('@canadianProvincesApiRequest')
       cy.wait('@apiRequest')
-      cy.get('[data-test=filter-chips]').children().as('filterChips')
     })
 
     it('should remove all filters and chips', () => {
+      cy.get('[data-test=filter-chips]').children().as('filterChips')
+      cy.get('@filterChips').should('have.length', 12)
       cy.get('[data-test=clear-filters]').click()
       cy.get('[data-test=filter-chips]').children().should('have.length', 0)
       assertCheckboxGroupNoneSelected('[data-test="headquarter-type-filter"]')
@@ -544,6 +682,14 @@ describe('Companies Collections Filter', () => {
       cy.get('[data-test="sector-filter"]').should('contain', 'Search sector')
       cy.get('[data-test="country-filter"]').should('contain', 'Search country')
       cy.get('[data-test="uk-postcode-filter"]').should('have.value', '')
+      cy.get('[data-test="us-state-filter"]').should(
+        'contain',
+        'Search US state'
+      )
+      cy.get('[data-test="canadian-province-filter"]').should(
+        'contain',
+        'Search Canadian province'
+      )
       cy.get('[data-test="uk-region-filter"]').should(
         'contain',
         'Search UK region'
