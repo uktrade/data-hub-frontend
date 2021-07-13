@@ -3,6 +3,8 @@ export const LABELS = {
   companyName: 'Company name',
   sector: 'Sector',
   country: 'Country',
+  usState: 'US state',
+  canadianProvince: 'Canadian province',
   ukPostcode: 'UK postcode',
   ukRegion: 'UK region',
   companyStatus: 'Status',
@@ -34,3 +36,8 @@ export const SORT_OPTIONS = [
     value: 'latest_interaction_date:desc',
   },
 ]
+
+export const COUNTRIES = {
+  usa: '81756b9a-5d95-e211-a939-e4115bead28a',
+  canada: '5daf72a6-5d95-e211-a939-e4115bead28a',
+}
