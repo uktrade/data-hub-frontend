@@ -16,7 +16,7 @@ describe('Download CSV', () => {
           count: 0,
         },
       })
-      cy.visit(omis.react.index())
+      cy.visit(omis.index())
     })
     it('should not render the download header', () => {
       cy.get(downloadHeader).should('not.exist')
@@ -31,7 +31,7 @@ describe('Download CSV', () => {
           count: ordersList.length,
         },
       })
-      cy.visit(omis.react.index())
+      cy.visit(omis.index())
     })
     it('should render the download header', () => {
       cy.get(downloadHeader).should('exist')
@@ -60,7 +60,7 @@ describe('Download CSV', () => {
           count: 4999,
         },
       })
-      cy.visit(omis.react.index())
+      cy.visit(omis.index())
     })
     it('should render a download message', () => {
       cy.get(downloadHeader).should(
@@ -78,7 +78,7 @@ describe('Download CSV', () => {
           count: 5000,
         },
       })
-      cy.visit(omis.react.index())
+      cy.visit(omis.index())
     })
     it('should render a download message', () => {
       cy.get(downloadHeader).should(
@@ -110,7 +110,7 @@ describe('Download CSV', () => {
           count: ordersList.length,
         },
       })
-      cy.visit(`${omis.react.index()}?${queryString}`)
+      cy.visit(`${omis.index()}?${queryString}`)
     })
     it('should have the correct query string', () => {
       cy.get(downloadButton).should(

@@ -6,7 +6,7 @@ describe('Order Collections Sort', () => {
   context('Default sort', () => {
     before(() => {
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(omis.react.index())
+      cy.visit(omis.index())
       cy.wait('@apiRequest')
     })
 
@@ -39,7 +39,7 @@ describe('Order Collections Sort', () => {
 
     beforeEach(() => {
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${omis.react.index()}?page=1`)
+      cy.visit(`${omis.index()}?page=1`)
       cy.wait('@apiRequest')
     })
 

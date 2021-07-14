@@ -40,11 +40,13 @@ describe('Order', () => {
 
     cy.contains('Orders (OMIS)').click()
 
-    cy.get(selectors.entityCollection.entityBadge(1)).should(
-      'contain',
-      'Brazil'
-    )
-    cy.get(selectors.collection.items)
+    cy.get('[data-test="collection-item"]').eq(0).as('firstListItem')
+
+    cy.get('@firstListItem')
+      .find('[data-test="badge"]')
+      .should('contain', 'Brazil')
+
+    cy.get('@firstListItem')
       .should('contain', 'order testing')
       .and('contain', 'Johnny Cakeman')
       .and('contain', 'Aerospace')
