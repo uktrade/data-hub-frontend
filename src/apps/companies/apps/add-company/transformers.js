@@ -62,4 +62,5 @@ const transformToCreateDnbCompanyInvestigation = (formData, companyId, res) => {
 module.exports = {
   transformToDnbStubCompany,
   transformToCreateDnbCompanyInvestigation,
+  transformFormData,
 }
