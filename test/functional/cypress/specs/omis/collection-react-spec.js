@@ -43,7 +43,7 @@ describe('Orders (OMIS) Collection List Page - React', () => {
         },
       },
     }).as('apiRequest')
-    cy.visit(omis.react.index())
+    cy.visit(omis.index())
     cy.wait('@apiRequest')
   })
 

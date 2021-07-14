@@ -2,7 +2,7 @@ import { omis } from '../../../../../src/lib/urls'
 
 describe('Orders (OMIS) Collection - React', () => {
   before(() => {
-    cy.visit(omis.react.index())
+    cy.visit(omis.index())
     cy.initA11y()
   })
 
