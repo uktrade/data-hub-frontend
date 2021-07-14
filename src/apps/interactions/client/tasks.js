@@ -2,7 +2,10 @@ import axios from 'axios'
 
 import urls from '../../../lib/urls'
 
-import { transformResponseToCollection } from './transformers'
+import {
+  transformResponseToCollection,
+  filterServiceNames,
+} from './transformers'
 
 import { getMetadataOptions } from '../../../client/metadata'
 
@@ -13,7 +16,9 @@ const sortServiceOptions = (options) =>
 
 const getInteractionsMetadata = () =>
   Promise.all([
-    getMetadataOptions(urls.metadata.service()),
+    getMetadataOptions(urls.metadata.service(), {
+      filterDisabled: false,
+    }),
     getMetadataOptions(urls.metadata.sector(), {
       params: {
         level__lte: '0',
@@ -31,7 +36,7 @@ const getInteractionsMetadata = () =>
         policyIssueTypeOptions,
         companyOneListTierOptions,
       ]) => ({
-        serviceOptions: sortServiceOptions(serviceOptions),
+        serviceOptions: filterServiceNames(sortServiceOptions(serviceOptions)),
         sectorOptions,
         policyAreaOptions,
         policyIssueTypeOptions,
