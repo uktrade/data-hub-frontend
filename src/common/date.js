@@ -1,30 +1,29 @@
-const { format } = require('date-fns')
+const { format, isValid, parseISO, subMonths } = require('date-fns')
 const {
   DATE_LONG_FORMAT,
   DATE_MEDIUM_FORMAT,
   DATE_TIME_MEDIUM_FORMAT,
+  INTERACTION_TIMESTAMP_FORMAT,
 } = require('./constants')
 
-function formatLongDate(dateString = []) {
-  if (dateString) {
-    return format(parseDateString(dateString), DATE_LONG_FORMAT)
-  }
-
-  return null
+function isDateValid(date) {
+  return isValid(parseISO(date))
 }
 
-function formatMediumDate(dateString = []) {
-  if (dateString) {
-    return format(parseDateString(dateString), DATE_MEDIUM_FORMAT)
-  }
+function formatDate(date, dateFormat) {
+  return isDateValid(date) ? format(parseISO(date), dateFormat) : null
+}
 
-  return null
+function formatLongDate(dateString) {
+  return formatDate(dateString, DATE_LONG_FORMAT)
+}
+
+function formatMediumDate(dateString) {
+  return formatDate(dateString, DATE_MEDIUM_FORMAT)
 }
 
 function formatMediumDateTime(dateString) {
-  if (dateString) {
-    return format(parseDateString(dateString), DATE_TIME_MEDIUM_FORMAT)
-  }
+  return formatDate(dateString, DATE_TIME_MEDIUM_FORMAT)
 }
 
 function parseDateString(dateString) {
@@ -58,10 +57,32 @@ function transformValueForApi({ year, month, day = 1 }) {
   return null
 }
 
+function getInteractionTimestamp({ offset }) {
+  const date = new Date()
+
+  if (offset > 0) {
+    subMonths(date, offset)
+  }
+
+  return formatDate(date, INTERACTION_TIMESTAMP_FORMAT)
+}
+
+const parseAndFormatDate = (dateStr) => {
+  return {
+    day: parseInt(format(new Date(dateStr), 'd')),
+    month: parseInt(format(new Date(dateStr), 'M')),
+    year: parseInt(format(new Date(dateStr), 'yyyy')),
+  }
+}
+
 module.exports = {
+  formatDate,
   formatLongDate,
   formatMediumDate,
   formatMediumDateTime,
+  isDateValid,
   parseDateString,
   transformValueForApi,
+  getInteractionTimestamp,
+  parseAndFormatDate,
 }
