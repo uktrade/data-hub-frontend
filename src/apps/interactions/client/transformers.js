@@ -82,3 +82,25 @@ export const transformResponseToCollection = ({ count, results = [] }) => ({
 export const transformWasPolicyfeedBackProvidedToApi = (
   wasPolicyfeedbackProvided
 ) => wasPolicyfeedbackProvided && wasPolicyfeedbackProvided[0] === 'true'
+
+export const filterServiceNames = (services) => {
+  if (!services) return
+
+  const excludedParentServices = [
+    'A Specific DIT Export Service or Funding',
+    'A Specific Service',
+    'Enquiry or Referral Received',
+    'Enquiry Received',
+  ]
+  const filteredServiceNames = services
+    .map((service) => {
+      const [parent, child] = service.label.split(' : ')
+      const isParentExcluded = excludedParentServices.includes(parent)
+      const label = isParentExcluded && child ? child : service.label
+      const value = service.value
+      return { label, value }
+    })
+    .sort((a, b) => a.label.localeCompare(b.label))
+
+  return filteredServiceNames
+}
