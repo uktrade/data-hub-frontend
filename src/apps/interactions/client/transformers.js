@@ -86,29 +86,21 @@ export const transformWasPolicyfeedBackProvidedToApi = (
 export const filterServiceNames = (services) => {
   if (!services) return
 
-  const excludedServiceStrings = [
+  const excludedParentServices = [
     'A Specific DIT Export Service or Funding',
     'A Specific Service',
     'Enquiry or Referral Received',
     'Enquiry Received',
   ]
-
   const filteredServiceNames = services
     .map((service) => {
-      const splitServiceName = service.label.split(' : ')
-      const name =
-        splitServiceName[1] &&
-        excludedServiceStrings.includes(splitServiceName[0])
-          ? splitServiceName[1]
-          : service.label
-      return { ...service, label: name }
+      const [parent, child] = service.label.split(' : ')
+      const isParentExcluded = excludedParentServices.includes(parent)
+      const label = isParentExcluded && child ? child : service.label
+      const value = service.value
+      return { label, value }
     })
-    .sort(function (a, b) {
-      const textA = a.label
-      const textB = b.label
-
-      return textA.localeCompare(textB)
-    })
+    .sort((a, b) => a.label.localeCompare(b.label))
 
   return filteredServiceNames
 }
