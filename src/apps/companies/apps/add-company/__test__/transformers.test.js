@@ -1,6 +1,8 @@
+const faker = require('faker')
 const {
   transformToDnbStubCompany,
   transformToCreateDnbCompanyInvestigation,
+  transformFormData,
 } = require('../transformers')
 
 describe('Companies add company transformers', () => {
@@ -223,6 +225,82 @@ describe('Companies add company transformers', () => {
             country: 'country',
           },
         })
+      })
+    })
+  })
+
+  describe('#transformFormData', () => {
+    context('when area is populated', () => {
+      it('returns area correctly', () => {
+        const area = faker.datatype.uuid
+        const formData = {
+          name: faker.name,
+          website: faker.internet.domainName,
+          telephone_number: faker.phone,
+          address1: faker.address.streetAddress,
+          address2: faker.address.streetAddress,
+          city: faker.address.city,
+          county: faker.address.county,
+          postcode: faker.address.zipCode,
+          country: faker.address.country,
+          area: area,
+        }
+        const response = transformFormData(formData, {
+          locals: { features: { 'address-area-company-search': true } },
+        })
+        const expected = {
+          name: formData.name,
+          website: formData.website,
+          telephone_number: formData.telephone_number,
+          address: {
+            line_1: formData.address1,
+            line_2: formData.address2 || '',
+            town: formData.city,
+            county: formData.county || '',
+            postcode: formData.postcode,
+            country: { id: formData.country },
+            area: { id: formData.area },
+          },
+        }
+
+        expect(response).to.deep.equal(expected)
+      })
+    })
+
+    context('when area is undefined', () => {
+      it('returns area as undefined without an id', () => {
+        const area = undefined
+        const formData = {
+          name: faker.name,
+          website: faker.internet.domainName,
+          telephone_number: faker.phone,
+          address1: faker.address.streetAddress,
+          address2: faker.address.streetAddress,
+          city: faker.address.city,
+          county: faker.address.county,
+          postcode: faker.address.zipCode,
+          country: faker.address.country,
+          area: area,
+        }
+        const response = transformFormData(formData, {
+          locals: { features: { 'address-area-company-search': true } },
+        })
+        const expected = {
+          name: formData.name,
+          website: formData.website,
+          telephone_number: formData.telephone_number,
+          address: {
+            line_1: formData.address1,
+            line_2: formData.address2 || '',
+            town: formData.city,
+            county: formData.county || '',
+            postcode: formData.postcode,
+            country: { id: formData.country },
+            area: undefined,
+          },
+        }
+
+        expect(response).to.deep.equal(expected)
       })
     })
   })
