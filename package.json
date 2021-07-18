@@ -98,7 +98,7 @@
     "csurf": "^1.9.0",
     "cypress-axe": "^0.12.2",
     "date-fns": "^2.22.1",
-    "del-cli": "^3.0.0",
+    "del-cli": "^4.0.1",
     "details-element-polyfill": "^2.4.0",
     "dotenv": "^10.0.0",
     "elastic-apm-node": "^3.17.0",
