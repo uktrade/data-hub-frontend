@@ -183,7 +183,7 @@
     "@wdio/reporter": "^7.7.3",
     "@wdio/selenium-standalone-service": "^7.0.0",
     "@wdio/spec-reporter": "^7.3.1",
-    "@wdio/sync": "^7.7.4",
+    "@wdio/sync": "^7.7.7",
     "babel-eslint": "^10.1.0",
     "babel-plugin-istanbul": "6.0.0",
     "browser-sync": "^2.27.4",
