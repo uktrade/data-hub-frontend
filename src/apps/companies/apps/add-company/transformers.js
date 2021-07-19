@@ -15,6 +15,17 @@ const transformFormData = (
   res,
   countryAsObject = true
 ) => {
+  const sanitiseArea = (area) => {
+    if (area === undefined) {
+      return {
+        area: undefined,
+      }
+    }
+    return {
+      area: { id: area },
+    }
+  }
+
   return {
     name,
     website,
@@ -26,9 +37,8 @@ const transformFormData = (
       county: county || '',
       postcode: postcode,
       country: countryAsObject ? { id: country } : country,
-      ...(res.locals.features['address-area-company-search'] && {
-        area: { id: area },
-      }),
+      ...(res.locals.features['address-area-company-search'] &&
+        sanitiseArea(area)),
     },
   }
 }
@@ -52,4 +62,5 @@ const transformToCreateDnbCompanyInvestigation = (formData, companyId, res) => {
 module.exports = {
   transformToDnbStubCompany,
   transformToCreateDnbCompanyInvestigation,
+  transformFormData,
 }
