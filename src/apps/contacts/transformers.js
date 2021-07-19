@@ -27,6 +27,11 @@ function getTelephoneNumber(telephone_countrycode, telephone_number) {
     : telephone_number
 }
 
+// The new react collection page no longer uses this transformer as it
+// has its own. When searching for a contact '/search/contacts?term=<search-term>'
+// or viewing a contact within companies '/companies/<company-id>/contacts'
+// this function is called, therefore, we cannot remove it until both of
+// those areas have been rewritten in react.
 function transformContactToListItem({
   id,
   first_name,
