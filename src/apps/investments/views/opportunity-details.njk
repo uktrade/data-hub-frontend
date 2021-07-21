@@ -1,8 +1,8 @@
-{% extends "_layouts/collection.njk" %}
+{% extends "_layouts/template-no-local-header.njk" %}
 
-{% block content %}
-{% component 'react-slot', {
-  id: 'opportunity-details',
-  props: props
-} %}
+{% block body %}
+  {% component 'react-slot', {
+    id: 'opportunity-details',
+    props: props
+  } %}
 {% endblock %}
