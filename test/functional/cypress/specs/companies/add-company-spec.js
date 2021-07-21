@@ -96,7 +96,7 @@ const goToUKCompanySectorAndRegionPage = () => {
   cy.get(selectors.companyAdd.continueButton).click()
 }
 
-const manualAddUSOrCanadianCompanyForm = () => {
+const assertUSOrCanadianCompanyFormFields = () => {
   cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.charity)
     .parent()
     .should('be.visible')
@@ -734,7 +734,7 @@ describe('Add company form', () => {
     })
 
     it('should display the manual entry form', () => {
-      manualAddUSOrCanadianCompanyForm()
+      assertUSOrCanadianCompanyFormFields()
       cy.get(selectors.companyAdd.form).contains('United States')
     })
 
@@ -762,7 +762,7 @@ describe('Add company form', () => {
     })
 
     it('should display the manual entry form', () => {
-      manualAddUSOrCanadianCompanyForm()
+      assertUSOrCanadianCompanyFormFields()
       cy.get(selectors.companyAdd.form).contains('Canada')
     })
 
