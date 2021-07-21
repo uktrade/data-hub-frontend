@@ -96,6 +96,46 @@ const goToUKCompanySectorAndRegionPage = () => {
   cy.get(selectors.companyAdd.continueButton).click()
 }
 
+const manualAddUSOrCanadianCompanyForm = () => {
+  cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.charity)
+    .parent()
+    .should('be.visible')
+  cy.get(
+    selectors.companyAdd.newCompanyRecordForm.organisationType
+      .governmentDepartmentOrOtherPublicBody
+  )
+    .parent()
+    .should('be.visible')
+  cy.get(
+    selectors.companyAdd.newCompanyRecordForm.organisationType.limitedCompany
+  )
+    .parent()
+    .should('be.visible')
+  cy.get(
+    selectors.companyAdd.newCompanyRecordForm.organisationType
+      .limitedPartnership
+  )
+    .parent()
+    .should('be.visible')
+  cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.partnership)
+    .parent()
+    .should('be.visible')
+  cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.soleTrader)
+    .parent()
+    .should('be.visible')
+  cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).should(
+    'be.visible'
+  )
+  cy.get(selectors.companyAdd.newCompanyRecordForm.website).should('be.visible')
+  cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).should(
+    'be.visible'
+  )
+  cy.get(selectors.companyAdd.newCompanyRecordForm.area).should('be.visible')
+  cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).should(
+    'be.visible'
+  )
+}
+
 describe('Add company form', () => {
   beforeEach(function () {
     Cypress.Cookies.preserveOnce('datahub.sid')
@@ -694,52 +734,7 @@ describe('Add company form', () => {
     })
 
     it('should display the manual entry form', () => {
-      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.charity)
-        .parent()
-        .should('be.visible')
-      cy.get(
-        selectors.companyAdd.newCompanyRecordForm.organisationType
-          .governmentDepartmentOrOtherPublicBody
-      )
-        .parent()
-        .should('be.visible')
-      cy.get(
-        selectors.companyAdd.newCompanyRecordForm.organisationType
-          .limitedCompany
-      )
-        .parent()
-        .should('be.visible')
-      cy.get(
-        selectors.companyAdd.newCompanyRecordForm.organisationType
-          .limitedPartnership
-      )
-        .parent()
-        .should('be.visible')
-      cy.get(
-        selectors.companyAdd.newCompanyRecordForm.organisationType.partnership
-      )
-        .parent()
-        .should('be.visible')
-      cy.get(
-        selectors.companyAdd.newCompanyRecordForm.organisationType.soleTrader
-      )
-        .parent()
-        .should('be.visible')
-      cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).should(
-        'be.visible'
-      )
-      cy.get(selectors.companyAdd.newCompanyRecordForm.website).should(
-        'be.visible'
-      )
-      cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).should(
-        'be.visible'
-      )
-      cy.get(selectors.companyAdd.newCompanyRecordForm.area).should(
-        'be.visible'
-      )
-      cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).should(
-        'be.visible'
-      )
+      manualAddUSOrCanadianCompanyForm()
       cy.get(selectors.companyAdd.form).contains('United States')
     })
 
@@ -767,52 +762,7 @@ describe('Add company form', () => {
     })
 
     it('should display the manual entry form', () => {
-      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.charity)
-        .parent()
-        .should('be.visible')
-      cy.get(
-        selectors.companyAdd.newCompanyRecordForm.organisationType
-          .governmentDepartmentOrOtherPublicBody
-      )
-        .parent()
-        .should('be.visible')
-      cy.get(
-        selectors.companyAdd.newCompanyRecordForm.organisationType
-          .limitedCompany
-      )
-        .parent()
-        .should('be.visible')
-      cy.get(
-        selectors.companyAdd.newCompanyRecordForm.organisationType
-          .limitedPartnership
-      )
-        .parent()
-        .should('be.visible')
-      cy.get(
-        selectors.companyAdd.newCompanyRecordForm.organisationType.partnership
-      )
-        .parent()
-        .should('be.visible')
-      cy.get(
-        selectors.companyAdd.newCompanyRecordForm.organisationType.soleTrader
-      )
-        .parent()
-        .should('be.visible')
-      cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).should(
-        'be.visible'
-      )
-      cy.get(selectors.companyAdd.newCompanyRecordForm.website).should(
-        'be.visible'
-      )
-      cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).should(
-        'be.visible'
-      )
-      cy.get(selectors.companyAdd.newCompanyRecordForm.area).should(
-        'be.visible'
-      )
-      cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).should(
-        'be.visible'
-      )
+      manualAddUSOrCanadianCompanyForm()
       cy.get(selectors.companyAdd.form).contains('Canada')
     })
 
