@@ -107,6 +107,7 @@ const InteractionCollection = ({
           name="adviser"
           qsParam="adviser"
           placeholder="Search adviser"
+          noOptionsMessage={() => <>No advisers found</>}
           selectedOptions={selectedFilters.advisers.options}
           data-test="adviser-filter"
         />
