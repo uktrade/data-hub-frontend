@@ -3,7 +3,7 @@ const selectors = require('../../../../selectors')
 
 const {
   companies,
-  contacts,
+  // contacts,
   investments,
 } = require('../../../../../src/lib/urls')
 
@@ -24,7 +24,7 @@ describe('Collection', () => {
     })
   })
 
-  describe('contact', () => {
+  /* describe('contact', () => {
     before(() => {
       cy.visit(contacts.index())
     })
@@ -32,7 +32,7 @@ describe('Collection', () => {
     it('should return the results summary for a contact collection', () => {
       cy.get('[data-test="collectionCount"]').should('have.text', '7')
     })
-  })
+  }) */
 
   context('investment', () => {
     describe('projects', () => {
