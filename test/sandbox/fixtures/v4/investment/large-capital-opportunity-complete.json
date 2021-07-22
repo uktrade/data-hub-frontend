@@ -28,7 +28,7 @@
         "first_name": "John",
         "last_name": "Rogers",
         "id": "7bad8082-4978-4fe8-a018-740257f01637"
-        },
+    },
     "required_checks_conducted_on": "2018-07-06T10:44:56Z",
     "lead_dit_relationship_manager": {
         "name": "Travis Greene",
@@ -42,8 +42,8 @@
             "first_name": "John",
             "last_name": "Rogers",
             "id": "7bad8082-4978-4fe8-a018-740257f01637"
-            }
-    ], 
+        }
+    ],
     "asset_classes": [
         {
             "name": "Biofuel",
@@ -87,7 +87,10 @@
         }
     ],
     "investment_projects": [],
-    "status": {},
+    "status": {
+        "name": "Seeking investment",
+        "id": "1386d4f4-732d-44b9-af8e-dffe7dd07d7b"
+    },
     "sources_of_funding": [],
     "funding_supporting_details": "",
     "dit_support_provided": "True",

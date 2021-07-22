@@ -3,7 +3,17 @@ const {
   assertBreadcrumbs,
 } = require('../../support/assertions')
 const fixtures = require('../../fixtures')
+
+const incompleteOpportunity = require('../../../../sandbox/fixtures/v4/investment/large-capital-opportunity-incomplete.json')
+const completeOpportunity = require('../../../../sandbox/fixtures/v4/investment/large-capital-opportunity-complete.json')
 const { investments } = require('../../../../../src/lib/urls')
+
+const assertLocalHeaderDetails = (index, label, value) => {
+  cy.get('[data-test="localHeaderDetails"]>li')
+    .eq(index)
+    .should('contain', label)
+    .and('contain', value)
+}
 
 const assertTableValues = (values, tableElement) => {
   cy.get('#opportunity_requirements_toggle')
@@ -23,16 +33,25 @@ describe('UK Opportunity with missing data', () => {
       )
     )
   })
-
-  it('should render the header', () => {
-    assertLocalHeader('UK Opportunities')
-  })
-
-  it('should render breadcrumbs', () => {
-    assertBreadcrumbs({
-      Home: '/',
-      Investments: '/investments',
-      'UK Opportunities': null,
+  context('The page header', () => {
+    it('should display correct breadcrumbs', () => {
+      assertBreadcrumbs({
+        Home: '/',
+        Investments: '/investments',
+        'UK opportunities': '/investments/opportunities',
+        [incompleteOpportunity.name]: '',
+      })
+    })
+    it('should display opportunity name in the header', () => {
+      assertLocalHeader(incompleteOpportunity.name)
+    })
+    it('should display opportunity details in the header', () => {
+      cy.get('[data-test="localHeaderDetails"]>li').should('have.length', '5')
+      assertLocalHeaderDetails(0, 'Status', 'Unassigned')
+      assertLocalHeaderDetails(1, 'Valuation', 'Not yet valued')
+      assertLocalHeaderDetails(2, 'UK location', 'Not yet defined')
+      assertLocalHeaderDetails(3, 'Asset class', 'Not yet defined')
+      assertLocalHeaderDetails(4, 'Created on', '13 May 2019, 3:01pm')
     })
   })
 
@@ -101,7 +120,31 @@ describe('UK Opportunity with complete data', () => {
       )
     )
   })
-
+  context('The page header', () => {
+    it('should display correct breadcrumbs', () => {
+      assertBreadcrumbs({
+        Home: '/',
+        Investments: '/investments',
+        'UK opportunities': '/investments/opportunities',
+        [completeOpportunity.name]: '',
+      })
+    })
+    it('should display opportunity name in the header', () => {
+      assertLocalHeader(completeOpportunity.name)
+    })
+    it('should display opportunity details in the header', () => {
+      cy.get('[data-test="localHeaderDetails"]>li').should('have.length', '5')
+      assertLocalHeaderDetails(0, 'Status', completeOpportunity.status.name)
+      assertLocalHeaderDetails(1, 'Valuation', '£12,345,789')
+      assertLocalHeaderDetails(
+        2,
+        'UK location',
+        completeOpportunity.uk_region_locations[0].name
+      )
+      assertLocalHeaderDetails(3, 'Asset class', 'Multiple')
+      assertLocalHeaderDetails(4, 'Created on', '13 May 2019, 3:01pm')
+    })
+  })
   it('should display two "Completed" labels', () => {
     cy.get('label:contains("Complete")').should('have.length', '2')
   })
