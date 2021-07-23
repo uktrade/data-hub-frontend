@@ -11,9 +11,13 @@
     <div class="c-progress">
       <ol class="c-progress-bar">
         {% for stageName in props.stageNames %}
-          <li class="c-progress__stage
-          {{- ' is-active' if props.currentStageName == stageName -}}
-          {{- ' is-complete' if loop.index0 < currentStageIndex -}}"
+          {% set stage =
+            'complete' if loop.index0 < currentStageIndex else
+            ('active' if props.currentStageName == stageName else
+            'incomplete')
+          %}
+          <li class="c-progress__stage is-{{- stage -}}"
+            aria-label="stage {{ stage }}"
           >
             <span class="c-progress__stage-title">{{ stageName }}</span>
           </li>
