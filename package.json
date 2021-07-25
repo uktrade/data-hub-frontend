@@ -212,7 +212,7 @@
     "js-beautify": "^1.14.0",
     "jsdom": "^16.6.0",
     "jsdom-global": "^3.0.2",
-    "json-schema-faker": "^0.5.0-rcv.36",
+    "json-schema-faker": "^0.5.0-rcv.38",
     "lint-staged": "^11.0.0",
     "mocha": "^8.4.0",
     "mocha-circleci-reporter": "0.0.3",
