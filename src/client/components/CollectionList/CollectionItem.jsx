@@ -9,7 +9,7 @@ import { GREY_2 } from 'govuk-colours'
 import Badge from '../Badge/'
 import Metadata from '../../components/Metadata/'
 
-const ItemWrapper = styled('div')`
+const ItemWrapper = styled('li')`
   border-bottom: 1px solid ${GREY_2};
   padding: ${SPACING.SCALE_3} 0;
 `
