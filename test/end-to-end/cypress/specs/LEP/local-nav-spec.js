@@ -12,8 +12,11 @@ const { assertLocalNav } = require('../../support/assertions')
 
 describe('LEP Permission', () => {
   describe('activity', () => {
+    const company = fixtures.company.create.corp()
+
     before(() => {
-      cy.visit(companies.detail(fixtures.company.oneListCorp.id))
+      cy.loadFixture([company])
+      cy.visit(companies.detail(company.pk))
     })
 
     it('should display LEP only tabs', () => {
@@ -41,8 +44,13 @@ describe('LEP Permission', () => {
   })
 
   describe('contact details', () => {
+    const company = fixtures.company.create.defaultCompany('local nav lep')
+    const contact = fixtures.contact.create(company.pk)
+
     before(() => {
-      cy.visit(contacts.details(fixtures.contact.johnnyCakeman.id))
+      cy.loadFixture([company])
+      cy.loadFixture([contact])
+      cy.visit(contacts.details(contact.pk))
     })
 
     it('should display LEP only tabs', () => {
