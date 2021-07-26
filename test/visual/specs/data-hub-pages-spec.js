@@ -48,6 +48,7 @@ describe('Data Hub', () => {
 
   it('companies page', async () => {
     await browser.url('/companies')
+    await $('[data-test="metadata"]')
     await hideScrollBarIE()
     await browser.imageDiff.take()
     const result = await browser.imageDiff.validate()

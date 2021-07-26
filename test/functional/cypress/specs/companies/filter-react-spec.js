@@ -53,7 +53,7 @@ describe('Companies Collections Filter', () => {
     it('should set the default params', () => {
       cy.intercept('POST', searchEndpoint).as('apiRequest')
 
-      cy.visit(urls.companies.react.index())
+      cy.visit(urls.companies.index())
 
       // Initial call to the api does not yet include default params
       // we shouldn't be making this call
@@ -86,7 +86,7 @@ describe('Companies Collections Filter', () => {
     it('should filter from the url', () => {
       const queryString = buildQueryString({ headquarter_type: [globalHqId] })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       assertCheckboxGroupOption({
         element,
@@ -99,7 +99,7 @@ describe('Companies Collections Filter', () => {
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
       clickCheckboxGroupOption({
@@ -134,7 +134,7 @@ describe('Companies Collections Filter', () => {
     it('should filter from the url', () => {
       const queryString = buildQueryString({ name: companyNameQuery })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('have.value', companyNameQuery)
       assertChipExists({ label: companyNameQuery, position: 1 })
@@ -143,7 +143,7 @@ describe('Companies Collections Filter', () => {
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
       cy.get(element).type(`${companyNameQuery}{enter}`)
@@ -177,7 +177,7 @@ describe('Companies Collections Filter', () => {
         sector_descends: [aerospaceSectorId],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', 'Aerospace')
       assertChipExists({ label: 'Aerospace', position: 1 })
@@ -186,7 +186,7 @@ describe('Companies Collections Filter', () => {
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
       testTypeahead({
@@ -225,7 +225,7 @@ describe('Companies Collections Filter', () => {
         country: [brazilCountryId],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', 'Brazil')
       assertChipExists({ label: 'Brazil', position: 1 })
@@ -234,7 +234,7 @@ describe('Companies Collections Filter', () => {
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
       testTypeahead({
@@ -276,7 +276,7 @@ describe('Companies Collections Filter', () => {
       })
       cy.intercept('GET', usStatesEndpoint, usStates).as('usStatesApiRequest')
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       cy.wait('@usStatesApiRequest')
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', state.name)
@@ -287,7 +287,7 @@ describe('Companies Collections Filter', () => {
       const queryString = buildQueryString()
       cy.intercept('GET', usStatesEndpoint, usStates).as('usStatesApiRequest')
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       cy.wait('@usStatesApiRequest')
       cy.wait('@apiRequest')
 
@@ -332,7 +332,7 @@ describe('Companies Collections Filter', () => {
         'canadianProvincesApiRequest'
       )
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       cy.wait('@canadianProvincesApiRequest')
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', province.name)
@@ -348,7 +348,7 @@ describe('Companies Collections Filter', () => {
         'canadianProvincesApiRequest'
       )
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       cy.wait('@canadianProvincesApiRequest')
       cy.wait('@apiRequest')
 
@@ -396,10 +396,11 @@ describe('Companies Collections Filter', () => {
         uk_region: [ukRegion.id],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
+
       cy.intercept('GET', ukRegionsEndpoint, ukRegions).as(
         'ukRegionsApiRequest'
       )
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       cy.wait('@ukRegionsApiRequest')
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', ukRegion.name)
@@ -412,7 +413,7 @@ describe('Companies Collections Filter', () => {
       cy.intercept('GET', ukRegionsEndpoint, ukRegions).as(
         'ukRegionsApiRequest'
       )
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       cy.wait('@ukRegionsApiRequest')
       cy.wait('@apiRequest')
 
@@ -446,7 +447,7 @@ describe('Companies Collections Filter', () => {
         archived: [activeStatusFlag],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body).to.deep.equal({
           ...minimumPayload,
@@ -464,7 +465,7 @@ describe('Companies Collections Filter', () => {
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
       cy.get(element).as('filter').find('label').as('options')
@@ -528,7 +529,7 @@ describe('Companies Collections Filter', () => {
         export_to_countries: [brazilCountryId],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', 'Brazil')
       assertChipExists({ label: 'Active', position: 1 })
@@ -538,7 +539,7 @@ describe('Companies Collections Filter', () => {
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
       testTypeahead({
@@ -577,7 +578,7 @@ describe('Companies Collections Filter', () => {
         future_interest_countries: [brazilCountryId],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', 'Brazil')
       assertChipExists({ label: 'Active', position: 1 })
@@ -587,7 +588,7 @@ describe('Companies Collections Filter', () => {
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
       testTypeahead({
@@ -630,7 +631,7 @@ describe('Companies Collections Filter', () => {
         latest_interaction_date_before: toDate,
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       assertChipExists({
         label: `Last interaction after: ${formattedFromDate}`,
@@ -655,7 +656,7 @@ describe('Companies Collections Filter', () => {
     it('should filter from user input and remove the chip', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
       inputDateValue({
@@ -728,7 +729,7 @@ describe('Companies Collections Filter', () => {
         one_list_group_global_account_manager: [adviserId],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', adviserName)
       assertChipExists({ label: adviserName, position: 2 })
@@ -737,7 +738,7 @@ describe('Companies Collections Filter', () => {
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
       selectFirstAdvisersTypeaheadOption({ element, input: adviserName })
@@ -791,7 +792,7 @@ describe('Companies Collections Filter', () => {
         'ukRegionsApiRequest'
       )
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
       cy.wait('@usStatesApiRequest')
       cy.wait('@canadianProvincesApiRequest')
       cy.wait('@ukRegionsApiRequest')

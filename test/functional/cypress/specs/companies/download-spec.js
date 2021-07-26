@@ -7,7 +7,7 @@ const downloadHeader = '[data-test="download-data-header"]'
 const downloadButton = '[data-test="download-data-header"] a'
 
 const apiEndpoint = '/api-proxy/v4/search/company'
-const pageUrl = `${urls.companies.react.index()}?archived[0]=false&sortby=modified_on:desc`
+const pageUrl = `${urls.companies.index()}?archived[0]=false&sortby=modified_on:desc`
 
 describe('Download CSV', () => {
   context('When there are 0 companies', () => {
@@ -125,7 +125,7 @@ describe('Download CSV', () => {
           count: companiesList.length,
         },
       })
-      cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.visit(`${urls.companies.index()}?${queryString}`)
     })
 
     it('should have the correct query string', () => {
