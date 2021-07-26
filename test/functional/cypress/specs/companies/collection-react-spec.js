@@ -1,5 +1,5 @@
 import { assertBreadcrumbs } from '../../support/assertions'
-import { companies } from '../../../../../src/lib/urls'
+import urls from '../../../../../src/lib/urls'
 
 import { companyFaker, companyListFaker } from '../../fakers/companies'
 
@@ -58,9 +58,7 @@ describe('Company Collections - React', () => {
         results: companyList,
       },
     }).as('apiRequest')
-    // Visit the new react companies page - note this will need to be changed
-    // to `companies.index()` when ready
-    cy.visit(companies.react.index())
+    cy.visit(urls.companies.index())
     cy.wait('@apiRequest')
   })
 

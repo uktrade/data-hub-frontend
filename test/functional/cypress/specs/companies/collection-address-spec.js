@@ -3,8 +3,6 @@ import { companies } from '../../../../../src/lib/urls'
 
 import { companyFaker, companyListFaker } from '../../fakers/companies'
 
-// const selectors = require('../../../../selectors')
-
 describe('Company Collection Address', () => {
   const usCompany = companyFaker({
     address: {
@@ -34,7 +32,7 @@ describe('Company Collection Address', () => {
         results: companyList,
       },
     }).as('apiRequest')
-    cy.visit(companies.react.index())
+    cy.visit(companies.index())
     cy.wait('@apiRequest')
   })
 
