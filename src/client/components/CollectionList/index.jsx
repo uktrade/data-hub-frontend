@@ -58,30 +58,33 @@ const CollectionList = ({
             entityName={entityName}
             entityNamePlural={entityNamePlural}
           />
-          {items.map(
-            (
-              { headingText, headingUrl, subheading, badges, metadata },
-              index
-            ) => (
-              <CollectionItem
-                key={[count, activePage, index].join('-')}
-                headingUrl={headingUrl}
-                headingText={headingText}
-                subheading={subheading}
-                badges={badges}
-                metadata={metadata}
-                metadataRenderer={metadataRenderer}
-              />
-            )
-          )}
-
+          <ol>
+            {items.map(
+              (
+                { headingText, headingUrl, subheading, badges, metadata },
+                index
+              ) => (
+                <CollectionItem
+                  key={[count, activePage, index].join('-')}
+                  headingUrl={headingUrl}
+                  headingText={headingText}
+                  subheading={subheading}
+                  badges={badges}
+                  metadata={metadata}
+                  metadataRenderer={metadataRenderer}
+                />
+              )
+            )}
+          </ol>
           <Task.Status {...taskProps}>
             {() =>
               isComplete && (
                 <>
-                  {results.map((item, i) => (
-                    <CollectionItem {...item} key={i} />
-                  ))}
+                  <ol>
+                    {results.map((item, i) => (
+                      <CollectionItem {...item} key={i} />
+                    ))}
+                  </ol>
                   <Pagination
                     totalPages={totalPages}
                     onPageClick={onPageClick}

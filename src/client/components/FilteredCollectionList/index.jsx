@@ -82,9 +82,11 @@ const FilteredCollectionList = ({
                   {() =>
                     isComplete && (
                       <>
-                        {results.map((item) => (
-                          <CollectionItem {...item} key={item.id} />
-                        ))}
+                        <ol>
+                          {results.map((item) => (
+                            <CollectionItem {...item} key={item.id} />
+                          ))}
+                        </ol>
                         <RoutedPagination
                           qsParamName="page"
                           totalPages={totalPages}
