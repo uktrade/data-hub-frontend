@@ -19,14 +19,14 @@ describe('Investment opportunities', () => {
       assertBreadcrumbs({
         Home: '/',
         Investments: '/investments',
-        'UK Opportunities': null,
+        'UK opportunities': null,
       })
     })
 
     it('should render the local navigation', () => {
       assertTabbedLocalNav('Projects')
       assertTabbedLocalNav('Investor profiles')
-      assertTabbedLocalNav('UK Opportunities')
+      assertTabbedLocalNav('UK opportunities')
     })
 
     it('should display add opportunity button', () => {

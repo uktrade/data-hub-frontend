@@ -1,9 +1,9 @@
 const renderOpportunitiesView = (req, res, next) => {
   try {
     res
-      .breadcrumb('UK Opportunities')
+      .breadcrumb('UK opportunities')
       .render('investments/views/opportunities', {
-        heading: 'UK Opportunities',
+        heading: 'UK opportunities',
         props: {
           opportunityId: req.params.opportunityId,
         },
