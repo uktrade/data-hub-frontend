@@ -15,7 +15,6 @@ const initialState = {
   details: {
     isEditingDetails: false,
     isEditingRequirements: false,
-    formSaved: false,
     detailsFields: {
       name: '',
       description: '',
@@ -107,12 +106,22 @@ export default (state = initialState, { type, result }) => {
     case INVESTMENT_OPPORTUNITY__DETAILS_CHANGE:
       return {
         ...state,
-        details: { ...state.details, ...result, formSaved: true },
+        details: {
+          ...state.details,
+          ...result,
+          isEditingDetails: false,
+          isEditingRequirements: false,
+        },
       }
     case INVESTMENT_OPPORTUNITY__REQUIREMENTS_CHANGE:
       return {
         ...state,
-        details: { ...state.details, ...result, formSaved: true },
+        details: {
+          ...state.details,
+          ...result,
+          isEditingDetails: false,
+          isEditingRequirements: false,
+        },
       }
     default:
       return state

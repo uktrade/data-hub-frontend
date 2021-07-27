@@ -57,9 +57,7 @@ export function saveOpportunityDetails({ values, opportunityId }) {
       description: values.description,
       opportunity_value: values.opportunityValue,
     })
-    .then(({ data }) => {
-      return data
-    })
+    .then(({ data }) => transformInvestmentOpportunityDetails(data))
 }
 
 export function saveOpportunityRequirements({ values, opportunityId }) {
@@ -72,7 +70,5 @@ export function saveOpportunityRequirements({ values, opportunityId }) {
       // TODO: Remove array bracket after refactoring endpoint.
       time_horizons: values.time_horizons ? [values.time_horizons] : [],
     })
-    .then(({ data }) => {
-      return data
-    })
+    .then(({ data }) => transformInvestmentOpportunityDetails(data))
 }
