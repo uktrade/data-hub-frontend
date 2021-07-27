@@ -43,7 +43,7 @@ const CustomMenuList = ({ children, selectProps, ...props }) => (
               },
             })
           )
-        : children}
+        : Boolean(!!selectProps.inputValue.length) && children}
     </ul>
   </MenuList>
 )
