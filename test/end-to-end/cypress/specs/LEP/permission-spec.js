@@ -110,7 +110,7 @@ describe('LEP Permission', () => {
 
   context('investment', () => {
     describe('investment document', () => {
-      investmentProjectNewZoo = fixtures.investmentProject.create.newZoo()
+      investmentProjectNewZoo = fixtures.investmentProject.create.newZooLEP()
 
       before(() => {
         cy.loadFixture([investmentProjectNewGolf])
@@ -127,7 +127,7 @@ describe('LEP Permission', () => {
 
     describe('interaction', () => {
       investmentProjectNewGolf =
-        fixtures.investmentProject.create.newGolfCourse()
+        fixtures.investmentProject.create.newGolfCourseDA()
 
       before(() => {
         cy.loadFixture([investmentProjectNewZoo])
