@@ -10,13 +10,17 @@ import {
 } from '../../../../../client/actions'
 
 import OpportunityDetails from './OpportunityDetails'
+import OpportunityDetailsHeader from './OpportunityDetailsHeader'
 import OpportunityRequirements from './OpportunityRequirements'
 import OpportunityDetailsForm from './OpportunityDetailsForm'
 import OpportunityRequirementsForm from './OpportunityRequirementsForm'
 
-import Task from '../../../../../client/components/Task'
-import ToggleSection from '../../../../../client/components/ToggleSection'
-import SummaryTable from '../../../../../client/components/SummaryTable'
+import {
+  Main,
+  SummaryTable,
+  ToggleSection,
+} from '../../../../../client/components'
+import Task from '../../../../../client/components/Task/index.jsx'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 
 import styled from 'styled-components'
@@ -104,42 +108,49 @@ const Opportunities = ({
         onSuccessDispatch: INVESTMENT_OPPORTUNITY_DETAILS__LOADED,
       }}
     >
-      {() => (
-        <>
-          <OpportunitySection
-            incompleteFields={incompleteDetailsFields}
-            form={<OpportunityDetailsForm opportunityId={opportunityId} />}
-            toggleName="Opportunity details"
-            id="opportunity_details"
-            isEditing={isEditingDetails}
-            onEdit={onDetailsEdit}
-          >
-            <OpportunityDetails details={detailsFields} />
-          </OpportunitySection>
+      {() =>
+        detailsFields.name.length && (
+          <>
+            <OpportunityDetailsHeader />
+            <Main>
+              <OpportunitySection
+                incompleteFields={incompleteDetailsFields}
+                form={<OpportunityDetailsForm opportunityId={opportunityId} />}
+                toggleName="Opportunity details"
+                id="opportunity_details"
+                isEditing={isEditingDetails}
+                onEdit={onDetailsEdit}
+              >
+                <OpportunityDetails details={detailsFields} />
+              </OpportunitySection>
 
-          <OpportunitySection
-            incompleteFields={incompleteRequirementsFields}
-            form={<OpportunityRequirementsForm opportunityId={opportunityId} />}
-            toggleName="Opportunity requirements"
-            id="opportunity_requirements"
-            isEditing={isEditingRequirements}
-            onEdit={onRequirementsEdit}
-          >
-            <OpportunityRequirements details={requirementsFields} />
-          </OpportunitySection>
+              <OpportunitySection
+                incompleteFields={incompleteRequirementsFields}
+                form={
+                  <OpportunityRequirementsForm opportunityId={opportunityId} />
+                }
+                toggleName="Opportunity requirements"
+                id="opportunity_requirements"
+                isEditing={isEditingRequirements}
+                onEdit={onRequirementsEdit}
+              >
+                <OpportunityRequirements details={requirementsFields} />
+              </OpportunitySection>
 
-          <StyledToggle
-            label="Need to delete this opportunity?"
-            id="opportunity_delete_toggle"
-            fontSize={FONT_SIZE.SIZE_14}
-          >
-            <StyledSpan>
-              To delete this opportunity, email{' '}
-              <Link>capitalinvestment@trade.gov.uk</Link>
-            </StyledSpan>
-          </StyledToggle>
-        </>
-      )}
+              <StyledToggle
+                label="Need to delete this opportunity?"
+                id="opportunity_delete_toggle"
+                fontSize={FONT_SIZE.SIZE_14}
+              >
+                <StyledSpan>
+                  To delete this opportunity, email{' '}
+                  <Link>capitalinvestment@trade.gov.uk</Link>
+                </StyledSpan>
+              </StyledToggle>
+            </Main>
+          </>
+        )
+      }
     </Task.Status>
   )
 }
