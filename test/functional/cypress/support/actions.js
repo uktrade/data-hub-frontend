@@ -14,20 +14,6 @@ export const selectFirstAdvisersTypeaheadOption = ({ element, input }) =>
   })
 
 /**
- * Enter `input` into an teams typeahead `element` and select the first result
- *
- * This waits for the team api request to complete before selecting the
- * first option.
- */
-export const selectFirstTeamsTypeaheadOption = ({ element, input }) =>
-  cy.get(element).within(() => {
-    cy.intercept('/api-proxy/v4/metadata/team?*').as('teamResults')
-    cy.get('div').eq(0).type(input)
-    cy.wait('@teamResults')
-    cy.get('[class*="menu"] > div').click()
-  })
-
-/**
  * Clicks the checkbox option with the given value
  */
 export const clickCheckboxGroupOption = ({ element, value }) => {

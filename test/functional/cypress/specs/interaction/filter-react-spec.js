@@ -6,7 +6,7 @@ import {
   clickCheckboxGroupOption,
   removeChip,
   selectFirstAdvisersTypeaheadOption,
-  selectFirstTeamsTypeaheadOption,
+  selectFirstTypeaheadOption,
   inputDateValue,
 } from '../../support/actions'
 
@@ -325,9 +325,7 @@ describe('Interactions Collections Filter', () => {
 
   context('Teams', () => {
     const teams = teamListFaker(10)
-
     const team = teams[0]
-
     const expectedPayload = {
       ...minimumPayload,
       dit_participants__team: [team.id],
@@ -360,7 +358,7 @@ describe('Interactions Collections Filter', () => {
 
       cy.visit(`${interactions.react()}?${queryString}`)
       cy.wait('@apiRequest')
-      selectFirstTeamsTypeaheadOption({
+      selectFirstTypeaheadOption({
         element: teamsFilter,
         input: team.name,
       })
