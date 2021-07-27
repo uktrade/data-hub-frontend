@@ -93,7 +93,6 @@ const Opportunities = ({
     incompleteRequirementsFields,
     isEditingDetails,
     isEditingRequirements,
-    formSaved,
   } = details
   return (
     <Task.Status
@@ -103,7 +102,6 @@ const Opportunities = ({
       startOnRender={{
         payload: {
           opportunityId,
-          formSaved,
         },
         onSuccessDispatch: INVESTMENT_OPPORTUNITY_DETAILS__LOADED,
       }}
