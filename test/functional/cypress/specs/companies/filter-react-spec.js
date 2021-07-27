@@ -634,21 +634,21 @@ describe('Companies Collections Filter', () => {
       cy.visit(`${urls.companies.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       assertChipExists({
-        label: `Last interaction after: ${formattedFromDate}`,
+        label: `Last interaction from: ${formattedFromDate}`,
         position: 2,
       })
       assertChipExists({
-        label: `Last interaction before: ${formattedToDate}`,
+        label: `Last interaction to: ${formattedToDate}`,
         position: 3,
       })
       assertDateInput({
         element: fromElement,
-        label: 'Last interaction after',
+        label: 'Last interaction from',
         value: fromDate,
       })
       assertDateInput({
         element: toElement,
-        label: 'Last interaction before',
+        label: 'Last interaction to',
         value: toDate,
       })
     })
@@ -673,21 +673,21 @@ describe('Companies Collections Filter', () => {
       assertQueryParams('latest_interaction_date_after', fromDate)
       assertQueryParams('latest_interaction_date_before', toDate)
       assertChipExists({
-        label: `Last interaction after: ${formattedFromDate}`,
+        label: `Last interaction from: ${formattedFromDate}`,
         position: 2,
       })
       assertChipExists({
-        label: `Last interaction before: ${formattedToDate}`,
+        label: `Last interaction to: ${formattedToDate}`,
         position: 3,
       })
       assertDateInput({
         element: fromElement,
-        label: 'Last interaction after',
+        label: 'Last interaction from',
         value: fromDate,
       })
       assertDateInput({
         element: toElement,
-        label: 'Last interaction before',
+        label: 'Last interaction to',
         value: toDate,
       })
 
@@ -701,12 +701,12 @@ describe('Companies Collections Filter', () => {
 
       assertDateInput({
         element: fromElement,
-        label: 'Last interaction after',
+        label: 'Last interaction from',
         value: '',
       })
       assertDateInput({
         element: toElement,
-        label: 'Last interaction before',
+        label: 'Last interaction to',
         value: '',
       })
     })
@@ -832,12 +832,12 @@ describe('Companies Collections Filter', () => {
       )
       assertDateInput({
         element: '[data-test="last-interaction-after-filter"]',
-        label: 'Last interaction after',
+        label: 'Last interaction from',
         value: '',
       })
       assertDateInput({
         element: '[data-test="last-interaction-before-filter"]',
-        label: 'Last interaction before',
+        label: 'Last interaction to',
         value: '',
       })
       cy.get('[data-test="lead-ita-global-account-manager-filter"]').should(
