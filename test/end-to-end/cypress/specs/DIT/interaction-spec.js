@@ -43,12 +43,12 @@ describe('Interaction', () => {
       cy.visit(interactions.index())
       cy.get(selectors.filter.interaction.myInteractions).click()
 
-      cy.get(selectors.collection.itemsHeader).should(
+      cy.get('[data-test="collection-item"]').should(
         'contain',
         'Some interesting interaction'
       )
 
-      cy.get(selectors.collection.itemsList)
+      cy.get('[data-test="collection-item"]')
         .should('contain', 'Johnny Cakeman')
         .and('contain', 'Venus Ltd')
         .and(

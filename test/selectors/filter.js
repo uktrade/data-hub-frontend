@@ -21,7 +21,7 @@ module.exports = {
     ukRegion: '#group-field-company_uk_region',
   },
   interaction: {
-    myInteractions: '[for="field-dit_participants__adviser-1"]',
+    myInteractions: '[data-test="adviser-filter"]',
   },
   investments: {
     companyName: '#group-field-sector_descends',
