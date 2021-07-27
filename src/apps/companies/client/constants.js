@@ -10,8 +10,8 @@ export const LABELS = {
   companyStatus: 'Status',
   currentlyExportingTo: 'Currently exporting to',
   futureCountriesOfInterest: 'Future countries of interest',
-  lastInteractionBefore: 'Last interaction before',
-  lastInteractionAfter: 'Last interaction after',
+  lastInteractionAfter: 'Last interaction from',
+  lastInteractionBefore: 'Last interaction to',
   leadItaOrGlobalAccountManager: 'Lead ITA or Global Account Manager',
 }
 
