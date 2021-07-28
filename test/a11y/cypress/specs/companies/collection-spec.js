@@ -1,8 +1,8 @@
-import { companies } from '../../../../../src/lib/urls'
+import urls from '../../../../../src/lib/urls'
 
 describe('Company Collection - React', () => {
   before(() => {
-    cy.visit(companies.react.index())
+    cy.visit(urls.companies.index())
     cy.initA11y()
   })
 

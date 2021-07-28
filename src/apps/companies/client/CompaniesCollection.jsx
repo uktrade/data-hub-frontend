@@ -30,6 +30,7 @@ const CompaniesCollection = ({
   currentAdviserId,
   optionMetadata,
   selectedFilters,
+  features,
   ...props
 }) => {
   const collectionListTask = {
@@ -115,26 +116,30 @@ const CompaniesCollection = ({
           selectedOptions={selectedFilters.countries.options}
           data-test="country-filter"
         />
-        <RoutedTypeahead
-          isMulti={true}
-          legend={LABELS.usState}
-          name="us_state"
-          qsParam="us_state"
-          placeholder="Search US state"
-          options={optionMetadata.usStateOptions}
-          selectedOptions={selectedFilters.usStates.options}
-          data-test="us-state-filter"
-        />
-        <RoutedTypeahead
-          isMulti={true}
-          legend={LABELS.canadianProvince}
-          name="canadian_province"
-          qsParam="canadian_province"
-          placeholder="Search Canadian province"
-          options={optionMetadata.canadianProvinceOptions}
-          selectedOptions={selectedFilters.canadianProvinces.options}
-          data-test="canadian-province-filter"
-        />
+        {features['state-filter'] && (
+          <RoutedTypeahead
+            isMulti={true}
+            legend={LABELS.usState}
+            name="us_state"
+            qsParam="us_state"
+            placeholder="Search US state"
+            options={optionMetadata.usStateOptions}
+            selectedOptions={selectedFilters.usStates.options}
+            data-test="us-state-filter"
+          />
+        )}
+        {features['province-filter'] && (
+          <RoutedTypeahead
+            isMulti={true}
+            legend={LABELS.canadianProvince}
+            name="canadian_province"
+            qsParam="canadian_province"
+            placeholder="Search Canadian province"
+            options={optionMetadata.canadianProvinceOptions}
+            selectedOptions={selectedFilters.canadianProvinces.options}
+            data-test="canadian-province-filter"
+          />
+        )}
         <RoutedInputField
           id="CompanyCollection.postcode"
           qsParam="uk_postcode"

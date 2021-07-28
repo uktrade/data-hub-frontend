@@ -105,10 +105,6 @@ module.exports = {
     signout: url('/oauth/sign-out'),
   },
   companies: {
-    // React routes (Work in progress) - to be released on completion
-    react: {
-      index: url('/companies', '/react'),
-    },
     index: url('/companies'),
     create: url('/companies', '/create'),
     export: url('/companies', '/export'),
