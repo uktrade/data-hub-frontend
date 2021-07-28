@@ -223,6 +223,7 @@ const ContactForm = ({
                 <FieldRadios
                   legend="Is the contact’s address the same as the company address?"
                   name="addressSameAsCompany"
+                  required="This field is required."
                   options={[
                     { value: 'yes', label: 'Yes' },
                     {
