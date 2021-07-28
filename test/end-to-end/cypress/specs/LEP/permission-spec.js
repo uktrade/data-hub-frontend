@@ -110,13 +110,13 @@ describe('LEP Permission', () => {
 
   context('investment', () => {
     describe('investment document', () => {
+      investmentProjectNewZoo = fixtures.investmentProject.create.newZooLEP()
+
       before(() => {
-        cy.visit(
-          investments.projects.documents(fixtures.investmentProject.newZoo.id),
-          {
-            failOnStatusCode: false,
-          }
-        )
+        cy.loadFixture([investmentProjectNewGolf])
+        cy.visit(investments.projects.documents(investmentProjectNewZoo.pk), {
+          failOnStatusCode: false,
+        })
       })
 
       it('should prevent LEP users from accessing the page', () => {
@@ -126,14 +126,14 @@ describe('LEP Permission', () => {
     })
 
     describe('interaction', () => {
+      investmentProjectNewGolf =
+        fixtures.investmentProject.create.newGolfCourseDA()
+
       before(() => {
+        cy.loadFixture([investmentProjectNewZoo])
         cy.visit(
-          investments.projects.interactions.index(
-            fixtures.investmentProject.newGolfCourse.id
-          ),
-          {
-            failOnStatusCode: false,
-          }
+          investments.projects.interactions.index(investmentProjectNewGolf.pk),
+          { failOnStatusCode: false }
         )
       })
 
@@ -144,15 +144,14 @@ describe('LEP Permission', () => {
     })
 
     describe('team', () => {
+      investmentProjectFancyDress =
+        fixtures.investmentProject.create.fancyDressManufacturing()
+
       before(() => {
-        cy.visit(
-          investments.projects.team(
-            fixtures.investmentProject.fancyDressManufacturing.id
-          ),
-          {
-            failOnStatusCode: false,
-          }
-        )
+        cy.loadFixture([investmentProjectFancyDress])
+        cy.visit(investments.projects.team(investmentProjectFancyDress.pk), {
+          failOnStatusCode: false,
+        })
       })
 
       it("should prevent LEP users from accessing a team they don't have access to", () => {
@@ -164,10 +163,13 @@ describe('LEP Permission', () => {
 
   context('contacts', () => {
     describe('documents', () => {
+      const company = fixtures.company.create.defaultCompany('contact lep')
+      const contact = fixtures.contact.create(company.pk)
+
       before(() => {
-        cy.visit(contacts.documents(fixtures.contact.johnnyCakeman.id), {
-          failOnStatusCode: false,
-        })
+        cy.loadFixture([company])
+        cy.loadFixture([contact])
+        cy.visit(contacts.documents(contact.pk), { failOnStatusCode: false })
       })
 
       it('should prevent LEP users from accessing the page', () => {
@@ -177,11 +179,15 @@ describe('LEP Permission', () => {
     })
 
     describe('interactions', () => {
+      const company = fixtures.company.create.defaultCompany('contact lep')
+      const contact = fixtures.contact.create(company.pk)
+
       before(() => {
-        cy.visit(
-          contacts.contactInteractions(fixtures.contact.johnnyCakeman.id),
-          { failOnStatusCode: false }
-        )
+        cy.loadFixture([company])
+        cy.loadFixture([contact])
+        cy.visit(contacts.contactInteractions(contact.pk), {
+          failOnStatusCode: false,
+        })
       })
 
       it('should prevent LEP users from accessing the page', () => {
