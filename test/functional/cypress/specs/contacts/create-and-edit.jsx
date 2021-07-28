@@ -91,7 +91,23 @@ describe('Create contact form', () => {
     })
   })
 
-  it('Should show errors when submitted empty', () => {
+  it('Should show errors when submitted pristine', () => {
+    submit()
+
+    assertErrors({
+      'First name': 'This field may not be null.',
+      'Last name': 'This field may not be null.',
+      'Job title': 'This field may not be null.',
+      'Is this person a primary contact?': 'This field is required.',
+      'Telephone country code': 'This field may not be null.',
+      'Telephone number': 'This field may not be null.',
+      Email: 'This field may not be null.',
+      'Is the contact’s address the same as the company address?':
+        'This field is required.',
+    })
+  })
+
+  it('Should show errors when only the same as company address is checked', () => {
     checkRadio(
       'Is the contact’s address the same as the company address?',
       'No'
