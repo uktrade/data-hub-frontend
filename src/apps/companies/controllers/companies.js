@@ -7,6 +7,7 @@ const renderCompaniesView = async (req, res, next) => {
       title: 'Companies',
       heading: 'Companies',
       currentAdviserId,
+      features: res.locals.features,
     }
 
     return res.render('companies/views/companies', { props })
