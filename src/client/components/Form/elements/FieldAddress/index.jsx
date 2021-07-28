@@ -237,7 +237,6 @@ const FieldAddress = ({
         </>
       )}
 
-      <FieldInput type="text" name="county" label="County (optional)" />
       {isCountrySelectable ? (
         <FieldCountrySelect name="country" />
       ) : (
