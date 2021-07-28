@@ -64,6 +64,7 @@
           type="{{ props.type }}"
           name="{{ props.name }}"
           id="{{ props.fieldId }}-0"
+          aria-label="{{ option.label }}"
           value=""
           {% if not props.value %}checked{% endif %}
           {% if props.inputData.test %}
@@ -93,6 +94,7 @@
           type="{{ props.type }}"
           name="{{ props.name }}"
           value="{{ option.value }}"
+          aria-label="{{ option.label }}"
           id="{{ props.fieldId }}-{{ loop.index }}"
           {% if isSelected %}checked="checked"{% endif %}
           {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
