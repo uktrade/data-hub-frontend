@@ -1,23 +1,15 @@
 import faker from 'faker'
 
-const ukRegions = [
-  'All',
-  'East Midlands',
-  'East of England',
-  'London',
-  'North East',
-  'North West',
-  'Northern Ireland',
-  'Scotland',
-  'South East',
-  'South West',
-  'UKTI Dubai Hub',
-  'Wales',
-  'West Midlands',
-  'Yorkshire and the Humber',
-]
+import { listFaker } from './utils'
 
-export const ukRegionFaker = () => ({
+export const ukRegionFaker = (overrides = {}) => ({
   id: faker.datatype.uuid(),
-  name: faker.random.arrayElement(ukRegions),
+  name: faker.lorem.words(),
+  disabled_on: null,
+  ...overrides,
 })
+
+export const ukRegionListFaker = (length = 1, overrides) =>
+  listFaker({ fakerFunction: ukRegionFaker, length, overrides })
+
+export default ukRegionListFaker
