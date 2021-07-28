@@ -43,9 +43,7 @@ const getCompanies = ({
       country,
       uk_postcode,
       uk_region,
-      administrative_area: administrativeAreas.length
-        ? administrativeAreas
-        : undefined,
+      area: administrativeAreas.length ? administrativeAreas : undefined,
       archived,
       export_to_countries,
       future_interest_countries,
