@@ -2,7 +2,6 @@ const router = require('express').Router()
 
 const urls = require('../../lib/urls')
 
-const { ENTITIES } = require('../search/constants')
 const {
   LOCAL_NAV,
   DEFAULT_COLLECTION_QUERY,
@@ -13,14 +12,10 @@ const {
 const setReturnUrl = require('./middleware/set-return-url')
 const { getRequestBody } = require('../../middleware/collection')
 const {
-  getCollection,
   exportCollection,
 } = require('../../modules/search/middleware/collection')
 
-const { renderCompanyList } = require('./controllers/list')
 const { renderDetails } = require('./controllers/details')
-
-// New react view (in progress) - to replace 'renderCompanyList' when finished
 const { renderCompaniesView } = require('./controllers/companies')
 
 const { renderBusinessDetails } = require('./apps/business-details/controllers')
@@ -63,8 +58,6 @@ const setCompaniesLocalNav = require('./middleware/local-navigation')
 const lastInteractionDate = require('./middleware/last-interaction-date')
 const formatPostcodes = require('./middleware/format-postcodes')
 
-const { transformCompanyToListItem } = require('./transformers')
-
 const addCompanyFormRouter = require('./apps/add-company/router')
 const editCompanyFormRouter = require('./apps/edit-company/router')
 const activityFeedRouter = require('./apps/activity-feed/router')
@@ -92,17 +85,18 @@ router.param('companyId', getCompany)
 router.param('companyId', setIsCompanyAlreadyAdded)
 router.param('companyId', setDnbHierarchyDetails)
 
-router.get(
-  urls.companies.index.route,
-  setDefaultQuery(DEFAULT_COLLECTION_QUERY),
-  getRequestBody(QUERY_FIELDS),
-  lastInteractionDate,
-  formatPostcodes,
-  getCollection('company', ENTITIES, transformCompanyToListItem),
-  renderCompanyList
-)
-// New react route (to replace the old companies list route above when complete)
-router.get(urls.companies.react.index.route, renderCompaniesView)
+// TODO: Old nunjucks collection page - this should be removed once we are
+// confident that the new react version is working correctly
+// router.get(
+//   urls.companies.index.route,
+//   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
+//   getRequestBody(QUERY_FIELDS),
+//   lastInteractionDate,
+//   formatPostcodes,
+//   getCollection('company', ENTITIES, transformCompanyToListItem),
+//   renderCompanyList
+// )
+router.get(urls.companies.index.route, renderCompaniesView)
 
 router.get(
   urls.companies.export.route,

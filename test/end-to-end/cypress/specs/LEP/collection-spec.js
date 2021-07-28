@@ -16,11 +16,11 @@ const checkCollection = () => {
 describe('Collection', () => {
   describe('company', () => {
     before(() => {
-      cy.visit(companies.index())
+      cy.visit(companies.index(), { qs: { name: 'Motor' } })
     })
 
     it('should return the results summary for a company collection', () => {
-      checkCollection()
+      cy.get('[data-test="collectionCount"]').should('have.text', '1')
     })
   })
 
