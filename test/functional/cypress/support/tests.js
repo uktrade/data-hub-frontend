@@ -26,6 +26,13 @@ export const testTypeahead = ({
 }
 
 /**
+ * Test that a typeahead has the correct number of options
+ */
+export const testTypeaheadOptionsLength = ({ element, length }) => {
+  cy.get(element).click().find('ul').children().should('have.length', length)
+}
+
+/**
  * Tests that clicking the first indicator button clears a filter element
  */
 export const testRemoveChip = ({ element, placeholder = null }) => {

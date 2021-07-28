@@ -2,7 +2,7 @@ import urls from '../../../../../src/lib/urls'
 import qs from 'qs'
 
 import { removeChip } from '../../support/actions'
-import { testTypeahead } from '../../support/tests'
+import { testTypeahead, testTypeaheadOptionsLength } from '../../support/tests'
 import {
   assertChipExists,
   assertChipsEmpty,
@@ -328,6 +328,11 @@ describe('Contacts Collections Filter', () => {
       })
       assertChipsEmpty()
       assertFieldEmpty(element)
+    })
+    it('should contain all UK regions (including the disabled ones)', () => {
+      const queryString = buildQueryString()
+      cy.visit(`${urls.contacts.index()}?${queryString}`)
+      testTypeaheadOptionsLength({ element, length: 23 })
     })
   })
 
