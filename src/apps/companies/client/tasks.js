@@ -73,7 +73,7 @@ const getCompaniesMetadata = () =>
       },
     }),
     getHeadquarterTypeOptions(urls.metadata.headquarterType()),
-    getMetadataOptions(urls.metadata.ukRegion()),
+    getMetadataOptions(urls.metadata.ukRegion(), { filterDisabled: false }),
     getMetadataOptions(urls.metadata.administrativeArea(), {
       params: { country: usa },
     }),

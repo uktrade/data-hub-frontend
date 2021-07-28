@@ -20,7 +20,8 @@ import {
   assertPayload,
   assertQueryParams,
 } from '../../support/assertions'
-import { testTypeahead } from '../../support/tests'
+import { testTypeahead, testTypeaheadOptionsLength } from '../../support/tests'
+import { ukRegionFaker, ukRegionListFaker } from '../../fakers/regions'
 
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
@@ -38,6 +39,7 @@ const minimumPayload = {
 
 const searchEndpoint = '/api-proxy/v3/search/event'
 const eventTypeEndpoint = '/api-proxy/v4/metadata/event-type'
+const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
 
 describe('events Collections Filter', () => {
   const disabledEventType = eventTypeFaker({ disabled_on: '2020-01-01' })
@@ -141,43 +143,58 @@ describe('events Collections Filter', () => {
 
   context('UK Region', () => {
     const element = '[data-test="uk-region-filter"]'
-    const southEastRegionId = '884cd12a-6095-e211-a939-e4115bead28a'
+    const ukRegion = ukRegionFaker()
+    const ukRegions = [
+      ukRegion,
+      ...ukRegionListFaker(5),
+      ...ukRegionListFaker(5, { disabled_on: '2000-01-01' }),
+    ]
     const expectedPayload = {
       offset: 0,
       limit: 10,
       sortby: 'modified_on:desc',
-      uk_region: [southEastRegionId],
+      uk_region: [ukRegion.id],
     }
 
     it('should filter from the url', () => {
       const queryString = buildQueryString({
-        uk_region: [southEastRegionId],
+        uk_region: [ukRegion.id],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.intercept('GET', ukRegionsEndpoint, ukRegions).as(
+        'ukRegionsApiRequest'
+      )
       cy.visit(`${urls.events.react.index()}?${queryString}`)
+      cy.wait('@ukRegionsApiRequest')
       assertPayload('@apiRequest', expectedPayload)
-      cy.get(element).should('contain', 'South East')
-      assertChipExists({ label: 'South East', position: 1 })
+      cy.get(element).should('contain', ukRegion.name)
+      assertChipExists({ label: ukRegion.name, position: 1 })
     })
 
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.intercept('GET', ukRegionsEndpoint, ukRegions).as(
+        'ukRegionsApiRequest'
+      )
       cy.visit(`${urls.events.react.index()}?${queryString}`)
+      cy.wait('@ukRegionsApiRequest')
       cy.wait('@apiRequest')
 
+      testTypeaheadOptionsLength({ element, length: ukRegions.length })
       testTypeahead({
         element,
         legend: 'UK region',
         placeholder: 'Search UK region',
-        input: 'South E',
-        expectedOption: 'South East',
+        input: ukRegion.name,
+        expectedOption: ukRegion.name,
       })
+
       assertPayload('@apiRequest', expectedPayload)
-      assertQueryParams('uk_region', [southEastRegionId])
-      assertChipExists({ label: 'South East', position: 1 })
-      removeChip(southEastRegionId)
-      cy.wait('@apiRequest')
+      assertQueryParams('uk_region', [ukRegion.id])
+      assertChipExists({ label: ukRegion.name, position: 1 })
+      removeChip(ukRegion.id)
+      assertPayload('@apiRequest', minimumPayload)
       assertChipsEmpty()
       assertFieldEmpty(element)
     })
@@ -363,15 +380,15 @@ describe('events Collections Filter', () => {
     before(() => {
       const ukCountryId = '80756b9a-5d95-e211-a939-e4115bead28a'
       const adviserId = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
-      const southEastRegionId = '884cd12a-6095-e211-a939-e4115bead28a'
       const fromDate = '2020-01-01'
       const toDate = '2021-10-05'
       const eventType = randomChoice(eventTypes)
+      const ukRegions = ukRegionListFaker(10)
       const queryString = qs.stringify({
         page: 1,
         name: 'Big Event',
         country: [ukCountryId],
-        uk_region: [southEastRegionId],
+        uk_region: [ukRegions[0].id],
         organiser: [adviserId],
         event_type: [eventType.id],
         start_date_after: fromDate,
@@ -381,8 +398,12 @@ describe('events Collections Filter', () => {
       cy.intercept('GET', eventTypeEndpoint, eventTypes).as(
         'eventTypeApiRequest'
       )
+      cy.intercept('GET', ukRegionsEndpoint, ukRegions).as(
+        'ukRegionsApiRequest'
+      )
       cy.visit(`${urls.events.react.index()}?${queryString}`)
       cy.wait('@eventTypeApiRequest')
+      cy.wait('@ukRegionsApiRequest')
       cy.wait('@apiRequest')
     })
 

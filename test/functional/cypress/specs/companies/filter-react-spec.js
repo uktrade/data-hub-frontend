@@ -17,12 +17,13 @@ import {
   assertPayload,
   assertQueryParams,
 } from '../../support/assertions'
-import { testTypeahead } from '../../support/tests'
+import { testTypeahead, testTypeaheadOptionsLength } from '../../support/tests'
 
 import {
   administrativeAreaListFaker,
   administrativeAreaFaker,
 } from '../../fakers/administrative-areas'
+import { ukRegionFaker, ukRegionListFaker } from '../../fakers/regions'
 
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
@@ -41,6 +42,7 @@ const minimumPayload = {
 const activeStatusFlag = 'false'
 const inactiveStatusFlag = 'true'
 const searchEndpoint = '/api-proxy/v4/search/company'
+const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
 const usaCountryId = '81756b9a-5d95-e211-a939-e4115bead28a'
 const canadaCountryId = '5daf72a6-5d95-e211-a939-e4115bead28a'
 const usStatesEndpoint = `/api-proxy/v4/metadata/administrative-area?country=${usaCountryId}`
@@ -375,44 +377,59 @@ describe('Companies Collections Filter', () => {
 
   context('UK Region', () => {
     const element = '[data-test="uk-region-filter"]'
-    const southEastRegionId = '884cd12a-6095-e211-a939-e4115bead28a'
+    const ukRegion = ukRegionFaker()
+    const ukRegions = [
+      ukRegion,
+      ...ukRegionListFaker(5),
+      ...ukRegionListFaker(5, { disabled_on: '2000-01-01' }),
+    ]
     const expectedPayload = {
       offset: 0,
       limit: 10,
       archived: false,
       sortby: 'modified_on:desc',
-      uk_region: [southEastRegionId],
+      uk_region: [ukRegion.id],
     }
 
     it('should filter from the url', () => {
       const queryString = buildQueryString({
-        uk_region: [southEastRegionId],
+        uk_region: [ukRegion.id],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.intercept('GET', ukRegionsEndpoint, ukRegions).as(
+        'ukRegionsApiRequest'
+      )
       cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.wait('@ukRegionsApiRequest')
       assertPayload('@apiRequest', expectedPayload)
-      cy.get(element).should('contain', 'South East')
-      assertChipExists({ label: 'South East', position: 1 })
+      cy.get(element).should('contain', ukRegion.name)
+      assertChipExists({ label: ukRegion.name, position: 1 })
     })
 
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.intercept('GET', ukRegionsEndpoint, ukRegions).as(
+        'ukRegionsApiRequest'
+      )
       cy.visit(`${urls.companies.react.index()}?${queryString}`)
+      cy.wait('@ukRegionsApiRequest')
       cy.wait('@apiRequest')
 
+      testTypeaheadOptionsLength({ element, length: ukRegions.length })
       testTypeahead({
         element,
         legend: 'UK region',
         placeholder: 'Search UK region',
-        input: 'South E',
-        expectedOption: 'South East',
+        input: ukRegion.name,
+        expectedOption: ukRegion.name,
       })
+
       assertPayload('@apiRequest', expectedPayload)
-      assertQueryParams('uk_region', [southEastRegionId])
-      assertChipExists({ label: 'South East', position: 1 })
+      assertQueryParams('uk_region', [ukRegion.id])
+      assertChipExists({ label: ukRegion.name, position: 1 })
       assertChipExists({ label: 'Active', position: 2 })
-      removeChip(southEastRegionId)
+      removeChip(ukRegion.id)
       cy.wait('@apiRequest')
       removeChip(activeStatusFlag)
       assertPayload('@apiRequest', minimumPayload)
@@ -745,8 +762,8 @@ describe('Companies Collections Filter', () => {
       const globalHqTypeId = '43281c5e-92a4-4794-867b-b4d5f801e6f3'
       const ukCountryId = '80756b9a-5d95-e211-a939-e4115bead28a'
       const adviserId = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
-      const southEastRegionId = '884cd12a-6095-e211-a939-e4115bead28a'
       const advancedEngineeringSectorId = 'af959812-6095-e211-a939-e4115bead28a'
+      const ukRegions = ukRegionListFaker(10)
       const usStates = administrativeAreaListFaker(20)
       const canadianProvinces = administrativeAreaListFaker(10)
       const queryString = qs.stringify({
@@ -758,7 +775,7 @@ describe('Companies Collections Filter', () => {
         us_state: [usStates[0].id],
         canadian_province: [canadianProvinces[0].id],
         uk_postcode: 'AB1 2CD, EF3 4GH',
-        uk_region: southEastRegionId,
+        uk_region: [ukRegions[0].id],
         archived: [inactiveStatusFlag],
         export_to_countries: [ukCountryId],
         future_interest_countries: [ukCountryId],
@@ -770,10 +787,14 @@ describe('Companies Collections Filter', () => {
       cy.intercept('GET', canadianProvincesEndpoint, canadianProvinces).as(
         'canadianProvincesApiRequest'
       )
+      cy.intercept('GET', ukRegionsEndpoint, ukRegions).as(
+        'ukRegionsApiRequest'
+      )
       cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`${urls.companies.react.index()}?${queryString}`)
       cy.wait('@usStatesApiRequest')
       cy.wait('@canadianProvincesApiRequest')
+      cy.wait('@ukRegionsApiRequest')
       cy.wait('@apiRequest')
     })
 
