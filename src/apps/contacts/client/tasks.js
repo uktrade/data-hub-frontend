@@ -39,7 +39,7 @@ export const getContactsMetadata = () =>
       },
     }),
     getMetadataOptions(urls.metadata.country()),
-    getMetadataOptions(urls.metadata.ukRegion()),
+    getMetadataOptions(urls.metadata.ukRegion(), { filterDisabled: false }),
   ])
     .then(([sectorOptions, countryOptions, ukRegionOptions]) => ({
       sectorOptions,
