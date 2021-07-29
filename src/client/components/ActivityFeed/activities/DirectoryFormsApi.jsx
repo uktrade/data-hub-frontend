@@ -5,6 +5,7 @@ import { get } from 'lodash'
 import { Card, CardDetails, CardHeader, CardTable } from './card'
 import { ACTIVITY_TYPE, SOURCE_TYPES } from '../constants'
 import CardUtils from './card/CardUtils'
+import { format } from '../../../utils/date'
 
 const FORM_URL_TO_NAME_MAP = {
   '/contact/export-advice/comment/': 'Export enquiry',
@@ -39,6 +40,9 @@ export default class DirectoryFormsApi extends React.PureComponent {
         />
         <CardDetails
           summary="View key details for this enquiry"
+          summaryVisuallyHidden={` on great.gov.uk, sent on ${format(
+            sentDate
+          )}`}
           showDetails={showDetails}
         >
           <CardTable

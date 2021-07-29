@@ -78,6 +78,7 @@ export default class CompaniesHouseCompany extends React.PureComponent {
 
         <CardDetails
           summary="View key details for this company"
+          summaryVisuallyHidden={`${company} from Companies House`}
           showDetails={showDetails}
         >
           <CardTable
