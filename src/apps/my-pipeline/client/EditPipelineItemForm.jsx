@@ -20,18 +20,18 @@ import PipelineForm from './PipelineForm'
 import GetPipelineData from './GetPipelineData'
 import { PipelineItemPropType } from './constants'
 import { getPipelineUrl } from './utils'
-import { parse, isValid, format } from 'date-fns'
-
 import { Main } from '../../../client/components'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 
+const {
+  format,
+  isDateValid,
+  createAndFormatDateObject,
+} = require('../../../client/utils/date')
+
 function formatInitialValues(values) {
   const { sector, contacts } = values
-  const expectedWinDate = parse(
-    values.expected_win_date,
-    'yyyy-MM-dd',
-    new Date()
-  )
+  const expectedWinDate = createAndFormatDateObject(values.expected_win_date)
   return {
     name: values.name,
     category: values.status,
@@ -39,7 +39,7 @@ function formatInitialValues(values) {
     sector: sector ? { value: sector.id, label: sector.segment } : null,
     contacts: contacts?.map(({ id, name }) => ({ value: id, label: name })),
     export_value: values.potential_value,
-    expected_win_date: isValid(expectedWinDate)
+    expected_win_date: isDateValid(expectedWinDate)
       ? {
           month: format(expectedWinDate, 'MM'),
           year: format(expectedWinDate, 'yyyy'),

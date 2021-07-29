@@ -15,8 +15,9 @@ import { AdviserItemRenderer, ContactItemRenderer } from './card/item-renderers'
 import { ACTIVITY_TYPE } from '../constants'
 
 import CardUtils from './card/CardUtils'
-import { format } from '../../../utils/date-utils'
 import { currencyGBP, decimal } from '../../../utils/number-utils'
+
+const { format } = require('../../../utils/date')
 
 const TITLES = {
   add: 'New investment project added',

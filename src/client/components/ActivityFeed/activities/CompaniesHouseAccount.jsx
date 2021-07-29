@@ -5,9 +5,10 @@ import PropTypes from 'prop-types'
 import { Card, CardDetails, CardHeader, CardTable } from './card'
 
 import CardUtils from './card/CardUtils'
-import { format } from '../../../utils/date-utils'
 import { currencyGBP } from '../../../utils/number-utils'
 import { ACTIVITY_TYPE, SOURCE_TYPES } from '../constants'
+
+const { format } = require('../../../utils/date')
 
 export default class CompaniesHouseAccount extends React.PureComponent {
   static propTypes = {

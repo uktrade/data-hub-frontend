@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const { get, compact } = require('lodash')
 
-const { formatWithTime } = require('../../../client/utils/date-utils')
+const { formatMediumDateTime } = require('../../../client/utils/date')
 const urls = require('../../../lib/urls')
 
 const getTelephoneNumber = (telephone_countrycode, telephone_number) =>
@@ -54,7 +54,7 @@ export const transformContactToListItem = ({
     headingUrl: urls.contacts.details(id),
     badges: badges.filter((item) => item.text),
     headingText: `${first_name} ${last_name}`.trim(),
-    subheading: `Updated on ${formatWithTime(modified_on)}`,
+    subheading: `Updated on ${formatMediumDateTime(modified_on)}`,
   }
 }
 

@@ -5,8 +5,9 @@ import Link from '@govuk-react/link'
 import { SPACING, FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 
 import { companies, interactions } from '../../../lib/urls'
-import { format } from '../../utils/date-utils'
 import { DARK_GREY } from '../../utils/colors'
+
+const { format } = require('../../utils/date')
 
 const StyledDiv = styled('div')({
   height: '100%',

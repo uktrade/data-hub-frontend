@@ -1,7 +1,7 @@
 import axios from 'axios'
 import pipelineApi from './api'
 import { addMessage } from '../../../client/utils/flash-messages'
-import { transformValueForApi } from '../../../common/date'
+import { transformValueForAPI } from '../../../client/utils/date'
 
 function transformValuesForApi(values, oldValues = {}) {
   const data = {
@@ -27,7 +27,7 @@ function transformValuesForApi(values, oldValues = {}) {
     values.contacts ? values.contacts.map(({ value }) => value) : []
   )
   addValue('potential_value', values.export_value)
-  addValue('expected_win_date', transformValueForApi(values.expected_win_date))
+  addValue('expected_win_date', transformValueForAPI(values.expected_win_date))
 
   return data
 }

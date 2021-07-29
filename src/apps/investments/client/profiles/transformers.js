@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
-import { format } from '../../../../client/utils/date-utils'
 import { companies } from '../../../../lib/urls'
+
+const { format } = require('../../../../client/utils/date')
 
 const transformLargeCapitalProfiles = ({ investor_company, created_on }) => ({
   headingText: investor_company.name,

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const { get, compact } = require('lodash')
 
-const { formatLongDate } = require('../../../common/date')
+const { formatLongDate } = require('../../../client/utils/date')
 
 function transformInvestmentLandingForView({ uk_company, actual_land_date }) {
   return {

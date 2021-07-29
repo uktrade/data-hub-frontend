@@ -4,8 +4,9 @@ import { Link } from 'govuk-react'
 import styled from 'styled-components'
 
 import { SummaryTable } from '../../../../../../client/components/'
-import { format } from '../../../../../../client/utils/date-utils'
 import urls from '../../../../../../lib/urls'
+
+const { format } = require('../../../../../../client/utils/date')
 
 const StyledSummaryTable = styled(SummaryTable)({
   'margin-top': SPACING_POINTS[8],

@@ -1,4 +1,4 @@
-import { formatWithTime } from '../../../../../client/utils/date-utils'
+const { formatMediumDateTime } = require('../../../../../client/utils/date')
 
 const getArrayNamesAndIds = (data) =>
   data.map((d) => ({ label: d.name, value: d.id }))
@@ -35,7 +35,7 @@ export const transformInvestmentOpportunityDetails = ({
   isEditingRequirements: false,
   status: idNameToValueLabel(status),
   detailsFields: {
-    createdOn: formatWithTime(created_on),
+    createdOn: formatMediumDateTime(created_on),
     name,
     description,
     ukRegions: uk_region_locations.map(idNameToValueLabel),
