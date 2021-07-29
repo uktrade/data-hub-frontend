@@ -267,7 +267,7 @@ describe('Companies Collections Filter', () => {
       limit: 10,
       archived: false,
       sortby: 'modified_on:desc',
-      administrative_area: [state.id],
+      area: [state.id],
     }
 
     it('should filter from the url', () => {
@@ -321,7 +321,7 @@ describe('Companies Collections Filter', () => {
       limit: 10,
       archived: false,
       sortby: 'modified_on:desc',
-      administrative_area: [province.id],
+      area: [province.id],
     }
 
     it('should filter from the url', () => {
