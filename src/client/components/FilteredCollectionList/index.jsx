@@ -35,6 +35,7 @@ const FilteredCollectionList = ({
   entityNamePlural,
   addItemUrl,
   defaultQueryParams,
+  titleRenderer = null,
 }) => {
   const totalPages = Math.ceil(count / itemsPerPage)
   return (
@@ -84,7 +85,11 @@ const FilteredCollectionList = ({
                       <>
                         <ol>
                           {results.map((item) => (
-                            <CollectionItem {...item} key={item.id} />
+                            <CollectionItem
+                              {...item}
+                              key={item.id}
+                              titleRenderer={titleRenderer}
+                            />
                           ))}
                         </ol>
                         <RoutedPagination
@@ -134,6 +139,7 @@ FilteredCollectionList.propTypes = {
   }),
   summary: PropTypes.object,
   defaultQueryParams: PropTypes.object,
+  titleRenderer: PropTypes.func,
 }
 
 export default FilteredCollectionList

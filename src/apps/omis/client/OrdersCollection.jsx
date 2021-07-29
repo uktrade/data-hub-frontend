@@ -1,5 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
+import Link from '@govuk-react/link'
+import { H3 } from '@govuk-react/heading'
+import { HEADING_SIZES } from '@govuk-react/constants'
+import VisuallyHidden from '@govuk-react/visually-hidden'
+
 import { LABELS } from './constants'
 
 import {
@@ -22,6 +28,19 @@ import {
   TASK_GET_ORDERS_LIST,
   TASK_GET_ORDERS_METADATA,
 } from './state'
+
+const StyledHeader = styled(H3)`
+  font-size: ${HEADING_SIZES.SMALL}px;
+`
+
+const StyledLinkHeader = styled(StyledHeader)`
+  & > a:link,
+  a:visited,
+  a:hover,
+  a:active {
+    text-decoration: none;
+  }
+`
 
 const OrdersCollection = ({
   payload,
@@ -49,6 +68,14 @@ const OrdersCollection = ({
     },
   }
 
+  const TitleRenderer = (title, url) => (
+    <StyledLinkHeader>
+      <Link href={url}>
+        {title} <VisuallyHidden>(Order reference)</VisuallyHidden>
+      </Link>
+    </StyledLinkHeader>
+  )
+
   return (
     <FilteredCollectionList
       {...props}
@@ -60,6 +87,7 @@ const OrdersCollection = ({
       entityName="order"
       entityNamePlural="orders"
       baseDownloadLink="/omis/export"
+      titleRenderer={TitleRenderer}
       defaultQueryParams={{
         page: 1,
         sortby: 'created_on:desc',
