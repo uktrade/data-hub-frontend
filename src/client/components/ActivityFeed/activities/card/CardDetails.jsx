@@ -3,6 +3,7 @@ import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
 import styled from 'styled-components'
 import { SPACING, MEDIA_QUERIES, FONT_SIZE } from '@govuk-react/constants'
+import { VisuallyHidden } from 'govuk-react'
 import PropTypes from 'prop-types'
 
 const GovUkDetails = styled(Details)`
@@ -27,6 +28,7 @@ const GovUkDetails = styled(Details)`
 export default class CardDetails extends React.PureComponent {
   static propTypes = {
     summary: PropTypes.string.isRequired,
+    summaryVisuallyHidden: PropTypes.string,
     showDetails: PropTypes.bool.isRequired,
     link: PropTypes.shape({
       url: PropTypes.string,
@@ -48,10 +50,21 @@ export default class CardDetails extends React.PureComponent {
   }
 
   render() {
-    const { summary, showDetails, link, children } = this.props
+    const { summary, showDetails, link, children, summaryVisuallyHidden } =
+      this.props
+
+    const SummaryWithHiddenContent = (
+      <>
+        {summary}
+        <VisuallyHidden>{summaryVisuallyHidden}</VisuallyHidden>
+      </>
+    )
 
     return (
-      <GovUkDetails summary={summary} open={showDetails}>
+      <GovUkDetails
+        summary={summaryVisuallyHidden ? SummaryWithHiddenContent : summary}
+        open={showDetails}
+      >
         {children}
         {this.renderLink(link)}
       </GovUkDetails>

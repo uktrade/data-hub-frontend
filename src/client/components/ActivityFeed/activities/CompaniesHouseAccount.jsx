@@ -58,6 +58,7 @@ export default class CompaniesHouseAccount extends React.PureComponent {
 
         <CardDetails
           summary="View key details for this account"
+          summaryVisuallyHidden={`${company} in Companies House`}
           link={{ taxonomy, text: 'Go to the Companies House accounts page' }}
           showDetails={showDetails}
         >
