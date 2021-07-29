@@ -1,4 +1,5 @@
-import { formatWithTime } from '../../../../../../client/utils/date-utils'
+const { formatMediumDateTime } = require('../../../../../../client/utils/date')
+
 import { GREEN } from 'govuk-colours'
 
 import urls from '../../../../../../lib/urls'
@@ -49,7 +50,7 @@ function createHistory(item) {
         label: 'By',
         value: item.history_user?.name ?? 'unknown',
       },
-      { label: 'Date', value: formatWithTime(item.date) },
+      { label: 'Date', value: formatMediumDateTime(item.date) },
     ],
   }
 }
@@ -92,7 +93,7 @@ function createInteraction(item) {
   return {
     headingText: item.subject,
     headingUrl: urls.interactions.detail(item.id),
-    subheading: `Created ${formatWithTime(item.date)}`,
+    subheading: `Created ${formatMediumDateTime(item.date)}`,
     badges: [
       {
         text: 'Interaction',

@@ -1,11 +1,10 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
-
-import { format } from 'date-fns'
-
+const { formatWithoutParsing } = require('../../../../../src/client/utils/date')
 const { companies, interactions } = require('../../../../../src/lib/urls')
+const { DATE_LONG_FORMAT_1 } = require('../../../../../src/common/constants')
 
-const today = format(new Date(), 'd MMMM yyyy')
+const today = formatWithoutParsing(new Date(), DATE_LONG_FORMAT_1)
 
 describe('Interaction', () => {
   const company = fixtures.company.create.defaultCompany('interaction testing')

@@ -8,7 +8,6 @@ import GridCol from '@govuk-react/grid-col'
 import { SPACING, MEDIA_QUERIES, FONT_SIZE } from '@govuk-react/constants'
 import { BLUE, GREY_1, BLACK } from 'govuk-colours'
 import { H3 } from 'govuk-react'
-import { format, parseISO } from 'date-fns'
 
 import { Card } from '../ActivityFeed/activities/card'
 import { currencyGBP } from '../../utils/number-utils'
@@ -17,6 +16,8 @@ import { newlineToBr } from '../../../lib/text-formatting'
 import { PipeLineItemPropType } from './types'
 import urls from '../../../lib/urls'
 import LIKELIHOOD_TO_SUCCEED from './constants'
+
+const { format } = require('../../utils/date')
 
 const StyledH3 = styled(H3)`
   font-size: ${FONT_SIZE.SIZE_27};
@@ -157,11 +158,11 @@ function buildMetaList({
     },
     expected_win_date && {
       label: 'Expected date for win',
-      value: format(parseISO(expected_win_date), 'MMM y'),
+      value: format(expected_win_date, 'MMM y'),
     },
     {
       label: 'Created',
-      value: format(parseISO(created_on), 'dd MMM y'),
+      value: format(created_on, 'dd MMM y'),
       subtle: true,
       showArchived: true,
     },
@@ -178,7 +179,7 @@ function buildMetaList({
       },
     archived && {
       label: 'Archived',
-      value: format(parseISO(archived_on), 'dd MMM y'),
+      value: format(archived_on, 'dd MMM y'),
       subtle: true,
     },
   ]

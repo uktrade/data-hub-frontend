@@ -6,9 +6,9 @@ import { STATUS_VALUES, LIKELIHOOD_VALUES } from './constants'
 import urls from '../../../lib/urls'
 import { SummaryTable } from '../../../client/components/'
 import { WIDTHS } from '@govuk-react/constants/lib/spacing'
-import { format } from '../../../client/utils/date-utils'
 import { currencyGBP } from '../../../client/utils/number-utils'
-import { format as formatFNS, parseISO } from 'date-fns'
+
+const { format } = require('../../../client/utils/date')
 
 function getLabels(acc, { value, label }) {
   acc[value] = label
@@ -55,7 +55,7 @@ export default function PipelineDetails({ item }) {
     ],
     item.expected_win_date && [
       'Expected date for win',
-      formatFNS(parseISO(item.expected_win_date), 'MMM y'),
+      format(item.expected_win_date, 'MMM y'),
     ],
     ['Created', format(item.created_on)],
     item.archived && ['Reason for archive', item.archived_reason],

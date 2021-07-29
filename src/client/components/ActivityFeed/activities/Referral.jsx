@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
-import { format } from '../../../utils/date-utils'
 import { Card, CardHeader, CardTable } from './card'
 import { ACTIVITY_TYPE } from '../constants'
 import CardUtils from './card/CardUtils'
 import ReferralUtils from './ReferralUtils'
+
+const { format } = require('../../../utils/date')
 
 export default class Referral extends React.PureComponent {
   static propTypes = {

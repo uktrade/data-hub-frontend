@@ -8,9 +8,10 @@ import { AdviserDetails } from '../../../apps/companies/apps/referrals/details/c
 import { CardHeader } from '../ActivityFeed/activities/card'
 import { Card } from '../ActivityFeed/activities/card'
 import SummaryList from '../../components/SummaryList'
-import { format } from '../../utils/date-utils'
 import styled from 'styled-components'
 import urls from '../../../lib/urls'
+
+const { format } = require('../../utils/date')
 
 const StyledSummaryListWrapper = styled.div({
   flexGrow: 1,

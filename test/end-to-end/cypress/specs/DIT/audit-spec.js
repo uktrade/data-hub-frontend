@@ -1,10 +1,10 @@
 const { company, contact, investmentProject } = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
+const { formatWithoutParsing } = require('../../../../../src/client/utils/date')
+const { DATE_MEDIUM_FORMAT } = require('../../../../../src/common/constants')
 
-import { format } from 'date-fns'
-
-const todaysDate = format(new Date(), 'd MMM yyyy')
+const todaysDate = formatWithoutParsing(new Date(), DATE_MEDIUM_FORMAT)
 let companyObj
 let contactObj
 let investmentProjectObj

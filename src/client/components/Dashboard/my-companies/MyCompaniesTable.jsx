@@ -1,5 +1,4 @@
 import { orderBy } from 'lodash'
-import { format, parseISO } from 'date-fns'
 import React from 'react'
 import styled from 'styled-components'
 import LinesEllipsis from 'react-lines-ellipsis'
@@ -12,6 +11,8 @@ import Button from '@govuk-react/button'
 import { useMyCompaniesContext } from './useMyCompaniesContext'
 import Filters from './MyCompaniesFilters'
 import urls from '../../../../lib/urls'
+
+const { formatMediumDate } = require('../../../utils/date')
 
 const StyledCellHeader = styled(Table.CellHeader)(
   typography.font({ size: 14, weight: 'bold' }),
@@ -97,7 +98,7 @@ function MyCompaniesTable() {
         </Table.Cell>
         <StyledDateCell setWidth="15%">
           {latestInteraction.date
-            ? format(parseISO(latestInteraction.date), 'd MMM yyyy')
+            ? formatMediumDate(latestInteraction.date)
             : '-'}
         </StyledDateCell>
         <Table.Cell setWidth="50%">

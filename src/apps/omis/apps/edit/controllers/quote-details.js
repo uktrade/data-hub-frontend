@@ -1,5 +1,6 @@
 const chrono = require('chrono-node')
-const dateFns = require('date-fns')
+const { formatWithoutParsing } = require('../../../../../client/utils/date')
+const { DATE_LONG_FORMAT_3 } = require('../../../../../common/constants')
 
 const { EditController } = require('../../../controllers')
 
@@ -9,9 +10,9 @@ class EditQuoteDetailsController extends EditController {
     const parsedDeliveryDate = chrono.en.GB.parseDate(deliveryDateStr)
 
     if (parsedDeliveryDate) {
-      req.form.values.delivery_date = dateFns.format(
+      req.form.values.delivery_date = formatWithoutParsing(
         parsedDeliveryDate,
-        'yyyy-MM-dd'
+        DATE_LONG_FORMAT_3
       )
     } else {
       req.form.values.delivery_date = deliveryDateStr
