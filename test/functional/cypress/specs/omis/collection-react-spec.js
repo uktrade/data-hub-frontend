@@ -88,7 +88,7 @@ describe('Orders (OMIS) Collection List Page - React', () => {
       cy.get('@firstListItem')
         .find('h3')
         .children()
-        .should('have.text', 'TMY947/21')
+        .should('have.text', 'TMY947/21 (Order reference)')
         .should('have.attr', 'href', '/omis/111/work-order')
     })
 
