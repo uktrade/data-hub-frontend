@@ -27,7 +27,10 @@ import ReferrerLink from '../ReferrerLink'
 import * as validators from '../Form/validators'
 import State from '../State'
 
-const boolToYesNo = (x) => (x === true ? 'yes' : x === false ? 'no' : x)
+const YES = 'yes'
+const NO = 'no'
+
+const boolToYesNo = (x) => (x === true ? YES : x === false ? NO : null)
 
 const keysToSnakeCase = (o) => _.mapKeys(o, (v, k) => _.snakeCase(k))
 
@@ -38,7 +41,7 @@ const ContactForm = ({
   redirectTo = ({ id }) => `/contacts/${id}/details`,
   // Needed for linking the newly created contact to a company and breadcrumbs
   companyId,
-  // We need to convert these to 'yes' / 'no' strings
+  // We need to convert these to YES / NO strings
   primary,
   addressSameAsCompany,
   acceptsDitEmailMarketing,
@@ -100,12 +103,13 @@ const ContactForm = ({
               const payload = {
                 ...keysToSnakeCase(values),
                 accepts_dit_email_marketing:
-                  acceptsDitEmailMarketing[0] === 'yes',
-                primary: primary === 'yes',
+                  acceptsDitEmailMarketing[0] === YES,
+                primary,
                 company,
-                address_same_as_company: addressSameAsCompany === 'yes',
+                // address_same_as_company: addressSameAsCompany === YES,
+                address_same_as_company: addressSameAsCompany,
                 // The API is complaining if we send the address fields when address_same_as_company is true
-                ...(addressSameAsCompany !== 'yes' && {
+                ...(addressSameAsCompany !== YES && {
                   address_1: address1 || ' ',
                   address_2: address2,
                   address_town: city || ' ',
@@ -183,8 +187,8 @@ const ContactForm = ({
                   name="primary"
                   required="This field is required."
                   options={[
-                    { value: 'yes', label: 'Yes' },
-                    { value: 'no', label: 'No' },
+                    { value: YES, label: YES },
+                    { value: NO, label: NO },
                   ]}
                 />
                 <FieldInput
@@ -211,14 +215,13 @@ const ContactForm = ({
                   validate={validators.email}
                 />
                 <FieldCheckboxes
-                  value="yes"
                   name="acceptsDitEmailMarketing"
                   options={[
                     {
-                      value: 'yes',
+                      value: YES,
                       label: 'The company contact does accept email marketing',
                       hint:
-                        !!values.accepts_dit_email_marketing?.length &&
+                        values.acceptsDitEmailMarketing.includes(YES) &&
                         'By checking this box, you confirm that the contact has opted in to email marketing.',
                     },
                   ]}
@@ -228,10 +231,10 @@ const ContactForm = ({
                   name="addressSameAsCompany"
                   required="This field is required."
                   options={[
-                    { value: 'yes', label: 'Yes' },
+                    { value: YES, label: YES },
                     {
-                      value: 'no',
-                      label: 'No',
+                      value: NO,
+                      label: NO,
                       children: (
                         <fieldset>
                           <legend>Contact address</legend>
