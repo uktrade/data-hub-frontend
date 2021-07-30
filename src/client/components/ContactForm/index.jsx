@@ -79,7 +79,9 @@ const ContactForm = ({
               country: addressCountry?.id,
               primary: boolToYesNo(primary),
               addressSameAsCompany: boolToYesNo(addressSameAsCompany),
-              acceptsDitEmailMarketing: [boolToYesNo(acceptsDitEmailMarketing)],
+              acceptsDitEmailMarketing: [
+                boolToYesNo(acceptsDitEmailMarketing),
+              ].filter(Boolean),
             }}
             onSubmit={async ({
               address1,
@@ -97,7 +99,7 @@ const ContactForm = ({
                 ..._.mapKeys(values, (v, k) => _.snakeCase(k)),
                 // The checkbox's value is for some odd reason at index 1
                 accepts_dit_email_marketing:
-                  acceptsDitEmailMarketing[1] === 'yes',
+                  acceptsDitEmailMarketing[0] === 'yes',
                 primary: primary === 'yes',
                 company,
                 address_same_as_company: addressSameAsCompany === 'yes',
@@ -209,6 +211,7 @@ const ContactForm = ({
                   validate={validators.email}
                 />
                 <FieldCheckboxes
+                  value="yes"
                   name="acceptsDitEmailMarketing"
                   options={[
                     {
