@@ -99,3 +99,20 @@ export function saveOpportunityRequirements({ values, opportunityId }) {
     })
     .then(({ data }) => transformInvestmentOpportunityDetails(data))
 }
+
+export function saveOpportunityStatus({ values, opportunityId }) {
+  return apiProxyAxios
+    .patch(`v4/large-capital-opportunity/${opportunityId}`, {
+      status: values.status,
+    })
+    .then(({ data }) => transformInvestmentOpportunityDetails(data))
+}
+
+export const getStatusMetadata = () =>
+  Promise.all([
+    apiProxyAxios.get(
+      '/v4/metadata/large-capital-opportunity/opportunity-status'
+    ),
+  ]).then(([{ data: opportunityStatuses }]) => ({
+    opportunityStatuses: opportunityStatuses.map(idNameToValueLabel),
+  }))

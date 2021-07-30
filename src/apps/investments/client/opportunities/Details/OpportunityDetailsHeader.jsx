@@ -26,10 +26,23 @@ const OpportunityDetailsHeader = ({ opportunity, currentPath }) => {
     }
   }
 
+  const getStatus = (status) => {
+    if (status.label) {
+      return status.label
+    }
+    return 'Unassigned'
+  }
+
   const itemCollection = [
     {
       label: 'Status',
-      value: status.label || 'Unassigned',
+      value: (
+        <span>
+          {getStatus(status)}
+          {' - '}
+          <a href={urls.investments.opportunities.status(id)}>change</a>
+        </span>
+      ),
     },
     {
       label: 'Valuation',

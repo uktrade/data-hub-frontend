@@ -284,6 +284,7 @@ module.exports = {
         '/investments',
         '/opportunities/:opportunityId/interactions'
       ),
+      status: url('/investments', '/opportunities/:opportunityId/status'),
       create: url('/investments', '/opportunities/create'),
     },
     editHistory: {

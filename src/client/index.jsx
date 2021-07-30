@@ -47,6 +47,7 @@ import InvestmentProjectsCollection from '../apps/investments/client/projects/Pr
 import CompanyProjectsCollection from '../apps/investments/client/projects/CompanyProjectsCollection.jsx'
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
+import OpportunityChangeStatus from '../apps/investments/client/opportunities/Details/OpportunityChangeStatus'
 import IEBanner from '../apps/dashboard/client/IEBanner'
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
 import createUKInvestmentOpportunityTask from './components/CreateUKInvestmentOpportunity/tasks'
@@ -130,6 +131,8 @@ import {
   TASK_GET_OPPORTUNITY_DETAILS,
   TASK_GET_OPPORTUNITY_DETAILS_METADATA,
   TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA,
+  TASK_SAVE_OPPORTUNITY_STATUS,
+  TASK_GET_OPPORTUNITY_STATUS_METADATA,
 } from '../apps/investments/client/opportunities/Details/state'
 import * as investmentOpportunitiesDetailsTasks from '../apps/investments/client/opportunities/Details/tasks'
 
@@ -258,6 +261,10 @@ function App() {
           investmentOpportunitiesDetailsTasks.getDetailsMetadata,
         [TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA]:
           investmentOpportunitiesDetailsTasks.getRequirementsMetadata,
+        [TASK_GET_OPPORTUNITY_STATUS_METADATA]:
+          investmentOpportunitiesDetailsTasks.getStatusMetadata,
+        [TASK_SAVE_OPPORTUNITY_STATUS]:
+          investmentOpportunitiesDetailsTasks.saveOpportunityStatus,
         [DNB__CHECK_PENDING_REQUEST]: dnbCheck.checkIfPendingRequest,
         [TASK_GET_PROFILES_LIST]:
           investmentProfilesTasks.getLargeCapitalProfiles,
@@ -389,6 +396,9 @@ function App() {
       </Mount>
       <Mount selector="#opportunity">
         {(props) => <Opportunity {...props} />}
+      </Mount>
+      <Mount selector="#opportunity-status">
+        {(props) => <OpportunityChangeStatus {...props} />}
       </Mount>
       <Mount selector="#create-uk-investment-opportunity">
         {() => (
