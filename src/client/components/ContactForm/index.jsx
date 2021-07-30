@@ -123,7 +123,6 @@ const ContactForm = ({
                 data: payload,
               })
 
-              // Flash message for the next request
               addMessage(
                 'success',
                 method === 'POST'
