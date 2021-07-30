@@ -260,7 +260,7 @@ FieldAddress.propTypes = {
   country: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
 }
 
 FieldAddress.defaultProps = {
