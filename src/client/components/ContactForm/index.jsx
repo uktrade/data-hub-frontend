@@ -99,7 +99,6 @@ const ContactForm = ({
             }) => {
               const payload = {
                 ...keysToSnakeCase(values),
-                // The checkbox's value is for some odd reason at index 1
                 accepts_dit_email_marketing:
                   acceptsDitEmailMarketing[0] === 'yes',
                 primary: primary === 'yes',
