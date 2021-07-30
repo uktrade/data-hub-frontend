@@ -108,6 +108,7 @@ const CheckboxGroupField = ({
   selectedOptions = [],
   onChange = () => null,
   id,
+  groupId = '',
   maxScrollHeight = 0,
   ...props
 }) => {
@@ -130,6 +131,7 @@ const CheckboxGroupField = ({
       name={name}
       hint={hint}
       data-test={`checkbox-group-field-${name}`}
+      groupId={groupId}
       {...props}
     >
       {loading ? (
@@ -163,16 +165,18 @@ const CheckboxGroupField = ({
                     onChange(otherOptions)
                   }
                 }
+                const getCheckboxId = (name) => `field-${name}-${i + 1}`
                 return (
                   <li>
                     <Checkbox
-                      id={`field-${name}-${i + 1}`}
+                      id={getCheckboxId(name)}
                       key={optionValue}
                       name={name}
                       initialChecked={checked}
                       value={optionValue}
                       onChange={handleChange}
                       aria-label={optionLabel}
+                      aria-labelledby={`${getCheckboxId(name)} ${groupId}`}
                       {...optionProps}
                     >
                       {optionLabel}
@@ -208,6 +212,7 @@ CheckboxGroupField.propTypes = {
   onChange: PropTypes.func,
   id: PropTypes.string,
   maxScrollHeight: PropTypes.number,
+  groupId: PropTypes.string,
 }
 
 export default CheckboxGroupField
