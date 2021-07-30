@@ -29,6 +29,8 @@ import State from '../State'
 
 const boolToYesNo = (x) => (x === true ? 'yes' : x === false ? 'no' : x)
 
+const keysToSnakeCase = (o) => _.mapKeys(o, (v, k) => _.snakeCase(k))
+
 const ContactForm = ({
   method,
   edit,
@@ -96,7 +98,7 @@ const ContactForm = ({
               ...values
             }) => {
               const payload = {
-                ..._.mapKeys(values, (v, k) => _.snakeCase(k)),
+                ...keysToSnakeCase(values),
                 // The checkbox's value is for some odd reason at index 1
                 accepts_dit_email_marketing:
                   acceptsDitEmailMarketing[0] === 'yes',
