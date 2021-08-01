@@ -186,7 +186,7 @@
     "@wdio/sync": "^7.7.7",
     "babel-eslint": "^10.1.0",
     "babel-plugin-istanbul": "6.0.0",
-    "browser-sync": "^2.27.4",
+    "browser-sync": "^2.27.5",
     "browserstack-local": "^1.4.8",
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
