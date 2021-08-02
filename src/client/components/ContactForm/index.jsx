@@ -241,6 +241,7 @@ const ContactForm = ({
                           <FieldAddress
                             apiEndpoint="/api/postcodelookup"
                             isCountrySelectable={true}
+                            forcePostcodeLookupButton={true}
                           />
                         </fieldset>
                       ),

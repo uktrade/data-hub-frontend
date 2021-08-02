@@ -45,6 +45,7 @@ const FieldAddress = ({
   onSelectUKAddress,
   features,
   isCountrySelectable,
+  forcePostcodeLookupButton,
 }) => {
   const areaFieldEnabled = features && features.areaFormField
   const findAdministrativeAreas = useAdministrativeAreaLookup()
@@ -159,7 +160,7 @@ const FieldAddress = ({
 
   return (
     <FieldWrapper {...{ label, legend, hint }} showBorder={true}>
-      {isUK && (
+      {(forcePostcodeLookupButton || isUK) && (
         <>
           <StyledFieldPostcode
             type="search"
@@ -255,6 +256,7 @@ FieldAddress.propTypes = {
   apiEndpoint: PropTypes.string.isRequired,
   onSelectUKAddress: PropTypes.func,
   isCountrySelectable: PropTypes.any,
+  forcePostcodeLookupButton: PropTypes.any,
   // Country is only required if isCountrySelectable is falsy, but this can't be
   // expressed with propTypes
   country: PropTypes.shape({
