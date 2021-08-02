@@ -2,7 +2,7 @@ import { events } from '../../../../../src/lib/urls'
 
 describe('Events Collection - React', () => {
   before(() => {
-    cy.visit(events.react.index())
+    cy.visit(events.index())
     cy.initA11y()
   })
 
