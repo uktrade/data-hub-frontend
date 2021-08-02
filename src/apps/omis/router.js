@@ -15,11 +15,21 @@ const createApp = require('./apps/create')
 const listApp = require('./apps/list')
 const reconciliationApp = require('./apps/reconciliation')
 
+const urls = require('../../lib/urls')
+
 router.use(translate)
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.param('orderId', setOrder)
+
+router.get(urls.omis.react.index.route, async (req, res, next) => {
+  try {
+    return res.render('base')
+  } catch (error) {
+    next(error)
+  }
+})
 
 router.use(listApp.mountpath, listApp.router)
 router.use(

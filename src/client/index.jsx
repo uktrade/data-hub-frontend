@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import * as Sentry from '@sentry/browser'
+import { Switch, Route } from 'react-router-dom'
 
 import Provider from './provider'
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
@@ -175,6 +176,9 @@ import {
 } from '../apps/interactions/client/state'
 
 import Footer from '../client/components/Footer'
+
+import Omis from './pages/Omis'
+import AddOrder from './pages/Omis/AddOrder'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -454,6 +458,12 @@ function App() {
         {(props) => <InteractionsCollection {...props} />}
       </Mount>
       <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
+      <Mount selector="#react-app">
+        <Switch>
+          <Route exact path="/omis/react" component={Omis} />
+          <Route exact path="/omis/react/add-order" component={AddOrder} />
+        </Switch>
+      </Mount>
     </Provider>
   )
 }

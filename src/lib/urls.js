@@ -405,7 +405,7 @@ module.exports = {
     index: url('/omis'),
     // React routes (Work in progress) - to be released on completion
     react: {
-      index: url('/omis', '/react'),
+      index: url('/omis', '/react(/*)?'),
     },
     export: url('/omis', '/export'),
     create: url('/omis/create?company=', ':companyId'),
