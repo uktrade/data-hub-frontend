@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { BLACK, GREY_3 } from 'govuk-colours'
 import { HEADING_SIZES, SPACING } from '@govuk-react/constants'
@@ -89,8 +90,8 @@ function FilteredCollectionHeader({
   const counterSuffix = pluralize(collectionName, totalItems)
   const actions = addItemUrl && (
     <Button
-      as={StyledLink}
-      href={addItemUrl}
+      as={Link}
+      to={addItemUrl}
       buttonColour={GREY_3}
       buttonTextColour={BLACK}
       data-test="add-collection-item-button"

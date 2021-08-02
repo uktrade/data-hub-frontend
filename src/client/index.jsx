@@ -177,7 +177,7 @@ import {
 
 import Footer from '../client/components/Footer'
 
-import Omis from './pages/Omis'
+import Omis from './pages/Omis/CollectionList'
 import AddOrder from './pages/Omis/AddOrder'
 
 function parseProps(domNode) {
@@ -458,11 +458,17 @@ function App() {
         {(props) => <InteractionsCollection {...props} />}
       </Mount>
       <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
+
+
+
+
       <Mount selector="#react-app">
-        <Switch>
-          <Route exact path="/omis/react" component={Omis} />
-          <Route exact path="/omis/react/add-order" component={AddOrder} />
-        </Switch>
+        {(props) => (
+          <Switch>
+            <Route exact path="/omis/react" component={Omis} />
+            <Route exact path="/omis/react/add-order" component={AddOrder} />
+          </Switch>
+        )}
       </Mount>
     </Provider>
   )

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { GREY_4 } from 'govuk-colours'
@@ -32,6 +33,10 @@ const LocalHeader = ({ breadcrumbs, flashMessages, heading, children }) => (
         {breadcrumbs?.map((breadcrumb) =>
           breadcrumb.link ? (
             <Breadcrumbs.Link key={breadcrumb.link} href={breadcrumb.link}>
+              {breadcrumb.text}
+            </Breadcrumbs.Link>
+          ) : breadcrumb.to ? (
+            <Breadcrumbs.Link key={breadcrumb.to} as={Link} to={breadcrumb.to}>
               {breadcrumb.text}
             </Breadcrumbs.Link>
           ) : (

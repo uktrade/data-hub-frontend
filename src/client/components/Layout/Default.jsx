@@ -1,7 +1,7 @@
 import React from 'react'
-import Main from '@govuk-react/main'
 import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
+import Main from '../Main'
 import Footer from '../Footer'
 
 const FullWidth = ({ children }) => (
