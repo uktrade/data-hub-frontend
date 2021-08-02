@@ -2,7 +2,7 @@ import { interactions } from '../../../../../src/lib/urls'
 
 describe('Interactions Collection - React', () => {
   before(() => {
-    cy.visit(interactions.react())
+    cy.visit(interactions.index())
     cy.initA11y()
   })
 

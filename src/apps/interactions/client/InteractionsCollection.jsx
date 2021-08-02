@@ -1,5 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
+import { SPACING } from '@govuk-react/constants'
 
 import {
   INTERACTIONS__LOADED,
@@ -28,6 +30,12 @@ import {
   TASK_GET_INTERACTIONS_METADATA,
   TASK_GET_INTERACTIONS_TEAM_NAME,
 } from './state'
+
+const StyledRoutedCheckboxGroupField = styled(RoutedCheckboxGroupField)`
+  /* This just tightens up the gap for when a single checkbox option group
+  (with no label) is beneath a multiple checkbox option group */
+  margin-bottom: ${SPACING.SCALE_2};
+`
 
 const InteractionCollection = ({
   payload,
@@ -98,7 +106,7 @@ const InteractionCollection = ({
       }}
     >
       <CollectionFilters taskProps={collectionListMetadataTask}>
-        <RoutedCheckboxGroupField
+        <StyledRoutedCheckboxGroupField
           legend={LABELS.kind}
           name="kind"
           qsParam="kind"
