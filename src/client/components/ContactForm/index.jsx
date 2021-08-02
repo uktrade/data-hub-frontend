@@ -27,8 +27,8 @@ import ReferrerLink from '../ReferrerLink'
 import * as validators from '../Form/validators'
 import State from '../State'
 
-const YES = 'yes'
-const NO = 'no'
+const YES = 'Yes'
+const NO = 'No'
 
 const boolToYesNo = (x) => (x === true ? YES : x === false ? NO : null)
 
