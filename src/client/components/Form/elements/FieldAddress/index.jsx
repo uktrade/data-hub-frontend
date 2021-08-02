@@ -36,6 +36,14 @@ const StyledFieldPostcode = styled(FieldInput)`
   }
 `
 
+const OptionalPostcodeField = () => (
+  <StyledFieldPostcode
+    type="text"
+    name="postcode"
+    label="Postcode (optional)"
+  />
+)
+
 const FieldAddress = ({
   label,
   legend,
@@ -160,15 +168,19 @@ const FieldAddress = ({
 
   return (
     <FieldWrapper {...{ label, legend, hint }} showBorder={true}>
-      {(forcePostcodeLookupButton || isUK) && (
+      {forcePostcodeLookupButton || isUK ? (
         <>
-          <StyledFieldPostcode
-            type="search"
-            name="postcode"
-            label="Postcode"
-            required="Enter postcode"
-            maxLength={10}
-          />
+          {forcePostcodeLookupButton ? (
+            <OptionalPostcodeField />
+          ) : (
+            <StyledFieldPostcode
+              type="search"
+              name="postcode"
+              label="Postcode"
+              required="Enter postcode"
+              maxLength={10}
+            />
+          )}
           <Button
             onClick={onSearchClick}
             buttonColour={GREY_3}
@@ -196,14 +208,8 @@ const FieldAddress = ({
             </FormGroup>
           )}
         </>
-      )}
-
-      {!isUK && (
-        <StyledFieldPostcode
-          type="text"
-          name="postcode"
-          label="Postcode (optional)"
-        />
+      ) : (
+        <OptionalPostcodeField />
       )}
 
       <FieldInput
