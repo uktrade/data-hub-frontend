@@ -20,6 +20,7 @@ async function getCommon(req, res, next) {
       req,
       contact.company.id
     )
+    res.locals.companies = [res.locals.company]
     res.locals.id = req.params.contactId
     res.locals.reasonForArchiveOptions = reasonForArchiveOptions
     res.locals.reasonForArchiveOptionsPrefix = reasonForArchiveOptionsPrefix

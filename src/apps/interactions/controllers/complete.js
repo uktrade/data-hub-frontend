@@ -64,7 +64,7 @@ async function postComplete(req, res, next) {
 
       req.flash('success', 'The interaction has been updated')
       return res.redirect(
-        urls.companies.interactions.index(interaction.company.id)
+        urls.companies.interactions.index(interaction.companies[0].id)
       )
     } catch (e) {
       return next(e)
@@ -73,7 +73,10 @@ async function postComplete(req, res, next) {
 
   if (req.body.meeting_happen === 'true') {
     return res.redirect(
-      urls.companies.interactions.edit(interaction.company.id, interaction.id)
+      urls.companies.interactions.edit(
+        interaction.companies[0].id,
+        interaction.id
+      )
     )
   }
 }

@@ -6,15 +6,15 @@ const { fetchEventAttendees } = require('./repos')
 
 function transformServiceDeliveryToAttendeeListItem({
   contacts = [],
-  company,
+  companies = [],
   date,
   id,
 }) {
   const metaItems = [
     {
       key: 'company',
-      value: get(company, 'name'),
-      url: `/companies/${get(company, 'id')}`,
+      value: get(companies[0], 'name'),
+      url: `/companies/${get(companies[0], 'id')}`,
     },
     {
       key: 'job_title',
@@ -46,7 +46,6 @@ function transformServiceDeliveryToAttendeeListItem({
         name: 'No contact assigned',
         meta: compact(metaItems),
       }
-
   return listItem
 }
 

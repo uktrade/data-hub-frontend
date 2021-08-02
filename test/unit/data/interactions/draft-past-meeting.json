@@ -1,9 +1,11 @@
 {
   "id": "888c12ee-91db-4964-908e-0f18ce823096",
-  "company": {
-    "name": "Venus Ltd",
-    "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
-  },
+  "companies": [
+    {
+      "name": "Venus Ltd",
+      "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+    }
+  ],
   "contacts": [
     {
       "name": "Theodore Schaden|6e4b048d-5bb5-4868-9455-aa712f4ceffd",

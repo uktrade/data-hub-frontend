@@ -46,7 +46,7 @@ export const transformInteractionToListItem = ({
   subject,
   dit_participants,
   service,
-  company,
+  companies,
   id,
   contacts,
   kind,
@@ -59,7 +59,10 @@ export const transformInteractionToListItem = ({
       label: 'Contact(s)',
       value: contacts && formatContacts(contacts),
     },
-    { label: 'Company', value: company?.name },
+    {
+      label: 'Company',
+      value: companies && (companies.length ? companies[0].name : null),
+    },
     {
       label: 'Adviser(s)',
       value: dit_participants && formatParticipants(dit_participants),

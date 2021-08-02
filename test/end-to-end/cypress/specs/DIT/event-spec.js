@@ -159,25 +159,29 @@ describe('Event', () => {
   })
 
   describe('Add attendee', () => {
+    const event = fixtures.event.create.defaultEvent()
+    const company = fixtures.company.create.defaultCompany('attendee testing')
+    const contact = fixtures.contact.create(company.pk, 'Joe', 'Attendee')
+
     before(() => {
-      const event = fixtures.event.create.defaultEvent()
-      cy.loadFixture([event])
-      cy.visit(urls.events.details(event.pk))
+      cy.loadFixture([event, company, contact])
     })
     it('Should add an interaction with the attendee', () => {
+      cy.visit(urls.events.details(event.pk))
       cy.contains('a', 'Attendees').click()
       cy.contains('Add attendee').click()
-      cy.get('input').type('John')
+      cy.get('input').type('Attendee')
       cy.contains('button', 'Search').click()
       cy.get('[data-test="item-contact-0"] a')
-        .should('contain', 'Johnny Cakeman')
+        .should('contain', 'Joe Attendee')
         .click()
       cy.contains('Event attendee added')
     })
     it('Should not be able to add a duplicate attendee', () => {
+      cy.visit(urls.events.details(event.pk))
       cy.contains('a', 'Attendees').click()
       cy.contains('Add attendee').click()
-      cy.get('input').type('John')
+      cy.get('input').type('Attendee')
       cy.contains('button', 'Search').click()
       cy.get('main li a').should('not.exist')
       cy.get('main li').should('contain', 'Existing attendee')

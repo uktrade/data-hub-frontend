@@ -94,7 +94,7 @@ export function restoreState() {
   return JSON.parse(stateFromStorage)
 }
 
-export function saveInteraction({ values, companyId, referralId }) {
+export function saveInteraction({ values, companyIds, referralId }) {
   window.sessionStorage.removeItem(STORE_ID)
 
   const endpoint = referralId
@@ -105,9 +105,7 @@ export function saveInteraction({ values, companyId, referralId }) {
 
   const commonPayload = {
     status: INTERACTION_STATUS.COMPLETE,
-    company: {
-      id: companyId,
-    },
+    companies: companyIds,
     service: values.service_2nd_level || values.service,
     service_answers: transformServiceAnswers(values),
     contacts: transformArrayOfOptions(values.contacts),

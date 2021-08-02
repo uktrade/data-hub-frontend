@@ -57,7 +57,7 @@ var getInteractionById = function (req, res) {
 }
 
 var createInteraction = function (req, res) {
-  if (req.body.company === '4e6a4edb-55e3-4461-a88d-84d329ee7eb8') {
+  if (_.isEqual(req.body.companies, ['4e6a4edb-55e3-4461-a88d-84d329ee7eb8'])) {
     return res.json(400, interactionValidationError)
   }
 

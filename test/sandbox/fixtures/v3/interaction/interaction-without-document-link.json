@@ -1,9 +1,11 @@
 {
   "id": "0dcb3748-c097-4f20-b84f-0114bbb1a8e0",
-  "company": {
+  "companies": [
+    {
       "name": "Venus Ltd",
       "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
-  },
+    }
+  ],
   "contacts": [
       {
           "name": "Dean Cox",
