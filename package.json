@@ -236,6 +236,10 @@
   },
   "sasslintConfig": ".sass-lint.yml",
   "resolutions": {
-    "is-plain-obj": "1.1.0"
+    "is-plain-obj": "1.1.0",
+    "highlight.js": "10.4.1",
+    "prismjs": "1.24.0",
+    "merge": "2.1.1",
+    "lodash.merge": "4.6.2"
   }
 }
