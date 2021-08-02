@@ -57,6 +57,7 @@ const CollectionItem = ({
   badges,
   metadata,
   metadataRenderer,
+  titleRenderer = null,
 }) => (
   <ItemWrapper data-test="collection-item">
     {badges && (
@@ -69,7 +70,9 @@ const CollectionItem = ({
       </StyledBadgesWrapper>
     )}
 
-    {headingUrl ? (
+    {titleRenderer ? (
+      titleRenderer(headingText, headingUrl)
+    ) : headingUrl ? (
       <StyledLinkHeader>
         <Link href={headingUrl}>{headingText}</Link>
       </StyledLinkHeader>
@@ -86,7 +89,6 @@ const CollectionItem = ({
     )}
   </ItemWrapper>
 )
-
 CollectionItem.propTypes = {
   headingUrl: PropTypes.string,
   headingText: PropTypes.string.isRequired,
@@ -105,6 +107,7 @@ CollectionItem.propTypes = {
   ),
   type: PropTypes.string,
   metadataRenderer: PropTypes.func,
+  titleRenderer: PropTypes.func,
 }
 
 export default CollectionItem
