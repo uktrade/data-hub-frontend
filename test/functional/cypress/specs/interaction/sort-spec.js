@@ -24,6 +24,7 @@ describe('Interactions Collections Sort', () => {
         }))
         expect(sortOptions).to.deep.eq([
           { value: 'date:desc', label: 'Recently created' },
+          { value: 'company.name', label: 'Company name A-Z' },
           { value: 'subject', label: 'Subject A-Z' },
         ])
       })
@@ -43,6 +44,13 @@ describe('Interactions Collections Sort', () => {
       cy.get(element).select('Recently created')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('date:desc')
+      })
+    })
+
+    it('should sort by "Company name A-Z"', () => {
+      cy.get(element).select('Company name A-Z')
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body.sortby).to.equal('company.name')
       })
     })
 
