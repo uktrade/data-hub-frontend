@@ -77,7 +77,7 @@ function getExportCountries(countries) {
 
 function transformInteractionResponseToViewRecord(
   {
-    company,
+    companies,
     notes,
     date,
     dit_participants,
@@ -103,7 +103,11 @@ function transformInteractionResponseToViewRecord(
   const kindLabels = labels[camelCase(kind)]
 
   const viewRecord = {
-    company: transformEntityLink(company, 'companies'),
+    // TODO: currently only a single company is displayed
+    company:
+      companies &&
+      companies.length &&
+      transformEntityLink(companies[0], 'companies'),
     contacts: contacts.map((contact) =>
       transformEntityLink(contact, 'contacts')
     ),

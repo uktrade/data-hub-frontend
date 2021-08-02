@@ -1,10 +1,12 @@
 {
   "kind": "service_delivery",
   "id": "7265dc3c-e89d-45ee-8106-d1e370c1c73d",
-  "company": {
-    "id": "dcdabbc9-1781-e411-8955-e4115bead28a",
-    "name": "Samsung"
-  },
+  "companies": [
+    {
+      "id": "dcdabbc9-1781-e411-8955-e4115bead28a",
+      "name": "Samsung"
+    }
+  ],
   "subject": "Test interactions",
   "notes": "lorem ipsum",
   "date": "2017-05-31T00:00:00",

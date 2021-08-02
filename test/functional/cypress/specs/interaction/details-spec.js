@@ -382,7 +382,7 @@ describe('Interaction details', () => {
       cy.url().should(
         'contain',
         companies.referrals.details(
-          interactionWithReferral.company.id,
+          interactionWithReferral.companies[0].id,
           interactionWithReferral.company_referral.id
         )
       )

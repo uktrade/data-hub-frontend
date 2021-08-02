@@ -10,7 +10,7 @@ function transformInteractionToListItem(showCompany = true) {
     subject,
     kind,
     contacts,
-    company,
+    companies,
     date,
     dit_participants,
     service,
@@ -55,7 +55,11 @@ function transformInteractionToListItem(showCompany = true) {
         label: labels.metaItems.contacts,
         value: contacts && formatContacts(contacts),
       },
-      { label: labels.metaItems.company, value: showCompany && company },
+      // TODO: currently only one company is supported
+      showCompany && {
+        label: labels.metaItems.company,
+        value: companies && (companies.length ? companies[0] : null),
+      },
       {
         label: labels.metaItems.dit_participants,
         value: dit_participants && formatParticipants(dit_participants),

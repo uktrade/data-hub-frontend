@@ -1,12 +1,14 @@
 const { v4: uuidv4 } = require('uuid')
 
-function create(companyId) {
+function create(companyId, _first_name, _last_name) {
+  const first_name = typeof _first_name === 'undefined' ? 'Johnny' : _first_name
+  const last_name = typeof _last_name === 'undefined' ? 'Cakeman' : _last_name
   return {
     model: 'company.contact',
     pk: uuidv4(),
     fields: {
-      first_name: 'Johnny',
-      last_name: 'Cakeman',
+      first_name: first_name,
+      last_name: last_name,
       company: companyId,
       primary: 'False',
       telephone_countrycode: '+44',

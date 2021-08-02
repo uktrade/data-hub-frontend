@@ -91,7 +91,7 @@ const InteractionDetailsForm = ({
       {(getTask) => {
         const saveInteractionTask = getTask(TASK_SAVE_INTERACTION, STATE_ID)
         const openContactFormTask = getTask(TASK_OPEN_CONTACT_FORM, STATE_ID)
-
+        const companyIds = [companyId]
         return (
           <Analytics>
             {(pushAnalytics) => (
@@ -103,7 +103,7 @@ const InteractionDetailsForm = ({
                   saveInteractionTask.start({
                     payload: {
                       values,
-                      companyId,
+                      companyIds,
                       referralId,
                     },
                     onSuccessDispatch: ADD_INTERACTION_FORM__SUBMIT,

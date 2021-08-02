@@ -30,7 +30,6 @@ async function fetchEventAttendees({
       (value) => !isNil(value)
     ),
   })
-
   return eventAttendees
 }
 
