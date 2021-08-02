@@ -29,5 +29,6 @@ export const BUSINESS_INTELLIGENCE_OPTION = [
 
 export const SORT_OPTIONS = [
   { value: 'date:desc', name: 'Recently created' },
+  { value: 'company.name', name: 'Company name A-Z' },
   { value: 'subject', name: 'Subject A-Z' },
 ]
