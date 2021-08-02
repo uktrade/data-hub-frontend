@@ -35,8 +35,7 @@ const boolToYesNo = (x) => (x === true ? YES : x === false ? NO : null)
 const keysToSnakeCase = (o) => _.mapKeys(o, (v, k) => _.snakeCase(k))
 
 const ContactForm = ({
-  method,
-  edit,
+  update,
   contactId,
   redirectTo = ({ id }) => `/contacts/${id}/details`,
   // Needed for linking the newly created contact to a company and breadcrumbs
@@ -58,15 +57,15 @@ const ContactForm = ({
       <>
         <LocalHeader
           superheading={
-            edit && (
+            update && (
               <Link href={`/companies/${company.id}`}>{company.name}</Link>
             )
           }
-          heading={`${edit ? 'Edit' : 'Add'} contact`}
+          heading={`${update ? 'Edit' : 'Add'} contact`}
           breadcrumbs={[
             { link: '/', text: 'Home' },
             { link: '/contacts/', text: 'Contacts' },
-            ...(edit
+            ...(update
               ? [{ text: props.name }, { text: 'Edit' }]
               : [{ text: `Add contact at ${company.name}` }]),
           ]}
@@ -120,18 +119,18 @@ const ContactForm = ({
               }
 
               const response = await axios({
-                url: edit
+                url: update
                   ? `/api-proxy/v3/contact/${contactId}`
                   : '/api-proxy/v3/contact',
-                method,
+                method: update ? 'PATCH' : 'POST',
                 data: payload,
               })
 
               addMessage(
                 'success',
-                method === 'POST'
-                  ? `You have successfully added a new contact ${response.data.name}`
-                  : 'Contact record updated'
+                update
+                  ? 'Contact record updated'
+                  : `You have successfully added a new contact ${response.data.name}`
               )
 
               return redirectTo(response.data)
@@ -262,10 +261,10 @@ const ContactForm = ({
                 <FieldTextarea label="Notes (optional)" name="notes" />
                 <FormActions>
                   <Button data-test="submit">
-                    {edit ? 'Save and return' : 'Add contact'}
+                    {update ? 'Save and return' : 'Add contact'}
                   </Button>
                   <ReferrerLink data-test="return-link">
-                    {edit ? 'Return without saving' : 'Cancel'}
+                    {update ? 'Return without saving' : 'Cancel'}
                   </ReferrerLink>
                 </FormActions>
               </>
@@ -278,7 +277,7 @@ const ContactForm = ({
 )
 
 const requiredProps = {
-  method: PropTypes.oneOf(['POST', 'PATCH']),
+  update: PropTypes.any,
   company: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -314,7 +313,6 @@ export const CreateContactForm = ({ companyId }) => (
       return (
         <ContactForm
           companyId={companyId}
-          method="POST"
           redirectTo={
             origin_url &&
             (({ id, name }) => {
@@ -339,9 +337,8 @@ export const UpdateContactForm = ({ contactId }) => (
       <ContactForm
         {...contact}
         contactId={contact.id}
-        edit={true}
+        update={true}
         companyId={contact.company.id}
-        method="PATCH"
       />
     )}
   </Contact>
