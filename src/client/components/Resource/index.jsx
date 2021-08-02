@@ -76,18 +76,21 @@ const deepKeysToCamelCase = (x) =>
  * @param {string} name - The name of the resource and its task.
  * @param {*} endpoint - The path of the API endpoint for the given resource
  * without the leading slash.
- * @returns A resource component preconfigured for a specific task name,
- * which doesn't require the {name} prop.
+ * @returns A resource component preconfigured for a specific task name and an
+ * API task to the specified {endpoint} out of the box.
  * @example
- * const Company = createResource('Company', 'v4/company')
- * // Then in src/client/index.jsx you can just spread Company.tasks into
- * // the tasks prop of the Provider component
- * <Provider tasks={{
- *   // ...
- *   ...Company.tasks,
- * }}>
- *   // ...
- * </Provider/>
+ * // Create a Resource component pre-bound to name="Company"
+ * const CompanyResource = createResource('Company', (id) => `v4/company/${id}`)
+ *
+ * // You need to spread CompanyResource.tasks in the ./tasks.js module export
+ * export default {
+ *   ...CompanyResource.tasks,
+ * }
+ *
+ * // Now you can easily fetch a company with CompanyResource
+ * <CompanyResource id={companyId}>
+ *   {company => <pre>{JSON.stringify(company, null, 2)}</pre>}
+ * </CompanyResource>
  */
 export const createResource = (name, endpoint) => {
   const Component = (props) => <Resource {...props} name={name} />

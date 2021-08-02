@@ -1,11 +1,11 @@
 import _ from 'lodash'
 import React from 'react'
 
-import Countries from '../../Resource/Countries'
+import CountriesResource from '../../Resource/Countries'
 import FieldSelect from './FieldSelect'
 
 const FieldCountrySelect = (props) => (
-  <Countries>
+  <CountriesResource>
     {(countries) => (
       <FieldSelect
         label="Country"
@@ -13,7 +13,7 @@ const FieldCountrySelect = (props) => (
         options={countries.map(({ name, id }) => ({ label: name, value: id }))}
       />
     )}
-  </Countries>
+  </CountriesResource>
 )
 
 FieldCountrySelect.propTypes = _.omit(FieldSelect.propTypes, 'options')

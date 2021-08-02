@@ -21,8 +21,8 @@ import {
 import { addMessage } from '../../utils/flash-messages'
 import LocalHeader from '../LocalHeader/LocalHeader'
 import FlashMessages from '../LocalHeader/FlashMessages'
-import Contact from '../Resource/Contact'
-import Company from '../Resource/Company'
+import ContactResource from '../Resource/Contact'
+import CompanyResource from '../Resource/Company'
 import ReferrerLink from '../ReferrerLink'
 import * as validators from '../Form/validators'
 import State from '../State'
@@ -52,7 +52,7 @@ const ContactForm = ({
   addressCountry,
   ...props
 }) => (
-  <Company id={companyId}>
+  <CompanyResource id={companyId}>
     {(company) => (
       <>
         <LocalHeader
@@ -273,7 +273,7 @@ const ContactForm = ({
         </Main>
       </>
     )}
-  </Company>
+  </CompanyResource>
 )
 
 const requiredProps = {
@@ -332,7 +332,7 @@ export const CreateContactForm = ({ companyId }) => (
 CreateContactForm.propTypes = requiredProps
 
 export const UpdateContactForm = ({ contactId }) => (
-  <Contact id={contactId}>
+  <ContactResource id={contactId}>
     {(contact) => (
       <ContactForm
         {...contact}
@@ -341,7 +341,7 @@ export const UpdateContactForm = ({ contactId }) => (
         companyId={contact.company.id}
       />
     )}
-  </Contact>
+  </ContactResource>
 )
 
 UpdateContactForm.propTypes = {
