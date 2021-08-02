@@ -6,6 +6,8 @@ const {
   QUERY_FIELDS,
   QUERY_DATE_FIELDS,
 } = require('./constants')
+// TODO: After the React collection list has gone live and the users are
+// happy we must remove the commented out code below
 // const { renderInteractionList } = require('./controllers/list')
 const {
   exportCollection,
@@ -13,6 +15,8 @@ const {
 const { getRequestBody } = require('../../middleware/collection')
 
 const { setDefaultQuery, handleRoutePermissions } = require('../middleware')
+// TODO: After the React collection list has gone live and the users are
+// happy we must remove the commented out code below
 // const {
 //   getInteractionCollection,
 //   getInteractionsRequestBody,
@@ -22,7 +26,8 @@ const { setDefaultQuery, handleRoutePermissions } = require('../middleware')
 const subAppRouter = require('./router.sub-app')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
-
+// TODO: After the React collection list has gone live and the users are
+// happy we must remove the commented out code below
 // router.get(
 //   '/',
 //   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
