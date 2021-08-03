@@ -16,7 +16,11 @@ storiesOf('Resource', module).add('Default', () => (
       {
         label: 'Example resolved',
         content: (
-          <Resource name="Resource example" id="resource-example-resolve">
+          <Resource
+            name="Resource example"
+            id="resource-example-resolve"
+            payload={1234}
+          >
             {(resource) => <Json>{resource}</Json>}
           </Resource>
         ),
