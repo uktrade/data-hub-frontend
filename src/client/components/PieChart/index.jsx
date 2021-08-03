@@ -42,7 +42,7 @@ const CentredProjectTotal = ({ dataWithArc, centerX, centerY }) => {
 
   return (
     <>
-      {centredText(total, 80, centerX, centerY - 20)}
+      {centredText(total, 60, centerX, centerY - 20)}
       {centredText('Projects', 20, centerX, centerY + 30)}
     </>
   )
@@ -56,7 +56,7 @@ const PieChart = ({ data, height }) => (
       }}
       data={data}
       colors={segmentColours}
-      margin={{ top: 20, bottom: 150 }}
+      margin={{ top: 20, bottom: 150, left: 50, right: 50 }}
       startAngle={-90}
       innerRadius={0.75}
       padAngle={0}
@@ -76,6 +76,7 @@ const PieChart = ({ data, height }) => (
         {
           anchor: 'bottom-left',
           direction: 'column',
+          translateX: -50,
           translateY: 150,
           itemWidth: 100,
           itemHeight: 18,
