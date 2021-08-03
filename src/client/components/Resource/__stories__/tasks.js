@@ -1,10 +1,12 @@
 export default {
-  'Resource example': (id) =>
+  'Resource example': (payload, id) =>
     new Promise((resolve, reject) =>
       id.match('reject')
         ? setTimeout(reject, 1000, 'Could not load resource')
         : setTimeout(resolve, 1000, {
             example: 'This is a dummy resource representation example',
+            id,
+            payload,
           })
     ),
   Contact: (id) => {

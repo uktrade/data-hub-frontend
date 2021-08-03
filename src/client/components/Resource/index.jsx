@@ -34,14 +34,14 @@ const Resource = multiInstance({
   }),
   idProp: 'name',
   componentStateToProps: (state, _, { id }) => ({ result: state[id] }),
-  component: ({ name, id, taskStatusProps, children, result }) => (
+  component: ({ name, id, taskStatusProps, children, result, payload }) => (
     <Task.Status
       {...taskStatusProps}
       name={name}
       id={id}
       startOnRender={{
         onSuccessDispatch: 'RESOURCE',
-        payload: id,
+        payload,
         ignoreIfInProgress: true,
       }}
     >
@@ -54,10 +54,12 @@ Resource.propTypes = {
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   children: PropTypes.func,
-  taskStatusProps: Task.Status.propTypes,
+  taskStatusProps: PropTypes.shape(Task.Status.propTypes),
 }
 
 export default Resource
+
+const SINGLETON_ID = '___SINGLETON___'
 
 const deepKeysToCamelCase = (x) =>
   Array.isArray(x)
@@ -73,9 +75,19 @@ const deepKeysToCamelCase = (x) =>
 
 /**
  * A utility factory for creating a {Resource} preset to a specific API endpoint
- * @param {string} name - The name of the resource and its task.
- * @param {*} endpoint - The path of the API endpoint for the given resource
- * without the leading slash.
+ * @param {string} name - The name of the resource and its task
+ * @param {(id: string | null, payload: any) => string} endpoint - A function
+ * which takes ID and payload as arguments and should return the path of the
+ * API endpoint for the given resource without the leading slash.
+ * @param {Object} [options] -
+ * @param {any} [options.singleton] - Whether the resource represents multiple
+ * entities with IDs e.g. a company or a singleton entity e.g. a list of
+ * companies. If truthy, the returned component won't have the required {id},
+ * the ID of the underlying task will be `'__SINGLETON__'` and the {id} passed
+ * to {endpoint} will be `null`.
+ * @param {(result: any) => any} [options.transformer=deepKeysToCamelCase] -
+ * A function through which the result of the API call will be passed through.
+ * Defaults to {deepKeysToCamelCase}.
  * @returns A resource component preconfigured for a specific task name and an
  * API task to the specified {endpoint} out of the box.
  * @example
@@ -92,14 +104,28 @@ const deepKeysToCamelCase = (x) =>
  *   {company => <pre>{JSON.stringify(company, null, 2)}</pre>}
  * </CompanyResource>
  */
-export const createResource = (name, endpoint) => {
-  const Component = (props) => <Resource {...props} name={name} />
-  Component.propTypes = _.omit(Component.propTypes, 'name')
+export const createResource = (
+  name,
+  endpoint,
+  options = { transformer: deepKeysToCamelCase }
+) => {
+  const Component = (props) => (
+    <Resource
+      {...props}
+      name={name}
+      {...(options.singleton ? { id: SINGLETON_ID } : {})}
+    />
+  )
+  Component.propTypes = _.omit(
+    Component.propTypes,
+    'name',
+    options.singleton && 'id'
+  )
   Component.tasks = {
-    [name]: (id) =>
+    [name]: (payload, id) =>
       apiProxyAxios
-        .get(`/api-proxy/${endpoint(id)}`)
-        .then(({ data }) => deepKeysToCamelCase(data)),
+        .get(`/api-proxy/${endpoint(id === SINGLETON_ID ? null : id, payload)}`)
+        .then(({ data }) => options.transformer(data)),
   }
 
   return Component
