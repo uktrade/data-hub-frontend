@@ -100,7 +100,7 @@ const PersonalisedDashboard = ({
                   </DashboardToggleSection>
 
                   <DashboardToggleSection
-                    label="Investment project summary"
+                    label="Investment projects summary"
                     id="investment-project-summary-section"
                     isOpen={true}
                     data-test="investment-project-summary-section"

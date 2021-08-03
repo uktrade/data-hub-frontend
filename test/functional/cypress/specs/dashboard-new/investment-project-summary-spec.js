@@ -40,10 +40,10 @@ describe('Investment projects summary', () => {
   })
 
   context('Common elements to both Chart and Table views', () => {
-    it('should display an "Investment project summary" toggle', () => {
+    it('should display an "Investment projects summary" toggle', () => {
       cy.get('[data-test=toggle-section-button-content]').should(
         'contain',
-        'Investment project summary'
+        'Investment projects summary'
       )
     })
 
