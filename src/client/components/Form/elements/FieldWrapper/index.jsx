@@ -111,7 +111,14 @@ const StyledHint = styled(HintText)`
   `}
 `
 
-const FieldInner = ({ legend, error, showBorder, children, bigLegend }) =>
+const FieldInner = ({
+  legend,
+  error,
+  showBorder,
+  children,
+  bigLegend,
+  groupId,
+}) =>
   legend ? (
     <StyledFieldset showBorder={showBorder}>
       <StyledLegend
@@ -119,6 +126,7 @@ const FieldInner = ({ legend, error, showBorder, children, bigLegend }) =>
         error={error}
         showBorder={showBorder}
         bigLegend={bigLegend}
+        id={groupId}
       >
         {legend}
       </StyledLegend>
@@ -140,6 +148,7 @@ const FieldWrapper = ({
   reduced,
   reducedPadding,
   isIE,
+  groupId,
   ...rest
 }) => (
   <StyledFormGroup
@@ -155,6 +164,7 @@ const FieldWrapper = ({
       error={error}
       showBorder={showBorder}
       bigLegend={bigLegend}
+      groupId={groupId}
     >
       {label && (
         <StyledLabel error={error} htmlFor={name}>
