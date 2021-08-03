@@ -25,7 +25,7 @@ router.param('orderId', setOrder)
 
 router.get(urls.omis.react.index.route, async (req, res, next) => {
   try {
-    return res.render('base')
+    return res.render('react')
   } catch (error) {
     next(error)
   }
