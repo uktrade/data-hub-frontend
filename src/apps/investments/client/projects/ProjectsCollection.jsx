@@ -93,6 +93,7 @@ const ProjectsCollection = ({
           options={optionMetadata.projectStageOptions}
           selectedOptions={selectedFilters.stages.options}
           data-test="stage-filter"
+          groupId="stage-filter"
         />
         <RoutedCheckboxGroupField
           legend="My projects"
@@ -150,6 +151,7 @@ const ProjectsCollection = ({
           options={optionMetadata.projectStatusOptions}
           selectedOptions={selectedFilters.statuses.options}
           data-test="project-status-filter"
+          groupId="status-filter"
         />
         <RoutedCheckboxGroupField
           legend="Type of investment"
@@ -158,6 +160,7 @@ const ProjectsCollection = ({
           options={optionMetadata.investmentTypeOptions}
           selectedOptions={selectedFilters.investmentTypes.options}
           data-test="investment-type-filter"
+          groupId="investment-type-filter"
         />
         <RoutedCheckboxGroupField
           legend="Likelihood to land"
@@ -166,6 +169,7 @@ const ProjectsCollection = ({
           options={optionMetadata.likelihoodToLandOptions}
           selectedOptions={selectedFilters.likelihoodToLand.options}
           data-test="likelihood-to-land-filter"
+          groupId="likelihood-to-land-filter"
         />
         <RoutedDateField
           label="Estimated land date before"
@@ -198,6 +202,7 @@ const ProjectsCollection = ({
           options={optionMetadata.involvementLevelOptions}
           selectedOptions={selectedFilters.involvementLevels.options}
           data-test="involvement-level-filter"
+          groupId="involvement-level-filter"
         />
       </CollectionFilters>
     </FilteredCollectionList>
