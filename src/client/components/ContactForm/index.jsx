@@ -238,6 +238,7 @@ const ContactForm = ({
                         <fieldset>
                           <legend>Contact address</legend>
                           <FieldAddress
+                            name="" // Required, but has no effect
                             apiEndpoint="/api/postcodelookup"
                             isCountrySelectable={true}
                             forcePostcodeLookupButton={true}

@@ -48,6 +48,7 @@ const FieldAddress = ({
   label,
   legend,
   hint,
+  name,
   country,
   apiEndpoint,
   onSelectUKAddress,
@@ -167,7 +168,7 @@ const FieldAddress = ({
   }
 
   return (
-    <FieldWrapper {...{ label, legend, hint }} showBorder={true}>
+    <FieldWrapper {...{ label, legend, hint, name }} showBorder={true}>
       {forcePostcodeLookupButton || isUK ? (
         <>
           {forcePostcodeLookupButton ? (
@@ -259,6 +260,7 @@ FieldAddress.propTypes = {
   label: PropTypes.node,
   legend: PropTypes.node,
   hint: PropTypes.node,
+  name: PropTypes.string.isRequired,
   apiEndpoint: PropTypes.string.isRequired,
   onSelectUKAddress: PropTypes.func,
   isCountrySelectable: PropTypes.any,
@@ -269,13 +271,6 @@ FieldAddress.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   }),
-}
-
-FieldAddress.defaultProps = {
-  label: null,
-  legend: null,
-  hint: null,
-  onSelectUKAddress: null,
 }
 
 export default FieldAddress
