@@ -60,4 +60,7 @@ module.exports = {
   referrals: {
     referalDetails: require('../../../sandbox/fixtures/v4/referrals/referral-details.json'),
   },
+  omis: {
+    quoteAccepted: require('../../../sandbox/fixtures/v3/omis/quote-accepted.json'),
+  },
 }
