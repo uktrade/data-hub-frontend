@@ -32,7 +32,8 @@ class EditPaymentReconciliationController extends EditController {
     const parsedDate = chrono.en.GB.parseDate(paymentDateStr)
 
     if (parsedDate) {
-      req.form.values.received_on = format(parsedDate, DATE_LONG_FORMAT_3)
+      const formattedDate = parsedDate.toISOString().slice(0, 10)
+      req.form.values.received_on = format(formattedDate, DATE_LONG_FORMAT_3)
     } else {
       req.form.values.received_on = paymentDateStr
     }
