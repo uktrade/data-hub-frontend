@@ -6,7 +6,7 @@
     "incomplete_details_fields": [],
     "incomplete_requirements_fields": [],
     "type": {},
-    "description": "Here is a lengthy description of an investment opportunity. Here is a lengthy description of an investment opportunity. Here is a lengthy description of an investment opportunity.",
+    "description": "Here is a lengthy description of an investment opportunity.",
     "uk_region_locations": [
         {
             "id": "7703f30f-20e0-49b7-b4e0-c23c80f5a205",
@@ -54,7 +54,10 @@
             "id": "9e619e8d-af51-4abf-a83a-5c139851de82"
         }
     ],
-    "opportunity_value_type": {},
+    "opportunity_value_type": {
+        "name": "Capital expenditure",
+        "id": "496379ec-7cd2-4746-98f7-143c905dd6aa"
+    },
     "opportunity_value": 12345789,
     "construction_risks": [
         {

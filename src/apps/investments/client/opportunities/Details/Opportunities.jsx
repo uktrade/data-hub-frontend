@@ -21,21 +21,13 @@ import {
   ToggleSection,
 } from '../../../../../client/components'
 import Task from '../../../../../client/components/Task/index.jsx'
-import { FONT_SIZE, SPACING } from '@govuk-react/constants'
+import { FONT_SIZE } from '@govuk-react/constants'
 
 import styled from 'styled-components'
-import { HIGHLIGHT_COLOUR, RED, GREEN } from 'govuk-colours'
+import { RED } from 'govuk-colours'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
-
-const StyledSpan = styled('span')`
-  background: ${HIGHLIGHT_COLOUR};
-`
-
-const StyledToggle = styled(ToggleSection)`
-  font-size: ${FONT_SIZE.SIZE_14};
-  margin-top: ${SPACING.SCALE_4};
-`
+import { Details, SectionBreak } from 'govuk-react'
 
 const StyledLabel = styled('label')`
   display: inline-table;
@@ -45,13 +37,22 @@ const StyledLabel = styled('label')`
   float: right;
   margin: 5px;
   color: ${(props) => props.color};
+  @media screen and (max-width: 600px) {
+    float: None;
+  }
+`
+
+const StyledDetails = styled(Details)`
+  span {
+    font-size: ${FONT_SIZE.SIZE_19};
+  }
 `
 
 const RequiredFields = (fieldCount) => {
   if (fieldCount == 0) {
-    return <StyledLabel color={GREEN}>Completed</StyledLabel>
+    return <StyledLabel color={RED}>Complete</StyledLabel>
   }
-  return <StyledLabel color={RED}>{fieldCount} fields required</StyledLabel>
+  return <StyledLabel color={RED}>{fieldCount} fields incomplete</StyledLabel>
 }
 
 const OpportunitySection = ({
@@ -64,8 +65,12 @@ const OpportunitySection = ({
   onEdit,
 }) => (
   <>
-    {RequiredFields(incompleteFields)}
-    <ToggleSection label={toggleName} id={`${id}_toggle`}>
+    <SectionBreak />
+    <ToggleSection
+      label={toggleName}
+      id={`${id}_toggle`}
+      badge={RequiredFields(incompleteFields)}
+    >
       {isEditing ? (
         <>{form}</>
       ) : (
@@ -121,7 +126,6 @@ const Opportunities = ({
               >
                 <OpportunityDetails details={detailsFields} />
               </OpportunitySection>
-
               <OpportunitySection
                 incompleteFields={incompleteRequirementsFields}
                 form={
@@ -134,17 +138,11 @@ const Opportunities = ({
               >
                 <OpportunityRequirements details={requirementsFields} />
               </OpportunitySection>
-
-              <StyledToggle
-                label="Need to delete this opportunity?"
-                id="opportunity_delete_toggle"
-                fontSize={FONT_SIZE.SIZE_14}
-              >
-                <StyledSpan>
-                  To delete this opportunity, email{' '}
-                  <Link>capitalinvestment@trade.gov.uk</Link>
-                </StyledSpan>
-              </StyledToggle>
+              <SectionBreak />
+              <StyledDetails summary="Need to delete this opportunity?">
+                To delete this opportunity, email{' '}
+                <Link>capitalinvestment@trade.gov.uk</Link>
+              </StyledDetails>
             </Main>
           </>
         )
