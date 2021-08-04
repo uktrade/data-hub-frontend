@@ -111,8 +111,8 @@ const EventsCollection = ({
         <RoutedTypeahead
           isMulti={true}
           legend={LABELS.country}
-          name="country"
-          qsParam="country"
+          name="address_country"
+          qsParam="address_country"
           placeholder="Search country"
           options={optionMetadata.countryOptions}
           selectedOptions={selectedFilters.countries.options}

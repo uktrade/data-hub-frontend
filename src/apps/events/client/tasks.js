@@ -15,7 +15,7 @@ const getEvents = ({
   organiser,
   start_date_before,
   start_date_after,
-  country,
+  address_country,
   uk_region,
   event_type,
 }) =>
@@ -28,7 +28,7 @@ const getEvents = ({
       organiser,
       start_date_before,
       start_date_after,
-      country,
+      address_country,
       uk_region,
       event_type,
     })
