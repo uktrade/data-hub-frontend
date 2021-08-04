@@ -1,13 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  BLUE,
-  YELLOW,
-  GREEN,
-  TURQUOISE,
-  GRASS_GREEN,
-  GREY_2,
-} from 'govuk-colours'
+import { BLUE, YELLOW, GREEN, TURQUOISE, GRASS_GREEN } from 'govuk-colours'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import { ResponsivePie } from '@nivo/pie'
 import styled from 'styled-components'
@@ -56,27 +49,17 @@ const PieChart = ({ data, height }) => (
       }}
       data={data}
       colors={segmentColours}
-      margin={{ top: 20, bottom: 150, left: 50, right: 50 }}
+      margin={{ top: 20, bottom: 150 }}
       startAngle={-90}
       innerRadius={0.75}
       padAngle={0}
       enableArcLabels={false}
-      arcLinkLabel="value"
-      arcLinkLabelsSkipAngle={10}
-      arcLinkLabelsOffset={3}
-      arcLinkLabelsColor={GREY_2}
-      arcLinkLabelsTextColor={GREY_2}
-      arcLinkLabelsThickness={3}
-      arcLinkLabelsDiagonalLength={9}
-      arcLinkLabelsStraightLength={12}
-      arcLinkLabelsTextOffset={2}
       isInteractive={false}
-      layers={['arcs', 'arcLinkLabels', 'legends', CentredProjectTotal]}
+      layers={['arcs', 'legends', CentredProjectTotal]}
       legends={[
         {
           anchor: 'bottom-left',
           direction: 'column',
-          translateX: -50,
           translateY: 150,
           itemWidth: 100,
           itemHeight: 18,
