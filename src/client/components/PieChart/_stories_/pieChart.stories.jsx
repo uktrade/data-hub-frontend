@@ -8,17 +8,17 @@ const stageData = [
   {
     id: 'Prospect',
     label: 'Prospect',
-    value: 7,
+    value: 318,
   },
   {
     id: 'Assign PM',
     label: 'Assign PM',
-    value: 2,
+    value: 201,
   },
   {
     id: 'Active',
     label: 'Active',
-    value: 5,
+    value: 57,
   },
   {
     id: 'Verify win',
@@ -28,7 +28,7 @@ const stageData = [
   {
     id: 'Won',
     label: 'Won',
-    value: 2,
+    value: 21,
   },
 ]
 

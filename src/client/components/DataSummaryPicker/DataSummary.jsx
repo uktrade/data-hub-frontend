@@ -66,7 +66,7 @@ const DataSummary = ({
   const total = data.reduce((prev, curr) => prev + curr.value, 0)
   const chartData = data.map(({ label, value }) => ({
     id: label,
-    label,
+    label: `${label} (${value})`,
     value,
   }))
 

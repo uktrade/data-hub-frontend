@@ -1,13 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  BLUE,
-  YELLOW,
-  GREEN,
-  TURQUOISE,
-  GRASS_GREEN,
-  GREY_2,
-} from 'govuk-colours'
+import { BLUE, YELLOW, GREEN, TURQUOISE, GRASS_GREEN } from 'govuk-colours'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import { ResponsivePie } from '@nivo/pie'
 import styled from 'styled-components'
@@ -42,7 +35,7 @@ const CentredProjectTotal = ({ dataWithArc, centerX, centerY }) => {
 
   return (
     <>
-      {centredText(total, 80, centerX, centerY - 20)}
+      {centredText(total, 60, centerX, centerY - 20)}
       {centredText('Projects', 20, centerX, centerY + 30)}
     </>
   )
@@ -61,17 +54,8 @@ const PieChart = ({ data, height }) => (
       innerRadius={0.75}
       padAngle={0}
       enableArcLabels={false}
-      arcLinkLabel="value"
-      arcLinkLabelsSkipAngle={10}
-      arcLinkLabelsOffset={3}
-      arcLinkLabelsColor={GREY_2}
-      arcLinkLabelsTextColor={GREY_2}
-      arcLinkLabelsThickness={3}
-      arcLinkLabelsDiagonalLength={9}
-      arcLinkLabelsStraightLength={12}
-      arcLinkLabelsTextOffset={2}
       isInteractive={false}
-      layers={['arcs', 'arcLinkLabels', 'legends', CentredProjectTotal]}
+      layers={['arcs', 'legends', CentredProjectTotal]}
       legends={[
         {
           anchor: 'bottom-left',
