@@ -116,7 +116,7 @@ const InteractionCollection = ({
         />
         <RoutedCheckboxGroupField
           name="dit_participants__adviser"
-          qsParam="adviser"
+          qsParam="dit_participants__adviser"
           options={[myInteractionsOption]}
           selectedOptions={myInteractionsSelected ? [myInteractionsOption] : []}
           data-test="my-interactions-filter"
@@ -126,7 +126,7 @@ const InteractionCollection = ({
           isMulti={true}
           legend={LABELS.advisers}
           name="adviser"
-          qsParam="adviser"
+          qsParam="dit_participants__adviser"
           placeholder="Search adviser"
           noOptionsMessage={() => <>No advisers found</>}
           selectedOptions={selectedFilters.advisers.options}

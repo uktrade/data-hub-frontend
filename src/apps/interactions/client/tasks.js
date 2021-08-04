@@ -49,7 +49,7 @@ const getInteractions = ({
   limit = 10,
   page = 1,
   kind,
-  adviser,
+  dit_participants__adviser,
   service,
   date_before,
   date_after,
@@ -65,7 +65,7 @@ const getInteractions = ({
     .post('/api-proxy/v3/search/interaction', {
       limit,
       kind,
-      dit_participants__adviser: adviser,
+      dit_participants__adviser,
       offset: limit * (page - 1),
       sortby,
       date_before,
