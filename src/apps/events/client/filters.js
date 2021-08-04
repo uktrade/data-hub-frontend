@@ -40,10 +40,10 @@ export const buildSelectedFilters = (
     }),
   },
   countries: {
-    queryParam: 'country',
+    queryParam: 'address_country',
     options: buildOptionsFilter({
       options: metadata.countryOptions,
-      value: queryParams.country,
+      value: queryParams.address_country,
       categoryLabel: LABELS.country,
     }),
   },
