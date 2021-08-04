@@ -11,19 +11,19 @@ const dataRanges = [
       {
         label: 'Prospect',
         id: '8a320cc9-ae2e-443e-9d26-2f36452c2ced',
-        value: 10,
+        value: 101,
         link: '#',
       },
       {
         label: 'Assigned',
         id: 'c9864359-fb1a-4646-a4c1-97d10189fc03',
-        value: 3,
+        value: 381,
         link: '#',
       },
       {
         label: 'Active',
         id: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
-        value: 5,
+        value: 201,
         link: '#',
       },
       {
@@ -35,7 +35,7 @@ const dataRanges = [
       {
         label: 'Won',
         id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
-        value: 3,
+        value: 31,
         link: '#',
       },
     ],
