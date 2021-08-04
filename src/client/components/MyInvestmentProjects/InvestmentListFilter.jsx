@@ -2,11 +2,12 @@ import React from 'react'
 
 import { Select } from '../../components'
 
-const InvestmentListFilter = ({ options, onChange }) => (
+const InvestmentListFilter = ({ initialValue, options, onChange }) => (
   <Select
     label="Stage"
     input={{
       onChange,
+      initialValue,
     }}
   >
     {options.map(({ id, name }, index) => (
