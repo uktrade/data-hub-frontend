@@ -107,25 +107,21 @@ const deepKeysToCamelCase = (x) =>
 export const createResource = (
   name,
   endpoint,
-  options = { transformer: deepKeysToCamelCase }
+  { singleton, transformer = deepKeysToCamelCase } = {}
 ) => {
   const Component = (props) => (
     <Resource
       {...props}
       name={name}
-      {...(options.singleton ? { id: SINGLETON_ID } : {})}
+      {...(singleton ? { id: SINGLETON_ID } : {})}
     />
   )
-  Component.propTypes = _.omit(
-    Component.propTypes,
-    'name',
-    options.singleton && 'id'
-  )
+  Component.propTypes = _.omit(Component.propTypes, 'name', singleton && 'id')
   Component.tasks = {
     [name]: (payload, id) =>
       apiProxyAxios
         .get(`/api-proxy/${endpoint(id === SINGLETON_ID ? null : id, payload)}`)
-        .then(({ data }) => options.transformer(data)),
+        .then(({ data }) => transformer(data)),
   }
 
   return Component
