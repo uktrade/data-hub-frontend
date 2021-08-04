@@ -5,6 +5,7 @@ const assignees = require('../../../fixtures/v3/omis/assignees.json')
 const invoice = require('../../../fixtures/v3/omis/invoice.json')
 const payments = require('../../../fixtures/v3/omis/payments.json')
 const quote = require('../../../fixtures/v3/omis/quote.json')
+const quoteAccepted = require('../../../fixtures/v3/omis/quote-accepted.json')
 const subscribers = require('../../../fixtures/v3/omis/subscribers.json')
 const quoteAwaitOrder = require('../../../fixtures/v3/omis/quote-awaiting-order.json')
 
@@ -22,6 +23,7 @@ exports.getOrderById = function (req, res) {
     [paidOrder.id]: paidOrder,
     [draftOrder.id]: draftOrder,
     [quoteAwaitOrder.id]: quoteAwaitOrder,
+    [quoteAccepted.id]: quoteAccepted,
   }
 
   res.json(orders[req.params.id] || paidOrder)
@@ -29,6 +31,10 @@ exports.getOrderById = function (req, res) {
 
 exports.payments = function (req, res) {
   res.json(req.params.id === draftOrder.id ? [] : payments)
+}
+
+exports.createPayments = function (req, res) {
+  res.json({})
 }
 
 exports.quote = function (req, res) {

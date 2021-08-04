@@ -56,6 +56,7 @@ module.exports = {
     draftOrder: require('../../../sandbox/fixtures/v3/omis/draft-order.json'),
     paidOrder: require('../../../sandbox/fixtures/v3/omis/paid-order.json'),
     quoteAwaitOrder: require('../../../sandbox/fixtures/v3/omis/quote-awaiting-order.json'),
+    quoteAccepted: require('../../../sandbox/fixtures/v3/omis/quote-accepted.json'),
   },
   referrals: {
     referalDetails: require('../../../sandbox/fixtures/v4/referrals/referral-details.json'),
