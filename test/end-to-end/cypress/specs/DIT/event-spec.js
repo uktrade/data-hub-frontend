@@ -142,11 +142,15 @@ describe('Event', () => {
     })
 
     it('should display newly created event in collection page', () => {
-      cy.get(selectors.collection.items).should('contain', 'Eventful event')
+      cy.get('[data-test="collection-item"]')
+        .eq(0)
+        .should('contain', 'Eventful event')
     })
 
     it('should edit event details', () => {
-      cy.get(selectors.collection.items).should('contain', 'Account management')
+      cy.get('[data-test="collection-item"]')
+        .eq(0)
+        .should('contain', 'Account management')
       cy.contains('Eventful event').click()
       cy.get(selectors.entityCollection.editEvent).click()
       cy.get(selectors.eventCreate.eventType).select('Exhibition')
