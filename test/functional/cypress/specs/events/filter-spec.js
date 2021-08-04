@@ -104,12 +104,12 @@ describe('events Collections Filter', () => {
       offset: 0,
       limit: 10,
       sortby: 'modified_on:desc',
-      country: [brazilCountryId],
+      address_country: [brazilCountryId],
     }
 
     it('should filter from the url', () => {
       const queryString = buildQueryString({
-        country: [brazilCountryId],
+        address_country: [brazilCountryId],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`${urls.events.index()}?${queryString}`)
@@ -132,7 +132,7 @@ describe('events Collections Filter', () => {
         expectedOption: 'Brazil',
       })
       assertPayload('@apiRequest', expectedPayload)
-      assertQueryParams('country', [brazilCountryId])
+      assertQueryParams('address_country', [brazilCountryId])
       assertChipExists({ label: 'Brazil', position: 1 })
       removeChip(brazilCountryId)
       assertPayload('@apiRequest', minimumPayload)
@@ -387,7 +387,7 @@ describe('events Collections Filter', () => {
       const queryString = qs.stringify({
         page: 1,
         name: 'Big Event',
-        country: [ukCountryId],
+        address_country: [ukCountryId],
         uk_region: [ukRegions[0].id],
         organiser: [adviserId],
         event_type: [eventType.id],
