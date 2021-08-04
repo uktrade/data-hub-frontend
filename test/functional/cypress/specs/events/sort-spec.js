@@ -1,75 +1,76 @@
-const selectors = require('../../../../selectors')
+import { events } from '../../../../../src/lib/urls'
+
+const searchEndpoint = '/api-proxy/v3/search/event'
 
 describe('Event Collections Sort', () => {
-  beforeEach(() => {
-    cy.intercept('/events?*').as('sortResults')
-    cy.visit('/events')
-    cy.get(selectors.entityCollection.entities)
-      .children()
-      .should('have.length', 7)
-    cy.get(selectors.entityCollection.collection).should('contain', '7 events')
-  })
-
-  it('should sort by AZ', () => {
-    cy.get(selectors.entityCollection.sort).select('name:asc')
-
-    cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.response.url).to.contain('?custom=true&sortby=name%3Aasc')
+  context('Default sort', () => {
+    before(() => {
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(events.index())
     })
 
-    cy.get(selectors.entityCollection.entities)
-      .children()
-      .should('have.length', 2)
-    cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort Event')
-  })
-
-  it('should sort by least recent', () => {
-    cy.get(selectors.entityCollection.sort).select('modified_on:asc')
-
-    cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.response.url).to.contain(
-        '?custom=true&sortby=modified_on%3Aasc'
-      )
+    it('should apply the default sort', () => {
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body.sortby).to.equal('modified_on:desc')
+      })
     })
 
-    cy.get(selectors.entityCollection.entities)
-      .children()
-      .should('have.length', 2)
-    cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort Event')
+    it('should have all sort options', () => {
+      cy.get('[data-test="sortby"] option').then((options) => {
+        const sortOptions = [...options].map((o) => [o.value, o.text])
+        expect(sortOptions).to.deep.eq([
+          ['name:asc', 'Event name A-Z'],
+          ['modified_on:desc', 'Recently updated'],
+          ['modified_on:asc', 'Least recently updated'],
+          ['start_date:asc', 'Earliest start date'],
+          ['start_date:desc', 'Latest start date'],
+        ])
+      })
+    })
   })
 
-  it('should sort by earliest start date', () => {
-    cy.get(selectors.entityCollection.sort).select('start_date:asc')
+  context('User sort', () => {
+    const element = '[data-test="sortby"] select'
 
-    cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.response.url).to.contain(
-        '?custom=true&sortby=start_date%3Aasc'
-      )
+    beforeEach(() => {
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${events.index()}?page=1`)
+      cy.wait('@apiRequest')
     })
 
-    cy.get(selectors.entityCollection.entities)
-      .children()
-      .should('have.length', 2)
-    cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort Event')
-  })
-
-  it('should sort by latest start date', () => {
-    cy.get(selectors.entityCollection.sort).select('start_date:desc')
-
-    cy.wait('@sortResults').then((xhr) => {
-      expect(xhr.response.url).to.contain(
-        '?custom=true&sortby=start_date%3Adesc'
-      )
+    it('should sort by "Event name A-Z"', () => {
+      cy.get(element).select('name:asc')
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body.sortby).to.equal('name:asc')
+      })
     })
 
-    cy.get(selectors.entityCollection.entities)
-      .children()
-      .should('have.length', 2)
-    cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort Event')
-  })
+    it('should sort by "Recently updated"', () => {
+      cy.get(element).select('modified_on:desc')
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body.sortby).to.equal('modified_on:desc')
+      })
+    })
 
-  it('should only show sort option if there is more than 1 result', () => {
-    cy.get(selectors.filter.name).type('FilterByEvent').type('{enter}')
-    cy.get(selectors.entityCollection.sort).should('not.exist')
+    it('should sort by "Least recently updated"', () => {
+      cy.get(element).select('modified_on:asc')
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body.sortby).to.equal('modified_on:asc')
+      })
+    })
+
+    it('should sort by "Earliest start date"', () => {
+      cy.get(element).select('start_date:asc')
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body.sortby).to.equal('start_date:asc')
+      })
+    })
+
+    it('should sort by "Latest start date"', () => {
+      cy.get(element).select('start_date:desc')
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body.sortby).to.equal('start_date:desc')
+      })
+    })
   })
 })
