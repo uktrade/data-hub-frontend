@@ -105,7 +105,6 @@ const ContactForm = ({
                   acceptsDitEmailMarketing[0] === YES,
                 primary,
                 company,
-                // address_same_as_company: addressSameAsCompany === YES,
                 address_same_as_company: addressSameAsCompany,
                 // The API is complaining if we send the address fields when address_same_as_company is true
                 ...(addressSameAsCompany !== YES && {
