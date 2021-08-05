@@ -153,7 +153,7 @@ const OrdersCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={LABELS.sector}
+          label={LABELS.sector}
           name="sector_descends"
           qsParam="sector_descends"
           placeholder="Search sector"
@@ -163,7 +163,7 @@ const OrdersCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={LABELS.primaryMarket}
+          label={LABELS.primaryMarket}
           name="primary_market"
           qsParam="primary_market"
           placeholder="Search country"
@@ -173,7 +173,7 @@ const OrdersCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={LABELS.ukRegion}
+          label={LABELS.ukRegion}
           name="uk_region"
           qsParam="uk_region"
           placeholder="Search UK region"

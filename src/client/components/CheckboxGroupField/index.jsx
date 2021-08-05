@@ -3,12 +3,24 @@ import MultiChoice from '@govuk-react/multi-choice'
 import PropTypes from 'prop-types'
 import { GREY_2, YELLOW } from 'govuk-colours'
 import styled, { css } from 'styled-components'
-import { FONT_SIZE, SPACING } from '@govuk-react/constants'
+import {
+  FONT_SIZE,
+  SPACING,
+  FONT_WEIGHTS,
+  BREAKPOINTS,
+} from '@govuk-react/constants'
 
 import Checkbox from '../Checkbox'
 import FieldWrapper from '../Form/elements/FieldWrapper'
 
 const checkboxGroupElementStyles = css`
+  legend {
+    font-size: ${FONT_SIZE.SIZE_16};
+    font-weight: ${FONT_WEIGHTS.bold};
+    @media (min-width: ${BREAKPOINTS.TABLET}) {
+      font-size: ${FONT_SIZE.SIZE_19};
+    }
+  }
   label {
     font-weight: normal;
     margin-bottom: 4px;
@@ -54,6 +66,13 @@ const StyledFieldWrapper = styled(FieldWrapper)`
   ${({ maxScrollHeight }) =>
     maxScrollHeight
       ? `
+      fieldset > legend {
+        font-size: ${FONT_SIZE.SIZE_16};
+        font-weight: ${FONT_WEIGHTS.bold};
+        @media (min-width: ${BREAKPOINTS.TABLET}) {
+          font-size: ${FONT_SIZE.SIZE_19};
+        }
+      }
       fieldset > div {
         overflow-y: scroll;
         max-height: ${maxScrollHeight}px;

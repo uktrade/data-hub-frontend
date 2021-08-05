@@ -98,7 +98,7 @@ const CompaniesCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={LABELS.sector}
+          label={LABELS.sector}
           name="sector"
           qsParam="sector_descends"
           placeholder="Search sector"
@@ -108,7 +108,7 @@ const CompaniesCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={LABELS.country}
+          label={LABELS.country}
           name="country"
           qsParam="country"
           placeholder="Search country"
@@ -119,7 +119,7 @@ const CompaniesCollection = ({
         {features['state-filter'] && (
           <RoutedTypeahead
             isMulti={true}
-            legend={LABELS.usState}
+            label={LABELS.usState}
             name="us_state"
             qsParam="us_state"
             placeholder="Search US state"
@@ -131,7 +131,7 @@ const CompaniesCollection = ({
         {features['province-filter'] && (
           <RoutedTypeahead
             isMulti={true}
-            legend={LABELS.canadianProvince}
+            label={LABELS.canadianProvince}
             name="canadian_province"
             qsParam="canadian_province"
             placeholder="Search Canadian province"
@@ -150,7 +150,7 @@ const CompaniesCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={LABELS.ukRegion}
+          label={LABELS.ukRegion}
           name="uk_region"
           qsParam="uk_region"
           placeholder="Search UK region"
@@ -169,7 +169,7 @@ const CompaniesCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={LABELS.currentlyExportingTo}
+          label={LABELS.currentlyExportingTo}
           name="export_to_countries"
           qsParam="export_to_countries"
           placeholder="Search country"
@@ -179,7 +179,7 @@ const CompaniesCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={LABELS.futureCountriesOfInterest}
+          label={LABELS.futureCountriesOfInterest}
           name="future_interest_countries"
           qsParam="future_interest_countries"
           placeholder="Search country"
@@ -202,7 +202,7 @@ const CompaniesCollection = ({
         <RoutedAdvisersTypeahead
           isMulti={true}
           taskProps={leadItaGlobalAccountManagerTask}
-          legend={LABELS.leadItaOrGlobalAccountManager}
+          label={LABELS.leadItaOrGlobalAccountManager}
           name="one_list_group_global_account_manager"
           qsParam="one_list_group_global_account_manager"
           placeholder="Search adviser"

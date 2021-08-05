@@ -11,7 +11,7 @@ import Typeahead from '../Typeahead/Typeahead'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
   label {
-    font-weight: ${FONT_WEIGHTS.regular};
+    font-weight: ${FONT_WEIGHTS.bold};
   }
 `
 

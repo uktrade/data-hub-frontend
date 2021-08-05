@@ -124,7 +124,7 @@ const InteractionCollection = ({
         <RoutedAdvisersTypeahead
           taskProps={adviserListTask}
           isMulti={true}
-          legend={LABELS.advisers}
+          label={LABELS.advisers}
           name="advisers"
           qsParam="dit_participants__adviser"
           placeholder="Search adviser"
@@ -147,7 +147,7 @@ const InteractionCollection = ({
         <RoutedTeamsTypeahead
           taskProps={teamListTask}
           isMulti={true}
-          legend={LABELS.teams}
+          label={LABELS.teams}
           name="dit_participants__team"
           qsParam="dit_participants__team"
           placeholder="Search teams"
@@ -167,7 +167,7 @@ const InteractionCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={LABELS.sector}
+          label={LABELS.sector}
           name="sector"
           qsParam="sector_descends"
           placeholder="Search sector"
