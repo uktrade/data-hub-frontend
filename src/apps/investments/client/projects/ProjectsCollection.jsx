@@ -106,7 +106,7 @@ const ProjectsCollection = ({
         <RoutedAdvisersTypeahead
           taskProps={adviserListTask}
           isMulti={true}
-          legend="Adviser"
+          label="Adviser"
           name="adviser"
           qsParam="adviser"
           placeholder="Search adviser"
@@ -116,7 +116,7 @@ const ProjectsCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend="Sector"
+          label="Sector"
           name="sector"
           qsParam="sector_descends"
           placeholder="Search sector"
@@ -126,7 +126,7 @@ const ProjectsCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend="Country of origin"
+          label="Country of origin"
           name="country"
           qsParam="country_investment_originates_from"
           placeholder="Search country"
@@ -136,7 +136,7 @@ const ProjectsCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend="UK region"
+          label="UK region"
           name="uk_region"
           qsParam="uk_region_location"
           placeholder="Search UK region"
