@@ -138,7 +138,7 @@ describe('Interactions Collections Filter', () => {
 
     it('should filter from the url', () => {
       const queryParams = buildQueryString({
-        adviser: [adviser.id],
+        dit_participants__adviser: [adviser.id],
       })
 
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
@@ -183,7 +183,7 @@ describe('Interactions Collections Filter', () => {
       cy.wait('@adviserListApiRequest')
       cy.wait('@adviserApiRequest')
       assertPayload('@apiRequest', expectedPayload)
-      assertQueryParams('adviser', [adviser.id])
+      assertQueryParams('dit_participants__adviser', [adviser.id])
       assertTypeaheadOptionSelected({
         element: advisersFilter,
         expectedOption: adviser.name,
@@ -216,7 +216,7 @@ describe('Interactions Collections Filter', () => {
     }
     it('should filter from the url', () => {
       const queryString = buildQueryString({
-        adviser: [adviser.id],
+        dit_participants__adviser: [adviser.id],
       })
       cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
       cy.visit(`${interactions.index()}?${queryString}`)
