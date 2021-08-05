@@ -101,6 +101,7 @@ const OrdersCollection = ({
           options={optionMetadata.statusOptions}
           selectedOptions={selectedFilters.statuses.options}
           data-test="status-filter"
+          groupId="status-filter"
         />
         <RoutedInputField
           id="OrdersCollection.reference"

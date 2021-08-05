@@ -116,6 +116,7 @@ const ContactsCollection = ({
           options={optionMetadata.statusOptions}
           selectedOptions={selectedFilters.statuses.options}
           data-test="status-filter"
+          groupId="status-filter"
         />
       </CollectionFilters>
     </FilteredCollectionList>
