@@ -58,7 +58,7 @@ const InteractionCollection = ({
     id: ID,
     progressMessage: 'Loading advisers',
     startOnRender: {
-      payload: payload.adviser,
+      payload: payload.dit_participants__adviser,
       onSuccessDispatch: INTERACTIONS_SELECTED_ADVISERS,
     },
   }
@@ -115,7 +115,7 @@ const InteractionCollection = ({
           data-test="status-filter"
         />
         <RoutedCheckboxGroupField
-          name="dit_participants__adviser"
+          name="my_interactions"
           qsParam="dit_participants__adviser"
           options={[myInteractionsOption]}
           selectedOptions={myInteractionsSelected ? [myInteractionsOption] : []}
@@ -125,7 +125,7 @@ const InteractionCollection = ({
           taskProps={adviserListTask}
           isMulti={true}
           legend={LABELS.advisers}
-          name="adviser"
+          name="advisers"
           qsParam="dit_participants__adviser"
           placeholder="Search adviser"
           noOptionsMessage={() => <>No advisers found</>}
