@@ -1,18 +1,18 @@
 import React from 'react'
 import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
-import Main from '../Main'
 import Footer from '../Footer'
+import { Container } from '../../components'
 
-const FullWidth = ({ children }) => (
+const Default = ({ children }) => (
   <>
-    <Main>
+    <Container>
       <GridRow>
         <GridCol>{children}</GridCol>
       </GridRow>
-    </Main>
+    </Container>
     <Footer />
   </>
 )
 
-export default FullWidth
+export default Default
