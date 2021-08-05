@@ -165,6 +165,7 @@ const CompaniesCollection = ({
           options={optionMetadata.companyStatusOptions}
           selectedOptions={selectedFilters.companyStatuses.options}
           data-test="company-status-filter"
+          groupId="company-status-filter"
         />
         <RoutedTypeahead
           isMulti={true}
