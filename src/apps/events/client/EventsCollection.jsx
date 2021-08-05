@@ -136,6 +136,7 @@ const EventsCollection = ({
           options={optionMetadata.eventTypeOptions}
           selectedOptions={selectedFilters.eventTypes.options}
           data-test="event-type-filter"
+          groupId="event-type-filter"
         />
       </CollectionFilters>
     </FilteredCollectionList>

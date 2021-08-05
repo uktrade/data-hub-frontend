@@ -163,6 +163,7 @@ const InteractionCollection = ({
           options={optionMetadata.serviceOptions}
           selectedOptions={selectedFilters.service.options}
           data-test="service-filter"
+          groupId="service-filter"
         />
         <RoutedTypeahead
           isMulti={true}
@@ -190,6 +191,7 @@ const InteractionCollection = ({
           options={optionMetadata.policyAreaOptions}
           selectedOptions={selectedFilters.policyArea.options}
           data-test="policy-area-filter"
+          groupId="policy-area-filter"
         />
         <RoutedCheckboxGroupField
           legend={LABELS.policyIssueType}
@@ -198,6 +200,7 @@ const InteractionCollection = ({
           options={optionMetadata.policyIssueTypeOptions}
           selectedOptions={selectedFilters.policyIssueType.options}
           data-test="policy-issue-type-filter"
+          groupId="policy-issue-type-filter"
         />
         <RoutedCheckboxGroupField
           maxScrollHeight={370}
