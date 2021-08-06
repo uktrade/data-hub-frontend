@@ -34,12 +34,8 @@ const StyledLabel = styled('label')`
   background: transparent;
   border: none;
   font-size: 19px;
-  float: right;
-  margin: 5px;
+  margin: 10px 5px 5px;
   color: ${(props) => props.color};
-  @media screen and (max-width: 600px) {
-    float: None;
-  }
 `
 
 const StyledDetails = styled(Details)`
@@ -70,6 +66,7 @@ const OpportunitySection = ({
       label={toggleName}
       id={`${id}_toggle`}
       badge={RequiredFields(incompleteFields)}
+      justifyHeaderContent={true}
     >
       {isEditing ? (
         <>{form}</>
