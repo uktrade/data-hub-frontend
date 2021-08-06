@@ -196,7 +196,7 @@ describe('Contacts Collections Filter', () => {
 
       testTypeahead({
         element,
-        legend: 'Sector',
+        label: 'Sector',
         placeholder: 'Search sector',
         input: 'aero',
         expectedOption: 'Aerospace',
@@ -251,7 +251,7 @@ describe('Contacts Collections Filter', () => {
 
       testTypeahead({
         element,
-        legend: 'Country',
+        label: 'Country',
         placeholder: 'Search country',
         input: 'bra',
         expectedOption: 'Brazil',
@@ -306,7 +306,7 @@ describe('Contacts Collections Filter', () => {
 
       testTypeahead({
         element,
-        legend: 'UK region',
+        label: 'UK region',
         placeholder: 'Search UK region',
         input: 'lon',
         expectedOption: 'London',
