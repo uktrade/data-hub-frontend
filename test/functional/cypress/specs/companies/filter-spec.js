@@ -191,7 +191,7 @@ describe('Companies Collections Filter', () => {
 
       testTypeahead({
         element,
-        legend: 'Sector',
+        label: 'Sector',
         placeholder: 'Search sector',
         input: 'aero',
         expectedOption: 'Aerospace',
@@ -239,7 +239,7 @@ describe('Companies Collections Filter', () => {
 
       testTypeahead({
         element,
-        legend: 'Country',
+        label: 'Country',
         placeholder: 'Search country',
         input: 'braz',
         expectedOption: 'Brazil',
@@ -293,7 +293,7 @@ describe('Companies Collections Filter', () => {
 
       testTypeahead({
         element,
-        legend: 'US state',
+        label: 'US state',
         placeholder: 'Search US state',
         input: state.name,
         expectedOption: state.name,
@@ -354,7 +354,7 @@ describe('Companies Collections Filter', () => {
 
       testTypeahead({
         element,
-        legend: 'Canadian province',
+        label: 'Canadian province',
         placeholder: 'Search Canadian province',
         input: province.name,
         expectedOption: province.name,
@@ -420,7 +420,7 @@ describe('Companies Collections Filter', () => {
       testTypeaheadOptionsLength({ element, length: ukRegions.length })
       testTypeahead({
         element,
-        legend: 'UK region',
+        label: 'UK region',
         placeholder: 'Search UK region',
         input: ukRegion.name,
         expectedOption: ukRegion.name,
@@ -544,7 +544,7 @@ describe('Companies Collections Filter', () => {
 
       testTypeahead({
         element,
-        legend: 'Currently exporting to',
+        label: 'Currently exporting to',
         placeholder: 'Search country',
         input: 'braz',
         expectedOption: 'Brazil',
@@ -593,7 +593,7 @@ describe('Companies Collections Filter', () => {
 
       testTypeahead({
         element,
-        legend: 'Future countries of interest',
+        label: 'Future countries of interest',
         placeholder: 'Search country',
         input: 'braz',
         expectedOption: 'Brazil',
