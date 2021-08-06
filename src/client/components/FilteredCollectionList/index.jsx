@@ -42,13 +42,13 @@ const FilteredCollectionList = ({
     <Route>
       {({ history, location }) => {
         const qsParams = qs.parse(location.search.slice(1))
-        if (defaultQueryParams && isEmpty(qsParams)) {
-          history.push({
-            search: qs.stringify({
-              ...defaultQueryParams,
-            }),
-          })
-        }
+        // if (defaultQueryParams && isEmpty(qsParams)) {
+        //   history.push({
+        //     search: qs.stringify({
+        //       ...defaultQueryParams,
+        //     }),
+        //   })
+        // }
         return (
           <GridRow data-test="collection-list">
             {children}

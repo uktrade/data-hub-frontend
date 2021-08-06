@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const fs = require('fs')
+const { forEach } = require('lodash')
 const detectUserAgent = require('../middleware/detect-useragent')
 // Check useragent on all routes
 router.use(detectUserAgent)
@@ -9,6 +10,18 @@ const { setHomeBreadcrumb } = require('./middleware')
 const subApps = fs.readdirSync(__dirname, { withFileTypes: true })
 
 const appsRouters = []
+
+const reactRoutes = ['/omis/react(/*)?']
+
+reactRoutes.forEach((path) => {
+  router.get(path, async (req, res, next) => {
+    try {
+      return res.render('react')
+    } catch (error) {
+      next(error)
+    }
+  })
+})
 
 subApps.forEach((subAppDir) => {
   if (subAppDir.isDirectory() && !subAppDir.name.startsWith('__')) {

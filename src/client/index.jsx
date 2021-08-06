@@ -459,13 +459,19 @@ function App() {
       </Mount>
       <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
 
-
-
-
       <Mount selector="#react-app">
         {(props) => (
           <Switch>
-            <Route exact path="/omis/react" component={Omis} />
+            <Route
+              exact
+              path="/omis/react"
+              search='mooo'
+              state={{
+                page: 1,
+                sortby: 'created_on:desc',
+              }}
+              component={Omis}
+            />
             <Route exact path="/omis/react/add-order" component={AddOrder} />
           </Switch>
         )}

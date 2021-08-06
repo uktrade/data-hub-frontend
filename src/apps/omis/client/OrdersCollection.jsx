@@ -88,10 +88,6 @@ const OrdersCollection = ({
       entityNamePlural="orders"
       baseDownloadLink="/omis/export"
       titleRenderer={TitleRenderer}
-      defaultQueryParams={{
-        page: 1,
-        sortby: 'created_on:desc',
-      }}
     >
       <CollectionFilters taskProps={collectionListMetadataTask}>
         <RoutedCheckboxGroupField

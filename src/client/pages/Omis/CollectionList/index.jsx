@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { LABELS } from './constants'
 
@@ -15,8 +15,6 @@ import {
   RoutedCheckboxGroupField,
 } from '../../../components'
 
-import LocalHeader from '../../../components/LocalHeader/LocalHeader'
-
 import {
   ID,
   state2props,
@@ -25,6 +23,9 @@ import {
 } from './state'
 
 const Omis = ({ payload, optionMetadata, selectedFilters, ...props }) => {
+  useEffect(() => {
+    console.log('moo')
+  })
   const collectionListTask = {
     name: TASK_GET_ORDERS_LIST,
     id: ID,
@@ -47,10 +48,6 @@ const Omis = ({ payload, optionMetadata, selectedFilters, ...props }) => {
 
   return (
     <>
-      <LocalHeader
-        heading="Orders (OMIS)"
-        breadcrumbs={[{ link: '/', text: 'Home' }, { text: 'Orders (OMIS)' }]}
-      />
       <Default>
         <FilteredCollectionList
           {...props}
