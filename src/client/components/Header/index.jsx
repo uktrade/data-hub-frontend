@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
   return (
@@ -52,12 +53,12 @@ const Header = () => {
               aria-label="Top Level Navigation"
             >
               <li class="datahub-header__navigation__item">
-                <a
-                  class="datahub-header__navigation__item__link"
-                  href="/companies"
+                <Link
+                  className="datahub-header__navigation__item__link"
+                  to="/companies/react"
                 >
                   Companies
-                </a>
+                </Link>
               </li>
               <li class="datahub-header__navigation__item">
                 <a
@@ -92,9 +93,12 @@ const Header = () => {
                 </a>
               </li>
               <li class="datahub-header__navigation__item">
-                <a class="datahub-header__navigation__item__link" href="/omis">
+                <Link
+                  className="datahub-header__navigation__item__link"
+                  to="/omis/react"
+                >
                   Orders
-                </a>
+                </Link>
               </li>
               <li class="datahub-header__navigation__item">
                 <a

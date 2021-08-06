@@ -1,11 +1,11 @@
 import { get } from 'lodash'
 
-import labels from '../labels'
-import urls from '../../../lib/urls'
+import labels from './labels'
+import urls from '../../../../lib/urls'
 
-import { addressToString } from '../../../client/utils/addresses'
+import { addressToString } from '../../../utils/addresses'
 
-const { format, formatMediumDateTime } = require('../../../client/utils/date')
+const { format, formatMediumDateTime } = require('../../../utils/date')
 
 export const transformArchivedToApi = (archivedParam) => {
   const archived = Array.isArray(archivedParam)

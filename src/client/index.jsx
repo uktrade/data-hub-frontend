@@ -177,7 +177,8 @@ import {
 
 import Footer from '../client/components/Footer'
 
-import Omis from './pages/Omis/CollectionList'
+import CompaniesCollectionList from './pages/Companies/CollectionList'
+import OmisCollectionList from './pages/Omis/CollectionList'
 import AddOrder from './pages/Omis/AddOrder'
 
 function parseProps(domNode) {
@@ -462,15 +463,21 @@ function App() {
       <Mount selector="#react-app">
         {(props) => (
           <Switch>
+            {/* Companies */}
+            <Route
+              exact
+              path="/companies/react"
+              component={CompaniesCollectionList}
+            />
+            {/* Omis */}
             <Route
               exact
               path="/omis/react"
-              search='mooo'
               state={{
                 page: 1,
                 sortby: 'created_on:desc',
               }}
-              component={Omis}
+              component={OmisCollectionList}
             />
             <Route exact path="/omis/react/add-order" component={AddOrder} />
           </Switch>

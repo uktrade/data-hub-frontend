@@ -2,7 +2,8 @@ import {
   buildDatesFilter,
   buildOptionsFilter,
   buildInputFieldFilter,
-} from '../../../client/filters'
+} from '../../../filters'
+
 import { LABELS, COMPANY_STATUS_OPTIONS } from './constants'
 
 export const buildSelectedFilters = (

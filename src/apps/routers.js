@@ -11,7 +11,14 @@ const subApps = fs.readdirSync(__dirname, { withFileTypes: true })
 
 const appsRouters = []
 
-const reactRoutes = ['/omis/react(/*)?']
+const reactRoutes = [
+  '/companies/react(/*)?',
+  '/contacts/react(/*)?',
+  '/events/react(/*)?',
+  '/interactions/react(/*)?',
+  '/omis/react(/*)?',
+  '/investments/react(/*)?',
+]
 
 reactRoutes.forEach((path) => {
   router.get(path, async (req, res, next) => {
