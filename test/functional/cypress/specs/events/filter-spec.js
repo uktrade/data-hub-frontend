@@ -126,7 +126,7 @@ describe('events Collections Filter', () => {
 
       testTypeahead({
         element,
-        legend: 'Country',
+        label: 'Country',
         placeholder: 'Search country',
         input: 'braz',
         expectedOption: 'Brazil',
@@ -184,7 +184,7 @@ describe('events Collections Filter', () => {
       testTypeaheadOptionsLength({ element, length: ukRegions.length })
       testTypeahead({
         element,
-        legend: 'UK region',
+        label: 'UK region',
         placeholder: 'Search UK region',
         input: ukRegion.name,
         expectedOption: ukRegion.name,

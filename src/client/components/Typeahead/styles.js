@@ -21,6 +21,7 @@ const defaultStyles = {
   option: (styles, { isFocused }) => ({
     ...styles,
     fontSize: FONT_SIZE.SIZE_16,
+
     fontWeight: FONT_WEIGHTS.regular,
     borderBottom: `1px solid ${BLACK}`,
     borderRadius: 0,

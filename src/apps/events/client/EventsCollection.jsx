@@ -88,7 +88,7 @@ const EventsCollection = ({
         <RoutedAdvisersTypeahead
           isMulti={true}
           taskProps={organisersTask}
-          legend={LABELS.organiser}
+          label={LABELS.organiser}
           name="organiser"
           qsParam="organiser"
           placeholder="Search organiser"
@@ -110,7 +110,7 @@ const EventsCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={LABELS.country}
+          label={LABELS.country}
           name="address_country"
           qsParam="address_country"
           placeholder="Search country"
@@ -120,7 +120,7 @@ const EventsCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={LABELS.ukRegion}
+          label={LABELS.ukRegion}
           name="uk_region"
           qsParam="uk_region"
           placeholder="Search UK region"

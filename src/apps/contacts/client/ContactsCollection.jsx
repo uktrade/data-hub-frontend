@@ -81,7 +81,7 @@ const ContactsCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={LABELS.sector}
+          label={LABELS.sector}
           name="sector"
           qsParam="company_sector_descends"
           placeholder="Search sector"
@@ -91,7 +91,7 @@ const ContactsCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={LABELS.country}
+          label={LABELS.country}
           name="country"
           qsParam="address_country"
           placeholder="Search country"
@@ -101,7 +101,7 @@ const ContactsCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          legend={LABELS.ukRegion}
+          label={LABELS.ukRegion}
           name="uk_region"
           qsParam="company_uk_region"
           placeholder="Search UK region"

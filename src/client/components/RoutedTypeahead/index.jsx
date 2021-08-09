@@ -4,14 +4,15 @@ import qs from 'qs'
 import { Route } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { FONT_WEIGHTS } from '@govuk-react/constants'
+import { FONT_WEIGHTS, LINE_HEIGHT } from '@govuk-react/constants'
 
 import FieldWrapper from '../Form/elements/FieldWrapper'
 import Typeahead from '../Typeahead/Typeahead'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
   label {
-    font-weight: ${FONT_WEIGHTS.regular};
+    font-weight: ${FONT_WEIGHTS.bold};
+    line-height: ${LINE_HEIGHT.SIZE_16};
   }
 `
 

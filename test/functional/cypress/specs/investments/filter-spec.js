@@ -118,7 +118,7 @@ describe('Investments Collections Filter', () => {
     it('should filter by advisers', () => {
       cy.get('@adviserFilter')
         .should('contain', 'Search adviser')
-        .find('legend')
+        .find('label')
         .should('have.text', 'Adviser')
 
       selectFirstAdvisersTypeaheadOption({
@@ -137,7 +137,7 @@ describe('Investments Collections Filter', () => {
     it('should filter by sector', () => {
       testTypeahead({
         element: '@sectorFilter',
-        legend: 'Sector',
+        label: 'Sector',
         placeholder: 'Search sector',
         input: 'adv',
         expectedOption: 'Advanced Engineering',
@@ -152,7 +152,7 @@ describe('Investments Collections Filter', () => {
     it('should filter by country', () => {
       testTypeahead({
         element: '@countryFilter',
-        legend: 'Country of origin',
+        label: 'Country of origin',
         placeholder: 'Search country',
         input: 'sin',
         expectedOption: 'Singapore',
@@ -167,7 +167,7 @@ describe('Investments Collections Filter', () => {
     it('should filter by uk region', () => {
       testTypeahead({
         element: '@ukRegionFilter',
-        legend: 'UK region',
+        label: 'UK region',
         placeholder: 'Search UK region',
         input: 'sou',
         expectedOption: 'South East',
