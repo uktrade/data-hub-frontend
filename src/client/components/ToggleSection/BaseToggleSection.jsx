@@ -13,7 +13,10 @@ const ToggleContainer = styled('div')``
 
 export const ToggleHeader = styled('div')`
   display: flex;
-  align-items: center;
+  ${({ justifyHeaderContent }) =>
+    justifyHeaderContent
+      ? `justify-content: space-between;`
+      : `align-items: center;`}
 `
 
 export const ToggleButton = styled('button')`
@@ -62,10 +65,11 @@ const BaseToggleSection = ({
   open,
   isOpen = false,
   children,
+  justifyHeaderContent = false,
   ...props
 }) => (
   <ToggleContainer {...props}>
-    <ToggleHeader>
+    <ToggleHeader justifyHeaderContent={justifyHeaderContent}>
       <ToggleButton
         data-test="toggle-section-button"
         onClick={() => open(!isOpen)}
@@ -95,6 +99,7 @@ BaseToggleSection.propTypes = {
   isOpen: PropTypes.bool,
   children: PropTypes.node,
   major: PropTypes.bool,
+  justifyHeaderContent: PropTypes.bool,
 }
 
 export const MultiInstanceToggleSection = multiInstance({
