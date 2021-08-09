@@ -23,9 +23,6 @@ import {
 } from './state'
 
 const Omis = ({ payload, optionMetadata, selectedFilters, ...props }) => {
-  useEffect(() => {
-    console.log('moo')
-  })
   const collectionListTask = {
     name: TASK_GET_ORDERS_LIST,
     id: ID,
@@ -48,7 +45,7 @@ const Omis = ({ payload, optionMetadata, selectedFilters, ...props }) => {
 
   return (
     <>
-      <Default>
+      <Default heading="Orders (OMIS)" pageTitle="Orders (OMIS)">
         <FilteredCollectionList
           {...props}
           collectionName="order"

@@ -177,7 +177,22 @@ import {
 
 import Footer from '../client/components/Footer'
 
+// Companies
 import CompaniesCollectionList from './pages/Companies/CollectionList'
+
+// Contacts
+import ContactsCollectionList from './pages/Contacts/CollectionList'
+
+// Events
+import EventsCollectionList from './pages/Events/CollectionList'
+
+// Interactions
+import InteractionsCollectionList from './pages/Interactions/CollectionList'
+
+// Interactions
+import InvestmentsCollectionList from './pages/Investments/CollectionList'
+
+// Orders
 import OmisCollectionList from './pages/Omis/CollectionList'
 import AddOrder from './pages/Omis/AddOrder'
 
@@ -468,6 +483,30 @@ function App() {
               exact
               path="/companies/react"
               component={CompaniesCollectionList}
+            />
+            {/* Contacts */}
+            <Route
+              exact
+              path="/contacts/react"
+              component={ContactsCollectionList}
+            />
+            {/* Events */}
+            <Route
+              exact
+              path="/events/react"
+              component={EventsCollectionList}
+            />
+            {/* Interactions */}
+            <Route
+              exact
+              path="/interactions/react"
+              component={InteractionsCollectionList}
+            />
+            {/* Investments */}
+            <Route
+              exact
+              path="/investments/react"
+              component={InvestmentsCollectionList}
             />
             {/* Omis */}
             <Route

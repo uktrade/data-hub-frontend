@@ -16,6 +16,7 @@ const StyledHeader = styled('div')`
   padding-bottom: ${SPACING.SCALE_5};
   background-color: ${GREY_4};
   padding-top: ${SPACING.SCALE_3};
+  margin-bottom: 32px;
 `
 
 const StyledMain = styled(Main)`

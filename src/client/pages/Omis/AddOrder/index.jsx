@@ -5,7 +5,7 @@ import Default from '../../../components/Layout/Default'
 
 const AddOrder = () => (
   <>
-    <Default>
+    <Default heading="Orders (OMIS)" pageTitle="Add order">
       Time to add an order <Link to="/omis/react">Go back</Link>
     </Default>
   </>

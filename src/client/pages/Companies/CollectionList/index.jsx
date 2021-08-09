@@ -68,7 +68,7 @@ const CompaniesCollection = ({
 
   return (
     <>
-      <Default>
+      <Default heading="Companies" pageTitle="Companies">
         <FilteredCollectionList
           {...props}
           collectionName="company"

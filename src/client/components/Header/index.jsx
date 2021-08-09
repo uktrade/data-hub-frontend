@@ -61,36 +61,36 @@ const Header = () => {
                 </Link>
               </li>
               <li class="datahub-header__navigation__item">
-                <a
-                  class="datahub-header__navigation__item__link"
-                  href="/contacts"
+                <Link
+                  className="datahub-header__navigation__item__link"
+                  to="/contacts/react"
                 >
                   Contacts
-                </a>
+                </Link>
               </li>
               <li class="datahub-header__navigation__item">
-                <a
-                  class="datahub-header__navigation__item__link"
-                  href="/events"
+                <Link
+                  className="datahub-header__navigation__item__link"
+                  to="/events/react"
                 >
                   Events
-                </a>
+                </Link>
               </li>
               <li class="datahub-header__navigation__item">
-                <a
-                  class="datahub-header__navigation__item__link"
-                  href="/interactions"
+                <Link
+                  className="datahub-header__navigation__item__link"
+                  to="/interactions/react"
                 >
-                  Interactions
-                </a>
+                  Interaction
+                </Link>
               </li>
               <li class="datahub-header__navigation__item">
-                <a
-                  class="datahub-header__navigation__item__link"
-                  href="/investments"
+                <Link
+                  className="datahub-header__navigation__item__link"
+                  to="/investments/react"
                 >
                   Investments
-                </a>
+                </Link>
               </li>
               <li class="datahub-header__navigation__item">
                 <Link
