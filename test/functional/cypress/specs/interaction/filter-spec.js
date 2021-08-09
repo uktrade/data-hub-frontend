@@ -388,7 +388,7 @@ describe('Interactions Collections Filter', () => {
 
       testTypeahead({
         element,
-        legend: 'Sector',
+        label: 'Sector',
         placeholder: 'Search sector',
         input: 'aero',
         expectedOption: 'Aerospace',

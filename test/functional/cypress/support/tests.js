@@ -19,8 +19,9 @@ export const testTypeahead = ({
   placeholder,
   input,
   expectedOption,
+  label,
 }) => {
-  assertTypeaheadHints({ element, legend, placeholder })
+  assertTypeaheadHints({ element, legend, label, placeholder })
   selectFirstTypeaheadOption({ element, input })
   assertTypeaheadOptionSelected({ element, expectedOption })
 }

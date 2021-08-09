@@ -277,7 +277,7 @@ const LargeCapitalProfileCollection = ({
             >
               <RoutedTypeahead
                 isMulti={true}
-                legend="Sector of interest"
+                label="Sector of interest"
                 name="asset-class"
                 qsParam={QS_PARAMS.assetClassesOfInterest}
                 placeholder="Search sector of interest"
@@ -287,7 +287,7 @@ const LargeCapitalProfileCollection = ({
               />
               <RoutedTypeahead
                 isMulti={true}
-                legend="Country of origin"
+                label="Country of origin"
                 name="country"
                 qsParam={QS_PARAMS.countryOfOrigin}
                 placeholder="Search country"
@@ -309,7 +309,7 @@ const LargeCapitalProfileCollection = ({
             >
               <RoutedTypeahead
                 isMulti={true}
-                legend="Investor type"
+                label="Investor type"
                 name="investor-type"
                 qsParam={QS_PARAMS.investorTypes}
                 placeholder="Search investor type"
@@ -329,7 +329,7 @@ const LargeCapitalProfileCollection = ({
               />
               <RoutedTypeahead
                 isMulti={true}
-                legend="Check clearance"
+                label="Check clearance"
                 name="required-checks-conducted"
                 qsParam={QS_PARAMS.requiredChecksConducted}
                 placeholder="Search clearance"
@@ -344,7 +344,7 @@ const LargeCapitalProfileCollection = ({
             >
               <RoutedTypeahead
                 isMulti={true}
-                legend="Deal ticket size"
+                label="Deal ticket size"
                 name="deal-ticket-size"
                 qsParam={QS_PARAMS.dealTicketSize}
                 placeholder="Search deal ticket size"
@@ -354,7 +354,7 @@ const LargeCapitalProfileCollection = ({
               />
               <RoutedTypeahead
                 isMulti={true}
-                legend="Types of investment"
+                label="Types of investment"
                 name="types-of-investment"
                 qsParam={QS_PARAMS.investmentTypes}
                 placeholder="Search types of investment"
@@ -364,7 +364,7 @@ const LargeCapitalProfileCollection = ({
               />
               <RoutedTypeahead
                 isMulti={true}
-                legend="Minimum return rate"
+                label="Minimum return rate"
                 name="minimum-return-rate"
                 qsParam={QS_PARAMS.minimumReturnRate}
                 placeholder="Search return rate"
@@ -374,7 +374,7 @@ const LargeCapitalProfileCollection = ({
               />
               <RoutedTypeahead
                 isMulti={true}
-                legend="Time horizon"
+                label="Time horizon"
                 name="time-horizon-tenor"
                 qsParam={QS_PARAMS.timeHorizon}
                 placeholder="Search time horizon"
@@ -384,7 +384,7 @@ const LargeCapitalProfileCollection = ({
               />
               <RoutedTypeahead
                 isMulti={true}
-                legend="Restrictions and conditions"
+                label="Restrictions and conditions"
                 name="restrictions-conditions"
                 qsParam={QS_PARAMS.restrictions}
                 placeholder="Search restrictions"
@@ -394,7 +394,7 @@ const LargeCapitalProfileCollection = ({
               />
               <RoutedTypeahead
                 isMulti={true}
-                legend="Construction risk"
+                label="Construction risk"
                 name="construction-risk"
                 qsParam={QS_PARAMS.constructionRisk}
                 placeholder="Search construction risk"
@@ -404,7 +404,7 @@ const LargeCapitalProfileCollection = ({
               />
               <RoutedTypeahead
                 isMulti={true}
-                legend="Minimum equity percentage"
+                label="Minimum equity percentage"
                 name="minimum-equity-percentage"
                 qsParam={QS_PARAMS.minimumEquityPercentage}
                 placeholder="Search equity percentage"
@@ -414,7 +414,7 @@ const LargeCapitalProfileCollection = ({
               />
               <RoutedTypeahead
                 isMulti={true}
-                legend="Desired deal role"
+                label="Desired deal role"
                 name="desired-deal-role"
                 qsParam={QS_PARAMS.desiredDealRole}
                 placeholder="Search desired deal role"
@@ -429,7 +429,7 @@ const LargeCapitalProfileCollection = ({
             >
               <RoutedTypeahead
                 isMulti={true}
-                legend="UK regions of interest"
+                label="UK regions of interest"
                 name="uk-regions-of-interest"
                 qsParam={QS_PARAMS.ukRegionsOfInterest}
                 placeholder="Search UK region"
