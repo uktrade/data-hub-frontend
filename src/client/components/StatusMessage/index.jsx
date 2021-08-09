@@ -22,6 +22,7 @@ StatusMessage.propTypes = {
 StatusMessage.defaultProps = {
   colour: BLUE,
   'data-test': 'status-message',
+  'aria-live': 'polite',
 }
 
 export default StatusMessage

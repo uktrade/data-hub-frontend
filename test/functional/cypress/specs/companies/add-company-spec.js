@@ -291,6 +291,7 @@ describe('Add company form', () => {
       cy.get('[data-test="status-message"]')
         .should('exist')
         .should('contain.text', 'Error occurred while searching for company.')
+        .should('have.attr', 'aria-live', 'polite')
     })
   })
 
