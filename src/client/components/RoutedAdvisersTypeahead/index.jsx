@@ -9,13 +9,15 @@ import Task from '../Task'
 
 import { parseAdviserData } from '../../../common/formatAdviser'
 
-const fetchAdvisers = () => {
+const fetchAdvisers = (onlyShowActiveAdvisers) => {
+  const isActiveParameter = onlyShowActiveAdvisers ? true : null
   return throttle(
     (searchString) =>
       axios
         .get('/api-proxy/adviser/', {
           params: {
             autocomplete: searchString,
+            is_active: isActiveParameter,
           },
         })
         .then(({ data: { results } }) => parseAdviserData(results)),
@@ -25,7 +27,8 @@ const fetchAdvisers = () => {
 
 const RoutedAdvisersTypeahead = ({
   taskProps,
-  loadOptions = fetchAdvisers(),
+  onlyShowActiveAdvisers = true,
+  loadOptions = fetchAdvisers(onlyShowActiveAdvisers),
   ...props
 }) => (
   <Task.Status {...taskProps}>
