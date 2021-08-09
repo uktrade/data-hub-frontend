@@ -450,7 +450,7 @@ describe('Orders Collections Filter', () => {
 
       testTypeahead({
         element,
-        legend: 'Sector',
+        label: 'Sector',
         placeholder: 'Search sector',
         input: 'aero',
         expectedOption: 'Aerospace',
@@ -492,7 +492,7 @@ describe('Orders Collections Filter', () => {
 
       testTypeahead({
         element,
-        legend: 'Market (country)',
+        label: 'Market (country)',
         placeholder: 'Search country',
         input: 'bra',
         expectedOption: 'Brazil',
@@ -535,7 +535,7 @@ describe('Orders Collections Filter', () => {
 
       testTypeahead({
         element,
-        legend: 'UK region',
+        label: 'UK region',
         placeholder: 'Search UK region',
         input: 'lon',
         expectedOption: 'London',
