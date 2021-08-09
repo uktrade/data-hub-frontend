@@ -15,14 +15,13 @@ import {
   MEDIA_QUERIES,
   FONT_SIZE,
   FONT_WEIGHTS,
-  LINE_HEIGHT,
 } from '@govuk-react/constants'
 
 const defaultStyles = {
   option: (styles, { isFocused }) => ({
     ...styles,
     fontSize: FONT_SIZE.SIZE_16,
-    lineHeight: LINE_HEIGHT.SIZE_16,
+
     fontWeight: FONT_WEIGHTS.regular,
     borderBottom: `1px solid ${BLACK}`,
     borderRadius: 0,
@@ -32,7 +31,6 @@ const defaultStyles = {
     backgroundColor: isFocused ? BLUE : WHITE,
     [MEDIA_QUERIES.TABLET]: {
       fontSize: FONT_SIZE.SIZE_19,
-      lineHeight: LINE_HEIGHT.SIZE_19,
     },
     '&:last-of-type': {
       borderBottom: 0,
