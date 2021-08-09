@@ -509,15 +509,7 @@ function App() {
               component={InvestmentsCollectionList}
             />
             {/* Omis */}
-            <Route
-              exact
-              path="/omis/react"
-              state={{
-                page: 1,
-                sortby: 'created_on:desc',
-              }}
-              component={OmisCollectionList}
-            />
+            <Route exact path="/omis/react" component={OmisCollectionList} />
             <Route exact path="/omis/react/add-order" component={AddOrder} />
           </Switch>
         )}

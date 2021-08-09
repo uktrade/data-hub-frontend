@@ -55,7 +55,7 @@ const Header = () => {
               <li class="datahub-header__navigation__item">
                 <Link
                   className="datahub-header__navigation__item__link"
-                  to="/companies/react"
+                  to="/companies/react?archived%5B0%5D=false&sortby=modified_on%3Adesc&page=1"
                 >
                   Companies
                 </Link>
@@ -63,7 +63,7 @@ const Header = () => {
               <li class="datahub-header__navigation__item">
                 <Link
                   className="datahub-header__navigation__item__link"
-                  to="/contacts/react"
+                  to="/contacts/react?archived%5B0%5D=false&sortby=modified_on%3Adesc&page=1"
                 >
                   Contacts
                 </Link>
@@ -71,7 +71,7 @@ const Header = () => {
               <li class="datahub-header__navigation__item">
                 <Link
                   className="datahub-header__navigation__item__link"
-                  to="/events/react"
+                  to="/events/react?page=1&sortby=modified_on%3Adesc"
                 >
                   Events
                 </Link>
@@ -79,7 +79,7 @@ const Header = () => {
               <li class="datahub-header__navigation__item">
                 <Link
                   className="datahub-header__navigation__item__link"
-                  to="/interactions/react"
+                  to="/interactions/react?sortby=date%3Adesc&page=1"
                 >
                   Interaction
                 </Link>
@@ -87,7 +87,7 @@ const Header = () => {
               <li class="datahub-header__navigation__item">
                 <Link
                   className="datahub-header__navigation__item__link"
-                  to="/investments/react"
+                  to="/investments/react?page=1&sortby=created_on%3Adesc"
                 >
                   Investments
                 </Link>
@@ -95,7 +95,7 @@ const Header = () => {
               <li class="datahub-header__navigation__item">
                 <Link
                   className="datahub-header__navigation__item__link"
-                  to="/omis/react"
+                  to="/omis/react?page=1&sortby=created_on%3Adesc"
                 >
                   Orders
                 </Link>
