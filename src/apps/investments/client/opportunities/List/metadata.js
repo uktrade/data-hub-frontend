@@ -4,7 +4,7 @@ export const sortOptions = [
     value: 'created_on:desc',
   },
   {
-    name: 'Oldest created',
+    name: 'Oldest',
     value: 'created_on:asc',
   },
   {
