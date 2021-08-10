@@ -106,6 +106,7 @@ const ProjectsCollection = ({
         <RoutedAdvisersTypeahead
           taskProps={adviserListTask}
           isMulti={true}
+          onlyShowActiveAdvisers={false}
           label="Adviser"
           name="adviser"
           qsParam="adviser"

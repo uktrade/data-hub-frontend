@@ -124,6 +124,7 @@ const InteractionCollection = ({
         <RoutedAdvisersTypeahead
           taskProps={adviserListTask}
           isMulti={true}
+          onlyShowActiveAdvisers={false}
           label={LABELS.advisers}
           name="advisers"
           qsParam="dit_participants__adviser"
