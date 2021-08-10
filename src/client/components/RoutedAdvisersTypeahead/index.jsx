@@ -10,14 +10,13 @@ import Task from '../Task'
 import { parseAdviserData } from '../../../common/formatAdviser'
 
 const fetchAdvisers = (onlyShowActiveAdvisers) => {
-  const isActiveParameter = onlyShowActiveAdvisers ? true : null
   return throttle(
     (searchString) =>
       axios
         .get('/api-proxy/adviser/', {
           params: {
             autocomplete: searchString,
-            is_active: isActiveParameter,
+            is_active: onlyShowActiveAdvisers ? true : null,
           },
         })
         .then(({ data: { results } }) => parseAdviserData(results)),
