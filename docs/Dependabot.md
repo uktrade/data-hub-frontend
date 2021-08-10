@@ -29,3 +29,13 @@ If the Elasticsearch version has been updated in the API, the version used in [`
 ### Storybook
 
 When one of the `@storybook` dependencies is updated, the others need to be updated to match.
+
+The `@storybook/addon-knobs` package has been deprecated and should be replaced with `@storybook/controls`. Until we make this change, `addon-knobs` should remain at 6.3.0 and will be maintained by its authors until v7. 
+
+## React
+
+The `react-dom` and `react` packages should, where possible, be kept at the same version number.
+
+## Babel
+
+The `@babel/core` and `@babel/preset-env` packages should, where possible, be kept at the same version number.
