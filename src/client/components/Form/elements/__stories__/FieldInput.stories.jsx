@@ -1,6 +1,6 @@
 import React from 'react'
 import { addDecorator, storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions/dist'
+import { action } from '@storybook/addon-actions'
 import { withKnobs } from '@storybook/addon-knobs'
 import Button from '@govuk-react/button'
 
