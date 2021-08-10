@@ -16,7 +16,7 @@ const fetchAdvisers = (onlyShowActiveAdvisers) => {
         .get('/api-proxy/adviser/', {
           params: {
             autocomplete: searchString,
-            is_active: onlyShowActiveAdvisers,
+            is_active: onlyShowActiveAdvisers ? true : null,
           },
         })
         .then(({ data: { results } }) => parseAdviserData(results)),
