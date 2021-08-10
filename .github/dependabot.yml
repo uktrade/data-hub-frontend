@@ -27,9 +27,6 @@ updates:
   - dependency-name: "@storybook/addon-knobs"
     versions:
     - ">= 0"
-  - dependency-name: "@storybook/addons"
-    versions:
-    - ">= 0"
   - dependency-name: "@storybook/react"
     versions:
     - ">= 0"
