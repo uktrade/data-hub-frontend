@@ -2,11 +2,12 @@ import React from 'react'
 
 import { Select } from '../../components'
 
-const InvestmentListSort = ({ options, onChange }) => (
+const InvestmentListSort = ({ initialValue, options, onChange }) => (
   <Select
     label="Sort by"
     input={{
       onChange,
+      initialValue,
     }}
   >
     {options.map(({ value, name }, index) => (
