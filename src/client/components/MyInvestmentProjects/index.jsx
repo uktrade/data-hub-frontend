@@ -82,10 +82,12 @@ const MyInvestmentProjects = ({
       )}
       <InvestmentListFilter
         options={STAGE_OPTIONS}
+        initialValue={filter}
         onChange={(event) => onFilterChange(event.target.value)}
       />
       <InvestmentListSort
         options={SORT_OPTIONS}
+        initialValue={sort}
         onChange={(event) => onSortChange(event.target.value)}
       />
     </StyledHeader>
