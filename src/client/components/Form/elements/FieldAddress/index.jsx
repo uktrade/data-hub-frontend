@@ -200,7 +200,7 @@ const FieldAddress = ({
           type="text"
           name="postcode"
           label={isUS || isCanada ? 'Postcode' : 'Postcode (optional)'}
-          required={isUS || isCanada ? 'Enter postcode' : null}
+          // required={isUS || isCanada ? 'Enter postcode' : null}
         />
       )}
 
@@ -208,7 +208,7 @@ const FieldAddress = ({
         type="text"
         name="address1"
         label="Address line 1"
-        required="Enter address line 1"
+        // required="Enter address line 1"
       />
       <FieldInput
         type="text"

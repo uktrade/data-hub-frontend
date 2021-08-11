@@ -77,8 +77,8 @@ const transformFormToApi = (company, formValues) => {
     : UNMATCHED_COMPANY_EDITABLE_FIELDS
 
   const originalFormValues = transformCompanyToForm(company)
-
-  return omitBy(
+  console.log('formvalues: ', formValues)
+  const omitByStuff = omitBy(
     {
       ...formValues,
       trading_names: formValues.trading_names
@@ -94,11 +94,14 @@ const transformFormToApi = (company, formValues) => {
         area: formValues.area,
       },
     },
-    (fieldValue, fieldName) =>
+    (fieldValue, fieldName) => {
       isUndefined(fieldValue) ||
-      !whitelistedFields.includes(fieldName) ||
-      originalFormValues[fieldName] === formValues[fieldName]
+        !whitelistedFields.includes(fieldName) ||
+        originalFormValues[fieldName] === formValues[fieldName]
+    }
   )
+  console.log('omitBy: ', omitByStuff)
+  return omitByStuff
 }
 
 const transformFormToChangeRequest = (company, formValues) => {

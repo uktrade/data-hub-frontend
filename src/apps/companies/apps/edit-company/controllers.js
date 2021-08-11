@@ -67,6 +67,7 @@ async function postEditCompany(req, res, next) {
 
     // No changes
     if (isEmpty(dataHubChanges) && isEmpty(dnbChanges)) {
+      console.log('NO CHANGES MADE')
       return res.json({})
     }
 
@@ -90,6 +91,7 @@ async function postEditCompany(req, res, next) {
 
     // Only Data Hub changes
     if (!isEmpty(dataHubChanges) && isEmpty(dnbChanges)) {
+      console.log('ONLY DATA HUB CHANGES')
       const updatedCompany = await updateCompany(
         req,
         company.id,
