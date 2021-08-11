@@ -199,7 +199,8 @@ const FieldAddress = ({
         <StyledFieldPostcode
           type="text"
           name="postcode"
-          label="Postcode (optional)"
+          label={isUS || isCanada ? 'Postcode' : 'Postcode (optional)'}
+          required={isUS || isCanada ? 'Enter postcode' : null}
         />
       )}
 
