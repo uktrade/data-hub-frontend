@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import pluralize from 'pluralize'
 
 import { TASK_GET_OPPORTUNITY_DETAILS, ID, state2props } from '../Details/state'
 import {
@@ -35,7 +36,7 @@ const StyledLabel = styled('label')`
   border: none;
   font-size: 19px;
   margin: 10px 5px 5px;
-  color: ${(props) => props.color};
+  color: ${RED};
 `
 
 const StyledDetails = styled(Details)`
@@ -44,11 +45,13 @@ const StyledDetails = styled(Details)`
   }
 `
 
-const RequiredFields = (fieldCount) => {
-  if (fieldCount == 0) {
-    return <StyledLabel color={RED}>Complete</StyledLabel>
-  }
-  return <StyledLabel color={RED}>{fieldCount} fields incomplete</StyledLabel>
+const IncompleteFieldsBadge = (incompleteFieldCount) => {
+  const badgeText =
+    incompleteFieldCount == 0
+      ? 'Complete'
+      : `${pluralize('field', incompleteFieldCount, true)} incomplete`
+
+  return <StyledLabel>{badgeText}</StyledLabel>
 }
 
 const OpportunitySection = ({
@@ -65,7 +68,7 @@ const OpportunitySection = ({
     <ToggleSection
       label={toggleName}
       id={`${id}_toggle`}
-      badge={RequiredFields(incompleteFields)}
+      badge={IncompleteFieldsBadge(incompleteFields)}
       justifyHeaderContent={true}
     >
       {isEditing ? (
