@@ -6,6 +6,12 @@ import axios from 'axios'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 
+import multiInstance from '../../utils/multiinstance'
+import {
+  CONTACT_FORM__DUPLICATE_EMAIL,
+  CONTACT_FORM__SUBMIT,
+} from '../../actions'
+
 import {
   FormStateful,
   FieldInput,
@@ -27,14 +33,24 @@ import ReferrerLink from '../ReferrerLink'
 import * as validators from '../Form/validators'
 import State from '../State'
 
+const emailAlreadyExists = (email) =>
+  axios
+    .get('/api-proxy/v3/contact', { params: { email } })
+    .then(({ data }) => data.count)
+
 const YES = 'Yes'
 const NO = 'No'
+
+const duplicateEmailMessage = (email, companyName) =>
+  `The email ${email} already exists at ${companyName}. ` +
+  `To continue adding this contact select 'Add contact'. ` +
+  "To return to the previous screen, select 'Cancel'."
 
 const boolToYesNo = (x) => (x === true ? YES : x === false ? NO : null)
 
 const keysToSnakeCase = (o) => _.mapKeys(o, (v, k) => _.snakeCase(k))
 
-const ContactForm = ({
+const _ContactForm = ({
   update,
   contactId,
   redirectTo = ({ id }) => `/contacts/${id}/details`,
@@ -50,6 +66,10 @@ const ContactForm = ({
   addressTown: city,
   addressCounty: county,
   addressCountry,
+  // State props
+  duplicateEmail,
+  dispatch,
+  id,
   ...props
 }) => (
   <CompanyResource id={companyId}>
@@ -97,10 +117,27 @@ const ContactForm = ({
               acceptsDitEmailMarketing,
               addressSameAsCompany,
               primary,
+              email,
               ...values
             }) => {
+              if (!update && (!duplicateEmail || duplicateEmail !== email)) {
+                if (await emailAlreadyExists(email)) {
+                  dispatch({
+                    type: CONTACT_FORM__DUPLICATE_EMAIL,
+                    duplicateEmail: email,
+                  })
+                  return
+                }
+              } else {
+                dispatch({
+                  type: CONTACT_FORM__SUBMIT,
+                  duplicateEmail: email,
+                })
+              }
+
               const payload = {
                 ...keysToSnakeCase(values),
+                email,
                 accepts_dit_email_marketing:
                   acceptsDitEmailMarketing[0] === YES,
                 primary,
@@ -145,6 +182,13 @@ const ContactForm = ({
                         text,
                       })
                     )}
+                  />
+                )}
+                {duplicateEmail && (
+                  <FlashMessages
+                    flashMessages={{
+                      info: [duplicateEmailMessage(values.email, company.name)],
+                    }}
                   />
                 )}
                 {submissionError && (
@@ -276,6 +320,22 @@ const ContactForm = ({
   </CompanyResource>
 )
 
+export const ContactForm = multiInstance({
+  name: 'ContactForm',
+  actionPattern: 'CONTACT_FORM__',
+  reducer: (state, { type, duplicateEmail }) => {
+    switch (type) {
+      case CONTACT_FORM__DUPLICATE_EMAIL:
+        return { duplicateEmail }
+      case CONTACT_FORM__SUBMIT:
+        return {}
+      default:
+        return state
+    }
+  },
+  component: _ContactForm,
+})
+
 const requiredProps = {
   update: PropTypes.any,
   company: PropTypes.shape({
@@ -306,13 +366,14 @@ ContactForm.propTypes = {
   notes: PropTypes.string,
 }
 
-export const CreateContactForm = ({ companyId }) => (
+export const CreateContactForm = ({ companyId, id }) => (
   <State>
     {(state) => {
       const { origin_url } = qs.parse(state.router.location.search)
       return (
         <ContactForm
           companyId={companyId}
+          id={id}
           redirectTo={
             origin_url &&
             (({ id, name }) => {
@@ -331,11 +392,12 @@ export const CreateContactForm = ({ companyId }) => (
 
 CreateContactForm.propTypes = requiredProps
 
-export const UpdateContactForm = ({ contactId }) => (
+export const UpdateContactForm = ({ contactId, id }) => (
   <ContactResource id={contactId}>
     {(contact) => (
       <ContactForm
         {...contact}
+        id={id}
         contactId={contact.id}
         update={true}
         companyId={contact.company.id}
@@ -349,9 +411,9 @@ UpdateContactForm.propTypes = {
   contactId: PropTypes.string.isRequired,
 }
 
-export default ({ contactId, companyId }) =>
+export default ({ contactId, companyId, id }) =>
   contactId ? (
-    <UpdateContactForm contactId={contactId} />
+    <UpdateContactForm contactId={contactId} id={id} />
   ) : (
-    <CreateContactForm companyId={companyId} />
+    <CreateContactForm companyId={companyId} id={id} />
   )
