@@ -154,11 +154,10 @@ describe('Dashboard reminders', () => {
     })
 
     it('should be in a togglable section that starts opened', () => {
+      cy.get('@investmentRemindersToggleButton').click()
       cy.get('@investmentReminders').should('be.visible')
       cy.get('@investmentRemindersToggleButton').click()
       cy.get('@investmentReminders').should('not.be.visible')
-      cy.get('@investmentRemindersToggleButton').click()
-      cy.get('@investmentReminders').should('be.visible')
     })
   })
 })
