@@ -14,6 +14,7 @@ export function getOpportunities({ activePage, payload }) {
         id,
         uk_region_locations,
         created_on,
+        modified_on,
       }) {
         const locationNames = getArrayNames(uk_region_locations)
         return {
@@ -28,7 +29,7 @@ export function getOpportunities({ activePage, payload }) {
           metadata: [
             {
               label: 'Updated on',
-              value: formatLongDate(new Date(created_on)),
+              value: formatLongDate(modified_on ? modified_on : created_on),
             },
           ],
         }
