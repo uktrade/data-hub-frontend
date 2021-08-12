@@ -77,7 +77,6 @@ const transformFormToApi = (company, formValues) => {
     : UNMATCHED_COMPANY_EDITABLE_FIELDS
 
   const originalFormValues = transformCompanyToForm(company)
-  console.log('formvalues: ', formValues)
   const omitByStuff = omitBy(
     {
       ...formValues,
@@ -100,7 +99,6 @@ const transformFormToApi = (company, formValues) => {
         originalFormValues[fieldName] === formValues[fieldName]
     }
   )
-  console.log('omitBy: ', omitByStuff)
   return omitByStuff
 }
 
