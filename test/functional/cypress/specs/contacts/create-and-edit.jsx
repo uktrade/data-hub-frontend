@@ -5,7 +5,8 @@ const { assertBreadcrumbs } = require('../../support/assertions')
 const ZBONCAK_COMPANY_ID = '4cd4128b-1bad-4f1e-9146-5d4678c6a018'
 const NEW_CONTACT_ID = '14890695-ce54-4419-88d3-9224754ecbc0'
 
-const submit = () => cy.get('form').contains('Add contact').click()
+export const submit = () =>
+  cy.get('form').contains('button', 'Add contact').click()
 
 const assertErrorSummary = (...errors) =>
   cy
@@ -54,12 +55,12 @@ const assertNoMarketingConsent = () =>
     .find('input')
     .should('not.be.checked')
 
-const checkRadio = (label, option) =>
+export const checkRadio = (label, option) =>
   cy.contains(label).parent().find(`[aria-label="${option}"]`).check()
 
 const typeIntoInput = (label, text) => cy.contains(label).type(text)
 
-const typeIntoInputs = (labelValueMap) =>
+export const typeIntoInputs = (labelValueMap) =>
   Object.entries(labelValueMap).forEach(([k, v]) => typeIntoInput(k, v))
 
 describe('Create contact form', () => {
