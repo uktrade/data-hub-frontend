@@ -749,6 +749,7 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.form).contains('Enter address line 1')
       cy.get(selectors.companyAdd.form).contains('Enter town or city')
       cy.get(selectors.companyAdd.form).contains('Select a state')
+      cy.get(selectors.companyAdd.form).contains('Zip Code is required')
     })
   })
 
@@ -777,6 +778,7 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.form).contains('Enter address line 1')
       cy.get(selectors.companyAdd.form).contains('Enter town or city')
       cy.get(selectors.companyAdd.form).contains('Select a province')
+      cy.get(selectors.companyAdd.form).contains('Postal Code is required')
     })
   })
 })
