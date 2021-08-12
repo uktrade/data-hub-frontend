@@ -155,6 +155,17 @@ const FieldAddress = ({
     }
   }
 
+  const postcodeLabel = () => {
+    if (isUS) return 'Zip Code'
+    if (isCanada) return 'Postal Code'
+    return 'Postcode (optional)'
+  }
+
+  const postcodeErrorMessage = () => {
+    if (isUS) return 'Zip Code is required'
+    if (isCanada) return 'Postal Code is required'
+  }
+
   return (
     <FieldWrapper {...{ name, label, legend, hint }} showBorder={true}>
       {isUK && (
@@ -199,8 +210,8 @@ const FieldAddress = ({
         <StyledFieldPostcode
           type="text"
           name="postcode"
-          label={isUS || isCanada ? 'Postcode' : 'Postcode (optional)'}
-          required={isUS || isCanada ? 'Enter postcode' : null}
+          label={postcodeLabel()}
+          required={postcodeErrorMessage()}
         />
       )}
 
