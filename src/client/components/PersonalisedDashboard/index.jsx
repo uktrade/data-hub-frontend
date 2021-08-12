@@ -93,7 +93,7 @@ const PersonalisedDashboard = ({
                       )
                     }
                     major={true}
-                    isOpen={true}
+                    isOpen={false}
                     data-test="investment-reminders-section"
                   >
                     <InvestmentReminders adviser={adviser} />
