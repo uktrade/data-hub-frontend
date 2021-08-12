@@ -11,7 +11,7 @@ const InvestmentListSort = ({ initialValue, options, onChange }) => (
     }}
   >
     {options.map(({ value, name }, index) => (
-      <option value={value} aria-label={name} key={index}>
+      <option value={value} aria-label={name} key={index} id={value}>
         {name}
       </option>
     ))}
