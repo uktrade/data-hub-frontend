@@ -1,18 +1,17 @@
 const {
   assertTabbedLocalNav,
-  assertLocalHeader,
   assertBreadcrumbs,
 } = require('../../support/assertions')
 const { investments } = require('../../../../../src/lib/urls')
 
 describe('Investment opportunities', () => {
-  context('When there are 4 profiles and viewing the first page', () => {
+  context('When there are 12 opportunities and viewing the first page', () => {
     before(() => {
       cy.visit(investments.opportunities.index())
     })
 
     it('should render the header', () => {
-      assertLocalHeader('Investments')
+      cy.get('h1').contains('UK opportunities')
     })
 
     it('should render breadcrumbs', () => {
@@ -36,21 +35,35 @@ describe('Investment opportunities', () => {
         .should('have.text', 'Add opportunity')
     })
 
-    it('should display 10 profiles', () => {
+    it('should display 10 opportunities', () => {
       cy.get('h3').should('have.length', 10)
     })
 
-    it('should display download profile text', () => {
+    it('should display download opportunities text', () => {
       cy.get('[data-test="download-data-header"]').should(
         'contain',
         'You can now download these 12 opportunities'
       )
     })
 
-    it('should display download profile button', () => {
+    it('should display download opportunities button', () => {
       cy.get('[data-test="download-data-header"] > div > a')
         .should('be.visible')
         .should('have.attr', 'href', '/investments/opportunities/export')
+    })
+    it('should display opportunity name and created on date where no modified date', () => {
+      cy.get('[data-test="collection-item"]')
+        .eq(0)
+        .should('contain', 'A non-modified opportunity')
+        .should('contain', 'Updated on')
+        .and('contain', '13 May 2019')
+    })
+    it('should display opportunity name and modified date', () => {
+      cy.get('[data-test="collection-item"]')
+        .eq(1)
+        .should('contain', 'A modified opportunity')
+        .should('contain', 'Updated on')
+        .and('contain', '10 April 2021')
     })
   })
 })
