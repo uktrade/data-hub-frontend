@@ -2,7 +2,11 @@ import { get } from 'lodash'
 
 import urls from '../../../lib/urls'
 
-const { format, formatMediumDateTime } = require('../../../client/utils/date')
+const {
+  format,
+  formatMediumDateTime,
+  formatMediumDate,
+} = require('../../../client/utils/date')
 
 const transformEventToListItem = ({
   id,
@@ -73,4 +77,42 @@ const transformResponseToEventCollection = ({ count, results = [] }) => ({
   results: results.map(transformEventToListItem),
 })
 
-export { transformResponseToEventCollection }
+const transformResponseToEventDetails = ({
+  event_type,
+  start_date,
+  end_date,
+  location_type,
+  address_1,
+  address_2,
+  address_town,
+  address_county,
+  address_country,
+  uk_region,
+  notes,
+  lead_team,
+  organiser,
+  related_programmes,
+  related_trade_agreements,
+  service,
+}) => ({
+  eventDetails: {
+    eventType: event_type.name,
+    startDate: formatMediumDate(start_date),
+    endDate: formatMediumDate(end_date),
+    locationType: location_type.name,
+    addressLine1: address_1,
+    addressLine2: address_2,
+    addressTown: address_town,
+    addressCounty: address_county,
+    addressCountry: address_country.name,
+    ukRegion: uk_region.name,
+    notes: notes,
+    leadTeam: lead_team.name,
+    organiser: organiser.name,
+    realatedProgrammes: related_programmes.name,
+    realatedTradeAgreements: related_trade_agreements,
+    service: service.name,
+  },
+})
+
+export { transformResponseToEventCollection, transformResponseToEventDetails }

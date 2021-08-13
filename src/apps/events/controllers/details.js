@@ -1,8 +1,8 @@
-const { displayEventLabels } = require('../labels')
-
-function renderDetailsPage(req, res) {
+function renderDetailsPage({ params: { eventId } }, res) {
   res.breadcrumb(res.locals.event.name).render('events/views/details', {
-    displayEventLabels,
+    props: {
+      eventId,
+    },
   })
 }
 

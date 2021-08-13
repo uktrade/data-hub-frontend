@@ -2,6 +2,7 @@ import {
   EVENTS__LOADED,
   EVENTS__METADATA_LOADED,
   EVENTS__SELECTED_ORGANISER,
+  EVENTS__DETAILS_LOADED,
 } from '../../../client/actions'
 
 const initialState = {
@@ -28,6 +29,12 @@ export default (state = initialState, { type, result }) => {
       return {
         ...state,
         selectedOrganisers: result,
+      }
+    case EVENTS__DETAILS_LOADED:
+      return {
+        ...state,
+        ...result,
+        isComplete: true,
       }
     default:
       return state
