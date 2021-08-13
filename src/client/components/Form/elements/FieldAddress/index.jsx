@@ -46,6 +46,7 @@ const FieldAddress = ({
   features,
 }) => {
   const areaFieldEnabled = features && features.areaFormField
+  const postcodeValidationEnabled = features && features.postcodeValidation
   const findAdministrativeAreas = useAdministrativeAreaLookup()
   const {
     onAdministrativeAreaSearch,
@@ -210,8 +211,10 @@ const FieldAddress = ({
         <StyledFieldPostcode
           type="text"
           name="postcode"
-          label={postcodeLabel()}
-          required={postcodeErrorMessage()}
+          label={
+            postcodeValidationEnabled ? postcodeLabel() : 'Postcode (optional)'
+          }
+          required={postcodeValidationEnabled ? postcodeErrorMessage() : null}
         />
       )}
 
