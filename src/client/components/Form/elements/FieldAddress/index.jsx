@@ -22,6 +22,7 @@ import FieldWrapper from '../FieldWrapper'
 import StatusMessage from '../../../StatusMessage'
 import { transformObjectToOption } from '../../../../../apps/transformers'
 import FieldSelect from '../FieldSelect'
+import FieldCountrySelect from '../FieldCountrySelect'
 
 const UNITED_KINGDOM = 'United Kingdom'
 const UNITED_STATES = 'United States'
@@ -35,15 +36,25 @@ const StyledFieldPostcode = styled(FieldInput)`
   }
 `
 
+const OptionalPostcodeField = () => (
+  <StyledFieldPostcode
+    type="text"
+    name="postcode"
+    label="Postcode (optional)"
+  />
+)
+
 const FieldAddress = ({
-  name,
   label,
   legend,
   hint,
+  name,
   country,
   apiEndpoint,
   onSelectUKAddress,
   features,
+  isCountrySelectable,
+  forcePostcodeLookupButton,
 }) => {
   const areaFieldEnabled = features && features.areaFormField
   const findAdministrativeAreas = useAdministrativeAreaLookup()
@@ -93,9 +104,9 @@ const FieldAddress = ({
     }
   }, [administrativeAreaList])
 
-  const isUK = country.name === UNITED_KINGDOM
-  const isUS = country.name === UNITED_STATES
-  const isCanada = country.name === CANADA
+  const isUK = country?.name === UNITED_KINGDOM
+  const isUS = country?.name === UNITED_STATES
+  const isCanada = country?.name === CANADA
 
   function onSearchClick(e) {
     e.preventDefault()
@@ -117,6 +128,7 @@ const FieldAddress = ({
     setFieldValue('address2', address.address2)
     setFieldValue('city', address.city)
     setFieldValue('county', address.county)
+    setFieldValue('country', isCountrySelectable ? address.country : country.id)
     setFieldValue('area', address.area)
     setFieldValue('country', country.id)
 
@@ -156,16 +168,20 @@ const FieldAddress = ({
   }
 
   return (
-    <FieldWrapper {...{ name, label, legend, hint }} showBorder={true}>
-      {isUK && (
+    <FieldWrapper {...{ label, legend, hint, name }} showBorder={true}>
+      {forcePostcodeLookupButton || isUK ? (
         <>
-          <StyledFieldPostcode
-            type="search"
-            name="postcode"
-            label="Postcode"
-            required="Enter postcode"
-            maxLength={10}
-          />
+          {forcePostcodeLookupButton ? (
+            <OptionalPostcodeField />
+          ) : (
+            <StyledFieldPostcode
+              type="search"
+              name="postcode"
+              label="Postcode"
+              required="Enter postcode"
+              maxLength={10}
+            />
+          )}
           <Button
             onClick={onSearchClick}
             buttonColour={GREY_3}
@@ -193,14 +209,8 @@ const FieldAddress = ({
             </FormGroup>
           )}
         </>
-      )}
-
-      {!isUK && (
-        <StyledFieldPostcode
-          type="text"
-          name="postcode"
-          label="Postcode (optional)"
-        />
+      ) : (
+        <OptionalPostcodeField />
       )}
 
       <FieldInput
@@ -235,31 +245,32 @@ const FieldAddress = ({
         </>
       )}
 
-      <FieldUneditable name="country" label="Country">
-        {country.name}
-      </FieldUneditable>
+      {isCountrySelectable ? (
+        <FieldCountrySelect name="country" />
+      ) : (
+        <FieldUneditable name="country" label="Country">
+          {country.name}
+        </FieldUneditable>
+      )}
     </FieldWrapper>
   )
 }
 
 FieldAddress.propTypes = {
-  name: PropTypes.string.isRequired,
   label: PropTypes.node,
   legend: PropTypes.node,
   hint: PropTypes.node,
+  name: PropTypes.string.isRequired,
+  apiEndpoint: PropTypes.string.isRequired,
+  onSelectUKAddress: PropTypes.func,
+  isCountrySelectable: PropTypes.any,
+  forcePostcodeLookupButton: PropTypes.any,
+  // Country is only required if isCountrySelectable is falsy, but this can't be
+  // expressed with propTypes
   country: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-  }).isRequired,
-  apiEndpoint: PropTypes.string.isRequired,
-  onSelectUKAddress: PropTypes.func,
-}
-
-FieldAddress.defaultProps = {
-  label: null,
-  legend: null,
-  hint: null,
-  onSelectUKAddress: null,
+  }),
 }
 
 export default FieldAddress

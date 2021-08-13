@@ -26,7 +26,7 @@ import {
 function* startTask(task, action) {
   yield put({ ...action, type: TASK__PROGRESS })
   try {
-    const result = yield call(task, action.payload)
+    const result = yield call(task, action.payload, action.id)
     const { id, name, payload, onSuccessDispatch } = action
     if (onSuccessDispatch) {
       yield put({
