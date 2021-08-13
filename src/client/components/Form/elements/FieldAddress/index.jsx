@@ -156,14 +156,14 @@ const FieldAddress = ({
   }
 
   const postcodeLabel = () => {
-    if (isUS) return 'Zip Code'
+    if (isUS) return 'ZIP Code'
     if (isCanada) return 'Postal Code'
     return 'Postcode (optional)'
   }
 
   const postcodeErrorMessage = () => {
-    if (isUS) return 'Zip Code is required'
-    if (isCanada) return 'Postal Code is required'
+    if (isUS) return 'Enter a ZIP code'
+    if (isCanada) return 'Enter a postal code'
   }
 
   return (
@@ -174,7 +174,7 @@ const FieldAddress = ({
             type="search"
             name="postcode"
             label="Postcode"
-            required="Enter postcode"
+            required="Enter a postcode"
             maxLength={10}
           />
           <Button
@@ -219,7 +219,7 @@ const FieldAddress = ({
         type="text"
         name="address1"
         label="Address line 1"
-        required="Enter address line 1"
+        required="Enter an address line 1"
       />
       <FieldInput
         type="text"
@@ -230,7 +230,7 @@ const FieldAddress = ({
         type="text"
         name="city"
         label="Town or city"
-        required="Enter town or city"
+        required="Enter a town or city"
       />
 
       <FieldInput type="text" name="county" label="County (optional)" />
