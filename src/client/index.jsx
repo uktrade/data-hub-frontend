@@ -51,6 +51,7 @@ import OpportunityDetailsHeader from '../apps/investments/client/opportunities/D
 import IEBanner from '../apps/dashboard/client/IEBanner'
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
 import createUKInvestmentOpportunityTask from './components/CreateUKInvestmentOpportunity/tasks'
+import EventsForm from '../apps/events/client/EventsForm'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -454,6 +455,9 @@ function App() {
         {(props) => <InteractionsCollection {...props} />}
       </Mount>
       <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
+      <Mount selector="#events-form">
+        {(props) => <EventsForm {...props} />}
+      </Mount>
     </Provider>
   )
 }
