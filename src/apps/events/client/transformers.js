@@ -77,6 +77,8 @@ const transformResponseToEventCollection = ({ count, results = [] }) => ({
   results: results.map(transformEventToListItem),
 })
 
+const idNameToValueLabel = ({ id, name }) => ({ value: id, label: name })
+
 const transformResponseToEventDetails = ({
   event_type,
   start_date,
@@ -91,6 +93,7 @@ const transformResponseToEventDetails = ({
   notes,
   lead_team,
   organiser,
+  teams,
   related_programmes,
   related_trade_agreements,
   service,
@@ -99,18 +102,20 @@ const transformResponseToEventDetails = ({
     eventType: event_type.name,
     startDate: formatMediumDate(start_date),
     endDate: formatMediumDate(end_date),
-    locationType: location_type.name,
-    addressLine1: address_1,
-    addressLine2: address_2,
-    addressTown: address_town,
-    addressCounty: address_county,
-    addressCountry: address_country.name,
-    ukRegion: uk_region.name,
+    locationType: location_type?.name,
+    fullAddress:
+      `${address_1 ? `${address_1}, ` : ''}` +
+      `${address_2 ? `${address_2}, ` : ''}` +
+      `${address_town ? `${address_town}, ` : ''}` +
+      `${address_county ? `${address_county}, ` : ''}` +
+      `${address_country.name ? address_country.name : ''}`,
+    ukRegion: uk_region?.name,
     notes: notes,
     leadTeam: lead_team.name,
     organiser: organiser.name,
-    realatedProgrammes: related_programmes.name,
-    realatedTradeAgreements: related_trade_agreements,
+    otherTeams: teams.map(idNameToValueLabel),
+    realatedProgrammes: related_programmes.map(idNameToValueLabel),
+    realatedTradeAgreements: related_trade_agreements.map(idNameToValueLabel),
     service: service.name,
   },
 })
