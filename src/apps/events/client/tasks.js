@@ -52,11 +52,10 @@ const getEventsMetadata = () =>
     }))
     .catch(handleError)
 
-const getEventDetails = (eventId) => {
-  return apiProxyAxios
+const getEventDetails = (eventId) =>
+  apiProxyAxios
     .get(`/api-proxy/v3/event/${eventId}`)
     .then(({ data }) => transformResponseToEventDetails(data))
     .catch(handleError)
-}
 
 export { getEvents, getEventsMetadata, getEventDetails }
