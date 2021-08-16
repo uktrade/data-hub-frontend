@@ -10,6 +10,7 @@ const initialState = {
   metadata: {},
   selectedOrganisers: [],
   isComplete: false,
+  eventDetails: {},
 }
 
 export default (state = initialState, { type, result }) => {
