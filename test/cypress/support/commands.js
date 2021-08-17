@@ -172,34 +172,33 @@ Cypress.Commands.add('setFeatureFlag', (name, isActive) => {
     code: name,
     is_active: isActive,
   }
-  backend_url = Cypress.env('sandbox_url')
-  uri = '/sandbox/feature-flag'
-  return cy.request('PUT', `${backend_url}${uri}`, body)
+  const backendUrl = Cypress.env('sandbox_url')
+  const uri = '/sandbox/feature-flag'
+  return cy.request('PUT', `${backendUrl}${uri}`, body)
 })
 
 Cypress.Commands.add('resetFeatureFlags', () => {
-  backend_url = Cypress.env('sandbox_url')
-  uri = '/sandbox/reset-feature-flag'
-  return cy.request('POST', `${backend_url}${uri}`)
+  const backendUrl = Cypress.env('sandbox_url')
+  const uri = '/sandbox/reset-feature-flag'
+  return cy.request('POST', `${backendUrl}${uri}`)
 })
 
 Cypress.Commands.add('reseed', () => {
-  backend_url = Cypress.env('sandbox_url')
-  uri = '/testfixtureapi/reset-fixtures/'
-  return cy.request('POST', `${backend_url}${uri}`)
+  const backendUrl = Cypress.env('sandbox_url')
+  const uri = '/testfixtureapi/reset-fixtures/'
+  return cy.request('POST', `${backendUrl}${uri}`)
 })
 
 Cypress.Commands.add('createUser', (userData) => {
-  backend_url = Cypress.env('sandbox_url')
-  uri = '/testfixtureapi/create-user/'
-  return cy.request('POST', `${backend_url}${uri}`, userData)
+  const backendUrl = Cypress.env('sandbox_url')
+  const uri = '/testfixtureapi/create-user/'
+  return cy.request('POST', `${backendUrl}${uri}`, userData)
 })
 
 Cypress.Commands.add('loadFixture', (fixture) => {
-  // backend_url = Cypress.env('sandbox_url')
-  backend_url = 'http://localhost:8000'
-  uri = '/testfixtureapi/load-fixture/'
-  return cy.request('POST', `${backend_url}${uri}`, {
+  const backendUrl = Cypress.env('sandbox_url')
+  const uri = '/testfixtureapi/load-fixture/'
+  return cy.request('POST', `${backendUrl}${uri}`, {
     fixture: fixture,
   })
 })
