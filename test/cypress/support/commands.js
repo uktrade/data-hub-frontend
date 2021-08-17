@@ -196,7 +196,8 @@ Cypress.Commands.add('createUser', (userData) => {
 })
 
 Cypress.Commands.add('loadFixture', (fixture) => {
-  backend_url = Cypress.env('sandbox_url')
+  // backend_url = Cypress.env('sandbox_url')
+  backend_url = 'http://localhost:8000'
   uri = '/testfixtureapi/load-fixture/'
   return cy.request('POST', `${backend_url}${uri}`, {
     fixture: fixture,
@@ -285,3 +286,21 @@ Cypress.Commands.add('runA11y', (context = null, options = null) => {
     ))
   })
 })
+
+Cypress.Commands.add(
+  'typeIntoInputs',
+  (labelValueMap) =>
+    Object.entries(labelValueMap)
+      .forEach(([label, value]) => cy.contains(label).type(value))
+)
+
+Cypress.Commands.add(
+  'checkRadioGroup',
+  (label, option) =>
+    cy.contains(label).parent().find(`[aria-label="${option}"]`).check()
+)
+
+Cypress.Commands.add(
+  'clickSubmitButton',
+  (label) => cy.get('form').contains('button', label).click()
+)
