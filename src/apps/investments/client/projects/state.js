@@ -1,6 +1,11 @@
 import { omitBy, isEmpty } from 'lodash'
 import qs from 'qs'
 
+import {
+  getFinancialYearStart,
+  generateFinancialYearLabel,
+} from '../../../../client/utils/date'
+
 import { buildSelectedFilters } from './filters'
 
 import {
@@ -28,10 +33,26 @@ export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
   const queryParams = parseQueryString(queryString)
   const { metadata, selectedAdvisers } = state[ID]
+  const financialYearStart = getFinancialYearStart(new Date())
+  const financialYearOptions = [
+    {
+      label: `Current year ${generateFinancialYearLabel(financialYearStart)}`,
+      value: `${financialYearStart}`,
+    },
+    {
+      label: `Last year ${generateFinancialYearLabel(financialYearStart - 1)}`,
+      value: `${financialYearStart - 1}`,
+    },
+    {
+      label: `Next year ${generateFinancialYearLabel(financialYearStart + 1)}`,
+      value: `${financialYearStart + 1}`,
+    },
+  ]
   const selectedFilters = buildSelectedFilters(
     queryParams,
     metadata,
-    selectedAdvisers
+    selectedAdvisers,
+    financialYearOptions
   )
 
   return {
@@ -42,6 +63,7 @@ export const state2props = ({ router, ...state }) => {
       sortOptions: SORT_OPTIONS,
       projectStatusOptions: PROJECT_STATUS_OPTIONS,
       involvementLevelOptions: INVOLVEMENT_LEVEL_OPTIONS,
+      financialYearOptions,
       ...metadata,
     },
   }

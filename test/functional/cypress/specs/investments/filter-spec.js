@@ -22,6 +22,14 @@ const FDI_INVESTMENT_TYPE_ID = '3e143372-496c-4d1e-8278-6fdd3da9b48b'
 const MEDIUM_LIKELIHOOD_TO_LAND_ID = '683ca57b-bd69-462c-852f-d2177e35b2eb'
 const INVOLVEMENT_LEVEL_UNSPECIFIED = 'unspecified'
 
+const getFinancialYearStart = () => {
+  const now = new Date()
+  return now.month < 3 ? now.getFullYear() - 1 : now.getFullYear()
+}
+
+const yearStartToRange = (yearStart) =>
+  `${yearStart}-${(yearStart + 1).toString().slice(-2)}`
+
 describe('Investments Collections Filter', () => {
   beforeEach(() => {
     cy.get('[data-test="stage-filter"]').as('stageFilter')
@@ -32,6 +40,7 @@ describe('Investments Collections Filter', () => {
     cy.get('[data-test="uk-region-filter"]').as('ukRegionFilter')
     cy.get('[data-test="project-status-filter"]').as('projectStatusFilter')
     cy.get('[data-test="investment-type-filter"]').as('investmentTypeFilter')
+    cy.get('[data-test="financial-year-filter"]').as('financialYearFilter')
     cy.get('[data-test="likelihood-to-land-filter"]').as(
       'likelihoodToLandFilter'
     )
@@ -67,6 +76,7 @@ describe('Investments Collections Filter', () => {
         'uk-region-filter',
         'project-status-filter',
         'investment-type-filter',
+        'financial-year-filter',
         'likelihood-to-land-filter',
         'estimated-land-date-before-filter',
         'estimated-land-date-after-filter',
@@ -284,6 +294,27 @@ describe('Investments Collections Filter', () => {
       testRemoveChip({ element: '@actualDateAfterFilter' })
     })
 
+    it('should filter by financial year', () => {
+      const yearStart = getFinancialYearStart()
+      const yearRange = yearStartToRange(yearStart)
+
+      clickCheckboxGroupOption({
+        element: '@financialYearFilter',
+        value: yearStart,
+      })
+      assertCheckboxGroupOption({
+        element: '@financialYearFilter',
+        value: yearStart,
+        checked: true,
+      })
+      assertChipExists({
+        label: `Current year ${yearRange}`,
+        position: 1,
+      })
+
+      testRemoveChip({ element: '@financialYearFilter' })
+    })
+
     it('should filter by involvement level', () => {
       clickCheckboxGroupOption({
         element: '@involvementLevelFilter',
@@ -304,6 +335,9 @@ describe('Investments Collections Filter', () => {
   })
 
   context('when the url contains state', () => {
+    const financialYearStart = getFinancialYearStart()
+    const financialYearRange = yearStartToRange(financialYearStart)
+
     before(() => {
       cy.visit(urls.investments.projects.index(), {
         qs: {
@@ -314,6 +348,7 @@ describe('Investments Collections Filter', () => {
           uk_region_location: SOUTH_EAST_UK_REGION_ID,
           status: PROJECT_STATUS_ABANDONED,
           investment_type: FDI_INVESTMENT_TYPE_ID,
+          financial_year_start: financialYearStart,
           likelihood_to_land: MEDIUM_LIKELIHOOD_TO_LAND_ID,
           estimated_land_date_before: '2020-01-01',
           estimated_land_date_after: '2020-01-02',
@@ -323,6 +358,7 @@ describe('Investments Collections Filter', () => {
         },
       })
     })
+
     it('should set the selected filter values and filter indicators', () => {
       assertChipExists({ position: 1, label: 'Prospect' })
       assertCheckboxGroupOption({
@@ -398,12 +434,21 @@ describe('Investments Collections Filter', () => {
         value: INVOLVEMENT_LEVEL_UNSPECIFIED,
         checked: true,
       })
+      assertChipExists({
+        position: 14,
+        label: `Current year ${financialYearRange}`,
+      })
+      assertCheckboxGroupOption({
+        element: '@financialYearFilter',
+        value: financialYearStart,
+        checked: true,
+      })
     })
 
     it('should clear all filters', () => {
       cy.get('#filter-chips').find('button').as('chips')
       cy.get('#clear-filters').as('clearFilters')
-      cy.get('@chips').should('have.length', 13)
+      cy.get('@chips').should('have.length', 14)
       cy.get('@clearFilters').click()
       cy.get('@chips').should('have.length', 0)
       cy.get('@estimatedDateBeforeFilter')
@@ -422,6 +467,7 @@ describe('Investments Collections Filter', () => {
       assertCheckboxGroupNoneSelected('@investmentTypeFilter')
       assertCheckboxGroupNoneSelected('@likelihoodToLandFilter')
       assertCheckboxGroupNoneSelected('@involvementLevelFilter')
+      assertCheckboxGroupNoneSelected('@financialYearFilter')
     })
   })
 })

@@ -12,7 +12,8 @@ import {
 export const buildSelectedFilters = (
   queryParams,
   metadata,
-  selectedAdvisers
+  selectedAdvisers,
+  financialYearOptions
 ) => ({
   stages: {
     queryParam: 'stage',
@@ -112,6 +113,14 @@ export const buildSelectedFilters = (
       options: INVOLVEMENT_LEVEL_OPTIONS,
       value: queryParams.level_of_involvement_simplified,
       categoryLabel: LABELS.involvementLevel,
+    }),
+  },
+  financialYears: {
+    queryParam: 'financial_year_start',
+    options: buildOptionsFilter({
+      options: financialYearOptions,
+      value: queryParams.financial_year_start,
+      categoryLabel: LABELS.financialYearStart,
     }),
   },
 })
