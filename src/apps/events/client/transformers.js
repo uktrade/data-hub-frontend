@@ -114,8 +114,8 @@ const transformResponseToEventDetails = ({
     leadTeam: lead_team.name,
     organiser: organiser.name,
     otherTeams: teams.map(idNameToValueLabel),
-    realatedProgrammes: related_programmes.map(idNameToValueLabel),
-    realatedTradeAgreements: related_trade_agreements.map(idNameToValueLabel),
+    relatedProgrammes: related_programmes.map(idNameToValueLabel),
+    relatedTradeAgreements: related_trade_agreements.map(idNameToValueLabel),
     service: service.name,
   },
 })
