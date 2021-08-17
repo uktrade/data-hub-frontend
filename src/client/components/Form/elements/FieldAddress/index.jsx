@@ -172,14 +172,16 @@ const FieldAddress = ({
   }
 
   const NonUKPostcodeField = () => {
-    ;<StyledFieldPostcode
-      type="text"
-      name="postcode"
-      label={
-        postcodeValidationEnabled ? postcodeLabel() : 'Postcode (optional)'
-      }
-      required={postcodeValidationEnabled ? postcodeErrorMessage() : null}
-    />
+    return (
+      <StyledFieldPostcode
+        type="text"
+        name="postcode"
+        label={
+          postcodeValidationEnabled ? postcodeLabel() : 'Postcode (optional)'
+        }
+        required={postcodeValidationEnabled ? postcodeErrorMessage() : null}
+      />
+    )
   }
 
   return (
@@ -187,7 +189,7 @@ const FieldAddress = ({
       {forcePostcodeLookupButton || isUK ? (
         <>
           {forcePostcodeLookupButton ? (
-            <NonUKPostcodeField />
+            NonUKPostcodeField()
           ) : (
             <StyledFieldPostcode
               type="search"
@@ -225,7 +227,7 @@ const FieldAddress = ({
           )}
         </>
       ) : (
-        <NonUKPostcodeField />
+        NonUKPostcodeField()
       )}
 
       <FieldInput
