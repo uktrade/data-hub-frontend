@@ -195,7 +195,7 @@ const FieldAddress = ({
               type="search"
               name="postcode"
               label="Postcode"
-              required="Enter postcode"
+              required="Enter a postcode"
               maxLength={10}
             />
           )}
