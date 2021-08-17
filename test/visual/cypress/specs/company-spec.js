@@ -6,6 +6,7 @@ describe('company page', () => {
   })
 
   it('should render company page correctly', () => {
+    cy.get('[data-test="collection-item"]').should('be.visible')
     cy.compareSnapshot('companyPage')
   })
 })
