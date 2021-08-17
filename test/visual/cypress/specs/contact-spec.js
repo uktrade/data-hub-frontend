@@ -6,6 +6,7 @@ describe('contact page', () => {
   })
 
   it('should render contact page correctly', () => {
+    cy.get('[data-test="collection-item"]').should('be.visible')
     cy.compareSnapshot('contactPage')
   })
 })

@@ -6,6 +6,7 @@ describe('event page', () => {
   })
 
   it('event page', () => {
+    cy.get('[data-test="collection-item"]').should('be.visible')
     cy.compareSnapshot('eventPage')
   })
 })

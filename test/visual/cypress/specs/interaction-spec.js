@@ -6,6 +6,7 @@ describe('interaction page', () => {
   })
 
   it('should render interaction page correctly', () => {
+    cy.get('[data-test="collection-item"]').should('be.visible')
     cy.compareSnapshot('interactionPage')
   })
 })

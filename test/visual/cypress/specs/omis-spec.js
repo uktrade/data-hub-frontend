@@ -6,6 +6,7 @@ describe('omis page', () => {
   })
 
   it('should render order page correctly', () => {
+    cy.get('[data-test="collection-item"]').should('be.visible')
     cy.compareSnapshot('omisPage')
   })
 })
