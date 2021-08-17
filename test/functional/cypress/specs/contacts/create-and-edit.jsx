@@ -5,9 +5,6 @@ const { assertBreadcrumbs } = require('../../support/assertions')
 const ZBONCAK_COMPANY_ID = '4cd4128b-1bad-4f1e-9146-5d4678c6a018'
 const NEW_CONTACT_ID = '14890695-ce54-4419-88d3-9224754ecbc0'
 
-export const submit = () =>
-  cy.get('form').contains('button', 'Add contact').click()
-
 const assertErrorSummary = (...errors) =>
   cy
     .contains('There is a problem')
@@ -55,14 +52,6 @@ const assertNoMarketingConsent = () =>
     .find('input')
     .should('not.be.checked')
 
-export const checkRadio = (label, option) =>
-  cy.contains(label).parent().find(`[aria-label="${option}"]`).check()
-
-const typeIntoInput = (label, text) => cy.contains(label).type(text)
-
-export const typeIntoInputs = (labelValueMap) =>
-  Object.entries(labelValueMap).forEach(([k, v]) => typeIntoInput(k, v))
-
 describe('Create contact form', () => {
   beforeEach(() => {
     cy.visit(`/contacts/create?company=${ZBONCAK_COMPANY_ID}`)
@@ -93,7 +82,7 @@ describe('Create contact form', () => {
   })
 
   it('Should show errors when submitted pristine', () => {
-    submit()
+    cy.clickSubmitButton('Add contact')
 
     assertErrors({
       'First name': 'This field may not be null.',
@@ -109,12 +98,12 @@ describe('Create contact form', () => {
   })
 
   it('Should show errors when only the same as company address is checked', () => {
-    checkRadio(
+    cy.checkRadioGroup(
       'Is the contact’s address the same as the company address?',
       'No'
     )
 
-    submit()
+    cy.clickSubmitButton('Add contact')
 
     assertErrors({
       'First name': 'This field may not be null.',
@@ -130,13 +119,13 @@ describe('Create contact form', () => {
   })
 
   it('Should show errors for invalid field values', () => {
-    checkRadio(
+    cy.checkRadioGroup(
       'Is the contact’s address the same as the company address?',
       'Yes'
     )
-    checkRadio('Is this person a primary contact?', 'Yes')
+    cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
 
-    typeIntoInputs({
+    cy.typeIntoInputs({
       'First name': 'Andy',
       'Last name': 'Pipkin',
       'Job title': 'On dole',
@@ -145,7 +134,7 @@ describe('Create contact form', () => {
       Email: 'foo',
     })
 
-    submit()
+    cy.clickSubmitButton('Add contact')
 
     assertErrors({
       'Telephone country code':
@@ -155,13 +144,13 @@ describe('Create contact form', () => {
   })
 
   it('Should redirect to the new contact page when required fields are filled out', () => {
-    checkRadio('Is this person a primary contact?', 'Yes')
-    checkRadio(
+    cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
+    cy.checkRadioGroup(
       'Is the contact’s address the same as the company address?',
       'Yes'
     )
 
-    typeIntoInputs({
+    cy.typeIntoInputs({
       'First name': 'Andy',
       'Last name': 'Pipkin',
       'Job title': 'On dole',
@@ -170,7 +159,7 @@ describe('Create contact form', () => {
       Email: 'andy@little.britain.co.uk',
     })
 
-    submit()
+    cy.clickSubmitButton('Add contact')
 
     cy.location('pathname').should('eq', `/contacts/${NEW_CONTACT_ID}/details`)
   })

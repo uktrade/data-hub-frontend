@@ -3,11 +3,6 @@ const selectors = require('../../../../selectors')
 const userActions = require('../../support/user-actions')
 
 const { contacts } = require('../../../../../src/lib/urls')
-const {
-  typeIntoInputs,
-  checkRadio,
-  submit,
-} = require('../../../../functional/cypress/specs/contacts/create-and-edit')
 
 describe('Contacts', () => {
   const data = {
@@ -43,12 +38,12 @@ describe('Contacts', () => {
     cy.loadFixture([company])
     cy.visit(contacts.create(company.pk))
 
-    checkRadio(
+    cy.checkRadioGroup(
       'Is the contact’s address the same as the company address?',
       'Yes'
     )
-    checkRadio('Is this person a primary contact?', 'Yes')
-    typeIntoInputs({
+    cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
+    cy.typeIntoInputs({
       'First name': 'Andy',
       'Last name': 'Pipkin',
       'Job title': 'On dole',
@@ -57,17 +52,17 @@ describe('Contacts', () => {
       Email: EMAIL,
     })
 
-    submit()
+    cy.clickSubmitButton('Add contact')
     cy.contains('You have successfully added a new contact Andy Pipkin')
 
     cy.visit(contacts.create(company.pk))
 
-    checkRadio(
+    cy.checkRadioGroup(
       'Is the contact’s address the same as the company address?',
       'Yes'
     )
-    checkRadio('Is this person a primary contact?', 'Yes')
-    typeIntoInputs({
+    cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
+    cy.typeIntoInputs({
       'First name': 'Lou',
       'Last name': 'Todd',
       'Job title': 'Carer',
@@ -76,7 +71,7 @@ describe('Contacts', () => {
       Email: EMAIL,
     })
 
-    submit()
+    cy.clickSubmitButton('Add contact')
 
     cy.contains('You have successfully added a new contact').should('not.exist')
     cy.contains(
@@ -85,7 +80,7 @@ describe('Contacts', () => {
         "To return to the previous screen, select 'Cancel'."
     )
 
-    submit()
+    cy.clickSubmitButton('Add contact')
     cy.contains('You have successfully added a new contact Lou Todd')
   })
 })
