@@ -56,9 +56,17 @@ async function createContactItemToAttendeeSearchResult(req, event) {
     limit: 9999,
   })
 
+  console.log("RETURNING GENERATED FUNCTION")
   return (contact) => {
+    console.log("GENERATED FUNCTION TRIGGERED")
     const isExistingAttendee = existingAttendee(contact, attendees)
 
+    //so this basically just creates an item to be displayed that just links to the attendee creation page
+    //it doesn't necessarily create an attendee unless the user goes out of their way to click the link
+    //so to test this we'll need to
+    // - Make an attendee that doesn't yet exist, from a contact that does exist
+    // - Click the displayed link
+    // - This should cause the get to be triggered on either v4 or v3 depending on our flag
     if (!isExistingAttendee) {
       return {
         ...contact,

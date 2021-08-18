@@ -117,6 +117,10 @@ const ContactForm = ({
                 }),
               }
 
+              // we need to figure out how to get the feature here
+              //  const isContactAreaRequiredEnabled = res.locals.features['address-area-contact-required-field']
+              // it looks like this works for both creating and editing without any additional changes elsewhere?
+
               const response = await axios({
                 url: update
                   ? `/api-proxy/v3/contact/${contactId}`
