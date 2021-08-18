@@ -74,5 +74,9 @@
   {
     "code": "address-area-unverifed-match",
     "is_active": true
+  },
+  {
+    "code": "address-postcode-company-required-field",
+    "is_active": true
   }
 ]
