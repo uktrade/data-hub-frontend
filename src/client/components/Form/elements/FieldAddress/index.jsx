@@ -36,14 +36,6 @@ const StyledFieldPostcode = styled(FieldInput)`
   }
 `
 
-const OptionalPostcodeField = () => (
-  <StyledFieldPostcode
-    type="text"
-    name="postcode"
-    label="Postcode (optional)"
-  />
-)
-
 const FieldAddress = ({
   label,
   legend,
@@ -57,6 +49,7 @@ const FieldAddress = ({
   forcePostcodeLookupButton,
 }) => {
   const areaFieldEnabled = features && features.areaFormField
+  const postcodeValidationEnabled = features && features.postcodeValidation
   const findAdministrativeAreas = useAdministrativeAreaLookup()
   const {
     onAdministrativeAreaSearch,
@@ -167,18 +160,42 @@ const FieldAddress = ({
     }
   }
 
+  const postcodeLabel = () => {
+    if (isUS) return 'ZIP Code'
+    if (isCanada) return 'Postal Code'
+    return 'Postcode (optional)'
+  }
+
+  const postcodeErrorMessage = () => {
+    if (isUS) return 'Enter a ZIP code'
+    if (isCanada) return 'Enter a postal code'
+  }
+
+  const NonUKPostcodeField = () => {
+    return (
+      <StyledFieldPostcode
+        type="text"
+        name="postcode"
+        label={
+          postcodeValidationEnabled ? postcodeLabel() : 'Postcode (optional)'
+        }
+        required={postcodeValidationEnabled ? postcodeErrorMessage() : null}
+      />
+    )
+  }
+
   return (
     <FieldWrapper {...{ label, legend, hint, name }} showBorder={true}>
       {forcePostcodeLookupButton || isUK ? (
         <>
           {forcePostcodeLookupButton ? (
-            <OptionalPostcodeField />
+            NonUKPostcodeField()
           ) : (
             <StyledFieldPostcode
               type="search"
               name="postcode"
               label="Postcode"
-              required="Enter postcode"
+              required="Enter a postcode"
               maxLength={10}
             />
           )}
@@ -210,14 +227,14 @@ const FieldAddress = ({
           )}
         </>
       ) : (
-        <OptionalPostcodeField />
+        NonUKPostcodeField()
       )}
 
       <FieldInput
         type="text"
         name="address1"
         label="Address line 1"
-        required="Enter address line 1"
+        required="Enter an address line 1"
       />
       <FieldInput
         type="text"
@@ -228,7 +245,7 @@ const FieldAddress = ({
         type="text"
         name="city"
         label="Town or city"
-        required="Enter town or city"
+        required="Enter a town or city"
       />
 
       <FieldInput type="text" name="county" label="County (optional)" />

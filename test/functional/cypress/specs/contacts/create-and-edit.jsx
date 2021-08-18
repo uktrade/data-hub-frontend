@@ -123,8 +123,8 @@ describe('Create contact form', () => {
       'Telephone country code': 'This field may not be null.',
       'Telephone number': 'This field may not be null.',
       Email: 'This field may not be null.',
-      'Address line 1': 'Enter address line 1',
-      'Town or city': 'Enter town or city',
+      'Address line 1': 'Enter an address line 1',
+      'Town or city': 'Enter a town or city',
     })
   })
 
