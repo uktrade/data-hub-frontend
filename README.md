@@ -65,7 +65,13 @@ Please view the dedicated [Docker readme](./docs/Docker.md).
     cp sample.env .env
     ```
 
-6.  Start the redis server:
+6.  [Install](./docs/Installing%20redis%20natively.md) the redis server and bring it up:
+
+    ```bash
+    redis-server
+    ```
+
+    or run in docker
 
     ```bash
     docker run -it -p 6379:6379 redis:3.2
