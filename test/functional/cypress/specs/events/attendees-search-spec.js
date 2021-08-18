@@ -20,6 +20,14 @@ describe('Event attendee search', () => {
 
     cy.get('@form').next().as('message')
   })
+
+  it('Figure out what we are actually dealing with here', () => {
+    cy.get('@input').type('lambda')
+    cy.get('@button').click()
+    cy.get('.c-collection header').click()
+    cy.pause()
+  })
+
   context('with results', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
