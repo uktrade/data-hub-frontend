@@ -156,7 +156,7 @@ describe('Create contact form', () => {
       'Job title': 'On dole',
       'Telephone country code': '1234',
       'Telephone number': '456789',
-      Email: 'andy@little.britain.co.uk',
+      Email: 'andy@new.email',
     })
 
     cy.clickSubmitButton('Add contact')
