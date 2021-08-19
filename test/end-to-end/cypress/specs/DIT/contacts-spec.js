@@ -32,7 +32,7 @@ describe('Contacts', () => {
       .and('contain', 'Rua Candido Portinari, Numero 521, Campinas, Brazil')
   })
 
-  it('Create with duplicate email', () => {
+  it('Should show a warning message when adding contact with duplicate email', () => {
     const EMAIL = 'andy.pipkin@andyandlou.co.uk'
     const company = fixtures.company.create.defaultCompany('contact testing')
     cy.loadFixture([company])
