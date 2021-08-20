@@ -18,10 +18,6 @@ services:
       # Required to test Data Hub roles in e2e tests, make sure this var
       # doesn't exists in your .env file as the override below won't work
       OAUTH2_DEV_TOKEN: ${OAUTH2_DEV_TOKEN:-ditStaffToken}
-      # BrowserStack vars cannot be placed in sample.env because they will take
-      # precedence over the ENV vars in CircleCI
-      BROWSERSTACK_ACCESS_KEY: ${BROWSERSTACK_ACCESS_KEY}
-      BROWSERSTACK_USERNAME: ${BROWSERSTACK_USERNAME}
     command: npm run develop
 
   redis:
