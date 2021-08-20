@@ -84,15 +84,11 @@ Instead of running the tests inside the container you can also run them outside 
 Note: Before running the tests (and the containers are up) in a browser go to: `http://localhost:3000` and you'll be redirected to mock-sso. For now (we're working on it) change the domain from `mock-sso` to `localhost` to view the application.
 
 ## Start the Visual tests
-Ensure both env vars have been set:
-    `BROWSERSTACK_USERNAME` and `BROWSERSTACK_ACCESS_KEY`
-
-### Bring up both the Frontend and the Mock API
     make start-mock         // bring up the containers
     make visual-tests       // runs the tests inside the container
     make stop-mock          // stop and remove the containers
 
-### Start the Accessibility tests
+## Start the Accessibility tests
     make start-mock          // bring up the containers
     make a11y-tests          // run the tests inside the container
 
