@@ -96,6 +96,7 @@ function transformInteractionResponseToViewRecord(
     archived_documents_url_path,
     export_countries,
     related_trade_agreements,
+    large_capital_opportunity,
   },
   canShowDocuments = false
 ) {
@@ -129,6 +130,10 @@ function transformInteractionResponseToViewRecord(
     policy_feedback_notes: policy_feedback_notes,
     ...getExportCountries(export_countries),
     related_trade_agreements: getNames(related_trade_agreements),
+    large_capital_opportunity: transformEntityLink(
+      large_capital_opportunity,
+      'investments/opportunities'
+    ),
   }
 
   if (canShowDocuments && archived_documents_url_path) {
