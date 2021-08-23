@@ -54,6 +54,7 @@ export default class HmrcExporter extends React.PureComponent {
 
         <CardDetails
           summary="View key export details"
+          summaryVisuallyHidden={` for ${reference}`}
           showDetails={showDetails}
         >
           <CardTable

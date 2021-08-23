@@ -213,7 +213,10 @@ describe('Company activity feed', () => {
         .should('have.text', '10 Nov 2020GREAT.GOV.UK')
       cy.get('@exportEnquiry')
         .find('details summary')
-        .should('have.text', 'View key details for this enquiry')
+        .should(
+          'have.text',
+          'View key details for this enquiry on great.gov.uk, sent on 10 Nov 2020'
+        )
         .click()
       assertTable(selectors.companyActivity.activityFeed.item(1), exportEnquiry)
     })
@@ -267,7 +270,10 @@ describe('Company activity feed', () => {
 
       cy.get('@maxemailCampaign')
         .find('details summary')
-        .should('have.text', 'View details of this campaign')
+        .should(
+          'have.text',
+          'View details of this campaign British Business Network Update - December 2020'
+        )
         .click()
 
       assertTable(selectors.companyActivity.activityFeed.item(2), [
