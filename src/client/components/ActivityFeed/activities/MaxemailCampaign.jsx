@@ -46,6 +46,7 @@ export default class MaxemailCampaign extends React.PureComponent {
 
         <CardDetails
           summary="View details of this campaign"
+          summaryVisuallyHidden={` ${emailSubject}`}
           showDetails={showDetails}
         >
           <CardTable
