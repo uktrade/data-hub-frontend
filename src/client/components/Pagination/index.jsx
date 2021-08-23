@@ -19,7 +19,7 @@ const StyledNav = styled('nav')`
   line-height: 1;
   display: flex;
   justify-content: space-around;
-  padding: ${SPACING.SCALE_3};
+  padding: ${SPACING.SCALE_3} 0;
 
   ${MEDIA_QUERIES.TABLET} {
     display: block;
