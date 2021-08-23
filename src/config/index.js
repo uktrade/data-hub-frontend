@@ -48,6 +48,9 @@ const config = {
   isDev,
   isProd,
   isTest,
+  marketAccessUrl: envVars.MARKET_ACCESS_URL,
+  findExportersUrl: envVars.FIND_EXPORTERS_URL,
+  dataWorkspaceUrl: envVars.DATA_WORKSPACE_URL,
   version: envVars.GIT_BRANCH,
   noCache: envVars.CACHE_ASSETS ? false : isDev,
   port: envVars.PORT,
@@ -85,7 +88,6 @@ const config = {
   paginationMaxResults: 10000,
   paginationDefaultSize: 10,
   performanceDashboardsUrl: envVars.PERFORMANCE_DASHBOARDS_URL,
-  findExportersUrl: envVars.FIND_EXPORTERS_URL,
   archivedDocumentsBaseUrl: envVars.ARCHIVED_DOCUMENTS_BASE_URL,
   oauth: {
     url: envVars.OAUTH2_AUTH_URL,

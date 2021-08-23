@@ -61,8 +61,11 @@ const envSchema = Joi.object({
   // Data store service API endpoint
   DATA_STORE_SERVICE_POSTCODE_TO_REGION_URL: Joi.string().required(),
 
+  // Url to Data Workspace app
+  DATA_WORKSPACE_URL: Joi.string().uri(),
+  
   // Url to Find Exporters app
-  FIND_EXPORTERS_URL: Joi.string().uri().required(),
+  FIND_EXPORTERS_URL: Joi.string().uri(),
 
   // Force using an HTTPS connection
   FORCE_HTTPS: Joi.when('NODE_ENV', {
@@ -91,6 +94,9 @@ const envSchema = Joi.object({
   LOG_LEVEL: Joi.string()
     .valid('error', 'warn', 'info', 'http', 'verbose', 'debug', 'silly')
     .default('error'),
+
+  // Url to Market Access app
+  MARKET_ACCESS_URL: Joi.string().uri(),
 
   // How long to store dropdown data etc for, in seconds. Defaults to 15 minutes
   METADATA_TTL: Joi.number().integer().default(15 * 60),
