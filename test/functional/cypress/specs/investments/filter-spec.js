@@ -20,6 +20,7 @@ import {
   assertTypeaheadOptionSelected,
   assertQueryParams,
 } from '../../support/assertions'
+import { testTypeahead, testTypeaheadOptionsLength } from '../../support/tests'
 
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
