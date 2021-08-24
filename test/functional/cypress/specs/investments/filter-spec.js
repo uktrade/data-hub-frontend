@@ -1,427 +1,788 @@
+import qs from 'qs'
+
 import urls from '../../../../../src/lib/urls'
 
+import { ukRegionFaker, ukRegionListFaker } from '../../fakers/regions'
+import {
+  clickCheckboxGroupOption,
+  inputDateValue,
+  removeChip,
+  selectFirstAdvisersTypeaheadOption,
+} from '../../support/actions'
 import {
   assertCheckboxGroupOption,
-  assertCheckboxGroupNoneSelected,
+  assertChipsEmpty,
   assertChipExists,
+  assertDateInput,
   assertElementsInOrder,
+  assertFieldEmpty,
+  assertPayload,
+  assertTypeaheadOptionSelected,
+  assertQueryParams,
 } from '../../support/assertions'
-import {
-  selectFirstAdvisersTypeaheadOption,
-  clickCheckboxGroupOption,
-} from '../../support/actions'
-import { testTypeahead, testRemoveChip } from '../../support/tests'
+import { testTypeahead, testTypeaheadOptionsLength } from '../../support/tests'
 
-const PROSPECT_STAGE_ID = '8a320cc9-ae2e-443e-9d26-2f36452c2ced'
-const MY_ADVISER_ID = '7d19d407-9aec-4d06-b190-d3f404627f21'
-const ADVANCED_ENGINEERING_SECTOR_ID = 'af959812-6095-e211-a939-e4115bead28a'
-const UK_COUNTRY_ID = '80756b9a-5d95-e211-a939-e4115bead28a'
-const SOUTH_EAST_UK_REGION_ID = '884cd12a-6095-e211-a939-e4115bead28a'
-const PROJECT_STATUS_ABANDONED = 'abandoned'
-const FDI_INVESTMENT_TYPE_ID = '3e143372-496c-4d1e-8278-6fdd3da9b48b'
-const MEDIUM_LIKELIHOOD_TO_LAND_ID = '683ca57b-bd69-462c-852f-d2177e35b2eb'
-const INVOLVEMENT_LEVEL_UNSPECIFIED = 'unspecified'
-
-describe('Investments Collections Filter', () => {
-  beforeEach(() => {
-    cy.get('[data-test="stage-filter"]').as('stageFilter')
-    cy.get('[data-test="my-projects-filter"]').as('myProjectsFilter')
-    cy.get('[data-test="adviser-filter"]').as('adviserFilter')
-    cy.get('[data-test="sector-filter"]').as('sectorFilter')
-    cy.get('[data-test="country-filter"]').as('countryFilter')
-    cy.get('[data-test="uk-region-filter"]').as('ukRegionFilter')
-    cy.get('[data-test="project-status-filter"]').as('projectStatusFilter')
-    cy.get('[data-test="investment-type-filter"]').as('investmentTypeFilter')
-    cy.get('[data-test="likelihood-to-land-filter"]').as(
-      'likelihoodToLandFilter'
-    )
-    cy.get('[data-test="estimated-land-date-before-filter"]').as(
-      'estimatedDateBeforeFilter'
-    )
-    cy.get('[data-test="estimated-land-date-after-filter"]').as(
-      'estimatedDateAfterFilter'
-    )
-    cy.get('[data-test="actual-land-date-before-filter"]').as(
-      'actualDateBeforeFilter'
-    )
-    cy.get('[data-test="actual-land-date-after-filter"]').as(
-      'actualDateAfterFilter'
-    )
-    cy.get('[data-test="involvement-level-filter"]').as(
-      'involvementLevelFilter'
-    )
+const buildQueryString = (queryParams = {}) =>
+  qs.stringify({
+    // Default query params
+    page: 1,
+    ...queryParams,
   })
 
-  context('when the url contains no state', () => {
-    before(() => {
-      cy.visit(urls.investments.projects.index())
+const minimumPayload = {
+  limit: 10,
+  offset: 0,
+}
+
+const getFinancialYearStart = () => {
+  const now = new Date()
+  return now.month < 3 ? now.getFullYear() - 1 : now.getFullYear()
+}
+
+const yearStartToRange = (yearStart) =>
+  `${yearStart}-${(yearStart + 1).toString().slice(-2)}`
+
+const myAdviser = {
+  id: '7d19d407-9aec-4d06-b190-d3f404627f21',
+  name: 'Barry Oling',
+}
+
+const searchEndpoint = '/api-proxy/v3/search/investment_project'
+const myAdviserEndpoint = `/api-proxy/adviser/${myAdviser.id}`
+const adviserAutocompleteEndpoint = '/api-proxy/adviser/?autocomplete=*'
+const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
+
+describe('Investments Collections Filter', () => {
+  it('should contain filter fields in the right order', () => {
+    const expectedIdentifiers = [
+      'stage-filter',
+      'my-projects-filter',
+      'adviser-filter',
+      'sector-filter',
+      'country-filter',
+      'uk-region-filter',
+      'project-status-filter',
+      'investment-type-filter',
+      'financial-year-filter',
+      'likelihood-to-land-filter',
+      'estimated-land-date-before-filter',
+      'estimated-land-date-after-filter',
+      'actual-land-date-before-filter',
+      'actual-land-date-after-filter',
+      'involvement-level-filter',
+    ]
+
+    cy.visit(urls.investments.projects.index())
+
+    cy.get('[data-test="collection-filters"]').children().as('filterFields')
+
+    assertElementsInOrder({
+      parentElement: '@filterFields',
+      expectedIdentifiers,
     })
+  })
 
-    it('should contain filter fields in the right order', () => {
-      const expectedIdentifiers = [
-        'stage-filter',
-        'my-projects-filter',
-        'adviser-filter',
-        'sector-filter',
-        'country-filter',
-        'uk-region-filter',
-        'project-status-filter',
-        'investment-type-filter',
-        'likelihood-to-land-filter',
-        'estimated-land-date-before-filter',
-        'estimated-land-date-after-filter',
-        'actual-land-date-before-filter',
-        'actual-land-date-after-filter',
-        'involvement-level-filter',
-      ]
-      cy.get('[data-test="company-information-filters"]')
-        .children()
-        .as('filterFields')
+  context('Stage', () => {
+    const element = '[data-test="stage-filter"]'
 
-      assertElementsInOrder({
-        parentElement: '@filterFields',
-        expectedIdentifiers,
-      })
-    })
+    const prospectStageId = '8a320cc9-ae2e-443e-9d26-2f36452c2ced'
+    const expectedPayload = {
+      offset: 0,
+      limit: 10,
+      stage: [prospectStageId],
+    }
 
-    it('should filter by stage', () => {
-      clickCheckboxGroupOption({
-        element: '@stageFilter',
-        value: PROSPECT_STAGE_ID,
-      })
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({ stage: [prospectStageId] })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
       assertCheckboxGroupOption({
-        element: '@stageFilter',
-        value: PROSPECT_STAGE_ID,
+        element,
+        value: prospectStageId,
         checked: true,
       })
       assertChipExists({ label: 'Prospect', position: 1 })
-
-      testRemoveChip({ element: '@stageFilter' })
     })
 
-    it('should filter by my projects', () => {
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+
       clickCheckboxGroupOption({
-        element: '@myProjectsFilter',
-        value: MY_ADVISER_ID,
+        element,
+        value: prospectStageId,
       })
-      assertCheckboxGroupOption({
-        element: '@myProjectsFilter',
-        value: MY_ADVISER_ID,
-        checked: true,
-      })
-      cy.get('@adviserFilter').should('contain', 'Jimmy West')
-      assertChipExists({ label: 'Jimmy West', position: 1 })
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('stage[0]', prospectStageId)
+      assertChipExists({ label: 'Prospect', position: 1 })
 
-      testRemoveChip({ element: '@adviserFilter' })
-    })
-
-    it('should filter by advisers', () => {
-      cy.get('@adviserFilter')
-        .should('contain', 'Search adviser')
-        .find('label')
-        .should('have.text', 'Adviser')
-
-      selectFirstAdvisersTypeaheadOption({
-        element: '@adviserFilter',
-        input: 'puc',
-      })
-      cy.get('@adviserFilter').should('contain', 'Puck Head')
-      assertChipExists({ label: 'Puck Head', position: 1 })
-
-      testRemoveChip({
-        element: '@adviserFilter',
-        placeholder: 'Search adviser',
-      })
-    })
-
-    it('should filter by sector', () => {
-      testTypeahead({
-        element: '@sectorFilter',
-        label: 'Sector',
-        placeholder: 'Search sector',
-        input: 'adv',
-        expectedOption: 'Advanced Engineering',
-      })
-
-      testRemoveChip({
-        element: '@sectorFilter',
-        placeholder: 'Search sector',
-      })
-    })
-
-    it('should filter by country', () => {
-      testTypeahead({
-        element: '@countryFilter',
-        label: 'Country of origin',
-        placeholder: 'Search country',
-        input: 'sin',
-        expectedOption: 'Singapore',
-      })
-
-      testRemoveChip({
-        element: '@countryFilter',
-        placeholder: 'Search country',
-      })
-    })
-
-    it('should filter by uk region', () => {
-      testTypeahead({
-        element: '@ukRegionFilter',
-        label: 'UK region',
-        placeholder: 'Search UK region',
-        input: 'sou',
-        expectedOption: 'South East',
-      })
-
-      testRemoveChip({
-        element: '@ukRegionFilter',
-        placeholder: 'Search UK region',
-      })
-    })
-
-    it('should filter by project status', () => {
-      clickCheckboxGroupOption({
-        element: '@projectStatusFilter',
-        value: PROJECT_STATUS_ABANDONED,
-      })
-      assertCheckboxGroupOption({
-        element: '@projectStatusFilter',
-        value: PROJECT_STATUS_ABANDONED,
-        checked: true,
-      })
-      assertChipExists({ label: 'Abandoned', position: 1 })
-
-      testRemoveChip({ element: '@projectStatusFilter' })
-    })
-
-    it('should filter by investment type', () => {
-      clickCheckboxGroupOption({
-        element: '@investmentTypeFilter',
-        value: FDI_INVESTMENT_TYPE_ID,
-      })
-      assertCheckboxGroupOption({
-        element: '@investmentTypeFilter',
-        value: FDI_INVESTMENT_TYPE_ID,
-        checked: true,
-      })
-      assertChipExists({ label: 'FDI', position: 1 })
-
-      testRemoveChip({ element: '@investmentTypeFilter' })
-    })
-
-    it('should filter by likelihood to land', () => {
-      clickCheckboxGroupOption({
-        element: '@likelihoodToLandFilter',
-        value: MEDIUM_LIKELIHOOD_TO_LAND_ID,
-      })
-      assertCheckboxGroupOption({
-        element: '@likelihoodToLandFilter',
-        value: MEDIUM_LIKELIHOOD_TO_LAND_ID,
-        checked: true,
-      })
-      assertChipExists({ label: 'Likelihood to land: Medium', position: 1 })
-
-      testRemoveChip({ element: '@investmentTypeFilter' })
-    })
-
-    it('should filter the estimated land date before', () => {
-      cy.get('@estimatedDateBeforeFilter')
-        .find('label')
-        .should('have.text', 'Estimated land date before')
-        .next()
-        .click()
-        .type('2020-01-01')
-      assertChipExists({
-        label: 'Estimated land date before: 1 January 2020',
-        position: 1,
-      })
-
-      testRemoveChip({ element: '@estimatedDateBeforeFilter' })
-    })
-
-    it('should filter the estimated land date after', () => {
-      cy.get('@estimatedDateAfterFilter')
-        .find('label')
-        .should('have.text', 'Estimated land date after')
-        .next()
-        .click()
-        .type('2020-01-02')
-      assertChipExists({
-        label: 'Estimated land date after: 2 January 2020',
-        position: 1,
-      })
-
-      testRemoveChip({ element: '@estimatedDateAfterFilter' })
-    })
-
-    it('should filter the actual land date before', () => {
-      cy.get('@actualDateBeforeFilter')
-        .find('label')
-        .should('have.text', 'Actual land date before')
-        .next()
-        .click()
-        .type('2020-02-01')
-      assertChipExists({
-        label: 'Actual land date before: 1 February 2020',
-        position: 1,
-      })
-
-      testRemoveChip({ element: '@actualDateBeforeFilter' })
-    })
-
-    it('should filter the actual land date after', () => {
-      cy.get('@actualDateAfterFilter')
-        .find('label')
-        .should('have.text', 'Actual land date after')
-        .next()
-        .click()
-        .type('2020-02-02')
-      assertChipExists({
-        label: 'Actual land date after: 2 February 2020',
-        position: 1,
-      })
-
-      testRemoveChip({ element: '@actualDateAfterFilter' })
-    })
-
-    it('should filter by involvement level', () => {
-      clickCheckboxGroupOption({
-        element: '@involvementLevelFilter',
-        value: INVOLVEMENT_LEVEL_UNSPECIFIED,
-      })
-      assertCheckboxGroupOption({
-        element: '@involvementLevelFilter',
-        value: INVOLVEMENT_LEVEL_UNSPECIFIED,
-        checked: true,
-      })
-      assertChipExists({
-        label: 'Level of involvement specified: Unspecified',
-        position: 1,
-      })
-
-      testRemoveChip({ element: '@involvementLevelFilter' })
+      removeChip(prospectStageId)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
     })
   })
 
-  context('when the url contains state', () => {
-    before(() => {
-      cy.visit(urls.investments.projects.index(), {
-        qs: {
-          stage: PROSPECT_STAGE_ID,
-          adviser: MY_ADVISER_ID,
-          sector_descends: ADVANCED_ENGINEERING_SECTOR_ID,
-          country_investment_originates_from: UK_COUNTRY_ID,
-          uk_region_location: SOUTH_EAST_UK_REGION_ID,
-          status: PROJECT_STATUS_ABANDONED,
-          investment_type: FDI_INVESTMENT_TYPE_ID,
-          likelihood_to_land: MEDIUM_LIKELIHOOD_TO_LAND_ID,
-          estimated_land_date_before: '2020-01-01',
-          estimated_land_date_after: '2020-01-02',
-          actual_land_date_before: '2020-02-01',
-          actual_land_date_after: '2020-02-02',
-          level_of_involvement_simplified: INVOLVEMENT_LEVEL_UNSPECIFIED,
-        },
+  context('Advisers', () => {
+    const expectedPayload = {
+      ...minimumPayload,
+      adviser: [myAdviser.id],
+    }
+    const advisersFilter = '[data-test="adviser-filter"]'
+    const myProjectsFilter = '[data-test="my-projects-filter"]'
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        adviser: [myAdviser.id],
       })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.intercept('GET', myAdviserEndpoint, myAdviser).as('adviserApiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      cy.wait('@adviserApiRequest')
+      assertPayload('@apiRequest', expectedPayload)
+      /*
+      Asserts the "Adviser typeahead" filter is selected with the
+      current user as this is the same as selecting "My projects".
+      */
+      assertTypeaheadOptionSelected({
+        element: advisersFilter,
+        expectedOption: myAdviser.name,
+      })
+      assertCheckboxGroupOption({
+        element: myProjectsFilter,
+        value: myAdviser.id,
+        checked: true,
+      })
+      assertChipExists({ label: myAdviser.name, position: 1 })
     })
-    it('should set the selected filter values and filter indicators', () => {
-      assertChipExists({ position: 1, label: 'Prospect' })
-      assertCheckboxGroupOption({
-        element: '@stageFilter',
-        value: PROSPECT_STAGE_ID,
-        checked: true,
+
+    it('should filter from "my projects" input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.intercept('GET', myAdviserEndpoint, myAdviser).as('adviserApiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+      clickCheckboxGroupOption({
+        element: myProjectsFilter,
+        value: myAdviser.id,
       })
-      assertChipExists({ position: 2, label: 'Jimmy West' })
-      assertCheckboxGroupOption({
-        element: '@myProjectsFilter',
-        value: MY_ADVISER_ID,
-        checked: true,
+      cy.wait('@adviserApiRequest')
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('adviser', [myAdviser.id])
+      assertChipExists({ label: myAdviser.name, position: 1 })
+      removeChip(myAdviser.id)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(myProjectsFilter)
+    })
+
+    it('should filter from "advisers" input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.intercept('GET', myAdviserEndpoint, myAdviser).as('adviserApiRequest')
+      cy.intercept('GET', adviserAutocompleteEndpoint, {
+        count: 1,
+        results: [myAdviser],
+      }).as('adviserListApiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+      selectFirstAdvisersTypeaheadOption({
+        element: advisersFilter,
+        input: myAdviser.name,
       })
-      cy.get('@adviserFilter').should('contain', 'Jimmy West')
-      assertChipExists({ position: 3, label: 'Advanced Engineering' })
-      cy.get('@sectorFilter').should('contain', 'Advanced Engineering')
-      assertChipExists({ position: 4, label: 'United Kingdom' })
-      cy.get('@countryFilter').should('contain', 'United Kingdom')
-      assertChipExists({ position: 5, label: 'South East' })
-      cy.get('@ukRegionFilter').should('contain', 'South East')
-      assertChipExists({ position: 6, label: 'Abandoned' })
-      assertCheckboxGroupOption({
-        element: '@projectStatusFilter',
-        value: PROJECT_STATUS_ABANDONED,
-        checked: true,
+      cy.wait('@adviserListApiRequest')
+      cy.wait('@adviserApiRequest')
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('adviser', [myAdviser.id])
+      assertTypeaheadOptionSelected({
+        element: advisersFilter,
+        expectedOption: myAdviser.name,
       })
-      assertChipExists({ position: 7, label: 'FDI' })
+      /*
+       Asserts the "My projects" filter checkbox as this should
+      be checked if the adviser chosen is the same as the current user.
+      */
       assertCheckboxGroupOption({
-        element: '@investmentTypeFilter',
-        value: FDI_INVESTMENT_TYPE_ID,
-        checked: true,
-      })
-      assertChipExists({ position: 8, label: 'Likelihood to land: Medium' })
-      assertCheckboxGroupOption({
-        element: '@likelihoodToLandFilter',
-        value: MEDIUM_LIKELIHOOD_TO_LAND_ID,
+        element: myProjectsFilter,
+        value: myAdviser.id,
         checked: true,
       })
       assertChipExists({
-        label: 'Estimated land date before: 1 January 2020',
-        position: 9,
+        label: myAdviser.name,
+        position: 1,
       })
-      cy.get('@estimatedDateBeforeFilter')
-        .find('input')
-        .should('have.attr', 'value', '2020-01-01')
-      assertChipExists({
-        label: 'Estimated land date after: 2 January 2020',
-        position: 10,
+
+      removeChip(myAdviser.id)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(advisersFilter)
+    })
+  })
+
+  context('Sector', () => {
+    const element = '[data-test="sector-filter"]'
+    const aerospaceSectorId = '9538cecc-5f95-e211-a939-e4115bead28a'
+    const expectedPayload = {
+      offset: 0,
+      limit: 10,
+      sector_descends: [aerospaceSectorId],
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        sector_descends: [aerospaceSectorId],
       })
-      cy.get('@estimatedDateAfterFilter')
-        .find('input')
-        .should('have.attr', 'value', '2020-01-02')
-      assertChipExists({
-        label: 'Actual land date before: 1 February 2020',
-        position: 11,
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      cy.get(element).should('contain', 'Aerospace')
+      assertChipExists({ label: 'Aerospace', position: 1 })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      testTypeahead({
+        element,
+        label: 'Sector',
+        placeholder: 'Search sector',
+        input: 'aero',
+        expectedOption: 'Aerospace',
       })
-      cy.get('@actualDateBeforeFilter')
-        .find('input')
-        .should('have.attr', 'value', '2020-02-01')
-      assertChipExists({
-        label: 'Actual land date after: 2 February 2020',
-        position: 12,
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('sector_descends', [aerospaceSectorId])
+      assertChipExists({ label: 'Aerospace', position: 1 })
+      removeChip(aerospaceSectorId)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
+  context('Country', () => {
+    const element = '[data-test="country-filter"]'
+    const brazilCountryId = 'b05f66a0-5d95-e211-a939-e4115bead28a'
+    const expectedPayload = {
+      offset: 0,
+      limit: 10,
+      country_investment_originates_from: [brazilCountryId],
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        country_investment_originates_from: [brazilCountryId],
       })
-      cy.get('@actualDateAfterFilter')
-        .find('input')
-        .should('have.attr', 'value', '2020-02-02')
-      assertChipExists({
-        position: 13,
-        label: 'Level of involvement specified: Unspecified',
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      cy.get(element).should('contain', 'Brazil')
+      assertChipExists({ label: 'Brazil', position: 1 })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      testTypeahead({
+        element,
+        label: 'Country of origin',
+        placeholder: 'Search country',
+        input: 'braz',
+        expectedOption: 'Brazil',
       })
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('country_investment_originates_from', [brazilCountryId])
+      assertChipExists({ label: 'Brazil', position: 1 })
+      removeChip(brazilCountryId)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
+  context('UK Region', () => {
+    const element = '[data-test="uk-region-filter"]'
+    const ukRegion = ukRegionFaker()
+    const ukRegions = [ukRegion, ...ukRegionListFaker(5)]
+    const expectedPayload = {
+      offset: 0,
+      limit: 10,
+      uk_region_location: [ukRegion.id],
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        uk_region_location: [ukRegion.id],
+      })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+
+      cy.intercept('GET', ukRegionsEndpoint, ukRegions).as(
+        'ukRegionsApiRequest'
+      )
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      cy.wait('@ukRegionsApiRequest')
+      assertPayload('@apiRequest', expectedPayload)
+      cy.get(element).should('contain', ukRegion.name)
+      assertChipExists({ label: ukRegion.name, position: 1 })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.intercept('GET', ukRegionsEndpoint, ukRegions).as(
+        'ukRegionsApiRequest'
+      )
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      cy.wait('@ukRegionsApiRequest')
+      cy.wait('@apiRequest')
+
+      testTypeaheadOptionsLength({ element, length: ukRegions.length })
+      testTypeahead({
+        element,
+        label: 'UK region',
+        placeholder: 'Search UK region',
+        input: ukRegion.name,
+        expectedOption: ukRegion.name,
+      })
+
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('uk_region_location', [ukRegion.id])
+      assertChipExists({ label: ukRegion.name, position: 1 })
+      removeChip(ukRegion.id)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
+  context('Project status', () => {
+    const element = '[data-test="project-status-filter"]'
+    const statusAbandoned = 'abandoned'
+    const expectedPayload = {
+      offset: 0,
+      limit: 10,
+      status: [statusAbandoned],
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({ status: [statusAbandoned] })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
       assertCheckboxGroupOption({
-        element: '@involvementLevelFilter',
-        value: INVOLVEMENT_LEVEL_UNSPECIFIED,
+        element,
+        value: statusAbandoned,
         checked: true,
+      })
+      assertChipExists({ label: 'Abandoned', position: 1 })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      clickCheckboxGroupOption({
+        element,
+        value: statusAbandoned,
+      })
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('status[0]', statusAbandoned)
+      assertChipExists({ label: 'Abandoned', position: 1 })
+
+      removeChip(statusAbandoned)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
+  context('Investment type', () => {
+    const element = '[data-test="investment-type-filter"]'
+    const investmentTypeFdi = '3e143372-496c-4d1e-8278-6fdd3da9b48b'
+    const expectedPayload = {
+      offset: 0,
+      limit: 10,
+      investment_type: [investmentTypeFdi],
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        investment_type: [investmentTypeFdi],
+      })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      assertCheckboxGroupOption({
+        element,
+        value: investmentTypeFdi,
+        checked: true,
+      })
+      assertChipExists({ label: 'FDI', position: 1 })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      clickCheckboxGroupOption({
+        element,
+        value: investmentTypeFdi,
+      })
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('investment_type[0]', investmentTypeFdi)
+      assertChipExists({ label: 'FDI', position: 1 })
+
+      removeChip(investmentTypeFdi)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
+  context('Financial year', () => {
+    const element = '[data-test="financial-year-filter"]'
+    const yearStart = getFinancialYearStart()
+    const yearRange = yearStartToRange(yearStart)
+    const expectedPayload = {
+      offset: 0,
+      limit: 10,
+      financial_year_start: [`${yearStart}`],
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        financial_year_start: [yearStart],
+      })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      assertCheckboxGroupOption({
+        element,
+        value: yearStart,
+        checked: true,
+      })
+      assertChipExists({ label: `Current year ${yearRange}`, position: 1 })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      clickCheckboxGroupOption({
+        element,
+        value: yearStart,
+      })
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('financial_year_start[0]', yearStart)
+      assertChipExists({ label: `Current year ${yearRange}`, position: 1 })
+
+      removeChip(yearStart)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
+  context('Likelihood to land', () => {
+    const element = '[data-test="likelihood-to-land-filter"]'
+    const likelihoodToLandMedium = '683ca57b-bd69-462c-852f-d2177e35b2eb'
+    const expectedPayload = {
+      offset: 0,
+      limit: 10,
+      likelihood_to_land: [likelihoodToLandMedium],
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        likelihood_to_land: [likelihoodToLandMedium],
+      })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      assertCheckboxGroupOption({
+        element,
+        value: likelihoodToLandMedium,
+        checked: true,
+      })
+      assertChipExists({ label: 'Medium', position: 1 })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      clickCheckboxGroupOption({
+        element,
+        value: likelihoodToLandMedium,
+      })
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('likelihood_to_land[0]', likelihoodToLandMedium)
+      assertChipExists({ label: 'Medium', position: 1 })
+
+      removeChip(likelihoodToLandMedium)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
+  context('Estimated land dates', () => {
+    const fromElement = '[data-test="estimated-land-date-after-filter"]'
+    const fromDate = '2020-01-01'
+    const formattedFromDate = '1 January 2020'
+    const toElement = '[data-test="estimated-land-date-before-filter"]'
+    const toDate = '2021-10-05'
+    const formattedToDate = '5 October 2021'
+    const expectedPayload = {
+      ...minimumPayload,
+      estimated_land_date_after: fromDate,
+      estimated_land_date_before: toDate,
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        estimated_land_date_after: fromDate,
+        estimated_land_date_before: toDate,
+      })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      assertChipExists({
+        label: `Estimated land date before: ${formattedToDate}`,
+        position: 1,
+      })
+      assertChipExists({
+        label: `Estimated land date after: ${formattedFromDate}`,
+        position: 2,
+      })
+      assertDateInput({
+        element: fromElement,
+        label: 'Estimated land date after',
+        value: fromDate,
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'Estimated land date before',
+        value: toDate,
       })
     })
 
-    it('should clear all filters', () => {
-      cy.get('#filter-chips').find('button').as('chips')
-      cy.get('#clear-filters').as('clearFilters')
-      cy.get('@chips').should('have.length', 13)
-      cy.get('@clearFilters').click()
-      cy.get('@chips').should('have.length', 0)
-      cy.get('@estimatedDateBeforeFilter')
-        .find('input')
-        .should('have.attr', 'value', '')
-      cy.get('@estimatedDateBeforeFilter')
-        .find('input')
-        .should('have.attr', 'value', '')
-      cy.get('@adviserFilter').should('contain', 'Search adviser')
-      cy.get('@sectorFilter').should('contain', 'Search sector')
-      cy.get('@countryFilter').should('contain', 'Search country')
-      cy.get('@ukRegionFilter').should('contain', 'Search UK region')
-      assertCheckboxGroupNoneSelected('@stageFilter')
-      assertCheckboxGroupNoneSelected('@myProjectsFilter')
-      assertCheckboxGroupNoneSelected('@projectStatusFilter')
-      assertCheckboxGroupNoneSelected('@investmentTypeFilter')
-      assertCheckboxGroupNoneSelected('@likelihoodToLandFilter')
-      assertCheckboxGroupNoneSelected('@involvementLevelFilter')
+    it('should filter from user input and remove the chip', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      inputDateValue({
+        element: fromElement,
+        value: fromDate,
+      })
+      cy.wait('@apiRequest')
+      inputDateValue({
+        element: toElement,
+        value: toDate,
+      })
+      assertPayload('@apiRequest', expectedPayload)
+
+      assertQueryParams('estimated_land_date_after', fromDate)
+      assertQueryParams('estimated_land_date_before', toDate)
+      assertChipExists({
+        label: `Estimated land date before: ${formattedToDate}`,
+        position: 1,
+      })
+      assertChipExists({
+        label: `Estimated land date after: ${formattedFromDate}`,
+        position: 2,
+      })
+      assertDateInput({
+        element: fromElement,
+        label: 'Estimated land date after',
+        value: fromDate,
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'Estimated land date before',
+        value: toDate,
+      })
+
+      removeChip(fromDate)
+      cy.wait('@apiRequest')
+      removeChip(toDate)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+
+      assertDateInput({
+        element: fromElement,
+        label: 'Estimated land date after',
+        value: '',
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'Estimated land date before',
+        value: '',
+      })
+    })
+  })
+
+  context('Actual land dates', () => {
+    const fromElement = '[data-test="actual-land-date-after-filter"]'
+    const fromDate = '2020-01-01'
+    const formattedFromDate = '1 January 2020'
+    const toElement = '[data-test="actual-land-date-before-filter"]'
+    const toDate = '2021-10-05'
+    const formattedToDate = '5 October 2021'
+    const expectedPayload = {
+      ...minimumPayload,
+      actual_land_date_after: fromDate,
+      actual_land_date_before: toDate,
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        actual_land_date_after: fromDate,
+        actual_land_date_before: toDate,
+      })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      assertChipExists({
+        label: `Actual land date before: ${formattedToDate}`,
+        position: 1,
+      })
+      assertChipExists({
+        label: `Actual land date after: ${formattedFromDate}`,
+        position: 2,
+      })
+      assertDateInput({
+        element: fromElement,
+        label: 'Actual land date after',
+        value: fromDate,
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'Actual land date before',
+        value: toDate,
+      })
+    })
+
+    it('should filter from user input and remove the chip', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      inputDateValue({
+        element: fromElement,
+        value: fromDate,
+      })
+      cy.wait('@apiRequest')
+      inputDateValue({
+        element: toElement,
+        value: toDate,
+      })
+      assertPayload('@apiRequest', expectedPayload)
+
+      assertQueryParams('actual_land_date_after', fromDate)
+      assertQueryParams('actual_land_date_before', toDate)
+      assertChipExists({
+        label: `Actual land date before: ${formattedToDate}`,
+        position: 1,
+      })
+      assertChipExists({
+        label: `Actual land date after: ${formattedFromDate}`,
+        position: 2,
+      })
+      assertDateInput({
+        element: fromElement,
+        label: 'Actual land date after',
+        value: fromDate,
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'Actual land date before',
+        value: toDate,
+      })
+
+      removeChip(fromDate)
+      cy.wait('@apiRequest')
+      removeChip(toDate)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+
+      assertDateInput({
+        element: fromElement,
+        label: 'Actual land date after',
+        value: '',
+      })
+      assertDateInput({
+        element: toElement,
+        label: 'Actual land date before',
+        value: '',
+      })
+    })
+  })
+
+  context('Involvement level', () => {
+    const element = '[data-test="involvement-level-filter"]'
+    const involvementLevelUnspecified = 'unspecified'
+    const expectedPayload = {
+      offset: 0,
+      limit: 10,
+      level_of_involvement_simplified: [involvementLevelUnspecified],
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        level_of_involvement_simplified: [involvementLevelUnspecified],
+      })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      assertCheckboxGroupOption({
+        element,
+        value: involvementLevelUnspecified,
+        checked: true,
+      })
+      assertChipExists({ label: 'Unspecified', position: 1 })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`${urls.investments.projects.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+
+      clickCheckboxGroupOption({
+        element,
+        value: involvementLevelUnspecified,
+      })
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams(
+        'level_of_involvement_simplified[0]',
+        involvementLevelUnspecified
+      )
+      assertChipExists({ label: 'Unspecified', position: 1 })
+
+      removeChip(involvementLevelUnspecified)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
     })
   })
 })

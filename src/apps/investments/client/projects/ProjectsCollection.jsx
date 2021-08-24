@@ -164,6 +164,14 @@ const ProjectsCollection = ({
           groupId="investment-type-filter"
         />
         <RoutedCheckboxGroupField
+          legend="Financial Year"
+          name="financial_year_start"
+          qsParam="financial_year_start"
+          options={optionMetadata.financialYearOptions}
+          selectedOptions={selectedFilters.financialYears.options}
+          data-test="financial-year-filter"
+        />
+        <RoutedCheckboxGroupField
           legend="Likelihood to land"
           name="likelihood_to_land"
           qsParam="likelihood_to_land"
