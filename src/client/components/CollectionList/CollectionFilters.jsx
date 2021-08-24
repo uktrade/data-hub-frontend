@@ -7,7 +7,7 @@ const CollectionFilters = ({ children, taskProps }) => {
     <GridCol setWidth="one-third">
       <Task.Status {...taskProps}>
         {() => (
-          <nav aria-label="Filters" data-test="company-information-filters">
+          <nav aria-label="Filters" data-test="collection-filters">
             {children}
           </nav>
         )}
