@@ -3,6 +3,7 @@ import axios from 'axios'
 import { transformResponseToCollection } from './transformers'
 import urls from '../../../lib/urls'
 import { getMetadataOptions } from '../../../client/metadata'
+import { getPageOffset } from '../../../lib/pagination'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 
@@ -21,13 +22,13 @@ export const getContacts = ({
     .post('/api-proxy/v3/search/contact', {
       name,
       limit,
+      offset: getPageOffset({ limit, page }),
       sortby,
       archived,
       company_name,
       address_country,
       company_uk_region,
       company_sector_descends,
-      offset: limit * (page - 1),
     })
     .then(({ data }) => transformResponseToCollection(data), handleError)
 

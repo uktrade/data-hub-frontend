@@ -78,7 +78,11 @@ function Pagination({ totalPages, activePage, getPageUrl, onPageClick }) {
   }
 
   return (
-    <StyledNav aria-label={`pagination: total ${totalPages} pages`}>
+    <StyledNav
+      data-test="pagination"
+      data-total-pages={totalPages}
+      aria-label={`pagination: total ${totalPages} pages`}
+    >
       <StyledPaginationList>
         {visiblePieces.map(
           ({ type, pageNumber, isActive, isDisabled }, index) => {

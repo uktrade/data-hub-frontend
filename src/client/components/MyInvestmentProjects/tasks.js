@@ -9,7 +9,8 @@ export const fetchMyInvestmentsList = ({
 }) => {
   const payload = {
     limit,
-    offset: limit * (page - 1),
+    // API is limited to a maximum of 10,000 results
+    offset: Math.min(limit * (page - 1), 10000 - limit) || 0,
     adviser: adviser.id,
     sortby: sort,
   }
