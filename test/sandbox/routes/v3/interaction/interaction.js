@@ -2,6 +2,7 @@ var interaction = require('../../../fixtures/v3/interaction/interaction.json')
 var interactionWithDocumentLink = require('../../../fixtures/v3/interaction/interaction-with-document-link.json')
 var interactionWithoutDocumentLink = require('../../../fixtures/v3/interaction/interaction-without-document-link.json')
 var interactions = require('../../../fixtures/v3/interaction/interactions.json')
+var no_interactions = require('../../../fixtures/v3/interaction/no_interactions.json')
 var interactionByInvestmentProjectId = require('../../../fixtures/v3/interaction/interaction-by-investment-project-id.json')
 var interactionByCompanyId = require('../../../fixtures/v3/interaction/interaction-by-company-id.json')
 var interactionByContactId = require('../../../fixtures/v3/interaction/interaction-by-contact-id.json')
@@ -26,6 +27,10 @@ var getInteractions = function (req, res) {
     req.query.investment_project_id === '5d341b34-1fc8-4638-b4b1-a0922ebf401e'
   ) {
     return res.json(interactionByInvestmentProjectId)
+  }
+
+  if (req.query.event_id === 'b93d4273-36fe-4008-ac40-fbc197910791') {
+    return res.json(no_interactions)
   }
 
   res.json(interactions)

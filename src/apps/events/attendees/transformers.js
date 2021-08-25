@@ -56,9 +56,7 @@ async function createContactItemToAttendeeSearchResult(req, event) {
     limit: 9999,
   })
 
-  console.log("RETURNING GENERATED FUNCTION")
   return (contact) => {
-    console.log("GENERATED FUNCTION TRIGGERED")
     const isExistingAttendee = existingAttendee(contact, attendees)
 
     //so this basically just creates an item to be displayed that just links to the attendee creation page

@@ -21,14 +21,14 @@ describe('Event attendee search', () => {
     cy.get('@form').next().as('message')
   })
 
-  it('Figure out what we are actually dealing with here', () => {
-    cy.get('@input').type('lambda')
-    cy.get('@button').click()
-    cy.get('.c-collection header').click()
-    cy.pause()
-  })
-
   context('with results', () => {
+    it('should add a new attendee', () => {
+      cy.get('@input').type('lambda')
+      cy.get('@button').click()
+      cy.get("[data-test='item-contact-0']").click()
+      cy.get('.c-message').should('contain', 'Event attendee added')
+    })
+
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: urls.dashboard(),
