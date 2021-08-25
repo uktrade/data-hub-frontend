@@ -36,7 +36,8 @@ const getCompanies = ({
   return axios
     .post('/api-proxy/v4/search/company', {
       limit,
-      offset: limit * (page - 1) || 0,
+      // API is limited to a maximum of 10,000 results
+      offset: Math.min(limit * (page - 1), 10000 - limit) || 0,
       headquarter_type,
       name,
       sector_descends,

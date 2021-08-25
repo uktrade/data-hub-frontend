@@ -21,13 +21,14 @@ export const getContacts = ({
     .post('/api-proxy/v3/search/contact', {
       name,
       limit,
+      // API is limited to a maximum of 10,000 results
+      offset: Math.min(limit * (page - 1), 10000 - limit) || 0,
       sortby,
       archived,
       company_name,
       address_country,
       company_uk_region,
       company_sector_descends,
-      offset: limit * (page - 1),
     })
     .then(({ data }) => transformResponseToCollection(data), handleError)
 
