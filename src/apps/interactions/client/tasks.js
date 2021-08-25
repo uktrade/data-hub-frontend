@@ -8,6 +8,7 @@ import {
 } from './transformers'
 
 import { getMetadataOptions } from '../../../client/metadata'
+import { getPageOffset } from '../../../lib/pagination'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 
@@ -64,9 +65,9 @@ const getInteractions = ({
   axios
     .post('/api-proxy/v3/search/interaction', {
       limit,
+      offset: getPageOffset({ limit, page }),
       kind,
       dit_participants__adviser,
-      offset: limit * (page - 1),
       sortby,
       date_before,
       date_after,
