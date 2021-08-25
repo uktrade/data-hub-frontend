@@ -24,8 +24,9 @@ export const getOrders = ({
 }) =>
   axios
     .post('/api-proxy/v3/search/order', {
-      offset: limit * (page - 1),
       limit,
+      // API is limited to a maximum of 10,000 results
+      offset: Math.min(limit * (page - 1), 10000 - limit) || 0,
       status,
       sortby,
       uk_region,
