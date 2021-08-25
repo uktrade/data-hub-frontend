@@ -28,6 +28,7 @@ const FilteredCollectionList = ({
   isComplete,
   children,
   collectionName,
+  maxItemsToPaginate = 10000,
   maxItemsToDownload,
   selectedFilters,
   baseDownloadLink = null,
@@ -38,6 +39,7 @@ const FilteredCollectionList = ({
   titleRenderer = null,
 }) => {
   const totalPages = Math.ceil(count / itemsPerPage)
+  const maxPages = Math.ceil(maxItemsToPaginate / itemsPerPage)
   return (
     <Route>
       {({ history, location }) => {
@@ -94,7 +96,7 @@ const FilteredCollectionList = ({
                         </ol>
                         <RoutedPagination
                           qsParamName="page"
-                          totalPages={totalPages}
+                          totalPages={Math.min(totalPages, maxPages)}
                         />
                       </>
                     )
@@ -132,6 +134,7 @@ FilteredCollectionList.propTypes = {
       query: PropTypes.object.isRequired,
     }),
   }),
+  maxItemsToPaginate: PropTypes.number,
   maxItemsToDownload: PropTypes.number,
   selectedFilters: PropTypes.shape({
     label: PropTypes.string,

@@ -26,6 +26,7 @@ const CollectionList = ({
   items,
   activePage = 1,
   onPageClick,
+  maxItemsToPaginate = 10000,
   maxItemsToDownload,
   baseDownloadLink,
   entityName,
@@ -34,6 +35,7 @@ const CollectionList = ({
   metadataRenderer,
 }) => {
   const totalPages = Math.ceil(count / itemsPerPage)
+  const maxPages = Math.ceil(maxItemsToPaginate / itemsPerPage)
   return (
     <GridRow>
       <GridCol setWidth="full">
@@ -86,7 +88,7 @@ const CollectionList = ({
                     ))}
                   </ol>
                   <Pagination
-                    totalPages={totalPages}
+                    totalPages={Math.min(totalPages, maxPages)}
                     onPageClick={onPageClick}
                     activePage={activePage}
                   />
@@ -123,6 +125,7 @@ CollectionList.propTypes = {
       query: PropTypes.object.isRequired,
     }),
   }),
+  maxItemsToPaginate: PropTypes.number,
   maxItemsToDownload: PropTypes.number,
   onPageClick: PropTypes.func.isRequired,
   addItemUrl: PropTypes.string,
