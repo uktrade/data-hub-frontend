@@ -5,13 +5,10 @@ const { getContact } = require('../../../contacts/repos')
 const { fetchEventAttendees } = require('../repos')
 
 async function createAttendee(req, res, next) {
-  //yay we're getting here!!!
-
   try {
     const { user: adviser } = req.session
     const contactId = req.params.contactId
     const { event, features } = res.locals
-
 
     if (!event || !contactId) {
       throw new Error('Missing eventId or contactId')
@@ -30,7 +27,7 @@ async function createAttendee(req, res, next) {
       )
       return res.redirect(`/events/${event.id}/attendees`)
     }
-
+    //should get triggered now
     const contact = await getContact(req, contactId, features) //when creating a new attendee we need to get contact information
 
     const serviceDelivery = {

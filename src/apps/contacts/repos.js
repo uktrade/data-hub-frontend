@@ -7,11 +7,13 @@ const config = require('../../config')
 //this code is used in like two places that aren't specifically to do with contacts?
 // I think I can safely say that this is at the very least untested, if not completely dead code
 function getContact(req, contactId, features = {}) {
-  //address-area-contact-required-field
-  //why isn't this do anything? Is this even used?
-  const addressAreaValidationEnabled = false //make true for now so we can see what's supposed to fail//features['address-area-contact-required-field']
+  const addressAreaValidationEnabled =
+    features['address-area-contact-required-field']
   const endpointVersion = addressAreaValidationEnabled ? 'v4' : 'v3'
-  return authorisedRequest(req, `${config.apiRoot}/${endpointVersion}/contact/${contactId}`)
+  return authorisedRequest(
+    req,
+    `${config.apiRoot}/${endpointVersion}/contact/${contactId}`
+  )
 }
 
 function saveContact(req, contact) {
