@@ -38,8 +38,9 @@ const FilteredCollectionList = ({
   defaultQueryParams,
   titleRenderer = null,
 }) => {
-  const totalPages = Math.ceil(count / itemsPerPage)
-  const maxPages = Math.ceil(maxItemsToPaginate / itemsPerPage)
+  const totalPages = Math.ceil(
+    Math.min(count, maxItemsToPaginate) / itemsPerPage
+  )
   return (
     <Route>
       {({ history, location }) => {
@@ -96,7 +97,7 @@ const FilteredCollectionList = ({
                         </ol>
                         <RoutedPagination
                           qsParamName="page"
-                          totalPages={Math.min(totalPages, maxPages)}
+                          totalPages={totalPages}
                         />
                       </>
                     )

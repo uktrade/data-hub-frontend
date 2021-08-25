@@ -5,6 +5,7 @@ import {
   getHeadquarterTypeOptions,
   getMetadataOptions,
 } from '../../../client/metadata'
+import { getPageOffset } from '../../../lib/pagination'
 
 import { transformResponseToCompanyCollection } from './transformers'
 
@@ -36,8 +37,7 @@ const getCompanies = ({
   return axios
     .post('/api-proxy/v4/search/company', {
       limit,
-      // API is limited to a maximum of 10,000 results
-      offset: Math.min(limit * (page - 1), 10000 - limit) || 0,
+      offset: getPageOffset({ limit, page }),
       headquarter_type,
       name,
       sector_descends,
