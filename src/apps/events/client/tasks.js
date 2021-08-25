@@ -2,6 +2,7 @@ import axios from 'axios'
 
 import urls from '../../../lib/urls'
 import { getMetadataOptions } from '../../../client/metadata'
+import { getPageOffset } from '../../../lib/pagination'
 
 import { transformResponseToEventCollection } from './transformers'
 
@@ -22,8 +23,7 @@ const getEvents = ({
   axios
     .post('/api-proxy/v3/search/event', {
       limit,
-      // API is limited to a maximum of 10,000 results
-      offset: Math.min(limit * (page - 1), 10000 - limit) || 0,
+      offset: getPageOffset({ limit, page }),
       sortby,
       name,
       organiser,

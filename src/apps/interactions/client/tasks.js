@@ -8,6 +8,7 @@ import {
 } from './transformers'
 
 import { getMetadataOptions } from '../../../client/metadata'
+import { getPageOffset } from '../../../lib/pagination'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 
@@ -64,8 +65,7 @@ const getInteractions = ({
   axios
     .post('/api-proxy/v3/search/interaction', {
       limit,
-      // API is limited to a maximum of 10,000 results
-      offset: Math.min(limit * (page - 1), 10000 - limit) || 0,
+      offset: getPageOffset({ limit, page }),
       kind,
       dit_participants__adviser,
       sortby,

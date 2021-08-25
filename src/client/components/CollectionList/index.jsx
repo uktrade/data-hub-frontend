@@ -34,8 +34,9 @@ const CollectionList = ({
   addItemUrl,
   metadataRenderer,
 }) => {
-  const totalPages = Math.ceil(count / itemsPerPage)
-  const maxPages = Math.ceil(maxItemsToPaginate / itemsPerPage)
+  const totalPages = Math.ceil(
+    Math.min(count, maxItemsToPaginate) / itemsPerPage
+  )
   return (
     <GridRow>
       <GridCol setWidth="full">
@@ -88,7 +89,7 @@ const CollectionList = ({
                     ))}
                   </ol>
                   <Pagination
-                    totalPages={Math.min(totalPages, maxPages)}
+                    totalPages={totalPages}
                     onPageClick={onPageClick}
                     activePage={activePage}
                   />
