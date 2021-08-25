@@ -60,6 +60,8 @@ function getContactAsFormData(contact) {
  * @returns {Promise} Returns a promise that resolves to a copy of the saved contact in API
  * format after the server has saved it
  */
+// DEADC0D3
+/*
 function saveContactForm(req, contactForm) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -85,5 +87,5 @@ function saveContactForm(req, contactForm) {
     }
   })
 }
-
-module.exports = { getContactAsFormData, saveContactForm }
+*/
+module.exports = { getContactAsFormData/*, saveContactForm*/ }

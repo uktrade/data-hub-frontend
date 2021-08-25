@@ -16,7 +16,9 @@ function getContact(req, contactId, features = {}) {
   )
 }
 
-function saveContact(req, contact) {
+//this code seems to have one dead reference and that's it, I think all the saving is just being done through the proxy, so we can just get rid of this
+// DEADC0D3
+/*function saveContact(req, contact) {
   const options = {
     body: contact,
   }
@@ -32,6 +34,7 @@ function saveContact(req, contact) {
 
   return authorisedRequest(req, options)
 }
+*/
 
 function archiveContact(req, contactId, reason) {
   const options = {
@@ -50,6 +53,7 @@ function unarchiveContact(req, contactId) {
 }
 
 async function getContactsForCompany(req, companyId) {
+  //there's a v4 list but we don't really need to worry about using it atm I don't think
   const response = await authorisedRequest(req, {
     url: `${config.apiRoot}/v3/contact`,
     qs: {
@@ -71,7 +75,7 @@ function getContactAuditLog(req, contactId, page = 1) {
 
 module.exports = {
   getContact,
-  saveContact,
+  //saveContact,
   archiveContact,
   unarchiveContact,
   getContactsForCompany,
