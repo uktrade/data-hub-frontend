@@ -277,9 +277,16 @@ const assertFieldTextarea = ({ element, label, hint, value }) =>
     .then(($el) => value ?? cy.wrap($el).should('have.text', value || ''))
 
 const assertFieldAddress = ({ element, hint = null, value = {} }) => {
-  const isUkBased = value.country.name === 'United Kingdom'
-  const hasStateField =
-    value.country.name === 'Canada' || value.country.name === 'United States'
+  const isUKBased = value.country.name === 'United Kingdom'
+  const isUSBased = value.country.name === 'United States'
+  const isCanadianBased = value.country.name === 'Canada'
+  const hasStateField = isUSBased || isCanadianBased
+  const postcodeLabel = () => {
+    if (isUSBased) return 'ZIP Code'
+    if (isCanadianBased) return 'Postal Code'
+    if (isUKBased) return 'Postcode'
+    return 'Postcode (optional)'
+  }
   let addressElements = [
     {
       assert: ({ element }) => cy.wrap(element).should('have.text', 'Address'),
@@ -288,11 +295,11 @@ const assertFieldAddress = ({ element, hint = null, value = {} }) => {
       assert: ({ element }) => cy.wrap(element).should('have.text', hint),
     },
     {
-      label: isUkBased ? 'Postcode' : 'Postcode (optional)',
+      label: postcodeLabel(),
       value: value.postcode,
       assert: assertFieldInput,
     },
-    isUkBased && {
+    isUKBased && {
       assert: ({ element }) =>
         cy
           .wrap(element)
@@ -325,7 +332,7 @@ const assertFieldAddress = ({ element, hint = null, value = {} }) => {
     addressElements = [
       ...addressElements,
       {
-        label: value.country.name === 'Canada' ? 'Province' : 'State',
+        label: isCanadianBased ? 'Province' : 'State',
         value: value.area.name,
         assert: assertFieldSelect,
       },

@@ -47,6 +47,8 @@ async function renderEditCompanyForm(req, res, next) {
           features: {
             areaFormField:
               res.locals.features['edit-business-details-area-fields'],
+            postcodeValidation:
+              res.locals.features['address-postcode-company-required-field'],
           },
         },
       })

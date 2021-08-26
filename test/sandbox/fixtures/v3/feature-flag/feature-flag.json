@@ -78,5 +78,9 @@
   {
     "code": "address-area-contact-required-field",
     "is_active": true
+  },
+  {
+    "code": "address-postcode-company-required-field",
+    "is_active": true
   }
 ]

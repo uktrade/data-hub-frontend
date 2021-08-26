@@ -22,6 +22,10 @@ const validateContactForm = function (formData) {
 }
 
 exports.contact = function (req, res) {
+  // This is here to allow creation of new contacts. The email must contain "new"
+  if (req.query.email?.includes('new')) {
+    return res.json([])
+  }
   if (req.query.company_id === lambdaPlc.id) {
     // eslint-disable-next-line no-console
     console.log(

@@ -13,7 +13,7 @@ function computeVisiblePieces(
 ) {
   const visiblePieces = []
   let lowerLimit = activePage
-  let upperLimit = activePage
+  let upperLimit = Math.min(activePage, numberOfPages)
 
   visiblePieces.push({
     type: PAGINATION_PIECE_PREVIOUS,
@@ -39,7 +39,7 @@ function computeVisiblePieces(
       pageNumber: 1,
       isActive: activePage === 1,
     })
-    visiblePieces.push({ type: PAGINATION_PIECE_ELLIPSIS })
+    if (activePage > 4) visiblePieces.push({ type: PAGINATION_PIECE_ELLIPSIS })
   }
 
   for (let i = lowerLimit; i <= upperLimit; i += 1) {
