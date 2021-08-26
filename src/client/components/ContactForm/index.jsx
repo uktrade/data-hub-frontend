@@ -157,6 +157,7 @@ const _ContactForm = ({
               // we need to figure out how to get the feature here
               //  const isContactAreaRequiredEnabled = res.locals.features['address-area-contact-required-field']
               // it looks like this works for both creating and editing without any additional changes elsewhere?
+              // I think that aside from the getting used in src/apps/my-pipeline/client/tasks.js this is the only other place where v3 contacts is used
 
               const response = await axios({
                 url: update

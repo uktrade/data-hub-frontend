@@ -57,6 +57,7 @@ export async function getPipelineItem({ pipelineItemId }) {
   return data
 }
 
+//this will need to be switchable to v4
 export async function getCompanyContacts({ companyId }) {
   const { data } = await axios.get('/api-proxy/v3/contact', {
     params: { company_id: companyId, limit: 500 },
