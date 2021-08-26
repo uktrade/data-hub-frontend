@@ -1,12 +1,12 @@
-const { merge } = require('lodash')
+//const { merge } = require('lodash')
 
 const {
-  convertNestedObjects,
-  convertYesNoToBoolean,
+  //convertNestedObjects,
+  //convertYesNoToBoolean,
   getPropertyId,
   nullEmptyFields,
 } = require('../../../lib/property-helpers')
-const contactsRepository = require('../repos')
+//const contactsRepository = require('../repos')
 
 /**
  * Accepts an API contact object and converts it into a format compatible with a HTML form
@@ -88,4 +88,4 @@ function saveContactForm(req, contactForm) {
   })
 }
 */
-module.exports = { getContactAsFormData/*, saveContactForm*/ }
+module.exports = { getContactAsFormData /*, saveContactForm*/ }

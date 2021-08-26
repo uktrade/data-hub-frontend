@@ -8,6 +8,7 @@ async function renderEditPipeline(req, res, next) {
       props: {
         pipelineItemId,
         sectors: await getOptions(req, 'sector'),
+        features: res.locals.features,
       },
     })
   } catch (e) {
