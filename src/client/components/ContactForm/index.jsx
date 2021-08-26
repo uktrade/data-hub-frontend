@@ -70,6 +70,7 @@ const _ContactForm = ({
   duplicateEmail,
   dispatch,
   id,
+  features,
   ...props
 }) => (
   <CompanyResource id={companyId}>
@@ -154,15 +155,15 @@ const _ContactForm = ({
                 }),
               }
 
-              // we need to figure out how to get the feature here
-              //  const isContactAreaRequiredEnabled = res.locals.features['address-area-contact-required-field']
-              // it looks like this works for both creating and editing without any additional changes elsewhere?
-              // I think that aside from the getting used in src/apps/my-pipeline/client/tasks.js this is the only other place where v3 contacts is used
-
+              const contactEndpointVersion = features[
+                'address-area-contact-required-field'
+              ]
+                ? 'v4'
+                : 'v3'
               const response = await axios({
                 url: update
-                  ? `/api-proxy/v3/contact/${contactId}`
-                  : '/api-proxy/v3/contact',
+                  ? `/api-proxy/${contactEndpointVersion}/contact/${contactId}`
+                  : `/api-proxy/${contactEndpointVersion}/contact`,
                 method: update ? 'PATCH' : 'POST',
                 data: payload,
               })
@@ -347,6 +348,10 @@ const requiredProps = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   }),
+  features: PropTypes.shape({
+    code: PropTypes.string,
+    is_active: PropTypes.string,
+  }),
 }
 
 ContactForm.propTypes = {
@@ -371,7 +376,7 @@ ContactForm.propTypes = {
   notes: PropTypes.string,
 }
 
-export const CreateContactForm = ({ companyId, id }) => (
+export const CreateContactForm = ({ companyId, features, id }) => (
   <State>
     {(state) => {
       const { origin_url } = qs.parse(state.router.location.search)
@@ -379,6 +384,7 @@ export const CreateContactForm = ({ companyId, id }) => (
         <ContactForm
           companyId={companyId}
           id={id}
+          features={features}
           redirectTo={
             origin_url &&
             (({ id, name }) => {
@@ -397,7 +403,7 @@ export const CreateContactForm = ({ companyId, id }) => (
 
 CreateContactForm.propTypes = requiredProps
 
-export const UpdateContactForm = ({ contactId, id }) => (
+export const UpdateContactForm = ({ contactId, features, id }) => (
   <ContactResource id={contactId}>
     {(contact) => (
       <ContactForm
@@ -406,6 +412,7 @@ export const UpdateContactForm = ({ contactId, id }) => (
         contactId={contact.id}
         update={true}
         companyId={contact.company.id}
+        features={features}
       />
     )}
   </ContactResource>
@@ -416,9 +423,9 @@ UpdateContactForm.propTypes = {
   contactId: PropTypes.string.isRequired,
 }
 
-export default ({ contactId, companyId, id }) =>
+export default ({ contactId, companyId, features, id }) =>
   contactId ? (
-    <UpdateContactForm contactId={contactId} id={id} />
+    <UpdateContactForm contactId={contactId} features={features} id={id} />
   ) : (
-    <CreateContactForm companyId={companyId} id={id} />
+    <CreateContactForm companyId={companyId} features={features} id={id} />
   )

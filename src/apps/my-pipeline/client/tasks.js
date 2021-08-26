@@ -58,10 +58,16 @@ export async function getPipelineItem({ pipelineItemId }) {
 }
 
 //this will need to be switchable to v4
-export async function getCompanyContacts({ companyId }) {
-  const { data } = await axios.get('/api-proxy/v3/contact', {
-    params: { company_id: companyId, limit: 500 },
-  })
+export async function getCompanyContacts({ companyId, features }) {
+  const contactEndpointVersion = features['address-area-contact-required-field']
+    ? 'v4'
+    : 'v3'
+  const { data } = await axios.get(
+    `/api-proxy/${contactEndpointVersion}/contact`,
+    {
+      params: { company_id: companyId, limit: 500 },
+    }
+  )
 
   return data.results
 }

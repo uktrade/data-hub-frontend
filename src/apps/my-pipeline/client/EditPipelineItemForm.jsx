@@ -51,10 +51,10 @@ function formatInitialValues(values) {
   }
 }
 
-function GetCompanyContacts({ task, companyId, children }) {
+function GetCompanyContacts({ task, companyId, features, children }) {
   useEffect(() => {
     task.start({
-      payload: { companyId },
+      payload: { companyId, features },
       onSuccessDispatch: PIPELINE__GET_COMPANY_CONTACTS,
     })
   }, [companyId])
@@ -68,6 +68,7 @@ function EditPipelineItemForm({
   sectors,
   currentPipelineItem,
   savedPipelineItem,
+  features,
 }) {
   useEffect(() => {
     if (savedPipelineItem) {
@@ -108,8 +109,10 @@ function EditPipelineItemForm({
                   currentPipelineItem={currentPipelineItem}
                 >
                   {() => (
+                    //this needs features passed into it
                     <GetCompanyContacts
                       task={getCompanyContacts}
+                      features={features}
                       companyId={currentPipelineItem.company.id}
                     >
                       <LoadingBox
@@ -155,6 +158,10 @@ EditPipelineItemForm.propTypes = {
   pipelineItemId: PropTypes.string,
   currentPipeline: PipelineItemPropType,
   savedPipelineItem: PipelineItemPropType,
+  features: PropTypes.shape({
+    code: PropTypes.string,
+    is_active: PropTypes.string,
+  }),
 }
 
 export default EditPipelineItemForm
