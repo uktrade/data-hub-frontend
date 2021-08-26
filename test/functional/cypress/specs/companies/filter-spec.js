@@ -231,7 +231,6 @@ describe('Companies Collections Filter', () => {
       assertChipExists({ label: 'Brazil', position: 1 })
     })
 
-    //this is breaking, why?
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')

@@ -26,6 +26,8 @@ const ALLOWLIST = [
   '/v4/company/:id/update-one-list-core-team',
   '/v4/proposition',
   '/v3/contact',
+  '/v4/contact',
+  '/v4/contact/:id',
   '/v3/search/contact',
   '/v4/company',
   '/v4/company/:id/assign-regional-account-manager',
