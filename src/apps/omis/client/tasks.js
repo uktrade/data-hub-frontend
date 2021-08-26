@@ -2,6 +2,7 @@ import axios from 'axios'
 
 import { getMetadataOptions } from '../../../client/metadata'
 import { transformResponseToCollection } from './transformers'
+import { getPageOffset } from '../../../lib/pagination'
 import { metadata } from '../../../lib/urls'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
@@ -24,8 +25,8 @@ export const getOrders = ({
 }) =>
   axios
     .post('/api-proxy/v3/search/order', {
-      offset: limit * (page - 1),
       limit,
+      offset: getPageOffset({ limit, page }),
       status,
       sortby,
       uk_region,

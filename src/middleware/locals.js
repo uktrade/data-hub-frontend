@@ -26,6 +26,9 @@ module.exports = function locals(req, res, next) {
     GOOGLE_TAG_MANAGER_KEY: config.googleTagManagerKey,
     IS_XHR: req.xhr,
     QUERY: req.query,
+    MARKET_ACCESS_URL: config.marketAccessUrl,
+    FIND_EXPORTERS_URL: config.findExportersUrl,
+    DATA_WORKSPACE_URL: config.dataWorkspaceUrl,
 
     getPageTitle() {
       const items = res.breadcrumb().map((item) => item.text)

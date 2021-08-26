@@ -49,6 +49,7 @@ export default class Interaction extends React.PureComponent {
 
         <CardDetails
           summary={`View ${transformed.typeText} details`}
+          summaryVisuallyHidden={` for ${transformed.subject}`}
           link={{
             url: transformed.url,
             text: `You can view more on the ${transformed.typeText} detail page`,

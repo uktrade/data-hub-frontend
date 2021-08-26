@@ -459,7 +459,7 @@ function App() {
       </Mount>
       <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
       <Mount selector="#contact-form">
-        {(props) => <ContactForm {...props} />}
+        {(props) => <ContactForm {...props} id="contact-form" />}
       </Mount>
     </Provider>
   )

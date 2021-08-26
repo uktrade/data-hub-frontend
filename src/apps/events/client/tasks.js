@@ -2,6 +2,7 @@ import axios from 'axios'
 
 import urls from '../../../lib/urls'
 import { getMetadataOptions } from '../../../client/metadata'
+import { getPageOffset } from '../../../lib/pagination'
 
 import { transformResponseToEventCollection } from './transformers'
 
@@ -22,7 +23,7 @@ const getEvents = ({
   axios
     .post('/api-proxy/v3/search/event', {
       limit,
-      offset: limit * (page - 1) || 0,
+      offset: getPageOffset({ limit, page }),
       sortby,
       name,
       organiser,

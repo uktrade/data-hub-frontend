@@ -214,13 +214,16 @@ describe('Interactions Collections Filter', () => {
       ...minimumPayload,
       dit_participants__adviser: [adviser.id],
     }
+
     it('should filter from the url', () => {
       const queryString = buildQueryString({
         dit_participants__adviser: [adviser.id],
       })
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
       cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
       cy.visit(`${interactions.index()}?${queryString}`)
       cy.wait('@adviserApiRequest')
+      assertPayload('@apiRequest', expectedPayload)
       /*
       Asserts the "Adviser typeahead" filter is selected with the
       current user as this is the same as selecting "My interactions".
