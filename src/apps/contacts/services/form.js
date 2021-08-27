@@ -1,12 +1,7 @@
-//const { merge } = require('lodash')
-
 const {
-  //convertNestedObjects,
-  //convertYesNoToBoolean,
   getPropertyId,
   nullEmptyFields,
 } = require('../../../lib/property-helpers')
-//const contactsRepository = require('../repos')
 
 /**
  * Accepts an API contact object and converts it into a format compatible with a HTML form
@@ -52,40 +47,4 @@ function getContactAsFormData(contact) {
   return result
 }
 
-/**
- * Accepts a contact posted from a form and converts it into the API format before saving it.
- *
- * @param {string} req Originating request
- * @param {Object} contactForm A flat form format contact
- * @returns {Promise} Returns a promise that resolves to a copy of the saved contact in API
- * format after the server has saved it
- */
-// DEADC0D3
-/*
-function saveContactForm(req, contactForm) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const contactFormWithYesNoAsBool = convertYesNoToBoolean(contactForm)
-      const contactFormWithEmptyAsNull = nullEmptyFields(
-        contactFormWithYesNoAsBool
-      )
-      const transformedContactForm = convertNestedObjects(
-        contactFormWithEmptyAsNull,
-        ['title', 'company', 'address_country']
-      )
-
-      const contactFormForApiRequest = merge({}, transformedContactForm, {
-        accepts_dit_email_marketing: !!contactForm.accepts_dit_email_marketing,
-      })
-      const savedContact = await contactsRepository.saveContact(
-        req,
-        contactFormForApiRequest
-      )
-      resolve(savedContact)
-    } catch (error) {
-      reject(error)
-    }
-  })
-}
-*/
-module.exports = { getContactAsFormData /*, saveContactForm*/ }
+module.exports = { getContactAsFormData }
