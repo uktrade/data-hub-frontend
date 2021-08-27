@@ -109,7 +109,6 @@ function EditPipelineItemForm({
                   currentPipelineItem={currentPipelineItem}
                 >
                   {() => (
-                    //this needs features passed into it
                     <GetCompanyContacts
                       task={getCompanyContacts}
                       features={features}

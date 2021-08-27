@@ -2,10 +2,6 @@ const { sortBy } = require('lodash')
 const { authorisedRequest } = require('../../lib/authorised-request')
 const config = require('../../config')
 
-// getContact() and saveContact() are the only ones that are going to need to be switchable to v4
-// is this used outside of contacts stuff what?
-//this code is used in like two places that aren't specifically to do with contacts?
-// I think I can safely say that this is at the very least untested, if not completely dead code
 function getContact(req, contactId, features = {}) {
   const addressAreaValidationEnabled =
     features['address-area-contact-required-field']
@@ -15,26 +11,6 @@ function getContact(req, contactId, features = {}) {
     `${config.apiRoot}/${endpointVersion}/contact/${contactId}`
   )
 }
-
-//this code seems to have one dead reference and that's it, I think all the saving is just being done through the proxy, so we can just get rid of this
-// DEADC0D3
-/*function saveContact(req, contact) {
-  const options = {
-    body: contact,
-  }
-
-  if (contact.id && contact.id.length > 0) {
-    // update
-    options.url = `${config.apiRoot}/v3/contact/${contact.id}`
-    options.method = 'PATCH'
-  } else {
-    options.url = `${config.apiRoot}/v3/contact`
-    options.method = 'POST'
-  }
-
-  return authorisedRequest(req, options)
-}
-*/
 
 function archiveContact(req, contactId, reason) {
   const options = {
@@ -53,7 +29,6 @@ function unarchiveContact(req, contactId) {
 }
 
 async function getContactsForCompany(req, companyId) {
-  //there's a v4 list but we don't really need to worry about using it atm I don't think
   const response = await authorisedRequest(req, {
     url: `${config.apiRoot}/v3/contact`,
     qs: {
@@ -75,7 +50,6 @@ function getContactAuditLog(req, contactId, page = 1) {
 
 module.exports = {
   getContact,
-  //saveContact,
   archiveContact,
   unarchiveContact,
   getContactsForCompany,

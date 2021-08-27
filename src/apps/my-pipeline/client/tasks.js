@@ -57,7 +57,6 @@ export async function getPipelineItem({ pipelineItemId }) {
   return data
 }
 
-//this will need to be switchable to v4
 export async function getCompanyContacts({ companyId, features }) {
   const contactEndpointVersion = features['address-area-contact-required-field']
     ? 'v4'

@@ -27,8 +27,8 @@ async function createAttendee(req, res, next) {
       )
       return res.redirect(`/events/${event.id}/attendees`)
     }
-    //should get triggered now
-    const contact = await getContact(req, contactId, features) //when creating a new attendee we need to get contact information
+
+    const contact = await getContact(req, contactId, features)
 
     const serviceDelivery = {
       contacts: [contact.id],

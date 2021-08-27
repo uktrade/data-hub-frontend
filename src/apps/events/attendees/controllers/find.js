@@ -22,7 +22,6 @@ async function renderFindAttendee(req, res, next) {
 }
 
 async function findAttendee(req, res, next) {
-  //
   try {
     const event = res.locals.event
 
