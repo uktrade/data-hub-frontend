@@ -41,7 +41,6 @@ var v3SearchOrder = require('./routes/v3/search/order.js')
 var v3SearchInteraction = require('./routes/v3/search/interaction.js')
 
 // V4
-var v4Contact = require('./routes/v4/contact/contact.js')
 var v4ActivityFeed = require('./routes/v4/activity-feed/activity-feed.js')
 var v4ChCompany = require('./routes/v4/ch-company/company.js')
 var v4Company = require('./routes/v4/company/company.js')
@@ -382,11 +381,12 @@ app.post(
 )
 app.post('/v3/search/interaction', v3SearchInteraction.interaction)
 
-// V4 contact
-app.get('/v4/contact', v4Contact.contact)
-app.post('/v4/contact', v4Contact.contactCreate)
-app.get('/v4/contact/:contactId', v4Contact.contactById)
-app.patch('/v4/contact/:contactId', v4Contact.updateContactById)
+// V4 contact - same functionality as v3 in the mock
+//just different endpoints since on the real API the only difference is validation
+app.get('/v4/contact', v3Contact.contact)
+app.post('/v4/contact', v3Contact.contactCreate)
+app.get('/v4/contact/:contactId', v3Contact.contactById)
+app.patch('/v4/contact/:contactId', v3Contact.updateContactById)
 
 // V4 activity feed
 app.get('/v4/activity-feed', v4ActivityFeed.activityFeed)
