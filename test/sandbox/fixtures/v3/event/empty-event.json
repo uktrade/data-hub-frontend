@@ -1,5 +1,5 @@
 {
-  "id": "63af73a6-5d95-e211-aaaa-e4115bead28a",
+  "id": "b93d4273-36fe-4008-ac40-fbc197910791",
   "address_1": "Day Court Exhibition Centre",
   "address_2": "Day Court Lane",
   "address_country": {
@@ -24,7 +24,7 @@
       "name": "HQ",
       "id": "b71fa81c-0c22-44c6-ab6f-13b9e045dc10"
   },
-  "name": "One-day exhibition",
+  "name": "Empty one-day exhibition",
   "notes": "This is a dummy event for testing.",
   "organiser": {
       "name": "John Rogers",
