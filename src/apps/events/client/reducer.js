@@ -34,7 +34,6 @@ export default (state = initialState, { type, result }) => {
       return {
         ...state,
         ...result,
-        isComplete: true,
       }
     default:
       return state
