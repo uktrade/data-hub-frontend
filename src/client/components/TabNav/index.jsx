@@ -151,6 +151,7 @@ const TabNav = ({
   onFocusChange,
   id,
   routed,
+  keepQueryParams = false,
 }) => {
   const tabKeys = Object.keys(tabs)
   const tablistRef = useRef()
@@ -161,7 +162,7 @@ const TabNav = ({
 
   return (
     <Route>
-      {({ location: { pathname }, history }) => {
+      {({ location: { pathname, search }, history }) => {
         selectedIndex = routed ? pathname : selectedIndex
         const isSelectedValid = tabKeys.includes(selectedIndex)
 
@@ -222,7 +223,8 @@ const TabNav = ({
                       onClick={() => {
                         onChange(key, index)
                         if (routed && !selected) {
-                          history.push(key)
+                          const url = keepQueryParams ? `${key}${search}` : key
+                          history.push(url)
                         }
                       }}
                     >
@@ -255,6 +257,7 @@ const tabPropType = PropTypes.shape({
 TabNav.propTypes = {
   label: PropTypes.string.isRequired,
   routed: PropTypes.any,
+  keepQueryParams: PropTypes.bool,
   tabs: PropTypes.oneOfType([
     PropTypes.arrayOf(tabPropType),
     PropTypes.objectOf(tabPropType),

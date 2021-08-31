@@ -34,4 +34,25 @@ describe('Dashboard - feature flag', () => {
       )
     })
   })
+
+  context('when a user navigates tabs with the feature flag set', () => {
+    before(() => {
+      cy.setUserFeatures(['personalised-dashboard'])
+      cy.visit('/')
+      cy.get('[data-test="dashboard-tabs"] [data-test="tab-item"]')
+        .eq(1)
+        .click()
+    })
+
+    it('should show an alternative layout', () => {
+      cy.get('[data-test="dashboard"]').should('be.visible')
+    })
+
+    it('should maintain the query param for GA tracking', () => {
+      cy.url('[data-test="dashboard"]').should(
+        'contain',
+        'company-lists?featureTesting=personalised-dashboard'
+      )
+    })
+  })
 })
