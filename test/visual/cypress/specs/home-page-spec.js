@@ -1,6 +1,8 @@
 describe('home page', () => {
   before(() => {
+    cy.intercept('GET', '/api-proxy/v4/company-list').as('apiRequest')
     cy.visit('/')
+    cy.wait('@apiRequest')
   })
 
   it('content', () => {
