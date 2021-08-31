@@ -98,26 +98,24 @@ const transformResponseToEventDetails = ({
   related_trade_agreements,
   service,
 }) => ({
-  eventDetails: {
-    eventType: event_type.name,
-    startDate: formatMediumDate(start_date),
-    endDate: formatMediumDate(end_date),
-    locationType: location_type?.name,
-    fullAddress:
-      `${address_1 ? `${address_1}, ` : ''}` +
-      `${address_2 ? `${address_2}, ` : ''}` +
-      `${address_town ? `${address_town}, ` : ''}` +
-      `${address_county ? `${address_county}, ` : ''}` +
-      `${address_country.name ? address_country.name : ''}`,
-    ukRegion: uk_region?.name,
-    notes: notes,
-    leadTeam: lead_team.name,
-    organiser: organiser.name,
-    otherTeams: teams.map(idNameToValueLabel),
-    relatedProgrammes: related_programmes.map(idNameToValueLabel),
-    relatedTradeAgreements: related_trade_agreements.map(idNameToValueLabel),
-    service: service.name,
-  },
+  eventType: event_type.name,
+  startDate: formatMediumDate(start_date),
+  endDate: formatMediumDate(end_date),
+  locationType: location_type?.name,
+  fullAddress:
+    `${address_1 ? `${address_1}, ` : ''}` +
+    `${address_2 ? `${address_2}, ` : ''}` +
+    `${address_town ? `${address_town}, ` : ''}` +
+    `${address_county ? `${address_county}, ` : ''}` +
+    `${address_country.name ? address_country.name : ''}`,
+  ukRegion: uk_region?.name,
+  notes: notes,
+  leadTeam: lead_team.name,
+  organiser: organiser.name,
+  otherTeams: teams.map(idNameToValueLabel),
+  relatedProgrammes: related_programmes.map(idNameToValueLabel),
+  relatedTradeAgreements: related_trade_agreements.map(idNameToValueLabel),
+  service: service.name,
 })
 
 export { transformResponseToEventCollection, transformResponseToEventDetails }
