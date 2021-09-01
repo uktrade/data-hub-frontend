@@ -14,6 +14,10 @@ describe('Empty feed', () => {
 })
 
 describe('Company feed', () => {
+  before(() => {
+    cy.viewport(2980, 2440)
+  })
+
   it('should render the company feed component correctly', () => {
     cy.visit('/iframe.html?id=activityfeed--data-hub-company-page')
     cy.get('[data-test="activity-feed"]').should('be.visible')
