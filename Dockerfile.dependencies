@@ -7,7 +7,7 @@ ENV TZ                     Europe/London
 ENV TERM                   xterm
 ENV LANG                   C.UTF-8
 ENV NODE_ENV               development
-ENV CHROME_VERSION         85.0.4183.83-1
+ENV CHROME_VERSION         93.0.4577.63-1
 
 # Install common dependencies
 RUN apt-get install -y \
@@ -43,9 +43,9 @@ RUN apt-get install -y \
 RUN apt-get install -y imagemagick
 
 # Install Chrome (Version 85)
-# See all available versions for download on: https://www.ubuntuupdates.org/package_logs?type=ppas&vals=8
+# See all available versions for download on: http://170.210.201.179/linux/chrome/deb/pool/main/g/google-chrome-stable/
 RUN apt-get install -y xvfb xdg-utils libgtk-3-0 lsb-release libappindicator3-1 fonts-liberation libasound2 libnspr4 libnss3 \
-  && curl https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb -O \
+  && curl http://170.210.201.179/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb -O \
   && dpkg -i google-chrome-stable_${CHROME_VERSION}_amd64.deb \
   && rm google-chrome-stable_${CHROME_VERSION}_amd64.deb \
   && google-chrome --version
@@ -53,7 +53,7 @@ RUN apt-get install -y xvfb xdg-utils libgtk-3-0 lsb-release libappindicator3-1 
 # Install cypress
 COPY package.json .
 COPY package-lock.json .
-RUN npm install -g cypress@8.2.0
+RUN npm install -g cypress@8.3.0
 RUN cypress verify
 
 RUN cypress cache path
