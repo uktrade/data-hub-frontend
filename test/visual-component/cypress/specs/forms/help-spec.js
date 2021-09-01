@@ -6,6 +6,9 @@ describe('Footer', () => {
 })
 
 describe('Without footer', () => {
+  before(() => {
+    cy.viewport(2980, 2440)
+  })
   it('should render the help component without footer correctly', () => {
     cy.visit('/iframe.html?id=forms-help--fieldhelp-without-footer-url')
     cy.compareSnapshot('without-footer')
