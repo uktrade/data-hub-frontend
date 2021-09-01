@@ -1,5 +1,6 @@
 describe('home page', () => {
   before(() => {
+    cy.viewport(1980, 1440)
     cy.intercept('GET', '/api-proxy/v4/company-list').as('apiRequest')
     cy.visit('/')
     cy.wait('@apiRequest')
@@ -8,7 +9,7 @@ describe('home page', () => {
   it('content', () => {
     cy.get('.dashboard-section__info-feed-date').hideElement()
     cy.get('[for="company-name"]').should('be.visible')
-    cy.get('.grid-row').compareSnapshot('homePageContent')
+    cy.get('#main-content').compareSnapshot('homePageContent')
   })
 
   it('header', () => {
