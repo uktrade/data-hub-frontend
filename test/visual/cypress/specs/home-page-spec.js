@@ -1,6 +1,5 @@
 describe('home page', () => {
   before(() => {
-    cy.viewport(1980, 1440)
     cy.intercept('GET', '/api-proxy/v4/company-list').as('apiRequest')
     cy.visit('/')
     cy.wait('@apiRequest')

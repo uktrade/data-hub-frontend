@@ -2,7 +2,6 @@ const urls = require('../../../../src/lib/urls')
 
 describe('event page', () => {
   before(() => {
-    cy.viewport(1980, 1440)
     cy.intercept('POST', '/api-proxy/v3/search/event').as('apiRequest')
     cy.visit(urls.events.index())
     cy.wait('@apiRequest')
