@@ -49,8 +49,8 @@ const StyledTableRow = styled(Table.Row)`
   line-height: ${LINE_HEIGHT.SIZE_24};
 `
 
-SummaryTable.Row = ({ heading, children }) => {
-  if (isEmpty(children)) {
+SummaryTable.Row = ({ heading, children, hideWhenEmpty }) => {
+  if (hideWhenEmpty && isEmpty(children)) {
     return null
   }
 
@@ -90,16 +90,18 @@ SummaryTable.CurrencyRow = ({ heading, value }) => (
   </SummaryTable.Row>
 )
 
-SummaryTable.ListRow = ({ heading, value }) => (
-  <SummaryTable.Row heading={heading}>
-    {value.length ? (
+SummaryTable.ListRow = ({ heading, value, emptyValue, ...rest }) => (
+  <SummaryTable.Row heading={heading} {...rest}>
+    {value && value.length ? (
       <ul>
         {value.map((v, i) => (
           <li key={`${heading}-${i}`}>{v.label}</li>
         ))}
       </ul>
-    ) : (
+    ) : emptyValue === undefined ? (
       <StyledTag>incomplete</StyledTag>
+    ) : (
+      emptyValue
     )}
   </SummaryTable.Row>
 )

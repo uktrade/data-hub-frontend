@@ -38,31 +38,46 @@ const EventDetails = ({
       return (
         <>
           <SummaryTable>
-            <SummaryTable.TextRow heading="Type of event" value={eventType} />
-            <SummaryTable.TextRow
-              heading="Event start date"
-              value={startDate}
-            />
-            <SummaryTable.TextRow heading="Event end date" value={endDate} />
-            <SummaryTable.TextRow
+            <SummaryTable.Row heading="Type of event" children={eventType} />
+            <SummaryTable.Row heading="Event start date" children={startDate} />
+            <SummaryTable.Row heading="Event end date" children={endDate} />
+            <SummaryTable.Row
               heading="Event location type"
-              value={locationType}
+              children={locationType}
+              hideWhenEmpty={false}
             />
-            <SummaryTable.TextRow heading="Address" value={fullAddress} />
-            <SummaryTable.TextRow heading="Region" value={ukRegion} />
-            <SummaryTable.TextRow heading="Notes" value={notes} />
-            <SummaryTable.TextRow heading="Lead team" value={leadTeam} />
-            <SummaryTable.TextRow heading="Organiser" value={organiser} />
-            <SummaryTable.ListRow heading="Other teams" value={otherTeams} />
+            <SummaryTable.Row heading="Address" children={fullAddress} />
+            <SummaryTable.Row
+              heading="Region"
+              children={ukRegion}
+              hideWhenEmpty={false}
+            />
+            <SummaryTable.Row
+              heading="Notes"
+              children={notes}
+              hideWhenEmpty={false}
+            />
+            <SummaryTable.Row heading="Lead team" children={leadTeam} />
+            <SummaryTable.Row heading="Organiser" children={organiser} />
+            <SummaryTable.ListRow
+              heading="Other teams"
+              value={otherTeams}
+              emptyValue=""
+              hideWhenEmpty={false}
+            />
             <SummaryTable.ListRow
               heading="Related programmes"
               value={relatedProgrammes}
+              emptyValue=""
+              hideWhenEmpty={false}
             />
             <SummaryTable.ListRow
               heading="Related Trade Agreements"
               value={relatedTradeAgreements}
+              emptyValue=""
+              hideWhenEmpty={false}
             />
-            <SummaryTable.TextRow heading="Service" value={service} />
+            <SummaryTable.Row heading="Service" children={service} />
           </SummaryTable>
           <FormActions>
             <Button as={Link} href={urls.events.edit(eventId)}>
