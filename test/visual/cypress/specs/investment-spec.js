@@ -2,7 +2,6 @@ const urls = require('../../../../src/lib/urls')
 
 describe('investment project', () => {
   before(() => {
-    cy.viewport(1980, 1440)
     cy.intercept('POST', '/api-proxy/v3/search/investment_project').as(
       'apiRequest'
     )
@@ -18,7 +17,6 @@ describe('investment project', () => {
 
 describe('investment profile', () => {
   before(() => {
-    cy.viewport(1980, 1440)
     cy.intercept('POST', '/api-proxy/v4/search/large-investor-profile').as(
       'apiRequest'
     )
@@ -34,7 +32,6 @@ describe('investment profile', () => {
 
 describe('investment opportunity', () => {
   before(() => {
-    cy.viewport(1980, 1440)
     cy.intercept('POST', '/api-proxy/v4/search/large-capital-opportunity').as(
       'apiRequest'
     )
