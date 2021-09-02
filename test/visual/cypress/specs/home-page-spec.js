@@ -6,6 +6,7 @@ describe('home page', () => {
   })
 
   it('content', () => {
+    cy.viewport(1980, 1440)
     cy.get('.dashboard-section__info-feed-date').hideElement()
     cy.get('[for="company-name"]').should('be.visible')
     cy.get('#main-content').compareSnapshot('homePageContent')
