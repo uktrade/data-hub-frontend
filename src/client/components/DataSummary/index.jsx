@@ -4,10 +4,15 @@ import styled from 'styled-components'
 import pluralize from 'pluralize'
 import { SPACING, FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 import { BLUE } from 'govuk-colours'
+import { connect } from 'react-redux'
+
 import { rgba } from '../../utils/colors'
+import { DATA_SUMMARY__ACCESSIBLE_TOGGLE } from '../../actions'
 
 import PieChart from '../PieChart'
-import DataTable from '../../../client/components/DataTable'
+import DataTable from '../DataTable'
+
+import { state2props } from './state'
 
 const StyledContainer = styled('div')`
   padding-top: ${SPACING.SCALE_1};
@@ -116,4 +121,10 @@ DataSummary.propTypes = {
   children: PropTypes.node,
 }
 
-export default DataSummary
+export default connect(state2props, (dispatch) => ({
+  onToggleAccessible: () => {
+    dispatch({
+      type: DATA_SUMMARY__ACCESSIBLE_TOGGLE,
+    })
+  },
+}))(DataSummary)

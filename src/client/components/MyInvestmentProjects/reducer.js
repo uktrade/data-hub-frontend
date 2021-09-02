@@ -12,6 +12,7 @@ const DEFAULT_SORT = 'created_on:desc'
 const initialState = {
   count: 0,
   results: [],
+  summary: [],
   itemsPerPage: 10,
   page: 1,
   sort: DEFAULT_SORT,
@@ -25,11 +26,12 @@ export default (
 ) => {
   switch (type) {
     case MY_INVESTMENTS__LIST_LOADED:
-      const { results, count } = result
+      const { results, count, summary } = result
       return {
         ...state,
         results,
         count,
+        summary,
       }
     case MY_INVESTMENTS__SORT_CHANGE:
       return { ...state, sort, page }
