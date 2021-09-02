@@ -1,6 +1,8 @@
 describe('Entire feed', () => {
   it('should render the entire feed component correctly', () => {
-    cy.visit('/')
+    // Required wait for storybook to load properly
+    // still haven't found a workaround for this.
+    cy.wait(10000)
     cy.visit('/iframe.html?id=activityfeed--entire-feed')
     cy.get('#root').should('be.visible').compareSnapshot('entire-feed')
   })
@@ -14,6 +16,10 @@ describe('Empty feed', () => {
 })
 
 describe('Company feed', () => {
+  before(() => {
+    cy.viewport(2980, 2440)
+  })
+
   it('should render the company feed component correctly', () => {
     cy.visit('/iframe.html?id=activityfeed--data-hub-company-page')
     cy.get('[data-test="activity-feed"]').should('be.visible')
