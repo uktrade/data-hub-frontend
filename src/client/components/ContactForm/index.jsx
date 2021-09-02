@@ -33,10 +33,15 @@ import ReferrerLink from '../ReferrerLink'
 import * as validators from '../Form/validators'
 import State from '../State'
 
-const emailAlreadyExists = (email) =>
-  axios
-    .get('/api-proxy/v3/contact', { params: { email } })
+const emailAlreadyExists = (email, features) => {
+  const contactEndpointVersion = features['address-area-contact-required-field']
+    ? 'v4'
+    : 'v3'
+
+  return axios
+    .get(`/api-proxy/${contactEndpointVersion}/contact`, { params: { email } })
     .then(({ data }) => data.count)
+}
 
 const YES = 'Yes'
 const NO = 'No'
@@ -122,7 +127,7 @@ const _ContactForm = ({
               ...values
             }) => {
               if (!update && (!duplicateEmail || duplicateEmail !== email)) {
-                if (await emailAlreadyExists(email)) {
+                if (await emailAlreadyExists(email, features)) {
                   dispatch({
                     type: CONTACT_FORM__DUPLICATE_EMAIL,
                     duplicateEmail: email,
