@@ -2,7 +2,7 @@ const { sortBy } = require('lodash')
 const { authorisedRequest } = require('../../lib/authorised-request')
 const config = require('../../config')
 
-function getContact(req, contactId, features = {}) {
+function getContact(req, contactId, features) {
   const addressAreaValidationEnabled =
     features['address-area-contact-required-field']
   const endpointVersion = addressAreaValidationEnabled ? 'v4' : 'v3'
