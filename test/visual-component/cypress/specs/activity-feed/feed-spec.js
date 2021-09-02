@@ -1,7 +1,8 @@
 describe('Entire feed', () => {
   it('should render the entire feed component correctly', () => {
-    cy.visit('/')
-    cy.get('#company-interactions', { timeout: 30000 }).should('be.visible')
+    // Required wait for storybook to load properly
+    // still haven't found a workaround for this.
+    cy.wait(10000)
     cy.visit('/iframe.html?id=activityfeed--entire-feed')
     cy.get('#root').should('be.visible').compareSnapshot('entire-feed')
   })
