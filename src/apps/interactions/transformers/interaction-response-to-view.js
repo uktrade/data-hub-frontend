@@ -5,10 +5,15 @@ const labels = require('../labels')
 const { getDataLabels } = require('../../../lib/controller-utils')
 const groupExportCountries = require('../../../lib/group-export-countries')
 
-function transformEntityLink(entity, entityPath, noLinkText = null) {
+function transformEntityLink({
+  entity,
+  entityPath,
+  urlSuffix = '',
+  noLinkText = null,
+}) {
   return entity
     ? {
-        url: `/${entityPath}/${entity.id}`,
+        url: `/${entityPath}/${entity.id}${urlSuffix}`,
         name: entity.name,
       }
     : noLinkText
@@ -130,10 +135,11 @@ function transformInteractionResponseToViewRecord(
     policy_feedback_notes: policy_feedback_notes,
     ...getExportCountries(export_countries),
     related_trade_agreements: getNames(related_trade_agreements),
-    large_capital_opportunity: transformEntityLink(
-      large_capital_opportunity,
-      'investments/opportunities'
-    ),
+    large_capital_opportunity: transformEntityLink({
+      entity: large_capital_opportunity,
+      entityPath: 'investments/opportunities',
+      urlSuffix: '/details',
+    }),
   }
 
   if (canShowDocuments && archived_documents_url_path) {
@@ -144,7 +150,6 @@ function transformInteractionResponseToViewRecord(
       hintId: 'external-link-label',
     }
   }
-
   return pickBy(getDataLabels(viewRecord, kindLabels))
 }
 

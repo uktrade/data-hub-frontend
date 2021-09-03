@@ -31,6 +31,9 @@ const interaction = {
   has_related_trade_agreements:
     'Does this interaction relate to a named trade agreement?',
   related_trade_agreements: 'Named trade agreement(s)',
+  has_related_opportunity:
+    'Does this interaction relate to a large capital opportunity?',
+  large_capital_opportunity: 'Related large capital opportunity',
   ...countriesDiscussed,
 }
 
