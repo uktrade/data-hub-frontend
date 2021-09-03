@@ -25,6 +25,7 @@ import FieldSelect from '../FieldSelect'
 import FieldCountrySelect from '../FieldCountrySelect'
 
 const UNITED_KINGDOM = 'United Kingdom'
+const UNITED_KINGDOM_ID = '80756b9a-5d95-e211-a939-e4115bead28a'
 const UNITED_STATES = 'United States'
 const UNITED_STATES_ID = '81756b9a-5d95-e211-a939-e4115bead28a'
 const CANADA = 'Canada'
@@ -46,7 +47,6 @@ const FieldAddress = ({
   onSelectUKAddress,
   features,
   isCountrySelectable,
-  forcePostcodeLookupButton,
 }) => {
   const areaFieldEnabled = features && features.areaFormField
   const postcodeValidationEnabled = features && features.postcodeValidation
@@ -63,13 +63,20 @@ const FieldAddress = ({
     useAddressSearch(findAddress)
 
   const {
-    values: { postcode },
+    values: { postcode, country: country_form_value },
     setFieldValue,
     validateForm,
     setIsLoading,
   } = useFormContext()
+
   const [usStates, setUsStates] = useState([])
   const [canadaProvinces, setCanadaProvinces] = useState([])
+
+  useEffect(() => {
+    setIsUK(country_form_value === UNITED_KINGDOM_ID)
+    setIsUS(country_form_value === UNITED_STATES_ID)
+    setIsCanada(country_form_value === CANADA_ID)
+  }, [country_form_value, isUK, isUS, isCanada])
 
   useEffect(() => {
     setIsLoading(isSubmitting && isAreaFilterSubmitting)
@@ -97,9 +104,9 @@ const FieldAddress = ({
     }
   }, [administrativeAreaList])
 
-  const isUK = country?.name === UNITED_KINGDOM
-  const isUS = country?.name === UNITED_STATES
-  const isCanada = country?.name === CANADA
+  const [isUK, setIsUK] = useState(country?.name === UNITED_KINGDOM)
+  const [isUS, setIsUS] = useState(country?.name === UNITED_STATES)
+  const [isCanada, setIsCanada] = useState(country?.name === CANADA)
 
   function onSearchClick(e) {
     e.preventDefault()
@@ -186,24 +193,21 @@ const FieldAddress = ({
 
   return (
     <FieldWrapper {...{ label, legend, hint, name }} showBorder={true}>
-      {forcePostcodeLookupButton || isUK ? (
+      {isUK ? (
         <>
-          {forcePostcodeLookupButton ? (
-            NonUKPostcodeField()
-          ) : (
-            <StyledFieldPostcode
-              type="search"
-              name="postcode"
-              label="Postcode"
-              required="Enter a postcode"
-              maxLength={10}
-            />
-          )}
+          <StyledFieldPostcode
+            type="search"
+            name="postcode"
+            label="Postcode"
+            required="Enter a postcode"
+            maxLength={10}
+          />
           <Button
             onClick={onSearchClick}
             buttonColour={GREY_3}
             buttonTextColour={BLACK}
             icon={<Search />}
+            id="postcode-search"
           >
             Find UK address
           </Button>
@@ -281,7 +285,6 @@ FieldAddress.propTypes = {
   apiEndpoint: PropTypes.string.isRequired,
   onSelectUKAddress: PropTypes.func,
   isCountrySelectable: PropTypes.any,
-  forcePostcodeLookupButton: PropTypes.any,
   // Country is only required if isCountrySelectable is falsy, but this can't be
   // expressed with propTypes
   country: PropTypes.shape({

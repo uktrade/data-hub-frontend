@@ -82,5 +82,9 @@
   {
     "code": "address-postcode-company-required-field",
     "is_active": true
+  },
+  {
+    "code": "contacts-area-field",
+    "is_active": true
   }
 ]

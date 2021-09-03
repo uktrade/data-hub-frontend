@@ -118,6 +118,32 @@ describe('Create contact form', () => {
     })
   })
 
+  describe('country specific address fields', () => {
+    beforeEach(() => {
+      cy.checkRadioGroup(
+        'Is the contact’s address the same as the company address?',
+        'No'
+      )
+    })
+
+    it('should only show the find postcode button when UK is selected', () => {
+      cy.contains('Country').parent().find('select').select('United Kingdom')
+      cy.contains('Find UK address').should('be.visible')
+    })
+
+    it('should only show the state field when US is selected', () => {
+      cy.contains('Country').parent().find('select').select('United States')
+      cy.get('#field-area').should('contain.text', 'State')
+      cy.get('#postcode-search').should('not.exist')
+    })
+
+    it('should only show the province field when Canada is selected', () => {
+      cy.contains('Country').parent().find('select').select('Canada')
+      cy.get('#field-area').should('contain.text', 'Province')
+      cy.get('#postcode-search').should('not.exist')
+    })
+  })
+
   it('Should show errors for invalid field values', () => {
     cy.checkRadioGroup(
       'Is the contact’s address the same as the company address?',
