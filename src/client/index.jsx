@@ -141,9 +141,6 @@ import { TASK_GET_MY_INVESTMENTS_LIST } from './components/MyInvestmentProjects/
 import * as personalisedDashboard from './components/PersonalisedDashboard/tasks'
 import { TASK_CHECK_FOR_INVESTMENTS } from './components/PersonalisedDashboard/state'
 
-import { fetchInvestmentSummaryDataRanges } from './components/InvestmentProjectSummary/tasks'
-import { TASK_GET_INVESTMENT_SUMMARY_DATA_RANGES } from './components/InvestmentProjectSummary/state'
-
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
 import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentReminders/state'
 
@@ -260,8 +257,6 @@ function App() {
         [TASK_CHECK_FOR_INVESTMENTS]: personalisedDashboard.checkForInvestments,
         [TASK_GET_MY_INVESTMENTS_LIST]:
           myInvestmentProjects.fetchMyInvestmentsList,
-        [TASK_GET_INVESTMENT_SUMMARY_DATA_RANGES]:
-          fetchInvestmentSummaryDataRanges,
         [TASK_GET_OUTSTANDING_PROPOSITIONS]: fetchOutstandingPropositions,
         'Large investment profiles filters':
           investmentProfilesTasks.loadFilterOptions,
