@@ -8,7 +8,7 @@ const {
 
 describe('Event attendee search', () => {
   beforeEach(() => {
-    cy.visit(urls.events.find(fixtures.event.oneDayExhibition.id))
+    cy.visit(urls.events.find(fixtures.event.emptyOneDayExhibition.id))
     cy.get('[data-test="bodyMainContent"] h2')
       .as('header')
       .next()
@@ -20,20 +20,28 @@ describe('Event attendee search', () => {
 
     cy.get('@form').next().as('message')
   })
+
   context('with results', () => {
+    it('should add a new attendee', () => {
+      cy.get('@input').type('lambda')
+      cy.get('@button').click()
+      cy.get("[data-test='item-contact-0']").click()
+      cy.get('.c-message').should('contain', 'Event attendee added')
+    })
+
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: urls.dashboard(),
         Events: urls.events.index(),
-        'One-day exhibition': urls.events.attendees(
-          fixtures.event.oneDayExhibition.id
+        'Empty one-day exhibition': urls.events.attendees(
+          fixtures.event.emptyOneDayExhibition.id
         ),
         'Add attendee': null,
       })
     })
 
     it('should render the header', () => {
-      assertLocalHeader('One-day exhibition')
+      assertLocalHeader('Empty one-day exhibition')
     })
 
     it('should display a form for searching', () => {

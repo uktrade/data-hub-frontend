@@ -45,6 +45,7 @@ module.exports = {
     incompleteOpportunity: require('./investment/large-capital-opportunity-incomplete.json'),
   },
   event: {
+    emptyOneDayExhibition: require('./event/empty-one-day-exhibition'),
     oneDayExhibition: require('./event/one-day-exhibition'),
     teddyBearExpo: require('./event/teddy-bear-expo'),
   },

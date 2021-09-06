@@ -21,6 +21,7 @@
     "watch:js:server": "nodemon $NODE_DEBUG_OPTION --inspect --ignore 'src/**/__test__/**/*'",
     "lint": "run-p lint:*",
     "lint:js": "npx eslint --ext .jsx,.js ./test ./src ./assets",
+    "lint:js:fix": "npx eslint --ext .jsx,.js ./test ./src ./assets --fix",
     "lint:sass": "npx sass-lint -v -q -c .sass-lint.yml 'assets/stylesheets/**/*.scss'",
     "test": "run-s test:*",
     "test:unit": "NODE_ENV=test API_ROOT=http://test LOG_LEVEL=silent MOCHA_FILE=junit/test-results.xml npx mocha ./src/**/*.test.js",

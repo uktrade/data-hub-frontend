@@ -33,10 +33,15 @@ import ReferrerLink from '../ReferrerLink'
 import * as validators from '../Form/validators'
 import State from '../State'
 
-const emailAlreadyExists = (email) =>
-  axios
-    .get('/api-proxy/v3/contact', { params: { email } })
+const emailAlreadyExists = (email, features) => {
+  const contactEndpointVersion = features['address-area-contact-required-field']
+    ? 'v4'
+    : 'v3'
+
+  return axios
+    .get(`/api-proxy/${contactEndpointVersion}/contact`, { params: { email } })
     .then(({ data }) => data.count)
+}
 
 const YES = 'Yes'
 const NO = 'No'
@@ -70,6 +75,7 @@ const _ContactForm = ({
   duplicateEmail,
   dispatch,
   id,
+  features,
   ...props
 }) => (
   <CompanyResource id={companyId}>
@@ -121,7 +127,7 @@ const _ContactForm = ({
               ...values
             }) => {
               if (!update && (!duplicateEmail || duplicateEmail !== email)) {
-                if (await emailAlreadyExists(email)) {
+                if (await emailAlreadyExists(email, features)) {
                   dispatch({
                     type: CONTACT_FORM__DUPLICATE_EMAIL,
                     duplicateEmail: email,
@@ -156,10 +162,15 @@ const _ContactForm = ({
                 }),
               }
 
+              const contactEndpointVersion = features[
+                'address-area-contact-required-field'
+              ]
+                ? 'v4'
+                : 'v3'
               const response = await axios({
                 url: update
-                  ? `/api-proxy/v3/contact/${contactId}`
-                  : '/api-proxy/v3/contact',
+                  ? `/api-proxy/${contactEndpointVersion}/contact/${contactId}`
+                  : `/api-proxy/${contactEndpointVersion}/contact`,
                 method: update ? 'PATCH' : 'POST',
                 data: payload,
               })
@@ -344,6 +355,10 @@ const requiredProps = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   }),
+  features: PropTypes.shape({
+    code: PropTypes.string,
+    is_active: PropTypes.string,
+  }),
 }
 
 ContactForm.propTypes = {
@@ -368,7 +383,7 @@ ContactForm.propTypes = {
   notes: PropTypes.string,
 }
 
-export const CreateContactForm = ({ companyId, id }) => (
+export const CreateContactForm = ({ companyId, features, id }) => (
   <State>
     {(state) => {
       const { origin_url } = qs.parse(state.router.location.search)
@@ -376,6 +391,7 @@ export const CreateContactForm = ({ companyId, id }) => (
         <ContactForm
           companyId={companyId}
           id={id}
+          features={features}
           redirectTo={
             origin_url &&
             (({ id, name }) => {
@@ -394,7 +410,7 @@ export const CreateContactForm = ({ companyId, id }) => (
 
 CreateContactForm.propTypes = requiredProps
 
-export const UpdateContactForm = ({ contactId, id }) => (
+export const UpdateContactForm = ({ contactId, features, id }) => (
   <ContactResource id={contactId}>
     {(contact) => (
       <ContactForm
@@ -403,6 +419,7 @@ export const UpdateContactForm = ({ contactId, id }) => (
         contactId={contact.id}
         update={true}
         companyId={contact.company.id}
+        features={features}
       />
     )}
   </ContactResource>
@@ -413,9 +430,9 @@ UpdateContactForm.propTypes = {
   contactId: PropTypes.string.isRequired,
 }
 
-export default ({ contactId, companyId, id }) =>
+export default ({ contactId, companyId, features, id }) =>
   contactId ? (
-    <UpdateContactForm contactId={contactId} id={id} />
+    <UpdateContactForm contactId={contactId} features={features} id={id} />
   ) : (
-    <CreateContactForm companyId={companyId} id={id} />
+    <CreateContactForm companyId={companyId} features={features} id={id} />
   )
