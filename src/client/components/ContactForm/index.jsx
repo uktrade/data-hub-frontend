@@ -296,6 +296,7 @@ const _ContactForm = ({
                             apiEndpoint="/api/postcodelookup"
                             isCountrySelectable={true}
                             forcePostcodeLookupButton={true}
+                            country={company.address.country}
                             features={{
                               areaFormField: features['contacts-area-field'],
                             }}
