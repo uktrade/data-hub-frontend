@@ -24,11 +24,8 @@ import { transformObjectToOption } from '../../../../../apps/transformers'
 import FieldSelect from '../FieldSelect'
 import FieldCountrySelect from '../FieldCountrySelect'
 
-const UNITED_KINGDOM = 'United Kingdom'
 const UNITED_KINGDOM_ID = '80756b9a-5d95-e211-a939-e4115bead28a'
-const UNITED_STATES = 'United States'
 const UNITED_STATES_ID = '81756b9a-5d95-e211-a939-e4115bead28a'
-const CANADA = 'Canada'
 const CANADA_ID = '5daf72a6-5d95-e211-a939-e4115bead28a'
 
 const StyledFieldPostcode = styled(FieldInput)`
@@ -63,7 +60,7 @@ const FieldAddress = ({
     useAddressSearch(findAddress)
 
   const {
-    values: { postcode, country: country_form_value },
+    values: { postcode, country },
     setFieldValue,
     validateForm,
     setIsLoading,
@@ -72,11 +69,9 @@ const FieldAddress = ({
   const [usStates, setUsStates] = useState([])
   const [canadaProvinces, setCanadaProvinces] = useState([])
 
-  useEffect(() => {
-    setIsUK(country_form_value === UNITED_KINGDOM_ID)
-    setIsUS(country_form_value === UNITED_STATES_ID)
-    setIsCanada(country_form_value === CANADA_ID)
-  }, [country_form_value, isUK, isUS, isCanada])
+  const isUK = country?.id === UNITED_KINGDOM_ID
+  const isUS = country?.id === UNITED_STATES_ID
+  const isCanada = country?.id === CANADA_ID
 
   useEffect(() => {
     setIsLoading(isSubmitting && isAreaFilterSubmitting)
@@ -103,10 +98,6 @@ const FieldAddress = ({
       )
     }
   }, [administrativeAreaList])
-
-  const [isUK, setIsUK] = useState(country?.name === UNITED_KINGDOM)
-  const [isUS, setIsUS] = useState(country?.name === UNITED_STATES)
-  const [isCanada, setIsCanada] = useState(country?.name === CANADA)
 
   function onSearchClick(e) {
     e.preventDefault()
