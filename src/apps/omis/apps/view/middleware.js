@@ -25,7 +25,11 @@ async function setContact(req, res, next) {
   }
 
   try {
-    res.locals.order.contact = await getContact(req, contactId)
+    res.locals.order.contact = await getContact(
+      req,
+      contactId,
+      res.locals.features
+    )
     next()
   } catch (error) {
     next(error)

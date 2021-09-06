@@ -2,25 +2,14 @@ const { sortBy } = require('lodash')
 const { authorisedRequest } = require('../../lib/authorised-request')
 const config = require('../../config')
 
-function getContact(req, contactId) {
-  return authorisedRequest(req, `${config.apiRoot}/v3/contact/${contactId}`)
-}
-
-function saveContact(req, contact) {
-  const options = {
-    body: contact,
-  }
-
-  if (contact.id && contact.id.length > 0) {
-    // update
-    options.url = `${config.apiRoot}/v3/contact/${contact.id}`
-    options.method = 'PATCH'
-  } else {
-    options.url = `${config.apiRoot}/v3/contact`
-    options.method = 'POST'
-  }
-
-  return authorisedRequest(req, options)
+function getContact(req, contactId, features) {
+  const addressAreaValidationEnabled =
+    features['address-area-contact-required-field']
+  const endpointVersion = addressAreaValidationEnabled ? 'v4' : 'v3'
+  return authorisedRequest(
+    req,
+    `${config.apiRoot}/${endpointVersion}/contact/${contactId}`
+  )
 }
 
 function archiveContact(req, contactId, reason) {
@@ -61,7 +50,6 @@ function getContactAuditLog(req, contactId, page = 1) {
 
 module.exports = {
   getContact,
-  saveContact,
   archiveContact,
   unarchiveContact,
   getContactsForCompany,
