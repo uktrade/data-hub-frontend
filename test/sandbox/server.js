@@ -381,6 +381,13 @@ app.post(
 )
 app.post('/v3/search/interaction', v3SearchInteraction.interaction)
 
+// V4 contact - same functionality as v3 in the mock
+//just different endpoints since on the real API the only difference is validation
+app.get('/v4/contact', v3Contact.contact)
+app.post('/v4/contact', v3Contact.contactCreate)
+app.get('/v4/contact/:contactId', v3Contact.contactById)
+app.patch('/v4/contact/:contactId', v3Contact.updateContactById)
+
 // V4 activity feed
 app.get('/v4/activity-feed', v4ActivityFeed.activityFeed)
 
