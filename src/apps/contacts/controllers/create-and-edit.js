@@ -4,6 +4,7 @@ module.exports = (req, res, next) => {
       props: {
         contactId: req.params.contactId,
         companyId: req.query.company,
+        features: res.locals.features,
       },
     })
   } catch (e) {

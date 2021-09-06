@@ -13,7 +13,8 @@ async function getCommon(req, res, next) {
   try {
     const contact = (res.locals.contact = await contactsRepository.getContact(
       req,
-      req.params.contactId
+      req.params.contactId,
+      res.locals.features
     ))
 
     res.locals.company = await companyRepository.getDitCompany(
