@@ -22,9 +22,9 @@ import Aside from './Aside'
 import Main from './Main'
 import blueTheme from './blue-theme'
 
+import InvestmentProjectSummary from '../MyInvestmentProjects/InvestmentProjectSummary'
 import {
   InvestmentReminders,
-  InvestmentProjectSummary,
   Search,
   DashboardTabs,
   Container,

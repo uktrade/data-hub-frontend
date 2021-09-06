@@ -47,8 +47,6 @@ const StyledDiv = styled('div')`
   font-size: ${FONT_SIZE.SIZE_14};
 `
 
-const StyledYear = styled(StyledDiv)``
-
 const StyledTotal = styled(StyledDiv)`
   font-weight: ${FONT_WEIGHTS.bold};
   font-size: ${FONT_SIZE.SIZE_24};
@@ -65,7 +63,6 @@ const DataSummary = ({
   onToggleAccessible = () => {},
   headers,
   data = [],
-  yearText,
   children,
 }) => {
   const total = data.reduce((prev, curr) => prev + curr.value, 0)
@@ -89,7 +86,6 @@ const DataSummary = ({
       {accessible || total === 0 ? (
         <>
           <StyledProjectContainer data-test="investment-project-total">
-            <StyledYear>{yearText} year</StyledYear>
             <StyledTotal>{total}</StyledTotal>
             <StyledSubject>{pluralize(subject, total)}</StyledSubject>
           </StyledProjectContainer>
@@ -109,7 +105,6 @@ DataSummary.propTypes = {
   subject: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   headers: PropTypes.array.isRequired,
-  yearText: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
