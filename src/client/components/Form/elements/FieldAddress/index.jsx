@@ -60,7 +60,7 @@ const FieldAddress = ({
     useAddressSearch(findAddress)
 
   const {
-    values: { postcode, country },
+    values: { postcode },
     setFieldValue,
     validateForm,
     setIsLoading,
