@@ -145,9 +145,7 @@ const _ContactForm = ({
                 ...keysToSnakeCase(values),
                 email,
                 accepts_dit_email_marketing:
-                  acceptsDitEmailMarketing[
-                    acceptsDitEmailMarketing.length - 1
-                  ] === YES,
+                  acceptsDitEmailMarketing.includes(YES),
                 primary,
                 company,
                 address_same_as_company: addressSameAsCompany,
