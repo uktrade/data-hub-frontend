@@ -37,6 +37,7 @@ const FilteredCollectionList = ({
   addItemUrl,
   defaultQueryParams,
   titleRenderer = null,
+  width = 'two-thirds',
 }) => {
   const totalPages = Math.ceil(
     Math.min(count, maxItemsToPaginate) / itemsPerPage
@@ -55,13 +56,14 @@ const FilteredCollectionList = ({
         return (
           <GridRow data-test="collection-list">
             {children}
-            <GridCol setWidth="two-thirds">
+            <GridCol setWidth={width}>
               <article>
                 {isComplete && (
                   <FilteredCollectionHeader
                     totalItems={count}
                     summary={summary}
                     collectionName={collectionName}
+                    hasFilters={children !== undefined}
                     selectedFilters={selectedFilters}
                     addItemUrl={addItemUrl}
                   />
@@ -144,6 +146,7 @@ FilteredCollectionList.propTypes = {
   summary: PropTypes.object,
   defaultQueryParams: PropTypes.object,
   titleRenderer: PropTypes.func,
+  width: PropTypes.string,
 }
 
 export default FilteredCollectionList

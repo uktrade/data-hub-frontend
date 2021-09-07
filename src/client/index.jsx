@@ -41,6 +41,7 @@ import Dashboard from './components/Dashboard'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyLocalHeader from './components/CompanyLocalHeader'
 import CompaniesCollection from '../apps/companies/client/CompaniesCollection.jsx'
+import CompaniesContactsCollection from '../apps/contacts/client/CompanyContactsCollection.jsx'
 import ContactsCollection from '../apps/contacts/client/ContactsCollection.jsx'
 import OrdersCollection from '../apps/omis/client/OrdersCollection.jsx'
 import EventsCollection from '../apps/events/client/EventsCollection.jsx'
@@ -444,6 +445,9 @@ function App() {
       </Mount>
       <Mount selector="#companies-collection">
         {(props) => <CompaniesCollection {...props} />}
+      </Mount>
+      <Mount selector="#company-contacts-collection">
+        {(props) => <CompaniesContactsCollection {...props} />}
       </Mount>
       <Mount selector="#contacts-collection">
         {(props) => <ContactsCollection {...props} />}

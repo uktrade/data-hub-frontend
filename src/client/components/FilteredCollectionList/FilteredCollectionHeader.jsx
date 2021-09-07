@@ -84,6 +84,7 @@ function FilteredCollectionHeader({
   collectionName = 'result',
   addItemUrl = null,
   selectedFilters,
+  hasFilters,
 }) {
   const formattedTotal = decimal(totalItems)
   const counterSuffix = pluralize(collectionName, totalItems)
@@ -109,9 +110,11 @@ function FilteredCollectionHeader({
             </StyledResultCount>{' '}
             {counterSuffix}
           </StyledHeaderText>
-          <FilterReset data-test="clear-filters" id="clear-filters">
-            Remove all filters
-          </FilterReset>
+          {hasFilters && (
+            <FilterReset data-test="clear-filters" id="clear-filters">
+              Remove all filters
+            </FilterReset>
+          )}
         </StyledDiv>
       </CollectionHeaderRow>
       {summary && (
