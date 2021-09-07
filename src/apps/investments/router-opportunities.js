@@ -23,8 +23,8 @@ const setInvestmentTabItems = require('./middleware/investments-tab-items')
 router.get('/', setInvestmentTabItems, renderOpportunitiesView)
 
 router.get(
-  '/:opportunityId/details',
-  setInvestmentTabItems,
+  // These paths are handled by react-router
+  ['/:opportunityId/details', '/:opportunityId/interactions'],
   renderOpportunityDetailsView
 )
 

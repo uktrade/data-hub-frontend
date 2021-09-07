@@ -10,6 +10,7 @@ import urls from '../../../../../lib/urls'
 import Task from '../../../../../client/components/Task/index.jsx'
 import { TASK_GET_OPPORTUNITY_DETAILS, ID, state2props } from '../Details/state'
 import { INVESTMENT_OPPORTUNITY_DETAILS__LOADED } from '../../../../../client/actions'
+import OpportunityInteractions from './OpportunityInteractions'
 
 const OpportunityTabNav = ({ opportunityId, opportunity }) => (
   <Task.Status
@@ -33,9 +34,13 @@ const OpportunityTabNav = ({ opportunityId, opportunity }) => (
               label="Opportunity tab nav"
               routed={true}
               tabs={{
-                [urls.investments.opportunities.opportunity(opportunityId)]: {
+                [urls.investments.opportunities.details(opportunityId)]: {
                   label: 'Details',
                   content: <Opportunities opportunityId={opportunityId} />,
+                },
+                [urls.investments.opportunities.interactions(opportunityId)]: {
+                  label: 'Interactions',
+                  content: <OpportunityInteractions />,
                 },
               }}
             ></TabNav>
