@@ -3,7 +3,7 @@
 {% block main_grid_right_column %}
 
   {% call DetailsContainer({ heading: 'Contact details' }) %}
-    {% component 'key-value-table', variant='striped', items=contactDetails, id='contact-details' %}
+    {% component 'key-value-table', variant='striped', items=contactDetails, id='contact-details', features=features %}
 
     {% if not contact.archived %}
       <p>
