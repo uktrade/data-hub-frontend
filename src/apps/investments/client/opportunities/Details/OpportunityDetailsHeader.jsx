@@ -7,10 +7,10 @@ import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeade
 import LocalHeaderDetails from '../../../../../client/components/LocalHeaderDetails'
 import { state2props } from '../Details/state'
 
-const OpportunityDetailsHeader = ({ opportunity }) => {
+const OpportunityDetailsHeader = ({ opportunity, currentPath }) => {
   const { createdOn, name, ukRegions, assetClasses, opportunityValue } =
     opportunity.detailsFields
-  const { status } = opportunity
+  const { id, status } = opportunity
 
   const oppValue = !opportunityValue.value
     ? 'Not yet valued'
@@ -48,11 +48,16 @@ const OpportunityDetailsHeader = ({ opportunity }) => {
       value: createdOn,
     },
   ]
+
+  const getCurrentTab = (currentPath) =>
+    currentPath.includes('/interactions') ? 'Interactions' : 'Details'
+
   const breadcrumbs = [
     { link: urls.dashboard(), text: 'Home' },
     { link: urls.investments.index(), text: 'Investments' },
     { link: urls.investments.opportunities.index(), text: 'UK opportunities' },
-    { text: name },
+    { link: urls.investments.opportunities.details(id), text: name },
+    { text: getCurrentTab(currentPath) },
   ]
 
   return (
