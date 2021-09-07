@@ -7,10 +7,10 @@ import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeade
 import LocalHeaderDetails from '../../../../../client/components/LocalHeaderDetails'
 import { state2props } from '../Details/state'
 
-const OpportunityDetailsHeader = ({ details }) => {
+const OpportunityDetailsHeader = ({ opportunity }) => {
   const { createdOn, name, ukRegions, assetClasses, opportunityValue } =
-    details.detailsFields
-  const { status } = details
+    opportunity.detailsFields
+  const { status } = opportunity
 
   const oppValue = !opportunityValue.value
     ? 'Not yet valued'
@@ -63,32 +63,30 @@ const OpportunityDetailsHeader = ({ details }) => {
 }
 
 OpportunityDetailsHeader.propTypes = {
-  opportunityDetails: PropTypes.shape({
-    details: PropTypes.shape({
-      status: PropTypes.shape({
+  opportunity: PropTypes.shape({
+    status: PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.string,
+    }).isRequired,
+    detailsFields: PropTypes.shape({
+      createdOn: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      ukRegions: PropTypes.arrayOf(
+        PropTypes.shape({
+          label: PropTypes.string,
+          value: PropTypes.string,
+        })
+      ).isRequired,
+      assetClasses: PropTypes.arrayOf(
+        PropTypes.shape({
+          label: PropTypes.string,
+          value: PropTypes.string,
+        })
+      ).isRequired,
+      opportunityValue: PropTypes.shape({
         label: PropTypes.string,
         value: PropTypes.string,
       }).isRequired,
-      detailsFields: PropTypes.shape({
-        createdOn: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        ukRegions: PropTypes.arrayOf(
-          PropTypes.shape({
-            label: PropTypes.string,
-            value: PropTypes.string,
-          })
-        ).isRequired,
-        assetClasses: PropTypes.arrayOf(
-          PropTypes.shape({
-            label: PropTypes.string,
-            value: PropTypes.string,
-          })
-        ).isRequired,
-        opportunityValue: PropTypes.shape({
-          label: PropTypes.string,
-          value: PropTypes.string,
-        }).isRequired,
-      }),
     }),
   }),
 }

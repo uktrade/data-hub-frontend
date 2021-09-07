@@ -46,14 +46,14 @@ const StyledP = styled('p')`
 const IS_NUMBER = /^[0-9]*$/ // Input validation to eliminates input script injection
 
 const OpportunityRequirementsForm = (state) => {
-  const { opportunityId, details, metadata } = state
+  const { opportunityId, opportunity, metadata } = state
   const {
     totalInvestmentSought,
     currentInvestmentSecured,
     investmentTypes: investmentTypesValues,
     returnRate: returnRateValues,
     timeHorizons: timeHorizonsValues,
-  } = details.requirementsFields
+  } = opportunity.requirementsFields
 
   const {
     investmentTypes: investmentTypesOptions,

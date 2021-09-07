@@ -3,25 +3,18 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import pluralize from 'pluralize'
 
-import { TASK_GET_OPPORTUNITY_DETAILS, ID, state2props } from '../Details/state'
+import { state2props } from '../Details/state'
 import {
-  INVESTMENT_OPPORTUNITY_DETAILS__LOADED,
   INVESTMENT_OPPORTUNITY__EDIT_DETAILS,
   INVESTMENT_OPPORTUNITY__EDIT_REQUIREMENTS,
 } from '../../../../../client/actions'
 
 import OpportunityDetails from './OpportunityDetails'
-import OpportunityDetailsHeader from './OpportunityDetailsHeader'
 import OpportunityRequirements from './OpportunityRequirements'
 import OpportunityDetailsForm from './OpportunityDetailsForm'
 import OpportunityRequirementsForm from './OpportunityRequirementsForm'
 
-import {
-  Main,
-  SummaryTable,
-  ToggleSection,
-} from '../../../../../client/components'
-import Task from '../../../../../client/components/Task/index.jsx'
+import { SummaryTable, ToggleSection } from '../../../../../client/components'
 import { FONT_SIZE } from '@govuk-react/constants'
 
 import styled from 'styled-components'
@@ -64,7 +57,6 @@ const OpportunitySection = ({
   onEdit,
 }) => (
   <>
-    <SectionBreak />
     <ToggleSection
       label={toggleName}
       id={`${id}_toggle`}
@@ -82,12 +74,13 @@ const OpportunitySection = ({
         </>
       )}
     </ToggleSection>
+    <SectionBreak />
   </>
 )
 
 const Opportunities = ({
+  opportunity,
   opportunityId,
-  details,
   onDetailsEdit,
   onRequirementsEdit,
 }) => {
@@ -98,56 +91,34 @@ const Opportunities = ({
     incompleteRequirementsFields,
     isEditingDetails,
     isEditingRequirements,
-  } = details
+  } = opportunity
   return (
-    <Task.Status
-      name={TASK_GET_OPPORTUNITY_DETAILS}
-      id={ID}
-      progressMessage="Loading opportunity"
-      startOnRender={{
-        payload: {
-          opportunityId,
-        },
-        onSuccessDispatch: INVESTMENT_OPPORTUNITY_DETAILS__LOADED,
-      }}
-    >
-      {() =>
-        detailsFields.name.length && (
-          <>
-            <OpportunityDetailsHeader />
-            <Main>
-              <OpportunitySection
-                incompleteFields={incompleteDetailsFields}
-                form={<OpportunityDetailsForm opportunityId={opportunityId} />}
-                toggleName="Opportunity details"
-                id="opportunity_details"
-                isEditing={isEditingDetails}
-                onEdit={onDetailsEdit}
-              >
-                <OpportunityDetails details={detailsFields} />
-              </OpportunitySection>
-              <OpportunitySection
-                incompleteFields={incompleteRequirementsFields}
-                form={
-                  <OpportunityRequirementsForm opportunityId={opportunityId} />
-                }
-                toggleName="Opportunity requirements"
-                id="opportunity_requirements"
-                isEditing={isEditingRequirements}
-                onEdit={onRequirementsEdit}
-              >
-                <OpportunityRequirements details={requirementsFields} />
-              </OpportunitySection>
-              <SectionBreak />
-              <StyledDetails summary="Need to delete this opportunity?">
-                To delete this opportunity, email{' '}
-                <Link>capitalinvestment@trade.gov.uk</Link>
-              </StyledDetails>
-            </Main>
-          </>
-        )
-      }
-    </Task.Status>
+    <>
+      <OpportunitySection
+        incompleteFields={incompleteDetailsFields}
+        form={<OpportunityDetailsForm opportunityId={opportunityId} />}
+        toggleName="Opportunity details"
+        id="opportunity_details"
+        isEditing={isEditingDetails}
+        onEdit={onDetailsEdit}
+      >
+        <OpportunityDetails details={detailsFields} />
+      </OpportunitySection>
+      <OpportunitySection
+        incompleteFields={incompleteRequirementsFields}
+        form={<OpportunityRequirementsForm opportunityId={opportunityId} />}
+        toggleName="Opportunity requirements"
+        id="opportunity_requirements"
+        isEditing={isEditingRequirements}
+        onEdit={onRequirementsEdit}
+      >
+        <OpportunityRequirements details={requirementsFields} />
+      </OpportunitySection>
+      <StyledDetails summary="Need to delete this opportunity?">
+        To delete this opportunity, email{' '}
+        <Link>capitalinvestment@trade.gov.uk</Link>
+      </StyledDetails>
+    </>
   )
 }
 Opportunities.propTypes = {
