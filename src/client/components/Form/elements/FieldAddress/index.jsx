@@ -46,6 +46,7 @@ const FieldAddress = ({
   isCountrySelectable,
 }) => {
   const areaFieldEnabled = features && features.areaFormField
+  // TODO: Set this up in controller
   const postcodeValidationEnabled = features && features.postcodeValidation
   const findAdministrativeAreas = useAdministrativeAreaLookup()
   const {
@@ -60,7 +61,7 @@ const FieldAddress = ({
     useAddressSearch(findAddress)
 
   const {
-    values: { postcode },
+    values: { postcode, country: country_form_value },
     setFieldValue,
     validateForm,
     setIsLoading,
@@ -69,13 +70,19 @@ const FieldAddress = ({
   const [usStates, setUsStates] = useState([])
   const [canadaProvinces, setCanadaProvinces] = useState([])
 
-  const isUK = country?.id === UNITED_KINGDOM_ID
-  const isUS = country?.id === UNITED_STATES_ID
-  const isCanada = country?.id === CANADA_ID
+  const [isUK, setIsUK] = useState(country?.id === UNITED_KINGDOM_ID)
+  const [isUS, setIsUS] = useState(country?.id === UNITED_STATES_ID)
+  const [isCanada, setIsCanada] = useState(country?.id === CANADA_ID)
 
   useEffect(() => {
     setIsLoading(isSubmitting && isAreaFilterSubmitting)
   }, [isSubmitting, isAreaFilterSubmitting])
+
+  useEffect(() => {
+    setIsUK(country_form_value === UNITED_KINGDOM_ID)
+    setIsUS(country_form_value === UNITED_STATES_ID)
+    setIsCanada(country_form_value === CANADA_ID)
+  }, [country_form_value, isUK, isUS, isCanada])
 
   useEffect(() => {
     if (areaFieldEnabled) {
