@@ -78,9 +78,11 @@ const FieldAddress = ({
   }, [isSubmitting, isAreaFilterSubmitting])
 
   useEffect(() => {
-    setIsUK(country_form_value === UNITED_KINGDOM_ID)
-    setIsUS(country_form_value === UNITED_STATES_ID)
-    setIsCanada(country_form_value === CANADA_ID)
+    if (country_form_value && isCountrySelectable) {
+      setIsUK(country_form_value === UNITED_KINGDOM_ID)
+      setIsUS(country_form_value === UNITED_STATES_ID)
+      setIsCanada(country_form_value === CANADA_ID)
+    }
   }, [country_form_value, isUK, isUS, isCanada])
 
   useEffect(() => {
