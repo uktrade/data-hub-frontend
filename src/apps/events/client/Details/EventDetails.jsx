@@ -2,12 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
-import urls from '../../../lib/urls'
-import Task from '../../../client/components/Task'
+import urls from '../../../../lib/urls'
+import Task from '../../../../client/components/Task'
 import { TASK_GET_EVENT_DETAILS, ID, state2props } from './state'
-import { EVENTS__DETAILS_LOADED } from '../../../client/actions'
+import { EVENTS__DETAILS_LOADED } from '../../../../client/actions'
 
-import { SummaryTable, FormActions } from '../../../client/components'
+import { SummaryTable, FormActions } from '../../../../client/components'
 
 const EventDetails = ({
   eventId,
