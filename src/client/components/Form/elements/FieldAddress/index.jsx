@@ -46,8 +46,9 @@ const FieldAddress = ({
   isCountrySelectable,
 }) => {
   const areaFieldEnabled = features && features.areaFormField
-  // TODO: Set this up in controller
   const postcodeValidationEnabled = features && features.postcodeValidation
+  // TODOL Remove this when done
+  // console.log('Post Code', postcodeValidationEnabled, features)
   const findAdministrativeAreas = useAdministrativeAreaLookup()
   const {
     onAdministrativeAreaSearch,
