@@ -16,8 +16,8 @@ import {
 } from '../../../client/components'
 
 import {
-  ID,
-  state2props,
+  CONTACTS_LIST_ID,
+  contactsState2props,
   TASK_GET_CONTACTS_LIST,
   TASK_GET_CONTACTS_METADATA,
 } from './state'
@@ -30,7 +30,7 @@ const ContactsCollection = ({
 }) => {
   const collectionListTask = {
     name: TASK_GET_CONTACTS_LIST,
-    id: ID,
+    id: CONTACTS_LIST_ID,
     progressMessage: 'Loading contacts',
     startOnRender: {
       payload,
@@ -40,7 +40,7 @@ const ContactsCollection = ({
 
   const collectionListMetadataTask = {
     name: TASK_GET_CONTACTS_METADATA,
-    id: ID,
+    id: CONTACTS_LIST_ID,
     progressMessage: 'Loading filters',
     startOnRender: {
       onSuccessDispatch: CONTACTS__METADATA_LOADED,
@@ -123,4 +123,4 @@ const ContactsCollection = ({
   )
 }
 
-export default connect(state2props)(ContactsCollection)
+export default connect(contactsState2props)(ContactsCollection)
