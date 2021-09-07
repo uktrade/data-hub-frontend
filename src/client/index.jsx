@@ -44,7 +44,7 @@ import CompaniesCollection from '../apps/companies/client/CompaniesCollection.js
 import ContactsCollection from '../apps/contacts/client/ContactsCollection.jsx'
 import OrdersCollection from '../apps/omis/client/OrdersCollection.jsx'
 import EventsCollection from '../apps/events/client/EventsCollection.jsx'
-import EventDetails from '../apps/events/client/EventDetails.jsx'
+import EventDetails from '../apps/events/client/Details/EventDetails.jsx'
 import InteractionsCollection from '../apps/interactions/client/InteractionsCollection'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 import Opportunities from '../apps/investments/client/opportunities/Details/Opportunities.jsx'
@@ -111,13 +111,10 @@ import {
   TASK_GET_EVENTS_LIST,
   TASK_GET_EVENTS_ORGANISER_NAME,
   TASK_GET_EVENTS_METADATA,
-  TASK_GET_EVENT_DETAILS,
 } from '../apps/events/client/state'
-import {
-  getEvents,
-  getEventsMetadata,
-  getEventDetails,
-} from '../apps/events/client/tasks'
+import { getEvents, getEventsMetadata } from '../apps/events/client/tasks'
+import { TASK_GET_EVENT_DETAILS } from '../apps/events/client/Details/state'
+import { getEventDetails } from '../apps/events/client/Details/tasks'
 
 import { TASK_GET_PROFILES_LIST } from '../apps/investments/client/profiles/state'
 import * as investmentProfilesTasks from '../apps/investments/client/profiles/tasks'
