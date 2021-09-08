@@ -83,7 +83,7 @@ const FieldAddress = ({
       setIsUS(country_form_value === UNITED_STATES_ID)
       setIsCanada(country_form_value === CANADA_ID)
     }
-  }, [country_form_value, isUK, isUS, isCanada])
+  }, [country_form_value])
 
   useEffect(() => {
     if (areaFieldEnabled) {
