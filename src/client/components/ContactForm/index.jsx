@@ -119,6 +119,7 @@ const _ContactForm = ({
               city,
               county,
               country,
+              area,
               postcode,
               acceptsDitEmailMarketing,
               addressSameAsCompany,
@@ -156,6 +157,7 @@ const _ContactForm = ({
                   address_town: city || ' ',
                   address_county: county,
                   address_postcode: postcode,
+                  address_area: area,
                   address_country: country,
                 }),
               }
