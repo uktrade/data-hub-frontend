@@ -70,6 +70,7 @@ const _ContactForm = ({
   addressPostcode: postcode,
   addressTown: city,
   addressCounty: county,
+  addressArea,
   addressCountry,
   // State props
   duplicateEmail,
@@ -106,6 +107,7 @@ const _ContactForm = ({
               postcode,
               county,
               city,
+              area: addressArea?.id,
               country: addressCountry?.id,
               primary: boolToYesNo(primary),
               addressSameAsCompany: boolToYesNo(addressSameAsCompany),
