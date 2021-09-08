@@ -87,6 +87,7 @@ describe('Contact controller', () => {
     context('when called with a contact', () => {
       beforeEach(() => {
         this.res.locals = assign({}, this.res.locals, { contact })
+        this.res.locals.features = assign({}, this.res.locals.features)
         this.contactController.getDetails(this.req, this.res, this.next)
       })
 
