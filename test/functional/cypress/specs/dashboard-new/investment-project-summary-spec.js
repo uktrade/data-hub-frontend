@@ -95,5 +95,11 @@ describe('Investment projects summary', () => {
         'href',
         `/investments/projects?stage=${won.id}&adviser=${myAdviserId}`
       )
+    cy.get('[data-test="pie-chart"]')
+      .should('contain', `Prospect (${prospect.value})`)
+      .should('contain', `Assign PM (${assign_pm.value})`)
+      .should('contain', `Active (${active.value})`)
+      .should('contain', `Verify win (${verify_win.value})`)
+      .should('contain', `Won (${won.value})`)
   })
 })
