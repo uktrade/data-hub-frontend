@@ -1,30 +1,27 @@
-const {
-  getFinancialYearStart,
-  generateFinancialYearLabel,
-} = require('../../../../../src/client/utils/date')
-
 import { INVESTMENT_PROJECT_STAGES_LIST } from '../../fakers/constants'
 import { investmentProjectSummaryFaker } from '../../fakers/investment-project-summary'
+import { investmentProjectListFaker } from '../../fakers/investment-projects'
 
 // Adviser id is currently set in the node layer, so we have to set to the
 // value in sandbox
 const MY_ADVISER_ID = '7d19d407-9aec-4d06-b190-d3f404627f21'
 
 describe('Investment projects summary', () => {
-  const myInvestmentProjectSummary = investmentProjectSummaryFaker()
-  const currentAnnualTotals =
-    myInvestmentProjectSummary.annual_summaries[1].totals
-  const projectCount = Object.entries(currentAnnualTotals)
+  const investmentProjectSummary = investmentProjectSummaryFaker()
+  const investmentProjects = investmentProjectListFaker(5)
+  const projectCount = Object.entries(investmentProjectSummary)
     .map(([, stage]) => stage.value)
     .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
 
   before(() => {
     cy.setUserFeatures(['personalised-dashboard'])
-    cy.intercept(
-      'GET',
-      `/api-proxy/v4/adviser/${MY_ADVISER_ID}/investment-summary`,
-      { body: myInvestmentProjectSummary }
-    ).as('apiRequest')
+    cy.intercept('POST', `/api-proxy/v3/search/investment_project`, {
+      body: {
+        count: 1,
+        results: investmentProjects,
+        summary: investmentProjectSummary,
+      },
+    }).as('apiRequest')
     cy.visit('/')
     cy.wait('@apiRequest')
   })
@@ -45,46 +42,6 @@ describe('Investment projects summary', () => {
         'contain',
         'Investment projects summary'
       )
-    })
-
-    it('should display the "Date range" label', () => {
-      cy.get('[data-test="data-summary-select"]').should(
-        'contain',
-        'Date range'
-      )
-    })
-
-    it('should display a date select with options in the correct order', () => {
-      const yearStart = getFinancialYearStart(new Date())
-      const expectedOptions = [
-        {
-          label: `Current financial year (${generateFinancialYearLabel(
-            yearStart
-          )})`,
-          value: `${yearStart}-04-01`,
-        },
-        {
-          label: `Previous financial year (${generateFinancialYearLabel(
-            yearStart - 1
-          )})`,
-          value: `${yearStart - 1}-04-01`,
-        },
-        {
-          label: 'Upcoming financial year',
-          value: `${yearStart + 1}-04-01`,
-        },
-      ]
-
-      cy.get('@investmentProjectsSummarySection')
-        .find('[data-test="data-summary-select"]')
-        .should('exist')
-        .find('[data-test="data-summary-option"]')
-        .should('have.length', 3)
-        .each(($el, index) => {
-          cy.wrap($el)
-            .should('have.text', expectedOptions[index].label)
-            .should('have.attr', 'value', expectedOptions[index].value)
-        })
     })
 
     it('should display a button to toggle the views', () => {
@@ -134,7 +91,6 @@ describe('Investment projects summary', () => {
 
     it('should display project information within a blue box', () => {
       cy.get('[data-test="investment-project-total"]')
-        .should('contain', 'Current year')
         .should('contain', projectCount)
         .should('contain', 'Projects')
     })
@@ -142,11 +98,11 @@ describe('Investment projects summary', () => {
     it('should display a table with rows for each stage', () => {
       const table = [
         ['Stage', 'Projects'],
-        ['Prospect', currentAnnualTotals.prospect.value],
-        ['Assign PM', currentAnnualTotals.assign_pm.value],
-        ['Active', currentAnnualTotals.active.value],
-        ['Verify win', currentAnnualTotals.verify_win.value],
-        ['Won', currentAnnualTotals.won.value],
+        ['Prospect', investmentProjectSummary.prospect.value],
+        ['Assign PM', investmentProjectSummary.assign_pm.value],
+        ['Active', investmentProjectSummary.active.value],
+        ['Verify win', investmentProjectSummary.verify_win.value],
+        ['Won', investmentProjectSummary.won.value],
       ]
       cy.get('[data-test="investment-project-table"]')
         .find('tr')
