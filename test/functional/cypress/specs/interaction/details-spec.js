@@ -4,7 +4,11 @@ const {
   assertKeyValueTable,
   assertBreadcrumbs,
 } = require('../../support/assertions')
-const { interactions, companies } = require('../../../../../src/lib/urls')
+const {
+  interactions,
+  companies,
+  investments,
+} = require('../../../../../src/lib/urls')
 
 const {
   interaction: { withReferral: interactionWithReferral },
@@ -388,4 +392,37 @@ describe('Interaction details', () => {
       )
     })
   })
+  context(
+    'An interaction with investment theme and large capital opportunity',
+    () => {
+      before(() => {
+        cy.visit(
+          interactions.detail(fixtures.interaction.withInvestmentTheme.id)
+        )
+      })
+      it('should render the details', () => {
+        assertKeyValueTable('interactionDetails', {
+          Company: {
+            href: `/companies/${fixtures.company.venusLtd.id}`,
+            name: fixtures.company.venusLtd.name,
+          },
+          'Contact(s)': {
+            href: '/contacts/952232d2-1d25-4c3a-bcac-2f3a30a94da9',
+            name: 'Dean Cox',
+          },
+          Service: 'Providing Investment Advice & Information',
+          Notes: 'This is a dummy interaction for testing',
+          'Date of interaction': '5 June 2017',
+          'Adviser(s)': 'DIT Staff, Digital Data Hub - Live Service',
+          'Communication channel': 'Email/Website',
+          'Related large capital opportunity': {
+            href: investments.opportunities.details(
+              fixtures.investment.completeOpportunity.id
+            ),
+            name: fixtures.investment.completeOpportunity.name,
+          },
+        })
+      })
+    }
+  )
 })

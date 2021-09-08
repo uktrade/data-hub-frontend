@@ -66,6 +66,15 @@ const ELEMENT_TRADE_AGREEMENTS = {
 const ELEMENT_TRADE_AGREEMENT_ADD = {
   text: 'Add another',
 }
+const ELEMENT_RELATED_OPPORTUNITY = {
+  legend: 'Does this interaction relate to a large capital opportunity?',
+  assert: assertFieldRadiosWithLegend,
+  optionsCount: 2,
+}
+const ELEMENT_OPPORTUNITY = {
+  legend: 'Related large capital opportunity',
+  placeholder: '-- Search opportunities --',
+}
 const ELEMENT_SERVICE = {
   emptyOption: '-- Select service --',
   assert: assertFieldSelect,
@@ -289,12 +298,22 @@ function submitForm(kind, theme, values) {
       cy.get('#event').parent().selectTypeaheadOption('Sort event')
     }
 
+    if (theme == THEMES.INVESTMENT) {
+      cy.contains(ELEMENT_RELATED_OPPORTUNITY.legend)
+        .next()
+        .find('input')
+        .check('yes')
+      cy.contains(ELEMENT_OPPORTUNITY.legend)
+        .next()
+        .selectTypeaheadOption('A modified opportunity')
+    }
+
     clickAddInteraction()
   })
 }
 
 function clickAddInteraction() {
-  cy.contains('Add interaction').click()
+  cy.contains('button', 'Add interaction').click()
 }
 
 function spyOnRequest(url = '/api-proxy/v4/interaction') {
@@ -585,6 +604,7 @@ describe('Investment theme', () => {
         ELEMENT_SUBJECT,
         ELEMENT_NOTES,
         ELEMENT_FEEDBACK_POLICY,
+        ELEMENT_RELATED_OPPORTUNITY,
         ELEMENT_STEP2_BUTTONS,
       ])
     })
@@ -602,6 +622,7 @@ describe('Investment theme', () => {
             'Select a communication channel',
             'Enter a subject',
             'Answer if the contact provided business intelligence',
+            'Answer if this interaction relates to a large capital opportunity',
           ].join('')
         )
     })
@@ -619,6 +640,7 @@ describe('Investment theme', () => {
           service: '3a0bba2b-3499-e211-a939-e4115bead28a',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           kind: 'interaction',
+          large_capital_opportunity: 'a84f8405-c419-40a6-84c8-642b7c3209b2',
           event: null,
           export_countries: [],
         },
@@ -629,6 +651,46 @@ describe('Investment theme', () => {
           )
         }
       )
+    })
+  })
+  context('with a related large capital opportunity', () => {
+    context('when creating an interaction', () => {
+      before(() => {
+        cy.visit(urls.companies.interactions.create(company.id))
+        cy.contains('label', 'Investment').click()
+        cy.contains('button', 'Continue').click()
+      })
+      it('should give an error if selected yes there is a related opportunity but no opportunity selected', () => {
+        cy.contains(ELEMENT_RELATED_OPPORTUNITY.legend)
+          .next()
+          .find('input')
+          .check('yes')
+        cy.contains('button', 'Add interaction').click()
+        cy.contains('h2', 'There is a problem')
+          .next()
+          .should('contain', 'Select a related large capital opportunity')
+      })
+    })
+    context('when editing an interaction', () => {
+      before(() => {
+        cy.visit(
+          urls.interactions.edit(fixtures.interaction.withInvestmentTheme.id)
+        )
+        cy.intercept(
+          'PATCH',
+          `/api-proxy/v4/interaction/${fixtures.interaction.withInvestmentTheme.id}`
+        ).as('apiRequest')
+      })
+      it('should remove the opportunity from the interaction if user selects no related opportunity', () => {
+        cy.contains(ELEMENT_RELATED_OPPORTUNITY.legend)
+          .next()
+          .find('input')
+          .check('no')
+        cy.contains('button', 'Save interaction').click()
+        cy.wait('@apiRequest').then(({ request }) => {
+          expect(request.body.large_capital_opportunity).to.equal(null)
+        })
+      })
     })
   })
 })

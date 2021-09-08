@@ -35,6 +35,7 @@ module.exports = {
     withNoLink: require('./interaction/with-no-link.json'),
     withLink: require('./interaction/with-link.json'),
     withReferral: require('../../../sandbox/fixtures/v3/interaction/interaction-with-referral.json'),
+    withInvestmentTheme: require('./interaction/investment-theme.json'),
   },
   investment: {
     investmentWithNoLink: require('./investment/investment-with-no-link.json'),

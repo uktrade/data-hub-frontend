@@ -1,0 +1,81 @@
+{
+  "id": "4dcb3748-c097-4f20-b84f-0114bbb1a8e3",
+  "companies": [
+    {
+      "name": "Venus Ltd",
+      "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+    }
+  ],
+  "contacts": [
+    {
+      "name": "Dean Cox",
+      "first_name": "Dean",
+      "last_name": "Cox",
+      "job_title": null,
+      "id": "952232d2-1d25-4c3a-bcac-2f3a30a94da9"
+    }
+  ],
+  "created_on": "2017-06-05T00:00:00Z",
+  "created_by": null,
+  "event": null,
+  "is_event": null,
+  "status": "complete",
+  "kind": "interaction",
+  "theme": "investment",
+  "modified_by": null,
+  "modified_on": "2017-06-05T00:00:00Z",
+  "date": "2017-06-05",
+  "dit_adviser": {
+    "name": "DIT Staff",
+    "first_name": "DIT",
+    "last_name": "Staff",
+    "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
+  },
+  "dit_participants": [
+    {
+      "adviser": {
+        "name": "DIT Staff",
+        "first_name": "DIT",
+        "last_name": "Staff",
+        "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
+      },
+      "team": {
+        "name": "Digital Data Hub - Live Service",
+        "id": "3a48318c-9698-e211-a939-e4115bead28a"
+      }
+    }
+  ],
+  "dit_team": {
+    "name": "British High Commission Wellington New Zealand",
+    "id": "197c51d4-9698-e211-a939-e4115bead28a"
+  },
+  "communication_channel": {
+    "name": "Email/Website",
+    "id": "70c226d7-5d95-e211-a939-e4115bead28a"
+  },
+  "grant_amount_offered": null,
+  "investment_project": null,
+  "net_company_receipt": null,
+  "service": {
+    "name": "Providing Investment Advice & Information",
+    "id": "ef3218c1-bed6-4ad8-b8d5-8af2430d32ff"
+  },
+  "service_answers": {
+    "3c69f671-0888-475c-97e5-bc55461db35e": {
+      "626890c4-214e-44fd-afc7-117abced123e": {}
+    }
+  },
+  "service_delivery_status": null,
+  "subject": "Investment theme interaction",
+  "notes": "This is a dummy interaction for testing",
+  "archived_documents_url_path": "",
+  "policy_areas": [],
+  "policy_feedback_notes": "",
+  "policy_issue_types": [],
+  "was_policy_feedback_provided": false,
+  "large_capital_opportunity": {
+    "name": "Battersea power station regeneration",
+    "id": "a84f8405-c419-40a6-84c8-642b7c3209b2"
+  },
+  "has_related_trade_agreements": false
+}

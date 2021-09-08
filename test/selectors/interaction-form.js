@@ -44,4 +44,5 @@ module.exports = {
     noInterest: '#field-' + EXPORT_INTEREST_STATUS.NOT_INTERESTED,
   },
   hasRelatedTradeAgreementsNo: '#field-has_related_trade_agreements [value=no]',
+  hasRelatedOpportunityNo: '#field-has_related_opportunity [value=no]',
 }
