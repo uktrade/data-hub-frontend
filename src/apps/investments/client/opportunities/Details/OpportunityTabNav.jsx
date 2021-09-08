@@ -12,6 +12,11 @@ import Task from '../../../../../client/components/Task/index.jsx'
 import { TASK_GET_OPPORTUNITY_DETAILS, ID, state2props } from '../Details/state'
 import { INVESTMENT_OPPORTUNITY_DETAILS__LOADED } from '../../../../../client/actions'
 import OpportunityInteractions from './OpportunityInteractions'
+import styled from 'styled-components'
+
+const StyledMain = styled(Main)`
+  padding-bottom: 40px;
+`
 
 const OpportunityTabNav = ({ opportunityId, opportunity }) => (
   <Route>
@@ -31,7 +36,7 @@ const OpportunityTabNav = ({ opportunityId, opportunity }) => (
           opportunity.detailsFields.name && (
             <>
               <OpportunityDetailsHeader currentPath={location.pathname} />
-              <Main>
+              <StyledMain>
                 <TabNav
                   id="opportunity-tab-nav"
                   label="Opportunity tab nav"
@@ -53,7 +58,7 @@ const OpportunityTabNav = ({ opportunityId, opportunity }) => (
                     },
                   }}
                 ></TabNav>
-              </Main>
+              </StyledMain>
             </>
           )
         }

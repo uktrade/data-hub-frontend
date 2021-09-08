@@ -33,6 +33,7 @@ const StyledLabel = styled('label')`
 `
 
 const StyledDetails = styled(Details)`
+  margin-bottom: 0;
   span {
     font-size: ${FONT_SIZE.SIZE_19};
   }
