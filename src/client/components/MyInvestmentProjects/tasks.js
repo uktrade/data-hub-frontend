@@ -1,10 +1,6 @@
 import { apiProxyAxios } from '../Task/utils'
 
-const summaryToDataRange = ({ summary, adviser }) =>
-  Object.keys(summary).map((key) => ({
-    link: `/investments/projects?stage=${summary[key].id}&adviser=${adviser.id}`,
-    ...summary[key],
-  }))
+import { summaryToDataRange } from './transformers'
 
 export const fetchMyInvestmentsList = ({
   limit = 10,

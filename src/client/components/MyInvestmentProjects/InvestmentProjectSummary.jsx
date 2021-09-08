@@ -3,7 +3,15 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import DataSummary from '../DataSummary'
-import { state2props } from './state'
+import { ID as CHECK_INVESTMENTS_ID } from '../PersonalisedDashboard/state'
+
+import { ID } from './state'
+
+const state2props = (state) => {
+  const { summary: unfilteredSummary } = state[CHECK_INVESTMENTS_ID]
+  const { summary } = state[ID]
+  return { summary: summary.length ? summary : unfilteredSummary }
+}
 
 const InvestmentProjectSummary = ({ summary = [] }) => (
   <DataSummary
