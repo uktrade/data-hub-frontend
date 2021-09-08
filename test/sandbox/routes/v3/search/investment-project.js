@@ -16,7 +16,7 @@ exports.investmentProjects = function (req, res) {
     req.body.likelihood_to_land ||
     req.body.level_of_involvement_simplified
   )
-  const results = investmentProjects.results
+  const { results, summary } = investmentProjects
 
   if (req.body.uk_region_location) {
     var regionQuery = req.body.uk_region_location
@@ -35,16 +35,19 @@ exports.investmentProjects = function (req, res) {
     return res.json({
       count: ukRegionFilteredResults.length,
       results: ukRegionFilteredResults,
+      summary,
     })
   } else if (hasFilters) {
     return res.json({
       count: 12,
       results,
+      summary,
     })
   } else {
     return res.json({
       ...investmentProjects,
       results,
+      summary,
     })
   }
 }
