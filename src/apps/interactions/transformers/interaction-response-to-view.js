@@ -113,9 +113,15 @@ function transformInteractionResponseToViewRecord(
     company:
       companies &&
       companies.length &&
-      transformEntityLink(companies[0], 'companies'),
+      transformEntityLink({
+        entity: companies[0],
+        entityPath: 'companies',
+      }),
     contacts: contacts.map((contact) =>
-      transformEntityLink(contact, 'contacts')
+      transformEntityLink({
+        entity: contact,
+        entityPath: 'contacts',
+      })
     ),
     service: getServiceValues(service),
     service_delivery_status,
@@ -124,11 +130,16 @@ function transformInteractionResponseToViewRecord(
     notes: notes,
     date: { type: 'date', name: date },
     dit_participants: (dit_participants || []).map(formatParticipantName),
-    investment_project: transformEntityLink(
-      investment_project,
-      'investments/projects'
-    ),
-    event: transformEntityLink(event, 'events', defaultEventText),
+    investment_project: transformEntityLink({
+      entity: investment_project,
+      entityPath: 'investments/projects',
+    }),
+    event: transformEntityLink({
+      entity: event,
+      entityPath: 'events',
+      noLinkText: defaultEventText,
+    }),
+
     communication_channel: communication_channel,
     policy_issue_types: getNames(policy_issue_types),
     policy_areas: getNames(policy_areas),
