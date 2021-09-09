@@ -2,26 +2,24 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 import styled from 'styled-components'
 import { GREY_4, WHITE, BLUE, BLACK } from 'govuk-colours'
-import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
-
-const StyledLocalNav = styled('nav')({
-  padding: `${SPACING.SCALE_2} ${SPACING.SCALE_3}`,
-})
+import { FONT_SIZE } from '@govuk-react/constants'
 
 const StyledActiveLink = styled('a')({
   display: 'block',
-  padding: `${SPACING.SCALE_2} ${SPACING.SCALE_3}`,
+  fontSize: FONT_SIZE.SIZE_20,
+  padding: '11px 16px',
   '&:link, &:visited': {
     color: WHITE,
-    backgroundColor: BLUE,
+    background: '#005ea5',
     textDecoration: 'none',
-    fontWeight: FONT_WEIGHTS.bold,
+    fontWeight: 600,
   },
 })
 
 const StyledInactiveLink = styled('a')({
   display: 'block',
-  padding: `${SPACING.SCALE_2} ${SPACING.SCALE_3}`,
+  fontSize: FONT_SIZE.SIZE_20,
+  padding: '11px 16px',
   '&:link, &:visited': {
     color: BLUE,
     textDecoration: 'none',
@@ -33,7 +31,7 @@ const StyledInactiveLink = styled('a')({
 })
 
 export const LocalNav = ({ children }) => {
-  return <StyledLocalNav>{children}</StyledLocalNav>
+  return <nav>{children}</nav>
 }
 
 export const LocalNavLink = ({ children, href, ...rest }) => (
