@@ -203,7 +203,7 @@ describe('Edit contact', () => {
     })
 
     describe('when changing countries', () => {
-      describe('when changing a canadian contact country to UK', () => {
+      describe('when changing a Canadian contact country to UK', () => {
         it('should clear the province value', () => {
           cy.intercept('PATCH', `/api-proxy/v4/contact/${EDIT_CONTACT_ID}`).as(
             'editContactResponse'
@@ -222,14 +222,40 @@ describe('Edit contact', () => {
           })
         })
       })
+
+      describe('when a US contact has a US state and changes to Canada', () => {
+        it('should clear the province value', () => {
+          cy.log(`/api-proxy/v4/contact/${EDIT_CONTACT_ID}`)
+
+          cy.visit(`/contacts/${EDIT_CONTACT_ID}/edit`)
+          cy.get('#country').select('United States')
+          cy.get('#area').select('Massachusetts')
+          cy.get('#country').select('Canada')
+          cy.get('#address1').type('Address first line')
+          cy.get('#city').type('Address city')
+          cy.get('#postcode').type('NE16 386')
+          cy.get('[data-test="submit"]').click()
+
+          cy.contains('Select a province')
+        })
+      })
+
+      describe('when a UK contact is switched to US', () => {
+        it('the state should be empty', () => {
+          cy.log(`/api-proxy/v4/contact/${EDIT_CONTACT_ID}`)
+
+          cy.visit(`/contacts/${EDIT_CONTACT_ID}/edit`)
+          cy.get('#country').select('United Kingdom')
+          cy.get('#country').select('United States')
+          cy.get('#address1').type('Address first line')
+          cy.get('#city').type('Address city')
+          cy.get('#postcode').type('NE16 386')
+          cy.get('[data-test="submit"]').click()
+
+          cy.contains('Select a state')
+        })
+      })
     })
-
-    //when US selected and US state selected and we switch to Canada
-    //submitted area should be null
-
-    //switching from UK to US and don't select an area
-    //submitted area should be null
-    //should also get a validation error
   })
 
   it('Should render the form with the contact values', () => {
