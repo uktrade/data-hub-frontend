@@ -10,7 +10,11 @@ import { TASK_GET_EVENT_DETAILS, ID, state2props } from './state'
 import { EVENTS__DETAILS_LOADED } from '../../../../client/actions'
 
 import { SummaryTable, FormActions } from '../../../../client/components'
-import { Container } from '../../../../client/components'
+import {
+  Container,
+  LocalNav,
+  LocalNavLink,
+} from '../../../../client/components'
 
 const EventDetails = ({
   eventId,
@@ -42,7 +46,16 @@ const EventDetails = ({
         return (
           <>
             <GridRow data-test="eventDetails">
-              <GridCol setWidth="one-quarter"></GridCol>
+              <GridCol setWidth="one-quarter">
+                <LocalNav data-test="event-details-nav">
+                  <LocalNavLink href={urls.events.details(eventId)}>
+                    Details
+                  </LocalNavLink>
+                  <LocalNavLink href={urls.events.attendees(eventId)}>
+                    Attendees
+                  </LocalNavLink>
+                </LocalNav>
+              </GridCol>
               <GridCol setWidth="three-quarter">
                 <SummaryTable>
                   <SummaryTable.Row
