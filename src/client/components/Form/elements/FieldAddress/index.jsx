@@ -82,6 +82,8 @@ const FieldAddress = ({
       setIsUK(country_form_value === UNITED_KINGDOM_ID)
       setIsUS(country_form_value === UNITED_STATES_ID)
       setIsCanada(country_form_value === CANADA_ID)
+
+      setFieldValue('area', null)
     }
   }, [country_form_value])
 

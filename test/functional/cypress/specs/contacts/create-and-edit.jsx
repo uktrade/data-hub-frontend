@@ -3,8 +3,6 @@
 const { assertBreadcrumbs } = require('../../support/assertions')
 
 const ZBONCAK_COMPANY_ID = '4cd4128b-1bad-4f1e-9146-5d4678c6a018'
-const NEW_CONTACT_ID = '14890695-ce54-4419-88d3-9224754ecbc0'
-
 const assertErrorSummary = (...errors) =>
   cy
     .contains('There is a problem')
@@ -53,6 +51,8 @@ const assertNoMarketingConsent = () =>
     .should('not.be.checked')
 
 describe('Create contact form', () => {
+  const NEW_CONTACT_ID = '14890695-ce54-4419-88d3-9224754ecbc0'
+
   beforeEach(() => {
     cy.visit(`/contacts/create?company=${ZBONCAK_COMPANY_ID}`)
 
@@ -192,17 +192,48 @@ describe('Create contact form', () => {
 })
 
 describe('Edit contact', () => {
+  const EDIT_CONTACT_ID = '5e75d636-1d24-416a-aaf0-3fb220d594ce'
+
   describe('country specific address fields', () => {
     it('should prepopulate the state', () => {
-      cy.visit(`/contacts/${NEW_CONTACT_ID}/edit`)
+      cy.visit(`/contacts/${EDIT_CONTACT_ID}/edit`)
       cy.get('#area')
         .find('option:selected')
         .should('have.text', 'Massachusetts')
     })
+
+    describe('when changing countries', () => {
+      describe('when changing a canadian contact country to UK', () => {
+        it('should clear the province value', () => {
+          cy.intercept('PATCH', `/api-proxy/v4/contact/${EDIT_CONTACT_ID}`).as(
+            'editContactResponse'
+          )
+          cy.log(`/api-proxy/v4/contact/${EDIT_CONTACT_ID}`)
+
+          cy.visit(`/contacts/${EDIT_CONTACT_ID}/edit`)
+          cy.get('#country').select('United Kingdom')
+          cy.get('#address1').type('Address first line')
+          cy.get('#city').type('Address city')
+          cy.get('#postcode').type('NE16 386')
+          cy.get('[data-test="submit"]').click()
+
+          cy.wait('@editContactResponse').then((xhr) => {
+            expect(xhr.request.body.address_area).to.equal(null)
+          })
+        })
+      })
+    })
+
+    //when US selected and US state selected and we switch to Canada
+    //submitted area should be null
+
+    //switching from UK to US and don't select an area
+    //submitted area should be null
+    //should also get a validation error
   })
 
   it('Should render the form with the contact values', () => {
-    cy.visit(`/contacts/${NEW_CONTACT_ID}/edit`)
+    cy.visit(`/contacts/${EDIT_CONTACT_ID}/edit`)
 
     assertBreadcrumbs({
       Home: '/',
