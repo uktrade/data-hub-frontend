@@ -15,9 +15,6 @@
  * @returns undefined
  */
 
-const compareSnapshotCommand = require('cypress-image-diff-js/dist/command')
-compareSnapshotCommand()
-
 const addLoggedCommand = ({
   name,
   logName,
