@@ -31,7 +31,7 @@ export const transformContactToListItem = (companyId) => (contact) => {
   const badges = [
     { text: contact.primary ? 'Primary' : null },
     { text: contact.archived ? 'Archived' : null },
-  ].filter((item) => item.text)
+  ]
 
   return {
     id: contact.id,

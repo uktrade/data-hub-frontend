@@ -117,12 +117,12 @@ describe('Local header for company under dnb investigation', () => {
             fixtures.company.investigationLimited.id
           )}?returnUrl=${urls.companies.detail(
             fixtures.company.investigationLimited.id
-          )}/contacts?sortby=modified_on%3Adesc&archived=false`
+          )}/contacts`
         )
       })
 
-      it('should not display a badge', () => {
-        cy.get(companyLocalHeader.badge).should('not.exist')
+      it('should display a badge', () => {
+        cy.get(companyLocalHeader.badge).should('exist')
       })
 
       it('should not display "What does this mean?" details', () => {

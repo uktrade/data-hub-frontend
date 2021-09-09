@@ -128,7 +128,7 @@ describe('Local header for global ultimate company', () => {
           fixtures.company.dnbGlobalUltimate.id
         )}?returnUrl=${urls.companies.detail(
           fixtures.company.dnbGlobalUltimate.id
-        )}/contacts?sortby=modified_on%3Adesc&archived=false`
+        )}/contacts`
       )
     })
 

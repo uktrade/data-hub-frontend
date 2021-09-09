@@ -127,7 +127,7 @@ router.get(
 )
 router.get(urls.companies.hierarchies.subsidiaries.add.route, addSubsidiary)
 
-router.get(urls.companies.contacts.route, renderContacts)
+router.get(urls.companies.contacts.route, setReturnUrl, renderContacts)
 
 router.get(urls.companies.orders.route, setReturnUrl, renderOrders)
 router.get(urls.companies.documents.route, renderDocuments)

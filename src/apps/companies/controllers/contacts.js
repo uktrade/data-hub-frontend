@@ -1,7 +1,8 @@
 const urls = require('../../../lib/urls')
 
 function renderContacts(req, res) {
-  const { company, dnbRelatedCompaniesCount } = res.locals
+  const { company, returnUrl, dnbRelatedCompaniesCount } = res.locals
+
   res.locals.title = `Contacts - ${company.name} - Companies`
 
   res.render('companies/views/contacts', {
@@ -13,6 +14,7 @@ function renderContacts(req, res) {
         { link: urls.companies.detail(company.id), text: company.name },
         { text: 'Contacts' },
       ],
+      returnUrl,
       dnbRelatedCompaniesCount,
     },
   })
