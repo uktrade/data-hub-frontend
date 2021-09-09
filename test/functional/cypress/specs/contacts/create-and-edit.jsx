@@ -192,6 +192,15 @@ describe('Create contact form', () => {
 })
 
 describe('Edit contact', () => {
+  describe('country specific address fields', () => {
+    it('should prepopulate the state', () => {
+      cy.visit(`/contacts/${NEW_CONTACT_ID}/edit`)
+      cy.get('#area')
+        .find('option:selected')
+        .should('have.text', 'Massachusetts')
+    })
+  })
+
   it('Should render the form with the contact values', () => {
     cy.visit(`/contacts/${NEW_CONTACT_ID}/edit`)
 
@@ -213,7 +222,7 @@ describe('Edit contact', () => {
     assertRadioGroup('Is this person a primary contact?', 'Yes')
     assertRadioGroup(
       'Is the contact’s address the same as the company address?',
-      'Yes'
+      'No'
     )
 
     assertInputValuesByLabels({
