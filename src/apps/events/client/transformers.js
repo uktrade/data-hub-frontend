@@ -5,7 +5,7 @@ import urls from '../../../lib/urls'
 const {
   format,
   formatMediumDateTime,
-  formatMediumDate,
+  formatLongDate,
   getDifferenceInDays,
 } = require('../../../client/utils/date')
 
@@ -103,8 +103,8 @@ const transformResponseToEventDetails = ({
   disabled_on,
 }) => ({
   eventType: event_type.name,
-  startDate: formatMediumDate(start_date),
-  endDate: formatMediumDate(end_date),
+  startDate: formatLongDate(start_date),
+  endDate: formatLongDate(end_date),
   eventDays:
     getDifferenceInDays(end_date) - getDifferenceInDays(start_date) + 1,
   locationType: location_type?.name,
