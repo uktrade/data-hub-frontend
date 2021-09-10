@@ -100,6 +100,7 @@ const transformResponseToEventDetails = ({
   related_trade_agreements,
   service,
   archived_documents_url_path,
+  disabled_on,
 }) => ({
   eventType: event_type.name,
   startDate: formatMediumDate(start_date),
@@ -123,6 +124,7 @@ const transformResponseToEventDetails = ({
   relatedTradeAgreements: related_trade_agreements.map(idNameToValueLabel),
   service: service.name,
   archievedDocumentsUrlPath: archived_documents_url_path,
+  disabledOn: disabled_on,
 })
 
 export { transformResponseToEventCollection, transformResponseToEventDetails }

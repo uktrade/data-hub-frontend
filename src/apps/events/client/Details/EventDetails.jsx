@@ -42,6 +42,7 @@ const EventDetails = ({
   relatedTradeAgreements,
   service,
   archievedDocumentsUrlPath,
+  disabledOn,
 }) => (
   <Container width="1180">
     <Task.Status
@@ -129,11 +130,13 @@ const EventDetails = ({
                   </SummaryTable.Row>
                 )}
               </StyledSummaryTable>
-              <FormActions>
-                <Button as={Link} href={urls.events.edit(eventId)}>
-                  Edit event
-                </Button>
-              </FormActions>
+              {!disabledOn && (
+                <FormActions>
+                  <Button as={Link} href={urls.events.edit(eventId)}>
+                    Edit event
+                  </Button>
+                </FormActions>
+              )}
             </GridCol>
           </GridRow>
         )
