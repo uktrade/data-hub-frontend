@@ -10,7 +10,11 @@ import Task from '../../../../client/components/Task'
 import { TASK_GET_EVENT_DETAILS, ID, state2props } from './state'
 import { EVENTS__DETAILS_LOADED } from '../../../../client/actions'
 
-import { SummaryTable, FormActions } from '../../../../client/components'
+import {
+  SummaryTable,
+  FormActions,
+  NewWindowLink,
+} from '../../../../client/components'
 import {
   Container,
   LocalNav,
@@ -26,6 +30,7 @@ const EventDetails = ({
   eventType,
   startDate,
   endDate,
+  eventDays,
   locationType,
   fullAddress,
   ukRegion,
@@ -36,6 +41,7 @@ const EventDetails = ({
   relatedProgrammes,
   relatedTradeAgreements,
   service,
+  archievedDocumentsUrlPath,
 }) => (
   <Container width="1180">
     <Task.Status
@@ -67,10 +73,17 @@ const EventDetails = ({
                   children={eventType}
                 />
                 <SummaryTable.Row
-                  heading="Event start date"
+                  heading={eventDays == 1 ? 'Event date' : 'Event start date'}
                   children={startDate}
                 />
-                <SummaryTable.Row heading="Event end date" children={endDate} />
+
+                {eventDays > 1 ? (
+                  <SummaryTable.Row
+                    heading="Event end date"
+                    children={endDate}
+                  />
+                ) : null}
+
                 <SummaryTable.Row
                   heading="Event location type"
                   children={locationType}
@@ -108,6 +121,13 @@ const EventDetails = ({
                   hideWhenEmpty={false}
                 />
                 <SummaryTable.Row heading="Service" children={service} />
+                {archievedDocumentsUrlPath && (
+                  <SummaryTable.Row heading="Documents">
+                    <NewWindowLink href={archievedDocumentsUrlPath}>
+                      View files and documents
+                    </NewWindowLink>
+                  </SummaryTable.Row>
+                )}
               </StyledSummaryTable>
               <FormActions>
                 <Button as={Link} href={urls.events.edit(eventId)}>

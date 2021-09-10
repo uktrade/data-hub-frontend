@@ -6,6 +6,7 @@ const {
   format,
   formatMediumDateTime,
   formatMediumDate,
+  getDifferenceInDays,
 } = require('../../../client/utils/date')
 
 const transformEventToListItem = ({
@@ -98,10 +99,13 @@ const transformResponseToEventDetails = ({
   related_programmes,
   related_trade_agreements,
   service,
+  archived_documents_url_path,
 }) => ({
   eventType: event_type.name,
   startDate: formatMediumDate(start_date),
   endDate: formatMediumDate(end_date),
+  eventDays:
+    getDifferenceInDays(end_date) - getDifferenceInDays(start_date) + 1,
   locationType: location_type?.name,
   fullAddress:
     `${address_1 ? `${address_1}, ` : ''}` +
@@ -118,6 +122,7 @@ const transformResponseToEventDetails = ({
   relatedProgrammes: related_programmes.map(idNameToValueLabel),
   relatedTradeAgreements: related_trade_agreements.map(idNameToValueLabel),
   service: service.name,
+  archievedDocumentsUrlPath: archived_documents_url_path,
 })
 
 export { transformResponseToEventCollection, transformResponseToEventDetails }
