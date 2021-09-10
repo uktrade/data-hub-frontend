@@ -95,14 +95,14 @@ const _ContactForm = ({
   }, [])
 
   const areaUS = (addressArea) => {
-    if (addressCountry.id === UNITED_STATES_ID) {
+    if (addressCountry?.id === UNITED_STATES_ID) {
       return addressArea?.id
     }
     return null
   }
 
   const areaCanada = (addressArea) => {
-    if (addressCountry.id === CANADA_ID) {
+    if (addressCountry?.id === CANADA_ID) {
       return addressArea?.id
     }
     return null
