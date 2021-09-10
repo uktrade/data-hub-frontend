@@ -1,5 +1,6 @@
 const contact = require('../../../fixtures/v3/contact/contact.json')
-const contactById = require('../../../fixtures/v3/contact/contact-by-id.json')
+const contactByIdUK = require('../../../fixtures/v3/contact/contact-by-id-uk.json')
+const contactByIdUS = require('../../../fixtures/v3/contact/contact-by-id-us.json')
 const contactByIdWithNoDocument = require('../../../fixtures/v3/contact/contact-by-id-with-no-document.json')
 const contactsForReferral = require('../../../fixtures/v3/contact/contacts-for-referral.json')
 
@@ -50,11 +51,13 @@ exports.contactCreate = function (req, res) {
 }
 
 exports.contactById = function (req, res) {
+  console.log(`CONTACT ID: ${req.params.contactId}`)
   const contacts = {
     '5555d636-1d24-416a-aaf0-3fb220d59aaa': contactByIdWithNoDocument,
+    'f3d19ea7-d4cf-43e0-8e97-755c57cae313': contactByIdUK,
   }
 
-  res.json(contacts[req.params.contactId] || contactById)
+  res.json(contacts[req.params.contactId] || contactByIdUS)
 }
 
 exports.updateContactById = function (req, res) {
@@ -66,5 +69,10 @@ exports.updateContactById = function (req, res) {
   if (fieldErrors.length) {
     return res.status(400).json(Object.fromEntries(fieldErrors))
   }
-  res.json(contactById)
+
+  if (req.params.contactId === 'f3d19ea7-d4cf-43e0-8e97-755c57cae313') {
+    res.json(contactByIdUK)
+  } else {
+    res.json(contactByIdUS)
+  }
 }

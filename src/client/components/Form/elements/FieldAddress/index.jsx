@@ -83,7 +83,11 @@ const FieldAddress = ({
       setIsUS(country_form_value === UNITED_STATES_ID)
       setIsCanada(country_form_value === CANADA_ID)
 
-      setFieldValue('area', null)
+      //should be set when
+      //isn't US
+      //country has changed
+      //how can we tell if the country's changed vs it's just being set to the initial value?
+      //setFieldValue('area', null)
     }
   }, [country_form_value])
 
@@ -130,7 +134,12 @@ const FieldAddress = ({
     setFieldValue('city', address.city)
     setFieldValue('county', address.county)
     setFieldValue('country', isCountrySelectable ? address.country : country.id)
-    setFieldValue('area', address.area)
+    if (address.country.id === UNITED_STATES_ID) {
+      setFieldValue('areaUS', address.area)
+    }
+    if (address.country.id === CANADA_ID) {
+      setFieldValue('areaUS', address.area)
+    }
     setFieldValue('country', country.id)
 
     if (onSelectUKAddress) {
@@ -143,7 +152,7 @@ const FieldAddress = ({
       return (
         <FieldSelect
           type="text"
-          name="area"
+          name="areaUS"
           label="State"
           options={usStates}
           required="Select a state"
@@ -158,7 +167,7 @@ const FieldAddress = ({
       return (
         <FieldSelect
           type="text"
-          name="area"
+          name="areaCanada"
           label="Province"
           options={canadaProvinces}
           required="Select a province"

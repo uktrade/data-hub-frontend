@@ -192,25 +192,46 @@ describe('Create contact form', () => {
 })
 
 describe('Edit contact', () => {
-  const EDIT_CONTACT_ID = '5e75d636-1d24-416a-aaf0-3fb220d594ce'
+  const EDIT_US_CONTACT_ID = '5e75d636-1d24-416a-aaf0-3fb220d594ce'
+  const EDIT_UK_CONTACT_ID = 'f3d19ea7-d4cf-43e0-8e97-755c57cae313'
 
   describe('country specific address fields', () => {
     it('should prepopulate the state', () => {
-      cy.visit(`/contacts/${EDIT_CONTACT_ID}/edit`)
-      cy.get('#area')
+      cy.visit(`/contacts/${EDIT_US_CONTACT_ID}/edit`)
+      cy.get('#areaUS')
         .find('option:selected')
         .should('have.text', 'Massachusetts')
+    })
+
+    describe('when a UK company is submitted', () => {
+      it('should explicitly submit area as null', () => {
+        cy.intercept('PATCH', `/api-proxy/v4/contact/${EDIT_UK_CONTACT_ID}`).as(
+          'editContactResponse'
+        )
+        cy.log(`/api-proxy/v4/contact/${EDIT_UK_CONTACT_ID}`)
+
+        cy.visit(`/contacts/${EDIT_UK_CONTACT_ID}/edit`)
+        cy.get('#address1').type('Address first line')
+        cy.get('#city').type('Address city')
+        cy.get('#postcode').type('NE16 386')
+        cy.get('[data-test="submit"]').click()
+
+        cy.wait('@editContactResponse').then((xhr) => {
+          expect(xhr.request.body.address_area).to.equal(null)
+        })
+      })
     })
 
     describe('when changing countries', () => {
       describe('when changing a Canadian contact country to UK', () => {
         it('should clear the province value', () => {
-          cy.intercept('PATCH', `/api-proxy/v4/contact/${EDIT_CONTACT_ID}`).as(
-            'editContactResponse'
-          )
-          cy.log(`/api-proxy/v4/contact/${EDIT_CONTACT_ID}`)
+          cy.intercept(
+            'PATCH',
+            `/api-proxy/v4/contact/${EDIT_US_CONTACT_ID}`
+          ).as('editContactResponse')
+          cy.log(`/api-proxy/v4/contact/${EDIT_US_CONTACT_ID}`)
 
-          cy.visit(`/contacts/${EDIT_CONTACT_ID}/edit`)
+          cy.visit(`/contacts/${EDIT_US_CONTACT_ID}/edit`)
           cy.get('#country').select('United Kingdom')
           cy.get('#address1').type('Address first line')
           cy.get('#city').type('Address city')
@@ -225,11 +246,11 @@ describe('Edit contact', () => {
 
       describe('when a US contact has a US state and changes to Canada', () => {
         it('should clear the province value', () => {
-          cy.log(`/api-proxy/v4/contact/${EDIT_CONTACT_ID}`)
+          cy.log(`/api-proxy/v4/contact/${EDIT_US_CONTACT_ID}`)
 
-          cy.visit(`/contacts/${EDIT_CONTACT_ID}/edit`)
+          cy.visit(`/contacts/${EDIT_US_CONTACT_ID}/edit`)
           cy.get('#country').select('United States')
-          cy.get('#area').select('Massachusetts')
+          cy.get('#areaUS').select('Massachusetts')
           cy.get('#country').select('Canada')
           cy.get('#address1').type('Address first line')
           cy.get('#city').type('Address city')
@@ -242,9 +263,9 @@ describe('Edit contact', () => {
 
       describe('when a UK contact is switched to US', () => {
         it('the state should be empty', () => {
-          cy.log(`/api-proxy/v4/contact/${EDIT_CONTACT_ID}`)
+          cy.log(`/api-proxy/v4/contact/${EDIT_UK_CONTACT_ID}`)
 
-          cy.visit(`/contacts/${EDIT_CONTACT_ID}/edit`)
+          cy.visit(`/contacts/${EDIT_UK_CONTACT_ID}/edit`)
           cy.get('#country').select('United Kingdom')
           cy.get('#country').select('United States')
           cy.get('#address1').type('Address first line')
@@ -259,7 +280,7 @@ describe('Edit contact', () => {
   })
 
   it('Should render the form with the contact values', () => {
-    cy.visit(`/contacts/${EDIT_CONTACT_ID}/edit`)
+    cy.visit(`/contacts/${EDIT_US_CONTACT_ID}/edit`)
 
     assertBreadcrumbs({
       Home: '/',
