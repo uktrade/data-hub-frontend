@@ -88,6 +88,7 @@ const transformResponseToEventDetails = ({
   address_2,
   address_town,
   address_county,
+  address_postcode,
   address_country,
   uk_region,
   notes,
@@ -107,6 +108,7 @@ const transformResponseToEventDetails = ({
     `${address_2 ? `${address_2}, ` : ''}` +
     `${address_town ? `${address_town}, ` : ''}` +
     `${address_county ? `${address_county}, ` : ''}` +
+    `${address_postcode ? `${address_postcode}, ` : ''}` +
     `${address_country.name ? address_country.name : ''}`,
   ukRegion: uk_region?.name,
   notes: notes,
