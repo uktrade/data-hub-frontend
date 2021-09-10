@@ -17,6 +17,7 @@ function getContactAddress(
         town: contactAddressFields.address_town,
         county: contactAddressFields.address_county,
         postcode: contactAddressFields.address_postcode,
+        area: contactAddressFields.address_area,
         country: contactAddressFields.address_country,
       }
 }
@@ -118,6 +119,7 @@ function transformContactToView(
     address_town,
     address_county,
     address_postcode,
+    address_area,
     address_country,
     telephone_alternative,
     email_alternative,
@@ -149,6 +151,7 @@ function transformContactToView(
           address_town,
           address_county,
           address_postcode,
+          address_area,
           address_country,
         },
         company

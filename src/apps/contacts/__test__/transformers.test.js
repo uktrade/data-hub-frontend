@@ -301,6 +301,7 @@ describe('Contact transformers', () => {
             address_2: 'Bridge Lane',
             address_town: 'Maidenhead',
             address_county: 'Berkshire',
+            address_area: undefined,
             address_country: {
               id: '80756b9a-5d95-e211-a939-e4115bead28a',
               name: 'United Kingdom',
@@ -321,9 +322,55 @@ describe('Contact transformers', () => {
             town: 'Maidenhead',
             county: 'Berkshire',
             postcode: 'SL1 11LL',
+            area: undefined,
             country: {
               id: '80756b9a-5d95-e211-a939-e4115bead28a',
               name: 'United Kingdom',
+            },
+          },
+        })
+      })
+    })
+
+    context('when the US contact has their own address', () => {
+      beforeEach(() => {
+        this.view = transformContactToView(
+          assign({}, contact, {
+            address_1: 'Bridge House',
+            address_2: 'Bridge Lane',
+            address_town: 'Sunny Town',
+            address_county: undefined,
+            address_area: {
+              id: '80756b9a-5d95-e211-a939-e4115bead28a',
+              name: 'California',
+            },
+            address_country: {
+              id: '80756b9a-5d95-e211-a939-e4115bead28a',
+              name: 'United States',
+            },
+            address_postcode: '90001',
+            address_same_as_company: false,
+          }),
+          company
+        )
+      })
+
+      it('uses the contacts address', () => {
+        expect(this.view.Address).to.deep.equal({
+          type: 'address',
+          address: {
+            line_1: 'Bridge House',
+            line_2: 'Bridge Lane',
+            town: 'Sunny Town',
+            county: undefined,
+            postcode: '90001',
+            area: {
+              id: '80756b9a-5d95-e211-a939-e4115bead28a',
+              name: 'California',
+            },
+            country: {
+              id: '80756b9a-5d95-e211-a939-e4115bead28a',
+              name: 'United States',
             },
           },
         })

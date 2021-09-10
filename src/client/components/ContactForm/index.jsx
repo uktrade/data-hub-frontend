@@ -177,11 +177,6 @@ const _ContactForm = ({
                   })
                 }
 
-                //we want to check that area is an area in the country
-                //if the area isn't an area in the country we want to null it
-                //because the area field has been hidden from the user in that case
-                //so it's not what the user was trying to submit???
-
                 let area = null
                 if (country === UNITED_STATES_ID) {
                   //if there is an area and it doesn't belong to america it should be undefined
@@ -194,7 +189,7 @@ const _ContactForm = ({
                   ...keysToSnakeCase(values),
                   email,
                   accepts_dit_email_marketing:
-                    acceptsDitEmailMarketing[0] === YES,
+                    acceptsDitEmailMarketing.includes(YES),
                   primary,
                   company,
                   address_same_as_company: addressSameAsCompany,

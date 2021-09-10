@@ -218,7 +218,7 @@ const filters = {
     return format(value, dateFormat).replace('AM', 'am').replace('PM', 'pm')
   },
 
-  formatAddress: (address, join = ', ', isAddressAreaEnabled = false) => {
+  formatAddress: (address, join = ', ', featureFlag = false) => {
     if (!address) {
       return
     }
@@ -229,7 +229,7 @@ const filters = {
       address.town,
       address.county,
       address.postcode,
-      address.area && isAddressAreaEnabled ? address.area.name : null,
+      address.area && featureFlag ? address.area.name : null,
       address.country.name,
     ]).join(join)
   },
