@@ -51,7 +51,6 @@ exports.contactCreate = function (req, res) {
 }
 
 exports.contactById = function (req, res) {
-  console.log(`CONTACT ID: ${req.params.contactId}`)
   const contacts = {
     '5555d636-1d24-416a-aaf0-3fb220d59aaa': contactByIdWithNoDocument,
     'f3d19ea7-d4cf-43e0-8e97-755c57cae313': contactByIdUK,

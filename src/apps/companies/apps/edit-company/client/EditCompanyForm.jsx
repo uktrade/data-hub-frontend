@@ -13,6 +13,9 @@ import {
   FormActions,
 } from '../../../../../client/components'
 
+const UNITED_STATES_ID = '81756b9a-5d95-e211-a939-e4115bead28a'
+const CANADA_ID = '5daf72a6-5d95-e211-a939-e4115bead28a'
+
 function EditCompanyForm({
   csrfToken,
   company,
@@ -40,9 +43,33 @@ function EditCompanyForm({
     return urls.companies.businessDetails(company.id)
   }
 
+  const { addressCountry } = formInitialValues
+  const areaUS = (addressArea) => {
+    if (addressCountry?.id === UNITED_STATES_ID) {
+      return addressArea?.id
+    }
+    return null
+  }
+
+  const areaCanada = (addressArea) => {
+    if (addressCountry?.id === CANADA_ID) {
+      return addressArea?.id
+    }
+    return null
+  }
+
   // TODO: Support nested form values to avoid transformation
   return (
-    <FormStateful onSubmit={onSubmit} initialValues={formInitialValues}>
+    <FormStateful
+      onSubmit={onSubmit}
+      initialValues={() => {
+        return {
+          ...formInitialValues,
+          areaUS: areaUS(formInitialValues.addressArea),
+          areaCanada: areaCanada(formInitialValues.addressArea),
+        }
+      }}
+    >
       {({ submissionError }) => (
         <>
           {submissionError && (
