@@ -113,7 +113,7 @@ describe('Local header for archived company', () => {
           fixtures.company.archivedLtd.id
         )}?returnUrl=${urls.companies.detail(
           fixtures.company.archivedLtd.id
-        )}/contacts?sortby=modified_on%3Adesc&archived=false`
+        )}/contacts`
       )
     })
 
