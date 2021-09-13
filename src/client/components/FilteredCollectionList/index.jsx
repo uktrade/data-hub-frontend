@@ -37,7 +37,6 @@ const FilteredCollectionList = ({
   addItemUrl,
   defaultQueryParams,
   titleRenderer = null,
-  width = 'two-thirds',
 }) => {
   const totalPages = Math.ceil(
     Math.min(count, maxItemsToPaginate) / itemsPerPage
@@ -56,7 +55,7 @@ const FilteredCollectionList = ({
         return (
           <GridRow data-test="collection-list">
             {children}
-            <GridCol setWidth={width}>
+            <GridCol>
               <article>
                 {isComplete && (
                   <FilteredCollectionHeader
