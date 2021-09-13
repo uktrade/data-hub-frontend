@@ -1,10 +1,14 @@
 import axios from 'axios'
+import { apiProxyAxios } from '../../../client/components/Task/utils'
 
 import urls from '../../../lib/urls'
 import { getMetadataOptions } from '../../../client/metadata'
 import { getPageOffset } from '../../../lib/pagination'
 
-import { transformResponseToEventCollection } from './transformers'
+import {
+  transformResponseToEventCollection,
+  transformResponseToEventDetails,
+} from './transformers'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
@@ -49,4 +53,10 @@ const getEventsMetadata = () =>
     }))
     .catch(handleError)
 
-export { getEvents, getEventsMetadata }
+const getEventDetails = (eventId) =>
+  apiProxyAxios
+    .get(`/api-proxy/v3/event/${eventId}`)
+    .then(({ data }) => transformResponseToEventDetails(data))
+    .catch(handleError)
+
+export { getEvents, getEventsMetadata, getEventDetails }
