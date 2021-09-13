@@ -45,6 +45,7 @@ import CompaniesContactsCollection from '../apps/contacts/client/CompanyContacts
 import ContactsCollection from '../apps/contacts/client/ContactsCollection.jsx'
 import OrdersCollection from '../apps/omis/client/OrdersCollection.jsx'
 import EventsCollection from '../apps/events/client/EventsCollection.jsx'
+import EventDetails from '../apps/events/client/Details/EventDetails.jsx'
 import InteractionsCollection from '../apps/interactions/client/InteractionsCollection'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 import CompanyProjectsCollection from '../apps/investments/client/projects/CompanyProjectsCollection.jsx'
@@ -114,6 +115,8 @@ import {
   TASK_GET_EVENTS_METADATA,
 } from '../apps/events/client/state'
 import { getEvents, getEventsMetadata } from '../apps/events/client/tasks'
+import { TASK_GET_EVENT_DETAILS } from '../apps/events/client/Details/state'
+import { getEventDetails } from '../apps/events/client/Details/tasks'
 
 import { TASK_GET_PROFILES_LIST } from '../apps/investments/client/profiles/state'
 import * as investmentProfilesTasks from '../apps/investments/client/profiles/tasks'
@@ -270,6 +273,7 @@ function App() {
         [TASK_GET_EVENTS_LIST]: getEvents,
         [TASK_GET_EVENTS_METADATA]: getEventsMetadata,
         [TASK_GET_EVENTS_ORGANISER_NAME]: getAdviserNames,
+        [TASK_GET_EVENT_DETAILS]: getEventDetails,
         [TASK_GET_ORDERS_METADATA]: getOrdersMetadata,
         [TASK_GET_ORDERS_LIST]: getOrders,
         [TASK_GET_INTERACTIONS_TEAM_NAME]: getTeamNames,
@@ -456,6 +460,9 @@ function App() {
       </Mount>
       <Mount selector="#events-collection">
         {(props) => <EventsCollection {...props} />}
+      </Mount>
+      <Mount selector="#event-details">
+        {(props) => <EventDetails {...props} />}
       </Mount>
       <Mount selector="#interactions-collection">
         {(props) => <InteractionsCollection {...props} />}
