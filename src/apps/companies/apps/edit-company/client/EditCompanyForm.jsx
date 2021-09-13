@@ -36,23 +36,34 @@ function EditCompanyForm({
       return urls.companies.businessDetails(company.id)
     }
 
+    values.address.area = null
+    values.area = null
+
+    if (values.address.country.id === UNITED_STATES_ID) {
+      values.address.area = { id: values.areaUS }
+      values.area = { id: values.areaUS }
+    } else if (values.address.country.id === CANADA_ID) {
+      values.address.area = { id: values.areaCanada }
+      values.area = { id: values.areaCanada }
+    }
+
     // The user has made some changes so make an API call
     await axios.post(urls.companies.edit(company.id), values, {
       params: { _csrf: csrfToken },
     })
+
     return urls.companies.businessDetails(company.id)
   }
 
-  const { addressCountry } = formInitialValues
   const areaUS = (addressArea) => {
-    if (addressCountry?.id === UNITED_STATES_ID) {
+    if (formInitialValues?.address?.country?.id === UNITED_STATES_ID) {
       return addressArea?.id
     }
     return null
   }
 
   const areaCanada = (addressArea) => {
-    if (addressCountry?.id === CANADA_ID) {
+    if (formInitialValues?.address?.country?.id === CANADA_ID) {
       return addressArea?.id
     }
     return null
@@ -65,8 +76,13 @@ function EditCompanyForm({
       initialValues={() => {
         return {
           ...formInitialValues,
-          areaUS: areaUS(formInitialValues.addressArea),
-          areaCanada: areaCanada(formInitialValues.addressArea),
+          areaUS: areaUS(formInitialValues?.address?.area),
+          areaCanada: areaCanada(formInitialValues.address.area),
+          address: {
+            ...formInitialValues.address,
+            areaUS: areaUS(formInitialValues?.address?.area),
+            areaCanada: areaCanada(formInitialValues?.address?.area),
+          },
         }
       }}
     >

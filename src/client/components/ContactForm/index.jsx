@@ -179,7 +179,6 @@ const _ContactForm = ({
 
                 let area = null
                 if (country === UNITED_STATES_ID) {
-                  //if there is an area and it doesn't belong to america it should be undefined
                   area = areaUS
                 } else if (country === CANADA_ID) {
                   area = areaCanada
