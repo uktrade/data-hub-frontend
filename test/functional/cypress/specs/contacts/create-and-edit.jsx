@@ -133,13 +133,13 @@ describe('Create contact form', () => {
 
     it('should only show the state field when US is selected', () => {
       cy.contains('Country').parent().find('select').select('United States')
-      cy.get('#field-area').should('contain.text', 'State')
+      cy.get('#field-areaUS').should('contain.text', 'State')
       cy.get('#postcode-search').should('not.exist')
     })
 
     it('should only show the province field when Canada is selected', () => {
       cy.contains('Country').parent().find('select').select('Canada')
-      cy.get('#field-area').should('contain.text', 'Province')
+      cy.get('#field-areaCanada').should('contain.text', 'Province')
       cy.get('#postcode-search').should('not.exist')
     })
   })
