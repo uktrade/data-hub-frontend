@@ -252,7 +252,7 @@ describe('Company edit', () => {
     })
 
     it('renders errors correctly', () => {
-      cy.get(selectors.companyEdit.address.area).select('-- Select state --')
+      cy.get(selectors.companyEdit.address.areaUS).select('-- Select state --')
       cy.contains('Submit').click()
       cy.get(selectors.companyEdit.form).contains('Select a state')
     })
@@ -336,7 +336,9 @@ describe('Company edit', () => {
     })
 
     it('renders errors correctly', () => {
-      cy.get(selectors.companyEdit.address.area).select('-- Select province --')
+      cy.get(selectors.companyEdit.address.areaCanada).select(
+        '-- Select province --'
+      )
       cy.contains('Submit').click()
       cy.get(selectors.companyEdit.form).contains('Select a province')
     })

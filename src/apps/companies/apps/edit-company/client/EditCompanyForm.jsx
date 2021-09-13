@@ -36,14 +36,14 @@ function EditCompanyForm({
       return urls.companies.businessDetails(company.id)
     }
 
-    values.address.area = null
+    values.address = { ...values.address, area: null }
     values.area = null
 
-    if (values.address.country.id === UNITED_STATES_ID) {
-      values.address.area = { id: values.areaUS }
+    if (values?.address?.country?.id === UNITED_STATES_ID) {
+      values.address = { ...values.address, area: { id: values.areaUS } }
       values.area = { id: values.areaUS }
-    } else if (values.address.country.id === CANADA_ID) {
-      values.address.area = { id: values.areaCanada }
+    } else if (values?.address?.country?.id === CANADA_ID) {
+      values.address = { ...values.address, area: { id: values.areaCanada } }
       values.area = { id: values.areaCanada }
     }
 
@@ -77,7 +77,7 @@ function EditCompanyForm({
         return {
           ...formInitialValues,
           areaUS: areaUS(formInitialValues?.address?.area),
-          areaCanada: areaCanada(formInitialValues.address.area),
+          areaCanada: areaCanada(formInitialValues?.address?.area),
           address: {
             ...formInitialValues.address,
             areaUS: areaUS(formInitialValues?.address?.area),
@@ -86,47 +86,54 @@ function EditCompanyForm({
         }
       }}
     >
-      {({ submissionError }) => (
-        <>
-          {submissionError && (
-            <StatusMessage>
-              Company details could not be saved, try again later.{' '}
-              {submissionError.message}
-            </StatusMessage>
-          )}
+      {({ submissionError }) => {
+        if (submissionError) {
+          // eslint-disable-next-line no-console
+          console.error(submissionError)
+        }
 
-          {company.duns_number ? (
-            <CompanyMatched
-              company={company}
-              isOnOneList={isOnOneList}
-              regions={regions}
-              headquarterTypes={headquarterTypes}
-              oneListEmail={oneListEmail}
-              sectors={sectors}
-              features={features}
-            />
-          ) : (
-            <CompanyUnmatched
-              company={company}
-              isOnOneList={isOnOneList}
-              regions={regions}
-              employeeRanges={employeeRanges}
-              headquarterTypes={headquarterTypes}
-              oneListEmail={oneListEmail}
-              sectors={sectors}
-              turnoverRanges={turnoverRanges}
-              features={features}
-            />
-          )}
+        return (
+          <>
+            {submissionError && (
+              <StatusMessage>
+                Company details could not be saved, try again later.{' '}
+                {submissionError.message}
+              </StatusMessage>
+            )}
 
-          <FormActions>
-            <Button>Submit</Button>
-            <Link href={urls.companies.businessDetails(company.id)}>
-              Return without saving
-            </Link>
-          </FormActions>
-        </>
-      )}
+            {company.duns_number ? (
+              <CompanyMatched
+                company={company}
+                isOnOneList={isOnOneList}
+                regions={regions}
+                headquarterTypes={headquarterTypes}
+                oneListEmail={oneListEmail}
+                sectors={sectors}
+                features={features}
+              />
+            ) : (
+              <CompanyUnmatched
+                company={company}
+                isOnOneList={isOnOneList}
+                regions={regions}
+                employeeRanges={employeeRanges}
+                headquarterTypes={headquarterTypes}
+                oneListEmail={oneListEmail}
+                sectors={sectors}
+                turnoverRanges={turnoverRanges}
+                features={features}
+              />
+            )}
+
+            <FormActions>
+              <Button>Submit</Button>
+              <Link href={urls.companies.businessDetails(company.id)}>
+                Return without saving
+              </Link>
+            </FormActions>
+          </>
+        )
+      }}
     </FormStateful>
   )
 }
