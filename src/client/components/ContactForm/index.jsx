@@ -342,7 +342,6 @@ const _ContactForm = ({
                               name="" // Required, but has no effect
                               apiEndpoint="/api/postcodelookup"
                               isCountrySelectable={true}
-                              forcePostcodeLookupButton={true}
                               features={{
                                 areaFormField: features['contacts-area-field'],
                                 postcodeValidation:
