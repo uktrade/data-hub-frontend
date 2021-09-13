@@ -54,7 +54,6 @@ const CompanyContactsCollection = ({
           company.archived ? null : `/contacts/create?company=${company.id}`
         }
         entityName="contact"
-        width="full"
         defaultQueryParams={{
           archived: ['false'],
           sortby: 'modified_on:desc',
