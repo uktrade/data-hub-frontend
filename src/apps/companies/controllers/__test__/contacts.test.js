@@ -23,40 +23,6 @@ describe('Company contact list controller', () => {
 
   describe('#renderContacts', () => {
     const commonTests = (expectedCompanyId, expectedTemplate) => {
-      it('should render collection page with locals', () => {
-        expect(
-          this.middlewareParameters.resMock.render
-        ).to.have.been.calledWith(
-          sinon.match.any,
-          sinon.match.hasOwn('sortForm')
-        )
-        expect(
-          this.middlewareParameters.resMock.render
-        ).to.have.been.calledWith(
-          sinon.match.any,
-          sinon.match.hasOwn('filtersFields')
-        )
-        expect(
-          this.middlewareParameters.resMock.render
-        ).to.have.been.calledWith(
-          sinon.match.any,
-          sinon.match.hasOwn('selectedFilters')
-        )
-        expect(
-          this.middlewareParameters.resMock.render
-        ).to.have.been.calledWith(
-          sinon.match.any,
-          sinon.match.hasOwn('actionButtons')
-        )
-        expect(this.buildSelectedFiltersSummaryStub).to.have.been.calledWith(
-          [
-            { macroName: 'foo', name: 'name' },
-            { macroName: 'bar', name: 'archived' },
-          ],
-          this.middlewareParameters.reqMock.query
-        )
-      })
-
       it('should render the correct template', () => {
         expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(
           expectedTemplate
@@ -77,17 +43,6 @@ describe('Company contact list controller', () => {
       })
 
       commonTests(companyMock.id, 'companies/views/contacts')
-
-      it('should set the correct add button', () => {
-        const props = this.middlewareParameters.resMock.render.args[0][1]
-
-        expect(props.actionButtons).to.deep.equal([
-          {
-            label: 'Add contact',
-            url: `/contacts/create?company=${companyMock.id}`,
-          },
-        ])
-      })
     })
 
     context('when the company is archived', () => {
