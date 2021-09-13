@@ -23,10 +23,11 @@ import StatusMessage from '../../../StatusMessage'
 import { transformObjectToOption } from '../../../../../apps/transformers'
 import FieldSelect from '../FieldSelect'
 import FieldCountrySelect from '../FieldCountrySelect'
-
-const UNITED_KINGDOM_ID = '80756b9a-5d95-e211-a939-e4115bead28a'
-const UNITED_STATES_ID = '81756b9a-5d95-e211-a939-e4115bead28a'
-const CANADA_ID = '5daf72a6-5d95-e211-a939-e4115bead28a'
+import {
+  UNITED_KINGDOM_ID,
+  UNITED_STATES_ID,
+  CANADA_ID,
+} from '../../../../../common/constants'
 
 const StyledFieldPostcode = styled(FieldInput)`
   ${MEDIA_QUERIES.TABLET} {

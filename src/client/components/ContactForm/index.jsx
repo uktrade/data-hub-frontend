@@ -32,6 +32,7 @@ import CompanyResource from '../Resource/Company'
 import ReferrerLink from '../ReferrerLink'
 import * as validators from '../Form/validators'
 import State from '../State'
+import { UNITED_STATES_ID, CANADA_ID } from '../../../common/constants'
 
 import useAdministrativeAreaLookup from '../AdministrativeAreaSearch/useAdministrativeAreaLookup'
 import useAdministrativeAreaSearch from '../AdministrativeAreaSearch/useAdministrativeAreaSearch'
@@ -57,9 +58,6 @@ const duplicateEmailMessage = (email, companyName) =>
 const boolToYesNo = (x) => (x === true ? YES : x === false ? NO : null)
 
 const keysToSnakeCase = (o) => _.mapKeys(o, (v, k) => _.snakeCase(k))
-
-const UNITED_STATES_ID = '81756b9a-5d95-e211-a939-e4115bead28a'
-const CANADA_ID = '5daf72a6-5d95-e211-a939-e4115bead28a'
 
 const _ContactForm = ({
   update,
