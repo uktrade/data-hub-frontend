@@ -1,3 +1,5 @@
+const qs = require('qs')
+
 const { assertBreadcrumbs } = require('../../support/assertions')
 const { contactFaker } = require('../../fakers/contacts')
 const urls = require('../../../../../src/lib/urls')
@@ -50,18 +52,48 @@ describe('Company Contacts Collections', () => {
 
   const contacts = [ukContact, foreignContact]
 
-  before(() => {
-    cy.intercept('POST', '/api-proxy/v3/search/contact', {
-      body: {
-        count: contacts.length,
-        results: contacts,
-      },
-    }).as('apiRequest')
-    cy.visit(urls.companies.contacts(fixtures.company.dnbCorp.id))
-    cy.wait('@apiRequest')
+  const buildQueryString = () =>
+    qs.stringify({
+      archived: ['false'],
+      sortby: 'modified_on:desc',
+    })
+
+  context('API payload', () => {
+    it('should have the correct payload', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', '/api-proxy/v3/search/contact', {
+        body: {
+          count: 0,
+          results: [],
+        },
+      }).as('apiRequest')
+      cy.visit(
+        `${urls.companies.contacts(fixtures.company.dnbCorp.id)}?${queryString}`
+      )
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body).to.deep.equal({
+          offset: 0,
+          limit: 10,
+          archived: false,
+          sortby: 'modified_on:desc',
+          company: fixtures.company.dnbCorp.id,
+        })
+      })
+    })
   })
 
   context('Viewing the companies contacts collection list page', () => {
+    before(() => {
+      cy.intercept('POST', '/api-proxy/v3/search/contact', {
+        body: {
+          count: contacts.length,
+          results: contacts,
+        },
+      }).as('apiRequest')
+      cy.visit(urls.companies.contacts(fixtures.company.dnbCorp.id))
+      cy.wait('@apiRequest')
+    })
+
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: urls.dashboard(),
@@ -116,6 +148,17 @@ describe('Company Contacts Collections', () => {
   })
 
   context('UK contact', () => {
+    before(() => {
+      cy.intercept('POST', '/api-proxy/v3/search/contact', {
+        body: {
+          count: contacts.length,
+          results: contacts,
+        },
+      }).as('apiRequest')
+      cy.visit(urls.companies.contacts(fixtures.company.dnbCorp.id))
+      cy.wait('@apiRequest')
+    })
+
     beforeEach(() => {
       cy.get('[data-test="collection-item"]').eq(0).as('firstListItem')
     })
@@ -196,6 +239,17 @@ describe('Company Contacts Collections', () => {
   })
 
   context('Foreign contact', () => {
+    before(() => {
+      cy.intercept('POST', '/api-proxy/v3/search/contact', {
+        body: {
+          count: contacts.length,
+          results: contacts,
+        },
+      }).as('apiRequest')
+      cy.visit(urls.companies.contacts(fixtures.company.dnbCorp.id))
+      cy.wait('@apiRequest')
+    })
+
     beforeEach(() => {
       cy.get('[data-test="collection-item"]').eq(1).as('secondListItem')
     })
