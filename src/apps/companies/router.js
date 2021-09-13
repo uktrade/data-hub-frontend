@@ -40,10 +40,6 @@ const {
 } = require('./middleware/collection')
 
 const {
-  setCompanyContactRequestBody,
-  getCompanyContactCollection,
-} = require('./middleware/contact-collection')
-const {
   getCompany,
   setIsCompanyAlreadyAdded,
   addCompanyOrRemoveFromList,
@@ -85,17 +81,6 @@ router.param('companyId', getCompany)
 router.param('companyId', setIsCompanyAlreadyAdded)
 router.param('companyId', setDnbHierarchyDetails)
 
-// TODO: Old nunjucks collection page - this should be removed once we are
-// confident that the new react version is working correctly
-// router.get(
-//   urls.companies.index.route,
-//   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
-//   getRequestBody(QUERY_FIELDS),
-//   lastInteractionDate,
-//   formatPostcodes,
-//   getCollection('company', ENTITIES, transformCompanyToListItem),
-//   renderCompanyList
-// )
 router.get(urls.companies.index.route, renderCompaniesView)
 
 router.get(
@@ -142,14 +127,7 @@ router.get(
 )
 router.get(urls.companies.hierarchies.subsidiaries.add.route, addSubsidiary)
 
-router.get(
-  urls.companies.contacts.route,
-  setDefaultQuery(DEFAULT_COLLECTION_QUERY),
-  setCompanyContactRequestBody,
-  getCompanyContactCollection,
-  setReturnUrl,
-  renderContacts
-)
+router.get(urls.companies.contacts.route, setReturnUrl, renderContacts)
 
 router.get(urls.companies.orders.route, setReturnUrl, renderOrders)
 router.get(urls.companies.documents.route, renderDocuments)

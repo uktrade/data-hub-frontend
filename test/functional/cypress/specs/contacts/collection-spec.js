@@ -2,7 +2,7 @@ import { assertBreadcrumbs } from '../../support/assertions'
 import { contacts } from '../../../../../src/lib/urls'
 import { contactsListFaker, contactFaker } from '../../fakers/contacts'
 
-describe('Contacts Collections - React', () => {
+describe('Contacts Collections', () => {
   const ukContact = contactFaker({
     id: '1',
     first_name: 'Hanna',

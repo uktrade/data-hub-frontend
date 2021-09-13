@@ -13,6 +13,7 @@ export const getContacts = ({
   limit = 10,
   sortby,
   archived,
+  companyId,
   company_name,
   address_country,
   company_uk_region,
@@ -25,12 +26,16 @@ export const getContacts = ({
       offset: getPageOffset({ limit, page }),
       sortby,
       archived,
+      company: companyId,
       company_name,
       address_country,
       company_uk_region,
       company_sector_descends,
     })
-    .then(({ data }) => transformResponseToCollection(data), handleError)
+    .then(
+      ({ data }) => transformResponseToCollection(companyId, data),
+      handleError
+    )
 
 export const getContactsMetadata = () =>
   Promise.all([

@@ -64,7 +64,7 @@ describe('Contacts', () => {
     cy.visit(companies.activity.index(company.pk))
 
     cy.contains('Company contacts').click()
-    cy.get(selectors.collection.items)
+    cy.get('[data-test="collection-item"]')
       .should('contain', 'Company Contact')
       .and('contain', 'Coffee machine operator')
       .and('contain', '(44) 0778877778800')
