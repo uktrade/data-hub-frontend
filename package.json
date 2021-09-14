@@ -143,13 +143,8 @@
     "react-dom": "^17.0.2",
     "react-lines-ellipsis": "^0.14.1",
     "react-markdown": "^5.0.3",
-<<<<<<< HEAD
-    "react-redux": "^7.2.4",
-    "react-router-dom": "^5.3.0",
-=======
     "react-redux": "^7.2.5",
-    "react-router-dom": "^5.2.1",
->>>>>>> 57f5bf9a3 (Bump react-redux from 7.2.4 to 7.2.5)
+    "react-router-dom": "^5.3.0",
     "react-select": "^4.3.1",
     "react-string-replace": "^0.4.4",
     "react-use": "^17.3.1",
