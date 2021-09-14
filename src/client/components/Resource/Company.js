@@ -1,3 +1,3 @@
-import { createResource } from '.'
+import { createEntityResource } from '.'
 
-export default createResource('Company', (id) => `v4/company/${id}`)
+export default createEntityResource('Company', (id) => `v4/company/${id}`)

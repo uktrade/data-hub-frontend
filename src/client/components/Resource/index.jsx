@@ -6,6 +6,18 @@ import multiInstance from '../../utils/multiinstance'
 import { apiProxyAxios } from '../Task/utils'
 import Task from '../Task'
 
+const deepKeysToCamelCase = (x) =>
+  Array.isArray(x)
+    ? x.map(deepKeysToCamelCase)
+    : _.isPlainObject(x)
+    ? Object.fromEntries(
+        Object.entries(x).map(([k, v]) => [
+          _.camelCase(k),
+          deepKeysToCamelCase(v),
+        ])
+      )
+    : x
+
 /**
  * @function Resource
  * This component abstracts away the loading of a resource which has an ID.
@@ -16,8 +28,11 @@ import Task from '../Task'
  * @param {string} props.id - The unique ID of the resource for the given name.
  * The ID will be the task's payload.
  * @param {result -> React.node} props.children - The single child should be
- * a function which will be passed the value the task resolves with with its
- * attributes deeply converted from snake to camel case in case it's an object.
+ * a function to whose arguments will be spread the return value of the
+ * {transformer}.
+ * @param {(result: any) => any} [props.transformer = x => [x]] -
+ * A function which should transform the task result into an array that will
+ * be spread to the {props.children} function. Defaults to `x => [x]`.
  * @example
  * <Resource name="My task name" id="foo">
  *   {result =>
@@ -34,7 +49,15 @@ const Resource = multiInstance({
   }),
   idProp: 'name',
   componentStateToProps: (state, _, { id }) => ({ result: state[id] }),
-  component: ({ name, id, taskStatusProps, children, result, payload }) => (
+  component: ({
+    name,
+    id,
+    taskStatusProps,
+    children,
+    result,
+    payload,
+    transformer = (x) => [x],
+  }) => (
     <Task.Status
       {...taskStatusProps}
       name={name}
@@ -45,7 +68,7 @@ const Resource = multiInstance({
         ignoreIfInProgress: true,
       }}
     >
-      {() => result !== undefined && children(result)}
+      {() => result !== undefined && children(...transformer(result))}
     </Task.Status>
   ),
 })
@@ -59,40 +82,20 @@ Resource.propTypes = {
 
 export default Resource
 
-const SINGLETON_ID = '___SINGLETON___'
-
-const deepKeysToCamelCase = (x) =>
-  Array.isArray(x)
-    ? x.map(deepKeysToCamelCase)
-    : _.isPlainObject(x)
-    ? Object.fromEntries(
-        Object.entries(x).map(([k, v]) => [
-          _.camelCase(k),
-          deepKeysToCamelCase(v),
-        ])
-      )
-    : x
-
 /**
- * A utility factory for creating a {Resource} preset to a specific API endpoint
- * @param {string} name - The name of the resource and its task
- * @param {(id: string | null, payload: any) => string} endpoint - A function
- * which takes ID and payload as arguments and should return the path of the
- * API endpoint for the given resource without the leading slash.
- * @param {Object} [options] -
- * @param {any} [options.singleton] - Whether the resource represents multiple
- * entities with IDs e.g. a company or a singleton entity e.g. a list of
- * companies. If truthy, the returned component won't have the required {id},
- * the ID of the underlying task will be `'__SINGLETON__'` and the {id} passed
- * to {endpoint} will be `null`.
- * @param {(result: any) => any} [options.transformer=deepKeysToCamelCase] -
- * A function through which the result of the API call will be passed through.
- * Defaults to {deepKeysToCamelCase}.
+ * A utility factory for creating an {Resource} preset to a specific _entity_
+ * API endpoint. An _entity_ endpoint is one that represents an entity uniquely
+ * identified by an ID.
+ * @param {string} name - The name for the resource and its task
+ * @param {(id: string) => string} endpoint - A function
+ * which takes the entity {id} and should return the path of the API endpoint
+ * for the given resource without the leading slash.
  * @returns A resource component preconfigured for a specific task name and an
- * API task to the specified {endpoint} out of the box.
+ * API task to the specified {endpoint}. The first argument to the component's
+ * children will be a camelCased, and the second the raw response result.
  * @example
  * // Create a Resource component pre-bound to name="Company"
- * const CompanyResource = createResource('Company', (id) => `v4/company/${id}`)
+ * const CompanyResource = createEntityResource('Company', (id) => `v4/company/${id}`)
  *
  * // You need to spread CompanyResource.tasks in the ./tasks.js module export
  * export default {
@@ -101,28 +104,116 @@ const deepKeysToCamelCase = (x) =>
  *
  * // Now you can easily fetch a company with CompanyResource
  * <CompanyResource id={companyId}>
- *   {company => <pre>{JSON.stringify(company, null, 2)}</pre>}
+ *   {(company, rawData) => <pre>{JSON.stringify(company, null, 2)}</pre>}
  * </CompanyResource>
  */
-export const createResource = (
-  name,
-  endpoint,
-  { singleton, transformer = deepKeysToCamelCase } = {}
-) => {
+export const createEntityResource = (name, endpoint) => {
   const Component = (props) => (
     <Resource
+      transformer={(rawResult) => [deepKeysToCamelCase(rawResult), rawResult]}
       {...props}
       name={name}
-      {...(singleton ? { id: SINGLETON_ID } : {})}
     />
   )
-  Component.propTypes = _.omit(Component.propTypes, 'name', singleton && 'id')
+
+  Component.propTypes = _.omit(Component.propTypes, 'name')
   Component.tasks = {
     [name]: (payload, id) =>
       apiProxyAxios
-        .get(`/api-proxy/${endpoint(id === SINGLETON_ID ? null : id, payload)}`)
-        .then(({ data }) => transformer(data)),
+        .get(`/api-proxy/${endpoint(id)}`, { params: payload })
+        .then(({ data }) => data),
   }
 
+  return Component
+}
+
+/**
+ * A utility factory for creating an {Resource} preset to a specific _collection_
+ * API endpoint. A _collection_ endpoint is one that represents a collection of
+ * _entities_ and responds with a `{count: Number, results: entity[]}` schema.
+ * @param {string} name - The name for the resource and its task
+ * @param {string} endpoint - The API endpoint for the given resource without leading slash.
+ * @returns A resource component preconfigured for a specific task name and an
+ * API task to the specified {endpoint}. The total collection count is passed
+ * as the second argument to the component's {children} function and the raw
+ * response data as third.
+ * @example
+ * // Create a Resource component pre-bound to name="Company"
+ * const CompaniesResource = createCollectionResource('Companies', 'v4/company')
+ *
+ * // You need to spread CompanyResource.tasks in the ./tasks.js module export
+ * export default {
+ *   ...CompaniesResource.tasks,
+ * }
+ *
+ * // Use the component
+ * <CompaniesResource>
+ *   {(companies, total, rawData) =>
+ *     <pre>{JSON.stringify({total, companies, rawData}, null, 2)}</pre>
+ *   }
+ * </CompaniesResource>
+ */
+export const createCollectionResource = (name, endpoint) => {
+  const Comp = createEntityResource(name, () => endpoint)
+  const Component = (props) => (
+    <Comp
+      transformer={(rawResult) => [
+        deepKeysToCamelCase(rawResult.results),
+        rawResult.count,
+        rawResult,
+      ]}
+      {...props}
+      id="__COLLECTION__"
+    />
+  )
+
+  Component.propTypes = _.omit(Component.propTypes, 'id')
+  Component.tasks = Comp.tasks
+  return Component
+}
+
+/**
+ * A utility factory for creating a {Resource} preset to a specific _metadata_
+ * API endpoint. Works exactly as {createCollectionResource} except for the
+ * endpoint path format and the response schema it expects.
+ * @param {string} name - The name for the resource and its task
+ * @param {string} endpoint - The metadata endpoint path without the leading
+ * `v4/metadata` part e.g. `'country'` for the endpoint `/v4/metadata/country`.
+ * @returns A resource component preconfigured for a specific task name and an
+ * API task to the specified {endpoint}. The total collection count is passed
+ * as the second argument to the component's {children} function and the raw
+ * response data as third.
+ * @example
+ * // Create a Resource component pre-bound to name="Company"
+ * const CountriesResource = createMetadataResource('Countries', 'country')
+ *
+ * // You need to spread CompanyResource.tasks in the ./tasks.js module export
+ * export default {
+ *   ...CountriesResource.tasks,
+ * }
+ *
+ * // Use the component
+ * <CountriesResource>
+ *   {(countries, total, rawData) =>
+ *     <pre>{JSON.stringify({total, countries, rawData}, null, 2)}</pre>
+ *   }
+ * </CountriesResource>
+ */
+export const createMetadataResource = (name, endpoint) => {
+  const Comp = createEntityResource(name, () => `v4/metadata/${endpoint}`)
+  const Component = (props) => (
+    <Comp
+      transformer={(rawResult) => [
+        deepKeysToCamelCase(rawResult),
+        rawResult.length,
+        rawResult,
+      ]}
+      {...props}
+      id="__METADATA__"
+    />
+  )
+
+  Component.propTypes = _.omit(Component.propTypes, 'id')
+  Component.tasks = Comp.tasks
   return Component
 }
