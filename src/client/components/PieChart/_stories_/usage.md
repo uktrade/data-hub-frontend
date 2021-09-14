@@ -18,7 +18,8 @@ A visual representaion of data in the form of a pie chart. This component is bui
 | Prop         | Required | Default | Type   | Description                                                                     |
 | :----------- | :------- | :------ | :----- | :------------------------------------------------------------------------------ |
 | `data`       | true     | ``````  | string | The data for the pie chart.
-| `height`       | true     | ``````  | number | A height value is need to render the chart
+| `height`       | true     | ``````  | number | A height value is need to render the chart.
+| `unit`       | false     | `''`  | string | Unit to display in the centre of the chart.
 
 
 ### Data format
@@ -26,28 +27,33 @@ A visual representaion of data in the form of a pie chart. This component is bui
 const exampleData = [
   {
     id: 'Prospect',
-    label: 'Prospect',
-    value: 7,
+    name: 'prospect',
+    value: 318,
+    colour: PURPLE,
   },
   {
     id: 'Assign PM',
-    label: 'Assign PM',
-    value: 2,
+    name: 'assign_pm',
+    value: 201,
+    colour: ORANGE,
   },
   {
     id: 'Active',
-    label: 'Active',
-    value: 5,
+    name: 'active',
+    value: 57,
+    colour: BLUE,
   },
   {
     id: 'Verify win',
-    label: 'Verify win',
+    name: 'verify_win',
     value: 2,
+    colour: YELLOW,
   },
   {
     id: 'Won',
-    label: 'Won',
-    value: 2,
+    name: 'won',
+    value: 21,
+    colour: GREEN,
   },
 ]
 ```

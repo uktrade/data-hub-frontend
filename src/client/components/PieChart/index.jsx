@@ -29,7 +29,7 @@ const centredText = (text, fontSize, x, y) => (
   </text>
 )
 
-const PieChart = ({ data, unit, height }) => {
+const PieChart = ({ data, unit = '', height }) => {
   const CentredProjectTotal = ({ dataWithArc, centerX, centerY }) => {
     const total = dataWithArc.reduce(
       (accumulator, datum) => accumulator + datum.value,
@@ -69,13 +69,13 @@ PieChart.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
       value: PropTypes.number.isRequired,
       link: PropTypes.string,
     })
   ).isRequired,
   height: PropTypes.number,
-  unit: PropTypes.string.isRequired,
+  unit: PropTypes.string,
 }
 
 export default PieChart

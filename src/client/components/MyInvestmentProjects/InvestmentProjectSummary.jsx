@@ -17,12 +17,11 @@ const state2props = (state) => {
   return {
     summary:
       data &&
-      data.map(({ label, value, link }, index) => ({
-        id: label,
-        label: `${label} (${value})`,
-        value,
-        link,
+      data.map(({ label, value, ...rest }, index) => ({
+        ...rest,
         colour: segmentColours[index % segmentColours.length],
+        value,
+        id: label,
       })),
   }
 }
@@ -35,7 +34,7 @@ InvestmentProjectSummary.propTypes = {
   summary: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
       value: PropTypes.number.isRequired,
       link: PropTypes.string,
       colour: PropTypes.string,
