@@ -79,7 +79,7 @@ _Discussed and agreed by all Data Hub developers. If anything changes, please ke
 
 #### Time
 
-- Allocate 30 minutes in the morning and 30 minutes in the afternoon for reviewing PRs
+- Allocate 30 minutes during the day for reviewing PRs
 - If there are multiple PRs, the preferred method for selection is FIFO (first in first out). However, this could result in fewer PRs being reviewed by multiple developers, so use common sense
 - Whenever possible, review a PR in one go so that the author understands the amount of work needed and can plan with his/her team
 - Aim to spend no longer than twenty or thirty minutes per Pull Request. For sure we are looking for a reviewer to
@@ -112,7 +112,7 @@ So for these reasons you ought to observe the following rules when reviewing a P
 
 - A Pull Request is not the forum for architectural review. Once work is at such a level of maturity that it
   exists in a PR, all the architectural considerations should have been handled already. If work contains
-  anything particularly unusual in terms of its approach, that should have been discussed at one of the fortnightly
+  anything particularly unusual in terms of its approach, that should have been discussed at one of the weekly
   Developer Huddles, well in advance of starting work on the actual code.
 
 #### Language
