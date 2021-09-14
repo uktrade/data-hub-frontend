@@ -1,25 +1,34 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { PURPLE, ORANGE, BLUE, YELLOW, GREEN } from 'govuk-colours'
 import { connect } from 'react-redux'
 
-import DataSummary from '../DataSummary'
+import PieChart from '../PieChart'
 import { ID as CHECK_INVESTMENTS_ID } from '../PersonalisedDashboard/state'
 
 import { ID } from './state'
 
+const segmentColours = [PURPLE, ORANGE, BLUE, YELLOW, GREEN]
+
 const state2props = (state) => {
   const { summary: unfilteredSummary } = state[CHECK_INVESTMENTS_ID]
   const { summary } = state[ID]
-  return { summary: summary.length ? summary : unfilteredSummary }
+  const data = summary.length ? summary : unfilteredSummary
+  return {
+    summary:
+      data &&
+      data.map(({ label, value, link }, index) => ({
+        id: label,
+        label: `${label} (${value})`,
+        value,
+        link,
+        colour: segmentColours[index % segmentColours.length],
+      })),
+  }
 }
 
 const InvestmentProjectSummary = ({ summary = [] }) => (
-  <DataSummary
-    subject="Project"
-    description="Projects in the current financial year"
-    headers={['Stage', 'Projects']}
-    data={summary}
-  />
+  <PieChart unit="Project" height={290} data={summary} />
 )
 
 InvestmentProjectSummary.propTypes = {
@@ -29,6 +38,7 @@ InvestmentProjectSummary.propTypes = {
       label: PropTypes.string.isRequired,
       value: PropTypes.number.isRequired,
       link: PropTypes.string,
+      colour: PropTypes.string,
     })
   ).isRequired,
 }
