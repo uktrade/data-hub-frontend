@@ -5,7 +5,9 @@ import { SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
 
 const StyledLegend = styled('figcaption')({})
-const StyledList = styled('ul')({})
+const StyledList = styled('ul')({
+  listStyle: 'none',
+})
 const StyledListItem = styled('li')(({ colour }) => ({
   margin: `${SPACING.SCALE_2} 0`,
   position: 'relative',
@@ -24,9 +26,13 @@ const StyledListItem = styled('li')(({ colour }) => ({
 const Legend = ({ data }) => (
   <StyledLegend data-test="pie-chart-legend">
     <StyledList>
-      {data.map(({ id, label, value, link, colour }) => (
-        <StyledListItem key={id} colour={colour}>
-          {value ? <Link href={link}>{label}</Link> : label}
+      {data.map(({ id, name, value, link, colour }) => (
+        <StyledListItem
+          key={name}
+          colour={colour}
+          data-test={`pie-chart-legend-${name}`}
+        >
+          {value ? <Link href={link}>{id}</Link> : id} ({value})
         </StyledListItem>
       ))}
     </StyledList>
@@ -36,8 +42,7 @@ const Legend = ({ data }) => (
 Legend.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
       value: PropTypes.number.isRequired,
       link: PropTypes.string,
       colour: PropTypes.string,

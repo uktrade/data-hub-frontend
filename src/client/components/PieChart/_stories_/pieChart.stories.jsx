@@ -4,31 +4,38 @@ import PieChart from 'PieChart'
 import exampleReadme from './example.md'
 import usageReadme from './usage.md'
 
+import { PURPLE, ORANGE, BLUE, YELLOW, GREEN } from 'govuk-colours'
+
 const stageData = [
   {
     id: 'Prospect',
-    label: 'Prospect',
+    name: 'prospect',
     value: 318,
+    colour: PURPLE,
   },
   {
     id: 'Assign PM',
-    label: 'Assign PM',
+    name: 'assign_pm',
     value: 201,
+    colour: ORANGE,
   },
   {
     id: 'Active',
-    label: 'Active',
+    name: 'active',
     value: 57,
+    colour: BLUE,
   },
   {
     id: 'Verify win',
-    label: 'Verify win',
+    name: 'verify_win',
     value: 2,
+    colour: YELLOW,
   },
   {
     id: 'Won',
-    label: 'Won',
+    name: 'won',
     value: 21,
+    colour: GREEN,
   },
 ]
 
@@ -40,4 +47,6 @@ storiesOf('PieChart', module)
       sidebar: usageReadme,
     },
   })
-  .add('Default', () => <PieChart data={stageData} height={450} />)
+  .add('Default', () => (
+    <PieChart data={stageData} height={450} unit="Project" />
+  ))
