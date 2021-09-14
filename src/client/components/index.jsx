@@ -12,7 +12,6 @@ export { default as CollectionHeaderRow } from './CollectionList/CollectionHeade
 export { default as CompanyLists } from './CompanyLists'
 export { default as DeleteCompanyListSection } from './CompanyLists/DeleteCompanyListSection'
 export { default as Dashboard } from './Dashboard'
-export { default as DataSummary } from './DataSummary'
 export { default as DateField } from './DateField'
 export { default as EntityList } from './EntityList'
 export { default as Main } from './Main'

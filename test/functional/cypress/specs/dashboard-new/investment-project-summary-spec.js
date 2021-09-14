@@ -51,7 +51,7 @@ describe('Investment projects summary', () => {
   it('should display a chart legend of all the stages', () => {
     const { prospect, assign_pm, active, verify_win, won } =
       investmentProjectSummary
-    cy.get('[data-test="pie-chart"]')
+    cy.get('[data-test="pie-chart-legend"]')
       .should('contain', `Prospect (${prospect.value})`)
       .should('contain', `Assign PM (${assign_pm.value})`)
       .should('contain', `Active (${active.value})`)
