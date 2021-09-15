@@ -123,7 +123,7 @@ const transformResponseToEventDetails = ({
   relatedProgrammes: related_programmes?.map(idNameToValueLabel),
   relatedTradeAgreements: related_trade_agreements?.map(idNameToValueLabel),
   service: service.name,
-  archievedDocumentsUrlPath: archived_documents_url_path,
+  archivedDocumentsUrlPath: archived_documents_url_path,
   disabledOn: disabled_on,
 })
 
