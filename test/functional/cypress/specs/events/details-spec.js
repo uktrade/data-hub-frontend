@@ -1,15 +1,17 @@
+import urls from '../../../../../src/lib/urls'
+
 const { assertKeyValueTable } = require('../../support/assertions')
 
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 
 describe('Event Details', () => {
-  it('should display event details', () => {
-    cy.visit(`/events/${fixtures.event.oneDayExhibition.id}/details`)
+  it('should display event details with link to documents', () => {
+    cy.visit(urls.events.details(fixtures.event.oneDayExhibition.id))
 
     cy.get(selectors.entityCollection.editEvent).should('be.visible')
 
-    assertKeyValueTable('bodyMainContent', {
+    assertKeyValueTable('eventDetails', {
       'Type of event': 'Exhibition',
       'Event date': '1 January 2021',
       'Event location type': 'HQ',
@@ -19,21 +21,26 @@ describe('Event Details', () => {
       Notes: 'This is a dummy event for testing.',
       'Lead team': 'CBBC Hangzhou',
       Organiser: 'John Rogers',
-      'Other teams': 'CBBC North West',
+      'Other teams': 'CBBC HangzhouCBBC North West',
       'Related programmes': 'Grown in Britain',
       'Related Trade Agreements': 'UK - Japan',
       Service: 'Events : UK Based',
-      Documents: 'View files and documents (will open another website)',
+      Documents: 'View files and documents (opens in a new window or tab)',
+    })
+
+    cy.contains('a', 'View files and documents').should((el) => {
+      expect(el).to.have.attr('href', '/documents/123')
+      expect(el).to.have.attr('target', '_blank')
     })
   })
 
   describe('Disabled event with no document', () => {
     before(() => {
-      cy.visit(`/events/${fixtures.event.teddyBearExpo.id}/details`)
+      cy.visit(urls.events.details(fixtures.event.teddyBearExpo.id))
     })
 
     it('should display no document link details', () => {
-      assertKeyValueTable('bodyMainContent', {
+      assertKeyValueTable('eventDetails', {
         'Type of event': 'Exhibition',
         'Event date': '1 January 2021',
         'Event location type': 'HQ',
@@ -43,7 +50,7 @@ describe('Event Details', () => {
         Notes: 'This is a dummy event for testing.',
         'Lead team': 'CBBC Hangzhou',
         Organiser: 'John Rogers',
-        'Other teams': 'CBBC North West',
+        'Other teams': 'CBBC HangzhouCBBC North West',
         'Related programmes': 'Grown in Britain',
         'Related Trade Agreements': '',
         Service: 'Events : UK Based',

@@ -41,7 +41,7 @@ const EventDetails = ({
   relatedProgrammes,
   relatedTradeAgreements,
   service,
-  archievedDocumentsUrlPath,
+  archivedDocumentsUrlPath,
   disabledOn,
 }) => (
   <Container width="1180">
@@ -122,9 +122,9 @@ const EventDetails = ({
                   hideWhenEmpty={false}
                 />
                 <SummaryTable.Row heading="Service" children={service} />
-                {archievedDocumentsUrlPath && (
+                {archivedDocumentsUrlPath && (
                   <SummaryTable.Row heading="Documents">
-                    <NewWindowLink href={archievedDocumentsUrlPath}>
+                    <NewWindowLink href={archivedDocumentsUrlPath}>
                       View files and documents
                     </NewWindowLink>
                   </SummaryTable.Row>
