@@ -208,7 +208,6 @@ describe('Edit contact', () => {
         cy.intercept('PATCH', `/api-proxy/v4/contact/${EDIT_UK_CONTACT_ID}`).as(
           'editContactResponse'
         )
-        cy.log(`/api-proxy/v4/contact/${EDIT_UK_CONTACT_ID}`)
 
         cy.visit(`/contacts/${EDIT_UK_CONTACT_ID}/edit`)
         cy.get('#address1').type('Address first line')
@@ -229,7 +228,6 @@ describe('Edit contact', () => {
             'PATCH',
             `/api-proxy/v4/contact/${EDIT_US_CONTACT_ID}`
           ).as('editContactResponse')
-          cy.log(`/api-proxy/v4/contact/${EDIT_US_CONTACT_ID}`)
 
           cy.visit(`/contacts/${EDIT_US_CONTACT_ID}/edit`)
           cy.get('#country').select('United Kingdom')
@@ -246,8 +244,6 @@ describe('Edit contact', () => {
 
       describe('when a US contact has a US state and changes to Canada', () => {
         it('should clear the province value', () => {
-          cy.log(`/api-proxy/v4/contact/${EDIT_US_CONTACT_ID}`)
-
           cy.visit(`/contacts/${EDIT_US_CONTACT_ID}/edit`)
           cy.get('#country').select('United States')
           cy.get('#areaUS').select('Massachusetts')
@@ -263,8 +259,6 @@ describe('Edit contact', () => {
 
       describe('when a UK contact is switched to US', () => {
         it('the state should be empty', () => {
-          cy.log(`/api-proxy/v4/contact/${EDIT_UK_CONTACT_ID}`)
-
           cy.visit(`/contacts/${EDIT_UK_CONTACT_ID}/edit`)
           cy.get('#country').select('United Kingdom')
           cy.get('#country').select('United States')
