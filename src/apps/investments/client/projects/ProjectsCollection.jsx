@@ -15,8 +15,8 @@ import {
   TASK_GET_PROJECTS_LIST,
   TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME,
   TASK_GET_INVESTMENTS_PROJECTS_METADATA,
-  ID,
-  state2props,
+  INVESTMENT_PROJECTS_ID,
+  projectsState2props,
 } from './state'
 
 import {
@@ -34,7 +34,7 @@ const ProjectsCollection = ({
 }) => {
   const collectionListTask = {
     name: TASK_GET_PROJECTS_LIST,
-    id: ID,
+    id: INVESTMENT_PROJECTS_ID,
     progressMessage: 'Loading projects',
     startOnRender: {
       payload,
@@ -43,7 +43,7 @@ const ProjectsCollection = ({
   }
   const adviserListTask = {
     name: TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME,
-    id: ID,
+    id: INVESTMENT_PROJECTS_ID,
     progressMessage: 'Loading advisers',
     startOnRender: {
       payload: payload.adviser,
@@ -52,7 +52,7 @@ const ProjectsCollection = ({
   }
   const collectionListMetadataTask = {
     name: TASK_GET_INVESTMENTS_PROJECTS_METADATA,
-    id: ID,
+    id: INVESTMENT_PROJECTS_ID,
     progressMessage: 'Loading filters',
     startOnRender: {
       payload: {
@@ -217,4 +217,4 @@ const ProjectsCollection = ({
     </FilteredCollectionList>
   )
 }
-export default connect(state2props)(ProjectsCollection)
+export default connect(projectsState2props)(ProjectsCollection)

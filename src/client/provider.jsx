@@ -77,7 +77,11 @@ import dnbCheckReducer from '../apps/companies/apps/business-details/client/redu
 import { ID as INVESTMENT_PROFILES_ID } from '../apps/investments/client/profiles/state'
 import investmentProfileReducer from '../apps/investments/client/profiles/reducer'
 
-import { ID as INVESTMENT_PROJECTS_ID } from '../apps/investments/client/projects/state'
+import {
+  INVESTMENT_PROJECTS_ID,
+  COMPANY_PROJECTS_LIST_ID,
+} from '../apps/investments/client/projects/state'
+
 import investmentProjectsReducer from '../apps/investments/client/projects/reducer'
 
 import { ID as COMPANIES_ID } from '../apps/companies/client/state'
@@ -171,6 +175,7 @@ const store = createStore(
       investmentOpportunitiesDetailsReducer,
     [INVESTMENT_PROFILES_ID]: investmentProfileReducer,
     [INVESTMENT_PROJECTS_ID]: investmentProjectsReducer,
+    [COMPANY_PROJECTS_LIST_ID]: investmentProjectsReducer,
     [MY_INVESTMENT_PROJECTS_ID]: myInvestmentProjectsReducer,
     [CHECK_FOR_INVESTMENTS_ID]: personalDashboardReducer,
     [INVESTMENT_SUMMARY_ID]: investmentSummaryReducer,
