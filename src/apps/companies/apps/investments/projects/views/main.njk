@@ -2,28 +2,10 @@
 
 {{ subnavigation(company, 'investment-projects') }}
 
-<h2 class="govuk-heading-m">Investment projects</h2>
+{% block body_main_content %}
+  {% component 'react-slot', {
+    id: 'company-projects-collection',
+    props: props
+  } %}
 
-{% if company.archived %}
-  <details role="group">
-    <summary role="button" aria-controls="details-content-0" aria-expanded="false">
-        <span class="details__summary">
-          Why can I not add an investment project?
-        </span>
-    </summary>
-    <div class="details__content" id="details-content-0" aria-hidden="false">
-      <p class="c-message c-message--muted">Investment projects cannot be added to an archived company.
-        <a href="/companies/{{company.id}}/unarchive">Click here to unarchive</a>
-      </p>
-    </div>
-  </details>
-{% endif %}
-
-  {{
-  CollectionContent(results | assignCopy({
-    sort: sort,
-    countLabel: 'project',
-    query: QUERY,
-    actionButtons: actionButtons
-  }))
-  }}
+{% endblock %}

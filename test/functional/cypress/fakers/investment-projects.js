@@ -3,13 +3,20 @@ import jsf from 'json-schema-faker'
 
 import apiSchema from '../../../api-schema.json'
 
-import { INVESTMENT_PROJECT_STAGES_LIST } from './constants'
+import {
+  INVESTMENT_PROJECT_STAGES_LIST,
+  INVESTMENT_PROJECT_STATUSES_LIST,
+} from './constants'
 import { relativeDateFaker } from './dates'
 import { numberStringFaker } from './numbers'
 import { listFaker, randomChoice } from './utils'
+import { sectorFaker } from './sectors'
 
 const investmentProjectStageFaker = () =>
   randomChoice(INVESTMENT_PROJECT_STAGES_LIST)
+
+const investmentProjectStatusFaker = () =>
+  randomChoice(INVESTMENT_PROJECT_STATUSES_LIST)
 
 const incompleteFieldOptions = [
   'client_cannot_provide_total_investment',
@@ -63,6 +70,8 @@ const investmentProjectFaker = (overrides = {}) => ({
     id: faker.datatype.uuid(),
     name: faker.company.companyName(),
   },
+  sector: sectorFaker(),
+  status: investmentProjectStatusFaker(),
   project_code: investmentProjectCodeFaker(),
   incomplete_fields: [],
   ...overrides,

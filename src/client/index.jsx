@@ -47,6 +47,7 @@ import OrdersCollection from '../apps/omis/client/OrdersCollection.jsx'
 import EventsCollection from '../apps/events/client/EventsCollection.jsx'
 import InteractionsCollection from '../apps/interactions/client/InteractionsCollection'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
+import CompanyProjectsCollection from '../apps/investments/client/projects/CompanyProjectsCollection.jsx'
 import Opportunities from '../apps/investments/client/opportunities/Details/Opportunities.jsx'
 import OpportunityDetailsHeader from '../apps/investments/client/opportunities/Details/OpportunityDetailsHeader'
 import IEBanner from '../apps/dashboard/client/IEBanner'
@@ -442,6 +443,9 @@ function App() {
       <Mount selector="#footer">{() => <Footer />}</Mount>
       <Mount selector="#investment-projects-collection">
         {(props) => <InvestmentProjectsCollection {...props} />}
+      </Mount>
+      <Mount selector="#company-projects-collection">
+        {(props) => <CompanyProjectsCollection {...props} />}
       </Mount>
       <Mount selector="#companies-collection">
         {(props) => <CompaniesCollection {...props} />}

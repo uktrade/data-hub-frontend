@@ -6,13 +6,16 @@ import transformInvestmentProjectToListItem from './transformers'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
-function getProjects({ limit = 10, page, ...rest }) {
+function getProjects({ limit = 10, page, companyId, ...rest }) {
   let offset = limit * (parseInt(page, 10) - 1) || 0
 
   return axios
     .post('/api-proxy/v3/search/investment_project', {
       limit,
       offset,
+      ...(companyId && {
+        investor_company: [companyId],
+      }),
       ...rest,
     })
     .then(

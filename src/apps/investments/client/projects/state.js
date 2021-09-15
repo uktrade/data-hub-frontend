@@ -14,7 +14,8 @@ import {
   INVOLVEMENT_LEVEL_OPTIONS,
 } from './constants'
 
-export const ID = 'projectsList'
+export const INVESTMENT_PROJECTS_ID = 'projectsList'
+export const COMPANY_PROJECTS_LIST_ID = 'companyProjectsList'
 export const TASK_GET_PROJECTS_LIST = 'TASK_GET_PROJECTS_LIST'
 export const TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME =
   'TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME'
@@ -29,10 +30,10 @@ const parseQueryString = (queryString) => {
   }
 }
 
-export const state2props = ({ router, ...state }) => {
+export const projectsState2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
   const queryParams = parseQueryString(queryString)
-  const { metadata, selectedAdvisers } = state[ID]
+  const { metadata, selectedAdvisers } = state[INVESTMENT_PROJECTS_ID]
   const financialYearStart = getFinancialYearStart(new Date())
   const financialYearOptions = [
     {
@@ -56,7 +57,7 @@ export const state2props = ({ router, ...state }) => {
   )
 
   return {
-    ...state[ID],
+    ...state[INVESTMENT_PROJECTS_ID],
     payload: { ...queryParams },
     selectedFilters,
     optionMetadata: {
@@ -65,6 +66,20 @@ export const state2props = ({ router, ...state }) => {
       involvementLevelOptions: INVOLVEMENT_LEVEL_OPTIONS,
       financialYearOptions,
       ...metadata,
+    },
+  }
+}
+
+export const companyProjectsState2props = ({ router, ...state }) => {
+  const queryString = router.location.search.slice(1)
+  const queryParams = parseQueryString(queryString)
+
+  return {
+    ...state[COMPANY_PROJECTS_LIST_ID],
+    payload: { ...queryParams },
+    selectedFilters: {},
+    optionMetadata: {
+      sortOptions: SORT_OPTIONS,
     },
   }
 }
