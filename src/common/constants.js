@@ -1,5 +1,5 @@
 // https://www.bloomberg.com/quote/USDGBP:CUR
-const EXCHANGE_RATE_USD_TO_GBP = 0.7062
+const EXCHANGE_RATE_USD_TO_GBP = 0.7231
 const EXCHANGE_RATE_GBP_TO_USD = parseFloat(
   Number(1 / EXCHANGE_RATE_USD_TO_GBP).toFixed(4)
 )
