@@ -24,3 +24,11 @@ export const INVESTMENT_PROJECT_STAGES = {
 export const INVESTMENT_PROJECT_STAGES_LIST = Object.values(
   INVESTMENT_PROJECT_STAGES
 )
+
+export const INVESTMENT_PROJECT_STATUSES_LIST = [
+  'ongoing',
+  'delayed',
+  'abandoned',
+  'lost',
+  'dormant',
+]
