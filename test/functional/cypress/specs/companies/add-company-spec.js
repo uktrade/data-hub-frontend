@@ -736,7 +736,7 @@ describe('Add company form', () => {
     it('should display the manual entry form', () => {
       assertUSOrCanadianCompanyFormFields()
       cy.get(selectors.companyAdd.newCompanyRecordForm.areaCanada).should(
-        'not.be.visible'
+        'not.exist'
       )
       cy.get(selectors.companyAdd.newCompanyRecordForm.areaUS).should(
         'be.visible'
@@ -774,7 +774,7 @@ describe('Add company form', () => {
         'be.visible'
       )
       cy.get(selectors.companyAdd.newCompanyRecordForm.areaUS).should(
-        'not.be.visible'
+        'not.exist'
       )
 
       cy.get(selectors.companyAdd.form).contains('Canada')
