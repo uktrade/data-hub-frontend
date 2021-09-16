@@ -22,4 +22,4 @@ https://github.com/uktrade/data-hub-frontend/blob/master/docs/Code%20review%20gu
 
 - [ ] Has the branch been rebased to master?
 - [ ] Automated tests (Any of the following when applicable: Unit, Functional or End-to-End)
-- [ ] Manual compatibility testing (Browsers: Chrome, Firefox, IE11, Safari)
+- [ ] Manual compatibility testing (Browsers: Chrome, Firefox, Edge, Safari)
