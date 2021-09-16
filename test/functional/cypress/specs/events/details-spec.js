@@ -9,7 +9,7 @@ const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 
 describe('Event Details', () => {
-  it('should display event details with link to documents', () => {
+  it('should display one day event details with link to documents', () => {
     cy.visit(urls.events.details(fixtures.event.oneDayExhibition.id))
 
     cy.get(selectors.entityCollection.editEvent).should('be.visible')
