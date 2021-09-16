@@ -81,6 +81,7 @@ const transformResponseToEventCollection = ({ count, results = [] }) => ({
 const idNameToValueLabel = ({ id, name }) => ({ value: id, label: name })
 
 const transformResponseToEventDetails = ({
+  name,
   event_type,
   start_date,
   end_date,
@@ -102,6 +103,7 @@ const transformResponseToEventDetails = ({
   archived_documents_url_path,
   disabled_on,
 }) => ({
+  name,
   eventType: event_type.name,
   startDate: formatLongDate(start_date),
   endDate: formatLongDate(end_date),

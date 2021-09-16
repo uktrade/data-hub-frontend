@@ -39,7 +39,7 @@ const StyledTag = styled(Tag)`
 `
 
 const SummaryTable = ({ caption, actions, children, ...rest }) => (
-  <StyledTable caption={[caption, actions]} {...rest}>
+  <StyledTable caption={caption && [caption, actions]} {...rest}>
     {children}
   </StyledTable>
 )

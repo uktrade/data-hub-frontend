@@ -1,6 +1,9 @@
 import urls from '../../../../../src/lib/urls'
 
-const { assertKeyValueTable } = require('../../support/assertions')
+const {
+  assertKeyValueTable,
+  assertBreadcrumbs,
+} = require('../../support/assertions')
 
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
@@ -10,6 +13,12 @@ describe('Event Details', () => {
     cy.visit(urls.events.details(fixtures.event.oneDayExhibition.id))
 
     cy.get(selectors.entityCollection.editEvent).should('be.visible')
+
+    assertBreadcrumbs({
+      Home: urls.dashboard.route,
+      Events: '/events',
+      'One-day exhibition': null,
+    })
 
     assertKeyValueTable('eventDetails', {
       'Type of event': 'Exhibition',
@@ -40,6 +49,12 @@ describe('Event Details', () => {
     })
 
     it('should display no document link details', () => {
+      assertBreadcrumbs({
+        Home: urls.dashboard.route,
+        Events: '/events',
+        'Teddy bear expo': null,
+      })
+
       assertKeyValueTable('eventDetails', {
         'Type of event': 'Exhibition',
         'Event date': '1 January 2021',
