@@ -1,5 +1,5 @@
 import qs from 'qs'
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import axios from 'axios'
@@ -32,6 +32,10 @@ import CompanyResource from '../Resource/Company'
 import ReferrerLink from '../ReferrerLink'
 import * as validators from '../Form/validators'
 import State from '../State'
+import { UNITED_STATES_ID, CANADA_ID } from '../../../common/constants'
+
+import useAdministrativeAreaLookup from '../AdministrativeAreaSearch/useAdministrativeAreaLookup'
+import useAdministrativeAreaSearch from '../AdministrativeAreaSearch/useAdministrativeAreaSearch'
 
 const emailAlreadyExists = (email, features) => {
   const contactEndpointVersion = features['address-area-contact-required-field']
@@ -70,6 +74,7 @@ const _ContactForm = ({
   addressPostcode: postcode,
   addressTown: city,
   addressCounty: county,
+  addressArea,
   addressCountry,
   // State props
   duplicateEmail,
@@ -77,259 +82,306 @@ const _ContactForm = ({
   id,
   features,
   ...props
-}) => (
-  <CompanyResource id={companyId}>
-    {(company) => (
-      <>
-        <LocalHeader
-          superheading={
-            update && (
-              <Link href={`/companies/${company.id}`}>{company.name}</Link>
-            )
-          }
-          heading={`${update ? 'Edit' : 'Add'} contact`}
-          breadcrumbs={[
-            { link: '/', text: 'Home' },
-            { link: '/contacts/', text: 'Contacts' },
-            ...(update
-              ? [{ text: props.name }, { text: 'Edit' }]
-              : [{ text: `Add contact at ${company.name}` }]),
-          ]}
-        />
+}) => {
+  const findAdministrativeAreas = useAdministrativeAreaLookup()
+  const { onAdministrativeAreaSearch } = useAdministrativeAreaSearch(
+    findAdministrativeAreas
+  )
 
-        <Main>
-          <FormStateful
-            id="add-contact-form"
-            showErrorSummary={true}
-            initialValues={{
-              ...props,
-              postcode,
-              county,
-              city,
-              country: addressCountry?.id,
-              primary: boolToYesNo(primary),
-              addressSameAsCompany: boolToYesNo(addressSameAsCompany),
-              acceptsDitEmailMarketing: [
-                boolToYesNo(acceptsDitEmailMarketing),
-              ].filter(Boolean),
-            }}
-            onSubmit={async ({
-              address1,
-              address2,
-              city,
-              county,
-              country,
-              postcode,
-              acceptsDitEmailMarketing,
-              addressSameAsCompany,
-              primary,
-              email,
-              ...values
-            }) => {
-              if (!update && (!duplicateEmail || duplicateEmail !== email)) {
-                if (await emailAlreadyExists(email, features)) {
+  useEffect(() => {
+    onAdministrativeAreaSearch()
+  }, [])
+
+  const areaUS = (addressArea) => {
+    if (addressCountry?.id === UNITED_STATES_ID) {
+      return addressArea?.id
+    }
+    return null
+  }
+
+  const areaCanada = (addressArea) => {
+    if (addressCountry?.id === CANADA_ID) {
+      return addressArea?.id
+    }
+    return null
+  }
+
+  return (
+    <CompanyResource id={companyId}>
+      {(company) => (
+        <>
+          <LocalHeader
+            superheading={
+              update && (
+                <Link href={`/companies/${company.id}`}>{company.name}</Link>
+              )
+            }
+            heading={`${update ? 'Edit' : 'Add'} contact`}
+            breadcrumbs={[
+              { link: '/', text: 'Home' },
+              { link: '/contacts/', text: 'Contacts' },
+              ...(update
+                ? [{ text: props.name }, { text: 'Edit' }]
+                : [{ text: `Add contact at ${company.name}` }]),
+            ]}
+          />
+
+          <Main>
+            <FormStateful
+              id="add-contact-form"
+              showErrorSummary={true}
+              initialValues={{
+                ...props,
+                postcode,
+                county,
+                city,
+                area: addressArea?.id,
+                areaUS: areaUS(addressArea),
+                areaCanada: areaCanada(addressArea),
+                country: addressCountry?.id,
+                primary: boolToYesNo(primary),
+                addressSameAsCompany: boolToYesNo(addressSameAsCompany),
+                acceptsDitEmailMarketing: [
+                  boolToYesNo(acceptsDitEmailMarketing),
+                ].filter(Boolean),
+              }}
+              onSubmit={async ({
+                address1,
+                address2,
+                city,
+                county,
+                country,
+                areaUS,
+                areaCanada,
+                postcode,
+                acceptsDitEmailMarketing,
+                addressSameAsCompany,
+                primary,
+                email,
+                ...values
+              }) => {
+                if (!update && (!duplicateEmail || duplicateEmail !== email)) {
+                  if (await emailAlreadyExists(email, features)) {
+                    dispatch({
+                      type: CONTACT_FORM__DUPLICATE_EMAIL,
+                      duplicateEmail: email,
+                    })
+                    return
+                  }
+                } else {
                   dispatch({
-                    type: CONTACT_FORM__DUPLICATE_EMAIL,
+                    type: CONTACT_FORM__SUBMIT,
                     duplicateEmail: email,
                   })
-                  return
                 }
-              } else {
-                dispatch({
-                  type: CONTACT_FORM__SUBMIT,
-                  duplicateEmail: email,
+
+                let area = null
+                if (country === UNITED_STATES_ID) {
+                  area = areaUS
+                } else if (country === CANADA_ID) {
+                  area = areaCanada
+                }
+
+                const payload = {
+                  ...keysToSnakeCase(values),
+                  email,
+                  accepts_dit_email_marketing:
+                    acceptsDitEmailMarketing.includes(YES),
+                  primary,
+                  company,
+                  address_same_as_company: addressSameAsCompany,
+                  // The API is complaining if we send the address fields when address_same_as_company is true
+                  ...(addressSameAsCompany !== YES && {
+                    address_1: address1 || ' ',
+                    address_2: address2,
+                    address_town: city || ' ',
+                    address_county: county,
+                    address_postcode: postcode,
+                    address_area: area,
+                    address_country: country,
+                  }),
+                }
+
+                const contactEndpointVersion = features[
+                  'address-area-contact-required-field'
+                ]
+                  ? 'v4'
+                  : 'v3'
+                const response = await axios({
+                  url: update
+                    ? `/api-proxy/${contactEndpointVersion}/contact/${contactId}`
+                    : `/api-proxy/${contactEndpointVersion}/contact`,
+                  method: update ? 'PATCH' : 'POST',
+                  data: payload,
                 })
-              }
 
-              const payload = {
-                ...keysToSnakeCase(values),
-                email,
-                accepts_dit_email_marketing:
-                  acceptsDitEmailMarketing.includes(YES),
-                primary,
-                company,
-                address_same_as_company: addressSameAsCompany,
-                // The API is complaining if we send the address fields when address_same_as_company is true
-                ...(addressSameAsCompany !== YES && {
-                  address_1: address1 || ' ',
-                  address_2: address2,
-                  address_town: city || ' ',
-                  address_county: county,
-                  address_postcode: postcode,
-                  address_country: country,
-                }),
-              }
+                addMessage(
+                  'success',
+                  update
+                    ? 'Contact record updated'
+                    : `You have successfully added a new contact ${response.data.name}`
+                )
 
-              const contactEndpointVersion = features[
-                'address-area-contact-required-field'
-              ]
-                ? 'v4'
-                : 'v3'
-              const response = await axios({
-                url: update
-                  ? `/api-proxy/${contactEndpointVersion}/contact/${contactId}`
-                  : `/api-proxy/${contactEndpointVersion}/contact`,
-                method: update ? 'PATCH' : 'POST',
-                data: payload,
-              })
-
-              addMessage(
-                'success',
-                update
-                  ? 'Contact record updated'
-                  : `You have successfully added a new contact ${response.data.name}`
-              )
-
-              return redirectTo(response.data)
-            }}
-          >
-            {({ submissionError, values, errors }) => (
-              <>
-                {_.isEmpty(errors) || (
-                  <ErrorSummary
-                    errors={Object.entries(errors).map(
-                      ([targetName, text]) => ({
-                        targetName,
-                        text,
-                      })
-                    )}
+                return redirectTo(response.data)
+              }}
+            >
+              {({ submissionError, values, errors }) => (
+                <>
+                  {_.isEmpty(errors) || (
+                    <ErrorSummary
+                      errors={Object.entries(errors).map(
+                        ([targetName, text]) => ({
+                          targetName,
+                          text,
+                        })
+                      )}
+                    />
+                  )}
+                  {duplicateEmail && (
+                    <FlashMessages
+                      flashMessages={{
+                        info: [
+                          duplicateEmailMessage(values.email, company.name),
+                        ],
+                      }}
+                    />
+                  )}
+                  {submissionError && (
+                    <FlashMessages
+                      flashMessages={{
+                        'error:with-body': [
+                          {
+                            heading: 'Something went wrong',
+                            body:
+                              submissionError.message ||
+                              submissionError.toString(),
+                          },
+                        ],
+                      }}
+                    />
+                  )}
+                  <FieldInput
+                    label="First name"
+                    name="firstName"
+                    type="text"
+                    required="This field may not be null."
+                    data-test="group-field-first_name"
                   />
-                )}
-                {duplicateEmail && (
-                  <FlashMessages
-                    flashMessages={{
-                      info: [duplicateEmailMessage(values.email, company.name)],
-                    }}
+                  <FieldInput
+                    label="Last name"
+                    name="lastName"
+                    type="text"
+                    required="This field may not be null."
                   />
-                )}
-                {submissionError && (
-                  <FlashMessages
-                    flashMessages={{
-                      'error:with-body': [
-                        {
-                          heading: 'Something went wrong',
-                          body:
-                            submissionError.message ||
-                            submissionError.toString(),
-                        },
-                      ],
-                    }}
+                  <FieldInput
+                    label="Job title"
+                    name="jobTitle"
+                    type="text"
+                    required="This field may not be null."
                   />
-                )}
-                <FieldInput
-                  label="First name"
-                  name="firstName"
-                  type="text"
-                  required="This field may not be null."
-                  data-test="group-field-first_name"
-                />
-                <FieldInput
-                  label="Last name"
-                  name="lastName"
-                  type="text"
-                  required="This field may not be null."
-                />
-                <FieldInput
-                  label="Job title"
-                  name="jobTitle"
-                  type="text"
-                  required="This field may not be null."
-                />
-                <FieldRadios
-                  legend="Is this person a primary contact?"
-                  name="primary"
-                  required="This field is required."
-                  options={[
-                    { value: YES, label: YES },
-                    { value: NO, label: NO },
-                  ]}
-                />
-                <FieldInput
-                  label="Telephone country code"
-                  name="telephoneCountrycode"
-                  type="number"
-                  required="This field may not be null."
-                  validate={(x) =>
-                    !x?.match(/^\d{1,4}$/) &&
-                    'Country code should consist of one to four numbers'
-                  }
-                />
-                <FieldInput
-                  label="Telephone number"
-                  name="telephoneNumber"
-                  type="number"
-                  required="This field may not be null."
-                />
-                <FieldInput
-                  label="Email"
-                  name="email"
-                  type="email"
-                  required="This field may not be null."
-                  validate={validators.email}
-                />
-                <FieldCheckboxes
-                  name="acceptsDitEmailMarketing"
-                  options={[
-                    {
-                      value: YES,
-                      label: 'The company contact does accept email marketing',
-                      hint:
-                        values.acceptsDitEmailMarketing.includes(YES) &&
-                        'By checking this box, you confirm that the contact has opted in to email marketing.',
-                    },
-                  ]}
-                />
-                <FieldRadios
-                  legend="Is the contact’s address the same as the company address?"
-                  name="addressSameAsCompany"
-                  required="This field is required."
-                  options={[
-                    { value: YES, label: YES },
-                    {
-                      value: NO,
-                      label: NO,
-                      children: (
-                        <fieldset>
-                          <legend>Contact address</legend>
-                          <FieldAddress
-                            name="" // Required, but has no effect
-                            apiEndpoint="/api/postcodelookup"
-                            isCountrySelectable={true}
-                            forcePostcodeLookupButton={true}
-                          />
-                        </fieldset>
-                      ),
-                    },
-                  ]}
-                />
-                <FieldInput
-                  label="Alternative telephone number (optional)"
-                  name="telephoneAlternative"
-                  type="number"
-                />
-                <FieldInput
-                  label="Alternative email (optional)"
-                  name="emailAlternative"
-                  type="email"
-                  validate={(x) => x && validators.email(x)}
-                />
-                <FieldTextarea label="Notes (optional)" name="notes" />
-                <FormActions>
-                  <Button data-test="submit">
-                    {update ? 'Save and return' : 'Add contact'}
-                  </Button>
-                  <ReferrerLink data-test="return-link">
-                    {update ? 'Return without saving' : 'Cancel'}
-                  </ReferrerLink>
-                </FormActions>
-              </>
-            )}
-          </FormStateful>
-        </Main>
-      </>
-    )}
-  </CompanyResource>
-)
+                  <FieldRadios
+                    legend="Is this person a primary contact?"
+                    name="primary"
+                    required="This field is required."
+                    options={[
+                      { value: YES, label: YES },
+                      { value: NO, label: NO },
+                    ]}
+                  />
+                  <FieldInput
+                    label="Telephone country code"
+                    name="telephoneCountrycode"
+                    type="number"
+                    required="This field may not be null."
+                    validate={(x) =>
+                      !x?.match(/^\d{1,4}$/) &&
+                      'Country code should consist of one to four numbers'
+                    }
+                  />
+                  <FieldInput
+                    label="Telephone number"
+                    name="telephoneNumber"
+                    type="number"
+                    required="This field may not be null."
+                  />
+                  <FieldInput
+                    label="Email"
+                    name="email"
+                    type="email"
+                    required="This field may not be null."
+                    validate={validators.email}
+                  />
+                  <FieldCheckboxes
+                    name="acceptsDitEmailMarketing"
+                    options={[
+                      {
+                        value: YES,
+                        label:
+                          'The company contact does accept email marketing',
+                        hint:
+                          values.acceptsDitEmailMarketing.includes(YES) &&
+                          'By checking this box, you confirm that the contact has opted in to email marketing.',
+                      },
+                    ]}
+                  />
+                  <FieldRadios
+                    legend="Is the contact’s address the same as the company address?"
+                    name="addressSameAsCompany"
+                    required="This field is required."
+                    options={[
+                      { value: YES, label: YES },
+                      {
+                        value: NO,
+                        label: NO,
+                        children: (
+                          <fieldset>
+                            <legend>Contact address</legend>
+                            <FieldAddress
+                              name="" // Required, but has no effect
+                              apiEndpoint="/api/postcodelookup"
+                              isCountrySelectable={true}
+                              features={{
+                                areaFormField: features['contacts-area-field'],
+                                postcodeValidation:
+                                  features[
+                                    'address-postcode-company-required-field'
+                                  ],
+                              }}
+                            />
+                          </fieldset>
+                        ),
+                      },
+                    ]}
+                  />
+                  <FieldInput
+                    label="Alternative telephone number (optional)"
+                    name="telephoneAlternative"
+                    type="number"
+                  />
+                  <FieldInput
+                    label="Alternative email (optional)"
+                    name="emailAlternative"
+                    type="email"
+                    validate={(x) => x && validators.email(x)}
+                  />
+                  <FieldTextarea label="Notes (optional)" name="notes" />
+                  <FormActions>
+                    <Button data-test="submit">
+                      {update ? 'Save and return' : 'Add contact'}
+                    </Button>
+                    <ReferrerLink data-test="return-link">
+                      {update ? 'Return without saving' : 'Cancel'}
+                    </ReferrerLink>
+                  </FormActions>
+                </>
+              )}
+            </FormStateful>
+          </Main>
+        </>
+      )}
+    </CompanyResource>
+  )
+}
 
 export const ContactForm = multiInstance({
   name: 'ContactForm',

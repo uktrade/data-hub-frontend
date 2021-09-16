@@ -3,8 +3,6 @@
 const { assertBreadcrumbs } = require('../../support/assertions')
 
 const ZBONCAK_COMPANY_ID = '4cd4128b-1bad-4f1e-9146-5d4678c6a018'
-const NEW_CONTACT_ID = '14890695-ce54-4419-88d3-9224754ecbc0'
-
 const assertErrorSummary = (...errors) =>
   cy
     .contains('There is a problem')
@@ -53,6 +51,8 @@ const assertNoMarketingConsent = () =>
     .should('not.be.checked')
 
 describe('Create contact form', () => {
+  const NEW_CONTACT_ID = '14890695-ce54-4419-88d3-9224754ecbc0'
+
   beforeEach(() => {
     cy.visit(`/contacts/create?company=${ZBONCAK_COMPANY_ID}`)
 
@@ -118,6 +118,32 @@ describe('Create contact form', () => {
     })
   })
 
+  describe('country specific address fields', () => {
+    beforeEach(() => {
+      cy.checkRadioGroup(
+        'Is the contact’s address the same as the company address?',
+        'No'
+      )
+    })
+
+    it('should only show the find postcode button when UK is selected', () => {
+      cy.contains('Country').parent().find('select').select('United Kingdom')
+      cy.contains('Find UK address').should('be.visible')
+    })
+
+    it('should only show the state field when US is selected', () => {
+      cy.contains('Country').parent().find('select').select('United States')
+      cy.get('#field-areaUS').should('contain.text', 'State')
+      cy.get('#postcode-search').should('not.exist')
+    })
+
+    it('should only show the province field when Canada is selected', () => {
+      cy.contains('Country').parent().find('select').select('Canada')
+      cy.get('#field-areaCanada').should('contain.text', 'Province')
+      cy.get('#postcode-search').should('not.exist')
+    })
+  })
+
   it('Should show errors for invalid field values', () => {
     cy.checkRadioGroup(
       'Is the contact’s address the same as the company address?',
@@ -166,8 +192,89 @@ describe('Create contact form', () => {
 })
 
 describe('Edit contact', () => {
+  const EDIT_US_CONTACT_ID = '5e75d636-1d24-416a-aaf0-3fb220d594ce'
+  const EDIT_UK_CONTACT_ID = 'f3d19ea7-d4cf-43e0-8e97-755c57cae313'
+
+  describe('country specific address fields', () => {
+    it('should prepopulate the state', () => {
+      cy.visit(`/contacts/${EDIT_US_CONTACT_ID}/edit`)
+      cy.get('#areaUS')
+        .find('option:selected')
+        .should('have.text', 'Massachusetts')
+    })
+
+    describe('when a UK company is submitted', () => {
+      it('should explicitly submit area as null', () => {
+        cy.intercept('PATCH', `/api-proxy/v4/contact/${EDIT_UK_CONTACT_ID}`).as(
+          'editContactResponse'
+        )
+
+        cy.visit(`/contacts/${EDIT_UK_CONTACT_ID}/edit`)
+        cy.get('#address1').type('Address first line')
+        cy.get('#city').type('Address city')
+        cy.get('#postcode').type('NE16 386')
+        cy.get('[data-test="submit"]').click()
+
+        cy.wait('@editContactResponse').then((xhr) => {
+          expect(xhr.request.body.address_area).to.equal(null)
+        })
+      })
+    })
+
+    describe('when changing countries', () => {
+      describe('when changing a Canadian contact country to UK', () => {
+        it('should clear the province value', () => {
+          cy.intercept(
+            'PATCH',
+            `/api-proxy/v4/contact/${EDIT_US_CONTACT_ID}`
+          ).as('editContactResponse')
+
+          cy.visit(`/contacts/${EDIT_US_CONTACT_ID}/edit`)
+          cy.get('#country').select('United Kingdom')
+          cy.get('#address1').type('Address first line')
+          cy.get('#city').type('Address city')
+          cy.get('#postcode').type('NE16 386')
+          cy.get('[data-test="submit"]').click()
+
+          cy.wait('@editContactResponse').then((xhr) => {
+            expect(xhr.request.body.address_area).to.equal(null)
+          })
+        })
+      })
+
+      describe('when a US contact has a US state and changes to Canada', () => {
+        it('should clear the province value', () => {
+          cy.visit(`/contacts/${EDIT_US_CONTACT_ID}/edit`)
+          cy.get('#country').select('United States')
+          cy.get('#areaUS').select('Massachusetts')
+          cy.get('#country').select('Canada')
+          cy.get('#address1').type('Address first line')
+          cy.get('#city').type('Address city')
+          cy.get('#postcode').type('NE16 386')
+          cy.get('[data-test="submit"]').click()
+
+          cy.contains('Select a province')
+        })
+      })
+
+      describe('when a UK contact is switched to US', () => {
+        it('the state should be empty', () => {
+          cy.visit(`/contacts/${EDIT_UK_CONTACT_ID}/edit`)
+          cy.get('#country').select('United Kingdom')
+          cy.get('#country').select('United States')
+          cy.get('#address1').type('Address first line')
+          cy.get('#city').type('Address city')
+          cy.get('#postcode').type('NE16 386')
+          cy.get('[data-test="submit"]').click()
+
+          cy.contains('Select a state')
+        })
+      })
+    })
+  })
+
   it('Should render the form with the contact values', () => {
-    cy.visit(`/contacts/${NEW_CONTACT_ID}/edit`)
+    cy.visit(`/contacts/${EDIT_US_CONTACT_ID}/edit`)
 
     assertBreadcrumbs({
       Home: '/',
@@ -187,7 +294,7 @@ describe('Edit contact', () => {
     assertRadioGroup('Is this person a primary contact?', 'Yes')
     assertRadioGroup(
       'Is the contact’s address the same as the company address?',
-      'Yes'
+      'No'
     )
 
     assertInputValuesByLabels({

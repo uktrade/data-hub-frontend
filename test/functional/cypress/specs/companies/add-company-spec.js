@@ -130,7 +130,6 @@ const assertUSOrCanadianCompanyFormFields = () => {
   cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).should(
     'be.visible'
   )
-  cy.get(selectors.companyAdd.newCompanyRecordForm.area).should('be.visible')
   cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).should(
     'be.visible'
   )
@@ -736,6 +735,12 @@ describe('Add company form', () => {
 
     it('should display the manual entry form', () => {
       assertUSOrCanadianCompanyFormFields()
+      cy.get(selectors.companyAdd.newCompanyRecordForm.areaCanada).should(
+        'not.exist'
+      )
+      cy.get(selectors.companyAdd.newCompanyRecordForm.areaUS).should(
+        'be.visible'
+      )
       cy.get(selectors.companyAdd.form).contains('United States')
     })
 
@@ -765,6 +770,13 @@ describe('Add company form', () => {
 
     it('should display the manual entry form', () => {
       assertUSOrCanadianCompanyFormFields()
+      cy.get(selectors.companyAdd.newCompanyRecordForm.areaCanada).should(
+        'be.visible'
+      )
+      cy.get(selectors.companyAdd.newCompanyRecordForm.areaUS).should(
+        'not.exist'
+      )
+
       cy.get(selectors.companyAdd.form).contains('Canada')
     })
 
