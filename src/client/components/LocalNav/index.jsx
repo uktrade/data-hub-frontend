@@ -30,9 +30,7 @@ const StyledInactiveLink = styled('a')({
   },
 })
 
-export const LocalNav = ({ children }) => {
-  return <nav>{children}</nav>
-}
+export const LocalNav = ({ children }) => <nav>{children}</nav>
 
 export const LocalNavLink = ({ children, href, ...rest }) => (
   <Route>
