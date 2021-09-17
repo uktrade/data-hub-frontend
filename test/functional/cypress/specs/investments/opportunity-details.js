@@ -2,7 +2,6 @@ const {
   assertLocalHeader,
   assertBreadcrumbs,
 } = require('../../support/assertions')
-const fixtures = require('../../fixtures')
 
 const incompleteOpportunity = require('../../../../sandbox/fixtures/v4/investment/large-capital-opportunity-incomplete.json')
 const completeOpportunity = require('../../../../sandbox/fixtures/v4/investment/large-capital-opportunity-complete.json')
@@ -35,11 +34,7 @@ const assertDetailsTableValues = (values, tableElement) => {
 
 describe('UK Opportunity with missing data', () => {
   before(() => {
-    cy.visit(
-      investments.opportunities.details(
-        fixtures.investment.incompleteOpportunity.id
-      )
-    )
+    cy.visit(investments.opportunities.details(incompleteOpportunity.id))
   })
   context('The page header', () => {
     it('should display correct breadcrumbs', () => {
@@ -157,11 +152,7 @@ describe('UK Opportunity with missing data', () => {
 
 describe('UK Opportunity with complete data', () => {
   before(() => {
-    cy.visit(
-      investments.opportunities.details(
-        fixtures.investment.completeOpportunity.id
-      )
-    )
+    cy.visit(investments.opportunities.details(completeOpportunity.id))
   })
   context('The page header', () => {
     it('should display correct breadcrumbs', () => {

@@ -59,6 +59,8 @@ describe('DA add Investment Project interaction', () => {
         .type('Conversation about Investment services')
         .get(formSelectors.policyFeedbackNo)
         .click()
+        .get(formSelectors.hasRelatedOpportunityNo)
+        .click()
         .get(formSelectors.add)
         .click()
         .wait('@post')

@@ -5,10 +5,15 @@ const labels = require('../labels')
 const { getDataLabels } = require('../../../lib/controller-utils')
 const groupExportCountries = require('../../../lib/group-export-countries')
 
-function transformEntityLink(entity, entityPath, noLinkText = null) {
+function transformEntityLink({
+  entity,
+  entityPath,
+  urlSuffix = '',
+  noLinkText = null,
+}) {
   return entity
     ? {
-        url: `/${entityPath}/${entity.id}`,
+        url: `/${entityPath}/${entity.id}${urlSuffix}`,
         name: entity.name,
       }
     : noLinkText
@@ -96,6 +101,7 @@ function transformInteractionResponseToViewRecord(
     archived_documents_url_path,
     export_countries,
     related_trade_agreements,
+    large_capital_opportunity,
   },
   canShowDocuments = false
 ) {
@@ -107,9 +113,15 @@ function transformInteractionResponseToViewRecord(
     company:
       companies &&
       companies.length &&
-      transformEntityLink(companies[0], 'companies'),
+      transformEntityLink({
+        entity: companies[0],
+        entityPath: 'companies',
+      }),
     contacts: contacts.map((contact) =>
-      transformEntityLink(contact, 'contacts')
+      transformEntityLink({
+        entity: contact,
+        entityPath: 'contacts',
+      })
     ),
     service: getServiceValues(service),
     service_delivery_status,
@@ -118,17 +130,27 @@ function transformInteractionResponseToViewRecord(
     notes: notes,
     date: { type: 'date', name: date },
     dit_participants: (dit_participants || []).map(formatParticipantName),
-    investment_project: transformEntityLink(
-      investment_project,
-      'investments/projects'
-    ),
-    event: transformEntityLink(event, 'events', defaultEventText),
+    investment_project: transformEntityLink({
+      entity: investment_project,
+      entityPath: 'investments/projects',
+    }),
+    event: transformEntityLink({
+      entity: event,
+      entityPath: 'events',
+      noLinkText: defaultEventText,
+    }),
+
     communication_channel: communication_channel,
     policy_issue_types: getNames(policy_issue_types),
     policy_areas: getNames(policy_areas),
     policy_feedback_notes: policy_feedback_notes,
     ...getExportCountries(export_countries),
     related_trade_agreements: getNames(related_trade_agreements),
+    large_capital_opportunity: transformEntityLink({
+      entity: large_capital_opportunity,
+      entityPath: 'investments/opportunities',
+      urlSuffix: '/details',
+    }),
   }
 
   if (canShowDocuments && archived_documents_url_path) {
@@ -139,7 +161,6 @@ function transformInteractionResponseToViewRecord(
       hintId: 'external-link-label',
     }
   }
-
   return pickBy(getDataLabels(viewRecord, kindLabels))
 }
 

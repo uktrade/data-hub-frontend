@@ -61,6 +61,7 @@ const InteractionDetailsForm = ({
   progress = false,
   has_related_trade_agreements,
   related_trade_agreements,
+  interactionId,
   ...props
 }) => {
   useEffect(() => {
@@ -137,7 +138,11 @@ const InteractionDetailsForm = ({
                       {() => (
                         <StepInteractionDetails
                           companyId={companyId}
+                          interactionId={interactionId}
                           activeEvent={initialValues.event}
+                          relatedOpportunity={
+                            initialValues.large_capital_opportunity
+                          }
                           onOpenContactForm={(e) => {
                             e.preventDefault()
                             openContactFormTask.start({

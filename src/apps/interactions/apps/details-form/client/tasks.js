@@ -7,6 +7,7 @@ import getContactFromQuery from '../../../../../client/utils/getContactFromQuery
 import { INTERACTION_STATUS } from '../../../constants'
 import { EXPORT_INTEREST_STATUS_VALUES, OPTION_NO } from '../../../../constants'
 import { ID as STORE_ID } from './state'
+import { THEMES } from '../../../constants'
 
 const { transformValueForAPI } = require('../../../../../client/utils/date')
 
@@ -15,6 +16,7 @@ const FIELDS_TO_OMIT = [
   'future_interest',
   'not_interested',
   'service_2nd_level',
+  'has_related_opportunity',
 ]
 
 function transformOption(option) {
@@ -135,6 +137,12 @@ export function saveInteraction({ values, companyIds, referralId }) {
     related_trade_agreements: transformArrayOfOptions(
       values.related_trade_agreements
     ),
+    ...(values.theme == THEMES.INVESTMENT && {
+      large_capital_opportunity:
+        values.has_related_opportunity == 'yes'
+          ? values.large_capital_opportunity.value
+          : null,
+    }),
   }
 
   const payload = values.id
@@ -146,7 +154,6 @@ export function saveInteraction({ values, companyIds, referralId }) {
         ...commonPayload,
         export_countries: transformExportCountries(values),
       }
-
   return request(
     values.id ? `${endpoint}/${values.id}` : endpoint,
     omit(payload, FIELDS_TO_OMIT)

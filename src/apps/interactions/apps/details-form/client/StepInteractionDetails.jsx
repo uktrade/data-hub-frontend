@@ -11,6 +11,9 @@ import styled from 'styled-components'
 
 import { SPACING_POINTS } from '@govuk-react/constants'
 
+import axios from 'axios'
+import { throttle } from 'lodash'
+
 import {
   AdviserTypeAhead,
   NewWindowLink,
@@ -40,6 +43,7 @@ import {
   EXPORT_INTEREST_STATUS_VALUES,
   OPTION_YES,
   OPTIONS_YES_NO,
+  OPTION_NO,
 } from '../../../../constants'
 
 import { ADD_INTERACTION__GET_ACTIVE_EVENTS } from '../../../../../client/actions'
@@ -154,6 +158,8 @@ const validatedDuplicatedCountries = (countries, field, { values }) =>
     ? 'A country that was discussed cannot be entered in multiple fields'
     : null
 
+const idNameToValueLabel = ({ id, name }) => ({ value: id, label: name })
+
 const StepInteractionDetails = ({
   companyId,
   contacts,
@@ -167,6 +173,8 @@ const StepInteractionDetails = ({
   activeEvents,
   activeEvent,
   relatedTradeAgreements,
+  relatedOpportunity,
+  interactionId,
 }) => {
   const { values = {} } = useFormContext()
   const serviceContext = getServiceContext(
@@ -177,7 +185,6 @@ const StepInteractionDetails = ({
   const servicesHierarchy = buildServicesHierarchy(
     services.filter((s) => s.contexts.includes(serviceContext))
   )
-
   const selectedServiceId = values.service_2nd_level || values.service
   const selectedService = services.find((s) => s.value === selectedServiceId)
   const isServiceDelivery = values.kind === KINDS.SERVICE_DELIVERY
@@ -510,6 +517,46 @@ const StepInteractionDetails = ({
           )}
         </>
       )}
+      {values.theme == THEMES.INVESTMENT && (
+        <>
+          <FieldRadios
+            inline={true}
+            name="has_related_opportunity"
+            legend="Does this interaction relate to a large capital opportunity?"
+            required="Answer if this interaction relates to a large capital opportunity"
+            options={OPTIONS_YES_NO}
+            initialValue={
+              interactionId && (relatedOpportunity ? OPTION_YES : OPTION_NO)
+            }
+          />
+
+          {values.has_related_opportunity === OPTION_YES && (
+            <FieldTypeahead
+              isMulti={false}
+              label="Related large capital opportunity"
+              name="large_capital_opportunity"
+              placeholder="-- Search opportunities --"
+              aria-label="Select an opportunity"
+              required="Select a related large capital opportunity"
+              initialValue={relatedOpportunity}
+              loadOptions={throttle(
+                (searchString) =>
+                  axios
+                    .get('/api-proxy/v4/large-capital-opportunity', {
+                      params: {
+                        autocomplete: searchString,
+                        archived: false,
+                      },
+                    })
+                    .then(({ data: { results } }) =>
+                      results.map(idNameToValueLabel)
+                    ),
+                500
+              )}
+            />
+          )}
+        </>
+      )}
     </>
   )
 }
@@ -532,6 +579,7 @@ StepInteractionDetails.propTypes = {
   activeEvents: typeaheadOptionsListProp,
   activeEvent: typeaheadOptionProp,
   relatedTradeAgreements: typeaheadOptionsListProp.isRequired,
+  relatedOpportunity: typeaheadOptionProp,
 }
 
 export default connect((state) => {

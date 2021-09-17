@@ -35,14 +35,13 @@ module.exports = {
     withNoLink: require('./interaction/with-no-link.json'),
     withLink: require('./interaction/with-link.json'),
     withReferral: require('../../../sandbox/fixtures/v3/interaction/interaction-with-referral.json'),
+    withInvestmentTheme: require('./interaction/investment-theme.json'),
   },
   investment: {
     investmentWithNoLink: require('./investment/investment-with-no-link.json'),
     investmentWithLink: require('./investment/investment-with-link.json'),
     newHotelFdi: require('./investment/new-hotel-fdi'),
     stageWon: require('./investment/investment-stage-won.json'),
-    completeOpportunity: require('./investment/large-capital-opportunity-complete.json'),
-    incompleteOpportunity: require('./investment/large-capital-opportunity-incomplete.json'),
   },
   event: {
     emptyOneDayExhibition: require('./event/empty-one-day-exhibition'),

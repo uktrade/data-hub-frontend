@@ -116,6 +116,7 @@ const transformInteractionToValues = (interaction) => {
       'communication_channel',
       'policy_areas',
       'related_trade_agreements',
+      'large_capital_opportunity',
     ]),
     ...transformServiceAnswers(interaction.service_answers),
   }
@@ -162,7 +163,6 @@ const getInitialFormValues = (req, res) => {
 async function renderInteractionDetailsForm(req, res, next) {
   try {
     const { company, interaction, referral, investment, contact } = res.locals
-
     const [
       services,
       serviceDeliveryStatuses,
@@ -207,6 +207,7 @@ async function renderInteractionDetailsForm(req, res, next) {
           communicationChannels,
           countries,
           relatedTradeAgreements,
+          interactionId: get(interaction, 'id'),
         },
       })
   } catch (error) {
