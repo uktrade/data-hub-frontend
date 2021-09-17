@@ -1,4 +1,5 @@
 const fixtures = require('../../fixtures')
+const largeCapitalOpportunity = require('../../../../sandbox/fixtures/v4/investment/large-capital-opportunity-complete.json')
 const selectors = require('../../../../selectors')
 const {
   assertKeyValueTable,
@@ -416,10 +417,8 @@ describe('Interaction details', () => {
           'Adviser(s)': 'DIT Staff, Digital Data Hub - Live Service',
           'Communication channel': 'Email/Website',
           'Related large capital opportunity': {
-            href: investments.opportunities.details(
-              fixtures.investment.completeOpportunity.id
-            ),
-            name: fixtures.investment.completeOpportunity.name,
+            href: investments.opportunities.details(largeCapitalOpportunity.id),
+            name: largeCapitalOpportunity.name,
           },
         })
       })
