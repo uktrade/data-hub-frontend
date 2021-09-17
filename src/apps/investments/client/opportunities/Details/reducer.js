@@ -7,7 +7,6 @@ import {
   INVESTMENT_OPPORTUNITY__CANCEL_EDIT,
   INVESTMENT_OPPORTUNITY__DETAILS_CHANGE,
   INVESTMENT_OPPORTUNITY__REQUIREMENTS_CHANGE,
-  INVESTMENT_OPPORTUNITY__STATUS_METADATA_LOADED,
   INVESTMENT_OPPORTUNITY__STATUS_CHANGE,
 } from '../../../../../client/actions'
 
@@ -85,14 +84,6 @@ export default (state = initialState, { type, result }) => {
           investmentTypes: result.investmentTypes,
           returnRates: result.returnRates,
           timeScales: result.timeScales,
-        },
-      }
-    case INVESTMENT_OPPORTUNITY__STATUS_METADATA_LOADED:
-      return {
-        ...state,
-        metadata: {
-          ...state.metadata,
-          opportunityStatuses: result.opportunityStatuses,
         },
       }
     case INVESTMENT_OPPORTUNITY__EDIT_DETAILS:

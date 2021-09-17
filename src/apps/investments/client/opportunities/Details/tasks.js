@@ -107,12 +107,3 @@ export function saveOpportunityStatus({ values, opportunityId }) {
     })
     .then(({ data }) => transformInvestmentOpportunityDetails(data))
 }
-
-export const getStatusMetadata = () =>
-  Promise.all([
-    apiProxyAxios.get(
-      '/v4/metadata/large-capital-opportunity/opportunity-status'
-    ),
-  ]).then(([{ data: opportunityStatuses }]) => ({
-    opportunityStatuses: opportunityStatuses.map(idNameToValueLabel),
-  }))

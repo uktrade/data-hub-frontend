@@ -6,46 +6,41 @@ import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeade
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 
-import {
-  ID,
-  state2props,
-  TASK_GET_OPPORTUNITY_DETAILS,
-  TASK_SAVE_OPPORTUNITY_STATUS,
-  TASK_GET_OPPORTUNITY_STATUS_METADATA,
-  SAVED,
-} from './state'
-import {
-  INVESTMENT_OPPORTUNITY__STATUS_METADATA_LOADED,
-  INVESTMENT_OPPORTUNITY__STATUS_CHANGE,
-  INVESTMENT_OPPORTUNITY_DETAILS__LOADED,
-} from '../../../../../client/actions'
+import { ID, state2props, TASK_SAVE_OPPORTUNITY_STATUS, SAVED } from './state'
+import { INVESTMENT_OPPORTUNITY__STATUS_CHANGE } from '../../../../../client/actions'
 
 import Task from '../../../../../client/components/Task'
+// import HardRedirect from '../../../../../client/components/HardRedirect'
 import {
   Main,
   FormActions,
   MultiInstanceForm,
   FieldRadios,
 } from '../../../../../client/components'
-import { STATUS_FIELD_NAME } from '../Details/constants'
+
+import OpportunityResource from '../../../../../client/components/Resource/Opportunity'
+import OpportunityStatusResource from '../../../../../client/components/Resource/OpportunityStatuses'
 
 const OpportunityChangeStatus = (state) => {
-  const { opportunityId, details, metadata } = state
-  const { opportunityStatuses: opportunityStatusOptions } = metadata
+  const { opportunityId } = state
 
-  const breadcrumbs = [
-    { link: urls.dashboard(), text: 'Home' },
-    { link: urls.investments.index(), text: 'Investments' },
-    {
-      link: urls.investments.opportunities.index(),
-      text: 'UK opportunities',
-    },
-    {
-      link: urls.investments.opportunities.details(opportunityId),
-      text: details.detailsFields.name,
-    },
-    { text: 'Change status' },
-  ]
+  const idNameToValueLabel = ({ id, name }) => ({ value: id, label: name })
+
+  const buildBreadcrumbs = (opportunityName) => {
+    return [
+      { link: urls.dashboard(), text: 'Home' },
+      { link: urls.investments.index(), text: 'Investments' },
+      {
+        link: urls.investments.opportunities.index(),
+        text: 'UK opportunities',
+      },
+      {
+        link: urls.investments.opportunities.details(opportunityId),
+        text: opportunityName,
+      },
+      { text: 'Change status' },
+    ]
+  }
 
   useEffect(() => {
     if (state[SAVED]) {
@@ -55,37 +50,20 @@ const OpportunityChangeStatus = (state) => {
   })
 
   return (
-    <Task.Status
-      name={TASK_GET_OPPORTUNITY_DETAILS}
-      id={ID}
-      progressMessage="Loading opportunity"
-      startOnRender={{
-        payload: {
-          opportunityId,
-        },
-        onSuccessDispatch: INVESTMENT_OPPORTUNITY_DETAILS__LOADED,
-      }}
-    >
-      {() =>
-        details.detailsFields.name.length && (
+    <OpportunityResource id={opportunityId}>
+      {(details) =>
+        details.name.length && (
           <>
             <LocalHeader
-              breadcrumbs={breadcrumbs}
+              breadcrumbs={buildBreadcrumbs(details.name)}
               heading={'Change opportunity status'}
             />
             <Task>
               {(getTask) => {
                 const saveStatusTask = getTask(TASK_SAVE_OPPORTUNITY_STATUS, ID)
                 return (
-                  <Task.Status
-                    name={TASK_GET_OPPORTUNITY_STATUS_METADATA}
-                    id={ID}
-                    startOnRender={{
-                      onSuccessDispatch:
-                        INVESTMENT_OPPORTUNITY__STATUS_METADATA_LOADED,
-                    }}
-                  >
-                    {() => (
+                  <OpportunityStatusResource>
+                    {(opportunityStatuses) => (
                       <>
                         <Main>
                           <MultiInstanceForm
@@ -100,8 +78,10 @@ const OpportunityChangeStatus = (state) => {
                             }}
                           >
                             <FieldRadios
-                              name={STATUS_FIELD_NAME}
-                              options={opportunityStatusOptions}
+                              name="status"
+                              options={opportunityStatuses.map(
+                                idNameToValueLabel
+                              )}
                               data-test="types-of-status"
                               required="You must select a status"
                             />
@@ -119,14 +99,14 @@ const OpportunityChangeStatus = (state) => {
                         </Main>
                       </>
                     )}
-                  </Task.Status>
+                  </OpportunityStatusResource>
                 )
               }}
             </Task>
           </>
         )
       }
-    </Task.Status>
+    </OpportunityResource>
   )
 }
 

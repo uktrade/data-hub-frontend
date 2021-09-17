@@ -132,7 +132,6 @@ import {
   TASK_GET_OPPORTUNITY_DETAILS_METADATA,
   TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA,
   TASK_SAVE_OPPORTUNITY_STATUS,
-  TASK_GET_OPPORTUNITY_STATUS_METADATA,
 } from '../apps/investments/client/opportunities/Details/state'
 import * as investmentOpportunitiesDetailsTasks from '../apps/investments/client/opportunities/Details/tasks'
 
@@ -261,8 +260,6 @@ function App() {
           investmentOpportunitiesDetailsTasks.getDetailsMetadata,
         [TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA]:
           investmentOpportunitiesDetailsTasks.getRequirementsMetadata,
-        [TASK_GET_OPPORTUNITY_STATUS_METADATA]:
-          investmentOpportunitiesDetailsTasks.getStatusMetadata,
         [TASK_SAVE_OPPORTUNITY_STATUS]:
           investmentOpportunitiesDetailsTasks.saveOpportunityStatus,
         [DNB__CHECK_PENDING_REQUEST]: dnbCheck.checkIfPendingRequest,

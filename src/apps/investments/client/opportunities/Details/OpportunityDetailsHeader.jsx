@@ -10,7 +10,10 @@ import { state2props } from '../Details/state'
 const OpportunityDetailsHeader = ({ opportunity, currentPath }) => {
   const { createdOn, name, ukRegions, assetClasses, opportunityValue } =
     opportunity.detailsFields
-  const { id, status } = opportunity
+  const {
+    status: { label: statusLabel = 'Unnasigned' },
+    id,
+  } = opportunity
 
   const oppValue = !opportunityValue.value
     ? 'Not yet valued'
@@ -26,19 +29,12 @@ const OpportunityDetailsHeader = ({ opportunity, currentPath }) => {
     }
   }
 
-  const getStatus = (status) => {
-    if (status.label) {
-      return status.label
-    }
-    return 'Unassigned'
-  }
-
   const itemCollection = [
     {
       label: 'Status',
       value: (
         <span>
-          {getStatus(status)}
+          {statusLabel}
           {' - '}
           <a href={urls.investments.opportunities.status(id)}>change</a>
         </span>
