@@ -1,3 +1,4 @@
+const { expect } = require('chai')
 const proxyquire = require('proxyquire')
 
 describe('Event details controller', () => {
@@ -12,7 +13,7 @@ describe('Event details controller', () => {
 
     this.req = {
       params: {
-        id: '1234',
+        eventId: '1234',
       },
       session: {
         token: '4321',
@@ -37,9 +38,11 @@ describe('Event details controller', () => {
       await this.controller.renderDetailsPage(this.req, this.res, this.next)
     })
 
-    it('should add a breadcrumb', () => {
-      expect(this.res.breadcrumb).to.be.calledWith('Dance')
-      expect(this.res.breadcrumb).to.have.been.calledOnce
+    it('should render breadcrumbs', () => {
+      const breadcrumbs = this.res.locals
+      expect(breadcrumbs)
+        .to.have.property('event')
+        .and.deep.equal({ name: 'Dance' })
     })
 
     it('should render the event details template', () => {
@@ -47,11 +50,11 @@ describe('Event details controller', () => {
       expect(this.res.render).to.have.been.calledOnce
     })
 
-    it('should return transformed events data', () => {
+    it('should return transformed events props', () => {
       const options = this.res.render.firstCall.args[1]
       expect(options)
-        .to.have.property('displayEventLabels')
-        .and.deep.equal({ label: 'Mare' })
+        .to.have.property('props')
+        .and.deep.equal({ eventId: '1234' })
     })
   })
 })
