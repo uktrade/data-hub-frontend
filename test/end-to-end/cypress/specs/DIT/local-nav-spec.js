@@ -98,7 +98,7 @@ describe('DIT Permission', () => {
     })
 
     it('should display DIT only side navs', () => {
-      assertLocalNav(selectors.nav.sideNav, ['Details', 'Attendee'])
+      assertLocalNav(selectors.nav.sideNavLink, ['Details', 'Attendee'])
     })
   })
 })

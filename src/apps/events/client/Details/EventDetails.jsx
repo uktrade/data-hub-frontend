@@ -74,10 +74,16 @@ const EventDetails = ({
               <GridRow data-test="eventDetails">
                 <GridCol setWidth="one-quarter">
                   <LocalNav data-test="event-details-nav">
-                    <LocalNavLink href={urls.events.details(eventId)}>
+                    <LocalNavLink
+                      data-test="event-details-nav-link"
+                      href={urls.events.details(eventId)}
+                    >
                       Details
                     </LocalNavLink>
-                    <LocalNavLink href={urls.events.attendees(eventId)}>
+                    <LocalNavLink
+                      data-test="event-details-nav-link"
+                      href={urls.events.attendees(eventId)}
+                    >
                       Attendees
                     </LocalNavLink>
                   </LocalNav>
