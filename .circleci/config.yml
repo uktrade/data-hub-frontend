@@ -125,7 +125,7 @@ jobs:
     machine:
       docker_layer_caching: true
     parallelism: 3
-    resource_class: xlarge
+    resource_class: 2xlarge
     parameters:
       staff:
         type: string
@@ -140,7 +140,7 @@ jobs:
     machine:
       docker_layer_caching: true
     parallelism: 1
-    resource_class: xlarge
+    resource_class: 2xlarge
     parameters:
       staff:
         type: string
