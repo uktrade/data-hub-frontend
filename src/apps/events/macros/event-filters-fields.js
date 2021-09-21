@@ -3,7 +3,7 @@ const { globalFields } = require('../../macros')
 const { collectionFilterLabels } = require('../labels')
 const { transformObjectToOption } = require('../../transformers')
 
-const eventFiltersFields = ({ advisers, userAgent }) => {
+const eventFiltersFields = ({ advisers }) => {
   return [
     {
       macroName: 'TextField',
@@ -22,13 +22,11 @@ const eventFiltersFields = ({ advisers, userAgent }) => {
       macroName: 'DateField',
       type: 'date',
       name: 'start_date_after',
-      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
     },
     {
       macroName: 'DateField',
       type: 'date',
       name: 'start_date_before',
-      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
     },
     {
       macroName: 'Typeahead',

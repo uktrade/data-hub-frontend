@@ -108,7 +108,6 @@ storiesOf('Forms/Date', module)
             label="What is the month and year?"
             hint="For example, 09 2019"
             required="Enter a valid date"
-            isIE={true}
           />
           <Button>Submit</Button>
           <pre>{JSON.stringify(form, null, 2)}</pre>

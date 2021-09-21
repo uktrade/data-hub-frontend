@@ -8,13 +8,6 @@ describe('Collection middleware', () => {
         company_name: 'company name',
       },
     }
-    this.res = {
-      locals: {
-        userAgent: {
-          isIE: false,
-        },
-      },
-    }
     this.nextSpy = sinon.spy()
   })
 

@@ -86,7 +86,6 @@ const FieldDate = ({
   required,
   format,
   reduced,
-  isIE,
 }) => {
   const { value, error, touched, onBlur } = useField({
     name,
@@ -112,7 +111,7 @@ const FieldDate = ({
   }
 
   return (
-    <FieldWrapper {...{ name, label, legend, hint, error, reduced, isIE }}>
+    <FieldWrapper {...{ name, label, legend, hint, error, reduced }}>
       <StyledInputWrapper error={error}>
         {error && <ErrorText>{error}</ErrorText>}
         {reduced ? (
@@ -194,7 +193,6 @@ FieldDate.propTypes = {
     year: PropTypes.string,
   }),
   reduced: PropTypes.bool,
-  isIE: PropTypes.bool,
 }
 
 FieldDate.defaultProps = {
@@ -211,7 +209,6 @@ FieldDate.defaultProps = {
     year: 'Year',
   },
   reduced: false,
-  isIE: false,
 }
 
 export default FieldDate

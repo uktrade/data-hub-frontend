@@ -16,13 +16,12 @@ import Paragraph from '@govuk-react/paragraph'
 const StyledFormGroup = styled(FormGroup)`
   ${(props) => {
     const isReduced = props.reduced
-    const isIE = props.isIE
     const hasReducedPadding = props.reducedPadding
     const hasHint = !!props.hint
 
     return `
     ${
-      (isReduced || isIE) &&
+      isReduced &&
       `
     background-color: ${GREY_3};
     label {
@@ -147,7 +146,6 @@ const FieldWrapper = ({
   children,
   reduced,
   reducedPadding,
-  isIE,
   groupId,
   ...rest
 }) => (
@@ -156,7 +154,6 @@ const FieldWrapper = ({
     reduced={reduced}
     hint={hint}
     reducedPadding={reducedPadding}
-    isIE={isIE}
     {...rest}
   >
     <FieldInner

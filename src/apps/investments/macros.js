@@ -13,7 +13,6 @@ const investmentFiltersFields = function ({
   currentAdviserId,
   sectorOptions,
   adviserOptions,
-  userAgent,
 }) {
   return [
     {
@@ -103,25 +102,21 @@ const investmentFiltersFields = function ({
       macroName: 'DateField',
       type: 'date',
       name: 'estimated_land_date_before',
-      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
     },
     {
       macroName: 'DateField',
       type: 'date',
       name: 'estimated_land_date_after',
-      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
     },
     {
       macroName: 'DateField',
       type: 'date',
       name: 'actual_land_date_before',
-      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
     },
     {
       macroName: 'DateField',
       type: 'date',
       name: 'actual_land_date_after',
-      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
     },
     {
       macroName: 'MultipleChoiceField',

@@ -6,7 +6,6 @@ const omisFiltersFields = function ({
   omisMarketOptions,
   regionOptions,
   sectorOptions,
-  userAgent,
 }) {
   return [
     {
@@ -27,7 +26,6 @@ const omisFiltersFields = function ({
       type: 'date',
       label: 'Completed date from',
       name: 'completed_on_after',
-      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
       placeholder: '',
     },
     {
@@ -35,7 +33,6 @@ const omisFiltersFields = function ({
       type: 'date',
       label: 'Completed date to',
       name: 'completed_on_before',
-      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
       placeholder: '',
     },
     {
@@ -43,7 +40,6 @@ const omisFiltersFields = function ({
       type: 'date',
       label: 'Expected delivery date from',
       name: 'delivery_date_after',
-      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
       placeholder: '',
     },
     {
@@ -51,7 +47,6 @@ const omisFiltersFields = function ({
       type: 'date',
       label: 'Expected delivery date to',
       name: 'delivery_date_before',
-      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
       placeholder: '',
     },
     {

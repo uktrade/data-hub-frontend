@@ -44,11 +44,6 @@ describe('interaction list', () => {
     res = {
       render: sinon.stub(),
       breadcrumb: sinon.stub().returnsThis(),
-      locals: {
-        userAgent: {
-          isIE: false,
-        },
-      },
     }
 
     next = sinon.stub()
@@ -166,7 +161,6 @@ describe('interaction list', () => {
                 createKind: 'interaction',
                 theme: 'export',
                 canAdd: true,
-                isIE: false,
               },
             },
           }

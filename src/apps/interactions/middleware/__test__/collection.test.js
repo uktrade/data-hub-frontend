@@ -20,14 +20,6 @@ describe('interaction collection middleware', () => {
       },
     }
 
-    res = {
-      locals: {
-        userAgent: {
-          isIE: false,
-        },
-      },
-    }
-
     next = sinon.spy()
     getInteractionsForEntityStub = sinon.stub()
 
