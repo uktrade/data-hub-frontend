@@ -156,7 +156,7 @@ const SubsectionDataHubHierarchy = ({
         information.
       </WideSummaryTableRow>
 
-      <SummaryTable.Row heading="Headquarter type">
+      <SummaryTable.Row heading="Headquarter type" hideWhenEmpty={true}>
         {businessDetails.headquarter_type_label}
       </SummaryTable.Row>
 
