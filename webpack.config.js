@@ -40,7 +40,6 @@ module.exports = (env) => ({
       './assets/javascripts/app-vue.js',
     ],
     'react-app': [
-      'react-app-polyfill/ie9',
       'react-app-polyfill/stable',
       'details-element-polyfill',
       './src/client/index.jsx',
@@ -81,7 +80,8 @@ module.exports = (env) => ({
       {
         test: /\.(js|jsx|mjs)$/,
         // Some packages need transpiling to es6 so below we exclude all node_modules but include specific modules.
-        exclude: /node_modules\/(?!(.*(hex-rgb|set-harmonic-interval|rafz|react-spring|internmap|unified|is-plain-obj|d3-.*))\/).*/,
+        exclude:
+          /node_modules\/(?!(.*(hex-rgb|set-harmonic-interval|rafz|react-spring|internmap|unified|is-plain-obj|d3-.*))\/).*/,
         loader: 'babel-loader',
         options: {
           cacheDirectory: './babel_cache',
