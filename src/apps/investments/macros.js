@@ -104,28 +104,24 @@ const investmentFiltersFields = function ({
       type: 'date',
       name: 'estimated_land_date_before',
       hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
-      inputClass: userAgent.isIE ? 'ie-date-field' : null,
     },
     {
       macroName: 'DateField',
       type: 'date',
       name: 'estimated_land_date_after',
       hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
-      inputClass: userAgent.isIE ? 'ie-date-field' : null,
     },
     {
       macroName: 'DateField',
       type: 'date',
       name: 'actual_land_date_before',
       hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
-      inputClass: userAgent.isIE ? 'ie-date-field' : null,
     },
     {
       macroName: 'DateField',
       type: 'date',
       name: 'actual_land_date_after',
       hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
-      inputClass: userAgent.isIE ? 'ie-date-field' : null,
     },
     {
       macroName: 'MultipleChoiceField',

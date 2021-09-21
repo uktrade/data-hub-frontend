@@ -1,7 +1,4 @@
-const {
-  matchWords,
-  checkDateFormat,
-} = require('../../../../../assets/javascripts/lib/helpers')
+const { matchWords } = require('../../../../../assets/javascripts/lib/helpers')
 
 describe('#matchWords', () => {
   const data = 'Aberdeen city -'
@@ -40,24 +37,5 @@ describe('#matchWords', () => {
 
   it('should return false if not found', () => {
     expect(matchWords(data, 'z')).to.equal(false)
-  })
-})
-
-describe('#checkDateFormat', () => {
-  context('when the date matches the required date format', () => {
-    it('should return true', () => {
-      expect(checkDateFormat('01/01/2019')).to.equal(true)
-    })
-  })
-
-  context('when the date does not match the required date format', () => {
-    it('should return false', () => {
-      expect(checkDateFormat('01')).to.equal(false)
-      expect(checkDateFormat('01/')).to.equal(false)
-      expect(checkDateFormat('01/01')).to.equal(false)
-      expect(checkDateFormat('01/01/20')).to.equal(false)
-      expect(checkDateFormat('aa/aa/aa')).to.equal(false)
-      expect(checkDateFormat('2019/01/01')).to.equal(false)
-    })
   })
 })

@@ -252,23 +252,6 @@ function matchWords(str, words) {
   return queryWords.length === count
 }
 
-/**
- * checkDateFormat
- *
- * used in IE as the date fields fallback to text fields.
- * As we use autosubmit we don't want this to fire if the date is in the incorrect format.
- * Checks format dd/mmm/yyyy
- * @param {string} str is the date
- *
- * @returns {boolean}
- */
-
-function checkDateFormat(value) {
-  const dateFormat =
-    /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i
-  return dateFormat.test(value)
-}
-
 module.exports = {
   addClass,
   removeClass,
@@ -286,6 +269,5 @@ module.exports = {
   resetFieldValues,
   closest,
   matchWords,
-  checkDateFormat,
   updateCypressDataAttribute,
 }

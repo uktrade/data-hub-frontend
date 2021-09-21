@@ -29,7 +29,6 @@ const omisFiltersFields = function ({
       name: 'completed_on_after',
       hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
       placeholder: '',
-      inputClass: userAgent.isIE ? 'ie-date-field' : null,
     },
     {
       macroName: 'DateField',
@@ -38,7 +37,6 @@ const omisFiltersFields = function ({
       name: 'completed_on_before',
       hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
       placeholder: '',
-      inputClass: userAgent.isIE ? 'ie-date-field' : null,
     },
     {
       macroName: 'DateField',
@@ -47,7 +45,6 @@ const omisFiltersFields = function ({
       name: 'delivery_date_after',
       hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
       placeholder: '',
-      inputClass: userAgent.isIE ? 'ie-date-field' : null,
     },
     {
       macroName: 'DateField',
@@ -56,7 +53,6 @@ const omisFiltersFields = function ({
       name: 'delivery_date_before',
       hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
       placeholder: '',
-      inputClass: userAgent.isIE ? 'ie-date-field' : null,
     },
     {
       macroName: 'TextField',
