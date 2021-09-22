@@ -5,7 +5,7 @@ services:
       - api
 
   api:
-    image: gcr.io/sre-docker-registry/github.com/uktrade/data-hub-api:74816bc0e62e27959b9d4e993f1a0db98276488d
+    image: gcr.io/sre-docker-registry/github.com/uktrade/data-hub-api:v38.2.0
     env_file: .env
     environment:
       DEBUG: 'False'
