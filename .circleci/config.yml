@@ -66,7 +66,7 @@ jobs:
   functional_tests:
     machine:
       docker_layer_caching: true
-    parallelism: 7
+    parallelism: 9
     resource_class: xlarge
     steps:
       - checkout
