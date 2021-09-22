@@ -2,7 +2,7 @@ import React from 'react'
 
 import SummaryTable from '../../../../../client/components/SummaryTable'
 
-const OpportunityRequirements = ({ details }) => {
+const OpportunityRequirementsTable = ({ details }) => {
   const {
     totalInvestmentSought,
     currentInvestmentSecured,
@@ -34,4 +34,4 @@ const OpportunityRequirements = ({ details }) => {
   )
 }
 
-export default OpportunityRequirements
+export default OpportunityRequirementsTable

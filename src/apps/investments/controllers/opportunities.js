@@ -13,9 +13,9 @@ const renderOpportunitiesView = (req, res, next) => {
   }
 }
 
-const renderOpportunityDetailsView = (req, res, next) => {
+const renderOpportunityView = (req, res, next) => {
   try {
-    res.render('investments/views/opportunity-details', {
+    res.render('investments/views/opportunity', {
       props: {
         opportunityId: req.params.opportunityId,
       },
@@ -25,4 +25,4 @@ const renderOpportunityDetailsView = (req, res, next) => {
   }
 }
 
-module.exports = { renderOpportunitiesView, renderOpportunityDetailsView }
+module.exports = { renderOpportunitiesView, renderOpportunityView }

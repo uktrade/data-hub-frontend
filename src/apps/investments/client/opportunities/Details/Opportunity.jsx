@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 
 import { Main } from '../../../../../client/components'
-import Opportunities from './Opportunities'
+import OpportunityDetails from './OpportunityDetails'
 import OpportunityDetailsHeader from './OpportunityDetailsHeader'
 import TabNav from '../../../../../client/components/TabNav'
 import urls from '../../../../../lib/urls'
 import Task from '../../../../../client/components/Task/index.jsx'
-import { TASK_GET_OPPORTUNITY_DETAILS, ID, state2props } from '../Details/state'
+import { TASK_GET_OPPORTUNITY_DETAILS, ID, state2props } from './state'
 import { INVESTMENT_OPPORTUNITY_DETAILS__LOADED } from '../../../../../client/actions'
 import OpportunityInteractions from './OpportunityInteractions'
 import styled from 'styled-components'
@@ -18,7 +18,7 @@ const StyledMain = styled(Main)`
   padding-bottom: 40px;
 `
 
-const OpportunityTabNav = ({ opportunityId, opportunity }) => (
+const Opportunity = ({ opportunityId, opportunity }) => (
   <Route>
     {({ location }) => (
       <Task.Status
@@ -44,7 +44,9 @@ const OpportunityTabNav = ({ opportunityId, opportunity }) => (
                   tabs={{
                     [urls.investments.opportunities.details(opportunityId)]: {
                       label: 'Details',
-                      content: <Opportunities opportunityId={opportunityId} />,
+                      content: (
+                        <OpportunityDetails opportunityId={opportunityId} />
+                      ),
                     },
                     [urls.investments.opportunities.interactions(
                       opportunityId
@@ -67,9 +69,9 @@ const OpportunityTabNav = ({ opportunityId, opportunity }) => (
   </Route>
 )
 
-OpportunityTabNav.propTypes = {
+Opportunity.propTypes = {
   opportunityId: PropTypes.string.isRequired,
   opportunity: PropTypes.object.isRequired,
 }
 
-export default connect(state2props)(OpportunityTabNav)
+export default connect(state2props)(Opportunity)

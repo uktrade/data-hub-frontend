@@ -16,7 +16,7 @@ const {
 
 const {
   renderOpportunitiesView,
-  renderOpportunityDetailsView,
+  renderOpportunityView,
 } = require('./controllers/opportunities')
 const setInvestmentTabItems = require('./middleware/investments-tab-items')
 
@@ -25,7 +25,7 @@ router.get('/', setInvestmentTabItems, renderOpportunitiesView)
 router.get(
   // These paths are handled by react-router
   ['/:opportunityId/details', '/:opportunityId/interactions'],
-  renderOpportunityDetailsView
+  renderOpportunityView
 )
 
 router.get('/create', (req, res) => {
