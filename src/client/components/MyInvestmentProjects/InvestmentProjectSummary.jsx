@@ -6,23 +6,23 @@ import { connect } from 'react-redux'
 import PieChart from '../PieChart'
 import { ID as CHECK_INVESTMENTS_ID } from '../PersonalisedDashboard/state'
 
-import { ID } from './state'
+import { ID as INVESTMENT_PROJECTS_ID } from './state'
 
 const segmentColours = [PURPLE, ORANGE, BLUE, YELLOW, GREEN]
 
 const state2props = (state) => {
   const { summary: unfilteredSummary } = state[CHECK_INVESTMENTS_ID]
-  const { summary } = state[ID]
-  const data = summary.length ? summary : unfilteredSummary
+  const { summary: projectsSummary } = state[INVESTMENT_PROJECTS_ID]
+  const summaryData = projectsSummary.length
+    ? projectsSummary
+    : unfilteredSummary
   return {
-    summary:
-      data &&
-      data.map(({ label, value, ...rest }, index) => ({
-        ...rest,
-        colour: segmentColours[index % segmentColours.length],
-        value,
-        id: label,
-      })),
+    summary: summaryData.map(({ label, value, ...rest }, index) => ({
+      ...rest,
+      colour: segmentColours[index % segmentColours.length],
+      value,
+      id: label,
+    })),
   }
 }
 
