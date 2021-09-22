@@ -11,4 +11,6 @@ module.exports = {
   },
   contentHeader: '.govuk-heading-m',
   nav: 'a.c-entity-search__aggregations-link',
+  pageSummary: '.c-collection__pagination-summary',
+  pageNext: '.c-pagination__label--next',
 }

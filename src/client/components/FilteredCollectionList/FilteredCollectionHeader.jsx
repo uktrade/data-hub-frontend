@@ -7,6 +7,7 @@ import { H2 } from '@govuk-react/heading'
 import Button from '@govuk-react/button'
 import styled from 'styled-components'
 import pluralize from 'pluralize'
+import { kebabCase } from 'lodash'
 
 import {
   CollectionHeaderRow,
@@ -90,6 +91,7 @@ function FilteredCollectionHeader({
   const counterSuffix = pluralize(collectionName, totalItems)
   const actions = addItemUrl && (
     <Button
+      id={`add-${kebabCase(collectionName)}`}
       as={StyledLink}
       href={addItemUrl}
       buttonColour={GREY_3}

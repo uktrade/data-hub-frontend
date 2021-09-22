@@ -111,7 +111,10 @@ import eventDetailsReducer from '../apps/events/client/Details/reducer'
 import { ID as EVENTS_ID } from './modules/Events/CollectionList/state'
 import eventsReducer from './modules/Events/CollectionList/reducer'
 
-import { ID as ORDERS_ID } from './modules/Omis/CollectionList/state'
+import {
+  ORDERS_LIST_ID,
+  COMPANY_ORDERS_LIST_ID,
+} from './modules/Omis/CollectionList/state'
 import ordersReducer from './modules/Omis/CollectionList/reducer'
 
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
@@ -197,7 +200,8 @@ const store = createStore(
     [INTERACTIONS_ID]: interactionsReducer,
     [EVENTS_ID]: eventsReducer,
     [EVENTS_DETAILS_ID]: eventDetailsReducer,
-    [ORDERS_ID]: ordersReducer,
+    [ORDERS_LIST_ID]: ordersReducer,
+    [COMPANY_ORDERS_LIST_ID]: ordersReducer,
   }),
   {
     referrerUrl: window.document.referrer,

@@ -539,10 +539,6 @@ describe('Local header for company under dnb investigation', () => {
       )
     })
 
-    it('should not display a badge', () => {
-      cy.get(companyLocalHeader.badge).should('not.exist')
-    })
-
     it('should not display "What does this mean?" details', () => {
       cy.get(companyLocalHeader.metaList).should('not.exist')
     })
