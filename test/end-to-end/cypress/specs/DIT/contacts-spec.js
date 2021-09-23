@@ -18,7 +18,7 @@ describe('Contacts', () => {
     country: 'Brazil',
   }
 
-  it('should create a primary contact with a different address to the companies address', () => {
+  it.skip('should create a primary contact with a different address to the companies address', () => {
     const company = fixtures.company.create.defaultCompany('contact testing')
     cy.loadFixture([company])
 
@@ -32,7 +32,7 @@ describe('Contacts', () => {
       .and('contain', 'Rua Candido Portinari, Numero 521, Campinas, Brazil')
   })
 
-  it('Should show a warning message when adding contact with duplicate email', () => {
+  it.skip('Should show a warning message when adding contact with duplicate email', () => {
     const EMAIL = 'andy.pipkin@andyandlou.co.uk'
     const company = fixtures.company.create.defaultCompany('contact testing')
     cy.loadFixture([company])
