@@ -20,11 +20,12 @@ services:
       - 8000:8000
     depends_on:
       - postgres
+      - mi-postgres
       - es
       - redis
       - celery
       - mock-sso
-    entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://es:9200 -wait tcp://redis:6379 -timeout 5m
+    entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://mi-postgres:5432 -wait tcp://es:9200 -wait tcp://redis:6379 -timeout 5m
     command: /app/setup-uat.sh || echo "all good"
 
   celery:
@@ -32,13 +33,21 @@ services:
     env_file: .env
     depends_on:
       - postgres
+      - mi-postgres
       - es
       - redis
-    entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://es:9200 -wait tcp://redis:6379 -timeout 5m
+    entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://mi-postgres:5432 -wait tcp://es:9200 -wait tcp://redis:6379 -timeout 5m
     command: celery worker -A config -l info -Q celery -B
 
   postgres:
     image: postgres:10
+    environment:
+      POSTGRES_DB: datahub
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+
+  mi-postgres:
+    image: postgres:9.6
     environment:
       POSTGRES_DB: datahub
       POSTGRES_USER: user
