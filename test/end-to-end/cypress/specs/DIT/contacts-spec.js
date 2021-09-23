@@ -5,20 +5,22 @@ const userActions = require('../../support/user-actions')
 const { contacts } = require('../../../../../src/lib/urls')
 
 describe('Contacts', () => {
+  const CONTACT_EMAIL = `${Math.random().toString(36).substring(2, 15)}@dit.com`
+
   const data = {
     name: 'NewAddress',
     lastName: 'Contact',
     jobTitle: 'Coffee machine operator',
     countryCode: '44',
     phone: '0778877778800',
-    email: 'company.contact@dit.com',
+    email: CONTACT_EMAIL,
     address1: 'Rua Candido Portinari',
     address2: 'Numero 521',
     city: 'Campinas',
     country: 'Brazil',
   }
 
-  it.skip('should create a primary contact with a different address to the companies address', () => {
+  it('should create a primary contact with a different address to the companies address', () => {
     const company = fixtures.company.create.defaultCompany('contact testing')
     cy.loadFixture([company])
 
@@ -28,11 +30,11 @@ describe('Contacts', () => {
     cy.get(selectors.contactCreate.details)
       .should('contain', 'Coffee machine operator')
       .and('contain', '(44) 0778877778800')
-      .and('contain', 'company.contact@dit.com')
+      .and('contain', CONTACT_EMAIL)
       .and('contain', 'Rua Candido Portinari, Numero 521, Campinas, Brazil')
   })
 
-  it.skip('Should show a warning message when adding contact with duplicate email', () => {
+  it('Should show a warning message when adding contact with duplicate email', () => {
     const EMAIL = 'andy.pipkin@andyandlou.co.uk'
     const company = fixtures.company.create.defaultCompany('contact testing')
     cy.loadFixture([company])
