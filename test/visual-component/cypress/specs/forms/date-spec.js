@@ -30,11 +30,4 @@ describe('Forms', () => {
       cy.get('#root').should('be.visible').compareSnapshot('reduced')
     })
   })
-
-  describe('IE11', () => {
-    it('should render the ie11 date component correctly', () => {
-      cy.visit('/iframe.html?id=forms-date--fielddate-ie-11')
-      cy.get('#root').should('be.visible').compareSnapshot('ie11')
-    })
-  })
 })
