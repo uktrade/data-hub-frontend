@@ -7,9 +7,15 @@
     "express": "^4.17.1",
     "ini": "^1.3.7",
     "lodash": "^4.17.21",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.12"
   },
   "engines": {
     "yarn": "YARN NO LONGER USED - use npm instead."
+  },
+  "scripts": {
+    "preinstall": "npx npm-force-resolutions"
+  },
+  "resolutions": {
+    "ansi-regex": "5.0.1"
   }
 }
