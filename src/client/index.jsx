@@ -471,7 +471,6 @@ function App() {
       <Mount selector="#event-details">
         {(props) => <EventDetails {...props} />}
       </Mount>
-      <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
       <Mount selector="#react-app">
         {() => (
           <Switch>
@@ -482,7 +481,6 @@ function App() {
             )}
           </Switch>
         )}
-      </Mount>
     </Provider>
   )
 }
