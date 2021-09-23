@@ -1,14 +1,8 @@
 const { pick, pickBy } = require('lodash')
 
 const { QUERY_DATE_FIELDS } = require('../../constants')
-const reverseDateIfIE = require('../../../../lib/if-ie-reverse-date-value')
 
 function setRequestBody(req, res, next) {
-  if (res.locals.userAgent) {
-    QUERY_DATE_FIELDS.forEach((date) => {
-      req.query[date] = reverseDateIfIE(req.query[date], res.locals.userAgent)
-    })
-  }
   const selectedSortBy = req.query.sortby ? { sortby: req.query.sortby } : null
   const selectedFiltersQuery = pick(req.query, [
     'status',
