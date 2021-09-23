@@ -47,8 +47,6 @@
     <link rel="canonical" href="{{ CANONICAL_URL }}">
   {% endif %}
 
-  <!--[if IE]>
-  <link rel="shortcut icon" href="{{ getAssetPath('images/favicon.ico') }}" type="image/x-icon"><![endif]-->
   <!-- Touch Icons - iOS and Android 2.1+ 180x180 pixels in size. -->
   <link rel="apple-touch-icon" href="{{ getAssetPath('images/apple-touch-icon.png') }}">
   <!-- Firefox, Chrome, Safari, IE 11+ and Opera. 192x192 pixels in size. -->
@@ -84,10 +82,6 @@
   <script>
     (function (d) {d.className = d.className.replace (/\bno-js\b/, 'js-enabled')}) (document.documentElement)
   </script>
-
-  <!--[if lt IE 9]>
-  <script src="{{ getAssetPath('html5shiv.min.js') }}"></script>
-  <![endif]-->
 
 {% endblock %}
 
