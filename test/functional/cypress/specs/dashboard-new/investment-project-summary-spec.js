@@ -1,30 +1,26 @@
-const {
-  getFinancialYearStart,
-  generateFinancialYearLabel,
-} = require('../../../../../src/client/utils/date')
-
-import { INVESTMENT_PROJECT_STAGES_LIST } from '../../fakers/constants'
 import { investmentProjectSummaryFaker } from '../../fakers/investment-project-summary'
+import { investmentProjectListFaker } from '../../fakers/investment-projects'
 
-// Adviser id is currently set in the node layer, so we have to set to the
-// value in sandbox
-const MY_ADVISER_ID = '7d19d407-9aec-4d06-b190-d3f404627f21'
+const myAdviserId = '7d19d407-9aec-4d06-b190-d3f404627f21'
 
 describe('Investment projects summary', () => {
-  const myInvestmentProjectSummary = investmentProjectSummaryFaker()
-  const currentAnnualTotals =
-    myInvestmentProjectSummary.annual_summaries[1].totals
-  const projectCount = Object.entries(currentAnnualTotals)
+  const investmentProjectSummary = investmentProjectSummaryFaker({
+    minValue: 1,
+  })
+  const investmentProjects = investmentProjectListFaker(5)
+  const projectCount = Object.entries(investmentProjectSummary)
     .map(([, stage]) => stage.value)
     .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
 
   before(() => {
     cy.setUserFeatures(['personalised-dashboard'])
-    cy.intercept(
-      'GET',
-      `/api-proxy/v4/adviser/${MY_ADVISER_ID}/investment-summary`,
-      { body: myInvestmentProjectSummary }
-    ).as('apiRequest')
+    cy.intercept('POST', `/api-proxy/v3/search/investment_project`, {
+      body: {
+        count: 1,
+        results: investmentProjects,
+        summary: investmentProjectSummary,
+      },
+    }).as('apiRequest')
     cy.visit('/')
     cy.wait('@apiRequest')
   })
@@ -39,147 +35,65 @@ describe('Investment projects summary', () => {
     )
   })
 
-  context('Common elements to both Chart and Table views', () => {
-    it('should display an "Investment projects summary" toggle', () => {
-      cy.get('[data-test=toggle-section-button-content]').should(
-        'contain',
-        'Investment projects summary'
-      )
-    })
-
-    it('should display the "Date range" label', () => {
-      cy.get('[data-test="data-summary-select"]').should(
-        'contain',
-        'Date range'
-      )
-    })
-
-    it('should display a date select with options in the correct order', () => {
-      const yearStart = getFinancialYearStart(new Date())
-      const expectedOptions = [
-        {
-          label: `Current financial year (${generateFinancialYearLabel(
-            yearStart
-          )})`,
-          value: `${yearStart}-04-01`,
-        },
-        {
-          label: `Previous financial year (${generateFinancialYearLabel(
-            yearStart - 1
-          )})`,
-          value: `${yearStart - 1}-04-01`,
-        },
-        {
-          label: 'Upcoming financial year',
-          value: `${yearStart + 1}-04-01`,
-        },
-      ]
-
-      cy.get('@investmentProjectsSummarySection')
-        .find('[data-test="data-summary-select"]')
-        .should('exist')
-        .find('[data-test="data-summary-option"]')
-        .should('have.length', 3)
-        .each(($el, index) => {
-          cy.wrap($el)
-            .should('have.text', expectedOptions[index].label)
-            .should('have.attr', 'value', expectedOptions[index].value)
-        })
-    })
-
-    it('should display a button to toggle the views', () => {
-      cy.get('[data-test="toggle-views"]').should('exist')
-    })
+  it('should display an "Investment projects summary" toggle', () => {
+    cy.get('[data-test=toggle-section-button-content]').should(
+      'contain',
+      'Investment projects summary'
+    )
   })
 
-  context('Chart view', () => {
-    it('should display a button "Change to table and accessible view"', () => {
-      cy.get('[data-test="toggle-views"]').should(
-        'contain',
-        'Change to table and accessible view'
-      )
-    })
-
-    it('should display an SVG representing a chart', () => {
-      cy.get('[data-test="pie-chart"]').find('svg').should('exist')
-    })
-
-    it('should display the correct project count', () => {
-      cy.get('[data-test="pie-chart"]')
-        .should('contain', projectCount)
-        .should('contain', 'Projects')
-    })
-
-    it('should display a chart legend of all the stages', () => {
-      cy.get('[data-test="pie-chart"]')
-        .should('contain', 'Prospect')
-        .should('contain', 'Assign PM')
-        .should('contain', 'Active')
-        .should('contain', 'Verify win')
-        .should('contain', 'Won')
-    })
+  it('should display an SVG representing a chart', () => {
+    cy.get('[data-test="pie-chart"]').find('svg').should('exist')
   })
 
-  context('Table view', () => {
-    before(() => {
-      cy.get('[data-test="toggle-views"]').click()
-    })
+  it('should display the correct project count', () => {
+    cy.get('[data-test="pie-chart"]')
+      .should('contain', projectCount)
+      .should('contain', 'Projects')
+  })
 
-    it('should display a button "Change to chart view"', () => {
-      cy.get('[data-test="toggle-views"]').should(
-        'contain',
-        'Change to chart view'
+  it('should display a chart legend of all the stages', () => {
+    const { prospect, assign_pm, active, verify_win, won } =
+      investmentProjectSummary
+    cy.get('[data-test="pie-chart-legend-prospect"]')
+      .should('contain', `Prospect (${prospect.value})`)
+      .find('a')
+      .should(
+        'have.attr',
+        'href',
+        `/investments/projects?stage=${prospect.id}&adviser=${myAdviserId}`
       )
-    })
-
-    it('should display project information within a blue box', () => {
-      cy.get('[data-test="investment-project-total"]')
-        .should('contain', 'Current year')
-        .should('contain', projectCount)
-        .should('contain', 'Projects')
-    })
-
-    it('should display a table with rows for each stage', () => {
-      const table = [
-        ['Stage', 'Projects'],
-        ['Prospect', currentAnnualTotals.prospect.value],
-        ['Assign PM', currentAnnualTotals.assign_pm.value],
-        ['Active', currentAnnualTotals.active.value],
-        ['Verify win', currentAnnualTotals.verify_win.value],
-        ['Won', currentAnnualTotals.won.value],
-      ]
-      cy.get('[data-test="investment-project-table"]')
-        .find('tr')
-        .each((el, row) => {
-          cy.wrap(el)
-            .children()
-            .each((el, col) => {
-              cy.wrap(el).should('contain', table[row][col])
-            })
-        })
-    })
-
-    it('should have hyperlinks for each stage', () => {
-      const IDS = INVESTMENT_PROJECT_STAGES_LIST.map((stage) => stage.id)
-      const TITLES = [
-        'View Prospect',
-        'View Assign PM',
-        'View Active',
-        'View Verify win',
-        'View Won',
-      ]
-      cy.get('[data-test="investment-project-table"]')
-        .find('a')
-        .should('have.length', 5)
-        .each((el, i) => {
-          cy.wrap(el)
-            .should(
-              'have.attr',
-              'href',
-              `/investments/projects?stage=${IDS[i]}&adviser=${MY_ADVISER_ID}`
-            )
-            .should('have.attr', 'title', TITLES[i])
-        })
-    })
+    cy.get('[data-test="pie-chart-legend-assign_pm"]')
+      .should('contain', `Assign PM (${assign_pm.value})`)
+      .find('a')
+      .should(
+        'have.attr',
+        'href',
+        `/investments/projects?stage=${assign_pm.id}&adviser=${myAdviserId}`
+      )
+    cy.get('[data-test="pie-chart-legend-active"]')
+      .should('contain', `Active (${active.value})`)
+      .find('a')
+      .should(
+        'have.attr',
+        'href',
+        `/investments/projects?stage=${active.id}&adviser=${myAdviserId}`
+      )
+    cy.get('[data-test="pie-chart-legend-verify_win"]')
+      .should('contain', `Verify win (${verify_win.value})`)
+      .find('a')
+      .should(
+        'have.attr',
+        'href',
+        `/investments/projects?stage=${verify_win.id}&adviser=${myAdviserId}`
+      )
+    cy.get('[data-test="pie-chart-legend-won"]')
+      .should('contain', `Won (${won.value})`)
+      .find('a')
+      .should(
+        'have.attr',
+        'href',
+        `/investments/projects?stage=${won.id}&adviser=${myAdviserId}`
+      )
   })
 })

@@ -1,7 +1,10 @@
 import { investmentProjectFaker } from '../../fakers/investment-projects'
 import { INVESTMENT_PROJECT_STAGES_LIST } from '../../fakers/constants'
+import { investmentProjectSummaryFaker } from '../../fakers/investment-project-summary'
 
 describe('Dashboard - Investment project stages', () => {
+  const summary = investmentProjectSummaryFaker()
+
   before(() => {
     cy.setUserFeatures(['personalised-dashboard'])
   })
@@ -17,6 +20,7 @@ describe('Dashboard - Investment project stages', () => {
         results: INVESTMENT_PROJECT_STAGES_LIST.map((stage) =>
           investmentProjectFaker({ stage })
         ),
+        summary,
       },
     }).as('apiRequest')
     cy.visit('/')

@@ -93,12 +93,6 @@ import personalDashboardReducer from './components/PersonalisedDashboard/reducer
 import { ID as MY_INVESTMENT_PROJECTS_ID } from './components/MyInvestmentProjects/state'
 import myInvestmentProjectsReducer from './components/MyInvestmentProjects/reducer'
 
-import { ID as INVESTMENT_SUMMARY_ID } from './components/InvestmentProjectSummary/state'
-import investmentSummaryReducer from './components/InvestmentProjectSummary/reducer'
-
-import { ID as DATA_SUMMARY_PICKER_ID } from './components/DataSummaryPicker/state'
-import dataSummaryPickerReducer from './components/DataSummaryPicker/reducer'
-
 import { ID as INVESTMENT_REMINDERS_ID } from './components/InvestmentReminders/state'
 import investmentRemindersReducer from './components/InvestmentReminders/reducer'
 
@@ -178,8 +172,6 @@ const store = createStore(
     [COMPANY_PROJECTS_LIST_ID]: investmentProjectsReducer,
     [MY_INVESTMENT_PROJECTS_ID]: myInvestmentProjectsReducer,
     [CHECK_FOR_INVESTMENTS_ID]: personalDashboardReducer,
-    [INVESTMENT_SUMMARY_ID]: investmentSummaryReducer,
-    [DATA_SUMMARY_PICKER_ID]: dataSummaryPickerReducer,
     [INVESTMENT_REMINDERS_ID]: investmentRemindersReducer,
     [CONTACTS_LIST_ID]: contactsReducer,
     [COMPANY_CONTACTS_LIST_ID]: contactsReducer,

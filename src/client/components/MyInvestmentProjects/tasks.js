@@ -1,5 +1,7 @@
 import { apiProxyAxios } from '../Task/utils'
 
+import { summaryToDataRange } from './transformers'
+
 export const fetchMyInvestmentsList = ({
   limit = 10,
   page = 1,
@@ -13,6 +15,7 @@ export const fetchMyInvestmentsList = ({
     offset: Math.min(limit * (page - 1), 10000 - limit) || 0,
     adviser: adviser.id,
     sortby: sort,
+    show_summary: true,
   }
 
   if (filter !== 'all-stages') {
@@ -21,5 +24,8 @@ export const fetchMyInvestmentsList = ({
 
   return apiProxyAxios
     .post('/v3/search/investment_project', payload)
-    .then(({ data }) => data)
+    .then(({ data: { summary, ...rest } }) => ({
+      summary: summaryToDataRange({ summary, adviser }),
+      ...rest,
+    }))
 }

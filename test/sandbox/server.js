@@ -48,7 +48,6 @@ var v4CompanyList = require('./routes/v4/company-list/companyList.js')
 var v4Dnb = require('./routes/v4/dnb/index.js')
 var v4Investment = require('./routes/v4/investment/investment.js')
 var v4Interaction = require('./routes/v4/interaction/interaction.js')
-var v4Adviser = require('./routes/v4/adviser/adviser.js')
 var v4Metadata = require('./routes/v4/metadata/index.js')
 var v4SearchCompany = require('./routes/v4/search/company.js')
 var v4SearchCompanyWithCountry = require('./routes/v4/search/company/autocomplete.js')
@@ -390,12 +389,6 @@ app.patch('/v4/contact/:contactId', v3Contact.updateContactById)
 
 // V4 activity feed
 app.get('/v4/activity-feed', v4ActivityFeed.activityFeed)
-
-// V4 Adviser
-app.get(
-  '/v4/adviser/:adviserId/investment-summary',
-  v4Adviser.investmentSummary
-)
 
 // V4 CH Company
 app.get('/v4/ch-company/:companyId', v4ChCompany.company)
