@@ -26,15 +26,16 @@ const deepKeysToCamelCase = (x) =>
  * @param {Object} props
  * @param {string} props.name - The name of the task which loads the resource
  * @param {string} props.id - The unique ID of the resource for the given name.
- * The ID will be the task's payload.
- * @param {result -> React.node} props.children - The single child should be
+ * The ID will be the task's payload.e
+ * @param {any} props.payload - A payload with which the task will be called.
+ * @param {(result: any) => React.ReactNode} props.children - The single child should be
  * a function to whose arguments will be spread the return value of the
  * {transformer}.
- * @param {(result: any) => any} [props.transformer = x => [x]] -
+ * @param {(result: any) => any[]} [props.transformer = x => [x]] -
  * A function which should transform the task result into an array that will
  * be spread to the {props.children} function. Defaults to `x => [x]`.
  * @example
- * <Resource name="My task name" id="foo">
+ * <Resource name="My task name" id="foo" payload={123}>
  *   {result =>
  *     <pre>{JSON.stringify(result, null, 2)}</pre>
  *   }
@@ -83,7 +84,7 @@ Resource.propTypes = {
 export default Resource
 
 /**
- * A utility factory for creating an {Resource} preset to a specific _entity_
+ * A utility factory for creating a {Resource} preset to a specific _entity_
  * API endpoint. An _entity_ endpoint is one that represents an entity uniquely
  * identified by an ID.
  * @param {string} name - The name for the resource and its task
@@ -91,8 +92,10 @@ export default Resource
  * which takes the entity {id} and should return the path of the API endpoint
  * for the given resource without the leading slash.
  * @returns A resource component preconfigured for a specific task name and an
- * API task to the specified {endpoint}. The first argument to the component's
- * children will be a camelCased, and the second the raw response result.
+ * _task_ to the specified API {endpoint}.
+ * The API response will be passed to the component's children function
+ * camelCased. The raw data as returned by the API will be passed as the second
+ * argument.
  * @example
  * // Create a Resource component pre-bound to name="Company"
  * const CompanyResource = createEntityResource('Company', (id) => `v4/company/${id}`)
@@ -104,7 +107,9 @@ export default Resource
  *
  * // Now you can easily fetch a company with CompanyResource
  * <CompanyResource id={companyId}>
- *   {(company, rawData) => <pre>{JSON.stringify(company, null, 2)}</pre>}
+ *   {(camelCasedCompany, rawResponseData) =>
+ *     <pre>{JSON.stringify(camelCasedCompany, null, 2)}</pre>
+ *   }
  * </CompanyResource>
  */
 export const createEntityResource = (name, endpoint) => {
@@ -128,7 +133,7 @@ export const createEntityResource = (name, endpoint) => {
 }
 
 /**
- * A utility factory for creating an {Resource} preset to a specific _collection_
+ * A utility factory for creating a {Resource} preset to a specific _collection_
  * API endpoint. A _collection_ endpoint is one that represents a collection of
  * _entities_ and responds with a `{count: Number, results: entity[]}` schema.
  * @param {string} name - The name for the resource and its task
@@ -147,9 +152,9 @@ export const createEntityResource = (name, endpoint) => {
  * }
  *
  * // Use the component
- * <CompaniesResource>
- *   {(companies, total, rawData) =>
- *     <pre>{JSON.stringify({total, companies, rawData}, null, 2)}</pre>
+ * <CompaniesResource payload={{limit: 10, offset: 20}}>
+ *   {(camelCasedCompanies, total, rawResponseData) =>
+ *     <pre>{JSON.stringify(camelCasedCompanies, null, 2)}</pre>
  *   }
  * </CompaniesResource>
  */
