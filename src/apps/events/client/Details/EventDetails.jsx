@@ -42,6 +42,7 @@ const EventDetails = ({
   service,
   archivedDocumentsUrlPath,
   disabledOn,
+  flashMessages,
 }) => {
   const breadcrumbs = [
     {
@@ -69,7 +70,11 @@ const EventDetails = ({
       {() =>
         name && (
           <>
-            <LocalHeader breadcrumbs={breadcrumbs} heading={name} />
+            <LocalHeader
+              breadcrumbs={breadcrumbs}
+              heading={name}
+              flashMessages={flashMessages}
+            />
             <Main>
               <GridRow data-test="eventDetails">
                 <GridCol setWidth="one-quarter">
