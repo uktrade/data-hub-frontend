@@ -56,7 +56,7 @@ const createEvent = () => {
 
   cy.get(selectors.eventCreate.saveEvent).click()
 
-  cy.get(selectors.message.successful).should('contain', 'Event created')
+  cy.get(selectors.message.flashMessages).should('contain', 'Event created')
 }
 
 describe('Event', () => {
@@ -124,7 +124,7 @@ describe('Event', () => {
       cy.get(selectors.nav.searchTerm).type('dean cox').type('{enter}')
       cy.get(selectors.collection.items).click()
 
-      cy.get(selectors.message.successful)
+      cy.get(selectors.message.flashMessages)
         .should(
           'contain',
           'Event attendee added - This has created a service delivery record.'
