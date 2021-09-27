@@ -10,16 +10,13 @@ import {
   Main,
   FormActions,
   FormStateful,
-  FieldRadios,
 } from '../../../../../client/components'
 
 import OpportunityResource from '../../../../../client/components/Resource/Opportunity'
-import OpportunityStatusResource from '../../../../../client/components/Resource/OpportunityStatuses'
+import FieldOpportunityStatuses from '../../../../../client/components/Form/elements/FieldOpportunityStatuses'
 
 const OpportunityChangeStatus = (state) => {
   const { opportunityId } = state
-
-  const idNameToValueLabel = ({ id, name }) => ({ value: id, label: name })
 
   const buildBreadcrumbs = (opportunityName) => {
     return [
@@ -47,45 +44,34 @@ const OpportunityChangeStatus = (state) => {
               breadcrumbs={buildBreadcrumbs(opportunity.name)}
               heading={'Change opportunity status'}
             />
-            <OpportunityStatusResource>
-              {(opportunityStatuses) => (
-                <Main>
-                  <FormStateful
-                    showErrorSummary={true}
-                    onSubmit={async (values) => {
-                      await axios.patch(
-                        `/api-proxy/v4/large-capital-opportunity/${opportunityId}`,
-                        {
-                          status: values.status,
-                        }
-                      )
-                      return urls.investments.opportunities.details(
-                        opportunityId
-                      )
-                    }}
+            <Main>
+              <FormStateful
+                showErrorSummary={true}
+                onSubmit={async (values) => {
+                  await axios.patch(
+                    `/api-proxy/v4/large-capital-opportunity/${opportunityId}`,
+                    {
+                      status: values.status,
+                    }
+                  )
+                  return urls.investments.opportunities.details(opportunityId)
+                }}
+              >
+                <FieldOpportunityStatuses
+                  name="status"
+                  initialValue={opportunity.status.id}
+                  data-test="types-of-status"
+                />
+                <FormActions>
+                  <Button data-test="edit-button">Save</Button>
+                  <Link
+                    href={urls.investments.opportunities.details(opportunityId)}
                   >
-                    {/* TODO: Abstract away into an OpportunityStatusesRadios component */}
-                    <FieldRadios
-                      name="status"
-                      options={opportunityStatuses.map(idNameToValueLabel)}
-                      initialValue={opportunity.status.id}
-                      data-test="types-of-status"
-                      required="You must select a status"
-                    />
-                    <FormActions>
-                      <Button data-test="edit-button">Save</Button>
-                      <Link
-                        href={urls.investments.opportunities.details(
-                          opportunityId
-                        )}
-                      >
-                        Cancel
-                      </Link>
-                    </FormActions>
-                  </FormStateful>
-                </Main>
-              )}
-            </OpportunityStatusResource>
+                    Cancel
+                  </Link>
+                </FormActions>
+              </FormStateful>
+            </Main>
           </>
         )
       }
