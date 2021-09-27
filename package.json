@@ -197,7 +197,7 @@
     "git-directory-deploy": "^1.5.1",
     "html": "^1.0.0",
     "istanbul": "^0.4.5",
-    "istanbul-lib-coverage": "^3.0.0",
+    "istanbul-lib-coverage": "^3.0.1",
     "js-beautify": "^1.14.0",
     "jsdom": "^17.0.0",
     "jsdom-global": "^3.0.2",
