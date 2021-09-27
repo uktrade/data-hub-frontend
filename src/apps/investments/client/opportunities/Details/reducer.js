@@ -7,10 +7,7 @@ import {
   INVESTMENT_OPPORTUNITY__CANCEL_EDIT,
   INVESTMENT_OPPORTUNITY__DETAILS_CHANGE,
   INVESTMENT_OPPORTUNITY__REQUIREMENTS_CHANGE,
-  INVESTMENT_OPPORTUNITY__STATUS_CHANGE,
 } from '../../../../../client/actions'
-
-import { SAVED } from './state'
 
 const initialState = {
   incompleteDetailsFields: 0,
@@ -132,12 +129,6 @@ export default (state = initialState, { type, result }) => {
           isEditingDetails: false,
           isEditingRequirements: false,
         },
-      }
-    case INVESTMENT_OPPORTUNITY__STATUS_CHANGE:
-      return {
-        ...state,
-        ...state.status,
-        [SAVED]: true,
       }
     default:
       return state
