@@ -10,7 +10,8 @@ import { ID, TASK_GET_MY_INVESTMENTS_LIST, state2props } from './state'
 import {
   MY_INVESTMENTS__LIST_LOADED,
   MY_INVESTMENTS__PAGINATION_CLICK,
-  MY_INVESTMENTS__FILTER_CHANGE,
+  MY_INVESTMENTS__STAGE_CHANGE,
+  MY_INVESTMENTS__STATUS_CHANGE,
   MY_INVESTMENTS__SORT_CHANGE,
   MY_INVESTMENTS__SHOW_DETAILS_CHANGE,
 } from '../../actions'
@@ -18,34 +19,23 @@ import Task from '../Task'
 
 import InvestmentListShowDetails from './InvestmentListShowDetails'
 import InvestmentListFilter from './InvestmentListFilter'
-import InvestmentListSort from './InvestmentListSort'
 import InvestmentList from './InvestmentList'
 import Pagination from '../Pagination/'
 
-import { STAGE_OPTIONS, SORT_OPTIONS } from './constants'
+import {
+  PROJECT_STATUS_OPTIONS,
+  STAGE_OPTIONS,
+  SORT_OPTIONS,
+} from './constants'
 
-const StyledHeader = styled('header')`
-  select {
-    width: 100%;
-  }
-  ${MEDIA_QUERIES.TABLET} {
-    label:first-child {
-      margin-bottom: ${SPACING.SCALE_2};
-      span {
-        padding-right: ${SPACING.SCALE_2};
-      }
-    }
-  }
-  ${MEDIA_QUERIES.DESKTOP} {
-    display: inline-flex;
-    label:first-child {
-      margin: 0 ${SPACING.SCALE_6} 0 0;
-      span {
-        padding-right: 0;
-      }
-    }
-  }
-`
+const StyledHeader = styled('header')({
+  [MEDIA_QUERIES.DESKTOP]: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    margin: `-${SPACING.SCALE_1} -${SPACING.SCALE_2}`,
+  },
+})
+
 const StyledParagraph = styled(Paragraph)`
   margin-top: ${SPACING.SCALE_3};
 `
@@ -60,10 +50,12 @@ const MyInvestmentProjects = ({
   count,
   itemsPerPage,
   page,
-  filter,
+  stage,
+  status,
   sort,
   onSortChange,
-  onFilterChange,
+  onStageChange,
+  onStatusChange,
   onPaginationClick,
   onShowDetailsChange,
   adviser,
@@ -81,11 +73,19 @@ const MyInvestmentProjects = ({
         </InvestmentListShowDetails>
       )}
       <InvestmentListFilter
+        label="Stage"
         options={STAGE_OPTIONS}
-        initialValue={filter}
-        onChange={(event) => onFilterChange(event.target.value)}
+        initialValue={stage}
+        onChange={(event) => onStageChange(event.target.value)}
       />
-      <InvestmentListSort
+      <InvestmentListFilter
+        label="Status"
+        options={PROJECT_STATUS_OPTIONS}
+        initialValue={status}
+        onChange={(event) => onStatusChange(event.target.value)}
+      />
+      <InvestmentListFilter
+        label="Sort"
         options={SORT_OPTIONS}
         initialValue={sort}
         onChange={(event) => onSortChange(event.target.value)}
@@ -100,7 +100,8 @@ const MyInvestmentProjects = ({
           payload: {
             adviser,
             page,
-            filter,
+            stage,
+            status,
             sort,
           },
           onSuccessDispatch: MY_INVESTMENTS__LIST_LOADED,
@@ -140,7 +141,8 @@ MyInvestmentProjects.propTypes = {
   count: PropTypes.number.isRequired,
   itemsPerPage: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
-  onFilterChange: PropTypes.func.isRequired,
+  onStageChange: PropTypes.func.isRequired,
+  onStatusChange: PropTypes.func.isRequired,
   onSortChange: PropTypes.func.isRequired,
   onPaginationClick: PropTypes.func.isRequired,
   onShowDetailsChange: PropTypes.func.isRequired,
@@ -157,10 +159,16 @@ export default connect(state2props, (dispatch) => ({
       showDetails,
     })
   },
-  onFilterChange: (filter) =>
+  onStageChange: (stage) =>
     dispatch({
-      type: MY_INVESTMENTS__FILTER_CHANGE,
-      filter,
+      type: MY_INVESTMENTS__STAGE_CHANGE,
+      stage,
+      page: 1,
+    }),
+  onStatusChange: (status) =>
+    dispatch({
+      type: MY_INVESTMENTS__STATUS_CHANGE,
+      status,
       page: 1,
     }),
   onSortChange: (sort) =>

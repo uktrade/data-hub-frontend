@@ -7,7 +7,8 @@ export const fetchMyInvestmentsList = ({
   page = 1,
   adviser,
   sort,
-  filter,
+  stage,
+  status,
 }) => {
   const payload = {
     limit,
@@ -18,8 +19,11 @@ export const fetchMyInvestmentsList = ({
     show_summary: true,
   }
 
-  if (filter !== 'all-stages') {
-    payload.stage = filter
+  if (stage !== 'all-stages') {
+    payload.stage = stage
+  }
+  if (status !== 'all-statuses') {
+    payload.status = status
   }
 
   return apiProxyAxios

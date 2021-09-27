@@ -1,6 +1,15 @@
+export const PROJECT_STATUS_OPTIONS = [
+  { name: 'Show all', id: 'all-statuses' },
+  { name: 'Ongoing', id: 'ongoing' },
+  { name: 'Delayed', id: 'delayed' },
+  { name: 'Abandoned', id: 'abandoned' },
+  { name: 'Lost', id: 'lost' },
+  { name: 'Dormant', id: 'dormant' },
+]
+
 export const STAGE_OPTIONS = [
   {
-    name: 'All stages',
+    name: 'Show all',
     id: 'all-stages',
   },
   {
