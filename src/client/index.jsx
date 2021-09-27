@@ -47,7 +47,7 @@ import InvestmentProjectsCollection from '../apps/investments/client/projects/Pr
 import CompanyProjectsCollection from '../apps/investments/client/projects/CompanyProjectsCollection.jsx'
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
-import OpportunityChangeStatus from '../apps/investments/client/opportunities/Details/OpportunityChangeStatus'
+import OpportunityChangeStatusForm from './components/OpportunityChangeStatusForm'
 import IEBanner from '../apps/dashboard/client/IEBanner'
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
 import createUKInvestmentOpportunityTask from './components/CreateUKInvestmentOpportunity/tasks'
@@ -392,7 +392,7 @@ function App() {
         {(props) => <Opportunity {...props} />}
       </Mount>
       <Mount selector="#opportunity-status">
-        {(props) => <OpportunityChangeStatus {...props} />}
+        {(props) => <OpportunityChangeStatusForm {...props} />}
       </Mount>
       <Mount selector="#create-uk-investment-opportunity">
         {() => (

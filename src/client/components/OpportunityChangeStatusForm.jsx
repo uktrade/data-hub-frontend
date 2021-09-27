@@ -2,21 +2,17 @@ import axios from 'axios'
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import urls from '../../../../../lib/urls'
-import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeader'
+import urls from '../../lib/urls'
+import LocalHeader from './LocalHeader/LocalHeader'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 
-import {
-  Main,
-  FormActions,
-  FormStateful,
-} from '../../../../../client/components'
+import { Main, FormActions, FormStateful } from '.'
 
-import OpportunityResource from '../../../../../client/components/Resource/Opportunity'
-import FieldOpportunityStatuses from '../../../../../client/components/Form/elements/FieldOpportunityStatuses'
+import OpportunityResource from './Resource/Opportunity'
+import FieldOpportunityStatuses from './Form/elements/FieldOpportunityStatuses'
 
-const OpportunityChangeStatus = ({ opportunityId }) => {
+const OpportunityChangeStatusForm = ({ opportunityId }) => {
   const opportunityUrl = urls.investments.opportunities.details(opportunityId)
 
   return (
@@ -69,8 +65,8 @@ const OpportunityChangeStatus = ({ opportunityId }) => {
   )
 }
 
-OpportunityChangeStatus.propTypes = {
+OpportunityChangeStatusForm.propTypes = {
   opportunityId: PropTypes.string.isRequired,
 }
 
-export default OpportunityChangeStatus
+export default OpportunityChangeStatusForm
