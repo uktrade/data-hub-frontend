@@ -1,5 +1,3 @@
-import { createResource } from '.'
+import { createMetadataResource } from '.'
 
-export default createResource('Countries', () => 'v4/metadata/country', {
-  singleton: true,
-})
+export default createMetadataResource('Countries', 'country')
