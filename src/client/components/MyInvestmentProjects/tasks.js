@@ -9,6 +9,7 @@ export const fetchMyInvestmentsList = ({
   sort,
   stage,
   status,
+  landDate,
 }) => {
   const payload = {
     limit,
@@ -24,6 +25,9 @@ export const fetchMyInvestmentsList = ({
   }
   if (status !== 'all-statuses') {
     payload.status = status
+  }
+  if (landDate !== 'all-land-dates') {
+    payload.financial_year_start = [landDate]
   }
 
   return apiProxyAxios

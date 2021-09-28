@@ -1,3 +1,9 @@
+export const LAND_DATE_OPTIONS = [
+  { name: 'Show all', id: 'all-land-dates' },
+  { name: 'Current year', id: '1' },
+  { name: 'Previous Year', id: '2' },
+  { name: 'Next Year', id: '3' },
+]
 export const PROJECT_STATUS_OPTIONS = [
   { name: 'Show all', id: 'all-statuses' },
   { name: 'Ongoing', id: 'ongoing' },
@@ -37,23 +43,23 @@ export const STAGE_OPTIONS = [
 export const SORT_OPTIONS = [
   {
     name: 'Recently created',
-    value: 'created_on:desc',
+    id: 'created_on:desc',
   },
   {
     name: 'Earliest land date',
-    value: 'estimated_land_date:asc',
+    id: 'estimated_land_date:asc',
   },
   {
     name: 'Latest land date',
-    value: 'estimated_land_date:desc',
+    id: 'estimated_land_date:desc',
   },
   {
     name: 'Project name (A-Z)',
-    value: 'name:asc',
+    id: 'name:asc',
   },
   {
     name: 'Project name (Z-A)',
-    value: 'name:desc',
+    id: 'name:desc',
   },
 ]
 

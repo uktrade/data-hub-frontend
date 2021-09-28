@@ -12,13 +12,14 @@ import {
   MY_INVESTMENTS__PAGINATION_CLICK,
   MY_INVESTMENTS__STAGE_CHANGE,
   MY_INVESTMENTS__STATUS_CHANGE,
+  MY_INVESTMENTS__LAND_DATE_CHANGE,
   MY_INVESTMENTS__SORT_CHANGE,
   MY_INVESTMENTS__SHOW_DETAILS_CHANGE,
 } from '../../actions'
 import Task from '../Task'
 
 import InvestmentListShowDetails from './InvestmentListShowDetails'
-import InvestmentListFilter from './InvestmentListFilter'
+import InvestmentListSelect from './InvestmentListSelect'
 import InvestmentList from './InvestmentList'
 import Pagination from '../Pagination/'
 
@@ -52,10 +53,13 @@ const MyInvestmentProjects = ({
   page,
   stage,
   status,
+  landDateOptions,
+  landDate,
   sort,
   onSortChange,
   onStageChange,
   onStatusChange,
+  onLandDateChange,
   onPaginationClick,
   onShowDetailsChange,
   adviser,
@@ -72,19 +76,25 @@ const MyInvestmentProjects = ({
           Show details
         </InvestmentListShowDetails>
       )}
-      <InvestmentListFilter
+      <InvestmentListSelect
         label="Stage"
         options={STAGE_OPTIONS}
         initialValue={stage}
         onChange={(event) => onStageChange(event.target.value)}
       />
-      <InvestmentListFilter
+      <InvestmentListSelect
         label="Status"
         options={PROJECT_STATUS_OPTIONS}
         initialValue={status}
         onChange={(event) => onStatusChange(event.target.value)}
       />
-      <InvestmentListFilter
+      <InvestmentListSelect
+        label="Land date"
+        options={landDateOptions}
+        initialValue={landDate}
+        onChange={(event) => onLandDateChange(event.target.value)}
+      />
+      <InvestmentListSelect
         label="Sort"
         options={SORT_OPTIONS}
         initialValue={sort}
@@ -102,6 +112,7 @@ const MyInvestmentProjects = ({
             page,
             stage,
             status,
+            landDate,
             sort,
           },
           onSuccessDispatch: MY_INVESTMENTS__LIST_LOADED,
@@ -143,6 +154,7 @@ MyInvestmentProjects.propTypes = {
   page: PropTypes.number.isRequired,
   onStageChange: PropTypes.func.isRequired,
   onStatusChange: PropTypes.func.isRequired,
+  onLandDateChange: PropTypes.func.isRequired,
   onSortChange: PropTypes.func.isRequired,
   onPaginationClick: PropTypes.func.isRequired,
   onShowDetailsChange: PropTypes.func.isRequired,
@@ -169,6 +181,12 @@ export default connect(state2props, (dispatch) => ({
     dispatch({
       type: MY_INVESTMENTS__STATUS_CHANGE,
       status,
+      page: 1,
+    }),
+  onLandDateChange: (landDate) =>
+    dispatch({
+      type: MY_INVESTMENTS__LAND_DATE_CHANGE,
+      landDate,
       page: 1,
     }),
   onSortChange: (sort) =>

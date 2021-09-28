@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { kebabCase } from 'lodash'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
-import { Select } from '../../components'
+import { Select } from '..'
 
 const StyledSelect = styled(Select)({
   alignItems: 'flex-start',
@@ -11,14 +11,15 @@ const StyledSelect = styled(Select)({
   flex: '1 1',
   select: {
     width: '100%',
+    minWidth: 170,
   },
   marginBottom: SPACING.SCALE_1,
   [MEDIA_QUERIES.DESKTOP]: {
-    margin: `${SPACING.SCALE_1} ${SPACING.SCALE_2}`,
+    margin: SPACING.SCALE_1,
   },
 })
 
-const InvestmentListFilter = ({ initialValue, label, options, onChange }) => (
+const InvestmentListSelect = ({ initialValue, label, options, onChange }) => (
   <StyledSelect
     label={label}
     input={{
@@ -34,4 +35,4 @@ const InvestmentListFilter = ({ initialValue, label, options, onChange }) => (
   </StyledSelect>
 )
 
-export default InvestmentListFilter
+export default InvestmentListSelect
