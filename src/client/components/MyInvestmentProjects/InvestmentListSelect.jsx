@@ -19,13 +19,20 @@ const StyledSelect = styled(Select)({
   },
 })
 
-const InvestmentListSelect = ({ initialValue, label, options, onChange }) => (
+const InvestmentListSelect = ({
+  initialValue,
+  label,
+  options,
+  onChange,
+  ...props
+}) => (
   <StyledSelect
     label={label}
     input={{
       onChange,
       initialValue,
     }}
+    {...props}
   >
     {options.map(({ id, name }, index) => (
       <option value={id} aria-label={name} key={index} id={kebabCase(name)}>

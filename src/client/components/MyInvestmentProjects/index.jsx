@@ -77,24 +77,28 @@ const MyInvestmentProjects = ({
         </InvestmentListShowDetails>
       )}
       <InvestmentListSelect
+        data-test="stage-select"
         label="Stage"
         options={STAGE_OPTIONS}
         initialValue={stage}
         onChange={(event) => onStageChange(event.target.value)}
       />
       <InvestmentListSelect
+        data-test="status-select"
         label="Status"
         options={PROJECT_STATUS_OPTIONS}
         initialValue={status}
         onChange={(event) => onStatusChange(event.target.value)}
       />
       <InvestmentListSelect
+        data-test="land-date-select"
         label="Land date"
         options={landDateOptions}
         initialValue={landDate}
         onChange={(event) => onLandDateChange(event.target.value)}
       />
       <InvestmentListSelect
+        data-test="sort-select"
         label="Sort"
         options={SORT_OPTIONS}
         initialValue={sort}
