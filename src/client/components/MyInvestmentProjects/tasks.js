@@ -33,7 +33,12 @@ export const fetchMyInvestmentsList = ({
   return apiProxyAxios
     .post('/v3/search/investment_project', payload)
     .then(({ data: { summary, ...rest } }) => ({
-      summary: summaryToDataRange({ summary, adviser }),
+      summary: summaryToDataRange({
+        summary,
+        adviser,
+        status,
+        landDate,
+      }),
       ...rest,
     }))
 }

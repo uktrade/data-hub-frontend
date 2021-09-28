@@ -3,9 +3,8 @@ import { investmentProjectListFaker } from '../../fakers/investment-projects'
 import { investmentProjectSummaryFaker } from '../../fakers/investment-project-summary'
 import { assertPayload } from '../../support/assertions'
 
-function getFinancialYearStart(date) {
-  return date.getMonth() < 3 ? date.getFullYear() - 1 : date.getFullYear()
-}
+const getFinancialYearStart = (date) =>
+  date.getMonth() < 3 ? date.getFullYear() - 1 : date.getFullYear()
 
 const myAdviser = {
   id: '7d19d407-9aec-4d06-b190-d3f404627f21',
