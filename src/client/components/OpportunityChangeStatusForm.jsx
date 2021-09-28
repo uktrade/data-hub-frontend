@@ -51,7 +51,6 @@ const OpportunityChangeStatusForm = ({ opportunityId }) => {
               <FieldOpportunityStatuses
                 name="status"
                 initialValue={status.id}
-                data-test="types-of-status"
               />
               <FormActions>
                 <Button data-test="edit-button">Save</Button>
