@@ -1,4 +1,3 @@
-const { expect } = require('chai')
 const proxyquire = require('proxyquire')
 
 describe('Event details controller', () => {
@@ -27,6 +26,7 @@ describe('Event details controller', () => {
         event: {
           name: 'Dance',
         },
+        getMessages: () => ({}),
       },
     }
 
@@ -34,8 +34,8 @@ describe('Event details controller', () => {
   })
 
   describe('#renderDetailsPage', async () => {
-    beforeEach(async () => {
-      await this.controller.renderDetailsPage(this.req, this.res, this.next)
+    beforeEach(() => {
+      this.controller.renderDetailsPage(this.req, this.res, this.next)
     })
 
     it('should render breadcrumbs', () => {
@@ -52,9 +52,10 @@ describe('Event details controller', () => {
 
     it('should return transformed events props', () => {
       const options = this.res.render.firstCall.args[1]
-      expect(options)
-        .to.have.property('props')
-        .and.deep.equal({ eventId: '1234' })
+      expect(options).to.have.property('props').and.deep.equal({
+        eventId: '1234',
+        flashMessages: this.res.locals.getMessages(),
+      })
     })
   })
 })
