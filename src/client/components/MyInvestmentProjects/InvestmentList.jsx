@@ -10,8 +10,8 @@ const StyledOrderedList = styled('ol')`
   ${({ isPaginated }) => isPaginated && `border-bottom: 2px solid ${GREY_1};`}
 `
 
-const InvestmentList = ({ items, isPaginated, showDetails }) => (
-  <StyledOrderedList isPaginated={isPaginated}>
+const InvestmentList = ({ items, isPaginated, showDetails, ...props }) => (
+  <StyledOrderedList isPaginated={isPaginated} {...props}>
     {items.map((item) => (
       <InvestmentListItem key={item.id} showDetails={showDetails} {...item} />
     ))}

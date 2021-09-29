@@ -7,7 +7,9 @@ export const fetchMyInvestmentsList = ({
   page = 1,
   adviser,
   sort,
-  filter,
+  stage,
+  status,
+  landDate,
 }) => {
   const payload = {
     limit,
@@ -18,14 +20,25 @@ export const fetchMyInvestmentsList = ({
     show_summary: true,
   }
 
-  if (filter !== 'all-stages') {
-    payload.stage = filter
+  if (stage !== 'all-stages') {
+    payload.stage = stage
+  }
+  if (status !== 'all-statuses') {
+    payload.status = status
+  }
+  if (landDate !== 'all-land-dates') {
+    payload.financial_year_start = [landDate]
   }
 
   return apiProxyAxios
     .post('/v3/search/investment_project', payload)
     .then(({ data: { summary, ...rest } }) => ({
-      summary: summaryToDataRange({ summary, adviser }),
+      summary: summaryToDataRange({
+        summary,
+        adviser,
+        status,
+        landDate,
+      }),
       ...rest,
     }))
 }
