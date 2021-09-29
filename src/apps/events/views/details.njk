@@ -1,8 +1,8 @@
-{% extends "./template.njk" %}
+{% extends "_layouts/template-no-local-header.njk" %}
 
-{% block main_grid_right_column %}
-  {% component 'key-value-table', variant='striped', items=eventViewRecord %}
-  {% if event.disabled_on == null %}
-    <a class="govuk-button govuk-button--secondary" href="/events/{{ event.id }}/edit">Edit event</a>
-  {% endif %}
+{% block body %}
+  {% component 'react-slot', {
+    id: 'event-details',
+    props: props
+  } %}
 {% endblock %}

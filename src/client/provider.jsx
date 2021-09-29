@@ -108,6 +108,9 @@ import interactionsReducer from '../apps/interactions/client/reducer'
 import { ID as EVENTS_ID } from '../apps/events/client/state'
 import eventsReducer from '../apps/events/client/reducer'
 
+import { ID as EVENTS_DETAILS_ID } from '../apps/events/client/Details/state'
+import eventDetailsReducer from '../apps/events/client/Details/reducer'
+
 import { ID as ORDERS_ID } from '../apps/omis/client/state'
 import ordersReducer from '../apps/omis/client/reducer'
 
@@ -177,6 +180,7 @@ const store = createStore(
     [COMPANY_CONTACTS_LIST_ID]: contactsReducer,
     [INTERACTIONS_ID]: interactionsReducer,
     [EVENTS_ID]: eventsReducer,
+    [EVENTS_DETAILS_ID]: eventDetailsReducer,
     [ORDERS_ID]: ordersReducer,
   }),
   {

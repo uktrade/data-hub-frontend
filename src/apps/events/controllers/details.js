@@ -1,9 +1,15 @@
-const { displayEventLabels } = require('../labels')
+const renderDetailsPage = ({ params: { eventId } }, res, next) => {
+  try {
+    const { event } = res.locals
 
-function renderDetailsPage(req, res) {
-  res.breadcrumb(res.locals.event.name).render('events/views/details', {
-    displayEventLabels,
-  })
+    const flashMessages = res.locals.getMessages()
+
+    res.locals.title = `Event name - ${event.name} - DIT Data Hub`
+
+    res.render('events/views/details', { props: { eventId, flashMessages } })
+  } catch (error) {
+    next(error)
+  }
 }
 
 module.exports = {

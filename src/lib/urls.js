@@ -228,6 +228,7 @@ module.exports = {
     index: url('/events'),
     create: url('/events/create'),
     details: url('/events', '/:eventId/details'),
+    edit: url('/events', '/:eventId/edit'),
     attendees: url('/events', '/:eventId/attendees'),
     find: url('/events', '/:eventId/attendees/find-new'),
   },

@@ -35,12 +35,12 @@ const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
     data-test="aboutDetailsContainer"
     actions={!isArchived && <Link href={urls.companyEdit}>Edit</Link>}
   >
-    <SummaryTable.Row heading="VAT number">
+    <SummaryTable.Row heading="VAT number" hideWhenEmpty={true}>
       {businessDetails.vat_number}
     </SummaryTable.Row>
 
     {!isDnbCompany && (
-      <SummaryTable.Row heading="Business type">
+      <SummaryTable.Row heading="Business type" hideWhenEmpty={true}>
         {businessDetails.business_type}
       </SummaryTable.Row>
     )}
@@ -51,12 +51,12 @@ const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
         : businessDetails.trading_names}
     </SummaryTable.Row>
 
-    <SummaryTable.Row heading="CDMS reference">
+    <SummaryTable.Row heading="CDMS reference" hideWhenEmpty={true}>
       {businessDetails.reference_code}
     </SummaryTable.Row>
 
     {businessDetails.company_number && (
-      <SummaryTable.Row heading="Companies House number">
+      <SummaryTable.Row heading="Companies House number" hideWhenEmpty={true}>
         {businessDetails.company_number}
 
         <NewWindowLink href={urls.companiesHouse}>

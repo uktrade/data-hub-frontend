@@ -2,7 +2,12 @@ import { get } from 'lodash'
 
 import urls from '../../../lib/urls'
 
-const { format, formatMediumDateTime } = require('../../../client/utils/date')
+const {
+  format,
+  formatMediumDateTime,
+  formatLongDate,
+  getDifferenceInDays,
+} = require('../../../client/utils/date')
 
 const transformEventToListItem = ({
   id,
@@ -73,4 +78,55 @@ const transformResponseToEventCollection = ({ count, results = [] }) => ({
   results: results.map(transformEventToListItem),
 })
 
-export { transformResponseToEventCollection }
+const idNameToValueLabel = ({ id, name }) => ({ value: id, label: name })
+
+const transformResponseToEventDetails = ({
+  name,
+  event_type,
+  start_date,
+  end_date,
+  location_type,
+  address_1,
+  address_2,
+  address_town,
+  address_county,
+  address_postcode,
+  address_country,
+  uk_region,
+  notes,
+  lead_team,
+  organiser,
+  teams,
+  related_programmes,
+  related_trade_agreements,
+  service,
+  archived_documents_url_path,
+  disabled_on,
+}) => ({
+  name,
+  eventType: event_type.name,
+  startDate: formatLongDate(start_date),
+  endDate: formatLongDate(end_date),
+  eventDays:
+    getDifferenceInDays(end_date) - getDifferenceInDays(start_date) + 1,
+  locationType: location_type?.name,
+  fullAddress:
+    `${address_1 ? `${address_1}, ` : ''}` +
+    `${address_2 ? `${address_2}, ` : ''}` +
+    `${address_town ? `${address_town}, ` : ''}` +
+    `${address_county ? `${address_county}, ` : ''}` +
+    `${address_postcode ? `${address_postcode}, ` : ''}` +
+    `${address_country.name ? address_country.name : ''}`,
+  ukRegion: uk_region?.name,
+  notes: notes,
+  leadTeam: lead_team.name,
+  organiser: organiser.name,
+  otherTeams: teams?.map(idNameToValueLabel),
+  relatedProgrammes: related_programmes?.map(idNameToValueLabel),
+  relatedTradeAgreements: related_trade_agreements?.map(idNameToValueLabel),
+  service: service.name,
+  archivedDocumentsUrlPath: archived_documents_url_path,
+  disabledOn: disabled_on,
+})
+
+export { transformResponseToEventCollection, transformResponseToEventDetails }
