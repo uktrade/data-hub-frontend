@@ -39,7 +39,7 @@ import { CLEARED_REFERENCE, ISSUES_IDENTIFIED_REFERENCE } from './constants'
 import { idNameToValueLabel } from './tasks'
 
 function OpportunityDetailsForm(state) {
-  const { opportunityId, metadata, details } = state
+  const { opportunityId, metadata, opportunity } = state
   const {
     name,
     description,
@@ -54,7 +54,7 @@ function OpportunityDetailsForm(state) {
     ukRegions,
     promoters,
     otherDitContacts,
-  } = details.detailsFields
+  } = opportunity.detailsFields
 
   const IS_NUMBER = /^[0-9]*$/
 
@@ -273,7 +273,7 @@ function OpportunityDetailsForm(state) {
 OpportunityDetailsForm.propTypes = {
   opportunityId: PropTypes.string.isRequired,
   metadata: PropTypes.object.isRequired,
-  details: PropTypes.object.isRequired,
+  opportunity: PropTypes.object.isRequired,
 }
 
 export default connect(state2props)(OpportunityDetailsForm)

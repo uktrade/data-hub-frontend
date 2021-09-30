@@ -7,10 +7,10 @@ import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeade
 import LocalHeaderDetails from '../../../../../client/components/LocalHeaderDetails'
 import { state2props } from '../Details/state'
 
-const OpportunityDetailsHeader = ({ details }) => {
+const OpportunityDetailsHeader = ({ opportunity, currentPath }) => {
   const { createdOn, name, ukRegions, assetClasses, opportunityValue } =
-    details.detailsFields
-  const { status } = details
+    opportunity.detailsFields
+  const { id, status } = opportunity
 
   const oppValue = !opportunityValue.value
     ? 'Not yet valued'
@@ -48,11 +48,16 @@ const OpportunityDetailsHeader = ({ details }) => {
       value: createdOn,
     },
   ]
+
+  const getCurrentTab = (currentPath) =>
+    currentPath.includes('/interactions') ? 'Interactions' : 'Details'
+
   const breadcrumbs = [
     { link: urls.dashboard(), text: 'Home' },
     { link: urls.investments.index(), text: 'Investments' },
     { link: urls.investments.opportunities.index(), text: 'UK opportunities' },
-    { text: name },
+    { link: urls.investments.opportunities.details(id), text: name },
+    { text: getCurrentTab(currentPath) },
   ]
 
   return (
@@ -63,32 +68,30 @@ const OpportunityDetailsHeader = ({ details }) => {
 }
 
 OpportunityDetailsHeader.propTypes = {
-  opportunityDetails: PropTypes.shape({
-    details: PropTypes.shape({
-      status: PropTypes.shape({
+  opportunity: PropTypes.shape({
+    status: PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.string,
+    }).isRequired,
+    detailsFields: PropTypes.shape({
+      createdOn: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      ukRegions: PropTypes.arrayOf(
+        PropTypes.shape({
+          label: PropTypes.string,
+          value: PropTypes.string,
+        })
+      ).isRequired,
+      assetClasses: PropTypes.arrayOf(
+        PropTypes.shape({
+          label: PropTypes.string,
+          value: PropTypes.string,
+        })
+      ).isRequired,
+      opportunityValue: PropTypes.shape({
         label: PropTypes.string,
         value: PropTypes.string,
       }).isRequired,
-      detailsFields: PropTypes.shape({
-        createdOn: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        ukRegions: PropTypes.arrayOf(
-          PropTypes.shape({
-            label: PropTypes.string,
-            value: PropTypes.string,
-          })
-        ).isRequired,
-        assetClasses: PropTypes.arrayOf(
-          PropTypes.shape({
-            label: PropTypes.string,
-            value: PropTypes.string,
-          })
-        ).isRequired,
-        opportunityValue: PropTypes.shape({
-          label: PropTypes.string,
-          value: PropTypes.string,
-        }).isRequired,
-      }),
     }),
   }),
 }

@@ -12,7 +12,7 @@ import {
 const initialState = {
   incompleteDetailsFields: 0,
   incompleteRequirementsFields: 0,
-  details: {
+  opportunity: {
     isEditingDetails: false,
     isEditingRequirements: false,
     detailsFields: {
@@ -58,7 +58,7 @@ export default (state = initialState, { type, result }) => {
     case INVESTMENT_OPPORTUNITY_DETAILS__LOADED:
       return {
         ...state,
-        details: result,
+        opportunity: result,
       }
     case INVESTMENT_OPPORTUNITY__DETAILS_METADATA_LOADED:
       return {
@@ -85,8 +85,8 @@ export default (state = initialState, { type, result }) => {
     case INVESTMENT_OPPORTUNITY__EDIT_DETAILS:
       return {
         ...state,
-        details: {
-          ...state.details,
+        opportunity: {
+          ...state.opportunity,
           isEditingDetails: true,
           isEditingRequirements: false,
         },
@@ -94,8 +94,8 @@ export default (state = initialState, { type, result }) => {
     case INVESTMENT_OPPORTUNITY__EDIT_REQUIREMENTS:
       return {
         ...state,
-        details: {
-          ...state.details,
+        opportunity: {
+          ...state.opportunity,
           isEditingDetails: false,
           isEditingRequirements: true,
         },
@@ -103,8 +103,8 @@ export default (state = initialState, { type, result }) => {
     case INVESTMENT_OPPORTUNITY__CANCEL_EDIT:
       return {
         ...state,
-        details: {
-          ...state.details,
+        opportunity: {
+          ...state.opportunity,
           isEditingDetails: false,
           isEditingRequirements: false,
         },
@@ -112,8 +112,8 @@ export default (state = initialState, { type, result }) => {
     case INVESTMENT_OPPORTUNITY__DETAILS_CHANGE:
       return {
         ...state,
-        details: {
-          ...state.details,
+        opportunity: {
+          ...state.opportunity,
           ...result,
           isEditingDetails: false,
           isEditingRequirements: false,
@@ -122,8 +122,8 @@ export default (state = initialState, { type, result }) => {
     case INVESTMENT_OPPORTUNITY__REQUIREMENTS_CHANGE:
       return {
         ...state,
-        details: {
-          ...state.details,
+        opportunity: {
+          ...state.opportunity,
           ...result,
           isEditingDetails: false,
           isEditingRequirements: false,

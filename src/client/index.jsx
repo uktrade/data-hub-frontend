@@ -49,8 +49,7 @@ import EventDetails from '../apps/events/client/Details/EventDetails.jsx'
 import InteractionsCollection from '../apps/interactions/client/InteractionsCollection'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 import CompanyProjectsCollection from '../apps/investments/client/projects/CompanyProjectsCollection.jsx'
-import Opportunities from '../apps/investments/client/opportunities/Details/Opportunities.jsx'
-import OpportunityDetailsHeader from '../apps/investments/client/opportunities/Details/OpportunityDetailsHeader'
+import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import IEBanner from '../apps/dashboard/client/IEBanner'
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
 import createUKInvestmentOpportunityTask from './components/CreateUKInvestmentOpportunity/tasks'
@@ -376,11 +375,8 @@ function App() {
       <Mount selector="#unfiltered-large-capital-opportunity-collection">
         {(props) => <UnfilteredLargeCapitalOpportunityCollection {...props} />}
       </Mount>
-      <Mount selector="#opportunity-details">
-        {(props) => <Opportunities {...props} />}
-      </Mount>
-      <Mount selector="#opportunity-details-header">
-        {(props) => <OpportunityDetailsHeader {...props} />}
+      <Mount selector="#opportunity">
+        {(props) => <Opportunity {...props} />}
       </Mount>
       <Mount selector="#create-uk-investment-opportunity">
         {() => (

@@ -27,6 +27,7 @@ const CollectionList = ({
   activePage = 1,
   onPageClick,
   maxItemsToPaginate = 10000,
+  includeDownloadHeader = true,
   maxItemsToDownload,
   baseDownloadLink,
   entityName,
@@ -53,14 +54,16 @@ const CollectionList = ({
           {sortOptions && (
             <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
           )}
-          <RoutedDownloadDataHeader
-            count={count}
-            maxItems={maxItemsToDownload}
-            data-test="download-data-header"
-            baseDownloadLink={baseDownloadLink}
-            entityName={entityName}
-            entityNamePlural={entityNamePlural}
-          />
+          {includeDownloadHeader && (
+            <RoutedDownloadDataHeader
+              count={count}
+              maxItems={maxItemsToDownload}
+              data-test="download-data-header"
+              baseDownloadLink={baseDownloadLink}
+              entityName={entityName}
+              entityNamePlural={entityNamePlural}
+            />
+          )}
           <ol>
             {items.map(
               (

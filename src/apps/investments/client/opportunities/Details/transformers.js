@@ -28,12 +28,14 @@ export const transformInvestmentOpportunityDetails = ({
   estimated_return_rate,
   time_horizons,
   status,
+  id,
 }) => ({
   incompleteDetailsFields: incomplete_details_fields.length,
   incompleteRequirementsFields: incomplete_requirements_fields.length,
   isEditingDetails: false,
   isEditingRequirements: false,
   status: idNameToValueLabel(status),
+  id,
   detailsFields: {
     createdOn: formatMediumDateTime(created_on),
     name,

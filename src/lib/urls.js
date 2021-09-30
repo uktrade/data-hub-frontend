@@ -276,6 +276,10 @@ module.exports = {
       index: url('/investments', '/opportunities'),
       opportunity: url('/investments', '/opportunities/:opportunityId'),
       details: url('/investments', '/opportunities/:opportunityId/details'),
+      interactions: url(
+        '/investments',
+        '/opportunities/:opportunityId/interactions'
+      ),
       create: url('/investments', '/opportunities/create'),
     },
     editHistory: {
