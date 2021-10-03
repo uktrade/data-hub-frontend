@@ -82,7 +82,7 @@
     "@storybook/react": "^6.3.8",
     "@uktrade/datahub-header": "^1.4.3",
     "autoprefixer": "^9.8.7",
-    "axios": "^0.21.4",
+    "axios": "^0.22.0",
     "babel-loader": "^8.2.2",
     "basic-auth": "^2.0.0",
     "body-parser": "^1.18.3",
