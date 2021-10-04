@@ -168,6 +168,7 @@ const QUERY_FIELDS = [
   'likelihood_to_land',
   'level_of_involvement_simplified',
   'country_investment_originates_from',
+  'financial_year_start',
 ]
 
 const QUERY_DATE_FIELDS = [
