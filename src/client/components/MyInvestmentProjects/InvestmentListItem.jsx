@@ -11,7 +11,7 @@ import {
 } from '@govuk-react/constants'
 
 import { investments } from '../../../lib/urls'
-import { STAGES } from './constants'
+import { STAGES, STAGE_TAG_COLOURS } from './constants'
 
 import InvestmentEstimatedLandDate from './InvestmentEstimatedLandDate'
 import InvestmentTimeline from './InvestmentTimeline'
@@ -71,6 +71,12 @@ const ListItemHeader = styled('h2')`
 
 const ListItemHeaderTagContainer = styled('div')`
   padding: 0 ${SPACING.SCALE_5};
+  flex-wrap: wrap;
+  margin-bottom: -${SPACING.SCALE_6};
+`
+const ListItemTagRow = styled('div')`
+  padding-bottom: ${SPACING.SCALE_2};
+  min-width: 140px;
 `
 
 const ListItemHeaderActionContainer = styled('div')`
@@ -112,6 +118,7 @@ const InvestmentListItem = ({
   id,
   name,
   stage,
+  status,
   estimated_land_date,
   investor_company,
   project_code,
@@ -128,13 +135,24 @@ const InvestmentListItem = ({
           <a href={`${investments.projects.details(id)}`}>{name}</a>
         </ListItemHeader>
         <ListItemHeaderTagContainer>
-          <Tag
-            colour="grey"
-            data-test="project-stage-tag"
-            aria-label="project stage"
-          >
-            {stage.name}
-          </Tag>
+          <ListItemTagRow>
+            <Tag
+              colour={STAGE_TAG_COLOURS[stage.name]}
+              data-test="project-stage-tag"
+              aria-label="project stage"
+            >
+              {stage.name}
+            </Tag>
+          </ListItemTagRow>
+          <ListItemTagRow>
+            <Tag
+              colour="grey"
+              data-test="project-status-tag"
+              aria-label="project status"
+            >
+              {status}
+            </Tag>
+          </ListItemTagRow>
         </ListItemHeaderTagContainer>
         <ListItemHeaderActionContainer>
           <Button
