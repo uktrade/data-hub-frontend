@@ -6,7 +6,7 @@ This is the process we have identified for dealing with Dependabot PRs that save
 2. Open each Dependabot PR and check that the tests have passed. Re-run any failing tests as the majority of failures are caused by timeouts or flakiness. Codecov failures can be ignored. If the PR contains any persistently failing tests, create a maintenance ticket for it and move on (these will be picked up as part of live support or maintenance sprint).
 3. Once all tests have passed, edit the PR so that the base branch is the `chore/dependencies` one. You should now be able to merge the PR without needing to request reviews.
 4. Repeat steps 2 and 3 until all PRs are either merged or identified as needing further work.
-5. After all the PRs have been merged, checkout the local branch and run ```npm install```, then commit any changes to `package-lock.json`.
+5. After all the PRs have been merged, checkout the local branch and run ```npm install```, then commit any changes to `package-lock.json`. This is **very important**, as if this is not done it will undo our NPM resolution settings and introduce numerous vulnerabilities into `master`.
 6. If required, carry out the appropriate tasks listed in the 'Additional actions' section below.
 7. Build and run Storybook to ensure it works correctly.
 8. Rebase the dependency branch against `master` to remove all the merge commits, then push the changes and open a PR.
