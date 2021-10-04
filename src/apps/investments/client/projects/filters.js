@@ -116,10 +116,10 @@ export const buildSelectedFilters = (
     }),
   },
   financialYears: {
-    queryParam: 'financial_year_start',
+    queryParam: 'land_date_financial_year_start',
     options: buildOptionsFilter({
       options: financialYearOptions,
-      value: queryParams.financial_year_start,
+      value: queryParams.land_date_financial_year_start,
       categoryLabel: LABELS.financialYearStart,
     }),
   },

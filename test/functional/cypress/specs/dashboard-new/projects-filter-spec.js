@@ -95,7 +95,7 @@ describe('Dashboard - my projects list filters', () => {
       cy.get('[data-test="land-date-select"] select').select(financialYearStart)
       assertPayload('@apiRequest', {
         ...minimumPayload,
-        financial_year_start: [financialYearStart],
+        land_date_financial_year_start: [financialYearStart],
       })
     })
   })
