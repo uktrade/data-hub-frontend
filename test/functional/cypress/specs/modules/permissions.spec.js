@@ -63,6 +63,9 @@ describe('DataHub module access', () => {
       cy.setModulePermissions(permissions)
       cy.visit('/companies')
     })
+    after(() => {
+      cy.resetUser()
+    })
     it('should show all the navigation links', () => {
       assertNavLinks(links)
     })
@@ -93,6 +96,9 @@ describe('DataHub module access', () => {
       )
       cy.visit('/companies')
     })
+    after(() => {
+      cy.resetUser()
+    })
     it('should only show the PERMITTED navigation links', () => {
       assertNavLinks(filteredLinks('Companies', links))
     })
@@ -106,6 +112,9 @@ describe('DataHub module access', () => {
         filteredPermissions('company.view_contact', permissions)
       )
       cy.visit('/contacts')
+    })
+    after(() => {
+      cy.resetUser()
     })
     it('should only show the PERMITTED navigation links', () => {
       assertNavLinks(filteredLinks('Contacts', links))
@@ -121,6 +130,9 @@ describe('DataHub module access', () => {
       )
       cy.visit('/events')
     })
+    after(() => {
+      cy.resetUser()
+    })
     it('should only show the PERMITTED navigation links', () => {
       assertNavLinks(filteredLinks('Events', links))
     })
@@ -135,6 +147,9 @@ describe('DataHub module access', () => {
       )
       cy.visit('/interactions')
     })
+    after(() => {
+      cy.resetUser()
+    })
     it('should only show the PERMITTED navigation links', () => {
       assertNavLinks(filteredLinks('Interactions', links))
     })
@@ -148,6 +163,9 @@ describe('DataHub module access', () => {
         filteredPermissions('order.view_order', permissions)
       )
       cy.visit('/omis')
+    })
+    after(() => {
+      cy.resetUser()
     })
     it('should only show the PERMITTED navigation links', () => {
       assertNavLinks(filteredLinks('Orders', links))
