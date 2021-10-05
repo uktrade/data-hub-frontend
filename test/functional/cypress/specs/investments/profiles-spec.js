@@ -18,7 +18,7 @@ describe('Investor profiles', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Investments: '/investments',
+        Investments: investments.index(),
         Profiles: null,
       })
     })

@@ -40,7 +40,7 @@ describe('The interactions tab on an opportunity page', () => {
     it('should display the correct breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Investments: '/investments',
+        Investments: urls.investments.index(),
         'UK opportunities': '/investments/opportunities',
         [incompleteOpportunity.name]: `/investments/opportunities/${incompleteOpportunity.id}/details`,
         Interactions: '',

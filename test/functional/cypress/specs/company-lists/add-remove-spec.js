@@ -1,6 +1,7 @@
 const selectors = require('../../../../selectors')
 const fixtures = require('../../fixtures')
 const { testBreadcrumbs } = require('../../support/assertions')
+const urls = require('../../../../../src/lib/urls')
 
 const listSelectors = selectors.companyAddRemoveFromLists
 
@@ -21,7 +22,7 @@ describe('Adding and removing a company to a list', () => {
 
     testBreadcrumbs({
       Home: '/',
-      Companies: '/companies',
+      Companies: urls.companies.index(),
       'Lambda plc': `/companies/${fixtures.company.lambdaPlc.id}`,
       'Add and remove from lists': undefined,
     })

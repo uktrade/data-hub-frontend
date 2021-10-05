@@ -25,7 +25,7 @@ function getStatusMessage(error) {
   }
 
   if (error.statusCode === 403 || error.statusCode === 401) {
-    return 'You don’t have permission to view this page'
+    return "You don't have permission to view this page"
   }
 
   return 'Page unavailable'

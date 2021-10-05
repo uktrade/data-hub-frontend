@@ -51,10 +51,6 @@ describe('events Collections Filter', () => {
 
       cy.visit(urls.events.index())
 
-      // Initial call to the api does not yet include default params
-      // we shouldn't be making this call
-      cy.wait('@apiRequest')
-
       // Second call to the api with default params
       assertPayload('@apiRequest', minimumPayload)
     })
@@ -73,7 +69,7 @@ describe('events Collections Filter', () => {
     it('should filter from the url', () => {
       const queryString = buildQueryString({ name: eventNameQuery })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.events.index()}?${queryString}`)
+      cy.visit(`/events?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('have.value', eventNameQuery)
       assertChipExists({ label: eventNameQuery, position: 1 })
@@ -82,7 +78,7 @@ describe('events Collections Filter', () => {
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.events.index()}?${queryString}`)
+      cy.visit(`/events?${queryString}`)
       cy.wait('@apiRequest')
 
       cy.get(element).type(`${eventNameQuery}{enter}`)
@@ -112,7 +108,7 @@ describe('events Collections Filter', () => {
         address_country: [brazilCountryId],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.events.index()}?${queryString}`)
+      cy.visit(`/events?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', 'Brazil')
       assertChipExists({ label: 'Brazil', position: 1 })
@@ -121,7 +117,7 @@ describe('events Collections Filter', () => {
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.events.index()}?${queryString}`)
+      cy.visit(`/events?${queryString}`)
       cy.wait('@apiRequest')
 
       testTypeahead({
@@ -164,7 +160,7 @@ describe('events Collections Filter', () => {
       cy.intercept('GET', ukRegionsEndpoint, ukRegions).as(
         'ukRegionsApiRequest'
       )
-      cy.visit(`${urls.events.index()}?${queryString}`)
+      cy.visit(`/events?${queryString}`)
       cy.wait('@ukRegionsApiRequest')
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', ukRegion.name)
@@ -177,7 +173,7 @@ describe('events Collections Filter', () => {
       cy.intercept('GET', ukRegionsEndpoint, ukRegions).as(
         'ukRegionsApiRequest'
       )
-      cy.visit(`${urls.events.index()}?${queryString}`)
+      cy.visit(`/events?${queryString}`)
       cy.wait('@ukRegionsApiRequest')
       cy.wait('@apiRequest')
 
@@ -214,7 +210,7 @@ describe('events Collections Filter', () => {
     it('should filter from the url', () => {
       const queryString = buildQueryString({ organiser: [adviserId] })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.events.index()}?${queryString}`)
+      cy.visit(`/events?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', adviserName)
       assertChipExists({ label: adviserName, position: 1 })
@@ -223,7 +219,7 @@ describe('events Collections Filter', () => {
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.events.index()}?${queryString}`)
+      cy.visit(`/events?${queryString}`)
       cy.wait('@apiRequest')
 
       selectFirstAdvisersTypeaheadOption({ element, input: adviserName })
@@ -250,7 +246,7 @@ describe('events Collections Filter', () => {
       cy.intercept('GET', eventTypeEndpoint, eventTypes).as(
         'eventTypeApiRequest'
       )
-      cy.visit(`${urls.events.index()}?${queryString}`)
+      cy.visit(`/events?${queryString}`)
       cy.wait('@eventTypeApiRequest')
       assertPayload('@apiRequest', {
         ...minimumPayload,
@@ -266,7 +262,7 @@ describe('events Collections Filter', () => {
       cy.intercept('GET', eventTypeEndpoint, eventTypes).as(
         'eventTypeApiRequest'
       )
-      cy.visit(`${urls.events.index()}?${queryString}`)
+      cy.visit(`/events?${queryString}`)
       cy.wait('@eventTypeApiRequest')
       cy.wait('@apiRequest')
 
@@ -309,7 +305,7 @@ describe('events Collections Filter', () => {
         start_date_before: toDate,
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.events.index()}?${queryString}`)
+      cy.visit(`/events?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       assertChipExists({ label: `From: ${formattedFromDate}`, position: 1 })
       assertChipExists({ label: `To: ${formattedToDate}`, position: 2 })
@@ -328,7 +324,7 @@ describe('events Collections Filter', () => {
     it('should filter from user input and remove the chip', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.visit(`${urls.events.index()}?${queryString}`)
+      cy.visit(`/events?${queryString}`)
       cy.wait('@apiRequest')
 
       inputDateValue({
@@ -401,7 +397,7 @@ describe('events Collections Filter', () => {
       cy.intercept('GET', ukRegionsEndpoint, ukRegions).as(
         'ukRegionsApiRequest'
       )
-      cy.visit(`${urls.events.index()}?${queryString}`)
+      cy.visit(`/events?${queryString}`)
       cy.wait('@eventTypeApiRequest')
       cy.wait('@ukRegionsApiRequest')
       cy.wait('@apiRequest')

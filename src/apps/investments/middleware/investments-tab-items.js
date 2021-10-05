@@ -7,7 +7,7 @@ const setInvestmentTabItems = (req, res, next) => {
     return {
       ...item,
       url,
-      isActive: res.locals.CURRENT_PATH === url,
+      isActive: res.locals.CURRENT_PATH === url.split('/?')[0],
     }
   })
   next()

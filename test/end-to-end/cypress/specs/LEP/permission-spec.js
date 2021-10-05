@@ -21,7 +21,7 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        assertError('You don’t have permission to view this page')
+        assertError("You don't have permission to view this page")
         assertError('403')
       })
     })
@@ -34,7 +34,7 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        assertError('You don’t have permission to view this page')
+        assertError("You don't have permission to view this page")
         assertError('403')
       })
     })
@@ -46,7 +46,7 @@ describe('LEP Permission', () => {
     })
 
     it('should prevent LEP users from accessing the page', () => {
-      assertError('You don’t have permission to view this page')
+      assertError("You don't have permission to view this page")
       assertError('403')
     })
   })
@@ -57,7 +57,7 @@ describe('LEP Permission', () => {
     })
 
     it('should prevent LEP users from accessing the page', () => {
-      assertError('You don’t have permission to view this page')
+      assertError("You don't have permission to view this page")
       assertError('403')
     })
   })
@@ -68,7 +68,7 @@ describe('LEP Permission', () => {
     })
 
     it('should prevent LEP users from accessing the page', () => {
-      assertError('You don’t have permission to view this page')
+      assertError("You don't have permission to view this page")
       assertError('403')
     })
   })
@@ -80,7 +80,7 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        assertError('You don’t have permission to view this page')
+        assertError("You don't have permission to view this page")
         assertError('403')
       })
     })
@@ -91,7 +91,7 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        assertError('You don’t have permission to view this page')
+        assertError("You don't have permission to view this page")
         assertError('403')
       })
     })
@@ -102,7 +102,7 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        assertError('You don’t have permission to view this page')
+        assertError("You don't have permission to view this page")
         assertError('403')
       })
     })
@@ -120,7 +120,7 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        assertError('You don’t have permission to view this page')
+        assertError("You don't have permission to view this page")
         assertError('403')
       })
     })
@@ -138,7 +138,7 @@ describe('LEP Permission', () => {
       })
 
       it("should prevent LEP users from accessing an interaction they don't have access to", () => {
-        assertError('You don’t have permission to view this page')
+        assertError("You don't have permission to view this page")
         assertError('403')
       })
     })
@@ -155,7 +155,7 @@ describe('LEP Permission', () => {
       })
 
       it("should prevent LEP users from accessing a team they don't have access to", () => {
-        assertError('You don’t have permission to view this page')
+        assertError("You don't have permission to view this page")
         assertError('403')
       })
     })
@@ -173,7 +173,7 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        assertError('You don’t have permission to view this page')
+        assertError("You don't have permission to view this page")
         assertError('403')
       })
     })
@@ -191,7 +191,7 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        assertError('You don’t have permission to view this page')
+        assertError("You don't have permission to view this page")
         assertError('403')
       })
     })

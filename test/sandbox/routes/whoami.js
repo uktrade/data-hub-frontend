@@ -17,6 +17,9 @@ exports.setWhoami = function (req, res) {
   if (req.body.active_features) {
     whoami.active_features = req.body.active_features
   }
+  if (req.body.permissions) {
+    whoami.permissions = req.body.permissions
+  }
   res.json(whoami)
 }
 

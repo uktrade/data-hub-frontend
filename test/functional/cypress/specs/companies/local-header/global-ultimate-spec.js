@@ -103,6 +103,7 @@ describe('Local header for global ultimate company', () => {
     testBreadcrumbs({
       Home: urls.dashboard(),
       Companies: urls.companies.index(),
+      Companies: urls.companies.index(),
       [fixtures.company.dnbGlobalUltimate.name]: urls.companies.detail(
         fixtures.company.dnbGlobalUltimate.id
       ),

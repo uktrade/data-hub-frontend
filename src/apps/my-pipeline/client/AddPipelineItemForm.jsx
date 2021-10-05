@@ -109,7 +109,10 @@ function AddPipelineItemForm({
         heading={`Add ${companyName} to your pipeline`}
         breadcrumbs={[
           { link: urls.dashboard(), text: 'Home' },
-          { link: urls.companies.index(), text: 'Companies' },
+          {
+            link: urls.companies.index(),
+            text: 'Companies',
+          },
           { link: urls.companies.detail(companyId), text: companyName },
           { link: null, text: 'Add to your pipeline' },
         ]}

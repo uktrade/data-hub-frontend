@@ -107,7 +107,7 @@ describe('Download CSV', () => {
           count: contactsList.length,
         },
       })
-      cy.visit(`${urls.contacts.index()}?${queryString}`)
+      cy.visit(`/contacts?${queryString}`)
     })
     it('should have the correct query string', () => {
       cy.get(downloadButton).should(

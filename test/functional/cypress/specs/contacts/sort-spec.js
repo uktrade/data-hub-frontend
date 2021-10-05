@@ -13,7 +13,6 @@ describe('Contact Collections Sort', () => {
       }).as('apiRequest')
 
       cy.visit(contacts.index())
-      cy.wait('@apiRequest')
     })
 
     it('should apply the default sort', () => {
@@ -51,7 +50,7 @@ describe('Contact Collections Sort', () => {
           results: contactsList,
         },
       }).as('apiRequest')
-      cy.visit(`${contacts.index()}?page=1`)
+      cy.visit('/contacts?page=1')
       cy.wait('@apiRequest')
     })
 

@@ -16,7 +16,6 @@ const {
 } = require('../../modules/search/middleware/collection')
 
 const { renderDetails } = require('./controllers/details')
-const { renderCompaniesView } = require('./controllers/companies')
 
 const { renderBusinessDetails } = require('./apps/business-details/controllers')
 
@@ -80,8 +79,6 @@ router.use(handleRoutePermissions(APP_PERMISSIONS))
 router.param('companyId', getCompany)
 router.param('companyId', setIsCompanyAlreadyAdded)
 router.param('companyId', setDnbHierarchyDetails)
-
-router.get(urls.companies.index.route, renderCompaniesView)
 
 router.get(
   urls.companies.export.route,

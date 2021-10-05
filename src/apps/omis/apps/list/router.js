@@ -28,7 +28,7 @@ const DEFAULT_QUERY = {
 //   renderList
 // )
 
-router.get(urls.omis.index.route, renderOrdersView)
+router.get(urls.omis.index(), renderOrdersView)
 
 router.get(
   '/export',

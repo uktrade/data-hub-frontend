@@ -110,7 +110,7 @@ describe('Download CSV', () => {
           count: ordersList.length,
         },
       })
-      cy.visit(`${omis.index()}?${queryString}`)
+      cy.visit(`/omis?${queryString}`)
     })
     it('should have the correct query string', () => {
       cy.get(downloadButton).should(

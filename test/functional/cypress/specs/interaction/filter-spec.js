@@ -77,7 +77,7 @@ describe('Interactions Collections Filter', () => {
       const queryParams = buildQueryString({
         kind: ['interaction', 'service_delivery'],
       })
-      cy.visit(`${interactions.index()}?${queryParams}`)
+      cy.visit(`/interactions?${queryParams}`)
       assertPayload('@apiRequest', {
         ...minimumPayload,
         kind: ['interaction', 'service_delivery'],
@@ -98,7 +98,7 @@ describe('Interactions Collections Filter', () => {
     it('should filter from user input and remove the chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
-      cy.visit(`${interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
 
       clickCheckboxGroupOption({
@@ -147,7 +147,7 @@ describe('Interactions Collections Filter', () => {
         results: [adviser],
       }).as('adviserListApiRequest')
       cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
-      cy.visit(`${interactions.index()}?${queryParams}`)
+      cy.visit(`/interactions?${queryParams}`)
       assertPayload('@apiRequest', expectedPayload)
       assertTypeaheadOptionSelected({
         element: advisersFilter,
@@ -174,7 +174,7 @@ describe('Interactions Collections Filter', () => {
       }).as('adviserListApiRequest')
       cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
 
-      cy.visit(`${interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
       selectFirstAdvisersTypeaheadOption({
         element: advisersFilter,
@@ -221,7 +221,7 @@ describe('Interactions Collections Filter', () => {
       })
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
       cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
-      cy.visit(`${interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
       cy.wait('@adviserApiRequest')
       assertPayload('@apiRequest', expectedPayload)
       /*
@@ -244,7 +244,7 @@ describe('Interactions Collections Filter', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
       cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
-      cy.visit(`${interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
       clickCheckboxGroupOption({
         element: myInteractionsFilter,
@@ -270,7 +270,7 @@ describe('Interactions Collections Filter', () => {
         date_before: '2023-06-24',
       })
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
-      cy.visit(`${interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
       assertPayload('@apiRequest', {
         ...minimumPayload,
         date_after: '2021-06-24',
@@ -292,7 +292,7 @@ describe('Interactions Collections Filter', () => {
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
-      cy.visit(`${interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
       inputDateValue({
         element: dateAfter,
@@ -336,7 +336,7 @@ describe('Interactions Collections Filter', () => {
       cy.intercept('GET', serviceMetadataEndpoint, [service]).as(
         'metaApiRequest'
       )
-      cy.visit(`${interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
       cy.wait('@metaApiRequest')
       assertPayload('@apiRequest', expectedPayload)
       assertCheckboxGroupOption({
@@ -352,7 +352,7 @@ describe('Interactions Collections Filter', () => {
       cy.intercept('GET', serviceMetadataEndpoint, [service]).as(
         'metaApiRequest'
       )
-      cy.visit(`${interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
       cy.wait('@metaApiRequest')
       clickCheckboxGroupOption({
@@ -378,7 +378,7 @@ describe('Interactions Collections Filter', () => {
         sector_descends: [aerospaceId],
       })
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
-      cy.visit(`${interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', 'Aerospace')
       assertChipExists({ label: 'Aerospace', position: 1 })
@@ -386,7 +386,7 @@ describe('Interactions Collections Filter', () => {
     it('should filter from user input and remove the chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
-      cy.visit(`${interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
 
       testTypeahead({
@@ -419,7 +419,7 @@ describe('Interactions Collections Filter', () => {
         was_policy_feedback_provided: ['true'],
       })
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
-      cy.visit(`${interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       assertCheckboxGroupOption({
         element,
@@ -431,7 +431,7 @@ describe('Interactions Collections Filter', () => {
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
-      cy.visit(`${interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
       clickCheckboxGroupOption({
         element,
@@ -460,7 +460,7 @@ describe('Interactions Collections Filter', () => {
       cy.intercept('GET', policyAreaMetadataEndpoint, [policyArea]).as(
         'metaApiRequest'
       )
-      cy.visit(`${interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.wait('@metaApiRequest')
       assertCheckboxGroupOption({
@@ -477,7 +477,7 @@ describe('Interactions Collections Filter', () => {
       cy.intercept('GET', policyAreaMetadataEndpoint, [policyArea]).as(
         'metaApiRequest'
       )
-      cy.visit(`${interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
       cy.wait('@metaApiRequest')
 
@@ -511,7 +511,7 @@ describe('Interactions Collections Filter', () => {
       cy.intercept('GET', policyIssueTypeMetadataEndpoint, [
         policyIssueType,
       ]).as('metaApiRequest')
-      cy.visit(`${interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.wait('@metaApiRequest')
       assertCheckboxGroupOption({
@@ -528,7 +528,7 @@ describe('Interactions Collections Filter', () => {
       cy.intercept('GET', policyIssueTypeMetadataEndpoint, [
         policyIssueType,
       ]).as('metaApiRequest')
-      cy.visit(`${interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
       cy.wait('@metaApiRequest')
 
@@ -561,7 +561,7 @@ describe('Interactions Collections Filter', () => {
       cy.intercept('GET', companyOneListTierGroupMetadataEndpoint, [
         companyOneListgroupTier,
       ]).as('metaApiRequest')
-      cy.visit(`${interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.wait('@metaApiRequest')
       assertCheckboxGroupOption({
@@ -578,7 +578,7 @@ describe('Interactions Collections Filter', () => {
       cy.intercept('GET', companyOneListTierGroupMetadataEndpoint, [
         companyOneListgroupTier,
       ]).as('metaApiRequest')
-      cy.visit(`${interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
       cy.wait('@metaApiRequest')
 

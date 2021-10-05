@@ -17,7 +17,7 @@ describe('Investment opportunities', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Investments: '/investments',
+        Investments: investments.index(),
         'UK opportunities': null,
       })
     })

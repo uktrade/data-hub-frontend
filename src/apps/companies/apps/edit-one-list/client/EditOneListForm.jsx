@@ -92,7 +92,10 @@ function EditOneListForm(state) {
                 heading={`Add or edit ${companyName} One List information`}
                 breadcrumbs={[
                   { link: dashboard(), text: 'Home' },
-                  { link: companies.index(), text: 'Companies' },
+                  {
+                    link: companies.index(),
+                    text: 'Companies',
+                  },
                   { link: companies.detail(companyId), text: companyName },
                   { text: 'Edit One List information' },
                 ]}

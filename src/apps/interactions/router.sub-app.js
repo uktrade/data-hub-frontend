@@ -16,7 +16,7 @@ const detailsFormRouter = require('./apps/details-form/router')
 router.param('interactionId', getInteractionDetails)
 
 router.get(
-  urls.interactions.index.route,
+  '/',
   getInteractionsRequestBody,
   getInteractionCollectionForEntity,
   getInteractionSortForm,

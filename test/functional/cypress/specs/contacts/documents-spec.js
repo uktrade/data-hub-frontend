@@ -1,5 +1,7 @@
 import { assertBreadcrumbs } from '../../support/assertions'
 
+const { contacts } = require('../../../../../src/lib/urls')
+
 const selectors = require('../../../../selectors')
 
 describe('Contact Documents', () => {
@@ -11,7 +13,7 @@ describe('Contact Documents', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Contacts: '/contacts',
+        Contacts: contacts.index(),
         'Joseph Woof': '/contacts/5e75d636-1d24-416a-aaf0-3fb220d594ce',
         Documents: null,
       })
@@ -38,7 +40,7 @@ describe('Contact Documents', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Contacts: '/contacts',
+        Contacts: contacts.index(),
         'Joseph Woof': '/contacts/5555d636-1d24-416a-aaf0-3fb220d59aaa',
         Documents: null,
       })

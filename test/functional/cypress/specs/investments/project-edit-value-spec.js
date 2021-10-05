@@ -23,7 +23,7 @@ describe('Edit the value details of a project', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Investments: '/investments',
+        Investments: investments.index(),
         Projects: investments.projects.index(),
         [projectLandingBeforeApril.name]: investments.projects.project(
           projectLandingBeforeApril.id

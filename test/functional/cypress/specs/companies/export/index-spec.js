@@ -68,7 +68,7 @@ describe('Company Export tab', () => {
       it('should render breadcrumbs', () => {
         assertBreadcrumbs({
           Home: '/',
-          Companies: '/companies',
+          Companies: urls.companies.index(),
           [fixtures.company.dnbCorp.name]: urls.companies.detail(
             fixtures.company.dnbCorp.id
           ),

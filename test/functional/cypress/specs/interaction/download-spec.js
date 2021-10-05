@@ -78,7 +78,7 @@ describe('Download CSV', () => {
           count: 5000,
         },
       })
-      cy.visit(urls.interactions.index())
+      cy.visit(`${urls.interactions.index()}?page=1&sortby=date:desc`)
     })
     it('should render a download message', () => {
       cy.get(downloadHeader).should(
@@ -109,7 +109,7 @@ describe('Download CSV', () => {
           count: interactionsList.length,
         },
       })
-      cy.visit(`${urls.interactions.index()}?${queryString}`)
+      cy.visit(`/interactions?${queryString}`)
     })
     it('should have the correct query string', () => {
       cy.get(downloadButton).should(

@@ -37,7 +37,7 @@ const assertViewHeader = ({ project }) => {
   it('should render breadcrumbs', () => {
     assertBreadcrumbs({
       Home: '/',
-      Investments: '/investments',
+      Investments: investments.index(),
       Projects: investments.projects.index(),
       [project.name]: investments.projects.project(project.id),
       'Project team': null,

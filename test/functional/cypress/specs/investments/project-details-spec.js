@@ -14,7 +14,7 @@ describe('Investment project details', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: urls.dashboard(),
-        Investments: '/investments',
+        Investments: urls.investments.index(),
         Projects: urls.investments.projects.index(),
         [fixtures.investment.stageWon.name]: null,
       })

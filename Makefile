@@ -11,7 +11,7 @@ ifdef CI
 	start-command = up --build --force-recreate -d
 	cypress-args = -- --parallel --record --key $(CYPRESS_DASHBOARD_KEY) --ci-build-id $(CIRCLE_BUILD_NUM)
 else
-	start-command = up
+	start-command = up --build --force-recreate
 	cypress-args =
 endif
 
