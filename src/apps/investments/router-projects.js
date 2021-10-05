@@ -3,7 +3,6 @@ const router = require('express').Router()
 const urls = require('../../lib/urls')
 
 const {
-  DEFAULT_COLLECTION_QUERY,
   APP_PERMISSIONS,
   QUERY_FIELDS,
   QUERY_DATE_FIELDS,
@@ -17,7 +16,6 @@ const {
 const setInvestmentTabItems = require('./middleware/investments-tab-items')
 const setLocalNavigation = require('./middleware/local-navigation')
 const {
-  setDefaultQuery,
   redirectToFirstNavItem,
   handleRoutePermissions,
 } = require('../middleware')
@@ -102,7 +100,6 @@ router.get('/', setInvestmentTabItems, renderProjectsView)
 
 router.get(
   '/export',
-  setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS, QUERY_DATE_FIELDS),
   exportCollection('investment_project')
 )

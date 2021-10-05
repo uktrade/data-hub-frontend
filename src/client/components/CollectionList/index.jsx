@@ -27,7 +27,6 @@ const CollectionList = ({
   activePage = 1,
   onPageClick,
   maxItemsToPaginate = 10000,
-  includeDownloadHeader = true,
   maxItemsToDownload,
   baseDownloadLink,
   entityName,
@@ -54,7 +53,7 @@ const CollectionList = ({
           {sortOptions && (
             <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
           )}
-          {includeDownloadHeader && (
+          {baseDownloadLink && (
             <RoutedDownloadDataHeader
               count={count}
               maxItems={maxItemsToDownload}

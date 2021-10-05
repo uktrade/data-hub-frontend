@@ -17,11 +17,6 @@ const QUERY_FIELDS_MAP = {
   area: 'area',
 }
 
-const DEFAULT_COLLECTION_QUERY = {
-  sortby: 'modified_on:desc',
-  [QUERY_FIELDS_MAP.archived]: false,
-}
-
 const GLOBAL_NAV_ITEM = {
   path: '/companies',
   headerKey: 'datahub-companies',
@@ -76,7 +71,6 @@ const NOT_AVAILABLE_TEXT = 'Not available'
 module.exports = {
   GLOBAL_NAV_ITEM,
   LOCAL_NAV,
-  DEFAULT_COLLECTION_QUERY,
   APP_PERMISSIONS,
   QUERY_FIELDS,
   QUERY_FIELDS_MAP,

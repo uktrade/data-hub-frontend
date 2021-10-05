@@ -97,7 +97,6 @@ describe('Download CSV', () => {
       date_before: '2023-06-24',
       service: ['94a2473d-e898-4e1c-a082-ddfde8f297ff'],
       sector_descends: ['af959812-6095-e211-a939-e4115bead28a'],
-      was_policy_feedback_provided: true,
       policy_areas: ['4b9142df-0520-46bd-9da9-94147cdbae13'],
       policy_issue_types: ['688ac22e-89d4-4d1f-bf0b-013588bf63a7'],
       company_one_list_group_tier: ['b91bf800-8d53-e311-aef3-441ea13961e2'],
@@ -116,6 +115,24 @@ describe('Download CSV', () => {
         'have.attr',
         'href',
         `/interactions/export?${queryString}`
+      )
+    })
+  })
+  context('When the policy feedback filter is applied', () => {
+    it('should not include policy feedback when no filters have been applied', () => {
+      cy.visit('/interactions')
+      cy.get(downloadButton).should('have.attr', 'href', '/interactions/export')
+    })
+    it('should include policy feedback when the filter has been applied', () => {
+      cy.visit(
+        `/interactions?${qs.stringify({
+          was_policy_feedback_provided: ['true'],
+        })}`
+      )
+      cy.get(downloadButton).should(
+        'have.attr',
+        'href',
+        '/interactions/export?was_policy_feedback_provided=true'
       )
     })
   })

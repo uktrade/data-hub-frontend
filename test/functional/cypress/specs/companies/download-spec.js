@@ -48,7 +48,7 @@ describe('Download CSV', () => {
         .should(
           'have.attr',
           'href',
-          '/companies/export?archived%5B0%5D=false&sortby=modified_on%3Adesc'
+          '/companies/export?archived=false&sortby=modified_on%3Adesc'
         )
         .and('contain', 'Download')
     })
@@ -110,7 +110,6 @@ describe('Download CSV', () => {
       sector_descends: ['test-sector'],
       uk_postcode: 'AB1 2CD, EF3 4GH',
       uk_region: ['region-id'],
-      archived: ['true'],
       country: ['uk-country-id'],
       export_to_countries: ['uk-country-id'],
       future_interest_countries: ['uk-country-id'],
@@ -133,6 +132,33 @@ describe('Download CSV', () => {
         'have.attr',
         'href',
         `/companies/export?${queryString}`
+      )
+    })
+  })
+
+  context('When the archived filter is applied', () => {
+    it('should not include archived when there are no filters', () => {
+      cy.visit('/companies')
+      cy.get(downloadButton).should('have.attr', 'href', '/companies/export')
+    })
+    it('should not include archived when both filters have been applied', () => {
+      cy.visit(`/companies?${qs.stringify({ archived: ['true', 'false'] })}`)
+      cy.get(downloadButton).should('have.attr', 'href', '/companies/export')
+    })
+    it('should include archived - true', () => {
+      cy.visit(`/companies?${qs.stringify({ archived: ['true'] })}`)
+      cy.get(downloadButton).should(
+        'have.attr',
+        'href',
+        '/companies/export?archived=true'
+      )
+    })
+    it('should include archived - false', () => {
+      cy.visit(`/companies?${qs.stringify({ archived: ['false'] })}`)
+      cy.get(downloadButton).should(
+        'have.attr',
+        'href',
+        '/companies/export?archived=false'
       )
     })
   })

@@ -1,11 +1,7 @@
 const router = require('express').Router()
 const urls = require('../../lib/urls')
 
-const {
-  LOCAL_NAV,
-  DEFAULT_COLLECTION_QUERY,
-  QUERY_FIELDS,
-} = require('./constants')
+const { LOCAL_NAV, QUERY_FIELDS } = require('./constants')
 
 const { getRequestBody } = require('../../middleware/collection')
 const {
@@ -14,7 +10,6 @@ const {
 
 const {
   setLocalNav,
-  setDefaultQuery,
   redirectToFirstNavItem,
   handleRoutePermissions,
 } = require('../middleware')
@@ -32,12 +27,7 @@ const interactionsRouter = require('../interactions/router.sub-app')
 router.get(urls.contacts.index(), renderContactsView)
 router.get(['/create', '/:contactId/edit'], createAndEdit)
 
-router.get(
-  '/export',
-  setDefaultQuery(DEFAULT_COLLECTION_QUERY),
-  getRequestBody(QUERY_FIELDS),
-  exportCollection('contact')
-)
+router.get('/export', getRequestBody(QUERY_FIELDS), exportCollection('contact'))
 
 router.use(
   '/:contactId',

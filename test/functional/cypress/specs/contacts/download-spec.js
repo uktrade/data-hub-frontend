@@ -42,7 +42,7 @@ describe('Download CSV', () => {
         .should(
           'have.attr',
           'href',
-          '/contacts/export?archived%5B0%5D=false&sortby=modified_on%3Adesc'
+          '/contacts/export?archived=false&sortby=modified_on%3Adesc'
         )
         .and('contain', 'Download')
     })
@@ -98,7 +98,6 @@ describe('Download CSV', () => {
       company_sector_descends: 'af959812-6095-e211-a939-e4115bead28a',
       address_country: '80756b9a-5d95-e211-a939-e4115bead28a',
       company_uk_region: '924cd12a-6095-e211-a939-e4115bead28a',
-      archived: ['false', 'true'],
     })
     before(() => {
       cy.intercept('POST', '/api-proxy/v3/search/contact', {
@@ -114,6 +113,32 @@ describe('Download CSV', () => {
         'have.attr',
         'href',
         `/contacts/export?${queryString}`
+      )
+    })
+  })
+  context('When the archived filter is applied', () => {
+    it('should not include archived when there are no filters', () => {
+      cy.visit('/contacts')
+      cy.get(downloadButton).should('have.attr', 'href', '/contacts/export')
+    })
+    it('should not include archived when both filters have been applied', () => {
+      cy.visit(`/contacts?${qs.stringify({ archived: ['true', 'false'] })}`)
+      cy.get(downloadButton).should('have.attr', 'href', '/contacts/export')
+    })
+    it('should include archived - true', () => {
+      cy.visit(`/contacts?${qs.stringify({ archived: ['true'] })}`)
+      cy.get(downloadButton).should(
+        'have.attr',
+        'href',
+        '/contacts/export?archived=true'
+      )
+    })
+    it('should include archived - false', () => {
+      cy.visit(`/contacts?${qs.stringify({ archived: ['false'] })}`)
+      cy.get(downloadButton).should(
+        'have.attr',
+        'href',
+        '/contacts/export?archived=false'
       )
     })
   })
