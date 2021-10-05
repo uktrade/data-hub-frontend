@@ -458,12 +458,12 @@ describe('Investments Collections Filter', () => {
     const expectedPayload = {
       offset: 0,
       limit: 10,
-      financial_year_start: [`${yearStart}`],
+      land_date_financial_year_start: [`${yearStart}`],
     }
 
     it('should filter from the url', () => {
       const queryString = buildQueryString({
-        financial_year_start: [yearStart],
+        land_date_financial_year_start: [yearStart],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
@@ -487,7 +487,7 @@ describe('Investments Collections Filter', () => {
         value: yearStart,
       })
       assertPayload('@apiRequest', expectedPayload)
-      assertQueryParams('financial_year_start[0]', yearStart)
+      assertQueryParams('land_date_financial_year_start[0]', yearStart)
       assertChipExists({ label: `Current year ${yearRange}`, position: 1 })
 
       removeChip(yearStart)

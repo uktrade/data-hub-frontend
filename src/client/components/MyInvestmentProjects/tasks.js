@@ -27,7 +27,7 @@ export const fetchMyInvestmentsList = ({
     payload.status = status
   }
   if (landDate !== 'all-land-dates') {
-    payload.financial_year_start = [landDate]
+    payload.land_date_financial_year_start = [landDate]
   }
 
   return apiProxyAxios

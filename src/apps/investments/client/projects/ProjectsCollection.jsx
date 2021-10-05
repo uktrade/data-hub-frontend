@@ -164,9 +164,9 @@ const ProjectsCollection = ({
           groupId="investment-type-filter"
         />
         <RoutedCheckboxGroupField
-          legend="Financial Year"
-          name="financial_year_start"
-          qsParam="financial_year_start"
+          legend="Land date"
+          name="land_date_financial_year_start"
+          qsParam="land_date_financial_year_start"
           options={optionMetadata.financialYearOptions}
           selectedOptions={selectedFilters.financialYears.options}
           data-test="financial-year-filter"

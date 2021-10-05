@@ -110,7 +110,7 @@ describe('Download CSV', () => {
       uk_region_location: '844cd12a-6095-e211-a939-e4115bead28a',
       status: ['ongoing', 'delayed'],
       investment_type: '031269ab-b7ec-40e9-8a4e-7371404f0622',
-      financial_year_start: '2021',
+      land_date_financial_year_start: '2021',
       likelihood_to_land: 'b3515282-dc36-487a-a5af-320cde165575',
       estimated_land_date_before: '2022-01-25',
       estimated_land_date_after: '2022-01-01',

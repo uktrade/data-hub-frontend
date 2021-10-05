@@ -102,7 +102,7 @@ describe('Investment projects summary', () => {
   context('with filters applied', () => {
     it('should apply status and land date filters to links', () => {
       const financialYearStart = getFinancialYearStart(new Date()).toString()
-      const query = `adviser=${myAdviserId}&financial_year_start[0]=${financialYearStart}&status=ongoing`
+      const query = `adviser=${myAdviserId}&land_date_financial_year_start[0]=${financialYearStart}&status=ongoing`
       cy.get('[data-test="land-date-select"] select').select(financialYearStart)
       cy.get('[data-test="status-select"] select').select('Ongoing')
 
