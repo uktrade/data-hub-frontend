@@ -31,7 +31,7 @@ describe('Interaction details', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Companies: '/companies',
+        Companies: companies.index(),
         Interaction: null,
       })
     })
@@ -101,7 +101,7 @@ describe('Interaction details', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Companies: '/companies',
+        Companies: companies.index(),
         Interaction: null,
       })
     })
@@ -166,7 +166,7 @@ describe('Interaction details', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Companies: '/companies',
+        Companies: companies.index(),
         Interaction: null,
       })
     })
@@ -231,7 +231,7 @@ describe('Interaction details', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Companies: '/companies',
+        Companies: companies.index(),
         'Service delivery': null,
       })
     })
@@ -304,7 +304,7 @@ describe('Interaction details', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Companies: '/companies',
+        Companies: companies.index(),
         Interaction: null,
       })
     })

@@ -10,7 +10,10 @@ function renderContacts(req, res) {
       company,
       breadcrumbs: [
         { link: urls.dashboard(), text: 'Home' },
-        { link: urls.companies.index(), text: 'Companies' },
+        {
+          link: urls.companies.index(),
+          text: 'Companies',
+        },
         { link: urls.companies.detail(company.id), text: company.name },
         { text: 'Contacts' },
       ],

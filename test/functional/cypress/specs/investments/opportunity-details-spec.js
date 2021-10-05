@@ -43,7 +43,7 @@ describe('UK Opportunity with missing data', () => {
     it('should display correct breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Investments: '/investments',
+        Investments: investments.index(),
         'UK opportunities': '/investments/opportunities',
         [incompleteOpportunity.name]: `/investments/opportunities/${incompleteOpportunity.id}/details`,
         Details: '',
@@ -195,7 +195,7 @@ describe('UK Opportunity with complete data', () => {
     it('should display correct breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Investments: '/investments',
+        Investments: investments.index(),
         'UK opportunities': '/investments/opportunities',
         [completeOpportunity.name]: `/investments/opportunities/${completeOpportunity.id}/details`,
         Details: '',

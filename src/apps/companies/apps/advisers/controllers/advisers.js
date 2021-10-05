@@ -41,7 +41,10 @@ function renderLeadAdvisers(req, res) {
       company,
       breadcrumbs: [
         { link: urls.dashboard(), text: 'Home' },
-        { link: urls.companies.index(), text: 'Companies' },
+        {
+          link: urls.companies.index(),
+          text: 'Companies',
+        },
         { link: urls.companies.detail(company.id), text: company.name },
         { text: 'Lead adviser' },
       ],
@@ -85,7 +88,10 @@ async function renderCoreTeamAdvisers(req, res, next) {
         company,
         breadcrumbs: [
           { link: urls.dashboard(), text: 'Home' },
-          { link: urls.companies.index(), text: 'Companies' },
+          {
+            link: urls.companies.index(),
+            text: 'Companies',
+          },
           { link: urls.companies.detail(company.id), text: company.name },
           { text: 'Core Team' },
         ],

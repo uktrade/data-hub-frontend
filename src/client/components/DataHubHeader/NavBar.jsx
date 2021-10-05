@@ -1,3 +1,4 @@
+import React from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { BLACK } from 'govuk-colours'
@@ -8,10 +9,13 @@ import {
   SPACING,
   MEDIA_QUERIES,
 } from '@govuk-react/constants'
+import ProtectedLink from '../ProtectedLink'
 
 // Colours not defined in 'govuk-colours' which we need for consistency
 // with Find Exporters and Market Access.
 import { LIGHT_GREY, DARK_BLUE } from '../../utils/colors'
+
+import links from './links'
 
 const StyledNavContainer = styled.div({
   position: 'relative',
@@ -59,22 +63,24 @@ const styledLinkActive = {
 }
 
 const styledLink = {
-  position: 'relative',
-  display: 'block',
-  margin: 0,
-  padding: `${SPACING.SCALE_1} 0`,
-  fontSize: FONT_SIZE.SIZE_16,
-  textDecoration: 'none',
-  lineHeight: '23px',
-  color: BLACK,
-  '&.active': {
-    color: DARK_BLUE,
-  },
-  [MEDIA_QUERIES.TABLET]: {
-    display: 'inline-block',
-    padding: '8px 0',
-    ':hover::after': styledLinkActive,
-    '&.active::after': styledLinkActive,
+  '&:link, &:visited': {
+    position: 'relative',
+    display: 'block',
+    margin: 0,
+    padding: `${SPACING.SCALE_1} 0`,
+    fontSize: FONT_SIZE.SIZE_16,
+    textDecoration: 'none',
+    lineHeight: '23px',
+    color: BLACK,
+    '&.active': {
+      color: DARK_BLUE,
+    },
+    [MEDIA_QUERIES.TABLET]: {
+      display: 'inline-block',
+      padding: '8px 0',
+      ':hover::after': styledLinkActive,
+      '&.active::after': styledLinkActive,
+    },
   },
 }
 
@@ -83,57 +89,37 @@ const StyledLink = styled.a(styledLink)
 
 const NavBar = ({ onShowVerticalNav, showVerticalNav }) => (
   <StyledNavContainer>
-    <StyledNav aria-labelledby="navigation">
+    <StyledNav aria-labelledby="navigation" data-test="primary-navigation">
       <StyledList
         showVerticalNav={showVerticalNav}
         id="navigation"
         aria-label="Top Level Navigation"
         onClick={() => onShowVerticalNav(!showVerticalNav)}
       >
+        {links.map(({ label, useRouter, module, to, ...rest }, i) => (
+          <ProtectedLink module={module} key={i}>
+            {useRouter ? (
+              <StyledListItem>
+                <StyledNavLink to={to} activeClassName="active" {...rest}>
+                  {label}
+                </StyledNavLink>
+              </StyledListItem>
+            ) : (
+              <StyledListItem>
+                <StyledLink href={`${to.pathname}${to.search}`}>
+                  {label}
+                </StyledLink>
+              </StyledListItem>
+            )}
+          </ProtectedLink>
+        ))}
         <StyledListItem>
-          <StyledNavLink to="/companies" activeClassName="active">
-            Companies
-          </StyledNavLink>
-        </StyledListItem>
-        <StyledListItem>
-          <StyledNavLink to="/contacts" activeClassName="active">
-            Contacts
-          </StyledNavLink>
-        </StyledListItem>
-        <StyledListItem>
-          <StyledNavLink to="/events" activeClassName="active">
-            Events
-          </StyledNavLink>
-        </StyledListItem>
-        <StyledListItem>
-          <StyledNavLink to="/interactions" activeClassName="active">
-            Interactions
-          </StyledNavLink>
-        </StyledListItem>
-        <StyledListItem>
-          <StyledNavLink to="/investments" activeClassName="active">
-            Investments
-          </StyledNavLink>
-        </StyledListItem>
-        <StyledListItem>
-          <StyledNavLink to="/omis" activeClassName="active">
-            Orders
-          </StyledNavLink>
-        </StyledListItem>
-        <StyledListItem>
-          <StyledLink href="https://find-exporters.datahub.trade.gov.uk/">
-            Find exporters
-          </StyledLink>
-        </StyledListItem>
-        <StyledListItem>
-          <StyledLink href="https://market-access.trade.gov.uk/">
-            Market Access
-          </StyledLink>
-        </StyledListItem>
-        <StyledListItem>
-          <StyledNavLink to="/support" activeClassName="active">
+          <StyledLink
+            href="/support"
+            className="datahub-header__navigation__item__link"
+          >
             Support
-          </StyledNavLink>
+          </StyledLink>
         </StyledListItem>
       </StyledList>
     </StyledNav>

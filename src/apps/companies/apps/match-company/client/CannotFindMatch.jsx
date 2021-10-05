@@ -48,7 +48,10 @@ function CannotFindMatch({ company, csrfToken }) {
         heading="I still can’t find what I’m looking for"
         breadcrumbs={[
           { link: urls.dashboard(), text: 'Home' },
-          { link: urls.companies.index(), text: 'Companies' },
+          {
+            link: urls.companies.index(),
+            text: 'Companies',
+          },
           { link: urls.companies.detail(company.id), text: company.name },
           {
             text: 'Send business details',

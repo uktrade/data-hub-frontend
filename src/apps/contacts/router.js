@@ -29,7 +29,7 @@ const { setInteractionsDetails } = require('./middleware/interactions')
 
 const interactionsRouter = require('../interactions/router.sub-app')
 
-router.get(urls.contacts.index.route, renderContactsView)
+router.get(urls.contacts.index(), renderContactsView)
 router.get(['/create', '/:contactId/edit'], createAndEdit)
 
 router.get(
@@ -57,7 +57,7 @@ router.get('/:contactId/audit', getAudit)
 router.get('/:contactId/documents', renderDocuments)
 
 router.use(
-  urls.contacts.interactions.index.route,
+  '/:contactId/interactions',
   setInteractionsDetails,
   interactionsRouter
 )

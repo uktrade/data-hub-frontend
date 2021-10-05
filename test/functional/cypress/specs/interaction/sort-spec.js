@@ -7,7 +7,6 @@ describe('Interactions Collections Sort', () => {
     before(() => {
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
       cy.visit(urls.interactions.index())
-      cy.wait('@apiRequest')
     })
 
     it('should apply the default sort', () => {

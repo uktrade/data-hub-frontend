@@ -27,14 +27,14 @@ import {
   InvestmentReminders,
   Search,
   DashboardTabs,
-  Container,
+  CustomContainer,
 } from '../../components'
 
 const SearchBackground = styled('div')`
   background-color: ${BLUE};
 `
 
-const SearchContainer = styled(Container)`
+const SearchContainer = styled(CustomContainer)`
   padding: ${SPACING.SCALE_2} 0;
 
   ${MEDIA_QUERIES.TABLET} {
@@ -68,7 +68,7 @@ const PersonalisedDashboard = ({
         <Search csrfToken={csrfToken} />
       </SearchContainer>
     </SearchBackground>
-    <Container width="1180">
+    <CustomContainer width="1180">
       <Task.Status
         name={TASK_CHECK_FOR_INVESTMENTS}
         id={CHECK_FOR_INVESTMENTS_ID}
@@ -122,7 +122,7 @@ const PersonalisedDashboard = ({
           </GridRow>
         )}
       </Task.Status>
-    </Container>
+    </CustomContainer>
   </ThemeProvider>
 )
 

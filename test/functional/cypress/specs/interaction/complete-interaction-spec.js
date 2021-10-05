@@ -1,6 +1,7 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const { assertBreadcrumbs } = require('../../support/assertions')
+const urls = require('../../../../../src/lib/urls')
 
 const companyLocalHeader = selectors.companyLocalHeader()
 
@@ -26,7 +27,7 @@ describe('Complete interaction', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Companies: '/companies',
+        Companies: urls.companies.index(),
         [fixtures.company.venusLtd
           .name]: `/companies/${fixtures.company.venusLtd.id}`,
         Interactions: `/companies/${fixtures.company.venusLtd.id}/interactions`,

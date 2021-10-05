@@ -7,7 +7,6 @@ describe('Contact Collections Sort', () => {
     before(() => {
       cy.intercept('POST', companySearchEndpoint).as('apiRequest')
       cy.visit(urls.companies.index())
-      cy.wait('@apiRequest')
     })
 
     it('should apply the default sort', () => {
@@ -34,7 +33,7 @@ describe('Contact Collections Sort', () => {
 
     beforeEach(() => {
       cy.intercept('POST', companySearchEndpoint).as('apiRequest')
-      cy.visit(`${urls.companies.index()}?page=1`)
+      cy.visit('/companies?page=1')
       cy.wait('@apiRequest')
     })
 

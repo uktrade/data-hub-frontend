@@ -49,7 +49,10 @@ const SendReferralForm = ({
         heading={'Send a referral'}
         breadcrumbs={[
           { link: dashboard(), text: 'Home' },
-          { link: companies.index(), text: 'Companies' },
+          {
+            link: companies.index(),
+            text: 'Companies',
+          },
           { link: companies.detail(companyId), text: companyName },
           { text: 'Send a referral' },
         ]}

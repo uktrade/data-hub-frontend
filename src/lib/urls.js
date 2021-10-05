@@ -1,4 +1,5 @@
 const queryString = require('qs')
+const { PRIMARY_LINK_PARAMS } = require('../../src/common/constants')
 
 function getTokens(path) {
   const tokens = []
@@ -57,7 +58,10 @@ function url(mountPoint, subMountPoint, path) {
 
 function createInteractionsSubApp(mountPoint, pathPrefix = '') {
   return {
-    index: url(mountPoint, pathPrefix),
+    index:
+      mountPoint === '/interactions'
+        ? url(mountPoint, PRIMARY_LINK_PARAMS.interactions, pathPrefix)
+        : url(mountPoint, pathPrefix),
     detail: url(mountPoint, pathPrefix + '/:interactionId'),
     create: url(mountPoint, pathPrefix + '/create'),
     createType: url(mountPoint, pathPrefix + '/create/:theme/:kind'),
@@ -104,7 +108,7 @@ module.exports = {
     signout: url('/oauth/sign-out'),
   },
   companies: {
-    index: url('/companies'),
+    index: url('/companies', PRIMARY_LINK_PARAMS.companies),
     create: url('/companies', '/create'),
     export: url('/companies', '/export'),
     detail: url('/companies', '/:companyId'),
@@ -210,7 +214,7 @@ module.exports = {
     rename: url('/company-lists', '/:listId/rename'),
   },
   contacts: {
-    index: url('/contacts'),
+    index: url('/contacts', PRIMARY_LINK_PARAMS.contacts),
     export: url('/contacts', '/export'),
     audit: url('/contacts', '/:contactId/audit'),
     contact: url('/contacts', '/:contactId'),
@@ -225,7 +229,7 @@ module.exports = {
     ),
   },
   events: {
-    index: url('/events'),
+    index: url('/events', PRIMARY_LINK_PARAMS.events),
     create: url('/events/create'),
     details: url('/events', '/:eventId/details'),
     edit: url('/events', '/:eventId/edit'),
@@ -243,7 +247,7 @@ module.exports = {
     export: url('/interactions', '/export'),
   },
   investments: {
-    index: url('/investments'),
+    index: url('/investments', PRIMARY_LINK_PARAMS.investments),
     projects: {
       index: url('/investments', '/projects'),
       export: url('/investments', '/projects', '/export'),
@@ -407,11 +411,7 @@ module.exports = {
     tradeAgreement: url('/api-proxy/v4/metadata', '/trade-agreement'),
   },
   omis: {
-    index: url('/omis'),
-    // React routes (Work in progress) - to be released on completion
-    react: {
-      index: url('/omis', '/react'),
-    },
+    index: url('/omis', PRIMARY_LINK_PARAMS.omis),
     export: url('/omis', '/export'),
     create: url('/omis/create?company=', ':companyId'),
     reconciliation: url('/omis/reconciliation'),

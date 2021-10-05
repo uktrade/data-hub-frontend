@@ -41,8 +41,12 @@ describe('urls', () => {
     })
     it('should return the correct values', () => {
       expect(urls.companies.index.mountPoint).to.equal('/companies')
-      expect(urls.companies.index.route).to.equal('/')
-      expect(urls.companies.index()).to.equal('/companies')
+      expect(urls.companies.index.route).to.equal(
+        '?archived[0]=false&sortby=modified_on:desc&page=1'
+      )
+      expect(urls.companies.index()).to.equal(
+        '/companies?archived[0]=false&sortby=modified_on:desc&page=1'
+      )
 
       expect(urls.companies.detail.route).to.equal('/:companyId')
       expect(urls.companies.detail(companyId)).to.equal(
@@ -235,8 +239,12 @@ describe('urls', () => {
   describe('contacts', () => {
     it('should return the correct values', () => {
       expect(urls.contacts.index.mountPoint).to.equal('/contacts')
-      expect(urls.contacts.index.route).to.equal('/')
-      expect(urls.contacts.index()).to.equal('/contacts')
+      expect(urls.contacts.index.route).to.equal(
+        '?archived[0]=false&sortby=modified_on:desc&page=1'
+      )
+      expect(urls.contacts.index()).to.equal(
+        '/contacts?archived[0]=false&sortby=modified_on:desc&page=1'
+      )
 
       const contactId = faker.datatype.uuid()
       expect(urls.contacts.interactions.create(contactId)).to.equal(
@@ -276,7 +284,9 @@ describe('urls', () => {
 
   describe('investments', () => {
     it('should return the correct values', () => {
-      expect(urls.investments.index()).to.equal('/investments')
+      expect(urls.investments.index()).to.equal(
+        '/investments?page=1&sortby=created_on:desc'
+      )
       expect(urls.investments.projects.index()).to.equal(
         '/investments/projects'
       )

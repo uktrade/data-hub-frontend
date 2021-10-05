@@ -68,7 +68,7 @@ const LOCAL_NAV = [
 
 const INVESTMENT_TAB_ITEMS = [
   {
-    path: 'projects',
+    path: 'projects/?page=1&sortby=created_on:desc',
     label: 'Projects',
   },
   {

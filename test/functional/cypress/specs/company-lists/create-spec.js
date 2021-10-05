@@ -1,6 +1,7 @@
 const selectors = require('../../../../selectors')
 const fixtures = require('../../fixtures')
 const { testBreadcrumbs } = require('../../support/assertions')
+const urls = require('../../../../../src/lib/urls')
 
 describe('Create a company list', () => {
   context('when viewing a Create list form', () => {
@@ -10,7 +11,7 @@ describe('Create a company list', () => {
 
     testBreadcrumbs({
       Home: '/',
-      Companies: '/companies',
+      Companies: urls.companies.index(),
       'Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978':
         '/companies/4cd4128b-1bad-4f1e-9146-5d4678c6a018',
       'Create a list': undefined,

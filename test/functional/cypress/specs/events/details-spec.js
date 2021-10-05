@@ -16,7 +16,7 @@ describe('Event Details', () => {
 
     assertBreadcrumbs({
       Home: urls.dashboard.route,
-      Events: '/events',
+      Events: urls.events.index(),
       'One-day exhibition': null,
     })
 
@@ -51,7 +51,7 @@ describe('Event Details', () => {
     it('should display no document link details', () => {
       assertBreadcrumbs({
         Home: urls.dashboard.route,
-        Events: '/events',
+        Events: urls.events.index(),
         'Teddy bear expo': null,
       })
 

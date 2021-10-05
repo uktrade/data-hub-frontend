@@ -232,11 +232,15 @@ Cypress.Commands.overwrite(
 )
 
 Cypress.Commands.add('setUserDitTeam', (id) => {
-  return cy.request('PUT', `${Cypress.env('sandbox_url')}/whoami`, { dit_team_id: id })
+  return cy.request('PUT', `${Cypress.env('sandbox_url')}/whoami`, {
+    dit_team_id: id,
+  })
 })
 
 Cypress.Commands.add('setUserFeatures', (features) => {
-  return cy.request('PUT', `${Cypress.env('sandbox_url')}/whoami`, { active_features: features })
+  return cy.request('PUT', `${Cypress.env('sandbox_url')}/whoami`, {
+    active_features: features,
+  })
 })
 
 Cypress.Commands.add('setAdviserId', (id) => {
@@ -248,7 +252,7 @@ Cypress.Commands.add('resetUser', () => {
 })
 
 Cypress.Commands.add('initA11y', (options = {}) => {
-  cy.injectAxe();
+  cy.injectAxe()
   cy.configureAxe(options)
 })
 
@@ -256,47 +260,51 @@ Cypress.Commands.add('checkRadioGroup', (label, option) =>
   cy
     .contains(label)
     .parent()
-    .within(() => cy.get(`[aria-label="${option}"]`).check()))
+    .within(() => cy.get(`[aria-label="${option}"]`).check())
+)
 
-Cypress.Commands.add(
-  'getSubmitButtonByLabel',
-  (label) => cy.get('form').contains(label)
+Cypress.Commands.add('getSubmitButtonByLabel', (label) =>
+  cy.get('form').contains(label)
 )
 
 Cypress.Commands.add('runA11y', (context = null, options = null) => {
   cy.checkA11y(context, options, (violations) => {
     const hasOneErr = violations.length === 1
-    const msg = `${violations.length} a11y violation${hasOneErr ? '' : 's'}` +
+    const msg =
+      `${violations.length} a11y violation${hasOneErr ? '' : 's'}` +
       `${hasOneErr ? 'was' : 'were'} detected`
 
     cy.task('log', msg)
-    cy.task('log',   violations.map(
-      ({ id, impact, description, help, helpUrl, nodes }) => ({
+    cy.task(
+      'log',
+      violations.map(({ id, impact, description, help, helpUrl, nodes }) => ({
         id,
         impact,
         description,
         help,
         helpUrl,
         nodes: nodes.length,
-      })
-    ))
+      }))
+    )
   })
 })
 
-Cypress.Commands.add(
-  'typeIntoInputs',
-  (labelValueMap) =>
-    Object.entries(labelValueMap)
-      .forEach(([label, value]) => cy.contains(label).type(value))
+Cypress.Commands.add('typeIntoInputs', (labelValueMap) =>
+  Object.entries(labelValueMap).forEach(([label, value]) =>
+    cy.contains(label).type(value)
+  )
 )
 
-Cypress.Commands.add(
-  'checkRadioGroup',
-  (label, option) =>
-    cy.contains(label).parent().find(`[aria-label="${option}"]`).check()
+Cypress.Commands.add('checkRadioGroup', (label, option) =>
+  cy.contains(label).parent().find(`[aria-label="${option}"]`).check()
 )
 
-Cypress.Commands.add(
-  'clickSubmitButton',
-  (label) => cy.get('form').contains('button', label).click()
+Cypress.Commands.add('clickSubmitButton', (label) =>
+  cy.get('form').contains('button', label).click()
 )
+
+Cypress.Commands.add('setModulePermissions', (permissions) => {
+  return cy.request('put', `${Cypress.env('sandbox_url')}/whoami`, {
+    permissions,
+  })
+})

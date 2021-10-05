@@ -1,8 +1,9 @@
 import styled from 'styled-components'
-import { typography } from '@govuk-react/lib'
+import { FONT_WEIGHTS, HEADING_SIZES } from '@govuk-react/constants'
 
 const LocalHeaderHeading = styled('h1')`
-  ${typography.font({ size: 36, weight: 'bold' })};
+  font-size: ${HEADING_SIZES.L}px;
+  font-weight: ${FONT_WEIGHTS.bold};
 `
 
 export default LocalHeaderHeading

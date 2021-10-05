@@ -83,7 +83,7 @@ const testProjectRequirementsForm = ({ project }) => {
   it('should render breadcrumbs', () => {
     assertBreadcrumbs({
       Home: '/',
-      Investments: '/investments',
+      Investments: investments.index(),
       Projects: investments.projects.index(),
       [project.name]: null,
     })

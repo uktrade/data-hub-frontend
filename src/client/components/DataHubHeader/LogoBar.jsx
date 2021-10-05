@@ -1,3 +1,4 @@
+import React from 'react'
 import { NavLink } from 'react-router-dom'
 import VisuallyHidden from '@govuk-react/visually-hidden'
 import styled from 'styled-components'
@@ -34,12 +35,14 @@ const StyledLogo = styled.div({
 })
 
 const StyledLogoNavLink = styled(NavLink)({
-  color: WHITE,
-  textDecoration: 'none',
-  boxShadow: 'none',
-  outline: 'none',
-  '&::after': {
-    content: '" "',
+  '&:link, &:visited': {
+    color: WHITE,
+    textDecoration: 'none',
+    boxShadow: 'none',
+    outline: 'none',
+    '&::after': {
+      content: '" "',
+    },
   },
 })
 
@@ -100,7 +103,9 @@ const LogoBar = ({ showVerticalNav }) => (
   <StyledLogoContainer>
     <StyledLogo>
       <VisuallyHidden>Department for International Trade</VisuallyHidden>
-      <StyledLogoNavLink to="/">Data Hub</StyledLogoNavLink>
+      <StyledLogoNavLink as="a" href="/">
+        Data Hub
+      </StyledLogoNavLink>
       <StyledTag>beta</StyledTag>
     </StyledLogo>
     <NavigationList

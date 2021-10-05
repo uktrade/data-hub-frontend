@@ -84,7 +84,10 @@ const Add = ({
         }`}
         breadcrumbs={[
           { link: urls.dashboard(), text: 'Home' },
-          { link: urls.companies.index(), text: 'Companies' },
+          {
+            link: urls.companies.index(),
+            text: 'Companies',
+          },
           { link: urls.companies.detail(companyId), text: companyName },
           {
             text: `${currentLeadITA ? 'Replace the Lead ITA' : 'Add Lead ITA'}`,
@@ -204,7 +207,10 @@ const Remove = ({
       heading="Remove the Lead ITA"
       breadcrumbs={[
         { link: urls.dashboard(), text: 'Home' },
-        { link: urls.companies.index(), text: 'Companies' },
+        {
+          link: urls.companies.index(),
+          text: 'Companies',
+        },
         { link: urls.companies.detail(companyId), text: companyName },
         {
           text: 'Remove the Lead ITA',

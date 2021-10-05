@@ -1,3 +1,4 @@
+import React from 'react'
 import { MEDIA_QUERIES, FONT_SIZE, SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { BLACK, WHITE, YELLOW } from 'govuk-colours'

@@ -162,7 +162,7 @@ describe('Error Middleware Test', () => {
         expect(this.renderSpy.args[0][1]).to.deep.equal({
           error: this.error,
           statusCode: errorCode403,
-          statusMessage: 'You don’t have permission to view this page',
+          statusMessage: "You don't have permission to view this page",
           showStackTrace: true,
         })
       })

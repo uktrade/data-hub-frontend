@@ -16,7 +16,7 @@ router.use('/opportunities', opportunitiesRouter)
 
 const redirectToProjects = (res) => {
   const { projects } = res.locals.paths
-  res.redirect(projects)
+  res.redirect(`${projects}?page=1&sortby=created_on:desc`)
 }
 
 router.get('/', (req, res) => {

@@ -3,6 +3,7 @@
  */
 
 const { isArray, isObject, each, extend, find, includes } = require('lodash')
+const { PRIMARY_LINK_PARAMS } = require('../common/constants.js')
 
 /**
  * Breadcrumbs initialization.
@@ -13,13 +14,31 @@ const { isArray, isObject, each, extend, find, includes } = require('lodash')
  *
  * @return {Function}
  */
+
 function init() {
   return function (req, res, next) {
     let breadcrumbs = []
 
+    function setDefaultParamsOnRoute(href) {
+      const paths = {
+        '/companies': `/companies${PRIMARY_LINK_PARAMS.companies}`,
+        '/contacts': `/contacts${PRIMARY_LINK_PARAMS.contacts}`,
+        '/events': `/events${PRIMARY_LINK_PARAMS.events}`,
+        '/interactions': `/interactions${PRIMARY_LINK_PARAMS.interactions}`,
+        '/investments': `/investments${PRIMARY_LINK_PARAMS.investments}`,
+        '/omis': `/omis${PRIMARY_LINK_PARAMS.omis}`,
+      }
+      return paths[href] || href
+    }
+
     function addBreadcrumb(item) {
       if (!includes(breadcrumbs, item)) {
-        breadcrumbs.push(item)
+        item.href
+          ? breadcrumbs.push({
+              ...item,
+              href: setDefaultParamsOnRoute(item.href),
+            })
+          : breadcrumbs.push(item)
       }
     }
 

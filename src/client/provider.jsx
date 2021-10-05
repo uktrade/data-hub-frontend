@@ -84,8 +84,8 @@ import {
 
 import investmentProjectsReducer from '../apps/investments/client/projects/reducer'
 
-import { ID as COMPANIES_ID } from '../apps/companies/client/state'
-import companiesReducer from '../apps/companies/client/reducer'
+import { ID as COMPANIES_ID } from './modules/Companies/CollectionList/state'
+import companiesReducer from './modules/Companies/CollectionList/reducer'
 
 import { ID as CHECK_FOR_INVESTMENTS_ID } from './components/PersonalisedDashboard/state'
 import personalDashboardReducer from './components/PersonalisedDashboard/reducer'
@@ -99,20 +99,20 @@ import investmentRemindersReducer from './components/InvestmentReminders/reducer
 import {
   CONTACTS_LIST_ID,
   COMPANY_CONTACTS_LIST_ID,
-} from '../apps/contacts/client/state'
-import contactsReducer from '../apps/contacts/client/reducer'
+} from './modules/Contacts/CollectionList/state'
+import contactsReducer from './modules/Contacts/CollectionList/reducer'
 
-import { ID as INTERACTIONS_ID } from '../apps/interactions/client/state'
-import interactionsReducer from '../apps/interactions/client/reducer'
-
-import { ID as EVENTS_ID } from '../apps/events/client/state'
-import eventsReducer from '../apps/events/client/reducer'
+import { ID as INTERACTIONS_ID } from './modules/Interactions/CollectionList/state'
+import interactionsReducer from './modules/Interactions/CollectionList/reducer'
 
 import { ID as EVENTS_DETAILS_ID } from '../apps/events/client/Details/state'
 import eventDetailsReducer from '../apps/events/client/Details/reducer'
 
-import { ID as ORDERS_ID } from '../apps/omis/client/state'
-import ordersReducer from '../apps/omis/client/reducer'
+import { ID as EVENTS_ID } from './modules/Events/CollectionList/state'
+import eventsReducer from './modules/Events/CollectionList/reducer'
+
+import { ID as ORDERS_ID } from './modules/Omis/CollectionList/state'
+import ordersReducer from './modules/Omis/CollectionList/reducer'
 
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
 
@@ -137,8 +137,24 @@ const history = createBrowserHistory({
   ),
 })
 
+const parseProps = (domNode) => {
+  if (!domNode) {
+    return {
+      modulePermissions: [],
+      currentAdviserId: '',
+    }
+  }
+  return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
+}
+
+const appWrapper = document.getElementById('react-app')
+
+const { modulePermissions, currentAdviserId } = parseProps(appWrapper)
+
 const store = createStore(
   combineReducers({
+    currentAdviserId: () => currentAdviserId,
+    modulePermissions: () => modulePermissions,
     router: connectRouter(history),
     tasks,
     [COMPANY_LISTS_STATE_ID]: companyListsReducer,

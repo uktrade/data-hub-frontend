@@ -8,6 +8,7 @@ const {
 
 const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
+
 const {
   company: {
     dnbGlobalUltimate,

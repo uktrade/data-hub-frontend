@@ -23,7 +23,7 @@ router.route('/create').post(postDetails, renderEditPage).get(renderEditPage)
 
 router.param('eventId', getEventDetails)
 
-router.get(urls.events.index.route, renderEventsView)
+router.get(urls.events.index(), renderEventsView)
 
 router.use(
   '/:eventId',

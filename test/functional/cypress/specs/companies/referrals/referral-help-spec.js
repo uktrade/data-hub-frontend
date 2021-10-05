@@ -15,7 +15,7 @@ describe('Referral help', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: urls.dashboard.route,
-        Companies: '/companies',
+        Companies: urls.companies.index(),
         'Lambda plc': urls.companies.detail(companyId),
         Referral: urls.companies.referrals.details(companyId, '1'),
         'I cannot accept this referral': null,

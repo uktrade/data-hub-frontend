@@ -19,7 +19,7 @@ describe('Referral details', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: urls.dashboard.route,
-        Companies: '/companies',
+        Companies: urls.companies.index(),
         'Lambda plc': urls.companies.detail(companyId),
         Referral: null,
       })
@@ -116,7 +116,7 @@ describe('Referral details', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: urls.dashboard.route,
-        Companies: '/companies',
+        Companies: urls.companies.index(),
         'Lambda plc': urls.companies.detail(companyId),
         Referral: null,
       })

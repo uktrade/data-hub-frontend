@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import * as Sentry from '@sentry/browser'
+import { Switch } from 'react-router-dom'
 
 import Provider from './provider'
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
@@ -40,16 +41,11 @@ import DeletePipelineItemForm from '../apps/my-pipeline/client/DeletePipelineIte
 import Dashboard from './components/Dashboard'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyLocalHeader from './components/CompanyLocalHeader'
-import CompaniesCollection from '../apps/companies/client/CompaniesCollection.jsx'
-import CompaniesContactsCollection from '../apps/contacts/client/CompanyContactsCollection.jsx'
-import ContactsCollection from '../apps/contacts/client/ContactsCollection.jsx'
-import OrdersCollection from '../apps/omis/client/OrdersCollection.jsx'
-import EventsCollection from '../apps/events/client/EventsCollection.jsx'
 import EventDetails from '../apps/events/client/Details/EventDetails.jsx'
-import InteractionsCollection from '../apps/interactions/client/InteractionsCollection'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 import CompanyProjectsCollection from '../apps/investments/client/projects/CompanyProjectsCollection.jsx'
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
+import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
 import IEBanner from '../apps/dashboard/client/IEBanner'
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
 import createUKInvestmentOpportunityTask from './components/CreateUKInvestmentOpportunity/tasks'
@@ -102,20 +98,25 @@ import {
   TASK_GET_COMPANIES_LIST,
   TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME,
   TASK_GET_COMPANIES_METADATA,
-} from '../apps/companies/client/state'
+} from './modules/Companies/CollectionList/state'
 import {
   getCompanies,
   getCompaniesMetadata,
-} from '../apps/companies/client/tasks'
+} from './modules/Companies/CollectionList/tasks'
 
 import {
   TASK_GET_EVENTS_LIST,
   TASK_GET_EVENTS_ORGANISER_NAME,
   TASK_GET_EVENTS_METADATA,
 } from '../apps/events/client/state'
-import { getEvents, getEventsMetadata } from '../apps/events/client/tasks'
+
 import { TASK_GET_EVENT_DETAILS } from '../apps/events/client/Details/state'
 import { getEventDetails } from '../apps/events/client/Details/tasks'
+
+import {
+  getEvents,
+  getEventsMetadata,
+} from './modules/Events/CollectionList/tasks'
 
 import { TASK_GET_PROFILES_LIST } from '../apps/investments/client/profiles/state'
 import * as investmentProfilesTasks from '../apps/investments/client/profiles/tasks'
@@ -147,17 +148,24 @@ import { TASK_CHECK_FOR_INVESTMENTS } from './components/PersonalisedDashboard/s
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
 import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentReminders/state'
 
-import { getContacts, getContactsMetadata } from '../apps/contacts/client/tasks'
+import {
+  getContacts,
+  getContactsMetadata,
+} from './modules/Contacts/CollectionList/tasks'
 import {
   getInteractions,
   getInteractionsMetadata,
-} from '../apps/interactions/client/tasks'
+} from './modules/Interactions/CollectionList/tasks'
 
 import {
   TASK_GET_ORDERS_LIST,
   TASK_GET_ORDERS_METADATA,
-} from '../apps/omis/client/state'
-import { getOrders, getOrdersMetadata } from '../apps/omis/client/tasks'
+} from './modules/Omis/CollectionList/state'
+
+import {
+  getOrders,
+  getOrdersMetadata,
+} from './modules/Omis/CollectionList/tasks'
 
 import { getAdviserNames } from './advisers'
 
@@ -166,19 +174,22 @@ import { getTeamNames } from './teams'
 import {
   TASK_GET_CONTACTS_LIST,
   TASK_GET_CONTACTS_METADATA,
-} from '../apps/contacts/client/state'
+} from './modules/Contacts/CollectionList/state'
 
 import {
   TASK_GET_INTERACTIONS_LIST,
   TASK_GET_INTERACTIONS_ADVISER_NAME,
   TASK_GET_INTERACTIONS_METADATA,
   TASK_GET_INTERACTIONS_TEAM_NAME,
-} from '../apps/interactions/client/state'
+} from './modules/Interactions/CollectionList/state'
 
 import Footer from '../client/components/Footer'
 
 import ContactForm from '../client/components/ContactForm'
 import resourceTasks from '../client/components/Resource/tasks'
+import { ProtectedRoute } from '../client/components'
+
+import routes from './routes'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -439,36 +450,35 @@ function App() {
       <Mount selector="#investment-projects-collection">
         {(props) => <InvestmentProjectsCollection {...props} />}
       </Mount>
+      <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
+      <Mount selector="#contact-form">
+        {(props) => <ContactForm {...props} id="contact-form" />}
+      </Mount>
       <Mount selector="#company-projects-collection">
         {(props) => <CompanyProjectsCollection {...props} />}
-      </Mount>
-      <Mount selector="#companies-collection">
-        {(props) => <CompaniesCollection {...props} />}
       </Mount>
       <Mount selector="#company-contacts-collection">
         {(props) => <CompaniesContactsCollection {...props} />}
       </Mount>
-      <Mount selector="#contacts-collection">
-        {(props) => <ContactsCollection {...props} />}
-      </Mount>
-      <Mount selector="#orders-collection">
-        {(props) => <OrdersCollection {...props} />}
-      </Mount>
-      <Mount selector="#events-collection">
-        {(props) => <EventsCollection {...props} />}
-      </Mount>
       <Mount selector="#event-details">
         {(props) => <EventDetails {...props} />}
       </Mount>
-      <Mount selector="#interactions-collection">
-        {(props) => <InteractionsCollection {...props} />}
-      </Mount>
       <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
-      <Mount selector="#contact-form">
-        {(props) => <ContactForm {...props} id="contact-form" />}
+      <Mount selector="#react-app">
+        {() => (
+          <Switch>
+            {Object.keys(routes).map((module) =>
+              routes[module].map((route) => (
+                <ProtectedRoute exact={true} {...route} />
+              ))
+            )}
+          </Switch>
+        )}
       </Mount>
     </Provider>
   )
 }
 
-ReactDOM.render(<App />, appWrapper)
+window.addEventListener('DOMContentLoaded', () =>
+  ReactDOM.render(<App />, appWrapper)
+)
