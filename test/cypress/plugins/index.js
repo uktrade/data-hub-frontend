@@ -9,7 +9,6 @@ module.exports = (on, config) => {
       return null
     },
   })
-  require('cypress-log-to-output').install(on)
   config.env.sandbox_url = process.env.API_ROOT
   return config
 }
