@@ -106,7 +106,9 @@ const NavBar = ({ onShowVerticalNav, showVerticalNav }) => (
               </StyledListItem>
             ) : (
               <StyledListItem>
-                <StyledLink href={`${to.pathname}${to.search}`}>
+                <StyledLink
+                  href={`${to.pathname}${to.search ? to.search : ''}`}
+                >
                   {label}
                 </StyledLink>
               </StyledListItem>
