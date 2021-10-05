@@ -36,7 +36,7 @@ describe('Dashboard - My projects list', () => {
 
   it('should contain a project title which links to the project', () => {
     cy.get('@firstListItem')
-      .find('[data-test="project-header"]')
+      .find('[data-test="project-title"]')
       .should('have.text', project1.name)
       .find('a')
       .should(

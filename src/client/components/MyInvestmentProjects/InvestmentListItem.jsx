@@ -20,19 +20,6 @@ import InvestmentNextSteps from './InvestmentNextSteps'
 import { NoHighlightToggleSection } from '../ToggleSection'
 import Tag from '../Tag'
 
-const ListItem = styled('li')`
-  padding: ${SPACING.SCALE_2} 0;
-  border-bottom: 2px solid ${GREY_1};
-  details {
-    &[open] {
-      padding-bottom: ${SPACING.SCALE_5};
-    }
-  }
-  &:last-child {
-    border-bottom: none;
-  }
-`
-
 const Row = styled('div')`
   margin-bottom: ${SPACING.SCALE_3};
 
@@ -49,6 +36,7 @@ const Row = styled('div')`
 `
 const Col = styled('div')`
   margin-bottom: ${SPACING.SCALE_3};
+
   ${MEDIA_QUERIES.LARGESCREEN} {
     width: ${({ fullWidth }) =>
       fullWidth ? '100%' : `calc(50% - ${SPACING.SCALE_2})`};
@@ -56,39 +44,77 @@ const Col = styled('div')`
   }
 `
 
-const ListItemHeaderContainer = styled('div')`
-  display: flex;
-  align-items: top;
-  align-content: stretch;
-`
+const ListItem = styled('li')({
+  padding: `${SPACING.SCALE_2} 0`,
+  borderBottom: `2px solid ${GREY_1}`,
+  '&:last-child': {
+    borderBottom: 'none',
+  },
+  display: 'grid',
+  columnGap: SPACING.SCALE_2,
+  rowGap: SPACING.SCALE_3,
+  gridTemplateAreas: `
+    "tags"
+    "title"
+    "details"
+    "actions"
+  `,
+  gridTemplateColumns: '100%',
 
-const ListItemHeader = styled('h2')`
-  flex-grow: 1;
-  font-size: ${FONT_SIZE.SIZE_19};
-  font-weight: ${FONT_WEIGHTS.bold};
-  margin: 0;
-`
+  [MEDIA_QUERIES.DESKTOP]: {
+    gridTemplateColumns:
+      'minmax(130px, 2fr) minmax(140px, 1fr) minmax(0, 170px)',
+    gridTemplateAreas: `
+      "title tags actions"
+      "details details details"
+    `,
+  },
+})
 
-const ListItemHeaderTagContainer = styled('div')`
-  padding: 0 ${SPACING.SCALE_5};
-  flex-wrap: wrap;
-  margin-bottom: -${SPACING.SCALE_6};
-`
-const ListItemTagRow = styled('div')`
-  padding-bottom: ${SPACING.SCALE_2};
-  min-width: 140px;
-`
+const ListItemTitle = styled('h2')({
+  fontSize: FONT_SIZE.SIZE_19,
+  fontWeight: FONT_WEIGHTS.bold,
+  margin: 0,
+  gridArea: 'title',
+})
 
-const ListItemHeaderActionContainer = styled('div')`
-  flex: 0 1 152px;
-  box-sizing: border-box;
-  white-space: nowrap;
+const ListItemTags = styled('div')({
+  gridArea: 'tags',
 
-  a {
-    width: 100%;
-    margin-bottom: 0;
-  }
-`
+  [MEDIA_QUERIES.DESKTOP]: {
+    padding: `0 ${SPACING.SCALE_5}`,
+    marginBottom: `-${SPACING.SCALE_6}`,
+  },
+})
+
+const ListItemTagRow = styled('div')({
+  display: 'inline-block',
+  paddingBottom: SPACING.SCALE_4,
+  marginRight: SPACING.SCALE_1,
+
+  [MEDIA_QUERIES.DESKTOP]: {
+    minWidth: '140px',
+    display: 'block',
+  },
+})
+
+const ListItemActions = styled('div')({
+  boxSizing: 'border-box',
+  gridArea: 'actions',
+  a: {
+    width: '100%',
+    marginBottom: 0,
+  },
+
+  [MEDIA_QUERIES.DESKTOP]: {
+    marginBottom: `-${SPACING.SCALE_6}`,
+  },
+})
+
+const ListItemDetails = styled(NoHighlightToggleSection)({
+  maxWidth: '100%',
+  gridArea: 'details',
+})
 
 const StyledInvestmentTimeline = styled(InvestmentTimeline)`
   display: none;
@@ -100,7 +126,7 @@ const StyledInvestmentTimeline = styled(InvestmentTimeline)`
   }
 
   ${MEDIA_QUERIES.DESKTOP} {
-    flex: 1 0 348px;
+    flex: 1 0 335px;
   }
 `
 
@@ -130,46 +156,40 @@ const InvestmentListItem = ({
   const hasStepsToComplete = !!incomplete_fields.length
   return (
     <ListItem data-test="projects-list-item">
-      <ListItemHeaderContainer>
-        <ListItemHeader data-test="project-header">
-          <a href={`${investments.projects.details(id)}`}>{name}</a>
-        </ListItemHeader>
-        <ListItemHeaderTagContainer>
-          <ListItemTagRow>
-            <Tag
-              colour={STAGE_TAG_COLOURS[stage.name]}
-              data-test="project-stage-tag"
-              aria-label="project stage"
-            >
-              {stage.name}
-            </Tag>
-          </ListItemTagRow>
-          <ListItemTagRow>
-            <Tag
-              colour="grey"
-              data-test="project-status-tag"
-              aria-label="project status"
-            >
-              {status}
-            </Tag>
-          </ListItemTagRow>
-        </ListItemHeaderTagContainer>
-        <ListItemHeaderActionContainer>
-          <Button
-            buttonColour={BLUE}
-            href={investments.projects.interactions.index(id)}
-            as="a"
-            data-test="add-interaction"
+      <ListItemTitle data-test="project-title">
+        <a href={`${investments.projects.details(id)}`}>{name}</a>
+      </ListItemTitle>
+      <ListItemTags>
+        <ListItemTagRow>
+          <Tag
+            colour={STAGE_TAG_COLOURS[stage.name]}
+            data-test="project-stage-tag"
+            aria-label="project stage"
           >
-            View interactions
-          </Button>
-        </ListItemHeaderActionContainer>
-      </ListItemHeaderContainer>
-      <NoHighlightToggleSection
-        id={id}
-        label={project_code}
-        data-test="project-details"
-      >
+            {stage.name}
+          </Tag>
+        </ListItemTagRow>
+        <ListItemTagRow>
+          <Tag
+            colour="grey"
+            data-test="project-status-tag"
+            aria-label="project status"
+          >
+            {status}
+          </Tag>
+        </ListItemTagRow>
+      </ListItemTags>
+      <ListItemActions>
+        <Button
+          buttonColour={BLUE}
+          href={investments.projects.interactions.index(id)}
+          as="a"
+          data-test="add-interaction"
+        >
+          View interactions
+        </Button>
+      </ListItemActions>
+      <ListItemDetails id={id} label={project_code} data-test="project-details">
         <Row>
           <StyledInvestmentTimeline stage={stage} />
           <StyledInvestmentEstimatedLandDate
@@ -195,7 +215,7 @@ const InvestmentListItem = ({
             </Col>
           )}
         </Row>
-      </NoHighlightToggleSection>
+      </ListItemDetails>
     </ListItem>
   )
 }
