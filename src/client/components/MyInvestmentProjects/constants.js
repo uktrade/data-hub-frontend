@@ -101,3 +101,10 @@ export const INCOMPLETE_FIELDS = {
 }
 
 export const STAGES = ['Prospect', 'Assign PM', 'Active', 'Verify win', 'Won']
+export const STAGE_TAG_COLOURS = {
+  Prospect: 'purple',
+  'Assign PM': 'red',
+  Active: 'blue',
+  'Verify win': 'yellow',
+  Won: 'green',
+}

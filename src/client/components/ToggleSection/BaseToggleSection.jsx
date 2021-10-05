@@ -13,6 +13,7 @@ const ToggleContainer = styled('div')``
 
 export const ToggleHeader = styled('div')`
   display: flex;
+  position: relative;
   ${({ justifyHeaderContent }) =>
     justifyHeaderContent
       ? `justify-content: space-between;`
