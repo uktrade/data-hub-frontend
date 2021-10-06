@@ -5,7 +5,21 @@ import AsyncSelect from 'react-select/async'
 import defaultStyles, { errorStyles } from './styles'
 import Highlighter from './Highlighter'
 
-const { Input, Option, NoOptionsMessage, MenuList } = components
+const {
+  Input,
+  Option,
+  NoOptionsMessage,
+  MenuList,
+  MultiValue,
+  Control,
+  MultiValueContainer,
+  MultiValueLabel,
+  MultiValueRemove,
+  ValueContainer,
+  IndicatorsContainer,
+} = components
+//  grabs these components from react select. We then make our own and sent them to the react-select
+// component to customise it.
 
 export const filterOption = ({ label = '' }, query) =>
   label.toLowerCase().includes(query.toLowerCase())
@@ -22,6 +36,39 @@ const CustomOption = ({
     </Option>
   </li>
 )
+
+const CustomControl = ({ selectProps: { value }, children, ...props }) => {
+  return (
+    <div id="Divvy1">
+      <div id="Divvy2">
+        {value[0] && (
+          <>
+            {value.map((selection) => (
+              <MultiValue
+                components={{
+                  Container: MultiValueContainer,
+                  Label: MultiValueLabel,
+                  Remove: MultiValueRemove,
+                }}
+                {...props}
+              >
+                {selection.label}
+              </MultiValue>
+            ))}
+          </>
+        )}
+      </div>
+
+      <Control
+        components={{
+          ValueContainer: ValueContainer,
+          IndicatorsContainer: IndicatorsContainer,
+        }}
+        {...props}
+      ></Control>
+    </div>
+  )
+}
 
 const CustomNoOptionsMessage = ({ children, ...props }) => (
   <li>
@@ -50,21 +97,27 @@ const CustomMenuList = ({ children, selectProps, ...props }) => (
 
 const CustomInput = ({ children, selectProps, inputProps, ...props }) => (
   <>
-    <Input
-      {...props}
-      aria-owns={selectProps['data-aria-id']}
-      aria-autocomplete="list"
-      aria-expanded={selectProps.menuIsOpen}
-      aria-describedby={`${selectProps['data-aria-id']}-assistiveHint`}
-      role="combobox"
-    />
-    {Boolean(!selectProps.options.length) && (
-      <ul
-        id={selectProps['data-aria-id']}
-        role="listbox"
-        style={{ display: 'none' }}
-      ></ul>
-    )}
+    <div className="react-select-container">
+      <div className="react-select__control">
+        <div className="react-select__value-container">
+          <Input
+            {...props}
+            aria-owns={selectProps['data-aria-id']}
+            aria-autocomplete="list"
+            aria-expanded={selectProps.menuIsOpen}
+            aria-describedby={`${selectProps['data-aria-id']}-assistiveHint`}
+            role="combobox"
+          />
+          {Boolean(!selectProps.options.length) && (
+            <ul
+              id={selectProps['data-aria-id']}
+              role="listbox"
+              style={{ display: 'none' }}
+            ></ul>
+          )}
+        </div>
+      </div>
+    </div>
   </>
 )
 
@@ -86,6 +139,8 @@ const Typeahead = ({ options, styles, error, name, ...props }) => {
       MenuList: CustomMenuList,
       Input: CustomInput,
       NoOptionsMessage: CustomNoOptionsMessage,
+      //  SLAP THE MULTI THING HERE LIKE THESE!!
+      Control: CustomControl,
     },
     filterOption,
     'data-aria-id': `autocomplete-${name}`,
@@ -104,6 +159,8 @@ const Typeahead = ({ options, styles, error, name, ...props }) => {
     </>
   )
 }
+//  Here we create a customised props object that lets you swap in your personalised components to the
+//  react select's component. The typeahead is just a personalised select from this library.
 
 Typeahead.propTypes = Select.propTypes
 
