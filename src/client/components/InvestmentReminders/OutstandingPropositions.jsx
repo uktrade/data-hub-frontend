@@ -46,6 +46,7 @@ const StyledDueDate = styled('span')`
 `
 
 const StyledDueCountdown = styled('span')`
+  margin-top: ${SPACING.SCALE_1};
   text-align: right;
   white-space: nowrap;
   font-size: ${FONT_SIZE.SIZE_16};
@@ -61,6 +62,7 @@ const StyledList = styled('ul')`
 const StyledListItem = styled('li')`
   margin-bottom: ${SPACING.SCALE_4};
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-end;
 `
