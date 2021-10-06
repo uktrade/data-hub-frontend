@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Button from '@govuk-react/button'
-import { BLUE, GREY_1 } from 'govuk-colours'
+import { BLUE } from 'govuk-colours'
 import styled from 'styled-components'
 import {
   MEDIA_QUERIES,
@@ -10,6 +10,7 @@ import {
   FONT_WEIGHTS,
 } from '@govuk-react/constants'
 
+import { MID_GREY } from '../../../client/utils/colors'
 import { investments } from '../../../lib/urls'
 import { STAGES, STAGE_TAG_COLOURS } from './constants'
 
@@ -46,7 +47,7 @@ const Col = styled('div')`
 
 const ListItem = styled('li')({
   padding: `${SPACING.SCALE_2} 0`,
-  borderBottom: `2px solid ${GREY_1}`,
+  borderBottom: `1px solid ${MID_GREY}`,
   '&:last-child': {
     borderBottom: 'none',
   },
