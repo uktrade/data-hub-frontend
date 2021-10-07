@@ -145,6 +145,13 @@ app.use(reactGlobalProps())
 app.use(fixSlashes())
 app.use(routers)
 
+
+
+app.get('/resource-example', (req, res) =>
+  res.render('dashboard/views/resource-demo', {})
+  // res.send('heheheh')
+)
+
 // Raven error handler must come before other error middleware
 reporter.handleErrors(app)
 

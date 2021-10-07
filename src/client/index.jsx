@@ -202,6 +202,8 @@ import routes from './routes'
 
 import { onMatchSubmit } from '../apps/companies/apps/match-company/client/tasks'
 
+import ResourceDemo from './ResourceDemo'
+
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
 }
@@ -307,6 +309,9 @@ function App() {
         ...resourceTasks,
       }}
     >
+      <Mount selector="#resource-demo">
+        <ResourceDemo/>
+      </Mount>
       <Mount selector="#add-company-form">
         {(props) => (
           <AddCompanyForm csrfToken={globalProps.csrfToken} {...props} />

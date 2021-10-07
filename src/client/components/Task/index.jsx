@@ -109,13 +109,14 @@ const startOnRenderPropTypes = {
 const Task = connect(
   (state) => state.tasks,
   (dispatch) => ({
-    start: (name, id, { payload, onSuccessDispatch }) =>
+    start: (name, id, { payload, onSuccessDispatch, ...meta }) =>
       dispatch({
         type: TASK__START,
         payload,
         id,
         name,
         onSuccessDispatch,
+        ...meta,
       }),
     cancel: (name, id) =>
       dispatch({
@@ -156,6 +157,7 @@ Task.propTypes = {
  * @param {string} props.name - The _task_ name
  * @param {string} props.id - The _task_ id
  * @param {any} [props.payload=] - The payload start the _task_ with
+ * @param {Object} [props.meta=] - An object of properties that will be attached to the _task_ start action.
  * @param {string} [props.onSuccessDispatch=] - If set, a {SuccessAction} with
  * this value as its {type} will be dispatched
  * @example
@@ -172,9 +174,9 @@ Task.StartOnRender = connect(
         name,
       }),
   })
-)(({ start, name, id, payload, onSuccessDispatch, status }) => {
+)(({ start, name, id, payload, onSuccessDispatch, status, meta }) => {
   useEffect(() => {
-    status || start({ payload, onSuccessDispatch })
+    status || start({ payload, onSuccessDispatch, ...meta })
   }, [name, id, JSON.stringify(payload), onSuccessDispatch])
   return null
 })

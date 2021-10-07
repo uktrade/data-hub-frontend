@@ -1,10 +1,14 @@
+/* eslint-disable prettier/prettier */
 import _ from 'lodash'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useEffect } from 'react'
+import {Route} from 'react-router-dom'
 
 import multiInstance from '../../utils/multiinstance'
 import { apiProxyAxios } from '../Task/utils'
 import Task from '../Task'
+import TaskLoadingBox, { ProgressBoxMulti } from '../Task/LoadingBox'
+import ProgressBox from '../ProgressBox'
 
 const deepKeysToCamelCase = (x) =>
   Array.isArray(x)
@@ -17,6 +21,238 @@ const deepKeysToCamelCase = (x) =>
         ])
       )
     : x
+
+export const Compose = ({ components, ...props }) =>
+  components.reduce(
+    (A, Component) => <Component>{() => <A>{() => null}</A>}</Component>,
+    ({ children, ...props }) => children()
+  )
+
+export const ActionResource = multiInstance({
+  name: 'ActionResource',
+  actionPattern: 'ACTION_RESOURCE',
+  reducer: (state, { id, result }) => ({
+    ...state,
+    [id]: result,
+  }),
+  idProp: 'name',
+  componentStateToProps: (state, _, { id }) => ({ result: state[id] }),
+  component: ({ name, id, children, result, overlay = true }) => (
+    <Task>
+      {(task) => {
+        const t = task(name, id)
+        const vdom = children(
+          result,
+          (payload) =>
+            t.start({
+              payload,
+              onSuccessDispatch: 'ACTION_RESOURCE',
+            }),
+          t
+        )
+        return overlay ? (
+          <TaskLoadingBox name={name} id={id}>
+            {vdom}
+          </TaskLoadingBox>
+        ) : (
+          vdom
+        )
+      }}
+    </Task>
+  ),
+})
+
+export const ActionsResource = multiInstance({
+  name: 'ActionsResource',
+  actionPattern: 'ACTIONS_RESOURCE',
+  reducer: (state, { id, result, actionName }) => ({
+    ...state,
+    [id]: { ...state?.[id], [actionName]: result },
+  }),
+  idProp: 'resourceName',
+  componentStateToProps: (state, _, { id }) => ({ results: state[id] }),
+  component: ({ resourceName, actions, id, children, results }) => (
+    <Task>
+      {(task) => {
+        const tasks = _.mapValues(actions, (taskName) => task(taskName, id))
+        const _actions = _.mapValues(
+          actions,
+          (taskName, actionName) => (payload) =>
+            task(taskName, id).start({
+              payload,
+              onSuccessDispatch: 'ACTIONS_RESOURCE',
+              actionName,
+              resourceName,
+            })
+        )
+        const vdom = children(
+          results,
+          _actions,
+          tasks,
+          // TODO: This seems to be the ideal interface
+          _.mapValues(_actions, (action, actionName) => {
+            // TODO: We want the action to have most properties of the task
+            action.result = results?.[actionName]
+
+            const task = tasks[actionName]
+            action.error = task.errorMessage
+            action.status = task.status
+            action.progress = task.progress
+
+            action.toJSON = function () {
+              return Object.fromEntries(Object.entries(this))
+            }
+            return action
+          })
+        )
+        return (
+          <>
+            <ProgressBoxMulti names={Object.values(actions)} id={id}>
+              {vdom}
+            </ProgressBoxMulti>
+          </>
+        )
+      }}
+    </Task>
+  ),
+})
+
+const Effect = ({ dependencyList, effect }) => {
+  useEffect(() => {
+    effect()
+  }, dependencyList)
+  return null
+}
+
+export const EntityResource = multiInstance({
+  name: 'EntityResource',
+  actionPattern: 'ENTITY_RESOURCE',
+  reducer: (state, { id, result, actionName }) => ({
+    ...state,
+    [id]: {
+      actionResults: { ...state?.[id].actionResults, [actionName]: result },
+      entity: actionName.startsWith('$') ? result : state?.[id].entity,
+    },
+  }),
+  idProp: 'resourceName',
+  componentStateToProps: (state, _, { id }) => state[id] || {},
+  component: ({
+    resourceName,
+    actions,
+    id,
+    children,
+    onMountStart = '$read',
+    entity,
+    actionResults,
+  }) => (
+    <Task>
+      {(t) => {
+        const tasks = _.mapValues(actions, (taskName) => t(taskName, id))
+        const _actions = _.mapValues(actions, (taskName, actionName) => {
+          const action = (payload) =>
+            tasks[actionName].start({
+              payload,
+              onSuccessDispatch: 'ENTITY_RESOURCE',
+              actionName,
+              resourceName,
+            })
+          // TODO: We want the action to have most properties of the task
+          action.result = actionResults?.[actionName]
+
+          const task = tasks[actionName]
+          action.error = task.errorMessage
+          action.status = task.status
+          action.progress = task.progress
+
+          action.toJSON = function () {
+            return Object.fromEntries(Object.entries(this))
+          }
+          return action
+        })
+        return (
+          <>
+            <Effect
+              dependencyList={[resourceName, onMountStart, id]}
+              effect={_actions[onMountStart]}
+            />
+            {entity === undefined ? (
+              <Task.Status name={actions[onMountStart]} id={id} />
+            ) : (
+              <ProgressBoxMulti names={Object.values(actions)} id={id}>
+                {children(entity, _actions)}
+              </ProgressBoxMulti>
+            )}
+          </>
+        )
+      }}
+    </Task>
+  ),
+})
+
+export const CreateEntityResource = multiInstance({
+  name: 'CreateEntityResource',
+  actionPattern: 'CREATE_ENTITY_RESOURCE',
+  reducer: (state, { id, result, actionName }) => ({
+    ...state,
+    [id]: {
+      actionResults: { ...state?.[id].actionResults, [actionName]: result },
+      entity: actionName.startsWith('$') ? result : state?.[id].entity,
+    },
+  }),
+  idProp: 'resourceName',
+  componentStateToProps: (state, _, { id }) => state[id] || {},
+  component: ({
+    resourceName,
+    actions,
+    id,
+    children,
+    onMountStart = '$read',
+    entity,
+    actionResults,
+  }) => (
+    <Task>
+      {(t) => {
+        const tasks = _.mapValues(actions, (taskName) => t(taskName, id))
+        const _actions = _.mapValues(actions, (taskName, actionName) => {
+          const action = (payload) =>
+            tasks[actionName].start({
+              payload,
+              onSuccessDispatch: 'CREATE_ENTITY_RESOURCE',
+              actionName,
+              resourceName,
+            })
+          // TODO: We want the action to have most properties of the task
+          action.result = actionResults?.[actionName]
+
+          const task = tasks[actionName]
+          action.error = task.errorMessage
+          action.status = task.status
+          action.progress = task.progress
+
+          action.toJSON = function () {
+            return Object.fromEntries(Object.entries(this))
+          }
+          return action
+        })
+        return (
+          <>
+            <Effect
+              dependencyList={[resourceName, onMountStart, id]}
+              effect={_actions[onMountStart]}
+            />
+            {entity === undefined ? (
+              <Task.Status name={actions[onMountStart]} id={id} />
+            ) : (
+              <ProgressBoxMulti names={Object.values(actions)} id={id}>
+                {children(entity, _actions)}
+              </ProgressBoxMulti>
+            )}
+          </>
+        )
+      }}
+    </Task>
+  ),
+})
 
 /**
  * @function Resource
@@ -222,3 +458,70 @@ export const createMetadataResource = (name, endpoint) => {
   Component.tasks = Comp.tasks
   return Component
 }
+
+const crudResourceTaskName = (resource, action) =>
+  `CRUDResource::${resource}::${action}`
+
+export const createCRUDResource = ({ name, actions }) => {
+  const tasks = Object.fromEntries(
+    Object.entries(actions).map(([actionName, [method, endpoint]]) => [
+      crudResourceTaskName(name, actionName),
+      (payload, id) => {
+        const url = `/api-proxy/${endpoint.replace(':id', id)}`
+
+        return apiProxyAxios({
+          method,
+          url,
+          data: payload,
+        }).then(({ data }) => data)
+      },
+    ])
+  )
+  const Component = (props) => (
+    <EntityResource
+      {...props}
+      resourceName="Investment"
+      actions={Object.keys(actions).reduce(
+        (a, actionName) => ({
+          ...a,
+          [actionName]: crudResourceTaskName(name, actionName),
+        }),
+        {}
+      )}
+    />
+  )
+
+  Component.tasks = tasks
+  return Component
+}
+
+// export const RoutedCRUDResource = ({
+//   parentPath,
+//   emptyState,
+//   actions: {$create, ...actions},
+//   ...props
+// }) =>
+//   <Route path={`${parentPath}/:id`}>
+//     {({match, history}) =>
+//       <>
+//         {/* <button onClick={() => history.push({
+//           pathname: `${parentPath}/1234`,
+//         })}>create</button>
+//         <pre>{JSON.stringify({match}, null, 2)}</pre> */}
+//         {
+//           match?.params.id
+//             ? <CRUDResource {...props} actions={actions} id={match.params.id} /> 
+//             : <Task>
+//                 {t =>
+//                   <TaskLoadingBox>
+//                     {emptyState(payload => t($create, props.resourceName).start({
+//                       payload,
+//                       onSuccessDispatch: ''
+//                     }))}
+//                   </TaskLoadingBox>
+//                 }
+//               </Task>
+//         }
+//       </>
+//     }
+//   </Route>

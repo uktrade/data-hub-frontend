@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React from 'react'
 import LoadingBox from '@govuk-react/loading-box'
 import styled from 'styled-components'
@@ -54,6 +55,35 @@ export default ({ name, id, when, children, startOnRender, ...props }) => (
                 {children}
                 <StyledErrorOverlay>
                   <Task.Status {...props} name={name} id={id} />
+                </StyledErrorOverlay>
+              </>
+            ) : (
+              children
+            )}
+          </StyledContentWrapper>
+        </LoadingBox>
+      )
+    }}
+  </Task>
+)
+
+export const ProgressBoxMulti = ({ names, id, when, children, ...props }) => (
+  <Task>
+    {(t) => {
+      const uniqueNames = _.uniq(names)
+      const tasks = uniqueNames.map((name) => t(name, id))
+      const progress = tasks.some(task => task.progress)
+      const error = tasks.some(task => task.error)
+      return (
+        <LoadingBox loading={progress || when}>
+          <StyledContentWrapper>
+            {error ? (
+              <>
+                {children}
+                <StyledErrorOverlay>
+                  {uniqueNames.map((name) =>
+                    <Task.Status {...props} name={name} id={id} key={name} />
+                  )}
                 </StyledErrorOverlay>
               </>
             ) : (

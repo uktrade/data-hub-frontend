@@ -14,6 +14,7 @@ import { spacing } from '@govuk-react/lib'
 
 import { FormActions } from '..'
 import SecondaryButton from '../SecondaryButton'
+import { FormActions } from '..'
 
 // Taken from https://github.com/govuk-react/govuk-react/blob/master/components/error-summary/src/index.js
 const StyledRoot = styled.div(

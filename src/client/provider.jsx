@@ -118,9 +118,12 @@ import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpport
 import RoutedInput from './components/RoutedInput'
 
 import Resource from './components/Resource'
+import {ActionResource, ActionsResource, EntityResource, CreateEntityResource, RoutedCRUDResource} from './components/Resource'
 
 import { ContactForm } from './components/ContactForm'
 import TaskForm from './components/Task/Form'
+
+import {InvestmentDetail} from './ResourceDemo'
 
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
@@ -169,8 +172,14 @@ const store = createStore(
     ...RoutedInput.reducerSpread,
     ...CreateUKInvestmentOpportunity.reducerSpread,
     ...Resource.reducerSpread,
+    ...ActionResource.reducerSpread,
+    ...ActionsResource.reducerSpread,
+    ...EntityResource.reducerSpread,
+    ...CreateEntityResource.reducerSpread,
     ...ContactForm.reducerSpread,
     ...TaskForm.reducerSpread,
+    ...InvestmentDetail.reducerSpread,
+    // ...RoutedCRUDResource.reducerSpread,
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
     [INVESTEMENT_PROJECT_ADMIN_ID]: investmentProjectAdminReducer,
