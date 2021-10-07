@@ -117,15 +117,15 @@ describe('Download CSV', () => {
     })
   })
   context('When the archived filter is applied', () => {
-    it('should not include archived when there are no filters', () => {
+    it('should not include archived within the query string when there are no filters', () => {
       cy.visit('/contacts')
       cy.get(downloadButton).should('have.attr', 'href', '/contacts/export')
     })
-    it('should not include archived when both filters have been applied', () => {
+    it('should not include archived within the query string when both filters have been applied', () => {
       cy.visit(`/contacts?${qs.stringify({ archived: ['true', 'false'] })}`)
       cy.get(downloadButton).should('have.attr', 'href', '/contacts/export')
     })
-    it('should include archived - true', () => {
+    it('should include archived within the query string set to true', () => {
       cy.visit(`/contacts?${qs.stringify({ archived: ['true'] })}`)
       cy.get(downloadButton).should(
         'have.attr',
@@ -133,7 +133,7 @@ describe('Download CSV', () => {
         '/contacts/export?archived=true'
       )
     })
-    it('should include archived - false', () => {
+    it('should include archived within the query string set to false', () => {
       cy.visit(`/contacts?${qs.stringify({ archived: ['false'] })}`)
       cy.get(downloadButton).should(
         'have.attr',
