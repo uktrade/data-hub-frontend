@@ -2,6 +2,7 @@ var whoami = require('../fixtures/whoami.json')
 
 var defaultTeamId = whoami.dit_team.id
 var defaultAdviserId = whoami.id
+var defaultPermissions = whoami.permissions
 
 exports.whoami = function (req, res) {
   res.json(whoami)
@@ -27,5 +28,6 @@ exports.resetWhoami = function (req, res) {
   whoami.id = defaultAdviserId
   whoami.dit_team.id = defaultTeamId
   whoami.active_features = []
+  whoami.permissions = defaultPermissions
   res.json(whoami)
 }
