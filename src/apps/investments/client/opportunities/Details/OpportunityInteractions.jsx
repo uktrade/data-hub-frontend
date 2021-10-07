@@ -50,7 +50,6 @@ const OpportunityInteractions = ({ opportunityId }) => (
                   })
                 }
                 activePage={activePage}
-                includeDownloadHeader={false}
                 sortOptions={count ? sortOptions : null}
               />
             )

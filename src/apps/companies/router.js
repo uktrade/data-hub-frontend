@@ -2,12 +2,7 @@ const router = require('express').Router()
 
 const urls = require('../../lib/urls')
 
-const {
-  LOCAL_NAV,
-  DEFAULT_COLLECTION_QUERY,
-  APP_PERMISSIONS,
-  QUERY_FIELDS,
-} = require('./constants')
+const { LOCAL_NAV, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
 
 const setReturnUrl = require('./middleware/set-return-url')
 const { getRequestBody } = require('../../middleware/collection')
@@ -28,7 +23,6 @@ const { renderSubsidiaries } = require('./controllers/subsidiaries')
 const { renderLinkSubsidiary } = require('./controllers/subsidiary-link')
 
 const {
-  setDefaultQuery,
   redirectToFirstNavItem,
   handleRoutePermissions,
 } = require('../middleware')
@@ -82,7 +76,6 @@ router.param('companyId', setDnbHierarchyDetails)
 
 router.get(
   urls.companies.export.route,
-  setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS),
   lastInteractionDate,
   formatPostcodes,

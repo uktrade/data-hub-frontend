@@ -1,10 +1,5 @@
 const { concat } = require('lodash')
 
-const DEFAULT_COLLECTION_QUERY = {
-  sortby: 'modified_on:desc',
-  archived: false,
-}
-
 const GLOBAL_NAV_ITEM = {
   path: '/contacts',
   headerKey: 'datahub-contacts',
@@ -48,7 +43,6 @@ const QUERY_FIELDS = [
 module.exports = {
   GLOBAL_NAV_ITEM,
   LOCAL_NAV,
-  DEFAULT_COLLECTION_QUERY,
   APP_PERMISSIONS,
   QUERY_FIELDS,
 }
