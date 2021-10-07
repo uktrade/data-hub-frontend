@@ -11,7 +11,7 @@ const OpportunityDetailsHeader = ({ opportunity, currentPath }) => {
   const { createdOn, name, ukRegions, assetClasses, opportunityValue } =
     opportunity.detailsFields
   const {
-    status: { label: statusLabel = 'Unnasigned' },
+    status: { label: statusLabel = 'Unassigned' },
     id,
   } = opportunity
 
