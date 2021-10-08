@@ -33,11 +33,6 @@ describe('Status change form', () => {
     })
   })
   context('when submitting the form', () => {
-    it('should give an error if a status is not selected', () => {
-      cy.contains('Save').click()
-      cy.get('#form-errors').should('be.visible')
-      cy.get('#form-errors').should('contain', 'You must select a status')
-    })
     it('should redirect to the details page after submitting', () => {
       cy.contains('Fully funded').click()
       cy.contains('Save').click()
