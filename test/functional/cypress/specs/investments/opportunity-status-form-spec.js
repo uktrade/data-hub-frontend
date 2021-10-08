@@ -13,7 +13,7 @@ describe('Status change form', () => {
     it('should display correct breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Investments: '/investments',
+        Investments: '/investments?page=1&sortby=created_on:desc',
         'UK opportunities': '/investments/opportunities',
         [completeOpportunity.name]: urls.investments.opportunities.details(
           completeOpportunity.id

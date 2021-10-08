@@ -54,7 +54,7 @@ describe('UK Opportunity with missing data', () => {
     })
     it('should display opportunity details in the header', () => {
       cy.get('[data-test="localHeaderDetails"]>li').should('have.length', '5')
-      assertLocalHeaderDetails(0, 'Status', 'Unassigned')
+      assertLocalHeaderDetails(0, 'Status', 'Seeking investment')
       assertLocalHeaderDetails(1, 'Valuation', 'Not yet valued')
       assertLocalHeaderDetails(2, 'UK location', 'Not yet defined')
       assertLocalHeaderDetails(3, 'Asset class', 'Not yet defined')

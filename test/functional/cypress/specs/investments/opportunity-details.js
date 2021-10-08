@@ -40,9 +40,11 @@ describe('UK Opportunity with missing data', () => {
     it('should display correct breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Investments: '/investments',
+        Investments: '/investments?page=1&sortby=created_on:desc',
         'UK opportunities': '/investments/opportunities',
-        [incompleteOpportunity.name]: '',
+        [incompleteOpportunity.name]:
+          '/investments/opportunities/5d441b34-1fc8-4638-b4b1-a0922ebf401e/details',
+        Details: '',
       })
     })
     it('should display opportunity name in the header', () => {
@@ -158,9 +160,11 @@ describe('UK Opportunity with complete data', () => {
     it('should display correct breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Investments: '/investments',
+        Investments: '/investments?page=1&sortby=created_on:desc',
         'UK opportunities': '/investments/opportunities',
-        [completeOpportunity.name]: '',
+        [completeOpportunity.name]:
+          '/investments/opportunities/a84f8405-c419-40a6-84c8-642b7c3209b2/details',
+        Details: null,
       })
     })
     it('should display opportunity name in the header', () => {
