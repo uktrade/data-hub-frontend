@@ -1,16 +1,14 @@
 const fixtures = require('../../fixtures')
-const selectors = require('../../../../selectors')
-const { assertCollection } = require('../../support/assertions')
+const {
+  assertCollection,
+  assertReactCollection,
+} = require('../../support/assertions')
 
 const {
   companies,
   contacts,
   investments,
 } = require('../../../../../src/lib/urls')
-
-const checkCollection = () => {
-  assertCollection(selectors.collection.headerCount, selectors.collection.items)
-}
 
 describe('Collection', () => {
   describe('contact', () => {
@@ -22,7 +20,7 @@ describe('Collection', () => {
     })
 
     it('should return the results summary for orders collection', () => {
-      checkCollection()
+      assertReactCollection()
     })
   })
 
@@ -37,7 +35,7 @@ describe('Collection', () => {
     })
 
     it('should return the results summary for contact interaction collection', () => {
-      checkCollection()
+      assertCollection()
     })
   })
 
@@ -50,7 +48,7 @@ describe('Collection', () => {
     })
 
     it('should return the results summary for investment interaction collection', () => {
-      checkCollection()
+      assertCollection()
     })
   })
 
@@ -63,7 +61,7 @@ describe('Collection', () => {
     })
 
     it('should return the results summary for investment proposition collection', () => {
-      checkCollection()
+      assertCollection()
     })
   })
 })

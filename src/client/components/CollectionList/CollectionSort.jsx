@@ -37,7 +37,7 @@ const CollectionSort = ({ sortOptions, totalPages }) => {
         {({ location: { search } }) => {
           const searchParams = qs.parse(search.slice(1))
           return (
-            <StyledSpan>
+            <StyledSpan data-test="pagination-summary">
               Page {searchParams.page || 1} of {totalPages}
             </StyledSpan>
           )

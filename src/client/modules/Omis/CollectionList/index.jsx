@@ -21,8 +21,8 @@ import {
 } from '../../../components'
 
 import {
-  ID,
-  state2props,
+  ORDERS_LIST_ID,
+  ordersState2props,
   TASK_GET_ORDERS_LIST,
   TASK_GET_ORDERS_METADATA,
 } from './state'
@@ -48,7 +48,7 @@ const OrdersCollection = ({
 }) => {
   const collectionListTask = {
     name: TASK_GET_ORDERS_LIST,
-    id: ID,
+    id: ORDERS_LIST_ID,
     progressMessage: 'Loading orders',
     startOnRender: {
       payload,
@@ -58,7 +58,7 @@ const OrdersCollection = ({
 
   const collectionListMetadataTask = {
     name: TASK_GET_ORDERS_METADATA,
-    id: ID,
+    id: ORDERS_LIST_ID,
     progressMessage: 'Loading filters',
     startOnRender: {
       payload: {},
@@ -182,4 +182,4 @@ const OrdersCollection = ({
   )
 }
 
-export default connect(state2props)(OrdersCollection)
+export default connect(ordersState2props)(OrdersCollection)

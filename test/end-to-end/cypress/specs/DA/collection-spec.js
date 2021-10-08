@@ -9,10 +9,6 @@ const {
 
 const { assertCollection } = require('../../support/assertions')
 
-const checkCollection = () => {
-  assertCollection(selectors.collection.headerCount, selectors.collection.items)
-}
-
 describe('Collection', () => {
   describe('company', () => {
     before(() => {
@@ -60,7 +56,7 @@ describe('Collection', () => {
       })
 
       it('should return the results summary for a interaction collection', () => {
-        checkCollection()
+        assertCollection()
       })
     })
 
@@ -74,7 +70,7 @@ describe('Collection', () => {
       })
 
       it('should return the results summary for a proposition collection', () => {
-        checkCollection()
+        assertCollection()
       })
     })
 

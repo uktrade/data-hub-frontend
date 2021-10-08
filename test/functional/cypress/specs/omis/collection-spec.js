@@ -2,7 +2,7 @@ import { ordersListFaker, orderFaker } from '../../fakers/orders'
 import { assertBreadcrumbs } from '../../support/assertions'
 import { omis } from '../../../../../src/lib/urls'
 
-describe('Orders (OMIS) Collection List Page - React', () => {
+describe('Orders (OMIS) Collection List Page', () => {
   const order1 = orderFaker({
     id: 111,
     reference: 'TMY947/21',
