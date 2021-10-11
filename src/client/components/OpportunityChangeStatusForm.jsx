@@ -33,7 +33,7 @@ const OpportunityChangeStatusForm = ({ opportunityId }) => {
               },
               { text: 'Change status' },
             ]}
-            heading={'Change opportunity status'}
+            heading="Change opportunity status"
           />
           <Main>
             <FormStateful
