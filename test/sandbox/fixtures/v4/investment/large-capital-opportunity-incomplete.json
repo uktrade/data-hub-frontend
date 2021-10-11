@@ -38,7 +38,10 @@
     "estimated_return_rate": {},
     "time_horizons": [],
     "investment_projects": [],
-    "status": {},
+    "status": {
+        "name": "Seeking investment",
+        "id": "5d441b34-1fc8-4638-b4b1-a0922ebf401e"
+    },
     "sources_of_funding": [],
     "funding_supporting_details": "",
     "dit_support_provided": "True",

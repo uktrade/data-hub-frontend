@@ -53,8 +53,20 @@ describe('UK Opportunity with missing data', () => {
       assertLocalHeader(incompleteOpportunity.name)
     })
     it('should display opportunity details in the header', () => {
-      cy.get('[data-test="localHeaderDetails"]>li').should('have.length', '5')
-      assertLocalHeaderDetails(0, 'Status', 'Unassigned')
+      cy.get('[data-test="localHeaderDetails"]>li')
+        .should('have.length', '5')
+        // Assert that there's the change status link in the first item
+        .eq(0)
+        .within(() =>
+          cy
+            .contains('change')
+            .should(
+              'have.attr',
+              'href',
+              `/investments/opportunities/${incompleteOpportunity.id}/status`
+            )
+        )
+      assertLocalHeaderDetails(0, 'Status', 'Seeking investment')
       assertLocalHeaderDetails(1, 'Valuation', 'Not yet valued')
       assertLocalHeaderDetails(2, 'UK location', 'Not yet defined')
       assertLocalHeaderDetails(3, 'Asset class', 'Not yet defined')

@@ -1,0 +1,27 @@
+[
+    {
+        "id": "1386d4f4-732d-44b9-af8e-dffe7dd07d7b",
+        "name": "Seeking investment",
+        "disabled_on": null
+    },
+    {
+        "id": "f4f7cd58-3989-4d5c-82f3-c13443c4bc98",
+        "name": "Part funded",
+        "disabled_on": null
+    },
+    {
+        "id": "d2d2f84c-bda2-4874-8aeb-308cbb9b9b77",
+        "name": "Fully funded",
+        "disabled_on": null
+    },
+    {
+        "id": "7a0180b7-ffe7-42c6-97d5-a89e0e5db75f",
+        "name": "Suspended",
+        "disabled_on": null
+    },
+    {
+        "id": "c14547fb-a8ee-410b-a144-06c882167a41",
+        "name": "Abandoned",
+        "disabled_on": null
+    }
+]

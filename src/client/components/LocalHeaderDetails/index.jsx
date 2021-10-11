@@ -36,7 +36,7 @@ LocalHeaderDetails.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
+      value: PropTypes.node.isRequired,
     })
   ).isRequired,
 }

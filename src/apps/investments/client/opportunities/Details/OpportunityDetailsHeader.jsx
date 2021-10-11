@@ -7,15 +7,20 @@ import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeade
 import LocalHeaderDetails from '../../../../../client/components/LocalHeaderDetails'
 import { state2props } from '../Details/state'
 
-const OpportunityDetailsHeader = ({ opportunity, currentPath }) => {
-  const { createdOn, name, ukRegions, assetClasses, opportunityValue } =
-    opportunity.detailsFields
-  const { id, status } = opportunity
-
-  const oppValue = !opportunityValue.value
-    ? 'Not yet valued'
-    : `${currencyGBP(opportunityValue.value)}`
-
+const OpportunityDetailsHeader = ({
+  opportunity: {
+    id,
+    status: { label: statusLabel },
+    detailsFields: {
+      createdOn,
+      name,
+      ukRegions,
+      assetClasses,
+      opportunityValue,
+    },
+  },
+  currentPath,
+}) => {
   const getArrayFieldValue = (arrayData) => {
     if (!arrayData.length) {
       return 'Not yet defined'
@@ -29,11 +34,19 @@ const OpportunityDetailsHeader = ({ opportunity, currentPath }) => {
   const itemCollection = [
     {
       label: 'Status',
-      value: status.label || 'Unassigned',
+      value: (
+        <span>
+          {statusLabel}
+          {' - '}
+          <a href={urls.investments.opportunities.status(id)}>change</a>
+        </span>
+      ),
     },
     {
       label: 'Valuation',
-      value: oppValue,
+      value: opportunityValue.value
+        ? currencyGBP(opportunityValue.value)
+        : 'Not yet valued',
     },
     {
       label: 'UK location',

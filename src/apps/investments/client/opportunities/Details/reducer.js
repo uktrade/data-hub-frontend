@@ -40,6 +40,7 @@ const initialState = {
       returnRate: {},
       timeHorizons: [],
     },
+    status: [],
   },
   metadata: {
     ukRegions: [],
