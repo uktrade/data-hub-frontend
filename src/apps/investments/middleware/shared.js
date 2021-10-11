@@ -118,7 +118,7 @@ async function getInvestmentDetails(req, res, next) {
         },
         {
           label: 'Created on',
-          value: formatMediumDateTime(new Date(investment.created_on)),
+          value: formatMediumDateTime(investment.created_on),
         },
       ],
       company: {
