@@ -159,7 +159,7 @@ describe('Investment shared middleware', () => {
             },
             {
               label: 'Created on',
-              value: null,
+              value: '14 Jun 2017, 2:52pm',
             },
           ],
           nextStage: {
