@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { STATUS_VALUES, LIKELIHOOD_VALUES } from './constants'
 import urls from '../../../lib/urls'
 import { SummaryTable } from '../../../client/components/'
-import { WIDTHS } from '@govuk-react/constants/lib/spacing'
+import { WIDTHS } from '@govuk-react/constants'
 import { currencyGBP } from '../../../client/utils/number-utils'
 
 const { format } = require('../../../client/utils/date')
