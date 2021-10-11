@@ -238,7 +238,6 @@ function OpportunityDetailsForm(state) {
                           placeholder="-- Select asset class --"
                           aria-label="Select asset classes"
                           initialValue={assetClasses}
-                          // controlShouldRenderValue={false}
                         />
                         <p>
                           If the asset class you wish to select is not shown
