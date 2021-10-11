@@ -3,8 +3,8 @@ import Link from '@govuk-react/link'
 import React from 'react'
 import styled from 'styled-components'
 
-import { FormActions } from '../../../client/components'
 import urls from '../../../lib/urls'
+import FormActions from '../Form/elements/FormActions'
 import SecondaryButton from '../SecondaryButton'
 
 const StyledRoot = styled.div({
@@ -18,17 +18,21 @@ const StyledHeading = styled(H3)({
   marginBottom: 0,
 })
 
+const StyledFormActions = styled(FormActions)({
+  textAlign: 'right',
+})
+
 const ListHeader = ({ id, name }) => (
   <StyledRoot>
     <StyledHeading level={2}>{name}</StyledHeading>
-    <FormActions>
+    <StyledFormActions>
       <SecondaryButton as={Link} href={urls.companyLists.rename(id)}>
         Edit list name
       </SecondaryButton>
       <SecondaryButton as={Link} href={urls.companyLists.delete(id)}>
         Delete list
       </SecondaryButton>
-    </FormActions>
+    </StyledFormActions>
   </StyledRoot>
 )
 

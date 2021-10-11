@@ -1,4 +1,5 @@
 import { BLUE, WHITE } from 'govuk-colours'
+import { MEDIA_QUERIES } from '@govuk-react/constants'
 
 export default {
   tabNav: {
@@ -19,5 +20,8 @@ export default {
       padding: '15px 15px 0 15px',
       marginBottom: '30px',
     },
+  },
+  table: {
+    toColumnsMediaQuery: MEDIA_QUERIES.DESKTOP,
   },
 }
