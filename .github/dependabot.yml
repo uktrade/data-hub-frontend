@@ -15,9 +15,6 @@ updates:
   - dependency-name: govuk-frontend
     versions:
     - ">= 0"
-  - dependency-name: image-webpack-loader
-    versions:
-    - ">= 0"
   - dependency-name: "@storybook/addon-a11y"
     versions:
     - ">= 0"
