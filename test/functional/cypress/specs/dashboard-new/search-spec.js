@@ -62,10 +62,7 @@ describe('Dashboard search', () => {
     })
 
     it('should contain hidden button text for accessibility', () => {
-      cy.get('@form')
-        .find('button span')
-        .should('have.attr', 'focusable', 'false')
-        .should('have.text', 'Submit Search')
+      cy.get('@form').contains('Submit Search')
     })
   })
 
