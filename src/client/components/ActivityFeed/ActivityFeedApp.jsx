@@ -11,7 +11,6 @@ export default class ActivityFeedApp extends React.Component {
     apiEndpoint: PropTypes.string.isRequired,
     isGlobalUltimate: PropTypes.bool,
     dnbHierarchyCount: PropTypes.number,
-    isGlobalUltimateFlagEnabled: PropTypes.bool,
     companyIsArchived: PropTypes.bool,
   }
 
@@ -21,7 +20,6 @@ export default class ActivityFeedApp extends React.Component {
     actions: null,
     isGlobalUltimate: false,
     dnbHierarchyCount: null,
-    isGlobalUltimateFlagEnabled: false,
   }
 
   constructor(props) {
@@ -124,7 +122,6 @@ export default class ActivityFeedApp extends React.Component {
       actions,
       isGlobalUltimate,
       dnbHierarchyCount,
-      isGlobalUltimateFlagEnabled,
       companyIsArchived,
     } = this.props
 
@@ -142,7 +139,6 @@ export default class ActivityFeedApp extends React.Component {
         totalActivities={total}
         isGlobalUltimate={isGlobalUltimate}
         dnbHierarchyCount={dnbHierarchyCount}
-        isGlobalUltimateFlagEnabled={isGlobalUltimateFlagEnabled}
         companyIsArchived={companyIsArchived}
       >
         {isEmptyFeed && !error && <div>There are no activities to show.</div>}

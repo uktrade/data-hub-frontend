@@ -40,10 +40,8 @@ const ActivityFeedFilters = ({
   showActivitiesFromAllCompanies,
   isGlobalUltimate,
   dnbHierarchyCount,
-  isGlobalUltimateFlagEnabled,
 }) => {
-  const isGlobalAndEnabled = isGlobalUltimate && isGlobalUltimateFlagEnabled
-  const showDnbHierarchyFilter = isGlobalAndEnabled && dnbHierarchyCount > 1
+  const showDnbHierarchyFilter = isGlobalUltimate && dnbHierarchyCount > 1
   return (
     <ActivityFeedFiltersRow>
       <StyledTitle>Filter by</StyledTitle>
@@ -73,7 +71,6 @@ ActivityFeedFilters.propTypes = {
   showActivitiesFromAllCompanies: PropTypes.func.isRequired,
   dnbHierarchyCount: PropTypes.number,
   isGlobalUltimate: PropTypes.bool.isRequired,
-  isGlobalUltimateFlagEnabled: PropTypes.bool.isRequired,
 }
 
 ActivityFeedFilters.defaultProps = {

@@ -71,7 +71,6 @@ describe('Company business details', () => {
                 name: 'Test Global Ultimate',
                 url: '/test/222',
               },
-              isGlobalUltimateFlagEnabled: false,
               dnbRelatedCompaniesCount: 111,
               subsidiariesCount: 999,
               canEditOneList: false,

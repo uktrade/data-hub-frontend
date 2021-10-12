@@ -45,7 +45,6 @@ const CompanyBusinessDetails = ({
   subsidiariesCount,
   dnbRelatedCompaniesCount,
   globalUltimate,
-  isGlobalUltimateFlagEnabled,
   canEditOneList,
   urls,
   isDnbPending,
@@ -159,7 +158,6 @@ const CompanyBusinessDetails = ({
         isDnbCompany={isDnbCompany}
         isGlobalUltimate={isGlobalUltimate}
         isGlobalHQ={isGlobalHQ}
-        isGlobalUltimateFlagEnabled={isGlobalUltimateFlagEnabled}
         globalUltimate={globalUltimate}
         urls={urls}
       />
@@ -184,7 +182,6 @@ CompanyBusinessDetails.propTypes = {
   subsidiariesCount: PropTypes.number,
   dnbRelatedCompaniesCount: PropTypes.number,
   globalUltimate: PropTypes.object.isRequired,
-  isGlobalUltimateFlagEnabled: PropTypes.bool.isRequired,
   canEditOneList: PropTypes.bool,
 }
 
