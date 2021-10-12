@@ -2,6 +2,7 @@ const buildMiddlewareParameters = require('../../../test/unit/helpers/middleware
 const locals = require('../locals')
 
 describe('locals', () => {
+  const DEFAULT_GENERIC_PAGE_TITLE = 'DIT Data Hub'
   it('should set local variables', () => {
     const middlewareParameters = buildMiddlewareParameters({
       reqMock: {
@@ -75,5 +76,51 @@ describe('locals', () => {
         text: 'breadcrumb-2',
       },
     ])
+  })
+
+  it('getGenericPageTitle() should return extracted generic title of page details ', () => {
+    const middlewareParameters = buildMiddlewareParameters({
+      reqMock: {
+        get: sinon.spy(),
+        originalUrl:
+          '/investments/opportunities/a84f8405-c419-40a6-84c8-642b7c3209b2/interactions',
+      },
+    })
+
+    locals(
+      middlewareParameters.reqMock,
+      middlewareParameters.resMock,
+      middlewareParameters.nextSpy
+    )
+
+    const extractedPageTitle =
+      middlewareParameters.resMock.locals.getGenericPageTitle()
+
+    expect(extractedPageTitle).to.deep.equal(
+      'Investments-opportunities-interactions - ' + DEFAULT_GENERIC_PAGE_TITLE
+    )
+  })
+
+  it('getGenericPageTitle() should return top-level module name at collection list', () => {
+    const middlewareParameters = buildMiddlewareParameters({
+      reqMock: {
+        get: sinon.spy(),
+        originalUrl:
+          '/companies?archived[0]=false&sortby=modified_on:desc&page=1',
+      },
+    })
+
+    locals(
+      middlewareParameters.reqMock,
+      middlewareParameters.resMock,
+      middlewareParameters.nextSpy
+    )
+
+    const extractedPageTitle =
+      middlewareParameters.resMock.locals.getGenericPageTitle()
+
+    expect(extractedPageTitle).to.deep.equal(
+      'Companies - ' + DEFAULT_GENERIC_PAGE_TITLE
+    )
   })
 })

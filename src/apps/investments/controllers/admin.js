@@ -11,7 +11,7 @@ async function renderAdminView(req, res) {
   }
   const stages = orderStages(await getOptions(req, 'investment-project-stage'))
 
-  res.locals.title = `Admin - ${name} - Projects - Investments - DIT Data Hub`
+  res.locals.title = `Admin - ${name} - Projects - Investments`
   res.render('investments/views/admin/client-container.njk', {
     props: {
       projectId: id,

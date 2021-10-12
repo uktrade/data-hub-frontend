@@ -1,9 +1,11 @@
-const { map } = require('lodash')
+const { map, upperFirst } = require('lodash')
 
 const logger = require('../config/logger')
 const config = require('../config')
 
 let webpackManifest = {}
+
+const DEFAULT_GENERIC_PAGE_TITLE = 'DIT Data Hub'
 
 try {
   webpackManifest = require(`${config.buildDir}/manifest.json`)
@@ -32,18 +34,23 @@ module.exports = function locals(req, res, next) {
 
     getPageTitle() {
       const items = res.breadcrumb().map((item) => item.text)
-      const title = res.locals.title
+      const title = 'title' in res.locals
 
       if (title) {
+        let value = res.locals.title
         if (items.length === 1) {
-          return [title]
+          return [value]
         }
 
         items.pop()
-        items.push(title)
+        items.push(value)
       }
 
       return items.reverse().slice(0, -1)
+    },
+
+    getGenericPageTitle() {
+      return extractUrlPageTitle(req)
     },
 
     getBreadcrumbs() {
@@ -71,5 +78,21 @@ module.exports = function locals(req, res, next) {
       return res.locals[key]
     },
   })
+
+  const extractUrlPageTitle = (req) => {
+    let reqURL = req.originalUrl
+    let isQueryStr = (reqURL.match(/\?/g) || []).length
+    let urlPath =
+      isQueryStr > 0
+        ? reqURL.slice(1, reqURL.indexOf('?'))
+        : reqURL.slice(1, reqURL.length)
+    let urlPathArray = urlPath.split('/')
+    let urlPathFiltered = urlPathArray.filter(
+      (item) => (item.match('[^a-z0-9]') || []).length < 1
+    )
+    let urlPathJoin = urlPathFiltered.join('-')
+    let urlPathUpperFirst = upperFirst(urlPathJoin)
+    return urlPathUpperFirst + ' - ' + DEFAULT_GENERIC_PAGE_TITLE
+  }
   next()
 }

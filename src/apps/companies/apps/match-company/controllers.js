@@ -218,7 +218,7 @@ async function renderCannotFindMatch(req, res, next) {
     const { company } = res.locals
     const countries = await getCountries(req)
 
-    res.locals.title = `Send business details - ${company.name}`
+    res.locals.title = `Send business details - ${company.name} - Companies`
     res.render('companies/apps/match-company/views/cannot-find-match', {
       props: {
         company: {
