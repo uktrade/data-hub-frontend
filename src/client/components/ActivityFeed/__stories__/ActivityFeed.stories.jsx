@@ -178,7 +178,6 @@ class ActivityFeedDemoApp extends React.Component {
           actions={ActivityFeedActions}
           dnbHierarchyCount={8}
           isGlobalUltimate={true}
-          isGlobalUltimateFlagEnabled={true}
           companyIsArchived={false}
         >
           {isEmptyFeed && !error && <div>There are no activities to show.</div>}

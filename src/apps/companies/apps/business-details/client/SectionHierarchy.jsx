@@ -19,11 +19,10 @@ const SubsectionDnBHierarchy = ({
   globalUltimate,
   isDnbCompany,
   isGlobalUltimate,
-  isGlobalUltimateFlagEnabled,
   dnbRelatedCompaniesCount,
   urls,
 }) => {
-  if (!isDnbCompany || !isGlobalUltimateFlagEnabled) {
+  if (!isDnbCompany) {
     return null
   }
 
@@ -69,7 +68,6 @@ const SubsectionDnBHierarchy = ({
 SubsectionDnBHierarchy.propTypes = {
   isDnbCompany: PropTypes.bool.isRequired,
   isGlobalUltimate: PropTypes.bool.isRequired,
-  isGlobalUltimateFlagEnabled: PropTypes.bool.isRequired,
   dnbRelatedCompaniesCount: PropTypes.number.isRequired,
   globalUltimate: PropTypes.object.isRequired,
   urls: PropTypes.object.isRequired,
@@ -196,7 +194,6 @@ const SectionHierarchy = ({
   subsidiariesCount,
   dnbRelatedCompaniesCount,
   globalUltimate,
-  isGlobalUltimateFlagEnabled,
   urls,
 }) => {
   const showDnbHierarchy = isDnbCompany
@@ -221,7 +218,6 @@ const SectionHierarchy = ({
           globalUltimate={globalUltimate}
           isDnbCompany={isDnbCompany}
           isGlobalUltimate={isGlobalUltimate}
-          isGlobalUltimateFlagEnabled={isGlobalUltimateFlagEnabled}
           dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
           urls={urls}
         />
@@ -245,7 +241,6 @@ SectionHierarchy.propTypes = {
   isArchived: PropTypes.bool.isRequired,
   isGlobalHQ: PropTypes.bool.isRequired,
   isGlobalUltimate: PropTypes.bool.isRequired,
-  isGlobalUltimateFlagEnabled: PropTypes.bool.isRequired,
   subsidiariesCount: PropTypes.number.isRequired,
   dnbRelatedCompaniesCount: PropTypes.number.isRequired,
   globalUltimate: PropTypes.object.isRequired,

@@ -22,7 +22,6 @@ const CompanyActivityFeed = ({
   activityTypeFilters,
   isGlobalUltimate,
   dnbHierarchyCount,
-  isGlobalUltimateFlagEnabled,
   apiEndpoint,
 }) => {
   const actions = (
@@ -69,7 +68,6 @@ const CompanyActivityFeed = ({
         activityTypeFilters={activityTypeFilters}
         isGlobalUltimate={isGlobalUltimate}
         dnbHierarchyCount={dnbHierarchyCount}
-        isGlobalUltimateFlagEnabled={isGlobalUltimateFlagEnabled}
         apiEndpoint={apiEndpoint}
         companyIsArchived={company.archived}
       />
@@ -85,7 +83,6 @@ CompanyActivityFeed.propTypes = {
   apiEndpoint: PropTypes.string.isRequired,
   isGlobalUltimate: PropTypes.bool,
   dnbHierarchyCount: PropTypes.number,
-  isGlobalUltimateFlagEnabled: PropTypes.bool,
   showMatchingPrompt: PropTypes.bool,
 }
 
@@ -96,7 +93,6 @@ CompanyActivityFeed.defaultProps = {
   actions: null,
   isGlobalUltimate: false,
   dnbHierarchyCount: null,
-  isGlobalUltimateFlagEnabled: false,
   showMatchingPrompt: false,
 }
 

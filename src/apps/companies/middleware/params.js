@@ -10,15 +10,13 @@ const { isItaTierDAccount } = require('../../../lib/is-tier-type-company')
 
 async function getCompany(req, res, next, id) {
   try {
-    const { features } = res.locals
     const company = await getDitCompany(req, id)
     company.isItaTierDAccount = isItaTierDAccount(company)
     company.hasAllocatedLeadIta =
       company.one_list_group_global_account_manager != null
     company.hasManagedAccountDetails =
       company.one_list_group_tier && company.hasAllocatedLeadIta
-    company.isUltimate =
-      !!company.is_global_ultimate && features['companies-ultimate-hq']
+    company.isUltimate = !!company.is_global_ultimate
     company.isGlobalHQ =
       company.headquarter_type && company.headquarter_type.name === 'ghq'
 

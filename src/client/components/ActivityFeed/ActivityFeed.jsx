@@ -36,7 +36,6 @@ export default class ActivityFeed extends React.Component {
     totalActivities: PropTypes.number,
     isGlobalUltimate: PropTypes.bool,
     dnbHierarchyCount: PropTypes.number,
-    isGlobalUltimateFlagEnabled: PropTypes.bool,
     companyIsArchived: PropTypes.bool,
   }
 
@@ -52,7 +51,6 @@ export default class ActivityFeed extends React.Component {
     totalActivities: 0,
     isGlobalUltimate: false,
     dnbHierarchyCount: null,
-    isGlobalUltimateFlagEnabled: false,
   }
 
   constructor(props) {
@@ -130,7 +128,6 @@ export default class ActivityFeed extends React.Component {
       totalActivities,
       isGlobalUltimate,
       dnbHierarchyCount,
-      isGlobalUltimateFlagEnabled,
       companyIsArchived,
     } = this.props
 
@@ -154,7 +151,6 @@ export default class ActivityFeed extends React.Component {
             showActivitiesFromAllCompanies={this.showActivitiesFromAllCompanies}
             isGlobalUltimate={isGlobalUltimate}
             dnbHierarchyCount={dnbHierarchyCount}
-            isGlobalUltimateFlagEnabled={isGlobalUltimateFlagEnabled}
           />
         )}
 

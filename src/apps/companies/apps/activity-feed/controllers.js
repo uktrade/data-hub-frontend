@@ -51,7 +51,6 @@ async function renderActivityFeed(req, res, next) {
           isGlobalUltimate: company.is_global_ultimate,
           dnbHierarchyCount,
           dnbRelatedCompaniesCount,
-          isGlobalUltimateFlagEnabled: features['companies-ultimate-hq'],
           showMatchingPrompt:
             features['companies-matching'] &&
             !company.duns_number &&
