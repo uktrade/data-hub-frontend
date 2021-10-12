@@ -36,8 +36,8 @@ export default class ActivityFeed extends React.Component {
     totalActivities: PropTypes.number,
     isGlobalUltimate: PropTypes.bool,
     dnbHierarchyCount: PropTypes.number,
-    isTypeFilterFlagEnabled: PropTypes.bool,
     isGlobalUltimateFlagEnabled: PropTypes.bool,
+    companyIsArchived: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -52,7 +52,6 @@ export default class ActivityFeed extends React.Component {
     totalActivities: 0,
     isGlobalUltimate: false,
     dnbHierarchyCount: null,
-    isTypeFilterFlagEnabled: false,
     isGlobalUltimateFlagEnabled: false,
   }
 
@@ -131,8 +130,8 @@ export default class ActivityFeed extends React.Component {
       totalActivities,
       isGlobalUltimate,
       dnbHierarchyCount,
-      isTypeFilterFlagEnabled,
       isGlobalUltimateFlagEnabled,
+      companyIsArchived,
     } = this.props
 
     const {
@@ -141,17 +140,13 @@ export default class ActivityFeed extends React.Component {
       showDetails,
       showDnbHierarchy,
     } = this.state
-
-    const hasFilters = isTypeFilterFlagEnabled || isGlobalUltimateFlagEnabled
-
     return (
       <ActivityFeedContainer data-test="activity-feed">
         <ActivityFeedHeader
           totalActivities={totalActivities}
           actions={actions}
         />
-
-        {hasFilters && (
+        {!companyIsArchived && (
           <ActivityFeedFilters
             activityTypeFilters={activityTypeFilters}
             activityTypeFilter={activityTypeFilter}
@@ -159,7 +154,6 @@ export default class ActivityFeed extends React.Component {
             showActivitiesFromAllCompanies={this.showActivitiesFromAllCompanies}
             isGlobalUltimate={isGlobalUltimate}
             dnbHierarchyCount={dnbHierarchyCount}
-            isTypeFilterFlagEnabled={isTypeFilterFlagEnabled}
             isGlobalUltimateFlagEnabled={isGlobalUltimateFlagEnabled}
           />
         )}

@@ -178,8 +178,8 @@ class ActivityFeedDemoApp extends React.Component {
           actions={ActivityFeedActions}
           dnbHierarchyCount={8}
           isGlobalUltimate={true}
-          isTypeFilterFlagEnabled={true}
           isGlobalUltimateFlagEnabled={true}
+          companyIsArchived={false}
         >
           {isEmptyFeed && !error && <div>There are no activities to show.</div>}
           {error && <div>Error occurred while loading activities.</div>}
@@ -205,7 +205,7 @@ storiesOf('ActivityFeed', module)
       </GridRow>
     </Main>
   ))
-  .add('Empty feed', () => <ActivityFeed />)
+  .add('Empty feed', () => <ActivityFeed companyIsArchived={false} />)
   .add('With error', () => {
     class ActivityFeedErrorDemoApp extends ActivityFeedDemoApp {
       fetchActivities = () => {
