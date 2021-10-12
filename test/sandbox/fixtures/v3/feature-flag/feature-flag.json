@@ -36,10 +36,6 @@
     "is_active": true
   },
   {
-    "code": "activity-feed-type-filter-enabled",
-    "is_active": true
-  },
-  {
     "code": "interaction-add-countries",
     "is_active": true
   },

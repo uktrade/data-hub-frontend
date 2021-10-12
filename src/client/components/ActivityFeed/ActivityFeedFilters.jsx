@@ -41,7 +41,6 @@ const ActivityFeedFilters = ({
   isGlobalUltimate,
   dnbHierarchyCount,
   isGlobalUltimateFlagEnabled,
-  isTypeFilterFlagEnabled,
 }) => {
   const isGlobalAndEnabled = isGlobalUltimate && isGlobalUltimateFlagEnabled
   const showDnbHierarchyFilter = isGlobalAndEnabled && dnbHierarchyCount > 1
@@ -58,13 +57,11 @@ const ActivityFeedFilters = ({
           </ActivityFeedCheckbox>
         </StyledCheckboxContainer>
       )}
-      {isTypeFilterFlagEnabled && (
-        <SelectFilter
-          filters={activityTypeFilters}
-          onActivityTypeFilterChange={onActivityTypeFilterChange}
-          value={activityTypeFilter}
-        />
-      )}
+      <SelectFilter
+        filters={activityTypeFilters}
+        onActivityTypeFilterChange={onActivityTypeFilterChange}
+        value={activityTypeFilter}
+      />
     </ActivityFeedFiltersRow>
   )
 }
@@ -77,7 +74,6 @@ ActivityFeedFilters.propTypes = {
   dnbHierarchyCount: PropTypes.number,
   isGlobalUltimate: PropTypes.bool.isRequired,
   isGlobalUltimateFlagEnabled: PropTypes.bool.isRequired,
-  isTypeFilterFlagEnabled: PropTypes.bool.isRequired,
 }
 
 ActivityFeedFilters.defaultProps = {
