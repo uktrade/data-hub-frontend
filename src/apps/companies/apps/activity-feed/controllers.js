@@ -71,7 +71,7 @@ async function renderActivityFeed(req, res, next) {
   }
 }
 
-function getQueries(options, isExportEnquiriesEnabled) {
+function getQueries(options) {
   return {
     [FILTER_KEYS.myActivity]: myActivityQuery({
       ...options,
@@ -81,20 +81,14 @@ function getQueries(options, isExportEnquiriesEnabled) {
       ...options,
       types: DATA_HUB_ACTIVITY,
     }),
-    [FILTER_KEYS.externalActivity]: externalActivityQuery(
-      {
-        ...options,
-        types: EXTERNAL_ACTIVITY,
-      },
-      isExportEnquiriesEnabled
-    ),
-    [FILTER_KEYS.dataHubAndExternalActivity]: externalActivityQuery(
-      {
-        ...options,
-        types: DATA_HUB_AND_EXTERNAL_ACTIVITY,
-      },
-      isExportEnquiriesEnabled
-    ),
+    [FILTER_KEYS.externalActivity]: externalActivityQuery({
+      ...options,
+      types: EXTERNAL_ACTIVITY,
+    }),
+    [FILTER_KEYS.dataHubAndExternalActivity]: externalActivityQuery({
+      ...options,
+      types: DATA_HUB_AND_EXTERNAL_ACTIVITY,
+    }),
   }
 }
 
@@ -178,16 +172,13 @@ async function fetchActivityFeedHandler(req, res, next) {
         .map((company) => company.id)
     }
 
-    const queries = getQueries(
-      {
-        from,
-        size,
-        companyIds: [company.id, ...dnbHierarchyIds],
-        contacts: company.contacts,
-        user,
-      },
-      features['activity-feed-export-enquiry']
-    )
+    const queries = getQueries({
+      from,
+      size,
+      companyIds: [company.id, ...dnbHierarchyIds],
+      contacts: company.contacts,
+      user,
+    })
 
     const results = await fetchActivityFeed(
       req,
