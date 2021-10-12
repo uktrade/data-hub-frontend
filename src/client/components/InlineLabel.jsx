@@ -5,24 +5,24 @@ import Label from '@govuk-react/label'
 import LabelText from '@govuk-react/label-text'
 import styled from 'styled-components'
 
-const StyledLabel = styled(Label)`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
-  ${MEDIA_QUERIES.TABLET} {
-    flex-wrap: nowrap;
-    ${({ justifyRight }) => justifyRight && `justify-content: flex-end;`}
-  }
-`
+const StyledLabel = styled(Label)(({ theme, justifyRight }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+  [theme?.toHorizontalMediaQuery || MEDIA_QUERIES.TABLET]: {
+    flexWrap: 'nowrap',
+    justifyContent: justifyRight && 'flex-end',
+  },
+}))
 
-const StyledLabelText = styled(LabelText)({
+const StyledLabelText = styled(LabelText)(({ theme }) => ({
   width: '100%',
-  [MEDIA_QUERIES.TABLET]: {
+  [theme?.toHorizontalMediaQuery || MEDIA_QUERIES.TABLET]: {
     marginRight: SPACING.SCALE_2,
     width: 'auto',
   },
-})
+}))
 
 const InlineLabel = ({ text, children, justifyRight, name }) => (
   <StyledLabel justifyRight={justifyRight} htmlFor={name}>

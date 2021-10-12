@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { kebabCase } from 'lodash'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
-import { Select } from '..'
+import Select from '../Select'
 
 const StyledSelect = styled(Select)({
   alignItems: 'flex-start',

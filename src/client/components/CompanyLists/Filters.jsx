@@ -16,25 +16,34 @@ export const ALPHABETICAL = 'alphabetical'
 export const RECENT = 'recent'
 export const LEAST_RECENT = 'least-recent'
 
-const StyledRoot = styled(GridRow)({
-  background: GREY_4,
-  padding: SPACING.SCALE_2,
-})
+const getMediaQuery = (theme) =>
+  theme?.toHorizontalMediaQuery || MEDIA_QUERIES.TABLET
 
-const StyledCol = styled(GridCol)({
-  ['&:not(:first-child)']: {
+const StyledRoot = styled(GridRow)(({ theme }) => ({
+  background: GREY_4,
+  padding: `${SPACING.SCALE_2} ${SPACING.SCALE_3}`,
+  flexWrap: 'wrap',
+  [getMediaQuery(theme)]: {
+    flexWrap: 'nowrap',
+  },
+}))
+
+const StyledCol = styled(GridCol)(({ theme }) => ({
+  paddingLeft: 0,
+  paddingRight: 0,
+  '&:not(:first-child)': {
     paddingTop: SPACING.SCALE_2,
-    [MEDIA_QUERIES.TABLET]: {
+    [getMediaQuery(theme)]: {
       paddingTop: 0,
+      marginLeft: SPACING.SCALE_2,
     },
   },
-})
+}))
 
 const StyledInput = styled(Input)({
   width: '100%',
-  [MEDIA_QUERIES.TABLET]: {
+  [MEDIA_QUERIES.LARGESCREEN]: {
     width: 200,
-    marginRight: SPACING.SCALE_6,
   },
 })
 

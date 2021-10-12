@@ -20,7 +20,7 @@ import SecondaryButton from '../SecondaryButton'
 const { format } = require('../../utils/date')
 
 const getMediaQuery = (theme) =>
-  theme?.table?.toColumnsMediaQuery || MEDIA_QUERIES.TABLET
+  theme?.toHorizontalMediaQuery || MEDIA_QUERIES.TABLET
 
 const StyledButtonLink = styled.a({
   marginBottom: 0,
@@ -133,7 +133,7 @@ const CompaniesTable = ({ companies }) => (
       <Table.Row>
         <StyledHeaderCell width="auto">Company name</StyledHeaderCell>
         <StyledHeaderCell width="15%">Last interaction</StyledHeaderCell>
-        <StyledHeaderCell width="20%">Subject</StyledHeaderCell>
+        <StyledHeaderCell width="25%">Subject</StyledHeaderCell>
         <StyledHeaderCell width="20%">Added by</StyledHeaderCell>
         <StyledHeaderCell width="151px">
           <VisuallyHidden>Action</VisuallyHidden>
