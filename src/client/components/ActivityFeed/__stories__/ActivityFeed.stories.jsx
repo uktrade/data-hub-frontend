@@ -204,7 +204,12 @@ storiesOf('ActivityFeed', module)
       </GridRow>
     </Main>
   ))
-  .add('Empty feed', () => <ActivityFeed companyIsArchived={false} />)
+  .add('Empty feed', () => (
+    <ActivityFeed
+      companyIsArchived={false}
+      activityTypeFilters={ACTIVITY_TYPE_FILTERS}
+    />
+  ))
   .add('With error', () => {
     class ActivityFeedErrorDemoApp extends ActivityFeedDemoApp {
       fetchActivities = () => {
