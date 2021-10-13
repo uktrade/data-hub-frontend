@@ -45,8 +45,6 @@ async function renderActivityFeed(req, res, next) {
       : {
           company,
           breadcrumbs,
-          hasActivityFeedWarning:
-            !!res.locals.features['activity-feed-display-incomplete-message'],
           flashMessages: res.locals.getMessages(),
           activityTypeFilter: FILTER_KEYS.dataHubActivity,
           activityTypeFilters: FILTER_ITEMS,
@@ -73,7 +71,7 @@ async function renderActivityFeed(req, res, next) {
   }
 }
 
-function getQueries(options, isExportEnquiriesEnabled) {
+function getQueries(options) {
   return {
     [FILTER_KEYS.myActivity]: myActivityQuery({
       ...options,
@@ -83,20 +81,14 @@ function getQueries(options, isExportEnquiriesEnabled) {
       ...options,
       types: DATA_HUB_ACTIVITY,
     }),
-    [FILTER_KEYS.externalActivity]: externalActivityQuery(
-      {
-        ...options,
-        types: EXTERNAL_ACTIVITY,
-      },
-      isExportEnquiriesEnabled
-    ),
-    [FILTER_KEYS.dataHubAndExternalActivity]: externalActivityQuery(
-      {
-        ...options,
-        types: DATA_HUB_AND_EXTERNAL_ACTIVITY,
-      },
-      isExportEnquiriesEnabled
-    ),
+    [FILTER_KEYS.externalActivity]: externalActivityQuery({
+      ...options,
+      types: EXTERNAL_ACTIVITY,
+    }),
+    [FILTER_KEYS.dataHubAndExternalActivity]: externalActivityQuery({
+      ...options,
+      types: DATA_HUB_AND_EXTERNAL_ACTIVITY,
+    }),
   }
 }
 
@@ -161,7 +153,7 @@ async function getMaxemailCampaigns(req, next, contacts) {
 
 async function fetchActivityFeedHandler(req, res, next) {
   try {
-    const { company, user, features } = res.locals
+    const { company, user } = res.locals
     const {
       from = 0,
       size = config.activityFeed.paginationSize,
@@ -180,16 +172,13 @@ async function fetchActivityFeedHandler(req, res, next) {
         .map((company) => company.id)
     }
 
-    const queries = getQueries(
-      {
-        from,
-        size,
-        companyIds: [company.id, ...dnbHierarchyIds],
-        contacts: company.contacts,
-        user,
-      },
-      features['activity-feed-export-enquiry']
-    )
+    const queries = getQueries({
+      from,
+      size,
+      companyIds: [company.id, ...dnbHierarchyIds],
+      contacts: company.contacts,
+      user,
+    })
 
     const results = await fetchActivityFeed(
       req,
@@ -199,8 +188,7 @@ async function fetchActivityFeedHandler(req, res, next) {
     let activities = results.hits.hits.map((hit) => hit._source)
     let total = results.hits.total.value
 
-    const isMaxemailEnabled = features['activity-feed-maxemail-campaign']
-    if (isExternalFilter(activityTypeFilter) && isMaxemailEnabled) {
+    if (isExternalFilter(activityTypeFilter)) {
       const campaigns = await getMaxemailCampaigns(req, next, company.contacts)
       activities = [...activities, ...campaigns]
       total += campaigns.length

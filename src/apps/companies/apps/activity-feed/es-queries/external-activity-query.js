@@ -1,7 +1,4 @@
-const externalActivityQuery = (
-  { from, size, types, companyIds, contacts },
-  isExportEnquiriesEnabled
-) => {
+const externalActivityQuery = ({ from, size, types, companyIds, contacts }) => {
   const dsl = {
     from,
     size,
@@ -73,10 +70,6 @@ const externalActivityQuery = (
         },
       },
     },
-  }
-
-  if (!isExportEnquiriesEnabled) {
-    dsl.query.bool.filter.bool.should.pop()
   }
 
   return dsl
