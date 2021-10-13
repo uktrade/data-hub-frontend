@@ -125,6 +125,8 @@ import Resource from './components/Resource'
 
 import { ContactForm } from './components/ContactForm'
 
+import TaskForm from './components/Form/TaskForm'
+
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
   // The baseURI is set to the <base/> tag by the spaFallbackSpread
@@ -174,6 +176,7 @@ const store = createStore(
     ...CreateUKInvestmentOpportunity.reducerSpread,
     ...Resource.reducerSpread,
     ...ContactForm.reducerSpread,
+    ...TaskForm.reducerSpread,
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
     [INVESTEMENT_PROJECT_ADMIN_ID]: investmentProjectAdminReducer,

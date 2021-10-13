@@ -65,27 +65,27 @@ const StyledErrorSummary = styled('div')(
   spacing.withWhiteSpace({ marginBottom: 6 })
 )
 
-const ErrorSummary = ({
-  heading = 'There is a problem',
-  description = null,
-  errors,
-  ...props
-}) => (
-  <StyledErrorSummary tabIndex={-1} {...props}>
-    <H2 size="MEDIUM">{heading}</H2>
-    {description && <Paragraph mb={3}>{description}</Paragraph>}
-    {errors.length > 0 && (
-      <UnorderedList mb={0} listStyleType="none">
-        {errors.map(({ targetName, text }) => (
-          <ListItem key={targetName}>
-            <StyledErrorText href={`#field-${targetName}`}>
-              {text}
-            </StyledErrorText>
-          </ListItem>
-        ))}
-      </UnorderedList>
-    )}
-  </StyledErrorSummary>
+const ErrorSummary = React.forwardRef(
+  (
+    { heading = 'There is a problem', description = null, errors, ...props },
+    ref
+  ) => (
+    <StyledErrorSummary tabIndex={-1} {...props} ref={ref}>
+      <H2 size="MEDIUM">{heading}</H2>
+      {description && <Paragraph mb={3}>{description}</Paragraph>}
+      {errors.length > 0 && (
+        <UnorderedList mb={0} listStyleType="none">
+          {errors.map(({ targetName, text }) => (
+            <ListItem key={targetName}>
+              <StyledErrorText href={`#field-${targetName}`}>
+                {text}
+              </StyledErrorText>
+            </ListItem>
+          ))}
+        </UnorderedList>
+      )}
+    </StyledErrorSummary>
+  )
 )
 
 ErrorSummary.propTypes = {
