@@ -202,7 +202,7 @@
     "jsdom": "^18.0.0",
     "jsdom-global": "^3.0.2",
     "json-schema-faker": "^0.5.0-rcv.40",
-    "lint-staged": "^11.2.0",
+    "lint-staged": "^11.2.3",
     "mocha": "^9.1.2",
     "mocha-circleci-reporter": "0.0.3",
     "mocha-multi": "^1.1.5",
