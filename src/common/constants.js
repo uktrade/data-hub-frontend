@@ -26,6 +26,8 @@ const PRIMARY_LINK_PARAMS = {
   omis: '?page=1&sortby=created_on:desc',
 }
 
+const GENERIC_PHONE_NUMBER_REGEX = /^$|([0-9]|#|\+|\s|\(|\))+$/
+
 module.exports = {
   EXCHANGE_RATE_USD_TO_GBP,
   EXCHANGE_RATE_GBP_TO_USD,
@@ -41,4 +43,5 @@ module.exports = {
   UNITED_STATES_ID,
   CANADA_ID,
   PRIMARY_LINK_PARAMS,
+  GENERIC_PHONE_NUMBER_REGEX,
 }
