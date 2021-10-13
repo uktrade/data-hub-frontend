@@ -153,7 +153,7 @@ async function getMaxemailCampaigns(req, next, contacts) {
 
 async function fetchActivityFeedHandler(req, res, next) {
   try {
-    const { company, user, features } = res.locals
+    const { company, user } = res.locals
     const {
       from = 0,
       size = config.activityFeed.paginationSize,
@@ -188,8 +188,7 @@ async function fetchActivityFeedHandler(req, res, next) {
     let activities = results.hits.hits.map((hit) => hit._source)
     let total = results.hits.total.value
 
-    const isMaxemailEnabled = features['activity-feed-maxemail-campaign']
-    if (isExternalFilter(activityTypeFilter) && isMaxemailEnabled) {
+    if (isExternalFilter(activityTypeFilter)) {
       const campaigns = await getMaxemailCampaigns(req, next, company.contacts)
       activities = [...activities, ...campaigns]
       total += campaigns.length
