@@ -32,7 +32,11 @@ import CompanyResource from '../Resource/Company'
 import ReferrerLink from '../ReferrerLink'
 import * as validators from '../Form/validators'
 import State from '../State'
-import { UNITED_STATES_ID, CANADA_ID } from '../../../common/constants'
+import {
+  UNITED_STATES_ID,
+  CANADA_ID,
+  GENERIC_PHONE_NUMBER_REGEX,
+} from '../../../common/constants'
 
 import useAdministrativeAreaLookup from '../AdministrativeAreaSearch/useAdministrativeAreaLookup'
 import useAdministrativeAreaSearch from '../AdministrativeAreaSearch/useAdministrativeAreaSearch'
@@ -291,7 +295,7 @@ const _ContactForm = ({
                   <FieldInput
                     label="Telephone country code"
                     name="telephoneCountrycode"
-                    type="number"
+                    type="text"
                     required="This field may not be null."
                     validate={(x) =>
                       !x?.match(/^\d{1,4}$/) &&
@@ -301,8 +305,12 @@ const _ContactForm = ({
                   <FieldInput
                     label="Telephone number"
                     name="telephoneNumber"
-                    type="number"
+                    type="text"
                     required="This field may not be null."
+                    validate={(x) =>
+                      !x?.match(GENERIC_PHONE_NUMBER_REGEX) &&
+                      'Telephone number should consist of numbers'
+                    }
                   />
                   <FieldInput
                     label="Email"
@@ -356,7 +364,7 @@ const _ContactForm = ({
                   <FieldInput
                     label="Alternative telephone number (optional)"
                     name="telephoneAlternative"
-                    type="number"
+                    type="text"
                   />
                   <FieldInput
                     label="Alternative email (optional)"

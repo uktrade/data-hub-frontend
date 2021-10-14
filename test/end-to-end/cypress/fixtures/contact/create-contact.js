@@ -11,7 +11,7 @@ function create(companyId, _first_name, _last_name) {
       last_name: last_name,
       company: companyId,
       primary: 'False',
-      telephone_countrycode: '+44',
+      telephone_countrycode: '44',
       telephone_number: '67890123432',
       email: 'johnny@cakeman.com',
       address_1: '82 Ramsgate Rd',
