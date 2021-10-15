@@ -124,8 +124,7 @@ import RoutedInput from './components/RoutedInput'
 import Resource from './components/Resource'
 
 import { ContactForm } from './components/ContactForm'
-
-import TaskForm from './components/Form/TaskForm'
+import TaskForm from './components/Task/Form'
 
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({

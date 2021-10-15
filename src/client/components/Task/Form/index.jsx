@@ -1,39 +1,41 @@
+/* eslint-disable prettier/prettier */
 import React, { useRef } from 'react'
 import { isEmpty } from 'lodash'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import * as ReactRouter from 'react-router-dom'
 
-import multiInstance from '../../utils/multiinstance'
-import { ErrorSummary } from '..'
-import Task from '../Task'
-import TaskLoadingBox from '../Task/LoadingBox'
-import Resource from '../Resource'
-import HardRedirect from '../HardRedirect'
-import Wrap from '../Wrap'
-import FlashMessage from '../FlashMessage'
-import Analytics from '../Analytics'
+import multiInstance from '../../../utils/multiinstance'
+import { ErrorSummary } from '../..'
+import Task from '..'
+import TaskLoadingBox from '../LoadingBox'
+import Resource from '../../Resource'
+import HardRedirect from '../../HardRedirect'
+import Wrap from '../../Wrap'
+import FlashMessage from '../../FlashMessage'
+import Analytics from '../../Analytics'
 
-import reducer from './task-form-reducer'
-import FormActions from './elements/FormActions'
-import { FormContextProvider } from './hooks'
-import Step from './elements/Step'
+import reducer from './reducer'
+import FormActions from '../../Form/elements/FormActions'
+import { FormContextProvider } from '../../Form/hooks'
+import Step from '../../Form/elements/Step'
 
-import { validateForm } from './MultiInstanceForm'
+import { validateForm } from '../../Form/MultiInstanceForm'
 
 const _TaskForm = ({
+  // Required
   name,
   id,
-  transformInitialValues = (x) => x,
-  transformPayload = (x) => x,
+  analyticsEventName,
+  // Optional
   initialValuesTaskName,
   redirectTo,
-  analyticsEventName,
-  // TODO: Allow for react router redirection
-  reactRouterRedirect,
   flashMessage,
   children,
-  submissionError,
+  // TODO: Allow for react router redirection
+  reactRouterRedirect,
+  transformInitialValues = (x) => x,
+  transformPayload = (x) => x,
   submitButtonLabel = 'Save',
   actionLinks = [],
   // State props
@@ -45,7 +47,6 @@ const _TaskForm = ({
   steps = [],
   currentStep,
   hardRedirect,
-  dispatch,
   ...props
 }) => {
   // TODO: Clean up this mess
@@ -132,7 +133,7 @@ const _TaskForm = ({
                         context={[result, values]}
                         template={(context) => flashMessage(...context)}
                       />
-                      {(!isEmpty(errors) || submissionError) && (
+                      {(!isEmpty(errors)) && (
                         <ErrorSummary
                           ref={ref}
                           // TODO: Rewrite the tests that rely on this and remove it
@@ -150,11 +151,15 @@ const _TaskForm = ({
                         : children}
                       <FormActions>
                         <Button>{submitButtonLabel}</Button>
-                        {actionLinks.map(({ reactRouter, ...props }, i) =>
-                          reactRouter ? (
-                            <ReactRouter.Link {...props} key={i} />
+                        {actionLinks.map(({to, href, children}, i) =>
+                          to ? (
+                            <ReactRouter.Link key={i} to={to}>
+                              {children}
+                            </ReactRouter.Link>
                           ) : (
-                            <Link {...props} key={i} />
+                            <Link key={i} href={href}>
+                              {children}
+                            </Link>
                           )
                         )}
                       </FormActions>
@@ -220,6 +225,7 @@ const dispatchToProps = (dispatch) => ({
     }),
 })
 
+/** @type {import("./types").TaskForm} TaskForm */
 const TaskForm = multiInstance({
   name: 'TaskForm',
   reducer,
@@ -227,6 +233,9 @@ const TaskForm = multiInstance({
   dispatchToProps,
   actionPattern: 'TASK_FORM__',
 })
+
+export const Example = () =>
+  <TaskForm/>
 
 // TODO: This doesn't seem to be needed
 TaskForm.Step = Step
