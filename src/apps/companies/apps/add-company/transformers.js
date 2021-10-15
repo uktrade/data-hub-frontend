@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+const { CANADA_ID, UNITED_STATES_ID } = require('../../../../common/constants')
+
 const transformFormData = (
   {
     name,
@@ -11,19 +13,17 @@ const transformFormData = (
     postcode,
     country,
     area,
+    areaUS,
+    areaCanada,
   },
   res,
   countryAsObject = true
 ) => {
-  const sanitiseArea = (area) => {
-    if (area === undefined) {
-      return {
-        area: undefined,
-      }
-    }
-    return {
-      area: { id: area },
-    }
+  const sanitiseArea = () => {
+    if (country === UNITED_STATES_ID && areaUS) return { area: { id: areaUS } }
+    if (country === CANADA_ID && areaCanada) return { area: { id: areaCanada } }
+    if (area === undefined) return { area: undefined }
+    return { area: { id: area } }
   }
 
   return {
@@ -37,8 +37,7 @@ const transformFormData = (
       county: county || '',
       postcode: postcode,
       country: countryAsObject ? { id: country } : country,
-      ...(res.locals.features['address-area-company-search'] &&
-        sanitiseArea(area)),
+      ...(res.locals.features['address-area-company-search'] && sanitiseArea()),
     },
   }
 }
