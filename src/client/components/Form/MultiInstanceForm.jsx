@@ -19,7 +19,7 @@ import {
 import multiInstance from '../../utils/multiinstance'
 import reducer from './reducer'
 
-const validateForm = (state) =>
+export const validateForm = (state) =>
   Object.values(state.fields)
     .map((field) => ({
       name: field.name,

@@ -4,53 +4,31 @@ import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import * as ReactRouter from 'react-router-dom'
 
-import { ErrorSummary } from '..'
-import { FormContextProvider } from './hooks'
-import Step from './elements/Step'
-
 import multiInstance from '../../utils/multiinstance'
-import reducer from './task-form-reducer'
-
-import FormActions from './elements/FormActions'
+import { ErrorSummary } from '..'
 import Task from '../Task'
 import TaskLoadingBox from '../Task/LoadingBox'
 import Resource from '../Resource'
-
 import HardRedirect from '../HardRedirect'
 import Wrap from '../Wrap'
 import FlashMessage from '../FlashMessage'
+import Analytics from '../Analytics'
 
-const validateForm = (state) =>
-  Object.values(state.fields)
-    .map((field) => ({
-      name: field.name,
-      error: []
-        .concat(field.validate)
-        .map((validator) => validator(state.values?.[field.name], field, state))
-        .filter(Boolean)[0],
-    }))
-    .filter(({ error }) => error)
-    .reduce(
-      (acc, { name, error }) => ({
-        errors: {
-          ...acc.errors,
-          [name]: error,
-        },
-        touched: {
-          ...acc.touched,
-          [name]: true,
-        },
-      }),
-      {}
-    )
+import reducer from './task-form-reducer'
+import FormActions from './elements/FormActions'
+import { FormContextProvider } from './hooks'
+import Step from './elements/Step'
 
-const Form = ({
+import { validateForm } from './MultiInstanceForm'
+
+const _TaskForm = ({
   name,
   id,
   transformInitialValues = (x) => x,
   transformPayload = (x) => x,
   initialValuesTaskName,
   redirectTo,
+  analyticsEventName,
   // TODO: Allow for react router redirection
   reactRouterRedirect,
   flashMessage,
@@ -65,6 +43,7 @@ const Form = ({
   values = {},
   touched = {},
   steps = [],
+  currentStep,
   hardRedirect,
   dispatch,
   ...props
@@ -107,56 +86,81 @@ const Form = ({
           <Task>
             {(t) => (
               <TaskLoadingBox name={name} id={id}>
-                <form
-                  noValidate={true}
-                  onSubmit={(e) => {
-                    e.preventDefault()
-                    const { errors, touched } = validateForm(contextProps)
-                    props.onValidate(errors, touched)
+                <Analytics>
+                  {(pushAnalytics) => (
+                    <form
+                      noValidate={true}
+                      onSubmit={(e) => {
+                        e.preventDefault()
+                        const { errors, touched } = validateForm(contextProps)
+                        props.onValidate(errors, touched)
 
-                    if (isEmpty(errors)) {
-                      contextProps.isLastStep()
-                        ? t(name, id).start({
-                            payload: transformPayload(values),
-                            onSuccessDispatch: 'TASK_FORM__RESOLVED',
+                        if (isEmpty(errors)) {
+                          if (contextProps.isLastStep()) {
+                            t(name, id).start({
+                              payload: transformPayload(values),
+                              onSuccessDispatch: 'TASK_FORM__RESOLVED',
+                            })
+
+                            pushAnalytics({
+                              event: `form:${analyticsEventName}:submit`,
+                              ...values,
+                            })
+                          } else {
+                            props.goForward()
+                            pushAnalytics({
+                              event: `form:${analyticsEventName}:next-step`,
+                              currentStep,
+                            })
+                          }
+                        } else {
+                          requestAnimationFrame(() => ref.current?.focus())
+                          pushAnalytics({
+                            event: `form:${analyticsEventName}:errors`,
+                            ...errors,
                           })
-                        : props.goForward()
-                    } else {
-                      requestAnimationFrame(() => ref.current?.focus())
-                    }
-                  }}
-                >
-                  {(!isEmpty(errors) || submissionError) && (
-                    <ErrorSummary
-                      ref={ref}
-                      id="form-errors"
-                      errors={Object.entries(errors).map(([name, error]) => ({
-                        targetName: name,
-                        text: error,
-                      }))}
-                    />
+                        }
+                      }}
+                    >
+                      <HardRedirect
+                        to={redirectTo(result, values)}
+                        when={resolved}
+                      />
+                      <FlashMessage
+                        type="success"
+                        when={resolved}
+                        context={[result, values]}
+                        template={(context) => flashMessage(...context)}
+                      />
+                      {(!isEmpty(errors) || submissionError) && (
+                        <ErrorSummary
+                          ref={ref}
+                          // TODO: Rewrite the tests that rely on this and remove it
+                          id="form-errors"
+                          errors={Object.entries(errors).map(
+                            ([name, error]) => ({
+                              targetName: name,
+                              text: error,
+                            })
+                          )}
+                        />
+                      )}
+                      {typeof children === 'function'
+                        ? children(contextProps)
+                        : children}
+                      <FormActions>
+                        <Button>{submitButtonLabel}</Button>
+                        {actionLinks.map(({ reactRouter, ...props }, i) =>
+                          reactRouter ? (
+                            <ReactRouter.Link {...props} key={i} />
+                          ) : (
+                            <Link {...props} key={i} />
+                          )
+                        )}
+                      </FormActions>
+                    </form>
                   )}
-                  <HardRedirect to={redirectTo(result, values)} when={result} />
-                  <FlashMessage
-                    type="success"
-                    when={result}
-                    context={[result, values]}
-                    template={(context) => flashMessage(...context)}
-                  />
-                  {typeof children === 'function'
-                    ? children(contextProps)
-                    : children}
-                  <FormActions>
-                    <Button>{submitButtonLabel}</Button>
-                    {actionLinks.map(({ reactRouter, ...props }, i) =>
-                      reactRouter ? (
-                        <ReactRouter.Link {...props} key={i} />
-                      ) : (
-                        <Link {...props} key={i} />
-                      )
-                    )}
-                  </FormActions>
-                </form>
+                </Analytics>
               </TaskLoadingBox>
             )}
           </Task>
@@ -219,7 +223,7 @@ const dispatchToProps = (dispatch) => ({
 const TaskForm = multiInstance({
   name: 'TaskForm',
   reducer,
-  component: Form,
+  component: _TaskForm,
   dispatchToProps,
   actionPattern: 'TASK_FORM__',
 })
