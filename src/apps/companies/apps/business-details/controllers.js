@@ -22,7 +22,6 @@ async function renderBusinessDetails(req, res) {
     company,
     ARCHIVED_DOCUMENT_BASE_URL,
     csrfToken,
-    features,
     globalUltimate,
     dnbRelatedCompaniesCount,
   } = res.locals
@@ -35,7 +34,6 @@ async function renderBusinessDetails(req, res) {
     .render('companies/apps/business-details/views/client-container', {
       heading: 'Business details',
       props: {
-        isGlobalUltimateFlagEnabled: features['companies-ultimate-hq'] === true,
         businessDetails: transformCompanyToBusinessDetails(company),
         subsidiariesCount: subsidiaries.count,
         dnbRelatedCompaniesCount,
