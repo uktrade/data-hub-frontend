@@ -95,7 +95,7 @@
     "connected-react-router": "^6.9.1",
     "constate": "^3.3.0",
     "cookie-parser": "^1.4.5",
-    "core-js": "^3.18.2",
+    "core-js": "^3.18.3",
     "css-loader": "^5.2.7",
     "csurf": "^1.9.0",
     "cypress-axe": "^0.13.0",
