@@ -24,6 +24,11 @@ import {
 } from '../../../components'
 
 import {
+  listSkeletonPlaceholder,
+  filterSkeletonPlaceholder,
+} from '../../../components/SkeletonPlaceholder'
+
+import {
   ID,
   state2props,
   TASK_GET_INTERACTIONS_LIST,
@@ -49,6 +54,7 @@ const InteractionCollection = ({
     name: TASK_GET_INTERACTIONS_LIST,
     id: ID,
     progressMessage: 'Loading interactions',
+    renderProgress: listSkeletonPlaceholder(),
     startOnRender: {
       payload,
       onSuccessDispatch: INTERACTIONS__LOADED,
@@ -68,6 +74,10 @@ const InteractionCollection = ({
     name: TASK_GET_INTERACTIONS_METADATA,
     id: ID,
     progressMessage: 'Loading filters',
+    renderProgress: filterSkeletonPlaceholder({
+      filterCheckboxCount: 3,
+      filterInputFields: 4,
+    }),
     startOnRender: {
       onSuccessDispatch: INTERACTIONS__METADATA_LOADED,
     },

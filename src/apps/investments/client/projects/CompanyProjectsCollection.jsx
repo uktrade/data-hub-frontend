@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link, Details } from 'govuk-react'
 
 import { FilteredCollectionList } from '../../../../client/components'
+import { listSkeletonPlaceholder } from '../../../../client/components/SkeletonPlaceholder'
 
 import {
   TASK_GET_PROJECTS_LIST,
@@ -23,6 +24,7 @@ const CompanyProjectsCollection = ({
     name: TASK_GET_PROJECTS_LIST,
     id: COMPANY_PROJECTS_LIST_ID,
     progressMessage: 'Loading projects',
+    renderProgress: listSkeletonPlaceholder(),
     startOnRender: {
       payload: {
         ...payload,

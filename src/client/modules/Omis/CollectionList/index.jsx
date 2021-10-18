@@ -21,6 +21,11 @@ import {
 } from '../../../components'
 
 import {
+  listSkeletonPlaceholder,
+  filterSkeletonPlaceholder,
+} from '../../../components/SkeletonPlaceholder'
+
+import {
   ORDERS_LIST_ID,
   ordersState2props,
   TASK_GET_ORDERS_LIST,
@@ -50,6 +55,7 @@ const OrdersCollection = ({
     name: TASK_GET_ORDERS_LIST,
     id: ORDERS_LIST_ID,
     progressMessage: 'Loading orders',
+    renderProgress: listSkeletonPlaceholder(),
     startOnRender: {
       payload,
       onSuccessDispatch: ORDERS__LOADED,
@@ -60,6 +66,7 @@ const OrdersCollection = ({
     name: TASK_GET_ORDERS_METADATA,
     id: ORDERS_LIST_ID,
     progressMessage: 'Loading filters',
+    renderProgress: filterSkeletonPlaceholder(),
     startOnRender: {
       payload: {},
       onSuccessDispatch: ORDERS__METADATA_LOADED,

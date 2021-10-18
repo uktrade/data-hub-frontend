@@ -15,6 +15,7 @@ const RoutedPagination = ({ qsParamName, ...props }) => (
           {...props}
           activePage={parseInt(activePage, 10)}
           onPageClick={(page) => {
+            window.scrollTo({ top: 0 })
             history.push({
               search: qs.stringify({
                 ...qsParams,

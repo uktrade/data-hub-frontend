@@ -8,7 +8,8 @@ import VisuallyHidden from '@govuk-react/visually-hidden'
 
 import { ORDERS__LOADED } from '../../../actions'
 
-import { FilteredCollectionList } from '../../../components/index.jsx'
+import { FilteredCollectionList } from '../../../components'
+import { listSkeletonPlaceholder } from '../../../components/SkeletonPlaceholder'
 
 import {
   companyOrdersState2props,
@@ -40,6 +41,7 @@ const CompanyOrdersCollection = ({
     name: TASK_GET_ORDERS_LIST,
     id: COMPANY_ORDERS_LIST_ID,
     progressMessage: 'Loading orders',
+    renderProgress: listSkeletonPlaceholder(),
     startOnRender: {
       payload: {
         ...payload,

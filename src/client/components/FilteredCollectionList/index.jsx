@@ -118,6 +118,7 @@ FilteredCollectionList.propTypes = {
     name: PropTypes.string,
     id: PropTypes.string,
     progressMessage: PropTypes.string,
+    renderProgress: PropTypes.func,
     startOnRender: PropTypes.shape({
       payload: PropTypes.shape({
         page: PropTypes.number,

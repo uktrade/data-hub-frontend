@@ -14,6 +14,11 @@ import {
 } from '../../../components'
 
 import {
+  listSkeletonPlaceholder,
+  filterSkeletonPlaceholder,
+} from '../../../components/SkeletonPlaceholder'
+
+import {
   CONTACTS_LIST_ID,
   contactsState2props,
   TASK_GET_CONTACTS_LIST,
@@ -30,6 +35,7 @@ const ContactsCollection = ({
     name: TASK_GET_CONTACTS_LIST,
     id: CONTACTS_LIST_ID,
     progressMessage: 'Loading contacts',
+    renderProgress: listSkeletonPlaceholder(),
     startOnRender: {
       payload,
       onSuccessDispatch: CONTACTS__LOADED,
@@ -40,6 +46,10 @@ const ContactsCollection = ({
     name: TASK_GET_CONTACTS_METADATA,
     id: CONTACTS_LIST_ID,
     progressMessage: 'Loading filters',
+    renderProgress: filterSkeletonPlaceholder({
+      filterCheckboxCount: 0,
+      filterInputFields: 6,
+    }),
     startOnRender: {
       onSuccessDispatch: CONTACTS__METADATA_LOADED,
     },

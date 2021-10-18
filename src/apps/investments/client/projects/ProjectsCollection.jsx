@@ -12,6 +12,11 @@ import {
 } from '../../../../client/components'
 
 import {
+  listSkeletonPlaceholder,
+  filterSkeletonPlaceholder,
+} from '../../../../client/components/SkeletonPlaceholder'
+
+import {
   TASK_GET_PROJECTS_LIST,
   TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME,
   TASK_GET_INVESTMENTS_PROJECTS_METADATA,
@@ -36,6 +41,7 @@ const ProjectsCollection = ({
     name: TASK_GET_PROJECTS_LIST,
     id: INVESTMENT_PROJECTS_ID,
     progressMessage: 'Loading projects',
+    renderProgress: listSkeletonPlaceholder(),
     startOnRender: {
       payload,
       onSuccessDispatch: INVESTMENTS__PROJECTS_LOADED,
@@ -54,6 +60,7 @@ const ProjectsCollection = ({
     name: TASK_GET_INVESTMENTS_PROJECTS_METADATA,
     id: INVESTMENT_PROJECTS_ID,
     progressMessage: 'Loading filters',
+    renderProgress: filterSkeletonPlaceholder(),
     startOnRender: {
       payload: {
         projectStageOptions: urls.metadata.investmentProjectStage(),

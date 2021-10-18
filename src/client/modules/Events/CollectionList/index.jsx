@@ -17,6 +17,11 @@ import {
   DefaultLayout,
 } from '../../../components'
 
+import {
+  listSkeletonPlaceholder,
+  filterSkeletonPlaceholder,
+} from '../../../components/SkeletonPlaceholder'
+
 import { LABELS } from './constants'
 
 import {
@@ -38,6 +43,7 @@ const EventsCollection = ({
     name: TASK_GET_EVENTS_LIST,
     id: ID,
     progressMessage: 'Loading events',
+    renderProgress: listSkeletonPlaceholder(),
     startOnRender: {
       payload,
       onSuccessDispatch: EVENTS__LOADED,
@@ -48,6 +54,10 @@ const EventsCollection = ({
     name: TASK_GET_EVENTS_METADATA,
     id: ID,
     progressMessage: 'Loading filters',
+    renderProgress: filterSkeletonPlaceholder({
+      filterCheckboxCount: 0,
+      filterInputFields: 6,
+    }),
     startOnRender: {
       onSuccessDispatch: EVENTS__METADATA_LOADED,
     },
