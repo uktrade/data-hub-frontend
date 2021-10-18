@@ -78,6 +78,8 @@ const MyInvestmentProjects = ({
         </InvestmentListShowDetails>
       )}
       <InvestmentListSelect
+        id="my-projects-stage-label"
+        input={{ id: 'my-projects-stage-select' }}
         data-test="stage-select"
         label="Stage"
         options={STAGE_OPTIONS}
@@ -85,6 +87,8 @@ const MyInvestmentProjects = ({
         onChange={(event) => onStageChange(event.target.value)}
       />
       <InvestmentListSelect
+        id="my-projects-status-label"
+        input={{ id: 'my-projects-status-select' }}
         data-test="status-select"
         label="Status"
         options={PROJECT_STATUS_OPTIONS}
@@ -92,6 +96,8 @@ const MyInvestmentProjects = ({
         onChange={(event) => onStatusChange(event.target.value)}
       />
       <InvestmentListSelect
+        id="my-projects-land-date-label"
+        input={{ id: 'my-projects-land-date-select' }}
         data-test="land-date-select"
         label="Land date"
         options={landDateOptions}
@@ -99,6 +105,8 @@ const MyInvestmentProjects = ({
         onChange={(event) => onLandDateChange(event.target.value)}
       />
       <InvestmentListSelect
+        id="my-projects-sort-label"
+        input={{ id: 'my-projects-sort-select' }}
         data-test="sort-select"
         label="Sort"
         options={SORT_OPTIONS}
