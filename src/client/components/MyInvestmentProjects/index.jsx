@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { Paragraph } from 'govuk-react'
-import { GREY_1 } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+
+import { MID_GREY } from '../../../client/utils/colors'
 
 import { ID, TASK_GET_MY_INVESTMENTS_LIST, state2props } from './state'
 import {
@@ -42,7 +43,7 @@ const StyledParagraph = styled(Paragraph)`
 `
 
 const StyledListContainer = styled('div')`
-  border-top: 2px solid ${GREY_1};
+  border-top: 1px solid ${MID_GREY};
   margin-top: ${SPACING.SCALE_3};
 `
 

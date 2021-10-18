@@ -1,7 +1,6 @@
 import Link from '@govuk-react/link'
 import Table from '@govuk-react/table'
 import { FONT_WEIGHTS, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
-import { spacing } from '@govuk-react/lib'
 import {
   BORDER_COLOUR,
   LINK_ACTIVE_COLOUR,
@@ -20,53 +19,54 @@ import SecondaryButton from '../SecondaryButton'
 
 const { format } = require('../../utils/date')
 
+const getMediaQuery = (theme) =>
+  theme?.toHorizontalMediaQuery || MEDIA_QUERIES.TABLET
+
 const StyledButtonLink = styled.a({
-  whiteSpace: 'nowrap',
   marginBottom: 0,
+  width: '100%',
 })
 
-const StyledTableRow = styled.tr({
+const StyledTableRow = styled.tr(({ theme }) => ({
   borderBottom: `1px solid ${BORDER_COLOUR}`,
 
-  [MEDIA_QUERIES.TABLET]: {
+  [getMediaQuery(theme)]: {
     borderBottom: 'none',
   },
-})
+}))
 
 const StyledCell = styled.td({
   padding: 0,
   borderBottom: 'none',
 })
-// based on: https://github.com/govuk-react/govuk-react/blob/master/components/table/src/atoms/Cell/index.js
-const StyledTableCell = styled(StyledCell)(
-  {
-    display: 'inline-block',
-    [MEDIA_QUERIES.TABLET]: {
-      display: 'table-cell',
-      padding: `${SPACING.SCALE_2} ${SPACING.SCALE_4} ${SPACING.SCALE_2} 0px`,
-      borderBottom: `1px solid ${BORDER_COLOUR}`,
-    },
+const StyledTableCell = styled(StyledCell)(({ theme }) => ({
+  display: 'inline-block',
+  width: '100%',
+  [getMediaQuery(theme)]: {
+    display: 'table-cell',
+    width: 'auto',
+    padding: `${SPACING.SCALE_2} ${SPACING.SCALE_4} ${SPACING.SCALE_2} 0`,
+    borderBottom: `1px solid ${BORDER_COLOUR}`,
   },
-  spacing.withWidth()
-)
+}))
 
-const StyledHeaderCell = styled(StyledCell)({
+const StyledHeaderCell = styled(StyledCell)(({ theme }) => ({
   display: 'none',
   fontWeight: FONT_WEIGHTS.bold,
-  [MEDIA_QUERIES.TABLET]: {
+  [getMediaQuery(theme)]: {
     display: 'table-cell',
     borderBottom: `1px solid ${BORDER_COLOUR}`,
   },
-})
+}))
 
-const TitleCell = styled(StyledTableCell)({
+const TitleCell = styled(StyledTableCell)(({ theme }) => ({
   paddingTop: SPACING.SCALE_3,
-  [MEDIA_QUERIES.TABLET]: {
+  [getMediaQuery(theme)]: {
     paddingTop: SPACING.SCALE_2,
   },
-})
+}))
 
-const ColumnLabelCell = styled(StyledTableCell)({
+const ColumnLabelCell = styled(StyledTableCell)(({ theme }) => ({
   position: 'relative',
   marginTop: `${SPACING.SCALE_5}`,
   '::before': {
@@ -76,13 +76,22 @@ const ColumnLabelCell = styled(StyledTableCell)({
     // the table element seems to have the font size hard coded to 19px, not a variable
     fontSize: 'smaller',
   },
-  [MEDIA_QUERIES.TABLET]: {
+  [getMediaQuery(theme)]: {
     marginTop: 0,
     '::before': {
       content: 'none',
     },
   },
-})
+}))
+
+const ActionCell = styled(StyledTableCell)(({ theme }) => ({
+  paddingTop: SPACING.SCALE_2,
+  paddingBottom: SPACING.SCALE_4,
+  [getMediaQuery(theme)]: {
+    paddingRight: 0,
+    paddingBottom: SPACING.SCALE_2,
+  },
+}))
 
 const StyledLink = styled(Link)({
   ':focus': {
@@ -105,16 +114,6 @@ const StyledLinesEllipsis = styled(LinesEllipsis)({
   textDecoration: 'underline',
 })
 
-const ActionCell = styled(StyledTableCell)({
-  paddingTop: SPACING.SCALE_2,
-  paddingBottom: SPACING.SCALE_4,
-  width: '100%',
-  [MEDIA_QUERIES.TABLET]: {
-    paddingRight: 0,
-    paddingBottom: `${SPACING.SCALE_2}`,
-  },
-})
-
 const Advisers = ({ ditParticipants }) =>
   ditParticipants.length === 0
     ? 'Unknown adviser - Unknown team'
@@ -132,11 +131,11 @@ const CompaniesTable = ({ companies }) => (
   <Table
     head={
       <Table.Row>
-        <StyledHeaderCell>Company name</StyledHeaderCell>
-        <StyledHeaderCell>Last interaction</StyledHeaderCell>
-        <StyledHeaderCell>Subject</StyledHeaderCell>
-        <StyledHeaderCell>Added by</StyledHeaderCell>
-        <StyledHeaderCell>
+        <StyledHeaderCell width="auto">Company name</StyledHeaderCell>
+        <StyledHeaderCell width="15%">Last interaction</StyledHeaderCell>
+        <StyledHeaderCell width="25%">Subject</StyledHeaderCell>
+        <StyledHeaderCell width="20%">Added by</StyledHeaderCell>
+        <StyledHeaderCell width="151px">
           <VisuallyHidden>Action</VisuallyHidden>
         </StyledHeaderCell>
       </Table.Row>
@@ -145,7 +144,7 @@ const CompaniesTable = ({ companies }) => (
     {companies.map(
       ({ id, name, date, subject, interactionId, ditParticipants }) => (
         <StyledTableRow key={id}>
-          <TitleCell setWidth="20%">
+          <TitleCell>
             <StyledLink href={urls.companies.detail(id)}>
               <StyledLinesEllipsis
                 text={name}
@@ -156,10 +155,8 @@ const CompaniesTable = ({ companies }) => (
               />
             </StyledLink>
           </TitleCell>
-          <ColumnLabelCell setWidth="15%">
-            {date ? format(date) : '-'}
-          </ColumnLabelCell>
-          <StyledTableCell setWidth="30%">
+          <ColumnLabelCell>{date ? format(date) : '-'}</ColumnLabelCell>
+          <StyledTableCell>
             {interactionId ? (
               <StyledLink href={urls.interactions.detail(interactionId)}>
                 <StyledLinesEllipsis
@@ -174,7 +171,7 @@ const CompaniesTable = ({ companies }) => (
               'No interactions have been recorded'
             )}
           </StyledTableCell>
-          <StyledTableCell setWidth="20%">
+          <StyledTableCell>
             <Advisers ditParticipants={ditParticipants} />
           </StyledTableCell>
           <ActionCell>

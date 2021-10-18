@@ -1,4 +1,5 @@
 import { BLUE, WHITE } from 'govuk-colours'
+import { MEDIA_QUERIES } from '../../utils/responsive'
 
 export default {
   tabNav: {
@@ -20,4 +21,5 @@ export default {
       marginBottom: '30px',
     },
   },
+  toHorizontalMediaQuery: MEDIA_QUERIES.LARGE_DESKTOP,
 }
