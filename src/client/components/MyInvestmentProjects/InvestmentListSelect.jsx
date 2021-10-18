@@ -24,6 +24,7 @@ const InvestmentListSelect = ({
   label,
   options,
   onChange,
+  input,
   ...props
 }) => (
   <StyledSelect
@@ -31,6 +32,7 @@ const InvestmentListSelect = ({
     input={{
       onChange,
       initialValue,
+      ...input,
     }}
     {...props}
   >

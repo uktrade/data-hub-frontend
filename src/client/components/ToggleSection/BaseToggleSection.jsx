@@ -72,6 +72,9 @@ const BaseToggleSection = ({
   <ToggleContainer {...props}>
     <ToggleHeader justifyHeaderContent={justifyHeaderContent}>
       <ToggleButton
+        id={
+          props.id && `${props.id}-toggle-button-${isOpen ? 'close' : 'open'}`
+        }
         data-test="toggle-section-button"
         onClick={() => open(!isOpen)}
         isOpen={isOpen}
