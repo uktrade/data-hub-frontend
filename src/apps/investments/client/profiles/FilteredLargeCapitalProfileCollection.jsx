@@ -9,6 +9,7 @@ import {
   RoutedTypeahead,
   ToggleSection,
 } from '../../../../client/components/'
+import { listSkeletonPlaceholder } from '../../../../client/components/SkeletonPlaceholder'
 import RoutedInputField from '../../../../client/components/RoutedInputField'
 import RoutedNumericRangeField from '../../../../client/components/RoutedNumericRangeField'
 import { TASK_GET_PROFILES_LIST, ID } from './state'
@@ -129,6 +130,9 @@ const LargeCapitalProfileCollection = ({
             name: TASK_GET_PROFILES_LIST,
             id: ID,
             progressMessage: 'Loading profiles',
+            renderProgress: listSkeletonPlaceholder({
+              listItemFields: 2,
+            }),
             startOnRender: {
               payload: {
                 page: parseInt(qsParams.page, 10),

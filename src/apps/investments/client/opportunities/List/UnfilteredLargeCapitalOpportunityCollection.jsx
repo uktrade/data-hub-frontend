@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { CollectionList } from '../../../../../client/components'
+import { listSkeletonPlaceholder } from '../../../../../client/components/SkeletonPlaceholder'
 import { TASK_GET_OPPORTUNITIES_LIST, ID, state2props } from './state'
 import {
   INVESTMENTS__OPPORTUNITIES_LOADED,
@@ -22,6 +23,9 @@ const LargeCapitalOpportunityCollection = ({
       name: TASK_GET_OPPORTUNITIES_LIST,
       id: ID,
       progressMessage: 'Loading opportunities',
+      renderProgress: listSkeletonPlaceholder({
+        listItemFields: 2,
+      }),
       startOnRender: {
         payload: { payload, activePage },
         onSuccessDispatch: INVESTMENTS__OPPORTUNITIES_LOADED,

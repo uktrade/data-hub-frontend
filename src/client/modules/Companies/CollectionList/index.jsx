@@ -18,6 +18,11 @@ import {
   DefaultLayout,
 } from '../../../components'
 
+import {
+  listSkeletonPlaceholder,
+  filterSkeletonPlaceholder,
+} from '../../../components/SkeletonPlaceholder/'
+
 import { LABELS } from './constants'
 
 import {
@@ -39,6 +44,7 @@ const CompaniesCollection = ({
     name: TASK_GET_COMPANIES_LIST,
     id: ID,
     progressMessage: 'Loading companies',
+    renderProgress: listSkeletonPlaceholder(),
     startOnRender: {
       payload,
       onSuccessDispatch: COMPANIES__LOADED,
@@ -49,6 +55,7 @@ const CompaniesCollection = ({
     name: TASK_GET_COMPANIES_METADATA,
     id: ID,
     progressMessage: 'Loading filters',
+    renderProgress: filterSkeletonPlaceholder({ filterCheckboxCount: 3 }),
     startOnRender: {
       onSuccessDispatch: COMPANIES__METADATA_LOADED,
     },
