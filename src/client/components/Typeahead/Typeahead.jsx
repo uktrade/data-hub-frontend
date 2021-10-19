@@ -5,7 +5,7 @@ import AsyncSelect from 'react-select/async'
 import defaultStyles, { errorStyles } from './styles'
 import Highlighter from './Highlighter'
 
-const { Input, Option, NoOptionsMessage, MenuList } = components
+const { Input, Option, NoOptionsMessage, MenuList, Control } = components
 
 export const filterOption = ({ label = '' }, query) =>
   label.toLowerCase().includes(query.toLowerCase())
@@ -28,10 +28,26 @@ const CustomNoOptionsMessage = ({ children, ...props }) => (
     <NoOptionsMessage {...props}>{children}</NoOptionsMessage>
   </li>
 )
+// figure out which aria tag is causing the screen reader to break on option read out
+const CustomControl = ({ children, innerProps, selectProps, ...props }) => {
+  innerProps['aria-owns'] = selectProps['data-aria-id']
+  innerProps['aria-expanded'] = selectProps.menuIsOpen
+  // innerProps.role = 'combobox'
+  // innerProps['aria-haspopup'] = 'listbox'
+  return (
+    <Control {...props} innerProps={innerProps}>
+      {children}
+    </Control>
+  )
+}
 
 const CustomMenuList = ({ children, selectProps, ...props }) => (
   <MenuList {...props}>
-    <ul id={selectProps['data-aria-id']} role="listbox">
+    <ul
+      id={selectProps['data-aria-id']}
+      role="listbox"
+      aria-multiselectable={selectProps.isMulti}
+    >
       {Array.isArray(children)
         ? children.map((child, i) =>
             React.cloneElement(child, {
@@ -52,19 +68,12 @@ const CustomInput = ({ children, selectProps, inputProps, ...props }) => (
   <>
     <Input
       {...props}
-      aria-owns={selectProps['data-aria-id']}
+      aria-activedescendant=""
       aria-autocomplete="list"
-      aria-expanded={selectProps.menuIsOpen}
       aria-describedby={`${selectProps['data-aria-id']}-assistiveHint`}
-      role="combobox"
+      type="text"
+      id="Input"
     />
-    {Boolean(!selectProps.options.length) && (
-      <ul
-        id={selectProps['data-aria-id']}
-        role="listbox"
-        style={{ display: 'none' }}
-      ></ul>
-    )}
   </>
 )
 
@@ -86,6 +95,7 @@ const Typeahead = ({ options, styles, error, name, ...props }) => {
       MenuList: CustomMenuList,
       Input: CustomInput,
       NoOptionsMessage: CustomNoOptionsMessage,
+      Control: CustomControl,
     },
     filterOption,
     'data-aria-id': `autocomplete-${name}`,
@@ -95,6 +105,10 @@ const Typeahead = ({ options, styles, error, name, ...props }) => {
 
   return (
     <>
+      {/* <span id="LaurenId-remove" style={{ display: 'none' }}>
+        remove
+      </span> */}
+
       {options ? (
         <Select {...customisedProps} options={options} />
       ) : (
