@@ -44,7 +44,7 @@ const Select = ({ input, ...props }) => {
    * Changing the initialValue prop overrides the user's input value - this
    * means that the input value will stay synchronised when changing the route.
    */
-  const { onChange = () => {}, initialValue = '', ...inputProps } = input
+  const { onChange = () => {}, initialValue = '', id, ...inputProps } = input
   const [value, setValue] = useState(initialValue)
   useEffect(() => setValue(initialValue), [initialValue])
 
@@ -56,6 +56,7 @@ const Select = ({ input, ...props }) => {
           setValue(e.target.value)
           onChange(e)
         },
+        id: id && `${id}-${initialValue}`,
         value,
         ...inputProps,
       }}
