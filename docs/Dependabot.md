@@ -14,6 +14,14 @@ This is the process we have identified for dealing with Dependabot PRs that save
 10. If you are satisfied that everything is in order and all the tests have passed, request reviews as normal.
 11. After merging the PR, ensure that Storybook is running properly (sometimes it breaks silently due to Dependabot changes).
 
+## Troubleshooting
+
+- **Note** be aware that there is a scenario where the package lock versions are lower than the package version. If the package lock generated file seems to contain output with lower  versions than expected, do `npm ci` instead of `npm i` , [https://docs.npmjs.com/cli/v7/commands/npm-ci](https://docs.npmjs.com/cli/v7/commands/npm-ci) for the reason this resolves the correct versions.
+
+  ![image-20211019111732729](./package-lock-issue.png)
+
+  ![image-20211019112355859](./requirmes-version-issue.png)
+
 ## Additional actions
 
 For some dependencies, additional updates and changes are required. These can be added in as part of the main Dependabot PR.
