@@ -120,7 +120,7 @@ export const buildSelectedFilters = (
     options: buildOptionsFilter({
       options: financialYearOptions,
       value: queryParams.land_date_financial_year_start,
-      categoryLabel: LABELS.financialYearStart,
+      categoryLabel: LABELS.landDate,
     }),
   },
 })

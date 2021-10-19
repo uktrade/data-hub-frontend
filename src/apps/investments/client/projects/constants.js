@@ -12,7 +12,7 @@ export const LABELS = {
   involvementLevel: 'Level of involvement specified',
   estimatedLandDateAfter: 'Estimated land date after',
   estimatedLandDateBefore: 'Estimated land date before',
-  financialYearStart: 'Financial year',
+  landDate: 'Land date',
 }
 
 export const SORT_OPTIONS = [
