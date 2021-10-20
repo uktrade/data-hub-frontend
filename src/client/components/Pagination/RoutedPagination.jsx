@@ -21,34 +21,34 @@ const StyledNav = styled('nav')`
 `
 
 const StyledPaginationList = styled('ul')`
-  ${MEDIA_QUERIES.MOBILE} {
-    width: 100%;
-    margin: 0;
-    list-style: none;
-    padding: 0;
-    display: flex;
-    justify-content: space-between;
-  }
+  width: 100%;
+  margin: 0;
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+
   ${MEDIA_QUERIES.TABLET} {
     display: block;
   }
 `
 
 const StyledPaginationPiece = styled('li')`
-  ${MEDIA_QUERIES.MOBILE} {
-    display: none;
-    &:first-child,
-    &:last-child {
-      display: inline-block;
-      ${({ isHidden }) =>
-        isHidden &&
-        css`
-          display: none;
-        `};
-    }
-    &:last-child {
-      margin-left: auto;
-    }
+  display: none;
+  &:first-child,
+  &:last-child {
+    display: inline-block;
+    ${({ isHidden }) =>
+      isHidden &&
+      css`
+        display: none;
+      `};
+  }
+  &:first-child {
+    margin-right: auto;
+  }
+  &:last-child {
+    margin-left: auto;
   }
 
   ${MEDIA_QUERIES.TABLET} {
@@ -70,17 +70,20 @@ const StyledPaginationLink = styled(Link)`
     padding: ${SPACING.SCALE_1} ${SPACING.SCALE_3};
     background-color: ${GREY_4};
     line-height: 1.9em;
-    color: ${LINK_COLOUR};
     text-decoration: none;
     :hover {
       background-color: ${GREY_3};
     }
     ${({ isActive }) =>
-      isActive &&
-      css`
+      isActive
+        ? `
         color: ${TEXT_COLOUR};
         background-color: transparent;
-      `};
+       `
+        : `
+        color: ${LINK_COLOUR};
+        background-color: ${GREY_4};
+      `}
   }
 `
 
@@ -104,33 +107,33 @@ const Pagination = ({
       return
     }
 
-    // get new pager object for specified page
+    // Get new pager object for specified page
     const newPager = getPager(items, page, pageSize)
 
-    // update state
+    // Update state
     setPagerState(newPager)
 
-    // call change page function in parent component
+    // Call change page function in parent component
     onChangePage(newPager)
   }
 
   const getPager = (totalItems, currentPage, pageSize) => {
-    // default to first page
+    // Default to first page
     currentPage = currentPage || 1
 
-    // default page size is 10
+    // Default page size is 10
     pageSize = pageSize || 10
 
-    // calculate total pages
+    // Calculate total pages
     const totalPages = Math.ceil(totalItems / pageSize)
 
     let startPage, endPage
     if (totalPages <= 10) {
-      // less than 10 total pages so show all
+      // Less than 10 total pages so show all
       startPage = 1
       endPage = totalPages
     } else {
-      // more than 10 total pages so calculate start and end pages
+      // More than 10 total pages so calculate start and end pages
       if (currentPage <= 6) {
         startPage = 1
         endPage = 10
@@ -143,16 +146,16 @@ const Pagination = ({
       }
     }
 
-    // calculate start and end item indexes
+    // Calculate start and end item indexes
     const startIndex = (currentPage - 1) * pageSize
     const endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1)
 
-    // create an array of pages to repeat in the pager control
+    // Create an array of pages to repeat in the pager control
     const pages = [...Array(endPage + 1 - startPage).keys()].map(
       (i) => startPage + i
     )
 
-    // return object with all pager properties required by the view
+    // Return object with all pager properties required by the view
     return {
       totalItems,
       currentPage,
