@@ -21,7 +21,7 @@ type FlashMessage = FlashMessageBody | [FlashMessageHeading, FlashMessageBody]
 type ChildFn = ({errors: Errors, values: Values}) => React.ReactNode
 type Children = React.ReactNode | ChildFn
 
-type Props = {
+export type Props = {
   name: string,
   id: string,
   analyticsFormName: string,

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { useRef } from 'react'
 import { isEmpty } from 'lodash'
 import Button from '@govuk-react/button'
@@ -26,7 +25,7 @@ const _TaskForm = ({
   // Required
   name,
   id,
-  analyticsEventName,
+  analyticsFormName,
   // Optional
   initialValuesTaskName,
   redirectTo,
@@ -83,10 +82,33 @@ const _TaskForm = ({
           registerField={props.registerField(
             transformInitialValues(initialValues)
           )}
+          // Required by the FieldDnbCompany
+          // eslint-disable-next-line no-unused-vars
+          setIsLoading={(isLoading) => {
+            // TODO: Is the isLoading actually needed in state?
+          }}
+          // Required by the FieldDnbCompan
+          // eslint-disable-next-line no-unused-vars
+          validateForm={(fieldNames) => {
+            // We are supposed to take the values, validate them and imperatively
+            // set the form state so, that it renders the errors.
+            // We actually don't need the fieldValues parameter.
+            const { errors, touched } = validateForm(contextProps)
+            props.onValidate(errors, touched)
+
+            // We also must return a map of field names to errors
+            return errors
+          }}
         >
           <Task>
             {(t) => (
-              <TaskLoadingBox name={name} id={id}>
+              <TaskLoadingBox
+                name={name}
+                id={id}
+                // TODO: We only want to keep the spinner kept around with hard redirects
+                // The value shold be falsy for React Router redirection
+                when={resolved}
+              >
                 <Analytics>
                   {(pushAnalytics) => (
                     <form
@@ -104,20 +126,20 @@ const _TaskForm = ({
                             })
 
                             pushAnalytics({
-                              event: `form:${analyticsEventName}:submit`,
+                              event: `form:${analyticsFormName}:submit`,
                               ...values,
                             })
                           } else {
                             props.goForward()
                             pushAnalytics({
-                              event: `form:${analyticsEventName}:next-step`,
+                              event: `form:${analyticsFormName}:next-step`,
                               currentStep,
                             })
                           }
                         } else {
                           requestAnimationFrame(() => ref.current?.focus())
                           pushAnalytics({
-                            event: `form:${analyticsEventName}:errors`,
+                            event: `form:${analyticsFormName}:errors`,
                             ...errors,
                           })
                         }
@@ -133,7 +155,7 @@ const _TaskForm = ({
                         context={[result, values]}
                         template={(context) => flashMessage(...context)}
                       />
-                      {(!isEmpty(errors)) && (
+                      {!isEmpty(errors) && (
                         <ErrorSummary
                           ref={ref}
                           // TODO: Rewrite the tests that rely on this and remove it
@@ -151,7 +173,7 @@ const _TaskForm = ({
                         : children}
                       <FormActions>
                         <Button>{submitButtonLabel}</Button>
-                        {actionLinks.map(({to, href, children}, i) =>
+                        {actionLinks.map(({ to, href, children }, i) =>
                           to ? (
                             <ReactRouter.Link key={i} to={to}>
                               {children}
@@ -225,7 +247,23 @@ const dispatchToProps = (dispatch) => ({
     }),
 })
 
-/** @type {import("./types").TaskForm} TaskForm */
+/**
+ * @function TaskForm
+ * @description A form component which
+ * - Starts a _task_ when the form is submitted
+ * - Renders a {ProgressBox} overlay while the _task_ is in progress
+ * - Handles the _task_ rejection by delegating it to the underlying {TaskProgressBox}
+ * - Hard redirects to a specified path when the _task_ resolves
+ * - Can optionally be prepopulated with initial values resolved from a _task_
+ * The form has built in
+ * - Error summary rendered on top of the form when there are validation errors
+ * - Submit button and secondary action links
+ * - Success flash message on _task_ resolution
+ * - Recording Google Tag Manager events on form submission and task resolution
+ * @typedef { import("./types").Props } Props
+ * @param {Props} props - Refer to the ./types.d.ts file for the concrete props
+ * @type {import("./types").TaskForm} TaskForm
+ * */
 const TaskForm = multiInstance({
   name: 'TaskForm',
   reducer,
@@ -234,8 +272,7 @@ const TaskForm = multiInstance({
   actionPattern: 'TASK_FORM__',
 })
 
-export const Example = () =>
-  <TaskForm/>
+export const Example = () => <TaskForm />
 
 // TODO: This doesn't seem to be needed
 TaskForm.Step = Step
