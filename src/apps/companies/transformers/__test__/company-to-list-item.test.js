@@ -229,7 +229,6 @@ describe('transformCompanyToListItem', () => {
           {
             label: 'Global HQ',
             value: 'Mars Exports Ltd',
-            url: '/companies/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
           },
         ])
       })
