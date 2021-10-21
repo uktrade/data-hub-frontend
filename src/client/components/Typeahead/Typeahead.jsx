@@ -15,25 +15,27 @@ const CustomOption = ({
   data: { label },
   ariaProps,
   ...props
-}) => (
-  <li {...ariaProps}>
-    <Option {...props}>
-      <Highlighter searchStr={inputValue} optionLabel={label} />
-    </Option>
-  </li>
-)
+}) => {
+  return (
+    <li {...ariaProps}>
+      <Option {...props}>
+        <Highlighter searchStr={inputValue} optionLabel={label} />
+      </Option>
+    </li>
+  )
+}
 
 const CustomNoOptionsMessage = ({ children, ...props }) => (
   <li>
     <NoOptionsMessage {...props}>{children}</NoOptionsMessage>
   </li>
 )
-// figure out which aria tag is causing the screen reader to break on option read out
+
 const CustomControl = ({ children, innerProps, selectProps, ...props }) => {
   innerProps['aria-owns'] = selectProps['data-aria-id']
   innerProps['aria-expanded'] = selectProps.menuIsOpen
-  // innerProps.role = 'combobox'
-  // innerProps['aria-haspopup'] = 'listbox'
+  innerProps.role = 'combobox'
+  innerProps['aria-haspopup'] = 'listbox'
   return (
     <Control {...props} innerProps={innerProps}>
       {children}
@@ -65,14 +67,19 @@ const CustomMenuList = ({ children, selectProps, ...props }) => (
 )
 
 const CustomInput = ({ children, selectProps, inputProps, ...props }) => (
+  // As I pass in the role to inputProps, it gives it to the input too. I override it by
+  // setting the role to textbox
   <>
     <Input
       {...props}
       aria-activedescendant=""
+      // This needs to be what has focus
       aria-autocomplete="list"
       aria-describedby={`${selectProps['data-aria-id']}-assistiveHint`}
       type="text"
+      role="textbox"
       id="Input"
+      //This needs to be something worthy
     />
   </>
 )
@@ -85,6 +92,7 @@ const AssistiveText = ({ name }) => (
 )
 
 const Typeahead = ({ options, styles, error, name, ...props }) => {
+  // Here is where we pass in all our custom options we make above, the select gobbles em up
   const customisedProps = {
     styles: {
       ...(error ? errorStyles : defaultStyles),
@@ -105,10 +113,6 @@ const Typeahead = ({ options, styles, error, name, ...props }) => {
 
   return (
     <>
-      {/* <span id="LaurenId-remove" style={{ display: 'none' }}>
-        remove
-      </span> */}
-
       {options ? (
         <Select {...customisedProps} options={options} />
       ) : (
