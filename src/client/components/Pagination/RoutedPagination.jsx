@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 import { Route } from 'react-router-dom'
@@ -67,7 +67,7 @@ const StyledPaginationLink = styled(Link)`
     font-weight: bold;
     font-size: ${FONT_SIZE.SIZE_16};
     display: inline-block;
-    padding: ${SPACING.SCALE_1} ${SPACING.SCALE_3};
+    padding: ${SPACING.SCALE_1} 12px;
     background-color: ${GREY_4};
     line-height: 1.9em;
     text-decoration: none;
@@ -93,14 +93,22 @@ const Pagination = ({
   onChangePage = () => {},
   initialPage = 1,
 }) => {
+  const linkRefs = useRef([])
+  const [pager, setPagerState] = useState({})
+  const { pages, totalPages, currentPage } = pager
+
   useEffect(() => {
     if (items) {
       setPage(initialPage)
     }
   }, [items])
 
-  const [pager, setPagerState] = useState({})
-  const { pages, totalPages, currentPage } = pager
+  useEffect(() => {
+    linkRefs.current.map(
+      (link) =>
+        parseInt(link.dataset.pageNumber, 10) === currentPage && link.focus()
+    )
+  })
 
   const setPage = (page) => {
     if (page < 1 || page > totalPages) {
@@ -208,6 +216,7 @@ const Pagination = ({
                       onClick={(e) => handleOnClick(page, e)}
                       data-page-number={page}
                       data-test={`${isActive && 'page-number-active'}`}
+                      ref={(el) => (linkRefs.current[index] = el)}
                       href="#"
                     >
                       {page}
