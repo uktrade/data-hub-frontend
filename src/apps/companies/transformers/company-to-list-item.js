@@ -62,12 +62,9 @@ module.exports = function transformCompanyToListItem({
   }
 
   if (global_headquarters) {
-    const { name: ghqName, id: ghqId } = global_headquarters
-
     meta.push({
       label: 'Global HQ',
-      value: ghqName,
-      url: urls.companies.detail(ghqId),
+      value: global_headquarters.name,
     })
   }
 
