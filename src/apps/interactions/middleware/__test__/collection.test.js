@@ -58,7 +58,6 @@ describe('interaction collection middleware', () => {
         res = {
           ...res,
           locals: {
-            ...res.locals,
             interactions: {
               entityQuery: {
                 entity: '1',
@@ -109,7 +108,6 @@ describe('interaction collection middleware', () => {
         res = {
           ...res,
           locals: {
-            ...res.locals,
             interactions: {
               entityQuery: {
                 entity: '1',
@@ -162,7 +160,6 @@ describe('interaction collection middleware', () => {
         res = {
           ...res,
           locals: {
-            ...res.locals,
             interactions: {
               entityQuery: {
                 entity: '1',
