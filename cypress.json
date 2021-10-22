@@ -9,6 +9,7 @@
   "defaultCommandTimeout": 5000,
   "requestTimeout": 5000,
   "projectId": "w97se2",
+  "componentFolder": "test/component/cypress/specs",
   "env": {
     "codeCoverage": {
       "url": "http://localhost:3000/__coverage__"

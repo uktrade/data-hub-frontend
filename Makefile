@@ -110,6 +110,12 @@ e2e-tests-dit:
 	@echo "*** Requires the e2e stack with the DIT role, it can be started with 'make start-e2e-dit' ***"
 	$(docker-e2e) exec frontend bash -c '$(wait-for-frontend) && npm run test:e2e:dit $(cypress-args)'
 
+component-tests:
+ifdef CI
+	$(docker-base) build frontend
+endif
+	$(docker-base) run --no-deps --rm frontend bash -c 'npm run test:component'
+
 clean:
 	make stop-base
 	make stop-mock

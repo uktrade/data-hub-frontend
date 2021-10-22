@@ -202,6 +202,11 @@ The aim of this suite is to ensure our HTML pages are usable by as many people a
   3. npm run develop
   4. npm run test:a11y
 
+## Component unit tests
+The aim of this suite is to run tests directly against our React components without having to start the frontend.
+
+To start these tests, run `npm run test:component`. To run these using the Cypress component testing interface, run `npm run test:component:watch`.
+
 ## Cypress code coverage
 
 As part of cypress test suites (functional and e2e), code coverage reports can be generated.
