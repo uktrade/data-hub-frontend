@@ -151,6 +151,16 @@ jobs:
           target: start-e2e-<< parameters.staff >> e2e-tests-<< parameters.staff >>
       - store_cypress_artifacts
 
+  
+  component_tests:
+    machine:
+      docker_layer_caching: true
+    steps:
+      - checkout
+      - run_make:
+          label: Run component tests
+          target: component-tests
+
   release-storybook:
     docker:
       - image: node:14.17.0
@@ -224,6 +234,7 @@ workflows:
       - a11y_tests: *ignore_ghpages
       - visual_tests: *ignore_ghpages
       - visual_component_tests: *ignore_ghpages
+      - component_tests: *ignore_ghpages
       - e2e_tests:
           <<: *ignore_ghpages
           name: e2e_tests_<< matrix.staff >>
