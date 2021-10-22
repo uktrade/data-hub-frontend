@@ -48,7 +48,6 @@ import CompanyProjectsCollection from '../apps/investments/client/projects/Compa
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
 import OpportunityChangeStatusForm from './components/OpportunityChangeStatusForm'
-import IEBanner from '../apps/dashboard/client/IEBanner'
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
 import createUKInvestmentOpportunityTask from './components/CreateUKInvestmentOpportunity/tasks'
 
@@ -481,6 +480,7 @@ function App() {
             )}
           </Switch>
         )}
+      </Mount>
     </Provider>
   )
 }
