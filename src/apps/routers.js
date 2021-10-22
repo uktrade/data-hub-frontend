@@ -1,8 +1,5 @@
 const router = require('express').Router()
 const fs = require('fs')
-const detectUserAgent = require('../middleware/detect-useragent')
-// Check useragent on all routes
-router.use(detectUserAgent)
 
 const { setHomeBreadcrumb } = require('./middleware')
 

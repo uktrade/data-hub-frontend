@@ -117,7 +117,6 @@ async function renderInteractionList(req, res, next) {
       currentAdviserId,
       permissions,
       ...options,
-      userAgent: res.locals.userAgent,
     })
 
     const filtersFieldsWithSelectedOptions =

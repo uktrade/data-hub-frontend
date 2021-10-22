@@ -11,13 +11,12 @@ const { joinPaths } = require('../../../lib/path')
 const { getReturnLink } = require('../helpers')
 
 function renderCompletePage(req, res) {
-  const { interactions, interaction, userAgent, errors } = res.locals
+  const { interactions, interaction, errors } = res.locals
 
   const breadcrumbs = get(interactions, 'breadcrumbs', [])
   breadcrumbs.forEach(({ text, href }) => res.breadcrumb(text, href))
 
   const form = meetingHappenForm({
-    userAgent,
     returnLink: joinPaths([getReturnLink(interactions), interaction.id]),
   })
 

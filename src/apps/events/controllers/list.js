@@ -11,7 +11,6 @@ async function renderEventList(req, res, next) {
     const advisers = await getAdvisers(req)
     const filtersFields = eventFiltersFields({
       advisers: advisers.results,
-      userAgent: res.locals.userAgent,
     })
     const filtersFieldsWithSelectedOptions =
       await buildFieldsWithSelectedEntities(req, filtersFields, req.query)
