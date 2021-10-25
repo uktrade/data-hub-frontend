@@ -85,7 +85,7 @@
     "@uktrade/datahub-header": "^1.4.4",
     "autoprefixer": "^9.8.8",
     "axios": "^0.23.0",
-    "babel-loader": "^8.2.2",
+    "babel-loader": "^8.2.3",
     "basic-auth": "^2.0.0",
     "body-parser": "^1.18.3",
     "case": "^1.5.5",
