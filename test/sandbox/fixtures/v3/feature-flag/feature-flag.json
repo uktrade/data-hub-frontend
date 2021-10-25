@@ -4,42 +4,6 @@
     "is_active": true
   },
   {
-    "code": "companies-advisers",
-    "is_active": true
-  },
-  {
-    "code": "investment-evidence",
-    "is_active": true
-  },
-  {
-    "code": "proposition-documents",
-    "is_active": true
-  },
-  {
-    "code": "interactions-complete-drafts",
-    "is_active": true
-  },
-  {
-    "code": "companies_add_remove_from_lists",
-    "is_active": true
-  },
-  {
-    "code": "activity-feed-filters",
-    "is_active": true
-  },
-  {
-    "code": "interaction-add-countries",
-    "is_active": true
-  },
-  {
-    "code": "companies-matching",
-    "is_active": true
-  },
-  {
-    "code": "capital-investments-filters",
-    "is_active": true
-  },
-  {
     "code": "state-filter",
     "is_active": true
   },

@@ -20,8 +20,7 @@ const {
 } = require('./es-queries')
 
 async function renderActivityFeed(req, res, next) {
-  const { company, features, dnbHierarchyCount, dnbRelatedCompaniesCount } =
-    res.locals
+  const { company, dnbHierarchyCount, dnbRelatedCompaniesCount } = res.locals
 
   res.locals.title = `Activities - ${company.name} - Companies`
 
@@ -52,9 +51,7 @@ async function renderActivityFeed(req, res, next) {
           dnbHierarchyCount,
           dnbRelatedCompaniesCount,
           showMatchingPrompt:
-            features['companies-matching'] &&
-            !company.duns_number &&
-            !company.pending_dnb_investigation,
+            !company.duns_number && !company.pending_dnb_investigation,
         }
 
     const props = {

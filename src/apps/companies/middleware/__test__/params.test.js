@@ -53,11 +53,6 @@ describe('Companies form middleware', () => {
   })
 
   describe('getCompany', () => {
-    function addFeatureFlag(res) {
-      res.locals.features['interaction-add-countries'] = true
-      return res
-    }
-
     beforeEach(() => {
       resMock.locals.features = {}
       company = JSON.parse(JSON.stringify(mockCompany))
@@ -67,14 +62,6 @@ describe('Companies form middleware', () => {
     context('when the company is not a One list Tier D ITA', () => {
       beforeEach(async () => {
         getDitCompanyStub.resolves(company)
-      })
-
-      context('With the interaction-add-countries set', () => {
-        it('should return the company without the old countries fields', async () => {
-          addFeatureFlag(resMock)
-          await middleware.getCompany(reqMock, resMock, nextSpy, 2)
-          expect(resMock.locals).to.have.deep.property('company')
-        })
       })
 
       context('With no features set', () => {
@@ -88,15 +75,6 @@ describe('Companies form middleware', () => {
     context('when the company is a One list Tier D ITA', () => {
       beforeEach(() => {
         getDitCompanyStub.resolves(oneListTypeDItaCompany)
-      })
-
-      context('With the interaction-add-countries set', () => {
-        it('should return the company without the old countries fields', async () => {
-          addFeatureFlag(resMock)
-          await middleware.getCompany(reqMock, resMock, nextSpy, 2)
-
-          expect(resMock.locals).to.have.deep.property('company')
-        })
       })
 
       context('With no features set', () => {
