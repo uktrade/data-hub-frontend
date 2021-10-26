@@ -23,7 +23,7 @@ import { validateForm } from '../../Form/MultiInstanceForm'
 
 const _TaskForm = ({
   // Required
-  name,
+  submissionTaskName,
   id,
   analyticsFormName,
   // Optional
@@ -102,7 +102,7 @@ const _TaskForm = ({
           <Task>
             {(t) => (
               <TaskLoadingBox
-                name={name}
+                name={submissionTaskName}
                 id={id}
                 // TODO: We only want to keep the spinner kept around with hard redirects
                 // The value shold be falsy for React Router redirection
@@ -119,7 +119,7 @@ const _TaskForm = ({
 
                         if (isEmpty(errors)) {
                           if (contextProps.isLastStep()) {
-                            t(name, id).start({
+                            t(submissionTaskName, id).start({
                               payload: transformPayload(values),
                               onSuccessDispatch: 'TASK_FORM__RESOLVED',
                             })
