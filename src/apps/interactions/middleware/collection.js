@@ -9,7 +9,6 @@ const {
 const {
   getCollection,
 } = require('../../../modules/search/middleware/collection')
-const reverseDateIfIE = require('../../../lib/if-ie-reverse-date-value')
 
 const {
   buildInteractionSortForm,
@@ -56,12 +55,6 @@ async function getInteractionCollectionForEntity(req, res, next) {
 }
 
 function getInteractionsRequestBody(req, res, next) {
-  if (res.locals.userAgent) {
-    QUERY_DATE_FIELDS.forEach((date) => {
-      req.query[date] = reverseDateIfIE(req.query[date], res.locals.userAgent)
-    })
-  }
-
   const searchBody = pick(req.query, [
     'kind',
     'sector_descends',

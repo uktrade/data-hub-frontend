@@ -18,7 +18,6 @@ module.exports = ({
   order,
   investment,
   features = {},
-  userAgent = { isIE: false },
   user,
   locals = {},
 } = {}) => {
@@ -56,7 +55,6 @@ module.exports = ({
         order,
         investment,
         features,
-        userAgent,
         user,
         csrfToken: 'csrf',
         ...locals,

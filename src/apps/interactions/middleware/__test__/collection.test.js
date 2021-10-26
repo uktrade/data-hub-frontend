@@ -20,14 +20,6 @@ describe('interaction collection middleware', () => {
       },
     }
 
-    res = {
-      locals: {
-        userAgent: {
-          isIE: false,
-        },
-      },
-    }
-
     next = sinon.spy()
     getInteractionsForEntityStub = sinon.stub()
 
@@ -66,7 +58,6 @@ describe('interaction collection middleware', () => {
         res = {
           ...res,
           locals: {
-            ...res.locals,
             interactions: {
               entityQuery: {
                 entity: '1',
@@ -117,7 +108,6 @@ describe('interaction collection middleware', () => {
         res = {
           ...res,
           locals: {
-            ...res.locals,
             interactions: {
               entityQuery: {
                 entity: '1',
@@ -170,7 +160,6 @@ describe('interaction collection middleware', () => {
         res = {
           ...res,
           locals: {
-            ...res.locals,
             interactions: {
               entityQuery: {
                 entity: '1',

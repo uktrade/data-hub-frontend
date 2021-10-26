@@ -2,7 +2,6 @@ const axios = require('axios')
 const getFormData = require('get-form-data').default
 const pickBy = require('lodash/pickBy')
 const XHR = require('../lib/xhr')
-const { checkDateFormat } = require('../lib/helpers')
 
 const AutoSubmit = {
   selector: '.js-AutoSubmit',
@@ -13,11 +12,6 @@ const AutoSubmit = {
   },
 
   handleFormSubmit(evt) {
-    if (evt.target.classList.contains('ie-date-field')) {
-      if (!checkDateFormat(evt.target.value)) {
-        return
-      }
-    }
     const targetForm = evt.target.closest('form')
 
     if (!targetForm) {

@@ -2,10 +2,9 @@
 
 ### Description
 
-Date field for use in forms and filters. When using this component as a filter (reduced version) the native input **`type="date"`** will not work in IE 11 so you need to toggle the **`isIE`** flag on (see props below). The fallback for IE11 is the three input fields pattern.
+Date field for use in forms and filters.
 
 **Note: The `<FieldDate>` has to be wrapped with `<FormStateful>`.** 
-
 ### Usage
 
 ```jsx
@@ -36,4 +35,3 @@ Date field for use in forms and filters. When using this component as a filter (
 | `initialValue` | false    | `` | Text | Sets initial value of the input                             |
 | `options` | true | empty array | array | Defines the checkbox labels and values
 | `reduced`      | false    | false                                                                   | Boolean                        | Toggles wether the element is a filter or not |
-| `isIE`      | false    | false                                                                   | Boolean                        | Toggles wether the native input type="date" is used or not |

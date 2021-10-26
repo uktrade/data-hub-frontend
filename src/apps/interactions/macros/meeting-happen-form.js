@@ -1,4 +1,4 @@
-module.exports = function ({ returnLink, userAgent }) {
+module.exports = function ({ returnLink }) {
   return {
     returnLink,
     buttonText: 'Continue',
@@ -52,9 +52,7 @@ module.exports = function ({ returnLink, userAgent }) {
             label: 'When will the meeting take place?',
             modifier: 'short',
             name: 'date',
-            hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
             placeholder: '',
-            inputClass: userAgent.isIE ? 'ie-date-field' : null,
             condition: {
               name: 'archived_reason',
               value: 'Rescheduled',

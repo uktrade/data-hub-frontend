@@ -8,7 +8,6 @@
 /// predefined size
 /// @prop {string} max-width - a pixel size to change layout when smaller
 /// @prop {string} min-width - a pixel size to change layout when greater
-/// @prop {boolean} ignore-for-ie - whether to ignore layout for Internet Explorer
 ///
 /// @example scss - change layout of element at tablet size
 ///   div {
@@ -19,7 +18,7 @@
 ///       float: left;
 ///     }
 ///   }
-@mixin media($size: false, $max-width: false, $min-width: false, $ignore-for-ie: false) {
+@mixin media($size: false, $max-width: false, $min-width: false) {
   @if $size == desktop {
     @media (min-width: 925px) {
       @content;

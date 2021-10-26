@@ -12,7 +12,6 @@ module.exports = function ({
   teamOptions,
   adviserOptions,
   oneListTierOptions,
-  userAgent,
   areas,
   types,
 }) {
@@ -48,17 +47,13 @@ module.exports = function ({
       macroName: 'DateField',
       type: 'date',
       name: 'date_after',
-      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
       placeholder: '',
-      inputClass: userAgent.isIE ? 'ie-date-field' : null,
     },
     {
       macroName: 'DateField',
       type: 'date',
       name: 'date_before',
-      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
       placeholder: '',
-      inputClass: userAgent.isIE ? 'ie-date-field' : null,
     },
     {
       macroName: 'Typeahead',
