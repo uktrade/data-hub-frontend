@@ -44,8 +44,6 @@ const _TaskForm = ({
   values = {},
   touched = {},
   steps = [],
-  currentStep,
-  hardRedirect,
   ...props
 }) => {
   // TODO: Clean up this mess
@@ -59,6 +57,7 @@ const _TaskForm = ({
       const index = steps?.indexOf(stepName)
       return index !== -1 ? index : null
     },
+    // FIXME: These don't need to be functions
     isFirstStep: () => props?.currentStep === 0,
     isLastStep: () => !steps.length || props?.currentStep === steps?.length - 1,
     getFieldState: (fieldName) => ({
@@ -133,7 +132,7 @@ const _TaskForm = ({
                             props.goForward()
                             pushAnalytics({
                               event: `form:${analyticsFormName}:next-step`,
-                              currentStep,
+                              currentStep: props.currentStep,
                             })
                           }
                         } else {
@@ -145,10 +144,12 @@ const _TaskForm = ({
                         }
                       }}
                     >
-                      <HardRedirect
-                        to={redirectTo(result, values)}
-                        when={resolved}
-                      />
+                      {resolved && (
+                        <HardRedirect
+                          to={redirectTo(result, values)}
+                          when={resolved}
+                        />
+                      )}
                       <FlashMessage
                         type="success"
                         when={resolved}
@@ -171,20 +172,26 @@ const _TaskForm = ({
                       {typeof children === 'function'
                         ? children(contextProps)
                         : children}
-                      <FormActions>
-                        <Button>{submitButtonLabel}</Button>
-                        {actionLinks.map(({ to, href, children }, i) =>
-                          to ? (
-                            <ReactRouter.Link key={i} to={to}>
-                              {children}
-                            </ReactRouter.Link>
-                          ) : (
-                            <Link key={i} href={href}>
-                              {children}
-                            </Link>
-                          )
-                        )}
-                      </FormActions>
+                      {/*
+                      We don't want to render the submit button when the form
+                      has multiple steps as the steps come with a built-in submit button
+                      */}
+                      {!steps.length && (
+                        <FormActions>
+                          <Button>{submitButtonLabel}</Button>
+                          {actionLinks.map(({ to, href, children }, i) =>
+                            to ? (
+                              <ReactRouter.Link key={i} to={to}>
+                                {children}
+                              </ReactRouter.Link>
+                            ) : (
+                              <Link key={i} href={href}>
+                                {children}
+                              </Link>
+                            )
+                          )}
+                        </FormActions>
+                      )}
                     </form>
                   )}
                 </Analytics>
