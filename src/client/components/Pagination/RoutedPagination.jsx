@@ -106,7 +106,8 @@ const Pagination = ({
       (link) =>
         parseInt(link?.dataset.pageNumber, 10) === currentPage && link.focus()
     )
-  })
+    window.scrollTo({ top: 0 })
+  }, [currentPage])
 
   const setPage = (page) => {
     if (page < 1 || page > totalPages) {
@@ -180,7 +181,6 @@ const Pagination = ({
         const handleOnClick = (pageNumber, e) => {
           e.preventDefault()
           setPage(pageNumber)
-          window.scrollTo({ top: 0 })
           history.push({
             search: qs.stringify({
               ...qsParams,
