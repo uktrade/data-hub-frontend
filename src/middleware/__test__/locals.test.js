@@ -2,7 +2,6 @@ const buildMiddlewareParameters = require('../../../test/unit/helpers/middleware
 const locals = require('../locals')
 
 describe('locals', () => {
-  const DEFAULT_GENERIC_PAGE_TITLE = 'DIT Data Hub'
   it('should set local variables', () => {
     const middlewareParameters = buildMiddlewareParameters({
       reqMock: {
@@ -78,7 +77,49 @@ describe('locals', () => {
     ])
   })
 
-  it('getGenericPageTitle() should return extracted generic title of page details ', () => {
+  it('getGoogleTagManagerPageTitle() should return the page title for GTM (level 1)', () => {
+    const middlewareParameters = buildMiddlewareParameters({
+      reqMock: {
+        get: sinon.spy(),
+        originalUrl: '/interactions/5befd870-c5f6-425a-bbce-ccc9b8c73781',
+      },
+    })
+
+    locals(
+      middlewareParameters.reqMock,
+      middlewareParameters.resMock,
+      middlewareParameters.nextSpy
+    )
+
+    const extractedPageTitle =
+      middlewareParameters.resMock.locals.getGoogleTagManagerPageTitle()
+
+    expect(extractedPageTitle).to.deep.equal('Interactions - DIT Data Hub')
+  })
+
+  it('getGoogleTagManagerPageTitle() should return the page title for GTM (level 2)', () => {
+    const middlewareParameters = buildMiddlewareParameters({
+      reqMock: {
+        get: sinon.spy(),
+        originalUrl: '/companies/ac03ea1f-9d4c-4969-9ffe-4f0e80c1d91f/activity',
+      },
+    })
+
+    locals(
+      middlewareParameters.reqMock,
+      middlewareParameters.resMock,
+      middlewareParameters.nextSpy
+    )
+
+    const extractedPageTitle =
+      middlewareParameters.resMock.locals.getGoogleTagManagerPageTitle()
+
+    expect(extractedPageTitle).to.deep.equal(
+      'Companies - Activity - DIT Data Hub'
+    )
+  })
+
+  it('getGoogleTagManagerPageTitle() should return the page title for GTM (level 3)', () => {
     const middlewareParameters = buildMiddlewareParameters({
       reqMock: {
         get: sinon.spy(),
@@ -94,33 +135,10 @@ describe('locals', () => {
     )
 
     const extractedPageTitle =
-      middlewareParameters.resMock.locals.getGenericPageTitle()
+      middlewareParameters.resMock.locals.getGoogleTagManagerPageTitle()
 
     expect(extractedPageTitle).to.deep.equal(
-      'Investments-opportunities-interactions - ' + DEFAULT_GENERIC_PAGE_TITLE
-    )
-  })
-
-  it('getGenericPageTitle() should return top-level module name at collection list', () => {
-    const middlewareParameters = buildMiddlewareParameters({
-      reqMock: {
-        get: sinon.spy(),
-        originalUrl:
-          '/companies?archived[0]=false&sortby=modified_on:desc&page=1',
-      },
-    })
-
-    locals(
-      middlewareParameters.reqMock,
-      middlewareParameters.resMock,
-      middlewareParameters.nextSpy
-    )
-
-    const extractedPageTitle =
-      middlewareParameters.resMock.locals.getGenericPageTitle()
-
-    expect(extractedPageTitle).to.deep.equal(
-      'Companies - ' + DEFAULT_GENERIC_PAGE_TITLE
+      'Investments - Opportunities - Interactions - DIT Data Hub'
     )
   })
 })
