@@ -49,8 +49,22 @@ module.exports = function locals(req, res, next) {
       return items.reverse().slice(0, -1)
     },
 
-    getGenericPageTitle() {
-      return extractUrlPageTitle(req)
+    getGoogleTagManagerPageTitle() {
+      function extractTitleFromUrl(url) {
+        return url
+          .split('/')
+          .filter((token) => token.match(/^[a-z-]+$/))
+          .map((word) => upperFirst(word))
+          .join(' - ')
+          .concat(` - ${DEFAULT_GENERIC_PAGE_TITLE}`)
+      }
+
+      const index = req.originalUrl.indexOf('?')
+      const hasQueryParams = index > 0
+
+      return hasQueryParams
+        ? extractTitleFromUrl(req.originalUrl.substring(0, index))
+        : extractTitleFromUrl(req.originalUrl)
     },
 
     getBreadcrumbs() {
@@ -79,20 +93,5 @@ module.exports = function locals(req, res, next) {
     },
   })
 
-  const extractUrlPageTitle = (req) => {
-    let reqURL = req.originalUrl
-    let isQueryStr = (reqURL.match(/\?/g) || []).length
-    let urlPath =
-      isQueryStr > 0
-        ? reqURL.slice(1, reqURL.indexOf('?'))
-        : reqURL.slice(1, reqURL.length)
-    let urlPathArray = urlPath.split('/')
-    let urlPathFiltered = urlPathArray.filter(
-      (item) => (item.match('[^a-z0-9]') || []).length < 1
-    )
-    let urlPathJoin = urlPathFiltered.join('-')
-    let urlPathUpperFirst = upperFirst(urlPathJoin)
-    return urlPathUpperFirst + ' - ' + DEFAULT_GENERIC_PAGE_TITLE
-  }
   next()
 }
