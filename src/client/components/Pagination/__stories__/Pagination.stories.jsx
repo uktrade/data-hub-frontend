@@ -20,7 +20,7 @@ const PaginationWithState = () => {
 }
 
 const RoutedPaginationWithState = () => {
-  const exampleItems = [...Array(1500).keys()].map((i) => ({
+  const exampleItems = [...Array(150).keys()].map((i) => ({
     id: i + 1,
     name: 'Item ' + (i + 1),
   }))

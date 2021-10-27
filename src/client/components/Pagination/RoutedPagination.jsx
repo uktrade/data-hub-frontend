@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { Route } from 'react-router-dom'
 import qs from 'qs'
 import { FONT_SIZE, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
@@ -38,11 +38,6 @@ const StyledPaginationPiece = styled('li')`
   &:first-child,
   &:last-child {
     display: inline-block;
-    ${({ isHidden }) =>
-      isHidden &&
-      css`
-        display: none;
-      `};
   }
   &:first-child {
     margin-right: auto;
@@ -82,8 +77,11 @@ const StyledPaginationLink = styled(Link)`
        `
         : `
         color: ${LINK_COLOUR};
-        background-color: ${GREY_4};
       `}
+    ${(props) => props['data-page-number'] && `display: none;`}
+    ${MEDIA_QUERIES.TABLET} {
+      ${(props) => props['data-page-number'] && `display: block;`}
+    }
   }
 `
 
@@ -106,7 +104,7 @@ const Pagination = ({
   useEffect(() => {
     linkRefs.current.map(
       (link) =>
-        parseInt(link.dataset.pageNumber, 10) === currentPage && link.focus()
+        parseInt(link?.dataset.pageNumber, 10) === currentPage && link.focus()
     )
   })
 
@@ -115,33 +113,20 @@ const Pagination = ({
       return
     }
 
-    // Get new pager object for specified page
     const newPager = getPager(items, page, pageSize)
 
-    // Update state
     setPagerState(newPager)
 
-    // Call change page function in parent component
     onChangePage(newPager)
   }
 
-  const getPager = (totalItems, currentPage, pageSize) => {
-    // Default to first page
-    currentPage = currentPage || 1
-
-    // Default page size is 10
-    pageSize = pageSize || 10
-
-    // Calculate total pages
-    const totalPages = Math.ceil(totalItems / pageSize)
-
+  const getStartAndEndPage = (totalPages, currentPage) => {
     let startPage, endPage
+
     if (totalPages <= 10) {
-      // Less than 10 total pages so show all
       startPage = 1
       endPage = totalPages
     } else {
-      // More than 10 total pages so calculate start and end pages
       if (currentPage <= 6) {
         startPage = 1
         endPage = 10
@@ -153,17 +138,28 @@ const Pagination = ({
         endPage = currentPage + 4
       }
     }
+    return {
+      startPage,
+      endPage,
+    }
+  }
 
-    // Calculate start and end item indexes
+  const getPager = (totalItems, currentPage, pageSize) => {
+    currentPage = currentPage || 1
+
+    pageSize = pageSize || 10
+
+    const totalPages = Math.ceil(totalItems / pageSize)
+
+    const { startPage, endPage } = getStartAndEndPage(totalPages, currentPage)
+
     const startIndex = (currentPage - 1) * pageSize
     const endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1)
 
-    // Create an array of pages to repeat in the pager control
     const pages = [...Array(endPage + 1 - startPage).keys()].map(
       (i) => startPage + i
     )
 
-    // Return object with all pager properties required by the view
     return {
       totalItems,
       currentPage,
@@ -184,6 +180,7 @@ const Pagination = ({
         const handleOnClick = (pageNumber, e) => {
           e.preventDefault()
           setPage(pageNumber)
+          window.scrollTo({ top: 0 })
           history.push({
             search: qs.stringify({
               ...qsParams,
@@ -198,15 +195,17 @@ const Pagination = ({
             data-total-pages={totalPages}
           >
             <StyledPaginationList>
-              <StyledPaginationPiece isHidden={currentPage === 1}>
-                <StyledPaginationLink
-                  onClick={(e) => handleOnClick(currentPage - 1, e)}
-                  data-test="previous"
-                  href="#"
-                >
-                  {PAGINATION_PIECE_PREVIOUS}
-                </StyledPaginationLink>
-              </StyledPaginationPiece>
+              {currentPage !== 1 && (
+                <StyledPaginationPiece>
+                  <StyledPaginationLink
+                    onClick={(e) => handleOnClick(currentPage - 1, e)}
+                    data-test="previous"
+                    href="#"
+                  >
+                    {PAGINATION_PIECE_PREVIOUS}
+                  </StyledPaginationLink>
+                </StyledPaginationPiece>
+              )}
               {pages.map((page, index) => {
                 const isActive = currentPage === page
                 return (
@@ -224,14 +223,17 @@ const Pagination = ({
                   </StyledPaginationPiece>
                 )
               })}
-              <StyledPaginationPiece isHidden={currentPage === totalPages}>
-                <StyledPaginationLink
-                  onClick={(e) => handleOnClick(currentPage + 1, e)}
-                  href="#"
-                >
-                  {PAGINATION_PIECE_NEXT}
-                </StyledPaginationLink>
-              </StyledPaginationPiece>
+              {currentPage !== totalPages && (
+                <StyledPaginationPiece>
+                  <StyledPaginationLink
+                    onClick={(e) => handleOnClick(currentPage + 1, e)}
+                    data-test="next"
+                    href="#"
+                  >
+                    {PAGINATION_PIECE_NEXT}
+                  </StyledPaginationLink>
+                </StyledPaginationPiece>
+              )}
             </StyledPaginationList>
           </StyledNav>
         ) : null
@@ -241,7 +243,7 @@ const Pagination = ({
 }
 
 Pagination.propTypes = {
-  items: PropTypes.array.isRequired,
+  items: PropTypes.number.isRequired,
   onChangePage: PropTypes.func,
   initialPage: PropTypes.number,
   pageSize: PropTypes.number,
