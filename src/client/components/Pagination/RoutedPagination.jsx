@@ -63,7 +63,6 @@ const StyledPaginationLink = styled(Link)`
     font-size: ${FONT_SIZE.SIZE_16};
     display: inline-block;
     padding: ${SPACING.SCALE_1} 12px;
-    background-color: ${GREY_4};
     line-height: 1.9em;
     text-decoration: none;
     :hover {
@@ -77,6 +76,7 @@ const StyledPaginationLink = styled(Link)`
        `
         : `
         color: ${LINK_COLOUR};
+        background-color: ${GREY_4};
       `}
     ${(props) => props['data-page-number'] && `display: none;`}
     ${MEDIA_QUERIES.TABLET} {
