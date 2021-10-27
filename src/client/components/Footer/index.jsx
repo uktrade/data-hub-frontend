@@ -111,6 +111,15 @@ export default function Footer() {
           </li>
           <li>
             <FooterLink
+              href={urls.external.helpCentre.cookies()}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Cookies
+            </FooterLink>
+          </li>
+          <li>
+            <FooterLink
               href={urls.external.helpCentre.accessibilityStatement()}
               target="_blank"
               rel="noopener noreferrer"

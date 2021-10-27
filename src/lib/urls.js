@@ -97,6 +97,8 @@ module.exports = {
         'https://data-services-help.trade.gov.uk/data-hub/how-articles/interactions-and-service-delivery/record-business-intelligence-interaction/',
       tradeagreementGuidance: () =>
         'https://data-services-help.trade.gov.uk/data-hub/how-articles/trade-agreement-activity/recording-trade-agreement-activity/',
+      cookies: () =>
+        'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/data-hub-cookie-policy/',
     },
     copyright:
       'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',
