@@ -5,8 +5,6 @@ const config = require('../config')
 
 let webpackManifest = {}
 
-const DEFAULT_GENERIC_PAGE_TITLE = 'DIT Data Hub'
-
 try {
   webpackManifest = require(`${config.buildDir}/manifest.json`)
 } catch (err) {
@@ -55,7 +53,7 @@ module.exports = function locals(req, res, next) {
           .filter((token) => token.match(/^[a-z-]+$/))
           .map((word) => upperFirst(word))
           .join(' - ')
-          .concat(` - ${DEFAULT_GENERIC_PAGE_TITLE}`)
+          .concat(' - DIT Data Hub')
       }
 
       const index = req.originalUrl.indexOf('?')
