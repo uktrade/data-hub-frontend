@@ -34,16 +34,15 @@ module.exports = function locals(req, res, next) {
 
     getPageTitle() {
       const items = res.breadcrumb().map((item) => item.text)
-      const title = 'title' in res.locals
+      const title = res.locals.title
 
       if (title) {
-        let value = res.locals.title
         if (items.length === 1) {
-          return [value]
+          return [title]
         }
 
         items.pop()
-        items.push(value)
+        items.push(title)
       }
 
       return items.reverse().slice(0, -1)

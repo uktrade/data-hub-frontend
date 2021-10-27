@@ -4,7 +4,7 @@ const renderDetailsPage = ({ params: { eventId } }, res, next) => {
 
     const flashMessages = res.locals.getMessages()
 
-    res.locals.title = `Event name - ${event.name} - Events`
+    res.locals.title = `Event name - ${event.name} - DIT Data Hub`
 
     res.render('events/views/details', { props: { eventId, flashMessages } })
   } catch (error) {
