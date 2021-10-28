@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, { useRef } from 'react'
 import { isEmpty } from 'lodash'
 import Button from '@govuk-react/button'
@@ -60,8 +61,8 @@ const _TaskForm = ({
     // FIXME: These don't need to be functions
     isFirstStep: () => props?.currentStep === 0,
     isLastStep: () => !steps.length || props?.currentStep === steps?.length - 1,
-    getFieldState: (fieldName) => ({
-      value: values[fieldName] ?? '',
+    getFieldState: (fieldName, initialValue) => ({
+      value: values[fieldName] ?? initialValue,
       touched: touched[fieldName] ?? false,
       error: errors[fieldName],
     }),
@@ -86,13 +87,17 @@ const _TaskForm = ({
           setIsLoading={(isLoading) => {
             // TODO: Is the isLoading actually needed in state?
           }}
-          // Required by the FieldDnbCompan
-          // eslint-disable-next-line no-unused-vars
-          validateForm={(fieldNames) => {
-            // We are supposed to take the values, validate them and imperatively
+          validateForm={(fieldNamesToValidate) => {
+            // This method is supposed to validate only the fields whose names
+            // are listed in fieldNamesToValidate,
+            // or all fields if fieldNamesToValidate is empty, and
             // set the form state so, that it renders the errors.
-            // We actually don't need the fieldValues parameter.
-            const { errors, touched } = validateForm(contextProps)
+            const { errors, touched } = validateForm({
+              ...contextProps,
+              fields: fieldNamesToValidate?.length
+                ? _.pick(contextProps.fields, fieldNamesToValidate)
+                : contextProps.fields,
+            })
             props.onValidate(errors, touched)
 
             // We also must return a map of field names to errors
