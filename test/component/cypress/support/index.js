@@ -1,4 +1,3 @@
 /* eslint-disable */
-import 'cypress-axe'
-
+import '@cypress/code-coverage/support'
 require('./commands')
