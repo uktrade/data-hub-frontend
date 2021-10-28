@@ -9,7 +9,7 @@ ignore_ghpages: &ignore_ghpages
 jobs:
   lint:
     machine:
-      docker_layer_caching: true
+      docker_layer_caching: false
     steps:
       - checkout
       - run_make:
@@ -22,7 +22,7 @@ jobs:
 
   unit_tests:
     machine:
-      docker_layer_caching: true
+      docker_layer_caching: false
     steps:
       - checkout
       - run_make:
@@ -48,7 +48,7 @@ jobs:
 
   unit_client_tests:
     machine:
-      docker_layer_caching: true
+      docker_layer_caching: false
     steps:
       - checkout
       - run_make:
@@ -65,7 +65,7 @@ jobs:
 
   functional_tests:
     machine:
-      docker_layer_caching: true
+      docker_layer_caching: false
     parallelism: 9
     resource_class: xlarge
     steps:
@@ -87,7 +87,7 @@ jobs:
 
   a11y_tests:
     machine:
-      docker_layer_caching: true
+      docker_layer_caching: false
     steps:
       - checkout
       - run_make:
@@ -96,7 +96,7 @@ jobs:
 
   visual_tests:
     machine:
-      docker_layer_caching: true
+      docker_layer_caching: false
     steps:
       - checkout
       - run_make:
@@ -109,7 +109,7 @@ jobs:
 
   visual_component_tests:
     machine:
-      docker_layer_caching: true
+      docker_layer_caching: false
     resource_class: xlarge
     steps:
       - checkout
@@ -123,7 +123,7 @@ jobs:
 
   e2e_tests_dit:
     machine:
-      docker_layer_caching: true
+      docker_layer_caching: false
     parallelism: 3
     resource_class: xlarge
     parameters:
@@ -138,7 +138,7 @@ jobs:
 
   e2e_tests:
     machine:
-      docker_layer_caching: true
+      docker_layer_caching: false
     parallelism: 1
     resource_class: xlarge
     parameters:
@@ -154,7 +154,7 @@ jobs:
   
   component_tests:
     machine:
-      docker_layer_caching: true
+      docker_layer_caching: false
     steps:
       - checkout
       - run_make:
