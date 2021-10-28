@@ -75,7 +75,6 @@ async function postAddDnbCompany(req, res, next) {
       sector,
     })
 
-    req.flash('success', 'Company added to Data Hub')
     res.json(result)
   } catch (error) {
     next(error)
@@ -100,7 +99,6 @@ async function postAddDnbCompanyInvestigation(req, res, next) {
     )
     await createDnbCompanyInvestigation(req, create)
 
-    req.flash('success', 'Company added to Data Hub')
     res.json(company)
   } catch (error) {
     next(error)

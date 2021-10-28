@@ -63,7 +63,9 @@ import * as referralsSendTasks from '../apps/companies/apps/referrals/send-refer
 import * as exportWinsTasks from '../apps/companies/apps/exports/client/ExportWins/tasks'
 import { TASK_NAME as EXPORT_COUNTRIES_EDIT_NAME } from '../apps/companies/apps/exports/client/ExportCountriesEdit/state'
 import * as exportCountriesEditTasks from '../apps/companies/apps/exports/client/ExportCountriesEdit/tasks'
-import addCompanyPostcodeToRegionTask from '../apps/companies/apps/add-company/client/tasks'
+import addCompanyPostcodeToRegionTask, {
+  createCompany,
+} from '../apps/companies/apps/add-company/client/tasks'
 import { TASK_SAVE_ONE_LIST_DETAILS } from '../apps/companies/apps/edit-one-list/client/state'
 import * as editOneListTasks from '../apps/companies/apps/edit-one-list/client/tasks'
 import {
@@ -220,6 +222,7 @@ function App() {
   return (
     <Provider
       tasks={{
+        'Create company': createCompany,
         'Company lists': companyListsTasks.fetchCompanyLists,
         'Company list': companyListsTasks.fetchCompanyList,
         'Exports history': exportsHistoryTasks.fetchExportsHistory,

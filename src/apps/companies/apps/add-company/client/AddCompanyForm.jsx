@@ -4,13 +4,11 @@
 
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
 import { get } from 'lodash'
 
 import {
   FieldRadios,
   FieldSelect,
-  FormStateful,
   Step,
 } from '../../../../../client/components'
 
@@ -20,6 +18,8 @@ import CompanySearchStep from './CompanySearchStep'
 import CompanyRegionAndSector from './CompanyRegionAndSector'
 import InformationList from './InformationList'
 import { ISO_CODE } from './constants'
+
+import TaskForm from '../../../../../client/components/Task/Form'
 
 function AddCompanyForm({
   csrfToken,
@@ -66,17 +66,14 @@ function AddCompanyForm({
     return {}
   }
 
-  async function onSubmit(values) {
-    const path = values.cannotFind ? 'company-investigation' : 'company-create'
-    const postUrl = `/companies/create/dnb/${path}?_csrf=${csrfToken}`
-    const { data } = await axios.post(postUrl, values)
-    return `/companies/${data.id}`
-  }
-
   return (
-    <FormStateful
-      onSubmit={onSubmit}
-      onExit={() => 'Changes that you made will not be saved.'}
+    <TaskForm
+      id="add-company-form"
+      submissionTaskName="Create company"
+      analyticsFormName="add-company-form"
+      redirectTo={(company) => `/companies/${company.id}`}
+      flashMessage={() => 'Company added to Data Hub'}
+      transformPayload={(values) => ({ ...values, csrfToken })}
     >
       {({ values, setFieldValue }) => {
         const country = getCountry(values)
@@ -159,7 +156,7 @@ function AddCompanyForm({
           </>
         )
       }}
-    </FormStateful>
+    </TaskForm>
   )
 }
 
