@@ -160,6 +160,7 @@ jobs:
       - run_make:
           label: Run component tests
           target: component-tests
+      - store_cypress_artifacts
 
   release-storybook:
     docker:

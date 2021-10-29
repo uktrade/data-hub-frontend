@@ -14,9 +14,10 @@ import {
   CollectionSort,
   CollectionItem,
   RoutedDownloadDataHeader,
-  RoutedPagination,
   FilteredCollectionHeader,
 } from '../../components'
+
+import RoutedPagination from '../../components/Pagination/RoutedPagination'
 
 const FilteredCollectionList = ({
   results = [],
@@ -45,6 +46,7 @@ const FilteredCollectionList = ({
     <Route>
       {({ history, location }) => {
         const qsParams = qs.parse(location.search.slice(1))
+        const initialPage = parseInt(qsParams.page, 10)
         if (defaultQueryParams && isEmpty(qsParams)) {
           history.push({
             search: qs.stringify({
@@ -96,14 +98,11 @@ const FilteredCollectionList = ({
                             />
                           ))}
                         </ol>
-                        <RoutedPagination
-                          qsParamName="page"
-                          totalPages={totalPages}
-                        />
                       </>
                     )
                   }
                 </Task.Status>
+                <RoutedPagination initialPage={initialPage} items={count} />
               </article>
             </GridCol>
           </GridRow>
