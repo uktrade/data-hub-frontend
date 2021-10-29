@@ -12,6 +12,14 @@ export default (
   { type, result, ...action }
 ) => {
   switch (type) {
+    case 'TASK_FORM__LOADED':
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          ...action.initialValues,
+        },
+      }
     case 'TASK_FORM__RESOLVED':
       return {
         ...state,

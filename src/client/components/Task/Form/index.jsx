@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { isEmpty } from 'lodash'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
@@ -21,6 +21,7 @@ import { FormContextProvider } from '../../Form/hooks'
 import Step from '../../Form/elements/Step'
 
 import { validateForm } from '../../Form/MultiInstanceForm'
+import Effect from '../../Effect'
 
 const _TaskForm = ({
   // Required
@@ -29,9 +30,11 @@ const _TaskForm = ({
   analyticsFormName,
   // Optional
   initialValuesTaskName,
+  initialValuesPayload,
   redirectTo,
   flashMessage,
   children,
+  initialValues,
   // TODO: Allow for react router redirection
   reactRouterRedirect,
   transformInitialValues = (x) => x,
@@ -39,6 +42,7 @@ const _TaskForm = ({
   submitButtonLabel = 'Save',
   actionLinks = [],
   // State props
+  onLoad,
   result,
   resolved,
   errors = {},
@@ -47,6 +51,10 @@ const _TaskForm = ({
   steps = [],
   ...props
 }) => {
+  useEffect(() => {
+    onLoad(initialValues)
+  }, [])
+
   // TODO: Clean up this mess
   const contextProps = {
     ...props,
@@ -74,136 +82,151 @@ const _TaskForm = ({
     <Wrap
       with={Resource}
       when={initialValuesTaskName}
-      props={{ id, name: initialValuesTaskName }}
+      props={{
+        id,
+        name: initialValuesTaskName,
+        progressBox: true,
+        payload: initialValuesPayload,
+      }}
     >
-      {(initialValues = {}) => (
-        <FormContextProvider
-          {...contextProps}
-          registerField={props.registerField(
-            transformInitialValues(initialValues)
-          )}
-          // Required by the FieldDnbCompany
-          // eslint-disable-next-line no-unused-vars
-          setIsLoading={(isLoading) => {
-            // TODO: Is the isLoading actually needed in state?
-          }}
-          validateForm={(fieldNamesToValidate) => {
-            // This method is supposed to validate only the fields whose names
-            // are listed in fieldNamesToValidate,
-            // or all fields if fieldNamesToValidate is empty, and
-            // set the form state so, that it renders the errors.
-            const { errors, touched } = validateForm({
-              ...contextProps,
-              fields: fieldNamesToValidate?.length
-                ? _.pick(contextProps.fields, fieldNamesToValidate)
-                : contextProps.fields,
-            })
-            props.onValidate(errors, touched)
+      {(initialValues) => (
+        <>
+          <Effect
+            dependencyList={[initialValues]}
+            effect={() =>
+              initialValues && onLoad(transformInitialValues(initialValues))
+            }
+          />
+          <FormContextProvider
+            {...contextProps}
+            // FIXME: This needs to be called also when the initial values load
+            //        so we need to use the Effect component somewhere above
+            registerField={props.registerField(
+              transformInitialValues(initialValues)
+            )}
+            // Required by the FieldDnbCompany
+            // eslint-disable-next-line no-unused-vars
+            setIsLoading={(isLoading) => {
+              // TODO: Is the isLoading actually needed in state?
+            }}
+            validateForm={(fieldNamesToValidate) => {
+              // This method is supposed to validate only the fields whose names
+              // are listed in fieldNamesToValidate,
+              // or all fields if fieldNamesToValidate is empty, and
+              // set the form state so, that it renders the errors.
+              const { errors, touched } = validateForm({
+                ...contextProps,
+                fields: fieldNamesToValidate?.length
+                  ? _.pick(contextProps.fields, fieldNamesToValidate)
+                  : contextProps.fields,
+              })
+              props.onValidate(errors, touched)
 
-            // We also must return a map of field names to errors
-            return errors
-          }}
-        >
-          <Task>
-            {(t) => (
-              <TaskLoadingBox
-                name={submissionTaskName}
-                id={id}
-                // TODO: We only want to keep the spinner kept around with hard redirects
-                // The value shold be falsy for React Router redirection
-                when={resolved}
-              >
-                <Analytics>
-                  {(pushAnalytics) => (
-                    <form
-                      noValidate={true}
-                      onSubmit={(e) => {
-                        e.preventDefault()
-                        const { errors, touched } = validateForm(contextProps)
-                        props.onValidate(errors, touched)
+              // We also must return a map of field names to errors
+              return errors
+            }}
+          >
+            <Task>
+              {(t) => (
+                <TaskLoadingBox
+                  name={submissionTaskName}
+                  id={id}
+                  // TODO: We only want to keep the spinner kept around with hard redirects
+                  // The value shold be falsy for React Router redirection
+                  when={resolved}
+                >
+                  <Analytics>
+                    {(pushAnalytics) => (
+                      <form
+                        noValidate={true}
+                        onSubmit={(e) => {
+                          e.preventDefault()
+                          const { errors, touched } = validateForm(contextProps)
+                          props.onValidate(errors, touched)
 
-                        if (isEmpty(errors)) {
-                          if (contextProps.isLastStep()) {
-                            t(submissionTaskName, id).start({
-                              payload: transformPayload(values),
-                              onSuccessDispatch: 'TASK_FORM__RESOLVED',
-                            })
+                          if (isEmpty(errors)) {
+                            if (contextProps.isLastStep()) {
+                              t(submissionTaskName, id).start({
+                                payload: transformPayload(values),
+                                onSuccessDispatch: 'TASK_FORM__RESOLVED',
+                              })
 
-                            pushAnalytics({
-                              event: `form:${analyticsFormName}:submit`,
-                              ...values,
-                            })
+                              pushAnalytics({
+                                event: `form:${analyticsFormName}:submit`,
+                                ...values,
+                              })
+                            } else {
+                              props.goForward()
+                              pushAnalytics({
+                                event: `form:${analyticsFormName}:next-step`,
+                                currentStep: props.currentStep,
+                              })
+                            }
                           } else {
-                            props.goForward()
+                            requestAnimationFrame(() => ref.current?.focus())
                             pushAnalytics({
-                              event: `form:${analyticsFormName}:next-step`,
-                              currentStep: props.currentStep,
+                              event: `form:${analyticsFormName}:errors`,
+                              ...errors,
                             })
                           }
-                        } else {
-                          requestAnimationFrame(() => ref.current?.focus())
-                          pushAnalytics({
-                            event: `form:${analyticsFormName}:errors`,
-                            ...errors,
-                          })
-                        }
-                      }}
-                    >
-                      {resolved && (
-                        <HardRedirect
-                          to={redirectTo(result, values)}
+                        }}
+                      >
+                        {resolved && (
+                          <HardRedirect
+                            to={redirectTo(result, values)}
+                            when={resolved}
+                          />
+                        )}
+                        <FlashMessage
+                          type="success"
                           when={resolved}
+                          context={[result, values]}
+                          template={(context) => flashMessage(...context)}
                         />
-                      )}
-                      <FlashMessage
-                        type="success"
-                        when={resolved}
-                        context={[result, values]}
-                        template={(context) => flashMessage(...context)}
-                      />
-                      {!isEmpty(errors) && (
-                        <ErrorSummary
-                          ref={ref}
-                          // TODO: Rewrite the tests that rely on this and remove it
-                          id="form-errors"
-                          errors={Object.entries(errors).map(
-                            ([name, error]) => ({
-                              targetName: name,
-                              text: error,
-                            })
-                          )}
-                        />
-                      )}
-                      {typeof children === 'function'
-                        ? children(contextProps)
-                        : children}
-                      {/*
+                        {!isEmpty(errors) && (
+                          <ErrorSummary
+                            ref={ref}
+                            // TODO: Rewrite the tests that rely on this and remove it
+                            id="form-errors"
+                            errors={Object.entries(errors).map(
+                              ([name, error]) => ({
+                                targetName: name,
+                                text: error,
+                              })
+                            )}
+                          />
+                        )}
+                        {typeof children === 'function'
+                          ? children(contextProps)
+                          : children}
+                        {/*
                       We don't want to render the submit button when the form
                       has multiple steps as the steps come with a built-in submit button
                       */}
-                      {!steps.length && (
-                        <FormActions>
-                          <Button>{submitButtonLabel}</Button>
-                          {actionLinks.map(({ to, href, children }, i) =>
-                            to ? (
-                              <ReactRouter.Link key={i} to={to}>
-                                {children}
-                              </ReactRouter.Link>
-                            ) : (
-                              <Link key={i} href={href}>
-                                {children}
-                              </Link>
-                            )
-                          )}
-                        </FormActions>
-                      )}
-                    </form>
-                  )}
-                </Analytics>
-              </TaskLoadingBox>
-            )}
-          </Task>
-        </FormContextProvider>
+                        {!steps.length && (
+                          <FormActions>
+                            <Button>{submitButtonLabel}</Button>
+                            {actionLinks.map(({ to, href, children }, i) =>
+                              to ? (
+                                <ReactRouter.Link key={i} to={to}>
+                                  {children}
+                                </ReactRouter.Link>
+                              ) : (
+                                <Link key={i} href={href}>
+                                  {children}
+                                </Link>
+                              )
+                            )}
+                          </FormActions>
+                        )}
+                      </form>
+                    )}
+                  </Analytics>
+                </TaskLoadingBox>
+              )}
+            </Task>
+          </FormContextProvider>
+        </>
       )}
     </Wrap>
   )
@@ -211,10 +234,15 @@ const _TaskForm = ({
 
 // TODO: Clean up this mess
 const dispatchToProps = (dispatch) => ({
+  onLoad: (initialValues) =>
+    dispatch({
+      type: 'TASK_FORM__LOADED',
+      initialValues,
+    }),
   registerField: (initialValues) => (field) =>
     dispatch({
       type: 'TASK_FORM__FIELD_REGISTER',
-      field: { ...field, initialValue: initialValues[field.name] },
+      field: { ...field, initialValue: initialValues?.[field.name] },
     }),
   deregisterField: (fieldName) =>
     dispatch({
