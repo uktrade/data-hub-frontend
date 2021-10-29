@@ -101,9 +101,7 @@ const _TaskForm = ({
             {...contextProps}
             // FIXME: This needs to be called also when the initial values load
             //        so we need to use the Effect component somewhere above
-            registerField={props.registerField(
-              transformInitialValues(initialValues)
-            )}
+            registerField={props.registerField(initialValues)}
             // Required by the FieldDnbCompany
             // eslint-disable-next-line no-unused-vars
             setIsLoading={(isLoading) => {
