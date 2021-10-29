@@ -12,6 +12,7 @@ import {
 } from '@govuk-react/constants'
 import { spacing } from '@govuk-react/lib'
 
+import { FormActions } from '..'
 import SecondaryButton from '../SecondaryButton'
 
 // Taken from https://github.com/govuk-react/govuk-react/blob/master/components/error-summary/src/index.js
@@ -37,11 +38,14 @@ const StyledSecondaryButton = styled(SecondaryButton)({
   marginBottom: 0,
 })
 
-const Err = ({ errorMessage, retry, noun }) => (
+const Err = ({ errorMessage, retry, dismiss, noun }) => (
   <StyledRoot>
     <H2 size="MEDIUM">Could not load {noun}</H2>
     <p>Error: {errorMessage}</p>
-    <StyledSecondaryButton onClick={retry}>Retry</StyledSecondaryButton>
+    <FormActions>
+      <StyledSecondaryButton onClick={retry}>Retry</StyledSecondaryButton>
+      <StyledSecondaryButton onClick={dismiss}>Dismiss</StyledSecondaryButton>
+    </FormActions>
   </StyledRoot>
 )
 

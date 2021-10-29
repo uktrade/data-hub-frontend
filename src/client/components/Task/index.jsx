@@ -230,6 +230,7 @@ Task.Status = ({
         payload,
         errorMessage,
         onSuccessDispatch,
+        dismissError,
       } = getTask(name, id)
       return (
         <>
@@ -242,6 +243,7 @@ Task.Status = ({
               noun,
               errorMessage,
               retry: () => start({ payload, onSuccessDispatch }),
+              dismiss: dismissError,
             })}
           {!status && children()}
         </>
