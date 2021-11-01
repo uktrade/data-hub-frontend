@@ -16,9 +16,9 @@ import { HARD_REDIRECT } from '../../actions'
  * @example
  * <HardRedirect to="/foo" when={shouldRedirect} />
  */
-export default connect()(({ to, when, dispatch }) => {
+export default connect()(({ to, when, dispatch, children = null }) => {
   useEffect(() => {
     when && dispatch({ type: HARD_REDIRECT, to })
   }, [to, when])
-  return null
+  return children
 })
