@@ -38,13 +38,15 @@ const StyledSecondaryButton = styled(SecondaryButton)({
   marginBottom: 0,
 })
 
-const Err = ({ errorMessage, retry, dismiss, noun }) => (
+const Err = ({ errorMessage, retry, dismiss, noun, dismissable = true }) => (
   <StyledRoot>
     <H2 size="MEDIUM">Could not load {noun}</H2>
     <p>Error: {errorMessage}</p>
     <FormActions>
       <StyledSecondaryButton onClick={retry}>Retry</StyledSecondaryButton>
-      <StyledSecondaryButton onClick={dismiss}>Dismiss</StyledSecondaryButton>
+      {dismissable && (
+        <StyledSecondaryButton onClick={dismiss}>Dismiss</StyledSecondaryButton>
+      )}
     </FormActions>
   </StyledRoot>
 )
