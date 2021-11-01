@@ -224,7 +224,7 @@
     "sinon-chai": "^3.7.0",
     "storybook-readme": "^5.0.9",
     "supertest": "^6.1.6",
-    "webpack-dev-server": "^4.3.1"
+    "webpack-dev-server": "^4.4.0"
   },
   "sasslintConfig": ".sass-lint.yml",
   "resolutions": {
