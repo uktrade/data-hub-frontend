@@ -3,8 +3,25 @@ import { useEffect } from 'react'
 
 import { addMessage, addMessageWithBody } from '../utils/flash-messages'
 
-// FIXME: Add docstring and types
-const FlashMessage = ({ when, type, template, context }) => {
+/**
+ * @function FlashMessage
+ * @description Allows for registering a Flash message declaratively in JSX.
+ * Please reffer to the `../utils/flash-messages` module for what exactly
+ * is happening when a flash message is registered.
+ * @param {Object} props
+ * @param {any} props.when - If truthy, {props.template} will be called with the
+ * {props.context} and a flash message will be registered.
+ * @param {string} props.type - The flash message type e.g. `"success"`.
+ * @param {(context: any) => string | [string, string]} props.type - A function
+ * that will be passed {props.context} and which should return a string or a
+ * tuple of two strings representing a simple flash message or a flash message
+ * with heading respectively.
+ * @param {any} props.context - The context passed to {props.template}.
+ * @param {any} [props.children=null] - The component will just render it's
+ * children.
+ * @returns {React.ReactNode}
+ */
+const FlashMessage = ({ when, type, template, context, children = null }) => {
   useEffect(() => {
     if (when) {
       const message = template(context)
@@ -13,7 +30,7 @@ const FlashMessage = ({ when, type, template, context }) => {
         : addMessage(type, message)
     }
   }, [when])
-  return null
+  return children
 }
 
 FlashMessage.propTypes = {
