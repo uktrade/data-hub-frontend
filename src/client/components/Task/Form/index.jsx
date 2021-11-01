@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import PropTypes from 'prop-types'
 import React, { useRef, useEffect } from 'react'
 import { isEmpty } from 'lodash'
 import Button from '@govuk-react/button'
@@ -18,7 +19,6 @@ import Analytics from '../../Analytics'
 import reducer from './reducer'
 import FormActions from '../../Form/elements/FormActions'
 import { FormContextProvider } from '../../Form/hooks'
-import Step from '../../Form/elements/Step'
 
 import { validateForm } from '../../Form/MultiInstanceForm'
 import Effect from '../../Effect'
@@ -299,9 +299,44 @@ const dispatchToProps = (dispatch) => ({
  * - Submit button and secondary action links
  * - Success flash message on _task_ resolution
  * - Recording Google Tag Manager events on form submission and task resolution
+ * @type {import("./types").TaskForm} TaskForm
  * @typedef { import("./types").Props } Props
  * @param {Props} props - Refer to the ./types.d.ts file for the concrete props
- * @type {import("./types").TaskForm} TaskForm
+ * @param {string} props.id - A unique instance ID
+ * @param {string} props.analyticsFormName - The name of the form that will be
+ * used in the Google Analytics event
+ * @param {Props['submissionTaskName']} props.submissionTaskName - Name of the
+ * task that should be started when the form is submitted. The task will receive
+ * the form values as payload.
+ * @param {Props['redirectTo']} props.redirectTo - A function which should
+ * convert the result of the submission task and the submitted form values into
+ * a URL path to which the user should be redirected when the submission task
+ * resolves.
+ * @param {Props['flashMessage']} props.flashMessage - A function which should
+ * convert the result of the submission task and the submitted form values into
+ * a flash message text or a tuple of `[heading, body]`, which will be used as
+ * a flash message when the submission task resolves.
+ * @param {Props['initialValuesTaskName']} [props.initialValuesTaskName] -
+ * Name of the task that shoud be used to resolve the initial form field values.
+ * @param {any} [props.initialValuesPayload] - An optional payload for the
+ * initial values task.
+ * @param {Props['transformInitialValues']} [props.transformInitialValues=(x) => x] -
+ * An optional function which takes the result of the resolved initial values
+ * task and should return a map of field names to their initial values. You can
+ * use this mechanism to mix in values comming from elsewhere than the task.
+ * @param {Props['transformPayload']} [props.transformPayload=(x) => x] -
+ * An optional function which takes the form values map as its only argument and
+ * whose return value will be used as the payload of the submission task.
+ * @param {Props['actionLinks']} [props.actionLinks] - An optional array of
+ * a subset of props of action links rendered to the right of the submit button.
+ * @param {Props['children']} [props.children] - The form fields should be
+ * passed as children. Note that the form communicates with it's fields
+ * through the context it provides to the {useFormContext} hook, which is used
+ * directly, but mostly indirectly through the {useField} hook in the various
+ * form fields. The context exposes a vast imperative interface of methods which
+ * is not documented yet. The form optionally accepts a function as a child,
+ * which will be passed the context provided by the form as it's only argument
+ * and should return React vdom containing form fields.
  * */
 const TaskForm = multiInstance({
   name: 'TaskForm',
@@ -311,9 +346,21 @@ const TaskForm = multiInstance({
   actionPattern: 'TASK_FORM__',
 })
 
-export const Example = () => <TaskForm />
-
-// TODO: This doesn't seem to be needed
-TaskForm.Step = Step
+TaskForm.propTypes = {
+  id: PropTypes.string.isRequired,
+  analyticsFormName: PropTypes.string.isRequired,
+  submissionTaskName: PropTypes.string.isRequired,
+  redirectTo: PropTypes.func.isRequired,
+  flashMessage: PropTypes.func.isRequired,
+  initialValuesTaskName: PropTypes.string,
+  transformInitialValues: PropTypes.func,
+  transformPayload: PropTypes.func,
+  actionLinks: PropTypes.arrayOf(
+    PropTypes.shape({
+      children: PropTypes.node,
+      href: PropTypes.string.isRequired,
+    })
+  ),
+}
 
 export default TaskForm
