@@ -1,27 +1,66 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Select from 'react-select'
 import { components } from 'react-select'
 import AsyncSelect from 'react-select/async'
+import styled from 'styled-components'
 import defaultStyles, { errorStyles } from './styles'
 import Highlighter from './Highlighter'
 
-const { Input, Option, NoOptionsMessage, MenuList, SelectContainer } =
-  components
+const {
+  Input,
+  Option,
+  NoOptionsMessage,
+  MenuList,
+  SelectContainer,
+  MultiValueRemove,
+  MultiValueLabel,
+} = components
 
 export const filterOption = ({ label = '' }, query) =>
   label.toLowerCase().includes(query.toLowerCase())
 
+const StyledListItem = styled('li')`
+  div {
+    ${({ isSelected }) => isSelected && 'background-color: pink;'}
+  }
+`
+
+const CustomMultiValue = ({ children, ...props }) => {
+  return (
+    <ul>
+      <CustomMultiValueLabel {...props}>{children}</CustomMultiValueLabel>
+      <MultiValueRemove />
+    </ul>
+  )
+}
+
+const CustomMultiValueLabel = () => {
+  return (
+    <li>
+      {children}
+      {/* <MultiValueRemove {...props} /> */}
+    </li>
+  )
+}
+
 const CustomOption = ({
-  selectProps: { inputValue },
+  selectProps: { inputValue, onClick },
   data: { label },
   ariaProps,
+  isSelected,
+  id,
   ...props
 }) => (
-  <li {...ariaProps}>
+  <StyledListItem
+    {...ariaProps}
+    id={id}
+    isSelected={isSelected}
+    onClick={onClick}
+  >
     <Option {...props}>
       <Highlighter searchStr={inputValue} optionLabel={label} />
     </Option>
-  </li>
+  </StyledListItem>
 )
 
 const CustomNoOptionsMessage = ({ children, ...props }) => (
@@ -34,22 +73,31 @@ const CustomMenuList = ({ children, selectProps, ...props }) => (
   <MenuList {...props}>
     <ul id={selectProps['data-aria-id']} role="listbox">
       {Array.isArray(children)
-        ? children.map((child, i) =>
-            React.cloneElement(child, {
+        ? children.map((child, i) => {
+            //  child.props.isSelected && console.log(child.props.data.label)
+            return React.cloneElement(child, {
               ariaProps: {
                 role: 'option',
-                'aria-selected': child.props.isFocused,
+                'aria-selected': child.props.isSelected,
                 'aria-setsize': children.length,
                 'aria-posinset': i + 1,
               },
+              isSelected: child.props.isSelected,
+              id: `combo-option-${i + 1}`,
             })
-          )
+          })
         : Boolean(!!selectProps.inputValue.length) && children}
     </ul>
   </MenuList>
 )
 
-const CustomInput = ({ children, selectProps, inputProps, ...props }) => (
+const CustomInput = ({
+  children,
+  selectProps,
+  inputProps,
+  activeDescendant,
+  ...props
+}) => (
   <>
     <Input
       {...props}
@@ -57,6 +105,7 @@ const CustomInput = ({ children, selectProps, inputProps, ...props }) => (
       aria-autocomplete="list"
       aria-expanded={selectProps.menuIsOpen}
       aria-describedby={`${selectProps['data-aria-id']}-assistiveHint`}
+      aria-activedescendant={selectProps.activeDescendant}
       role="combobox"
     />
     {Boolean(!selectProps.options.length) && (
@@ -76,77 +125,29 @@ const AssistiveText = ({ name }) => (
   </span>
 )
 
-const SelectedValuesContainer = ({ isDisabled, getValue, ...props }) => {
-  const { getOptionValue, formatOptionLabel, removeValue } = props.selectProps
-
-  const getValueLabel = (opt) => formatOptionLabel?.(opt, 'value') || opt.label
-  const getKey = (opt, index) => `${getOptionValue(opt)}-${index}`
-
-  const toMultiValue = (opt, index) => (
-    <components.MultiValue
-      getValue={getValue}
-      {...props}
-      components={{
-        Container: components.MultiValueContainer,
-        Label: components.MultiValueLabel,
-        Remove: components.MultiValueRemove,
-      }}
-      //isFocused={isOptionFocused}
-      isDisabled={isDisabled}
-      key={getKey(opt, index)}
-      index={index}
-      removeProps={{
-        onClick: () => removeValue(opt),
-        onTouchEnd: () => removeValue(opt),
-        onMouseDown: (e) => {
-          e.preventDefault()
-          e.stopPropagation()
-        },
-      }}
-      data={opt}
-    >
-      {getValueLabel(opt)}
-    </components.MultiValue>
-  )
-
-  return (
-    <div style={{ margin: '.5rem 0', display: 'flex', flexFlow: 'row wrap' }}>
-      {getValue().map(toMultiValue)}
-    </div>
-  )
-}
-
 const CustomSelectContainer = ({
   children,
   className,
   innerProps,
   isFocused,
   ...commonProps
-}) => {
-  const selectContainerProps = {
-    ...commonProps,
-  }
-
-  return (
-    <SelectContainer
-      className={className}
-      innerProps={innerProps}
-      isFocused={isFocused}
-      {...selectContainerProps}
-    >
-      <SelectedValuesContainer {...commonProps} />
-      {children}
-    </SelectContainer>
-  )
-}
+}) => (
+  <SelectContainer
+    className={className}
+    innerProps={innerProps}
+    isFocused={isFocused}
+    {...commonProps}
+  >
+    {children}
+  </SelectContainer>
+)
 
 const Typeahead = ({ value, options, styles, error, name, ...props }) => {
-  // const [setValue] = useState()
-  // const onChange = useCallback((newValue) => setValue(newValue), [])
-  // const removeValue = useCallback(
-  //   (removed) => setValue(value.filter((v) => v.value !== removed.value)),
-  //   [value]
-  // )
+  const [activeDescendant, setActiveDescendant] = useState('')
+  const handleOnClick = (e) => {
+    setActiveDescendant(e.currentTarget.getAttribute('id'))
+  }
+
   const customisedProps = {
     styles: {
       ...(error ? errorStyles : defaultStyles),
@@ -158,10 +159,15 @@ const Typeahead = ({ value, options, styles, error, name, ...props }) => {
       Input: CustomInput,
       NoOptionsMessage: CustomNoOptionsMessage,
       SelectContainer: CustomSelectContainer,
+      MultiValue: CustomMultiValue,
+      MultiValueLabel: CustomMultiValueLabel,
     },
+    menuIsOpen: true,
+    hideSelectedOptions: false,
     filterOption,
     'data-aria-id': `autocomplete-${name}`,
     inputId: name,
+    activeDescendant,
     ...props,
   }
 
@@ -171,8 +177,7 @@ const Typeahead = ({ value, options, styles, error, name, ...props }) => {
         <Select
           {...customisedProps}
           options={options}
-          // onChange={onChange}
-          // removeValue={removeValue}
+          onClick={handleOnClick}
         />
       ) : (
         <AsyncSelect {...customisedProps} />
