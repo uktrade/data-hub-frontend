@@ -87,6 +87,7 @@ const _TaskForm = ({
         name: initialValuesTaskName,
         progressBox: true,
         payload: initialValuesPayload,
+        taskStatusProps: { dismissable: false },
       }}
     >
       {(initialValues) => (
