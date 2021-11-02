@@ -3,21 +3,23 @@ import { mount } from '@cypress/react'
 import NewWindowLink from '../../../../src/client/components/NewWindowLink'
 
 describe('NewWindowLink', () => {
-  let wrapper
   const link = 'https://example.com'
   const linkText = 'example'
   const newTabText = 'opens in a new window or tab'
 
+  const Component = (props) => <NewWindowLink {...props} />
+
   context('when the "href" prop is passed', () => {
     before(() => {
-      wrapper = mount(<NewWindowLink href={link}>{linkText}</NewWindowLink>)
+      mount(<Component href={link}>{linkText}</Component>)
     })
 
     it('should render the link', () => {
-      wrapper.its('aria-label').should('eq', 'Opens in a new window or tab')
-      wrapper.its('href').should('eq', link)
-      wrapper.should('have.text', linkText)
-      wrapper.should('have.text', newTabText)
+      cy.get('[data-test="newWindowLink"]')
+        .should('have.attr', 'aria-label', 'Opens in a new window or tab')
+        .should('have.attr', 'href', link)
+        .should('have.text', linkText)
+      cy.contains(newTabText).should('be.visible')
     })
   })
 })

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 const NewWindowLink = ({ href, showHelpText, children, ...rest }) => (
   <>
     <Link
+      data-test="newWindowLink"
       href={href}
       target="_blank"
       aria-label="Opens in a new window or tab"
