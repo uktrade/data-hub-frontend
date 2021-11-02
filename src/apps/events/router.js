@@ -10,7 +10,7 @@ const {
   redirectToFirstNavItem,
 } = require('../middleware')
 const { renderDetailsPage } = require('./controllers/details')
-const { renderEditPage } = require('./controllers/edit')
+const { renderEditPage, renderFormPage } = require('./controllers/edit')
 const { postDetails, getEventDetails } = require('./middleware/details')
 
 const { renderEventsView } = require('./controllers/events')
@@ -20,6 +20,8 @@ const attendeesRouter = require('./attendees/router')
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.route('/create').post(postDetails, renderEditPage).get(renderEditPage)
+// TODO: Temp route to placehold react implementation
+router.route('/create-2').get(renderFormPage)
 
 router.param('eventId', getEventDetails)
 
