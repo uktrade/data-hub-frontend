@@ -93,13 +93,19 @@ module.exports = (env) => ({
       },
       {
         test: /\.(eot|ttf|woff|woff2)$/,
-        loader: 'file-loader?name=fonts/[name].[hash:8].[ext]',
+        loader: 'file-loader',
+        options: {
+          name: 'fonts/[name].[hash:8].[ext]',
+        },
       },
       {
         test: /\.(png|svg|jpe?g)$/,
-        loader: [
-          'file-loader?name=images/[name].[hash:8].[ext]',
-          'image-webpack-loader',
+        use: [
+          {
+            loader: 'file-loader',
+            options: { name: 'images/[name].[hash:8].[ext]' },
+          },
+          { loader: 'image-webpack-loader' },
         ],
       },
       {
@@ -140,12 +146,5 @@ module.exports = (env) => ({
         ],
       },
     ],
-  },
-  node: {
-    fs: 'empty',
-    child_process: 'empty',
-    module: 'empty',
-    net: 'empty',
-    tls: 'empty',
   },
 })

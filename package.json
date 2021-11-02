@@ -165,8 +165,8 @@
     "vue-loader": "^15.9.8",
     "vue-multiselect": "^2.1.0",
     "vue-template-compiler": "^2.6.14",
-    "webpack": "^4.46.0",
-    "webpack-assets-manifest": "^4.0.6",
+    "webpack": "^5.61.0",
+    "webpack-assets-manifest": "^5.0.6",
     "webpack-cli": "^4.9.1",
     "winston": "^3.3.3"
   },
@@ -206,7 +206,6 @@
     "mocha": "^9.1.3",
     "mocha-circleci-reporter": "0.0.3",
     "mocha-multi": "^1.1.5",
-    "mochapack": "^2.1.2",
     "nock": "^13.1.3",
     "nodemon": "^2.0.14",
     "npm-run-all": "^4.1.3",
@@ -224,19 +223,5 @@
     "supertest": "^6.1.6",
     "webpack-dev-server": "^4.3.1"
   },
-  "sasslintConfig": ".sass-lint.yml",
-  "resolutions": {
-    "@pmmmwh/react-refresh-webpack-plugin": "0.5.0",
-    "immer": "9.0.6",
-    "is-plain-obj": "1.1.0",
-    "highlight.js": "11.2.0",
-    "prismjs": "1.24.1",
-    "merge": "2.1.1",
-    "lodash.merge": "4.6.2",
-    "set-value": "4.0.1",
-    "trim": "0.0.3",
-    "semver-regex": "3.1.3",
-    "ansi-regex": "5.0.1",
-    "nth-check": "2.0.1"
-  }
+  "sasslintConfig": ".sass-lint.yml"
 }

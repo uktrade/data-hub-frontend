@@ -1,9 +1,14 @@
 /* eslint-disable */
 require('dotenv').config()
+const path = require("path");
 
 module.exports = (on, config) => {
   if (config.testingType === 'component') {
-    require('@cypress/react/plugins/react-scripts')(on, config)
+    require('@cypress/react/plugins/react-scripts')(
+      on,
+      config,
+      {webpackConfigPath: path.join(process.cwd(), 'webpack.config.js')}
+    )
 
     return config
   }
