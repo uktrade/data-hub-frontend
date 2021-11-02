@@ -1,11 +1,30 @@
 import React from 'react'
-import urls from '../../../../lib/urls'
-import LocalHeader from '../../../../client/components/LocalHeader/LocalHeader.jsx'
-import { Main, NewWindowLink } from '../../../../client/components'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
+import styled from 'styled-components'
+import { FONT_WEIGHTS, LINE_HEIGHT } from '@govuk-react/constants'
 
-const EventForm = ({}) => {
+import urls from '../../../../lib/urls'
+import LocalHeader from '../../../../client/components/LocalHeader/LocalHeader.jsx'
+import {
+  Main,
+  NewWindowLink,
+  FieldRadios,
+  FormStateful,
+  FieldInput,
+  Typeahead,
+} from '../../../../client/components'
+import FieldWrapper from '../../../../client/components/Form/elements/FieldWrapper'
+
+// TODO: Move this somewhere else and share both
+const StyledFieldWrapper = styled(FieldWrapper)`
+  label {
+    font-weight: ${FONT_WEIGHTS.bold};
+    line-height: ${LINE_HEIGHT.SIZE_16};
+  }
+`
+
+const EventForm = (props) => {
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -40,6 +59,46 @@ const EventForm = ({}) => {
                 See more guidance
               </NewWindowLink>
             </article>
+            <FormStateful
+              id="add-event-form"
+              showErrorSummary={true}
+              initialValues={{
+                ...props,
+              }}
+            >
+              <FieldRadios
+                legend="Does the Event relate to a Trade Agreement?"
+                name="has_related_trade_agreements"
+                required="This field is required."
+                options={[
+                  { value: 'Yes', label: 'Yes' },
+                  { value: 'No', label: 'No' },
+                ]}
+                inline={true}
+              />
+              <FieldInput
+                label="Event name"
+                name="name"
+                type="text"
+                required="This field may not be null."
+                data-test="group-field-name"
+              />
+              <StyledFieldWrapper
+                label="Type of event"
+                name=""
+                hint=""
+                {...props}
+              >
+                <Typeahead
+                  name="event_type"
+                  inputId="event_type"
+                  options={[]}
+                  placeholder="-- Select event type --"
+                  required="Select at least one event type"
+                  aria-label="Select an event type"
+                />
+              </StyledFieldWrapper>
+            </FormStateful>
           </GridCol>
         </GridRow>
       </Main>
