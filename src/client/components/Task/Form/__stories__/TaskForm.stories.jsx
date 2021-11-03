@@ -36,11 +36,13 @@ storiesOf('Task/Form', module)
           type="text"
           label="Foo"
           hint='Initial value shold be "Blah Blah"'
+          required="Foo is required"
         />
         <FieldSelect
           name="bar"
           label="Bar"
           hint='Initial value shold be "B".'
+          required="Bar is required"
           options={[
             { label: 'A', value: 'a' },
             { label: 'B', value: 'b' },
@@ -103,6 +105,54 @@ storiesOf('Task/Form', module)
             { label: 'B', value: 'b' },
             { label: 'C', value: 'c' },
           ]}
+        />
+      </TaskForm>
+    ),
+    {
+      readme: {
+        sidebar: rejectInitialValuesReadme,
+      },
+    }
+  )
+  .add(
+    'Initial values passed as prop',
+    () => (
+      <TaskForm
+        id="task-form-example-initialValues-prop"
+        submissionTaskName="Submit TaskForm example"
+        analyticsFormName="task-form-example"
+        initialValues={{ foo: 'Foo', bar: 'b' }}
+        redirectTo={(submissionTaskResult, formValues) =>
+          '#' + JSON.stringify({ submissionTaskResult, formValues })
+        }
+        // eslint-disable-next-line no-unused-vars
+        flashMessage={(submissionTaskResult, formValues) =>
+          'Form was submitted successfully'
+        }
+      >
+        <FieldInput
+          name="foo"
+          type="text"
+          label="Foo"
+          required="Foo is required"
+        />
+        <FieldSelect
+          name="bar"
+          label="Bar"
+          required="Bar is required"
+          initialValue="c"
+          options={[
+            { label: 'A', value: 'a' },
+            { label: 'B', value: 'b' },
+            { label: 'C', value: 'c' },
+          ]}
+        />
+        <FieldInput
+          name="baz"
+          type="text"
+          label="Baz"
+          required="Baz is required"
+          initialValue="Baz"
         />
       </TaskForm>
     ),
