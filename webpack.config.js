@@ -30,7 +30,7 @@ const StartServerAfterBuild = () => {
 }
 
 module.exports = (env) => ({
-  devtool: config.isProd ? 'false' : 'source-map',
+  devtool: config.isProd ? false : 'source-map',
   mode: config.isProd ? 'production' : 'development',
   entry: {
     styles: './assets/stylesheets/application.scss',
@@ -74,6 +74,9 @@ module.exports = (env) => ({
       vue$: 'vue/dist/vue.common.js',
     },
     extensions: ['*', '.js', '.jsx', '.vue', '.json'],
+    fallback: {
+      path: require.resolve('path-browserify'),
+    },
   },
   module: {
     rules: [
@@ -121,15 +124,16 @@ module.exports = (env) => ({
             options: {
               sourceMap: !config.isProd,
               importLoaders: 3,
-              url: (url) => {
-                const files = [
-                  '/assets/images/icon-pointer.png',
-                  '/assets/images/icon-pointer-2x.png',
-                  '/assets/images/govuk-crest.png',
-                  '/assets/images/govuk-crest-2x.png',
-                ]
-
-                return !files.some((file) => url.includes(file))
+              url: {
+                filter: (url) => {
+                  const files = [
+                    '/assets/images/icon-pointer.png',
+                    '/assets/images/icon-pointer-2x.png',
+                    '/assets/images/govuk-crest.png',
+                    '/assets/images/govuk-crest-2x.png',
+                  ]
+                  return !files.some((file) => url.includes(file))
+                },
               },
             },
           },
