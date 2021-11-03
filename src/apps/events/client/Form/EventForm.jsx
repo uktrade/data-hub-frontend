@@ -3,6 +3,7 @@ import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import styled from 'styled-components'
 import { FONT_WEIGHTS, LINE_HEIGHT } from '@govuk-react/constants'
+import { connect } from 'react-redux'
 
 import urls from '../../../../lib/urls'
 import LocalHeader from '../../../../client/components/LocalHeader/LocalHeader.jsx'
@@ -15,6 +16,9 @@ import {
   Typeahead,
 } from '../../../../client/components'
 import FieldWrapper from '../../../../client/components/Form/elements/FieldWrapper'
+import Task from '../../../../client/components/Task'
+import { ID, TASK_GET_EVENTS_FORM_METADATA, state2props } from './state'
+import { EVENTS__FORM_METADATA_LOADED } from '../../../../client/actions'
 
 // TODO: Move this somewhere else and share both
 const StyledFieldWrapper = styled(FieldWrapper)`
@@ -24,7 +28,8 @@ const StyledFieldWrapper = styled(FieldWrapper)`
   }
 `
 
-const EventForm = (props) => {
+const EventForm = ({ metadata: { eventTypeOptions }, isComplete }) => {
+  // console.log(eventTypeOptions)
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -41,69 +46,92 @@ const EventForm = (props) => {
 
   return (
     <>
-      <LocalHeader breadcrumbs={breadcrumbs} heading="Add event" />
-      <Main>
-        <GridRow data-test="eventForm">
-          <GridCol setWidth="three-quarters">
-            <article>
-              <p data-test="trade-agreement-text">
-                If your Event is set up to focus on a Trade Agreement or
-                contributes to implementing a Trade Agreement then select that
-                the event relates to a Trade Agreement and the relevant
-                Agreement(s)
-              </p>
-              <NewWindowLink
-                href={urls.external.helpCentre.tradeagreementGuidance()}
-                data-test="trade-agreement-link"
-              >
-                See more guidance
-              </NewWindowLink>
-            </article>
-            <FormStateful
-              id="add-event-form"
-              showErrorSummary={true}
-              initialValues={{
-                ...props,
-              }}
-            >
-              <FieldRadios
-                legend="Does the Event relate to a Trade Agreement?"
-                name="has_related_trade_agreements"
-                required="This field is required."
-                options={[
-                  { value: 'Yes', label: 'Yes' },
-                  { value: 'No', label: 'No' },
-                ]}
-                inline={true}
-              />
-              <FieldInput
-                label="Event name"
-                name="name"
-                type="text"
-                required="This field may not be null."
-                data-test="group-field-name"
-              />
-              <StyledFieldWrapper
-                label="Type of event"
-                name=""
-                hint=""
-                {...props}
-              >
-                <Typeahead
-                  name="event_type"
-                  inputId="event_type"
-                  options={[]}
-                  placeholder="-- Select event type --"
-                  required="Select at least one event type"
-                  aria-label="Select an event type"
-                />
-              </StyledFieldWrapper>
-            </FormStateful>
-          </GridCol>
-        </GridRow>
-      </Main>
+      <Task>
+        {() => {
+          // const eventsFormMetadataTask = getTask(
+          //   TASK_GET_EVENTS_FORM_METADATA,
+          //   ID
+          // )
+          return (
+            <>
+              <LocalHeader breadcrumbs={breadcrumbs} heading="Add event" />
+              <Main>
+                <GridRow data-test="eventForm">
+                  <GridCol setWidth="three-quarters">
+                    <article>
+                      <p data-test="trade-agreement-text">
+                        If your Event is set up to focus on a Trade Agreement or
+                        contributes to implementing a Trade Agreement then
+                        select that the event relates to a Trade Agreement and
+                        the relevant Agreement(s)
+                      </p>
+                      <NewWindowLink
+                        href={urls.external.helpCentre.tradeagreementGuidance()}
+                        data-test="trade-agreement-link"
+                      >
+                        See more guidance
+                      </NewWindowLink>
+                    </article>
+                    <Task.Status
+                      id={ID}
+                      name={TASK_GET_EVENTS_FORM_METADATA}
+                      startOnRender={{
+                        onSuccessDispatch: EVENTS__FORM_METADATA_LOADED,
+                      }}
+                    >
+                      {() => {
+                        return (
+                          isComplete && (
+                            <FormStateful
+                              id="add-event-form"
+                              showErrorSummary={true}
+                            >
+                              <FieldRadios
+                                legend="Does the Event relate to a Trade Agreement?"
+                                name="has_related_trade_agreements"
+                                required="This field is required."
+                                options={[
+                                  { value: 'Yes', label: 'Yes' },
+                                  { value: 'No', label: 'No' },
+                                ]}
+                                inline={true}
+                              />
+                              <FieldInput
+                                label="Event name"
+                                name="name"
+                                type="text"
+                                required="This field may not be null."
+                                data-test="group-field-name"
+                              />
+
+                              <StyledFieldWrapper
+                                label="Type of event"
+                                name=""
+                                hint=""
+                              >
+                                <Typeahead
+                                  name="event_type"
+                                  inputId="event_type"
+                                  options={eventTypeOptions}
+                                  placeholder="-- Select event type --"
+                                  required="Select at least one event type"
+                                  aria-label="Select an event type"
+                                />
+                              </StyledFieldWrapper>
+                            </FormStateful>
+                          )
+                        )
+                      }}
+                    </Task.Status>
+                  </GridCol>
+                </GridRow>
+              </Main>
+            </>
+          )
+        }}
+      </Task>
     </>
   )
 }
 
-export default EventForm
+export default connect(state2props)(EventForm)

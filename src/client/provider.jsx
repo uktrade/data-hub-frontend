@@ -108,6 +108,9 @@ import interactionsReducer from './modules/Interactions/CollectionList/reducer'
 import { ID as EVENTS_DETAILS_ID } from '../apps/events/client/Details/state'
 import eventDetailsReducer from '../apps/events/client/Details/reducer'
 
+import { ID as EVENTS_FORMS_ID } from '../apps/events/client/Form/state'
+import eventFormsReducer from '../apps/events/client/Form/reducer'
+
 import { ID as EVENTS_ID } from './modules/Events/CollectionList/state'
 import eventsReducer from './modules/Events/CollectionList/reducer'
 
@@ -193,6 +196,7 @@ const store = createStore(
     [INTERACTIONS_ID]: interactionsReducer,
     [EVENTS_ID]: eventsReducer,
     [EVENTS_DETAILS_ID]: eventDetailsReducer,
+    [EVENTS_FORMS_ID]: eventFormsReducer,
     [ORDERS_LIST_ID]: ordersReducer,
     [COMPANY_ORDERS_LIST_ID]: ordersReducer,
   }),
