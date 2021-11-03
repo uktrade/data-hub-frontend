@@ -15,7 +15,7 @@ const StartServerAfterBuild = () => {
   let server = false
   return {
     apply: (compiler) => {
-      compiler.plugin('done', () => {
+      compiler.hooks.done.tap('StartServerAfterBuild', () => {
         if (server) {
           server.stdin.write('rs\n')
         } else {
