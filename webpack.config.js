@@ -75,7 +75,16 @@ module.exports = (env) => ({
     },
     extensions: ['*', '.js', '.jsx', '.vue', '.json'],
     fallback: {
-      path: require.resolve('path-browserify'),
+      path: false,
+      os: false,
+      http: false,
+      https: false,
+      stream: false,
+      fs: false,
+      child_process: false,
+      zlib: false,
+      tls: false,
+      net: false,
     },
   },
   module: {
