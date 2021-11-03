@@ -241,7 +241,7 @@ const dispatchToProps = (dispatch) => ({
   registerField: (initialValues) => (field) =>
     dispatch({
       type: 'TASK_FORM__FIELD_REGISTER',
-      field: { ...field, initialValue: initialValues?.[field.name] },
+      field: { initialValue: initialValues?.[field.name], ...field },
     }),
   deregisterField: (fieldName) =>
     dispatch({
