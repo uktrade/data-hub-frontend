@@ -97,7 +97,7 @@ Resource.propTypes = {
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   children: PropTypes.func,
-  taskStatusProps: PropTypes.shape(Task.Status.propTypes),
+  taskStatusProps: PropTypes.shape(_.omit(Task.Status.propTypes, 'name', 'id')),
 }
 
 export default Resource
