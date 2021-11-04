@@ -9,10 +9,14 @@ const getEventFormMetadata = () =>
     getMetadataOptions(urls.metadata.tradeAgreement(), {
       filterDisabled: false,
     }),
+    getMetadataOptions(urls.metadata.locationType(), {
+      filterDisabled: false,
+    }),
   ])
-    .then(([eventTypeOptions, relatedTradeAgreements]) => ({
+    .then(([eventTypeOptions, relatedTradeAgreements, eventLocationTypes]) => ({
       eventTypeOptions,
       relatedTradeAgreements,
+      eventLocationTypes,
     }))
     .catch(handleError)
 

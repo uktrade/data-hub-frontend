@@ -30,7 +30,7 @@ const StyledFieldWrapper = styled(FieldWrapper)`
 `
 
 const EventForm = ({
-  metadata: { eventTypeOptions, relatedTradeAgreements },
+  metadata: { eventTypeOptions, relatedTradeAgreements, eventLocationTypes },
   isComplete,
 }) => {
   const breadcrumbs = [
@@ -161,6 +161,19 @@ const EventForm = ({
                                     label="Event end date"
                                     required="Enter a valid date"
                                   />
+                                  <StyledFieldWrapper
+                                    label="Event location type"
+                                    name=""
+                                    hint=""
+                                  >
+                                    <Typeahead
+                                      name="location_type"
+                                      inputId="location_type"
+                                      options={eventLocationTypes}
+                                      placeholder="-- Select event --"
+                                      aria-label="Select an event"
+                                    />
+                                  </StyledFieldWrapper>
                                 </>
                               )}
                             </MultiInstanceForm>
