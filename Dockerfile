@@ -12,6 +12,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
 WORKDIR /usr/src/app
 
 RUN npm install -g npm@8.1.2
+RUN chown -R $(whoami) /root/.cache
+RUN chown -R $(whoami) /usr/src/app
 
 # Install dev packages
 COPY package.json .
