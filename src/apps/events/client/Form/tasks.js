@@ -12,12 +12,23 @@ const getEventFormMetadata = () =>
     getMetadataOptions(urls.metadata.locationType(), {
       filterDisabled: false,
     }),
+    getMetadataOptions(urls.metadata.country(), {
+      filterDisabled: false,
+    }),
   ])
-    .then(([eventTypeOptions, relatedTradeAgreements, eventLocationTypes]) => ({
-      eventTypeOptions,
-      relatedTradeAgreements,
-      eventLocationTypes,
-    }))
+    .then(
+      ([
+        eventTypeOptions,
+        relatedTradeAgreements,
+        eventLocationTypes,
+        countries,
+      ]) => ({
+        eventTypeOptions,
+        relatedTradeAgreements,
+        eventLocationTypes,
+        countries,
+      })
+    )
     .catch(handleError)
 
 export { getEventFormMetadata }

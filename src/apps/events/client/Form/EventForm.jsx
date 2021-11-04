@@ -30,7 +30,12 @@ const StyledFieldWrapper = styled(FieldWrapper)`
 `
 
 const EventForm = ({
-  metadata: { eventTypeOptions, relatedTradeAgreements, eventLocationTypes },
+  metadata: {
+    eventTypeOptions,
+    relatedTradeAgreements,
+    eventLocationTypes,
+    countries,
+  },
   isComplete,
 }) => {
   const breadcrumbs = [
@@ -208,6 +213,19 @@ const EventForm = ({
                                     required="This field may not be null."
                                     data-test="group-field-address_postcode"
                                   />
+                                  <StyledFieldWrapper
+                                    label="Country"
+                                    name=""
+                                    hint=""
+                                  >
+                                    <Typeahead
+                                      name="address_country"
+                                      inputId="address_country"
+                                      options={countries}
+                                      placeholder="-- Select country --"
+                                      aria-label="Select a country"
+                                    />
+                                  </StyledFieldWrapper>
                                 </>
                               )}
                             </MultiInstanceForm>
