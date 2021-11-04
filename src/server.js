@@ -108,7 +108,9 @@ app.use('/images', express.static(path.join(config.buildDir, 'images')))
 app.use('/fonts', express.static(path.join(config.buildDir, 'fonts')))
 app.use(
   '/assets',
-  express.static(path.join(config.root, 'node_modules/govuk-frontend/assets'))
+  express.static(
+    path.join(config.root, 'node_modules/govuk-frontend/govuk/assets')
+  )
 )
 
 app.use(title())
