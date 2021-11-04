@@ -12,6 +12,7 @@ import {
   NewWindowLink,
   FieldRadios,
   FieldInput,
+  FieldDate,
   Typeahead,
   FieldAddAnother,
   MultiInstanceForm,
@@ -150,6 +151,16 @@ const EventForm = ({
                                       aria-label="Select an event type"
                                     />
                                   </StyledFieldWrapper>
+                                  <FieldDate
+                                    name="start_date"
+                                    label="Event start date"
+                                    required="Enter a valid date"
+                                  />
+                                  <FieldDate
+                                    name="end_date"
+                                    label="Event end date"
+                                    required="Enter a valid date"
+                                  />
                                 </>
                               )}
                             </MultiInstanceForm>
