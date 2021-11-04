@@ -1,7 +1,12 @@
 import { EVENTS__FORM_METADATA_LOADED } from '../../../../client/actions'
 
 const initialState = {
-  metadata: { eventTypeOptions: [] },
+  metadata: {
+    eventTypeOptions: [],
+    relatedTradeAgreements: [],
+    eventLocationTypes: [],
+    countries: [],
+  },
   isComplete: false,
 }
 

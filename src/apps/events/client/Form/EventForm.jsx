@@ -16,6 +16,7 @@ import {
   Typeahead,
   FieldAddAnother,
   MultiInstanceForm,
+  FieldTextarea,
 } from '../../../../client/components'
 import FieldWrapper from '../../../../client/components/Form/elements/FieldWrapper'
 import Task from '../../../../client/components/Task'
@@ -226,6 +227,11 @@ const EventForm = ({
                                       aria-label="Select a country"
                                     />
                                   </StyledFieldWrapper>
+                                  <FieldTextarea
+                                    type="text"
+                                    name="notes"
+                                    label="Notes (optional)"
+                                  />
                                 </>
                               )}
                             </MultiInstanceForm>
