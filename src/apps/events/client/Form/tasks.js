@@ -6,9 +6,13 @@ const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 const getEventFormMetadata = () =>
   Promise.all([
     getMetadataOptions(urls.metadata.eventType(), { filterDisabled: false }),
+    getMetadataOptions(urls.metadata.tradeAgreement(), {
+      filterDisabled: false,
+    }),
   ])
-    .then(([eventTypeOptions]) => ({
+    .then(([eventTypeOptions, relatedTradeAgreements]) => ({
       eventTypeOptions,
+      relatedTradeAgreements,
     }))
     .catch(handleError)
 

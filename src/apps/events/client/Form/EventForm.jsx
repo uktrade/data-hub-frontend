@@ -11,16 +11,16 @@ import {
   Main,
   NewWindowLink,
   FieldRadios,
-  FormStateful,
   FieldInput,
   Typeahead,
+  FieldAddAnother,
+  MultiInstanceForm,
 } from '../../../../client/components'
 import FieldWrapper from '../../../../client/components/Form/elements/FieldWrapper'
 import Task from '../../../../client/components/Task'
 import { ID, TASK_GET_EVENTS_FORM_METADATA, state2props } from './state'
 import { EVENTS__FORM_METADATA_LOADED } from '../../../../client/actions'
 
-// TODO: Move this somewhere else and share both
 const StyledFieldWrapper = styled(FieldWrapper)`
   label {
     font-weight: ${FONT_WEIGHTS.bold};
@@ -28,8 +28,10 @@ const StyledFieldWrapper = styled(FieldWrapper)`
   }
 `
 
-const EventForm = ({ metadata: { eventTypeOptions }, isComplete }) => {
-  // console.log(eventTypeOptions)
+const EventForm = ({
+  metadata: { eventTypeOptions, relatedTradeAgreements },
+  isComplete,
+}) => {
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -82,43 +84,75 @@ const EventForm = ({ metadata: { eventTypeOptions }, isComplete }) => {
                       {() => {
                         return (
                           isComplete && (
-                            <FormStateful
+                            <MultiInstanceForm
                               id="add-event-form"
                               showErrorSummary={true}
                             >
-                              <FieldRadios
-                                legend="Does the Event relate to a Trade Agreement?"
-                                name="has_related_trade_agreements"
-                                required="This field is required."
-                                options={[
-                                  { value: 'Yes', label: 'Yes' },
-                                  { value: 'No', label: 'No' },
-                                ]}
-                                inline={true}
-                              />
-                              <FieldInput
-                                label="Event name"
-                                name="name"
-                                type="text"
-                                required="This field may not be null."
-                                data-test="group-field-name"
-                              />
-
-                              <StyledFieldWrapper
-                                label="Type of event"
-                                name=""
-                                hint=""
-                              >
-                                <Typeahead
-                                  name="event_type"
-                                  inputId="event_type"
-                                  options={eventTypeOptions}
-                                  placeholder="-- Select event type --"
-                                  required="Select at least one event type"
-                                  aria-label="Select an event type"
-                                />
-                              </StyledFieldWrapper>
-                            </FormStateful>
+                              {({ values }) => (
+                                <>
+                                  {/* {console.log(values)} */}
+                                  <FieldRadios
+                                    legend="Does the Event relate to a Trade Agreement?"
+                                    name="has_related_trade_agreements"
+                                    required="This field is required."
+                                    options={[
+                                      { value: 'Yes', label: 'Yes' },
+                                      { value: 'No', label: 'No' },
+                                    ]}
+                                    inline={true}
+                                  />
+                                  {values.has_related_trade_agreements ===
+                                    'Yes' && (
+                                    <FieldAddAnother
+                                      name="related_trade_agreements"
+                                      label="Related named trade agreement(s)"
+                                      data-test-prefix="trade-agreement-field-"
+                                      required="Select at least one Trade Agreement"
+                                      item-name="trade agreement"
+                                    >
+                                      {({ value, onChange, error }) => (
+                                        <Typeahead
+                                          name="related_trade_agreements"
+                                          inputId="related_trade_agreements"
+                                          label=""
+                                          options={relatedTradeAgreements}
+                                          placeholder="-- Search trade agreements --"
+                                          required="Select at least one Trade Agreement"
+                                          aria-label="Select a trade agreement"
+                                          value={relatedTradeAgreements.find(
+                                            ({ value: option_value }) =>
+                                              option_value === value
+                                          )}
+                                          onChange={onChange}
+                                          error={error}
+                                        />
+                                      )}
+                                    </FieldAddAnother>
+                                  )}
+                                  <FieldInput
+                                    label="Event name"
+                                    name="name"
+                                    type="text"
+                                    required="This field may not be null."
+                                    data-test="group-field-name"
+                                  />
+                                  <StyledFieldWrapper
+                                    label="Type of event"
+                                    name=""
+                                    hint=""
+                                  >
+                                    <Typeahead
+                                      name="event_type"
+                                      inputId="event_type"
+                                      options={eventTypeOptions}
+                                      placeholder="-- Select event type --"
+                                      required="Select at least one event type"
+                                      aria-label="Select an event type"
+                                    />
+                                  </StyledFieldWrapper>
+                                </>
+                              )}
+                            </MultiInstanceForm>
                           )
                         )
                       }}
