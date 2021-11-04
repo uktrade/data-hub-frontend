@@ -11,6 +11,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
 
 WORKDIR /usr/src/app
 
+RUN npm install -g npm@8.1.2
+
 # Install dev packages
 COPY package.json .
 COPY package-lock.json .
