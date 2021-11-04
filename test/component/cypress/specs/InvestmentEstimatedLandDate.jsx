@@ -19,129 +19,173 @@ const pastDate = subtractDays(today, 10)
 const yesterday = subtractDays(today, 1)
 
 describe('InvestmentEstimatedLandDate', () => {
-  let wrapper
+  const Component = (props) => <InvestmentEstimatedLandDate {...props} />
 
   context('When the date is in the future', () => {
     beforeEach(() => {
-      wrapper = mount(
-        <InvestmentEstimatedLandDate estimatedLandDate={futureDate} />
-      )
+      mount(<Component estimatedLandDate={futureDate} />)
     })
 
     it('should format and display the date correctly', () => {
-      wrapper.should('have.text', 'Estimated land date')
-      wrapper.should('have.text', '100 days')
-      wrapper.should(
+      cy.get('[data-test="estimated-land-date-label"]').should(
+        'have.text',
+        'Estimated land date'
+      )
+      cy.get('[data-test="estimated-land-date-countdown"]').should(
+        'have.text',
+        '100 days'
+      )
+      cy.get('[data-test="estimated-land-date-date"]').should(
         'have.text',
         formatWithoutParsing(futureDate, DATE_DAY_LONG_FORMAT)
       )
     })
 
     it('should render with a green background', () => {
-      wrapper.should('have.backgroundColour', rgba(BUTTON_COLOUR, 0.3))
+      cy.get('[data-test="estimated-land-date"]').should(
+        'have.backgroundColour',
+        rgba(BUTTON_COLOUR, 0.3)
+      )
     })
   })
 
   context('When the date is today', () => {
     beforeEach(() => {
-      wrapper = mount(<InvestmentEstimatedLandDate estimatedLandDate={today} />)
+      mount(<Component estimatedLandDate={today} />)
     })
 
     it('should format and display the date correctly', () => {
-      wrapper.should('have.text', 'Estimated land date')
-      wrapper.should('have.text', '0 days')
-      wrapper.should(
+      cy.get('[data-test="estimated-land-date-label"]').should(
+        'have.text',
+        'Estimated land date'
+      )
+      cy.get('[data-test="estimated-land-date-countdown"]').should(
+        'have.text',
+        '0 days'
+      )
+      cy.get('[data-test="estimated-land-date-date"]').should(
         'have.text',
         formatWithoutParsing(today, DATE_DAY_LONG_FORMAT)
       )
     })
 
     it('should render with a red background', () => {
-      wrapper.should('have.backgroundColour', rgba(RED, 0.4))
+      cy.get('[data-test="estimated-land-date"]').should(
+        'have.backgroundColour',
+        rgba(RED, 0.4)
+      )
     })
   })
 
   context('When the date is tomorrow', () => {
     beforeEach(() => {
-      wrapper = mount(
-        <InvestmentEstimatedLandDate estimatedLandDate={tomorrow} />
-      )
+      mount(<Component estimatedLandDate={tomorrow} />)
     })
 
     it('should format and display the date correctly', () => {
-      wrapper.should('have.text', 'Estimated land date')
-      wrapper.should('have.text', '1 day')
-      wrapper.should(
+      cy.get('[data-test="estimated-land-date-label"]').should(
+        'have.text',
+        'Estimated land date'
+      )
+      cy.get('[data-test="estimated-land-date-countdown"]').should(
+        'have.text',
+        '1 day'
+      )
+      cy.get('[data-test="estimated-land-date-date"]').should(
         'have.text',
         formatWithoutParsing(tomorrow, DATE_DAY_LONG_FORMAT)
       )
     })
 
     it('should render with a red background', () => {
-      wrapper.should('have.backgroundColour', rgba(RED, 0.4))
+      cy.get('[data-test="estimated-land-date"]').should(
+        'have.backgroundColour',
+        rgba(RED, 0.4)
+      )
     })
   })
 
   context('When the date is two months in the future', () => {
     beforeEach(() => {
-      wrapper = mount(
-        <InvestmentEstimatedLandDate estimatedLandDate={twoMonthsAhead} />
-      )
+      mount(<Component estimatedLandDate={twoMonthsAhead} />)
     })
 
     it('should format and display the date correctly', () => {
-      wrapper.should('have.text', 'Estimated land date')
-      wrapper.should('have.text', '1 day')
-      wrapper.should(
+      cy.get('[data-test="estimated-land-date-label"]').should(
+        'have.text',
+        'Estimated land date'
+      )
+      cy.get('[data-test="estimated-land-date-countdown"]').should(
+        'have.text',
+        '60 days'
+      )
+      cy.get('[data-test="estimated-land-date-date"]').should(
         'have.text',
         formatWithoutParsing(twoMonthsAhead, DATE_DAY_LONG_FORMAT)
       )
     })
 
     it('should render with a yellow background', () => {
-      wrapper.should('have.backgroundColour', rgba(YELLOW, 0.5))
+      cy.get('[data-test="estimated-land-date"]').should(
+        'have.backgroundColour',
+        rgba(YELLOW, 0.5)
+      )
     })
   })
 
   context('When the date is in the past', () => {
     beforeEach(() => {
-      wrapper = mount(
-        <InvestmentEstimatedLandDate estimatedLandDate={pastDate} />
-      )
+      mount(<Component estimatedLandDate={pastDate} />)
     })
 
     it('should format and display the date correctly', () => {
-      wrapper.should('have.text', 'Estimated land date')
-      wrapper.should('have.text', '-10 days')
-      wrapper.should(
+      cy.get('[data-test="estimated-land-date-label"]').should(
+        'have.text',
+        'Estimated land date'
+      )
+      cy.get('[data-test="estimated-land-date-countdown"]').should(
+        'have.text',
+        '-10 days'
+      )
+      cy.get('[data-test="estimated-land-date-date"]').should(
         'have.text',
         formatWithoutParsing(pastDate, DATE_DAY_LONG_FORMAT)
       )
     })
 
     it('should render with a grey background', () => {
-      wrapper.should('have.backgroundColour', rgba(GREY_2, 0.5))
+      cy.get('[data-test="estimated-land-date"]').should(
+        'have.backgroundColour',
+        rgba(GREY_2, 0.5)
+      )
     })
   })
 
   context('When the date is yesterday', () => {
     beforeEach(() => {
-      wrapper = mount(
-        <InvestmentEstimatedLandDate estimatedLandDate={yesterday} />
-      )
+      mount(<Component estimatedLandDate={yesterday} />)
     })
 
     it('should format and display the date correctly', () => {
-      wrapper.should('have.text', 'Estimated land date')
-      wrapper.should('have.text', '-1 day')
-      wrapper.should(
+      cy.get('[data-test="estimated-land-date-label"]').should(
+        'have.text',
+        'Estimated land date'
+      )
+      cy.get('[data-test="estimated-land-date-countdown"]').should(
+        'have.text',
+        '-1 day'
+      )
+      cy.get('[data-test="estimated-land-date-date"]').should(
         'have.text',
         formatWithoutParsing(yesterday, DATE_DAY_LONG_FORMAT)
       )
     })
 
     it('should render with a grey background', () => {
-      wrapper.should('have.backgroundColour', rgba(GREY_2, 0.5))
+      cy.get('[data-test="estimated-land-date"]').should(
+        'have.backgroundColour',
+        rgba(GREY_2, 0.5)
+      )
     })
   })
 })
