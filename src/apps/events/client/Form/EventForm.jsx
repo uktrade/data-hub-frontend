@@ -36,6 +36,7 @@ const EventForm = ({
     relatedTradeAgreements,
     eventLocationTypes,
     countries,
+    teams,
   },
   isComplete,
 }) => {
@@ -230,8 +231,22 @@ const EventForm = ({
                                   <FieldTextarea
                                     type="text"
                                     name="notes"
-                                    label="Notes (optional)"
+                                    label="Event Notes (optional)"
                                   />
+                                  <StyledFieldWrapper
+                                    label="Team hosting the event"
+                                    name=""
+                                    hint=""
+                                  >
+                                    <Typeahead
+                                      name="teams"
+                                      inputId="teams"
+                                      options={teams}
+                                      required="Select at least one team hosting the event"
+                                      placeholder="-- Select team --"
+                                      aria-label="Select an team"
+                                    />
+                                  </StyledFieldWrapper>
                                 </>
                               )}
                             </MultiInstanceForm>

@@ -6,6 +6,7 @@ const initialState = {
     relatedTradeAgreements: [],
     eventLocationTypes: [],
     countries: [],
+    teams: [],
   },
   isComplete: false,
 }
