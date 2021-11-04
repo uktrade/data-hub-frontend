@@ -37,6 +37,7 @@ const EventForm = ({
     eventLocationTypes,
     countries,
     teams,
+    services,
   },
   isComplete,
 }) => {
@@ -245,6 +246,19 @@ const EventForm = ({
                                       required="Select at least one team hosting the event"
                                       placeholder="-- Select team --"
                                       aria-label="Select an team"
+                                    />
+                                  </StyledFieldWrapper>
+                                  <StyledFieldWrapper
+                                    label="Service (optional)"
+                                    name=""
+                                    hint=""
+                                  >
+                                    <Typeahead
+                                      name="service"
+                                      inputId="service"
+                                      options={services}
+                                      placeholder="-- Select service --"
+                                      aria-label="Select a service"
                                     />
                                   </StyledFieldWrapper>
                                 </>
