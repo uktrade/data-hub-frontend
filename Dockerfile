@@ -9,17 +9,20 @@ ENV NODE_ENV               development
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
   && echo "Timezone: $(date +%z)"
 
-WORKDIR /usr/src/app
-
+RUN mkdir -p /usr/src/app
+RUN chown -R node: /usr/src/app
 RUN npm install -g npm@8.1.2
-RUN chown -R $(whoami) /root/.cache
-RUN chown -R $(whoami) /usr/src/app
+USER node
+
+WORKDIR /usr/src/app
+RUN npm -v
 
 # Install dev packages
-COPY package.json .
-COPY package-lock.json .
+COPY --chown=node:node package.json .
+COPY --chown=node:node package-lock.json .
+
 RUN npm install
 
-COPY . .
+COPY --chown=node:node . .
 
 CMD npm run develop

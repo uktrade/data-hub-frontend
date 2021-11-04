@@ -3,7 +3,7 @@ $images-dir: "/images/";
 $govuk-canvas-background-colour: #f3f2f1;
 $govuk-font-family: Arial, sans-serif;
 @import "../../node_modules/@uktrade/datahub-header/component/header.css";;
-@import "../../node_modules/govuk-frontend/govuk/all";
+@import "../../node_modules/govuk-frontend/govuk/all.scss";
 
 $toolkit-font-stack: $govuk-font-family;
 @import "_deprecated/trade-elements";
