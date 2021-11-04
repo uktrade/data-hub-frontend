@@ -162,7 +162,7 @@ const EventForm = ({
                                     required="Enter a valid date"
                                   />
                                   <StyledFieldWrapper
-                                    label="Event location type"
+                                    label="Event location type (optional)"
                                     name=""
                                     hint=""
                                   >
@@ -174,6 +174,40 @@ const EventForm = ({
                                       aria-label="Select an event"
                                     />
                                   </StyledFieldWrapper>
+                                  {/* TODO: Refactor Address stuff into an Address Component */}
+                                  {/* CHECK: Why required is not labeling as expected */}
+                                  <FieldInput
+                                    label="Business and street"
+                                    name="address_1"
+                                    type="text"
+                                    required="This field may not be null."
+                                    data-test="group-field-address-1"
+                                  />
+                                  <FieldInput
+                                    name="address_2"
+                                    type="text"
+                                    data-test="group-field-address-2"
+                                  />
+                                  <FieldInput
+                                    label="Town or city"
+                                    name="address_town"
+                                    type="text"
+                                    required="This field may not be null."
+                                    data-test="group-field-address_town"
+                                  />
+                                  <FieldInput
+                                    label="County (optional)"
+                                    name="address_county"
+                                    type="text"
+                                    data-test="group-field-address_county"
+                                  />
+                                  <FieldInput
+                                    label="Postcode"
+                                    name="address_postcode"
+                                    type="text"
+                                    required="This field may not be null."
+                                    data-test="group-field-address_postcode"
+                                  />
                                 </>
                               )}
                             </MultiInstanceForm>
