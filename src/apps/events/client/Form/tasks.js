@@ -1,5 +1,6 @@
 import urls from '../../../../lib/urls'
 import { getMetadataOptions } from '../../../../client/metadata'
+import { transformFromEventform } from './transformers'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
@@ -46,4 +47,14 @@ const getEventFormMetadata = () =>
     )
     .catch(handleError)
 
-export { getEventFormMetadata }
+const saveEvent = ({ values }) => {
+  // console.log(values)
+  const commonPayload = transformFromEventform(values)
+  // console.log(commonPayload)
+  return Promise.resolve('success')
+  if (commonPayload) {
+    // Save this to the backend
+  }
+}
+
+export { getEventFormMetadata, saveEvent }

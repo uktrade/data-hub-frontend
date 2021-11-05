@@ -2,6 +2,7 @@ import React from 'react'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { connect } from 'react-redux'
+import { Button, Link } from 'govuk-react'
 
 import urls from '../../../../lib/urls'
 import LocalHeader from '../../../../client/components/LocalHeader/LocalHeader.jsx'
@@ -16,9 +17,15 @@ import {
   Main,
   MultiInstanceForm,
   NewWindowLink,
+  FormActions,
 } from '../../../../client/components'
 import Task from '../../../../client/components/Task'
-import { ID, TASK_GET_EVENTS_FORM_METADATA, state2props } from './state'
+import {
+  ID,
+  TASK_GET_EVENTS_FORM_METADATA,
+  TASK_SAVE_EVENT,
+  state2props,
+} from './state'
 import { EVENTS__FORM_METADATA_LOADED } from '../../../../client/actions'
 
 const EventForm = ({
@@ -50,11 +57,8 @@ const EventForm = ({
   return (
     <>
       <Task>
-        {() => {
-          // const eventsFormMetadataTask = getTask(
-          //   TASK_GET_EVENTS_FORM_METADATA,
-          //   ID
-          // )
+        {(getTask) => {
+          const saveEventFormTask = getTask(TASK_SAVE_EVENT, ID)
           return (
             <>
               <LocalHeader breadcrumbs={breadcrumbs} heading="Add event" />
@@ -88,6 +92,15 @@ const EventForm = ({
                             <MultiInstanceForm
                               id="add-event-form"
                               showErrorSummary={true}
+                              submissionError={saveEventFormTask.errorMessage}
+                              onSubmit={(values) => {
+                                saveEventFormTask.start({
+                                  payload: {
+                                    values,
+                                  },
+                                  // onSuccessDispatch: ADD_EVENTS_FORM__SUBMIT,
+                                })
+                              }}
                             >
                               {({ values }) => (
                                 <>
@@ -95,7 +108,7 @@ const EventForm = ({
                                   <FieldRadios
                                     legend="Does the Event relate to a Trade Agreement?"
                                     name="has_related_trade_agreements"
-                                    required="This field is required."
+                                    required="Answer if the Event is related to a Trade Agreement"
                                     options={[
                                       { value: 'Yes', label: 'Yes' },
                                       { value: 'No', label: 'No' },
@@ -133,7 +146,7 @@ const EventForm = ({
                                     label="Event name"
                                     name="name"
                                     type="text"
-                                    required="This field may not be null."
+                                    required="Event name may not be null."
                                     data-test="group-field-name"
                                   />
                                   <FieldTypeahead
@@ -148,12 +161,12 @@ const EventForm = ({
                                   <FieldDate
                                     name="start_date"
                                     label="Event start date"
-                                    required="Enter a valid date"
+                                    required="Enter a valid start date"
                                   />
                                   <FieldDate
                                     name="end_date"
                                     label="Event end date"
-                                    required="Enter a valid date"
+                                    required="Enter a valid end date"
                                   />
                                   <FieldTypeahead
                                     name="location_type"
@@ -169,7 +182,7 @@ const EventForm = ({
                                     label="Business and street"
                                     name="address_1"
                                     type="text"
-                                    required="This field may not be null."
+                                    required="Business and street may not be null."
                                     data-test="group-field-address-1"
                                   />
                                   <FieldInput
@@ -181,7 +194,7 @@ const EventForm = ({
                                     label="Town or city"
                                     name="address_town"
                                     type="text"
-                                    required="This field may not be null."
+                                    required="Town or city may not be null."
                                     data-test="group-field-address_town"
                                   />
                                   <FieldInput
@@ -194,7 +207,7 @@ const EventForm = ({
                                     label="Postcode"
                                     name="address_postcode"
                                     type="text"
-                                    required="This field may not be null."
+                                    required="Postcode may not be null."
                                     data-test="group-field-address_postcode"
                                   />
                                   <FieldTypeahead
@@ -252,7 +265,6 @@ const EventForm = ({
                                         <FieldTypeahead
                                           name="teams"
                                           inputId="teams"
-                                          label="Teams"
                                           options={teams}
                                           placeholder="-- Select team --"
                                           required="Select at least one team"
@@ -290,6 +302,11 @@ const EventForm = ({
                                       />
                                     )}
                                   </FieldAddAnother>
+                                  <FormActions>
+                                    <Button>Add event</Button>
+                                    {/* TDODO: Cancel URL */}
+                                    <Link href="/">Cancel</Link>
+                                  </FormActions>
                                 </>
                               )}
                             </MultiInstanceForm>
