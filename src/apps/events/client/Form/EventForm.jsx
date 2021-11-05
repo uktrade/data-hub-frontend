@@ -8,15 +8,16 @@ import { connect } from 'react-redux'
 import urls from '../../../../lib/urls'
 import LocalHeader from '../../../../client/components/LocalHeader/LocalHeader.jsx'
 import {
-  Main,
-  NewWindowLink,
+  AdviserTypeAhead,
   FieldRadios,
   FieldInput,
   FieldDate,
-  Typeahead,
   FieldAddAnother,
-  MultiInstanceForm,
   FieldTextarea,
+  Main,
+  MultiInstanceForm,
+  NewWindowLink,
+  Typeahead,
 } from '../../../../client/components'
 import FieldWrapper from '../../../../client/components/Form/elements/FieldWrapper'
 import Task from '../../../../client/components/Task'
@@ -29,7 +30,6 @@ const StyledFieldWrapper = styled(FieldWrapper)`
     line-height: ${LINE_HEIGHT.SIZE_16};
   }
 `
-
 const EventForm = ({
   metadata: {
     eventTypeOptions,
@@ -261,6 +261,11 @@ const EventForm = ({
                                       aria-label="Select a service"
                                     />
                                   </StyledFieldWrapper>
+                                  <AdviserTypeAhead
+                                    name="organiser"
+                                    label="Organiser"
+                                    required="Select at least one organiser"
+                                  />
                                 </>
                               )}
                             </MultiInstanceForm>
