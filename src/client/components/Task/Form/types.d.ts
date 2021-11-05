@@ -41,6 +41,7 @@ export type Props = {
   actionLinks?: LinkProps[],
   children?: Children,
   submitButtonLabel?: string,
+  initialStepIndex?: number,
 }
 
 export type TaskForm = (props: Props) => any
