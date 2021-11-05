@@ -1,8 +1,6 @@
 import React from 'react'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
-import styled from 'styled-components'
-import { FONT_WEIGHTS, LINE_HEIGHT } from '@govuk-react/constants'
 import { connect } from 'react-redux'
 
 import urls from '../../../../lib/urls'
@@ -14,22 +12,16 @@ import {
   FieldDate,
   FieldAddAnother,
   FieldTextarea,
+  FieldTypeahead,
   Main,
   MultiInstanceForm,
   NewWindowLink,
   Typeahead,
 } from '../../../../client/components'
-import FieldWrapper from '../../../../client/components/Form/elements/FieldWrapper'
 import Task from '../../../../client/components/Task'
 import { ID, TASK_GET_EVENTS_FORM_METADATA, state2props } from './state'
 import { EVENTS__FORM_METADATA_LOADED } from '../../../../client/actions'
 
-const StyledFieldWrapper = styled(FieldWrapper)`
-  label {
-    font-weight: ${FONT_WEIGHTS.bold};
-    line-height: ${LINE_HEIGHT.SIZE_16};
-  }
-`
 const EventForm = ({
   metadata: {
     eventTypeOptions,
@@ -145,20 +137,15 @@ const EventForm = ({
                                     required="This field may not be null."
                                     data-test="group-field-name"
                                   />
-                                  <StyledFieldWrapper
+                                  <FieldTypeahead
+                                    name="event_type"
+                                    inputId="event_type"
                                     label="Type of event"
-                                    name=""
-                                    hint=""
-                                  >
-                                    <Typeahead
-                                      name="event_type"
-                                      inputId="event_type"
-                                      options={eventTypeOptions}
-                                      placeholder="-- Select event type --"
-                                      required="Select at least one event type"
-                                      aria-label="Select an event type"
-                                    />
-                                  </StyledFieldWrapper>
+                                    options={eventTypeOptions}
+                                    placeholder="-- Select event type --"
+                                    required="Select at least one event type"
+                                    aria-label="Select an event type"
+                                  />
                                   <FieldDate
                                     name="start_date"
                                     label="Event start date"
@@ -169,19 +156,14 @@ const EventForm = ({
                                     label="Event end date"
                                     required="Enter a valid date"
                                   />
-                                  <StyledFieldWrapper
+                                  <FieldTypeahead
+                                    name="location_type"
                                     label="Event location type (optional)"
-                                    name=""
-                                    hint=""
-                                  >
-                                    <Typeahead
-                                      name="location_type"
-                                      inputId="location_type"
-                                      options={eventLocationTypes}
-                                      placeholder="-- Select event --"
-                                      aria-label="Select an event"
-                                    />
-                                  </StyledFieldWrapper>
+                                    inputId="location_type"
+                                    options={eventLocationTypes}
+                                    placeholder="-- Select event --"
+                                    aria-label="Select an event"
+                                  />
                                   {/* TODO: Refactor Address stuff into an Address Component */}
                                   {/* CHECK: Why required is not labeling as expected */}
                                   <FieldInput
@@ -216,51 +198,36 @@ const EventForm = ({
                                     required="This field may not be null."
                                     data-test="group-field-address_postcode"
                                   />
-                                  <StyledFieldWrapper
+                                  <FieldTypeahead
+                                    name="address_country"
                                     label="Country"
-                                    name=""
-                                    hint=""
-                                  >
-                                    <Typeahead
-                                      name="address_country"
-                                      inputId="address_country"
-                                      options={countries}
-                                      placeholder="-- Select country --"
-                                      aria-label="Select a country"
-                                    />
-                                  </StyledFieldWrapper>
+                                    inputId="address_country"
+                                    options={countries}
+                                    placeholder="-- Select country --"
+                                    aria-label="Select a country"
+                                  />
                                   <FieldTextarea
                                     type="text"
                                     name="notes"
                                     label="Event Notes (optional)"
                                   />
-                                  <StyledFieldWrapper
+                                  <FieldTypeahead
+                                    name="teams"
                                     label="Team hosting the event"
-                                    name=""
-                                    hint=""
-                                  >
-                                    <Typeahead
-                                      name="teams"
-                                      inputId="teams"
-                                      options={teams}
-                                      required="Select at least one team hosting the event"
-                                      placeholder="-- Select team --"
-                                      aria-label="Select an team"
-                                    />
-                                  </StyledFieldWrapper>
-                                  <StyledFieldWrapper
+                                    inputId="teams"
+                                    options={teams}
+                                    required="Select at least one team hosting the event"
+                                    placeholder="-- Select team --"
+                                    aria-label="Select an team"
+                                  />
+                                  <FieldTypeahead
+                                    name="service"
                                     label="Service (optional)"
-                                    name=""
-                                    hint=""
-                                  >
-                                    <Typeahead
-                                      name="service"
-                                      inputId="service"
-                                      options={services}
-                                      placeholder="-- Select service --"
-                                      aria-label="Select a service"
-                                    />
-                                  </StyledFieldWrapper>
+                                    inputId="service"
+                                    options={services}
+                                    placeholder="-- Select service --"
+                                    aria-label="Select a service"
+                                  />
                                   <AdviserTypeAhead
                                     name="organiser"
                                     label="Organiser"
