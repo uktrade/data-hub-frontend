@@ -7,6 +7,7 @@ const initialState = {
     eventLocationTypes: [],
     countries: [],
     teams: [],
+    programmes: [],
   },
   isComplete: false,
 }

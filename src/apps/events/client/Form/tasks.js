@@ -21,6 +21,9 @@ const getEventFormMetadata = () =>
     getMetadataOptions(urls.metadata.service(), {
       filterDisabled: false,
     }),
+    getMetadataOptions(urls.metadata.programme(), {
+      filterDisabled: false,
+    }),
   ])
     .then(
       ([
@@ -30,6 +33,7 @@ const getEventFormMetadata = () =>
         countries,
         teams,
         services,
+        programmes,
       ]) => ({
         eventTypeOptions,
         relatedTradeAgreements,
@@ -37,6 +41,7 @@ const getEventFormMetadata = () =>
         countries,
         teams,
         services,
+        programmes,
       })
     )
     .catch(handleError)

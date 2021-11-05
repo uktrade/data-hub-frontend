@@ -16,7 +16,6 @@ import {
   Main,
   MultiInstanceForm,
   NewWindowLink,
-  Typeahead,
 } from '../../../../client/components'
 import Task from '../../../../client/components/Task'
 import { ID, TASK_GET_EVENTS_FORM_METADATA, state2props } from './state'
@@ -30,6 +29,7 @@ const EventForm = ({
     countries,
     teams,
     services,
+    programmes,
   },
   isComplete,
 }) => {
@@ -112,10 +112,9 @@ const EventForm = ({
                                       item-name="trade agreement"
                                     >
                                       {({ value, onChange, error }) => (
-                                        <Typeahead
+                                        <FieldTypeahead
                                           name="related_trade_agreements"
                                           inputId="related_trade_agreements"
-                                          label=""
                                           options={relatedTradeAgreements}
                                           placeholder="-- Search trade agreements --"
                                           required="Select at least one Trade Agreement"
@@ -246,18 +245,18 @@ const EventForm = ({
                                     <FieldAddAnother
                                       name="teams"
                                       label="Teams"
-                                      required="Select at least one Team"
+                                      required="Select at least one team"
                                       item-name="team"
                                     >
                                       {({ value, onChange, error }) => (
-                                        <Typeahead
+                                        <FieldTypeahead
                                           name="teams"
                                           inputId="teams"
                                           label="Teams"
                                           options={teams}
-                                          placeholder="-- Select a Team --"
-                                          required="Select at least one Team"
-                                          aria-label="Select at least one Team"
+                                          placeholder="-- Select team --"
+                                          required="Select at least one team"
+                                          aria-label="Select at least one team"
                                           value={teams.find(
                                             ({ value: option_value }) =>
                                               option_value === value
@@ -268,6 +267,29 @@ const EventForm = ({
                                       )}
                                     </FieldAddAnother>
                                   )}
+                                  <FieldAddAnother
+                                    name="related_programmes"
+                                    label="Related programmes"
+                                    required="Select at least one programme"
+                                    item-name="program"
+                                  >
+                                    {({ value, onChange, error }) => (
+                                      <FieldTypeahead
+                                        name="related_programmes"
+                                        inputId="related_programmes"
+                                        options={programmes}
+                                        placeholder="-- Select programme --"
+                                        required="Select at least one programme"
+                                        aria-label="Select at least one programme"
+                                        value={programmes.find(
+                                          ({ value: option_value }) =>
+                                            option_value === value
+                                        )}
+                                        onChange={onChange}
+                                        error={error}
+                                      />
+                                    )}
+                                  </FieldAddAnother>
                                 </>
                               )}
                             </MultiInstanceForm>
