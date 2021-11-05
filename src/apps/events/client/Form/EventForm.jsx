@@ -212,9 +212,9 @@ const EventForm = ({
                                     label="Event Notes (optional)"
                                   />
                                   <FieldTypeahead
-                                    name="teams"
+                                    name="lead_team"
                                     label="Team hosting the event"
-                                    inputId="teams"
+                                    inputId="lead_teams"
                                     options={teams}
                                     required="Select at least one team hosting the event"
                                     placeholder="-- Select team --"
@@ -233,6 +233,41 @@ const EventForm = ({
                                     label="Organiser"
                                     required="Select at least one organiser"
                                   />
+                                  <FieldRadios
+                                    legend="Is this a shared event? (optional)?"
+                                    name="event_shared"
+                                    options={[
+                                      { value: 'Yes', label: 'Yes' },
+                                      { value: 'No', label: 'No' },
+                                    ]}
+                                    inline={true}
+                                  />
+                                  {values.event_shared === 'Yes' && (
+                                    <FieldAddAnother
+                                      name="teams"
+                                      label="Teams"
+                                      required="Select at least one Team"
+                                      item-name="team"
+                                    >
+                                      {({ value, onChange, error }) => (
+                                        <Typeahead
+                                          name="teams"
+                                          inputId="teams"
+                                          label="Teams"
+                                          options={teams}
+                                          placeholder="-- Select a Team --"
+                                          required="Select at least one Team"
+                                          aria-label="Select at least one Team"
+                                          value={teams.find(
+                                            ({ value: option_value }) =>
+                                              option_value === value
+                                          )}
+                                          onChange={onChange}
+                                          error={error}
+                                        />
+                                      )}
+                                    </FieldAddAnother>
+                                  )}
                                 </>
                               )}
                             </MultiInstanceForm>
