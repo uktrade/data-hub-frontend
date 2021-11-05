@@ -52,10 +52,11 @@ const _TaskForm = ({
   values = {},
   touched = {},
   steps = [],
+  initialStepIndex = 0,
   ...props
 }) => {
   useEffect(() => {
-    onLoad(initialValues)
+    onLoad(initialValues, initialStepIndex)
   }, [])
 
   // TODO: Clean up this mess
@@ -215,7 +216,10 @@ const _TaskForm = ({
                               dependencyList={[initialValues]}
                               effect={() =>
                                 initialValues &&
-                                onLoad(transformInitialValues(initialValues))
+                                onLoad(
+                                  transformInitialValues(initialValues),
+                                  initialStepIndex
+                                )
                               }
                             />
                             <Effect
@@ -288,10 +292,11 @@ const _TaskForm = ({
 
 // TODO: Clean up this mess
 const dispatchToProps = (dispatch) => ({
-  onLoad: (initialValues) =>
+  onLoad: (initialValues, initialStepIndex) =>
     dispatch({
       type: 'TASK_FORM__LOADED',
       initialValues,
+      initialStepIndex,
     }),
   resetResolved: () =>
     dispatch({
@@ -412,6 +417,10 @@ const dispatchToProps = (dispatch) => ({
  * is not documented yet. The form optionally accepts a function as a child,
  * which will be passed the whole context provided by the form as it's only
  * argument and should return React vdom containing form fields.
+ * @param {Props['initialStepIndex']} [props.initialStepIndex] - An optional integer
+ * representing the index of the step which the user will land on when the form
+ * is rendered, if the form has multiple steps. This is then set as the currentStep
+ * property in the form's state.
  * */
 const TaskForm = multiInstance({
   name: 'TaskForm',
@@ -437,6 +446,7 @@ TaskForm.propTypes = {
       href: PropTypes.string.isRequired,
     })
   ),
+  initialStepIndex: PropTypes.number,
 }
 
 export default TaskForm
