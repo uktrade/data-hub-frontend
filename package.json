@@ -64,7 +64,7 @@
     "node": "14.17.0"
   },
   "dependencies": {
-    "@babel/core": "^7.15.8",
+    "@babel/core": "^7.16.0",
     "@babel/helper-call-delegate": "^7.12.13",
     "@babel/plugin-proposal-optional-chaining": "^7.14.5",
     "@babel/preset-react": "^7.14.5",
