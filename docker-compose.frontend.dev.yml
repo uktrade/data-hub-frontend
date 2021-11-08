@@ -17,3 +17,7 @@ services:
       MOCK_SSO_USERNAME: test@gov.uk
       MOCK_SSO_VALIDATE_TOKEN: "true"
 
+networks:
+  default:
+    external:
+      name: data-infrastructure-shared-network
