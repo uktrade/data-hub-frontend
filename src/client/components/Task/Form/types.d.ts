@@ -37,6 +37,7 @@ export type Props = {
   transformPayload?: (values: Values) => any,
   actionLinks?: LinkProps[],
   children?: Children,
+  submitButtonLabel?: string,
 }
 
 export type TaskForm = (props: Props) => any
