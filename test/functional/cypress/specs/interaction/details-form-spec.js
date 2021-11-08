@@ -350,6 +350,12 @@ function assertRequestBody(expectedBody, callback) {
   })
 }
 
+const selectInteractionType = (theme, kind) => {
+  cy.contains('label', theme).click()
+  kind && cy.contains('label', kind).click()
+  cy.contains('button', 'Continue').click()
+}
+
 const company = fixtures.company.venusLtd
 
 describe('Interaction theme', () => {
@@ -1013,18 +1019,11 @@ describe('Editing an interaction from an interactions list', () => {
 })
 
 describe('Filtering services based on theme & kind', () => {
-  const openFormForNewInteraction = (theme, kind) =>
-    cy.visit(
-      urls.companies.interactions.createType(
-        fixtures.company.dnbCorp,
-        theme,
-        kind
-      )
-    )
-
+  beforeEach(() => {
+    cy.visit(urls.companies.interactions.create(fixtures.company.dnbCorp))
+  })
   it('should show filtered services for Export => Interaction', () => {
-    openFormForNewInteraction(THEMES.EXPORT, KINDS.INTERACTION)
-
+    selectInteractionType('Export', 'A standard interaction')
     cy.get('#field-service').should(
       'have.text',
       [
@@ -1040,8 +1039,7 @@ describe('Filtering services based on theme & kind', () => {
   })
 
   it('should show filtered services for Export => Service delivery', () => {
-    openFormForNewInteraction(THEMES.EXPORT, KINDS.SERVICE_DELIVERY)
-
+    selectInteractionType('Export', 'A service that you have provided')
     cy.get('#field-service').should(
       'have.text',
       [
@@ -1055,8 +1053,7 @@ describe('Filtering services based on theme & kind', () => {
   })
 
   it('should show filtered services for Investment', () => {
-    openFormForNewInteraction(THEMES.INVESTMENT, KINDS.INTERACTION)
-
+    selectInteractionType('Investment')
     cy.get('#field-service').should(
       'have.text',
       [
@@ -1071,7 +1068,7 @@ describe('Filtering services based on theme & kind', () => {
   })
 
   it('should show filtered services for Trade Agreement', () => {
-    openFormForNewInteraction(THEMES.TRADE_AGREEMENT, KINDS.INTERACTION)
+    selectInteractionType('Trade agreement')
     cy.get('#field-service').should(
       'have.text',
       [
@@ -1088,8 +1085,7 @@ describe('Filtering services based on theme & kind', () => {
   })
 
   it('should show filtered services for Other => Interaction', () => {
-    openFormForNewInteraction(THEMES.OTHER, KINDS.INTERACTION)
-
+    selectInteractionType('Other', 'A standard interaction')
     cy.get('#field-service').should(
       'have.text',
       [
@@ -1104,7 +1100,7 @@ describe('Filtering services based on theme & kind', () => {
   })
 
   it('should show filtered services for Other => Service delivery', () => {
-    openFormForNewInteraction(THEMES.OTHER, KINDS.SERVICE_DELIVERY)
+    selectInteractionType('Other', 'A service that you have provided')
 
     cy.get('#field-service').should(
       'have.text',
