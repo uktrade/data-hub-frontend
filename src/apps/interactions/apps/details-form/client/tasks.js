@@ -213,6 +213,11 @@ export async function getInitialFormValues({
   } else {
     // If creating an interaction
     const date = new Date()
+    const getInvestmentValues = (investmentId) =>
+      investmentId && {
+        kind: KINDS.INTERACTION,
+        theme: THEMES.INVESTMENT,
+      }
     return {
       companies: [companyId],
       investment_project: investmentId,
@@ -226,6 +231,7 @@ export async function getInitialFormValues({
           ? [transformObjectToOption(referral.contact)]
           : [],
       dit_participants: [transformObjectToOption(user)],
+      ...getInvestmentValues(investmentId),
     }
   }
 }
