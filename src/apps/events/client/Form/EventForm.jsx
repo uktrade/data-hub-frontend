@@ -37,6 +37,7 @@ const EventForm = ({
     teams,
     services,
     programmes,
+    ukRegions,
   },
   isComplete,
 }) => {
@@ -218,6 +219,14 @@ const EventForm = ({
                                     placeholder="-- Select country --"
                                     aria-label="Select a country"
                                   />
+                                  <FieldTypeahead
+                                    name="uk_region"
+                                    label="UK Region"
+                                    inputId="uk_region"
+                                    options={ukRegions}
+                                    placeholder="-- Select region --"
+                                    aria-label="Select a region"
+                                  />
                                   <FieldTextarea
                                     type="text"
                                     name="notes"
@@ -234,8 +243,9 @@ const EventForm = ({
                                   />
                                   <FieldTypeahead
                                     name="service"
-                                    label="Service (optional)"
+                                    label="Service"
                                     inputId="service"
+                                    required="Select at least one service"
                                     options={services}
                                     placeholder="-- Select service --"
                                     aria-label="Select a service"
