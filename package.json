@@ -64,7 +64,7 @@
     "node": "14.17.0"
   },
   "dependencies": {
-    "@babel/core": "^7.15.8",
+    "@babel/core": "^7.16.0",
     "@babel/helper-call-delegate": "^7.12.13",
     "@babel/plugin-proposal-optional-chaining": "^7.14.5",
     "@babel/preset-react": "^7.14.5",
@@ -143,7 +143,7 @@
     "react-markdown": "^7.1.0",
     "react-redux": "^7.2.6",
     "react-router-dom": "^5.3.0",
-    "react-select": "^5.1.0",
+    "react-select": "^5.2.1",
     "react-string-replace": "^0.4.4",
     "react-use": "^17.3.1",
     "redis": "3.1.2",
@@ -222,7 +222,7 @@
     "reqres": "^3.0.1",
     "rewire": "^5.0.0",
     "sass-lint": "^1.12.1",
-    "sinon": "^11.1.2",
+    "sinon": "^12.0.1",
     "sinon-chai": "^3.7.0",
     "storybook-readme": "^5.0.9",
     "supertest": "^6.1.6",
