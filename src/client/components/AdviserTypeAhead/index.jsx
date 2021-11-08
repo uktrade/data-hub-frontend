@@ -11,13 +11,14 @@ const AdviserTypeAhead = ({
   required,
   isMulti,
   onlyShowActiveAdvisers = true,
+  placeholder = '-- Select adviser --',
   ...props
 }) => {
   return (
     <FieldTypeahead
       name={name}
       label={label}
-      placeholder="-- Select adviser --"
+      placeholder={placeholder}
       noOptionsMessage={() => 'Type to search for advisers'}
       required={required}
       loadOptions={throttle(

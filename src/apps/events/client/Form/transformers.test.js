@@ -58,7 +58,7 @@ describe('transformers', () => {
         event_shared: false,
         // Single result
         related_programmes: ['e2a8be20-7a54-e311-a33a-e4115bead28a'],
-        teams: [],
+        teams: ['cff02898-9698-e211-a939-e4115bead28a'],
         uk_region: null,
       })
     })
@@ -139,7 +139,10 @@ describe('transformers', () => {
         organiser: '453a608e-84a4-11e6-ea22-56b6b6499622',
         event_shared: true,
         related_programmes: ['e2a8be20-7a54-e311-a33a-e4115bead28a'],
-        teams: ['08c14624-2f50-e311-a56a-e4115bead28a'],
+        teams: [
+          '08c14624-2f50-e311-a56a-e4115bead28a',
+          'cff02898-9698-e211-a939-e4115bead28a',
+        ],
         uk_region: '934cd12a-6095-e211-a939-e4115bead28a',
       })
     })

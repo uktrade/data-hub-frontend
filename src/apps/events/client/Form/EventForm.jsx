@@ -107,9 +107,9 @@ const EventForm = ({
                                 <>
                                   {/* {console.log(values)} */}
                                   <FieldRadios
-                                    legend="Does the Event relate to a Trade Agreement?"
+                                    legend="Does the event relate to a trade agreement?"
                                     name="has_related_trade_agreements"
-                                    required="Answer if the Event is related to a Trade Agreement"
+                                    required="Answer if the event is related to a trade agreement"
                                     options={[
                                       { value: 'Yes', label: 'Yes' },
                                       { value: 'No', label: 'No' },
@@ -253,7 +253,8 @@ const EventForm = ({
                                   <AdviserTypeAhead
                                     name="organiser"
                                     label="Organiser"
-                                    required="Select at least one organiser"
+                                    required="Type at least one organiser"
+                                    placeholder="-- Search organiser --"
                                   />
                                   <FieldRadios
                                     legend="Is this a shared event? (optional)?"

@@ -68,7 +68,9 @@ const transformEventFormForAPIRequest = (values) => {
     organiser: transformOption(organiser),
     event_shared: stringToBoolOrNull(event_shared),
     related_programmes: transformArrayOfOptions(related_programmes),
-    teams: transformArrayOfOptions(teams),
+    teams: transformArrayOfOptions(
+      teams ? teams.concat([lead_team]) : [lead_team]
+    ),
     uk_region: transformOption(uk_region),
   }
   return result
