@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { connect } from 'react-redux'
@@ -26,7 +26,20 @@ import {
   TASK_SAVE_EVENT,
   state2props,
 } from './state'
-import { EVENTS__FORM_METADATA_LOADED } from '../../../../client/actions'
+import {
+  EVENTS__FORM_METADATA_LOADED,
+  ADD_EVENT_FORM__SUBMIT,
+} from '../../../../client/actions'
+import { addMessage } from '../../../../client/utils/flash-messages'
+
+const getReturnLink = (eventId) => {
+  if (eventId) {
+    return urls.events.details(eventId)
+  }
+
+  // TODO: CHECK: This is the same URL with possibly the error message
+  return urls.events.create()
+}
 
 const EventForm = ({
   metadata: {
@@ -40,7 +53,9 @@ const EventForm = ({
     ukRegions,
   },
   isComplete,
+  updatedEventId,
 }) => {
+  // TODO: Check if this needs to be refactored using shared constants
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -54,6 +69,13 @@ const EventForm = ({
       text: 'Add event',
     },
   ]
+
+  useEffect(() => {
+    if (updatedEventId) {
+      addMessage('success', 'Event created')
+      window.location.href = getReturnLink(updatedEventId)
+    }
+  }, [updatedEventId])
 
   return (
     <>
@@ -99,13 +121,13 @@ const EventForm = ({
                                   payload: {
                                     values,
                                   },
-                                  // onSuccessDispatch: ADD_EVENTS_FORM__SUBMIT,
+                                  onSuccessDispatch: ADD_EVENT_FORM__SUBMIT,
                                 })
                               }}
                             >
                               {({ values }) => (
                                 <>
-                                  {/* {console.log(values)} */}
+                                  {/* TODO: Refactor values into constants in shared space */}
                                   <FieldRadios
                                     legend="Does the event relate to a trade agreement?"
                                     name="has_related_trade_agreements"
@@ -254,7 +276,7 @@ const EventForm = ({
                                     name="organiser"
                                     label="Organiser"
                                     required="Type at least one organiser"
-                                    placeholder="-- Search organiser --"
+                                    placeholder="-- Type to search for organiser --"
                                   />
                                   <FieldRadios
                                     legend="Is this a shared event? (optional)?"
