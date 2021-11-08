@@ -61,7 +61,22 @@ function transformExportCountries(values) {
   )
 }
 
-function transformServiceAnswers(values) {
+const transformServiceAnswers = (serviceAnswers) => {
+  if (!serviceAnswers) {
+    return serviceAnswers
+  }
+  return Object.keys(serviceAnswers).reduce(
+    (acc, questionId) => ({
+      ...acc,
+      [`service_answers.${questionId}`]: Object.keys(
+        serviceAnswers[questionId]
+      )[0],
+    }),
+    {}
+  )
+}
+
+function transformServiceAnswersForPayload(values) {
   return Object.keys(values)
     .filter((fieldName) => fieldName.startsWith('service_answers.'))
     .reduce((acc, fieldName) => {
@@ -249,7 +264,7 @@ export function saveInteraction({ values, companyIds, referralId }) {
     status: INTERACTION_STATUS.COMPLETE,
     companies: companyIds,
     service: values.service_2nd_level || values.service,
-    service_answers: transformServiceAnswers(values),
+    service_answers: transformServiceAnswersForPayload(values),
     contacts: transformArrayOfOptions(values.contacts),
     dit_participants: values.dit_participants.map((a) => ({
       adviser: a.value,
