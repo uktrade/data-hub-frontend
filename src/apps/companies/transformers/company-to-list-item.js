@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { get } = require('lodash')
+const { get, isEqual } = require('lodash')
 
 const labels = require('../labels')
 const urls = require('../../../lib/urls')
@@ -16,6 +16,7 @@ module.exports = function transformCompanyToListItem({
   headquarter_type,
   global_headquarters,
   latest_interaction_date,
+  registered_address,
 } = {}) {
   if (!id) {
     return
@@ -73,6 +74,14 @@ module.exports = function transformCompanyToListItem({
     label: labels.address.companyAddress,
     value: address,
   })
+
+  if (registered_address && !isEqual(registered_address, address)) {
+    meta.push({
+      type: 'address',
+      label: labels.address.companyRegisteredAddress,
+      value: registered_address,
+    })
+  }
 
   if (latest_interaction_date) {
     meta.push({
