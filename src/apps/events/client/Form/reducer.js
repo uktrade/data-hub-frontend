@@ -33,8 +33,11 @@ export default (state = initialState, { type, result }) => {
     case ADD_EVENT_FORM__SUBMIT:
       return {
         ...state,
-        updatedEventId: [200, 201].includes(result.status)
+        createdEventId: [201].includes(result.status)
           ? result.data.id
+          : undefined,
+        createdEventName: [201].includes(result.status)
+          ? result.data.name
           : undefined,
         progress: true,
       }

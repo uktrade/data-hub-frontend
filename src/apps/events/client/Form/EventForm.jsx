@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
-import { connect } from 'react-redux'
-import { Button, Link } from 'govuk-react'
+import { Button, Link, LoadingBox } from 'govuk-react'
 
 import urls from '../../../../lib/urls'
 import LocalHeader from '../../../../client/components/LocalHeader/LocalHeader.jsx'
@@ -31,15 +33,7 @@ import {
   ADD_EVENT_FORM__SUBMIT,
 } from '../../../../client/actions'
 import { addMessage } from '../../../../client/utils/flash-messages'
-
-const getReturnLink = (eventId) => {
-  if (eventId) {
-    return urls.events.details(eventId)
-  }
-
-  // TODO: CHECK: This is the same URL with possibly the error message
-  return urls.events.create()
-}
+import { OPTIONS_YES_NO, OPTION_YES } from '../../../../client/constants'
 
 const EventForm = ({
   metadata: {
@@ -53,9 +47,10 @@ const EventForm = ({
     ukRegions,
   },
   isComplete,
-  updatedEventId,
+  createdEventId,
+  createdEventName,
+  progress,
 }) => {
-  // TODO: Check if this needs to be refactored using shared constants
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -70,12 +65,13 @@ const EventForm = ({
     },
   ]
 
+  // TODO: Move this logic into the MultiInstanceForm as dedicated form logic
   useEffect(() => {
-    if (updatedEventId) {
-      addMessage('success', 'Event created')
-      window.location.href = getReturnLink(updatedEventId)
+    if (createdEventId) {
+      addMessage('success', `'${createdEventName}' event created`)
+      window.location.href = urls.events.details(createdEventId)
     }
-  }, [updatedEventId])
+  }, [createdEventId, createdEventName])
 
   return (
     <>
@@ -126,20 +122,16 @@ const EventForm = ({
                               }}
                             >
                               {({ values }) => (
-                                <>
-                                  {/* TODO: Refactor values into constants in shared space */}
+                                <LoadingBox loading={progress}>
                                   <FieldRadios
                                     legend="Does the event relate to a trade agreement?"
                                     name="has_related_trade_agreements"
                                     required="Answer if the event is related to a trade agreement"
-                                    options={[
-                                      { value: 'Yes', label: 'Yes' },
-                                      { value: 'No', label: 'No' },
-                                    ]}
+                                    options={OPTIONS_YES_NO}
                                     inline={true}
                                   />
                                   {values.has_related_trade_agreements ===
-                                    'Yes' && (
+                                    OPTION_YES && (
                                     <FieldAddAnother
                                       name="related_trade_agreements"
                                       label="Related named trade agreement(s)"
@@ -199,8 +191,6 @@ const EventForm = ({
                                     placeholder="-- Select event --"
                                     aria-label="Select an event"
                                   />
-                                  {/* TODO: Refactor Address stuff into an Address Component */}
-                                  {/* CHECK: Why required is not labeling as expected */}
                                   <FieldInput
                                     label="Business and street"
                                     name="address_1"
@@ -238,6 +228,7 @@ const EventForm = ({
                                     label="Country"
                                     inputId="address_country"
                                     options={countries}
+                                    required="Country may not be null."
                                     placeholder="-- Select country --"
                                     aria-label="Select a country"
                                   />
@@ -246,6 +237,7 @@ const EventForm = ({
                                     label="UK Region"
                                     inputId="uk_region"
                                     options={ukRegions}
+                                    required="UK region may not be null."
                                     placeholder="-- Select region --"
                                     aria-label="Select a region"
                                   />
@@ -279,15 +271,12 @@ const EventForm = ({
                                     placeholder="-- Type to search for organiser --"
                                   />
                                   <FieldRadios
-                                    legend="Is this a shared event? (optional)?"
+                                    legend="Is this a shared event? (optional)"
                                     name="event_shared"
-                                    options={[
-                                      { value: 'Yes', label: 'Yes' },
-                                      { value: 'No', label: 'No' },
-                                    ]}
+                                    options={OPTIONS_YES_NO}
                                     inline={true}
                                   />
-                                  {values.event_shared === 'Yes' && (
+                                  {values.event_shared === OPTION_YES && (
                                     <FieldAddAnother
                                       name="teams"
                                       label="Teams"
@@ -337,10 +326,11 @@ const EventForm = ({
                                   </FieldAddAnother>
                                   <FormActions>
                                     <Button>Add event</Button>
-                                    {/* TDODO: Cancel URL */}
-                                    <Link href="/">Cancel</Link>
+                                    <Link href={urls.events.index()}>
+                                      Cancel
+                                    </Link>
                                   </FormActions>
-                                </>
+                                </LoadingBox>
                               )}
                             </MultiInstanceForm>
                           )
@@ -356,6 +346,23 @@ const EventForm = ({
       </Task>
     </>
   )
+}
+
+EventForm.propTypes = {
+  metadata: PropTypes.shape({
+    eventTypeOptions: PropTypes.array,
+    relatedTradeAgreements: PropTypes.array,
+    eventLocationTypes: PropTypes.array,
+    countries: PropTypes.array,
+    teams: PropTypes.array,
+    services: PropTypes.array,
+    programmes: PropTypes.array,
+    ukRegions: PropTypes.array,
+  }),
+  isComplete: PropTypes.bool,
+  createdEventId: PropTypes.string,
+  createdEventName: PropTypes.string,
+  progress: PropTypes.bool,
 }
 
 export default connect(state2props)(EventForm)

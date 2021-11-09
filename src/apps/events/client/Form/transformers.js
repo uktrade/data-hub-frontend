@@ -1,40 +1,9 @@
-// TODO: Convert back to ES6 when test understood
-const { uniq } = require('lodash')
-
-// TODO: Find the util for this and where this exists
-const stringToBoolOrNull = (value) => {
-  if (value && value.toLowerCase().includes('yes')) {
-    return true
-  } else if (value && value.toLowerCase().includes('no')) {
-    return false
-  }
-  return null
-}
-
-// TODO: Copy to shared transformer and remove all others
-const transformDateObjectToDateString = (value) => {
-  if (!value) {
-    throw Error('date object key is required to transform date')
-  }
-  const dateString = `${value.year}-${value.month}-${value.day}`
-  return dateString === '--' ? null : dateString
-}
-
-// TODO: Copy to shared transformer and remove all others
-const transformOption = (option) => {
-  if (!option || !option.value) {
-    return null
-  }
-  return option.value
-}
-
-// TODO: Copy to shared transformer and remove all others
-const transformArrayOfOptions = (options) => {
-  if (!options || !options.length) {
-    return []
-  }
-  return uniq(options.map(transformOption))
-}
+import {
+  transformDateObjectToDateString,
+  transformArrayOfUniqueOptions,
+  transformOption,
+  transformYesNoToBool,
+} from '../../../../client/transformers'
 
 const transformEventFormForAPIRequest = (values) => {
   const {
@@ -54,10 +23,12 @@ const transformEventFormForAPIRequest = (values) => {
     uk_region,
   } = values
   const result = {
-    has_related_trade_agreements: stringToBoolOrNull(
+    has_related_trade_agreements: transformYesNoToBool(
       has_related_trade_agreements
     ),
-    related_trade_agreements: transformArrayOfOptions(related_trade_agreements),
+    related_trade_agreements: transformArrayOfUniqueOptions(
+      related_trade_agreements
+    ),
     event_type: transformOption(event_type),
     start_date: transformDateObjectToDateString(start_date),
     end_date: transformDateObjectToDateString(end_date),
@@ -66,9 +37,9 @@ const transformEventFormForAPIRequest = (values) => {
     lead_team: transformOption(lead_team),
     service: transformOption(service),
     organiser: transformOption(organiser),
-    event_shared: stringToBoolOrNull(event_shared),
-    related_programmes: transformArrayOfOptions(related_programmes),
-    teams: transformArrayOfOptions(
+    event_shared: transformYesNoToBool(event_shared),
+    related_programmes: transformArrayOfUniqueOptions(related_programmes),
+    teams: transformArrayOfUniqueOptions(
       teams ? teams.concat([lead_team]) : [lead_team]
     ),
     uk_region: transformOption(uk_region),
@@ -76,6 +47,4 @@ const transformEventFormForAPIRequest = (values) => {
   return result
 }
 
-// TODO: CHECK best way of doing this
-// export { transformEventFormForAPIRequest }
-module.exports = { transformEventFormForAPIRequest }
+export { transformEventFormForAPIRequest }
