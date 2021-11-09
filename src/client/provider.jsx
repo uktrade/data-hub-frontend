@@ -42,9 +42,6 @@ import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/
 import { ID as EXPORT_COUNTRIES_EDIT_ID } from '../apps/companies/apps/exports/client/ExportCountriesEdit/state'
 import exportCountriesEditReducer from '../apps/companies/apps/exports/client/ExportCountriesEdit/reducer'
 
-import * as addInteractionFormState from '../apps/interactions/apps/details-form/client/state'
-import addInteractionFormReducer from '../apps/interactions/apps/details-form/client/reducer'
-
 import * as addCompanyState from '../apps/companies/apps/add-company/client/state'
 import addCompanyPostcodeToRegionReducer from '../apps/companies/apps/add-company/client/reducer'
 
@@ -160,7 +157,6 @@ const store = createStore(
     [REFERRALS_SEND_ID]: referralsSendReducer,
     [EXPORTS_WINS_ID]: exportWinsReducer,
     [EXPORT_COUNTRIES_EDIT_ID]: exportCountriesEditReducer,
-    [addInteractionFormState.ID]: addInteractionFormReducer,
     [ONE_LIST_DETAILS_ID]: editOneListReducer,
     [addCompanyState.ID]: addCompanyPostcodeToRegionReducer,
     [ADD_TO_PIPELINE_ID]: addToPipelineReducer,
