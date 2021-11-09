@@ -247,9 +247,9 @@ const _TaskForm = ({
                               ? children(contextProps)
                               : children}
                             {/*
-                      We don't want to render the submit button when the form
-                      has multiple steps as the steps come with a built-in submit button
-                      */}
+                            We don't want to render the submit button when the form
+                            has multiple steps as the steps come with a built-in submit button
+                            */}
                             {!steps.length && (
                               <FormActions>
                                 <Button>{submitButtonLabel}</Button>
