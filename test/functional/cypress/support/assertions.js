@@ -359,14 +359,12 @@ const assertFieldAddress = ({ element, hint = null, value = {} }) => {
 }
 
 const assertFieldDate = ({ element, label, value = {} }) => {
-  const labels = element.find('label')
   const inputs = element.find('input')
 
-  label && expect(labels[0]).to.have.text(label)
-
-  expect(labels[1]).to.have.text('Day')
-  expect(labels[2]).to.have.text('Month')
-  expect(labels[3]).to.have.text('Year')
+  expect(element).to.contain.text(label)
+  expect(element).to.contain.text('Day')
+  expect(element).to.contain.text('Month')
+  expect(element).to.contain.text('Year')
 
   value.day && expect(inputs[0]).to.have.value(value.day)
   value.month && expect(inputs[1]).to.have.value(value.month)
