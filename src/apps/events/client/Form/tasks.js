@@ -9,28 +9,14 @@ const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
 const getEventFormMetadata = () =>
   Promise.all([
-    getMetadataOptions(urls.metadata.eventType(), { filterDisabled: false }),
-    getMetadataOptions(urls.metadata.tradeAgreement(), {
-      filterDisabled: false,
-    }),
-    getMetadataOptions(urls.metadata.locationType(), {
-      filterDisabled: false,
-    }),
-    getMetadataOptions(urls.metadata.country(), {
-      filterDisabled: false,
-    }),
-    getMetadataOptions(urls.metadata.team(), {
-      filterDisabled: false,
-    }),
-    getMetadataOptions(urls.metadata.service(), {
-      filterDisabled: false,
-    }),
-    getMetadataOptions(urls.metadata.programme(), {
-      filterDisabled: false,
-    }),
-    getMetadataOptions(urls.metadata.ukRegion(), {
-      filterDisabled: false,
-    }),
+    getMetadataOptions(urls.metadata.eventType()),
+    getMetadataOptions(urls.metadata.tradeAgreement()),
+    getMetadataOptions(urls.metadata.locationType()),
+    getMetadataOptions(urls.metadata.country()),
+    getMetadataOptions(urls.metadata.team()),
+    getMetadataOptions(urls.metadata.service()),
+    getMetadataOptions(urls.metadata.programme()),
+    getMetadataOptions(urls.metadata.ukRegion()),
   ])
     .then(
       ([
