@@ -8,10 +8,13 @@ action and passes the data intended for the GTM data layer to the
 Analytics saga. */
 
 const Analytics = connect()(({ children, dispatch }) =>
-  children((data) =>
+  children((category, action, label, extra) =>
     dispatch({
       type: ANALYTICS__PUSH,
-      data,
+      category,
+      action,
+      label,
+      extra,
     })
   )
 )

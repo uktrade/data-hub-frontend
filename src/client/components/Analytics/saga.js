@@ -7,8 +7,14 @@ data layer. */
 
 export default function* () {
   while (true) {
-    const { data } = yield take(ANALYTICS__PUSH)
+    const { category, action, label, extra } = yield take(ANALYTICS__PUSH)
     window.dataLayer = window.dataLayer || []
-    window.dataLayer.push(data)
+    window.dataLayer.push({
+      ...extra,
+      event: 'gaEvent',
+      category,
+      action,
+      label,
+    })
   }
 }
