@@ -10,8 +10,8 @@ const {
   redirectToFirstNavItem,
 } = require('../middleware')
 const { renderDetailsPage } = require('./controllers/details')
-const { renderEditPage, renderFormPage } = require('./controllers/edit')
-const { postDetails, getEventDetails } = require('./middleware/details')
+const { renderFormPage } = require('./controllers/edit')
+const { getEventDetails } = require('./middleware/details')
 
 const { renderEventsView } = require('./controllers/events')
 
@@ -19,9 +19,7 @@ const attendeesRouter = require('./attendees/router')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
-router.route('/create').post(postDetails, renderEditPage).get(renderEditPage)
-// TODO: Temp route to placehold react implementation
-router.route('/create-2').get(renderFormPage)
+router.route('/create').get(renderFormPage)
 
 router.param('eventId', getEventDetails)
 
@@ -33,10 +31,7 @@ router.use(
   setLocalNav(LOCAL_NAV)
 )
 
-router
-  .route('/:eventId/edit')
-  .post(postDetails, renderEditPage)
-  .get(renderEditPage)
+router.route('/:eventId/edit').get(renderFormPage)
 
 router.get('/:eventId', redirectToFirstNavItem)
 router.get('/:eventId/details', renderDetailsPage)

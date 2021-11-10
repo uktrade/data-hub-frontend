@@ -5,7 +5,7 @@ import {
 } from '../../../../client/actions'
 
 const initialState = {
-  metadata: {
+  formData: {
     eventTypeOptions: [],
     relatedTradeAgreements: [],
     eventLocationTypes: [],
@@ -13,6 +13,7 @@ const initialState = {
     teams: [],
     programmes: [],
     ukRegions: [],
+    initialValues: {},
   },
   isComplete: false,
 }
@@ -27,7 +28,7 @@ export default (state = initialState, { type, result }) => {
     case EVENTS__FORM_METADATA_LOADED:
       return {
         ...state,
-        metadata: result,
+        formData: result,
         isComplete: true,
       }
     case ADD_EVENT_FORM__SUBMIT:
@@ -37,6 +38,12 @@ export default (state = initialState, { type, result }) => {
           ? result.data.id
           : undefined,
         createdEventName: [201].includes(result.status)
+          ? result.data.name
+          : undefined,
+        updatedEventId: [200].includes(result.status)
+          ? result.data.id
+          : undefined,
+        updatedEventName: [200].includes(result.status)
           ? result.data.name
           : undefined,
         progress: true,

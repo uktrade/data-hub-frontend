@@ -36,7 +36,7 @@ import { addMessage } from '../../../../client/utils/flash-messages'
 import { OPTIONS_YES_NO, OPTION_YES } from '../../../../client/constants'
 
 const EventForm = ({
-  metadata: {
+  formData: {
     eventTypeOptions,
     relatedTradeAgreements,
     eventLocationTypes,
@@ -45,12 +45,17 @@ const EventForm = ({
     services,
     programmes,
     ukRegions,
+    initialValues,
   },
   isComplete,
   createdEventId,
   createdEventName,
   progress,
+  eventId,
+  updatedEventId,
+  updatedEventName,
 }) => {
+  // console.log(initialValues)
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -60,18 +65,37 @@ const EventForm = ({
       link: urls.events.index(),
       text: 'Events',
     },
-    {
-      text: 'Add event',
-    },
   ]
+  if (eventId) {
+    if (initialValues && initialValues.name) {
+      breadcrumbs.push({
+        link: urls.events.edit(eventId),
+        text: initialValues.name,
+      })
+    }
+    breadcrumbs.push({
+      text: 'Edit event',
+    })
+  } else {
+    breadcrumbs.push({
+      text: 'Add event',
+    })
+  }
 
   // TODO: Move this logic into the MultiInstanceForm as dedicated form logic
   useEffect(() => {
-    if (createdEventId) {
+    if (createdEventId && createdEventName) {
       addMessage('success', `'${createdEventName}' event created`)
       window.location.href = urls.events.details(createdEventId)
     }
   }, [createdEventId, createdEventName])
+
+  useEffect(() => {
+    if (updatedEventId && updatedEventName) {
+      addMessage('success', `'${updatedEventName}' event updated`)
+      window.location.href = urls.events.details(updatedEventId)
+    }
+  }, [updatedEventId, updatedEventName])
 
   return (
     <>
@@ -80,7 +104,10 @@ const EventForm = ({
           const saveEventFormTask = getTask(TASK_SAVE_EVENT, ID)
           return (
             <>
-              <LocalHeader breadcrumbs={breadcrumbs} heading="Add event" />
+              <LocalHeader
+                breadcrumbs={breadcrumbs}
+                heading={eventId ? 'Edit event' : 'Add event'}
+              />
               <Main>
                 <GridRow data-test="eventForm">
                   <GridCol setWidth="three-quarters">
@@ -102,6 +129,7 @@ const EventForm = ({
                       id={ID}
                       name={TASK_GET_EVENTS_FORM_METADATA}
                       startOnRender={{
+                        payload: eventId,
                         onSuccessDispatch: EVENTS__FORM_METADATA_LOADED,
                       }}
                     >
@@ -109,7 +137,8 @@ const EventForm = ({
                         return (
                           isComplete && (
                             <MultiInstanceForm
-                              id="add-event-form"
+                              id="event-form"
+                              initialValues={initialValues}
                               showErrorSummary={true}
                               submissionError={saveEventFormTask.errorMessage}
                               onSubmit={(values) => {
@@ -308,25 +337,36 @@ const EventForm = ({
                                     item-name="program"
                                   >
                                     {({ value, onChange, error }) => (
-                                      <FieldTypeahead
-                                        name="related_programmes"
-                                        inputId="related_programmes"
-                                        options={programmes}
-                                        placeholder="-- Select programme --"
-                                        required="Select at least one programme"
-                                        aria-label="Select at least one programme"
-                                        value={programmes.find(
-                                          ({ value: option_value }) =>
-                                            option_value === value
-                                        )}
-                                        onChange={onChange}
-                                        error={error}
-                                      />
+                                      <>
+                                        {/* {console.log(value)} */}
+                                        <FieldTypeahead
+                                          name="related_programmes"
+                                          inputId="related_programmes"
+                                          options={programmes}
+                                          placeholder="-- Select programme --"
+                                          required="Select at least one programme"
+                                          aria-label="Select at least one programme"
+                                          value={programmes.find(
+                                            ({ value: option_value }) =>
+                                              option_value === value
+                                          )}
+                                          onChange={onChange}
+                                          error={error}
+                                        />
+                                      </>
                                     )}
                                   </FieldAddAnother>
                                   <FormActions>
-                                    <Button>Add event</Button>
-                                    <Link href={urls.events.index()}>
+                                    <Button>
+                                      {eventId ? 'Edit event' : 'Add event'}
+                                    </Button>
+                                    <Link
+                                      href={
+                                        eventId
+                                          ? urls.events.details(eventId)
+                                          : urls.events.index()
+                                      }
+                                    >
                                       Cancel
                                     </Link>
                                   </FormActions>
@@ -349,7 +389,7 @@ const EventForm = ({
 }
 
 EventForm.propTypes = {
-  metadata: PropTypes.shape({
+  formData: PropTypes.shape({
     eventTypeOptions: PropTypes.array,
     relatedTradeAgreements: PropTypes.array,
     eventLocationTypes: PropTypes.array,
@@ -358,11 +398,13 @@ EventForm.propTypes = {
     services: PropTypes.array,
     programmes: PropTypes.array,
     ukRegions: PropTypes.array,
+    initialValues: PropTypes.object,
   }),
   isComplete: PropTypes.bool,
   createdEventId: PropTypes.string,
   createdEventName: PropTypes.string,
   progress: PropTypes.bool,
+  updatedEventName: PropTypes.string,
 }
 
 export default connect(state2props)(EventForm)

@@ -93,40 +93,14 @@ async function renderEditPage(req, res, next) {
   }
 }
 
-// TODO: Temp place holder to rmove over logic to react
+// TODO: Temp placeholder to remove over logic to react, extract from url in future
 async function renderFormPage(req, res, next) {
   try {
     const eventData = transformEventResponseToFormBody(res.locals.event)
-
     const eventId = get(eventData, 'id', '')
-    const eventName = get(eventData, 'name')
-    const lead_team =
-      eventData.lead_team || get(req, 'session.user.dit_team.id')
-    const mergedData = pickBy(
-      merge({}, eventData, { lead_team }, res.locals.requestBody)
-    )
-    const currentAdviser = get(eventData, 'organiser')
-    const options = await getEditOptions(
-      req,
-      mergedData.created_on,
-      currentAdviser
-    )
-
-    const eventForm = buildFormWithStateAndErrors(
-      eventFormConfig({ eventId, ...options }, res.locals.features),
-      mergedData,
-      get(res.locals, 'form.errors.messages')
-    )
-
-    if (eventName) {
-      res.breadcrumb(eventName, `/events/${eventId}`)
-    }
-
-    res
-      .breadcrumb(`${eventId ? 'Edit' : 'Add'} event`)
-      .render('events/views/create-and-edit', {
-        eventForm,
-      })
+    res.render('events/views/create-and-edit', {
+      props: { eventId },
+    })
   } catch (error) {
     next(error)
   }

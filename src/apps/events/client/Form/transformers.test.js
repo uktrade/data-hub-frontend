@@ -93,7 +93,6 @@
 //           value: '934cd12a-6095-e211-a939-e4115bead28a',
 //           label: 'Alderney',
 //         },
-//         notes: 'adsasdas',
 //         lead_team: {
 //           value: 'cff02898-9698-e211-a939-e4115bead28a',
 //           label: 'Aberdeen City Council',

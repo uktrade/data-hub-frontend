@@ -1,14 +1,28 @@
-import axios from 'axios'
-
 import urls from '../../../../lib/urls'
 import { getMetadataOptions } from '../../../../client/metadata'
-import { transformEventFormForAPIRequest } from './transformers'
-import { catchApiError } from '../../../../client/components/Task/utils'
+import {
+  transformEventFormForAPIRequest,
+  transformResponseToEventForm,
+} from './transformers'
+import {
+  catchApiError,
+  apiProxyAxios,
+} from '../../../../client/components/Task/utils'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
-const getEventFormMetadata = () =>
-  Promise.all([
+export const getEventDetails = (eventId) =>
+  eventId
+    ? apiProxyAxios
+        .get(`/v4/event/${eventId}`)
+        .then(({ data }) =>
+          Object.assign(data, transformResponseToEventForm(data))
+        )
+    : Promise.resolve({})
+
+const getEventFormMetadata = (eventId) => {
+  // TODO: seperate initial stuff
+  return Promise.all([
     getMetadataOptions(urls.metadata.eventType()),
     getMetadataOptions(urls.metadata.tradeAgreement()),
     getMetadataOptions(urls.metadata.locationType()),
@@ -17,6 +31,7 @@ const getEventFormMetadata = () =>
     getMetadataOptions(urls.metadata.service()),
     getMetadataOptions(urls.metadata.programme()),
     getMetadataOptions(urls.metadata.ukRegion()),
+    getEventDetails(eventId),
   ])
     .then(
       ([
@@ -28,6 +43,7 @@ const getEventFormMetadata = () =>
         services,
         programmes,
         ukRegions,
+        initialValues,
       ]) => ({
         eventTypeOptions,
         relatedTradeAgreements,
@@ -37,9 +53,11 @@ const getEventFormMetadata = () =>
         services,
         programmes,
         ukRegions,
+        initialValues,
       })
     )
     .catch(handleError)
+}
 
 const saveEvent = ({ values }) => {
   // console.log(values)
@@ -47,7 +65,7 @@ const saveEvent = ({ values }) => {
   // console.log(transformedValuesOnlyPayload)
   if (transformedValuesOnlyPayload) {
     // Save this to the backend
-    const request = values.id ? axios.patch : axios.post
+    const request = values.id ? apiProxyAxios.patch : apiProxyAxios.post
     const payload = values.id
       ? {
           ...transformedValuesOnlyPayload,
@@ -56,9 +74,7 @@ const saveEvent = ({ values }) => {
           ...values,
           ...transformedValuesOnlyPayload,
         }
-    const endpoint = values.id
-      ? `/api-proxy/v4/event/${values.id}`
-      : '/api-proxy/v4/event'
+    const endpoint = values.id ? `/v4/event/${values.id}` : '/v4/event'
     return request(endpoint, payload).catch(catchApiError)
   }
 }
