@@ -95,8 +95,11 @@ import * as addInteractionFormTasks from '../apps/interactions/apps/details-form
 import { TASK_UPDATE_ADVISER } from '../apps/companies/apps/advisers/client/state'
 import * as manageAdviser from '../apps/companies/apps/advisers/client/tasks'
 
-import { DNB__CHECK_PENDING_REQUEST } from '../apps/companies/apps/business-details/client/state'
-import * as dnbCheck from '../apps/companies/apps/business-details/client/tasks'
+import {
+  DNB__CHECK_PENDING_REQUEST,
+  TASK_ARCHIVE_COMPANY,
+} from '../apps/companies/apps/business-details/client/state'
+import * as businessDetails from '../apps/companies/apps/business-details/client/tasks'
 
 import {
   TASK_GET_COMPANIES_LIST,
@@ -264,7 +267,7 @@ function App() {
           investmentOpportunitiesDetailsTasks.getDetailsMetadata,
         [TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA]:
           investmentOpportunitiesDetailsTasks.getRequirementsMetadata,
-        [DNB__CHECK_PENDING_REQUEST]: dnbCheck.checkIfPendingRequest,
+        [DNB__CHECK_PENDING_REQUEST]: businessDetails.checkIfPendingRequest,
         [TASK_GET_PROFILES_LIST]:
           investmentProfilesTasks.getLargeCapitalProfiles,
         [TASK_GET_PROJECTS_LIST]: getInvestmentProjects.getProjects,
@@ -294,6 +297,7 @@ function App() {
         [TASK_GET_ORDERS_METADATA]: getOrdersMetadata,
         [TASK_GET_ORDERS_LIST]: getOrders,
         [TASK_GET_INTERACTIONS_TEAM_NAME]: getTeamNames,
+        [TASK_ARCHIVE_COMPANY]: businessDetails.archiveSubmitCallback,
         ...resourceTasks,
       }}
     >

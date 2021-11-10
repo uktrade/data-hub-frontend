@@ -34,3 +34,11 @@ const checkIfRequestIsValid = ({ count, results }) => {
   }
   return false
 }
+
+export function archiveSubmitCallback({ urls, values }) {
+  return axios({
+    method: 'POST',
+    url: urls.companyArchive,
+    data: values,
+  })
+}
