@@ -49,7 +49,7 @@ describe('Layout', () => {
 
   describe('Footer', () => {
     it('should display footer', () => {
-      cy.get('footer a').should('have.length', 6)
+      cy.get('footer a').should('have.length', 7)
     })
   })
 })
