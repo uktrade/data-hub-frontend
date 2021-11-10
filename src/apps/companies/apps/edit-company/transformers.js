@@ -1,10 +1,7 @@
 /* eslint-disable camelcase */
 const { castArray, get, isEmpty, omitBy, pick, isUndefined } = require('lodash')
 const { roundToSignificantDigits } = require('../../../../common/number')
-const {
-  convertUsdToGbp,
-  convertGbpToUsd,
-} = require('../../../../common/currency')
+const { convertGbpToUsd } = require('../../../../common/currency')
 
 const UNMATCHED_COMPANY_EDITABLE_FIELDS = [
   'business_type',
@@ -65,7 +62,7 @@ const transformCompanyToForm = (company) => {
       employee_range: get(company.employee_range, 'id'),
       turnover_range: get(company.turnover_range, 'id'),
       trading_names: get(company.trading_names, '0'),
-      turnover: roundToSignificantDigits(convertUsdToGbp(company.turnover), 2),
+      turnover: roundToSignificantDigits(company.turnover_gbp, 2),
     },
     isUndefined
   )
