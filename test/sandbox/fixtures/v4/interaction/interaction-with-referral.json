@@ -117,12 +117,11 @@
     "subject":"This is an automated interaction",
     "notes":"Sandbox",
     "archived_documents_url_path":"",
-    "policy_areas":[
-
-    ],
+    "policy_areas":[],
     "policy_feedback_notes":"",
     "policy_issue_types":[
 
     ],
-    "was_policy_feedback_provided":false
+    "was_policy_feedback_provided":false,
+    "has_related_trade_agreements": false
   }
