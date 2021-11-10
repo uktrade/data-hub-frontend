@@ -823,7 +823,7 @@ describe('Trade Agreement theme', () => {
 })
 
 describe('Contact loop', () => {
-  context('when a contact does not exists and user wants to add one', () => {
+  context('when a contact does not exist and user wants to add one', () => {
     beforeEach(() => {
       cy.visit(urls.companies.interactions.create(company.id))
 
@@ -963,7 +963,11 @@ describe('Editing an interaction from a contact', () => {
     cy.contains('a', 'totam|f19f5014-8bb1-4645-a224-27a4c8db5336').click()
     cy.contains('a', 'Edit interaction').click()
     cy.contains('h1', 'Edit interaction for Zboncak Group')
-    cy.contains('button', 'Save interaction')
+    cy.contains('button', 'Save interaction').click()
+    cy.get('[data-test="status-message"]').should(
+      'have.text',
+      'Interaction updated'
+    )
   })
 })
 
@@ -987,7 +991,11 @@ describe('Editing an interaction from an investment project', () => {
     cy.contains('a', 'totam|f19f5014-8bb1-4645-a224-27a4c8db5336').click()
     cy.contains('a', 'Edit interaction').click()
     cy.contains('h1', 'Edit interaction for Venus Ltd')
-    cy.contains('button', 'Save interaction')
+    cy.contains('button', 'Save interaction').click()
+    cy.get('[data-test="status-message"]').should(
+      'have.text',
+      'Interaction updated'
+    )
   })
 })
 
@@ -996,7 +1004,11 @@ describe('Editing an interaction from an interactions list', () => {
     cy.visit(urls.interactions.edit(fixtures.interaction.withLink))
 
     cy.contains('h1', 'Edit interaction for Zboncak Group')
-    cy.contains('button', 'Save interaction')
+    cy.contains('button', 'Save interaction').click()
+    cy.get('[data-test="status-message"]').should(
+      'have.text',
+      'Interaction updated'
+    )
   })
 })
 
@@ -1118,6 +1130,10 @@ describe('Editing an interaction without a theme', () => {
       })
     )
 
-    cy.contains('button', 'Save interaction')
+    cy.contains('button', 'Save interaction').click()
+    cy.get('[data-test="status-message"]').should(
+      'have.text',
+      'Interaction updated'
+    )
   })
 })
