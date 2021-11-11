@@ -6,7 +6,6 @@ const {
   transformObjectToOption,
 } = require('../../../transformers')
 const { getOptions } = require('../../../../lib/options')
-const urls = require('../../../../lib/urls')
 
 const transformServiceToOption = (service) => ({
   value: service.id,
@@ -54,7 +53,6 @@ async function renderInteractionDetailsForm(req, res, next) {
           contacts: company.contacts
             .filter((contact) => !contact.archived)
             .map(transformContactToOption),
-          activeEventsEndpoint: urls.interactions.activeEvents.route,
           services,
           serviceDeliveryStatuses,
           policyAreas,

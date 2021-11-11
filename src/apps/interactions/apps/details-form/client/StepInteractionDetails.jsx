@@ -558,8 +558,9 @@ StepInteractionDetails.propTypes = {
   policyIssueTypes: typeaheadOptionsListProp.isRequired,
   communicationChannels: typeaheadOptionsListProp.isRequired,
   countries: typeaheadOptionsListProp.isRequired,
-  activeEvents: typeaheadOptionsListProp,
   relatedTradeAgreements: typeaheadOptionsListProp.isRequired,
+  onOpenContactForm: PropTypes.func.isRequired,
+  contacts: typeaheadOptionsListProp.isRequired,
 }
 
 export default StepInteractionDetails

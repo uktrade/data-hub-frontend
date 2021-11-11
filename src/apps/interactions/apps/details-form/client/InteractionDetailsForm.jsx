@@ -63,10 +63,6 @@ const InteractionDetailsForm = ({
   companyId,
   investmentId,
   contactId,
-  returnLink,
-  updatedInteractionId,
-  has_related_trade_agreements,
-  related_trade_agreements,
   user,
   interactionId,
   referral,
@@ -174,14 +170,12 @@ const InteractionDetailsForm = ({
 }
 
 InteractionDetailsForm.propTypes = {
-  updatedInteractionId: PropTypes.string,
   companyId: PropTypes.string,
-  // Replace with referral object
-  referralId: PropTypes.string,
+  referral: PropTypes.object,
   investmentId: PropTypes.string,
   contactId: PropTypes.string,
-  returnLink: PropTypes.string,
-  progress: PropTypes.bool,
+  interactionId: PropTypes.string,
+  user: PropTypes.object,
   ...StepInteractionDetails.propTypes,
 }
 
