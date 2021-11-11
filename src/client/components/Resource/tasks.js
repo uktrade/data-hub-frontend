@@ -5,6 +5,7 @@ import Interactions from './Interactions'
 import Opportunity from './Opportunity'
 import OpportunityStatuses from './OpportunityStatuses'
 import UKRegions from './UKRegions'
+import CapitalInvestmentRequiredChecksConducted from './CapitalInvestmentRequiredChecksConducted'
 
 export default {
   ...Company.tasks,
@@ -14,4 +15,5 @@ export default {
   ...Opportunity.tasks,
   ...OpportunityStatuses.tasks,
   ...UKRegions.tasks,
+  ...CapitalInvestmentRequiredChecksConducted.tasks,
 }
