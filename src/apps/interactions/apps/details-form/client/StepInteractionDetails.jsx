@@ -43,7 +43,6 @@ import {
   EXPORT_INTEREST_STATUS_VALUES,
   OPTION_YES,
   OPTIONS_YES_NO,
-  OPTION_NO,
 } from '../../../../constants'
 
 import { ADD_INTERACTION__GET_ACTIVE_EVENTS } from '../../../../../client/actions'
@@ -171,10 +170,7 @@ const StepInteractionDetails = ({
   countries,
   onOpenContactForm,
   activeEvents,
-  activeEvent,
   relatedTradeAgreements,
-  relatedOpportunity,
-  interactionId,
 }) => {
   const { values = {} } = useFormContext()
   const serviceContext = getServiceContext(
@@ -369,7 +365,6 @@ const StepInteractionDetails = ({
                   name="event"
                   placeholder="-- Select event --"
                   required="Select a specific event"
-                  initialValue={activeEvent}
                   options={activeEvents}
                 />
               )}
@@ -525,9 +520,6 @@ const StepInteractionDetails = ({
             legend="Does this interaction relate to a large capital opportunity?"
             required="Answer if this interaction relates to a large capital opportunity"
             options={OPTIONS_YES_NO}
-            initialValue={
-              interactionId && (relatedOpportunity ? OPTION_YES : OPTION_NO)
-            }
           />
 
           {values.has_related_opportunity === OPTION_YES && (
@@ -538,7 +530,6 @@ const StepInteractionDetails = ({
               placeholder="-- Search opportunities --"
               aria-label="Select an opportunity"
               required="Select a related large capital opportunity"
-              initialValue={relatedOpportunity}
               loadOptions={throttle(
                 (searchString) =>
                   axios
@@ -577,9 +568,7 @@ StepInteractionDetails.propTypes = {
   communicationChannels: typeaheadOptionsListProp.isRequired,
   countries: typeaheadOptionsListProp.isRequired,
   activeEvents: typeaheadOptionsListProp,
-  activeEvent: typeaheadOptionProp,
   relatedTradeAgreements: typeaheadOptionsListProp.isRequired,
-  relatedOpportunity: typeaheadOptionProp,
 }
 
 export default connect((state) => {

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Route } from 'react-router-dom'
 
 import StepInteractionType from './StepInteractionType'
 import StepInteractionDetails from './StepInteractionDetails'
@@ -15,6 +16,7 @@ import {
   ID as STATE_ID,
   TASK_SAVE_INTERACTION,
   TASK_OPEN_CONTACT_FORM,
+  TASK_GET_INTERACTION_INITIAL_VALUES,
 } from './state'
 import urls from '../../../../../lib/urls'
 
@@ -62,16 +64,15 @@ const getFlashMessage = (interactionId, wasPolicyFeedbackProvided) => {
 
 const InteractionDetailsForm = ({
   companyId,
-  referralId,
   investmentId,
   contactId,
   returnLink,
   updatedInteractionId,
-  wasPolicyFeedbackProvided,
-  initialValues,
   has_related_trade_agreements,
   related_trade_agreements,
+  user,
   interactionId,
+  referral,
   ...props
 }) => {
   return (
@@ -80,72 +81,88 @@ const InteractionDetailsForm = ({
         const openContactFormTask = getTask(TASK_OPEN_CONTACT_FORM, STATE_ID)
         const companyIds = [companyId]
         return (
-          <TaskForm
-            id={STATE_ID}
-            submissionTaskName={TASK_SAVE_INTERACTION}
-            initialValues={initialValues}
-            // TODO update when taskform analytics finalised
-            analyticsFormName="placeholder"
-            transformPayload={(values) => ({
-              values,
-              companyIds,
-              referralId,
-            })}
-            redirectTo={({ data }) =>
-              getReturnLink(
-                companyId,
-                referralId,
-                investmentId,
-                contactId,
-                data.id
-              )
-            }
-            flashMessage={({ data }) =>
-              getFlashMessage(interactionId, data.was_policy_feedback_provided)
-            }
-          >
-            {({ values, currentStep }) => (
-              <>
-                {(!initialValues.theme || !initialValues.kind) && (
-                  <Step name="interaction_type">
-                    {() => <StepInteractionType />}
-                  </Step>
-                )}
-
-                <Step
-                  name="interaction_details"
-                  forwardButton={
-                    initialValues.id ? 'Save interaction' : 'Add interaction'
+          <Route>
+            {({ location }) => {
+              const contactCreated =
+                location.search.includes('new-contact-name')
+              return (
+                <TaskForm
+                  id={STATE_ID}
+                  submissionTaskName={TASK_SAVE_INTERACTION}
+                  analyticsFormName="placeholder"
+                  initialValuesPayload={{
+                    companyId,
+                    referral,
+                    investmentId,
+                    contactId,
+                    user,
+                    interactionId,
+                  }}
+                  initialValuesTaskName={TASK_GET_INTERACTION_INITIAL_VALUES}
+                  transformPayload={(values) => ({
+                    values,
+                    companyIds,
+                    referralId: referral?.id,
+                  })}
+                  initialStepIndex={contactCreated && !interactionId ? 1 : 0}
+                  redirectTo={({ data }) =>
+                    getReturnLink(
+                      companyId,
+                      referral?.id,
+                      investmentId,
+                      contactId,
+                      data.id
+                    )
+                  }
+                  flashMessage={({ data }) =>
+                    getFlashMessage(
+                      interactionId,
+                      data.was_policy_feedback_provided
+                    )
                   }
                 >
-                  {() => (
-                    <StepInteractionDetails
-                      companyId={companyId}
-                      interactionId={interactionId}
-                      activeEvent={initialValues.event}
-                      relatedOpportunity={
-                        initialValues.large_capital_opportunity
-                      }
-                      onOpenContactForm={(e) => {
-                        e.preventDefault()
-                        openContactFormTask.start({
-                          payload: {
-                            values,
-                            currentStep,
-                            companyId,
-                            url: e.target.href,
-                          },
-                          onSuccessDispatch:
-                            ADD_INTERACTION_FORM__CONTACT_FORM_OPENED,
-                        })
-                      }}
-                      {...props}
-                    />
+                  {({ values, currentStep }) => (
+                    <>
+                      {/* Step registered if creating the interaction
+                  and haven't come from an investment project */}
+                      {!interactionId && !investmentId && (
+                        <Step name="interaction_type">
+                          {() => <StepInteractionType />}
+                        </Step>
+                      )}
+
+                      <Step
+                        name="interaction_details"
+                        forwardButton={
+                          interactionId ? 'Save interaction' : 'Add interaction'
+                        }
+                      >
+                        {() => (
+                          <StepInteractionDetails
+                            companyId={companyId}
+                            onOpenContactForm={(e) => {
+                              e.preventDefault()
+                              openContactFormTask.start({
+                                payload: {
+                                  values,
+                                  currentStep,
+                                  companyId,
+                                  url: e.target.href,
+                                },
+                                onSuccessDispatch:
+                                  ADD_INTERACTION_FORM__CONTACT_FORM_OPENED,
+                              })
+                            }}
+                            {...props}
+                          />
+                        )}
+                      </Step>
+                    </>
                   )}
-                </Step>
-              </>
-            )}
-          </TaskForm>
+                </TaskForm>
+              )
+            }}
+          </Route>
         )
       }}
     </Task>
@@ -154,14 +171,13 @@ const InteractionDetailsForm = ({
 
 InteractionDetailsForm.propTypes = {
   updatedInteractionId: PropTypes.string,
-  wasPolicyFeedbackProvided: PropTypes.bool,
   companyId: PropTypes.string,
+  // Replace with referral object
   referralId: PropTypes.string,
   investmentId: PropTypes.string,
   contactId: PropTypes.string,
   returnLink: PropTypes.string,
   progress: PropTypes.bool,
-  initialValues: PropTypes.object,
   ...StepInteractionDetails.propTypes,
 }
 
