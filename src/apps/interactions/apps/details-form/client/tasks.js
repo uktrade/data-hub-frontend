@@ -312,7 +312,11 @@ export function saveInteraction({ values, companyIds, referralId }) {
   return request(
     values.id ? `${endpoint}/${values.id}` : endpoint,
     omit(payload, FIELDS_TO_OMIT)
-  ).catch(catchApiError)
+  ).catch((e) => {
+    // Accounts for non-standard API error on contacts field
+    const contactsError = e.response.data.contacts[0]
+    return contactsError ? Promise.reject(contactsError) : catchApiError(e)
+  })
 }
 
 export const fetchActiveEvents = () =>
