@@ -30,10 +30,11 @@ import {
   FieldTypeahead,
   AdviserTypeAhead,
 } from '../../../../../client/components'
+import FieldUKRegionTypeahead from '../../../../../client/components/Form/elements/FieldUKRegionTypeahead'
+import FieldCapitalInvestmentRequiredChecksConductedRadios from '../../../../../client/components/Form/elements/FieldCapitalInvestmentRequiredChecksConductedRadios'
+
 import { CLEARED_REFERENCE, ISSUES_IDENTIFIED_REFERENCE } from './constants'
 import { idNameToValueLabel } from './tasks'
-
-import FieldUKRegionTypeahead from '../../../../../client/components/Form/elements/FieldUKRegionTypeahead'
 
 function OpportunityDetailsForm(state) {
   const { opportunityId, metadata, opportunity, dispatch } = state
@@ -128,11 +129,10 @@ function OpportunityDetailsForm(state) {
                       500
                     )}
                   />
-                  <FieldRadios
+                  <FieldCapitalInvestmentRequiredChecksConductedRadios
                     name="requiredChecksConducted"
                     legend="Has this opportunity cleared the required checks?"
                     initialValue={requiredChecksConducted.value}
-                    options={metadata.requiredChecksConducted}
                   />
                   {[CLEARED_REFERENCE, ISSUES_IDENTIFIED_REFERENCE].includes(
                     values.values.requiredChecksConducted
