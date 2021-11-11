@@ -30,6 +30,7 @@ const _TaskForm = ({
   id,
   analyticsFormName,
   // Optional
+  analyticsData,
   initialValuesTaskName,
   initialValuesPayload,
   redirectTo,
@@ -189,7 +190,10 @@ const _TaskForm = ({
                                   ]}
                                   effect={() => {
                                     if (resolved) {
-                                      analytics('Submission request success')
+                                      analytics(
+                                        'Submission request success',
+                                        analyticsData(values)
+                                      )
                                       if (flashMessage) {
                                         const message = flashMessage(
                                           result,
@@ -367,6 +371,9 @@ const dispatchToProps = (dispatch) => ({
  * @param {string} props.id - A unique instance ID
  * @param {string} props.analyticsFormName - The name of the form that will be
  * used in the Google Analytics event
+ * @param {Props['analyticsData']} props.analyticsData - A function which takes
+ * the values of the form as an argument, and which returns an object
+ * containing additional - non-sensitive - data to be passed to google analytics.
  * @param {Props['submissionTaskName']} props.submissionTaskName - Name of the
  * task that should be started when the form is submitted. The task will receive
  * the form values as payload.
@@ -418,6 +425,7 @@ const TaskForm = multiInstance({
 TaskForm.propTypes = {
   id: PropTypes.string.isRequired,
   analyticsFormName: PropTypes.string.isRequired,
+  analyticsData: PropTypes.func,
   submissionTaskName: PropTypes.string.isRequired,
   redirectTo: PropTypes.func,
   redirectMode: PropTypes.oneOf(['hard', 'soft']),

@@ -29,6 +29,7 @@ export type Props = {
   submissionTaskName: string,
   id: string,
   analyticsFormName: string,
+  analyticsData?: (values: Values) => object,
   initialValuesTaskName?: string,
   initialValuesPayload?: any,
   // TODO: These would need to be optional or ignored when onSuccess is set

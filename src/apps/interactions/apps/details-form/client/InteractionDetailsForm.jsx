@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -85,7 +86,16 @@ const InteractionDetailsForm = ({
                 <TaskForm
                   id={STATE_ID}
                   submissionTaskName={TASK_SAVE_INTERACTION}
-                  analyticsFormName="placeholder"
+                  analyticsFormName={
+                    interactionId ? 'edit_interaction' : 'create_interaction'
+                  }
+                  analyticsData={(values) =>
+                    _.pick(
+                      values,
+                      'was_policy_feedback_provided',
+                      'were_countries_discussed'
+                    )
+                  }
                   initialValuesPayload={{
                     companyId,
                     referral,
