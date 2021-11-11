@@ -150,9 +150,7 @@ const _TaskForm = ({
                         <TaskLoadingBox
                           name={submissionTaskName}
                           id={id}
-                          // TODO: We only want to keep the spinner kept around with hard redirects
-                          // The value shold be falsy for React Router redirection
-                          when={resolved}
+                          when={redirectTo && resolved}
                         >
                           <form
                             noValidate={true}
@@ -195,18 +193,22 @@ const _TaskForm = ({
                                   effect={() => {
                                     if (resolved) {
                                       analytics('Submission request success')
-                                      const message = flashMessage(
-                                        result,
-                                        values
-                                      )
-                                      onSuccess(result, values)
-                                      Array.isArray(message)
-                                        ? addMessageWithBody(
-                                            'success',
-                                            ...message
-                                          )
-                                        : addMessage('success', message)
-                                      history.push(redirectTo(result, values))
+                                      if (flashMessage) {
+                                        const message = flashMessage(
+                                          result,
+                                          values
+                                        )
+                                        Array.isArray(message)
+                                          ? addMessageWithBody(
+                                              'success',
+                                              ...message
+                                            )
+                                          : addMessage('success', message)
+                                      }
+                                      redirectTo &&
+                                        history.push(redirectTo(result, values))
+                                      onSuccess && onSuccess(result, values)
+                                      props.resetResolved()
                                     }
                                   }}
                                 />
@@ -285,6 +287,10 @@ const dispatchToProps = (dispatch) => ({
     dispatch({
       type: 'TASK_FORM__LOADED',
       initialValues,
+    }),
+  resetResolved: () =>
+    dispatch({
+      type: 'TASK_FORM__RESET_RESOLVED',
     }),
   registerField: (initialValues) => (field) =>
     dispatch({
@@ -398,8 +404,8 @@ TaskForm.propTypes = {
   id: PropTypes.string.isRequired,
   analyticsFormName: PropTypes.string.isRequired,
   submissionTaskName: PropTypes.string.isRequired,
-  redirectTo: PropTypes.func.isRequired,
-  flashMessage: PropTypes.func.isRequired,
+  redirectTo: PropTypes.func,
+  flashMessage: PropTypes.func,
   initialValuesTaskName: PropTypes.string,
   transformInitialValues: PropTypes.func,
   transformPayload: PropTypes.func,

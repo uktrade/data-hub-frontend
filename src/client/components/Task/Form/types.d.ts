@@ -32,8 +32,8 @@ export type Props = {
   initialValuesTaskName?: string,
   initialValuesPayload?: any,
   // TODO: These would need to be optional or ignored when onSuccess is set
-  redirectTo: (successActionResult: any, values: Values) => string,
-  flashMessage: (successActionResult: any, values: Values) => FlashMessage,
+  redirectTo?: (successActionResult: any, values: Values) => string,
+  flashMessage?: (successActionResult: any, values: Values) => FlashMessage,
   onSuccess?: (SuccessActionResult: any, values: Values) => any,
   transformInitialValues?: (initialValuesTaskResult: any) => Values,
   transformPayload?: (values: Values) => any,

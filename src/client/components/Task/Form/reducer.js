@@ -40,6 +40,8 @@ export default (
         result,
         resolved: true,
       }
+    case 'TASK_FORM__RESET_RESOLVED':
+      return omit(state, 'result', 'resolved')
     case TASK_FORM__FIELD_REGISTER:
       return {
         ...state,
