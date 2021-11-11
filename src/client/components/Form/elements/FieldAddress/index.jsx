@@ -172,6 +172,10 @@ const FieldAddress = ({
     return 'Postcode (optional)'
   }
 
+  // eslint-disable-next-line no-unused-vars
+  const canadianPostalCodeRegex =
+    /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$/i
+
   const postcodeErrorMessage = () => {
     if (isUS) return 'Enter a ZIP code'
     if (isCanada) return 'Enter a postal code'
