@@ -17,10 +17,11 @@ import {
   FieldTextarea,
   FieldTypeahead,
   Main,
-  MultiInstanceForm,
+  FormStateful,
   NewWindowLink,
   FormActions,
 } from '../../../../client/components'
+
 import Task from '../../../../client/components/Task'
 import {
   ID,
@@ -82,20 +83,43 @@ const EventForm = ({
     })
   }
 
-  // TODO: Move this logic into the MultiInstanceForm as dedicated form logic
   useEffect(() => {
     if (createdEventId && createdEventName) {
-      addMessage('success', `'${createdEventName}' event created`)
+      addMessage('success', `'${createdEventName}' event has been created`)
       window.location.href = urls.events.details(createdEventId)
     }
   }, [createdEventId, createdEventName])
 
   useEffect(() => {
     if (updatedEventId && updatedEventName) {
-      addMessage('success', `'${updatedEventName}' event updated`)
+      addMessage('success', `'${updatedEventName}' event has been updated`)
       window.location.href = urls.events.details(updatedEventId)
     }
   }, [updatedEventId, updatedEventName])
+
+  const getDate = (value) => {
+    const { day, month, year } = value
+    const result = new Date(year, month, day)
+    return result
+  }
+
+  const validatedStartDateBeforeOrEqualToEndDate = (
+    value,
+    field,
+    { values }
+  ) => {
+    if (value) {
+      const startDate = getDate(values?.start_date)
+      const endDate = getDate(values?.end_date)
+      if (startDate && endDate) {
+        return
+        startDate > endDate
+          ? 'Enter a valid end date. This must be after the start date.'
+          : null
+      }
+    }
+    return null
+  }
 
   return (
     <>
@@ -136,7 +160,7 @@ const EventForm = ({
                       {() => {
                         return (
                           isComplete && (
-                            <MultiInstanceForm
+                            <FormStateful
                               id="event-form"
                               initialValues={initialValues}
                               showErrorSummary={true}
@@ -211,6 +235,9 @@ const EventForm = ({
                                     name="end_date"
                                     label="Event end date"
                                     required="Enter a valid end date"
+                                    validate={
+                                      validatedStartDateBeforeOrEqualToEndDate
+                                    }
                                   />
                                   <FieldTypeahead
                                     name="location_type"
@@ -358,7 +385,9 @@ const EventForm = ({
                                   </FieldAddAnother>
                                   <FormActions>
                                     <Button>
-                                      {eventId ? 'Edit event' : 'Add event'}
+                                      {eventId
+                                        ? 'Save and return'
+                                        : 'Add event'}
                                     </Button>
                                     <Link
                                       href={
@@ -367,12 +396,12 @@ const EventForm = ({
                                           : urls.events.index()
                                       }
                                     >
-                                      Cancel
+                                      Return without saving
                                     </Link>
                                   </FormActions>
                                 </LoadingBox>
                               )}
-                            </MultiInstanceForm>
+                            </FormStateful>
                           )
                         )
                       }}

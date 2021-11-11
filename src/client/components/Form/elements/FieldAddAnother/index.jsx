@@ -53,9 +53,7 @@ const FieldAddAnother = ({
     required,
     initialValue: null,
   })
-  // if (name === 'related_programmes') {
-  //   console.log('VAL', value)
-  // }
+
   const ensureFieldIds = (unvalidatedValue) =>
     unvalidatedValue.map(({ value, field_id }) => {
       if (field_id) {
@@ -67,9 +65,6 @@ const FieldAddAnother = ({
   const [internalValue, setInternalValue] = useState(
     ensureFieldIds(value || [])
   )
-  // if (name === 'related_programmes') {
-  //   console.log('ENS', ensureFieldIds(value || []))
-  // }
 
   const appendNewFieldValue = () => {
     const field_id = uuid()
