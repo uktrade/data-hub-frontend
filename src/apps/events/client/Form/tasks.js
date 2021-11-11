@@ -61,7 +61,6 @@ const getEventFormAndMetadata = (eventId) => {
 const saveEvent = ({ values }) => {
   const transformedValuesOnlyPayload = transformEventFormForAPIRequest(values)
   if (transformedValuesOnlyPayload) {
-    // Save this to the backend
     const request = values.id ? apiProxyAxios.patch : apiProxyAxios.post
     const payload = {
       ...values,
