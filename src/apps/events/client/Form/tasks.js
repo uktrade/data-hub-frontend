@@ -20,8 +20,7 @@ export const getEventDetails = (eventId) =>
         )
     : Promise.resolve({})
 
-const getEventFormMetadata = (eventId) => {
-  // TODO: seperate initial stuff
+const getEventFormAndMetadata = (eventId) => {
   return Promise.all([
     getMetadataOptions(urls.metadata.eventType()),
     getMetadataOptions(urls.metadata.tradeAgreement()),
@@ -79,4 +78,4 @@ const saveEvent = ({ values }) => {
   }
 }
 
-export { getEventFormMetadata, saveEvent }
+export { getEventFormAndMetadata, saveEvent }

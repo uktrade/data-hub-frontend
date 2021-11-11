@@ -115,11 +115,11 @@ import {
 import { TASK_GET_EVENT_DETAILS } from '../apps/events/client/Details/state'
 import { getEventDetails } from '../apps/events/client/Details/tasks'
 import {
-  TASK_GET_EVENTS_FORM_METADATA,
+  TASK_GET_EVENTS_FORM_AND_METADATA,
   TASK_SAVE_EVENT,
 } from '../apps/events/client/Form/state'
 import {
-  getEventFormMetadata,
+  getEventFormAndMetadata,
   saveEvent,
 } from '../apps/events/client/Form/tasks'
 
@@ -294,7 +294,7 @@ function App() {
         [TASK_GET_EVENTS_METADATA]: getEventsMetadata,
         [TASK_GET_EVENTS_ORGANISER_NAME]: getAdviserNames,
         [TASK_GET_EVENT_DETAILS]: getEventDetails,
-        [TASK_GET_EVENTS_FORM_METADATA]: getEventFormMetadata,
+        [TASK_GET_EVENTS_FORM_AND_METADATA]: getEventFormAndMetadata,
         [TASK_SAVE_EVENT]: saveEvent,
         [TASK_GET_ORDERS_METADATA]: getOrdersMetadata,
         [TASK_GET_ORDERS_LIST]: getOrders,

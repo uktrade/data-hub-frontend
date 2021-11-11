@@ -25,7 +25,7 @@ import {
 import Task from '../../../../client/components/Task'
 import {
   ID,
-  TASK_GET_EVENTS_FORM_METADATA,
+  TASK_GET_EVENTS_FORM_AND_METADATA,
   TASK_SAVE_EVENT,
   state2props,
 } from './state'
@@ -151,7 +151,7 @@ const EventForm = ({
                     </article>
                     <Task.Status
                       id={ID}
-                      name={TASK_GET_EVENTS_FORM_METADATA}
+                      name={TASK_GET_EVENTS_FORM_AND_METADATA}
                       startOnRender={{
                         payload: eventId,
                         onSuccessDispatch: EVENTS__FORM_METADATA_LOADED,
