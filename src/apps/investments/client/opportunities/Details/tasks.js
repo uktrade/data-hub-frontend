@@ -12,7 +12,6 @@ export const getOpportunityDetails = ({ opportunityId }) =>
 
 export const getDetailsMetadata = () =>
   Promise.all([
-    apiProxyAxios.get('/v4/metadata/uk-region'),
     apiProxyAxios.get(
       '/v4/metadata/capital-investment/required-checks-conducted'
     ),
@@ -23,15 +22,11 @@ export const getDetailsMetadata = () =>
     ),
   ]).then(
     ([
-      { data: ukRegions },
       { data: requiredChecksConducted },
       { data: classes },
       { data: constructionRisks },
       { data: valueTypes },
     ]) => ({
-      ukRegions: ukRegions
-        .filter((region) => !region.disabled_on)
-        .map(idNameToValueLabel),
       requiredChecksConducted: requiredChecksConducted.map(idNameToValueLabel),
       classesOfInterest: classes.map(idNameToValueLabel),
       constructionRisks: constructionRisks.map(idNameToValueLabel),

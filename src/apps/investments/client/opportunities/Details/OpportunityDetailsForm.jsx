@@ -33,6 +33,8 @@ import {
 import { CLEARED_REFERENCE, ISSUES_IDENTIFIED_REFERENCE } from './constants'
 import { idNameToValueLabel } from './tasks'
 
+import FieldUKRegionTypeahead from '../../../../../client/components/Form/elements/FieldUKRegionTypeahead'
+
 function OpportunityDetailsForm(state) {
   const { opportunityId, metadata, opportunity, dispatch } = state
   const {
@@ -46,7 +48,6 @@ function OpportunityDetailsForm(state) {
     requiredChecksConductedOn,
     constructionRisks,
     opportunityValue,
-    ukRegions,
     promoters,
     otherDitContacts,
   } = opportunity.detailsFields
@@ -104,15 +105,7 @@ function OpportunityDetailsForm(state) {
                     name="description"
                     type="text"
                   />
-                  <FieldTypeahead
-                    isMulti={true}
-                    label="UK location"
-                    name="ukRegions"
-                    options={metadata.ukRegions}
-                    placeholder="-- Select UK region --"
-                    aria-label="Select a uk location"
-                    initialValue={ukRegions}
-                  />
+                  <FieldUKRegionTypeahead isMulti={true} name="ukRegions" />
                   <FieldTypeahead
                     isMulti={true}
                     label="Promoters"
