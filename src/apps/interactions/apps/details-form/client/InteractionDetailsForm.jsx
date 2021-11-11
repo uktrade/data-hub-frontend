@@ -1,14 +1,12 @@
-import _ from 'lodash'
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import { LoadingBox } from 'govuk-react'
 import { connect } from 'react-redux'
 
-import { MultiInstanceForm } from '../../../../../client/components'
 import StepInteractionType from './StepInteractionType'
 import StepInteractionDetails from './StepInteractionDetails'
-import Analytics from '../../../../../client/components/Analytics'
+import Step from '../../../../../client/components/Form/elements/Step.jsx'
 import Task from '../../../../../client/components/Task'
+import TaskForm from '../../../../../client/components/Task/Form/index.jsx'
 import {
   ADD_INTERACTION_FORM__CONTACT_FORM_OPENED,
   ADD_INTERACTION_FORM__SUBMIT,
@@ -19,10 +17,6 @@ import {
   TASK_OPEN_CONTACT_FORM,
 } from './state'
 import urls from '../../../../../lib/urls'
-import {
-  addMessage,
-  addMessageWithBody,
-} from '../../../../../client/utils/flash-messages'
 
 const getReturnLink = (
   companyId,
@@ -49,6 +43,23 @@ const getReturnLink = (
   return urls.companies.interactions.detail(companyId, interactionId)
 }
 
+const getFlashMessage = (interactionId, wasPolicyFeedbackProvided) => {
+  if (!interactionId) {
+    if (wasPolicyFeedbackProvided) {
+      const body = [
+        'Thanks for submitting business intelligence (BI), which feeds into the Business Intelligence Unit’s reports. If they need more information, they will contact you.',
+        '',
+        'For more on the value of BI, <a href="https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/business-intelligence-reports/" target="_blank">See the Digital Workspace article</a> (opens in new tab)',
+      ].join('<br />')
+      return ['Interaction created', body]
+    } else {
+      return 'Interaction created'
+    }
+  } else {
+    return 'Interaction updated'
+  }
+}
+
 const InteractionDetailsForm = ({
   companyId,
   referralId,
@@ -58,113 +69,83 @@ const InteractionDetailsForm = ({
   updatedInteractionId,
   wasPolicyFeedbackProvided,
   initialValues,
-  progress = false,
   has_related_trade_agreements,
   related_trade_agreements,
   interactionId,
   ...props
 }) => {
-  useEffect(() => {
-    if (updatedInteractionId) {
-      if (!initialValues.id) {
-        if (wasPolicyFeedbackProvided) {
-          const body = [
-            'Thanks for submitting business intelligence (BI), which feeds into the Business Intelligence Unit’s reports. If they need more information, they will contact you.',
-            '',
-            'For more on the value of BI, <a href="https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/business-intelligence-reports/" target="_blank">See the Digital Workspace article</a> (opens in new tab)',
-          ].join('<br />')
-          addMessageWithBody('success', 'Interaction created', body)
-        } else {
-          addMessage('success', 'Interaction created')
-        }
-      }
-      window.location.href = getReturnLink(
-        companyId,
-        referralId,
-        investmentId,
-        contactId,
-        updatedInteractionId
-      )
-    }
-  }, [updatedInteractionId, returnLink])
   return (
     <Task>
       {(getTask) => {
-        const saveInteractionTask = getTask(TASK_SAVE_INTERACTION, STATE_ID)
         const openContactFormTask = getTask(TASK_OPEN_CONTACT_FORM, STATE_ID)
         const companyIds = [companyId]
         return (
-          <Analytics>
-            {(pushAnalytics) => (
-              <MultiInstanceForm
-                id={STATE_ID}
-                initialValues={initialValues}
-                submissionError={saveInteractionTask.errorMessage}
-                onSubmit={(values) => {
-                  saveInteractionTask.start({
-                    payload: {
-                      values,
-                      companyIds,
-                      referralId,
-                    },
-                    onSuccessDispatch: ADD_INTERACTION_FORM__SUBMIT,
-                  })
-                  pushAnalytics({
-                    event: 'create_interaction',
-                    ..._.pick(
-                      values,
-                      'was_policy_feedback_provided',
-                      'were_countries_discussed'
-                    ),
-                  })
-                }}
-              >
-                {({ values, currentStep }) => (
-                  <LoadingBox loading={progress}>
-                    {(!initialValues.theme || !initialValues.kind) && (
-                      <MultiInstanceForm.Step name="interaction_type">
-                        {() => <StepInteractionType />}
-                      </MultiInstanceForm.Step>
-                    )}
-
-                    <MultiInstanceForm.Step
-                      name="interaction_details"
-                      forwardButton={
-                        initialValues.id
-                          ? 'Save interaction'
-                          : 'Add interaction'
-                      }
-                    >
-                      {() => (
-                        <StepInteractionDetails
-                          companyId={companyId}
-                          interactionId={interactionId}
-                          activeEvent={initialValues.event}
-                          relatedOpportunity={
-                            initialValues.large_capital_opportunity
-                          }
-                          onOpenContactForm={(e) => {
-                            e.preventDefault()
-                            openContactFormTask.start({
-                              payload: {
-                                values,
-                                currentStep,
-                                companyId,
-                                url: e.target.href,
-                              },
-                              onSuccessDispatch:
-                                ADD_INTERACTION_FORM__CONTACT_FORM_OPENED,
-                            })
-                          }}
-                          {...props}
-                        />
-                      )}
-                    </MultiInstanceForm.Step>
-                  </LoadingBox>
+          <TaskForm
+            id={STATE_ID}
+            submissionTaskName={TASK_SAVE_INTERACTION}
+            initialValues={initialValues}
+            // TODO update when taskform analytics finalised
+            analyticsFormName="placeholder"
+            transformPayload={(values) => ({
+              values,
+              companyIds,
+              referralId,
+            })}
+            redirectTo={({ data }) =>
+              getReturnLink(
+                companyId,
+                referralId,
+                investmentId,
+                contactId,
+                data.id
+              )
+            }
+            flashMessage={({ data }) =>
+              getFlashMessage(interactionId, data.was_policy_feedback_provided)
+            }
+          >
+            {({ values, currentStep }) => (
+              <>
+                {(!initialValues.theme || !initialValues.kind) && (
+                  <Step name="interaction_type">
+                    {() => <StepInteractionType />}
+                  </Step>
                 )}
-              </MultiInstanceForm>
+
+                <Step
+                  name="interaction_details"
+                  forwardButton={
+                    initialValues.id ? 'Save interaction' : 'Add interaction'
+                  }
+                >
+                  {() => (
+                    <StepInteractionDetails
+                      companyId={companyId}
+                      interactionId={interactionId}
+                      activeEvent={initialValues.event}
+                      relatedOpportunity={
+                        initialValues.large_capital_opportunity
+                      }
+                      onOpenContactForm={(e) => {
+                        e.preventDefault()
+                        openContactFormTask.start({
+                          payload: {
+                            values,
+                            currentStep,
+                            companyId,
+                            url: e.target.href,
+                          },
+                          onSuccessDispatch:
+                            ADD_INTERACTION_FORM__CONTACT_FORM_OPENED,
+                        })
+                      }}
+                      {...props}
+                    />
+                  )}
+                </Step>
+              </>
             )}
-          </Analytics>
+          </TaskForm>
         )
       }}
     </Task>

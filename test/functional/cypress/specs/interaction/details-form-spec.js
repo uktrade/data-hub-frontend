@@ -396,7 +396,7 @@ describe('Interaction theme', () => {
     })
 
     it('should render all form fields', () => {
-      assertFormFields(cy.get('#interaction-details-form form div'), [
+      assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
@@ -496,7 +496,7 @@ describe('Service delivery theme', () => {
     })
 
     it('should render all form fields', () => {
-      assertFormFields(cy.get('#interaction-details-form form div'), [
+      assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
@@ -589,7 +589,7 @@ describe('Investment theme', () => {
     })
 
     it('should render all form fields', () => {
-      assertFormFields(cy.get('#interaction-details-form form div'), [
+      assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
@@ -704,7 +704,7 @@ describe('Trade Agreement theme', () => {
       cy.contains('button', 'Continue').click()
     })
     it('should render all form fields', () => {
-      assertFormFields(cy.get('#interaction-details-form form div'), [
+      assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
