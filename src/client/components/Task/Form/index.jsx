@@ -19,9 +19,10 @@ import reducer from './reducer'
 import FormActions from '../../Form/elements/FormActions'
 import { FormContextProvider } from '../../Form/hooks'
 
+import { addMessage, addMessageWithBody } from '../../../utils/flash-messages'
 import { validateForm } from '../../Form/MultiInstanceForm'
 import Effect from '../../Effect'
-import { addMessage, addMessageWithBody } from '../../../utils/flash-messages'
+import HardRedirect from '../../HardRedirect'
 
 const _TaskForm = ({
   // Required
@@ -35,6 +36,7 @@ const _TaskForm = ({
   flashMessage,
   children,
   initialValues,
+  redirectMode = 'hard',
   // TODO: Allow for react router redirection
   reactRouterRedirect,
   transformInitialValues = (x) => x,
@@ -150,7 +152,9 @@ const _TaskForm = ({
                         <TaskLoadingBox
                           name={submissionTaskName}
                           id={id}
-                          when={redirectTo && resolved}
+                          when={
+                            redirectMode === 'hard' && redirectTo && resolved
+                          }
                         >
                           <form
                             noValidate={true}
@@ -205,7 +209,8 @@ const _TaskForm = ({
                                             )
                                           : addMessage('success', message)
                                       }
-                                      redirectTo &&
+                                      redirectMode === 'soft' &&
+                                        redirectTo &&
                                         history.push(redirectTo(result, values))
                                       onSuccess && onSuccess(result, values)
                                       props.resetResolved()
@@ -230,6 +235,12 @@ const _TaskForm = ({
                                   })
                               }}
                             />
+                            {redirectMode === 'hard' && (
+                              <HardRedirect
+                                to={resolved && redirectTo(result, values)}
+                                when={resolved}
+                              />
+                            )}
                             {!isEmpty(errors) && (
                               <ErrorSummary
                                 ref={ref}
@@ -366,6 +377,9 @@ const dispatchToProps = (dispatch) => ({
  * convert the result of the submission task and the submitted form values into
  * a URL path to which the user should be redirected when the submission task
  * resolves.
+ * @param {Props['redirectMode']} [props.redirectMode='hard'] - The component
+ * supports a _hard_ and _soft_ redirection modes. The _hard_ mode alters
+ * `window.location.href`, the _soft_ mode uses React-Router.
  * @param {Props['flashMessage']} props.flashMessage - A function which should
  * convert the result of the submission task and the submitted form values into
  * a flash message text or a tuple of `[heading, body]`, which will be used as
@@ -405,6 +419,7 @@ TaskForm.propTypes = {
   analyticsFormName: PropTypes.string.isRequired,
   submissionTaskName: PropTypes.string.isRequired,
   redirectTo: PropTypes.func,
+  redirectMode: PropTypes.oneOf(['hard', 'soft']),
   flashMessage: PropTypes.func,
   initialValuesTaskName: PropTypes.string,
   transformInitialValues: PropTypes.func,
