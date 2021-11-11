@@ -228,16 +228,14 @@ const _TaskForm = ({
                                   })
                               }}
                             />
-                            {redirectMode === 'hard' && (
-                              <HardRedirect
-                                to={
-                                  resolved &&
-                                  redirectTo &&
-                                  redirectTo(result, values)
-                                }
-                                when={resolved}
-                              />
-                            )}
+                            {redirectMode === 'hard' &&
+                              redirectTo &&
+                              resolved(
+                                <HardRedirect
+                                  to={redirectTo(result, values)}
+                                  when={resolved}
+                                />
+                              )}
                             {!isEmpty(errors) && (
                               <ErrorSummary
                                 ref={ref}
