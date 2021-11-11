@@ -9,10 +9,6 @@ import Step from '../../../../../client/components/Form/elements/Step.jsx'
 import Task from '../../../../../client/components/Task'
 import TaskForm from '../../../../../client/components/Task/Form/index.jsx'
 import {
-  ADD_INTERACTION_FORM__CONTACT_FORM_OPENED,
-  ADD_INTERACTION_FORM__SUBMIT,
-} from '../../../../../client/actions'
-import {
   ID as STATE_ID,
   TASK_SAVE_INTERACTION,
   TASK_OPEN_CONTACT_FORM,
@@ -149,8 +145,6 @@ const InteractionDetailsForm = ({
                                   companyId,
                                   url: e.target.href,
                                 },
-                                onSuccessDispatch:
-                                  ADD_INTERACTION_FORM__CONTACT_FORM_OPENED,
                               })
                             }}
                             {...props}
@@ -186,14 +180,10 @@ export default connect(
     ...state[STATE_ID],
     values,
   }),
-  (dispatch) => ({
-    openContactForm: (page, event) => {
+  () => ({
+    openContactForm: (event) => {
       event.target.blur()
       event.preventDefault()
-      dispatch({
-        type: ADD_INTERACTION_FORM__SUBMIT,
-        page,
-      })
     },
   })
 )(InteractionDetailsForm)
