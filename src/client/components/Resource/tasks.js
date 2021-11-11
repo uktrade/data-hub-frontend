@@ -5,7 +5,7 @@ import Interactions from './Interactions'
 import Opportunity from './Opportunity'
 import OpportunityStatuses from './OpportunityStatuses'
 import UKRegions from './UKRegions'
-import CapitalInvestmentRequiredChecksConducted from './CapitalInvestmentRequiredChecksConducted'
+import CapitalInvestmentRequiredChecksConducted from './RequiredChecksConducted'
 import ConstructionRisks from './ConstructionRisks'
 
 export default {

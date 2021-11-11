@@ -1,6 +1,6 @@
 import { createMetadataResource } from '.'
 
 export default createMetadataResource(
-  'CapitalInvestmentRequiredChecksConducted',
+  'RequiredChecksConducted',
   'capital-investment/required-checks-conducted'
 )
