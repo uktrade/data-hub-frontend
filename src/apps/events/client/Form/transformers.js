@@ -26,13 +26,15 @@ const transformEventFormForAPIRequest = (values) => {
     teams,
     uk_region,
   } = values
+  const hasRelatedTradeAgreements = transformYesNoToBool(
+    has_related_trade_agreements
+  )
+  const hasEventShared = transformYesNoToBool(event_shared)
   const result = {
-    has_related_trade_agreements: transformYesNoToBool(
-      has_related_trade_agreements
-    ),
-    related_trade_agreements: transformArrayOfUniqueOptions(
-      related_trade_agreements
-    ),
+    has_related_trade_agreements: hasRelatedTradeAgreements,
+    related_trade_agreements: hasRelatedTradeAgreements
+      ? transformArrayOfUniqueOptions(related_trade_agreements)
+      : [],
     event_type: transformOption(event_type),
     start_date: transformDateObjectToDateString(start_date),
     end_date: transformDateObjectToDateString(end_date),
@@ -43,9 +45,11 @@ const transformEventFormForAPIRequest = (values) => {
     organiser: transformOption(organiser),
     event_shared: transformYesNoToBool(event_shared),
     related_programmes: transformArrayOfUniqueOptions(related_programmes),
-    teams: transformArrayOfUniqueOptions(
-      teams ? teams.concat([lead_team]) : [lead_team]
-    ),
+    teams: hasEventShared
+      ? transformArrayOfUniqueOptions(
+          teams ? teams.concat([lead_team]) : [lead_team]
+        )
+      : transformArrayOfUniqueOptions([lead_team]),
     uk_region: transformOption(uk_region),
   }
   return result

@@ -67,6 +67,7 @@ const saveEvent = ({ values }) => {
     const request = values.id ? apiProxyAxios.patch : apiProxyAxios.post
     const payload = values.id
       ? {
+          ...values,
           ...transformedValuesOnlyPayload,
         }
       : {
