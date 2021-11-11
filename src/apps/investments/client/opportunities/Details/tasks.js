@@ -13,21 +13,13 @@ export const getOpportunityDetails = ({ opportunityId }) =>
 export const getDetailsMetadata = () =>
   Promise.all([
     apiProxyAxios.get('/v4/metadata/capital-investment/asset-class-interest'),
-    apiProxyAxios.get('/v4/metadata/capital-investment/construction-risk'),
     apiProxyAxios.get(
       '/v4/metadata/large-capital-opportunity/opportunity-value-type'
     ),
-  ]).then(
-    ([
-      { data: classes },
-      { data: constructionRisks },
-      { data: valueTypes },
-    ]) => ({
-      classesOfInterest: classes.map(idNameToValueLabel),
-      constructionRisks: constructionRisks.map(idNameToValueLabel),
-      valueTypes: valueTypes.map(idNameToValueLabel),
-    })
-  )
+  ]).then(([{ data: classes }, { data: valueTypes }]) => ({
+    classesOfInterest: classes.map(idNameToValueLabel),
+    valueTypes: valueTypes.map(idNameToValueLabel),
+  }))
 
 export const getRequirementsMetadata = () =>
   Promise.all([

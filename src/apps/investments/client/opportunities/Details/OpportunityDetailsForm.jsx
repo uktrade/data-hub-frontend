@@ -32,6 +32,7 @@ import {
 } from '../../../../../client/components'
 import FieldUKRegionTypeahead from '../../../../../client/components/Form/elements/FieldUKRegionTypeahead'
 import FieldCapitalInvestmentRequiredChecksConductedRadios from '../../../../../client/components/Form/elements/FieldCapitalInvestmentRequiredChecksConductedRadios'
+import FieldConstructionRiskRadios from '../../../../../client/components/Form/elements/FieldConstructionRiskRadios'
 
 import { CLEARED_REFERENCE, ISSUES_IDENTIFIED_REFERENCE } from './constants'
 import { idNameToValueLabel } from './tasks'
@@ -155,11 +156,10 @@ function OpportunityDetailsForm(state) {
                       />
                     </>
                   )}
-                  <FieldRadios
+
+                  <FieldConstructionRiskRadios
                     name="constructionRisks"
-                    legend="Construction risk"
                     initialValue={constructionRisks[0]?.value}
-                    options={metadata.constructionRisks}
                   />
                   <AdviserTypeAhead
                     name="leadRelationshipManager"
