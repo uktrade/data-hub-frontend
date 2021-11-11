@@ -19,7 +19,7 @@ const FieldCapitalInvestmentRequiredChecksConductedRadios = ({ ...props }) => (
 )
 
 FieldCapitalInvestmentRequiredChecksConductedRadios.propTypes = _.omit(
-  FieldRadios,
+  FieldRadios.propTypes,
   'options'
 )
 

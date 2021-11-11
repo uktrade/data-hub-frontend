@@ -19,7 +19,7 @@ const FieldUKRegionTypeahead = ({ ...props }) => (
 )
 
 FieldUKRegionTypeahead.propTypes = _.omit(
-  FieldTypeahead,
+  FieldTypeahead.propTypes,
   'label',
   'options',
   'placeholder',
