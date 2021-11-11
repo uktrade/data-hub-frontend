@@ -105,13 +105,6 @@ const _TaskForm = ({
               )
             return (
               <>
-                <Effect
-                  dependencyList={[initialValues]}
-                  effect={() =>
-                    initialValues &&
-                    onLoad(transformInitialValues(initialValues))
-                  }
-                />
                 <FormContextProvider
                   {...contextProps}
                   // FIXME: This needs to be called also when the initial values load
