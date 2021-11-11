@@ -29,6 +29,7 @@ export type Props = {
   submissionTaskName: string,
   id: string,
   analyticsFormName: string,
+  analyticsData?: (values: Values) => object,
   initialValuesTaskName?: string,
   initialValuesPayload?: any,
   initialValues?: Record<string, any>,
