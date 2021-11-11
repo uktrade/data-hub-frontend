@@ -59,21 +59,14 @@ const getEventFormAndMetadata = (eventId) => {
 }
 
 const saveEvent = ({ values }) => {
-  // console.log(values)
   const transformedValuesOnlyPayload = transformEventFormForAPIRequest(values)
-  // console.log(transformedValuesOnlyPayload)
   if (transformedValuesOnlyPayload) {
     // Save this to the backend
     const request = values.id ? apiProxyAxios.patch : apiProxyAxios.post
-    const payload = values.id
-      ? {
-          ...values,
-          ...transformedValuesOnlyPayload,
-        }
-      : {
-          ...values,
-          ...transformedValuesOnlyPayload,
-        }
+    const payload = {
+      ...values,
+      ...transformedValuesOnlyPayload,
+    }
     const endpoint = values.id ? `/v4/event/${values.id}` : '/v4/event'
     return request(endpoint, payload).catch(catchApiError)
   }
