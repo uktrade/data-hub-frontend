@@ -1,14 +1,11 @@
-const { get, pick } = require('lodash')
-const { KINDS, THEMES } = require('../../constants')
+const { get } = require('lodash')
+
 const { getActiveEvents } = require('../../../events/repos')
 const {
   transformContactToOption,
   transformObjectToOption,
 } = require('../../../transformers')
 const { getOptions } = require('../../../../lib/options')
-const { formatWithoutParsing } = require('../../../../client/utils/date')
-
-const { OPTION_YES, OPTION_NO } = require('../../../constants')
 const urls = require('../../../../lib/urls')
 
 const transformServiceToOption = (service) => ({
@@ -18,151 +15,10 @@ const transformServiceToOption = (service) => ({
   interaction_questions: service.interaction_questions,
 })
 
-const transformToTypeahead = (value) => {
-  if (!value) {
-    return value
-  }
-  return Array.isArray(value)
-    ? value.map(transformObjectToOption)
-    : transformObjectToOption(value)
-}
-
-const transformToID = (value) => {
-  if (!value) {
-    return value
-  }
-  return Array.isArray(value)
-    ? value.map((optionFromArrayOfOptions) => optionFromArrayOfOptions.id)
-    : value.id
-}
-
-const transformToYesNo = (value) => (value ? OPTION_YES : OPTION_NO)
-
-const transformValues = (interaction, callback, fieldNames) => {
-  const isServiceDelivery = interaction.kind === KINDS.SERVICE_DELIVERY
-  const serviceDeliveryExclusiveFields = [
-    'service_delivery_status',
-    'grant_amount_offered',
-    'is_event',
-  ]
-  const interactionExclusiveFields = ['communication_channel']
-
-  return fieldNames
-    .filter((fieldName) => fieldName in interaction)
-    .filter((fieldName) =>
-      isServiceDelivery
-        ? !interactionExclusiveFields.includes(fieldName)
-        : !serviceDeliveryExclusiveFields.includes(fieldName)
-    )
-    .reduce(
-      (acc, fieldName) => ({
-        ...acc,
-        [fieldName]: callback(interaction[fieldName]),
-      }),
-      {}
-    )
-}
-
-const transformServiceAnswers = (serviceAnswers) => {
-  if (!serviceAnswers) {
-    return serviceAnswers
-  }
-  return Object.keys(serviceAnswers).reduce(
-    (acc, questionId) => ({
-      ...acc,
-      [`service_answers.${questionId}`]: Object.keys(
-        serviceAnswers[questionId]
-      )[0],
-    }),
-    {}
-  )
-}
-
-const transformInteractionToValues = (interaction) => {
-  if (!interaction) {
-    return {}
-  }
-
-  const serviceId = get(interaction, 'service.id')
-  const serviceName = get(interaction, 'service.name', '')
-  const [parentServiceLabel, childServiceLabel] = serviceName.split(' : ')
-
-  return {
-    theme: interaction.theme || THEMES.OTHER,
-    service: childServiceLabel ? parentServiceLabel : serviceId,
-    service_2nd_level: childServiceLabel ? serviceId : undefined,
-    ...pick(interaction, [
-      'id',
-      'kind',
-      'subject',
-      'notes',
-      'grant_amount_offered',
-      'net_company_receipt',
-      'policy_feedback_notes',
-    ]),
-    ...transformValues(interaction, transformToYesNo, [
-      'was_policy_feedback_provided',
-      'were_countries_discussed',
-      'is_event',
-      'has_related_trade_agreements',
-    ]),
-    ...transformValues(interaction, transformToID, [
-      'service_delivery_status',
-      'policy_issue_types',
-    ]),
-    ...transformValues(interaction, transformToTypeahead, [
-      'contacts',
-      'event',
-      'communication_channel',
-      'policy_areas',
-      'related_trade_agreements',
-      'large_capital_opportunity',
-    ]),
-    ...transformServiceAnswers(interaction.service_answers),
-  }
-}
-
-const getInitialFormValues = (req, res) => {
-  const { user } = req.session
-  const { company, investment, interaction, referral } = res.locals
-  const { theme, kind } = req.params
-  const date = interaction ? new Date(interaction.date) : new Date()
-  const investmentId = get(
-    investment,
-    'id',
-    get(interaction, 'investment_project')
-  )
-  const advisers =
-    interaction &&
-    interaction.dit_participants &&
-    interaction.dit_participants
-      .filter((participant) => participant.adviser.name)
-      .map((participant) => participant.adviser)
-  return {
-    theme,
-    kind,
-    companies: [company.id],
-    investment_project: investmentId,
-    date: {
-      day: formatWithoutParsing(date, 'dd'),
-      month: formatWithoutParsing(date, 'MM'),
-      year: formatWithoutParsing(date, 'yyyy'),
-    },
-    contacts:
-      referral && referral.contact
-        ? [transformObjectToOption(referral.contact)]
-        : [],
-    dit_participants: (advisers &&
-      advisers.map((adviser) => transformObjectToOption(adviser))) || [
-      transformObjectToOption(user),
-    ],
-    ...transformInteractionToValues(interaction),
-  }
-}
-
 async function renderInteractionDetailsForm(req, res, next) {
   try {
     const { company, interaction, referral, investment, contact } = res.locals
+    const { user } = req.session
     const [
       services,
       serviceDeliveryStatuses,
@@ -191,10 +47,9 @@ async function renderInteractionDetailsForm(req, res, next) {
       )
       .render('interactions/apps/details-form/views/interaction-details-form', {
         props: {
-          initialValues: getInitialFormValues(req, res),
           companyId: get(company, 'id'),
           investmentId: get(investment, 'id'),
-          referralId: get(referral, 'id'),
+          referral,
           contactId: get(contact, 'id'),
           contacts: company.contacts
             .filter((contact) => !contact.archived)
@@ -208,6 +63,7 @@ async function renderInteractionDetailsForm(req, res, next) {
           countries,
           relatedTradeAgreements,
           interactionId: get(interaction, 'id'),
+          user,
         },
       })
   } catch (error) {

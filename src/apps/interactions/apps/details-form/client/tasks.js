@@ -1,13 +1,23 @@
 import axios from 'axios'
-import { omit, pick } from 'lodash'
+import { get, omit, pick } from 'lodash'
 
 import urls from '../../../../../lib/urls'
-import { catchApiError } from '../../../../../client/components/Task/utils'
+import {
+  apiProxyAxios,
+  catchApiError,
+} from '../../../../../client/components/Task/utils'
 import getContactFromQuery from '../../../../../client/utils/getContactFromQuery'
-import { INTERACTION_STATUS } from '../../../constants'
-import { EXPORT_INTEREST_STATUS_VALUES, OPTION_NO } from '../../../../constants'
+import { INTERACTION_STATUS, KINDS, THEMES } from '../../../constants'
+import {
+  EXPORT_INTEREST_STATUS_VALUES,
+  OPTION_NO,
+  OPTION_YES,
+} from '../../../../constants'
 import { ID as STORE_ID } from './state'
-import { THEMES } from '../../../constants'
+
+import { transformObjectToOption } from '../../../../transformers'
+
+import { formatWithoutParsing } from '../../../../../client/utils/date'
 
 const { transformValueForAPI } = require('../../../../../client/utils/date')
 
@@ -65,35 +75,159 @@ function transformServiceAnswers(values) {
     }, {})
 }
 
-export function openContactForm({ values, currentStep, url }) {
-  window.sessionStorage.setItem(
-    STORE_ID,
-    JSON.stringify({
-      values,
-      currentStep,
-    })
-  )
+const transformToYesNo = (value) => (value ? OPTION_YES : OPTION_NO)
+
+const transformValues = (interaction, callback, fieldNames) => {
+  const isServiceDelivery = interaction.kind === KINDS.SERVICE_DELIVERY
+  const serviceDeliveryExclusiveFields = [
+    'service_delivery_status',
+    'grant_amount_offered',
+    'is_event',
+  ]
+  const interactionExclusiveFields = ['communication_channel']
+
+  return fieldNames
+    .filter((fieldName) => fieldName in interaction)
+    .filter((fieldName) =>
+      isServiceDelivery
+        ? !interactionExclusiveFields.includes(fieldName)
+        : !serviceDeliveryExclusiveFields.includes(fieldName)
+    )
+    .reduce(
+      (acc, fieldName) => ({
+        ...acc,
+        [fieldName]: callback(interaction[fieldName]),
+      }),
+      {}
+    )
+}
+
+const transformToID = (value) => {
+  if (!value) {
+    return value
+  }
+  return Array.isArray(value)
+    ? value.map((optionFromArrayOfOptions) => optionFromArrayOfOptions.id)
+    : value.id
+}
+
+const transformToTypeahead = (value) => {
+  if (!value) {
+    return value
+  }
+  return Array.isArray(value)
+    ? value.map(transformObjectToOption)
+    : transformObjectToOption(value)
+}
+
+const transformInteractionToValues = (interaction, companyId, investmentId) => {
+  const advisers = interaction.dit_participants
+    .filter((participant) => participant.adviser.name)
+    .map((participant) => participant.adviser)
+  const serviceId = get(interaction, 'service.id')
+  const serviceName = get(interaction, 'service.name', '')
+  const [parentServiceLabel, childServiceLabel] = serviceName.split(' : ')
+  const date = new Date(interaction.date)
+
+  return {
+    theme: interaction.theme || THEMES.OTHER,
+    service: childServiceLabel ? parentServiceLabel : serviceId,
+    service_2nd_level: childServiceLabel ? serviceId : undefined,
+    has_related_opportunity: transformToYesNo(
+      interaction.large_capital_opportunity
+    ),
+    dit_participants: advisers.map((adviser) =>
+      transformObjectToOption(adviser)
+    ),
+    date: {
+      day: formatWithoutParsing(date, 'dd'),
+      month: formatWithoutParsing(date, 'MM'),
+      year: formatWithoutParsing(date, 'yyyy'),
+    },
+    companies: [companyId],
+    investment_project: investmentId,
+    ...pick(interaction, [
+      'id',
+      'kind',
+      'subject',
+      'notes',
+      'grant_amount_offered',
+      'net_company_receipt',
+      'policy_feedback_notes',
+    ]),
+    ...transformValues(interaction, transformToYesNo, [
+      'was_policy_feedback_provided',
+      'were_countries_discussed',
+      'is_event',
+      'has_related_trade_agreements',
+    ]),
+    ...transformValues(interaction, transformToID, [
+      'service_delivery_status',
+      'policy_issue_types',
+    ]),
+    ...transformValues(interaction, transformToTypeahead, [
+      'contacts',
+      'event',
+      'communication_channel',
+      'policy_areas',
+      'related_trade_agreements',
+      'large_capital_opportunity',
+    ]),
+    ...transformServiceAnswers(interaction.service_answers),
+  }
+}
+
+export function openContactForm({ values, url }) {
+  window.sessionStorage.setItem(STORE_ID, JSON.stringify(values))
   window.location.href = url
 }
 
-export function restoreState() {
-  const stateFromStorage = window.sessionStorage.getItem(STORE_ID)
-
-  if (!stateFromStorage) {
-    return {}
-  }
-
+export async function getInitialFormValues({
+  companyId,
+  referral,
+  investmentId,
+  user,
+  interactionId,
+}) {
   const queryContact = getContactFromQuery()
+
+  // If user has added a contact during an interaction,
+  // form values are stored in sessionStorage and added
+  // back to state when returning to the form.
   if (queryContact.label && queryContact.value) {
-    const updatedState = JSON.parse(stateFromStorage)
-    updatedState.values.contacts.push({
+    const valuesFromStorage = JSON.parse(
+      window.sessionStorage.getItem(STORE_ID)
+    )
+    valuesFromStorage.contacts.push({
       label: queryContact.label,
       value: queryContact.value,
     })
-    return updatedState
+    return valuesFromStorage
+  } else if (interactionId) {
+    // If editing an interaction
+    return apiProxyAxios
+      .get(`v4/interaction/${interactionId}`)
+      .then(({ data }) =>
+        transformInteractionToValues(data, companyId, investmentId)
+      )
+  } else {
+    // If creating an interaction
+    const date = new Date()
+    return {
+      companies: [companyId],
+      investment_project: investmentId,
+      date: {
+        day: formatWithoutParsing(date, 'dd'),
+        month: formatWithoutParsing(date, 'MM'),
+        year: formatWithoutParsing(date, 'yyyy'),
+      },
+      contacts:
+        referral && referral.contact
+          ? [transformObjectToOption(referral.contact)]
+          : [],
+      dit_participants: [transformObjectToOption(user)],
+    }
   }
-
-  return JSON.parse(stateFromStorage)
 }
 
 export function saveInteraction({ values, companyIds, referralId }) {
