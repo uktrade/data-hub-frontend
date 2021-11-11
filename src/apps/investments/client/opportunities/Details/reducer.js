@@ -5,8 +5,8 @@ import {
   INVESTMENT_OPPORTUNITY__EDIT_DETAILS,
   INVESTMENT_OPPORTUNITY__EDIT_REQUIREMENTS,
   INVESTMENT_OPPORTUNITY__CANCEL_EDIT,
-  INVESTMENT_OPPORTUNITY__DETAILS_CHANGE,
   INVESTMENT_OPPORTUNITY__REQUIREMENTS_CHANGE,
+  INVESTMENT_OPPORTUNITY__UPDATED,
 } from '../../../../../client/actions'
 
 const initialState = {
@@ -54,8 +54,18 @@ const initialState = {
   },
 }
 
-export default (state = initialState, { type, result }) => {
+export default (state = initialState, { type, result, opportunity }) => {
   switch (type) {
+    case INVESTMENT_OPPORTUNITY__UPDATED:
+      return {
+        ...state,
+        opportunity: {
+          ...state.opportunity,
+          ...opportunity,
+          isEditingDetails: false,
+          isEditingRequirements: false,
+        },
+      }
     case INVESTMENT_OPPORTUNITY_DETAILS__LOADED:
       return {
         ...state,
@@ -106,16 +116,6 @@ export default (state = initialState, { type, result }) => {
         ...state,
         opportunity: {
           ...state.opportunity,
-          isEditingDetails: false,
-          isEditingRequirements: false,
-        },
-      }
-    case INVESTMENT_OPPORTUNITY__DETAILS_CHANGE:
-      return {
-        ...state,
-        opportunity: {
-          ...state.opportunity,
-          ...result,
           isEditingDetails: false,
           isEditingRequirements: false,
         },
