@@ -89,7 +89,6 @@ const _TaskForm = ({
       props={{
         id,
         name: initialValuesTaskName,
-        progressBox: true,
         payload: initialValuesPayload,
         taskStatusProps: { dismissable: false },
       }}
