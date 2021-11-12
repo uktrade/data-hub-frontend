@@ -5,7 +5,6 @@ import React from 'react'
 import multiInstance from '../../utils/multiinstance'
 import { apiProxyAxios } from '../Task/utils'
 import Task from '../Task'
-import LoadingBox from '../Task/LoadingBox'
 
 const deepKeysToCamelCase = (x) =>
   Array.isArray(x)
@@ -35,9 +34,6 @@ const deepKeysToCamelCase = (x) =>
  * @param {(result: any) => any[]} [props.transformer = x => [x]] -
  * A function which should transform the task result into an array that will
  * be spread to the {props.children} function. Defaults to `x => [x]`.
- * @param {any} [progressBox] - If truthy, the {LoadingBox} will be used as
- * the task status component. Note that in such case {props.children} will be
- * also called before the task resolves with the resut being {undefined}.
  * @example
  * <Resource name="My task name" id="foo" payload={123}>
  *   {result =>
@@ -62,35 +58,20 @@ const Resource = multiInstance({
     result,
     payload,
     transformer = (x) => [x],
-    progressBox,
-  }) =>
-    progressBox ? (
-      <LoadingBox
-        {...taskStatusProps}
-        name={name}
-        id={id}
-        startOnRender={{
-          onSuccessDispatch: 'RESOURCE',
-          payload,
-          ignoreIfInProgress: true,
-        }}
-      >
-        {children(...(result ? transformer(result) : [result]))}
-      </LoadingBox>
-    ) : (
-      <Task.Status
-        {...taskStatusProps}
-        name={name}
-        id={id}
-        startOnRender={{
-          onSuccessDispatch: 'RESOURCE',
-          payload,
-          ignoreIfInProgress: true,
-        }}
-      >
-        {() => result !== undefined && children(...transformer(result))}
-      </Task.Status>
-    ),
+  }) => (
+    <Task.Status
+      {...taskStatusProps}
+      name={name}
+      id={id}
+      startOnRender={{
+        onSuccessDispatch: 'RESOURCE',
+        payload,
+        ignoreIfInProgress: true,
+      }}
+    >
+      {() => result !== undefined && children(...transformer(result))}
+    </Task.Status>
+  ),
 })
 
 Resource.propTypes = {
