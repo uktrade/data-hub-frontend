@@ -351,54 +351,67 @@ const dispatchToProps = (dispatch) => ({
  * - Starts a _task_ when the form is submitted
  * - Renders a {ProgressBox} overlay while the _task_ is in progress
  * - Handles the _task_ rejection by delegating it to the underlying {TaskProgressBox}
- * - Hard redirects to a specified path when the _task_ resolves
  * - Can optionally be prepopulated with initial values resolved from a _task_
  * The form has built in
  * - Error summary rendered on top of the form when there are validation errors
  * - Submit button and secondary action links
  * - Success flash message on _task_ resolution
- * - Recording Google Tag Manager events on form submission and task resolution
+ * - Redirection after the _submission task_ resolves
+ * - Recording Google Tag Manager events
  * @type {import("./types").TaskForm} TaskForm
  * @typedef { import("./types").Props } Props
- * @param {Props} props - Refer to the ./types.d.ts file for the concrete props
- * @param {string} props.id - A unique instance ID
+ * @param {Props} props
+ * @param {string} props.id - A unique component instance ID
  * @param {string} props.analyticsFormName - The name of the form that will be
- * used in the Google Analytics event
+ * used in the Google Analytics events
  * @param {Props['submissionTaskName']} props.submissionTaskName - Name of the
  * task that should be started when the form is submitted. The task will receive
  * the form values as payload.
- * @param {Props['redirectTo']} props.redirectTo - A function which should
+ * @param {Props['onSuccess']} [props.onSuccess] - A function that will be
+ * called when the _submission task_ resolves. The function will receive the
+ * task result as its first, and the form values as its second argument.
+ * @param {Props['redirectTo']} [props.redirectTo] - A function which should
  * convert the result of the submission task and the submitted form values into
  * a URL path to which the user should be redirected when the submission task
  * resolves.
  * @param {Props['redirectMode']} [props.redirectMode='hard'] - The component
  * supports a _hard_ and _soft_ redirection modes. The _hard_ mode alters
  * `window.location.href`, the _soft_ mode uses React-Router.
- * @param {Props['flashMessage']} props.flashMessage - A function which should
+ * @param {Props['flashMessage']} [props.flashMessage] - A function which should
  * convert the result of the submission task and the submitted form values into
  * a flash message text or a tuple of `[heading, body]`, which will be used as
  * a flash message when the submission task resolves.
+ * @param {Props['initialValues']} [props.initialValues] - An object mapping
+ * field names to their initial values.
  * @param {Props['initialValuesTaskName']} [props.initialValuesTaskName] -
  * Name of the task that shoud be used to resolve the initial form field values.
+ * The task should resolve with an object mapping field names to their initial
+ * values.
  * @param {any} [props.initialValuesPayload] - An optional payload for the
  * initial values task.
- * @param {Props['transformInitialValues']} [props.transformInitialValues=(x) => x] -
- * An optional function which takes the result of the resolved initial values
- * task and should return a map of field names to their initial values. You can
- * use this mechanism to mix in values comming from elsewhere than the task.
- * @param {Props['transformPayload']} [props.transformPayload=(x) => x] -
+ * @param {Props['transformInitialValues']} [props.transformInitialValues] -
+ * An function which takes the result of the resolved initial values
+ * task and should return an object mapping field names to their initial values.
+ * You can use this mechanism to mix in values comming from elsewhere than the
+ * initial values task.
+ * @param {Props['transformPayload']} [props.transformPayload] -
  * An optional function which takes the form values map as its only argument and
  * whose return value will be used as the payload of the submission task.
+ * You can use this to mix in values into the payload which are not coming from
+ * the form fields.
  * @param {Props['actionLinks']} [props.actionLinks] - An optional array of
- * a subset of props of action links rendered to the right of the submit button.
+ * objects representing action links rendered to the right of the submit button.
+ * For the exact shape of the objects refrer to `./types.d.ts`.
+ * @param {Props['submitButtonLabel']} [props.submitButtonLabel='Save'] -
+ * The label of the submit button.
  * @param {Props['children']} [props.children] - The form fields should be
  * passed as children. Note that the form communicates with it's fields
  * through the context it provides to the {useFormContext} hook, which is used
  * directly, but mostly indirectly through the {useField} hook in the various
  * form fields. The context exposes a vast imperative interface of methods which
  * is not documented yet. The form optionally accepts a function as a child,
- * which will be passed the context provided by the form as it's only argument
- * and should return React vdom containing form fields.
+ * which will be passed the whole context provided by the form as it's only
+ * argument and should return React vdom containing form fields.
  * */
 const TaskForm = multiInstance({
   name: 'TaskForm',

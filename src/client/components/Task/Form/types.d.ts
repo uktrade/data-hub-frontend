@@ -31,6 +31,7 @@ export type Props = {
   analyticsFormName: string,
   initialValuesTaskName?: string,
   initialValuesPayload?: any,
+  initialValues?: Record<string, any>,
   redirectTo?: (successActionResult: any, values: Values) => string,
   redirectMode?: 'hard' | 'soft',
   flashMessage?: (successActionResult: any, values: Values) => FlashMessage,
