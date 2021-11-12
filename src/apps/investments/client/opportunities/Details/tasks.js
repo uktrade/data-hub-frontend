@@ -12,12 +12,10 @@ export const getOpportunityDetails = ({ opportunityId }) =>
 
 export const getDetailsMetadata = () =>
   Promise.all([
-    apiProxyAxios.get('/v4/metadata/capital-investment/asset-class-interest'),
     apiProxyAxios.get(
       '/v4/metadata/large-capital-opportunity/opportunity-value-type'
     ),
-  ]).then(([{ data: classes }, { data: valueTypes }]) => ({
-    classesOfInterest: classes.map(idNameToValueLabel),
+  ]).then(([{ data: valueTypes }]) => ({
     valueTypes: valueTypes.map(idNameToValueLabel),
   }))
 

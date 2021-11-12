@@ -33,6 +33,7 @@ import {
 import FieldUKRegionTypeahead from '../../../../../client/components/Form/elements/FieldUKRegionTypeahead'
 import RequiredChecksConductedRadios from '../../../../../client/components/Form/elements/FieldRequiredChecksConductedRadios'
 import FieldConstructionRiskRadios from '../../../../../client/components/Form/elements/FieldConstructionRiskRadios'
+import FieldAssetClassTypeahead from '../../../../../client/components/Form/elements/FieldAssetClassTypeahead'
 
 import { CLEARED_REFERENCE, ISSUES_IDENTIFIED_REFERENCE } from './constants'
 import { idNameToValueLabel } from './tasks'
@@ -204,13 +205,9 @@ function OpportunityDetailsForm(state) {
                       ),
                     }))}
                   />
-                  <FieldTypeahead
+                  <FieldAssetClassTypeahead
                     isMulti={true}
-                    label="Asset classes"
                     name="assetClasses"
-                    options={metadata.classesOfInterest}
-                    placeholder="-- Select asset class --"
-                    aria-label="Select asset classes"
                     initialValue={assetClasses}
                   />
                   <p>
