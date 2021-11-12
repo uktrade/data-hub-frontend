@@ -3,8 +3,9 @@ import { useEffect } from 'react'
 /**
  * @function Effect
  * @description Allows you to use the {React.useEffect} hook as a component.
- * A typical use case is when you wan't to make a side effect inside of a
- * function passed as a child to a component.
+ * A typical use case is when you need to make a side effect inside of a
+ * function passed as a child to a component, but you can't use a hook directly
+ * because it violates the hook rules.
  * @param {Object} props
  * @param {any[]} props.dependencyList - The same as the second argument to the
  * {React.useEffect} hook, but with all values JSON stringified.
