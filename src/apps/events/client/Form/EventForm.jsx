@@ -56,7 +56,6 @@ const EventForm = ({
   updatedEventId,
   updatedEventName,
 }) => {
-  // console.log(initialValues)
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -108,14 +107,15 @@ const EventForm = ({
     field,
     { values }
   ) => {
-    if (value) {
-      const startDate = getDate(values?.start_date)
-      const endDate = getDate(values?.end_date)
+    if (values && values.start_date && values.end_date) {
+      const startDate = getDate(values.start_date)
+      const endDate = getDate(values.end_date)
       if (startDate && endDate) {
-        return
-        startDate > endDate
-          ? 'Enter a valid end date. This must be after the start date.'
-          : null
+        const result =
+          startDate > endDate
+            ? 'Enter a valid end date. This must be after the start date.'
+            : null
+        return result
       }
     }
     return null
@@ -364,23 +364,20 @@ const EventForm = ({
                                     item-name="program"
                                   >
                                     {({ value, onChange, error }) => (
-                                      <>
-                                        {/* {console.log(value)} */}
-                                        <FieldTypeahead
-                                          name="related_programmes"
-                                          inputId="related_programmes"
-                                          options={programmes}
-                                          placeholder="-- Select programme --"
-                                          required="Select at least one programme"
-                                          aria-label="Select at least one programme"
-                                          value={programmes.find(
-                                            ({ value: option_value }) =>
-                                              option_value === value
-                                          )}
-                                          onChange={onChange}
-                                          error={error}
-                                        />
-                                      </>
+                                      <FieldTypeahead
+                                        name="related_programmes"
+                                        inputId="related_programmes"
+                                        options={programmes}
+                                        placeholder="-- Select programme --"
+                                        required="Select at least one programme"
+                                        aria-label="Select at least one programme"
+                                        value={programmes.find(
+                                          ({ value: option_value }) =>
+                                            option_value === value
+                                        )}
+                                        onChange={onChange}
+                                        error={error}
+                                      />
                                     )}
                                   </FieldAddAnother>
                                   <FormActions>
@@ -419,19 +416,105 @@ const EventForm = ({
 
 EventForm.propTypes = {
   formData: PropTypes.shape({
-    eventTypeOptions: PropTypes.array,
-    relatedTradeAgreements: PropTypes.array,
-    eventLocationTypes: PropTypes.array,
-    countries: PropTypes.array,
-    teams: PropTypes.array,
-    services: PropTypes.array,
-    programmes: PropTypes.array,
-    ukRegions: PropTypes.array,
-    initialValues: PropTypes.object,
+    eventTypeOptions: PropTypes.arrayOf(
+      PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
+    ),
+    relatedTradeAgreements: PropTypes.arrayOf(
+      PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
+    ),
+    eventLocationTypes: PropTypes.arrayOf(
+      PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
+    ),
+    countries: PropTypes.arrayOf(
+      PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
+    ),
+    teams: PropTypes.arrayOf(
+      PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
+    ),
+    services: PropTypes.arrayOf(
+      PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
+    ),
+    programmes: PropTypes.arrayOf(
+      PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
+    ),
+    ukRegions: PropTypes.arrayOf(
+      PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
+    ),
+    initialValues: PropTypes.shape({
+      id: PropTypes.string,
+      address_postcode: PropTypes.string,
+      address_1: PropTypes.string,
+      address_2: PropTypes.string,
+      address_county: PropTypes.string,
+      address_postcode: PropTypes.string,
+      address_town: PropTypes.string,
+      address_country: PropTypes.shape({
+        value: PropTypes.string,
+        label: PropTypes.string,
+      }),
+      end_date: PropTypes.shape({
+        year: PropTypes.string,
+        month: PropTypes.string,
+        day: PropTypes.string,
+      }),
+      start_date: PropTypes.shape({
+        year: PropTypes.string,
+        month: PropTypes.string,
+        day: PropTypes.string,
+      }),
+      event_type: PropTypes.shape({
+        value: PropTypes.string,
+        label: PropTypes.string,
+      }),
+      lead_team: PropTypes.shape({
+        value: PropTypes.string,
+        label: PropTypes.string,
+      }),
+      location_type: PropTypes.shape({
+        value: PropTypes.string,
+        label: PropTypes.string,
+      }),
+      name: PropTypes.string,
+      notes: PropTypes.string,
+      organiser: PropTypes.shape({
+        value: PropTypes.string,
+        label: PropTypes.string,
+      }),
+      has_related_trade_agreements: PropTypes.oneOf(['yes', 'no']),
+      related_trade_agreements: PropTypes.arrayOf(
+        PropTypes.shape({
+          value: PropTypes.string,
+          label: PropTypes.string,
+        })
+      ),
+      related_programmes: PropTypes.arrayOf(
+        PropTypes.shape({
+          value: PropTypes.string,
+          label: PropTypes.string,
+        })
+      ),
+      event_shared: PropTypes.oneOf(['yes', 'no']),
+      teams: PropTypes.arrayOf(
+        PropTypes.shape({
+          value: PropTypes.string,
+          label: PropTypes.string,
+        })
+      ),
+      service: PropTypes.shape({
+        value: PropTypes.string,
+        label: PropTypes.string,
+      }),
+      uk_region: PropTypes.shape({
+        value: PropTypes.string,
+        label: PropTypes.string,
+      }),
+    }),
   }),
   isComplete: PropTypes.bool,
   createdEventId: PropTypes.string,
   createdEventName: PropTypes.string,
+  updatedEventId: PropTypes.string,
+  updatedEventName: PropTypes.string,
   progress: PropTypes.bool,
   updatedEventName: PropTypes.string,
 }
