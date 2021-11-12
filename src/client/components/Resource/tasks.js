@@ -7,6 +7,7 @@ import OpportunityStatuses from './OpportunityStatuses'
 import UKRegions from './UKRegions'
 import CapitalInvestmentRequiredChecksConducted from './RequiredChecksConducted'
 import ConstructionRisks from './ConstructionRisks'
+import AssetClasses from './AssetClasses'
 
 export default {
   ...Company.tasks,
@@ -18,4 +19,5 @@ export default {
   ...UKRegions.tasks,
   ...CapitalInvestmentRequiredChecksConducted.tasks,
   ...ConstructionRisks.tasks,
+  ...AssetClasses.tasks,
 }
