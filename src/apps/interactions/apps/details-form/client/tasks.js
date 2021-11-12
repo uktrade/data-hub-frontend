@@ -8,14 +8,17 @@ import {
 } from '../../../../../client/components/Task/utils'
 import getContactFromQuery from '../../../../../client/utils/getContactFromQuery'
 import { INTERACTION_STATUS, KINDS, THEMES } from '../../../constants'
-import {
-  EXPORT_INTEREST_STATUS_VALUES,
-  OPTION_NO,
-  OPTION_YES,
-} from '../../../../constants'
+import { EXPORT_INTEREST_STATUS_VALUES, OPTION_NO } from '../../../../constants'
 import { ID as STORE_ID } from './state'
 
-import { transformObjectToOption } from '../../../../transformers'
+import {
+  transformObjectToOption,
+  transformOptionToValue,
+  transformArrayOfOptionsToValues,
+  transformToYesNo,
+  transformToID,
+  transformObjectToTypeahead,
+} from '../../../../transformers'
 
 import { formatWithoutParsing } from '../../../../../client/utils/date'
 
@@ -29,20 +32,6 @@ const FIELDS_TO_OMIT = [
   'has_related_opportunity',
 ]
 
-function transformOption(option) {
-  if (!option || !option.value) {
-    return null
-  }
-  return option.value
-}
-
-function transformArrayOfOptions(options) {
-  if (!options || !options.length) {
-    return []
-  }
-  return options.map(transformOption)
-}
-
 function transformExportCountries(values) {
   if (values.were_countries_discussed === OPTION_NO) {
     return
@@ -53,7 +42,7 @@ function transformExportCountries(values) {
     (acc, status) => [
       ...acc,
       ...values[status].map((country) => ({
-        country: transformOption(country),
+        country: transformOptionToValue(country),
         status,
       })),
     ],
@@ -90,8 +79,6 @@ function transformServiceAnswersForPayload(values) {
     }, {})
 }
 
-const transformToYesNo = (value) => (value ? OPTION_YES : OPTION_NO)
-
 const transformValues = (interaction, callback, fieldNames) => {
   const isServiceDelivery = interaction.kind === KINDS.SERVICE_DELIVERY
   const serviceDeliveryExclusiveFields = [
@@ -115,24 +102,6 @@ const transformValues = (interaction, callback, fieldNames) => {
       }),
       {}
     )
-}
-
-const transformToID = (value) => {
-  if (!value) {
-    return value
-  }
-  return Array.isArray(value)
-    ? value.map((optionFromArrayOfOptions) => optionFromArrayOfOptions.id)
-    : value.id
-}
-
-const transformToTypeahead = (value) => {
-  if (!value) {
-    return value
-  }
-  return Array.isArray(value)
-    ? value.map(transformObjectToOption)
-    : transformObjectToOption(value)
 }
 
 const transformInteractionToValues = (interaction, companyId, investmentId) => {
@@ -180,7 +149,7 @@ const transformInteractionToValues = (interaction, companyId, investmentId) => {
       'service_delivery_status',
       'policy_issue_types',
     ]),
-    ...transformValues(interaction, transformToTypeahead, [
+    ...transformValues(interaction, transformObjectToTypeahead, [
       'contacts',
       'event',
       'communication_channel',
@@ -265,14 +234,14 @@ export function saveInteraction({ values, companyIds, referralId }) {
     companies: companyIds,
     service: values.service_2nd_level || values.service,
     service_answers: transformServiceAnswersForPayload(values),
-    contacts: transformArrayOfOptions(values.contacts),
+    contacts: transformArrayOfOptionsToValues(values.contacts),
     dit_participants: values.dit_participants.map((a) => ({
       adviser: a.value,
     })),
     date: transformValueForAPI(values.date),
-    policy_areas: transformArrayOfOptions(values.policy_areas),
-    communication_channel: transformOption(values.communication_channel),
-    event: transformOption(values.event),
+    policy_areas: transformArrayOfOptionsToValues(values.policy_areas),
+    communication_channel: transformOptionToValue(values.communication_channel),
+    event: transformOptionToValue(values.event),
     // Cannot be empty string
     grant_amount_offered:
       'grant_amount_offered' in values
@@ -289,7 +258,7 @@ export function saveInteraction({ values, companyIds, referralId }) {
       'policy_issue_types',
       'has_related_trade_agreements',
     ]),
-    related_trade_agreements: transformArrayOfOptions(
+    related_trade_agreements: transformArrayOfOptionsToValues(
       values.related_trade_agreements
     ),
     ...(values.theme == THEMES.INVESTMENT && {
