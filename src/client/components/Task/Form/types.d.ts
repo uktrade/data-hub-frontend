@@ -31,7 +31,6 @@ export type Props = {
   analyticsFormName: string,
   initialValuesTaskName?: string,
   initialValuesPayload?: any,
-  // TODO: These would need to be optional or ignored when onSuccess is set
   redirectTo?: (successActionResult: any, values: Values) => string,
   redirectMode?: 'hard' | 'soft',
   flashMessage?: (successActionResult: any, values: Values) => FlashMessage,
