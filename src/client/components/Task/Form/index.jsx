@@ -230,7 +230,7 @@ const _TaskForm = ({
                             />
                             {redirectMode === 'hard' &&
                               redirectTo &&
-                              resolved(
+                              resolved && (
                                 <HardRedirect
                                   to={redirectTo(result, values)}
                                   when={resolved}
