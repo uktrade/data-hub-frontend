@@ -12,6 +12,8 @@ import FieldRadios from '../../../Form/elements/FieldRadios'
 import rejectInitialValuesReadme from './reject-initial-values.md'
 import basicExampleReadme from './basic-example.md'
 import initialValuesAsPropExampleReadme from './initial-values-as-prop.md'
+import softRedirectExampleReadme from './soft-redirect.md'
+import multiStepExampleReadme from './multi-step.md'
 
 storiesOf('Task/Form', module)
   .add(
@@ -227,7 +229,7 @@ storiesOf('Task/Form', module)
     ),
     {
       readme: {
-        sidebar: basicExampleReadme,
+        sidebar: multiStepExampleReadme,
       },
     }
   )
@@ -292,7 +294,7 @@ storiesOf('Task/Form', module)
     ),
     {
       readme: {
-        sidebar: basicExampleReadme,
+        sidebar: softRedirectExampleReadme,
       },
     }
   )
