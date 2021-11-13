@@ -82,18 +82,23 @@ const EventForm = ({
     })
   }
 
-  useEffect(() => {
-    if (createdEventId && createdEventName) {
-      addMessage('success', `'${createdEventName}' event has been created`)
-      window.location.href = urls.events.details(createdEventId)
+  const hardRedirectTo = (id) => {
+    window.location.href = urls.events.details(id)
+  }
+
+  const flashMessage = (id, name, action) => {
+    if (id && name) {
+      addMessage('success', `'${name}' event has been ${action}`)
+      hardRedirectTo(id)
     }
+  }
+
+  useEffect(() => {
+    flashMessage(createdEventId, createdEventName, 'created')
   }, [createdEventId, createdEventName])
 
   useEffect(() => {
-    if (updatedEventId && updatedEventName) {
-      addMessage('success', `'${updatedEventName}' event has been updated`)
-      window.location.href = urls.events.details(updatedEventId)
-    }
+    flashMessage(updatedEventId, updatedEventName, 'updated')
   }, [updatedEventId, updatedEventName])
 
   const getDate = (value) => {
