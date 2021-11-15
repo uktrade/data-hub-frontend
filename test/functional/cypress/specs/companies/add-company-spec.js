@@ -792,5 +792,25 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.form).contains('Select a province')
       cy.get(selectors.companyAdd.form).contains('Enter a postal code')
     })
+
+    it('should show an invalid postal code error', () => {
+      cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).type(
+        '12345'
+      )
+      cy.get(selectors.companyAdd.continueButton).click()
+      cy.get(selectors.companyAdd.form).contains('Enter a valid Postal Code')
+    })
+
+    it('should not show an invalid postal code error when completed correctly', () => {
+      cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).clear()
+      cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).type(
+        'A1A 1A1'
+      )
+      cy.get(selectors.companyAdd.continueButton).click()
+      cy.get(selectors.companyAdd.form).should(
+        'not.contain',
+        'Enter a valid Postal Code'
+      )
+    })
   })
 })
