@@ -102,15 +102,6 @@ export default function Footer() {
           </li>
           <li>
             <FooterLink
-              href={urls.external.digitalWorkspace.privacyPolicy}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Privacy Policy
-            </FooterLink>
-          </li>
-          <li>
-            <FooterLink
               href={urls.external.helpCentre.privacyNotice()}
               target="_blank"
               rel="noopener noreferrer"
