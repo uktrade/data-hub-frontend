@@ -19,8 +19,10 @@ export const delay = curry((duration, task, payload) =>
   ]).then(([result]) => result)
 )
 
-export const catchApiError = ({ response }) =>
-  Promise.reject(response?.data?.detail || response?.data)
+export const catchApiError = ({ response, message }) =>
+  Promise.reject(
+    response?.data?.detail || response?.text || response?.statusText || message
+  )
 
 /**
  * A custom Axios instance for easy access to the `/api-proxy` endpoint.
@@ -34,8 +36,4 @@ apiProxyAxios.interceptors.request.use(({ url, ...config }) => ({
   ...config,
   url: url.startsWith('/api-proxy') ? url : url.replace(/^\/?/, '/api-proxy/'),
 }))
-apiProxyAxios.interceptors.response.use(identity, ({ response, message }) =>
-  Promise.reject(
-    response?.data?.detail || response?.text || response?.statusText || message
-  )
-)
+apiProxyAxios.interceptors.response.use(identity, catchApiError)
