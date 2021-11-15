@@ -1,0 +1,23 @@
+version: '3'
+services:
+  frontend:
+    depends_on:
+      - mock-sso
+    entrypoint: dockerize -wait tcp://api:8000 -timeout 3m -wait-retry-interval 5s
+    env_file: .env
+
+  mock-sso:
+    image: gcr.io/sre-docker-registry/github.com/uktrade/mock-sso:latest
+    ports:
+      - 8080:8080
+    environment:
+      MOCK_SSO_SCOPE: data-hub:internal-front-end
+      MOCK_SSO_TOKEN: 123
+      MOCK_SSO_EMAIL_USER_ID: test@gov.uk
+      MOCK_SSO_USERNAME: test@gov.uk
+      MOCK_SSO_VALIDATE_TOKEN: "true"
+
+networks:
+  default:
+    external:
+      name: data-infrastructure-shared-network

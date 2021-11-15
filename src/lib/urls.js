@@ -84,8 +84,6 @@ module.exports = {
     digitalWorkspace: {
       teams:
         'https://people.trade.gov.uk/teams/department-for-international-trade',
-      privacyPolicy:
-        'https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/data-hub-privacy-policy/',
     },
     helpCentre: {
       accessibilityStatement: () =>
