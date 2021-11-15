@@ -1,4 +1,4 @@
-# Sof redirect
+# Soft redirect
 
 The `TaskForm` component supports a _hard_ and _soft_ redirection mode, which
 you can control with the `redirectMode` prop.

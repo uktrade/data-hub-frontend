@@ -41,13 +41,13 @@ storiesOf('Task/Form', module)
           name="foo"
           type="text"
           label="Foo"
-          hint='Initial value shold be "Blah Blah"'
+          hint='Initial value should be "Blah Blah"'
           required="Foo is required"
         />
         <FieldSelect
           name="bar"
           label="Bar"
-          hint='Initial value shold be "B".'
+          hint='Initial value should be "B".'
           required="Bar is required"
           options={[
             { label: 'A', value: 'a' },
@@ -197,7 +197,7 @@ storiesOf('Task/Form', module)
             name="foo"
             type="text"
             label="Foo"
-            hint='Initial value shold be "Blah Blah"'
+            hint='Initial value should be "Blah Blah"'
             required="Foo is required"
           />
         </Step>
@@ -205,7 +205,7 @@ storiesOf('Task/Form', module)
           <FieldSelect
             name="bar"
             label="Bar"
-            hint='Initial value shold be "B".'
+            hint='Initial value should be "B".'
             required="Bar is required"
             options={[
               { label: 'A', value: 'a' },
@@ -260,13 +260,13 @@ storiesOf('Task/Form', module)
               name="foo"
               type="text"
               label="Foo"
-              hint='Initial value shold be "Blah Blah"'
+              hint='Initial value should be "Blah Blah"'
               required="Foo is required"
             />
             <FieldSelect
               name="bar"
               label="Bar"
-              hint='Initial value shold be "B".'
+              hint='Initial value should be "B".'
               required="Bar is required"
               options={[
                 { label: 'A', value: 'a' },
