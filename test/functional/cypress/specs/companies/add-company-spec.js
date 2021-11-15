@@ -643,7 +643,7 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.form).contains('Poland')
     })
 
-    it('should not show an invalid postal code error', () => {
+    it('should not show an invalid postal or ZIP code error', () => {
       cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).clear()
       cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).type(
         'ABC 123'
@@ -651,7 +651,8 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.continueButton).click()
       cy.get(selectors.companyAdd.form).should(
         'not.contain',
-        'Enter a valid Postal Code'
+        'Enter a valid Postal Code',
+        'Enter a valid ZIP Code'
       )
     })
 
@@ -767,6 +768,26 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.form).contains('Enter a town or city')
       cy.get(selectors.companyAdd.form).contains('Select a state')
       cy.get(selectors.companyAdd.form).contains('Enter a ZIP code')
+    })
+
+    it('should show an invalid ZIP code error', () => {
+      cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).type(
+        'A1A 1A1'
+      )
+      cy.get(selectors.companyAdd.continueButton).click()
+      cy.get(selectors.companyAdd.form).contains('Enter a valid ZIP Code')
+    })
+
+    it('should not show an invalid ZIP code error when completed correctly', () => {
+      cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).clear()
+      cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).type(
+        '48222'
+      )
+      cy.get(selectors.companyAdd.continueButton).click()
+      cy.get(selectors.companyAdd.form).should(
+        'not.contain',
+        'Enter a valid ZIP Code'
+      )
     })
   })
 
