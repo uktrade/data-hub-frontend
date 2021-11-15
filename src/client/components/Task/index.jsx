@@ -218,6 +218,7 @@ Task.Status = ({
   progressMessage,
   renderError = Err,
   renderProgress = ProgressIndicator,
+  dismissable = true,
   children = () => null,
 }) => (
   <Task>
@@ -230,6 +231,7 @@ Task.Status = ({
         payload,
         errorMessage,
         onSuccessDispatch,
+        dismissError,
       } = getTask(name, id)
       return (
         <>
@@ -242,6 +244,8 @@ Task.Status = ({
               noun,
               errorMessage,
               retry: () => start({ payload, onSuccessDispatch }),
+              dismiss: dismissError,
+              dismissable,
             })}
           {!status && children()}
         </>

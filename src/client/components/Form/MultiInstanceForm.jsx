@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, { useEffect, useRef } from 'react'
 import { isEmpty } from 'lodash'
 import { ErrorSummary } from '../../../client/components'
@@ -19,7 +20,7 @@ import {
 import multiInstance from '../../utils/multiinstance'
 import reducer from './reducer'
 
-const validateForm = (state) =>
+export const validateForm = (state) =>
   Object.values(state.fields)
     .map((field) => ({
       name: field.name,
@@ -72,8 +73,8 @@ const Form = ({
     },
     isFirstStep: () => props?.currentStep === 0,
     isLastStep: () => !steps.length || props?.currentStep === steps?.length - 1,
-    getFieldState: (fieldName) => ({
-      value: values[fieldName] ?? '',
+    getFieldState: (fieldName, initialValue) => ({
+      value: values[fieldName] ?? initialValue,
       touched: touched[fieldName] ?? false,
       error: errors[fieldName],
     }),
@@ -82,7 +83,23 @@ const Form = ({
   const ref = useRef()
 
   return (
-    <FormContextProvider {...contextProps}>
+    <FormContextProvider
+      {...contextProps}
+      // eslint-disable-next-line no-unused-vars
+      setIsLoading={(isLoading) => {
+        // TODO: Is the isLoading actually needed in state?
+      }}
+      validateForm={(fieldNamesToValidate) => {
+        const { errors, touched } = validateForm({
+          ...contextProps,
+          fields: fieldNamesToValidate?.length
+            ? _.pick(contextProps.fields, fieldNamesToValidate)
+            : contextProps.fields,
+        })
+        props.onValidate(errors, touched)
+        return errors
+      }}
+    >
       <form
         ref={ref}
         noValidate={true}

@@ -30,6 +30,8 @@ const FieldSelect = ({
         onChange={onChange}
         onBlur={onBlur}
         meta={{ error, touched }}
+        // We need the key, to be able to reset the defaultValue
+        key={value}
         input={{
           id: name,
           defaultValue: value,
