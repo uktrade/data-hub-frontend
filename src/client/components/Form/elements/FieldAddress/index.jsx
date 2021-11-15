@@ -175,6 +175,17 @@ const FieldAddress = ({
   const canadianPostalCodeRegex =
     /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$/i
 
+  const usZipCodeRegex = /^\d{5}(-\d{4})?$/i
+
+  const zipCodeValidator = (value) => {
+    if (!value && isUS) {
+      return 'Enter a ZIP Code'
+    } else if (value && isUS && !usZipCodeRegex.test(value)) {
+      return 'Enter a valid ZIP Code'
+    }
+    return null
+  }
+
   const postalCodeValidator = (value) => {
     if (!value && isCanada) {
       return 'Enter a Postal Code'
@@ -198,7 +209,7 @@ const FieldAddress = ({
           postcodeValidationEnabled ? postcodeLabel() : 'Postcode (optional)'
         }
         required={postcodeValidationEnabled ? postcodeErrorMessage() : null}
-        validate={postalCodeValidator}
+        validate={isUS ? zipCodeValidator : postalCodeValidator}
       />
     )
   }
