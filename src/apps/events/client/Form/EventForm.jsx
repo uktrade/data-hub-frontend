@@ -200,7 +200,6 @@ const EventForm = ({
                                       {({ value, onChange, error }) => (
                                         <FieldTypeahead
                                           name="related_trade_agreements"
-                                          inputId="related_trade_agreements"
                                           options={relatedTradeAgreements}
                                           placeholder="-- Search trade agreements --"
                                           required="Select at least one Trade Agreement"
@@ -224,7 +223,6 @@ const EventForm = ({
                                   />
                                   <FieldTypeahead
                                     name="event_type"
-                                    inputId="event_type"
                                     label="Type of event"
                                     options={eventTypeOptions}
                                     placeholder="-- Select event type --"
@@ -247,7 +245,6 @@ const EventForm = ({
                                   <FieldTypeahead
                                     name="location_type"
                                     label="Event location type (optional)"
-                                    inputId="location_type"
                                     options={eventLocationTypes}
                                     placeholder="-- Select event --"
                                     aria-label="Select an event"
@@ -287,7 +284,6 @@ const EventForm = ({
                                   <FieldTypeahead
                                     name="address_country"
                                     label="Country"
-                                    inputId="address_country"
                                     options={countries}
                                     required="Country may not be null."
                                     placeholder="-- Select country --"
@@ -296,7 +292,6 @@ const EventForm = ({
                                   <FieldTypeahead
                                     name="uk_region"
                                     label="UK Region"
-                                    inputId="uk_region"
                                     options={ukRegions}
                                     required="UK region may not be null."
                                     placeholder="-- Select region --"
@@ -310,7 +305,6 @@ const EventForm = ({
                                   <FieldTypeahead
                                     name="lead_team"
                                     label="Team hosting the event"
-                                    inputId="lead_teams"
                                     options={teams}
                                     required="Select at least one team hosting the event"
                                     placeholder="-- Select team --"
@@ -319,7 +313,6 @@ const EventForm = ({
                                   <FieldTypeahead
                                     name="service"
                                     label="Service"
-                                    inputId="service"
                                     required="Select at least one service"
                                     options={services}
                                     placeholder="-- Select service --"
@@ -347,7 +340,6 @@ const EventForm = ({
                                       {({ value, onChange, error }) => (
                                         <FieldTypeahead
                                           name="teams"
-                                          inputId="teams"
                                           options={teams}
                                           placeholder="-- Select team --"
                                           required="Select at least one team"
@@ -371,7 +363,6 @@ const EventForm = ({
                                     {({ value, onChange, error }) => (
                                       <FieldTypeahead
                                         name="related_programmes"
-                                        inputId="related_programmes"
                                         options={programmes}
                                         placeholder="-- Select programme --"
                                         required="Select at least one programme"
