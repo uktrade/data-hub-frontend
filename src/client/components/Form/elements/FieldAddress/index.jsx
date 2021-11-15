@@ -177,11 +177,12 @@ const FieldAddress = ({
     /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$/i
 
   const postalCodeValidator = (value) => {
-    return !value
-      ? 'Enter Postal Code'
-      : canadianPostalCodeRegex.test(value)
-      ? 'Enter a valid Postal Code'
-      : null
+    if (!value && isCanada) {
+      return 'Enter a Postal Code'
+    } else if (value && isCanada && !canadianPostalCodeRegex.test(value)) {
+      return 'Enter a valid Postal Code'
+    }
+    return null
   }
 
   const postcodeErrorMessage = () => {
