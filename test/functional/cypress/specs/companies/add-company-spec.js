@@ -643,6 +643,18 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.form).contains('Poland')
     })
 
+    it('should not show an invalid postal code error', () => {
+      cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).clear()
+      cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).type(
+        'ABC 123'
+      )
+      cy.get(selectors.companyAdd.continueButton).click()
+      cy.get(selectors.companyAdd.form).should(
+        'not.contain',
+        'Enter a valid Postal Code'
+      )
+    })
+
     it('should hide the UK-related fields', () => {
       cy.get(
         selectors.companyAdd.newCompanyRecordForm.address.findUkAddress
