@@ -335,12 +335,29 @@ describe('Company edit', () => {
       ],
     })
 
-    it('renders errors correctly', () => {
+    it('renders province selection errors correctly', () => {
       cy.get(selectors.companyEdit.address.areaCanada).select(
         '-- Select province --'
       )
       cy.contains('Submit').click()
       cy.get(selectors.companyEdit.form).contains('Select a province')
+    })
+
+    it('renders postal code errors if postal code is not valid', () => {
+      cy.get(selectors.companyEdit.address.postcode).clear()
+      cy.get(selectors.companyEdit.address.postcode).type('ABC 123')
+      cy.contains('Submit').click()
+      cy.get(selectors.companyEdit.form).contains('Enter a valid Postal Code')
+    })
+
+    it('does not render postal code errors if postal code is valid', () => {
+      cy.get(selectors.companyEdit.address.postcode).clear()
+      cy.get(selectors.companyEdit.address.postcode).type('A1A 1A1')
+      cy.contains('Submit').click()
+      cy.get(selectors.companyEdit.form).should(
+        'not.contain',
+        'Enter a valid Postal Code'
+      )
     })
   })
 
