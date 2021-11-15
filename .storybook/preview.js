@@ -11,6 +11,7 @@ import referralsTask from '../src/client/components/ReferralList/tasks/dummy/spr
 import companyListsTasks from '../src/client/components/CompanyLists/tasks/dummy/spread'
 import taskStoriesTasks from '../src/client/components/Task/__stories__/tasks.js'
 import contactTasks from '../src/client/components/Resource/__stories__/tasks.js'
+import eventFormAndMetadataTasks from '../src/apps/events/client/Form/__stories__/tasks.js'
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -24,23 +25,26 @@ const GlobalStyle = createGlobalStyle`
 
 addParameters({
   options: {
-    theme: {}
+    theme: {},
   },
 })
 
 addDecorator(addReadme)
-addDecorator(s =>
+addDecorator((s) => (
   <>
     <GlobalStyle />
-    <DataHubProvider tasks={{
-      ...referralsTask(),
-      ...companyListsTasks(),
-      ...taskStoriesTasks,
-      ...contactTasks,
-    }}>
+    <DataHubProvider
+      tasks={{
+        ...referralsTask(),
+        ...companyListsTasks(),
+        ...taskStoriesTasks,
+        ...contactTasks,
+        ...eventFormAndMetadataTasks,
+      }}
+    >
       {s()}
     </DataHubProvider>
   </>
-)
+))
 
-configure(req, module);
+configure(req, module)
