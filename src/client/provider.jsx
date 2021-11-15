@@ -127,6 +127,7 @@ import RoutedInput from './components/RoutedInput'
 import Resource from './components/Resource'
 
 import { ContactForm } from './components/ContactForm'
+import TaskForm from './components/Task/Form'
 
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
@@ -177,6 +178,7 @@ const store = createStore(
     ...CreateUKInvestmentOpportunity.reducerSpread,
     ...Resource.reducerSpread,
     ...ContactForm.reducerSpread,
+    ...TaskForm.reducerSpread,
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
     [INVESTEMENT_PROJECT_ADMIN_ID]: investmentProjectAdminReducer,

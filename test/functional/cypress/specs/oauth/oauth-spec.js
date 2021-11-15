@@ -29,6 +29,8 @@ const testSignOut = () => {
   }).then((response) => {
     expect(response.status).to.eq(302)
     const location = new URL(response.redirectedToUrl)
+    // This assertion is currently bound to the state of the OAUTH2_LOGOUT_URL env var
+    // TODO remove this dependency
     expect(location.pathname).to.eq('/o/logout')
     cy.getCookie('datahub.sid').should('not.exist')
   })
@@ -50,6 +52,8 @@ describe('Authenticating with OAuth', () => {
         const location = new URL(response.redirectedToUrl)
         const { state, ...otherQsParams } = qs.parse(location.search.slice(1))
 
+        // This assertion is currently bound to the state of the OAUTH2_AUTH_URL env var
+        // TODO remove this dependency
         expect(location.pathname).to.eq('/o/authorize')
         expect(otherQsParams.idp).to.eq('cirrus')
 
@@ -81,6 +85,8 @@ describe('Authenticating with OAuth', () => {
           expect(response.status).to.eq(302)
           const location = new URL(response.redirectedToUrl)
           const { state } = qs.parse(location.search.slice(1))
+          // This assertion is currently bound to the state of the OAUTH2_AUTH_URL env var
+          // TODO remove this dependency
           expect(location.pathname).to.eq('/o/authorize')
 
           // The state should persist

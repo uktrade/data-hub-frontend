@@ -84,8 +84,6 @@ module.exports = {
     digitalWorkspace: {
       teams:
         'https://people.trade.gov.uk/teams/department-for-international-trade',
-      privacyPolicy:
-        'https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/data-hub-privacy-policy/',
     },
     helpCentre: {
       accessibilityStatement: () =>
@@ -99,6 +97,8 @@ module.exports = {
         'https://data-services-help.trade.gov.uk/data-hub/how-articles/trade-agreement-activity/recording-trade-agreement-activity/',
       cookies: () =>
         'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/data-hub-cookie-policy/',
+      privacyNotice: () =>
+        'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/data-hub-privacy-notice/',
     },
     copyright:
       'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',

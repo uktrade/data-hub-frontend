@@ -11,6 +11,7 @@ import referralsTask from '../src/client/components/ReferralList/tasks/dummy/spr
 import companyListsTasks from '../src/client/components/CompanyLists/tasks/dummy/spread'
 import taskStoriesTasks from '../src/client/components/Task/__stories__/tasks.js'
 import contactTasks from '../src/client/components/Resource/__stories__/tasks.js'
+import taskFormTasks from '../src/client/components/Task/Form/__stories__/tasks'
 import eventFormAndMetadataTasks from '../src/apps/events/client/Form/__stories__/tasks.js'
 
 const GlobalStyle = createGlobalStyle`
@@ -39,6 +40,7 @@ addDecorator((s) => (
         ...companyListsTasks(),
         ...taskStoriesTasks,
         ...contactTasks,
+        ...taskFormTasks,
         ...eventFormAndMetadataTasks,
       }}
     >

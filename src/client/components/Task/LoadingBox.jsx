@@ -2,6 +2,7 @@ import React from 'react'
 import LoadingBox from '@govuk-react/loading-box'
 import styled from 'styled-components'
 
+import Effect from '../Effect'
 import Task from '.'
 
 const StyledContentWrapper = styled.div({
@@ -37,12 +38,16 @@ const StyledErrorOverlay = styled.div({
  *   contents
  * </TaskLoadingBox>
  */
-export default ({ name, id, when, children, ...props }) => (
+export default ({ name, id, when, children, startOnRender, ...props }) => (
   <Task>
     {(t) => {
       const task = t(name, id)
       return (
         <LoadingBox loading={task.progress || when}>
+          <Effect
+            dependencyList={[name, id, startOnRender]}
+            effect={() => startOnRender && task.start(startOnRender)}
+          />
           <StyledContentWrapper>
             {task.error ? (
               <>

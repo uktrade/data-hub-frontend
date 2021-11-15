@@ -21,20 +21,20 @@ function CompanyRegionAndSector({ regions, region, sectors, isUK, postcode }) {
             onSuccessDispatch: ADD_COMPANY__REGION_LOADED,
           }}
         >
-          {() => (
-            <FieldSelect
-              key={region?.value}
-              name="uk_region"
-              label="DIT region"
-              initialValue={region?.value}
-              emptyOption="-- Select DIT region --"
-              options={regions}
-              required="Select DIT region"
-            />
-          )}
+          {() =>
+            region && (
+              <FieldSelect
+                name="uk_region"
+                label="DIT region"
+                initialValue={region.value}
+                emptyOption="-- Select DIT region --"
+                options={regions}
+                required="Select DIT region"
+              />
+            )
+          }
         </Task.Status>
       )}
-
       <FieldSelect
         name="sector"
         label="DIT sector"

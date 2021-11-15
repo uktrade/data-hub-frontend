@@ -181,6 +181,64 @@ describe('transformCompanyToListItem', () => {
     })
   })
 
+  context('when the company has a different registered address', () => {
+    before(() => {
+      listItem = transformCompanyToListItem({
+        ...companyData,
+        registered_address: {
+          line_1: 'registered address',
+          line_2: null,
+          town: 'town',
+          county: null,
+          postcode: 'postcode',
+          country: {
+            id: '80756b9a-5d95-e211-a939-e4115bead28a',
+            name: 'United Kingdom',
+          },
+        },
+      })
+    })
+
+    it('should include the registered address in the result', () => {
+      expect(listItem.meta).to.containSubset([
+        {
+          label: 'Registered address',
+          type: 'address',
+          value: {
+            line_1: 'registered address',
+            line_2: null,
+            town: 'town',
+            county: null,
+            postcode: 'postcode',
+            country: {
+              id: '80756b9a-5d95-e211-a939-e4115bead28a',
+              name: 'United Kingdom',
+            },
+          },
+        },
+      ])
+    })
+  })
+
+  context('when the registered address is the same as the address', () => {
+    before(() => {
+      listItem = transformCompanyToListItem({
+        ...companyData,
+        registered_address: companyData.address,
+      })
+    })
+
+    it('should not include the registered address in the result', () => {
+      expect(listItem.meta).to.not.containSubset([
+        {
+          label: 'Registered address',
+          type: 'address',
+          value: companyData.address,
+        },
+      ])
+    })
+  })
+
   context('headquarter information', () => {
     context('contains the headquarter information', () => {
       before(() => {

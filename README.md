@@ -113,6 +113,14 @@ Please view the dedicated [Docker readme](./docs/Docker.md).
     The server will run with the node debug flag so you can debug with Webstorm
     or Visual Studio Code.
 
+### Working with live SSO
+
+To use the live SSO service, add the environment variables from sample.env below the line `To use live SSO` into your `.env` file and uncomment
+
+Then restart your development environment
+
+These instructions work for both the dockerised environment and the native environment
+
 ### Environment variables
 
 List of all environment variables can be found in the source code of [envSchema.js](./src/config/envSchema.js).
