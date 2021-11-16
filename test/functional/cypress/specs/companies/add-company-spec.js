@@ -651,7 +651,10 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.continueButton).click()
       cy.get(selectors.companyAdd.form).should(
         'not.contain',
-        'Enter a valid Postal Code',
+        'Enter a valid Postal Code'
+      )
+      cy.get(selectors.companyAdd.form).should(
+        'not.contain',
         'Enter a valid ZIP Code'
       )
     })
