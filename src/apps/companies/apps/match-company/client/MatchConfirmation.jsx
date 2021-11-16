@@ -6,7 +6,6 @@ import UnorderedList from '@govuk-react/unordered-list'
 import ListItem from '@govuk-react/list-item'
 import InsetText from '@govuk-react/inset-text'
 import { SPACING } from '@govuk-react/constants'
-import ErrorSummary from '@govuk-react/error-summary'
 import Details from '@govuk-react/details'
 
 import { SummaryList } from '../../../../../client/components'
@@ -63,16 +62,8 @@ function MatchConfirmation({
           { href: urls.companies.match.index(company.id), children: 'Back' },
         ]}
       >
-        {({ submissionError }) => (
+        {() => (
           <>
-            {submissionError && (
-              <ErrorSummary
-                heading="There was an error matching this company"
-                description={submissionError.message}
-                errors={[]}
-              />
-            )}
-
             <H4 as="h2">Data Hub business details (un-verified)</H4>
             <InsetText>
               <SummaryList
