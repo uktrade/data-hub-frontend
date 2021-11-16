@@ -192,7 +192,7 @@ const _TaskForm = ({
                                     if (resolved) {
                                       analytics(
                                         'Submission request success',
-                                        analyticsData(values)
+                                        analyticsData && analyticsData(values)
                                       )
                                       if (flashMessage) {
                                         const message = flashMessage(
