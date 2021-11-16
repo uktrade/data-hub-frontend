@@ -8,14 +8,103 @@ import TaskForm from '..'
 import FieldInput from '../../../Form/elements/FieldInput'
 import FieldSelect from '../../../Form/elements/FieldSelect'
 import FieldRadios from '../../../Form/elements/FieldRadios'
+import FieldCheckboxes from '../../../Form/elements/FieldCheckboxes'
+import FieldTypeahead from '../../../Form/elements/FieldTypeahead'
 
 import rejectInitialValuesReadme from './reject-initial-values.md'
 import basicExampleReadme from './basic-example.md'
 import initialValuesAsPropExampleReadme from './initial-values-as-prop.md'
 import softRedirectExampleReadme from './soft-redirect.md'
 import multiStepExampleReadme from './multi-step.md'
+import ResourceOptionsField from '../../../Form/elements/ResourceOptionsField'
+
+import Resource from '../../../Resource'
+
+const DummyResource = (props) => <Resource {...props} name="Load options" />
 
 storiesOf('Task/Form', module)
+  .add('Task/Resource options fields', () => (
+    <TaskForm
+      id="lazy-field-example"
+      submissionTaskName="Submit TaskForm example"
+      analyticsFormName="task-form-example"
+      initialValues={{
+        select: 'b',
+        // radios: 'b',
+        // checkboxes: ['a', 'c'],
+        typeahead: { label: 'B', value: 'b' },
+      }}
+    >
+      <ResourceOptionsField
+        resource={DummyResource}
+        field={FieldSelect}
+        id="select"
+        payload={[
+          { id: 'a', name: 'A' },
+          { id: 'b', name: 'B' },
+          { id: 'c', name: 'C' },
+        ]}
+        resultToOptions={(result) =>
+          result.map(({ id, name }) => ({ value: id, label: name }))
+        }
+        name="select"
+        label="Select"
+        hint='Initial value shold be "B".'
+        required="Required"
+      />
+      <ResourceOptionsField
+        taskName="Load options"
+        field={FieldRadios}
+        id="radios"
+        payload={[
+          { id: 'a', name: 'A' },
+          { id: 'b', name: 'B' },
+          { id: 'c', name: 'C' },
+        ]}
+        resultToOptions={(result) =>
+          result.map(({ id, name }) => ({ value: id, label: name }))
+        }
+        name="radios"
+        label="Radios"
+        hint="Uses taskName instead of resource. Initial value should be 'B'"
+        required="Required"
+      />
+      <ResourceOptionsField
+        resource={DummyResource}
+        field={FieldCheckboxes}
+        id="checkboxes-reject"
+        payload={[
+          { id: 'a', name: 'A' },
+          { id: 'b', name: 'B' },
+          { id: 'c', name: 'C' },
+        ]}
+        resultToOptions={(result) =>
+          result.map(({ id, name }) => ({ value: id, label: name }))
+        }
+        name="checkboxes"
+        label="Checkboxes"
+        hint="Should Reject."
+        required="Required"
+      />
+      <ResourceOptionsField
+        resource={DummyResource}
+        field={FieldTypeahead}
+        id="typeahead"
+        payload={[
+          { id: 'a', name: 'A' },
+          { id: 'b', name: 'B' },
+          { id: 'c', name: 'C' },
+        ]}
+        resultToOptions={(result) =>
+          result.map(({ id, name }) => ({ value: id, label: name }))
+        }
+        name="typeahead"
+        label="Typeahead"
+        hint="Default value should be 'b'"
+        required="Required"
+      />
+    </TaskForm>
+  ))
   .add(
     'Basics',
     () => (

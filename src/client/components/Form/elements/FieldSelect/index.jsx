@@ -25,16 +25,17 @@ const FieldSelect = ({
   })
   return (
     <FieldWrapper {...{ name, label, legend, hint, error }}>
+      {/* <pre>{JSON.stringify({initialValue, value})}</pre> */}
       <Select
         name={name}
         onChange={onChange}
         onBlur={onBlur}
         meta={{ error, touched }}
         // We need the key, to be able to reset the defaultValue
-        key={value}
+        // key={value}
         input={{
           id: name,
-          defaultValue: value,
+          value,
           ...rest,
         }}
       >
