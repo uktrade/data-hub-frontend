@@ -86,5 +86,6 @@
   "policy_issue_types":[
 
   ],
-  "was_policy_feedback_provided":false
+  "was_policy_feedback_provided":false,
+  "has_related_trade_agreements": false
 }

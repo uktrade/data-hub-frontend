@@ -88,6 +88,7 @@ import {
   TASK_GET_ACTIVE_EVENTS,
   TASK_SAVE_INTERACTION,
   TASK_OPEN_CONTACT_FORM,
+  TASK_GET_INTERACTION_INITIAL_VALUES,
 } from '../apps/interactions/apps/details-form/client/state'
 import * as addInteractionFormTasks from '../apps/interactions/apps/details-form/client/tasks'
 
@@ -246,6 +247,8 @@ function App() {
         [TASK_POSTCODE_TO_REGION]: addCompanyPostcodeToRegionTask,
         [TASK_GET_ACTIVE_EVENTS]: addInteractionFormTasks.fetchActiveEvents,
         [TASK_SAVE_INTERACTION]: addInteractionFormTasks.saveInteraction,
+        [TASK_GET_INTERACTION_INITIAL_VALUES]:
+          addInteractionFormTasks.getInitialFormValues,
         [TASK_OPEN_CONTACT_FORM]: addInteractionFormTasks.openContactForm,
         [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
         [TASK_UPDATE_ADVISER]: manageAdviser.updateAdviser,

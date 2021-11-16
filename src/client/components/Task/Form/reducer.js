@@ -33,6 +33,7 @@ export default (
           ...state.values,
           ...action.initialValues,
         },
+        currentStep: action.initialStepIndex,
       }
     case TASK_FORM__RESOLVED:
       return {
