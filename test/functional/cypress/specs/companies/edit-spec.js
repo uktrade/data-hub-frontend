@@ -251,10 +251,27 @@ describe('Company edit', () => {
       ],
     })
 
-    it('renders errors correctly', () => {
+    it('renders state selection errors correctly', () => {
       cy.get(selectors.companyEdit.address.areaUS).select('-- Select state --')
       cy.contains('Submit').click()
       cy.get(selectors.companyEdit.form).contains('Select a state')
+    })
+
+    it('renders ZIP code errors if ZIP code is not valid', () => {
+      cy.get(selectors.companyEdit.address.postcode).clear()
+      cy.get(selectors.companyEdit.address.postcode).type('ABC 123')
+      cy.contains('Submit').click()
+      cy.get(selectors.companyEdit.form).contains('Enter a valid ZIP Code')
+    })
+
+    it('does not render ZIP code errors if ZIP code is valid', () => {
+      cy.get(selectors.companyEdit.address.postcode).clear()
+      cy.get(selectors.companyEdit.address.postcode).type('12345')
+      cy.contains('Submit').click()
+      cy.get(selectors.companyEdit.form).should(
+        'not.contain',
+        'Enter a valid ZIP Code'
+      )
     })
   })
 
