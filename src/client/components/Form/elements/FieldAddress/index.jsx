@@ -172,25 +172,25 @@ const FieldAddress = ({
     return 'Postcode (optional)'
   }
 
+  const usZipCodeRegex = /^\d{5}(-\d{4})?$/i
+
   const canadianPostalCodeRegex =
     /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$/i
 
-  const usZipCodeRegex = /^\d{5}(-\d{4})?$/i
-
-  const zipCodeValidator = (value) => {
-    if (!value && isUS) {
-      return 'Enter a ZIP Code'
-    } else if (value && isUS && !usZipCodeRegex.test(value)) {
-      return 'Enter a valid ZIP Code'
+  const postcodeValidator = (value) => {
+    if (isUS) {
+      if (!value) {
+        return 'Enter a ZIP Code'
+      } else if (value && !usZipCodeRegex.test(value)) {
+        return 'Enter a valid ZIP Code'
+      }
     }
-    return null
-  }
-
-  const postalCodeValidator = (value) => {
-    if (!value && isCanada) {
-      return 'Enter a Postal Code'
-    } else if (value && isCanada && !canadianPostalCodeRegex.test(value)) {
-      return 'Enter a valid Postal Code'
+    if (isCanada) {
+      if (!value) {
+        return 'Enter a Postal Code'
+      } else if (value && !canadianPostalCodeRegex.test(value)) {
+        return 'Enter a valid Postal Code'
+      }
     }
     return null
   }
@@ -209,7 +209,7 @@ const FieldAddress = ({
           postcodeValidationEnabled ? postcodeLabel() : 'Postcode (optional)'
         }
         required={postcodeValidationEnabled ? postcodeErrorMessage() : null}
-        validate={isUS ? zipCodeValidator : postalCodeValidator}
+        validate={postcodeValidator}
       />
     )
   }
