@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
-import { Button, Link, LoadingBox } from 'govuk-react'
 
 import urls from '../../../../lib/urls'
 import LocalHeader from '../../../../client/components/LocalHeader/LocalHeader.jsx'
@@ -17,45 +16,19 @@ import {
   FieldTextarea,
   FieldTypeahead,
   Main,
-  FormStateful,
   NewWindowLink,
-  FormActions,
 } from '../../../../client/components'
+import TaskForm from '../../../../client/components/Task/Form'
 
-import Task from '../../../../client/components/Task'
 import {
-  ID,
   TASK_GET_EVENTS_FORM_AND_METADATA,
   TASK_SAVE_EVENT,
   state2props,
 } from './state'
-import {
-  EVENTS__FORM_METADATA_LOADED,
-  ADD_EVENT_FORM__SUBMIT,
-} from '../../../../client/actions'
-import { addMessage } from '../../../../client/utils/flash-messages'
 import { OPTIONS_YES_NO, OPTION_YES } from '../../../../client/constants'
 
-const EventForm = ({
-  formData: {
-    eventTypeOptions,
-    relatedTradeAgreements,
-    eventLocationTypes,
-    countries,
-    teams,
-    services,
-    programmes,
-    ukRegions,
-    initialValues,
-  },
-  isComplete,
-  createdEventId,
-  createdEventName,
-  progress,
-  eventId,
-  updatedEventId,
-  updatedEventName,
-}) => {
+const EventForm = ({ eventId }) => {
+  const [eventName, setEventName] = useState()
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -65,41 +38,11 @@ const EventForm = ({
       link: urls.events.index(),
       text: 'Events',
     },
+    {
+      link: eventId ? urls.events.edit(eventId) : undefined,
+      text: eventId ? eventName || `Edit event` : 'Add Event',
+    },
   ]
-  if (eventId) {
-    if (initialValues && initialValues.name) {
-      breadcrumbs.push({
-        link: urls.events.edit(eventId),
-        text: initialValues.name,
-      })
-    }
-    breadcrumbs.push({
-      text: 'Edit event',
-    })
-  } else {
-    breadcrumbs.push({
-      text: 'Add event',
-    })
-  }
-
-  const hardRedirectTo = (id) => {
-    window.location.href = urls.events.details(id)
-  }
-
-  const flashMessage = (id, name, action) => {
-    if (id && name) {
-      addMessage('success', `'${name}' event has been ${action}`)
-      hardRedirectTo(id)
-    }
-  }
-
-  useEffect(() => {
-    flashMessage(createdEventId, createdEventName, 'created')
-  }, [createdEventId, createdEventName])
-
-  useEffect(() => {
-    flashMessage(updatedEventId, updatedEventName, 'updated')
-  }, [updatedEventId, updatedEventName])
 
   const getDate = (value) => {
     const { day, month, year } = value
@@ -128,391 +71,280 @@ const EventForm = ({
 
   return (
     <>
-      <Task>
-        {(getTask) => {
-          const saveEventFormTask = getTask(TASK_SAVE_EVENT, ID)
-          return (
-            <>
-              <LocalHeader
-                breadcrumbs={breadcrumbs}
-                heading={eventId ? 'Edit event' : 'Add event'}
-              />
-              <Main>
-                <GridRow data-test="eventForm">
-                  <GridCol setWidth="three-quarters">
-                    <article>
-                      <p data-test="trade-agreement-text">
-                        If your Event is set up to focus on a Trade Agreement or
-                        contributes to implementing a Trade Agreement then
-                        select that the event relates to a Trade Agreement and
-                        the relevant Agreement(s)
-                      </p>
-                      <NewWindowLink
-                        href={urls.external.helpCentre.tradeagreementGuidance()}
-                        data-test="trade-agreement-link"
-                      >
-                        See more guidance
-                      </NewWindowLink>
-                    </article>
-                    <Task.Status
-                      id={ID}
-                      name={TASK_GET_EVENTS_FORM_AND_METADATA}
-                      startOnRender={{
-                        payload: eventId,
-                        onSuccessDispatch: EVENTS__FORM_METADATA_LOADED,
-                      }}
+      <LocalHeader
+        breadcrumbs={breadcrumbs}
+        heading={eventId ? 'Edit event' : 'Add event'}
+      />
+      <Main>
+        <GridRow data-test="eventForm">
+          <GridCol setWidth="three-quarters">
+            <article>
+              <p data-test="trade-agreement-text">
+                If your Event is set up to focus on a Trade Agreement or
+                contributes to implementing a Trade Agreement then select that
+                the event relates to a Trade Agreement and the relevant
+                Agreement(s)
+              </p>
+              <NewWindowLink
+                href={urls.external.helpCentre.tradeagreementGuidance()}
+                data-test="trade-agreement-link"
+              >
+                See more guidance
+              </NewWindowLink>
+            </article>
+            <TaskForm
+              id="event-form"
+              submissionTaskName={TASK_SAVE_EVENT}
+              analyticsFormName={eventId ? 'edit_event' : 'create_event'}
+              analyticsData={(values) => values}
+              initialValuesTaskName={TASK_GET_EVENTS_FORM_AND_METADATA}
+              initialValuesPayload={{
+                eventId,
+                metadata: {
+                  eventTypeOptions: [],
+                  relatedTradeAgreements: [],
+                  eventLocationTypes: [],
+                  countries: [],
+                  teams: [],
+                  programmes: [],
+                  ukRegions: [],
+                },
+                initialValue: {},
+              }}
+              redirectTo={({ data }) => urls.events.details(data?.id)}
+              redirectMode="hard"
+              flashMessage={(submissionTaskResult, formValues) => {
+                const { name } = formValues
+                return `'${name}' event has been ${
+                  eventId ? 'updated' : 'created'
+                }`
+              }}
+              submitButtonLabel={eventId ? 'Save and return' : 'Add event'}
+              actionLinks={[
+                {
+                  children: 'Return without saving',
+                  href: eventId
+                    ? urls.events.details(eventId)
+                    : urls.events.index(),
+                },
+              ]}
+            >
+              {({ values }) => (
+                <>
+                  {setEventName(values?.name)}
+                  {/* TODO: Remove when done */}
+                  {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+                  <FieldRadios
+                    legend="Does the event relate to a trade agreement?"
+                    name="has_related_trade_agreements"
+                    required="Answer if the event is related to a trade agreement"
+                    options={OPTIONS_YES_NO}
+                    inline={true}
+                  />
+                  {values.has_related_trade_agreements === OPTION_YES && (
+                    <FieldAddAnother
+                      name="related_trade_agreements"
+                      label="Related named trade agreement(s)"
+                      data-test-prefix="trade-agreement-field-"
+                      required="Select at least one Trade Agreement"
+                      item-name="trade agreement"
                     >
-                      {() => {
-                        return (
-                          isComplete && (
-                            <FormStateful
-                              id="event-form"
-                              initialValues={initialValues}
-                              showErrorSummary={true}
-                              submissionError={saveEventFormTask.errorMessage}
-                              onSubmit={(values) => {
-                                saveEventFormTask.start({
-                                  payload: {
-                                    values,
-                                  },
-                                  onSuccessDispatch: ADD_EVENT_FORM__SUBMIT,
-                                })
-                              }}
-                            >
-                              {({ values }) => (
-                                <LoadingBox loading={progress}>
-                                  <FieldRadios
-                                    legend="Does the event relate to a trade agreement?"
-                                    name="has_related_trade_agreements"
-                                    required="Answer if the event is related to a trade agreement"
-                                    options={OPTIONS_YES_NO}
-                                    inline={true}
-                                  />
-                                  {values.has_related_trade_agreements ===
-                                    OPTION_YES && (
-                                    <FieldAddAnother
-                                      name="related_trade_agreements"
-                                      label="Related named trade agreement(s)"
-                                      data-test-prefix="trade-agreement-field-"
-                                      required="Select at least one Trade Agreement"
-                                      item-name="trade agreement"
-                                    >
-                                      {({ value, onChange, error }) => (
-                                        <FieldTypeahead
-                                          name="related_trade_agreements"
-                                          options={relatedTradeAgreements}
-                                          placeholder="-- Search trade agreements --"
-                                          required="Select at least one Trade Agreement"
-                                          aria-label="Select a trade agreement"
-                                          value={relatedTradeAgreements.find(
-                                            ({ value: option_value }) =>
-                                              option_value === value
-                                          )}
-                                          onChange={onChange}
-                                          error={error}
-                                        />
-                                      )}
-                                    </FieldAddAnother>
-                                  )}
-                                  <FieldInput
-                                    label="Event name"
-                                    name="name"
-                                    type="text"
-                                    required="Event name may not be null."
-                                    data-test="group-field-name"
-                                  />
-                                  <FieldTypeahead
-                                    name="event_type"
-                                    label="Type of event"
-                                    options={eventTypeOptions}
-                                    placeholder="-- Select event type --"
-                                    required="Select at least one event type"
-                                    aria-label="Select an event type"
-                                  />
-                                  <FieldDate
-                                    name="start_date"
-                                    label="Event start date"
-                                    required="Enter a valid start date"
-                                  />
-                                  <FieldDate
-                                    name="end_date"
-                                    label="Event end date"
-                                    required="Enter a valid end date"
-                                    validate={
-                                      validatedStartDateBeforeOrEqualToEndDate
-                                    }
-                                  />
-                                  <FieldTypeahead
-                                    name="location_type"
-                                    label="Event location type (optional)"
-                                    options={eventLocationTypes}
-                                    placeholder="-- Select event --"
-                                    aria-label="Select an event"
-                                  />
-                                  <FieldInput
-                                    label="Business and street"
-                                    name="address_1"
-                                    type="text"
-                                    required="Business and street may not be null."
-                                    data-test="group-field-address-1"
-                                  />
-                                  <FieldInput
-                                    name="address_2"
-                                    type="text"
-                                    data-test="group-field-address-2"
-                                  />
-                                  <FieldInput
-                                    label="Town or city"
-                                    name="address_town"
-                                    type="text"
-                                    required="Town or city may not be null."
-                                    data-test="group-field-address_town"
-                                  />
-                                  <FieldInput
-                                    label="County (optional)"
-                                    name="address_county"
-                                    type="text"
-                                    data-test="group-field-address_county"
-                                  />
-                                  <FieldInput
-                                    label="Postcode"
-                                    name="address_postcode"
-                                    type="text"
-                                    required="Postcode may not be null."
-                                    data-test="group-field-address_postcode"
-                                  />
-                                  <FieldTypeahead
-                                    name="address_country"
-                                    label="Country"
-                                    options={countries}
-                                    required="Country may not be null."
-                                    placeholder="-- Select country --"
-                                    aria-label="Select a country"
-                                  />
-                                  <FieldTypeahead
-                                    name="uk_region"
-                                    label="UK Region"
-                                    options={ukRegions}
-                                    required="UK region may not be null."
-                                    placeholder="-- Select region --"
-                                    aria-label="Select a region"
-                                  />
-                                  <FieldTextarea
-                                    type="text"
-                                    name="notes"
-                                    label="Event Notes (optional)"
-                                  />
-                                  <FieldTypeahead
-                                    name="lead_team"
-                                    label="Team hosting the event"
-                                    options={teams}
-                                    required="Select at least one team hosting the event"
-                                    placeholder="-- Select team --"
-                                    aria-label="Select an team"
-                                  />
-                                  <FieldTypeahead
-                                    name="service"
-                                    label="Service"
-                                    required="Select at least one service"
-                                    options={services}
-                                    placeholder="-- Select service --"
-                                    aria-label="Select a service"
-                                  />
-                                  <AdviserTypeAhead
-                                    name="organiser"
-                                    label="Organiser"
-                                    required="Type at least one organiser"
-                                    placeholder="-- Type to search for organiser --"
-                                  />
-                                  <FieldRadios
-                                    legend="Is this a shared event? (optional)"
-                                    name="event_shared"
-                                    options={OPTIONS_YES_NO}
-                                    inline={true}
-                                  />
-                                  {values.event_shared === OPTION_YES && (
-                                    <FieldAddAnother
-                                      name="teams"
-                                      label="Teams"
-                                      required="Select at least one team"
-                                      item-name="team"
-                                    >
-                                      {({ value, onChange, error }) => (
-                                        <FieldTypeahead
-                                          name="teams"
-                                          options={teams}
-                                          placeholder="-- Select team --"
-                                          required="Select at least one team"
-                                          aria-label="Select at least one team"
-                                          value={teams.find(
-                                            ({ value: option_value }) =>
-                                              option_value === value
-                                          )}
-                                          onChange={onChange}
-                                          error={error}
-                                        />
-                                      )}
-                                    </FieldAddAnother>
-                                  )}
-                                  <FieldAddAnother
-                                    name="related_programmes"
-                                    label="Related programmes"
-                                    required="Select at least one programme"
-                                    item-name="program"
-                                  >
-                                    {({ value, onChange, error }) => (
-                                      <FieldTypeahead
-                                        name="related_programmes"
-                                        options={programmes}
-                                        placeholder="-- Select programme --"
-                                        required="Select at least one programme"
-                                        aria-label="Select at least one programme"
-                                        value={programmes.find(
-                                          ({ value: option_value }) =>
-                                            option_value === value
-                                        )}
-                                        onChange={onChange}
-                                        error={error}
-                                      />
-                                    )}
-                                  </FieldAddAnother>
-                                  <FormActions>
-                                    <Button>
-                                      {eventId
-                                        ? 'Save and return'
-                                        : 'Add event'}
-                                    </Button>
-                                    <Link
-                                      href={
-                                        eventId
-                                          ? urls.events.details(eventId)
-                                          : urls.events.index()
-                                      }
-                                    >
-                                      Return without saving
-                                    </Link>
-                                  </FormActions>
-                                </LoadingBox>
-                              )}
-                            </FormStateful>
-                          )
-                        )
-                      }}
-                    </Task.Status>
-                  </GridCol>
-                </GridRow>
-              </Main>
-            </>
-          )
-        }}
-      </Task>
+                      {({ value, onChange, error }) => (
+                        <FieldTypeahead
+                          name="related_trade_agreements"
+                          options={values?.metadata?.relatedTradeAgreements}
+                          placeholder="-- Search trade agreements --"
+                          required="Select at least one Trade Agreement"
+                          aria-label="Select a trade agreement"
+                          value={values?.metadata?.relatedTradeAgreements?.find(
+                            ({ value: option_value }) => option_value === value
+                          )}
+                          onChange={onChange}
+                          error={error}
+                        />
+                      )}
+                    </FieldAddAnother>
+                  )}
+                  <FieldInput
+                    label="Event name"
+                    name="name"
+                    type="text"
+                    required="Event name may not be null."
+                    data-test="group-field-name"
+                  />
+                  <FieldTypeahead
+                    name="event_type"
+                    label="Type of event"
+                    options={values?.metadata?.eventTypeOptions}
+                    placeholder="-- Select event type --"
+                    required="Select at least one event type"
+                    aria-label="Select an event type"
+                  />
+                  <FieldDate
+                    name="start_date"
+                    label="Event start date"
+                    required="Enter a valid start date"
+                  />
+                  <FieldDate
+                    name="end_date"
+                    label="Event end date"
+                    required="Enter a valid end date"
+                    validate={validatedStartDateBeforeOrEqualToEndDate}
+                  />
+                  <FieldTypeahead
+                    name="location_type"
+                    label="Event location type (optional)"
+                    options={values?.metadata?.eventLocationTypes}
+                    placeholder="-- Select event --"
+                    aria-label="Select an event"
+                  />
+                  <FieldInput
+                    label="Business and street"
+                    name="address_1"
+                    type="text"
+                    required="Business and street may not be null."
+                    data-test="group-field-address-1"
+                  />
+                  <FieldInput
+                    name="address_2"
+                    type="text"
+                    data-test="group-field-address-2"
+                  />
+                  <FieldInput
+                    label="Town or city"
+                    name="address_town"
+                    type="text"
+                    required="Town or city may not be null."
+                    data-test="group-field-address_town"
+                  />
+                  <FieldInput
+                    label="County (optional)"
+                    name="address_county"
+                    type="text"
+                    data-test="group-field-address_county"
+                  />
+                  <FieldInput
+                    label="Postcode"
+                    name="address_postcode"
+                    type="text"
+                    required="Postcode may not be null."
+                    data-test="group-field-address_postcode"
+                  />
+                  <FieldTypeahead
+                    name="address_country"
+                    label="Country"
+                    options={values?.metadata?.countries}
+                    required="Country may not be null."
+                    placeholder="-- Select country --"
+                    aria-label="Select a country"
+                    data-test="group-field-address_country"
+                  />
+                  <FieldTypeahead
+                    name="uk_region"
+                    label="UK Region"
+                    options={values?.metadata?.ukRegions}
+                    required="UK region may not be null."
+                    placeholder="-- Select region --"
+                    aria-label="Select a region"
+                    data-test="group-field-uk_region"
+                  />
+                  <FieldTextarea
+                    type="text"
+                    name="notes"
+                    label="Event Notes (optional)"
+                    data-test="group-field-notes"
+                  />
+                  <FieldTypeahead
+                    name="lead_team"
+                    label="Team hosting the event"
+                    options={values?.metadata?.teams}
+                    required="Select at least one team hosting the event"
+                    placeholder="-- Select team --"
+                    aria-label="Select an team"
+                    data-test="group-field-lead-team"
+                  />
+                  <FieldTypeahead
+                    name="service"
+                    label="Service"
+                    required="Select at least one service"
+                    options={values?.metadata?.services}
+                    placeholder="-- Select service --"
+                    aria-label="Select a service"
+                    data-test="group-field-service"
+                  />
+                  <AdviserTypeAhead
+                    name="organiser"
+                    label="Organiser"
+                    required="Type at least one organiser"
+                    placeholder="-- Type to search for organiser --"
+                    data-test="group-field-organiser"
+                  />
+                  <FieldRadios
+                    legend="Is this a shared event? (optional)"
+                    name="event_shared"
+                    options={OPTIONS_YES_NO}
+                    inline={true}
+                    data-test="group-field-event-shared"
+                  />
+                  {values.event_shared === OPTION_YES && (
+                    <FieldAddAnother
+                      name="teams"
+                      label="Teams"
+                      required="Select at least one team"
+                      item-name="team"
+                      data-test="group-field-teams"
+                    >
+                      {({ value, onChange, error }) => (
+                        <FieldTypeahead
+                          name="teams"
+                          options={values?.metadata?.teams}
+                          placeholder="-- Select team --"
+                          required="Select at least one team"
+                          aria-label="Select at least one team"
+                          value={values?.metadata?.teams?.find(
+                            ({ value: option_value }) => option_value === value
+                          )}
+                          onChange={onChange}
+                          error={error}
+                        />
+                      )}
+                    </FieldAddAnother>
+                  )}
+                  <FieldAddAnother
+                    name="related_programmes"
+                    label="Related programmes"
+                    required="Select at least one programme"
+                    item-name="program"
+                    initialValue={values?.metadata?.related_programmes}
+                    data-test="group-field-related-programmes"
+                  >
+                    {({ value, onChange, error }) => (
+                      <FieldTypeahead
+                        name="related_programmes"
+                        options={values?.metadata?.programmes}
+                        placeholder="-- Select programme --"
+                        required="Select at least one programme"
+                        aria-label="Select at least one programme"
+                        value={values?.metadata?.programmes?.find(
+                          ({ value: option_value }) => option_value === value
+                        )}
+                        onChange={onChange}
+                        error={error}
+                      />
+                    )}
+                  </FieldAddAnother>
+                </>
+              )}
+            </TaskForm>
+          </GridCol>
+        </GridRow>
+      </Main>
     </>
   )
 }
 
 EventForm.propTypes = {
-  formData: PropTypes.shape({
-    eventTypeOptions: PropTypes.arrayOf(
-      PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
-    ),
-    relatedTradeAgreements: PropTypes.arrayOf(
-      PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
-    ),
-    eventLocationTypes: PropTypes.arrayOf(
-      PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
-    ),
-    countries: PropTypes.arrayOf(
-      PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
-    ),
-    teams: PropTypes.arrayOf(
-      PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
-    ),
-    services: PropTypes.arrayOf(
-      PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
-    ),
-    programmes: PropTypes.arrayOf(
-      PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
-    ),
-    ukRegions: PropTypes.arrayOf(
-      PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
-    ),
-    initialValues: PropTypes.shape({
-      id: PropTypes.string,
-      address_postcode: PropTypes.string,
-      address_1: PropTypes.string,
-      address_2: PropTypes.string,
-      address_county: PropTypes.string,
-      address_postcode: PropTypes.string,
-      address_town: PropTypes.string,
-      address_country: PropTypes.shape({
-        value: PropTypes.string,
-        label: PropTypes.string,
-      }),
-      end_date: PropTypes.shape({
-        year: PropTypes.string,
-        month: PropTypes.string,
-        day: PropTypes.string,
-      }),
-      start_date: PropTypes.shape({
-        year: PropTypes.string,
-        month: PropTypes.string,
-        day: PropTypes.string,
-      }),
-      event_type: PropTypes.shape({
-        value: PropTypes.string,
-        label: PropTypes.string,
-      }),
-      lead_team: PropTypes.shape({
-        value: PropTypes.string,
-        label: PropTypes.string,
-      }),
-      location_type: PropTypes.shape({
-        value: PropTypes.string,
-        label: PropTypes.string,
-      }),
-      name: PropTypes.string,
-      notes: PropTypes.string,
-      organiser: PropTypes.shape({
-        value: PropTypes.string,
-        label: PropTypes.string,
-      }),
-      has_related_trade_agreements: PropTypes.oneOf(['yes', 'no']),
-      related_trade_agreements: PropTypes.arrayOf(
-        PropTypes.shape({
-          value: PropTypes.string,
-          label: PropTypes.string,
-        })
-      ),
-      related_programmes: PropTypes.arrayOf(
-        PropTypes.shape({
-          value: PropTypes.string,
-          label: PropTypes.string,
-        })
-      ),
-      event_shared: PropTypes.oneOf(['yes', 'no']),
-      teams: PropTypes.arrayOf(
-        PropTypes.shape({
-          value: PropTypes.string,
-          label: PropTypes.string,
-        })
-      ),
-      service: PropTypes.shape({
-        value: PropTypes.string,
-        label: PropTypes.string,
-      }),
-      uk_region: PropTypes.shape({
-        value: PropTypes.string,
-        label: PropTypes.string,
-      }),
-    }),
-  }),
-  isComplete: PropTypes.bool,
-  createdEventId: PropTypes.string,
-  createdEventName: PropTypes.string,
-  updatedEventId: PropTypes.string,
-  updatedEventName: PropTypes.string,
-  progress: PropTypes.bool,
-  updatedEventName: PropTypes.string,
+  eventId: PropTypes.string,
 }
 
 export default connect(state2props)(EventForm)

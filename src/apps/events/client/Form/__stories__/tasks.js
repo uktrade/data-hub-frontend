@@ -87,8 +87,6 @@ const programmes = [
   },
 ]
 
-// const initialValues = {}
-
 const initialValues = {
   address_1: 'Address 1',
   address_2: 'Address 2',
@@ -164,21 +162,19 @@ const initialValues = {
 
 export default {
   ['TASK_GET_EVENTS_FORM_AND_METADATA']: () =>
-    new Promise(
-      (resolve) =>
-        setTimeout(() =>
-          resolve({
-            eventTypeOptions,
-            relatedTradeAgreements,
-            eventLocationTypes,
-            countries,
-            teams,
-            services,
-            programmes,
-            ukRegions,
-            initialValues,
-          })
-        ),
-      1000
+    new Promise((resolve) =>
+      setTimeout(resolve, 1000, {
+        metadata: {
+          eventTypeOptions,
+          relatedTradeAgreements,
+          eventLocationTypes,
+          countries,
+          teams,
+          services,
+          programmes,
+          ukRegions,
+        },
+        ...initialValues,
+      })
     ),
 }

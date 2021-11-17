@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 import urls from '../../../../lib/urls'
 import { getMetadataOptions } from '../../../../client/metadata'
 import {
@@ -20,7 +22,7 @@ export const getEventDetails = (eventId) =>
         )
     : Promise.resolve({})
 
-const getEventFormAndMetadata = (eventId) => {
+const getEventFormAndMetadata = (data) => {
   return Promise.all([
     getMetadataOptions(urls.metadata.eventType()),
     getMetadataOptions(urls.metadata.tradeAgreement()),
@@ -30,7 +32,7 @@ const getEventFormAndMetadata = (eventId) => {
     getMetadataOptions(urls.metadata.service()),
     getMetadataOptions(urls.metadata.programme()),
     getMetadataOptions(urls.metadata.ukRegion()),
-    getEventDetails(eventId),
+    getEventDetails(data?.eventId),
   ])
     .then(
       ([
@@ -44,26 +46,28 @@ const getEventFormAndMetadata = (eventId) => {
         ukRegions,
         initialValues,
       ]) => ({
-        eventTypeOptions,
-        relatedTradeAgreements,
-        eventLocationTypes,
-        countries,
-        teams,
-        services,
-        programmes,
-        ukRegions,
-        initialValues,
+        metadata: {
+          eventTypeOptions,
+          relatedTradeAgreements,
+          eventLocationTypes,
+          countries,
+          teams,
+          services,
+          programmes,
+          ukRegions,
+        },
+        ...initialValues,
       })
     )
     .catch(handleError)
 }
 
-const saveEvent = ({ values }) => {
+const saveEvent = (values) => {
   const transformedValuesOnlyPayload = transformEventFormForAPIRequest(values)
   if (transformedValuesOnlyPayload) {
     const request = values.id ? apiProxyAxios.patch : apiProxyAxios.post
     const payload = {
-      ...values,
+      ..._.omit(values, ['metadata']),
       ...transformedValuesOnlyPayload,
     }
     const endpoint = values.id ? `/v4/event/${values.id}` : '/v4/event'
