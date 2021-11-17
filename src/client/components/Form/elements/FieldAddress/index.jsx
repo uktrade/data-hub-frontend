@@ -174,23 +174,31 @@ const FieldAddress = ({
 
   const usZipCodeRegex = /^\d{5}(-\d{4})?$/i
 
-  const canadianPostalCodeRegex =
+  const canadaPostalCodeRegex =
     /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$/i
+
+  const usZipCodeValidator = (value) => {
+    if (!value) {
+      return 'Enter a ZIP Code'
+    } else if (value && !usZipCodeRegex.test(value)) {
+      return 'Enter a valid ZIP Code'
+    }
+  }
+
+  const canadaPostalCodeValidator = (value) => {
+    if (!value) {
+      return 'Enter a Postal Code'
+    } else if (value && !canadaPostalCodeRegex.test(value)) {
+      return 'Enter a valid Postal Code'
+    }
+  }
 
   const postcodeValidator = (value) => {
     if (isUS) {
-      if (!value) {
-        return 'Enter a ZIP Code'
-      } else if (value && !usZipCodeRegex.test(value)) {
-        return 'Enter a valid ZIP Code'
-      }
+      return usZipCodeValidator(value)
     }
     if (isCanada) {
-      if (!value) {
-        return 'Enter a Postal Code'
-      } else if (value && !canadianPostalCodeRegex.test(value)) {
-        return 'Enter a valid Postal Code'
-      }
+      return canadaPostalCodeValidator(value)
     }
     return null
   }
