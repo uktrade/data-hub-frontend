@@ -57,7 +57,6 @@ const getEventFormAndMetadata = (data) => {
           ukRegions,
         },
         ...initialValues,
-        isComplete: true,
       })
     )
     .catch(handleError)

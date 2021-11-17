@@ -136,9 +136,10 @@ const EventForm = ({ eventId }) => {
                 },
               ]}
             >
-              {/* HACK isComplete hack added to fix related_programmes initialising with an udnefined value when not ready */}
+              {/* HACK metadata hack added to fix related_programmes initialising with an udnefined value when not ready */}
               {({ values }) =>
-                values?.isComplete && (
+                values &&
+                values.metadata && (
                   <>
                     {setEventName(values?.name)}
                     <FieldRadios
@@ -159,11 +160,11 @@ const EventForm = ({ eventId }) => {
                         {({ value, onChange, error }) => (
                           <FieldTypeahead
                             name="related_trade_agreements"
-                            options={values?.metadata?.relatedTradeAgreements}
+                            options={values.metadata.relatedTradeAgreements}
                             placeholder="-- Search trade agreements --"
                             required="Select at least one Trade Agreement"
                             aria-label="Select a trade agreement"
-                            value={values?.metadata?.relatedTradeAgreements?.find(
+                            value={values.metadata.relatedTradeAgreements?.find(
                               ({ value: option_value }) =>
                                 option_value === value
                             )}
@@ -183,7 +184,7 @@ const EventForm = ({ eventId }) => {
                     <FieldTypeahead
                       name="event_type"
                       label="Type of event"
-                      options={values?.metadata?.eventTypeOptions}
+                      options={values.metadata.eventTypeOptions}
                       placeholder="-- Select event type --"
                       required="Select at least one event type"
                       aria-label="Select an event type"
@@ -202,7 +203,7 @@ const EventForm = ({ eventId }) => {
                     <FieldTypeahead
                       name="location_type"
                       label="Event location type (optional)"
-                      options={values?.metadata?.eventLocationTypes}
+                      options={values.metadata.eventLocationTypes}
                       placeholder="-- Select event --"
                       aria-label="Select an event"
                     />
@@ -241,7 +242,7 @@ const EventForm = ({ eventId }) => {
                     <FieldTypeahead
                       name="address_country"
                       label="Country"
-                      options={values?.metadata?.countries}
+                      options={values.metadata.countries}
                       required="Country may not be null."
                       placeholder="-- Select country --"
                       aria-label="Select a country"
@@ -250,7 +251,7 @@ const EventForm = ({ eventId }) => {
                     <FieldTypeahead
                       name="uk_region"
                       label="UK Region"
-                      options={values?.metadata?.ukRegions}
+                      options={values.metadata.ukRegions}
                       required="UK region may not be null."
                       placeholder="-- Select region --"
                       aria-label="Select a region"
@@ -265,7 +266,7 @@ const EventForm = ({ eventId }) => {
                     <FieldTypeahead
                       name="lead_team"
                       label="Team hosting the event"
-                      options={values?.metadata?.teams}
+                      options={values.metadata.teams}
                       required="Select at least one team hosting the event"
                       placeholder="-- Select team --"
                       aria-label="Select an team"
@@ -275,7 +276,7 @@ const EventForm = ({ eventId }) => {
                       name="service"
                       label="Service"
                       required="Select at least one service"
-                      options={values?.metadata?.services}
+                      options={values.metadata.services}
                       placeholder="-- Select service --"
                       aria-label="Select a service"
                       data-test="group-field-service"
@@ -305,11 +306,11 @@ const EventForm = ({ eventId }) => {
                         {({ value, onChange, error }) => (
                           <FieldTypeahead
                             name="teams"
-                            options={values?.metadata?.teams}
+                            options={values.metadata.teams}
                             placeholder="-- Select team --"
                             required="Select at least one team"
                             aria-label="Select at least one team"
-                            value={values?.metadata?.teams?.find(
+                            value={values.metadata.teams?.find(
                               ({ value: option_value }) =>
                                 option_value === value
                             )}
@@ -332,11 +333,11 @@ const EventForm = ({ eventId }) => {
                           {/* {console.log('Related Programme', value)} */}
                           <FieldTypeahead
                             name="related_programmes"
-                            options={values?.metadata?.programmes}
+                            options={values.metadata.programmes}
                             placeholder="-- Select programme --"
                             required="Select at least one programme"
                             aria-label="Select at least one programme"
-                            value={values?.metadata?.programmes?.find(
+                            value={values.metadata.programmes?.find(
                               ({ value: option_value }) => {
                                 if (value) {
                                   // debugger
