@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 const { castArray, get, isEmpty, omitBy, pick, isUndefined } = require('lodash')
 const { roundToSignificantDigits } = require('../../../../common/number')
-const { convertGbpToUsd } = require('../../../../common/currency')
 
 const UNMATCHED_COMPANY_EDITABLE_FIELDS = [
   'business_type',
@@ -153,9 +152,8 @@ const transformFormToDnbChangeRequest = (company, formValues, res) => {
   delete obj.trading_names
 
   if (obj.turnover) {
-    obj.turnover = Math.round(
-      convertGbpToUsd(parseInt(formValues.turnover, 10))
-    ).toString()
+    obj.turnover_gbp = Math.round(parseInt(formValues.turnover, 10)).toString()
+    delete obj.turnover
   }
 
   const dnbChangeRequest = {
