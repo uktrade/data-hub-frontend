@@ -27,17 +27,33 @@ describe('Badge', () => {
       const badge = container.querySelector('[data-test="badge"]')
       expect(badge.textContent).to.equal('example')
     })
+
+    it('should render with a default border', () => {
+      const badge = container.querySelector('[data-test="badge"]')
+      const styles = window.getComputedStyle(badge)
+      expect(styles.border).to.equal('2px solid #bfc1c3')
+    })
   })
 
   context('When a "label" prop is passed passed', () => {
     let container
     beforeEach(() => {
-      container = mount(<Badge label="testLabel">{badgeText}</Badge>)
+      container = mount(
+        <Badge borderColour="red" label="testLabel">
+          {badgeText}
+        </Badge>
+      )
     })
 
     it('should set the content with children', () => {
       const badge = container.querySelector('[data-test="badge"]')
       expect(badge.textContent).to.equal('testLabelexample')
+    })
+
+    it('should render with a red border', () => {
+      const badge = container.querySelector('[data-test="badge"]')
+      const styles = window.getComputedStyle(badge)
+      expect(styles.border).to.equal('2px solid red')
     })
   })
 })
