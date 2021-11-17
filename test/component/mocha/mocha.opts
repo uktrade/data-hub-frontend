@@ -1,0 +1,3 @@
+--require test/component/mocha/dom.js
+--file test/component/mocha/bootstrap.js
+--recursive

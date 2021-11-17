@@ -41,6 +41,8 @@
     "test:visual:update": "cypress-image-diff -u",
     "test:component": "CYPRESS_coverage=false CYPRESS_integrationFolder=test/component/cypress/specs cypress run-ct",
     "test:component:watch": "CYPRESS_coverage=false CYPRESS_integrationFolder=test/component/cypress/specs cypress open-ct",
+    "test:component:mocha": "NODE_ENV=test WEBPACK_ENV=develop MOCHA_FILE=junit/test-results.xml npx mochapack --webpack-config webpack.config.js --opts ./test/component/mocha/mocha.opts ./test/component/mocha/**/*.test.{js,jsx}",
+    "test:component:mocha:watch": "NODE_ENV=test WEBPACK_ENV=develop MOCHA_FILE=junit/test-results.xml npx mochapack --watch --webpack-config webpack.config.js --opts ./test/component/mocha/mocha.opts ./test/component/mocha/**/*.test.{js,jsx}",
     "coverage": "npx nyc --reporter=html --reporter=json --reporter=text --reporter=lcov --report-dir=coverage npm run test:unit",
     "circle:unit": "npx nyc --reporter=lcov --reporter=json --report-dir=coverage npm run test:unit -- --reporter mocha-circleci-reporter",
     "circle:unit-client": "npm run test:unit-client --reporter mocha-circleci-reporter",
