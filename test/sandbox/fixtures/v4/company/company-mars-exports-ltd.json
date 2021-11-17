@@ -145,7 +145,7 @@
     "line_2": "",
     "town": "New York",
     "county": "",
-    "postcode": "765413",
+    "postcode": "12345",
     "area": {
       "name": "New York",
       "id": "aa65b701-244a-41fc-bd31-0a546303106a"
@@ -160,7 +160,7 @@
     "line_2": "",
     "town": "New York",
     "county": "",
-    "postcode": "765413",
+    "postcode": "12345",
     "country": {
       "name": "United States",
       "id": "81756b9a-5d95-e211-a939-e4115bead28a"
