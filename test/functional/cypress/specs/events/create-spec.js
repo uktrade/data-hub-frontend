@@ -5,7 +5,6 @@ describe('Event create', () => {
 
   it('should get add event header', () => {
     cy.findByRole('heading', { name: 'Add event' }).should('be.visible')
-    selectors.eventCreate.addressCountry
   })
 
   it('should get add event breadcrumb', () => {
