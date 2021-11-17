@@ -6,14 +6,16 @@ import Button from '@govuk-react/button'
 import { ButtonLink } from '../../../../../client/components/'
 import { typography } from '@govuk-react/lib'
 import { SPACING } from '@govuk-react/constants'
-import axios from 'axios'
 
 import {
-  FormStateful,
   FormActions,
   FieldRadios,
   FieldInput,
 } from '../../../../../client/components'
+
+import TaskForm from '../../../../../client/components/Task/Form'
+
+import { ID, TASK_ARCHIVE_COMPANY } from './state'
 
 const StyledSectionHeader = styled('div')`
   ${typography.font({ size: 24, weight: 'bold' })};
@@ -27,15 +29,6 @@ const SectionArchive = ({ isArchived, isDnbCompany, urls }) => {
     return null
   }
 
-  const archiveSubmitCallback = async (values) => {
-    await axios({
-      method: 'POST',
-      url: urls.companyArchive,
-      data: values,
-    })
-    return urls.companyBusinessDetails
-  }
-
   return (
     <div data-test="archiveCompanyContainer">
       <StyledSectionHeader>Archive company</StyledSectionHeader>
@@ -43,7 +36,16 @@ const SectionArchive = ({ isArchived, isDnbCompany, urls }) => {
       <p>Archive this company if it is no longer required or active.</p>
 
       {formIsOpen && (
-        <FormStateful onSubmit={archiveSubmitCallback} scrollToTop={false}>
+        <TaskForm
+          id={ID}
+          submissionTaskName={TASK_ARCHIVE_COMPANY}
+          transformPayload={(values) => ({
+            values,
+            urls,
+          })}
+          redirectTo={() => urls.companyBusinessDetails}
+          analyticsFormName="archive-company"
+        >
           <FieldRadios
             label="Archive reason"
             name="archived_reason"
@@ -54,7 +56,11 @@ const SectionArchive = ({ isArchived, isDnbCompany, urls }) => {
                 label: 'Other',
                 value: 'Other',
                 children: (
-                  <FieldInput label="Other" name="archived_reason_other" />
+                  <FieldInput
+                    type="text"
+                    label="Other"
+                    name="archived_reason_other"
+                  />
                 ),
               },
             ]}
@@ -64,7 +70,7 @@ const SectionArchive = ({ isArchived, isDnbCompany, urls }) => {
             <Button>Archive</Button>
             <ButtonLink onClick={() => setFormIsOpen(false)}>Cancel</ButtonLink>
           </FormActions>
-        </FormStateful>
+        </TaskForm>
       )}
 
       {!formIsOpen && (
