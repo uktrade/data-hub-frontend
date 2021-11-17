@@ -9,6 +9,7 @@ function Form({ formAttributes, children, ...contextProps }) {
       <form
         {...formAttributes}
         noValidate={true}
+        autoComplete="new-name"
         onSubmit={(e) => {
           e.preventDefault()
           contextProps.goForward()

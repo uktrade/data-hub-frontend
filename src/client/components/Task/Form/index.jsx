@@ -152,6 +152,7 @@ const _TaskForm = ({
                         >
                           <form
                             noValidate={true}
+                            autoComplete="off"
                             onSubmit={(e) => {
                               e.preventDefault()
                               const { errors, touched } =
