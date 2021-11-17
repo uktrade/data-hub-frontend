@@ -175,6 +175,7 @@ export default {
           ukRegions,
         },
         ...initialValues,
+        isComplete: true,
       })
     ),
 }
