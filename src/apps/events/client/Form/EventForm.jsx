@@ -328,6 +328,7 @@ const EventForm = ({ eventId }) => {
                     >
                       {({ value, onChange, error }) => (
                         <>
+                          {/* TODO: remove when done */}
                           {/* {console.log('Related Programme', value)} */}
                           <FieldTypeahead
                             name="related_programmes"
