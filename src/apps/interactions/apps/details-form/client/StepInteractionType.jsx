@@ -2,11 +2,13 @@ import React from 'react'
 
 import InsetText from '@govuk-react/inset-text'
 
-import { FieldRadios } from '../../../../../client/components'
+import { FieldRadios, FieldInput } from '../../../../../client/components'
 import { useFormContext } from '../../../../../client/components/Form/hooks'
 import { THEMES, KINDS } from '../../../constants'
 import { NewWindowLink } from '../../../../../client/components'
 import urls from '../../../../../lib/urls'
+import * as validators from '../../../../../client/components/Form/validators'
+import { GENERIC_PHONE_NUMBER_REGEX } from '../../../../../common/constants'
 
 const getOnChangeHandler = (fieldName, setFieldValue) => (e) => {
   setFieldValue('service', '')
@@ -112,7 +114,46 @@ const StepInteractionType = () => {
         </NewWindowLink>{' '}
         on this section.
       </InsetText>
-
+      <FieldInput
+        label="First name"
+        name="firstName"
+        type="text"
+        required="This field may not be null."
+        data-test="group-field-first_name"
+      />
+      <FieldInput
+        label="Last name"
+        name="lastName"
+        type="text"
+        required="This field may not be null."
+      />
+      <FieldInput
+        label="Telephone country code"
+        name="telephoneCountrycode"
+        type="text"
+        required="This field may not be null."
+        validate={(x) =>
+          !x?.match(/^\d{1,4}$/) &&
+          'Country code should consist of one to four numbers'
+        }
+      />
+      <FieldInput
+        label="Telephone number"
+        name="telephoneNumber"
+        type="text"
+        required="This field may not be null."
+        validate={(x) =>
+          !x?.match(GENERIC_PHONE_NUMBER_REGEX) &&
+          'Telephone number should consist of numbers'
+        }
+      />
+      <FieldInput
+        label="Email"
+        name="email"
+        type="email"
+        required="This field may not be null."
+        validate={validators.email}
+      />
       <FieldRadios
         name="theme"
         label="What is this regarding?"
