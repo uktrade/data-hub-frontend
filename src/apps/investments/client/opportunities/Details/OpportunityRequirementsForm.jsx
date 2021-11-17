@@ -2,10 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import { SPACING } from '@govuk-react/constants'
-import url from '../../../../../lib/urls'
+import urls from '../../../../../lib/urls'
 
 import {
   ID,
@@ -25,7 +24,6 @@ import {
   FieldInput,
   FieldCheckboxes,
   FieldRadios,
-  FormActions,
 } from '../../../../../client/components'
 import {
   TOTAL_INVESTMENT_SOUGHT_FIELD_NAME,
@@ -84,6 +82,12 @@ const OpportunityRequirementsForm = (state) => {
                     opportunity,
                   })
                 }
+                actionLinks={[
+                  {
+                    children: 'Cancel',
+                    href: urls.investments.opportunities.details(opportunityId),
+                  },
+                ]}
               >
                 <FieldInput
                   label="Total investment sought"
@@ -134,14 +138,6 @@ const OpportunityRequirementsForm = (state) => {
                   options={timeScalesOptions}
                   data-test="timescales"
                 />
-                <FormActions>
-                  <Button data-test="edit-button">Save</Button>
-                  <Link
-                    href={url.investments.opportunities.details(opportunityId)}
-                  >
-                    Cancel
-                  </Link>
-                </FormActions>
               </TaskForm>
             </Main>
           </>

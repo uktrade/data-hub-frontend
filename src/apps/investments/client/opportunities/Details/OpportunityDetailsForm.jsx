@@ -11,6 +11,7 @@ import {
   ID,
   state2props,
 } from './state'
+import urls from '../../../../../lib/urls'
 
 import {
   INVESTMENT_OPPORTUNITY__DETAILS_METADATA_LOADED,
@@ -88,6 +89,12 @@ function OpportunityDetailsForm(state) {
                   opportunity,
                 })
               }
+              actionLinks={[
+                {
+                  children: 'Cancel',
+                  href: urls.investments.opportunities.details(opportunityId),
+                },
+              ]}
             >
               {(values) => (
                 <>
@@ -228,16 +235,6 @@ function OpportunityDetailsForm(state) {
                     </a>
                     .
                   </p>
-                  {/* <FormActions>
-                    <Button data-test="save-button">Save</Button>
-                    <Link
-                      href={url.investments.opportunities.details(
-                        opportunityId
-                      )}
-                    >
-                      Cancel
-                    </Link>
-                  </FormActions> */}
                 </>
               )}
             </TaskForm>
