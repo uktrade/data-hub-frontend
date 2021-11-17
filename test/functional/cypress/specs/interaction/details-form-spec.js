@@ -350,6 +350,12 @@ function assertRequestBody(expectedBody, callback) {
   })
 }
 
+const selectInteractionType = (theme, kind) => {
+  cy.contains('label', theme).click()
+  kind && cy.contains('label', kind).click()
+  cy.contains('button', 'Continue').click()
+}
+
 const company = fixtures.company.venusLtd
 
 describe('Interaction theme', () => {
@@ -396,7 +402,7 @@ describe('Interaction theme', () => {
     })
 
     it('should render all form fields', () => {
-      assertFormFields(cy.get('#interaction-details-form form div'), [
+      assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
@@ -496,7 +502,7 @@ describe('Service delivery theme', () => {
     })
 
     it('should render all form fields', () => {
-      assertFormFields(cy.get('#interaction-details-form form div'), [
+      assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
@@ -589,7 +595,7 @@ describe('Investment theme', () => {
     })
 
     it('should render all form fields', () => {
-      assertFormFields(cy.get('#interaction-details-form form div'), [
+      assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
@@ -704,7 +710,7 @@ describe('Trade Agreement theme', () => {
       cy.contains('button', 'Continue').click()
     })
     it('should render all form fields', () => {
-      assertFormFields(cy.get('#interaction-details-form form div'), [
+      assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
@@ -823,7 +829,7 @@ describe('Trade Agreement theme', () => {
 })
 
 describe('Contact loop', () => {
-  context('when a contact does not exists and user wants to add one', () => {
+  context('when a contact does not exist and user wants to add one', () => {
     beforeEach(() => {
       cy.visit(urls.companies.interactions.create(company.id))
 
@@ -963,7 +969,11 @@ describe('Editing an interaction from a contact', () => {
     cy.contains('a', 'totam|f19f5014-8bb1-4645-a224-27a4c8db5336').click()
     cy.contains('a', 'Edit interaction').click()
     cy.contains('h1', 'Edit interaction for Zboncak Group')
-    cy.contains('button', 'Save interaction')
+    cy.contains('button', 'Save interaction').click()
+    cy.get('[data-test="status-message"]').should(
+      'have.text',
+      'Interaction updated'
+    )
   })
 })
 
@@ -987,7 +997,11 @@ describe('Editing an interaction from an investment project', () => {
     cy.contains('a', 'totam|f19f5014-8bb1-4645-a224-27a4c8db5336').click()
     cy.contains('a', 'Edit interaction').click()
     cy.contains('h1', 'Edit interaction for Venus Ltd')
-    cy.contains('button', 'Save interaction')
+    cy.contains('button', 'Save interaction').click()
+    cy.get('[data-test="status-message"]').should(
+      'have.text',
+      'Interaction updated'
+    )
   })
 })
 
@@ -996,23 +1010,20 @@ describe('Editing an interaction from an interactions list', () => {
     cy.visit(urls.interactions.edit(fixtures.interaction.withLink))
 
     cy.contains('h1', 'Edit interaction for Zboncak Group')
-    cy.contains('button', 'Save interaction')
+    cy.contains('button', 'Save interaction').click()
+    cy.get('[data-test="status-message"]').should(
+      'have.text',
+      'Interaction updated'
+    )
   })
 })
 
 describe('Filtering services based on theme & kind', () => {
-  const openFormForNewInteraction = (theme, kind) =>
-    cy.visit(
-      urls.companies.interactions.createType(
-        fixtures.company.dnbCorp,
-        theme,
-        kind
-      )
-    )
-
+  beforeEach(() => {
+    cy.visit(urls.companies.interactions.create(fixtures.company.dnbCorp))
+  })
   it('should show filtered services for Export => Interaction', () => {
-    openFormForNewInteraction(THEMES.EXPORT, KINDS.INTERACTION)
-
+    selectInteractionType('Export', 'A standard interaction')
     cy.get('#field-service').should(
       'have.text',
       [
@@ -1028,8 +1039,7 @@ describe('Filtering services based on theme & kind', () => {
   })
 
   it('should show filtered services for Export => Service delivery', () => {
-    openFormForNewInteraction(THEMES.EXPORT, KINDS.SERVICE_DELIVERY)
-
+    selectInteractionType('Export', 'A service that you have provided')
     cy.get('#field-service').should(
       'have.text',
       [
@@ -1043,8 +1053,7 @@ describe('Filtering services based on theme & kind', () => {
   })
 
   it('should show filtered services for Investment', () => {
-    openFormForNewInteraction(THEMES.INVESTMENT, KINDS.INTERACTION)
-
+    selectInteractionType('Investment')
     cy.get('#field-service').should(
       'have.text',
       [
@@ -1059,7 +1068,7 @@ describe('Filtering services based on theme & kind', () => {
   })
 
   it('should show filtered services for Trade Agreement', () => {
-    openFormForNewInteraction(THEMES.TRADE_AGREEMENT, KINDS.INTERACTION)
+    selectInteractionType('Trade agreement')
     cy.get('#field-service').should(
       'have.text',
       [
@@ -1076,8 +1085,7 @@ describe('Filtering services based on theme & kind', () => {
   })
 
   it('should show filtered services for Other => Interaction', () => {
-    openFormForNewInteraction(THEMES.OTHER, KINDS.INTERACTION)
-
+    selectInteractionType('Other', 'A standard interaction')
     cy.get('#field-service').should(
       'have.text',
       [
@@ -1092,7 +1100,7 @@ describe('Filtering services based on theme & kind', () => {
   })
 
   it('should show filtered services for Other => Service delivery', () => {
-    openFormForNewInteraction(THEMES.OTHER, KINDS.SERVICE_DELIVERY)
+    selectInteractionType('Other', 'A service that you have provided')
 
     cy.get('#field-service').should(
       'have.text',
@@ -1118,6 +1126,10 @@ describe('Editing an interaction without a theme', () => {
       })
     )
 
-    cy.contains('button', 'Save interaction')
+    cy.contains('button', 'Save interaction').click()
+    cy.get('[data-test="status-message"]').should(
+      'have.text',
+      'Interaction updated'
+    )
   })
 })

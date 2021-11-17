@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 const { filter, keyBy, snakeCase, upperFirst } = require('lodash')
 const { format, isDateValid } = require('../client/utils/date')
+const { OPTION_NO, OPTION_YES } = require('./constants')
 
 const { hqLabels } = require('./companies/labels')
 
@@ -102,6 +103,40 @@ function buildMetaDataObj(collection) {
   })
 }
 
+const transformOptionToValue = (option) => {
+  if (!option || !option.value) {
+    return null
+  }
+  return option.value
+}
+
+const transformArrayOfOptionsToValues = (options) => {
+  if (!options || !options.length) {
+    return []
+  }
+  return options.map(transformOptionToValue)
+}
+
+const transformToID = (value) => {
+  if (!value) {
+    return value
+  }
+  return Array.isArray(value)
+    ? value.map((optionFromArrayOfOptions) => optionFromArrayOfOptions.id)
+    : value.id
+}
+
+const transformObjectToTypeahead = (value) => {
+  if (!value) {
+    return value
+  }
+  return Array.isArray(value)
+    ? value.map(transformObjectToOption)
+    : transformObjectToOption(value)
+}
+
+const transformToYesNo = (value) => (value ? OPTION_YES : OPTION_NO)
+
 module.exports = {
   buildMetaDataObj,
   transformHQCodeToLabelledOption,
@@ -113,4 +148,9 @@ module.exports = {
   transformDateObjectToDateString,
   transformDateStringToDateObject,
   transformObjectToGovUKOption,
+  transformOptionToValue,
+  transformArrayOfOptionsToValues,
+  transformToYesNo,
+  transformToID,
+  transformObjectToTypeahead,
 }
