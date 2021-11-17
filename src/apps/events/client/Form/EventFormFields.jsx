@@ -271,72 +271,72 @@ EventFormFields.propTypes = {
         PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
       ),
     }),
-  }).isRequired,
-  id: PropTypes.string,
-  address_postcode: PropTypes.string,
-  address_1: PropTypes.string,
-  address_2: PropTypes.string,
-  address_county: PropTypes.string,
-  address_postcode: PropTypes.string,
-  address_town: PropTypes.string,
-  address_country: PropTypes.shape({
-    value: PropTypes.string,
-    label: PropTypes.string,
-  }),
-  end_date: PropTypes.shape({
-    year: PropTypes.string,
-    month: PropTypes.string,
-    day: PropTypes.string,
-  }),
-  start_date: PropTypes.shape({
-    year: PropTypes.string,
-    month: PropTypes.string,
-    day: PropTypes.string,
-  }),
-  event_type: PropTypes.shape({
-    value: PropTypes.string,
-    label: PropTypes.string,
-  }),
-  lead_team: PropTypes.shape({
-    value: PropTypes.string,
-    label: PropTypes.string,
-  }),
-  location_type: PropTypes.shape({
-    value: PropTypes.string,
-    label: PropTypes.string,
-  }),
-  name: PropTypes.string,
-  notes: PropTypes.string,
-  organiser: PropTypes.shape({
-    value: PropTypes.string,
-    label: PropTypes.string,
-  }),
-  has_related_trade_agreements: PropTypes.oneOf(['yes', 'no']),
-  related_trade_agreements: PropTypes.arrayOf(
-    PropTypes.shape({
+    id: PropTypes.string,
+    address_postcode: PropTypes.string,
+    address_1: PropTypes.string,
+    address_2: PropTypes.string,
+    address_county: PropTypes.string,
+    address_postcode: PropTypes.string,
+    address_town: PropTypes.string,
+    address_country: PropTypes.shape({
       value: PropTypes.string,
       label: PropTypes.string,
-    })
-  ),
-  related_programmes: PropTypes.arrayOf(
-    PropTypes.shape({
+    }),
+    end_date: PropTypes.shape({
+      year: PropTypes.string,
+      month: PropTypes.string,
+      day: PropTypes.string,
+    }),
+    start_date: PropTypes.shape({
+      year: PropTypes.string,
+      month: PropTypes.string,
+      day: PropTypes.string,
+    }),
+    event_type: PropTypes.shape({
       value: PropTypes.string,
       label: PropTypes.string,
-    })
-  ),
-  event_shared: PropTypes.oneOf(['yes', 'no']),
-  teams: PropTypes.arrayOf(
-    PropTypes.shape({
+    }),
+    lead_team: PropTypes.shape({
       value: PropTypes.string,
       label: PropTypes.string,
-    })
-  ),
-  service: PropTypes.shape({
-    value: PropTypes.string,
-    label: PropTypes.string,
-  }),
-  uk_region: PropTypes.shape({
-    value: PropTypes.string,
-    label: PropTypes.string,
+    }),
+    location_type: PropTypes.shape({
+      value: PropTypes.string,
+      label: PropTypes.string,
+    }),
+    name: PropTypes.string,
+    notes: PropTypes.string,
+    organiser: PropTypes.shape({
+      value: PropTypes.string,
+      label: PropTypes.string,
+    }),
+    has_related_trade_agreements: PropTypes.oneOf(['yes', 'no']),
+    related_trade_agreements: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.string,
+        label: PropTypes.string,
+      })
+    ),
+    related_programmes: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.string,
+        label: PropTypes.string,
+      })
+    ),
+    event_shared: PropTypes.oneOf(['yes', 'no']),
+    teams: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.string,
+        label: PropTypes.string,
+      })
+    ),
+    service: PropTypes.shape({
+      value: PropTypes.string,
+      label: PropTypes.string,
+    }),
+    uk_region: PropTypes.shape({
+      value: PropTypes.string,
+      label: PropTypes.string,
+    }),
   }),
 }
