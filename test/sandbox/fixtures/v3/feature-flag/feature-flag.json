@@ -12,10 +12,6 @@
     "is_active": true
   },
   {
-    "code": "address-area-unverifed-match",
-    "is_active": true
-  },
-  {
     "code": "address-area-contact-required-field",
     "is_active": true
   },
