@@ -79,7 +79,7 @@ const Add = ({ cancelUrl, currentLeadITA, companyName, companyId }) => (
         flashMessage={({ name, email }) => [
           'Lead adviser information updated.',
           `Send ${name} an email to let them know they've been ` +
-            `made Lead ITA ${
+            `made Lead ITA${
               email ? `: <a href="mailto:${email}">${email}</a>` : '.'
             }`,
         ]}
