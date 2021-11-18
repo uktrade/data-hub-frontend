@@ -13,6 +13,8 @@ import {
 import { OPTIONS_YES_NO, OPTION_YES } from '../../../../client/constants'
 import { validateStartDateBeforeOrEqualToEndDate } from './validators'
 
+const UK = '80756b9a-5d95-e211-a939-e4115bead28a'
+
 export const EventFormFields = ({ values }) => {
   return values && values.metadata ? (
     <>
@@ -121,15 +123,17 @@ export const EventFormFields = ({ values }) => {
         aria-label="Select a country"
         data-test="group-field-address_country"
       />
-      <FieldTypeahead
-        name="uk_region"
-        label="UK Region"
-        options={values.metadata.ukRegions}
-        required="UK region may not be null."
-        placeholder="-- Select region --"
-        aria-label="Select a region"
-        data-test="group-field-uk_region"
-      />
+      {values.address_country?.value === UK && (
+        <FieldTypeahead
+          name="uk_region"
+          label="UK Region"
+          options={values.metadata.ukRegions}
+          required="UK region may not be null."
+          placeholder="-- Select region --"
+          aria-label="Select a region"
+          data-test="group-field-uk_region"
+        />
+      )}
       <FieldTextarea
         type="text"
         name="notes"

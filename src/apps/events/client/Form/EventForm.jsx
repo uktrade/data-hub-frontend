@@ -93,12 +93,8 @@ const EventForm = ({ eventId }) => {
               ]}
             >
               {({ values }) => {
-                return (
-                  <>
-                    {setEventName(values?.name)}
-                    <EventFormFields values={values} />
-                  </>
-                )
+                setEventName(values?.name)
+                return <EventFormFields values={values} />
               }}
             </TaskForm>
           </GridCol>
