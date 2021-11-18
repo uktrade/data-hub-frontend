@@ -10,9 +10,5 @@
   {
     "code": "province-filter",
     "is_active": true
-  },
-  {
-    "code": "contacts-area-field",
-    "is_active": true
   }
 ]
