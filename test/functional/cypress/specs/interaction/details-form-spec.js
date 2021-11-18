@@ -306,7 +306,8 @@ function submitForm(kind, theme, values) {
       cy.get('#event')
         .parent()
         .selectTypeaheadOption('Sort event')
-        .should('contain', 'Sort event')
+        .parent()
+        .should('contain', 'Sort Event')
     }
 
     if (theme == THEMES.INVESTMENT) {
