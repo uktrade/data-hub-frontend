@@ -6,9 +6,5 @@
   {
     "code": "state-filter",
     "is_active": true
-  },
-  {
-    "code": "province-filter",
-    "is_active": true
   }
 ]
