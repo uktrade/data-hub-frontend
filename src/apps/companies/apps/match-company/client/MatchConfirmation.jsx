@@ -1,22 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import axios from 'axios'
 import { H4 } from '@govuk-react/heading'
 import UnorderedList from '@govuk-react/unordered-list'
-import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
 import ListItem from '@govuk-react/list-item'
 import InsetText from '@govuk-react/inset-text'
 import { SPACING } from '@govuk-react/constants'
-import ErrorSummary from '@govuk-react/error-summary'
 import Details from '@govuk-react/details'
 
-import {
-  SummaryList,
-  FormStateful,
-  FormActions,
-} from '../../../../../client/components'
+import { SummaryList } from '../../../../../client/components'
+import TaskForm from '../../../../../client/components/Task/Form'
 import urls from '../../../../../lib/urls'
 import MatchDuplicate from './MatchDuplicate'
 
@@ -31,16 +24,6 @@ const StyledList = styled(UnorderedList)`
   list-style-type: initial;
   margin-bottom: ${SPACING.SCALE_6};
 `
-
-async function onMatchSubmit({ company, dnbCompany, csrfToken }) {
-  await axios.post(
-    `${urls.companies.match.link(company.id)}?_csrf=${csrfToken}`,
-    {
-      dnbCompany,
-    }
-  )
-  return urls.companies.detail(company.id)
-}
 
 function MatchConfirmation({
   dnbCompanyIsMatched,
@@ -60,19 +43,27 @@ function MatchConfirmation({
 
   return (
     <StyledRoot>
-      <FormStateful
-        onSubmit={() => onMatchSubmit({ company, dnbCompany, csrfToken })}
+      <TaskForm
+        id="match-confirmation-form"
+        submissionTaskName="Match confirmation"
+        analyticsFormName="match-confirmation-form"
+        redirectTo={(company) => urls.companies.detail(company.id)}
+        flashMessage={() => [
+          'Business details verified.',
+          'Thanks for helping to improve the quality of records on Data Hub!',
+        ]}
+        transformPayload={() => ({
+          company,
+          dnbCompany,
+          csrfToken,
+        })}
+        submitButtonLabel="Verify"
+        actionLinks={[
+          { href: urls.companies.match.index(company.id), children: 'Back' },
+        ]}
       >
-        {({ submissionError }) => (
+        {() => (
           <>
-            {submissionError && (
-              <ErrorSummary
-                heading="There was an error matching this company"
-                description={submissionError.message}
-                errors={[]}
-              />
-            )}
-
             <H4 as="h2">Data Hub business details (un-verified)</H4>
             <InsetText>
               <SummaryList
@@ -120,13 +111,9 @@ function MatchConfirmation({
                 future
               </ListItem>
             </StyledList>
-            <FormActions>
-              <Button>Verify</Button>
-              <Link href={urls.companies.match.index(company.id)}>Back</Link>
-            </FormActions>
           </>
         )}
-      </FormStateful>
+      </TaskForm>
     </StyledRoot>
   )
 }

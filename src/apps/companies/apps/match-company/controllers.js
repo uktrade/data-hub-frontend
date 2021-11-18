@@ -154,13 +154,6 @@ async function linkCompanies(req, res, next) {
       company.id,
       dnbCompany.duns_number
     )
-
-    req.flashWithBody(
-      'success',
-      'Business details verified.',
-      'Thanks for helping to improve the quality of records on Data Hub!',
-      'message-company-matched'
-    )
     res.json(result)
   } catch (error) {
     next(error)

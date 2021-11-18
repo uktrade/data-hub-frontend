@@ -198,6 +198,8 @@ import { ProtectedRoute } from '../client/components'
 
 import routes from './routes'
 
+import { onMatchSubmit } from '../apps/companies/apps/match-company/client/tasks'
+
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
 }
@@ -227,6 +229,7 @@ function App() {
     <Provider
       tasks={{
         'Create company': createCompany,
+        'Match confirmation': onMatchSubmit,
         'Company lists': companyListsTasks.fetchCompanyLists,
         'Company list': companyListsTasks.fetchCompanyList,
         'Exports history': exportsHistoryTasks.fetchExportsHistory,
