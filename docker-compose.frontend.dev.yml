@@ -3,7 +3,7 @@ services:
   frontend:
     depends_on:
       - mock-sso
-    entrypoint: dockerize -wait tcp://api:8000 -timeout 3m -wait-retry-interval 5s
+    entrypoint: dockerize -wait tcp://api:8000 -timeout 5m -wait-retry-interval 5s
     env_file: .env
 
   mock-sso:
@@ -15,9 +15,9 @@ services:
       MOCK_SSO_TOKEN: 123
       MOCK_SSO_EMAIL_USER_ID: test@gov.uk
       MOCK_SSO_USERNAME: test@gov.uk
-      MOCK_SSO_VALIDATE_TOKEN: "true"
 
 networks:
   default:
     external:
       name: data-infrastructure-shared-network
+

@@ -1,7 +1,7 @@
 docker-base = docker-compose -p dh -f docker-compose.base.yml
 docker-mock = docker-compose -p dh -f docker-compose.base.yml -f docker-compose.mock.yml
 docker-e2e = docker-compose -p dh -f docker-compose.base.yml -f docker-compose.e2e.frontend.yml -f docker-compose.e2e.backend.yml -f docker-compose.services.yml
-docker-dev = docker-compose -p dh -f docker-compose.base.yml -f docker-compose.frontend.dev.yml
+docker-dev = COMPOSE_HTTP_TIMEOUT=300 docker-compose -p dh -f docker-compose.base.yml -f docker-compose.frontend.dev.yml
 docker-storybook = docker-compose -p dh -f docker-compose.storybook.yml
 
 wait-for-frontend = dockerize -wait tcp://localhost:3000/healthcheck -timeout 5m -wait-retry-interval 5s
