@@ -129,9 +129,6 @@ const envSchema = Joi.object({
   // Email address to the team responsible for changes to the One List companies
   ONE_LIST_EMAIL: Joi.string().required(),
 
-  // Url to Export Wins performance dashboards, used in the main nav
-  PERFORMANCE_DASHBOARDS_URL: Joi.string().uri().required(),
-
   // Port on which the app runs
   PORT: Joi.number().port().default(3000),
 
