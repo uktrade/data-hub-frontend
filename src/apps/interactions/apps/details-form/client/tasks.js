@@ -1,13 +1,26 @@
 import axios from 'axios'
-import { omit, pick } from 'lodash'
+import { get, omit, pick } from 'lodash'
 
 import urls from '../../../../../lib/urls'
-import { catchApiError } from '../../../../../client/components/Task/utils'
+import {
+  apiProxyAxios,
+  catchApiError,
+} from '../../../../../client/components/Task/utils'
 import getContactFromQuery from '../../../../../client/utils/getContactFromQuery'
-import { INTERACTION_STATUS } from '../../../constants'
+import { INTERACTION_STATUS, KINDS, THEMES } from '../../../constants'
 import { EXPORT_INTEREST_STATUS_VALUES, OPTION_NO } from '../../../../constants'
 import { ID as STORE_ID } from './state'
-import { THEMES } from '../../../constants'
+
+import {
+  transformObjectToOption,
+  transformOptionToValue,
+  transformArrayOfOptionsToValues,
+  transformToYesNo,
+  transformToID,
+  transformObjectToTypeahead,
+} from '../../../../transformers'
+
+import { formatWithoutParsing } from '../../../../../client/utils/date'
 
 const { transformValueForAPI } = require('../../../../../client/utils/date')
 
@@ -19,20 +32,6 @@ const FIELDS_TO_OMIT = [
   'has_related_opportunity',
 ]
 
-function transformOption(option) {
-  if (!option || !option.value) {
-    return null
-  }
-  return option.value
-}
-
-function transformArrayOfOptions(options) {
-  if (!options || !options.length) {
-    return []
-  }
-  return options.map(transformOption)
-}
-
 function transformExportCountries(values) {
   if (values.were_countries_discussed === OPTION_NO) {
     return
@@ -43,7 +42,7 @@ function transformExportCountries(values) {
     (acc, status) => [
       ...acc,
       ...values[status].map((country) => ({
-        country: transformOption(country),
+        country: transformOptionToValue(country),
         status,
       })),
     ],
@@ -51,7 +50,22 @@ function transformExportCountries(values) {
   )
 }
 
-function transformServiceAnswers(values) {
+const transformServiceAnswers = (serviceAnswers) => {
+  if (!serviceAnswers) {
+    return serviceAnswers
+  }
+  return Object.keys(serviceAnswers).reduce(
+    (acc, questionId) => ({
+      ...acc,
+      [`service_answers.${questionId}`]: Object.keys(
+        serviceAnswers[questionId]
+      )[0],
+    }),
+    {}
+  )
+}
+
+function transformServiceAnswersForPayload(values) {
   return Object.keys(values)
     .filter((fieldName) => fieldName.startsWith('service_answers.'))
     .reduce((acc, fieldName) => {
@@ -65,35 +79,145 @@ function transformServiceAnswers(values) {
     }, {})
 }
 
-export function openContactForm({ values, currentStep, url }) {
-  window.sessionStorage.setItem(
-    STORE_ID,
-    JSON.stringify({
-      values,
-      currentStep,
-    })
-  )
+const transformValues = (interaction, callback, fieldNames) => {
+  const isServiceDelivery = interaction.kind === KINDS.SERVICE_DELIVERY
+  const serviceDeliveryExclusiveFields = [
+    'service_delivery_status',
+    'grant_amount_offered',
+    'is_event',
+  ]
+  const interactionExclusiveFields = ['communication_channel']
+
+  return fieldNames
+    .filter((fieldName) => fieldName in interaction)
+    .filter((fieldName) =>
+      isServiceDelivery
+        ? !interactionExclusiveFields.includes(fieldName)
+        : !serviceDeliveryExclusiveFields.includes(fieldName)
+    )
+    .reduce(
+      (acc, fieldName) => ({
+        ...acc,
+        [fieldName]: callback(interaction[fieldName]),
+      }),
+      {}
+    )
+}
+
+const transformInteractionToValues = (interaction, companyId, investmentId) => {
+  const advisers = interaction.dit_participants
+    .filter((participant) => participant.adviser.name)
+    .map((participant) => participant.adviser)
+  const serviceId = get(interaction, 'service.id')
+  const serviceName = get(interaction, 'service.name', '')
+  const [parentServiceLabel, childServiceLabel] = serviceName.split(' : ')
+  const date = new Date(interaction.date)
+
+  return {
+    theme: interaction.theme || THEMES.OTHER,
+    service: childServiceLabel ? parentServiceLabel : serviceId,
+    service_2nd_level: childServiceLabel ? serviceId : undefined,
+    has_related_opportunity: transformToYesNo(
+      interaction.large_capital_opportunity
+    ),
+    dit_participants: advisers.map((adviser) =>
+      transformObjectToOption(adviser)
+    ),
+    date: {
+      day: formatWithoutParsing(date, 'dd'),
+      month: formatWithoutParsing(date, 'MM'),
+      year: formatWithoutParsing(date, 'yyyy'),
+    },
+    companies: [companyId],
+    investment_project: investmentId,
+    ...pick(interaction, [
+      'id',
+      'kind',
+      'subject',
+      'notes',
+      'grant_amount_offered',
+      'net_company_receipt',
+      'policy_feedback_notes',
+    ]),
+    ...transformValues(interaction, transformToYesNo, [
+      'was_policy_feedback_provided',
+      'were_countries_discussed',
+      'is_event',
+      'has_related_trade_agreements',
+    ]),
+    ...transformValues(interaction, transformToID, [
+      'service_delivery_status',
+      'policy_issue_types',
+    ]),
+    ...transformValues(interaction, transformObjectToTypeahead, [
+      'contacts',
+      'event',
+      'communication_channel',
+      'policy_areas',
+      'related_trade_agreements',
+      'large_capital_opportunity',
+    ]),
+    ...transformServiceAnswers(interaction.service_answers),
+  }
+}
+
+export function openContactForm({ values, url }) {
+  window.sessionStorage.setItem(STORE_ID, JSON.stringify(values))
   window.location.href = url
 }
 
-export function restoreState() {
-  const stateFromStorage = window.sessionStorage.getItem(STORE_ID)
-
-  if (!stateFromStorage) {
-    return {}
-  }
-
+export async function getInitialFormValues({
+  companyId,
+  referral,
+  investmentId,
+  user,
+  interactionId,
+}) {
   const queryContact = getContactFromQuery()
+
+  // If user has added a contact during an interaction,
+  // form values are stored in sessionStorage and added
+  // back to state when returning to the form.
   if (queryContact.label && queryContact.value) {
-    const updatedState = JSON.parse(stateFromStorage)
-    updatedState.values.contacts.push({
+    const valuesFromStorage = JSON.parse(
+      window.sessionStorage.getItem(STORE_ID)
+    )
+    valuesFromStorage.contacts.push({
       label: queryContact.label,
       value: queryContact.value,
     })
-    return updatedState
+    return valuesFromStorage
+  } else if (interactionId) {
+    // If editing an interaction
+    return apiProxyAxios
+      .get(`v4/interaction/${interactionId}`)
+      .then(({ data }) =>
+        transformInteractionToValues(data, companyId, investmentId)
+      )
+  } else {
+    // If creating an interaction
+    const date = new Date()
+    const getInvestmentValues = (investmentId) =>
+      investmentId && {
+        kind: KINDS.INTERACTION,
+        theme: THEMES.INVESTMENT,
+      }
+    return {
+      companies: [companyId],
+      investment_project: investmentId,
+      date: {
+        day: formatWithoutParsing(date, 'dd'),
+        month: formatWithoutParsing(date, 'MM'),
+        year: formatWithoutParsing(date, 'yyyy'),
+      },
+      contacts:
+        referral && referral.contact
+          ? [transformObjectToOption(referral.contact)]
+          : [],
+      dit_participants: [transformObjectToOption(user)],
+      ...getInvestmentValues(investmentId),
+    }
   }
-
-  return JSON.parse(stateFromStorage)
 }
 
 export function saveInteraction({ values, companyIds, referralId }) {
@@ -109,15 +233,15 @@ export function saveInteraction({ values, companyIds, referralId }) {
     status: INTERACTION_STATUS.COMPLETE,
     companies: companyIds,
     service: values.service_2nd_level || values.service,
-    service_answers: transformServiceAnswers(values),
-    contacts: transformArrayOfOptions(values.contacts),
+    service_answers: transformServiceAnswersForPayload(values),
+    contacts: transformArrayOfOptionsToValues(values.contacts),
     dit_participants: values.dit_participants.map((a) => ({
       adviser: a.value,
     })),
     date: transformValueForAPI(values.date),
-    policy_areas: transformArrayOfOptions(values.policy_areas),
-    communication_channel: transformOption(values.communication_channel),
-    event: transformOption(values.event),
+    policy_areas: transformArrayOfOptionsToValues(values.policy_areas),
+    communication_channel: transformOptionToValue(values.communication_channel),
+    event: transformOptionToValue(values.event),
     // Cannot be empty string
     grant_amount_offered:
       'grant_amount_offered' in values
@@ -134,7 +258,7 @@ export function saveInteraction({ values, companyIds, referralId }) {
       'policy_issue_types',
       'has_related_trade_agreements',
     ]),
-    related_trade_agreements: transformArrayOfOptions(
+    related_trade_agreements: transformArrayOfOptionsToValues(
       values.related_trade_agreements
     ),
     ...(values.theme == THEMES.INVESTMENT && {
@@ -157,7 +281,11 @@ export function saveInteraction({ values, companyIds, referralId }) {
   return request(
     values.id ? `${endpoint}/${values.id}` : endpoint,
     omit(payload, FIELDS_TO_OMIT)
-  ).catch(catchApiError)
+  ).catch((e) => {
+    // Accounts for non-standard API error on contacts field
+    const contactsError = e.response.data.contacts[0]
+    return contactsError ? Promise.reject(contactsError) : catchApiError(e)
+  })
 }
 
 export const fetchActiveEvents = () =>

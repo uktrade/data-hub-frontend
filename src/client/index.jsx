@@ -88,14 +88,18 @@ import {
   TASK_GET_ACTIVE_EVENTS,
   TASK_SAVE_INTERACTION,
   TASK_OPEN_CONTACT_FORM,
+  TASK_GET_INTERACTION_INITIAL_VALUES,
 } from '../apps/interactions/apps/details-form/client/state'
 import * as addInteractionFormTasks from '../apps/interactions/apps/details-form/client/tasks'
 
 import { TASK_UPDATE_ADVISER } from '../apps/companies/apps/advisers/client/state'
 import * as manageAdviser from '../apps/companies/apps/advisers/client/tasks'
 
-import { DNB__CHECK_PENDING_REQUEST } from '../apps/companies/apps/business-details/client/state'
-import * as dnbCheck from '../apps/companies/apps/business-details/client/tasks'
+import {
+  DNB__CHECK_PENDING_REQUEST,
+  TASK_ARCHIVE_COMPANY,
+} from '../apps/companies/apps/business-details/client/state'
+import * as businessDetails from '../apps/companies/apps/business-details/client/tasks'
 
 import {
   TASK_GET_COMPANIES_LIST,
@@ -194,6 +198,8 @@ import { ProtectedRoute } from '../client/components'
 
 import routes from './routes'
 
+import { onMatchSubmit } from '../apps/companies/apps/match-company/client/tasks'
+
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
 }
@@ -223,6 +229,7 @@ function App() {
     <Provider
       tasks={{
         'Create company': createCompany,
+        'Match confirmation': onMatchSubmit,
         'Company lists': companyListsTasks.fetchCompanyLists,
         'Company list': companyListsTasks.fetchCompanyList,
         'Exports history': exportsHistoryTasks.fetchExportsHistory,
@@ -246,6 +253,8 @@ function App() {
         [TASK_POSTCODE_TO_REGION]: addCompanyPostcodeToRegionTask,
         [TASK_GET_ACTIVE_EVENTS]: addInteractionFormTasks.fetchActiveEvents,
         [TASK_SAVE_INTERACTION]: addInteractionFormTasks.saveInteraction,
+        [TASK_GET_INTERACTION_INITIAL_VALUES]:
+          addInteractionFormTasks.getInitialFormValues,
         [TASK_OPEN_CONTACT_FORM]: addInteractionFormTasks.openContactForm,
         [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
         [TASK_UPDATE_ADVISER]: manageAdviser.updateAdviser,
@@ -261,7 +270,7 @@ function App() {
           investmentOpportunitiesDetailsTasks.getDetailsMetadata,
         [TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA]:
           investmentOpportunitiesDetailsTasks.getRequirementsMetadata,
-        [DNB__CHECK_PENDING_REQUEST]: dnbCheck.checkIfPendingRequest,
+        [DNB__CHECK_PENDING_REQUEST]: businessDetails.checkIfPendingRequest,
         [TASK_GET_PROFILES_LIST]:
           investmentProfilesTasks.getLargeCapitalProfiles,
         [TASK_GET_PROJECTS_LIST]: getInvestmentProjects.getProjects,
@@ -291,6 +300,7 @@ function App() {
         [TASK_GET_ORDERS_METADATA]: getOrdersMetadata,
         [TASK_GET_ORDERS_LIST]: getOrders,
         [TASK_GET_INTERACTIONS_TEAM_NAME]: getTeamNames,
+        [TASK_ARCHIVE_COMPANY]: businessDetails.archiveSubmitCallback,
         ...resourceTasks,
       }}
     >

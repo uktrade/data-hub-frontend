@@ -1,7 +1,6 @@
 import React from 'react'
 import _ from 'lodash'
 import qs from 'qs'
-import { connect } from 'react-redux'
 import { H3 } from '@govuk-react/heading'
 import InsetText from '@govuk-react/inset-text'
 import Link from '@govuk-react/link'
@@ -28,6 +27,7 @@ import {
   FieldAddAnother,
   Typeahead,
 } from '../../../../../client/components'
+import Resource from '../../../../../client/components/Resource'
 
 import { useFormContext } from '../../../../../client/components/Form/hooks'
 
@@ -43,12 +43,9 @@ import {
   EXPORT_INTEREST_STATUS_VALUES,
   OPTION_YES,
   OPTIONS_YES_NO,
-  OPTION_NO,
 } from '../../../../constants'
 
-import { ADD_INTERACTION__GET_ACTIVE_EVENTS } from '../../../../../client/actions'
 import { ID, TASK_GET_ACTIVE_EVENTS } from './state'
-import Task from '../../../../../client/components/Task'
 
 import urls from '../../../../../lib/urls'
 
@@ -170,11 +167,7 @@ const StepInteractionDetails = ({
   communicationChannels,
   countries,
   onOpenContactForm,
-  activeEvents,
-  activeEvent,
   relatedTradeAgreements,
-  relatedOpportunity,
-  interactionId,
 }) => {
   const { values = {} } = useFormContext()
   const serviceContext = getServiceContext(
@@ -356,24 +349,17 @@ const StepInteractionDetails = ({
             required="Answer if this was an event"
           />
           {values.is_event === OPTION_YES && (
-            <Task.Status
-              id={ID}
-              name={TASK_GET_ACTIVE_EVENTS}
-              startOnRender={{
-                onSuccessDispatch: ADD_INTERACTION__GET_ACTIVE_EVENTS,
-              }}
-            >
-              {() => (
+            <Resource name={TASK_GET_ACTIVE_EVENTS} id={ID}>
+              {(events) => (
                 <FieldTypeahead
                   label="Event"
                   name="event"
                   placeholder="-- Select event --"
                   required="Select a specific event"
-                  initialValue={activeEvent}
-                  options={activeEvents}
+                  options={events}
                 />
               )}
-            </Task.Status>
+            </Resource>
           )}
         </>
       )}
@@ -525,9 +511,6 @@ const StepInteractionDetails = ({
             legend="Does this interaction relate to a large capital opportunity?"
             required="Answer if this interaction relates to a large capital opportunity"
             options={OPTIONS_YES_NO}
-            initialValue={
-              interactionId && (relatedOpportunity ? OPTION_YES : OPTION_NO)
-            }
           />
 
           {values.has_related_opportunity === OPTION_YES && (
@@ -538,7 +521,6 @@ const StepInteractionDetails = ({
               placeholder="-- Search opportunities --"
               aria-label="Select an opportunity"
               required="Select a related large capital opportunity"
-              initialValue={relatedOpportunity}
               loadOptions={throttle(
                 (searchString) =>
                   axios
@@ -576,15 +558,9 @@ StepInteractionDetails.propTypes = {
   policyIssueTypes: typeaheadOptionsListProp.isRequired,
   communicationChannels: typeaheadOptionsListProp.isRequired,
   countries: typeaheadOptionsListProp.isRequired,
-  activeEvents: typeaheadOptionsListProp,
-  activeEvent: typeaheadOptionProp,
   relatedTradeAgreements: typeaheadOptionsListProp.isRequired,
-  relatedOpportunity: typeaheadOptionProp,
+  onOpenContactForm: PropTypes.func.isRequired,
+  contacts: typeaheadOptionsListProp.isRequired,
 }
 
-export default connect((state) => {
-  const { activeEvents } = state[ID]
-  return {
-    activeEvents,
-  }
-}, null)(StepInteractionDetails)
+export default StepInteractionDetails

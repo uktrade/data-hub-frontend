@@ -30,6 +30,7 @@ const _TaskForm = ({
   id,
   analyticsFormName,
   // Optional
+  analyticsData,
   initialValuesTaskName,
   initialValuesPayload,
   redirectTo,
@@ -52,10 +53,11 @@ const _TaskForm = ({
   values = {},
   touched = {},
   steps = [],
+  initialStepIndex = 0,
   ...props
 }) => {
   useEffect(() => {
-    onLoad(initialValues)
+    onLoad(initialValues, initialStepIndex)
   }, [])
 
   // TODO: Clean up this mess
@@ -188,7 +190,10 @@ const _TaskForm = ({
                                   ]}
                                   effect={() => {
                                     if (resolved) {
-                                      analytics('Submission request success')
+                                      analytics(
+                                        'Submission request success',
+                                        analyticsData && analyticsData(values)
+                                      )
                                       if (flashMessage) {
                                         const message = flashMessage(
                                           result,
@@ -215,7 +220,10 @@ const _TaskForm = ({
                               dependencyList={[initialValues]}
                               effect={() =>
                                 initialValues &&
-                                onLoad(transformInitialValues(initialValues))
+                                onLoad(
+                                  transformInitialValues(initialValues),
+                                  initialStepIndex
+                                )
                               }
                             />
                             <Effect
@@ -288,10 +296,11 @@ const _TaskForm = ({
 
 // TODO: Clean up this mess
 const dispatchToProps = (dispatch) => ({
-  onLoad: (initialValues) =>
+  onLoad: (initialValues, initialStepIndex) =>
     dispatch({
       type: 'TASK_FORM__LOADED',
       initialValues,
+      initialStepIndex,
     }),
   resetResolved: () =>
     dispatch({
@@ -364,6 +373,9 @@ const dispatchToProps = (dispatch) => ({
  * @param {string} props.id - A unique component instance ID
  * @param {string} props.analyticsFormName - The name of the form that will be
  * used in the Google Analytics events
+ * @param {Props['analyticsData']} props.analyticsData - A function which takes
+ * the values of the form as an argument, and which returns an object
+ * containing additional - non-sensitive - data to be passed to google analytics.
  * @param {Props['submissionTaskName']} props.submissionTaskName - Name of the
  * task that should be started when the form is submitted. The task will receive
  * the form values as payload.
@@ -412,6 +424,10 @@ const dispatchToProps = (dispatch) => ({
  * is not documented yet. The form optionally accepts a function as a child,
  * which will be passed the whole context provided by the form as it's only
  * argument and should return React vdom containing form fields.
+ * @param {Props['initialStepIndex']} [props.initialStepIndex] - An optional integer
+ * representing the index of the step which the user will land on when the form
+ * is rendered, if the form has multiple steps. This is then set as the currentStep
+ * property in the form's state.
  * */
 const TaskForm = multiInstance({
   name: 'TaskForm',
@@ -424,6 +440,7 @@ const TaskForm = multiInstance({
 TaskForm.propTypes = {
   id: PropTypes.string.isRequired,
   analyticsFormName: PropTypes.string.isRequired,
+  analyticsData: PropTypes.func,
   submissionTaskName: PropTypes.string.isRequired,
   redirectTo: PropTypes.func,
   redirectMode: PropTypes.oneOf(['hard', 'soft']),
@@ -437,6 +454,7 @@ TaskForm.propTypes = {
       href: PropTypes.string.isRequired,
     })
   ),
+  initialStepIndex: PropTypes.number,
 }
 
 export default TaskForm

@@ -6,19 +6,23 @@ const { DATE_LONG_FORMAT_1 } = require('../../../../../src/common/constants')
 
 const today = formatWithoutParsing(new Date(), DATE_LONG_FORMAT_1)
 
+const selectInteractionType = (theme, kind) => {
+  cy.contains('label', theme).click()
+  kind && cy.contains('label', kind).click()
+  cy.contains('button', 'Continue').click()
+}
+
 describe('Interaction', () => {
   const company = fixtures.company.create.defaultCompany('interaction testing')
   const contact = fixtures.contact.create(company.pk)
-
   before(() => {
     cy.loadFixture([company])
     cy.loadFixture([contact])
   })
 
   beforeEach(() => {
-    cy.visit(
-      companies.interactions.createType(company.pk, 'export', 'interaction')
-    )
+    cy.visit(companies.interactions.create(company.pk))
+    selectInteractionType('Export', 'A standard interaction')
   })
 
   context('An interaction with no countries discussed', () => {
@@ -155,13 +159,8 @@ describe('Service delivery', () => {
   })
 
   beforeEach(() => {
-    cy.visit(
-      companies.interactions.createType(
-        company.pk,
-        'export',
-        'service_delivery'
-      )
-    )
+    cy.visit(companies.interactions.create(company.pk))
+    selectInteractionType('Export', 'A service that you have provided')
   })
 
   it('should create the service delivery', () => {
