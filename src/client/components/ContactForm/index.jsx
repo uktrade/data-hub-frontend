@@ -350,10 +350,6 @@ const _ContactForm = ({
                               isCountrySelectable={true}
                               features={{
                                 areaFormField: features['contacts-area-field'],
-                                postcodeValidation:
-                                  features[
-                                    'address-postcode-company-required-field'
-                                  ],
                               }}
                             />
                           </fieldset>

@@ -43,10 +43,8 @@ const FieldAddress = ({
   country,
   apiEndpoint,
   onSelectUKAddress,
-  features,
   isCountrySelectable,
 }) => {
-  const postcodeValidationEnabled = features && features.postcodeValidation
   const findAdministrativeAreas = useAdministrativeAreaLookup()
   const {
     onAdministrativeAreaSearch,
@@ -210,10 +208,8 @@ const FieldAddress = ({
       <StyledFieldPostcode
         type="text"
         name="postcode"
-        label={
-          postcodeValidationEnabled ? postcodeLabel() : 'Postcode (optional)'
-        }
-        required={postcodeValidationEnabled ? postcodeErrorMessage() : null}
+        label={postcodeLabel()}
+        required={postcodeErrorMessage()}
         validate={postcodeValidator}
       />
     )

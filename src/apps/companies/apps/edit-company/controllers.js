@@ -44,10 +44,6 @@ async function renderEditCompanyForm(req, res, next) {
           regions,
           sectors,
           headquarterTypes,
-          features: {
-            postcodeValidation:
-              res.locals.features['address-postcode-company-required-field'],
-          },
         },
       })
   } catch (error) {
