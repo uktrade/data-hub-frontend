@@ -39,8 +39,6 @@ async function renderAddCompanyForm(req, res, next) {
           features: {
             isAddressAreaEnabled:
               res.locals.features['address-area-company-search'],
-            areaFormField:
-              res.locals.features['edit-business-details-area-fields'],
             postcodeValidation:
               res.locals.features['address-postcode-company-required-field'],
             ...features,
