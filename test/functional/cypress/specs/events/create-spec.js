@@ -48,23 +48,38 @@ describe('Event create', () => {
       .should('be.visible')
       .should('have.attr', 'aria-label', 'Add a 1nd trade agreement')
     cy.findAllByText('Add another').first().click()
+    // Check two trade agreement selectors added
     cy.findAllByText('-- Search trade agreements --').should('have.length', 2)
     cy.findAllByText('Add another')
       .first()
       .should('be.visible')
       .should('have.attr', 'aria-label', 'Add a 2rd trade agreement')
+
+    // TODO: Replace with generic assert pattern
+    // Set values in the role
     cy.findAllByRole('combobox', { id: 'related_trade_agreements' })
-      .first()
+      .eq(0)
       .type(
+        'Comprehensive and Progressive Agreement for Trans-Pacific Partnership',
+        { force: true }
+      )
+      .type('{enter}')
+
+    cy.findAllByRole('combobox', { id: 'related_trade_agreements' })
+      .eq(1)
+      .type('UK-Australia Mutual Recognition Agreement', { force: true })
+      .type('{enter}')
+
+    // Verify values set
+    cy.findAllByRole('combobox', { id: 'related_trade_agreements' })
+      .eq(1)
+      .should('contain', 'UK-Australia Mutual Recognition Agreement')
+    cy.findAllByRole('combobox', { id: 'related_trade_agreements' })
+      .eq(0)
+      .should(
+        'contain',
         'Comprehensive and Progressive Agreement for Trans-Pacific Partnership'
       )
-      .click()
-    // cy.findAllByRole('combobox', { id: 'related_trade_agreements' })
-    //   .next()
-    //   .type('UK-Australia Mutual Recognition Agreement')
-    //   .click()
-    // TODO: Checking values of the checkbox
-    // TODO: Actually populating the values
   })
 
   // it('should toggle uk region field', () => {
@@ -105,26 +120,5 @@ describe('Event create', () => {
   //   cy.get(selectors.eventCreate.relatedProgrammes)
   //     .eq(1)
   //     .should('contain', 'Services')
-  // })
-
-  // it('should allow a user to add multiple related trade agreements', () => {
-  //   cy.get(selectors.eventCreate.tradeAgreementExistsYes).click()
-  //   cy.get(selectors.eventCreate.relatedTradeAgreements)
-  //     .eq(0)
-  //     .select('UK-Japan Comprehensive Economic Partnership Agreement')
-  //   cy.get(selectors.eventCreate.addAnotherTradeAgreement).click()
-  //   cy.get(selectors.eventCreate.relatedTradeAgreements)
-  //     .eq(1)
-  //     .select('UK-Australia Mutual Recognition Agreement')
-
-  //   cy.get(selectors.eventCreate.relatedTradeAgreements)
-  //     .eq(0)
-  //     .should(
-  //       'contain',
-  //       'UK-Japan Comprehensive Economic Partnership Agreement'
-  //     )
-  //   cy.get(selectors.eventCreate.relatedTradeAgreements)
-  //     .eq(1)
-  //     .should('contain', 'UK-Australia Mutual Recognition Agreement')
   // })
 })

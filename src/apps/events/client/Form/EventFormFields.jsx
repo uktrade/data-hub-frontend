@@ -11,28 +11,7 @@ import {
   FieldTypeahead,
 } from '../../../../client/components'
 import { OPTIONS_YES_NO, OPTION_YES } from '../../../../client/constants'
-
-const getDate = (value) => {
-  const { day, month, year } = value
-  const result = new Date(year, month, day)
-  return result
-}
-
-// TODO: Move to shared validators
-const validatedStartDateBeforeOrEqualToEndDate = (value, field, { values }) => {
-  if (values && values.start_date && values.end_date) {
-    const startDate = getDate(values.start_date)
-    const endDate = getDate(values.end_date)
-    if (startDate && endDate) {
-      const result =
-        startDate > endDate
-          ? 'Enter a valid end date. This must be after the start date.'
-          : null
-      return result
-    }
-  }
-  return null
-}
+import { validateStartDateBeforeOrEqualToEndDate } from './validators'
 
 export const EventFormFields = ({ values }) => {
   return values && values.metadata ? (
@@ -92,7 +71,7 @@ export const EventFormFields = ({ values }) => {
         name="end_date"
         label="Event end date"
         required="Enter a valid end date"
-        validate={validatedStartDateBeforeOrEqualToEndDate}
+        validate={validateStartDateBeforeOrEqualToEndDate}
       />
       <FieldTypeahead
         name="location_type"
@@ -237,8 +216,6 @@ export const EventFormFields = ({ values }) => {
           </>
         )}
       </FieldAddAnother>
-      {/* TODO: Remove when done */}
-      {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
     </>
   ) : null
 }

@@ -73,16 +73,6 @@ const EventForm = ({ eventId }) => {
               initialValuesTaskName={TASK_GET_EVENTS_FORM_AND_METADATA}
               initialValuesPayload={{
                 eventId,
-                metadata: {
-                  eventTypeOptions: [],
-                  relatedTradeAgreements: [],
-                  eventLocationTypes: [],
-                  countries: [],
-                  teams: [],
-                  programmes: [],
-                  ukRegions: [],
-                },
-                isComplete: false,
               }}
               redirectTo={({ data }) => urls.events.details(data?.id)}
               redirectMode="hard"
