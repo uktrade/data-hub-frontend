@@ -41,13 +41,9 @@ import {
 import useAdministrativeAreaLookup from '../AdministrativeAreaSearch/useAdministrativeAreaLookup'
 import useAdministrativeAreaSearch from '../AdministrativeAreaSearch/useAdministrativeAreaSearch'
 
-const emailAlreadyExists = (email, features) => {
-  const contactEndpointVersion = features['address-area-contact-required-field']
-    ? 'v4'
-    : 'v3'
-
+const emailAlreadyExists = (email) => {
   return axios
-    .get(`/api-proxy/${contactEndpointVersion}/contact`, { params: { email } })
+    .get(`/api-proxy/v4/contact`, { params: { email } })
     .then(({ data }) => data.count)
 }
 
@@ -206,15 +202,10 @@ const _ContactForm = ({
                   }),
                 }
 
-                const contactEndpointVersion = features[
-                  'address-area-contact-required-field'
-                ]
-                  ? 'v4'
-                  : 'v3'
                 const response = await axios({
                   url: update
-                    ? `/api-proxy/${contactEndpointVersion}/contact/${contactId}`
-                    : `/api-proxy/${contactEndpointVersion}/contact`,
+                    ? `/api-proxy/v4/contact/${contactId}`
+                    : `/api-proxy/v4/contact`,
                   method: update ? 'PATCH' : 'POST',
                   data: payload,
                 })
