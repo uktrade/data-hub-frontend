@@ -36,11 +36,9 @@ async function renderCompanyList(req, res, next) {
       sectorOptions,
     })
 
-    if (!res.locals.features['state-filter']) {
-      filtersFields = filtersFields.filter(
-        (macroField) => macroField.label !== 'US state'
-      )
-    }
+    filtersFields = filtersFields.filter(
+      (macroField) => macroField.label !== 'US state'
+    )
 
     filtersFields = filtersFields.filter(
       (macroField) => macroField.label !== 'Canadian Province'
