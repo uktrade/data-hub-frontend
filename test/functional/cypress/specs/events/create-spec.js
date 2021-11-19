@@ -168,8 +168,6 @@ describe('Event create', () => {
       .should('be.visible')
       .should('have.attr', 'aria-label', 'Add a 2rd trade agreement')
 
-    // TODO: Check how to get selectTypeaheadOption to work
-    // Set values in the role
     cy.findAllByRole('combobox', { id: 'related_trade_agreements' })
       .eq(0)
       .type(
@@ -177,47 +175,26 @@ describe('Event create', () => {
         { force: true }
       )
       .type('{enter}')
-    // .selectTypeaheadOption(
-    //   'Comprehensive and Progressive Agreement for Trans-Pacific Partnership'
-    // )
 
-    // TODO: Check how to get selectTypeaheadOption to work
     cy.findAllByRole('combobox', { id: 'related_trade_agreements' })
       .eq(1)
       .type('UK-Australia Mutual Recognition Agreement', { force: true })
       .type('{enter}')
-    // .selectTypeaheadOption('UK-Australia Mutual Recognition Agreement')
 
-    // TODO: Check how to get this working
-    // Verify values set
-    // cy.findAllByRole('combobox', { id: 'related_trade_agreements' })
-    //   .eq(1)
-    //   .should('contain', 'UK-Australia Mutual Recognition Agreement')
-    // cy.findAllByRole('combobox', { id: 'related_trade_agreements' })
-    //   .eq(0)
-    //   .should(
-    //     'contain',
-    //     'Comprehensive and Progressive Agreement for Trans-Pacific Partnership'
-    //   )
+    cy.findAllByRole('region').then((element) =>
+      assertFieldTypeahead({
+        element,
+        value:
+          'Comprehensive and Progressive Agreement for Trans-Pacific Partnership',
+      })
+    )
 
-    cy.findAllByRole('combobox', { id: 'related_trade_agreements' })
-      .eq(0)
-      .then((element) =>
-        assertFieldTypeahead({
-          element,
-          value:
-            'Comprehensive and Progressive Agreement for Trans-Pacific Partnership',
-        })
-      )
-
-    cy.findAllByRole('combobox', { id: 'related_trade_agreements' })
-      .eq(1)
-      .then((element) =>
-        assertFieldTypeahead({
-          element,
-          value: 'UK-Australia Mutual Recognition Agreement',
-        })
-      )
+    cy.findAllByRole('region').then((element) =>
+      assertFieldTypeahead({
+        element,
+        value: 'UK-Australia Mutual Recognition Agreement',
+      })
+    )
   })
 
   it('should toggle uk region field', () => {
@@ -225,12 +202,13 @@ describe('Event create', () => {
       .type('United Kingdom', { force: true })
       .type('{enter}')
 
-    cy.get('#address_country').should('contain', 'United Kingdom')
+    cy.get('#field-address_country').should('contain', 'United Kingdom')
 
     cy.get('#uk_region').should('be.visible')
 
     cy.get('#address_country').type('Uganda', { force: true }).type('{enter}')
-    cy.get('#uk_region').should('not.be.visible')
+    cy.get('#field-address_country').should('contain', 'Uganda')
+    cy.get('#uk_region').should('not.exist')
   })
 
   it('should toggle teams section when interacting with shared options', () => {
@@ -239,27 +217,27 @@ describe('Event create', () => {
     cy.get('#teams').should('be.visible')
 
     cy.get('[name="event_shared"]').eq(1).click()
-    cy.get('#teams').should('not.be.visible')
-    // TODO: Figure out how to work below
-    // cy.findByText('Is this a shared event? (optional)')
-    // .then((element) => {
-    //   assertFieldRadiosWithLegend({
-    //     element,
-    //     label: 'Is this a shared event? (optional)',
-    //     optionsCount: 8,
-    //     value: 'Aberdeen City Council',
-    //   })
-    // })
+    cy.get('#teams').should('not.exist')
   })
 
-  // it('should allow user to add multiple shared teams', () => {
-  //   cy.get(selectors.eventCreate.sharedYes).click()
-  //   cy.get(selectors.eventCreate.teams).eq(0).select('BPI')
-  //   cy.get(selectors.eventCreate.addAnotherSharedTeam).click()
-  //   cy.get(selectors.eventCreate.teams).eq(1).select('BN Americas')
-  //   cy.get(selectors.eventCreate.teams).eq(0).should('contain', 'BPI')
-  //   cy.get(selectors.eventCreate.teams).eq(1).should('contain', 'BN Americas')
-  // })
+  it('should allow user to add multiple shared teams', () => {
+    // Select yes
+    cy.get('[name="event_shared"]').eq(0).click()
+    // Click Add another
+    cy.findAllByText('Add another')
+      .eq(0)
+      .should('be.visible')
+      .should('have.attr', 'aria-label', 'Add a 1nd team')
+    cy.findAllByText('Add another').eq(0).click()
+    cy.get('#teams').should('have.length', 2)
+
+    //  Set first teams with BPI
+    cy.get('#teams').eq(0).type('BPI', { force: true }).type('{enter}')
+    cy.get('#field-teams').should('contain', 'BPI')
+    // Set second with
+    cy.get('#teams').eq(1).type('BN Americas', { force: true }).type('{enter}')
+    cy.get('#field-teams').eq(1).should('contain', 'BN Americas')
+  })
 
   // it('should allow user to add multiple programmes', () => {
   //   cy.get(selectors.eventCreate.sharedYes).click()

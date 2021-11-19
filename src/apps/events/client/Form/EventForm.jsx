@@ -51,7 +51,7 @@ const EventForm = ({ eventId }) => {
         <GridRow data-test="eventForm">
           <GridCol setWidth="three-quarters">
             <article>
-              <p data-test="trade-agreement-text">
+              <p>
                 If your Event is set up to focus on a Trade Agreement or
                 contributes to implementing a Trade Agreement then select that
                 the event relates to a Trade Agreement and the relevant
@@ -59,7 +59,6 @@ const EventForm = ({ eventId }) => {
               </p>
               <NewWindowLink
                 href={urls.external.helpCentre.tradeagreementGuidance()}
-                data-test="trade-agreement-link"
               >
                 See more guidance
               </NewWindowLink>

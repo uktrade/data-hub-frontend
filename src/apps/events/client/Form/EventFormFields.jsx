@@ -54,7 +54,6 @@ export const EventFormFields = ({ values }) => {
         name="name"
         type="text"
         required="Event name may not be null."
-        data-test="group-field-name"
       />
       <FieldTypeahead
         name="event_type"
@@ -146,14 +145,12 @@ export const EventFormFields = ({ values }) => {
         label="Organiser"
         required="Type at least one organiser"
         placeholder="Type to search for organiser"
-        data-test="group-field-organiser"
       />
       <FieldRadios
         legend="Is this a shared event? (optional)"
         name="event_shared"
         options={OPTIONS_YES_NO}
         inline={true}
-        data-test="group-field-event-shared"
       />
       {values.event_shared === OPTION_YES && (
         <FieldAddAnother
@@ -161,6 +158,7 @@ export const EventFormFields = ({ values }) => {
           label="Teams"
           required="Select at least one team"
           item-name="team"
+          data-test-prefix="team-field-"
         >
           {({ value, onChange, error }) => (
             <FieldTypeahead
