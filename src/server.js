@@ -12,7 +12,7 @@ const csrf = require('csurf')
 const enforce = require('express-sslify')
 const favicon = require('serve-favicon')
 const cookieParser = require('cookie-parser')
-const minifyHTML = require('express-minify-html')
+const minifyHTML = require('express-minify-html-2')
 const Joi = require('@hapi/joi')
 
 const config = require('./config')
