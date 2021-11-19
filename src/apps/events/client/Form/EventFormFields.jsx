@@ -37,7 +37,7 @@ export const EventFormFields = ({ values }) => {
             <FieldTypeahead
               name="related_trade_agreements"
               options={values.metadata.relatedTradeAgreements}
-              placeholder="-- Search trade agreements --"
+              placeholder="Search trade agreements"
               required="Select at least one Trade Agreement"
               aria-label="Select a trade agreement"
               value={values.metadata.relatedTradeAgreements?.find(
@@ -60,7 +60,7 @@ export const EventFormFields = ({ values }) => {
         name="event_type"
         label="Type of event"
         options={values.metadata.eventTypeOptions}
-        placeholder="-- Select event type --"
+        placeholder="Select event type"
         required="Select at least one event type"
         aria-label="Select an event type"
       />
@@ -79,49 +79,40 @@ export const EventFormFields = ({ values }) => {
         name="location_type"
         label="Event location type (optional)"
         options={values.metadata.eventLocationTypes}
-        placeholder="-- Select event --"
+        placeholder="Select event"
         aria-label="Select an event"
       />
       <FieldInput
-        label="Business and street"
+        label="Address line 1"
         name="address_1"
         type="text"
         required="Business and street may not be null."
-        data-test="group-field-address-1"
       />
       <FieldInput
         name="address_2"
         type="text"
-        data-test="group-field-address-2"
+        label="Address line 2 (optional)"
       />
       <FieldInput
         label="Town or city"
         name="address_town"
         type="text"
         required="Town or city may not be null."
-        data-test="group-field-address_town"
       />
-      <FieldInput
-        label="County (optional)"
-        name="address_county"
-        type="text"
-        data-test="group-field-address_county"
-      />
+      <FieldInput label="County (optional)" name="address_county" type="text" />
       <FieldInput
         label="Postcode"
         name="address_postcode"
         type="text"
         required="Postcode may not be null."
-        data-test="group-field-address_postcode"
       />
       <FieldTypeahead
         name="address_country"
         label="Country"
         options={values.metadata.countries}
         required="Country may not be null."
-        placeholder="-- Select country --"
+        placeholder="Select country"
         aria-label="Select a country"
-        data-test="group-field-address_country"
       />
       {values.address_country?.value === UK && (
         <FieldTypeahead
@@ -129,40 +120,32 @@ export const EventFormFields = ({ values }) => {
           label="UK Region"
           options={values.metadata.ukRegions}
           required="UK region may not be null."
-          placeholder="-- Select region --"
+          placeholder="Select region"
           aria-label="Select a region"
-          data-test="group-field-uk_region"
         />
       )}
-      <FieldTextarea
-        type="text"
-        name="notes"
-        label="Event Notes (optional)"
-        data-test="group-field-notes"
-      />
+      <FieldTextarea type="text" name="notes" label="Event Notes (optional)" />
       <FieldTypeahead
         name="lead_team"
         label="Team hosting the event"
         options={values.metadata.teams}
         required="Select at least one team hosting the event"
-        placeholder="-- Select team --"
+        placeholder="Select team"
         aria-label="Select an team"
-        data-test="group-field-lead-team"
       />
       <FieldTypeahead
         name="service"
         label="Service"
         required="Select at least one service"
         options={values.metadata.services}
-        placeholder="-- Select service --"
+        placeholder="Select service"
         aria-label="Select a service"
-        data-test="group-field-service"
       />
       <AdviserTypeAhead
         name="organiser"
         label="Organiser"
         required="Type at least one organiser"
-        placeholder="-- Type to search for organiser --"
+        placeholder="Type to search for organiser"
         data-test="group-field-organiser"
       />
       <FieldRadios
@@ -178,13 +161,12 @@ export const EventFormFields = ({ values }) => {
           label="Teams"
           required="Select at least one team"
           item-name="team"
-          data-test="group-field-teams"
         >
           {({ value, onChange, error }) => (
             <FieldTypeahead
               name="teams"
               options={values.metadata.teams}
-              placeholder="-- Select team --"
+              placeholder="Select team"
               required="Select at least one team"
               aria-label="Select at least one team"
               value={values.metadata.teams?.find(
@@ -201,14 +183,13 @@ export const EventFormFields = ({ values }) => {
         label="Related programmes"
         required="Select at least one programme"
         item-name="program"
-        data-test="group-field-related-programmes"
       >
         {({ value, onChange, error }) => (
           <>
             <FieldTypeahead
               name="related_programmes"
               options={values.metadata.programmes}
-              placeholder="-- Select programme --"
+              placeholder="Select programme"
               required="Select at least one programme"
               aria-label="Select at least one programme"
               value={values.metadata.programmes?.find(

@@ -154,7 +154,7 @@ const assertFieldAddAnother = ({
         element: item,
         emptyOption,
         optionsCount,
-        value: values[i] && values[i].name,
+        value: values && values[i] && values[i].name,
       })
     })
 
@@ -554,6 +554,26 @@ const assertDateInput = ({ element, label, value }) => {
     .should('have.attr', 'value', value)
 }
 
+const assertBooleanFieldRadios = ({ element, legend, value }) =>
+  cy
+    .wrap(element)
+    .as('fieldRadio')
+    .find('legend')
+    .first()
+    .should('have.text', legend)
+    .parent()
+    .find('input')
+    .should('have.length', 2)
+    .then(
+      () =>
+        value &&
+        cy
+          .get('@fieldRadio')
+          .find('input:checked')
+          .next()
+          .should('have.text', 'Yes')
+    )
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
@@ -591,4 +611,5 @@ module.exports = {
   assertElementsInOrder,
   assertPayload,
   assertDateInput,
+  assertBooleanFieldRadios,
 }
