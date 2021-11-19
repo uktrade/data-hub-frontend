@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -26,7 +26,6 @@ const DISPLAY_HOME = 'Home'
 const DISPLAY_EVENTS = 'Events'
 
 const EventForm = ({ eventId }) => {
-  const [eventName, setEventName] = useState()
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -37,8 +36,8 @@ const EventForm = ({ eventId }) => {
       text: DISPLAY_EVENTS,
     },
     {
-      link: eventId ? urls.events.edit(eventId) : undefined,
-      text: eventId ? eventName || DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT,
+      link: undefined,
+      text: eventId ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT,
     },
   ]
 
@@ -92,10 +91,7 @@ const EventForm = ({ eventId }) => {
                 },
               ]}
             >
-              {({ values }) => {
-                setEventName(values?.name)
-                return <EventFormFields values={values} />
-              }}
+              {({ values }) => <EventFormFields values={values} />}
             </TaskForm>
           </GridCol>
         </GridRow>
