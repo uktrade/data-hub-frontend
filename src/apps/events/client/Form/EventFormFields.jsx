@@ -38,7 +38,7 @@ export const EventFormFields = ({ values }) => {
               name="related_trade_agreements"
               options={values.metadata.relatedTradeAgreements}
               placeholder="Search trade agreements"
-              required="Select at least one Trade Agreement"
+              required="Trade Agreement can not be null"
               aria-label="Select a trade agreement"
               value={values.metadata.relatedTradeAgreements?.find(
                 ({ value: option_value }) => option_value === value
@@ -53,7 +53,7 @@ export const EventFormFields = ({ values }) => {
         label="Event name"
         name="name"
         type="text"
-        required="Event name may not be null."
+        required="Event name may not be null"
       />
       <FieldTypeahead
         name="event_type"
@@ -85,7 +85,7 @@ export const EventFormFields = ({ values }) => {
         label="Address line 1"
         name="address_1"
         type="text"
-        required="Business and street may not be null."
+        required="Address line 1 may not be null"
       />
       <FieldInput
         name="address_2"
@@ -96,20 +96,20 @@ export const EventFormFields = ({ values }) => {
         label="Town or city"
         name="address_town"
         type="text"
-        required="Town or city may not be null."
+        required="Town or city may not be null"
       />
       <FieldInput label="County (optional)" name="address_county" type="text" />
       <FieldInput
         label="Postcode"
         name="address_postcode"
         type="text"
-        required="Postcode may not be null."
+        required="Postcode may not be null"
       />
       <FieldTypeahead
         name="address_country"
         label="Country"
         options={values.metadata.countries}
-        required="Country may not be null."
+        required="Country may not be null"
         placeholder="Select country"
         aria-label="Select a country"
       />
@@ -118,7 +118,7 @@ export const EventFormFields = ({ values }) => {
           name="uk_region"
           label="UK Region"
           options={values.metadata.ukRegions}
-          required="UK region may not be null."
+          required="UK region may not be null"
           placeholder="Select region"
           aria-label="Select a region"
         />
@@ -165,7 +165,7 @@ export const EventFormFields = ({ values }) => {
               name="teams"
               options={values.metadata.teams}
               placeholder="Select team"
-              required="Select at least one team"
+              required="Team can not be null"
               aria-label="Select at least one team"
               value={values.metadata.teams?.find(
                 ({ value: option_value }) => option_value === value
@@ -181,6 +181,7 @@ export const EventFormFields = ({ values }) => {
         label="Related programmes"
         required="Select at least one programme"
         item-name="program"
+        data-test-prefix="programme-field-"
       >
         {({ value, onChange, error }) => (
           <>
@@ -188,8 +189,8 @@ export const EventFormFields = ({ values }) => {
               name="related_programmes"
               options={values.metadata.programmes}
               placeholder="Select programme"
-              required="Select at least one programme"
-              aria-label="Select at least one programme"
+              required="Programme can not be null"
+              aria-label="Programme can not be null"
               value={values.metadata.programmes?.find(
                 ({ value: option_value }) => option_value === value
               )}

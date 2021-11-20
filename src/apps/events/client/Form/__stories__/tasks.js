@@ -1,3 +1,5 @@
+import { TASK_GET_EVENTS_FORM_AND_METADATA } from '../../../../../apps/events/client/Form/state'
+
 const eventTypeOptions = [
   {
     value: '85f2f48f-0ecb-4a3a-b7d2-8106b8733769',
@@ -161,7 +163,7 @@ const initialValues = {
 }
 
 export default {
-  ['TASK_GET_EVENTS_FORM_AND_METADATA']: () =>
+  [TASK_GET_EVENTS_FORM_AND_METADATA]: () =>
     new Promise((resolve) =>
       setTimeout(resolve, 1000, {
         metadata: {
