@@ -110,7 +110,7 @@ const transformFormToChangeRequest = (company, formValues) => {
 }
 
 // The API expects to receive only the values that have changed.
-const transformFormToDnbChangeRequest = (company, formValues, res) => {
+const transformFormToDnbChangeRequest = (company, formValues) => {
   const obj = transformFormToChangeRequest(company, formValues)
   const sanitiseArea = (area) => {
     if (area === undefined) {
@@ -128,9 +128,7 @@ const transformFormToDnbChangeRequest = (company, formValues, res) => {
       town: obj.city,
       county: obj.county,
       postcode: obj.postcode,
-      ...(res.locals.features['address-area-company-search'] && {
-        area: sanitiseArea(obj.area),
-      }),
+      area: sanitiseArea(obj.area),
     },
     (fieldValue) => isEmpty(fieldValue)
   )

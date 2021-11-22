@@ -43,11 +43,8 @@ const FieldAddress = ({
   country,
   apiEndpoint,
   onSelectUKAddress,
-  features,
   isCountrySelectable,
 }) => {
-  const areaFieldEnabled = features && features.areaFormField
-  const postcodeValidationEnabled = features && features.postcodeValidation
   const findAdministrativeAreas = useAdministrativeAreaLookup()
   const {
     onAdministrativeAreaSearch,
@@ -87,9 +84,7 @@ const FieldAddress = ({
   }, [country_form_value])
 
   useEffect(() => {
-    if (areaFieldEnabled) {
-      onAdministrativeAreaSearch()
-    }
+    onAdministrativeAreaSearch()
   }, [])
 
   useEffect(() => {
@@ -213,10 +208,8 @@ const FieldAddress = ({
       <StyledFieldPostcode
         type="text"
         name="postcode"
-        label={
-          postcodeValidationEnabled ? postcodeLabel() : 'Postcode (optional)'
-        }
-        required={postcodeValidationEnabled ? postcodeErrorMessage() : null}
+        label={postcodeLabel()}
+        required={postcodeErrorMessage()}
         validate={postcodeValidator}
       />
     )
@@ -285,17 +278,15 @@ const FieldAddress = ({
 
       <FieldInput type="text" name="county" label="County (optional)" />
 
-      {areaFieldEnabled && (
-        <>
-          {renderUsStateField()}
-          {renderCanadaProvinceField()}
-          {administrativeAreaSearchError && (
-            <StatusMessage>
-              Error occurred while retrieving Administrative Areas.
-            </StatusMessage>
-          )}
-        </>
-      )}
+      <>
+        {renderUsStateField()}
+        {renderCanadaProvinceField()}
+        {administrativeAreaSearchError && (
+          <StatusMessage>
+            Error occurred while retrieving Administrative Areas.
+          </StatusMessage>
+        )}
+      </>
 
       {isCountrySelectable ? (
         <FieldCountrySelect name="country" />

@@ -44,10 +44,6 @@ function getDetails(req, res, next) {
         res.locals.contact,
         res.locals.company
       ),
-      features: {
-        addressAreaContactRequired:
-          res.locals.features['address-area-contact-displayed'],
-      },
     })
   } catch (error) {
     next(error)
