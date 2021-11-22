@@ -48,7 +48,6 @@ export async function addCompanyToPipeline({ values, companyId }) {
     ...transformValuesForApi(values),
   })
 
-  addMessage('success', `You added ${values.name} to your pipeline`)
   return data
 }
 
