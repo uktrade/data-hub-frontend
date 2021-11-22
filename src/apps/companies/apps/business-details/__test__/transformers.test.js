@@ -51,6 +51,7 @@ describe('Company business details transformers', () => {
           },
           business_type: 'Private limited company',
           turnover_range: '£33.5M+',
+          turnover: 987,
           employee_range: '500+',
           sector: 'Retail',
           uk_region: 'North West',

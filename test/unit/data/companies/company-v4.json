@@ -59,7 +59,8 @@
     "name": "£33.5M+",
     "id": "7a4cd12a-6095-e211-a939-e4115bead28a"
   },
-  "turnover": null,
+  "turnover": 123,
+  "turnover_gbp": 987,
   "is_turnover_estimated": null,
   "uk_region": {
     "name": "North West",
