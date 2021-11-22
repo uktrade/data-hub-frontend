@@ -10,8 +10,8 @@ import {
 
 export const assertEventFormFields = ({
   hasRelatedTradeAgreement,
-  // relatedTradeAgrements,
-  name,
+  relatedTradeAgrements,
+  eventName,
   eventType,
   startDate,
   endDate,
@@ -22,32 +22,47 @@ export const assertEventFormFields = ({
   postcode,
   county,
   country,
-  // ukRegion,
+  ukRegion,
   notes,
   leadTeam,
   service,
   organiser,
   isEventShared,
-  // teams,
+  teams,
   relatedProgrammes,
 } = {}) => {
-  assertFormFields(cy.get('form'), [
+  const eventFormsFields = [
     {
       assert: assertFieldRadiosWithLegend,
       legend: 'Does the event relate to a trade agreement?',
       optionsCount: 2,
       value: hasRelatedTradeAgreement,
     },
-    // TODO: FieldAddAnother relatedTradeAgreements when hidden fields understood
+  ]
+  if (
+    hasRelatedTradeAgreement &&
+    hasRelatedTradeAgreement === 'Yes' &&
+    relatedTradeAgrements
+  ) {
+    eventFormsFields.push({
+      assert: assertFieldAddAnother,
+      label: '',
+      placeholder: !relatedTradeAgrements
+        ? 'Search trade agreements'
+        : undefined,
+      values: relatedTradeAgrements,
+    })
+  }
+  eventFormsFields.push(
     {
       assert: assertFieldInput,
       label: 'Event name',
-      value: name,
+      value: eventName,
     },
     {
       assert: assertFieldTypeahead,
       label: 'Type of event',
-      placeholder: 'Select event type',
+      placeholder: !eventType ? 'Select event type' : undefined,
       value: eventType,
     },
     {
@@ -63,7 +78,7 @@ export const assertEventFormFields = ({
     {
       assert: assertFieldTypeahead,
       label: 'Event location type (optional)',
-      placeholder: 'Select event',
+      placeholder: !locationType ? 'Select event' : undefined,
       value: locationType,
     },
     {
@@ -94,10 +109,20 @@ export const assertEventFormFields = ({
     {
       assert: assertFieldTypeahead,
       label: 'Country',
-      placeholder: 'Select country',
+      placeholder: !country ? 'Select country' : undefined,
       value: country,
-    },
-    // TODO: UKRegion when hidden fields understood
+    }
+  )
+
+  if (country && country === 'United Kingdom' && ukRegion) {
+    eventFormsFields.push({
+      assert: assertFieldTypeahead,
+      label: 'UK Region',
+      placeholder: !ukRegion ? 'Select region' : undefined,
+      value: ukRegion,
+    })
+  }
+  eventFormsFields.push(
     {
       assert: assertFieldTextarea,
       label: 'Event Notes (optional)',
@@ -106,19 +131,19 @@ export const assertEventFormFields = ({
     {
       assert: assertFieldTypeahead,
       label: 'Team hosting the event',
-      placeholder: 'Select team',
+      placeholder: !leadTeam ? 'Select team' : undefined,
       value: leadTeam,
     },
     {
       assert: assertFieldTypeahead,
       label: 'Service',
-      placeholder: 'Select service',
+      placeholder: !service ? 'Select service' : undefined,
       value: service,
     },
     {
       assert: assertFieldTypeahead,
       label: 'Organiser',
-      placeholder: 'Type to search for organiser',
+      placeholder: !organiser ? 'Type to search for organiser' : undefined,
       value: organiser,
     },
     {
@@ -126,14 +151,23 @@ export const assertEventFormFields = ({
       legend: 'Is this a shared event? (optional)',
       optionsCount: 2,
       value: isEventShared,
-    },
-    // TODO: FieldAddAnother hidden teams
-    {
+    }
+  )
+
+  if (isEventShared && isEventShared === 'Yes' && teams) {
+    eventFormsFields.push({
       assert: assertFieldAddAnother,
-      label: 'Related programmes',
-      values: relatedProgrammes,
-    },
-  ])
+      label: 'Teams',
+      placeholder: !teams ? 'Select at least one team' : undefined,
+      values: teams,
+    })
+  }
+  eventFormsFields.push({
+    assert: assertFieldAddAnother,
+    label: 'Related programmes',
+    values: relatedProgrammes,
+  })
+  assertFormFields(cy.get('form'), eventFormsFields)
 }
 
 export const assertTypeaheadValuesWith = (

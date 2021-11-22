@@ -172,7 +172,7 @@ export const fillEndDateWith = (day, month, year) => {
 
 // Generic Fillers
 
-const fillAddAnotherWithValues = (
+export const fillAddAnotherWithValues = (
   addButtonSelector,
   AddAnotherDataTestPrefix,
   dataArray
@@ -186,11 +186,11 @@ const fillAddAnotherWithValues = (
   }
 }
 
-const fillWith = (selector, value) => {
+export const fillWith = (selector, value) => {
   cy.get(selector).type(value)
 }
 
-const fillRadioWith = (selector, isYes) => {
+export const fillRadioWith = (selector, isYes) => {
   if (isYes === true) {
     cy.get(selector).eq(0).click()
   } else if (isYes === false) {
@@ -198,11 +198,11 @@ const fillRadioWith = (selector, isYes) => {
   }
 }
 
-const fillTypeaheadWith = (selector, value) => {
+export const fillTypeaheadWith = (selector, value) => {
   cy.get(selector).selectTypeaheadOption(value)
 }
 
-const fillDateWith = (dateId, day, month, year) => {
+export const fillDateWith = (dateId, day, month, year) => {
   cy.get(`#${dateId}\\.day`).type(day)
   cy.get(`#${dateId}\\.month`).type(month)
   cy.get(`#${dateId}\\.year`).type(year)
@@ -210,7 +210,7 @@ const fillDateWith = (dateId, day, month, year) => {
 
 //  Click events
 
-const clickAddAnotherButton = (selector) => {
+export const clickAddAnotherButton = (selector) => {
   cy.get(selector).find('button').click()
 }
 

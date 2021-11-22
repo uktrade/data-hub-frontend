@@ -25,6 +25,26 @@ describe('Event edit', () => {
 
   it('should render expected form fields with original values ', () => {
     // TODO: When intercepter configured
-    assertEventFormFields()
+    assertEventFormFields({
+      hasRelatedTradeAgreement: 'No',
+      eventName: 'One-day exhibition',
+      eventType: 'Exhibition',
+      startDate: { day: '01', month: '01', year: '2021' },
+      endDate: { day: '01', month: '01', year: '2021' },
+      locationType: 'HQ',
+      street1: 'Day Court Exhibition Centre',
+      street2: 'Day Court Lane',
+      town: 'China',
+      county: '',
+      postcode: 'SW9 9AB',
+      country: 'China',
+      notes: 'This is a dummy event for testing.',
+      leadTeam: 'CBBC Hangzhou',
+      service: 'Events : UK Based',
+      organiser: 'John Rogers',
+      isEventShared: 'Yes',
+      teams: ['CBBC HangZhou', 'CBBC North West'],
+      relatedProgrammes: 'Grown in Britain',
+    })
   })
 })

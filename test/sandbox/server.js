@@ -325,6 +325,9 @@ app.patch('/v3/contact/:contactId', v3Contact.updateContactById)
 // V3 Event
 app.get('/v3/event/:eventId', v3Event.eventById)
 
+// V4 Event
+app.get('/v4/event/:eventId', v3Event.eventById)
+
 // V3 Feature Flag
 app.get('/v3/feature-flag', v3FeatureFlag.featureFlag)
 app.put('/sandbox/feature-flag', v3FeatureFlag.setSandboxFlag)
