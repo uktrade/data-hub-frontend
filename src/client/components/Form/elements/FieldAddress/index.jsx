@@ -289,7 +289,7 @@ const FieldAddress = ({
       </>
 
       {isCountrySelectable ? (
-        <FieldCountrySelect name="country" />
+        <FieldCountrySelect name="country" required="Select a country" />
       ) : (
         <FieldUneditable name="country" label="Country">
           {country.name}
