@@ -213,7 +213,7 @@ describe('Edit contact', () => {
         cy.get('#address1').type('Address first line')
         cy.get('#city').type('Address city')
         cy.get('#postcode').type('NE16 386')
-        cy.get('[data-test="submit"]').click()
+        cy.clickSubmitButton('Save and return')
 
         cy.wait('@editContactResponse').then((xhr) => {
           expect(xhr.request.body.address_area).to.equal(null)
@@ -234,7 +234,7 @@ describe('Edit contact', () => {
           cy.get('#address1').type('Address first line')
           cy.get('#city').type('Address city')
           cy.get('#postcode').type('NE16 386')
-          cy.get('[data-test="submit"]').click()
+          cy.clickSubmitButton('Save and return')
 
           cy.wait('@editContactResponse').then((xhr) => {
             expect(xhr.request.body.address_area).to.equal(null)
@@ -251,7 +251,7 @@ describe('Edit contact', () => {
           cy.get('#address1').type('Address first line')
           cy.get('#city').type('Address city')
           cy.get('#postcode').type('NE16 386')
-          cy.get('[data-test="submit"]').click()
+          cy.clickSubmitButton('Save and return')
 
           cy.contains('Select a province')
         })
@@ -265,7 +265,7 @@ describe('Edit contact', () => {
           cy.get('#address1').type('Address first line')
           cy.get('#city').type('Address city')
           cy.get('#postcode').type('NE16 386')
-          cy.get('[data-test="submit"]').click()
+          cy.clickSubmitButton('Save and return')
 
           cy.contains('Select a state')
         })
