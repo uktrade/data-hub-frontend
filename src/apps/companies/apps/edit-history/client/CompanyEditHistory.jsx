@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { isBoolean, isNumber } from 'lodash'
-import { convertUsdToGbp } from '../../../../../common/currency'
 
 import EditHistory from '../../../../../client/components/EditHistory/EditHistory'
 import { currencyGBP } from '../../../../../client/utils/number-utils'
@@ -43,7 +42,7 @@ function getValue(value, field) {
 
   if (isNumber(value)) {
     return CURRENCY_FIELDS.includes(field)
-      ? currencyGBP(convertUsdToGbp(value), {
+      ? currencyGBP(value, {
           maximumSignificantDigits: 2,
         })
       : value.toString()

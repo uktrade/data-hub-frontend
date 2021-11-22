@@ -1,4 +1,3 @@
-const { convertUsdToGbp } = require('../../../../../src/common/currency')
 const { roundToSignificantDigits } = require('../../../../../src/common/number')
 const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
@@ -436,7 +435,7 @@ describe('Company edit', () => {
         {
           label: 'Annual turnover (optional)',
           hint: 'Amount in GBP',
-          value: roundToSignificantDigits(convertUsdToGbp(company.turnover), 2),
+          value: roundToSignificantDigits(company.turnover_gbp, 2),
           assert: assertFieldInput,
         },
         {
