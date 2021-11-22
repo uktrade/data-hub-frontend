@@ -110,7 +110,7 @@
     "express-session": "^1.17.2",
     "express-sslify": "^1.2.0",
     "file-loader": "^6.2.0",
-    "formidable": "^1.2.2",
+    "formidable": "^2.0.1",
     "get-form-data": "^3.0.0",
     "govuk-colours": "1.1.0",
     "govuk-elements-sass": "^3.1.3",
