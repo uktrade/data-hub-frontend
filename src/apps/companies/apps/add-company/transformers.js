@@ -37,7 +37,7 @@ const transformFormData = (
       county: county || '',
       postcode: postcode,
       country: countryAsObject ? { id: country } : country,
-      ...(res.locals.features['address-area-company-search'] && sanitiseArea()),
+      ...sanitiseArea(),
     },
   }
 }

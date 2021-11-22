@@ -29,11 +29,6 @@ describe('Search Controller #renderSearchResults', () => {
     this.res = {
       breadcrumb: this.breadcrumbStub,
       render: this.renderFunction,
-      locals: {
-        features: {
-          'address-area-company-search': true,
-        },
-      },
     }
   })
 
