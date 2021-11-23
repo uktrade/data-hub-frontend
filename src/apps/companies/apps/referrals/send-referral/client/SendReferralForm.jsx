@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { LoadingBox } from 'govuk-react'
 
-import { SEND_REFERRAL_FORM__SUBMIT } from '../../../../../../client/actions'
+//import { SEND_REFERRAL_FORM__SUBMIT } from '../../../../../../client/actions' //not sure if this is still useful for anything
 import StepReferralDetails from './StepReferralDetails'
 import StepReferralConfirmation from './StepReferralConfirmation'
+import Step from '../../../../../../client/components/Form/elements/Step.jsx'
 import LocalHeader from '../../../../../../client/components/LocalHeader/LocalHeader'
-import { Main, MultiInstanceForm } from '../../../../../../client/components/'
+import { Main } from '../../../../../../client/components/'
 import { companies, dashboard } from '../../../../../../lib/urls'
 import Task from '../../../../../../client/components/Task'
-import Analytics from '../../../../../../client/components/Analytics/index.jsx'
-import { addMessageWithBody } from '../../../../../../client/utils/flash-messages'
+import TaskForm from '../../../../../../client/components/Task/Form'
 
 import {
   ID as STATE_ID,
@@ -30,105 +29,74 @@ const SendReferralForm = ({
   adviser,
   sendingAdviserTeamName,
   flashMessages,
-  progress = false,
-  formSubmitted = false,
-}) => {
-  useEffect(() => {
-    if (formSubmitted) {
-      addMessageWithBody(
-        'success',
-        'Referral sent.',
-        `You can <a href=${companies.referrals.list()}>see all of your referrals on your Homepage</a>.`
-      )
-      window.location.href = companies.detail(companyId)
-    }
-  }, [formSubmitted])
-  return (
-    <>
-      <LocalHeader
-        heading={'Send a referral'}
-        breadcrumbs={[
-          { link: dashboard(), text: 'Home' },
-          {
-            link: companies.index(),
-            text: 'Companies',
-          },
-          { link: companies.detail(companyId), text: companyName },
-          { text: 'Send a referral' },
+}) => (
+  <>
+    <LocalHeader
+      heading={'Send a referral'}
+      breadcrumbs={[
+        { link: dashboard(), text: 'Home' },
+        {
+          link: companies.index(),
+          text: 'Companies',
+        },
+        { link: companies.detail(companyId), text: companyName },
+        { text: 'Send a referral' },
+      ]}
+      flashMessages={flashMessages}
+    />
+
+    <Main>
+      <TaskForm
+        id={STATE_ID}
+        transformPayload={(values) => ({
+          values,
+          companyId,
+        })}
+        submissionTaskName={TASK_SAVE_REFERRAL}
+        analyticsFormName="send-referral-form"
+        analyticsData={({ adviser, subject }) => ({
+          event: 'send_referral',
+          sendingAdviserTeam: sendingAdviserTeamName,
+          receivingAdviserTeam: adviser.label?.split(', ')[1],
+          referralSubject: subject,
+        })}
+        initialValues={{ adviser, subject, notes, contact }}
+        redirectTo={() => companies.detail(companyId)}
+        flashMessage={() => [
+          'Referral sent',
+          `You can <a href=${companies.referrals.list()}>see all of your referrals on your Homepage</a>.`,
         ]}
-        flashMessages={flashMessages}
-      />
+      >
+        <Step name="referral_details" forwardButton={null}>
+          <Task>
+            {(getTask) => {
+              const openContactFormTask = getTask(
+                TASK_OPEN_REFERRALS_CONTACT_FORM,
+                STATE_ID
+              )
 
-      <Main>
-        <Task>
-          {(getTask) => {
-            const saveTask = getTask(TASK_SAVE_REFERRAL, STATE_ID)
-            const openContactFormTask = getTask(
-              TASK_OPEN_REFERRALS_CONTACT_FORM,
-              STATE_ID
-            )
-
-            return (
-              <Analytics>
-                {(pushData) => (
-                  <MultiInstanceForm
-                    id={STATE_ID}
-                    onSubmit={(values) => {
-                      const receivingAdviserTeamName =
-                        values.adviser.label?.split(', ')[1]
-                      pushData({
-                        event: 'send_referral',
-                        sendingAdviserTeam: sendingAdviserTeamName,
-                        receivingAdviserTeam: receivingAdviserTeamName,
-                        referralSubject: values.subject,
-                      })
-                      saveTask.start({
-                        payload: {
-                          values,
-                          companyId,
-                        },
-                        onSuccessDispatch: SEND_REFERRAL_FORM__SUBMIT,
-                      })
-                    }}
-                    initialValues={{ adviser, subject, notes, contact }}
-                    submissionError={saveTask.errorMessage}
-                  >
-                    {() => (
-                      <LoadingBox loading={progress}>
-                        <MultiInstanceForm.Step
-                          name="referral_details"
-                          forwardButton={null}
-                        >
-                          {() => (
-                            <StepReferralDetails
-                              cancelUrl={cancelUrl}
-                              companyContacts={companyContacts}
-                              companyId={companyId}
-                              openContactFormTask={openContactFormTask}
-                            />
-                          )}
-                        </MultiInstanceForm.Step>
-                        <MultiInstanceForm.Step
-                          name="referral_confirmation"
-                          forwardButton={null}
-                          backButton={null}
-                        >
-                          {() => (
-                            <StepReferralConfirmation cancelUrl={cancelUrl} />
-                          )}
-                        </MultiInstanceForm.Step>
-                      </LoadingBox>
-                    )}
-                  </MultiInstanceForm>
-                )}
-              </Analytics>
-            )
-          }}
-        </Task>
-      </Main>
-    </>
-  )
-}
+              return (
+                <StepReferralDetails
+                  cancelUrl={cancelUrl}
+                  companyContacts={companyContacts}
+                  companyId={companyId}
+                  openContactFormTask={openContactFormTask}
+                />
+              )
+            }}
+          </Task>
+        </Step>
+        <Step
+          name="referral_confirmation"
+          forwardButton={null}
+          backButton={null}
+        >
+          <StepReferralConfirmation cancelUrl={cancelUrl} />
+        </Step>
+      </TaskForm>
+    </Main>
+  </>
+)
 
 SendReferralForm.propTypes = {
   companyContacts: PropTypes.arrayOf(
