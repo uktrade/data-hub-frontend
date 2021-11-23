@@ -63,11 +63,11 @@ export const fillEventForm = ({
   fillProgrammes(relatedProgrammes)
 }
 
-const fillEventNotes = (notes) => {
+export const fillEventNotes = (notes) => {
   fillWith(selectors.notesId, notes)
 }
 
-const fillAddress = ({
+export const fillAddress = ({
   address1,
   address2,
   town,
@@ -87,19 +87,19 @@ const fillAddress = ({
   }
 }
 
-const fillOrganiser = (organiser) => {
+export const fillOrganiser = (organiser) => {
   fillTypeaheadWith(selectors.organiserFieldId, organiser)
 }
 
-const fillService = (service) => {
+export const fillService = (service) => {
   fillTypeaheadWith(selectors.serviceFieldId, service)
 }
 
-const fillRegion = (region) => {
+export const fillRegion = (region) => {
   fillTypeaheadWith(selectors.ukRegionFieldId, region)
 }
 
-const fillLeadTeam = (leadTeam) => {
+export const fillLeadTeam = (leadTeam) => {
   fillTypeaheadWith(selectors.leadTeamFieldId, leadTeam)
 }
 
@@ -107,7 +107,7 @@ export const fillCountry = (country) => {
   fillTypeaheadWith(selectors.addressCountryFieldId, country)
 }
 
-const fillEventName = (name) => {
+export const fillEventName = (name) => {
   fillWith(selectors.eventNameId, name)
 }
 
@@ -117,7 +117,7 @@ export const fillAndAssertProgrammes = (programmes = []) => {
   assertTypeaheadValuesWith(PROGRAMME_FIELD_PREFIX, programmes)
 }
 
-const fillProgrammes = (programmes = []) => {
+export const fillProgrammes = (programmes = []) => {
   fillAddAnotherWithValues(
     selectors.relatedProgrammesFieldId,
     PROGRAMME_FIELD_PREFIX,
@@ -142,11 +142,11 @@ export const fillAndAssertRelatedTradeAgreements = (tradeAgreements = []) => {
   assertTypeaheadValuesWith(TRADE_AGREEMENT_FIELD_PREFIX, tradeAgreements)
 }
 
-const fillTeams = (teams = []) => {
+export const fillTeams = (teams = []) => {
   fillAddAnotherWithValues(selectors.teamsFieldId, TEAM_FIELD_PREFIX, teams)
 }
 
-const fillRelatedTradeAgreements = (tradeAgreements = []) => {
+export const fillRelatedTradeAgreements = (tradeAgreements = []) => {
   fillAddAnotherWithValues(
     selectors.relatedTradeAgreementsFieldId,
     TRADE_AGREEMENT_FIELD_PREFIX,
@@ -154,11 +154,11 @@ const fillRelatedTradeAgreements = (tradeAgreements = []) => {
   )
 }
 
-const fillLocationType = (value) => {
+export const fillLocationType = (value) => {
   fillTypeaheadWith(selectors.locationTypeFieldId, value)
 }
 
-const fillEventType = (value) => {
+export const fillEventType = (value) => {
   fillTypeaheadWith(selectors.eventTypeFieldId, value)
 }
 
@@ -195,7 +195,9 @@ export const fillAddAnotherWithValues = (
 }
 
 export const fillWith = (selector, value) => {
-  cy.get(selector).type(value)
+  if (selector && value) {
+    cy.get(selector).type(value)
+  }
 }
 
 export const fillRadioWith = (selector, isYes) => {

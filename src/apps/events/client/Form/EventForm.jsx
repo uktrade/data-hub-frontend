@@ -7,7 +7,7 @@ import GridCol from '@govuk-react/grid-col'
 
 import urls from '../../../../lib/urls'
 import LocalHeader from '../../../../client/components/LocalHeader/LocalHeader.jsx'
-import { Main, NewWindowLink } from '../../../../client/components'
+import { Main } from '../../../../client/components'
 import TaskForm from '../../../../client/components/Task/Form'
 
 import {
@@ -50,19 +50,6 @@ const EventForm = ({ eventId }) => {
       <Main>
         <GridRow data-test="eventForm">
           <GridCol setWidth="three-quarters">
-            <article>
-              <p>
-                If your Event is set up to focus on a Trade Agreement or
-                contributes to implementing a Trade Agreement then select that
-                the event relates to a Trade Agreement and the relevant
-                Agreement(s)
-              </p>
-              <NewWindowLink
-                href={urls.external.helpCentre.tradeagreementGuidance()}
-              >
-                See more guidance
-              </NewWindowLink>
-            </article>
             <TaskForm
               id="event-form"
               submissionTaskName={TASK_SAVE_EVENT}

@@ -9,15 +9,27 @@ import {
   FieldAddAnother,
   FieldTextarea,
   FieldTypeahead,
+  NewWindowLink,
 } from '../../../../client/components'
 import { OPTIONS_YES_NO, OPTION_YES } from '../../../../client/constants'
 import { validateStartDateBeforeOrEqualToEndDate } from './validators'
+import urls from '../../../../lib/urls'
 
 const UK = '80756b9a-5d95-e211-a939-e4115bead28a'
 
 export const EventFormFields = ({ values }) => {
   return values && values.metadata ? (
     <>
+      <article>
+        <p>
+          If your Event is set up to focus on a Trade Agreement or contributes
+          to implementing a Trade Agreement then select that the event relates
+          to a Trade Agreement and the relevant Agreement(s)
+        </p>
+        <NewWindowLink href={urls.external.helpCentre.tradeagreementGuidance()}>
+          See more guidance
+        </NewWindowLink>
+      </article>
       <FieldRadios
         legend="Does the event relate to a trade agreement?"
         name="has_related_trade_agreements"
