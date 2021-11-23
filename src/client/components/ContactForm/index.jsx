@@ -79,7 +79,6 @@ const _ContactForm = ({
   duplicateEmail,
   dispatch,
   id,
-  features,
   ...props
 }) => {
   const findAdministrativeAreas = useAdministrativeAreaLookup()
@@ -321,14 +320,6 @@ const _ContactForm = ({
                                     name="" // Required, but has no effect
                                     apiEndpoint="/api/postcodelookup"
                                     isCountrySelectable={true}
-                                    features={{
-                                      areaFormField:
-                                        features['contacts-area-field'],
-                                      postcodeValidation:
-                                        features[
-                                          'address-postcode-company-required-field'
-                                        ],
-                                    }}
                                   />
                                 </fieldset>
                               ),
@@ -382,10 +373,6 @@ const requiredProps = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   }),
-  features: PropTypes.shape({
-    code: PropTypes.string,
-    is_active: PropTypes.string,
-  }),
 }
 
 ContactForm.propTypes = {
@@ -410,13 +397,13 @@ ContactForm.propTypes = {
   notes: PropTypes.string,
 }
 
-export const CreateContactForm = ({ companyId, features, id }) => (
-  <ContactForm companyId={companyId} id={id} features={features} />
+export const CreateContactForm = ({ companyId, id }) => (
+  <ContactForm companyId={companyId} id={id} />
 )
 
 CreateContactForm.propTypes = requiredProps
 
-export const UpdateContactForm = ({ contactId, features, id }) => (
+export const UpdateContactForm = ({ contactId, id }) => (
   <ContactResource id={contactId}>
     {(contact) => (
       <ContactForm
@@ -425,7 +412,6 @@ export const UpdateContactForm = ({ contactId, features, id }) => (
         contactId={contact.id}
         update={true}
         companyId={contact.company.id}
-        features={features}
       />
     )}
   </ContactResource>
@@ -436,9 +422,9 @@ UpdateContactForm.propTypes = {
   contactId: PropTypes.string.isRequired,
 }
 
-export default ({ contactId, companyId, features, id }) =>
+export default ({ contactId, companyId, id }) =>
   contactId ? (
-    <UpdateContactForm contactId={contactId} features={features} id={id} />
+    <UpdateContactForm contactId={contactId} id={id} />
   ) : (
-    <CreateContactForm companyId={companyId} features={features} id={id} />
+    <CreateContactForm companyId={companyId} id={id} />
   )
