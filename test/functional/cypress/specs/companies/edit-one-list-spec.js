@@ -107,13 +107,13 @@ describe('Edit One List', () => {
         cy.contains('Continue').click()
 
         cy.get(selectors.companyEditOneList.globalAccountManagerField).contains(
-          '-- Select adviser --'
+          '-- Type to search for advisers --'
         )
       })
 
       it('should not have a core team pre-listed', () => {
         cy.get(selectors.companyEditOneList.coreTeamFieldText).contains(
-          '-- Select adviser --'
+          '-- Type to search for advisers --'
         )
       })
 
