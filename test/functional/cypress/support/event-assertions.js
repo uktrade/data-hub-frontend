@@ -8,6 +8,9 @@ import {
   assertFieldRadiosWithLegend,
 } from './assertions'
 
+const YES = 'Yes'
+const UK = 'United Kingdom'
+
 export const assertEventFormFields = ({
   hasRelatedTradeAgreement,
   relatedTradeAgrements,
@@ -31,7 +34,7 @@ export const assertEventFormFields = ({
   teams,
   relatedProgrammes,
 } = {}) => {
-  const eventFormsFields = [
+  const eventFormFields = [
     {
       assert: assertFieldRadiosWithLegend,
       legend: 'Does the event relate to a trade agreement?',
@@ -41,10 +44,10 @@ export const assertEventFormFields = ({
   ]
   if (
     hasRelatedTradeAgreement &&
-    hasRelatedTradeAgreement === 'Yes' &&
+    hasRelatedTradeAgreement === YES &&
     relatedTradeAgrements
   ) {
-    eventFormsFields.push({
+    eventFormFields.push({
       assert: assertFieldAddAnother,
       label: '',
       placeholder: !relatedTradeAgrements
@@ -53,7 +56,7 @@ export const assertEventFormFields = ({
       values: relatedTradeAgrements,
     })
   }
-  eventFormsFields.push(
+  eventFormFields.push(
     {
       assert: assertFieldInput,
       label: 'Event name',
@@ -114,15 +117,15 @@ export const assertEventFormFields = ({
     }
   )
 
-  if (country && country === 'United Kingdom' && ukRegion) {
-    eventFormsFields.push({
+  if (country && country === UK && ukRegion) {
+    eventFormFields.push({
       assert: assertFieldTypeahead,
       label: 'UK Region',
       placeholder: !ukRegion ? 'Select region' : undefined,
       value: ukRegion,
     })
   }
-  eventFormsFields.push(
+  eventFormFields.push(
     {
       assert: assertFieldTextarea,
       label: 'Event Notes (optional)',
@@ -154,20 +157,21 @@ export const assertEventFormFields = ({
     }
   )
 
-  if (isEventShared && isEventShared === 'Yes' && teams) {
-    eventFormsFields.push({
+  if (isEventShared && isEventShared === YES && teams) {
+    eventFormFields.push({
       assert: assertFieldAddAnother,
       label: 'Teams',
       placeholder: !teams ? 'Select at least one team' : undefined,
       values: teams,
     })
   }
-  eventFormsFields.push({
+  eventFormFields.push({
     assert: assertFieldAddAnother,
     label: 'Related programmes',
     values: relatedProgrammes,
   })
-  assertFormFields(cy.get('form'), eventFormsFields)
+
+  assertFormFields(cy.get('form'), eventFormFields)
 }
 
 export const assertTypeaheadValuesWith = (
@@ -211,20 +215,13 @@ export const assertTextVisible = (text) => {
   cy.contains(text).should('be.visible')
 }
 
-export const assertRedirectUrl = (url) => {
-  cy.location('pathname').should('eq', url)
+export const assertUrl = (url) => {
+  cy.url().should('contain', url)
 }
 
 export const assertEventRequestBody = (expectedBody, callback) => {
   cy.wait('@eventHttpRequest').then((xhr) => {
-    // eslint-disable-next-line no-console
-    cy.log(
-      'Request body fields that differ',
-      objectDiff(xhr.request.body, expectedBody)
-    )
-
     expect(xhr.request.body).to.deep.equal(expectedBody)
-
     callback(xhr)
   })
 }

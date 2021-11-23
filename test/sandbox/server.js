@@ -46,6 +46,8 @@ var v4ChCompany = require('./routes/v4/ch-company/company.js')
 var v4Company = require('./routes/v4/company/company.js')
 var v4CompanyList = require('./routes/v4/company-list/companyList.js')
 var v4Dnb = require('./routes/v4/dnb/index.js')
+var v4Event = require('./routes/v4/event/event.js')
+
 var v4Investment = require('./routes/v4/investment/investment.js')
 var v4Interaction = require('./routes/v4/interaction/interaction.js')
 var v4Metadata = require('./routes/v4/metadata/index.js')
@@ -326,7 +328,9 @@ app.patch('/v3/contact/:contactId', v3Contact.updateContactById)
 app.get('/v3/event/:eventId', v3Event.eventById)
 
 // V4 Event
-app.get('/v4/event/:eventId', v3Event.eventById)
+app.get('/v4/event/:eventId', v4Event.eventById)
+app.patch('/v4/event/:eventId', v4Event.patchEvent)
+app.post('/v4/event', v4Event.createEvent)
 
 // V3 Feature Flag
 app.get('/v3/feature-flag', v3FeatureFlag.featureFlag)

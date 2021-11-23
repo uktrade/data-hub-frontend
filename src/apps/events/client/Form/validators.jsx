@@ -22,5 +22,3 @@ export const validateStartDateBeforeOrEqualToEndDate = (
   }
   return null
 }
-
-// TODO: Add a validator to validateCountrySupportsUKRegion after validating this is the case

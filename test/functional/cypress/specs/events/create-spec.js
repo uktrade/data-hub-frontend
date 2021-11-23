@@ -10,7 +10,10 @@ import {
   assertNotExists,
   assertErrorSummary,
   assertEventRequestBody,
+  assertUrl,
 } from '../../../cypress/support/event-assertions'
+
+import urls from '../../../../../src/lib/urls'
 
 import {
   fillAndAssertRelatedTradeAgreements,
@@ -23,6 +26,7 @@ import {
   fillEndDateWith,
   fillEventForm,
   clickAddEventButton,
+  clickReturnWithoutSavingButton,
 } from '../../../cypress/support/form-fillers'
 
 describe('Event create', () => {
@@ -147,8 +151,6 @@ describe('Event create', () => {
     })
   })
 
-  // TODO: Add more edge cases to extend Transformations possibilities
-  // TODO: Move this to JSON scenarios to load generically
   context('when filling in a valid event form', () => {
     it('should save with expected values and endpoint', () => {
       fillEventForm({
@@ -177,103 +179,67 @@ describe('Event create', () => {
           'UK-Australia Mutual Recognition Agreement',
           'Comprehensive and Progressive Agreement for Trans-Pacific Partnership',
         ],
-        relatedProgrammes: ['Aid Funded Business Service (AFBS)', 'CEN Energy'],
+        relatedProgrammes: [
+          'Aid Funded Business Service (AFBS)',
+          'CEN Energy',
+          'CEN Energy',
+        ],
         startDate: {
           year: '2021',
           month: '12',
           day: '12',
         },
         eventShared: true,
-        teams: ['BPI', 'BN America'],
+        teams: ['BPI', 'BN America', 'BPI'],
         service: 'Making Other Introductions : UK Export Finance (UKEF)',
       })
 
       clickAddEventButton()
 
       const expectedBody = {
+        has_related_trade_agreements: true,
+        name: 'Test Create Event',
+        event_type: '2fade471-e868-4ea9-b125-945eb90ae5d4',
+        start_date: '2021-12-12',
+        end_date: '2021-12-13',
+        location_type: 'b71fa81c-0c22-44c6-ab6f-13b9e045dc10',
         address_1: 'Bussiness 1',
         address_2: 'Street 2',
-        address_country: {
-          value: '80756b9a-5d95-e211-a939-e4115bead28a',
-          label: 'United Kingdom',
-        },
+        address_town: 'Town & City',
         address_county: 'County',
         address_postcode: 'POST CODE',
-        address_town: 'Town & City',
-        end_date: {
-          year: '2021',
-          month: '12',
-          day: '13',
-        },
-        event_type: {
-          value: '2fade471-e868-4ea9-b125-945eb90ae5d4',
-          label: 'Exhibition',
-        },
-        lead_team: {
-          value: '08c14624-2f50-e311-a56a-e4115bead28a',
-          label: 'Advanced Manufacturing Sector',
-        },
-        location_type: {
-          value: 'b71fa81c-0c22-44c6-ab6f-13b9e045dc10',
-          label: 'HQ',
-        },
-        name: 'Test Create Event',
+        address_country: '80756b9a-5d95-e211-a939-e4115bead28a',
         notes: 'Testing a valid form for all fields',
-        organiser: {
-          value: '3442c516-9898-e211-a939-e4115bead28a',
-          label: 'Violet Roy',
-        },
-        has_related_trade_agreements: 'yes',
-        related_trade_agreements: [
-          {
-            value: 'af704a93-5404-4bc6-adda-381756993902',
-            label:
-              'Comprehensive and Progressive Agreement for Trans-Pacific Partnership',
-          },
-          {
-            value: '50370070-71f9-4ada-ae2c-cd0a737ba5e2',
-            label: 'UK-Australia Mutual Recognition Agreement',
-          },
-        ],
+        lead_team: '08c14624-2f50-e311-a56a-e4115bead28a',
+        service: '6fd4b203-8e73-4a39-96ea-188bdb623b69',
+        organiser: '3442c516-9898-e211-a939-e4115bead28a',
+        event_shared: true,
         related_programmes: [
-          {
-            value: 'e2a8be20-7a54-e311-a33a-e4115bead28a',
-            label: 'Aid Funded Business Service (AFBS)',
-          },
-          {
-            value: '058dde7c-19d5-e311-8a2b-e4115bead28a',
-            label: 'CEN Energy',
-          },
+          'e2a8be20-7a54-e311-a33a-e4115bead28a',
+          '058dde7c-19d5-e311-8a2b-e4115bead28a',
         ],
-        start_date: {
-          year: '2021',
-          month: '12',
-          day: '12',
-        },
+        related_trade_agreements: [
+          'af704a93-5404-4bc6-adda-381756993902',
+          '50370070-71f9-4ada-ae2c-cd0a737ba5e2',
+        ],
+        uk_region: '874cd12a-6095-e211-a939-e4115bead28a',
         teams: [
-          {
-            value: 'bb65239e-9698-e211-a939-e4115bead28a',
-            label: 'BPI',
-          },
-          {
-            value: '06374ae0-9698-e211-a939-e4115bead28a',
-            label: 'BN America',
-          },
+          'bb65239e-9698-e211-a939-e4115bead28a',
+          '06374ae0-9698-e211-a939-e4115bead28a',
+          '08c14624-2f50-e311-a56a-e4115bead28a',
         ],
-        service: {
-          value: '6fd4b203-8e73-4a39-96ea-188bdb623b69',
-          label: 'Making Other Introductions : UK Export Finance (UKEF)',
-        },
-        uk_region: {
-          value: '874cd12a-6095-e211-a939-e4115bead28a',
-          label: 'London',
-        },
-        event_shared: 'yes',
       }
       assertEventRequestBody(expectedBody, (xhr) => {
-        assertRedirectUrl(urls.events.detail(xhr.response.body.id))
+        assertUrl(urls.events.details(xhr.response.body.id))
         assertTextVisible(`'Test Create Event' event has been created`)
       })
+    })
+  })
+
+  context('when a user cancels', () => {
+    it('should return without saving and return to the correct endpoint', () => {
+      clickReturnWithoutSavingButton()
+      assertUrl(urls.events.index())
     })
   })
 })

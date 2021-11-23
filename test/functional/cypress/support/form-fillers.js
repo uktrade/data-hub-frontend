@@ -1,7 +1,15 @@
+const selectors = require('../../../selectors/event/createOrEdit')
+
 import {
   assertTypeaheadValuesWith,
   assertTextVisible,
 } from './event-assertions'
+
+const PROGRAMME_FIELD_PREFIX = 'programme-field-'
+const TEAM_FIELD_PREFIX = 'team-field-'
+const TRADE_AGREEMENT_FIELD_PREFIX = 'trade-agreement-field-'
+const UK = 'United Kingdom'
+const ALL = 'All'
 
 export const fillEventForm = ({
   address1,
@@ -56,7 +64,7 @@ export const fillEventForm = ({
 }
 
 const fillEventNotes = (notes) => {
-  fillWith('#notes', notes)
+  fillWith(selectors.notesId, notes)
 }
 
 const fillAddress = ({
@@ -65,54 +73,54 @@ const fillAddress = ({
   town,
   county,
   postcode,
-  country = 'United Kingdom',
-  region = 'All',
+  country = UK,
+  region = ALL,
 } = {}) => {
-  fillWith('#address_1', address1)
-  fillWith('#address_2', address2)
-  fillWith('#address_town', town)
-  fillWith('#address_county', county)
-  fillWith('#address_postcode', postcode)
+  fillWith(selectors.addressLine1Id, address1)
+  fillWith(selectors.addressLine2Id, address2)
+  fillWith(selectors.addressTownId, town)
+  fillWith(selectors.addressCountryId, county)
+  fillWith(selectors.addressPostcodeId, postcode)
   fillCountry(country)
-  if (country && country === 'United Kingdom') {
+  if (country && country === UK) {
     fillRegion(region)
   }
 }
 
 const fillOrganiser = (organiser) => {
-  fillTypeaheadWith('#field-organiser', organiser)
+  fillTypeaheadWith(selectors.organiserFieldId, organiser)
 }
 
 const fillService = (service) => {
-  fillTypeaheadWith('#field-service', service)
+  fillTypeaheadWith(selectors.serviceFieldId, service)
 }
 
 const fillRegion = (region) => {
-  fillTypeaheadWith('#field-uk_region', region)
+  fillTypeaheadWith(selectors.ukRegionFieldId, region)
 }
 
 const fillLeadTeam = (leadTeam) => {
-  fillTypeaheadWith('#field-lead_team', leadTeam)
+  fillTypeaheadWith(selectors.leadTeamFieldId, leadTeam)
 }
 
 export const fillCountry = (country) => {
-  fillTypeaheadWith('#field-address_country', country)
+  fillTypeaheadWith(selectors.addressCountryFieldId, country)
 }
 
 const fillEventName = (name) => {
-  fillWith('#name', name)
+  fillWith(selectors.eventNameId, name)
 }
 
 export const fillAndAssertProgrammes = (programmes = []) => {
   fillProgrammes(programmes)
 
-  assertTypeaheadValuesWith('programme-field-', programmes)
+  assertTypeaheadValuesWith(PROGRAMME_FIELD_PREFIX, programmes)
 }
 
 const fillProgrammes = (programmes = []) => {
   fillAddAnotherWithValues(
-    '#field-related_programmes',
-    'programme-field-',
+    selectors.relatedProgrammesFieldId,
+    PROGRAMME_FIELD_PREFIX,
     programmes
   )
 }
@@ -120,7 +128,7 @@ const fillProgrammes = (programmes = []) => {
 export const fillAndAssertSharedTeams = (teams = []) => {
   fillEventSharedRadio(true)
   fillTeams(teams)
-  assertTypeaheadValuesWith('team-field-', teams)
+  assertTypeaheadValuesWith(TEAM_FIELD_PREFIX, teams)
 }
 
 export const fillAndAssertRelatedTradeAgreements = (tradeAgreements = []) => {
@@ -131,43 +139,43 @@ export const fillAndAssertRelatedTradeAgreements = (tradeAgreements = []) => {
 
   fillRelatedTradeAgreements(tradeAgreements)
 
-  assertTypeaheadValuesWith('trade-agreement-field-', tradeAgreements)
+  assertTypeaheadValuesWith(TRADE_AGREEMENT_FIELD_PREFIX, tradeAgreements)
 }
 
 const fillTeams = (teams = []) => {
-  fillAddAnotherWithValues('#field-teams', 'team-field-', teams)
+  fillAddAnotherWithValues(selectors.teamsFieldId, TEAM_FIELD_PREFIX, teams)
 }
 
 const fillRelatedTradeAgreements = (tradeAgreements = []) => {
   fillAddAnotherWithValues(
-    '#field-related_trade_agreements',
-    'trade-agreement-field-',
+    selectors.relatedTradeAgreementsFieldId,
+    TRADE_AGREEMENT_FIELD_PREFIX,
     tradeAgreements
   )
 }
 
 const fillLocationType = (value) => {
-  fillTypeaheadWith('#field-location_type', value)
+  fillTypeaheadWith(selectors.locationTypeFieldId, value)
 }
 
 const fillEventType = (value) => {
-  fillTypeaheadWith('#field-event_type', value)
+  fillTypeaheadWith(selectors.eventTypeFieldId, value)
 }
 
 export const fillHasRelatedTradeAgreementsRadio = (isYes = false) => {
-  fillRadioWith('[name="has_related_trade_agreements"]', isYes)
+  fillRadioWith(selectors.relatedTradeAgreements, isYes)
 }
 
 export const fillEventSharedRadio = (isYes = false) => {
-  fillRadioWith('[name = "event_shared"]', isYes)
+  fillRadioWith(selectors.eventShared, isYes)
 }
 
 export const fillStartDateWith = (day, month, year) => {
-  fillDateWith('start_date', day, month, year)
+  fillDateWith(selectors.startDateId, day, month, year)
 }
 
 export const fillEndDateWith = (day, month, year) => {
-  fillDateWith('end_date', day, month, year)
+  fillDateWith(selectors.endDateId, day, month, year)
 }
 
 // Generic Fillers
@@ -203,9 +211,9 @@ export const fillTypeaheadWith = (selector, value) => {
 }
 
 export const fillDateWith = (dateId, day, month, year) => {
-  cy.get(`#${dateId}\\.day`).type(day)
-  cy.get(`#${dateId}\\.month`).type(month)
-  cy.get(`#${dateId}\\.year`).type(year)
+  cy.get(`${dateId}\\.day`).type(day)
+  cy.get(`${dateId}\\.month`).type(month)
+  cy.get(`${dateId}\\.year`).type(year)
 }
 
 //  Click events
@@ -216,4 +224,12 @@ export const clickAddAnotherButton = (selector) => {
 
 export const clickAddEventButton = () => {
   cy.contains('button', 'Add event').click()
+}
+
+export const clickSaveAndReturnButton = () => {
+  cy.contains('button', 'Save and return').click()
+}
+
+export const clickReturnWithoutSavingButton = () => {
+  cy.contains('Return without saving').click()
 }

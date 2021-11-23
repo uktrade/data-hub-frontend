@@ -93,7 +93,6 @@ async function renderEditPage(req, res, next) {
   }
 }
 
-// TODO: Temp placeholder to remove over logic to react, extract from url in future
 async function renderFormPage(req, res, next) {
   try {
     const eventData = transformEventResponseToFormBody(res.locals.event)

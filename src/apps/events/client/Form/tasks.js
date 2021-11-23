@@ -67,7 +67,11 @@ const saveEvent = (values) => {
   if (transformedValuesOnlyPayload) {
     const request = values.id ? apiProxyAxios.patch : apiProxyAxios.post
     const payload = {
-      ..._.omit(values, ['metadata']),
+      ..._.omit(values, [
+        'metadata',
+        'disabled_on',
+        'archived_documents_url_path',
+      ]),
       ...transformedValuesOnlyPayload,
     }
     const endpoint = values.id ? `/v4/event/${values.id}` : '/v4/event'

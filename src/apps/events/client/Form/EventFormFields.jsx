@@ -271,7 +271,7 @@ EventFormFields.propTypes = {
       value: PropTypes.string,
       label: PropTypes.string,
     }),
-    has_related_trade_agreements: PropTypes.oneOf(['yes', 'no']),
+    has_related_trade_agreements: PropTypes.oneOf(['yes', 'no', '']),
     related_trade_agreements: PropTypes.arrayOf(
       PropTypes.shape({
         value: PropTypes.string,
@@ -284,7 +284,7 @@ EventFormFields.propTypes = {
         label: PropTypes.string,
       })
     ),
-    event_shared: PropTypes.oneOf(['yes', 'no']),
+    event_shared: PropTypes.oneOf(['yes', 'no', '']),
     teams: PropTypes.arrayOf(
       PropTypes.shape({
         value: PropTypes.string,
