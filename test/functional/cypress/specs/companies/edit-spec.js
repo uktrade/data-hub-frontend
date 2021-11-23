@@ -60,7 +60,7 @@ const describeCompanyEditForm = ({ company, elements }) => {
       },
     ]
 
-    cy.get('#edit-company-form form div')
+    cy.get('#edit-company-form form')
       .as('formRoot')
       .children()
       .each((element, i) => {
@@ -75,7 +75,6 @@ const describeCompanyEditForm = ({ company, elements }) => {
 describe('Company edit', () => {
   context('when editing unmatched UK company on the One List', () => {
     const company = fixtures.company.venusLtd
-
     before(() => {
       cy.visit(urls.companies.edit(company.id))
     })
@@ -519,7 +518,7 @@ describe('Company edit', () => {
     it('displays the "Change requested. Thanks for keeping Data Hub running smoothly" flash message and the ID used in GA', () => {
       cy.contains(
         'Change requested.Thanks for keeping Data Hub running smoothly.'
-      ).should('have.attr', 'id', 'message-company-change-request')
+      ).should('have.attr', 'data-test', 'status-message')
     })
   })
 
