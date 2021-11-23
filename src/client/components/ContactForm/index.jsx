@@ -156,9 +156,6 @@ const _ContactForm = ({
                       address2,
                       city,
                       county,
-                      country,
-                      areaUS,
-                      areaCanada,
                       postcode,
                       acceptsDitEmailMarketing,
                       addressSameAsCompany,
@@ -177,15 +174,26 @@ const _ContactForm = ({
                         address_same_as_company:
                           addressSameAsCompany.includes(YES),
                         // The API is complaining if we send the address fields when address_same_as_company is true
-                        ...(values.addressSameAsCompany == YES && {
-                          address_1: address1 || ' ',
-                          address_2: address2,
-                          address_town: city || ' ',
-                          address_county: county,
-                          address_postcode: postcode,
-                          address_area: getAreaValue(values),
-                          address_country: country,
-                        }),
+                        // If answer changes from yes to no, need to clear address fields on object
+                        ...(values.addressSameAsCompany == YES
+                          ? {
+                              address_1: null,
+                              address_2: null,
+                              address_town: null,
+                              address_county: null,
+                              address_postcode: null,
+                              address_area: null,
+                              address_country: null,
+                            }
+                          : {
+                              address_1: address1 || ' ',
+                              address_2: address2,
+                              address_town: city || ' ',
+                              address_county: county,
+                              address_postcode: postcode,
+                              address_area: getAreaValue(values),
+                              address_country: values.country,
+                            }),
                       },
                     })}
                     redirectTo={(result) => redirectTo(result)}
