@@ -84,9 +84,6 @@ async function renderSearchResults(req, res) {
     searchEntity,
     searchTerm,
     results,
-    features: {
-      isAddressAreaEnabled: res.locals.features['address-area-company-search'],
-    },
   })
 }
 

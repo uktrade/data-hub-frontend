@@ -43,11 +43,8 @@ const FieldAddress = ({
   country,
   apiEndpoint,
   onSelectUKAddress,
-  features,
   isCountrySelectable,
 }) => {
-  const areaFieldEnabled = features && features.areaFormField
-  const postcodeValidationEnabled = features && features.postcodeValidation
   const findAdministrativeAreas = useAdministrativeAreaLookup()
   const {
     onAdministrativeAreaSearch,
@@ -87,9 +84,7 @@ const FieldAddress = ({
   }, [country_form_value])
 
   useEffect(() => {
-    if (areaFieldEnabled) {
-      onAdministrativeAreaSearch()
-    }
+    onAdministrativeAreaSearch()
   }, [])
 
   useEffect(() => {
@@ -172,14 +167,33 @@ const FieldAddress = ({
     return 'Postcode (optional)'
   }
 
-  const canadianPostalCodeRegex =
+  const usZipCodeRegex = /^\d{5}(-\d{4})?$/i
+
+  const canadaPostalCodeRegex =
     /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$/i
 
-  const postalCodeValidator = (value) => {
-    if (!value && isCanada) {
+  const usZipCodeValidator = (value) => {
+    if (!value) {
+      return 'Enter a ZIP Code'
+    } else if (value && !usZipCodeRegex.test(value)) {
+      return 'Enter a valid ZIP Code'
+    }
+  }
+
+  const canadaPostalCodeValidator = (value) => {
+    if (!value) {
       return 'Enter a Postal Code'
-    } else if (value && isCanada && !canadianPostalCodeRegex.test(value)) {
+    } else if (value && !canadaPostalCodeRegex.test(value)) {
       return 'Enter a valid Postal Code'
+    }
+  }
+
+  const postcodeValidator = (value) => {
+    if (isUS) {
+      return usZipCodeValidator(value)
+    }
+    if (isCanada) {
+      return canadaPostalCodeValidator(value)
     }
     return null
   }
@@ -194,11 +208,9 @@ const FieldAddress = ({
       <StyledFieldPostcode
         type="text"
         name="postcode"
-        label={
-          postcodeValidationEnabled ? postcodeLabel() : 'Postcode (optional)'
-        }
-        required={postcodeValidationEnabled ? postcodeErrorMessage() : null}
-        validate={postalCodeValidator}
+        label={postcodeLabel()}
+        required={postcodeErrorMessage()}
+        validate={postcodeValidator}
       />
     )
   }
@@ -266,17 +278,15 @@ const FieldAddress = ({
 
       <FieldInput type="text" name="county" label="County (optional)" />
 
-      {areaFieldEnabled && (
-        <>
-          {renderUsStateField()}
-          {renderCanadaProvinceField()}
-          {administrativeAreaSearchError && (
-            <StatusMessage>
-              Error occurred while retrieving Administrative Areas.
-            </StatusMessage>
-          )}
-        </>
-      )}
+      <>
+        {renderUsStateField()}
+        {renderCanadaProvinceField()}
+        {administrativeAreaSearchError && (
+          <StatusMessage>
+            Error occurred while retrieving Administrative Areas.
+          </StatusMessage>
+        )}
+      </>
 
       {isCountrySelectable ? (
         <FieldCountrySelect name="country" />

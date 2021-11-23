@@ -2,33 +2,5 @@
   {
     "code": "cfe1",
     "is_active": true
-  },
-  {
-    "code": "state-filter",
-    "is_active": true
-  },
-  {
-    "code": "province-filter",
-    "is_active": true
-  },
-  {
-    "code": "edit-business-details-area-fields",
-    "is_active": true
-  },
-  {
-    "code": "address-area-unverifed-match",
-    "is_active": true
-  },
-  {
-    "code": "address-area-contact-required-field",
-    "is_active": true
-  },
-  {
-    "code": "address-postcode-company-required-field",
-    "is_active": true
-  },
-  {
-    "code": "contacts-area-field",
-    "is_active": true
   }
 ]

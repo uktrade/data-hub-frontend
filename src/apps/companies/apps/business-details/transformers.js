@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 const { get, pick, compact, omitBy } = require('lodash')
 const { hqLabels } = require('../../labels')
-const { convertUsdToGbp } = require('../../../../common/currency')
 
 const transformGlobalAccountManager = (globalAccountManager) => {
   if (!globalAccountManager) {
@@ -45,7 +44,7 @@ const transformCompanyToBusinessDetails = (company) => {
         'export_segment',
         'export_sub_segment',
       ]),
-      turnover: convertUsdToGbp(company.turnover),
+      turnover: company.turnover_gbp,
       business_type: get(company.business_type, 'name'),
       turnover_range: get(company.turnover_range, 'name'),
       employee_range: get(company.employee_range, 'name'),

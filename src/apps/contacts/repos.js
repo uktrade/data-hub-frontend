@@ -2,14 +2,8 @@ const { sortBy } = require('lodash')
 const { authorisedRequest } = require('../../lib/authorised-request')
 const config = require('../../config')
 
-function getContact(req, contactId, features) {
-  const addressAreaValidationEnabled =
-    features['address-area-contact-required-field']
-  const endpointVersion = addressAreaValidationEnabled ? 'v4' : 'v3'
-  return authorisedRequest(
-    req,
-    `${config.apiRoot}/${endpointVersion}/contact/${contactId}`
-  )
+function getContact(req, contactId) {
+  return authorisedRequest(req, `${config.apiRoot}/v4/contact/${contactId}`)
 }
 
 function archiveContact(req, contactId, reason) {

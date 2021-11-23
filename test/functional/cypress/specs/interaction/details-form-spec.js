@@ -210,17 +210,20 @@ function fillCommonFields({
     .parent()
     .find("[data-test='trade-agreement-field-0']")
     .selectTypeaheadOption('UK-Australia Mutual Recognition Agreement')
+    .should('contain', 'UK-Australia Mutual Recognition Agreement')
 
   cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
     .parent()
     .find("[data-test='trade-agreement-field-1']")
     .selectTypeaheadOption('UK-Mexico Trade Continuity Agreement')
+    .should('contain', 'UK-Mexico Trade Continuity Agreement')
 
   if (contact) {
     cy.contains(ELEMENT_CONTACT.label)
       .next()
       .next()
       .selectTypeaheadOption(contact)
+      .should('contain', contact)
   }
 
   cy.contains(ELEMENT_SUBJECT.label).next().find('input').type('Some subject')
@@ -241,6 +244,7 @@ function fillCommonFields({
   cy.contains(ELEMENT_POLICY_AREAS.label)
     .next()
     .selectTypeaheadOption('State Aid')
+    .should('contain', 'State Aid')
 
   cy.contains(ELEMENT_POLICY_FEEDBACK_NOTES.label)
     .next()
@@ -255,14 +259,17 @@ function fillExportCountriesFields() {
   cy.contains(ELEMENT_COUNTRIES_CURRENTLY_EXPORTING.label)
     .parent()
     .selectTypeaheadOption('Iceland')
+    .should('contain', 'Iceland')
 
   cy.contains(ELEMENT_COUNTRIES_FUTURE_INTEREST.label)
     .parent()
     .selectTypeaheadOption('Austria')
+    .should('contain', 'Austria')
 
   cy.contains(ELEMENT_COUNTRIES_NOT_INTERESTED.label)
     .parent()
     .selectTypeaheadOption('Germany')
+    .should('contain', 'Germany')
 }
 
 function submitForm(kind, theme, values) {
@@ -277,6 +284,7 @@ function submitForm(kind, theme, values) {
       cy.contains(ELEMENT_COMMUNICATION_CHANNEL.label)
         .next()
         .selectTypeaheadOption('Telephone')
+        .should('contain', 'Telephone')
     } else if (kind === KINDS.SERVICE_DELIVERY) {
       cy.contains(ELEMENT_SERVICE_STATUS.label)
         .next()
@@ -295,7 +303,11 @@ function submitForm(kind, theme, values) {
 
       cy.contains(ELEMENT_IS_EVENT.legend).next().find('input').check('yes')
 
-      cy.get('#event').parent().selectTypeaheadOption('Sort event')
+      cy.get('#event')
+        .parent()
+        .selectTypeaheadOption('Sort event')
+        .parent()
+        .should('contain', 'Sort Event')
     }
 
     if (theme == THEMES.INVESTMENT) {
@@ -306,6 +318,7 @@ function submitForm(kind, theme, values) {
       cy.contains(ELEMENT_OPPORTUNITY.legend)
         .next()
         .selectTypeaheadOption('A modified opportunity')
+        .should('contain', 'A modified opportunity')
     }
 
     clickAddInteraction()
