@@ -11,11 +11,13 @@ import {
   FieldTypeahead,
   NewWindowLink,
 } from '../../../../client/components'
-import { OPTIONS_YES_NO, OPTION_YES } from '../../../../client/constants'
+import {
+  OPTIONS_YES_NO,
+  OPTION_YES,
+  UK_VALUE,
+} from '../../../../client/constants'
 import { validateStartDateBeforeOrEqualToEndDate } from './validators'
 import urls from '../../../../lib/urls'
-
-const UK = '80756b9a-5d95-e211-a939-e4115bead28a'
 
 export const EventFormFields = ({ values }) => {
   return values && values.metadata ? (
@@ -125,7 +127,7 @@ export const EventFormFields = ({ values }) => {
         placeholder="Select country"
         aria-label="Select a country"
       />
-      {values.address_country?.value === UK && (
+      {values.address_country?.value === UK_VALUE && (
         <FieldTypeahead
           name="uk_region"
           label="UK Region"
