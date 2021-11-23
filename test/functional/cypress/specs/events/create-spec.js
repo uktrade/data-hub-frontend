@@ -29,6 +29,8 @@ import {
   clickReturnWithoutSavingButton,
 } from '../../../cypress/support/form-fillers'
 
+const selectors = require('../../../../selectors/event/createOrEdit')
+
 describe('Event create', () => {
   beforeEach(() => {
     cy.intercept('POST', '/api-proxy/v4/event').as('eventHttpRequest')
@@ -79,21 +81,21 @@ describe('Event create', () => {
 
   it('should toggle uk region field', () => {
     fillCountry('United Kingdom')
-    cy.get('#field-address_country').should('contain', 'United Kingdom')
-    assertVisible('#uk_region')
+    cy.get(selectors.addressCountryFieldId).should('contain', 'United Kingdom')
+    assertVisible(selectors.ukRegionId)
 
     fillCountry('Uganda')
-    cy.get('#field-address_country').should('contain', 'Uganda')
-    assertNotExists('#uk_region')
+    cy.get(selectors.addressCountryFieldId).should('contain', 'Uganda')
+    assertNotExists(selectors.ukRegionId)
   })
 
   it('should toggle teams section when interacting with shared options', () => {
     assertTextVisible('Is this a shared event? (optional)')
     fillEventSharedRadio(true)
-    assertVisible('#teams')
+    assertVisible(selectors.teamsId)
 
     fillEventSharedRadio(false)
-    assertNotExists('#teams')
+    assertNotExists(selectors.teamsId)
   })
 
   it('should allow user to add multiple shared teams', () => {

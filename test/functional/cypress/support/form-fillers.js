@@ -1,9 +1,9 @@
-const selectors = require('../../../selectors/event/createOrEdit')
-
 import {
   assertTypeaheadValuesWith,
   assertTextVisible,
 } from './event-assertions'
+
+const selectors = require('../../../selectors/event/createOrEdit')
 
 const PROGRAMME_FIELD_PREFIX = 'programme-field-'
 const TEAM_FIELD_PREFIX = 'team-field-'
