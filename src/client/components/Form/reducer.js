@@ -29,8 +29,8 @@ export default (
       return {
         ...state,
         values: {
-          ...state.values,
           ...action.initialValues,
+          ...state.values,
         },
       }
     case FORM__FIELD_REGISTER:
