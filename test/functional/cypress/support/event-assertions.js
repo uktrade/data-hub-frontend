@@ -11,6 +11,72 @@ import {
 const YES = 'Yes'
 const UK = 'United Kingdom'
 
+const assertTradeAgreementArticle = (articleElement) => {
+  cy.wrap(articleElement).contains(
+    'If your Event is set up to focus on a Trade Agreement or contributes to implementing a Trade Agreement then select that the event relates to a Trade Agreement and the relevant Agreement(s)'
+  )
+  assertTextVisible('See more guidance')
+  cy.contains('See more guidance')
+    .should('have.attr', 'href')
+    .should(
+      'contain',
+      'https://data-services-help.trade.gov.uk/data-hub/how-articles/trade-agreement-activity/recording-trade-agreement-activity/'
+    )
+  cy.contains('See more guidance').should(
+    'have.attr',
+    'aria-label',
+    'Opens in a new window or tab'
+  )
+  assertTextVisible('(opens in a new window or tab)')
+}
+
+const assertTeamsFields = (element, teams, isEventShared) => {
+  const optionsCount = 2 + (teams ? teams.length : 0)
+  assertFieldRadiosWithLegend({
+    element,
+    legend: 'Is this a shared event? (optional)',
+    optionsCount,
+    value: isEventShared,
+  })
+  if (isEventShared && isEventShared === YES) {
+    cy.get('#field-teams').then((teamsElement) => {
+      assertFieldAddAnother({
+        element: teamsElement,
+        label: 'Teams',
+        placeholder: !teams ? 'Select at least one team' : undefined,
+        values: teams,
+      })
+    })
+  }
+}
+
+const assertTradeAgreementsFields = (
+  element,
+  relatedTradeAgrements,
+  hasRelatedTradeAgreement
+) => {
+  const optionsCount =
+    2 + (relatedTradeAgrements ? relatedTradeAgrements.length : 0)
+  assertFieldRadiosWithLegend({
+    element,
+    legend: 'Does the event relate to a trade agreement?',
+    optionsCount,
+    value: hasRelatedTradeAgreement,
+  })
+  if (hasRelatedTradeAgreement && hasRelatedTradeAgreement === YES) {
+    cy.get('#field-related_trade_agreements').then((tradeAgrementsElement) => {
+      assertFieldAddAnother({
+        element: tradeAgrementsElement,
+        label: '',
+        placeholder: !relatedTradeAgrements
+          ? 'Search trade agreements'
+          : undefined,
+        values: relatedTradeAgrements,
+      })
+    })
+  }
+}
+
 export const assertEventFormFields = ({
   hasRelatedTradeAgreement,
   relatedTradeAgrements,
@@ -34,48 +100,14 @@ export const assertEventFormFields = ({
   teams,
   relatedProgrammes,
 } = {}) => {
-  const assertTradeAgreementArticle = (articleElement) => {
-    cy.wrap(articleElement).contains(
-      'If your Event is set up to focus on a Trade Agreement or contributes to implementing a Trade Agreement then select that the event relates to a Trade Agreement and the relevant Agreement(s)'
-    )
-    assertTextVisible('See more guidance')
-    cy.contains('See more guidance')
-      .should('have.attr', 'href')
-      .should(
-        'contain',
-        'https://data-services-help.trade.gov.uk/data-hub/how-articles/trade-agreement-activity/recording-trade-agreement-activity/'
-      )
-    cy.contains('See more guidance').should(
-      'have.attr',
-      'aria-label',
-      'Opens in a new window or tab'
-    )
-    assertTextVisible('(opens in a new window or tab)')
-  }
   const eventFormFields = [
     assertTradeAgreementArticle,
-    {
-      assert: assertFieldRadiosWithLegend,
-      legend: 'Does the event relate to a trade agreement?',
-      optionsCount: 2,
-      value: hasRelatedTradeAgreement,
-    },
-  ]
-  if (
-    hasRelatedTradeAgreement &&
-    hasRelatedTradeAgreement === YES &&
-    relatedTradeAgrements
-  ) {
-    eventFormFields.push({
-      assert: assertFieldAddAnother,
-      label: '',
-      placeholder: !relatedTradeAgrements
-        ? 'Search trade agreements'
-        : undefined,
-      values: relatedTradeAgrements,
-    })
-  }
-  eventFormFields.push(
+    (element) =>
+      assertTradeAgreementsFields(
+        element,
+        relatedTradeAgrements,
+        hasRelatedTradeAgreement
+      ),
     {
       assert: assertFieldInput,
       label: 'Event name',
@@ -133,8 +165,8 @@ export const assertEventFormFields = ({
       label: 'Country',
       placeholder: !country ? 'Select country' : undefined,
       value: country,
-    }
-  )
+    },
+  ]
 
   if (country && country === UK && ukRegion) {
     eventFormFields.push({
@@ -144,6 +176,7 @@ export const assertEventFormFields = ({
       value: ukRegion,
     })
   }
+
   eventFormFields.push(
     {
       assert: assertFieldTextarea,
@@ -168,27 +201,14 @@ export const assertEventFormFields = ({
       placeholder: !organiser ? 'Type to search for organiser' : undefined,
       value: organiser,
     },
+    (element) => assertTeamsFields(element, teams, isEventShared),
     {
-      assert: assertFieldRadiosWithLegend,
-      legend: 'Is this a shared event? (optional)',
-      optionsCount: 2,
-      value: isEventShared,
+      assert: assertFieldAddAnother,
+      label: 'Related programmes',
+      values: relatedProgrammes,
     }
   )
 
-  if (isEventShared && isEventShared === YES && teams) {
-    eventFormFields.push({
-      assert: assertFieldAddAnother,
-      label: 'Teams',
-      placeholder: !teams ? 'Select at least one team' : undefined,
-      values: teams,
-    })
-  }
-  eventFormFields.push({
-    assert: assertFieldAddAnother,
-    label: 'Related programmes',
-    values: relatedProgrammes,
-  })
   assertFormFields(cy.get('form'), eventFormFields)
 }
 
