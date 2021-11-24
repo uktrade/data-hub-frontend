@@ -164,6 +164,8 @@ import { TASK_CHECK_FOR_INVESTMENTS } from './components/PersonalisedDashboard/s
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
 import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentReminders/state'
 
+import * as exportsEdit from '../apps/companies/apps/exports/client/tasks'
+
 import {
   getContacts,
   getContactsMetadata,
@@ -312,6 +314,7 @@ function App() {
         [TASK_GET_ORDERS_LIST]: getOrders,
         [TASK_GET_INTERACTIONS_TEAM_NAME]: getTeamNames,
         [TASK_ARCHIVE_COMPANY]: businessDetails.archiveSubmitCallback,
+        'Exports Edit': exportsEdit.saveWinCategory,
         ...resourceTasks,
       }}
     >
