@@ -113,12 +113,9 @@ export default Resource
  * </CompanyResource>
  */
 export const createEntityResource = (name, endpoint) => {
+  const transformer = (rawResult) => [deepKeysToCamelCase(rawResult), rawResult]
   const Component = (props) => (
-    <Resource
-      transformer={(rawResult) => [deepKeysToCamelCase(rawResult), rawResult]}
-      {...props}
-      name={name}
-    />
+    <Resource transformer={transformer} {...props} name={name} />
   )
 
   Component.propTypes = _.omit(Component.propTypes, 'name')
@@ -128,6 +125,8 @@ export const createEntityResource = (name, endpoint) => {
         .get(`/api-proxy/${endpoint(id)}`, { params: payload })
         .then(({ data }) => data),
   }
+  Component.transformer = transformer
+  Component.taskName = name
 
   return Component
 }
@@ -160,20 +159,19 @@ export const createEntityResource = (name, endpoint) => {
  */
 export const createCollectionResource = (name, endpoint) => {
   const Comp = createEntityResource(name, () => endpoint)
+  const transformer = (rawResult) => [
+    deepKeysToCamelCase(rawResult.results),
+    rawResult.count,
+    rawResult,
+  ]
   const Component = (props) => (
-    <Comp
-      transformer={(rawResult) => [
-        deepKeysToCamelCase(rawResult.results),
-        rawResult.count,
-        rawResult,
-      ]}
-      {...props}
-      id="__COLLECTION__"
-    />
+    <Comp transformer={transformer} {...props} id="__COLLECTION__" />
   )
 
   Component.propTypes = _.omit(Component.propTypes, 'id')
   Component.tasks = Comp.tasks
+  Component.transformer = transformer
+  Component.taskName = name
   return Component
 }
 
@@ -206,19 +204,18 @@ export const createCollectionResource = (name, endpoint) => {
  */
 export const createMetadataResource = (name, endpoint) => {
   const Comp = createEntityResource(name, () => `v4/metadata/${endpoint}`)
+  const transformer = (rawResult) => [
+    deepKeysToCamelCase(rawResult),
+    rawResult.length,
+    rawResult,
+  ]
   const Component = (props) => (
-    <Comp
-      transformer={(rawResult) => [
-        deepKeysToCamelCase(rawResult),
-        rawResult.length,
-        rawResult,
-      ]}
-      {...props}
-      id="__METADATA__"
-    />
+    <Comp transformer={transformer} {...props} id="__METADATA__" />
   )
 
   Component.propTypes = _.omit(Component.propTypes, 'id')
   Component.tasks = Comp.tasks
+  Component.transformer = transformer
+  Component.taskName = name
   return Component
 }
