@@ -24,6 +24,11 @@ import { validateForm } from '../../Form/MultiInstanceForm'
 import Effect from '../../Effect'
 import HardRedirect from '../../HardRedirect'
 
+const addFlashMessage = (message) =>
+  Array.isArray(message)
+    ? addMessageWithBody('success', ...message)
+    : addMessage('success', message)
+
 const _TaskForm = ({
   // Required
   submissionTaskName,
@@ -182,38 +187,45 @@ const _TaskForm = ({
                           >
                             <Route>
                               {({ history }) => (
-                                <Effect
-                                  dependencyList={[
-                                    submissionTaskName,
-                                    id,
-                                    resolved,
-                                  ]}
-                                  effect={() => {
-                                    if (resolved) {
-                                      analytics(
-                                        'Submission request success',
-                                        analyticsData && analyticsData(values)
-                                      )
-                                      if (flashMessage) {
-                                        const message = flashMessage(
-                                          result,
-                                          values
-                                        )
-                                        Array.isArray(message)
-                                          ? addMessageWithBody(
-                                              'success',
-                                              ...message
+                                <HardRedirect>
+                                  {(hardRedirect) => (
+                                    <Effect
+                                      dependencyList={[
+                                        submissionTaskName,
+                                        id,
+                                        resolved,
+                                      ]}
+                                      effect={() => {
+                                        if (resolved) {
+                                          analytics(
+                                            'Submission request success',
+                                            analyticsData &&
+                                              analyticsData(values)
+                                          )
+                                          if (flashMessage) {
+                                            const message = flashMessage(
+                                              result,
+                                              values
                                             )
-                                          : addMessage('success', message)
-                                      }
-                                      redirectMode === 'soft' &&
-                                        redirectTo &&
-                                        history.push(redirectTo(result, values))
-                                      onSuccess && onSuccess(result, values)
-                                      props.resetResolved()
-                                    }
-                                  }}
-                                />
+                                            addFlashMessage(message)
+                                          }
+                                          redirectMode === 'soft' &&
+                                            redirectTo &&
+                                            history.push(
+                                              redirectTo(result, values)
+                                            )
+                                          onSuccess &&
+                                            onSuccess(result, values, {
+                                              flashMessage: addFlashMessage,
+                                              hardRedirect,
+                                              softRedirect: history.push,
+                                            })
+                                          props.resetResolved()
+                                        }
+                                      }}
+                                    />
+                                  )}
+                                </HardRedirect>
                               )}
                             </Route>
                             <Effect
@@ -381,7 +393,9 @@ const dispatchToProps = (dispatch) => ({
  * the form values as payload.
  * @param {Props['onSuccess']} [props.onSuccess] - A function that will be
  * called when the _submission task_ resolves. The function will receive the
- * task result as its first, and the form values as its second argument.
+ * task result as its first, and the form values as its second argument. The
+ * third argument can be an object containing the 3 actions which may result
+ * from a form submission: `hardRedirect`, `softRedirect` and `flashMessage`.
  * @param {Props['redirectTo']} [props.redirectTo] - A function which should
  * convert the result of the submission task and the submitted form values into
  * a URL path to which the user should be redirected when the submission task
