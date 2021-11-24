@@ -246,25 +246,25 @@ const _ContactForm = ({
                           label="First name"
                           name="firstName"
                           type="text"
-                          required="This field may not be null."
+                          required="Enter a first name"
                           data-test="group-field-first_name"
                         />
                         <FieldInput
                           label="Last name"
                           name="lastName"
                           type="text"
-                          required="This field may not be null."
+                          required="Enter a last name"
                         />
                         <FieldInput
                           label="Job title"
                           name="jobTitle"
                           type="text"
-                          required="This field may not be null."
+                          required="Enter a job title"
                         />
                         <FieldRadios
                           legend="Is this person a primary contact?"
                           name="primary"
-                          required="This field is required."
+                          required="Select yes if this person is a primary contact"
                           options={[
                             { value: YES, label: YES },
                             { value: NO, label: NO },
@@ -274,7 +274,7 @@ const _ContactForm = ({
                           label="Telephone country code"
                           name="telephoneCountrycode"
                           type="text"
-                          required="This field may not be null."
+                          required="Enter a telephone country code"
                           validate={(x) =>
                             !x?.match(/^\d{1,4}$/) &&
                             'Country code should consist of one to four numbers'
@@ -284,7 +284,7 @@ const _ContactForm = ({
                           label="Telephone number"
                           name="telephoneNumber"
                           type="text"
-                          required="This field may not be null."
+                          required="Enter a telephone number"
                           validate={(x) =>
                             !x?.match(GENERIC_PHONE_NUMBER_REGEX) &&
                             'Telephone number should consist of numbers'
@@ -294,7 +294,7 @@ const _ContactForm = ({
                           label="Email"
                           name="email"
                           type="email"
-                          required="This field may not be null."
+                          required="Enter an email"
                           validate={validators.email}
                         />
                         <FieldCheckboxes
@@ -315,7 +315,7 @@ const _ContactForm = ({
                         <FieldRadios
                           legend="Is the contact’s address the same as the company address?"
                           name="addressSameAsCompany"
-                          required="This field is required."
+                          required="Select yes if the contact's address is the same as the company address"
                           options={[
                             { value: YES, label: YES },
                             {

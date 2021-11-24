@@ -85,15 +85,16 @@ describe('Create contact form', () => {
     cy.clickSubmitButton('Add contact')
 
     assertErrors({
-      'First name': 'This field may not be null.',
-      'Last name': 'This field may not be null.',
-      'Job title': 'This field may not be null.',
-      'Is this person a primary contact?': 'This field is required.',
-      'Telephone country code': 'This field may not be null.',
-      'Telephone number': 'This field may not be null.',
-      Email: 'This field may not be null.',
+      'First name': 'Enter a first name',
+      'Last name': 'Enter a last name',
+      'Job title': 'Enter a job title',
+      'Is this person a primary contact?':
+        'Select yes if this person is a primary contact',
+      'Telephone country code': 'Enter a telephone country code',
+      'Telephone number': 'Enter a telephone number',
+      Email: 'Enter an email',
       'Is the contact’s address the same as the company address?':
-        'This field is required.',
+        "Select yes if the contact's address is the same as the company address",
     })
   })
 
@@ -106,13 +107,14 @@ describe('Create contact form', () => {
     cy.clickSubmitButton('Add contact')
 
     assertErrors({
-      'First name': 'This field may not be null.',
-      'Last name': 'This field may not be null.',
-      'Job title': 'This field may not be null.',
-      'Is this person a primary contact?': 'This field is required.',
-      'Telephone country code': 'This field may not be null.',
-      'Telephone number': 'This field may not be null.',
-      Email: 'This field may not be null.',
+      'First name': 'Enter a first name',
+      'Last name': 'Enter a last name',
+      'Job title': 'Enter a job title',
+      'Is this person a primary contact?':
+        'Select yes if this person is a primary contact',
+      'Telephone country code': 'Enter a telephone country code',
+      'Telephone number': 'Enter a telephone number',
+      Email: 'Enter an email',
       'Address line 1': 'Enter an address line 1',
       'Town or city': 'Enter a town or city',
     })
