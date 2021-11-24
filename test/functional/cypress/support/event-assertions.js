@@ -34,7 +34,26 @@ export const assertEventFormFields = ({
   teams,
   relatedProgrammes,
 } = {}) => {
+  const assertTradeAgreementArticle = (articleElement) => {
+    cy.wrap(articleElement).contains(
+      'If your Event is set up to focus on a Trade Agreement or contributes to implementing a Trade Agreement then select that the event relates to a Trade Agreement and the relevant Agreement(s)'
+    )
+    assertTextVisible('See more guidance')
+    cy.contains('See more guidance')
+      .should('have.attr', 'href')
+      .should(
+        'contain',
+        'https://data-services-help.trade.gov.uk/data-hub/how-articles/trade-agreement-activity/recording-trade-agreement-activity/'
+      )
+    cy.contains('See more guidance').should(
+      'have.attr',
+      'aria-label',
+      'Opens in a new window or tab'
+    )
+    assertTextVisible('(opens in a new window or tab)')
+  }
   const eventFormFields = [
+    assertTradeAgreementArticle,
     {
       assert: assertFieldRadiosWithLegend,
       legend: 'Does the event relate to a trade agreement?',
@@ -170,7 +189,6 @@ export const assertEventFormFields = ({
     label: 'Related programmes',
     values: relatedProgrammes,
   })
-
   assertFormFields(cy.get('form'), eventFormFields)
 }
 
