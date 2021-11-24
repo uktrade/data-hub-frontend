@@ -2,7 +2,6 @@ import qs from 'qs'
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import axios from 'axios'
 import Link from '@govuk-react/link'
 
 import multiInstance from '../../utils/multiinstance'
@@ -35,12 +34,6 @@ import {
 import useAdministrativeAreaLookup from '../AdministrativeAreaSearch/useAdministrativeAreaLookup'
 import useAdministrativeAreaSearch from '../AdministrativeAreaSearch/useAdministrativeAreaSearch'
 import urls from '../../../lib/urls'
-
-const emailAlreadyExists = (email) => {
-  return axios
-    .get(`/api-proxy/v4/contact`, { params: { email } })
-    .then(({ data }) => data.count)
-}
 
 const YES = 'Yes'
 const NO = 'No'
@@ -164,6 +157,7 @@ const _ContactForm = ({
                       ...values
                     }) => ({
                       contactId,
+                      duplicateEmail,
                       values: {
                         ...keysToSnakeCase(values),
                         email,
@@ -196,12 +190,25 @@ const _ContactForm = ({
                             }),
                       },
                     })}
-                    redirectTo={(result) => redirectTo(result)}
-                    flashMessage={({ name }) =>
-                      update
-                        ? 'Contact record updated'
-                        : `You have successfully added a new contact ${name}`
-                    }
+                    onSuccess={(
+                      result,
+                      values,
+                      { hardRedirect, flashMessage }
+                    ) => {
+                      if (typeof result === 'string') {
+                        dispatch({
+                          type: CONTACT_FORM__DUPLICATE_EMAIL,
+                          duplicateEmail: result,
+                        })
+                      } else {
+                        flashMessage(
+                          update
+                            ? 'Contact record updated'
+                            : `You have successfully added a new contact ${result.name}`
+                        )
+                        hardRedirect(redirectTo(result))
+                      }
+                    }}
                     submitButtonLabel={
                       update ? 'Save and return' : 'Add contact'
                     }
@@ -229,7 +236,6 @@ const _ContactForm = ({
                   >
                     {({ values }) => (
                       <>
-                        {/* Keep as is? */}
                         {duplicateEmail && (
                           <FlashMessages
                             flashMessages={{

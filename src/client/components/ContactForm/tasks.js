@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const saveContact = ({ contactId, values }) => {
+const _saveContact = (contactId, values) => {
   const request = contactId ? axios.patch : axios.post
   const endpoint = '/api-proxy/v4/contact'
 
@@ -11,4 +11,21 @@ export const saveContact = ({ contactId, values }) => {
     .then((response) => {
       return response.data
     })
+}
+
+export const saveContact = ({ contactId, duplicateEmail, values }) => {
+  // Check if contact with same email exists on company
+  if (!contactId && (!duplicateEmail || duplicateEmail !== values.email)) {
+    return axios
+      .get(`/api-proxy/v4/contact`, { params: { email: values.email } })
+      .then(({ data }) => {
+        if (data.count) {
+          return values.email
+        } else {
+          return _saveContact(contactId, values)
+        }
+      })
+  } else {
+    return _saveContact(contactId, values)
+  }
 }
