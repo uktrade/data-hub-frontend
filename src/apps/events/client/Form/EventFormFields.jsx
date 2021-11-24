@@ -36,33 +36,38 @@ export const EventFormFields = ({ values }) => {
         legend="Does the event relate to a trade agreement?"
         name="has_related_trade_agreements"
         required="Answer if the event is related to a trade agreement"
-        options={OPTIONS_YES_NO}
+        options={OPTIONS_YES_NO.map((option) => ({
+          label: option.label,
+          value: option.value,
+          ...(option.value === OPTION_YES && {
+            children: (
+              <FieldAddAnother
+                name="related_trade_agreements"
+                label="Related named trade agreement(s)"
+                data-test-prefix="trade-agreement-field-"
+                required="Select at least one Trade Agreement"
+                item-name="trade agreement"
+              >
+                {({ value, onChange, error }) => (
+                  <FieldTypeahead
+                    name="related_trade_agreements"
+                    options={values.metadata.relatedTradeAgreements}
+                    placeholder="Search trade agreements"
+                    required="Trade Agreement can not be null"
+                    aria-label="Select a trade agreement"
+                    value={values.metadata.relatedTradeAgreements?.find(
+                      ({ value: option_value }) => option_value === value
+                    )}
+                    onChange={onChange}
+                    error={error}
+                  />
+                )}
+              </FieldAddAnother>
+            ),
+          }),
+        }))}
         inline={true}
       />
-      {values.has_related_trade_agreements === OPTION_YES && (
-        <FieldAddAnother
-          name="related_trade_agreements"
-          label="Related named trade agreement(s)"
-          data-test-prefix="trade-agreement-field-"
-          required="Select at least one Trade Agreement"
-          item-name="trade agreement"
-        >
-          {({ value, onChange, error }) => (
-            <FieldTypeahead
-              name="related_trade_agreements"
-              options={values.metadata.relatedTradeAgreements}
-              placeholder="Search trade agreements"
-              required="Trade Agreement can not be null"
-              aria-label="Select a trade agreement"
-              value={values.metadata.relatedTradeAgreements?.find(
-                ({ value: option_value }) => option_value === value
-              )}
-              onChange={onChange}
-              error={error}
-            />
-          )}
-        </FieldAddAnother>
-      )}
       <FieldInput
         label="Event name"
         name="name"
@@ -163,33 +168,38 @@ export const EventFormFields = ({ values }) => {
       <FieldRadios
         legend="Is this a shared event? (optional)"
         name="event_shared"
-        options={OPTIONS_YES_NO}
+        options={OPTIONS_YES_NO.map((option) => ({
+          label: option.label,
+          value: option.value,
+          ...(option.value === OPTION_YES && {
+            children: (
+              <FieldAddAnother
+                name="teams"
+                label="Teams"
+                required="Select at least one team"
+                item-name="team"
+                data-test-prefix="team-field-"
+              >
+                {({ value, onChange, error }) => (
+                  <FieldTypeahead
+                    name="teams"
+                    options={values.metadata.teams}
+                    placeholder="Select team"
+                    required="Team can not be null"
+                    aria-label="Select at least one team"
+                    value={values.metadata.teams?.find(
+                      ({ value: option_value }) => option_value === value
+                    )}
+                    onChange={onChange}
+                    error={error}
+                  />
+                )}
+              </FieldAddAnother>
+            ),
+          }),
+        }))}
         inline={true}
       />
-      {values.event_shared === OPTION_YES && (
-        <FieldAddAnother
-          name="teams"
-          label="Teams"
-          required="Select at least one team"
-          item-name="team"
-          data-test-prefix="team-field-"
-        >
-          {({ value, onChange, error }) => (
-            <FieldTypeahead
-              name="teams"
-              options={values.metadata.teams}
-              placeholder="Select team"
-              required="Team can not be null"
-              aria-label="Select at least one team"
-              value={values.metadata.teams?.find(
-                ({ value: option_value }) => option_value === value
-              )}
-              onChange={onChange}
-              error={error}
-            />
-          )}
-        </FieldAddAnother>
-      )}
       <FieldAddAnother
         name="related_programmes"
         label="Related programmes"
