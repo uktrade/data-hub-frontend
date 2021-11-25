@@ -39,7 +39,7 @@ function createRequest(req, urls, file) {
 function getDocumentUploadS3Url(req, { file, url, fields, textFields = {} }) {
   const body = {
     ...textFields,
-    original_filename: file.name,
+    original_filename: file.originalFilename,
   }
 
   const options = {
