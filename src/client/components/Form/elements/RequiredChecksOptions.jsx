@@ -5,16 +5,7 @@ import ResourceOptionsField from './ResourceOptionsField'
 import FieldRadios from './FieldRadios'
 
 const RequiredChecksOptions = (props) => (
-  <ResourceOptionsField
-    {...props}
-    resource={RequiredChecksConducted}
-    resultToOptions={(result) =>
-      result.map(({ name, id }) => ({
-        label: name,
-        value: id,
-      }))
-    }
-  />
+  <ResourceOptionsField {...props} resource={RequiredChecksConducted} />
 )
 
 export const FieldRequiredChecksRadios = (props) => (

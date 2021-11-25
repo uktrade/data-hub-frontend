@@ -8,15 +8,23 @@ type ResourceProps = {
   payload?: any,
 }
 
+type Option = {
+  value: string,
+  label: string,
+  children?: React.ReactNode,
+  hint: string,
+}
+
 type Props = {
-  resource: (props: ResourceProps) => any
+  resource: (props: ResourceProps) => any,
+  resultToOptions?: (result: any) => {label: string, value: string | number}[],
+  interceptOption?: (option: Option) => Option,
 } | {
   taskName: string,
   id: string,
 } & {
   field: (props: any) => any,
   id?: string,
-  resultToOptions?: (result: any) => {label: string, value: string | number}[],
 }
 
 export type ResourceOptionsField = (props: Props) => JSX.Element

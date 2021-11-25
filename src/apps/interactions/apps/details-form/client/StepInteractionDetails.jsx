@@ -13,6 +13,7 @@ import { SPACING_POINTS } from '@govuk-react/constants'
 import axios from 'axios'
 import { throttle } from 'lodash'
 
+import { idNamesToValueLabels } from '../../../../../client/utils'
 import {
   AdviserTypeAhead,
   NewWindowLink,
@@ -154,8 +155,6 @@ const validatedDuplicatedCountries = (countries, field, { values }) =>
   )
     ? 'A country that was discussed cannot be entered in multiple fields'
     : null
-
-const idNameToValueLabel = ({ id, name }) => ({ value: id, label: name })
 
 const StepInteractionDetails = ({
   companyId,
@@ -531,7 +530,7 @@ const StepInteractionDetails = ({
                       },
                     })
                     .then(({ data: { results } }) =>
-                      results.map(idNameToValueLabel)
+                      idNamesToValueLabels(results)
                     ),
                 500
               )}

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { idNamesToValueLabels } from '../../../../utils'
 import Resource from '../../../Resource'
 
 /**
@@ -12,7 +13,7 @@ import Resource from '../../../Resource'
  * All other props not specified here will be forwarded to the field component
  * passed to {props.field}.
  * @type {import("./types").ResourceOptionsField} TaskForm
- * @type {import("./types").Props} Props
+ * @typedef {import("./types").Props} Props
  * @param {Object} props
  * @param {Function} [props.field] - The _options form field_ to be wrapped.
  * @param {Function} [props.resource] - A particular _resource_ component which
@@ -22,8 +23,12 @@ import Resource from '../../../Resource'
  * @param {string} [props.id] - ID for the _task_ or _resource_. This prop is
  * required with if {props.taskName} is used and optional with {props.resource}.
  * @param {any} [props.payload] - The optional ID
- * @param {Props['resultToOptions']} [props.resultToOptions] - Use this to
- * transform the _task_/_resource_ result to the field options.
+ * @param {Props['resultToOptions']} [props.resultToOptions=idNamesToValueLabels]
+ * - Use this to transform the _task_/_resource_ result to the field options.
+ * @param {Props['interceptOption']} [props.interceptOptions] - A function that
+ * will be called for each option already resolved with {props.resultToOptions}
+ * and should return the tweaked option. Allows you to tweak the optios e.g.
+ * to add children or hint to it.
  * @example
  * import CountriesResource from '../Resource/Countries'
  * import FieldSelect from '../Form/elements/FieldSelect'
@@ -42,7 +47,7 @@ const ResourceOptionsField = ({
   payload,
   // Only required when Resource is not specified
   taskName,
-  resultToOptions = (x) => x,
+  resultToOptions = idNamesToValueLabels,
   interceptOption = (x) => x,
   ...props
 }) => (

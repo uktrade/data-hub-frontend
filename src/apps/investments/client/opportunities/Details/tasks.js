@@ -1,9 +1,8 @@
+import { idNamesToValueLabels } from '../../../../../client/utils'
 import { apiProxyAxios } from '../../../../../client/components/Task/utils'
 import { transformValueForAPI } from '../../../../../client/utils/date'
 
 import { transformInvestmentOpportunityDetails } from './transformers'
-
-export const idNameToValueLabel = ({ id, name }) => ({ value: id, label: name })
 
 export const getOpportunityDetails = ({ opportunityId }) =>
   apiProxyAxios
@@ -16,7 +15,7 @@ export const getDetailsMetadata = () =>
       '/v4/metadata/large-capital-opportunity/opportunity-value-type'
     ),
   ]).then(([{ data: valueTypes }]) => ({
-    valueTypes: valueTypes.map(idNameToValueLabel),
+    valueTypes: idNamesToValueLabels(valueTypes),
   }))
 
 export const getRequirementsMetadata = () =>
@@ -32,9 +31,9 @@ export const getRequirementsMetadata = () =>
       { data: returnRates },
       { data: timeScales },
     ]) => ({
-      investmentTypes: investmentTypes.map(idNameToValueLabel),
-      returnRates: returnRates.map(idNameToValueLabel),
-      timeScales: timeScales.map(idNameToValueLabel),
+      investmentTypes: idNamesToValueLabels(investmentTypes),
+      returnRates: idNamesToValueLabels(returnRates),
+      timeScales: idNamesToValueLabels(timeScales),
     })
   )
 

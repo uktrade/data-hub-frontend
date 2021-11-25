@@ -11,12 +11,6 @@ const UKRegionOptions = (props) => (
     aria-label="Select a uk region"
     {...props}
     resource={UKRegionsResource}
-    resultToOptions={(result) =>
-      result.map(({ name, id }) => ({
-        label: name,
-        value: id,
-      }))
-    }
   />
 )
 

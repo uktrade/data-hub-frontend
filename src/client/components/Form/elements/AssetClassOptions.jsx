@@ -11,12 +11,6 @@ const AssetClassOptions = (props) => (
     aria-label="Select asset classes"
     {...props}
     resource={AssetClassesResource}
-    resultToOptions={(result) =>
-      result.map(({ name, id }) => ({
-        label: name,
-        value: id,
-      }))
-    }
   />
 )
 

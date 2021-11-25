@@ -9,12 +9,6 @@ const ConstructionRiskOptions = (props) => (
     legend="Construction risk"
     {...props}
     resource={ConstructionRisksResource}
-    resultToOptions={(result) =>
-      result.map(({ name, id }) => ({
-        label: name,
-        value: id,
-      }))
-    }
   />
 )
 

@@ -9,9 +9,6 @@ const OpportunityValueTypeOptions = (props) => (
     legend="Opportunity value type"
     {...props}
     resource={OpportunityValueTypeResource}
-    resultToOptions={(result) =>
-      result.map(({ id, name }) => ({ value: id, label: name }))
-    }
   />
 )
 
