@@ -1,4 +1,4 @@
-export const fillAddAnotherWithValues = (
+export const fillAddAnother = (
   addButtonSelector,
   AddAnotherDataTestPrefix,
   dataArray
@@ -7,18 +7,18 @@ export const fillAddAnotherWithValues = (
     const max = dataArray.length - 1
     dataArray.map((item, index) => {
       if (index < max) clickAddAnotherButton(addButtonSelector)
-      fillTypeaheadWith(`[data-test=${AddAnotherDataTestPrefix}${index}]`, item)
+      fillTypeahead(`[data-test=${AddAnotherDataTestPrefix}${index}]`, item)
     })
   }
 }
 
-export const fillWith = (selector, value) => {
+export const fill = (selector, value) => {
   if (selector && value) {
     cy.get(selector).type(value)
   }
 }
 
-export const fillRadioWith = (selector, isYes) => {
+export const fillYesNoRadio = (selector, isYes) => {
   if (isYes === true) {
     cy.get(selector).eq(0).click()
   } else if (isYes === false) {
@@ -26,11 +26,11 @@ export const fillRadioWith = (selector, isYes) => {
   }
 }
 
-export const fillTypeaheadWith = (selector, value) => {
+export const fillTypeahead = (selector, value) => {
   cy.get(selector).selectTypeaheadOption(value)
 }
 
-export const fillDateWith = (dateId, day, month, year) => {
+export const fillDate = (dateId, day, month, year) => {
   cy.get(`${dateId}\\.day`).type(day)
   cy.get(`${dateId}\\.month`).type(month)
   cy.get(`${dateId}\\.year`).type(year)

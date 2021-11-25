@@ -2,11 +2,11 @@ import { assertTextVisible } from './assertions'
 import { assertTypeaheadValuesWith } from './event-assertions'
 
 import {
-  fillWith,
-  fillTypeaheadWith,
-  fillAddAnotherWithValues,
-  fillRadioWith,
-  fillDateWith,
+  fill,
+  fillTypeahead,
+  fillAddAnother,
+  fillYesNoRadio,
+  fillDate,
 } from './form-fillers'
 
 const selectors = require('../../../selectors/event/createOrEdit')
@@ -70,7 +70,7 @@ export const fillEventForm = ({
 }
 
 export const fillEventNotes = (notes) => {
-  fillWith(selectors.notesId, notes)
+  fill(selectors.notesId, notes)
 }
 
 export const fillAddress = ({
@@ -82,11 +82,11 @@ export const fillAddress = ({
   country = UK,
   region = ALL,
 } = {}) => {
-  fillWith(selectors.addressLine1Id, address1)
-  fillWith(selectors.addressLine2Id, address2)
-  fillWith(selectors.addressTownId, town)
-  fillWith(selectors.addressCountryId, county)
-  fillWith(selectors.addressPostcodeId, postcode)
+  fill(selectors.addressLine1Id, address1)
+  fill(selectors.addressLine2Id, address2)
+  fill(selectors.addressTownId, town)
+  fill(selectors.addressCountryId, county)
+  fill(selectors.addressPostcodeId, postcode)
   fillCountry(country)
   if (country && country === UK) {
     fillRegion(region)
@@ -94,27 +94,27 @@ export const fillAddress = ({
 }
 
 export const fillOrganiser = (organiser) => {
-  fillTypeaheadWith(selectors.organiserFieldId, organiser)
+  fillTypeahead(selectors.organiserFieldId, organiser)
 }
 
 export const fillService = (service) => {
-  fillTypeaheadWith(selectors.serviceFieldId, service)
+  fillTypeahead(selectors.serviceFieldId, service)
 }
 
 export const fillRegion = (region) => {
-  fillTypeaheadWith(selectors.ukRegionFieldId, region)
+  fillTypeahead(selectors.ukRegionFieldId, region)
 }
 
 export const fillLeadTeam = (leadTeam) => {
-  fillTypeaheadWith(selectors.leadTeamFieldId, leadTeam)
+  fillTypeahead(selectors.leadTeamFieldId, leadTeam)
 }
 
 export const fillCountry = (country) => {
-  fillTypeaheadWith(selectors.addressCountryFieldId, country)
+  fillTypeahead(selectors.addressCountryFieldId, country)
 }
 
 export const fillEventName = (name) => {
-  fillWith(selectors.eventNameId, name)
+  fill(selectors.eventNameId, name)
 }
 
 export const fillAndAssertProgrammes = (programmes = []) => {
@@ -124,7 +124,7 @@ export const fillAndAssertProgrammes = (programmes = []) => {
 }
 
 export const fillProgrammes = (programmes = []) => {
-  fillAddAnotherWithValues(
+  fillAddAnother(
     selectors.relatedProgrammesFieldId,
     PROGRAMME_FIELD_PREFIX,
     programmes
@@ -149,11 +149,11 @@ export const fillAndAssertRelatedTradeAgreements = (tradeAgreements = []) => {
 }
 
 export const fillTeams = (teams = []) => {
-  fillAddAnotherWithValues(selectors.teamsFieldId, TEAM_FIELD_PREFIX, teams)
+  fillAddAnother(selectors.teamsFieldId, TEAM_FIELD_PREFIX, teams)
 }
 
 export const fillRelatedTradeAgreements = (tradeAgreements = []) => {
-  fillAddAnotherWithValues(
+  fillAddAnother(
     selectors.relatedTradeAgreementsFieldId,
     TRADE_AGREEMENT_FIELD_PREFIX,
     tradeAgreements
@@ -161,27 +161,27 @@ export const fillRelatedTradeAgreements = (tradeAgreements = []) => {
 }
 
 export const fillLocationType = (value) => {
-  fillTypeaheadWith(selectors.locationTypeFieldId, value)
+  fillTypeahead(selectors.locationTypeFieldId, value)
 }
 
 export const fillEventType = (value) => {
-  fillTypeaheadWith(selectors.eventTypeFieldId, value)
+  fillTypeahead(selectors.eventTypeFieldId, value)
 }
 
 export const fillHasRelatedTradeAgreementsRadio = (isYes = false) => {
-  fillRadioWith(selectors.relatedTradeAgreements, isYes)
+  fillYesNoRadio(selectors.relatedTradeAgreements, isYes)
 }
 
 export const fillEventSharedRadio = (isYes = false) => {
-  fillRadioWith(selectors.eventShared, isYes)
+  fillYesNoRadio(selectors.eventShared, isYes)
 }
 
 export const fillStartDateWith = (day, month, year) => {
-  fillDateWith(selectors.startDateId, day, month, year)
+  fillDate(selectors.startDateId, day, month, year)
 }
 
 export const fillEndDateWith = (day, month, year) => {
-  fillDateWith(selectors.endDateId, day, month, year)
+  fillDate(selectors.endDateId, day, month, year)
 }
 
 // Click Events
