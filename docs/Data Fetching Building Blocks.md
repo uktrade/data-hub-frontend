@@ -153,9 +153,9 @@ interactionsTask = Interactions.tasks.Interactions
 
 // Which allows them to be easily plugged in
 <DataHubProvider tasks={{
-  ...Company,
-  ...Countries,
-  ...Interactions,
+  ...Company.tasks,
+  ...Countries.tasks,
+  ...Interactions.tasks,
 }}>
   // ...
 </DataHubProvider>
