@@ -148,11 +148,12 @@ PipelineForm.propTypes = {
     })
   ),
   submissionTaskName: PropTypes.string.isRequired,
+  initialValuesTaskName: PropTypes.string,
   analyticsFormName: PropTypes.string.isRequired,
   transformPayload: PropTypes.func.isRequired,
   redirectTo: PropTypes.func.isRequired,
   flashMessage: PropTypes.func.isRequired,
-  submitButtonLabel: PropTypes.string.isRequired,
+  submitButtonLabel: PropTypes.string,
   actionLinks: PropTypes.array.isRequired,
 }
 

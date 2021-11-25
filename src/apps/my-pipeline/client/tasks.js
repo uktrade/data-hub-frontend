@@ -47,7 +47,6 @@ export async function addCompanyToPipeline({ values, companyId }) {
     company: companyId,
     ...transformValuesForApi(values),
   })
-
   return data
 }
 
@@ -73,7 +72,6 @@ export async function editPipelineItem({
     pipelineItemId,
     transformValuesForApi(values, currentPipelineItem)
   )
-  addMessage('success', `You saved changes to ${values.name}`)
   return data
 }
 
