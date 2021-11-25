@@ -15,16 +15,24 @@ type Option = {
   hint: string,
 }
 
-type Props = {
-  resource: (props: ResourceProps) => any,
-  resultToOptions?: (result: any) => {label: string, value: string | number}[],
-  interceptOption?: (option: Option) => Option,
-} | {
-  taskName: string,
-  id: string,
-} & {
+export type CommonProps = {
   field: (props: any) => any,
   id?: string,
+  resultToOptions?: (result: any) => {label: string, value: string | number}[],
+  interceptOption?: (option: Option) => Option,
 }
+
+export type TaskPropsMixin = {
+  taskName: string,
+  id: string,
+}
+
+export type ResourcePropsMixin = {
+  resource: (props: ResourceProps) => any,
+}
+
+
+
+export type Props = CommonProps & (TaskPropsMixin | ResourcePropsMixin)
 
 export type ResourceOptionsField = (props: Props) => JSX.Element

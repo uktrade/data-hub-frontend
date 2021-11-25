@@ -25,7 +25,7 @@ import Resource from '../../../Resource'
  * @param {any} [props.payload] - The optional ID
  * @param {Props['resultToOptions']} [props.resultToOptions=idNamesToValueLabels]
  * - Use this to transform the _task_/_resource_ result to the field options.
- * @param {Props['interceptOption']} [props.interceptOptions] - A function that
+ * @param {Props['interceptOption']} [props.interceptOption] - A function that
  * will be called for each option already resolved with {props.resultToOptions}
  * and should return the tweaked option. Allows you to tweak the optios e.g.
  * to add children or hint to it.
