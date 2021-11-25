@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-//import { SEND_REFERRAL_FORM__SUBMIT } from '../../../../../../client/actions' //not sure if this is still useful for anything
 import StepReferralDetails from './StepReferralDetails'
 import StepReferralConfirmation from './StepReferralConfirmation'
 import Step from '../../../../../../client/components/Form/elements/Step.jsx'
@@ -18,16 +17,11 @@ import {
   TASK_SAVE_REFERRAL,
 } from './state'
 
-//this is apparently not restoring values when returning from the contact form loop, we'll need to fix that
 const SendReferralForm = ({
   cancelUrl,
   companyContacts,
   companyName,
   companyId,
-  subject,
-  notes,
-  contact,
-  adviser,
   sendingAdviserTeamName,
   flashMessages,
 }) => (
@@ -61,10 +55,7 @@ const SendReferralForm = ({
           receivingAdviserTeam: adviser.label?.split(', ')[1],
           referralSubject: subject,
         })}
-        //we need to make it redirect back from the contact form
-        initialValuesPayload={{ adviser, subject, notes, contact }}
         initialValuesTaskName="Get send referral initial values"
-        
         redirectTo={() => companies.detail(companyId)}
         flashMessage={() => [
           'Referral sent',

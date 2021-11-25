@@ -348,7 +348,7 @@ describe('Contact loop', () => {
       window.sessionStorage.clear()
     })
 
-    it('should redirect the user back to the interaction form after the contact is added', () => {
+    it('should redirect the user back to the interaction form and add the contact after the contact is added', () => {
       cy.get(selectors.sendReferral.subjectField)
         .click()
         .type('Test if values are restored')
@@ -387,6 +387,11 @@ describe('Contact loop', () => {
         'have.attr',
         'value',
         'Test if values are restored'
+      )
+
+      cy.get(selectors.sendReferral.contactField).should(
+        'contain',
+        'Json Russel'
       )
     })
   })
