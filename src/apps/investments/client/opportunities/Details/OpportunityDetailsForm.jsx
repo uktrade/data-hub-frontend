@@ -20,10 +20,10 @@ import {
   FieldTypeahead,
   AdviserTypeAhead,
 } from '../../../../../client/components'
-import RequiredChecksConductedRadios from '../../../../../client/components/Form/elements/FieldRequiredChecksConductedRadios'
 import FieldConstructionRiskRadios from '../../../../../client/components/Form/elements/FieldConstructionRiskRadios'
 import FieldAssetClassTypeahead from '../../../../../client/components/Form/elements/FieldAssetClassTypeahead'
 import { FieldUKRegionTypeahead } from '../../../../../client/components/Form/elements/UKRegionOptions'
+import { FieldRequiredChecksRadios } from '../../../../../client/components/Form/elements/RequiredChecksOptions'
 
 import { CLEARED_REFERENCE, ISSUES_IDENTIFIED_REFERENCE } from './constants'
 import { idNameToValueLabel } from './tasks'
@@ -102,7 +102,7 @@ function OpportunityDetailsForm(state) {
                 500
               )}
             />
-            <RequiredChecksConductedRadios
+            <FieldRequiredChecksRadios
               name="requiredChecksConducted"
               legend="Has this opportunity cleared the required checks?"
               initialValue={requiredChecksConducted.value}
