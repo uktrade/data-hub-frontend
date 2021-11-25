@@ -218,7 +218,7 @@ export const assertTypeaheadValuesWith = (
   dataArray = []
 ) => {
   if (dataArray) {
-    dataArray.forEach((item, index) => {
+    dataArray.map((item, index) => {
       assertTypeaheadValueWith(
         `[data-test=${fieldAddAnotherDataTestPrefix}${index}]`,
         item
