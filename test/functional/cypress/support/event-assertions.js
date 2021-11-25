@@ -78,12 +78,7 @@ const assertTradeAgreementsFields = (
   }
 }
 
-const assertUkRegionAndNotesFields = ({
-  element,
-  country,
-  ukRegion,
-  notes,
-}) => {
+const assertUkRegionOrNotesFields = ({ element, country, ukRegion, notes }) => {
   if (country && country === UK) {
     assertFieldTypeahead({
       element,
@@ -190,7 +185,7 @@ export const assertEventFormFields = ({
       value: country,
     },
     (element) =>
-      assertUkRegionAndNotesFields({ element, country, ukRegion, notes }),
+      assertUkRegionOrNotesFields({ element, country, ukRegion, notes }),
     {
       assert: assertFieldTypeahead,
       label: 'Team hosting the event',
