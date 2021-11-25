@@ -6,6 +6,7 @@ import {
   assertFieldTypeahead,
   assertFieldDate,
   assertFieldRadiosWithLegend,
+  assertTextVisible,
 } from './assertions'
 
 const YES = 'Yes'
@@ -77,6 +78,28 @@ const assertTradeAgreementsFields = (
   }
 }
 
+const assertUkRegionAndNotesFields = ({
+  element,
+  country,
+  ukRegion,
+  notes,
+}) => {
+  if (country && country === UK) {
+    assertFieldTypeahead({
+      element,
+      label: 'UK Region',
+      placeholder: !ukRegion ? 'Select region' : undefined,
+      value: ukRegion,
+    })
+  } else {
+    assertFieldTextarea({
+      element,
+      label: 'Event Notes (optional)',
+      value: notes,
+    })
+  }
+}
+
 export const assertEventFormFields = ({
   hasRelatedTradeAgreement,
   relatedTradeAgrements,
@@ -100,7 +123,7 @@ export const assertEventFormFields = ({
   teams,
   relatedProgrammes,
 } = {}) => {
-  const eventFormFields = [
+  assertFormFields(cy.get('form'), [
     assertTradeAgreementArticle,
     (element) =>
       assertTradeAgreementsFields(
@@ -166,23 +189,8 @@ export const assertEventFormFields = ({
       placeholder: !country ? 'Select country' : undefined,
       value: country,
     },
-  ]
-
-  if (country && country === UK && ukRegion) {
-    eventFormFields.push({
-      assert: assertFieldTypeahead,
-      label: 'UK Region',
-      placeholder: !ukRegion ? 'Select region' : undefined,
-      value: ukRegion,
-    })
-  }
-
-  eventFormFields.push(
-    {
-      assert: assertFieldTextarea,
-      label: 'Event Notes (optional)',
-      value: notes,
-    },
+    (element) =>
+      assertUkRegionAndNotesFields({ element, country, ukRegion, notes }),
     {
       assert: assertFieldTypeahead,
       label: 'Team hosting the event',
@@ -206,10 +214,8 @@ export const assertEventFormFields = ({
       assert: assertFieldAddAnother,
       label: 'Related programmes',
       values: relatedProgrammes,
-    }
-  )
-
-  assertFormFields(cy.get('form'), eventFormFields)
+    },
+  ])
 }
 
 export const assertTypeaheadValuesWith = (
@@ -233,28 +239,6 @@ export const assertTypeaheadValueWith = (selector, value) => {
       value,
     })
   )
-}
-
-export const assertErrorSummary = (errors) => {
-  cy.contains('h2', 'There is a problem')
-    .next()
-    .should('have.text', errors.join(''))
-}
-
-export const assertVisible = (selector) => {
-  cy.get(selector).should('be.visible')
-}
-
-export const assertNotExists = (selector) => {
-  cy.get(selector).should('not.exist')
-}
-
-export const assertTextVisible = (text) => {
-  cy.contains(text).should('be.visible')
-}
-
-export const assertUrl = (url) => {
-  cy.url().should('contain', url)
 }
 
 export const assertEventRequestBody = (expectedBody, callback) => {

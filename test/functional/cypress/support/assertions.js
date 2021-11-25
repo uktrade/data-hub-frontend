@@ -552,25 +552,42 @@ const assertDateInput = ({ element, label, value }) => {
     .should('have.attr', 'value', value)
 }
 
-const assertBooleanFieldRadios = ({ element, legend, value }) =>
-  cy
-    .wrap(element)
-    .as('fieldRadio')
-    .find('legend')
-    .first()
-    .should('have.text', legend)
-    .parent()
-    .find('input')
-    .should('have.length', 2)
-    .then(
-      () =>
-        value &&
-        cy
-          .get('@fieldRadio')
-          .find('input:checked')
-          .next()
-          .should('have.text', 'Yes')
-    )
+/**
+ * Assert error summary passing in a list of errors as as an array
+ */
+const assertErrorSummary = (errors) => {
+  cy.contains('h2', 'There is a problem')
+    .next()
+    .should('have.text', errors.join(''))
+}
+
+/**
+ * Assert by selector if it is visible
+ */
+const assertVisible = (selector) => {
+  cy.get(selector).should('be.visible')
+}
+
+/**
+ * Assert by selector if it does not exist
+ */
+const assertNotExists = (selector) => {
+  cy.get(selector).should('not.exist')
+}
+
+/**
+ * Assert if the text is visible
+ */
+const assertTextVisible = (text) => {
+  cy.contains(text).should('be.visible')
+}
+
+/**
+ * Assert url is contained in current url
+ */
+const assertUrl = (url) => {
+  cy.url().should('contain', url)
+}
 
 module.exports = {
   assertKeyValueTable,
@@ -609,5 +626,9 @@ module.exports = {
   assertElementsInOrder,
   assertPayload,
   assertDateInput,
-  assertBooleanFieldRadios,
+  assertErrorSummary,
+  assertVisible,
+  assertNotExists,
+  assertTextVisible,
+  assertUrl,
 }

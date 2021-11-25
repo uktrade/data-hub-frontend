@@ -1,16 +1,16 @@
 import {
   assertLocalHeader,
   assertBreadcrumbs,
+  assertErrorSummary,
+  assertVisible,
+  assertNotExists,
+  assertTextVisible,
+  assertUrl,
 } from '../../../cypress/support/assertions'
 
 import {
   assertEventFormFields,
-  assertTextVisible,
-  assertVisible,
-  assertNotExists,
-  assertErrorSummary,
   assertEventRequestBody,
-  assertUrl,
 } from '../../../cypress/support/event-assertions'
 
 import urls from '../../../../../src/lib/urls'
@@ -26,8 +26,8 @@ import {
   fillEndDateWith,
   fillEventForm,
   clickAddEventButton,
-  clickReturnWithoutSavingButton,
-} from '../../../cypress/support/form-fillers'
+} from '../../../cypress/support/eventform-fillers'
+import { clickReturnWithoutSavingButton } from '../../../cypress/support/form-fillers'
 
 const selectors = require('../../../../selectors/event/createOrEdit')
 

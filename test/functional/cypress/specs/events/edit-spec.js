@@ -1,12 +1,12 @@
 import {
   assertLocalHeader,
   assertBreadcrumbs,
+  assertTextVisible,
+  assertUrl,
 } from '../../../cypress/support/assertions'
 import {
   assertEventFormFields,
   assertEventRequestBody,
-  assertUrl,
-  assertTextVisible,
 } from '../../../cypress/support/event-assertions'
 import {
   clickSaveAndReturnButton,

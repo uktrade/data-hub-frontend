@@ -4,15 +4,13 @@ const urls = require('../../../../../src/lib/urls')
 const { assertKeyValueTable } = require('../../support/assertions')
 const { formatWithoutParsing } = require('../../../../../src/client/utils/date')
 const {
-  fillEventType,
-  fillEventForm,
-  clickAddEventButton,
   clickSaveAndReturnButton,
 } = require('../../../../functional/cypress/support/form-fillers')
-
 const {
-  assertTextVisible,
-} = require('../../../../functional/cypress/support/event-assertions')
+  clickAddEventButton,
+  fillEventType,
+  fillEventForm,
+} = require('../../../../functional/cypress/support/eventform-fillers')
 
 const today = new Date()
 
@@ -52,7 +50,7 @@ const createEvent = () => {
 
   clickAddEventButton()
 
-  assertTextVisible(`'Eventful event' event has been created`)
+  cy.contains(`'Eventful event' event has been created`).should('be.visible')
 }
 
 describe('Event', () => {
