@@ -195,17 +195,6 @@ const store = createStore(
   }),
   {
     referrerUrl: window.document.referrer,
-    Form: {
-      [REFERRALS_SEND_ID]: {
-        values: {},
-        touched: {},
-        errors: {},
-        fields: {},
-        steps: [],
-        currentStep: 0,
-        ...referralsSendTasks.restoreState(),
-      },
-    },
   },
   composeWithDevTools(
     applyMiddleware(sagaMiddleware, routerMiddleware(history))

@@ -18,6 +18,7 @@ import {
   TASK_SAVE_REFERRAL,
 } from './state'
 
+//this is apparently not restoring values when returning from the contact form loop, we'll need to fix that
 const SendReferralForm = ({
   cancelUrl,
   companyContacts,
@@ -60,7 +61,9 @@ const SendReferralForm = ({
           receivingAdviserTeam: adviser.label?.split(', ')[1],
           referralSubject: subject,
         })}
-        initialValues={{ adviser, subject, notes, contact }}
+        //we need to make it redirect back from the contact form
+        //initialValuesPayload={{ adviser, subject, notes, contact }}
+        //initialValuesTaskName="Get send referral initial values"
         redirectTo={() => companies.detail(companyId)}
         flashMessage={() => [
           'Referral sent',
