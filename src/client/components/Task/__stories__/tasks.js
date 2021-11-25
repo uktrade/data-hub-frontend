@@ -5,13 +5,13 @@ const OPTIONS = Array(1000)
   .fill()
   .map(() => faker.name.findName())
 
-export const fakerOptions = ({ query = '', delay = 1000 }) =>
+export const fakerOptions = (query = '') =>
   new Promise((resolve, reject) =>
     query === 'reject'
-      ? setTimeout(reject, delay, 'Something went horribly wrong')
+      ? setTimeout(reject, 1000, 'Something went horribly wrong')
       : setTimeout(
           resolve,
-          delay,
+          1000,
           OPTIONS.filter((x) => x.toLowerCase().includes(query.toLowerCase()))
             .slice(0, 10)
             .map((x) => ({ value: _.snakeCase(x), label: x }))
@@ -19,16 +19,5 @@ export const fakerOptions = ({ query = '', delay = 1000 }) =>
   )
 
 export default {
-  'Task typeahead example options': _.memoize(fakerOptions, ({ query = '' }) =>
-    query.toLowerCase()
-  ),
-  'Task typeahead example label': (values) =>
-    new Promise((resolve) =>
-      setTimeout(
-        resolve,
-        1000,
-        values.map((value) => `Label for ${value}`)
-      )
-    ),
-  'Task cancellation demo': () => new Promise((r) => setTimeout(r, 5000)),
+  'Task typeahead example options': fakerOptions,
 }
