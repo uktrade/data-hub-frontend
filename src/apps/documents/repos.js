@@ -24,7 +24,7 @@ function createRequest(req, urls, file) {
   request({
     url: urls.s3Url,
     method: 'PUT',
-    data: fs.readFileSync(file.filepath),
+    data: fs.readFileSync(file.filepath || file.path),
     headers: {
       'Content-Type': 'application/octet-stream',
     },
@@ -39,7 +39,7 @@ function createRequest(req, urls, file) {
 function getDocumentUploadS3Url(req, { file, url, fields, textFields = {} }) {
   const body = {
     ...textFields,
-    original_filename: file.originalFilename,
+    original_filename: file.originalFilename || file.name,
   }
 
   const options = {
