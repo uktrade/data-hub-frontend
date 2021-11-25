@@ -43,6 +43,7 @@ const ResourceOptionsField = ({
   // Only required when Resource is not specified
   taskName,
   resultToOptions = (x) => x,
+  interceptOption = (x) => x,
   ...props
 }) => (
   <Rsrc {...{ name: taskName, id, payload }} progressBox={true}>
@@ -50,7 +51,11 @@ const ResourceOptionsField = ({
       <Field
         {...props}
         disabled={result === undefined}
-        options={result === undefined ? [] : resultToOptions(result)}
+        options={
+          result === undefined
+            ? []
+            : resultToOptions(result).map(interceptOption)
+        }
       />
     )}
   </Rsrc>
@@ -58,7 +63,7 @@ const ResourceOptionsField = ({
 
 ResourceOptionsField.propTypes = {
   field: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   resource: PropTypes.func,
   taskName: PropTypes.string,
   resultToOptions: PropTypes.func,
