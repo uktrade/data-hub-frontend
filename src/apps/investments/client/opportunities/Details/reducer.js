@@ -1,6 +1,5 @@
 import {
   INVESTMENT_OPPORTUNITY_DETAILS__LOADED,
-  INVESTMENT_OPPORTUNITY__DETAILS_METADATA_LOADED,
   INVESTMENT_OPPORTUNITY__REQUIREMENTS_METADATA_LOADED,
   INVESTMENT_OPPORTUNITY__EDIT_DETAILS,
   INVESTMENT_OPPORTUNITY__EDIT_REQUIREMENTS,
@@ -43,14 +42,9 @@ const initialState = {
     status: [],
   },
   metadata: {
-    ukRegions: [],
-    requiredChecks: [],
-    classesOfInterest: [],
-    constructionRisks: [],
     investmentTypes: [],
     returnRates: [],
     timeScales: [],
-    valueTypes: [],
   },
 }
 
@@ -70,18 +64,6 @@ export default (state = initialState, { type, result, opportunity }) => {
       return {
         ...state,
         opportunity: result,
-      }
-    case INVESTMENT_OPPORTUNITY__DETAILS_METADATA_LOADED:
-      return {
-        ...state,
-        metadata: {
-          ...state.metadata,
-          ukRegions: result.ukRegions,
-          requiredChecksConducted: result.requiredChecksConducted,
-          classesOfInterest: result.classesOfInterest,
-          constructionRisks: result.constructionRisks,
-          valueTypes: result.valueTypes,
-        },
       }
     case INVESTMENT_OPPORTUNITY__REQUIREMENTS_METADATA_LOADED:
       return {
