@@ -62,8 +62,9 @@ const SendReferralForm = ({
           referralSubject: subject,
         })}
         //we need to make it redirect back from the contact form
-        //initialValuesPayload={{ adviser, subject, notes, contact }}
-        //initialValuesTaskName="Get send referral initial values"
+        initialValuesPayload={{ adviser, subject, notes, contact }}
+        initialValuesTaskName="Get send referral initial values"
+        
         redirectTo={() => companies.detail(companyId)}
         flashMessage={() => [
           'Referral sent',
