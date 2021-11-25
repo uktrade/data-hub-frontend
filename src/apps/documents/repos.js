@@ -24,7 +24,7 @@ function createRequest(req, urls, file) {
   request({
     url: urls.s3Url,
     method: 'PUT',
-    data: fs.readFileSync(file.path),
+    data: fs.readFileSync(file.filepath),
     headers: {
       'Content-Type': 'application/octet-stream',
     },
