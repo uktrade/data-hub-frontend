@@ -20,10 +20,10 @@ import {
   FieldTypeahead,
   AdviserTypeAhead,
 } from '../../../../../client/components'
-import FieldAssetClassTypeahead from '../../../../../client/components/Form/elements/FieldAssetClassTypeahead'
 import { FieldUKRegionTypeahead } from '../../../../../client/components/Form/elements/UKRegionOptions'
 import { FieldRequiredChecksRadios } from '../../../../../client/components/Form/elements/RequiredChecksOptions'
 import { FieldConstructionRiskRadios } from '../../../../../client/components/Form/elements/ConstructionRiskOptions'
+import { FieldAssetClassTypeahead } from '../../../../../client/components/Form/elements/AssetClassOptions'
 
 import { CLEARED_REFERENCE, ISSUES_IDENTIFIED_REFERENCE } from './constants'
 import { idNameToValueLabel } from './tasks'
