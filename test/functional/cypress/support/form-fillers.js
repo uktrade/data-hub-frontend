@@ -30,6 +30,12 @@ export const fillTypeahead = (selector, value) => {
   cy.get(selector).selectTypeaheadOption(value)
 }
 
+export const fillMultiOptionTypeahead = (selector, values = []) => {
+  values.map((value) => {
+    return fillTypeahead(selector, value)
+  })
+}
+
 export const fillDate = (dateId, day, month, year) => {
   cy.get(`${dateId}\\.day`).type(day)
   cy.get(`${dateId}\\.month`).type(month)

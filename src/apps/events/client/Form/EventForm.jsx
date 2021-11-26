@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import GridRow from '@govuk-react/grid-row'
@@ -10,11 +9,7 @@ import LocalHeader from '../../../../client/components/LocalHeader/LocalHeader.j
 import { Main } from '../../../../client/components'
 import TaskForm from '../../../../client/components/Task/Form'
 
-import {
-  TASK_GET_EVENTS_FORM_AND_METADATA,
-  TASK_SAVE_EVENT,
-  state2props,
-} from './state'
+import { TASK_GET_EVENTS_FORM_AND_METADATA, TASK_SAVE_EVENT } from './state'
 
 import { EventFormFields } from './EventFormFields'
 
@@ -53,16 +48,15 @@ const EventForm = ({ eventId }) => {
             <TaskForm
               id="event-form"
               submissionTaskName={TASK_SAVE_EVENT}
-              analyticsFormName={eventId ? 'edit_event' : 'create_event'}
-              analyticsData={(values) => values}
+              analyticsFormName={eventId ? 'editEvent' : 'createEvent'}
               initialValuesTaskName={TASK_GET_EVENTS_FORM_AND_METADATA}
               initialValuesPayload={{
                 eventId,
               }}
               redirectTo={({ data }) => urls.events.details(data?.id)}
               redirectMode="hard"
-              flashMessage={(submissionTaskResult, formValues) => {
-                const { name } = formValues
+              flashMessage={(submissionTaskResult) => {
+                const { name } = submissionTaskResult?.data
                 return `'${name}' event has been ${
                   eventId ? 'updated' : 'created'
                 }`
@@ -90,4 +84,4 @@ EventForm.propTypes = {
   eventId: PropTypes.string,
 }
 
-export default connect(state2props)(EventForm)
+export default EventForm

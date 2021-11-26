@@ -68,7 +68,7 @@ describe('Event', () => {
       )
       cy.get(selectors.eventCreate.eventNameFieldId).should(
         'contain',
-        'Event name may not be null'
+        'Enter an event name'
       )
 
       cy.get(selectors.eventCreate.eventTypeFieldId).should(
@@ -85,15 +85,15 @@ describe('Event', () => {
       )
       cy.get(selectors.eventCreate.addressLine1FieldId).should(
         'contain',
-        'Address line 1 may not be null'
+        'Enter an Address line 1'
       )
       cy.get(selectors.eventCreate.addressTownFieldId).should(
         'contain',
-        'Town or city may not be null'
+        'Enter a town or city'
       )
       cy.get(selectors.eventCreate.addressPostcodeFieldId).should(
         'contain',
-        'Postcode may not be null'
+        'Enter a postcode'
       )
       cy.get(selectors.eventCreate.addressCountryFieldId).should(
         'contain',

@@ -6,7 +6,6 @@ import {
   FieldRadios,
   FieldInput,
   FieldDate,
-  FieldAddAnother,
   FieldTextarea,
   FieldTypeahead,
   NewWindowLink,
@@ -41,28 +40,17 @@ export const EventFormFields = ({ values }) => {
           value: option.value,
           ...(option.value === OPTION_YES && {
             children: (
-              <FieldAddAnother
+              <FieldTypeahead
+                label="Related Trade Agreements"
+                isMulti={true}
+                closeMenuOnSelect={true}
                 name="related_trade_agreements"
-                label="Related named trade agreement(s)"
-                data-test-prefix="trade-agreement-field-"
-                required="Select at least one Trade Agreement"
-                item-name="trade agreement"
-              >
-                {({ value, onChange, error }) => (
-                  <FieldTypeahead
-                    name="related_trade_agreements"
-                    options={values.metadata.relatedTradeAgreements}
-                    placeholder="Search trade agreements"
-                    required="Trade Agreement can not be null"
-                    aria-label="Select a trade agreement"
-                    value={values.metadata.relatedTradeAgreements?.find(
-                      ({ value: option_value }) => option_value === value
-                    )}
-                    onChange={onChange}
-                    error={error}
-                  />
-                )}
-              </FieldAddAnother>
+                options={values.metadata.relatedTradeAgreements}
+                placeholder="Search trade agreements"
+                required="Trade Agreement can not be null"
+                aria-label="Select a trade agreement"
+                noOptionsMessage={() => <span>No trade agreement found</span>}
+              />
             ),
           }),
         }))}
@@ -72,7 +60,7 @@ export const EventFormFields = ({ values }) => {
         label="Event name"
         name="name"
         type="text"
-        required="Event name may not be null"
+        required="Enter an event name"
       />
       <FieldTypeahead
         name="event_type"
@@ -104,7 +92,7 @@ export const EventFormFields = ({ values }) => {
         label="Address line 1"
         name="address_1"
         type="text"
-        required="Address line 1 may not be null"
+        required="Enter an Address line 1"
       />
       <FieldInput
         name="address_2"
@@ -115,14 +103,14 @@ export const EventFormFields = ({ values }) => {
         label="Town or city"
         name="address_town"
         type="text"
-        required="Town or city may not be null"
+        required="Enter a town or city"
       />
       <FieldInput label="County (optional)" name="address_county" type="text" />
       <FieldInput
         label="Postcode"
         name="address_postcode"
         type="text"
-        required="Postcode may not be null"
+        required="Enter a postcode"
       />
       <FieldTypeahead
         name="address_country"
@@ -173,57 +161,33 @@ export const EventFormFields = ({ values }) => {
           value: option.value,
           ...(option.value === OPTION_YES && {
             children: (
-              <FieldAddAnother
-                name="teams"
+              <FieldTypeahead
                 label="Teams"
-                required="Select at least one team"
-                item-name="team"
-                data-test-prefix="team-field-"
-              >
-                {({ value, onChange, error }) => (
-                  <FieldTypeahead
-                    name="teams"
-                    options={values.metadata.teams}
-                    placeholder="Select team"
-                    required="Team can not be null"
-                    aria-label="Select at least one team"
-                    value={values.metadata.teams?.find(
-                      ({ value: option_value }) => option_value === value
-                    )}
-                    onChange={onChange}
-                    error={error}
-                  />
-                )}
-              </FieldAddAnother>
+                isMulti={true}
+                closeMenuOnSelect={true}
+                name="teams"
+                options={values.metadata.teams}
+                placeholder="Select team"
+                required="Team can not be null"
+                aria-label="Select at least one team"
+                noOptionsMessage={() => <span>No team found</span>}
+              />
             ),
           }),
         }))}
         inline={true}
       />
-      <FieldAddAnother
-        name="related_programmes"
+      <FieldTypeahead
         label="Related programmes"
-        required="Select at least one programme"
-        item-name="program"
-        data-test-prefix="programme-field-"
-      >
-        {({ value, onChange, error }) => (
-          <>
-            <FieldTypeahead
-              name="related_programmes"
-              options={values.metadata.programmes}
-              placeholder="Select programme"
-              required="Programme can not be null"
-              aria-label="Programme can not be null"
-              value={values.metadata.programmes?.find(
-                ({ value: option_value }) => option_value === value
-              )}
-              onChange={onChange}
-              error={error}
-            />
-          </>
-        )}
-      </FieldAddAnother>
+        isMulti={true}
+        closeMenuOnSelect={true}
+        name="related_programmes"
+        options={values.metadata.programmes}
+        placeholder="Select programme"
+        required="Programme can not be null"
+        aria-label="Programme can not be null"
+        noOptionsMessage={() => <span>No programmes found</span>}
+      />
     </>
   ) : null
 }

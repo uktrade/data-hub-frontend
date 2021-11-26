@@ -93,13 +93,13 @@ describe('Event create', () => {
 
       assertErrorSummary([
         'Answer if the event is related to a trade agreement',
-        'Event name may not be null',
+        'Enter an event name',
         'Select at least one event type',
         'Enter a valid start date',
         'Enter a valid end date',
-        'Address line 1 may not be null',
-        'Town or city may not be null',
-        'Postcode may not be null',
+        'Enter an Address line 1',
+        'Enter a town or city',
+        'Enter a postcode',
         'Country may not be null',
         'Select at least one team hosting the event',
         'Select at least one service',
@@ -117,12 +117,12 @@ describe('Event create', () => {
       clickAddEventButton()
 
       assertErrorSummary([
-        'Event name may not be null',
+        'Enter an event name',
         'Select at least one event type',
         'Enter a valid end date. This must be after the start date.',
-        'Address line 1 may not be null',
-        'Town or city may not be null',
-        'Postcode may not be null',
+        'Enter an Address line 1',
+        'Enter a town or city',
+        'Enter a postcode',
         'Country may not be null',
         'Select at least one team hosting the event',
         'Select at least one service',
@@ -156,17 +156,11 @@ describe('Event create', () => {
         notes: 'Testing a valid form for all fields',
         organiser: 'Violet Roy',
         hasRelatedTradeAgreements: true,
-        // Test duplicates
         relatedTradeAgreements: [
           'Comprehensive and Progressive Agreement for Trans-Pacific Partnership',
           'UK-Australia Mutual Recognition Agreement',
-          'Comprehensive and Progressive Agreement for Trans-Pacific Partnership',
         ],
-        relatedProgrammes: [
-          'Aid Funded Business Service (AFBS)',
-          'CEN Energy',
-          'CEN Energy',
-        ],
+        relatedProgrammes: ['Aid Funded Business Service (AFBS)', 'CEN Energy'],
         startDate: {
           year: '2021',
           month: '12',

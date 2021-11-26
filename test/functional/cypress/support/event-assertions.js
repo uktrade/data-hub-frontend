@@ -32,7 +32,7 @@ const assertTradeAgreementArticle = (articleElement) => {
 }
 
 const assertTeamsFields = (element, teams, isEventShared) => {
-  const optionsCount = 2 + (teams ? teams.length : 0)
+  const optionsCount = isEventShared === YES ? 3 : 2
   assertFieldRadiosWithLegend({
     element,
     legend: 'Is this a shared event? (optional)',
@@ -41,7 +41,7 @@ const assertTeamsFields = (element, teams, isEventShared) => {
   })
   if (isEventShared && isEventShared === YES) {
     cy.get('#field-teams').then((teamsElement) => {
-      assertFieldAddAnother({
+      assertFieldTypeahead({
         element: teamsElement,
         label: 'Teams',
         placeholder: !teams ? 'Select at least one team' : undefined,
@@ -56,8 +56,7 @@ const assertTradeAgreementsFields = (
   relatedTradeAgrements,
   hasRelatedTradeAgreement
 ) => {
-  const optionsCount =
-    2 + (relatedTradeAgrements ? relatedTradeAgrements.length : 0)
+  const optionsCount = hasRelatedTradeAgreement === YES ? 3 : 2
   assertFieldRadiosWithLegend({
     element,
     legend: 'Does the event relate to a trade agreement?',
@@ -206,20 +205,23 @@ export const assertEventFormFields = ({
     },
     (element) => assertTeamsFields(element, teams, isEventShared),
     {
-      assert: assertFieldAddAnother,
+      assert: assertFieldTypeahead,
       label: 'Related programmes',
+      placeholder: !relatedProgrammes ? 'Select programme' : undefined,
       values: relatedProgrammes,
     },
   ])
 }
 
-export const assertTypeaheadValuesWith = (
+// Generic Assertions
+
+export const assertAddAnotherTypeaheadValues = (
   fieldAddAnotherDataTestPrefix,
   dataArray = []
 ) => {
   if (dataArray) {
     dataArray.map((item, index) => {
-      assertTypeaheadValueWith(
+      assertTypeaheadValue(
         `[data-test=${fieldAddAnotherDataTestPrefix}${index}]`,
         item
       )
@@ -227,10 +229,21 @@ export const assertTypeaheadValuesWith = (
   }
 }
 
-export const assertTypeaheadValueWith = (selector, value) => {
+export const assertMultiOptionTypeaheadValues = (
+  selector,
+  label,
+  dataArray = []
+) => {
+  dataArray.map((value) => {
+    assertTypeaheadValue(selector, label, value)
+  })
+}
+
+export const assertTypeaheadValue = (selector, label, value) => {
   cy.get(selector).then((element) =>
     assertFieldTypeahead({
       element,
+      label,
       value,
     })
   )

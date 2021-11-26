@@ -1,19 +1,16 @@
 import { assertTextVisible } from './assertions'
-import { assertTypeaheadValuesWith } from './event-assertions'
+import { assertMultiOptionTypeaheadValues } from './event-assertions'
 
 import {
   fill,
   fillTypeahead,
-  fillAddAnother,
+  fillMultiOptionTypeahead,
   fillYesNoRadio,
   fillDate,
 } from './form-fillers'
 
 const selectors = require('../../../selectors/event/createOrEdit')
 
-const PROGRAMME_FIELD_PREFIX = 'programme-field-'
-const TEAM_FIELD_PREFIX = 'team-field-'
-const TRADE_AGREEMENT_FIELD_PREFIX = 'trade-agreement-field-'
 const UK = 'United Kingdom'
 const ALL = 'All'
 
@@ -120,42 +117,43 @@ export const fillEventName = (name) => {
 export const fillAndAssertProgrammes = (programmes = []) => {
   fillProgrammes(programmes)
 
-  assertTypeaheadValuesWith(PROGRAMME_FIELD_PREFIX, programmes)
+  assertMultiOptionTypeaheadValues(
+    selectors.relatedProgrammesFieldId,
+    'Related programmes',
+    programmes
+  )
 }
 
 export const fillProgrammes = (programmes = []) => {
-  fillAddAnother(
-    selectors.relatedProgrammesFieldId,
-    PROGRAMME_FIELD_PREFIX,
-    programmes
-  )
+  fillMultiOptionTypeahead(selectors.relatedProgrammesFieldId, programmes)
 }
 
 export const fillAndAssertSharedTeams = (teams = []) => {
   fillEventSharedRadio(true)
   fillTeams(teams)
-  assertTypeaheadValuesWith(TEAM_FIELD_PREFIX, teams)
+  assertMultiOptionTypeaheadValues(selectors.teamsFieldId, 'Teams', teams)
 }
 
 export const fillAndAssertRelatedTradeAgreements = (tradeAgreements = []) => {
   assertTextVisible('Does the event relate to a trade agreement?')
   fillHasRelatedTradeAgreementsRadio(true)
-  assertTextVisible('Related named trade agreement(s)')
   assertTextVisible('Search trade agreements')
 
   fillRelatedTradeAgreements(tradeAgreements)
-
-  assertTypeaheadValuesWith(TRADE_AGREEMENT_FIELD_PREFIX, tradeAgreements)
+  assertMultiOptionTypeaheadValues(
+    selectors.relatedTradeAgreementsFieldId,
+    'Related Trade Agreements',
+    tradeAgreements
+  )
 }
 
 export const fillTeams = (teams = []) => {
-  fillAddAnother(selectors.teamsFieldId, TEAM_FIELD_PREFIX, teams)
+  fillMultiOptionTypeahead(selectors.teamsFieldId, teams)
 }
 
 export const fillRelatedTradeAgreements = (tradeAgreements = []) => {
-  fillAddAnother(
+  fillMultiOptionTypeahead(
     selectors.relatedTradeAgreementsFieldId,
-    TRADE_AGREEMENT_FIELD_PREFIX,
     tradeAgreements
   )
 }
