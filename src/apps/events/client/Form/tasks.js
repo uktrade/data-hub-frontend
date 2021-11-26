@@ -2,10 +2,7 @@ import _ from 'lodash'
 
 import urls from '../../../../lib/urls'
 import { getMetadataOptions } from '../../../../client/metadata'
-import {
-  transformEventFormForAPIRequest,
-  transformResponseToEventForm,
-} from './transformers'
+import { transformResponseToEventForm } from './transformers'
 import {
   catchApiError,
   apiProxyAxios,
@@ -13,7 +10,7 @@ import {
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
-export const getEventDetails = (eventId) =>
+const getEventDetails = (eventId) =>
   eventId
     ? apiProxyAxios
         .get(`/v4/event/${eventId}`)
@@ -63,20 +60,16 @@ const getEventFormAndMetadata = (data) => {
 }
 
 const saveEvent = (values) => {
-  const transformedValuesOnlyPayload = transformEventFormForAPIRequest(values)
-  if (transformedValuesOnlyPayload) {
-    const request = values.id ? apiProxyAxios.patch : apiProxyAxios.post
-    const payload = {
-      ..._.omit(values, [
-        'metadata',
-        'disabled_on',
-        'archived_documents_url_path',
-      ]),
-      ...transformedValuesOnlyPayload,
-    }
-    const endpoint = values.id ? `/v4/event/${values.id}` : '/v4/event'
-    return request(endpoint, payload).catch(catchApiError)
+  const request = values.id ? apiProxyAxios.patch : apiProxyAxios.post
+  const payload = {
+    ..._.omit(values, [
+      'metadata',
+      'disabled_on',
+      'archived_documents_url_path',
+    ]),
   }
+  const endpoint = values.id ? `/v4/event/${values.id}` : '/v4/event'
+  return request(endpoint, payload).catch(catchApiError)
 }
 
 export { getEventFormAndMetadata, saveEvent }

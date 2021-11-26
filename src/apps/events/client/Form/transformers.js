@@ -1,59 +1,9 @@
 import {
-  transformDateObjectToDateString,
-  transformArrayOfUniqueOptions,
-  transformOption,
-  transformYesNoToBool,
   transformBoolToYesNo,
   transformIdNameToValueLabel,
   transformDateStringToDateObject,
   transformArrayIdNameToValueLabel,
 } from '../../../../client/transformers'
-
-const transformEventFormForAPIRequest = (values) => {
-  const {
-    has_related_trade_agreements,
-    related_trade_agreements,
-    start_date,
-    end_date,
-    event_type,
-    location_type,
-    address_country,
-    lead_team,
-    service,
-    organiser,
-    event_shared,
-    related_programmes,
-    teams,
-    uk_region,
-  } = values
-  const hasRelatedTradeAgreements = transformYesNoToBool(
-    has_related_trade_agreements
-  )
-  const hasEventShared = transformYesNoToBool(event_shared)
-  const result = {
-    has_related_trade_agreements: hasRelatedTradeAgreements,
-    related_trade_agreements: hasRelatedTradeAgreements
-      ? transformArrayOfUniqueOptions(related_trade_agreements)
-      : [],
-    event_type: transformOption(event_type),
-    start_date: transformDateObjectToDateString(start_date),
-    end_date: transformDateObjectToDateString(end_date),
-    location_type: transformOption(location_type),
-    address_country: transformOption(address_country),
-    lead_team: transformOption(lead_team),
-    service: transformOption(service),
-    organiser: transformOption(organiser),
-    event_shared: transformYesNoToBool(event_shared),
-    related_programmes: transformArrayOfUniqueOptions(related_programmes),
-    teams: hasEventShared
-      ? transformArrayOfUniqueOptions(
-          teams ? teams.concat([lead_team]) : [lead_team]
-        )
-      : transformArrayOfUniqueOptions([lead_team]),
-    uk_region: transformOption(uk_region),
-  }
-  return result
-}
 
 const transformResponseToEventForm = (data) => {
   const {
@@ -98,4 +48,4 @@ const transformResponseToEventForm = (data) => {
   return result
 }
 
-export { transformEventFormForAPIRequest, transformResponseToEventForm }
+export { transformResponseToEventForm }

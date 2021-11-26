@@ -11,7 +11,7 @@ const AdviserTypeAhead = ({
   required,
   isMulti,
   onlyShowActiveAdvisers = true,
-  placeholder = '-- Type to search for advisers --',
+  placeholder = 'Type to search for advisers',
   ...props
 }) => {
   return (

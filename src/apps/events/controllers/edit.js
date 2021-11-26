@@ -95,8 +95,7 @@ async function renderEditPage(req, res, next) {
 
 async function renderFormPage(req, res, next) {
   try {
-    const eventData = transformEventResponseToFormBody(res.locals.event)
-    const eventId = get(eventData, 'id', '')
+    const eventId = get(res.locals.event, 'id', '')
     res.render('events/views/create-and-edit', {
       props: { eventId },
     })

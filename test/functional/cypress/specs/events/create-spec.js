@@ -208,7 +208,7 @@ describe('Event create', () => {
       }
       assertEventRequestBody(expectedBody, (xhr) => {
         assertUrl(urls.events.details(xhr.response.body.id))
-        assertTextVisible(`'Test Create Event' event has been created`)
+        assertTextVisible(`'One-day exhibition' event has been created`)
       })
     })
   })
