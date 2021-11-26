@@ -97,7 +97,7 @@ describe('Event', () => {
       )
       cy.get(selectors.eventCreate.addressCountryFieldId).should(
         'contain',
-        'Country may not be null'
+        'Enter a country'
       )
       cy.get(selectors.eventCreate.serviceFieldId).should(
         'contain',

@@ -116,7 +116,7 @@ export const EventFormFields = ({ values }) => {
         name="address_country"
         label="Country"
         options={values.metadata.countries}
-        required="Country may not be null"
+        required="Enter a country"
         placeholder="Select country"
         aria-label="Select a country"
       />
