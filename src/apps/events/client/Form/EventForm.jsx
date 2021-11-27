@@ -40,6 +40,64 @@ const EventForm = ({ eventId }) => {
     },
   ]
 
+  const transformPayloadForEventForm = (values) => {
+    const {
+      has_related_trade_agreements,
+      related_trade_agreements,
+      start_date,
+      end_date,
+      event_type,
+      location_type,
+      address_country,
+      lead_team,
+      service,
+      organiser,
+      event_shared,
+      related_programmes,
+      teams,
+      uk_region,
+    } = values
+    const hasRelatedTradeAgreements = transformYesNoToBool(
+      has_related_trade_agreements
+    )
+    const hasEventShared = transformYesNoToBool(event_shared)
+    const transformedValuesOnlyPayload = {
+      has_related_trade_agreements: hasRelatedTradeAgreements,
+      related_trade_agreements: hasRelatedTradeAgreements
+        ? transformArrayOfUniqueOptions(related_trade_agreements)
+        : [],
+      event_type: transformOption(event_type),
+      start_date: transformDateObjectToDateString(start_date),
+      end_date: transformDateObjectToDateString(end_date),
+      location_type: transformOption(location_type),
+      address_country: transformOption(address_country),
+      lead_team: transformOption(lead_team),
+      service: transformOption(service),
+      organiser: transformOption(organiser),
+      event_shared: transformYesNoToBool(event_shared),
+      related_programmes: transformArrayOfUniqueOptions(related_programmes),
+      teams: hasEventShared
+        ? transformArrayOfUniqueOptions(
+            teams ? teams.concat([lead_team]) : [lead_team]
+          )
+        : transformArrayOfUniqueOptions([lead_team]),
+      uk_region: transformOption(uk_region),
+    }
+    return { ...values, ...transformedValuesOnlyPayload }
+  }
+
+  const cancelLink = [
+    {
+      children: DISPLAY_CANCEL,
+      href: eventId ? urls.events.details(eventId) : urls.events.index(),
+    },
+  ]
+
+  const flashMessage = (submissionTaskResult) => {
+    const { name } = submissionTaskResult?.data
+    return `'${name}' event has been ${eventId ? 'updated' : 'created'}`
+  }
+
   return (
     <>
       <LocalHeader
@@ -59,67 +117,10 @@ const EventForm = ({ eventId }) => {
               }}
               redirectTo={({ data }) => urls.events.details(data?.id)}
               redirectMode="hard"
-              flashMessage={(submissionTaskResult) => {
-                const { name } = submissionTaskResult?.data
-                return `'${name}' event has been ${
-                  eventId ? 'updated' : 'created'
-                }`
-              }}
+              flashMessage={flashMessage}
               submitButtonLabel={eventId ? DISPLAY_SAVE : DISPLAY_ADD_EVENT}
-              actionLinks={[
-                {
-                  children: DISPLAY_CANCEL,
-                  href: eventId
-                    ? urls.events.details(eventId)
-                    : urls.events.index(),
-                },
-              ]}
-              transformPayload={(values) => {
-                const {
-                  has_related_trade_agreements,
-                  related_trade_agreements,
-                  start_date,
-                  end_date,
-                  event_type,
-                  location_type,
-                  address_country,
-                  lead_team,
-                  service,
-                  organiser,
-                  event_shared,
-                  related_programmes,
-                  teams,
-                  uk_region,
-                } = values
-                const hasRelatedTradeAgreements = transformYesNoToBool(
-                  has_related_trade_agreements
-                )
-                const hasEventShared = transformYesNoToBool(event_shared)
-                const transformedValuesOnlyPayload = {
-                  has_related_trade_agreements: hasRelatedTradeAgreements,
-                  related_trade_agreements: hasRelatedTradeAgreements
-                    ? transformArrayOfUniqueOptions(related_trade_agreements)
-                    : [],
-                  event_type: transformOption(event_type),
-                  start_date: transformDateObjectToDateString(start_date),
-                  end_date: transformDateObjectToDateString(end_date),
-                  location_type: transformOption(location_type),
-                  address_country: transformOption(address_country),
-                  lead_team: transformOption(lead_team),
-                  service: transformOption(service),
-                  organiser: transformOption(organiser),
-                  event_shared: transformYesNoToBool(event_shared),
-                  related_programmes:
-                    transformArrayOfUniqueOptions(related_programmes),
-                  teams: hasEventShared
-                    ? transformArrayOfUniqueOptions(
-                        teams ? teams.concat([lead_team]) : [lead_team]
-                      )
-                    : transformArrayOfUniqueOptions([lead_team]),
-                  uk_region: transformOption(uk_region),
-                }
-                return Object.assign(values, transformedValuesOnlyPayload)
-              }}
+              actionLinks={cancelLink}
+              transformPayload={transformPayloadForEventForm}
             >
               {({ values }) => <EventFormFields values={values} />}
             </TaskForm>
