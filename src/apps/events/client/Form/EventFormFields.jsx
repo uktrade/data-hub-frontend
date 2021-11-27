@@ -47,7 +47,7 @@ export const EventFormFields = ({ values }) => {
                 name="related_trade_agreements"
                 options={values.metadata.relatedTradeAgreements}
                 placeholder="Search trade agreements"
-                required="Trade Agreement can not be null"
+                required="Select at least one trade agreement"
                 aria-label="Select a trade agreement"
                 noOptionsMessage={() => <span>No trade agreement found</span>}
               />
@@ -125,7 +125,7 @@ export const EventFormFields = ({ values }) => {
           name="uk_region"
           label="UK Region"
           options={values.metadata.ukRegions}
-          required="UK region may not be null"
+          required="Select a UK region"
           placeholder="Select region"
           aria-label="Select a region"
         />
@@ -168,7 +168,7 @@ export const EventFormFields = ({ values }) => {
                 name="teams"
                 options={values.metadata.teams}
                 placeholder="Select team"
-                required="Team can not be null"
+                required="Select at least one team"
                 aria-label="Select at least one team"
                 noOptionsMessage={() => <span>No team found</span>}
               />
@@ -184,8 +184,8 @@ export const EventFormFields = ({ values }) => {
         name="related_programmes"
         options={values.metadata.programmes}
         placeholder="Select programme"
-        required="Programme can not be null"
-        aria-label="Programme can not be null"
+        required="Select at least one related programme"
+        aria-label="Select at least one related programme"
         noOptionsMessage={() => <span>No programmes found</span>}
       />
     </>

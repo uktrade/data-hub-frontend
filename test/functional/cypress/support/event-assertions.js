@@ -215,20 +215,6 @@ export const assertEventFormFields = ({
 
 // Generic Assertions
 
-export const assertAddAnotherTypeaheadValues = (
-  fieldAddAnotherDataTestPrefix,
-  dataArray = []
-) => {
-  if (dataArray) {
-    dataArray.map((item, index) => {
-      assertTypeaheadValue(
-        `[data-test=${fieldAddAnotherDataTestPrefix}${index}]`,
-        item
-      )
-    })
-  }
-}
-
 export const assertMultiOptionTypeaheadValues = (
   selector,
   label,

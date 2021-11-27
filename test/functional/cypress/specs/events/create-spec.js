@@ -104,15 +104,16 @@ describe('Event create', () => {
         'Select at least one team hosting the event',
         'Select at least one service',
         'Type at least one organiser',
-        'Programme can not be null',
+        'Select at least one related programme',
       ])
     })
 
-    it('should validate dates and other radio fields when selected', () => {
+    it('should validate dates, uk regions and other radio fields when selected', () => {
       fillHasRelatedTradeAgreementsRadio(true)
       fillEventSharedRadio(true)
       fillStartDateWith('12', '12', '2021')
       fillEndDateWith('11', '11', '2021')
+      fillCountry('United Kingdom')
 
       clickAddEventButton()
 
@@ -123,13 +124,13 @@ describe('Event create', () => {
         'Enter an Address line 1',
         'Enter a town or city',
         'Enter a postcode',
-        'Enter a country',
         'Select at least one team hosting the event',
         'Select at least one service',
         'Type at least one organiser',
-        'Programme can not be null',
-        'Trade Agreement can not be null',
-        'Team can not be null',
+        'Select at least one related programme',
+        'Select at least one trade agreement',
+        'Select at least one team',
+        'Select a UK region',
       ])
     })
   })

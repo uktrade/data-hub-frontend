@@ -1,5 +1,3 @@
-export const ID = 'eventForm'
-
 export const TASK_GET_EVENTS_FORM_AND_METADATA =
   'TASK_GET_EVENTS_FORM_AND_METADATA'
 export const TASK_SAVE_EVENT = 'TASK_SAVE_EVENT'
