@@ -60,6 +60,66 @@ describe('Event create', () => {
     ])
   })
 
+  it('should show "No trade agreement found" value not found', () => {
+    fillHasRelatedTradeAgreementsRadio(true)
+
+    cy.get(selectors.relatedTradeAgreementsFieldId).type('Non existant field')
+
+    assertVisible('span', 'No trade agreements found')
+  })
+
+  it('should show "No event type found" value not found', () => {
+    cy.get(selectors.eventTypeFieldId).type('Non existant field')
+
+    assertVisible('span', 'No event type found')
+  })
+
+  it('should show "No event location found" when value not found', () => {
+    cy.get(selectors.locationTypeFieldId).type('Non existant field')
+
+    assertVisible('span', 'No event location found')
+  })
+
+  it('should show "No country found" when value not found', () => {
+    cy.get(selectors.addressCountryFieldId).type('Non existant field')
+
+    assertVisible('span', 'No country found')
+  })
+
+  it('should show "No region found" when value not found', () => {
+    fillCountry('United Kingdom')
+
+    cy.get(selectors.ukRegionFieldId).type('Non existant field')
+
+    assertVisible('span', 'No region found')
+  })
+
+  it('should show "No hosting team found" when value not found', () => {
+    cy.get(selectors.leadTeamFieldId).type('Non existant field')
+
+    assertVisible('span', 'No hosting team found')
+  })
+
+  it('should show "No service found" when value not found', () => {
+    cy.get(selectors.serviceFieldId).type('Non existant field')
+
+    assertVisible('span', 'No service found')
+  })
+
+  it('should show "No shared team found" when value not found', () => {
+    fillEventSharedRadio(true)
+
+    cy.get(selectors.teamsFieldId).type('Non existant field')
+
+    assertVisible('span', 'No shared team found')
+  })
+
+  it('should show "No programmes found" when value not found', () => {
+    cy.get(selectors.relatedProgrammesFieldId).type('Non existant field')
+
+    assertVisible('span', 'No programmes found')
+  })
+
   it('should toggle uk region field', () => {
     fillCountry('United Kingdom')
     cy.get(selectors.addressCountryFieldId).should('contain', 'United Kingdom')

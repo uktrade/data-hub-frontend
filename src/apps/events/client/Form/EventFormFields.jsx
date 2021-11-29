@@ -74,6 +74,7 @@ export const EventFormFields = ({ values }) => {
         placeholder="Select event type"
         required="Select at least one event type"
         aria-label="Select an event type"
+        noOptionsMessage={() => <span>No event type found</span>}
       />
       <FieldDate
         name="start_date"
@@ -92,6 +93,7 @@ export const EventFormFields = ({ values }) => {
         options={values.metadata.eventLocationTypes}
         placeholder="Select event"
         aria-label="Select an event"
+        noOptionsMessage={() => <span>No event location found</span>}
       />
       <FieldInput
         label="Address line 1"
@@ -124,6 +126,7 @@ export const EventFormFields = ({ values }) => {
         required="Enter a country"
         placeholder="Select country"
         aria-label="Select a country"
+        noOptionsMessage={() => <span>No country found</span>}
       />
       {values.address_country?.value === UK_VALUE && (
         <FieldTypeahead
@@ -133,6 +136,7 @@ export const EventFormFields = ({ values }) => {
           required="Select a UK region"
           placeholder="Select region"
           aria-label="Select a region"
+          noOptionsMessage={() => <span>No region found</span>}
         />
       )}
       <FieldTextarea type="text" name="notes" label="Event Notes (optional)" />
@@ -143,6 +147,7 @@ export const EventFormFields = ({ values }) => {
         required="Select at least one team hosting the event"
         placeholder="Select team"
         aria-label="Select an team"
+        noOptionsMessage={() => <span>No hosting team found</span>}
       />
       <FieldTypeahead
         name="service"
@@ -151,6 +156,7 @@ export const EventFormFields = ({ values }) => {
         options={values.metadata.services}
         placeholder="Select service"
         aria-label="Select a service"
+        noOptionsMessage={() => <span>No service found</span>}
       />
       <AdviserTypeAhead
         name="organiser"
@@ -175,7 +181,7 @@ export const EventFormFields = ({ values }) => {
                 placeholder="Select team"
                 required="Select at least one team"
                 aria-label="Select at least one team"
-                noOptionsMessage={() => <span>No team found</span>}
+                noOptionsMessage={() => <span>No shared team found</span>}
               />
             ),
           }),

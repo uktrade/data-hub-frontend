@@ -1,5 +1,4 @@
 import {
-  assertFieldAddAnother,
   assertFormFields,
   assertFieldTextarea,
   assertFieldInput,
@@ -66,7 +65,7 @@ const assertTradeAgreementsFields = (
   })
   if (hasRelatedTradeAgreement && hasRelatedTradeAgreement === YES) {
     cy.get('#field-related_trade_agreements').then((tradeAgrementsElement) => {
-      assertFieldAddAnother({
+      assertFieldTypeahead({
         element: tradeAgrementsElement,
         label: '',
         placeholder: !relatedTradeAgrements
