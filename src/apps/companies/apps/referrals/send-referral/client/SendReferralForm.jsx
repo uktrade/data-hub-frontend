@@ -48,7 +48,7 @@ const SendReferralForm = ({
           companyId,
         })}
         submissionTaskName={TASK_SAVE_REFERRAL}
-        analyticsFormName="send-referral-form"
+        analyticsFormName="sendReferralForm"
         analyticsData={({ adviser, subject }) => ({
           event: 'send_referral',
           sendingAdviserTeam: sendingAdviserTeamName,
