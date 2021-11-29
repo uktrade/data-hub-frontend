@@ -58,12 +58,8 @@ const getEventFormAndMetadata = (data) => {
 const saveEvent = (values) => {
   const request = values.id ? apiProxyAxios.patch : apiProxyAxios.post
 
-  const payload = {
-    ...values,
-    metadata: undefined,
-    disabled_on: undefined,
-    archived_documents_url_path: undefined,
-  }
+  const { metadata, disabled_on, archived_documents_url_path, ...payload } =
+    values
   const endpoint = values.id ? `/v4/event/${values.id}` : '/v4/event'
   return request(endpoint, payload).catch(catchApiError)
 }
