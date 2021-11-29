@@ -103,7 +103,7 @@ describe('Event create', () => {
         'Enter a country',
         'Select at least one team hosting the event',
         'Select at least one service',
-        'Select at least one organiser',
+        'Enter at least one organiser',
         'Select at least one related programme',
       ])
     })
