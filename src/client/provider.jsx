@@ -25,7 +25,6 @@ import referralsReducer from '../apps/companies/apps/referrals/details/client/re
 
 import { ID as REFERRALS_SEND_ID } from '../apps/companies/apps/referrals/send-referral/client/state'
 import referralsSendReducer from '../apps/companies/apps/referrals/send-referral/client/reducer'
-import * as referralsSendTasks from '../apps/companies/apps/referrals/send-referral/client/tasks'
 
 import { ID as EXPORTS_HISTORY_ID } from '../apps/companies/apps/exports/client/ExportsHistory/state'
 import exportsHistoryReducer from '../apps/companies/apps/exports/client/ExportsHistory/reducer'
@@ -195,17 +194,6 @@ const store = createStore(
   }),
   {
     referrerUrl: window.document.referrer,
-    Form: {
-      [REFERRALS_SEND_ID]: {
-        values: {},
-        touched: {},
-        errors: {},
-        fields: {},
-        steps: [],
-        currentStep: 0,
-        ...referralsSendTasks.restoreState(),
-      },
-    },
   },
   composeWithDevTools(
     applyMiddleware(sagaMiddleware, routerMiddleware(history))

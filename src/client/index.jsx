@@ -238,6 +238,8 @@ function App() {
         'Referral details': referralTasks.fetchReferralDetails,
         Referrals: referralListTask,
         'Export wins': exportWinsTasks.fetchExportWins,
+        'Get send referral initial values':
+          referralsSendTasks.getInitialFormValues,
         [TASK_OPEN_REFERRALS_CONTACT_FORM]: referralsSendTasks.openContactForm,
         [TASK_SAVE_REFERRAL]: referralsSendTasks.saveReferral,
         [TASK_SAVE_ONE_LIST_DETAILS]: editOneListTasks.saveOneListDetails,
