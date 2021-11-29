@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import Link from '@govuk-react/link'
+
 import {
   AdviserTypeAhead,
   FieldRadios,
@@ -8,7 +10,6 @@ import {
   FieldDate,
   FieldTextarea,
   FieldTypeahead,
-  NewWindowLink,
 } from '../../../../client/components'
 import {
   OPTIONS_YES_NO,
@@ -22,14 +23,18 @@ export const EventFormFields = ({ values }) => {
   return values && values.metadata ? (
     <>
       <article>
+        <p>Select a trade agreement and then a related event.</p>
         <p>
-          If your Event is set up to focus on a Trade Agreement or contributes
-          to implementing a Trade Agreement then select that the event relates
-          to a Trade Agreement and the relevant Agreement(s)
+          Find{' '}
+          <Link
+            href={urls.external.helpCentre.tradeagreementGuidance()}
+            target="_blank"
+            aria-label="This will open in a new tab"
+          >
+            more information
+          </Link>{' '}
+          about selecting trade agreements. This will open in a new window.
         </p>
-        <NewWindowLink href={urls.external.helpCentre.tradeagreementGuidance()}>
-          See more guidance
-        </NewWindowLink>
       </article>
       <FieldRadios
         legend="Does the event relate to a trade agreement?"
