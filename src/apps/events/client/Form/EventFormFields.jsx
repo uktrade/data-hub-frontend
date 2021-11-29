@@ -29,7 +29,7 @@ export const EventFormFields = ({ values }) => {
           <Link
             href={urls.external.helpCentre.tradeagreementGuidance()}
             target="_blank"
-            aria-label="This will open in a new tab"
+            aria-label="This will open in a new window"
           >
             more information
           </Link>{' '}

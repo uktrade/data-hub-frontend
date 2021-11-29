@@ -28,7 +28,7 @@ const assertTradeAgreementArticle = (articleElement) => {
   cy.contains('more information').should(
     'have.attr',
     'aria-label',
-    'This will open in a new tab'
+    'This will open in a new window'
   )
 }
 
