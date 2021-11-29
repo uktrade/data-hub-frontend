@@ -1,5 +1,3 @@
-import _ from 'lodash'
-
 import urls from '../../../../lib/urls'
 import { getMetadataOptions } from '../../../../client/metadata'
 import { transformResponseToEventForm } from './transformers'
@@ -12,11 +10,9 @@ const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
 const getEventDetails = (eventId) =>
   eventId
-    ? apiProxyAxios
-        .get(`/v4/event/${eventId}`)
-        .then(({ data }) =>
-          Object.assign(data, transformResponseToEventForm(data))
-        )
+    ? apiProxyAxios.get(`/v4/event/${eventId}`).then(({ data }) => {
+        return { ...data, ...transformResponseToEventForm(data) }
+      })
     : Promise.resolve({})
 
 const getEventFormAndMetadata = (data) => {
@@ -61,12 +57,12 @@ const getEventFormAndMetadata = (data) => {
 
 const saveEvent = (values) => {
   const request = values.id ? apiProxyAxios.patch : apiProxyAxios.post
+
   const payload = {
-    ..._.omit(values, [
-      'metadata',
-      'disabled_on',
-      'archived_documents_url_path',
-    ]),
+    ...values,
+    metadata: undefined,
+    disabled_on: undefined,
+    archived_documents_url_path: undefined,
   }
   const endpoint = values.id ? `/v4/event/${values.id}` : '/v4/event'
   return request(endpoint, payload).catch(catchApiError)

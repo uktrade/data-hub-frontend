@@ -1,5 +1,5 @@
 import { uniq } from 'lodash'
-import { OPTION_NO, OPTION_YES } from '../../client/constants'
+import { OPTION_NO, OPTION_YES } from '../../common/constants'
 import { format, isDateValid } from '../../client/utils/date'
 
 export const transformDateObjectToDateString = (value) => {

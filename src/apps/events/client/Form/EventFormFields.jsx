@@ -14,8 +14,8 @@ import {
 import {
   OPTIONS_YES_NO,
   OPTION_YES,
-  UK_VALUE,
-} from '../../../../client/constants'
+  UNITED_KINGDOM_ID,
+} from '../../../../common/constants'
 import { validateStartDateBeforeOrEqualToEndDate } from './validators'
 import urls from '../../../../lib/urls'
 
@@ -128,7 +128,7 @@ export const EventFormFields = ({ values }) => {
         aria-label="Select a country"
         noOptionsMessage={() => <span>No country found</span>}
       />
-      {values.address_country?.value === UK_VALUE && (
+      {values.address_country?.value === UNITED_KINGDOM_ID && (
         <FieldTypeahead
           name="uk_region"
           label="UK Region"
