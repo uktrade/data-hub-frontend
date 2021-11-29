@@ -1,17 +1,3 @@
-export const fillAddAnother = (
-  addButtonSelector,
-  AddAnotherDataTestPrefix,
-  dataArray
-) => {
-  if (dataArray) {
-    const max = dataArray.length - 1
-    dataArray.map((item, index) => {
-      if (index < max) clickAddAnotherButton(addButtonSelector)
-      fillTypeahead(`[data-test=${AddAnotherDataTestPrefix}${index}]`, item)
-    })
-  }
-}
-
 export const fill = (selector, value) => {
   if (selector && value) {
     cy.get(selector).type(value)
