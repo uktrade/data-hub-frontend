@@ -105,7 +105,7 @@ describe('Event', () => {
       )
       cy.get(selectors.eventCreate.organiserFieldId).should(
         'contain',
-        'Type at least one organiser'
+        'Select at least one organiser'
       )
     })
 

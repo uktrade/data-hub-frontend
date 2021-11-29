@@ -150,7 +150,7 @@ export const EventFormFields = ({ values }) => {
       <AdviserTypeAhead
         name="organiser"
         label="Organiser"
-        required="Type at least one organiser"
+        required="Select at least one organiser"
         placeholder="Type to search for organiser"
       />
       <FieldRadios
