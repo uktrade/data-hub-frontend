@@ -31,9 +31,6 @@ const addOrReplaceTestCase = ({
   })
 }
 
-;("Lead adviser information updated.Send Harold Jones an email to let them know they've been made Lead ITA.")
-;("Lead adviser information updated.Send Harold Jones an email to let them know they've been made Lead ITA .")
-
 describe('Manage Lead ITA', () => {
   company = fixtures.company.create.lambda()
   before(() => {
