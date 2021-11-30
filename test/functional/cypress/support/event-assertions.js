@@ -220,9 +220,7 @@ export const assertMultiOptionTypeaheadValues = (
   label,
   dataArray = []
 ) => {
-  dataArray.map((value) => {
-    assertTypeaheadValue(selector, label, value)
-  })
+  dataArray.map((value) => assertTypeaheadValue(selector, label, value))
 }
 
 export const assertTypeaheadValue = (selector, label, value) => {

@@ -25,7 +25,7 @@ const getEventFormAndMetadata = (data) => {
     getMetadataOptions(urls.metadata.service()),
     getMetadataOptions(urls.metadata.programme()),
     getMetadataOptions(urls.metadata.ukRegion()),
-    getEventDetails(data?.eventId),
+    getEventDetails(data.eventId),
   ])
     .then(
       ([

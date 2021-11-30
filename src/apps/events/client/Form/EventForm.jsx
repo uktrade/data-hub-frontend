@@ -64,7 +64,7 @@ const EventForm = ({ eventId }) => {
               initialValuesPayload={{
                 eventId,
               }}
-              redirectTo={({ data }) => urls.events.details(data?.id)}
+              redirectTo={({ data }) => urls.events.details(data.id)}
               redirectMode="hard"
               flashMessage={flashMessage}
               submitButtonLabel={eventId ? DISPLAY_SAVE : DISPLAY_ADD_EVENT}

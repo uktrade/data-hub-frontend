@@ -203,33 +203,24 @@ export const EventFormFields = ({ values }) => {
   ) : null
 }
 
+const valueLabelShape = PropTypes.shape({
+  value: PropTypes.string,
+  label: PropTypes.string,
+})
+
+const arrayOfValueLabel = PropTypes.arrayOf(valueLabelShape)
+
 EventFormFields.propTypes = {
   values: PropTypes.shape({
     metadata: PropTypes.shape({
-      eventTypeOptions: PropTypes.arrayOf(
-        PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
-      ),
-      relatedTradeAgreements: PropTypes.arrayOf(
-        PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
-      ),
-      eventLocationTypes: PropTypes.arrayOf(
-        PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
-      ),
-      countries: PropTypes.arrayOf(
-        PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
-      ),
-      teams: PropTypes.arrayOf(
-        PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
-      ),
-      services: PropTypes.arrayOf(
-        PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
-      ),
-      programmes: PropTypes.arrayOf(
-        PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
-      ),
-      ukRegions: PropTypes.arrayOf(
-        PropTypes.shape({ value: PropTypes.string, label: PropTypes.string })
-      ),
+      eventTypeOptions: arrayOfValueLabel,
+      relatedTradeAgreements: arrayOfValueLabel,
+      eventLocationTypes: arrayOfValueLabel,
+      countries: arrayOfValueLabel,
+      teams: arrayOfValueLabel,
+      services: arrayOfValueLabel,
+      programmes: arrayOfValueLabel,
+      ukRegions: arrayOfValueLabel,
     }),
     id: PropTypes.string,
     address_postcode: PropTypes.string,
@@ -238,10 +229,7 @@ EventFormFields.propTypes = {
     address_county: PropTypes.string,
     address_postcode: PropTypes.string,
     address_town: PropTypes.string,
-    address_country: PropTypes.shape({
-      value: PropTypes.string,
-      label: PropTypes.string,
-    }),
+    address_country: valueLabelShape,
     end_date: PropTypes.shape({
       year: PropTypes.string,
       month: PropTypes.string,
@@ -252,51 +240,18 @@ EventFormFields.propTypes = {
       month: PropTypes.string,
       day: PropTypes.string,
     }),
-    event_type: PropTypes.shape({
-      value: PropTypes.string,
-      label: PropTypes.string,
-    }),
-    lead_team: PropTypes.shape({
-      value: PropTypes.string,
-      label: PropTypes.string,
-    }),
-    location_type: PropTypes.shape({
-      value: PropTypes.string,
-      label: PropTypes.string,
-    }),
+    event_type: valueLabelShape,
+    lead_team: valueLabelShape,
+    location_type: valueLabelShape,
     name: PropTypes.string,
     notes: PropTypes.string,
-    organiser: PropTypes.shape({
-      value: PropTypes.string,
-      label: PropTypes.string,
-    }),
+    organiser: valueLabelShape,
     has_related_trade_agreements: PropTypes.oneOf(['yes', 'no', '']),
-    related_trade_agreements: PropTypes.arrayOf(
-      PropTypes.shape({
-        value: PropTypes.string,
-        label: PropTypes.string,
-      })
-    ),
-    related_programmes: PropTypes.arrayOf(
-      PropTypes.shape({
-        value: PropTypes.string,
-        label: PropTypes.string,
-      })
-    ),
+    related_trade_agreements: arrayOfValueLabel,
+    related_programmes: arrayOfValueLabel,
     event_shared: PropTypes.oneOf(['yes', 'no', '']),
-    teams: PropTypes.arrayOf(
-      PropTypes.shape({
-        value: PropTypes.string,
-        label: PropTypes.string,
-      })
-    ),
-    service: PropTypes.shape({
-      value: PropTypes.string,
-      label: PropTypes.string,
-    }),
-    uk_region: PropTypes.shape({
-      value: PropTypes.string,
-      label: PropTypes.string,
-    }),
+    teams: arrayOfValueLabel,
+    service: valueLabelShape,
+    uk_region: valueLabelShape,
   }),
 }

@@ -5,11 +5,9 @@ export const fill = (selector, value) => {
 }
 
 export const fillYesNoRadio = (selector, isYes) => {
-  if (isYes === true) {
-    cy.get(selector).eq(0).click()
-  } else if (isYes === false) {
-    cy.get(selector).eq(1).click()
-  }
+  cy.get(selector)
+    .eq(isYes === true ? 0 : 1)
+    .click()
 }
 
 export const fillTypeahead = (selector, value) => {
@@ -17,9 +15,7 @@ export const fillTypeahead = (selector, value) => {
 }
 
 export const fillMultiOptionTypeahead = (selector, values = []) => {
-  values.map((value) => {
-    return fillTypeahead(selector, value)
-  })
+  values.map((value) => fillTypeahead(selector, value))
 }
 
 export const fillDate = (dateId, day, month, year) => {

@@ -25,6 +25,10 @@ const transformResponseToEventForm = (data) => {
     teams,
     uk_region,
   } = data
+  const containsLeadTeamOnly =
+    teams?.length === 1 &&
+    !teams?.find((item) => item.value === lead_team.value)
+
   const result = {
     has_related_trade_agreements: transformBoolToYesNo(
       has_related_trade_agreements
@@ -43,9 +47,7 @@ const transformResponseToEventForm = (data) => {
     ),
     related_programmes: transformArrayIdNameToValueLabel(related_programmes),
     event_shared: transformBoolToYesNo(
-      teams?.length > 1 ||
-        (teams?.length === 1 &&
-          !teams?.find((item) => item.value === lead_team?.value))
+      (teams && teams.length > 1) || containsLeadTeamOnly
     ),
     teams: transformArrayIdNameToValueLabel(teams),
   }
