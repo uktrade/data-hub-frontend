@@ -6,14 +6,18 @@ import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import styled from 'styled-components'
 import urls from '../../../../lib/urls'
-import Task from '../../../components/Task'
 import { TASK_GET_EVENT_DETAILS, ID, state2props } from './state'
 import { EVENTS__DETAILS_LOADED } from '../../../actions'
-import LocalHeader from '../../../components/LocalHeader/LocalHeader.jsx'
-import { Main } from '../../../components'
 
-import { SummaryTable, FormActions, NewWindowLink } from '../../../components'
-import { LocalNav, LocalNavLink } from '../../../components'
+import LocalHeader, {
+  LocalNav,
+  LocalNavLink,
+  Main,
+  Task,
+  SummaryTable,
+  FormActions,
+  NewWindowLink,
+} from '../../../components'
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
