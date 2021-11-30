@@ -7,7 +7,7 @@ import {
   transformArrayOfUniqueOptions,
   transformOption,
   transformYesNoToBool,
-} from '../../../../client/transformers'
+} from '../../../transformers'
 
 const transformResponseToEventForm = (data) => {
   const {

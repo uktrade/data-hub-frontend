@@ -10,7 +10,7 @@ import {
   FieldDate,
   FieldTextarea,
   FieldTypeahead,
-} from '../../../../client/components'
+} from '../../..'
 import {
   OPTIONS_YES_NO,
   OPTION_YES,

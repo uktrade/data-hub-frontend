@@ -1,10 +1,7 @@
 import urls from '../../../../lib/urls'
-import { getMetadataOptions } from '../../../../client/metadata'
+import { getMetadataOptions } from '../../../metadata'
 import { transformResponseToEventForm } from './transformers'
-import {
-  catchApiError,
-  apiProxyAxios,
-} from '../../../../client/components/Task/utils'
+import { catchApiError, apiProxyAxios } from '../../../components/Task/utils'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
