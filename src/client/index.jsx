@@ -50,7 +50,6 @@ import CompaniesContactsCollection from '../client/modules/Contacts/CollectionLi
 import OpportunityChangeStatusForm from './components/OpportunityChangeStatusForm'
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
 import createUKInvestmentOpportunityTask from './components/CreateUKInvestmentOpportunity/tasks'
-import EventForm from '../client/modules/Events/EventForm'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -498,9 +497,6 @@ function App() {
       </Mount>
       <Mount selector="#event-details">
         {(props) => <EventDetails {...props} />}
-      </Mount>
-      <Mount selector="#event-form">
-        {(props) => <EventForm {...props} />}
       </Mount>
 
       <Mount selector="#react-app">

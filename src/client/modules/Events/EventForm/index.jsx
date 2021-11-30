@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
+import { useParams } from 'react-router-dom'
 
 import urls from '../../../../lib/urls'
 import LocalHeader from '../../../components/LocalHeader/LocalHeader.jsx'
@@ -19,7 +20,8 @@ const DISPLAY_CANCEL = 'Return without saving'
 const DISPLAY_HOME = 'Home'
 const DISPLAY_EVENTS = 'Events'
 
-const EventForm = ({ eventId }) => {
+const EventForm = () => {
+  const { id } = useParams()
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -31,27 +33,27 @@ const EventForm = ({ eventId }) => {
     },
     {
       link: undefined,
-      text: eventId ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT,
+      text: id ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT,
     },
   ]
 
   const cancelLink = [
     {
       children: DISPLAY_CANCEL,
-      href: eventId ? urls.events.details(eventId) : urls.events.index(),
+      href: id ? urls.events.details(id) : urls.events.index(),
     },
   ]
 
   const flashMessage = (submissionTaskResult) => {
     const { name } = submissionTaskResult?.data
-    return `'${name}' event has been ${eventId ? 'updated' : 'created'}`
+    return `'${name}' event has been ${id ? 'updated' : 'created'}`
   }
 
   return (
     <>
       <LocalHeader
         breadcrumbs={breadcrumbs}
-        heading={eventId ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT}
+        heading={id ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT}
       />
       <Main>
         <GridRow data-test="eventForm">
@@ -59,15 +61,15 @@ const EventForm = ({ eventId }) => {
             <TaskForm
               id="event-form"
               submissionTaskName={TASK_SAVE_EVENT}
-              analyticsFormName={eventId ? 'editEvent' : 'createEvent'}
+              analyticsFormName={id ? 'editEvent' : 'createEvent'}
               initialValuesTaskName={TASK_GET_EVENTS_FORM_AND_METADATA}
               initialValuesPayload={{
-                eventId,
+                eventId: id,
               }}
               redirectTo={({ data }) => urls.events.details(data.id)}
               redirectMode="hard"
               flashMessage={flashMessage}
-              submitButtonLabel={eventId ? DISPLAY_SAVE : DISPLAY_ADD_EVENT}
+              submitButtonLabel={id ? DISPLAY_SAVE : DISPLAY_ADD_EVENT}
               actionLinks={cancelLink}
               transformPayload={transformEventFormForAPIRequest}
             >

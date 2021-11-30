@@ -1,6 +1,7 @@
 import CompaniesCollectionList from './modules/Companies/CollectionList'
 import ContactsCollectionList from './modules/Contacts/CollectionList'
 import EventsCollectionList from './modules/Events/CollectionList'
+import EventForm from './modules/Events/EventForm'
 import InteractionsCollectionList from './modules/Interactions/CollectionList'
 import OmisCollectionList from './modules/Omis/CollectionList'
 
@@ -24,6 +25,16 @@ const routes = {
       path: '/events',
       module: 'datahub:events',
       component: EventsCollectionList,
+    },
+    {
+      path: '/events/create',
+      module: 'datahub:events',
+      component: EventForm,
+    },
+    {
+      path: '/events/:id/edit',
+      module: 'datahub:events',
+      component: EventForm,
     },
   ],
   interactions: [
