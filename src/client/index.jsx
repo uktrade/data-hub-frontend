@@ -50,7 +50,7 @@ import CompaniesContactsCollection from '../client/modules/Contacts/CollectionLi
 import OpportunityChangeStatusForm from './components/OpportunityChangeStatusForm'
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
 import createUKInvestmentOpportunityTask from './components/CreateUKInvestmentOpportunity/tasks'
-import EventForm from '../apps/events/client/Form/EventForm'
+import EventForm from '../client/modules/Events/EventForm'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -123,11 +123,11 @@ import { getEventDetails } from '../apps/events/client/Details/tasks'
 import {
   TASK_GET_EVENTS_FORM_AND_METADATA,
   TASK_SAVE_EVENT,
-} from '../apps/events/client/Form/state'
+} from '../client/modules/Events/EventForm/state'
 import {
   getEventFormAndMetadata,
   saveEvent,
-} from '../apps/events/client/Form/tasks'
+} from '../client/modules/Events/EventForm/tasks'
 
 import {
   getEvents,

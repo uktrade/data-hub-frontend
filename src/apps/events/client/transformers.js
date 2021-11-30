@@ -80,7 +80,7 @@ const transformResponseToEventCollection = ({ count, results = [] }) => ({
 
 const idNameToValueLabel = ({ id, name }) => ({ value: id, label: name })
 
-const transformResponseToEventDetails = ({
+const transformResponseToEventCollectionDetails = ({
   name,
   event_type,
   start_date,
@@ -129,4 +129,7 @@ const transformResponseToEventDetails = ({
   disabledOn: disabled_on,
 })
 
-export { transformResponseToEventCollection, transformResponseToEventDetails }
+export {
+  transformResponseToEventCollection,
+  transformResponseToEventCollectionDetails,
+}
