@@ -4,7 +4,6 @@ const getDate = (value) => {
   return result
 }
 
-// TODO: Refactot in RR-231
 export const validateStartDateBeforeOrEqualToEndDate = (
   value,
   field,
