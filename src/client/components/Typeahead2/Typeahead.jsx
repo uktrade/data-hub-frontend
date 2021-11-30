@@ -4,10 +4,12 @@ import styled from 'styled-components'
 import multiInstance from '../../utils/multiinstance'
 
 import {
+  TYPEAHEAD__BLUR,
   TYPEAHEAD__FOCUS_OPTION,
   TYPEAHEAD__INPUT,
   TYPEAHEAD__MENU_CLOSE,
   TYPEAHEAD__MENU_OPEN,
+  TYPEAHEAD__OPTION_MOUSE_DOWN,
   TYPEAHEAD__OPTION_TOGGLE,
   TYPEAHEAD__OPTION_REMOVE,
 } from '../../actions'
@@ -16,8 +18,25 @@ import SelectedChips from './SelectedChips'
 import { getActionFromKey, getUpdatedIndex, menuActions } from './utils'
 import reducer from './reducer'
 
-const FocusLabel = styled('label')(({ focussed }) => ({
-  border: focussed ? 'solid #f00 3px' : 'none',
+const ListboxOption = styled('div')((props) => ({
+  border: props.focussed ? 'solid #f00 3px' : 'none',
+  paddingLeft: 20, // use a constant
+  position: 'relative',
+
+  '::before': {
+    content: '""',
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    width: 15,
+    height: 15,
+    backgroundColor: props['aria-selected'] ? 'red' : 'none',
+    border: 'solid 1px #333',
+  },
+}))
+
+const Menu = styled('div')(({ open }) => ({
+  display: open ? 'block' : 'none',
 }))
 
 // Show highlight over active item (can be selected by keyboard or hover)
@@ -29,14 +48,17 @@ const Typeahead = ({
   input = '',
   selectedOptions = [],
   focusIndex,
+  onBlur,
   onFocusChange,
   onInput,
+  onOptionMouseDown,
   onOptionToggle,
   onOptionRemove,
   onMenuClose,
   onMenuOpen,
   value,
 }) => {
+  const inputRef = React.useRef(null)
   const filteredOptions = input
     ? options.filter((option) => option.label.startsWith(input))
     : options
@@ -53,15 +75,21 @@ const Typeahead = ({
       case menuActions.first:
       case menuActions.previous:
         event.preventDefault()
-        return onFocusChange(getUpdatedIndex(focusIndex, max, action))
+        onFocusChange(getUpdatedIndex(focusIndex, max, action))
+        return
       case menuActions.closeSelect:
         event.preventDefault()
-        return onOptionToggle(filteredOptions[focusIndex])
+        onOptionToggle(filteredOptions[focusIndex])
+        // Single select - close menu
+        // Multi select - keep open
+        return
       case menuActions.close:
         event.preventDefault()
-        return onMenuClose()
+        onMenuClose()
+        return
       case menuActions.open:
-        return onMenuOpen()
+        onMenuOpen()
+        return
     }
   }
   return (
@@ -79,38 +107,41 @@ const Typeahead = ({
           aria-controls={`${name}-listbox`}
           aria-expanded={menuOpen ? 'true' : 'false'}
           aria-haspopup="listbox"
-          aria-labelledby={`${name} ${name}-selected`}
+          aria-labelledby={`${name}-label ${name}-selected`}
           role="combobox"
           type="text"
           value={value}
-          // onBlur={onMenuClose} // Want to keep the listbox open...
+          onBlur={onBlur}
           onClick={onMenuOpen}
-          onChange={onInput}
+          onInput={onInput}
           onKeyDown={onInputKeyDown}
+          ref={inputRef}
         />
-        <div
+        <Menu
+          id={`${name}-listbox`}
+          open={menuOpen}
           role="listbox"
           aria-labelledby={`${name}-label`}
           aria-multiselectable="true"
-          id={`${name}-listbox`}
-          style={{ display: menuOpen ? 'inherit' : 'none' }}
         >
           {filteredOptions.map((option, index) => (
-            <FocusLabel key={option.value} focussed={index === focusIndex}>
-              <input
-                role="option"
-                id={`${name}-${option.value}`}
-                type="checkbox"
-                name={name}
-                checked={selectedOptions.indexOf(option) > -1}
-                aria-selected={selectedOptions.indexOf(option) > -1}
-                onChange={() => onOptionToggle(option)}
-                tabIndex={-1}
-              />
-              {option.label} - focus: {index === focusIndex ? 'Yes' : 'No'}
-            </FocusLabel>
+            <ListboxOption
+              id={`${name}-${option.value}`}
+              key={option.value}
+              focussed={index === focusIndex}
+              role="option"
+              aria-selected={selectedOptions.indexOf(option) > -1}
+              onClick={() => {
+                inputRef.current && inputRef.current.focus()
+                onOptionToggle(option)
+              }}
+              onMouseDown={() => onOptionMouseDown()}
+              onMouseEnter={() => onFocusChange(index)}
+            >
+              {option.label}
+            </ListboxOption>
           ))}
-        </div>
+        </Menu>
       </div>
     </div>
   )
@@ -120,6 +151,11 @@ export default multiInstance({
   name: 'Typeahead',
   actionPattern: 'TYPEAHEAD__',
   dispatchToProps: (dispatch) => ({
+    onBlur: () => {
+      dispatch({
+        type: TYPEAHEAD__BLUR,
+      })
+    },
     onFocusChange: (focusIndex) => {
       dispatch({
         type: TYPEAHEAD__FOCUS_OPTION,
@@ -140,6 +176,11 @@ export default multiInstance({
     onMenuOpen: () => {
       dispatch({
         type: TYPEAHEAD__MENU_OPEN,
+      })
+    },
+    onOptionMouseDown: () => {
+      dispatch({
+        type: TYPEAHEAD__OPTION_MOUSE_DOWN,
       })
     },
     onOptionToggle: (option) => {
