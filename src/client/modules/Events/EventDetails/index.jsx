@@ -9,11 +9,13 @@ import urls from '../../../../lib/urls'
 import { TASK_GET_EVENT_DETAILS, ID, state2props } from './state'
 import { EVENTS__DETAILS_LOADED } from '../../../actions'
 
-import LocalHeader, {
+import Task from '../../../components/Task'
+import LocalHeader from '../../../components/LocalHeader/LocalHeader'
+
+import {
   LocalNav,
   LocalNavLink,
   Main,
-  Task,
   SummaryTable,
   FormActions,
   NewWindowLink,
