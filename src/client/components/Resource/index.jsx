@@ -21,7 +21,7 @@ const deepKeysToCamelCase = (x) =>
 /**
  * @function Resource
  * This component abstracts away the loading of a resource which has an ID.
- * It's basically a {Task} whith the result persisted in the state without the
+ * It's basically a {Task} with the result persisted in the state without the
  * need to deal with the {onSuccessDispatch} mechanism and to add any reducers.
  * @param {Object} props
  * @param {string} props.name - The name of the task which loads the resource

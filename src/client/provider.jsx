@@ -25,7 +25,6 @@ import referralsReducer from '../apps/companies/apps/referrals/details/client/re
 
 import { ID as REFERRALS_SEND_ID } from '../apps/companies/apps/referrals/send-referral/client/state'
 import referralsSendReducer from '../apps/companies/apps/referrals/send-referral/client/reducer'
-import * as referralsSendTasks from '../apps/companies/apps/referrals/send-referral/client/tasks'
 
 import { ID as EXPORTS_HISTORY_ID } from '../apps/companies/apps/exports/client/ExportsHistory/state'
 import exportsHistoryReducer from '../apps/companies/apps/exports/client/ExportsHistory/reducer'
@@ -63,9 +62,6 @@ import investmentOpportunitiesListReducer from '../apps/investments/client/oppor
 
 import { ID as INVESTMENT_OPPORTUNITIES_DETAILS_ID } from '../apps/investments/client/opportunities/Details/state'
 import investmentOpportunitiesDetailsReducer from '../apps/investments/client/opportunities/Details/reducer'
-
-import { ID as MANAGE_ADVISER_ID } from '../apps/companies/apps/advisers/client/state'
-import manageAdviserReducer from '../apps/companies/apps/advisers/client/reducer'
 
 import { ID as DNB_CHECK_ID } from '../apps/companies/apps/business-details/client/state'
 import dnbCheckReducer from '../apps/companies/apps/business-details/client/reducer'
@@ -176,7 +172,6 @@ const store = createStore(
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
     [INVESTEMENT_PROJECT_ADMIN_ID]: investmentProjectAdminReducer,
-    [MANAGE_ADVISER_ID]: manageAdviserReducer,
     [DNB_CHECK_ID]: dnbCheckReducer,
     [INVESTMENT_OPPORTUNITIES_LIST_ID]: investmentOpportunitiesListReducer,
     [INVESTMENT_OPPORTUNITIES_DETAILS_ID]:
@@ -197,17 +192,6 @@ const store = createStore(
   }),
   {
     referrerUrl: window.document.referrer,
-    Form: {
-      [REFERRALS_SEND_ID]: {
-        values: {},
-        touched: {},
-        errors: {},
-        fields: {},
-        steps: [],
-        currentStep: 0,
-        ...referralsSendTasks.restoreState(),
-      },
-    },
   },
   composeWithDevTools(
     applyMiddleware(sagaMiddleware, routerMiddleware(history))

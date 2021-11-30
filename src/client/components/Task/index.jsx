@@ -233,6 +233,7 @@ Task.Status = ({
         onSuccessDispatch,
         dismissError,
       } = getTask(name, id)
+
       return (
         <>
           {!!startOnRender && (

@@ -3,60 +3,54 @@ const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
 const { assertKeyValueTable } = require('../../support/assertions')
 const { formatWithoutParsing } = require('../../../../../src/client/utils/date')
+const {
+  clickSaveAndReturnButton,
+} = require('../../../../functional/cypress/support/form-fillers')
+const {
+  clickAddEventButton,
+  fillEventType,
+  fillEventForm,
+} = require('../../../../functional/cypress/support/eventform-fillers')
 
 const today = new Date()
 
 const createEvent = () => {
-  cy.get(selectors.eventCreate.tradeAgreementExistsYes).click()
-  cy.get(selectors.eventCreate.relatedTradeAgreements)
-    .eq(0)
-    .select('UK-Australia Mutual Recognition Agreement')
-  cy.get(selectors.eventCreate.addAnotherTradeAgreement).click()
-  cy.get(selectors.eventCreate.relatedTradeAgreements)
-    .eq(1)
-    .select('UK-India Free Trade Agreement')
-  cy.get(selectors.eventCreate.eventName).type('Eventful event')
-  cy.get(selectors.eventCreate.eventType).select('Account management')
-  cy.get(selectors.eventCreate.startDateDay).type(
-    formatWithoutParsing(today, 'dd')
-  )
-  cy.get(selectors.eventCreate.startDateMonth).type(
-    formatWithoutParsing(today, 'MM')
-  )
-  cy.get(selectors.eventCreate.startDateYear).type(
-    formatWithoutParsing(today, 'yyyy')
-  )
-  cy.get(selectors.eventCreate.endDateDay).type(
-    formatWithoutParsing(today, 'dd')
-  )
-  cy.get(selectors.eventCreate.endDateMonth).type(
-    formatWithoutParsing(today, 'MM')
-  )
-  cy.get(selectors.eventCreate.endDateYear).type(
-    formatWithoutParsing(today, 'yyyy')
-  )
-  cy.get(selectors.eventCreate.addressLine1).type('Address1')
-  cy.get(selectors.eventCreate.addressLine2).type('Address2')
-  cy.get(selectors.eventCreate.addressTown).type('Campinas')
-  cy.get(selectors.eventCreate.addressCountry).select('Brazil')
-  cy.get(selectors.eventCreate.service).select(
-    'Account Management : Northern Powerhouse'
-  )
-  cy.get(selectors.eventCreate.organiser).click()
-  cy.get(selectors.eventCreate.organiserInput).type('Barry')
-  cy.get(selectors.eventCreate.organiserOption).should('be.visible')
-  cy.get(selectors.eventCreate.organiserInput).type('{enter}')
-  cy.get(selectors.eventCreate.sharedYes).click()
-  cy.get(selectors.eventCreate.teams).eq(0).select('Automotive Sector')
-  cy.get(selectors.eventCreate.addAnotherSharedTeam).click()
-  cy.get(selectors.eventCreate.teams).eq(1).select('Biopartner')
-  cy.get(selectors.eventCreate.relatedProgrammes).eq(0).select('CEN Energy')
-  cy.get(selectors.eventCreate.addAnotherProgramme).click()
-  cy.get(selectors.eventCreate.relatedProgrammes).eq(1).select('CEN Services')
+  fillEventForm({
+    address1: 'Address1',
+    address2: 'Address2',
+    postcode: 'POST CODE',
+    town: 'Campinas',
+    country: 'Brazil',
+    endDate: {
+      year: formatWithoutParsing(today, 'yyyy'),
+      month: formatWithoutParsing(today, 'MM'),
+      day: formatWithoutParsing(today, 'dd'),
+    },
+    eventType: 'Account management',
+    leadTeam: 'Advanced Manufacturing Sector',
+    locationType: 'HQ',
+    eventName: 'Eventful event',
+    notes: 'Testing a valid form for all fields',
+    organiser: 'Barry Oling',
+    hasRelatedTradeAgreements: true,
+    relatedTradeAgreements: [
+      'UK-Australia Mutual Recognition Agreement',
+      'UK-India Free Trade Agreement',
+    ],
+    relatedProgrammes: ['CEN Energy', 'CEN Services'],
+    startDate: {
+      year: formatWithoutParsing(today, 'yyyy'),
+      month: formatWithoutParsing(today, 'MM'),
+      day: formatWithoutParsing(today, 'dd'),
+    },
+    eventShared: true,
+    teams: ['Biopartner'],
+    service: 'Account Management : Northern Powerhouse',
+  })
 
-  cy.get(selectors.eventCreate.saveEvent).click()
+  clickAddEventButton()
 
-  cy.get(selectors.message.flashMessages).should('contain', 'Event created')
+  cy.contains(`'Eventful event' event has been created`).should('be.visible')
 }
 
 describe('Event', () => {
@@ -66,46 +60,52 @@ describe('Event', () => {
     })
 
     it('should throw validation messages for required fields', () => {
-      cy.get(selectors.eventCreate.saveEvent).click()
-      cy.get(selectors.eventCreate.tradeAgreementError).should(
+      clickAddEventButton()
+
+      cy.get(selectors.eventCreate.hasRelatedTradeAgreementsFieldId).should(
         'contain',
-        'This field is required.'
+        'Answer if the event is related to a trade agreement'
       )
-      cy.get(selectors.eventCreate.nameError).should(
+      cy.get(selectors.eventCreate.eventNameFieldId).should(
         'contain',
-        'This field may not be blank.'
+        'Enter an event name'
       )
-      cy.get(selectors.eventCreate.typeError).should(
+
+      cy.get(selectors.eventCreate.eventTypeFieldId).should(
         'contain',
-        'This field may not be null.'
+        'Select at least one event type'
       )
-      cy.get(selectors.eventCreate.startDateError).should(
+      cy.get(selectors.eventCreate.startDateFieldId).should(
         'contain',
-        'This field may not be null.'
+        'Enter a valid start date'
       )
-      cy.get(selectors.eventCreate.endDateError).should(
+      cy.get(selectors.eventCreate.endDateFieldId).should(
         'contain',
-        'This field may not be null.'
+        'Enter a valid end date'
       )
-      cy.get(selectors.eventCreate.addressLine1Error).should(
+      cy.get(selectors.eventCreate.addressLine1FieldId).should(
         'contain',
-        'This field may not be blank.'
+        'Enter an Address line 1'
       )
-      cy.get(selectors.eventCreate.addressTownError).should(
+      cy.get(selectors.eventCreate.addressTownFieldId).should(
         'contain',
-        'This field may not be blank.'
+        'Enter a town or city'
       )
-      cy.get(selectors.eventCreate.addressCountryError).should(
+      cy.get(selectors.eventCreate.addressPostcodeFieldId).should(
         'contain',
-        'This field may not be null.'
+        'Enter a postcode'
       )
-      cy.get(selectors.eventCreate.serviceError).should(
+      cy.get(selectors.eventCreate.addressCountryFieldId).should(
         'contain',
-        'This field may not be null.'
+        'Enter a country'
       )
-      cy.get(selectors.eventCreate.organiserError).should(
+      cy.get(selectors.eventCreate.serviceFieldId).should(
         'contain',
-        'This field may not be null.'
+        'Select at least one service'
+      )
+      cy.get(selectors.eventCreate.organiserFieldId).should(
+        'contain',
+        'Enter at least one organiser'
       )
     })
 
@@ -153,8 +153,8 @@ describe('Event', () => {
         .should('contain', 'Account management')
       cy.contains('Eventful event').click()
       cy.get(selectors.entityCollection.editEvent).click()
-      cy.get(selectors.eventCreate.eventType).select('Exhibition')
-      cy.get(selectors.eventCreate.saveAndReturn).click()
+      fillEventType('Exhibition')
+      clickSaveAndReturnButton()
 
       assertKeyValueTable('bodyMainContent', {
         'Type of event': 'Exhibition',
@@ -170,6 +170,7 @@ describe('Event', () => {
     before(() => {
       cy.loadFixture([event, company, contact])
     })
+
     it('Should add an interaction with the attendee', () => {
       cy.visit(urls.events.details(event.pk))
       cy.contains('a', 'Attendees').click()
@@ -181,6 +182,7 @@ describe('Event', () => {
         .click()
       cy.contains('Event attendee added')
     })
+
     it('Should not be able to add a duplicate attendee', () => {
       cy.visit(urls.events.details(event.pk))
       cy.contains('a', 'Attendees').click()

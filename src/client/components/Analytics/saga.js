@@ -8,6 +8,7 @@ data layer. */
 export default function* () {
   while (true) {
     const { category, action, label, extra } = yield take(ANALYTICS__PUSH)
+
     window.dataLayer = window.dataLayer || []
     window.dataLayer.push({
       ...extra,

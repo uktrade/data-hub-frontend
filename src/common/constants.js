@@ -25,8 +25,13 @@ const PRIMARY_LINK_PARAMS = {
   investments: '?page=1&sortby=created_on:desc',
   omis: '?page=1&sortby=created_on:desc',
 }
-
 const GENERIC_PHONE_NUMBER_REGEX = /^$|([0-9]|#|\+|\s|\(|\))+$/
+const OPTION_YES = 'yes'
+const OPTION_NO = 'no'
+const OPTIONS_YES_NO = [
+  { label: 'Yes', value: OPTION_YES },
+  { label: 'No', value: OPTION_NO },
+]
 
 module.exports = {
   EXCHANGE_RATE_USD_TO_GBP,
@@ -44,4 +49,7 @@ module.exports = {
   CANADA_ID,
   PRIMARY_LINK_PARAMS,
   GENERIC_PHONE_NUMBER_REGEX,
+  OPTIONS_YES_NO,
+  OPTION_YES,
+  OPTION_NO,
 }

@@ -50,6 +50,7 @@ import CompaniesContactsCollection from '../client/modules/Contacts/CollectionLi
 import OpportunityChangeStatusForm from './components/OpportunityChangeStatusForm'
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
 import createUKInvestmentOpportunityTask from './components/CreateUKInvestmentOpportunity/tasks'
+import EventForm from '../apps/events/client/Form/EventForm'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -92,7 +93,6 @@ import {
 } from '../apps/interactions/apps/details-form/client/state'
 import * as addInteractionFormTasks from '../apps/interactions/apps/details-form/client/tasks'
 
-import { TASK_UPDATE_ADVISER } from '../apps/companies/apps/advisers/client/state'
 import * as manageAdviser from '../apps/companies/apps/advisers/client/tasks'
 
 import {
@@ -119,6 +119,14 @@ import {
 
 import { TASK_GET_EVENT_DETAILS } from '../apps/events/client/Details/state'
 import { getEventDetails } from '../apps/events/client/Details/tasks'
+import {
+  TASK_GET_EVENTS_FORM_AND_METADATA,
+  TASK_SAVE_EVENT,
+} from '../apps/events/client/Form/state'
+import {
+  getEventFormAndMetadata,
+  saveEvent,
+} from '../apps/events/client/Form/tasks'
 
 import {
   getEvents,
@@ -238,6 +246,9 @@ function App() {
         'Referral details': referralTasks.fetchReferralDetails,
         Referrals: referralListTask,
         'Export wins': exportWinsTasks.fetchExportWins,
+        'Update Lead ITA': manageAdviser.updateAdviser,
+        'Get send referral initial values':
+          referralsSendTasks.getInitialFormValues,
         [TASK_OPEN_REFERRALS_CONTACT_FORM]: referralsSendTasks.openContactForm,
         [TASK_SAVE_REFERRAL]: referralsSendTasks.saveReferral,
         [TASK_SAVE_ONE_LIST_DETAILS]: editOneListTasks.saveOneListDetails,
@@ -259,7 +270,6 @@ function App() {
           addInteractionFormTasks.getInitialFormValues,
         [TASK_OPEN_CONTACT_FORM]: addInteractionFormTasks.openContactForm,
         [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
-        [TASK_UPDATE_ADVISER]: manageAdviser.updateAdviser,
         [TASK_SAVE_OPPORTUNITY_DETAILS]:
           investmentOpportunitiesDetailsTasks.saveOpportunityDetails,
         [TASK_SAVE_OPPORTUNITY_REQUIREMENTS]:
@@ -299,6 +309,8 @@ function App() {
         [TASK_GET_EVENTS_METADATA]: getEventsMetadata,
         [TASK_GET_EVENTS_ORGANISER_NAME]: getAdviserNames,
         [TASK_GET_EVENT_DETAILS]: getEventDetails,
+        [TASK_GET_EVENTS_FORM_AND_METADATA]: getEventFormAndMetadata,
+        [TASK_SAVE_EVENT]: saveEvent,
         [TASK_GET_ORDERS_METADATA]: getOrdersMetadata,
         [TASK_GET_ORDERS_LIST]: getOrders,
         [TASK_GET_INTERACTIONS_TEAM_NAME]: getTeamNames,
@@ -486,6 +498,10 @@ function App() {
       <Mount selector="#event-details">
         {(props) => <EventDetails {...props} />}
       </Mount>
+      <Mount selector="#event-form">
+        {(props) => <EventForm {...props} />}
+      </Mount>
+
       <Mount selector="#react-app">
         {() => (
           <Switch>

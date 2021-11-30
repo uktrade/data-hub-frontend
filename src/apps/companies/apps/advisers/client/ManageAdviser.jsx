@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { LoadingBox } from 'govuk-react'
 
 import {
   Button,
@@ -14,19 +12,16 @@ import {
   UnorderedList,
 } from 'govuk-react'
 
-import { ID as STATE_ID, TASK_UPDATE_ADVISER, state2props } from './state'
-import { MANAGE_ADVISER__UPDATE } from '../../../../../client/actions'
 import urls from '../../../../../lib/urls'
-import Task from '../../../../../client/components/Task'
 import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeader'
 import {
   FormActions,
   FieldInput,
   StatusMessage,
   Main,
-  MultiInstanceForm,
 } from '../../../../../client/components'
-import { addMessageWithBody } from '../../../../../client/utils/flash-messages'
+
+import TaskForm from '../../../../../client/components/Task/Form'
 
 import FieldActiveITA from '../../../../../client/components/Form/elements/FieldActiveITA'
 
@@ -49,123 +44,79 @@ CurrentLeadIta.propTypes = {
   team: PropTypes.string.isRequired,
 }
 
-const Add = ({
-  cancelUrl,
-  currentLeadITA,
-  companyName,
-  companyId,
-  isLeadITAUpdated,
-  updatedLeadITA,
-}) => {
-  useEffect(() => {
-    if (isLeadITAUpdated) {
-      addMessageWithBody(
-        'success',
-        'Lead adviser information updated.',
-        `Send ${
-          updatedLeadITA.name
-        } an email to let them know they've been made Lead ITA${
-          updatedLeadITA.email
-            ? `: <a href="mailto:${updatedLeadITA.email}">${updatedLeadITA.email}</a>`
-            : '.'
-        }`
-      )
-      window.location.href = urls.companies.advisers.index(companyId)
-    }
-  }, [isLeadITAUpdated])
-  return (
-    <>
-      <LocalHeader
-        heading={`${
-          currentLeadITA
-            ? 'Replace the Lead ITA'
-            : 'Add someone as the Lead ITA'
-        }`}
-        breadcrumbs={[
-          { link: urls.dashboard(), text: 'Home' },
-          {
-            link: urls.companies.index(),
-            text: 'Companies',
-          },
-          { link: urls.companies.detail(companyId), text: companyName },
-          {
-            text: `${currentLeadITA ? 'Replace the Lead ITA' : 'Add Lead ITA'}`,
-          },
+const Add = ({ cancelUrl, currentLeadITA, companyName, companyId }) => (
+  <>
+    <LocalHeader
+      heading={`${
+        currentLeadITA ? 'Replace the Lead ITA' : 'Add someone as the Lead ITA'
+      }`}
+      breadcrumbs={[
+        { link: urls.dashboard(), text: 'Home' },
+        {
+          link: urls.companies.index(),
+          text: 'Companies',
+        },
+        { link: urls.companies.detail(companyId), text: companyName },
+        {
+          text: `${currentLeadITA ? 'Replace the Lead ITA' : 'Add Lead ITA'}`,
+        },
+      ]}
+    />
+    <Main>
+      {currentLeadITA && (
+        <>
+          <Paragraph>You would replace Lead ITA:</Paragraph>
+          <CurrentLeadIta {...currentLeadITA} />
+        </>
+      )}
+      <TaskForm
+        id="manage-adviser"
+        submissionTaskName="Update Lead ITA"
+        analyticsFormName="Update Lead ITA"
+        transformPayload={(values) => ({ ...values, companyId })}
+        redirectTo={() => urls.companies.advisers.index(companyId)}
+        flashMessage={({ name, email }) => [
+          'Lead adviser information updated.',
+          `Send ${name} an email to let them know they've been ` +
+            `made Lead ITA${
+              email ? `: <a href="mailto:${email}">${email}</a>` : '.'
+            }`,
         ]}
-      />
-      <Main>
-        <Task>
-          {(getTask) => {
-            const updateStageTask = getTask(TASK_UPDATE_ADVISER, STATE_ID)
-            return (
-              <>
-                {currentLeadITA && (
-                  <>
-                    <Paragraph>You would replace Lead ITA:</Paragraph>
-                    <CurrentLeadIta {...currentLeadITA} />
-                  </>
-                )}
-                <LoadingBox loading={isLeadITAUpdated}>
-                  <MultiInstanceForm
-                    id={STATE_ID}
-                    onSubmit={(values) => {
-                      updateStageTask.start({
-                        payload: { values },
-                        onSuccessDispatch: MANAGE_ADVISER__UPDATE,
-                      })
-                    }}
-                    submissionError={updateStageTask.errorMessage}
-                  >
-                    <FieldActiveITA
-                      id="manage-lead-ita/select-ita"
-                      name="dit_participants"
-                      hint="Who should be the primary point of contact?"
-                      required="Select an ITA"
-                    />
-                    <H3 as="h2">What happens next</H3>
-                    <UnorderedList listStyleType="bullet">
-                      <ListItem>
-                        The Lead ITA’s name and team will be shown on the
-                        company record page and on the Lead ITA tab.
-                      </ListItem>
-                      <ListItem>
-                        This will replace all Lead ITAs added on any
-                        subsidiaries of this company.
-                      </ListItem>
-                      <ListItem>
-                        Other ITAs can replace or remove this Lead ITA at any
-                        time.
-                      </ListItem>
-                    </UnorderedList>
-                    <StyledStatusMessage>
-                      <p>
-                        <strong>
-                          When adding someone else as the Lead ITA, send the
-                          person an email to notify them. Data Hub does not send
-                          notications.
-                        </strong>
-                      </p>
-                    </StyledStatusMessage>
-                    <FieldInput
-                      type="hidden"
-                      name="companyId"
-                      initialValue={companyId}
-                    />
-
-                    <FormActions>
-                      <Button>Add Lead ITA</Button>
-                      <Link href={cancelUrl}>Cancel</Link>
-                    </FormActions>
-                  </MultiInstanceForm>
-                </LoadingBox>
-              </>
-            )
-          }}
-        </Task>
-      </Main>
-    </>
-  )
-}
+        actionLinks={[{ children: 'Cancel', href: cancelUrl }]}
+        submitButtonLabel="Add Lead ITA"
+      >
+        <FieldActiveITA
+          name="dit_participants"
+          hint="Who should be the primary point of contact?"
+          required="Select an ITA"
+        />
+        <H3 as="h2">What happens next</H3>
+        <UnorderedList listStyleType="bullet">
+          <ListItem>
+            The Lead ITA’s name and team will be shown on the company record
+            page and on the Lead ITA tab.
+          </ListItem>
+          <ListItem>
+            This will replace all Lead ITAs added on any subsidiaries of this
+            company.
+          </ListItem>
+          <ListItem>
+            Other ITAs can replace or remove this Lead ITA at any time.
+          </ListItem>
+        </UnorderedList>
+        <StyledStatusMessage>
+          <p>
+            <strong>
+              When adding someone else as the Lead ITA, send the person an email
+              to notify them. Data Hub does not send notications.
+            </strong>
+          </p>
+        </StyledStatusMessage>
+        <FieldInput type="hidden" name="companyId" initialValue={companyId} />
+      </TaskForm>
+    </Main>
+  </>
+)
 
 const Remove = ({
   cancelUrl,
@@ -232,4 +183,4 @@ const Manage = ({ isRemove, ...props }) =>
 
 Manage.propTypes = { ...Add.propTypes, isRemove: PropTypes.bool }
 
-export default connect(state2props)(Manage)
+export default Manage
