@@ -42,7 +42,7 @@ import Dashboard from './components/Dashboard'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyLocalHeader from './components/CompanyLocalHeader'
 import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/CompanyOrdersCollection'
-import EventDetails from '../apps/events/client/Details/EventDetails.jsx'
+import EventDetails from './modules/Events/EventDetails/'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 import CompanyProjectsCollection from '../apps/investments/client/projects/CompanyProjectsCollection.jsx'
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
@@ -118,8 +118,8 @@ import {
   TASK_GET_EVENTS_METADATA,
 } from '../client/modules/Events/CollectionList/state'
 
-import { TASK_GET_EVENT_DETAILS } from '../apps/events/client/Details/state'
-import { getEventDetails } from '../apps/events/client/Details/tasks'
+import { TASK_GET_EVENT_DETAILS } from '../client/modules/Events/EventDetails/state'
+import { getEventDetails } from '../client/modules/Events/EventDetails/tasks'
 import {
   TASK_GET_EVENTS_FORM_AND_METADATA,
   TASK_SAVE_EVENT,
