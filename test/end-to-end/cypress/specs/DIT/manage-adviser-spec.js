@@ -24,7 +24,8 @@ const addOrReplaceTestCase = ({
       .parents('form')
       .find('button')
       .click()
-    cy.get(selectors.companyLocalHeader().flashMessageList).contains(
+    cy.get(selectors.companyLocalHeader().flashMessageList).should(
+      'have.text',
       successMessage
     )
   })

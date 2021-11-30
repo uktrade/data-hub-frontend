@@ -63,9 +63,6 @@ import investmentOpportunitiesListReducer from '../apps/investments/client/oppor
 import { ID as INVESTMENT_OPPORTUNITIES_DETAILS_ID } from '../apps/investments/client/opportunities/Details/state'
 import investmentOpportunitiesDetailsReducer from '../apps/investments/client/opportunities/Details/reducer'
 
-import { ID as MANAGE_ADVISER_ID } from '../apps/companies/apps/advisers/client/state'
-import manageAdviserReducer from '../apps/companies/apps/advisers/client/reducer'
-
 import { ID as DNB_CHECK_ID } from '../apps/companies/apps/business-details/client/state'
 import dnbCheckReducer from '../apps/companies/apps/business-details/client/reducer'
 
@@ -173,7 +170,6 @@ const store = createStore(
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
     [INVESTEMENT_PROJECT_ADMIN_ID]: investmentProjectAdminReducer,
-    [MANAGE_ADVISER_ID]: manageAdviserReducer,
     [DNB_CHECK_ID]: dnbCheckReducer,
     [INVESTMENT_OPPORTUNITIES_LIST_ID]: investmentOpportunitiesListReducer,
     [INVESTMENT_OPPORTUNITIES_DETAILS_ID]:
