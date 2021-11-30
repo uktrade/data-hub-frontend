@@ -2,12 +2,14 @@ import { get } from 'lodash'
 
 import urls from '../../../lib/urls'
 
-const {
+import {
   format,
   formatMediumDateTime,
-  formatLongDate,
   getDifferenceInDays,
-} = require('../../../client/utils/date')
+  formatLongDate,
+} from '../../utils/date'
+
+import { transformIdNameToValueLabel } from '../../transformers'
 
 const transformEventToListItem = ({
   id,
@@ -78,9 +80,7 @@ const transformResponseToEventCollection = ({ count, results = [] }) => ({
   results: results.map(transformEventToListItem),
 })
 
-const idNameToValueLabel = ({ id, name }) => ({ value: id, label: name })
-
-const transformResponseToEventCollectionDetails = ({
+const transformResponseToEventDetails = ({
   name,
   event_type,
   start_date,
@@ -121,15 +121,14 @@ const transformResponseToEventCollectionDetails = ({
   notes: notes,
   leadTeam: lead_team.name,
   organiser: organiser.name,
-  otherTeams: teams?.map(idNameToValueLabel),
-  relatedProgrammes: related_programmes?.map(idNameToValueLabel),
-  relatedTradeAgreements: related_trade_agreements?.map(idNameToValueLabel),
+  otherTeams: teams?.map(transformIdNameToValueLabel),
+  relatedProgrammes: related_programmes?.map(transformIdNameToValueLabel),
+  relatedTradeAgreements: related_trade_agreements?.map(
+    transformIdNameToValueLabel
+  ),
   service: service.name,
   archivedDocumentsUrlPath: archived_documents_url_path,
   disabledOn: disabled_on,
 })
 
-export {
-  transformResponseToEventCollection,
-  transformResponseToEventCollectionDetails,
-}
+export { transformResponseToEventCollection, transformResponseToEventDetails }

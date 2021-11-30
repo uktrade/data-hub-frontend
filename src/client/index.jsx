@@ -116,7 +116,7 @@ import {
   TASK_GET_EVENTS_LIST,
   TASK_GET_EVENTS_ORGANISER_NAME,
   TASK_GET_EVENTS_METADATA,
-} from '../apps/events/client/state'
+} from '../client/modules/Events/CollectionList/state'
 
 import { TASK_GET_EVENT_DETAILS } from '../apps/events/client/Details/state'
 import { getEventDetails } from '../apps/events/client/Details/tasks'
