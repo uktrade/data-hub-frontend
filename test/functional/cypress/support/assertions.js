@@ -154,7 +154,7 @@ const assertFieldAddAnother = ({
         element: item,
         emptyOption,
         optionsCount,
-        value: values[i] && values[i].name,
+        value: values && values[i] && values[i].name,
       })
     })
 
@@ -552,6 +552,43 @@ const assertDateInput = ({ element, label, value }) => {
     .should('have.attr', 'value', value)
 }
 
+/**
+ * Assert error summary passing in a list of errors as as an array
+ */
+const assertErrorSummary = (errors) => {
+  cy.contains('h2', 'There is a problem')
+    .next()
+    .should('have.text', errors.join(''))
+}
+
+/**
+ * Assert by selector if it is visible
+ */
+const assertVisible = (selector) => {
+  cy.get(selector).should('be.visible')
+}
+
+/**
+ * Assert by selector if it does not exist
+ */
+const assertNotExists = (selector) => {
+  cy.get(selector).should('not.exist')
+}
+
+/**
+ * Assert if the text is visible
+ */
+const assertTextVisible = (text) => {
+  cy.contains(text).should('be.visible')
+}
+
+/**
+ * Assert url is contained in current url
+ */
+const assertUrl = (url) => {
+  cy.url().should('contain', url)
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
@@ -589,4 +626,9 @@ module.exports = {
   assertElementsInOrder,
   assertPayload,
   assertDateInput,
+  assertErrorSummary,
+  assertVisible,
+  assertNotExists,
+  assertTextVisible,
+  assertUrl,
 }

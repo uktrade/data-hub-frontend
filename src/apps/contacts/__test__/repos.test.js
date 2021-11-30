@@ -22,11 +22,8 @@ describe('Contacts repository', () => {
   })
 
   describe('#getContact', () => {
-    it('should request from the v4 endpoint when the address-area-contact-required-field feature flag is set', async () => {
+    it('should request from the v4 endpoint without needing a feature flag', async () => {
       const contactId = 'acb8fa10-af78-4c80-99cb-0c5605d677a7'
-      const features = {
-        'address-area-contact-required-field': true,
-      }
       const request = {
         session: {
           token: 'DUMMY',
@@ -36,26 +33,8 @@ describe('Contacts repository', () => {
       const v4contactRequest = nock(config.apiRoot)
         .get(`/v4/contact/${contactId}`)
         .reply(200, {})
-      await getContact(request, contactId, features)
+      await getContact(request, contactId)
       expect(v4contactRequest.isDone()).to.be.true
-    })
-
-    it('should request from the v3 endpoint when the address-area-contact-required-field feature flag is not set', async () => {
-      const contactId = 'acb8fa10-af78-4c80-99cb-0c5605d677a7'
-      const features = {
-        'address-area-contact-required-field': false,
-      }
-      const request = {
-        session: {
-          token: 'DUMMY',
-        },
-      }
-
-      const v3contactRequest = nock(config.apiRoot)
-        .get(`/v3/contact/${contactId}`)
-        .reply(200, {})
-      await getContact(request, contactId, features)
-      expect(v3contactRequest.isDone()).to.be.true
     })
   })
 })

@@ -50,6 +50,7 @@ import CompaniesContactsCollection from '../client/modules/Contacts/CollectionLi
 import OpportunityChangeStatusForm from './components/OpportunityChangeStatusForm'
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
 import createUKInvestmentOpportunityTask from './components/CreateUKInvestmentOpportunity/tasks'
+import EventForm from '../apps/events/client/Form/EventForm'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -118,6 +119,14 @@ import {
 
 import { TASK_GET_EVENT_DETAILS } from '../apps/events/client/Details/state'
 import { getEventDetails } from '../apps/events/client/Details/tasks'
+import {
+  TASK_GET_EVENTS_FORM_AND_METADATA,
+  TASK_SAVE_EVENT,
+} from '../apps/events/client/Form/state'
+import {
+  getEventFormAndMetadata,
+  saveEvent,
+} from '../apps/events/client/Form/tasks'
 
 import {
   getEvents,
@@ -153,6 +162,8 @@ import { TASK_CHECK_FOR_INVESTMENTS } from './components/PersonalisedDashboard/s
 
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
 import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentReminders/state'
+
+import * as exportsEdit from '../apps/companies/apps/exports/client/tasks'
 
 import {
   getContacts,
@@ -236,6 +247,8 @@ function App() {
         Referrals: referralListTask,
         'Export wins': exportWinsTasks.fetchExportWins,
         'Update Lead ITA': manageAdviser.updateAdviser,
+        'Get send referral initial values':
+          referralsSendTasks.getInitialFormValues,
         [TASK_OPEN_REFERRALS_CONTACT_FORM]: referralsSendTasks.openContactForm,
         [TASK_SAVE_REFERRAL]: referralsSendTasks.saveReferral,
         [TASK_SAVE_ONE_LIST_DETAILS]: editOneListTasks.saveOneListDetails,
@@ -296,10 +309,13 @@ function App() {
         [TASK_GET_EVENTS_METADATA]: getEventsMetadata,
         [TASK_GET_EVENTS_ORGANISER_NAME]: getAdviserNames,
         [TASK_GET_EVENT_DETAILS]: getEventDetails,
+        [TASK_GET_EVENTS_FORM_AND_METADATA]: getEventFormAndMetadata,
+        [TASK_SAVE_EVENT]: saveEvent,
         [TASK_GET_ORDERS_METADATA]: getOrdersMetadata,
         [TASK_GET_ORDERS_LIST]: getOrders,
         [TASK_GET_INTERACTIONS_TEAM_NAME]: getTeamNames,
         [TASK_ARCHIVE_COMPANY]: businessDetails.archiveSubmitCallback,
+        'Exports Edit': exportsEdit.saveWinCategory,
         ...resourceTasks,
       }}
     >
@@ -482,6 +498,10 @@ function App() {
       <Mount selector="#event-details">
         {(props) => <EventDetails {...props} />}
       </Mount>
+      <Mount selector="#event-form">
+        {(props) => <EventForm {...props} />}
+      </Mount>
+
       <Mount selector="#react-app">
         {() => (
           <Switch>

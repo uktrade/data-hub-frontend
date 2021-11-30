@@ -1,10 +1,6 @@
 /* eslint-disable camelcase */
 const { castArray, get, isEmpty, omitBy, pick, isUndefined } = require('lodash')
 const { roundToSignificantDigits } = require('../../../../common/number')
-const {
-  convertUsdToGbp,
-  convertGbpToUsd,
-} = require('../../../../common/currency')
 
 const UNMATCHED_COMPANY_EDITABLE_FIELDS = [
   'business_type',
@@ -65,7 +61,7 @@ const transformCompanyToForm = (company) => {
       employee_range: get(company.employee_range, 'id'),
       turnover_range: get(company.turnover_range, 'id'),
       trading_names: get(company.trading_names, '0'),
-      turnover: roundToSignificantDigits(convertUsdToGbp(company.turnover), 2),
+      turnover: roundToSignificantDigits(company.turnover_gbp, 2),
     },
     isUndefined
   )
@@ -114,7 +110,7 @@ const transformFormToChangeRequest = (company, formValues) => {
 }
 
 // The API expects to receive only the values that have changed.
-const transformFormToDnbChangeRequest = (company, formValues, res) => {
+const transformFormToDnbChangeRequest = (company, formValues) => {
   const obj = transformFormToChangeRequest(company, formValues)
   const sanitiseArea = (area) => {
     if (area === undefined) {
@@ -132,9 +128,7 @@ const transformFormToDnbChangeRequest = (company, formValues, res) => {
       town: obj.city,
       county: obj.county,
       postcode: obj.postcode,
-      ...(res.locals.features['address-area-company-search'] && {
-        area: sanitiseArea(obj.area),
-      }),
+      area: sanitiseArea(obj.area),
     },
     (fieldValue) => isEmpty(fieldValue)
   )
@@ -156,9 +150,8 @@ const transformFormToDnbChangeRequest = (company, formValues, res) => {
   delete obj.trading_names
 
   if (obj.turnover) {
-    obj.turnover = Math.round(
-      convertGbpToUsd(parseInt(formValues.turnover, 10))
-    ).toString()
+    obj.turnover_gbp = Math.round(parseInt(formValues.turnover, 10)).toString()
+    delete obj.turnover
   }
 
   const dnbChangeRequest = {

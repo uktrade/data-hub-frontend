@@ -1,82 +1,283 @@
-const selectors = require('../../../../selectors')
+import {
+  assertLocalHeader,
+  assertBreadcrumbs,
+  assertErrorSummary,
+  assertVisible,
+  assertNotExists,
+  assertTextVisible,
+  assertUrl,
+} from '../../../cypress/support/assertions'
+
+import {
+  assertEventFormFields,
+  assertEventRequestBody,
+} from '../../../cypress/support/event-assertions'
+
+import urls from '../../../../../src/lib/urls'
+
+import {
+  fillAndAssertRelatedTradeAgreements,
+  fillCountry,
+  fillEventSharedRadio,
+  fillAndAssertSharedTeams,
+  fillAndAssertProgrammes,
+  fillHasRelatedTradeAgreementsRadio,
+  fillStartDateWith,
+  fillEndDateWith,
+  fillEventForm,
+  clickAddEventButton,
+} from '../../../cypress/support/eventform-fillers'
+import { clickReturnWithoutSavingButton } from '../../../cypress/support/form-fillers'
+
+const selectors = require('../../../../selectors/event/createOrEdit')
 
 describe('Event create', () => {
-  before(() => {
+  beforeEach(() => {
+    cy.intercept('POST', '/api-proxy/v4/event').as('eventHttpRequest')
     cy.visit('/events/create')
   })
 
-  it('should toggle uk region field', () => {
-    cy.get(selectors.eventCreate.addressCountry).select('United Kingdom')
-    cy.get(selectors.eventCreate.ukRegion).should('be.visible')
+  it('should render the header', () => {
+    assertLocalHeader('Add event')
+  })
 
-    cy.get(selectors.eventCreate.addressCountry).select('Uganda')
-    cy.get(selectors.eventCreate.ukRegion).should('not.be.visible')
+  it('should render add event breadcrumb', () => {
+    assertBreadcrumbs({
+      Home: '/',
+      Events: '/events?page=1&sortby=modified_on:desc',
+      'Add event': null,
+    })
+  })
+
+  it('should render expected form fields with default values ', () => {
+    assertEventFormFields()
+  })
+
+  it('should allow a user to add multiple named trade agreements', () => {
+    fillAndAssertRelatedTradeAgreements([
+      'Comprehensive and Progressive Agreement for Trans-Pacific Partnership',
+      'UK-Australia Mutual Recognition Agreement',
+    ])
+  })
+
+  it('should show "No trade agreement found" value not found', () => {
+    fillHasRelatedTradeAgreementsRadio(true)
+
+    cy.get(selectors.relatedTradeAgreementsFieldId).type('Non existant field')
+
+    assertVisible('span', 'No trade agreements found')
+  })
+
+  it('should show "No event type found" value not found', () => {
+    cy.get(selectors.eventTypeFieldId).type('Non existant field')
+
+    assertVisible('span', 'No event type found')
+  })
+
+  it('should show "No event location found" when value not found', () => {
+    cy.get(selectors.locationTypeFieldId).type('Non existant field')
+
+    assertVisible('span', 'No event location found')
+  })
+
+  it('should show "No country found" when value not found', () => {
+    cy.get(selectors.addressCountryFieldId).type('Non existant field')
+
+    assertVisible('span', 'No country found')
+  })
+
+  it('should show "No region found" when value not found', () => {
+    fillCountry('United Kingdom')
+
+    cy.get(selectors.ukRegionFieldId).type('Non existant field')
+
+    assertVisible('span', 'No region found')
+  })
+
+  it('should show "No hosting team found" when value not found', () => {
+    cy.get(selectors.leadTeamFieldId).type('Non existant field')
+
+    assertVisible('span', 'No hosting team found')
+  })
+
+  it('should show "No service found" when value not found', () => {
+    cy.get(selectors.serviceFieldId).type('Non existant field')
+
+    assertVisible('span', 'No service found')
+  })
+
+  it('should show "No shared team found" when value not found', () => {
+    fillEventSharedRadio(true)
+
+    cy.get(selectors.teamsFieldId).type('Non existant field')
+
+    assertVisible('span', 'No shared team found')
+  })
+
+  it('should show "No programmes found" when value not found', () => {
+    cy.get(selectors.relatedProgrammesFieldId).type('Non existant field')
+
+    assertVisible('span', 'No programmes found')
+  })
+
+  it('should toggle uk region field', () => {
+    fillCountry('United Kingdom')
+    cy.get(selectors.addressCountryFieldId).should('contain', 'United Kingdom')
+    assertVisible(selectors.ukRegionId)
+
+    fillCountry('Uganda')
+    cy.get(selectors.addressCountryFieldId).should('contain', 'Uganda')
+    assertNotExists(selectors.ukRegionId)
   })
 
   it('should toggle teams section when interacting with shared options', () => {
-    cy.get(selectors.eventCreate.sharedYes).click()
-    cy.get(selectors.eventCreate.teams).should('be.visible')
+    assertTextVisible('Is this a shared event? (optional)')
+    fillEventSharedRadio(true)
+    assertVisible(selectors.teamsId)
 
-    cy.get(selectors.eventCreate.sharedNo).click()
-    cy.get(selectors.eventCreate.teams).should('not.be.visible')
+    fillEventSharedRadio(false)
+    assertNotExists(selectors.teamsId)
   })
 
   it('should allow user to add multiple shared teams', () => {
-    cy.get(selectors.eventCreate.sharedYes).click()
-    cy.get(selectors.eventCreate.teams).eq(0).select('BPI')
-    cy.get(selectors.eventCreate.addAnotherSharedTeam).click()
-    cy.get(selectors.eventCreate.teams).eq(1).select('BN Americas')
-
-    cy.get(selectors.eventCreate.teams).eq(0).should('contain', 'BPI')
-    cy.get(selectors.eventCreate.teams).eq(1).should('contain', 'BN Americas')
+    fillAndAssertSharedTeams(['BPI', 'BN Americas'])
   })
 
   it('should allow user to add multiple programmes', () => {
-    cy.get(selectors.eventCreate.sharedYes).click()
-    cy.get(selectors.eventCreate.relatedProgrammes).eq(0).select('CEN Energy')
-    cy.get(selectors.eventCreate.addAnotherProgramme).click()
-    cy.get(selectors.eventCreate.relatedProgrammes).eq(1).select('CEN Services')
-
-    cy.get(selectors.eventCreate.relatedProgrammes)
-      .eq(0)
-      .should('contain', 'CEN Energy')
-    cy.get(selectors.eventCreate.relatedProgrammes)
-      .eq(1)
-      .should('contain', 'Services')
+    fillAndAssertProgrammes(['CEN Energy', 'CEN Services'])
   })
 
-  it('should allow a user to add multiple related trade agreements', () => {
-    cy.get(selectors.eventCreate.tradeAgreementExistsYes).click()
-    cy.get(selectors.eventCreate.relatedTradeAgreements)
-      .eq(0)
-      .select('UK-Japan Comprehensive Economic Partnership Agreement')
-    cy.get(selectors.eventCreate.addAnotherTradeAgreement).click()
-    cy.get(selectors.eventCreate.relatedTradeAgreements)
-      .eq(1)
-      .select('UK-Australia Mutual Recognition Agreement')
+  context('when verifying inputs', () => {
+    it('should validate an empty form', () => {
+      clickAddEventButton()
 
-    cy.get(selectors.eventCreate.relatedTradeAgreements)
-      .eq(0)
-      .should(
-        'contain',
-        'UK-Japan Comprehensive Economic Partnership Agreement'
-      )
-    cy.get(selectors.eventCreate.relatedTradeAgreements)
-      .eq(1)
-      .should('contain', 'UK-Australia Mutual Recognition Agreement')
+      assertErrorSummary([
+        'Answer if the event is related to a trade agreement',
+        'Enter an event name',
+        'Select at least one event type',
+        'Enter a valid start date',
+        'Enter a valid end date',
+        'Enter an Address line 1',
+        'Enter a town or city',
+        'Enter a postcode',
+        'Enter a country',
+        'Select at least one team hosting the event',
+        'Select at least one service',
+        'Enter at least one organiser',
+        'Select at least one related programme',
+      ])
+    })
+
+    it('should validate dates, uk regions and other radio fields when selected', () => {
+      fillHasRelatedTradeAgreementsRadio(true)
+      fillEventSharedRadio(true)
+      fillStartDateWith('12', '12', '2021')
+      fillEndDateWith('11', '11', '2021')
+      fillCountry('United Kingdom')
+
+      clickAddEventButton()
+
+      assertErrorSummary([
+        'Enter an event name',
+        'Select at least one event type',
+        'Enter a valid end date. This must be after the start date.',
+        'Enter an Address line 1',
+        'Enter a town or city',
+        'Enter a postcode',
+        'Select at least one team hosting the event',
+        'Select at least one service',
+        'Enter at least one organiser',
+        'Select at least one related programme',
+        'Select at least one trade agreement',
+        'Select at least one team',
+        'Select a UK region',
+      ])
+    })
   })
 
-  it('should contain help information relating to trade agreements', () => {
-    cy.get('[data-test="trade-agreement-text"]').should(
-      'have.text',
-      'If your Event is set up to focus on a Trade Agreement or contributes to implementing a Trade Agreement then select that the event relates to a Trade Agreement and the relevant Agreement(s)'
-    )
-    cy.get('[data-test="trade-agreement-link"]')
-      .should(
-        'have.attr',
-        'href',
-        'https://data-services-help.trade.gov.uk/data-hub/how-articles/trade-agreement-activity/recording-trade-agreement-activity/'
-      )
-      .should('have.attr', 'aria-label', 'opens in a new tab')
+  context('when filling in a valid event form', () => {
+    it('should save with expected values and endpoint', () => {
+      fillEventForm({
+        address1: 'Bussiness 1',
+        address2: 'Street 2',
+        country: 'United Kingdom',
+        county: 'County',
+        postcode: 'POST CODE',
+        town: 'Town & City',
+        region: 'London',
+        endDate: {
+          year: '2021',
+          month: '12',
+          day: '13',
+        },
+        eventType: 'Exhibition',
+        leadTeam: 'Advanced Manufacturing Sector',
+        locationType: 'HQ',
+        eventName: 'Test Create Event',
+        notes: 'Testing a valid form for all fields',
+        organiser: 'Violet Roy',
+        hasRelatedTradeAgreements: true,
+        relatedTradeAgreements: [
+          'Comprehensive and Progressive Agreement for Trans-Pacific Partnership',
+          'UK-Australia Mutual Recognition Agreement',
+        ],
+        relatedProgrammes: ['Aid Funded Business Service (AFBS)', 'CEN Energy'],
+        startDate: {
+          year: '2021',
+          month: '12',
+          day: '12',
+        },
+        eventShared: true,
+        teams: ['BPI', 'BN America', 'BPI'],
+        service: 'Making Other Introductions : UK Export Finance (UKEF)',
+      })
+
+      clickAddEventButton()
+
+      const expectedBody = {
+        has_related_trade_agreements: true,
+        name: 'Test Create Event',
+        event_type: '2fade471-e868-4ea9-b125-945eb90ae5d4',
+        start_date: '2021-12-12',
+        end_date: '2021-12-13',
+        location_type: 'b71fa81c-0c22-44c6-ab6f-13b9e045dc10',
+        address_1: 'Bussiness 1',
+        address_2: 'Street 2',
+        address_town: 'Town & City',
+        address_county: 'County',
+        address_postcode: 'POST CODE',
+        address_country: '80756b9a-5d95-e211-a939-e4115bead28a',
+        notes: 'Testing a valid form for all fields',
+        lead_team: '08c14624-2f50-e311-a56a-e4115bead28a',
+        service: '6fd4b203-8e73-4a39-96ea-188bdb623b69',
+        organiser: '3442c516-9898-e211-a939-e4115bead28a',
+        event_shared: true,
+        related_programmes: [
+          'e2a8be20-7a54-e311-a33a-e4115bead28a',
+          '058dde7c-19d5-e311-8a2b-e4115bead28a',
+        ],
+        related_trade_agreements: [
+          'af704a93-5404-4bc6-adda-381756993902',
+          '50370070-71f9-4ada-ae2c-cd0a737ba5e2',
+        ],
+        uk_region: '874cd12a-6095-e211-a939-e4115bead28a',
+        teams: [
+          'bb65239e-9698-e211-a939-e4115bead28a',
+          '06374ae0-9698-e211-a939-e4115bead28a',
+          '08c14624-2f50-e311-a56a-e4115bead28a',
+        ],
+      }
+      assertEventRequestBody(expectedBody, (xhr) => {
+        assertUrl(urls.events.details(xhr.response.body.id))
+        assertTextVisible(`'One-day exhibition' event has been created`)
+      })
+    })
+  })
+
+  context('when a user cancels', () => {
+    it('should return without saving and return to the correct endpoint', () => {
+      clickReturnWithoutSavingButton()
+      assertUrl(urls.events.index())
+    })
   })
 })

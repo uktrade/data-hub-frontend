@@ -1,0 +1,63 @@
+{
+  "id": "63af73a6-5d95-e211-aaaa-e4115bead28a",
+  "address_1": "Day Court Exhibition Centre",
+  "address_2": "Day Court Lane",
+  "address_country": {
+    "name": "China",
+    "id": "63af72a6-5d95-e211-a939-e4115bead28a"
+  },
+  "address_county": "",
+  "address_postcode": "SW9 9AB",
+  "address_town": "China",
+  "archived_documents_url_path": "/documents/123",
+  "disabled_on": null,
+  "end_date": "2021-01-01",
+  "event_type": {
+    "name": "Exhibition",
+    "id": "2fade471-e868-4ea9-b125-945eb90ae5d4"
+  },
+  "lead_team": {
+    "name": "CBBC Hangzhou",
+    "id": "5d4d24c2-9698-e211-a939-e4115bead28a"
+  },
+  "location_type": {
+    "name": "HQ",
+    "id": "b71fa81c-0c22-44c6-ab6f-13b9e045dc10"
+  },
+  "name": "One-day exhibition",
+  "notes": "This is a dummy event for testing.",
+  "organiser": {
+    "name": "John Rogers",
+    "first_name": "John",
+    "last_name": "Rogers",
+    "id": "7bad8082-4978-4fe8-a018-740257f01637"
+  },
+  "related_programmes": [
+    {
+      "name": "Grown in Britain",
+      "id": "d352a68f-aaf4-4c43-b39d-9bca67a8322e"
+    }
+  ],
+  "related_trade_agreements": [
+    {
+      "name": "UK - Japan",
+      "id": "3117da1b-a776-4b03-af7e-2487d931491c"
+    }
+  ],
+  "start_date": "2021-01-01",
+  "teams": [
+    {
+      "name": "CBBC Hangzhou",
+      "id": "5d4d24c2-9698-e211-a939-e4115bead28a"
+    },
+    {
+      "name": "CBBC North West",
+      "id": "4e4d24c2-9698-e211-a939-e4115bead28a"
+    }
+  ],
+  "service": {
+    "name": "Events : UK Based",
+    "id": "9584b82b-3499-e211-a939-e4115bead28a"
+  },
+  "uk_region": null
+}
