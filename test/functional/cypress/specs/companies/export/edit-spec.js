@@ -1,7 +1,6 @@
 const minimallyMinimal = require('../../../../../sandbox/fixtures/v4/company/company-minimally-minimal.json')
 const dnbLimited = require('../../../../../sandbox/fixtures/v4/company/company-dnb-ltd.json')
 const urls = require('../../../../../../src/lib/urls')
-const { assertFieldSelect } = require('../../../support/assertions')
 
 describe('Company Export tab - Edit exports', () => {
   function assertReadOnlyItems(rows) {
@@ -27,12 +26,8 @@ describe('Company Export tab - Edit exports', () => {
     )
   }
 
-  function selectOption(selector, index) {
-    cy.get(selector)
-      .find('option')
-      .then(($els) => $els.get(index).setAttribute('selected', 'selected'))
-      .parent()
-      .trigger('change')
+  function selectOption(selector, option) {
+    cy.get(selector).get('select').select(option)
   }
 
   context(
@@ -46,17 +41,6 @@ describe('Company Export tab - Edit exports', () => {
 
       beforeEach(() => {
         cy.intercept('PATCH', '*/v4/company/*').as(XHR_ALIAS)
-      })
-
-      it('Should render a list without a selected item', () => {
-        cy.get('#field-export_experience_category').then((element) => {
-          assertFieldSelect({
-            element,
-            label: 'Export win category (optional)',
-            value: '-- Select category --',
-            optionsCount: 7,
-          })
-        })
       })
 
       it('Should render the read only items', () => {
@@ -73,7 +57,7 @@ describe('Company Export tab - Edit exports', () => {
         assertButtons(minimallyMinimal.id)
 
         //selecting a real value should send the UUID
-        selectOption('#field-export_experience_category', 1)
+        selectOption('#field-export_experience_category', 'Export growth')
 
         cy.contains('Save and return').click()
 
@@ -100,17 +84,6 @@ describe('Company Export tab - Edit exports', () => {
         cy.intercept('PATCH', '*/v4/company/*').as(XHR_ALIAS)
       })
 
-      it('Should render a list without a selected item', () => {
-        cy.get('#field-export_experience_category').then((element) => {
-          assertFieldSelect({
-            element,
-            label: 'Export win category (optional)',
-            value: 'Increasing export turnover',
-            optionsCount: 7,
-          })
-        })
-      })
-
       it('Should render the read only items', () => {
         assertReadOnlyItems([
           {
@@ -131,7 +104,10 @@ describe('Company Export tab - Edit exports', () => {
         assertButtons(dnbLimited.id)
 
         //selecting the first value should set the category back to null
-        selectOption('#field-export_experience_category', 0)
+        selectOption(
+          '#field-export_experience_category',
+          '-- Select category --'
+        )
 
         cy.contains('Save and return').click()
 
