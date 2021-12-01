@@ -2,34 +2,29 @@ import { ID as STORE_ID } from './state'
 import getContactFromQuery from '../../../../../../client/utils/getContactFromQuery'
 import { apiProxyAxios } from '../../../../../../client/components/Task/utils'
 
+export async function getInitialFormValues() {
+  const valuesFromStorage = JSON.parse(window.sessionStorage.getItem(STORE_ID))
+
+  const queryContact = getContactFromQuery()
+
+  if (queryContact.label && queryContact.value) {
+    valuesFromStorage.contact = {
+      label: queryContact.label,
+      value: queryContact.value,
+    }
+  }
+
+  return valuesFromStorage
+}
+
 export function openContactForm({ values, url }) {
   window.sessionStorage.setItem(
     STORE_ID,
     JSON.stringify({
-      values,
+      ...values,
     })
   )
   window.location.href = url
-}
-
-export function restoreState() {
-  const stateFromStorage = window.sessionStorage.getItem(STORE_ID)
-
-  if (!stateFromStorage) {
-    return {}
-  }
-
-  const queryContact = getContactFromQuery()
-  if (queryContact.label && queryContact.value) {
-    const updatedState = JSON.parse(stateFromStorage)
-    updatedState.values.contact = {
-      label: queryContact.label,
-      value: queryContact.value,
-    }
-    return updatedState
-  }
-
-  return JSON.parse(stateFromStorage)
 }
 
 export async function saveReferral({ values, companyId }) {

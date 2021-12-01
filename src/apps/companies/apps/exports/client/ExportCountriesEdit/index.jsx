@@ -1,25 +1,14 @@
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
-import { Button, Link } from 'govuk-react'
+import React from 'react'
 import { ERROR_COLOUR } from 'govuk-colours'
 import styled from 'styled-components'
 
 import Task from '../../../../../../client/components/Task'
-import { EXPORT_COUNTRIES_EDIT__SAVE } from '../../../../../../client/actions'
-import {
-  state2props,
-  ID as TASK_ID,
-  TASK_NAME,
-  API_ERROR,
-  API_WARN,
-  SAVED,
-} from './state'
+import TaskForm from '../../../../../../client/components/Task/Form'
+import { ID as TASK_ID, TASK_NAME, API_ERROR, API_WARN } from './state'
 import urls from '../../../../../../lib/urls'
 import {
   StatusMessage,
-  FormActions,
   FieldTypeahead,
-  FormStateful,
 } from '../../../../../../client/components/'
 
 const StyledH2 = styled.h2`
@@ -56,26 +45,29 @@ function ErrorHandler({ errorMessage }) {
   )
 }
 
-function ExportCountriesEdit(state) {
-  const { companyId, countryOptions, fields } = state
-
-  useEffect(() => {
-    if (state[SAVED]) {
-      window.location.href = state[SAVED]
-    }
-  })
-
+export default ({ companyId, countryOptions, fields }) => {
   return (
-    <Task>
-      {(getTask) => (
-        <FormStateful
-          onSubmit={(values) => {
-            getTask(TASK_NAME, TASK_ID).start({
-              payload: { values, companyId },
-              onSuccessDispatch: EXPORT_COUNTRIES_EDIT__SAVE,
-            })
-            return null
-          }}
+    <Task.Status
+      name={TASK_NAME}
+      id={TASK_ID}
+      renderProgress={() => null}
+      renderError={ErrorHandler}
+    >
+      {() => (
+        <TaskForm
+          id={TASK_ID}
+          name={TASK_NAME}
+          submitButtonLabel="Save and return"
+          transformPayload={(values) => ({ values, companyId })}
+          redirectTo={() => urls.companies.exports.index(companyId)}
+          submissionTaskName={TASK_NAME}
+          analyticsFormName={TASK_NAME}
+          actionLinks={[
+            {
+              children: 'Return without saving',
+              href: urls.companies.exports.index(companyId),
+            },
+          ]}
           initialValues={fields
             .filter(({ values }) => !!values?.length)
             .reduce((acc, { name, values }) => {
@@ -83,13 +75,6 @@ function ExportCountriesEdit(state) {
               return acc
             }, {})}
         >
-          <Task.Status
-            name={TASK_NAME}
-            id={TASK_ID}
-            renderProgress={() => null}
-            renderError={ErrorHandler}
-          />
-
           {fields.map(({ label, name }) => (
             <FieldTypeahead
               key={name}
@@ -100,16 +85,8 @@ function ExportCountriesEdit(state) {
               placeholder="Search countries..."
             />
           ))}
-          <FormActions>
-            <Button>Save and return</Button>
-            <Link href={urls.companies.exports.index(companyId)}>
-              Return without saving
-            </Link>
-          </FormActions>
-        </FormStateful>
+        </TaskForm>
       )}
-    </Task>
+    </Task.Status>
   )
 }
-
-export default connect(state2props)(ExportCountriesEdit)

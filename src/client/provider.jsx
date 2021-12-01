@@ -25,7 +25,6 @@ import referralsReducer from '../apps/companies/apps/referrals/details/client/re
 
 import { ID as REFERRALS_SEND_ID } from '../apps/companies/apps/referrals/send-referral/client/state'
 import referralsSendReducer from '../apps/companies/apps/referrals/send-referral/client/reducer'
-import * as referralsSendTasks from '../apps/companies/apps/referrals/send-referral/client/tasks'
 
 import { ID as EXPORTS_HISTORY_ID } from '../apps/companies/apps/exports/client/ExportsHistory/state'
 import exportsHistoryReducer from '../apps/companies/apps/exports/client/ExportsHistory/reducer'
@@ -38,9 +37,6 @@ import ToggleSection from './components/ToggleSection/BaseToggleSection'
 
 import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/ExportWins/state'
 import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/reducer'
-
-import { ID as EXPORT_COUNTRIES_EDIT_ID } from '../apps/companies/apps/exports/client/ExportCountriesEdit/state'
-import exportCountriesEditReducer from '../apps/companies/apps/exports/client/ExportCountriesEdit/reducer'
 
 import * as addCompanyState from '../apps/companies/apps/add-company/client/state'
 import addCompanyPostcodeToRegionReducer from '../apps/companies/apps/add-company/client/reducer'
@@ -63,9 +59,6 @@ import investmentOpportunitiesListReducer from '../apps/investments/client/oppor
 
 import { ID as INVESTMENT_OPPORTUNITIES_DETAILS_ID } from '../apps/investments/client/opportunities/Details/state'
 import investmentOpportunitiesDetailsReducer from '../apps/investments/client/opportunities/Details/reducer'
-
-import { ID as MANAGE_ADVISER_ID } from '../apps/companies/apps/advisers/client/state'
-import manageAdviserReducer from '../apps/companies/apps/advisers/client/reducer'
 
 import { ID as DNB_CHECK_ID } from '../apps/companies/apps/business-details/client/state'
 import dnbCheckReducer from '../apps/companies/apps/business-details/client/reducer'
@@ -156,7 +149,6 @@ const store = createStore(
     [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
     [REFERRALS_SEND_ID]: referralsSendReducer,
     [EXPORTS_WINS_ID]: exportWinsReducer,
-    [EXPORT_COUNTRIES_EDIT_ID]: exportCountriesEditReducer,
     [ONE_LIST_DETAILS_ID]: editOneListReducer,
     [addCompanyState.ID]: addCompanyPostcodeToRegionReducer,
     [ADD_TO_PIPELINE_ID]: addToPipelineReducer,
@@ -174,7 +166,6 @@ const store = createStore(
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
     [INVESTEMENT_PROJECT_ADMIN_ID]: investmentProjectAdminReducer,
-    [MANAGE_ADVISER_ID]: manageAdviserReducer,
     [DNB_CHECK_ID]: dnbCheckReducer,
     [INVESTMENT_OPPORTUNITIES_LIST_ID]: investmentOpportunitiesListReducer,
     [INVESTMENT_OPPORTUNITIES_DETAILS_ID]:
@@ -195,17 +186,6 @@ const store = createStore(
   }),
   {
     referrerUrl: window.document.referrer,
-    Form: {
-      [REFERRALS_SEND_ID]: {
-        values: {},
-        touched: {},
-        errors: {},
-        fields: {},
-        steps: [],
-        currentStep: 0,
-        ...referralsSendTasks.restoreState(),
-      },
-    },
   },
   composeWithDevTools(
     applyMiddleware(sagaMiddleware, routerMiddleware(history))

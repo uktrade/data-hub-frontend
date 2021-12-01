@@ -6,6 +6,7 @@ import axios from 'axios'
 import { throttle } from 'lodash'
 
 import { TASK_SAVE_OPPORTUNITY_DETAILS, state2props } from './state'
+import urls from '../../../../../lib/urls'
 
 import { INVESTMENT_OPPORTUNITY__UPDATED } from '../../../../../client/actions'
 
@@ -30,8 +31,7 @@ import { idNameToValueLabel } from './tasks'
 
 import { FieldOpportunityValueTypeRadios } from '../../../../../client/components/Form/elements/FieldOpportunityValueType'
 
-function OpportunityDetailsForm(state) {
-  const { opportunityId, opportunity, dispatch } = state
+function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
   const {
     name,
     description,
@@ -62,6 +62,12 @@ function OpportunityDetailsForm(state) {
             opportunity,
           })
         }
+        actionLinks={[
+          {
+            children: 'Cancel',
+            href: urls.investments.opportunities.details(opportunityId),
+          },
+        ]}
       >
         {(values) => (
           <>
@@ -201,7 +207,6 @@ function OpportunityDetailsForm(state) {
 
 OpportunityDetailsForm.propTypes = {
   opportunityId: PropTypes.string.isRequired,
-  metadata: PropTypes.object.isRequired,
   opportunity: PropTypes.object.isRequired,
 }
 
