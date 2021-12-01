@@ -1,14 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { useParams } from 'react-router-dom'
+
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import styled from 'styled-components'
+
 import urls from '../../../../lib/urls'
 import { TASK_GET_EVENT_DETAILS, ID, state2props } from './state'
 import { EVENTS__DETAILS_LOADED } from '../../../actions'
-
 import Task from '../../../components/Task'
 
 import {
@@ -26,7 +28,6 @@ const StyledSummaryTable = styled(SummaryTable)({
 })
 
 const EventDetails = ({
-  eventId,
   name,
   eventType,
   startDate,
@@ -46,6 +47,7 @@ const EventDetails = ({
   disabledOn,
   flashMessages,
 }) => {
+  const { id } = useParams()
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -65,7 +67,7 @@ const EventDetails = ({
       id={ID}
       progressMessage="loading event details"
       startOnRender={{
-        payload: eventId,
+        payload: id,
         onSuccessDispatch: EVENTS__DETAILS_LOADED,
       }}
     >
@@ -83,13 +85,13 @@ const EventDetails = ({
                   <LocalNav data-test="event-details-nav">
                     <LocalNavLink
                       data-test="event-details-nav-link"
-                      href={urls.events.details(eventId)}
+                      href={urls.events.details(id)}
                     >
                       Details
                     </LocalNavLink>
                     <LocalNavLink
                       data-test="event-details-nav-link"
-                      href={urls.events.attendees(eventId)}
+                      href={urls.events.attendees(id)}
                     >
                       Attendees
                     </LocalNavLink>
@@ -168,7 +170,7 @@ const EventDetails = ({
                   </StyledSummaryTable>
                   {!disabledOn && (
                     <FormActions>
-                      <Button as={Link} href={urls.events.edit(eventId)}>
+                      <Button as={Link} href={urls.events.edit(id)}>
                         Edit event
                       </Button>
                     </FormActions>

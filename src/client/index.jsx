@@ -42,7 +42,6 @@ import Dashboard from './components/Dashboard'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyLocalHeader from './components/CompanyLocalHeader'
 import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/CompanyOrdersCollection'
-import EventDetails from './modules/Events/EventDetails'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 import CompanyProjectsCollection from '../apps/investments/client/projects/CompanyProjectsCollection.jsx'
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
@@ -494,9 +493,6 @@ function App() {
       </Mount>
       <Mount selector="#company-orders-collection">
         {(props) => <CompanyOrdersCollection {...props} />}
-      </Mount>
-      <Mount selector="#event-details">
-        {(props) => <EventDetails {...props} />}
       </Mount>
 
       <Mount selector="#react-app">
