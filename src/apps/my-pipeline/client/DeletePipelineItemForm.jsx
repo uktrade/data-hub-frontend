@@ -41,7 +41,7 @@ function DeletePipelineItemForm({
        * TODO: Replace with react router navigation.
        * As we move to SPA clear the saveId from the state before navigation.
        */
-      window.location.href = getPipelineUrl(currentPipelineItem)
+      window.location.href = getPipelineUrl(currentPipelineItem.status)
     }
   }, [itemDeleted])
 
@@ -93,7 +93,7 @@ function DeletePipelineItemForm({
                     >
                       <FormActions>
                         <Button buttonColour={RED}>Delete project</Button>
-                        <Link href={getPipelineUrl(currentPipelineItem)}>
+                        <Link href={getPipelineUrl(currentPipelineItem.status)}>
                           Cancel
                         </Link>
                       </FormActions>

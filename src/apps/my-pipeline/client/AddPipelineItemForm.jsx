@@ -129,8 +129,8 @@ function AddPipelineItemForm({
                     })}
                     analyticsFormName="addCompanyToPipeline"
                     redirectTo={(result) => getPipelineUrl(result.status)}
-                    flashMessage={() =>
-                      `You added ${companyName} to your pipeline`
+                    flashMessage={(result) =>
+                      `You added ${result.name} to your pipeline`
                     }
                     submitButtonLabel="Create project"
                     actionLinks={[

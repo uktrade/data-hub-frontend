@@ -68,12 +68,6 @@ function EditPipelineItemForm({ pipelineItemId, contacts, sectors }) {
             }
             sectors={sectors}
             contacts={contacts}
-            actionLinks={[
-              {
-                href: urls.pipeline.index(),
-                children: 'Cancel',
-              },
-            ]}
             flashMessage={(result) => `You saved changes to ${result.name}`}
             redirectTo={(result) => getPipelineUrl(result.status)}
           />
@@ -86,10 +80,6 @@ function EditPipelineItemForm({ pipelineItemId, contacts, sectors }) {
 EditPipelineItemForm.propTypes = {
   pipelineItemId: PropTypes.string,
   currentPipeline: PipelineItemPropType,
-  features: PropTypes.shape({
-    code: PropTypes.string,
-    is_active: PropTypes.string,
-  }),
 }
 
 export default EditPipelineItemForm
