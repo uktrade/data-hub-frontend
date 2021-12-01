@@ -1,6 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-
+import {
+  BLACK,
+  FOCUS_COLOUR,
+  GREY_1,
+  GREY_2,
+  TEXT_COLOUR,
+  WHITE,
+} from 'govuk-colours'
+import { FOCUSABLE, SPACING } from '@govuk-react/constants'
+import Label from '@govuk-react/label'
 import multiInstance from '../../utils/multiinstance'
 
 import {
@@ -14,32 +23,109 @@ import {
   TYPEAHEAD__OPTION_REMOVE,
 } from '../../actions'
 
+import AssistiveText from './AssistiveText'
 import SelectedChips from './SelectedChips'
-import { getActionFromKey, getUpdatedIndex, menuActions } from './utils'
+import {
+  getActionFromKey,
+  getUpdatedIndex,
+  maintainScrollVisibility,
+  menuActions,
+} from './utils'
 import reducer from './reducer'
 
 const ListboxOption = styled('div')((props) => ({
-  border: props.focussed ? 'solid #f00 3px' : 'none',
-  paddingLeft: 20, // use a constant
+  padding: `${SPACING.SCALE_3} 0 ${SPACING.SCALE_3} 38px`,
+  borderBottom: `solid 1px ${GREY_2}`,
   position: 'relative',
+  boxSizing: 'border-box',
+  height: 50,
+  display: 'flex',
+  alignItems: 'center',
+  cursor: 'pointer',
 
+  '&:last-child': {
+    borderBottom: 'none',
+  },
+  '&:hover': {
+    backgroundColor: 'rgba(0,0,0,0.1)',
+  },
   '::before': {
     content: '""',
     position: 'absolute',
-    left: 0,
-    top: 0,
-    width: 15,
-    height: 15,
-    backgroundColor: props['aria-selected'] ? 'red' : 'none',
-    border: 'solid 1px #333',
+    left: 5,
+    top: 'calc(50% - 10px)',
+    width: 20,
+    height: 20,
+    boxSizing: 'border-box',
+    border: `solid 1px ${TEXT_COLOUR}`,
+    outline: props.focussed ? `3px solid ${FOCUS_COLOUR}` : 'none',
+    outlineOffset: 0,
+  },
+  '::after': {
+    display: props['aria-selected'] ? 'block' : 'none',
+    content: '""',
+    borderBottom: '2px solid #000',
+    borderRight: '2px solid #000',
+    height: 12,
+    position: 'absolute',
+    left: 12,
+    top: 'calc(50% - 2px)',
+    transform: 'translate(0, -50%) rotate(45deg)',
+    width: 5,
   },
 }))
 
+const NoOptionsMessage = styled('div')({
+  padding: `${SPACING.SCALE_3} 0`,
+  boxSizing: 'border-box',
+  height: 50,
+  textAlign: 'center',
+  color: GREY_1,
+})
+
+const InputWrapper = styled('div')({
+  position: 'relative',
+
+  '&::after': {
+    borderBottom: `2px solid ${BLACK}`,
+    borderRight: `2px solid ${BLACK}`,
+    content: '""',
+    display: 'block',
+    height: 12,
+    pointerEvents: 'none',
+    position: 'absolute',
+    right: 16,
+    top: '50%',
+    transform: 'translate(0, -65%) rotate(45deg)',
+    width: 12,
+  },
+})
+
+const AutocompleteInput = styled('input')(FOCUSABLE, {
+  backgroundColor: WHITE,
+  boxSizing: 'border-box',
+  border: `2px solid ${BLACK}`,
+  display: 'block',
+  fontSize: '1em',
+  padding: '8px 12px 10px',
+  textAlign: 'left',
+  width: '100%',
+})
+
 const Menu = styled('div')(({ open }) => ({
   display: open ? 'block' : 'none',
+  backgroundColor: WHITE,
+  boxSizing: 'border-box',
+  border: `1px solid ${BLACK}`,
+  maxHeight: 300,
+  overflowY: 'scroll',
+  left: 0,
+  position: 'absolute',
+  top: '100%',
+  width: '100%',
+  zIndex: 100,
 }))
 
-// Show highlight over active item (can be selected by keyboard or hover)
 const Typeahead = ({
   name,
   label = '',
@@ -48,6 +134,7 @@ const Typeahead = ({
   input = '',
   selectedOptions = [],
   focusIndex,
+  multiSelect = true,
   onBlur,
   onFocusChange,
   onInput,
@@ -59,8 +146,9 @@ const Typeahead = ({
   value,
 }) => {
   const inputRef = React.useRef(null)
+  const menuRef = React.useRef(null)
   const filteredOptions = input
-    ? options.filter((option) => option.label.startsWith(input))
+    ? options.filter((option) => option.label.includes(input))
     : options
   const activeId =
     menuOpen && filteredOptions[focusIndex]
@@ -75,13 +163,19 @@ const Typeahead = ({
       case menuActions.first:
       case menuActions.previous:
         event.preventDefault()
-        onFocusChange(getUpdatedIndex(focusIndex, max, action))
+        const newFocusIndex = getUpdatedIndex(focusIndex, max, action)
+        onFocusChange(newFocusIndex)
+        maintainScrollVisibility({
+          parent: menuRef.current,
+          target: menuRef.current.children[newFocusIndex],
+        })
         return
       case menuActions.closeSelect:
         event.preventDefault()
         onOptionToggle(filteredOptions[focusIndex])
-        // Single select - close menu
-        // Multi select - keep open
+        if (!multiSelect) {
+          onMenuClose()
+        }
         return
       case menuActions.close:
         event.preventDefault()
@@ -94,14 +188,16 @@ const Typeahead = ({
   }
   return (
     <div id={name}>
-      <label id={`${name}-label`}>{label}</label>
-      <SelectedChips
-        name={name}
-        selectedOptions={selectedOptions}
-        onOptionRemove={onOptionRemove}
-      />
-      <div>
-        <input
+      <Label id={`${name}-label`}>{label}</Label>
+      {Boolean(selectedOptions.length) && (
+        <SelectedChips
+          name={name}
+          selectedOptions={selectedOptions}
+          onOptionRemove={onOptionRemove}
+        />
+      )}
+      <InputWrapper>
+        <AutocompleteInput
           aria-activedescendant={activeId}
           aria-autocomplete="list"
           aria-controls={`${name}-listbox`}
@@ -123,6 +219,7 @@ const Typeahead = ({
           role="listbox"
           aria-labelledby={`${name}-label`}
           aria-multiselectable="true"
+          ref={menuRef}
         >
           {filteredOptions.map((option, index) => (
             <ListboxOption
@@ -131,18 +228,29 @@ const Typeahead = ({
               focussed={index === focusIndex}
               role="option"
               aria-selected={selectedOptions.indexOf(option) > -1}
+              aria-setsize={filteredOptions.length}
+              aria-posinset={index}
               onClick={() => {
                 inputRef.current && inputRef.current.focus()
                 onOptionToggle(option)
+                if (!multiSelect) {
+                  onMenuClose()
+                }
               }}
-              onMouseDown={() => onOptionMouseDown()}
-              onMouseEnter={() => onFocusChange(index)}
+              onMouseDown={() => {
+                onFocusChange(index)
+                onOptionMouseDown()
+              }}
             >
               {option.label}
             </ListboxOption>
           ))}
+          {!filteredOptions.length && (
+            <NoOptionsMessage>No Options</NoOptionsMessage>
+          )}
         </Menu>
-      </div>
+      </InputWrapper>
+      <AssistiveText name={name} />
     </div>
   )
 }

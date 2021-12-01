@@ -1,13 +1,60 @@
 import React from 'react'
+import styled from 'styled-components'
+
+import { TEXT_COLOUR, GREY_3 } from 'govuk-colours'
+import { FOCUSABLE, SPACING } from '@govuk-react/constants'
+
+const ChipList = styled('ul')({
+  listStyleType: 'none',
+  margin: `${SPACING.SCALE_1} 0`,
+  padding: 0,
+})
+
+const Chip = styled('li')({
+  display: 'inline-block',
+  margin: `${SPACING.SCALE_1} 0`,
+})
+
+const ChipButton = styled('button')(FOCUSABLE, {
+  backgroundColor: GREY_3,
+  border: 'none',
+  borderRadius: 3,
+  color: TEXT_COLOUR,
+  fontSize: '0.75em',
+  fontWeight: 'bold',
+  marginBottom: 0,
+  marginRight: 6,
+  padding: `${SPACING.SCALE_1} 1.75em ${SPACING.SCALE_1} ${SPACING.SCALE_1}`,
+  position: 'relative',
+  cursor: 'pointer',
+
+  '&::before, &::after': {
+    borderRight: `1px solid ${TEXT_COLOUR}`,
+    content: '""',
+    height: '1em',
+    right: '0.75em',
+    position: 'absolute',
+    top: '50%',
+    width: 0,
+  },
+
+  '&::before': {
+    transform: 'translate(0, -50%) rotate(45deg)',
+  },
+
+  '&::after': {
+    transform: 'translate(0, -50%) rotate(-45deg)',
+  },
+})
 
 const SelectedChips = ({ name, selectedOptions, onOptionRemove }) => (
-  <ul id={`${name}-selected`}>
+  <ChipList id={`${name}-selected`}>
     <span id={`${name}-remove`} style={{ display: 'none' }}>
       remove
     </span>
     {selectedOptions.map((option) => (
-      <li key={option.value}>
-        <button
+      <Chip key={option.value}>
+        <ChipButton
           type="button"
           aria-describedby={`${name}-remove`}
           onClick={() => {
@@ -15,10 +62,10 @@ const SelectedChips = ({ name, selectedOptions, onOptionRemove }) => (
           }}
         >
           {option.label}
-        </button>
-      </li>
+        </ChipButton>
+      </Chip>
     ))}
-  </ul>
+  </ChipList>
 )
 
 export default SelectedChips
