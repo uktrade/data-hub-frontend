@@ -81,12 +81,7 @@ function PipelineForm({
             <Resource
               name={TASK_GET_PIPELINE_COMPANY_CONTACTS}
               id="getCompanyContacts"
-              payload={{
-                params: {
-                  company_id: companyId || values.company.id,
-                  limit: 500,
-                },
-              }}
+              payload={{ companyId: companyId || values.company.id }}
             >
               {(contacts) => (
                 <FieldTypeahead
