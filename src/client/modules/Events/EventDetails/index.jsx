@@ -10,9 +10,9 @@ import { TASK_GET_EVENT_DETAILS, ID, state2props } from './state'
 import { EVENTS__DETAILS_LOADED } from '../../../actions'
 
 import Task from '../../../components/Task'
-import LocalHeader from '../../../components/LocalHeader/LocalHeader'
 
 import {
+  LocalHeader,
   LocalNav,
   LocalNavLink,
   Main,
