@@ -23,10 +23,10 @@ function formatInitialValues(values) {
   return {
     name: values.name,
     category: values.status,
-    likelihood: String(values.likelihood_to_win),
+    likelihood: String(values.likelihoodToWin),
     sector: sector ? { value: sector.id, label: sector.segment } : null,
     contacts: contacts?.map(({ id, name }) => ({ value: id, label: name })),
-    export_value: values.potential_value,
+    export_value: values.potentialValue,
     company: values.company,
     expected_win_date: isDateValid(expectedWinDate)
       ? {
