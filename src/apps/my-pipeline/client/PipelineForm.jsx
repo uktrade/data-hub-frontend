@@ -14,8 +14,6 @@ import Resource from '../../../client/components/Resource'
 import { ID as STATE_ID, TASK_GET_PIPELINE_COMPANY_CONTACTS } from './state'
 import { STATUS_VALUES, LIKELIHOOD_VALUES } from './constants'
 
-import { getPipelineUrl } from './utils'
-
 const statusOptions = STATUS_VALUES.map(({ value, label }) => ({
   value,
   label,
@@ -32,11 +30,9 @@ function PipelineForm({
   redirectTo,
   flashMessage,
   submitButtonLabel,
-  initialValuesPayload,
-  initialValuesTaskName,
-  transformInitialValues,
   companyId,
-  status,
+  actionLinks,
+  initialValues,
 }) {
   return (
     <TaskForm
@@ -47,15 +43,8 @@ function PipelineForm({
       redirectTo={redirectTo}
       flashMessage={flashMessage}
       submitButtonLabel={submitButtonLabel}
-      actionLinks={[
-        {
-          href: getPipelineUrl(status),
-          children: 'Cancel',
-        },
-      ]}
-      initialValuesPayload={initialValuesPayload}
-      initialValuesTaskName={initialValuesTaskName}
-      transformInitialValues={transformInitialValues}
+      actionLinks={actionLinks}
+      initialValues={initialValues}
     >
       {({ values }) => (
         <>
