@@ -27,7 +27,7 @@ import { FieldConstructionRiskRadios } from '../../../../../client/components/Fo
 import { FieldAssetClassTypeahead } from '../../../../../client/components/Form/elements/AssetClassOptions'
 
 import { CLEARED_REFERENCE, ISSUES_IDENTIFIED_REFERENCE } from './constants'
-import { idNameToValueLabel } from './tasks'
+import { idNamesToValueLabels } from '../../../../../client/utils'
 
 import { FieldOpportunityValueTypeRadios } from '../../../../../client/components/Form/elements/FieldOpportunityValueType'
 
@@ -43,6 +43,7 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
     requiredChecksConductedOn,
     constructionRisks,
     opportunityValue,
+    ukRegions,
     promoters,
     otherDitContacts,
   } = opportunity.detailsFields
@@ -84,7 +85,12 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
               name="description"
               type="text"
             />
-            <FieldUKRegionTypeahead isMulti={true} name="ukRegions" />
+            <FieldUKRegionTypeahead
+              isMulti={true}
+              initialValue={ukRegions}
+              name="ukRegions"
+              aria-label="Select a uk location"
+            />
             {/* TODO: Use FieldTaskTypeahead */}
             <FieldTypeahead
               isMulti={true}
@@ -103,7 +109,7 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
                       },
                     })
                     .then(({ data: { results } }) =>
-                      results.map(idNameToValueLabel)
+                      idNamesToValueLabels(results)
                     ),
                 500
               )}
