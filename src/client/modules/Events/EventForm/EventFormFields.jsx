@@ -20,7 +20,7 @@ import { validateStartDateBeforeOrEqualToEndDate } from './validators'
 import urls from '../../../../lib/urls'
 
 export const EventFormFields = ({ values }) => {
-  return values && values.metadata ? (
+  return (
     <>
       <article>
         <p>Select a trade agreement and then a related event.</p>
@@ -50,7 +50,7 @@ export const EventFormFields = ({ values }) => {
                 isMulti={true}
                 closeMenuOnSelect={true}
                 name="related_trade_agreements"
-                options={values.metadata.relatedTradeAgreements}
+                options={values?.metadata?.relatedTradeAgreements}
                 placeholder="Search trade agreements"
                 required="Select at least one trade agreement"
                 aria-label="Select a trade agreement"
@@ -70,7 +70,7 @@ export const EventFormFields = ({ values }) => {
       <FieldTypeahead
         name="event_type"
         label="Type of event"
-        options={values.metadata.eventTypeOptions}
+        options={values?.metadata?.eventTypeOptions}
         placeholder="Select event type"
         required="Select at least one event type"
         aria-label="Select an event type"
@@ -90,7 +90,7 @@ export const EventFormFields = ({ values }) => {
       <FieldTypeahead
         name="location_type"
         label="Event location type (optional)"
-        options={values.metadata.eventLocationTypes}
+        options={values?.metadata?.eventLocationTypes}
         placeholder="Select event"
         aria-label="Select an event"
         noOptionsMessage={() => <span>No event location found</span>}
@@ -122,7 +122,7 @@ export const EventFormFields = ({ values }) => {
       <FieldTypeahead
         name="address_country"
         label="Country"
-        options={values.metadata.countries}
+        options={values?.metadata?.countries}
         required="Enter a country"
         placeholder="Select country"
         aria-label="Select a country"
@@ -132,7 +132,7 @@ export const EventFormFields = ({ values }) => {
         <FieldTypeahead
           name="uk_region"
           label="UK Region"
-          options={values.metadata.ukRegions}
+          options={values?.metadata?.ukRegions}
           required="Select a UK region"
           placeholder="Select region"
           aria-label="Select a region"
@@ -143,7 +143,7 @@ export const EventFormFields = ({ values }) => {
       <FieldTypeahead
         name="lead_team"
         label="Team hosting the event"
-        options={values.metadata.teams}
+        options={values?.metadata?.teams}
         required="Select at least one team hosting the event"
         placeholder="Select team"
         aria-label="Select an team"
@@ -153,7 +153,7 @@ export const EventFormFields = ({ values }) => {
         name="service"
         label="Service"
         required="Select at least one service"
-        options={values.metadata.services}
+        options={values?.metadata?.services}
         placeholder="Select service"
         aria-label="Select a service"
         noOptionsMessage={() => <span>No service found</span>}
@@ -177,7 +177,7 @@ export const EventFormFields = ({ values }) => {
                 isMulti={true}
                 closeMenuOnSelect={true}
                 name="teams"
-                options={values.metadata.teams}
+                options={values?.metadata?.teams}
                 placeholder="Select team"
                 required="Select at least one team"
                 aria-label="Select at least one team"
@@ -193,14 +193,14 @@ export const EventFormFields = ({ values }) => {
         isMulti={true}
         closeMenuOnSelect={true}
         name="related_programmes"
-        options={values.metadata.programmes}
+        options={values?.metadata?.programmes}
         placeholder="Select programme"
         required="Select at least one related programme"
         aria-label="Select at least one related programme"
         noOptionsMessage={() => <span>No programmes found</span>}
       />
     </>
-  ) : null
+  )
 }
 
 const valueLabelShape = PropTypes.shape({
