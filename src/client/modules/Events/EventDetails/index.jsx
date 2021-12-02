@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { useParams } from 'react-router-dom'
 
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
@@ -28,6 +27,7 @@ const StyledSummaryTable = styled(SummaryTable)({
 })
 
 const EventDetails = ({
+  eventId,
   name,
   eventType,
   startDate,
@@ -47,7 +47,6 @@ const EventDetails = ({
   disabledOn,
   flashMessages,
 }) => {
-  const { id } = useParams()
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -67,7 +66,7 @@ const EventDetails = ({
       id={ID}
       progressMessage="loading event details"
       startOnRender={{
-        payload: id,
+        payload: eventId,
         onSuccessDispatch: EVENTS__DETAILS_LOADED,
       }}
     >
@@ -85,13 +84,13 @@ const EventDetails = ({
                   <LocalNav data-test="event-details-nav">
                     <LocalNavLink
                       data-test="event-details-nav-link"
-                      href={urls.events.details(id)}
+                      href={urls.events.details(eventId)}
                     >
                       Details
                     </LocalNavLink>
                     <LocalNavLink
                       data-test="event-details-nav-link"
-                      href={urls.events.attendees(id)}
+                      href={urls.events.attendees(eventId)}
                     >
                       Attendees
                     </LocalNavLink>
@@ -170,7 +169,7 @@ const EventDetails = ({
                   </StyledSummaryTable>
                   {!disabledOn && (
                     <FormActions>
-                      <Button as={Link} href={urls.events.edit(id)}>
+                      <Button as={Link} href={urls.events.edit(eventId)}>
                         Edit event
                       </Button>
                     </FormActions>
