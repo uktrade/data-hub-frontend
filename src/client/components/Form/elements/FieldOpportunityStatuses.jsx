@@ -4,6 +4,7 @@ import React from 'react'
 import FieldRadios from './FieldRadios'
 import OpportunityStatusesResource from '../../Resource/OpportunityStatuses'
 
+// TODO: Refactor with ResourceOptionsField
 const FieldOpportunityStatuses = (props) => (
   <OpportunityStatusesResource>
     {(statuses) => (

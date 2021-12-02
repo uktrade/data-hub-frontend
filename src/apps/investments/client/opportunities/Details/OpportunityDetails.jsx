@@ -69,7 +69,7 @@ const OpportunitySection = ({
       ) : (
         <>
           <SummaryTable>{children}</SummaryTable>
-          <Button onClick={onEdit} dataTest={`${id}_button`}>
+          <Button onClick={onEdit} data-test={`${id}_button`}>
             Edit
           </Button>
         </>

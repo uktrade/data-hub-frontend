@@ -16,4 +16,10 @@ export default {
             task: 'result',
           })
     ),
+  'Load options': (payload, id) =>
+    new Promise((resolve, reject) =>
+      id.includes('reject')
+        ? setTimeout(reject, 2000, 'You broke the internet!')
+        : setTimeout(resolve, 5000, payload)
+    ),
 }
