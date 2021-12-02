@@ -20,7 +20,7 @@ import {
   Main,
 } from '..'
 import LocalHeader from '../LocalHeader/LocalHeader'
-import FlashMessages from '../LocalHeader/FlashMessages'
+import { FlashMessagesStateless } from '../LocalHeader/FlashMessages'
 import ContactResource from '../Resource/Contact'
 import CompanyResource from '../Resource/Company'
 import * as validators from '../Form/validators'
@@ -237,7 +237,7 @@ const _ContactForm = ({
                     {({ values }) => (
                       <>
                         {duplicateEmail && (
-                          <FlashMessages
+                          <FlashMessagesStateless
                             flashMessages={{
                               info: [
                                 duplicateEmailMessage(
