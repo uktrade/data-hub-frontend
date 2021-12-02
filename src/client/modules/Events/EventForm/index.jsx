@@ -61,7 +61,7 @@ const EventForm = ({ eventId }) => {
               analyticsFormName={eventId ? 'editEvent' : 'createEvent'}
               initialValuesTaskName={TASK_GET_EVENTS_FORM_AND_METADATA}
               initialValuesPayload={{
-                eventId: eventId,
+                eventId,
               }}
               redirectTo={({ data }) => urls.events.details(data.id)}
               redirectMode="hard"
