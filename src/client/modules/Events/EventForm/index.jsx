@@ -13,9 +13,26 @@ const DISPLAY_EDIT_EVENT = 'Edit event'
 const DISPLAY_ADD_EVENT = 'Add event'
 const DISPLAY_SAVE = 'Save and return'
 const DISPLAY_CANCEL = 'Return without saving'
+const DISPLAY_HOME = 'Home'
+const DISPLAY_EVENTS = 'Events'
 
 const EventForm = () => {
   const { id } = useParams()
+
+  const breadcrumbs = [
+    {
+      link: urls.dashboard(),
+      text: DISPLAY_HOME,
+    },
+    {
+      link: urls.events.index(),
+      text: DISPLAY_EVENTS,
+    },
+    {
+      link: undefined,
+      text: id ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT,
+    },
+  ]
 
   const cancelLink = [
     {
@@ -33,6 +50,7 @@ const EventForm = () => {
     <DefaultLayout
       heading={id ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT}
       pageTitle={id ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT}
+      breadcrumbs={breadcrumbs}
     >
       <TaskForm
         id="event-form"
