@@ -9,6 +9,7 @@ const FieldActiveITA = (props) => (
     placeholder="-- Select ITA --"
     {...props}
     taskName={AdvisersResource.taskName}
+    id="active-ita" //need to update the tests to reflect the way this new field works
     interceptOptionsPayload={(query) => ({
       autocomplete: query,
       dit_team__role: '5e329c18-6095-e211-a939-e4115bead28a',

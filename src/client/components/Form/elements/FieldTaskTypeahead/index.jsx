@@ -51,7 +51,9 @@ const FieldTaskTypeahead = ({
         <TaskTypeahead
           aria-label={label || legend}
           onBlur={onBlur}
-          onChange={(newValue) => setFieldValue(name, newValue)}
+          onChange={(newValue) => {
+            setFieldValue(name, newValue)
+          }}
           error={error}
           value={value}
           defaultValues={initialValue}

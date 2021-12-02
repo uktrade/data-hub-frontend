@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import React from 'react'
 import Select from 'react-select/base'
+import PropTypes from 'prop-types'
 
 import {
   TASK_REACT_SELECT__CHANGE,
@@ -104,3 +105,7 @@ export default multiInstance({
   },
   component: TaskTypeahead,
 })
+
+TaskTypeahead.propTypes = {
+  id: PropTypes.string.isRequired,
+}
