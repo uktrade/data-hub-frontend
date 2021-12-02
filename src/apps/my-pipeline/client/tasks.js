@@ -4,11 +4,12 @@ import { addMessage } from '../../../client/utils/flash-messages'
 import { transformValueForAPI } from '../../../client/utils/date'
 
 function transformValuesForApi(values, oldValues = {}) {
+  const sector = values.sector ? values.sector.value : null
   const data = {
     name: values.name,
     status: values.category,
+    sector: sector,
   }
-
   function addValue(key, value) {
     const existingValue = oldValues[key]
     const hasExistingValue = Array.isArray(existingValue)
@@ -21,14 +22,13 @@ function transformValuesForApi(values, oldValues = {}) {
   }
 
   addValue('likelihood_to_win', parseInt(values.likelihood, 10))
-  addValue('sector', values.sector?.value)
   addValue(
     'contacts',
     values.contacts ? values.contacts.map(({ value }) => value) : []
   )
   addValue('potential_value', values.export_value)
   addValue('expected_win_date', transformValueForAPI(values.expected_win_date))
-
+  debugger
   return data
 }
 
@@ -66,11 +66,11 @@ export async function getCompanyContacts({ companyId }) {
 export async function editPipelineItem({
   values,
   pipelineItemId,
-  currentPipelineItem,
+  pipelineItem,
 }) {
   const { data } = await pipelineApi.update(
     pipelineItemId,
-    transformValuesForApi(values, currentPipelineItem)
+    transformValuesForApi(values, pipelineItem)
   )
   return data
 }

@@ -24,7 +24,7 @@ function formatInitialValues(values) {
     name: values.name,
     category: values.status,
     likelihood: String(values.likelihoodToWin),
-    sector: sector ? { value: sector.id, label: sector.segment } : null,
+    sector: sector ? { value: sector.id, label: sector.segment } : undefined,
     contacts: contacts?.map(({ id, name }) => ({ value: id, label: name })),
     export_value: values.potentialValue,
     company: values.company,
@@ -59,9 +59,10 @@ function EditPipelineItemForm({ pipelineItemId, contacts, sectors }) {
             <>
               <PipelineForm
                 analyticsFormName="editPipelineItem"
-                transformPayload={(values) => ({
+                transformPayload={(values, pipelineItem) => ({
                   values,
                   pipelineItemId,
+                  pipelineItem,
                 })}
                 submissionTaskName={TASK_EDIT_PIPELINE_ITEM}
                 initialValues={formatInitialValues(pipelineItem)}
