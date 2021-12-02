@@ -2,11 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useParams } from 'react-router-dom'
 
-import GridRow from '@govuk-react/grid-row'
-import GridCol from '@govuk-react/grid-col'
-
 import urls from '../../../../lib/urls'
-import { Main, LocalHeader } from '../../../components'
+import { DefaultLayout } from '../../../components'
 import TaskForm from '../../../components/Task/Form'
 import { TASK_GET_EVENTS_FORM_AND_METADATA, TASK_SAVE_EVENT } from './state'
 import { EventFormFields } from './EventFormFields'
@@ -16,25 +13,9 @@ const DISPLAY_EDIT_EVENT = 'Edit event'
 const DISPLAY_ADD_EVENT = 'Add event'
 const DISPLAY_SAVE = 'Save and return'
 const DISPLAY_CANCEL = 'Return without saving'
-const DISPLAY_HOME = 'Home'
-const DISPLAY_EVENTS = 'Events'
 
 const EventForm = () => {
   const { id } = useParams()
-  const breadcrumbs = [
-    {
-      link: urls.dashboard(),
-      text: DISPLAY_HOME,
-    },
-    {
-      link: urls.events.index(),
-      text: DISPLAY_EVENTS,
-    },
-    {
-      link: undefined,
-      text: id ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT,
-    },
-  ]
 
   const cancelLink = [
     {
@@ -49,35 +30,28 @@ const EventForm = () => {
   }
 
   return (
-    <>
-      <LocalHeader
-        breadcrumbs={breadcrumbs}
-        heading={id ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT}
-      />
-      <Main>
-        <GridRow data-test="eventForm">
-          <GridCol setWidth="three-quarters">
-            <TaskForm
-              id="event-form"
-              submissionTaskName={TASK_SAVE_EVENT}
-              analyticsFormName={id ? 'editEvent' : 'createEvent'}
-              initialValuesTaskName={TASK_GET_EVENTS_FORM_AND_METADATA}
-              initialValuesPayload={{
-                eventId: id,
-              }}
-              redirectTo={({ data }) => urls.events.details(data.id)}
-              redirectMode="hard"
-              flashMessage={flashMessage}
-              submitButtonLabel={id ? DISPLAY_SAVE : DISPLAY_ADD_EVENT}
-              actionLinks={cancelLink}
-              transformPayload={transformEventFormForAPIRequest}
-            >
-              {({ values }) => <EventFormFields values={values} />}
-            </TaskForm>
-          </GridCol>
-        </GridRow>
-      </Main>
-    </>
+    <DefaultLayout
+      heading={id ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT}
+      pageTitle={id ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT}
+    >
+      <TaskForm
+        id="event-form"
+        submissionTaskName={TASK_SAVE_EVENT}
+        analyticsFormName={id ? 'editEvent' : 'createEvent'}
+        initialValuesTaskName={TASK_GET_EVENTS_FORM_AND_METADATA}
+        initialValuesPayload={{
+          eventId: id,
+        }}
+        redirectTo={({ data }) => urls.events.details(data.id)}
+        redirectMode="hard"
+        flashMessage={flashMessage}
+        submitButtonLabel={id ? DISPLAY_SAVE : DISPLAY_ADD_EVENT}
+        actionLinks={cancelLink}
+        transformPayload={transformEventFormForAPIRequest}
+      >
+        {({ values }) => <EventFormFields values={values} />}
+      </TaskForm>
+    </DefaultLayout>
   )
 }
 

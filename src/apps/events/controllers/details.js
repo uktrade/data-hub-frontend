@@ -1,3 +1,4 @@
+// TODO: Remove RR-231
 const renderDetailsPage = ({ params: { eventId } }, res, next) => {
   try {
     const { event } = res.locals

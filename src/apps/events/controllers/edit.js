@@ -93,6 +93,7 @@ async function renderEditPage(req, res, next) {
   }
 }
 
+// TODO: Remove RR-231
 async function renderFormPage(req, res, next) {
   try {
     const eventId = get(res.locals.event, 'id', '')
