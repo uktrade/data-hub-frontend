@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link as RouterLink } from 'react-router-dom'
 
 import styled from 'styled-components'
 import { H3 } from '@govuk-react/heading'
@@ -58,6 +59,7 @@ const CollectionItem = ({
   metadata,
   metadataRenderer,
   titleRenderer = null,
+  useReactRouter = false,
 }) => (
   <ItemWrapper data-test="collection-item">
     {badges && (
@@ -74,7 +76,13 @@ const CollectionItem = ({
       titleRenderer(headingText, headingUrl)
     ) : headingUrl ? (
       <StyledLinkHeader>
-        <Link href={headingUrl}>{headingText}</Link>
+        {!useReactRouter ? (
+          <Link href={headingUrl}>{headingText}</Link>
+        ) : (
+          <Link as={RouterLink} to={headingUrl}>
+            {headingText}
+          </Link>
+        )}
       </StyledLinkHeader>
     ) : (
       <StyledHeader>{headingText}</StyledHeader>

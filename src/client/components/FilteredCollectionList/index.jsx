@@ -38,6 +38,7 @@ const FilteredCollectionList = ({
   addItemUrl,
   defaultQueryParams,
   titleRenderer = null,
+  useReactRouter = false,
 }) => {
   const totalPages = Math.ceil(
     Math.min(count, maxItemsToPaginate) / itemsPerPage
@@ -95,6 +96,7 @@ const FilteredCollectionList = ({
                               {...item}
                               key={item.id}
                               titleRenderer={titleRenderer}
+                              useReactRouter={useReactRouter}
                             />
                           ))}
                         </ol>
