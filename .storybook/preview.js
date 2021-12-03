@@ -12,7 +12,7 @@ import companyListsTasks from '../src/client/components/CompanyLists/tasks/dummy
 import taskStoriesTasks from '../src/client/components/Task/__stories__/tasks.js'
 import contactTasks from '../src/client/components/Resource/__stories__/tasks.js'
 import taskFormTasks from '../src/client/components/Task/Form/__stories__/tasks'
-import eventFormAndMetadataTasks from '../src/apps/events/client/Form/__stories__/tasks.js'
+import eventFormAndMetadataTasks from '../src/client/modules/Events/EventForm/__stories__/tasks'
 
 const GlobalStyle = createGlobalStyle`
   body {

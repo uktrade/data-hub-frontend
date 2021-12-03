@@ -42,15 +42,15 @@ import Dashboard from './components/Dashboard'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyLocalHeader from './components/CompanyLocalHeader'
 import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/CompanyOrdersCollection'
-import EventDetails from '../apps/events/client/Details/EventDetails.jsx'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
+import EventDetails from '../client/modules/Events/EventDetails'
 import CompanyProjectsCollection from '../apps/investments/client/projects/CompanyProjectsCollection.jsx'
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
 import OpportunityChangeStatusForm from './components/OpportunityChangeStatusForm'
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
 import createUKInvestmentOpportunityTask from './components/CreateUKInvestmentOpportunity/tasks'
-import EventForm from '../apps/events/client/Form/EventForm'
+import EventForm from '../client/modules/Events/EventForm'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -115,18 +115,18 @@ import {
   TASK_GET_EVENTS_LIST,
   TASK_GET_EVENTS_ORGANISER_NAME,
   TASK_GET_EVENTS_METADATA,
-} from '../apps/events/client/state'
+} from '../client/modules/Events/CollectionList/state'
 
-import { TASK_GET_EVENT_DETAILS } from '../apps/events/client/Details/state'
-import { getEventDetails } from '../apps/events/client/Details/tasks'
+import { TASK_GET_EVENT_DETAILS } from '../client/modules/Events/EventDetails/state'
+import { getEventDetails } from '../client/modules/Events/EventDetails/tasks'
 import {
   TASK_GET_EVENTS_FORM_AND_METADATA,
   TASK_SAVE_EVENT,
-} from '../apps/events/client/Form/state'
+} from '../client/modules/Events/EventForm/state'
 import {
   getEventFormAndMetadata,
   saveEvent,
-} from '../apps/events/client/Form/tasks'
+} from '../client/modules/Events/EventForm/tasks'
 
 import {
   getEvents,

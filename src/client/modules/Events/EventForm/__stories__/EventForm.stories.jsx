@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
-import EventForm from '../EventForm'
+import EventForm from '..'
 
 storiesOf('Task/Form/Event Form/Create Event Form', module)
   .addParameters({

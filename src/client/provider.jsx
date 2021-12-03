@@ -94,8 +94,8 @@ import contactsReducer from './modules/Contacts/CollectionList/reducer'
 import { ID as INTERACTIONS_ID } from './modules/Interactions/CollectionList/state'
 import interactionsReducer from './modules/Interactions/CollectionList/reducer'
 
-import { ID as EVENTS_DETAILS_ID } from '../apps/events/client/Details/state'
-import eventDetailsReducer from '../apps/events/client/Details/reducer'
+import { ID as EVENTS_DETAILS_ID } from './modules/Events/EventDetails/state'
+import eventDetailsReducer from './modules/Events/EventDetails/reducer'
 
 import { ID as EVENTS_ID } from './modules/Events/CollectionList/state'
 import eventsReducer from './modules/Events/CollectionList/reducer'

@@ -1,4 +1,4 @@
-import { apiProxyAxios } from '../../../../client/components/Task/utils'
+import { apiProxyAxios } from '../../../components/Task/utils'
 import { transformResponseToEventDetails } from '../transformers'
 
 export const getEventDetails = (eventId) =>

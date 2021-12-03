@@ -4,7 +4,7 @@ import urls from '../../../../lib/urls'
 import { getMetadataOptions } from '../../../metadata'
 import { getPageOffset } from '../../../../lib/pagination'
 
-import { transformResponseToEventCollection } from './transformers'
+import { transformResponseToEventCollection } from '../transformers'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 

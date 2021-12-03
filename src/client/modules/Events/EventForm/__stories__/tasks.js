@@ -1,4 +1,4 @@
-import { TASK_GET_EVENTS_FORM_AND_METADATA } from '../../../../../apps/events/client/Form/state'
+import { TASK_GET_EVENTS_FORM_AND_METADATA } from '../state'
 
 const eventTypeOptions = [
   {
