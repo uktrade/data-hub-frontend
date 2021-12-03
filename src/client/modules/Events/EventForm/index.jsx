@@ -37,7 +37,7 @@ const EventForm = () => {
   const cancelLink = [
     {
       children: DISPLAY_CANCEL,
-      href: id ? urls.events.details(id) : urls.events.index(),
+      to: id ? urls.events.details(id) : urls.events.index(),
     },
   ]
 
