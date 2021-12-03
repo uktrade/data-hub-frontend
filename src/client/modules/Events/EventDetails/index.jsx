@@ -11,7 +11,6 @@ import urls from '../../../../lib/urls'
 import { TASK_GET_EVENT_DETAILS, ID, state2props } from './state'
 import { EVENTS__DETAILS_LOADED } from '../../../actions'
 import Task from '../../../components/Task'
-// TODO: RR-231 Remove
 import { getMessages } from '../../../utils/flash-messages'
 import {
   LocalNav,

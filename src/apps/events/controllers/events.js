@@ -1,4 +1,4 @@
-const renderEventsView = async (req, res, next) => {
+const renderReactifiedEventsView = async (req, res, next) => {
   try {
     const { user } = req.session
     const currentAdviserId = user.id
@@ -16,5 +16,5 @@ const renderEventsView = async (req, res, next) => {
 }
 
 module.exports = {
-  renderEventsView,
+  renderReactifiedEventsView,
 }
