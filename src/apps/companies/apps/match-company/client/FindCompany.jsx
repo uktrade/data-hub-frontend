@@ -4,16 +4,14 @@ import { H4 } from '@govuk-react/heading'
 import InsetText from '@govuk-react/inset-text'
 
 import urls from '../../../../../lib/urls'
-import {
-  SummaryList,
-  FieldDnbCompany,
-  FormStateful,
-} from '../../../../../client/components'
+import { SummaryList, FieldDnbCompany } from '../../../../../client/components'
 import EntityListItem from '../../../../../client/components/EntityList/EntityListItem'
+import TaskForm from '../../../../../client/components/Task/Form'
 
 function FindCompany({ company, csrfToken }) {
   return (
-    <FormStateful
+    <TaskForm
+      id="find-company"
       initialValues={{
         dnbCompanyName: company.name,
         dnbPostalCode: company.postcode,
@@ -56,7 +54,7 @@ function FindCompany({ company, csrfToken }) {
          company. You'll be given a chance to review the new business details
           before you verify."
       />
-    </FormStateful>
+    </TaskForm>
   )
 }
 
