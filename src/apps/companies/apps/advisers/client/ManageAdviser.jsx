@@ -1,7 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
-import { throttle } from 'lodash'
 import styled from 'styled-components'
 
 import {
@@ -19,12 +17,13 @@ import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeade
 import {
   FormActions,
   FieldInput,
-  FieldTypeahead,
   StatusMessage,
   Main,
 } from '../../../../../client/components'
 
 import TaskForm from '../../../../../client/components/Task/Form'
+
+import FieldActiveITA from '../../../../../client/components/Form/elements/FieldActiveITA'
 
 const StyledStatusMessage = styled(StatusMessage)`
   p {
@@ -86,33 +85,10 @@ const Add = ({ cancelUrl, currentLeadITA, companyName, companyId }) => (
         actionLinks={[{ children: 'Cancel', href: cancelUrl }]}
         submitButtonLabel="Add Lead ITA"
       >
-        <FieldTypeahead
+        <FieldActiveITA
           name="dit_participants"
-          label="Select an ITA"
           hint="Who should be the primary point of contact?"
-          placeholder="-- Select ITA --"
-          noOptionsMessage={() => 'Type to search for advisers'}
           required="Select an ITA"
-          loadOptions={throttle(
-            (searchString) =>
-              axios
-                .get('/api-proxy/adviser/', {
-                  params: {
-                    autocomplete: searchString,
-                    dit_team__role: '5e329c18-6095-e211-a939-e4115bead28a',
-                    is_active: 'true',
-                  },
-                })
-                .then(({ data: { results } }) =>
-                  results
-                    .filter((adviser) => adviser?.name.trim().length)
-                    .map(({ id, name, dit_team }) => ({
-                      label: `${name}${dit_team ? ', ' + dit_team.name : ''}`,
-                      value: id,
-                    }))
-                ),
-            500
-          )}
         />
         <H3 as="h2">What happens next</H3>
         <UnorderedList listStyleType="bullet">

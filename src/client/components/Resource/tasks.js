@@ -1,3 +1,4 @@
+import Advisers from './Advisers'
 import Contact from './Contact'
 import Company from './Company'
 import Countries from './Countries'
@@ -11,6 +12,7 @@ import AssetClasses from './AssetClasses'
 import OpportunityValueType from './OpportunityValueType'
 
 export default {
+  ...Advisers.tasks,
   ...Company.tasks,
   ...Contact.tasks,
   ...Countries.tasks,

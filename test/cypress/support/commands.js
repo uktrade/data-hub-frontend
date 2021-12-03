@@ -116,7 +116,9 @@ Cypress.Commands.add(
   'selectTypeaheadOption',
   { prevSubject: 'element' },
   (subject, text) => {
-    cy.wrap(subject).find('input').type(text, { force: true }).type('{enter}')
+    cy.wrap(subject).find('input').type(text, { force: true })
+    cy.wait(100) //wait for typeahead options to load
+    cy.wrap(subject).find('input').type('{enter}')
 
     return cy.wrap(subject)
   }
