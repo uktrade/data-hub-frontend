@@ -1,24 +1,14 @@
-const axios = require('axios')
+import { apiProxyAxios } from '../../../../../client/components/Task/utils'
 
-export function updateAdviser({ values }) {
-  const { dit_participants, companyId } = values
-  return axios
-    .post(
-      `/api-proxy/v4/company/${companyId}/assign-regional-account-manager`,
-      {
-        regional_account_manager: dit_participants.value,
-      }
-    )
-    .then(() => {
-      return axios
-        .get(`/api-proxy/v4/company/${companyId}`)
-        .then(
-          ({ data: { one_list_group_global_account_manager: adviser } }) => {
-            return {
-              name: adviser?.name,
-              email: adviser?.contact_email,
-            }
-          }
-        )
-    })
+export async function updateAdviser({ dit_participants, companyId }) {
+  await apiProxyAxios.post(
+    `/api-proxy/v4/company/${companyId}/assign-regional-account-manager`,
+    { regional_account_manager: dit_participants.value }
+  )
+  const { data } = await apiProxyAxios.get(`/api-proxy/v4/company/${companyId}`)
+  const leadIta = data.one_list_group_global_account_manager
+  return {
+    ...leadIta,
+    email: leadIta.contact_email,
+  }
 }

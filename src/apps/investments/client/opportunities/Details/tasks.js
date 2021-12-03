@@ -1,9 +1,8 @@
+import { idNamesToValueLabels } from '../../../../../client/utils'
 import { apiProxyAxios } from '../../../../../client/components/Task/utils'
 import { transformValueForAPI } from '../../../../../client/utils/date'
 
 import { transformInvestmentOpportunityDetails } from './transformers'
-
-export const idNameToValueLabel = ({ id, name }) => ({ value: id, label: name })
 
 export const getOpportunityDetails = ({ opportunityId }) =>
   apiProxyAxios
@@ -12,32 +11,12 @@ export const getOpportunityDetails = ({ opportunityId }) =>
 
 export const getDetailsMetadata = () =>
   Promise.all([
-    apiProxyAxios.get('/v4/metadata/uk-region'),
-    apiProxyAxios.get(
-      '/v4/metadata/capital-investment/required-checks-conducted'
-    ),
-    apiProxyAxios.get('/v4/metadata/capital-investment/asset-class-interest'),
-    apiProxyAxios.get('/v4/metadata/capital-investment/construction-risk'),
     apiProxyAxios.get(
       '/v4/metadata/large-capital-opportunity/opportunity-value-type'
     ),
-  ]).then(
-    ([
-      { data: ukRegions },
-      { data: requiredChecksConducted },
-      { data: classes },
-      { data: constructionRisks },
-      { data: valueTypes },
-    ]) => ({
-      ukRegions: ukRegions
-        .filter((region) => !region.disabled_on)
-        .map(idNameToValueLabel),
-      requiredChecksConducted: requiredChecksConducted.map(idNameToValueLabel),
-      classesOfInterest: classes.map(idNameToValueLabel),
-      constructionRisks: constructionRisks.map(idNameToValueLabel),
-      valueTypes: valueTypes.map(idNameToValueLabel),
-    })
-  )
+  ]).then(([{ data: valueTypes }]) => ({
+    valueTypes: idNamesToValueLabels(valueTypes),
+  }))
 
 export const getRequirementsMetadata = () =>
   Promise.all([
@@ -52,9 +31,9 @@ export const getRequirementsMetadata = () =>
       { data: returnRates },
       { data: timeScales },
     ]) => ({
-      investmentTypes: investmentTypes.map(idNameToValueLabel),
-      returnRates: returnRates.map(idNameToValueLabel),
-      timeScales: timeScales.map(idNameToValueLabel),
+      investmentTypes: idNamesToValueLabels(investmentTypes),
+      returnRates: idNamesToValueLabels(returnRates),
+      timeScales: idNamesToValueLabels(timeScales),
     })
   )
 
