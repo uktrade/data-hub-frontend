@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { isEmpty } from 'lodash'
 
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
@@ -108,58 +109,50 @@ const EventDetails = ({
                       }
                       children={startDate}
                     />
-
                     {eventDays > 1 ? (
                       <SummaryTable.Row
                         heading="Event end date"
                         children={endDate}
                       />
                     ) : null}
-
-                    <SummaryTable.Row
-                      heading="Event location type"
-                      children={locationType}
-                      hideWhenEmpty={false}
-                    />
-                    <SummaryTable.Row
-                      heading="Address"
-                      children={fullAddress}
-                    />
-                    <SummaryTable.Row
-                      heading="Region"
-                      children={ukRegion}
-                      hideWhenEmpty={false}
-                    />
-                    <SummaryTable.Row
-                      heading="Notes"
-                      children={notes}
-                      hideWhenEmpty={false}
-                    />
-                    <SummaryTable.Row heading="Lead team" children={leadTeam} />
-                    <SummaryTable.Row
-                      heading="Organiser"
-                      children={organiser}
-                    />
+                    <SummaryTable.Row heading="Event location type">
+                      {isEmpty(locationType) ? 'Not set' : locationType}
+                    </SummaryTable.Row>
+                    <SummaryTable.Row heading="Address">
+                      {fullAddress}
+                    </SummaryTable.Row>
+                    <SummaryTable.Row heading="Region" hideWhenEmpty={false}>
+                      {isEmpty(ukRegion) ? 'Not set' : ukRegion}
+                    </SummaryTable.Row>
+                    <SummaryTable.Row heading="Notes" hideWhenEmpty={false}>
+                      {isEmpty(notes) ? 'Not set' : notes}
+                    </SummaryTable.Row>
+                    <SummaryTable.Row heading="Lead team">
+                      {isEmpty(leadTeam) ? 'Not set' : leadTeam}
+                    </SummaryTable.Row>
+                    <SummaryTable.Row heading="Organiser">
+                      {isEmpty(organiser) ? 'Not set' : organiser}
+                    </SummaryTable.Row>
                     <SummaryTable.ListRow
                       heading="Other teams"
                       value={otherTeams}
-                      emptyValue=""
+                      emptyValue="Not set"
                       hideWhenEmpty={false}
                     />
                     <SummaryTable.ListRow
                       heading="Related programmes"
                       value={relatedProgrammes}
-                      emptyValue=""
+                      emptyValue="Not set"
                       hideWhenEmpty={false}
                     />
                     <SummaryTable.ListRow
                       heading="Related Trade Agreements"
                       value={relatedTradeAgreements}
-                      emptyValue=""
+                      emptyValue="Not set"
                       hideWhenEmpty={false}
                     />
                     <SummaryTable.Row heading="Service" children={service} />
-                    {archivedDocumentsUrlPath && (
+                    {!!archivedDocumentsUrlPath && (
                       <SummaryTable.Row heading="Documents">
                         <NewWindowLink href={archivedDocumentsUrlPath}>
                           View files and documents
