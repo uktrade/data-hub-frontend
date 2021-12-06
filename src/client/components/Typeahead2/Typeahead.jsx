@@ -134,7 +134,7 @@ const Typeahead = ({
   input = '',
   selectedOptions = [],
   focusIndex,
-  multiSelect = true,
+  closeMenuOnSelect = false,
   onBlur,
   onFocusChange,
   onInput,
@@ -173,7 +173,7 @@ const Typeahead = ({
       case menuActions.closeSelect:
         event.preventDefault()
         onOptionToggle(filteredOptions[focusIndex])
-        if (!multiSelect) {
+        if (closeMenuOnSelect) {
           onMenuClose()
         }
         return
@@ -233,7 +233,7 @@ const Typeahead = ({
               onClick={() => {
                 inputRef.current && inputRef.current.focus()
                 onOptionToggle(option)
-                if (!multiSelect) {
+                if (closeMenuOnSelect) {
                   onMenuClose()
                 }
               }}

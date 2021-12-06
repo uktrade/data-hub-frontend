@@ -13,7 +13,7 @@ import {
 
 const initialState = {
   menuOpen: false,
-  focusIndex: -1,
+  focusIndex: 0,
   input: '',
   selectedOptions: [],
   ignoreBlur: false,
@@ -31,7 +31,7 @@ export default (state = initialState, { type, input, option, focusIndex }) => {
       return {
         ...state,
         input,
-        focusIndex: -1,
+        focusIndex: 0,
       }
     case TYPEAHEAD__FOCUS_OPTION:
       return {
