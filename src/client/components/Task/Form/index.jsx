@@ -19,7 +19,11 @@ import reducer from './reducer'
 import FormActions from '../../Form/elements/FormActions'
 import { FormContextProvider } from '../../Form/hooks'
 
-import { addMessage, addMessageWithBody } from '../../../utils/flash-messages'
+import {
+  addMessage,
+  addMessageWithBody,
+  getMessages,
+} from '../../../utils/flash-messages'
 import { validateForm } from '../../Form/MultiInstanceForm'
 import Effect from '../../Effect'
 import HardRedirect from '../../HardRedirect'
@@ -208,7 +212,10 @@ const _TaskForm = ({
                                       }
                                       redirectMode === 'soft' &&
                                         redirectTo &&
-                                        history.push(redirectTo(result, values))
+                                        history.push(
+                                          redirectTo(result, values),
+                                          { messages: getMessages() }
+                                        )
                                       onSuccess && onSuccess(result, values)
                                       props.resetResolved()
                                     }

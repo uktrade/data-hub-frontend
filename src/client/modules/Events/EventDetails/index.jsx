@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useLocation } from 'react-router-dom'
 
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
@@ -8,10 +8,9 @@ import Button from '@govuk-react/button'
 import styled from 'styled-components'
 
 import urls from '../../../../lib/urls'
-import { TASK_GET_EVENT_DETAILS, ID, state2props } from './state'
+import { TASK_GET_EVENT_SUMMARY_DETAILS, ID, state2props } from './state'
 import { EVENTS__DETAILS_LOADED } from '../../../actions'
 import Task from '../../../components/Task'
-import { getMessages } from '../../../utils/flash-messages'
 import {
   LocalNav,
   LocalNavLink,
@@ -45,6 +44,9 @@ const EventDetails = ({
   disabledOn,
 }) => {
   const { id } = useParams()
+  const { state } = useLocation()
+  // const id = 'c8e6dc0e-4a1d-41f0-ac0a-fed19c776fa9'
+  // const state = undefined
 
   const breadcrumbs = [
     {
@@ -62,7 +64,7 @@ const EventDetails = ({
 
   return (
     <Task.Status
-      name={TASK_GET_EVENT_DETAILS}
+      name={TASK_GET_EVENT_SUMMARY_DETAILS}
       id={ID}
       progressMessage="loading event details"
       startOnRender={{
@@ -71,14 +73,13 @@ const EventDetails = ({
       }}
     >
       {() => {
-        // TODO: Remove
-        const messages = getMessages()
+        debugger
         return (
           name && (
             <DefaultLayout
               heading="Events"
               pageTitle="Events"
-              flashMessages={messages}
+              flashMessages={state?.messages}
               breadcrumbs={breadcrumbs}
             >
               <GridRow data-test="eventDetails">
