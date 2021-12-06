@@ -9,7 +9,7 @@ const {
   setLocalNav,
   redirectToFirstNavItem,
 } = require('../middleware')
-
+const { getEventDetails } = require('./middleware/details')
 const { renderReactifiedEventsView } = require('./controllers/events')
 
 const attendeesRouter = require('./attendees/router')
@@ -17,6 +17,7 @@ const attendeesRouter = require('./attendees/router')
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 // TODO: Figure out why this alone doesn't do the job
 router.get(urls.events.eventsWildcard(), renderReactifiedEventsView)
+router.param('eventId', getEventDetails)
 router.get('/:eventId/details', renderReactifiedEventsView)
 router.get('/:eventId/edit', renderReactifiedEventsView)
 router.get('/create', renderReactifiedEventsView)
