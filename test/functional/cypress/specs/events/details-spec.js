@@ -6,6 +6,7 @@ const {
 } = require('../../support/assertions')
 
 const fixtures = require('../../fixtures')
+const event = require('../../../../sandbox/fixtures/v3/event/single-event-missing-teams.json')
 const selectors = require('../../../../selectors')
 
 describe('Event Details', () => {
@@ -40,6 +41,29 @@ describe('Event Details', () => {
     cy.contains('a', 'View files and documents').should((el) => {
       expect(el).to.have.attr('href', '/documents/123')
       expect(el).to.have.attr('target', '_blank')
+    })
+  })
+
+  it('should display one day event details with no teams', () => {
+    cy.visit(urls.events.details(event.id))
+
+    cy.get(selectors.entityCollection.editEvent).should('be.visible')
+
+    assertKeyValueTable('eventDetails', {
+      'Type of event': 'Exhibition',
+      'Event date': '1 January 2021',
+      'Event location type': 'HQ',
+      Address:
+        'Day Court Exhibition Centre, Day Court Lane, China, SW9 9AB, China',
+      Region: '',
+      Notes: 'This is a dummy event for testing.',
+      'Lead team': '',
+      Organiser: 'John Rogers',
+      'Other teams': '',
+      'Related programmes': 'Grown in Britain',
+      'Related Trade Agreements': 'UK - Japan',
+      Service: 'Events : UK Based',
+      Documents: 'View files and documents (opens in a new window or tab)',
     })
   })
 
