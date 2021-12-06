@@ -8,6 +8,7 @@ import Breadcrumbs from '@govuk-react/breadcrumbs'
 
 import LocalHeaderHeading from './LocalHeaderHeading'
 import FlashMessages from './FlashMessages'
+import { Link } from 'react-router-dom'
 
 // Using <div> as there is already a <header> on the page
 // role="region" gives the element significance as a landmark
@@ -37,6 +38,7 @@ const LocalHeader = ({
   heading,
   superheading,
   children,
+  useReactRouter = false,
 }) => (
   <StyledHeader
     aria-label="local header"
@@ -48,9 +50,19 @@ const LocalHeader = ({
       <BreadcrumbsWrapper>
         {breadcrumbs?.map((breadcrumb) =>
           breadcrumb.link ? (
-            <Breadcrumbs.Link key={breadcrumb.link} href={breadcrumb.link}>
-              {breadcrumb.text}
-            </Breadcrumbs.Link>
+            useReactRouter ? (
+              <Breadcrumbs.Link
+                as={Link}
+                key={breadcrumb.link}
+                to={breadcrumb.link}
+              >
+                {breadcrumb.text}
+              </Breadcrumbs.Link>
+            ) : (
+              <Breadcrumbs.Link key={breadcrumb.link} href={breadcrumb.link}>
+                {breadcrumb.text}
+              </Breadcrumbs.Link>
+            )
           ) : (
             breadcrumb.text
           )

@@ -21,6 +21,7 @@ const DefaultLayout = ({
   flashMessages,
   breadcrumbs,
   children,
+  useReactRouter = false,
 }) => {
   const [showVerticalNav, setShowVerticalNav] = useState(false)
   useEffect(() => {
@@ -39,6 +40,7 @@ const DefaultLayout = ({
         breadcrumbs={
           breadcrumbs || [{ link: '/', text: 'Home' }, { text: heading }]
         }
+        useReactRouter={useReactRouter}
       />
       <Main>
         <GridRow>

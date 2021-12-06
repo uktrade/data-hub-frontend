@@ -78,6 +78,7 @@ const EventDetails = ({
               pageTitle="Events"
               flashMessages={messages}
               breadcrumbs={breadcrumbs}
+              useReactRouter={true}
             >
               <GridRow data-test="eventDetails">
                 <GridCol setWidth="one-quarter">

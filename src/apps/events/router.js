@@ -15,9 +15,7 @@ router.use(
   handleRoutePermissions(LOCAL_NAV),
   setLocalNav(LOCAL_NAV)
 )
-
 router.use('/:eventId/attendees', attendeesRouter)
-
 router.get('/*', renderReactifiedEventsView)
 
 module.exports = router

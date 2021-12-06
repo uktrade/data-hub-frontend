@@ -68,6 +68,7 @@ const FilteredCollectionList = ({
                     hasFilters={children !== undefined}
                     selectedFilters={selectedFilters}
                     addItemUrl={addItemUrl}
+                    useReactRouter={useReactRouter}
                   />
                 )}
                 {sortOptions && (

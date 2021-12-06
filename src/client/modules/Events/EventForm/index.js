@@ -51,6 +51,7 @@ const EventForm = () => {
       heading={id ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT}
       pageTitle={id ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT}
       breadcrumbs={breadcrumbs}
+      useReactRouter={true}
     >
       <TaskForm
         id="event-form"
