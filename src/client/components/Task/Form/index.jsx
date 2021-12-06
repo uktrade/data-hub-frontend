@@ -458,7 +458,8 @@ TaskForm.propTypes = {
   actionLinks: PropTypes.arrayOf(
     PropTypes.shape({
       children: PropTypes.node,
-      href: PropTypes.string.isRequired,
+      href: PropTypes.string,
+      to: PropTypes.string,
     })
   ),
   initialStepIndex: PropTypes.number,
