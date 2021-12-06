@@ -25,6 +25,7 @@ import {
   TYPEAHEAD__OPTION_REMOVE,
 } from '../../actions'
 
+import Highlighter from '../Typeahead/Highlighter'
 import AssistiveText from './AssistiveText'
 import SelectedChips from './SelectedChips'
 import {
@@ -256,7 +257,7 @@ const Typeahead = ({
                 onOptionMouseDown()
               }}
             >
-              {option.label}
+              <Highlighter optionLabel={option.label} searchStr={input} />
             </ListboxOption>
           ))}
           {!filteredOptions.length && (
