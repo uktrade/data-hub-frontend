@@ -91,9 +91,6 @@ import {
 } from '../apps/interactions/apps/details-form/client/state'
 import * as addInteractionFormTasks from '../apps/interactions/apps/details-form/client/tasks'
 
-import { TASK_UPDATE_ADVISER } from '../apps/companies/apps/advisers/client/state'
-import * as manageAdviser from '../apps/companies/apps/advisers/client/tasks'
-
 import {
   DNB__CHECK_PENDING_REQUEST,
   TASK_ARCHIVE_COMPANY,
@@ -141,7 +138,6 @@ import {
   TASK_SAVE_OPPORTUNITY_DETAILS,
   TASK_SAVE_OPPORTUNITY_REQUIREMENTS,
   TASK_GET_OPPORTUNITY_DETAILS,
-  TASK_GET_OPPORTUNITY_DETAILS_METADATA,
   TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA,
 } from '../apps/investments/client/opportunities/Details/state'
 import * as investmentOpportunitiesDetailsTasks from '../apps/investments/client/opportunities/Details/tasks'
@@ -268,7 +264,6 @@ function App() {
           addInteractionFormTasks.getInitialFormValues,
         [TASK_OPEN_CONTACT_FORM]: addInteractionFormTasks.openContactForm,
         [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
-        [TASK_UPDATE_ADVISER]: manageAdviser.updateAdviser,
         [TASK_SAVE_OPPORTUNITY_DETAILS]:
           investmentOpportunitiesDetailsTasks.saveOpportunityDetails,
         [TASK_SAVE_OPPORTUNITY_REQUIREMENTS]:
@@ -277,8 +272,6 @@ function App() {
           investmentOpportunitiesDetailsTasks.getOpportunityDetails,
         [TASK_GET_OPPORTUNITIES_LIST]:
           investmentOpportunitiesListTasks.getOpportunities,
-        [TASK_GET_OPPORTUNITY_DETAILS_METADATA]:
-          investmentOpportunitiesDetailsTasks.getDetailsMetadata,
         [TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA]:
           investmentOpportunitiesDetailsTasks.getRequirementsMetadata,
         [DNB__CHECK_PENDING_REQUEST]: businessDetails.checkIfPendingRequest,

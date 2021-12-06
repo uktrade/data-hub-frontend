@@ -47,7 +47,6 @@ const EventDetails = ({
   const { state } = useLocation()
   // const id = 'c8e6dc0e-4a1d-41f0-ac0a-fed19c776fa9'
   // const state = undefined
-
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -73,7 +72,6 @@ const EventDetails = ({
       }}
     >
       {() => {
-        debugger
         return (
           name && (
             <DefaultLayout
