@@ -73,4 +73,8 @@ export const maintainScrollVisibility = ({ parent, target }) => {
 }
 
 export const getFilteredOptions = ({ input, options }) =>
-  input ? options.filter((option) => option.label.includes(input)) : options
+  input
+    ? options.filter((option) =>
+        option.label.toLowerCase().includes(input.toLowerCase())
+      )
+    : options
