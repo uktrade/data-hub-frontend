@@ -35,6 +35,13 @@ const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
     data-test="aboutDetailsContainer"
     actions={!isArchived && <Link href={urls.companyEdit}>Edit</Link>}
   >
+    {/* TODO: isolate this component when ready */}
+    {/* {Object.entries(businessDetails.about).map(([key, { label, value }]) => (
+      <SummaryTable.Row key={key} heading={label} hideWhenEmpty={true}>
+        {'TEST' || value}
+      </SummaryTable.Row>
+    ))} */}
+
     <SummaryTable.Row heading="VAT number" hideWhenEmpty={true}>
       {businessDetails.vat_number}
     </SummaryTable.Row>
