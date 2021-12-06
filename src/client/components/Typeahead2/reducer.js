@@ -20,7 +20,6 @@ const initialState = {
   input: '',
   selectedOptions: [],
   options: [],
-  selectionMade: false,
   ignoreBlur: false,
 }
 
@@ -53,7 +52,6 @@ export default (
           input,
         }).indexOf(activeOption),
         menuOpen: true,
-        selectionMade: false,
       }
     case TYPEAHEAD__FOCUS_OPTION:
       return {
@@ -76,7 +74,6 @@ export default (
         ignoreBlur: true,
       }
     case TYPEAHEAD__OPTION_TOGGLE:
-      const optionToggledOn = !state.selectedOptions.includes(option)
       const newInput = isMulti ? state.input : option.label
       return {
         ...state,
@@ -84,7 +81,6 @@ export default (
           ? xor(state.selectedOptions, [option])
           : [option],
         input: newInput,
-        selectionMade: optionToggledOn,
         focusIndex: getFilteredOptions({
           options: state.options,
           input: isMulti && newInput,

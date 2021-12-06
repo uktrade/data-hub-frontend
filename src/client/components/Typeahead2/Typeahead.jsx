@@ -139,7 +139,6 @@ const Typeahead = ({
   options = [],
   input = '',
   selectedOptions = [],
-  selectionMade = false,
   focusIndex,
   loadOptions,
   onBlur,
@@ -154,9 +153,11 @@ const Typeahead = ({
   const inputRef = React.useRef(null)
   const menuRef = React.useRef(null)
   loadOptions(options)
+  const ignoreFilter =
+    !isMulti && selectedOptions.map(({ label }) => label).includes(input)
   const filteredOptions = getFilteredOptions({
     options,
-    input: !selectionMade && input,
+    input: !ignoreFilter && input,
   })
   const activeId =
     menuOpen && filteredOptions[focusIndex]
