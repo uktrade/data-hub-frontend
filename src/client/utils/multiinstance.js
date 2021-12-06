@@ -199,5 +199,6 @@ export default ({
   Connected.reducerSpread = {
     [name]: reducerDecorator(reducer, actionPattern, idProp),
   }
+  Connected.displayName = `multiInstance(${name})`
   return withRouter(Connected)
 }

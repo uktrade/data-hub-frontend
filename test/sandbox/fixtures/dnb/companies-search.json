@@ -1,0 +1,15 @@
+{
+  "results": [
+    {
+      "duns_number": "123456999",
+      "primary_name": "Lambda PLC",
+      "address_line_1": "12 St George's Road",
+      "address_line_2": "",
+      "address_town": "Paris",
+      "address_county": "",
+      "address_area_name": "",
+      "address_postcode": "75001",
+      "address_country": "FR"
+    }
+  ]
+}

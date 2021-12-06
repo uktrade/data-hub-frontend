@@ -62,6 +62,8 @@ var v4Proposition = require('./routes/v4/proposition/proposition.js')
 // Datahub API 3rd party dependencies
 var consentService = require('./routes/api/consentService.js')
 
+var dnbService = require('./routes/api/dnbService.js')
+
 // Data store service (github.com/uktrade/data-store-service)
 app.get('/api/v1/get-postcode-data/', postcode.toRegion)
 app.get('/api/v1/get-postcode-data/:postCode', postcode.toRegion)
@@ -547,6 +549,8 @@ app.delete(
 
 app.post('/api/v1/person', consentService.person)
 app.get('/api/v1/person/bulk_lookup', consentService.bulkPerson)
+
+app.post('/companies/search', dnbService.companiesSearch)
 
 app.post('/v4/large-capital-opportunity', (req, res) =>
   res.json({ id: 'new-large-capital-uk-opportunity-id' })
