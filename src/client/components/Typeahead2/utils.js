@@ -71,3 +71,6 @@ export const maintainScrollVisibility = ({ parent, target }) => {
     parent.scrollTo(0, offsetTop - parentOffsetHeight + offsetHeight)
   }
 }
+
+export const getFilteredOptions = ({ input, options }) =>
+  input ? options.filter((option) => option.label.includes(input)) : options

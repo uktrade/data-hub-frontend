@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import {
   BLACK,
+  BLUE,
   FOCUS_COLOUR,
   GREY_1,
   GREY_2,
@@ -16,6 +17,7 @@ import {
   TYPEAHEAD__BLUR,
   TYPEAHEAD__FOCUS_OPTION,
   TYPEAHEAD__INPUT,
+  TYPEAHEAD__LOAD_OPTIONS,
   TYPEAHEAD__MENU_CLOSE,
   TYPEAHEAD__MENU_OPEN,
   TYPEAHEAD__OPTION_MOUSE_DOWN,
@@ -27,6 +29,7 @@ import AssistiveText from './AssistiveText'
 import SelectedChips from './SelectedChips'
 import {
   getActionFromKey,
+  getFilteredOptions,
   getUpdatedIndex,
   maintainScrollVisibility,
   menuActions,
@@ -34,7 +37,9 @@ import {
 import reducer from './reducer'
 
 const ListboxOption = styled('div')((props) => ({
-  padding: `${SPACING.SCALE_3} 0 ${SPACING.SCALE_3} 38px`,
+  padding: props.isMulti
+    ? `${SPACING.SCALE_3} 0 ${SPACING.SCALE_3} 38px`
+    : SPACING.SCALE_3,
   borderBottom: `solid 1px ${GREY_2}`,
   position: 'relative',
   boxSizing: 'border-box',
@@ -42,36 +47,35 @@ const ListboxOption = styled('div')((props) => ({
   display: 'flex',
   alignItems: 'center',
   cursor: 'pointer',
+  backgroundColor: props.focussed ? BLUE : WHITE,
+  color: props.focussed ? WHITE : TEXT_COLOUR,
 
   '&:last-child': {
     borderBottom: 'none',
   },
-  '&:hover': {
-    backgroundColor: 'rgba(0,0,0,0.1)',
-  },
   '::before': {
-    content: '""',
+    content: props.isMulti ? '""' : '',
     position: 'absolute',
     left: 5,
     top: 'calc(50% - 10px)',
     width: 20,
     height: 20,
     boxSizing: 'border-box',
-    border: `solid 1px ${TEXT_COLOUR}`,
+    border: 'solid 1px',
     outline: props.focussed ? `3px solid ${FOCUS_COLOUR}` : 'none',
     outlineOffset: 0,
   },
   '::after': {
     display: props['aria-selected'] ? 'block' : 'none',
-    content: '""',
-    borderBottom: '2px solid #000',
-    borderRight: '2px solid #000',
-    height: 12,
+    content: props.isMulti ? '""' : '',
     position: 'absolute',
     left: 12,
     top: 'calc(50% - 2px)',
-    transform: 'translate(0, -50%) rotate(45deg)',
     width: 5,
+    height: 12,
+    borderRight: '2px solid',
+    borderBottom: '2px solid',
+    transform: 'translate(0, -50%) rotate(45deg)',
   },
 }))
 
@@ -129,12 +133,15 @@ const Menu = styled('div')(({ open }) => ({
 const Typeahead = ({
   name,
   label = '',
+  closeMenuOnSelect = false,
+  isMulti = true,
   menuOpen,
   options = [],
   input = '',
   selectedOptions = [],
+  selectionMade = false,
   focusIndex,
-  closeMenuOnSelect = false,
+  loadOptions,
   onBlur,
   onFocusChange,
   onInput,
@@ -143,13 +150,14 @@ const Typeahead = ({
   onOptionRemove,
   onMenuClose,
   onMenuOpen,
-  value,
 }) => {
   const inputRef = React.useRef(null)
   const menuRef = React.useRef(null)
-  const filteredOptions = input
-    ? options.filter((option) => option.label.includes(input))
-    : options
+  loadOptions(options)
+  const filteredOptions = getFilteredOptions({
+    options,
+    input: !selectionMade && input,
+  })
   const activeId =
     menuOpen && filteredOptions[focusIndex]
       ? `${name}-${filteredOptions[focusIndex].value}`
@@ -172,7 +180,9 @@ const Typeahead = ({
         return
       case menuActions.closeSelect:
         event.preventDefault()
-        onOptionToggle(filteredOptions[focusIndex])
+        if (filteredOptions[focusIndex]) {
+          onOptionToggle({ option: filteredOptions[focusIndex], isMulti })
+        }
         if (closeMenuOnSelect) {
           onMenuClose()
         }
@@ -189,7 +199,7 @@ const Typeahead = ({
   return (
     <div id={name}>
       <Label id={`${name}-label`}>{label}</Label>
-      {Boolean(selectedOptions.length) && (
+      {isMulti && Boolean(selectedOptions.length) && (
         <SelectedChips
           name={name}
           selectedOptions={selectedOptions}
@@ -206,7 +216,7 @@ const Typeahead = ({
           aria-labelledby={`${name}-label ${name}-selected`}
           role="combobox"
           type="text"
-          value={value}
+          value={input}
           onBlur={onBlur}
           onClick={onMenuOpen}
           onInput={onInput}
@@ -226,19 +236,22 @@ const Typeahead = ({
               id={`${name}-${option.value}`}
               key={option.value}
               focussed={index === focusIndex}
+              isMulti={isMulti}
               role="option"
               aria-selected={selectedOptions.indexOf(option) > -1}
               aria-setsize={filteredOptions.length}
               aria-posinset={index}
               onClick={() => {
                 inputRef.current && inputRef.current.focus()
-                onOptionToggle(option)
+                onOptionToggle({ option, isMulti })
                 if (closeMenuOnSelect) {
                   onMenuClose()
                 }
               }}
-              onMouseDown={() => {
+              onMouseMove={() => {
                 onFocusChange(index)
+              }}
+              onMouseDown={() => {
                 onOptionMouseDown()
               }}
             >
@@ -259,6 +272,12 @@ export default multiInstance({
   name: 'Typeahead',
   actionPattern: 'TYPEAHEAD__',
   dispatchToProps: (dispatch) => ({
+    loadOptions: (options) => {
+      dispatch({
+        type: TYPEAHEAD__LOAD_OPTIONS,
+        options,
+      })
+    },
     onBlur: () => {
       dispatch({
         type: TYPEAHEAD__BLUR,
@@ -291,10 +310,11 @@ export default multiInstance({
         type: TYPEAHEAD__OPTION_MOUSE_DOWN,
       })
     },
-    onOptionToggle: (option) => {
+    onOptionToggle: ({ option, isMulti }) => {
       dispatch({
         type: TYPEAHEAD__OPTION_TOGGLE,
         option,
+        isMulti,
       })
     },
     onOptionRemove: (option) => {
