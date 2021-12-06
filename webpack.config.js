@@ -37,7 +37,6 @@ module.exports = (env) => ({
     app: [
       './assets/javascripts/govuk-frontend-all.js',
       './assets/javascripts/app.js',
-      './assets/javascripts/app-vue.js',
     ],
     'react-app': [
       'react-app-polyfill/stable',
