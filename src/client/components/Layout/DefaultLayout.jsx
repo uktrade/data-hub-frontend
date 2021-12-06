@@ -37,7 +37,7 @@ const DefaultLayout = ({
         heading={heading}
         flashMessages={flashMessages}
         breadcrumbs={
-          breadcrumbs || [({ link: '/', text: 'Home' }, { text: heading })]
+          breadcrumbs || [{ link: '/', text: 'Home' }, { text: heading }]
         }
       />
       <Main>
