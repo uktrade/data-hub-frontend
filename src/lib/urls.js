@@ -231,7 +231,6 @@ module.exports = {
     ),
   },
   events: {
-    eventsWildcard: url('/events/*'),
     index: url('/events', PRIMARY_LINK_PARAMS.events),
     create: url('/events/create'),
     details: url('/events', '/:eventId/details'),

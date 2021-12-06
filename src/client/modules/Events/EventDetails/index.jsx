@@ -45,21 +45,6 @@ const EventDetails = ({
 }) => {
   const { id } = useParams()
   const { state } = useLocation()
-  // const id = 'c8e6dc0e-4a1d-41f0-ac0a-fed19c776fa9'
-  // const state = undefined
-  const breadcrumbs = [
-    {
-      link: urls.dashboard(),
-      text: 'Home',
-    },
-    {
-      link: urls.events.index(),
-      text: 'Events',
-    },
-    {
-      text: name,
-    },
-  ]
 
   return (
     <Task.Status
@@ -72,12 +57,26 @@ const EventDetails = ({
       }}
     >
       {() => {
+        const messages = state?.messages
+        const breadcrumbs = [
+          {
+            link: urls.dashboard(),
+            text: 'Home',
+          },
+          {
+            link: urls.events.index(),
+            text: 'Events',
+          },
+          {
+            text: name,
+          },
+        ]
         return (
           name && (
             <DefaultLayout
               heading="Events"
               pageTitle="Events"
-              flashMessages={state?.messages}
+              flashMessages={messages}
               breadcrumbs={breadcrumbs}
             >
               <GridRow data-test="eventDetails">
