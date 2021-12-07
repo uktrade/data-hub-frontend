@@ -46,41 +46,41 @@ const EventDetails = ({
 }) => {
   const { id } = useParams()
   const { state } = useLocation()
+  const messages = state?.messages
+  const breadcrumbs = [
+    {
+      link: urls.dashboard(),
+      text: 'Home',
+    },
+    {
+      link: urls.events.index(),
+      text: 'Events',
+    },
+    {
+      text: name,
+    },
+  ]
 
   return (
-    <Task.Status
-      name={TASK_GET_EVENT_SUMMARY_DETAILS}
-      id={ID}
-      progressMessage="loading event details"
-      startOnRender={{
-        payload: id,
-        onSuccessDispatch: EVENTS__DETAILS_LOADED,
-      }}
+    <DefaultLayout
+      heading="Events"
+      pageTitle="Events"
+      flashMessages={messages}
+      breadcrumbs={breadcrumbs}
+      useReactRouter={true}
     >
-      {() => {
-        const messages = state?.messages
-        const breadcrumbs = [
-          {
-            link: urls.dashboard(),
-            text: 'Home',
-          },
-          {
-            link: urls.events.index(),
-            text: 'Events',
-          },
-          {
-            text: name,
-          },
-        ]
-        return (
-          name && (
-            <DefaultLayout
-              heading="Events"
-              pageTitle="Events"
-              flashMessages={messages}
-              breadcrumbs={breadcrumbs}
-              useReactRouter={true}
-            >
+      <Task.Status
+        name={TASK_GET_EVENT_SUMMARY_DETAILS}
+        id={ID}
+        progressMessage="loading event details"
+        startOnRender={{
+          payload: id,
+          onSuccessDispatch: EVENTS__DETAILS_LOADED,
+        }}
+      >
+        {() => {
+          return (
+            name && (
               <GridRow data-test="eventDetails">
                 <GridCol setWidth="one-quarter">
                   <LocalNav data-test="event-details-nav">
@@ -170,11 +170,11 @@ const EventDetails = ({
                   )}
                 </GridCol>
               </GridRow>
-            </DefaultLayout>
+            )
           )
-        )
-      }}
-    </Task.Status>
+        }}
+      </Task.Status>
+    </DefaultLayout>
   )
 }
 

@@ -7,15 +7,17 @@ const { getEventDetails } = require('./middleware/details')
 const { renderReactifiedEventsView } = require('./controllers/events')
 const attendeesRouter = require('./attendees/router')
 
-router.get('*', renderReactifiedEventsView)
+router.get('/create', renderReactifiedEventsView)
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
-router.param('eventId', getEventDetails)
 router.use(
   '/:eventId',
   handleRoutePermissions(LOCAL_NAV),
   setLocalNav(LOCAL_NAV)
 )
+
 router.use('/:eventId/attendees', attendeesRouter)
+router.param('eventId', getEventDetails)
+router.get('/*', renderReactifiedEventsView)
 
 module.exports = router
