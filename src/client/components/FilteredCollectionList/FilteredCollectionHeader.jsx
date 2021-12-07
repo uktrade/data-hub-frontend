@@ -29,6 +29,10 @@ const StyledLink = styled.a`
   margin-bottom: 0;
 `
 
+const StyledReactRouterLink = styled(Link)`
+  margin-bottom: 0;
+`
+
 const StyledResultCount = styled('span')`
   font-size: 36px;
   font-weight: 600;
@@ -96,7 +100,7 @@ function FilteredCollectionHeader({
     (useReactRouter ? (
       <Button
         id={`add-${kebabCase(collectionName)}`}
-        as={Link}
+        as={StyledReactRouterLink}
         to={addItemUrl}
         buttonColour={GREY_3}
         buttonTextColour={BLACK}
