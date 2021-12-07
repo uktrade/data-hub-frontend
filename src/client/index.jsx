@@ -91,6 +91,8 @@ import {
 } from '../apps/interactions/apps/details-form/client/state'
 import * as addInteractionFormTasks from '../apps/interactions/apps/details-form/client/tasks'
 
+import * as manageAdviser from '../apps/companies/apps/advisers/client/tasks'
+
 import {
   DNB__CHECK_PENDING_REQUEST,
   TASK_ARCHIVE_COMPANY,
@@ -241,6 +243,7 @@ function App() {
         'Referral details': referralTasks.fetchReferralDetails,
         Referrals: referralListTask,
         'Export wins': exportWinsTasks.fetchExportWins,
+        'Update Lead ITA': manageAdviser.updateAdviser,
         'Get send referral initial values':
           referralsSendTasks.getInitialFormValues,
         [TASK_OPEN_REFERRALS_CONTACT_FORM]: referralsSendTasks.openContactForm,
