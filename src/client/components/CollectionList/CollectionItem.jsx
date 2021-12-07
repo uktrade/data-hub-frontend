@@ -76,12 +76,12 @@ const CollectionItem = ({
       titleRenderer(headingText, headingUrl)
     ) : headingUrl ? (
       <StyledLinkHeader>
-        {!useReactRouter ? (
-          <Link href={headingUrl}>{headingText}</Link>
-        ) : (
+        {useReactRouter ? (
           <Link as={RouterLink} to={headingUrl}>
             {headingText}
           </Link>
+        ) : (
+          <Link href={headingUrl}>{headingText}</Link>
         )}
       </StyledLinkHeader>
     ) : (
