@@ -2,7 +2,7 @@
 
 const { pick } = require('lodash')
 
-const { transformCompanyToBusinessDetails } = require('./transformers')
+const { transformDynamicCompanyToBusinessDetails } = require('./transformers')
 const { getCompanySubsidiaries } = require('../../repos')
 const urls = require('../../../../lib/urls')
 
@@ -34,7 +34,7 @@ async function renderBusinessDetails(req, res) {
     .render('companies/apps/business-details/views/client-container', {
       heading: 'Business details',
       props: {
-        businessDetails: transformCompanyToBusinessDetails(company),
+        businessDetails: transformDynamicCompanyToBusinessDetails(company),
         subsidiariesCount: subsidiaries.count,
         dnbRelatedCompaniesCount,
         globalUltimate: globalUltimate

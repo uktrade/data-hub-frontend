@@ -108,6 +108,10 @@ const transformDynamicCompanyToBusinessDetails = (company) => {
           value: company?.number_of_employees,
         },
         website: { label: 'Website', value: company?.website },
+        contactNumber: {
+          label: 'Contact Number',
+          value: company?.contact_number,
+        },
         description: {
           label: 'Business description',
           value: company?.description,
@@ -116,6 +120,10 @@ const transformDynamicCompanyToBusinessDetails = (company) => {
         export_sub_segment: {
           label: 'Sub-segment',
           value: company?.export_sub_segment,
+        },
+        export_sub_segment2: {
+          label: 'Sub-segment2',
+          value: company?.export_sub_segment2,
         },
       },
 
