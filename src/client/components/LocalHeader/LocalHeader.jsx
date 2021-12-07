@@ -50,7 +50,7 @@ const LocalHeader = ({
       <BreadcrumbsWrapper>
         {breadcrumbs?.map((breadcrumb) =>
           breadcrumb.link ? (
-            useReactRouter ? (
+            useReactRouter && breadcrumb.text !== 'Home' ? (
               <Breadcrumbs.Link
                 as={Link}
                 key={breadcrumb.link}
