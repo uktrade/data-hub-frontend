@@ -4,10 +4,10 @@ const { APP_PERMISSIONS, LOCAL_NAV } = require('./constants')
 
 const { handleRoutePermissions, setLocalNav } = require('../middleware')
 const { getEventDetails } = require('./middleware/details')
-const { renderReactifiedEventsView } = require('./controllers/events')
+const { renderEventsView } = require('./controllers/events')
 const attendeesRouter = require('./attendees/router')
 
-router.get('/create', renderReactifiedEventsView)
+router.get('/create', renderEventsView)
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 router.use(
@@ -18,6 +18,6 @@ router.use(
 
 router.use('/:eventId/attendees', attendeesRouter)
 router.param('eventId', getEventDetails)
-router.get('/*', renderReactifiedEventsView)
+router.get('/*', renderEventsView)
 
 module.exports = router

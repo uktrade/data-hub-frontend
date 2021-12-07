@@ -4,13 +4,13 @@ import { MemoryRouter, Route } from 'react-router'
 
 import EventForm from '..'
 
-storiesOf('Task/Form/Event Form/Create Event Form', module)
+storiesOf('Modules/Event Form/Create Event Form', module)
   .addParameters({
     options: { theme: undefined },
   })
   .add('Add event', () => <EventForm />)
 
-storiesOf('Task/Form/Event Form/Update Event Form', module)
+storiesOf('Modules/Event Form/Update Event Form', module)
   .addParameters({
     options: { theme: undefined },
   })
