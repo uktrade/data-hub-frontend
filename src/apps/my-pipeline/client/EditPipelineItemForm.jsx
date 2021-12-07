@@ -12,14 +12,14 @@ import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 import PipelineItemResource from '../../../client/components/Resource/PipelineItem'
 
 const {
-  format,
-  isDateValid,
+  formatWithoutParsing,
+  isUnparsedDateValid,
   createAndFormatDateObject,
 } = require('../../../client/utils/date')
 
 function formatInitialValues(values) {
   const { sector, contacts } = values
-  const expectedWinDate = createAndFormatDateObject(values.expected_win_date)
+  const expectedWinDate = createAndFormatDateObject(values.expectedWinDate)
   return {
     name: values.name,
     category: values.status,
@@ -28,10 +28,10 @@ function formatInitialValues(values) {
     contacts: contacts?.map(({ id, name }) => ({ value: id, label: name })),
     export_value: values.potentialValue,
     company: values.company,
-    expected_win_date: isDateValid(expectedWinDate)
+    expected_win_date: isUnparsedDateValid(expectedWinDate)
       ? {
-          month: format(expectedWinDate, 'MM'),
-          year: format(expectedWinDate, 'yyyy'),
+          month: formatWithoutParsing(expectedWinDate, 'MM'),
+          year: formatWithoutParsing(expectedWinDate, 'yyyy'),
         }
       : {
           month: '',
@@ -59,10 +59,9 @@ function EditPipelineItemForm({ pipelineItemId, contacts, sectors }) {
             <>
               <PipelineForm
                 analyticsFormName="editPipelineItem"
-                transformPayload={(values, pipelineItem) => ({
+                transformPayload={(values) => ({
                   values,
                   pipelineItemId,
-                  pipelineItem,
                 })}
                 submissionTaskName={TASK_EDIT_PIPELINE_ITEM}
                 initialValues={formatInitialValues(pipelineItem)}

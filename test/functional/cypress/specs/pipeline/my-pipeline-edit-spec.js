@@ -211,10 +211,10 @@ describe('Pipeline edit form', () => {
 
           cy.contains('button', 'Save').click()
           cy.wait('@updatePipelineItem').then((xhr) => {
-            expect(xhr.request.body.sector).to.equal(undefined)
-            expect(xhr.request.body.contacts).to.deep.equal(undefined)
-            expect(xhr.request.body.potential_value).to.equal(undefined)
-            expect(xhr.request.body.expected_win_date).to.equal(undefined)
+            expect(xhr.request.body.sector).to.equal(null)
+            expect(xhr.request.body.contacts).to.deep.equal([])
+            expect(xhr.request.body.potential_value).to.equal(null)
+            expect(xhr.request.body.expected_win_date).to.equal(null)
           })
         })
       })
