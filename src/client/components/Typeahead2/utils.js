@@ -58,6 +58,13 @@ export const getUpdatedIndex = (current, max, action) => {
   }
 }
 
+export const getFilteredOptions = ({ input, options }) =>
+  input
+    ? options.filter((option) =>
+        option.label.toLowerCase().includes(input.toLowerCase())
+      )
+    : options
+
 export const maintainScrollVisibility = ({ parent, target }) => {
   if (!parent || !target) {
     return
@@ -71,10 +78,3 @@ export const maintainScrollVisibility = ({ parent, target }) => {
     parent.scrollTo(0, offsetTop - parentOffsetHeight + offsetHeight)
   }
 }
-
-export const getFilteredOptions = ({ input, options }) =>
-  input
-    ? options.filter((option) =>
-        option.label.toLowerCase().includes(input.toLowerCase())
-      )
-    : options

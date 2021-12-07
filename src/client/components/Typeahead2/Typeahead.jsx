@@ -17,7 +17,7 @@ import {
   TYPEAHEAD__BLUR,
   TYPEAHEAD__FOCUS_OPTION,
   TYPEAHEAD__INPUT,
-  TYPEAHEAD__LOAD_OPTIONS,
+  TYPEAHEAD__INITIALISE,
   TYPEAHEAD__MENU_CLOSE,
   TYPEAHEAD__MENU_OPEN,
   TYPEAHEAD__OPTION_MOUSE_DOWN,
@@ -39,7 +39,7 @@ import reducer from './reducer'
 
 const ListboxOption = styled('div')((props) => ({
   padding: props.isMulti
-    ? `${SPACING.SCALE_3} 0 ${SPACING.SCALE_3} 38px`
+    ? `${SPACING.SCALE_3} 0 ${SPACING.SCALE_3} 41px`
     : SPACING.SCALE_3,
   borderBottom: `solid 1px ${GREY_2}`,
   position: 'relative',
@@ -57,7 +57,7 @@ const ListboxOption = styled('div')((props) => ({
   '::before': {
     content: props.isMulti ? '""' : '',
     position: 'absolute',
-    left: 5,
+    left: 8,
     top: 'calc(50% - 10px)',
     width: 20,
     height: 20,
@@ -70,7 +70,7 @@ const ListboxOption = styled('div')((props) => ({
     display: props['aria-selected'] ? 'block' : 'none',
     content: props.isMulti ? '""' : '',
     position: 'absolute',
-    left: 12,
+    left: 15,
     top: 'calc(50% - 2px)',
     width: 5,
     height: 12,
@@ -141,7 +141,7 @@ const Typeahead = ({
   input = '',
   selectedOptions = [],
   focusIndex,
-  loadOptions,
+  onInitialise,
   onBlur,
   onFocusChange,
   onInput,
@@ -153,7 +153,7 @@ const Typeahead = ({
 }) => {
   const inputRef = React.useRef(null)
   const menuRef = React.useRef(null)
-  loadOptions(options)
+  onInitialise({ options, isMulti })
   const ignoreFilter =
     !isMulti && selectedOptions.map(({ label }) => label).includes(input)
   const filteredOptions = getFilteredOptions({
@@ -183,7 +183,7 @@ const Typeahead = ({
       case menuActions.closeSelect:
         event.preventDefault()
         if (filteredOptions[focusIndex]) {
-          onOptionToggle({ option: filteredOptions[focusIndex], isMulti })
+          onOptionToggle(filteredOptions[focusIndex])
         }
         if (closeMenuOnSelect) {
           onMenuClose()
@@ -245,7 +245,7 @@ const Typeahead = ({
               aria-posinset={index}
               onClick={() => {
                 inputRef.current && inputRef.current.focus()
-                onOptionToggle({ option, isMulti })
+                onOptionToggle(option)
                 if (closeMenuOnSelect) {
                   onMenuClose()
                 }
@@ -274,10 +274,11 @@ export default multiInstance({
   name: 'Typeahead',
   actionPattern: 'TYPEAHEAD__',
   dispatchToProps: (dispatch) => ({
-    loadOptions: (options) => {
+    onInitialise: ({ options, isMulti }) => {
       dispatch({
-        type: TYPEAHEAD__LOAD_OPTIONS,
+        type: TYPEAHEAD__INITIALISE,
         options,
+        isMulti,
       })
     },
     onBlur: () => {
@@ -312,11 +313,10 @@ export default multiInstance({
         type: TYPEAHEAD__OPTION_MOUSE_DOWN,
       })
     },
-    onOptionToggle: ({ option, isMulti }) => {
+    onOptionToggle: (option) => {
       dispatch({
         type: TYPEAHEAD__OPTION_TOGGLE,
         option,
-        isMulti,
       })
     },
     onOptionRemove: (option) => {

@@ -4,7 +4,7 @@ import {
   TYPEAHEAD__BLUR,
   TYPEAHEAD__FOCUS_OPTION,
   TYPEAHEAD__INPUT,
-  TYPEAHEAD__LOAD_OPTIONS,
+  TYPEAHEAD__INITIALISE,
   TYPEAHEAD__MENU_CLOSE,
   TYPEAHEAD__MENU_OPEN,
   TYPEAHEAD__OPTION_MOUSE_DOWN,
@@ -21,6 +21,7 @@ const initialState = {
   selectedOptions: [],
   options: [],
   ignoreBlur: false,
+  isMulti: true,
 }
 
 export default (
@@ -28,15 +29,19 @@ export default (
   { type, input, isMulti, option, options, focusIndex }
 ) => {
   switch (type) {
-    case TYPEAHEAD__LOAD_OPTIONS:
+    case TYPEAHEAD__INITIALISE:
       return {
         ...state,
         options,
+        isMulti,
       }
     case TYPEAHEAD__BLUR:
+      const selectedValue =
+        (!state.isMulti && state.selectedOptions[0]?.label) || ''
       return {
         ...state,
         menuOpen: state.ignoreBlur ? state.menuOpen : false,
+        input: state.ignoreBlur ? state.input : state.input && selectedValue,
         ignoreBlur: false,
       }
     case TYPEAHEAD__INPUT:
@@ -74,16 +79,16 @@ export default (
         ignoreBlur: true,
       }
     case TYPEAHEAD__OPTION_TOGGLE:
-      const newInput = isMulti ? state.input : option.label
+      const newInput = state.isMulti ? state.input : option.label
       return {
         ...state,
-        selectedOptions: isMulti
+        selectedOptions: state.isMulti
           ? xor(state.selectedOptions, [option])
           : [option],
         input: newInput,
         focusIndex: getFilteredOptions({
           options: state.options,
-          input: isMulti && newInput,
+          input: state.isMulti && newInput,
         }).indexOf(option),
       }
     case TYPEAHEAD__OPTION_REMOVE:
