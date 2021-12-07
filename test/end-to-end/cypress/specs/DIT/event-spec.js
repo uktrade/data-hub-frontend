@@ -189,8 +189,8 @@ describe('Event', () => {
       cy.contains('Add attendee').click()
       cy.get('input').type('Attendee')
       cy.contains('button', 'Search').click()
-      cy.get('main li a').should('not.exist')
-      cy.get('main li').should('contain', 'Existing attendee')
+      cy.get('[data-test="item-contact-0"]').contains('Joe Attendee')
+      cy.get('[data-test="item-contact-0"]').contains('Existing attendee')
     })
   })
 
