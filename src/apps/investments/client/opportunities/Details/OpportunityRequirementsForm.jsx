@@ -74,7 +74,7 @@ const OpportunityRequirementsForm = (state) => {
               <TaskForm
                 id="opportunity-requirements"
                 submissionTaskName={TASK_SAVE_OPPORTUNITY_REQUIREMENTS}
-                analyticsFormName="Opportunity requirements"
+                analyticsFormName="opportunityRequirementsForm"
                 transformPayload={(values) => ({ opportunityId, values })}
                 onSuccess={(opportunity) =>
                   dispatch({

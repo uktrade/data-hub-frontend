@@ -29,7 +29,7 @@
       ...initialValues,
       reject: 'yes',
     })}
-    analyticsFormName="Example"
+    analyticsFormName="multiStepExample"
     flashMessage={(submissionTaskResult, formValues) =>
       'Form was submitted successfully'
     }

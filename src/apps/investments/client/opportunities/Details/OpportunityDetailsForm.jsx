@@ -55,7 +55,7 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
       <TaskForm
         id="opportunity-details"
         submissionTaskName={TASK_SAVE_OPPORTUNITY_DETAILS}
-        analyticsFormName="Opportunity details"
+        analyticsFormName="opportunityDetailsForm"
         transformPayload={(values) => ({ opportunityId, values })}
         onSuccess={(opportunity) =>
           dispatch({
