@@ -13,11 +13,7 @@ import {
 } from './state'
 import urls from '../../../lib/urls'
 import PipelineForm from './PipelineForm'
-import {
-  PipelineItemPropType,
-  PipelineItemsPropType,
-  STATUS_VALUES,
-} from './constants'
+import { PipelineItemsPropType, STATUS_VALUES } from './constants'
 import { getPipelineUrl } from './utils'
 
 import { Main, StatusMessage } from '../../../client/components/'
@@ -154,7 +150,6 @@ AddPipelineItemForm.propTypes = {
   companyName: PropTypes.string,
   companyId: PropTypes.string,
   pipelineStatus: PipelineItemsPropType,
-  savedId: PipelineItemPropType,
 }
 
 export default AddPipelineItemForm

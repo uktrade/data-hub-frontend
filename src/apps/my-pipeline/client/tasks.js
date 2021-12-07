@@ -4,8 +4,8 @@ import { addMessage } from '../../../client/utils/flash-messages'
 import { transformValueForAPI } from '../../../client/utils/date'
 
 function transformValuesForApi(values) {
-  const sector = values.sector ? values.sector.value : null
-  const potential_value = values.export_value ? values.export_value : null
+  const sector = values.sector?.value || null
+  const potential_value = values.export_value || null
   const likelihood_to_win = values.likelihood
     ? parseInt(values.likelihood, 10)
     : null

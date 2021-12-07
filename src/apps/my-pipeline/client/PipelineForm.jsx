@@ -77,6 +77,11 @@ function PipelineForm({
             isClearable={true}
             className="govuk-!-width-two-thirds"
           />
+          {/* 
+            This template form needs to cater for both the Add and Edit use cases. 
+            As both use cases have different params we need to check where to get
+            the company information from before firing the resource.
+          */}
           {(values.company || companyId) && (
             <Resource
               name={TASK_GET_PIPELINE_COMPANY_CONTACTS}
