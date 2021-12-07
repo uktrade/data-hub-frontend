@@ -1,4 +1,4 @@
-export const TASK_GET_EVENT_SUMMARY_DETAILS = 'TASK_GET_EVENT_SUMMARY_DETAILS'
+export const TASK_GET_EVENT_DETAILS = 'TASK_GET_EVENT_DETAILS'
 
 export const ID = 'eventDetails'
 

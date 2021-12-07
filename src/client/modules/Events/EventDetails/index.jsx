@@ -9,7 +9,7 @@ import Button from '@govuk-react/button'
 import styled from 'styled-components'
 
 import urls from '../../../../lib/urls'
-import { TASK_GET_EVENT_SUMMARY_DETAILS, ID, state2props } from './state'
+import { TASK_GET_EVENT_DETAILS, ID, state2props } from './state'
 import { EVENTS__DETAILS_LOADED } from '../../../actions'
 import Task from '../../../components/Task'
 import {
@@ -70,7 +70,7 @@ const EventDetails = ({
       useReactRouter={true}
     >
       <Task.Status
-        name={TASK_GET_EVENT_SUMMARY_DETAILS}
+        name={TASK_GET_EVENT_DETAILS}
         id={ID}
         progressMessage="loading event details"
         startOnRender={{
