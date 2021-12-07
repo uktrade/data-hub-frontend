@@ -153,7 +153,7 @@ function transformEventResponseToViewRecord({
     Notes: notes,
     'Lead team': lead_team,
     Organiser: organiser,
-    'Other teams': otherTeams.map((x) => x.name),
+    'Other teams': otherTeams ? otherTeams.map((x) => x.name) : '',
     'Related programmes': related_programmes.map((item) => item.name),
     'Related Trade Agreements': related_trade_agreements.map(
       (item) => item.name
