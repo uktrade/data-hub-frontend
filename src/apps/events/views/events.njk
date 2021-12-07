@@ -1,11 +1,8 @@
 {% extends "react.njk" %}
 
-{% block content %}
-  <div class="govuk-grid-column-full">
-      {% component 'react-slot', {
-        id: 'events-collection',
-        props: props
-      }
-      %}
-  </div>
+{% block body %}
+  {% component 'react-slot', {
+    id: 'events',
+    props: props
+  } %}
 {% endblock %}
