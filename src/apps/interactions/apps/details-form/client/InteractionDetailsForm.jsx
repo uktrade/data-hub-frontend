@@ -83,7 +83,7 @@ const InteractionDetailsForm = ({
                   id={STATE_ID}
                   submissionTaskName={TASK_SAVE_INTERACTION}
                   analyticsFormName={
-                    interactionId ? 'edit_interaction' : 'create_interaction'
+                    interactionId ? 'editInteraction' : 'createInteraction'
                   }
                   analyticsData={(values) =>
                     _.pick(

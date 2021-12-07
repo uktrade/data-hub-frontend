@@ -72,7 +72,7 @@ const Add = ({ cancelUrl, currentLeadITA, companyName, companyId }) => (
       <TaskForm
         id="manage-adviser"
         submissionTaskName="Update Lead ITA"
-        analyticsFormName="Update Lead ITA"
+        analyticsFormName="updateLeadITA"
         transformPayload={(values) => ({ ...values, companyId })}
         redirectTo={() => urls.companies.advisers.index(companyId)}
         flashMessage={({ name, email }) => [

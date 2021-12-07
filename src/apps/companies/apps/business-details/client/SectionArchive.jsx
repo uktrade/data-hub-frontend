@@ -40,7 +40,7 @@ const SectionArchive = ({ isArchived, isDnbCompany, urls }) => {
           })}
           submitButtonLabel="Archive"
           redirectTo={() => urls.companyBusinessDetails}
-          analyticsFormName="archive-company"
+          analyticsFormName="archiveCompany"
           actionLinks={[
             {
               href: urls.companyBusinessDetails,
