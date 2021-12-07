@@ -28,6 +28,12 @@ export default (
   state = initialState,
   { type, input, isMulti, option, options, focusIndex }
 ) => {
+  const selectedValue = !state.isMulti && state.selectedOptions[0]?.label
+  const filteredOptions = getFilteredOptions({
+    options: state.options,
+    input: state.input,
+  })
+
   switch (type) {
     case TYPEAHEAD__INITIALISE:
       return {
@@ -36,26 +42,22 @@ export default (
         isMulti,
       }
     case TYPEAHEAD__BLUR:
-      const selectedValue =
-        (!state.isMulti && state.selectedOptions[0]?.label) || ''
       return {
         ...state,
         menuOpen: state.ignoreBlur ? state.menuOpen : false,
-        input: state.ignoreBlur ? state.input : state.input && selectedValue,
+        input: state.ignoreBlur
+          ? state.input
+          : (state.input && selectedValue) || '',
         ignoreBlur: false,
       }
     case TYPEAHEAD__INPUT:
-      const activeOption = getFilteredOptions({
-        options: state.options,
-        input: state.input,
-      })[state.focusIndex]
       return {
         ...state,
         input,
         focusIndex: getFilteredOptions({
           options: state.options,
           input,
-        }).indexOf(activeOption),
+        }).indexOf(filteredOptions[state.focusIndex]),
         menuOpen: true,
       }
     case TYPEAHEAD__FOCUS_OPTION:
@@ -69,9 +71,13 @@ export default (
         menuOpen: false,
       }
     case TYPEAHEAD__MENU_OPEN:
+      const selectedIndex = state.options
+        .map(({ label }) => label)
+        .indexOf(selectedValue)
       return {
         ...state,
         menuOpen: true,
+        focusIndex: selectedIndex,
       }
     case TYPEAHEAD__OPTION_MOUSE_DOWN:
       return {

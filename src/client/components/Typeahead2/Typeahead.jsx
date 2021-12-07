@@ -44,8 +44,8 @@ const ListboxOption = styled('div')((props) => ({
   borderBottom: `solid 1px ${GREY_2}`,
   position: 'relative',
   boxSizing: 'border-box',
-  height: 50,
-  display: 'flex',
+  minHeight: 50,
+  display: 'block',
   alignItems: 'center',
   cursor: 'pointer',
   backgroundColor: props.focussed ? BLUE : WHITE,
@@ -118,7 +118,7 @@ const AutocompleteInput = styled('input')(FOCUSABLE, {
 })
 
 const Menu = styled('div')(({ open }) => ({
-  display: open ? 'block' : 'none',
+  visibility: open ? 'visible' : 'hidden',
   backgroundColor: WHITE,
   boxSizing: 'border-box',
   border: `1px solid ${BLACK}`,
@@ -151,9 +151,9 @@ const Typeahead = ({
   onMenuClose,
   onMenuOpen,
 }) => {
+  onInitialise({ options, isMulti })
   const inputRef = React.useRef(null)
   const menuRef = React.useRef(null)
-  onInitialise({ options, isMulti })
   const ignoreFilter =
     !isMulti && selectedOptions.map(({ label }) => label).includes(input)
   const filteredOptions = getFilteredOptions({
@@ -164,6 +164,11 @@ const Typeahead = ({
     menuOpen && filteredOptions[focusIndex]
       ? `${name}-${filteredOptions[focusIndex].value}`
       : ''
+  const scrollMenuToIndex = (index) =>
+    maintainScrollVisibility({
+      parent: menuRef.current,
+      target: menuRef.current.children[index],
+    })
   const onInputKeyDown = (event) => {
     const max = filteredOptions.length - 1
     const action = getActionFromKey(event.code, menuOpen)
@@ -175,10 +180,7 @@ const Typeahead = ({
         event.preventDefault()
         const newFocusIndex = getUpdatedIndex(focusIndex, max, action)
         onFocusChange(newFocusIndex)
-        maintainScrollVisibility({
-          parent: menuRef.current,
-          target: menuRef.current.children[newFocusIndex],
-        })
+        scrollMenuToIndex(newFocusIndex)
         return
       case menuActions.closeSelect:
         event.preventDefault()
@@ -195,6 +197,7 @@ const Typeahead = ({
         return
       case menuActions.open:
         onMenuOpen()
+        scrollMenuToIndex(focusIndex)
         return
     }
   }
@@ -220,7 +223,10 @@ const Typeahead = ({
           type="text"
           value={input}
           onBlur={onBlur}
-          onClick={onMenuOpen}
+          onClick={() => {
+            onMenuOpen()
+            scrollMenuToIndex(focusIndex)
+          }}
           onInput={onInput}
           onKeyDown={onInputKeyDown}
           ref={inputRef}
