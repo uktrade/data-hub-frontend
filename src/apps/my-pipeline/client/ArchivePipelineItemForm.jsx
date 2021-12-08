@@ -44,7 +44,7 @@ function ArchivePipelineItemForm({
        * TODO: Replace with react router navigation.
        * As we move to SPA clear the saveId from the state before navigation.
        */
-      window.location.href = getPipelineUrl(savedPipelineItem)
+      window.location.href = getPipelineUrl(savedPipelineItem.status)
     }
   }, [savedPipelineItem])
 
@@ -108,7 +108,7 @@ function ArchivePipelineItemForm({
                       />
                       <FormActions>
                         <Button>Archive project</Button>
-                        <Link href={getPipelineUrl(currentPipelineItem)}>
+                        <Link href={getPipelineUrl(currentPipelineItem.status)}>
                           Cancel
                         </Link>
                       </FormActions>

@@ -10,6 +10,7 @@ import CapitalInvestmentRequiredChecksConducted from './RequiredChecksConducted'
 import ConstructionRisks from './ConstructionRisks'
 import AssetClasses from './AssetClasses'
 import OpportunityValueType from './OpportunityValueType'
+import PipelineItem from './PipelineItem'
 
 export default {
   ...Advisers.tasks,
@@ -24,4 +25,5 @@ export default {
   ...ConstructionRisks.tasks,
   ...AssetClasses.tasks,
   ...OpportunityValueType.tasks,
+  ...PipelineItem.tasks,
 }

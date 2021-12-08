@@ -256,11 +256,11 @@ describe('Company add to pipeline form', () => {
 
     it('Should allow more than one contact to be selected', () => {
       cy.get(formSelectors.fields.contacts)
-        .selectTypeaheadOption('Dean')
-        .selectTypeaheadOption('Georg')
+        .selectTypeaheadOption('Helena')
+        .selectTypeaheadOption('Joseph')
         .getTypeaheadValues()
-        .should('contain', 'Georgina Clark')
-        .should('contain', 'Dean Cox')
+        .should('contain', 'Helena Referral')
+        .should('contain', 'Joseph Woof')
     })
   })
 })

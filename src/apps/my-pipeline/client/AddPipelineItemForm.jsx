@@ -4,12 +4,8 @@ import pluralize from 'pluralize'
 
 import ErrorSummary from '@govuk-react/error-summary'
 import Task from '../../../client/components/Task'
-import LoadingBox from '@govuk-react/loading-box'
 import ProgressIndicator from '../../../client/components/ProgressIndicator'
-import {
-  PIPELINE__CHECKED_IF_ON_PIPELINE,
-  PIPELINE__ADD_ITEM,
-} from '../../../client/actions'
+import { PIPELINE__CHECKED_IF_ON_PIPELINE } from '../../../client/actions'
 import {
   ID as STATE_ID,
   TASK_GET_PIPELINE_BY_COMPANY,
@@ -17,11 +13,7 @@ import {
 } from './state'
 import urls from '../../../lib/urls'
 import PipelineForm from './PipelineForm'
-import {
-  PipelineItemPropType,
-  PipelineItemsPropType,
-  STATUS_VALUES,
-} from './constants'
+import { PipelineItemsPropType, STATUS_VALUES } from './constants'
 import { getPipelineUrl } from './utils'
 
 import { Main, StatusMessage } from '../../../client/components/'
@@ -89,20 +81,9 @@ function AddPipelineItemForm({
   companyName,
   companyId,
   pipelineStatus,
-  savedPipelineItem,
   sectors,
   contacts,
 }) {
-  useEffect(() => {
-    if (savedPipelineItem) {
-      /**
-       * TODO: Replace with react router navigation.
-       * As we move to SPA clear the saveId from the state before navigation.
-       */
-      window.location.href = getPipelineUrl(savedPipelineItem)
-    }
-  }, [savedPipelineItem])
-
   return (
     <>
       <LocalHeader
@@ -124,10 +105,6 @@ function AddPipelineItemForm({
               TASK_GET_PIPELINE_BY_COMPANY,
               STATE_ID
             )
-            const addCompanyToPipeline = getTask(
-              TASK_ADD_COMPANY_TO_PIPELINE,
-              STATE_ID
-            )
             return (
               <>
                 <PipelineCheck
@@ -135,24 +112,30 @@ function AddPipelineItemForm({
                   pipelineStatus={pipelineStatus}
                   companyId={companyId}
                 >
-                  <LoadingBox
-                    loading={addCompanyToPipeline.progress || savedPipelineItem}
-                  >
-                    <PipelineForm
-                      companyName={companyName}
-                      cancelLink={urls.companies.detail(companyId)}
-                      pipelineStatus={pipelineStatus}
-                      sectors={sectors}
-                      contacts={contacts}
-                      onSubmit={(values) => {
-                        addCompanyToPipeline.start({
-                          payload: { values, companyId },
-                          onSuccessDispatch: PIPELINE__ADD_ITEM,
-                        })
-                      }}
-                      submissionError={addCompanyToPipeline.errorMessage}
-                    />
-                  </LoadingBox>
+                  <PipelineForm
+                    companyName={companyName}
+                    companyId={companyId}
+                    pipelineStatus={pipelineStatus}
+                    sectors={sectors}
+                    contacts={contacts}
+                    submissionTaskName={TASK_ADD_COMPANY_TO_PIPELINE}
+                    transformPayload={(values) => ({
+                      values,
+                      companyId,
+                    })}
+                    analyticsFormName="addCompanyToPipeline"
+                    redirectTo={(result) => getPipelineUrl(result.status)}
+                    flashMessage={(result) =>
+                      `You added ${result.name} to your pipeline`
+                    }
+                    submitButtonLabel="Create project"
+                    actionLinks={[
+                      {
+                        href: urls.companies.detail(companyId),
+                        children: 'Cancel',
+                      },
+                    ]}
+                  />
                 </PipelineCheck>
               </>
             )
@@ -167,7 +150,6 @@ AddPipelineItemForm.propTypes = {
   companyName: PropTypes.string,
   companyId: PropTypes.string,
   pipelineStatus: PipelineItemsPropType,
-  savedId: PipelineItemPropType,
 }
 
 export default AddPipelineItemForm

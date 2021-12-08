@@ -1,23 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
-import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
 import { H4 } from '@govuk-react/heading'
 import InsetText from '@govuk-react/inset-text'
-import ErrorSummary from '@govuk-react/error-summary'
 import Paragraph from '@govuk-react/paragraph'
 
 import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeader.jsx'
-import {
-  Main,
-  SummaryList,
-  FormStateful,
-  FormActions,
-  FieldInput,
-} from '../../../../../client/components'
+import { Main, SummaryList, FieldInput } from '../../../../../client/components'
 import urls from '../../../../../lib/urls'
 import { WEBSITE_REGEX } from '../../add-company/client/constants'
+import TaskForm from '../../../../../client/components/Task/Form'
 
 const requiredWebsiteOrPhoneValidator = (
   value,
@@ -29,16 +20,6 @@ const requiredWebsiteOrPhoneValidator = (
 
 const websiteValidator = (value) => {
   WEBSITE_REGEX.test(value) ? null : 'Enter a valid website URL'
-}
-
-async function onFormSubmit(values, csrfToken) {
-  const url = urls.companies.match.cannotFind(values.companyId)
-  await axios.post(url, {
-    _csrf: csrfToken,
-    website: values.website,
-    telephone_number: values.telephoneNumber,
-  })
-  return urls.companies.detail(values.companyId)
 }
 
 function CannotFindMatch({ company, csrfToken }) {
@@ -64,22 +45,24 @@ function CannotFindMatch({ company, csrfToken }) {
         </Paragraph>
       </LocalHeader>
       <Main>
-        <FormStateful
-          initialValues={{
-            companyId: company.id,
-            address: company.address.join(', '),
-          }}
-          onSubmit={(values) => onFormSubmit(values, csrfToken)}
+        <TaskForm
+          id="cannot-find-match-form"
+          submissionTaskName="Cannot find match"
+          redirectTo={() => urls.companies.detail(company.id)}
+          transformPayload={(values) => ({ values, company, csrfToken })}
+          flashMessage={() =>
+            'Verification request sent for third party review'
+          }
+          submitButtonLabel="Send"
+          actionLinks={[
+            {
+              children: 'Back',
+              href: urls.companies.match.index(company.id),
+            },
+          ]}
         >
-          {({ submissionError }) => (
+          {() => (
             <>
-              {submissionError && (
-                <ErrorSummary
-                  heading="There was an error submitting these details"
-                  description={submissionError.message}
-                  errors={[]}
-                />
-              )}
               <H4 as="h2">Data Hub business details (un-verified)</H4>
               <InsetText>
                 <SummaryList
@@ -114,13 +97,9 @@ function CannotFindMatch({ company, csrfToken }) {
                 It will NOT change any recorded activity (interactions, OMIS
                 orders or Investment projects).
               </Paragraph>
-              <FormActions>
-                <Button>Send</Button>
-                <Link href={urls.companies.match.index(company.id)}>Back</Link>
-              </FormActions>
             </>
           )}
-        </FormStateful>
+        </TaskForm>
       </Main>
     </>
   )
