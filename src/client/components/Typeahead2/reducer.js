@@ -12,9 +12,10 @@ import {
   TYPEAHEAD__OPTION_REMOVE,
 } from '../../actions'
 
-import { getFilteredOptions } from './utils'
+import { getFilteredOptions, valueAsArray } from './utils'
 
 const initialState = {
+  initialised: false,
   menuOpen: false,
   focusIndex: -1,
   input: '',
@@ -26,7 +27,7 @@ const initialState = {
 
 export default (
   state = initialState,
-  { type, input, isMulti, option, options, focusIndex }
+  { type, value, input, isMulti, option, options, focusIndex }
 ) => {
   const selectedValue = !state.isMulti && state.selectedOptions[0]?.label
   const filteredOptions = getFilteredOptions({
@@ -36,10 +37,19 @@ export default (
 
   switch (type) {
     case TYPEAHEAD__INITIALISE:
+      const useInitialValue = !state.initialised && value
       return {
         ...state,
         options,
         isMulti,
+        selectedOptions: useInitialValue
+          ? valueAsArray(value)
+          : state.selectedOptions,
+        input:
+          useInitialValue && !isMulti
+            ? valueAsArray(value)[0]?.label
+            : state.input,
+        initialised: true,
       }
     case TYPEAHEAD__BLUR:
       return {

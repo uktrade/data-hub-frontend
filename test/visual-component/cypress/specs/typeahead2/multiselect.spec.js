@@ -5,4 +5,18 @@ describe('Multi select', () => {
       .should('be.visible')
       .compareSnapshot('typeahead2-multi-select')
   })
+
+  it('should render the typeahead2 with pre-selected options correctly', () => {
+    cy.visit('/iframe.html?id=typeahead2--multi-pre-selected-option')
+    cy.get('#root')
+      .should('be.visible')
+      .compareSnapshot('typeahead2-multi-pre-selected-options')
+  })
+
+  it('should render the typeahead2 with multiple pre-selected options correctly', () => {
+    cy.visit('/iframe.html?id=typeahead2--multi-pre-selected-multiple-options')
+    cy.get('#root')
+      .should('be.visible')
+      .compareSnapshot('typeahead2-multi-pre-selected-multiple-options')
+  })
 })

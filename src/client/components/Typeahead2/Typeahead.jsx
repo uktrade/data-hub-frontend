@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import {
   BLACK,
@@ -135,7 +136,9 @@ const Typeahead = ({
   name,
   label = '',
   closeMenuOnSelect = false,
-  isMulti = true,
+  isMulti = false,
+  defaultValue,
+  value,
   menuOpen,
   options = [],
   input = '',
@@ -150,8 +153,9 @@ const Typeahead = ({
   onOptionRemove,
   onMenuClose,
   onMenuOpen,
+  ...inputProps
 }) => {
-  onInitialise({ options, isMulti })
+  onInitialise({ options, isMulti, value: value || defaultValue })
   const inputRef = React.useRef(null)
   const menuRef = React.useRef(null)
   const ignoreFilter =
@@ -213,6 +217,7 @@ const Typeahead = ({
       )}
       <InputWrapper>
         <AutocompleteInput
+          {...inputProps}
           aria-activedescendant={activeId}
           aria-autocomplete="list"
           aria-controls={`${name}-listbox`}
@@ -276,15 +281,50 @@ const Typeahead = ({
   )
 }
 
+const keyPairPropType = PropTypes.shape({
+  label: PropTypes.string,
+  value: PropTypes.string,
+})
+
+Typeahead.propTypes = {
+  name: PropTypes.string,
+  label: PropTypes.string,
+  closeMenuOnSelect: PropTypes.bool,
+  isMulti: PropTypes.bool,
+  defaultValue: PropTypes.oneOfType([
+    keyPairPropType,
+    PropTypes.arrayOf(keyPairPropType),
+  ]),
+  value: PropTypes.oneOfType([
+    keyPairPropType,
+    PropTypes.arrayOf(keyPairPropType),
+  ]),
+  menuOpen: PropTypes.bool,
+  options: PropTypes.arrayOf(keyPairPropType),
+  input: PropTypes.string,
+  selectedOptions: PropTypes.arrayOf(keyPairPropType),
+  focusIndex: PropTypes.number,
+  onInitialise: PropTypes.func,
+  onBlur: PropTypes.func,
+  onFocusChange: PropTypes.func,
+  onInput: PropTypes.func,
+  onOptionMouseDown: PropTypes.func,
+  onOptionToggle: PropTypes.func,
+  onOptionRemove: PropTypes.func,
+  onMenuClose: PropTypes.func,
+  onMenuOpen: PropTypes.func,
+}
+
 export default multiInstance({
   name: 'Typeahead',
   actionPattern: 'TYPEAHEAD__',
   dispatchToProps: (dispatch) => ({
-    onInitialise: ({ options, isMulti }) => {
+    onInitialise: ({ options, isMulti, value }) => {
       dispatch({
         type: TYPEAHEAD__INITIALISE,
         options,
         isMulti,
+        value,
       })
     },
     onBlur: () => {
