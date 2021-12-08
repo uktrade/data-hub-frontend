@@ -208,6 +208,7 @@ import { ProtectedRoute } from '../client/components'
 import routes from './routes'
 
 import * as matchCompanyTasks from '../apps/companies/apps/match-company/client/tasks'
+import * as companyListTasks from '../apps/company-lists/client/tasks'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -238,6 +239,7 @@ function App() {
     <Provider
       tasks={{
         'Create company': createCompany,
+        'Edit company list': companyListTasks.editCompanyList,
         'Match confirmation': matchCompanyTasks.onMatchSubmit,
         'Cannot find match': matchCompanyTasks.cannotFindMatchSubmit,
         'Company lists': companyListsTasks.fetchCompanyLists,

@@ -1,68 +1,34 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-import { get } from 'lodash'
+import React from 'react'
 import PropTypes from 'prop-types'
-import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
-import ErrorSummary from '@govuk-react/error-summary'
 
-import {
-  FormStateful,
-  FieldInput,
-  FormActions,
-} from '../../../client/components'
+import { FieldInput } from '../../../client/components'
 
-const NOT_FOUND_MESSAGE =
-  'The list you are trying to edit was not found. It may have already been deleted.'
+import TaskForm from '../../../client/components/Task/Form'
 
-function EditCompanyList({ cancelUrl, listName, csrfToken, id, returnUrl }) {
-  const [errorMessage, setErrorMessage] = useState(null)
-  const onSubmitHandler = async ({ listName }) => {
-    try {
-      await axios({
-        method: 'PATCH',
-        url: `/company-lists/${id}/rename?_csrf=${csrfToken}`,
-        data: { name: listName, id },
-      })
-      return returnUrl
-    } catch (error) {
-      if (get(error, 'response.status') === 404) {
-        setErrorMessage(NOT_FOUND_MESSAGE)
-      } else {
-        setErrorMessage(error.message || error.toString())
+const EditCompanyList = ({ cancelUrl, listName, csrfToken, id, returnUrl }) => (
+  <TaskForm
+    id="edit-company-list"
+    analyticsFormName="edit-company-list"
+    submissionTaskName="Edit company list"
+    initialValues={{ listName }}
+    actionLinks={[{ children: 'Cancel', href: cancelUrl }]}
+    transformPayload={(values) => ({ ...values, id, csrfToken })}
+    redirectTo={() => returnUrl}
+  >
+    <FieldInput
+      name="listName"
+      type="text"
+      label="List name"
+      required="Enter a name for your list"
+      hint="This is a name only you see, and can be up to 30 characters"
+      validate={(value) =>
+        value && value.length > 30
+          ? `Enter list name which is no longer than 30 characters`
+          : null
       }
-    }
-  }
-  return (
-    <>
-      {errorMessage && (
-        <ErrorSummary
-          heading="There was an error editing this list"
-          description={errorMessage}
-          errors={[]}
-        />
-      )}
-      <FormStateful onSubmit={onSubmitHandler} initialValues={{ listName }}>
-        <FieldInput
-          name="listName"
-          type="text"
-          label="List name"
-          required="Enter a name for your list"
-          hint="This is a name only you see, and can be up to 30 characters"
-          validate={(value) =>
-            value && value.length > 30
-              ? `Enter list name which is no longer than 30 characters`
-              : null
-          }
-        />
-        <FormActions>
-          <Button>Save</Button>
-          <Link href={cancelUrl}>Cancel</Link>
-        </FormActions>
-      </FormStateful>
-    </>
-  )
-}
+    />
+  </TaskForm>
+)
 
 EditCompanyList.propTypes = {
   listName: PropTypes.string.isRequired,
