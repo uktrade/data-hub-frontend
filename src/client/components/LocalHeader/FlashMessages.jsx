@@ -46,14 +46,14 @@ const messageColours = {
   muted: BLACK,
 }
 
-const FlashMessages = ({ flashMessages }) => {
-  const flashMessagesFromStorage = getMessages()
-  clearMessages()
-  return !isEmpty(flashMessages) || flashMessagesFromStorage ? (
+export const FlashMessagesStateless = ({ flashMessages }) => {
+  /*
+  Flash message component used just for presentation which does not interact with
+  the session storage. Takes an object of flash messages as a prop.
+  */
+  return !isEmpty(flashMessages) ? (
     <UnorderedList listStyleType="none" data-test="flash">
-      {Object.entries(
-        !isEmpty(flashMessages) ? flashMessages : flashMessagesFromStorage
-      ).map(([type, messages]) => {
+      {Object.entries(flashMessages).map(([type, messages]) => {
         /*
         Example "success:with-body" -  If the string you pass in the first argument "type"
         has a colon then the message argument accepts two props in an object, one for the heading
@@ -81,7 +81,20 @@ const FlashMessages = ({ flashMessages }) => {
   ) : null
 }
 
-FlashMessages.propTypes = {
+const FlashMessages = ({ flashMessages }) => {
+  /*
+  Flash message component that will get messages from either session storage,
+  or via the flashMessages prop.
+  */
+  const flashMessagesFromStorage = getMessages()
+  const messages = !isEmpty(flashMessages)
+    ? flashMessages
+    : flashMessagesFromStorage
+  clearMessages()
+  return <FlashMessagesStateless flashMessages={messages} />
+}
+
+const flashMessagePropTypes = {
   flashMessages: PropTypes.shape({
     type: PropTypes.oneOfType([
       PropTypes.arrayOf(
@@ -95,5 +108,8 @@ FlashMessages.propTypes = {
     ]),
   }),
 }
+
+FlashMessagesStateless.propTypes = flashMessagePropTypes
+FlashMessages.propTypes = flashMessagePropTypes
 
 export default FlashMessages

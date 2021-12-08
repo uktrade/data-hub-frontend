@@ -17,7 +17,7 @@ describe('Company Investments and Large capital profile', () => {
     it('should render a meta title', () => {
       cy.title().should(
         'eq',
-        'Large capitail profile - One List Corp - Companies - DIT Data Hub'
+        'Large capital profile - One List Corp - Companies - DIT Data Hub'
       )
     })
 

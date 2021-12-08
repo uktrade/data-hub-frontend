@@ -25,6 +25,12 @@ type ChildFn = ({
 }) => React.ReactNode
 type Children = React.ReactNode | ChildFn
 
+type OnSuccessActions = {
+  hardRedirect: (to: string) => any,
+  softRedirect: (to: string) => any,
+  flashMessage: (message: FlashMessage) => any,
+}
+
 export type Props = {
   submissionTaskName: string,
   id: string,
@@ -36,7 +42,7 @@ export type Props = {
   redirectTo?: (successActionResult: any, values: Values) => string,
   redirectMode?: 'hard' | 'soft',
   flashMessage?: (successActionResult: any, values: Values) => FlashMessage,
-  onSuccess?: (SuccessActionResult: any, values: Values) => any,
+  onSuccess?: (successActionResult: any, values: Values, actions: OnSuccessActions) => any,
   transformInitialValues?: (initialValuesTaskResult: any) => Values,
   transformPayload?: (values: Values) => any,
   actionLinks?: LinkProps[],
