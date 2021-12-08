@@ -164,6 +164,7 @@ const FieldAddress = ({
   const postcodeLabel = () => {
     if (isUS) return 'ZIP Code'
     if (isCanada) return 'Postal Code'
+    if (isUK) return 'Postcode'
     return 'Postcode (optional)'
   }
 
@@ -201,31 +202,21 @@ const FieldAddress = ({
   const postcodeErrorMessage = () => {
     if (isUS) return 'Enter a ZIP code'
     if (isCanada) return 'Enter a postal code'
-  }
-
-  const NonUKPostcodeField = () => {
-    return (
-      <StyledFieldPostcode
-        type="text"
-        name="postcode"
-        label={postcodeLabel()}
-        required={postcodeErrorMessage()}
-        validate={postcodeValidator}
-      />
-    )
+    if (isUK) return 'Enter a postcode'
   }
 
   return (
     <FieldWrapper {...{ label, legend, hint, name }} showBorder={true}>
-      {isUK ? (
+      <StyledFieldPostcode
+        type={isUK ? 'search' : 'text'}
+        name="postcode"
+        label={postcodeLabel()}
+        required={postcodeErrorMessage()}
+        maxLength={isUK ? 10 : null}
+        validate={postcodeValidator}
+      />
+      {isUK && (
         <>
-          <StyledFieldPostcode
-            type="search"
-            name="postcode"
-            label="Postcode"
-            required="Enter a postcode"
-            maxLength={10}
-          />
           <Button
             onClick={onSearchClick}
             buttonColour={GREY_3}
@@ -254,10 +245,7 @@ const FieldAddress = ({
             </FormGroup>
           )}
         </>
-      ) : (
-        NonUKPostcodeField()
       )}
-
       <FieldInput
         type="text"
         name="address1"
@@ -275,9 +263,7 @@ const FieldAddress = ({
         label="Town or city"
         required="Enter a town or city"
       />
-
       <FieldInput type="text" name="county" label="County (optional)" />
-
       <>
         {renderUsStateField()}
         {renderCanadaProvinceField()}
@@ -287,9 +273,8 @@ const FieldAddress = ({
           </StatusMessage>
         )}
       </>
-
       {isCountrySelectable ? (
-        <FieldCountrySelect name="country" />
+        <FieldCountrySelect name="country" required="Select a country" />
       ) : (
         <FieldUneditable name="country" label="Country">
           {country.name}

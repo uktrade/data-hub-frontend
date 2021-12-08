@@ -1,6 +1,7 @@
 /// <reference types="Cypress" />
 
 const { assertBreadcrumbs } = require('../../support/assertions')
+const urls = require('../../../../../src/lib/urls')
 
 const ZBONCAK_COMPANY_ID = '4cd4128b-1bad-4f1e-9146-5d4678c6a018'
 const assertErrorSummary = (...errors) =>
@@ -85,15 +86,16 @@ describe('Create contact form', () => {
     cy.clickSubmitButton('Add contact')
 
     assertErrors({
-      'First name': 'This field may not be null.',
-      'Last name': 'This field may not be null.',
-      'Job title': 'This field may not be null.',
-      'Is this person a primary contact?': 'This field is required.',
-      'Telephone country code': 'This field may not be null.',
-      'Telephone number': 'This field may not be null.',
-      Email: 'This field may not be null.',
+      'First name': 'Enter a first name',
+      'Last name': 'Enter a last name',
+      'Job title': 'Enter a job title',
+      'Is this person a primary contact?':
+        'Select yes if this person is a primary contact',
+      'Telephone country code': 'Enter a telephone country code',
+      'Telephone number': 'Enter a telephone number',
+      Email: 'Enter an email',
       'Is the contact’s address the same as the company address?':
-        'This field is required.',
+        "Select yes if the contact's address is the same as the company address",
     })
   })
 
@@ -106,13 +108,14 @@ describe('Create contact form', () => {
     cy.clickSubmitButton('Add contact')
 
     assertErrors({
-      'First name': 'This field may not be null.',
-      'Last name': 'This field may not be null.',
-      'Job title': 'This field may not be null.',
-      'Is this person a primary contact?': 'This field is required.',
-      'Telephone country code': 'This field may not be null.',
-      'Telephone number': 'This field may not be null.',
-      Email: 'This field may not be null.',
+      'First name': 'Enter a first name',
+      'Last name': 'Enter a last name',
+      'Job title': 'Enter a job title',
+      'Is this person a primary contact?':
+        'Select yes if this person is a primary contact',
+      'Telephone country code': 'Enter a telephone country code',
+      'Telephone number': 'Enter a telephone number',
+      Email: 'Enter an email',
       'Address line 1': 'Enter an address line 1',
       'Town or city': 'Enter a town or city',
     })
@@ -213,7 +216,7 @@ describe('Edit contact', () => {
         cy.get('#address1').type('Address first line')
         cy.get('#city').type('Address city')
         cy.get('#postcode').type('NE16 386')
-        cy.get('[data-test="submit"]').click()
+        cy.clickSubmitButton('Save and return')
 
         cy.wait('@editContactResponse').then((xhr) => {
           expect(xhr.request.body.address_area).to.equal(null)
@@ -234,7 +237,7 @@ describe('Edit contact', () => {
           cy.get('#address1').type('Address first line')
           cy.get('#city').type('Address city')
           cy.get('#postcode').type('NE16 386')
-          cy.get('[data-test="submit"]').click()
+          cy.clickSubmitButton('Save and return')
 
           cy.wait('@editContactResponse').then((xhr) => {
             expect(xhr.request.body.address_area).to.equal(null)
@@ -251,7 +254,7 @@ describe('Edit contact', () => {
           cy.get('#address1').type('Address first line')
           cy.get('#city').type('Address city')
           cy.get('#postcode').type('NE16 386')
-          cy.get('[data-test="submit"]').click()
+          cy.clickSubmitButton('Save and return')
 
           cy.contains('Select a province')
         })
@@ -265,7 +268,7 @@ describe('Edit contact', () => {
           cy.get('#address1').type('Address first line')
           cy.get('#city').type('Address city')
           cy.get('#postcode').type('NE16 386')
-          cy.get('[data-test="submit"]').click()
+          cy.clickSubmitButton('Save and return')
 
           cy.contains('Select a state')
         })
@@ -279,7 +282,7 @@ describe('Edit contact', () => {
     assertBreadcrumbs({
       Home: '/',
       Contacts: '/contacts/',
-      'Joseph Woof': null,
+      'Joseph Woof': urls.contacts.details(EDIT_US_CONTACT_ID),
       Edit: null,
     })
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import { connect } from 'react-redux'
 
 /**
@@ -9,6 +8,6 @@ import { connect } from 'react-redux'
  * a function as it's single child, which will be passed the whole Redux state
  * and whose return value will be rendered by the component.
  */
-export default connect((state) => ({ state }))(
-  ({ state, children: Children }) => <Children {...state} />
+export default connect((state) => ({ state }))(({ state, children }) =>
+  children(state)
 )
