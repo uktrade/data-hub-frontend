@@ -148,7 +148,7 @@ const _ContactForm = ({
                 return (
                   <TaskForm
                     id="add-contact-form"
-                    analyticsFormName={update ? 'edit_contact' : 'add_contact'}
+                    analyticsFormName={update ? 'editContact' : 'addContact'}
                     submissionTaskName="Save contact"
                     transformPayload={({
                       address1,
