@@ -1,48 +1,36 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
-import Task from '../../../client/components/Task'
-import LoadingBox from '@govuk-react/loading-box'
-
-import {
-  PIPELINE__EDIT_ITEM,
-  PIPELINE__GET_COMPANY_CONTACTS,
-} from '../../../client/actions'
-
-import {
-  ID as STATE_ID,
-  TASK_GET_PIPELINE_COMPANY_CONTACTS,
-  TASK_EDIT_PIPELINE_ITEM,
-} from './state'
+import { TASK_EDIT_PIPELINE_ITEM } from './state'
 
 import urls from '../../../lib/urls'
 import PipelineForm from './PipelineForm'
-import GetPipelineData from './GetPipelineData'
-import { PipelineItemPropType } from './constants'
 import { getPipelineUrl } from './utils'
 import { Main } from '../../../client/components'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
+import PipelineItemResource from '../../../client/components/Resource/PipelineItem'
 
 const {
-  format,
-  isDateValid,
+  formatWithoutParsing,
+  isUnparsedDateValid,
   createAndFormatDateObject,
 } = require('../../../client/utils/date')
 
 function formatInitialValues(values) {
   const { sector, contacts } = values
-  const expectedWinDate = createAndFormatDateObject(values.expected_win_date)
+  const expectedWinDate = createAndFormatDateObject(values.expectedWinDate)
   return {
     name: values.name,
     category: values.status,
-    likelihood: String(values.likelihood_to_win),
+    likelihood: String(values.likelihoodToWin),
     sector: sector ? { value: sector.id, label: sector.segment } : null,
     contacts: contacts?.map(({ id, name }) => ({ value: id, label: name })),
-    export_value: values.potential_value,
-    expected_win_date: isDateValid(expectedWinDate)
+    export_value: values.potentialValue,
+    company: values.company,
+    expected_win_date: isUnparsedDateValid(expectedWinDate)
       ? {
-          month: format(expectedWinDate, 'MM'),
-          year: format(expectedWinDate, 'yyyy'),
+          month: formatWithoutParsing(expectedWinDate, 'MM'),
+          year: formatWithoutParsing(expectedWinDate, 'yyyy'),
         }
       : {
           month: '',
@@ -51,116 +39,57 @@ function formatInitialValues(values) {
   }
 }
 
-function GetCompanyContacts({ task, companyId, features, children }) {
-  useEffect(() => {
-    task.start({
-      payload: { companyId, features },
-      onSuccessDispatch: PIPELINE__GET_COMPANY_CONTACTS,
-    })
-  }, [companyId])
-
-  return children
-}
-
-function EditPipelineItemForm({
-  pipelineItemId,
-  contacts,
-  sectors,
-  currentPipelineItem,
-  savedPipelineItem,
-  features,
-}) {
-  useEffect(() => {
-    if (savedPipelineItem) {
-      /**
-       * TODO: Replace with react router navigation.
-       * As we move to SPA clear the saveId from the state before navigation.
-       */
-      window.location.href = getPipelineUrl(savedPipelineItem)
-    }
-  }, [savedPipelineItem])
-
+function EditPipelineItemForm({ pipelineItemId, contacts, sectors }) {
   return (
-    <>
-      <LocalHeader
-        heading="Edit project"
-        breadcrumbs={[
-          { link: urls.dashboard(), text: 'Home' },
-          { link: urls.pipeline.index(), text: 'My Pipeline' },
-          {
-            text: 'Edit project',
-          },
-        ]}
-      />
-      <Main>
-        <Task>
-          {(getTask) => {
-            const editPipelineItem = getTask(TASK_EDIT_PIPELINE_ITEM, STATE_ID)
-
-            const getCompanyContacts = getTask(
-              TASK_GET_PIPELINE_COMPANY_CONTACTS,
-              STATE_ID
-            )
-            return (
-              <>
-                <GetPipelineData
-                  getTask={getTask}
-                  pipelineItemId={pipelineItemId}
-                  currentPipelineItem={currentPipelineItem}
-                >
-                  {() => (
-                    <GetCompanyContacts
-                      task={getCompanyContacts}
-                      features={features}
-                      companyId={currentPipelineItem.company.id}
-                    >
-                      <LoadingBox
-                        loading={
-                          getCompanyContacts.progress ||
-                          editPipelineItem.progress
-                        }
-                      >
-                        <PipelineForm
-                          submissionError={editPipelineItem.errorMessage}
-                          onSubmit={(values) => {
-                            editPipelineItem.start({
-                              payload: {
-                                values,
-                                pipelineItemId,
-                                currentPipelineItem,
-                              },
-                              onSuccessDispatch: PIPELINE__EDIT_ITEM,
-                            })
-                          }}
-                          cancelLink={getPipelineUrl(currentPipelineItem)}
-                          initialValue={
-                            currentPipelineItem &&
-                            formatInitialValues(currentPipelineItem)
-                          }
-                          sectors={sectors}
-                          contacts={contacts}
-                        />
-                      </LoadingBox>
-                    </GetCompanyContacts>
-                  )}
-                </GetPipelineData>
-              </>
-            )
-          }}
-        </Task>
-      </Main>
-    </>
+    <PipelineItemResource id={pipelineItemId}>
+      {(pipelineItem) => (
+        <>
+          <LocalHeader
+            heading="Edit project"
+            breadcrumbs={[
+              { link: urls.dashboard(), text: 'Home' },
+              { link: urls.pipeline.index(), text: 'My Pipeline' },
+              {
+                text: 'Edit project',
+              },
+            ]}
+          />
+          <Main>
+            <PipelineForm
+              analyticsFormName="editPipelineItem"
+              transformPayload={(values) => ({
+                values,
+                pipelineItemId,
+              })}
+              submissionTaskName={TASK_EDIT_PIPELINE_ITEM}
+              initialValues={formatInitialValues(pipelineItem)}
+              sectors={sectors}
+              contacts={contacts}
+              actionLinks={[
+                {
+                  href: getPipelineUrl(pipelineItem.status),
+                  children: 'Cancel',
+                },
+              ]}
+              flashMessage={(result) => `You saved changes to ${result.name}`}
+              redirectTo={(result) => getPipelineUrl(result.status)}
+            />
+          </Main>
+        </>
+      )}
+    </PipelineItemResource>
   )
 }
 
 EditPipelineItemForm.propTypes = {
-  pipelineItemId: PropTypes.string,
-  currentPipeline: PipelineItemPropType,
-  savedPipelineItem: PipelineItemPropType,
-  features: PropTypes.shape({
-    code: PropTypes.string,
-    is_active: PropTypes.string,
-  }),
+  pipelineItemId: PropTypes.string.isRequired,
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+    })
+  ),
+  sectors: PropTypes.array,
 }
 
 export default EditPipelineItemForm
