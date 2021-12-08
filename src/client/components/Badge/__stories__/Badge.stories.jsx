@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import Link from '@govuk-react/link'
 import Badge from 'Badge'
 
-const stories = storiesOf('Badge')
+const stories = storiesOf('Badge', module)
 
 stories.add('Default', () => <Badge>This is a text</Badge>)
 
