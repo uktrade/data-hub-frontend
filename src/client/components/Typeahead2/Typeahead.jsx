@@ -16,7 +16,7 @@ import multiInstance from '../../utils/multiinstance'
 
 import {
   TYPEAHEAD__BLUR,
-  TYPEAHEAD__FOCUS_OPTION,
+  TYPEAHEAD__SET_ACTIVE_OPTION,
   TYPEAHEAD__INPUT,
   TYPEAHEAD__INITIALISE,
   TYPEAHEAD__MENU_CLOSE,
@@ -39,18 +39,18 @@ import {
 import reducer from './reducer'
 
 const ListboxOption = styled('div')((props) => ({
+  display: 'flex',
   padding: props.isMulti
-    ? `${SPACING.SCALE_3} 0 ${SPACING.SCALE_3} 41px`
+    ? `${SPACING.SCALE_3} 0 ${SPACING.SCALE_3} 48px`
     : SPACING.SCALE_3,
   borderBottom: `solid 1px ${GREY_2}`,
   position: 'relative',
   boxSizing: 'border-box',
-  minHeight: 50,
-  display: 'block',
+  minHeight: 53,
   alignItems: 'center',
   cursor: 'pointer',
-  backgroundColor: props.focussed ? BLUE : WHITE,
-  color: props.focussed ? WHITE : TEXT_COLOUR,
+  backgroundColor: props.active ? BLUE : WHITE,
+  color: props.active ? WHITE : TEXT_COLOUR,
 
   '&:last-child': {
     borderBottom: 'none',
@@ -58,12 +58,13 @@ const ListboxOption = styled('div')((props) => ({
   '::before': {
     content: props.isMulti ? '""' : '',
     position: 'absolute',
-    left: 8,
-    top: 'calc(50% - 10px)',
-    width: 20,
-    height: 20,
+    left: 10,
+    top: 'calc(50% - 14px)',
+    width: 26,
+    height: 26,
+    backgroundColor: WHITE,
     boxSizing: 'border-box',
-    border: 'solid 1px',
+    border: `solid 2px ${TEXT_COLOUR}`,
     outline: props.focussed ? `3px solid ${FOCUS_COLOUR}` : 'none',
     outlineOffset: 0,
   },
@@ -71,12 +72,12 @@ const ListboxOption = styled('div')((props) => ({
     display: props['aria-selected'] ? 'block' : 'none',
     content: props.isMulti ? '""' : '',
     position: 'absolute',
-    left: 15,
-    top: 'calc(50% - 2px)',
+    left: 19,
+    top: 'calc(50% - 3px)',
     width: 5,
-    height: 12,
-    borderRight: '2px solid',
-    borderBottom: '2px solid',
+    height: 14,
+    borderRight: `3px solid ${TEXT_COLOUR}`,
+    borderBottom: `3px solid ${TEXT_COLOUR}`,
     transform: 'translate(0, -50%) rotate(45deg)',
   },
 }))
@@ -84,7 +85,7 @@ const ListboxOption = styled('div')((props) => ({
 const NoOptionsMessage = styled('div')({
   padding: `${SPACING.SCALE_3} 0`,
   boxSizing: 'border-box',
-  height: 50,
+  minHeight: 53,
   textAlign: 'center',
   color: GREY_1,
 })
@@ -123,7 +124,7 @@ const Menu = styled('div')(({ open }) => ({
   backgroundColor: WHITE,
   boxSizing: 'border-box',
   border: `1px solid ${BLACK}`,
-  maxHeight: 300,
+  maxHeight: 318,
   overflowY: 'scroll',
   left: 0,
   position: 'absolute',
@@ -143,10 +144,11 @@ const Typeahead = ({
   options = [],
   input = '',
   selectedOptions = [],
+  activeIndex,
   focusIndex,
   onInitialise,
   onBlur,
-  onFocusChange,
+  onActiveChange,
   onInput,
   onOptionMouseDown,
   onOptionToggle,
@@ -165,8 +167,8 @@ const Typeahead = ({
     input: !ignoreFilter && input,
   })
   const activeId =
-    menuOpen && filteredOptions[focusIndex]
-      ? `${name}-${filteredOptions[focusIndex].value}`
+    menuOpen && filteredOptions[activeIndex]
+      ? `${name}-${filteredOptions[activeIndex].value}`
       : ''
   const scrollMenuToIndex = (index) =>
     maintainScrollVisibility({
@@ -182,14 +184,14 @@ const Typeahead = ({
       case menuActions.first:
       case menuActions.previous:
         event.preventDefault()
-        const newFocusIndex = getUpdatedIndex(focusIndex, max, action)
-        onFocusChange(newFocusIndex)
-        scrollMenuToIndex(newFocusIndex)
+        const newActiveIndex = getUpdatedIndex(activeIndex, max, action)
+        onActiveChange(newActiveIndex)
+        scrollMenuToIndex(newActiveIndex)
         return
       case menuActions.closeSelect:
         event.preventDefault()
-        if (filteredOptions[focusIndex]) {
-          onOptionToggle(filteredOptions[focusIndex])
+        if (filteredOptions[activeIndex]) {
+          onOptionToggle(filteredOptions[activeIndex])
         }
         if (closeMenuOnSelect) {
           onMenuClose()
@@ -201,7 +203,7 @@ const Typeahead = ({
         return
       case menuActions.open:
         onMenuOpen()
-        scrollMenuToIndex(focusIndex)
+        scrollMenuToIndex(activeIndex)
         return
     }
   }
@@ -218,6 +220,7 @@ const Typeahead = ({
       <InputWrapper>
         <AutocompleteInput
           {...inputProps}
+          autoComplete="off"
           aria-activedescendant={activeId}
           aria-autocomplete="list"
           aria-controls={`${name}-listbox`}
@@ -230,7 +233,7 @@ const Typeahead = ({
           onBlur={onBlur}
           onClick={() => {
             onMenuOpen()
-            scrollMenuToIndex(focusIndex)
+            scrollMenuToIndex(activeIndex)
           }}
           onInput={onInput}
           onKeyDown={onInputKeyDown}
@@ -248,6 +251,7 @@ const Typeahead = ({
             <ListboxOption
               id={`${name}-${option.value}`}
               key={option.value}
+              active={index === activeIndex}
               focussed={index === focusIndex}
               isMulti={isMulti}
               role="option"
@@ -262,13 +266,15 @@ const Typeahead = ({
                 }
               }}
               onMouseMove={() => {
-                onFocusChange(index)
+                onActiveChange(index)
               }}
               onMouseDown={() => {
-                onOptionMouseDown()
+                onOptionMouseDown(index)
               }}
             >
-              <Highlighter optionLabel={option.label} searchStr={input} />
+              <span>
+                <Highlighter optionLabel={option.label} searchStr={input} />
+              </span>
             </ListboxOption>
           ))}
           {!filteredOptions.length && (
@@ -303,10 +309,11 @@ Typeahead.propTypes = {
   options: PropTypes.arrayOf(keyPairPropType),
   input: PropTypes.string,
   selectedOptions: PropTypes.arrayOf(keyPairPropType),
+  activeIndex: PropTypes.number,
   focusIndex: PropTypes.number,
   onInitialise: PropTypes.func,
   onBlur: PropTypes.func,
-  onFocusChange: PropTypes.func,
+  onActiveChange: PropTypes.func,
   onInput: PropTypes.func,
   onOptionMouseDown: PropTypes.func,
   onOptionToggle: PropTypes.func,
@@ -332,10 +339,10 @@ export default multiInstance({
         type: TYPEAHEAD__BLUR,
       })
     },
-    onFocusChange: (focusIndex) => {
+    onActiveChange: (activeIndex) => {
       dispatch({
-        type: TYPEAHEAD__FOCUS_OPTION,
-        focusIndex,
+        type: TYPEAHEAD__SET_ACTIVE_OPTION,
+        activeIndex,
       })
     },
     onInput: (event) => {
@@ -354,9 +361,10 @@ export default multiInstance({
         type: TYPEAHEAD__MENU_OPEN,
       })
     },
-    onOptionMouseDown: () => {
+    onOptionMouseDown: (focusIndex) => {
       dispatch({
         type: TYPEAHEAD__OPTION_MOUSE_DOWN,
+        focusIndex,
       })
     },
     onOptionToggle: (option) => {
