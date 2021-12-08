@@ -19,21 +19,9 @@ describe('Pipeline edit form', () => {
       cy.visit(urls.pipeline.edit('INCORRECT_PIPELINE'))
     })
 
-    it('should render the breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: urls.dashboard(),
-        'My Pipeline': urls.pipeline.index(),
-        'Edit project': null,
-      })
-    })
-
-    it('should render the heading', () => {
-      cy.get('[data-test="localHeader"] h1').should('have.text', 'Edit project')
-    })
-
     it('should render 404 error message', () => {
-      cy.contains('There is a problem')
-      cy.contains('Not Found')
+      cy.contains('Could not load PipelineItem')
+      cy.contains('Error: Not Found')
     })
   })
 

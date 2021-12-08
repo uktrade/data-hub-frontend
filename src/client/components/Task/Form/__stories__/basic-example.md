@@ -36,7 +36,7 @@ This is a basic example of all the capabilities of `TaskForm`. It:
     initialValuesTaskName="Load initial values"
     initialValuesPayload="resolve"
     transformInitialValues={initialValues => ({...initialValues, reject: 'yes'})}
-    analyticsFormName="task-form-example"
+    analyticsFormName="taskFormExample"
     redirectTo={(submissionTaskResult, formValues) => '#' + JSON.stringify({submissionTaskResult, formValues})}
     flashMessage={(submissionTaskResult, formValues) => 'Form was submitted successfully'}
   >

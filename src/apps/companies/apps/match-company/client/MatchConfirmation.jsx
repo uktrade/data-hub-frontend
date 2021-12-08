@@ -46,7 +46,7 @@ function MatchConfirmation({
       <TaskForm
         id="match-confirmation-form"
         submissionTaskName="Match confirmation"
-        analyticsFormName="match-confirmation-form"
+        analyticsFormName="matchConfirmationForm"
         redirectTo={(company) => urls.companies.detail(company.id)}
         flashMessage={() => [
           'Business details verified.',

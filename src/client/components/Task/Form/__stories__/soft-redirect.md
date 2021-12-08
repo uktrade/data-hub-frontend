@@ -41,7 +41,7 @@ import { Switch, Route, Link } from 'react-router-dom'
           ...initialValues,
           reject: 'yes',
         })}
-        analyticsFormName="task-form-example"
+        analyticsFormName="taskFormExample"
         redirectTo={(submissionTaskResult, formValues) => '/success'}
         // eslint-disable-next-line no-unused-vars
         flashMessage={(submissionTaskResult, formValues) =>

@@ -61,7 +61,7 @@ export default ({ companyId, countryOptions, fields }) => {
           transformPayload={(values) => ({ values, companyId })}
           redirectTo={() => urls.companies.exports.index(companyId)}
           submissionTaskName={TASK_NAME}
-          analyticsFormName={TASK_NAME}
+          analyticsFormName="exportCountriesEdit"
           actionLinks={[
             {
               children: 'Return without saving',

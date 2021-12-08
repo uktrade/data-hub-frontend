@@ -1,12 +1,9 @@
 import {
   PIPELINE__CHECKED_IF_ON_PIPELINE,
-  PIPELINE__ADD_ITEM,
   PIPELINE__GET_ITEM,
-  PIPELINE__EDIT_ITEM,
   PIPELINE__ARCHIVE_ITEM,
   PIPELINE__UNARCHIVE_ITEM,
   PIPELINE__DELETE_ITEM,
-  PIPELINE__GET_COMPANY_CONTACTS,
 } from '../../../client/actions'
 
 export default (state = {}, { type, result }) => {
@@ -16,8 +13,6 @@ export default (state = {}, { type, result }) => {
         ...state,
         pipelineStatus: result,
       }
-    case PIPELINE__ADD_ITEM:
-    case PIPELINE__EDIT_ITEM:
     case PIPELINE__ARCHIVE_ITEM:
     case PIPELINE__UNARCHIVE_ITEM:
       return {
@@ -28,11 +23,6 @@ export default (state = {}, { type, result }) => {
       return {
         ...state,
         currentPipelineItem: result,
-      }
-    case PIPELINE__GET_COMPANY_CONTACTS:
-      return {
-        ...state,
-        contacts: result,
       }
     case PIPELINE__DELETE_ITEM:
       return {

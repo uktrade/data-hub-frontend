@@ -1,4 +1,4 @@
-import { get } from 'lodash'
+import { get, compact } from 'lodash'
 
 import urls from '../../../lib/urls'
 
@@ -110,17 +110,18 @@ const transformResponseToEventDetails = ({
   eventDays:
     getDifferenceInDays(end_date) - getDifferenceInDays(start_date) + 1,
   locationType: location_type?.name,
-  fullAddress:
-    `${address_1 ? `${address_1}, ` : ''}` +
-    `${address_2 ? `${address_2}, ` : ''}` +
-    `${address_town ? `${address_town}, ` : ''}` +
-    `${address_county ? `${address_county}, ` : ''}` +
-    `${address_postcode ? `${address_postcode}, ` : ''}` +
-    `${address_country.name ? address_country.name : ''}`,
+  fullAddress: compact([
+    address_1,
+    address_2,
+    address_town,
+    address_county,
+    address_postcode,
+    address_country?.name,
+  ]).join(', '),
   ukRegion: uk_region?.name,
   notes: notes,
-  leadTeam: lead_team.name,
-  organiser: organiser.name,
+  leadTeam: lead_team?.name,
+  organiser: organiser?.name,
   otherTeams: teams?.map(transformIdNameToValueLabel),
   relatedProgrammes: related_programmes?.map(transformIdNameToValueLabel),
   relatedTradeAgreements: related_trade_agreements?.map(
