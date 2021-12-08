@@ -1,6 +1,7 @@
 /// <reference types="Cypress" />
 
 const { assertBreadcrumbs } = require('../../support/assertions')
+const urls = require('../../../../../src/lib/urls')
 
 const ZBONCAK_COMPANY_ID = '4cd4128b-1bad-4f1e-9146-5d4678c6a018'
 const assertErrorSummary = (...errors) =>
@@ -281,7 +282,7 @@ describe('Edit contact', () => {
     assertBreadcrumbs({
       Home: '/',
       Contacts: '/contacts/',
-      'Joseph Woof': null,
+      'Joseph Woof': urls.contacts.details(EDIT_US_CONTACT_ID),
       Edit: null,
     })
 

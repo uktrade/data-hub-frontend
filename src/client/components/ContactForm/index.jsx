@@ -121,7 +121,13 @@ const _ContactForm = ({
               { link: '/', text: 'Home' },
               { link: '/contacts/', text: 'Contacts' },
               ...(update
-                ? [{ text: props.name }, { text: 'Edit' }]
+                ? [
+                    {
+                      link: urls.contacts.details(contactId),
+                      text: props.name,
+                    },
+                    { text: 'Edit' },
+                  ]
                 : [{ text: `Add contact at ${company.name}` }]),
             ]}
           />
