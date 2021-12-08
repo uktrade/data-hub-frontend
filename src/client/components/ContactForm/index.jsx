@@ -175,7 +175,7 @@ const _ContactForm = ({
                           addressSameAsCompany.includes(YES),
                         // The API is complaining if we send the address fields when address_same_as_company is true
                         // If answer changes from yes to no, need to clear address fields on object
-                        ...(values.addressSameAsCompany == YES
+                        ...(addressSameAsCompany == YES
                           ? {
                               address_1: null,
                               address_2: null,
