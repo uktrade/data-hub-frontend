@@ -27,7 +27,7 @@ This example demonstrates the rejection of the initial values task.
     id="task-form-example-reject-initial-values"
     initialValuesTaskName="Load initial values"
     submissionTaskName="Submit TaskForm example"
-    analyticsFormName="task-form-example"
+    analyticsFormName="taskFormExample"
     redirectTo={(submissionTaskResult, formValues) => '#'}
     flashMessage={(submissionTaskResult, formValues) => 'Form was submitted successfully'}
   >

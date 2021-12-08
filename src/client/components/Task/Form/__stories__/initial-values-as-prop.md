@@ -17,7 +17,7 @@ The initial values of `TaskForm` can also be set with the `initialValues` prop.
     id="task-form-example-reject-initial-values"
     initialValues={{ foo: 'Foo', bar: 'b' }}
     submissionTaskName="Submit TaskForm example"
-    analyticsFormName="task-form-example"
+    analyticsFormName="taskFormExample"
     redirectTo={(submissionTaskResult, formValues) => '#'}
     flashMessage={(submissionTaskResult, formValues) =>
       'Form was submitted successfully'

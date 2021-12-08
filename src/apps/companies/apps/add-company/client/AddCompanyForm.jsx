@@ -70,7 +70,7 @@ function AddCompanyForm({
     <TaskForm
       id="add-company-form"
       submissionTaskName="Create company"
-      analyticsFormName="add-company-form"
+      analyticsFormName="addCompanyForm"
       redirectTo={(company) => `/companies/${company.id}`}
       flashMessage={() => 'Company added to Data Hub'}
       transformPayload={(values) => ({ ...values, csrfToken })}

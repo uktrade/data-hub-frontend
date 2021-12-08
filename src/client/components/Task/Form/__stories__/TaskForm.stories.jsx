@@ -27,7 +27,7 @@ storiesOf('Task/Form', module)
     <TaskForm
       id="lazy-field-example"
       submissionTaskName="Submit TaskForm example"
-      analyticsFormName="task-form-example"
+      analyticsFormName="taskFormExample"
       initialValues={{
         select: 'b',
         // radios: 'b',
@@ -117,7 +117,7 @@ storiesOf('Task/Form', module)
           ...initialValues,
           reject: 'yes',
         })}
-        analyticsFormName="task-form-example"
+        analyticsFormName="taskFormExample"
         redirectTo={(submissionTaskResult, formValues) =>
           '#' + JSON.stringify({ submissionTaskResult, formValues })
         }
@@ -182,7 +182,7 @@ storiesOf('Task/Form', module)
         submissionTaskName="Submit TaskForm example"
         initialValuesTaskName="Load initial values"
         initialValuesPayload="reject"
-        analyticsFormName="task-form-example"
+        analyticsFormName="taskFormExample"
         redirectTo={(submissionTaskResult, formValues) =>
           '#' + JSON.stringify({ submissionTaskResult, formValues })
         }
@@ -215,7 +215,7 @@ storiesOf('Task/Form', module)
       <TaskForm
         id="task-form-example-initialValues-prop"
         submissionTaskName="Submit TaskForm example"
-        analyticsFormName="task-form-example"
+        analyticsFormName="taskFormExample"
         initialValues={{ foo: 'Foo', bar: 'b' }}
         redirectTo={(submissionTaskResult, formValues) =>
           '#' + JSON.stringify({ submissionTaskResult, formValues })
@@ -269,7 +269,7 @@ storiesOf('Task/Form', module)
           ...initialValues,
           reject: 'yes',
         })}
-        analyticsFormName="Example"
+        analyticsFormName="taskFormExample"
         redirectTo={(submissionTaskResult, formValues) =>
           '#' + JSON.stringify({ submissionTaskResult, formValues })
         }
@@ -337,7 +337,7 @@ storiesOf('Task/Form', module)
               ...initialValues,
               reject: 'yes',
             })}
-            analyticsFormName="task-form-example"
+            analyticsFormName="taskFormExample"
             // eslint-disable-next-line no-unused-vars
             redirectTo={(submissionTaskResult, formValues) => '/success'}
             // eslint-disable-next-line no-unused-vars

@@ -25,7 +25,7 @@ export default ({
   <TaskForm
     id="exports-edit"
     submissionTaskName="Exports Edit"
-    analyticsFormName="Exports Edit"
+    analyticsFormName="exportsEdit"
     transformPayload={(values) => ({ ...values, companyId })}
     redirectTo={() => urls.companies.exports.index(companyId)}
     submitButtonLabel="Save and return"

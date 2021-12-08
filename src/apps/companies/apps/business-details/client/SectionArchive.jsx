@@ -3,15 +3,10 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { BLACK, GREY_3 } from 'govuk-colours'
 import Button from '@govuk-react/button'
-import { ButtonLink } from '../../../../../client/components/'
 import { typography } from '@govuk-react/lib'
 import { SPACING } from '@govuk-react/constants'
 
-import {
-  FormActions,
-  FieldRadios,
-  FieldInput,
-} from '../../../../../client/components'
+import { FieldRadios, FieldInput } from '../../../../../client/components'
 
 import TaskForm from '../../../../../client/components/Task/Form'
 
@@ -43,8 +38,15 @@ const SectionArchive = ({ isArchived, isDnbCompany, urls }) => {
             values,
             urls,
           })}
+          submitButtonLabel="Archive"
           redirectTo={() => urls.companyBusinessDetails}
-          analyticsFormName="archive-company"
+          analyticsFormName="archiveCompany"
+          actionLinks={[
+            {
+              href: urls.companyBusinessDetails,
+              children: 'Cancel',
+            },
+          ]}
         >
           <FieldRadios
             label="Archive reason"
@@ -65,11 +67,6 @@ const SectionArchive = ({ isArchived, isDnbCompany, urls }) => {
               },
             ]}
           />
-
-          <FormActions>
-            <Button>Archive</Button>
-            <ButtonLink onClick={() => setFormIsOpen(false)}>Cancel</ButtonLink>
-          </FormActions>
         </TaskForm>
       )}
 
