@@ -7,6 +7,7 @@ import {
   FOCUS_COLOUR,
   GREY_1,
   GREY_2,
+  RED,
   TEXT_COLOUR,
   WHITE,
 } from 'govuk-colours'
@@ -108,16 +109,17 @@ const InputWrapper = styled('div')({
   },
 })
 
-const AutocompleteInput = styled('input')(FOCUSABLE, {
+const AutocompleteInput = styled('input')(({ error }) => ({
   backgroundColor: WHITE,
   boxSizing: 'border-box',
-  border: `2px solid ${BLACK}`,
+  border: error ? `4px solid ${RED}` : `2px solid ${BLACK}`,
   display: 'block',
   fontSize: '1em',
   padding: '8px 12px 10px',
   textAlign: 'left',
   width: '100%',
-})
+  ...FOCUSABLE,
+}))
 
 const Menu = styled('div')(({ open }) => ({
   visibility: open ? 'visible' : 'hidden',
@@ -136,6 +138,7 @@ const Menu = styled('div')(({ open }) => ({
 const Typeahead = ({
   name,
   label = '',
+  error = false,
   closeMenuOnSelect = false,
   isMulti = false,
   defaultValue,
@@ -237,6 +240,7 @@ const Typeahead = ({
           }}
           onInput={onInput}
           onKeyDown={onInputKeyDown}
+          error={error}
           ref={inputRef}
         />
         <Menu
@@ -295,6 +299,7 @@ const keyPairPropType = PropTypes.shape({
 Typeahead.propTypes = {
   name: PropTypes.string,
   label: PropTypes.string,
+  error: PropTypes.bool,
   closeMenuOnSelect: PropTypes.bool,
   isMulti: PropTypes.bool,
   defaultValue: PropTypes.oneOfType([

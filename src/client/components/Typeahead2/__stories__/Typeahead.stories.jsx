@@ -1,6 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
+import usageReadme from '../usage.md'
+import exampleReadme from '../example.md'
 import Typeahead from '../Typeahead'
 
 const options = [
@@ -17,6 +19,13 @@ const options = [
 ]
 
 storiesOf('Typeahead2', module)
+  .addParameters({
+    options: { theme: undefined },
+    readme: {
+      content: exampleReadme,
+      sidebar: usageReadme,
+    },
+  })
   .add('Single - standard options', () => (
     <Typeahead
       id="typeahead-single-1"
@@ -37,6 +46,18 @@ storiesOf('Typeahead2', module)
       options={options}
       placeholder="Search..."
       defaultValue={options[2]}
+      label="Pick a fruit"
+    />
+  ))
+  .add('Single - error', () => (
+    <Typeahead
+      id="typeahead-single-3"
+      error={true}
+      isMulti={false}
+      closeMenuOnSelect={false}
+      name="singleselect-error"
+      options={options}
+      placeholder="Search..."
       label="Pick a fruit"
     />
   ))
