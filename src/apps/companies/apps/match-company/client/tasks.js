@@ -26,3 +26,13 @@ export const cannotFindMatchSubmit = ({ csrfToken, values, company }) =>
     .then((response) => {
       return response.data
     })
+
+export async function submitMergeRequest({ company, dnbCompany, csrfToken }) {
+  await axios.post(
+    `${urls.companies.match.merge(company.id)}?_csrf=${csrfToken}`,
+    {
+      dnbCompany,
+    }
+  )
+  return company
+}
