@@ -20,7 +20,11 @@ describe('Company', () => {
     cy.get(selectors.companyEdit.website).clear().type('www.example.com')
 
     cy.get(selectors.companyEdit.saveButton).click()
-    cy.get(selectors.message.successful).should('be.visible')
+    cy.contains('div', 'Company record updated').should(
+      'have.attr',
+      'data-test',
+      'status-message'
+    )
 
     cy.visit(urls.companies.editHistory.index(companyObj.pk))
 

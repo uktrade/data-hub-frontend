@@ -1,4 +1,5 @@
 {
+  "company": {
   "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
   "duns_number": "218882442",
   "changes": {
@@ -12,4 +13,5 @@
   },
   "status": "pending",
   "created_on": "2020-03-26T16:11:54.593785Z"
+  }
 }

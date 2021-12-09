@@ -1,18 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
-import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
-
-import urls from '../../../../../lib/urls'
 import CompanyMatched from './CompanyMatched'
 import CompanyUnmatched from './CompanyUnmatched'
-import {
-  StatusMessage,
-  FormStateful,
-  FormActions,
-} from '../../../../../client/components'
+import TaskForm from '../../../../../client/components/Task/Form'
 import { UNITED_STATES_ID, CANADA_ID } from '../../../../../common/constants'
+import urls from '../../../../../lib/urls'
 
 function EditCompanyForm({
   csrfToken,
@@ -27,32 +19,6 @@ function EditCompanyForm({
   isOnOneList,
   features,
 }) {
-  async function onSubmit(values, isPristine) {
-    if (isPristine) {
-      // The user has not made any changes so redirect
-      // back to the Business Details page.
-      return urls.companies.businessDetails(company.id)
-    }
-
-    values.address = { ...values.address, area: null }
-    values.area = null
-
-    if (values?.address?.country?.id === UNITED_STATES_ID) {
-      values.address = { ...values.address, area: { id: values.areaUS } }
-      values.area = { id: values.areaUS }
-    } else if (values?.address?.country?.id === CANADA_ID) {
-      values.address = { ...values.address, area: { id: values.areaCanada } }
-      values.area = { id: values.areaCanada }
-    }
-
-    // The user has made some changes so make an API call
-    await axios.post(urls.companies.edit(company.id), values, {
-      params: { _csrf: csrfToken },
-    })
-
-    return urls.companies.businessDetails(company.id)
-  }
-
   const areaUS = (addressArea) => {
     if (formInitialValues?.address?.country?.id === UNITED_STATES_ID) {
       return addressArea?.id
@@ -69,36 +35,50 @@ function EditCompanyForm({
 
   // TODO: Support nested form values to avoid transformation
   return (
-    <FormStateful
-      onSubmit={onSubmit}
-      initialValues={() => {
-        return {
-          ...formInitialValues,
-          areaUS: areaUS(formInitialValues?.address?.area),
-          areaCanada: areaCanada(formInitialValues?.address?.area),
-          address: {
-            ...formInitialValues.address,
-            areaUS: areaUS(formInitialValues?.address?.area),
-            areaCanada: areaCanada(formInitialValues?.address?.area),
-          },
+    <TaskForm
+      id="edit-company-form"
+      submissionTaskName="Edit company"
+      analyticsFormName="edit-company-form"
+      redirectTo={() => urls.companies.businessDetails(company.id)}
+      flashMessage={(result) => {
+        if (
+          result.company?.duns_number ||
+          result.dnbChangeRequest?.company.duns_number
+        ) {
+          return [
+            'Change requested.',
+            'Thanks for keeping Data Hub running smoothly.',
+          ]
+        } else {
+          return 'Company record updated'
         }
       }}
+      submitButtonLabel="Submit"
+      actionLinks={[
+        {
+          href: urls.companies.businessDetails(company.id),
+          children: 'Return without saving',
+        },
+      ]}
+      transformPayload={(values) => ({
+        company,
+        csrfToken,
+        values,
+      })}
+      initialValues={{
+        ...formInitialValues,
+        areaUS: areaUS(formInitialValues?.address?.area),
+        areaCanada: areaCanada(formInitialValues?.address?.area),
+        address: {
+          ...formInitialValues.address,
+          areaUS: areaUS(formInitialValues?.address?.area),
+          areaCanada: areaCanada(formInitialValues?.address?.area),
+        },
+      }}
     >
-      {({ submissionError }) => {
-        if (submissionError) {
-          // eslint-disable-next-line no-console
-          console.error(submissionError)
-        }
-
+      {() => {
         return (
           <>
-            {submissionError && (
-              <StatusMessage>
-                Company details could not be saved, try again later.{' '}
-                {submissionError.message}
-              </StatusMessage>
-            )}
-
             {company.duns_number ? (
               <CompanyMatched
                 company={company}
@@ -122,17 +102,10 @@ function EditCompanyForm({
                 features={features}
               />
             )}
-
-            <FormActions>
-              <Button>Submit</Button>
-              <Link href={urls.companies.businessDetails(company.id)}>
-                Return without saving
-              </Link>
-            </FormActions>
           </>
         )
       }}
-    </FormStateful>
+    </TaskForm>
   )
 }
 
