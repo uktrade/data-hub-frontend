@@ -29,8 +29,8 @@ const asyncOptions = [
 const getOptions = () =>
   new Promise((resolve) => setTimeout(resolve, 1000, asyncOptions))
 
-storiesOf('Typeahead/Single select', module)
-  .add('Standard options', () => (
+storiesOf('Typeahead', module)
+  .add('Single - standard options', () => (
     <>
       <label htmlFor="test_1">Search</label>
       <Typeahead
@@ -43,7 +43,7 @@ storiesOf('Typeahead/Single select', module)
       />
     </>
   ))
-  .add('Error', () => (
+  .add('Single - error', () => (
     <>
       <label htmlFor="test_2">Search</label>
       <Typeahead
@@ -57,7 +57,7 @@ storiesOf('Typeahead/Single select', module)
       />
     </>
   ))
-  .add('Options - pre-selected option', () => (
+  .add('Single - pre-selected option', () => (
     <>
       <label htmlFor="test_3">Search</label>
       <Typeahead
@@ -72,9 +72,7 @@ storiesOf('Typeahead/Single select', module)
       />
     </>
   ))
-
-storiesOf('Typeahead/Multiple select', module)
-  .add('Standard options', () => (
+  .add('Multi - standard options', () => (
     <>
       <label htmlFor="test_5">Search</label>
       <Typeahead
@@ -88,7 +86,7 @@ storiesOf('Typeahead/Multiple select', module)
       />
     </>
   ))
-  .add('Options - pre-selected option', () => (
+  .add('Multi - pre-selected option', () => (
     <>
       <label htmlFor="test_6">Search</label>
       <Typeahead
@@ -102,7 +100,7 @@ storiesOf('Typeahead/Multiple select', module)
       />
     </>
   ))
-  .add('Async options', () => (
+  .add('Multi - async options', () => (
     <div style={{ width: '600px' }}>
       <h2>Search for</h2>
       <ul>
@@ -122,7 +120,7 @@ storiesOf('Typeahead/Multiple select', module)
       />
     </div>
   ))
-  .add('Async options - pre-selected option', () => (
+  .add('Multi - pre-selected async option', () => (
     <div style={{ width: '600px' }}>
       <h2>Search for</h2>
       <ul>

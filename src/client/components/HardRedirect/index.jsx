@@ -13,6 +13,9 @@ import { HARD_REDIRECT } from '../../actions'
  * @param {string} props.to - The URL to redirect to
  * @param {any} props.when - The redirect will only happen when this expression
  * is truthy
+ * @param {(redirect: (to: string) => any) => React.ReactNode} props.children - A
+ * function which will be passed the redirect function as its only argument.
+ * Calling that function will result in the hard redirection.
  * @example
  * <HardRedirect to="/foo" when={shouldRedirect} />
  */
@@ -20,5 +23,7 @@ export default connect()(({ to, when, dispatch, children = null }) => {
   useEffect(() => {
     when && dispatch({ type: HARD_REDIRECT, to })
   }, [to, when])
-  return children
+  return typeof children === 'function'
+    ? children((to) => dispatch({ type: HARD_REDIRECT, to }))
+    : children
 })

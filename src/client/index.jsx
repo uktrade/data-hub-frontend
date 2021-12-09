@@ -164,6 +164,7 @@ import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentRemind
 
 import * as exportsEdit from '../apps/companies/apps/exports/client/tasks'
 
+import { saveContact } from './components/ContactForm/tasks'
 import {
   getContacts,
   getContactsMetadata,
@@ -251,6 +252,7 @@ function App() {
         'Update Lead ITA': manageAdviser.updateAdviser,
         'Get send referral initial values':
           referralsSendTasks.getInitialFormValues,
+        'Save contact': saveContact,
         [TASK_OPEN_REFERRALS_CONTACT_FORM]: referralsSendTasks.openContactForm,
         [TASK_SAVE_REFERRAL]: referralsSendTasks.saveReferral,
         [TASK_SAVE_ONE_LIST_DETAILS]: editOneListTasks.saveOneListDetails,
