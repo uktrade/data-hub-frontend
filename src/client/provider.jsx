@@ -35,6 +35,8 @@ import ReferralList from './components/ReferralList'
 
 import ToggleSection from './components/ToggleSection/BaseToggleSection'
 
+import Typeahead from './components/Typeahead2/Typeahead'
+
 import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/ExportWins/state'
 import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/reducer'
 
@@ -159,6 +161,7 @@ const store = createStore(
     ...MultiInstanceForm.reducerSpread,
     ...DropdownMenu.reducerSpread,
     ...ToggleSection.reducerSpread,
+    ...Typeahead.reducerSpread,
     ...RoutedInput.reducerSpread,
     ...CreateUKInvestmentOpportunity.reducerSpread,
     ...Resource.reducerSpread,

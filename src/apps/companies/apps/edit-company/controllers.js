@@ -51,80 +51,50 @@ async function renderEditCompanyForm(req, res, next) {
   }
 }
 
-async function postEditCompany(req, res, next) {
-  try {
-    const { company } = res.locals
+async function postEditCompany(req, res) {
+  const { company } = res.locals
 
-    const dataHubChanges = transformFormToApi(company, req.body)
+  const dataHubChanges = transformFormToApi(company, req.body)
 
-    const dnbChanges = company.duns_number
-      ? transformFormToDnbChangeRequest(company, req.body, res)
-      : {}
+  const dnbChanges = company.duns_number
+    ? transformFormToDnbChangeRequest(company, req.body, res)
+    : {}
 
-    // No changes
-    if (isEmpty(dataHubChanges) && isEmpty(dnbChanges)) {
-      return res.json({})
-    }
+  // No changes
+  if (isEmpty(dataHubChanges) && isEmpty(dnbChanges)) {
+    return res.json({})
+  }
 
-    // Only D&B changes
-    if (isEmpty(dataHubChanges) && !isEmpty(dnbChanges)) {
-      const dnbChangeRequest = await createDnbChangeRequest(
-        req,
-        company.duns_number,
-        dnbChanges
-      )
+  // Only D&B changes
+  if (isEmpty(dataHubChanges) && !isEmpty(dnbChanges)) {
+    const dnbChangeRequest = await createDnbChangeRequest(
+      req,
+      company.duns_number,
+      dnbChanges
+    )
+    return res.json({ dnbChangeRequest })
+  }
 
-      req.flashWithBody(
-        'success',
-        'Change requested.',
-        'Thanks for keeping Data Hub running smoothly.',
-        'message-company-change-request'
-      )
+  // Only Data Hub changes
+  if (!isEmpty(dataHubChanges) && isEmpty(dnbChanges)) {
+    const updatedCompany = await updateCompany(req, company.id, dataHubChanges)
+    return res.json({ company: updatedCompany })
+  }
 
-      return res.json({ dnbChangeRequest })
-    }
+  // Both D&B and Data Hub changes
+  if (!isEmpty(dataHubChanges) && !isEmpty(dnbChanges)) {
+    const updatedCompany = await updateCompany(req, company.id, dataHubChanges)
 
-    // Only Data Hub changes
-    if (!isEmpty(dataHubChanges) && isEmpty(dnbChanges)) {
-      const updatedCompany = await updateCompany(
-        req,
-        company.id,
-        dataHubChanges
-      )
+    const dnbChangeRequest = await createDnbChangeRequest(
+      req,
+      company.duns_number,
+      dnbChanges
+    )
 
-      req.flash('success', 'Company record updated')
-
-      return res.json({ company: updatedCompany })
-    }
-
-    // Both D&B and Data Hub changes
-    if (!isEmpty(dataHubChanges) && !isEmpty(dnbChanges)) {
-      const updatedCompany = await updateCompany(
-        req,
-        company.id,
-        dataHubChanges
-      )
-
-      const dnbChangeRequest = await createDnbChangeRequest(
-        req,
-        company.duns_number,
-        dnbChanges
-      )
-
-      req.flashWithBody(
-        'success',
-        'Change requested.',
-        'Thanks for keeping Data Hub running smoothly.',
-        'message-company-change-request'
-      )
-
-      res.json({
-        company: updatedCompany,
-        dnbChangeRequest,
-      })
-    }
-  } catch (error) {
-    next(error)
+    return res.json({
+      company: updatedCompany,
+      dnbChangeRequest,
+    })
   }
 }
 

@@ -70,9 +70,10 @@ describe('Business hierarchy', () => {
       cy.get(selectors.companyEdit.globalHqHierarchy).click()
       cy.get(selectors.companyEdit.saveButton).click()
 
-      cy.get(selectors.message.successful).should(
-        'contain',
-        'Company record updated'
+      cy.contains('div', 'Company record updated').should(
+        'have.attr',
+        'data-test',
+        'status-message'
       )
     })
 
@@ -105,9 +106,10 @@ describe('Business hierarchy', () => {
       cy.get(selectors.companyEdit.notHqHierarchy).click()
       cy.get(selectors.companyEdit.saveButton).click()
 
-      cy.get(selectors.message.successful).should(
-        'contain',
-        'Company record updated'
+      cy.contains('div', 'Company record updated').should(
+        'have.attr',
+        'data-test',
+        'status-message'
       )
     })
   })
