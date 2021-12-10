@@ -18,6 +18,10 @@ router.use(
 
 router.use('/:eventId/attendees', attendeesRouter)
 router.param('eventId', getEventDetails)
-router.get('/*', renderEventsView)
+// TODO: When everything in the events space is converted to react
+// router.get('/*', renderEventsView)
+router.get('/:eventId/edit', renderEventsView)
+router.get('/:eventId', renderEventsView)
+router.get('/:eventId/details', renderEventsView)
 
 module.exports = router
