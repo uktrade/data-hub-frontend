@@ -243,6 +243,7 @@ function App() {
         'Create company': createCompany,
         'Match confirmation': matchCompanyTasks.onMatchSubmit,
         'Cannot find match': matchCompanyTasks.cannotFindMatchSubmit,
+        'Submit merge request': matchCompanyTasks.submitMergeRequest,
         'Company lists': companyListsTasks.fetchCompanyLists,
         'Company list': companyListsTasks.fetchCompanyList,
         'Exports history': exportsHistoryTasks.fetchExportsHistory,
