@@ -137,7 +137,7 @@ describe('Event', () => {
   })
 
   describe('edit', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.events.index())
     })
 
