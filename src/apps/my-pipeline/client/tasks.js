@@ -1,6 +1,5 @@
 import axios from 'axios'
 import pipelineApi from './api'
-import { addMessage } from '../../../client/utils/flash-messages'
 import { transformValueForAPI } from '../../../client/utils/date'
 
 function transformValuesForApi(values) {
@@ -79,8 +78,7 @@ export async function unarchivePipelineItem({ pipelineItemId }) {
   return data
 }
 
-export async function deletePipelineItem({ projectName, pipelineItemId }) {
+export async function deletePipelineItem({ pipelineItemId }) {
   const { status } = await pipelineApi.delete(pipelineItemId)
-  addMessage('success', `You deleted ${projectName} from your pipeline`)
   return status
 }
