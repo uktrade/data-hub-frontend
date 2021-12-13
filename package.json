@@ -66,7 +66,7 @@
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@babel/helper-call-delegate": "^7.12.13",
-    "@babel/plugin-proposal-optional-chaining": "^7.14.5",
+    "@babel/plugin-proposal-optional-chaining": "^7.16.0",
     "@babel/preset-react": "^7.14.5",
     "@govuk-react/constants": "^0.10.0",
     "@hapi/hawk": "^8.0.0",
@@ -226,7 +226,7 @@
     "sinon-chai": "^3.7.0",
     "storybook-readme": "^5.0.9",
     "supertest": "^6.1.6",
-    "webpack-dev-server": "^4.4.0"
+    "webpack-dev-server": "^4.6.0"
   },
   "sasslintConfig": ".sass-lint.yml",
   "resolutions": {
