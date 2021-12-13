@@ -1,11 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import GridRow from '@govuk-react/grid-row'
-import GridCol from '@govuk-react/grid-col'
+import { useParams } from 'react-router-dom'
 
 import urls from '../../../../lib/urls'
-import { Main, LocalHeader } from '../../../components'
+import { DefaultLayout } from '../../../components'
 import TaskForm from '../../../components/Task/Form'
 import { TASK_GET_EVENTS_FORM_AND_METADATA, TASK_SAVE_EVENT } from './state'
 import { EventFormFields } from './EventFormFields'
@@ -18,7 +16,9 @@ const DISPLAY_CANCEL = 'Return without saving'
 const DISPLAY_HOME = 'Home'
 const DISPLAY_EVENTS = 'Events'
 
-const EventForm = ({ eventId }) => {
+const EventForm = () => {
+  const { id } = useParams()
+
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -30,52 +30,47 @@ const EventForm = ({ eventId }) => {
     },
     {
       link: undefined,
-      text: eventId ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT,
+      text: id ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT,
     },
   ]
 
   const cancelLink = [
     {
       children: DISPLAY_CANCEL,
-      href: eventId ? urls.events.details(eventId) : urls.events.index(),
+      to: id ? urls.events.details(id) : urls.events.index(),
     },
   ]
 
   const flashMessage = (submissionTaskResult) => {
     const { name } = submissionTaskResult?.data
-    return `'${name}' event has been ${eventId ? 'updated' : 'created'}`
+    return `'${name}' event has been ${id ? 'updated' : 'created'}`
   }
 
   return (
-    <>
-      <LocalHeader
-        breadcrumbs={breadcrumbs}
-        heading={eventId ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT}
-      />
-      <Main>
-        <GridRow data-test="eventForm">
-          <GridCol setWidth="three-quarters">
-            <TaskForm
-              id="event-form"
-              submissionTaskName={TASK_SAVE_EVENT}
-              analyticsFormName={eventId ? 'editEvent' : 'createEvent'}
-              initialValuesTaskName={TASK_GET_EVENTS_FORM_AND_METADATA}
-              initialValuesPayload={{
-                eventId,
-              }}
-              redirectTo={({ data }) => urls.events.details(data.id)}
-              redirectMode="hard"
-              flashMessage={flashMessage}
-              submitButtonLabel={eventId ? DISPLAY_SAVE : DISPLAY_ADD_EVENT}
-              actionLinks={cancelLink}
-              transformPayload={transformEventFormForAPIRequest}
-            >
-              {({ values }) => <EventFormFields values={values} />}
-            </TaskForm>
-          </GridCol>
-        </GridRow>
-      </Main>
-    </>
+    <DefaultLayout
+      heading={id ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT}
+      pageTitle={id ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT}
+      breadcrumbs={breadcrumbs}
+      useReactRouter={true}
+    >
+      <TaskForm
+        id="event-form"
+        submissionTaskName={TASK_SAVE_EVENT}
+        analyticsFormName={id ? 'editEvent' : 'createEvent'}
+        initialValuesTaskName={TASK_GET_EVENTS_FORM_AND_METADATA}
+        initialValuesPayload={{
+          eventId: id,
+        }}
+        redirectTo={({ data }) => urls.events.details(data.id)}
+        redirectMode="soft"
+        flashMessage={flashMessage}
+        submitButtonLabel={id ? DISPLAY_SAVE : DISPLAY_ADD_EVENT}
+        actionLinks={cancelLink}
+        transformPayload={transformEventFormForAPIRequest}
+      >
+        {({ values }) => <EventFormFields values={values} />}
+      </TaskForm>
+    </DefaultLayout>
   )
 }
 
