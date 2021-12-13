@@ -158,6 +158,7 @@ const Typeahead = ({
   onOptionRemove,
   onMenuClose,
   onMenuOpen,
+  'data-test': testId,
   ...inputProps
 }) => {
   onInitialise({ options, isMulti, value: value || defaultValue })
@@ -211,8 +212,10 @@ const Typeahead = ({
     }
   }
   return (
-    <div id={name}>
-      <Label id={`${name}-label`}>{label}</Label>
+    <div id={name} data-test={testId}>
+      <Label id={`${name}-label`} data-test="typeahead-label">
+        {label}
+      </Label>
       {isMulti && Boolean(selectedOptions.length) && (
         <SelectedChips
           name={name}
@@ -242,6 +245,7 @@ const Typeahead = ({
           onKeyDown={onInputKeyDown}
           error={error}
           ref={inputRef}
+          data-test="typeahead-input"
         />
         <Menu
           id={`${name}-listbox`}
@@ -250,6 +254,7 @@ const Typeahead = ({
           aria-labelledby={`${name}-label`}
           aria-multiselectable="true"
           ref={menuRef}
+          data-test="typeahead-menu"
         >
           {filteredOptions.map((option, index) => (
             <ListboxOption
@@ -275,6 +280,7 @@ const Typeahead = ({
               onMouseDown={() => {
                 onOptionMouseDown(index)
               }}
+              data-test="typeahead-menu-option"
             >
               <span>
                 <Highlighter optionLabel={option.label} searchStr={input} />

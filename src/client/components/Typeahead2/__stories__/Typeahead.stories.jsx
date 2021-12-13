@@ -8,8 +8,8 @@ import Typeahead from '../Typeahead'
 const options = [
   { value: '0001', label: 'Apple' },
   { value: '0002', label: 'Banana' },
-  { value: '0003', label: 'Blueberry' },
-  { value: '0004', label: 'Blackberry' },
+  { value: '0003', label: 'Blackberry' },
+  { value: '0004', label: 'Blueberry' },
   { value: '0005', label: 'Orange' },
   { value: '0006', label: 'Papaya' },
   { value: '0007', label: 'Passion Fruit' },
@@ -41,7 +41,7 @@ storiesOf('Typeahead2', module)
     <Typeahead
       id="typeahead-single-2"
       isMulti={false}
-      closeMenuOnSelect={false}
+      closeMenuOnSelect={true}
       name="singleselect-pre-select"
       options={options}
       placeholder="Search..."
