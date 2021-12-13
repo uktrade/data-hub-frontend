@@ -67,15 +67,10 @@ export async function editPipelineItem({ values, pipelineItemId }) {
   return data
 }
 
-export async function archivePipelineItem({
-  values,
-  pipelineItemId,
-  projectName,
-}) {
+export async function archivePipelineItem({ values, pipelineItemId }) {
   const { data } = await pipelineApi.archive(pipelineItemId, {
     reason: values.reason,
   })
-  addMessage('success', `You archived ${projectName}`)
   return data
 }
 

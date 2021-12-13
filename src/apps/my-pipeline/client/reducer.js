@@ -1,7 +1,6 @@
 import {
   PIPELINE__CHECKED_IF_ON_PIPELINE,
   PIPELINE__GET_ITEM,
-  PIPELINE__ARCHIVE_ITEM,
   PIPELINE__UNARCHIVE_ITEM,
   PIPELINE__DELETE_ITEM,
 } from '../../../client/actions'
@@ -13,7 +12,6 @@ export default (state = {}, { type, result }) => {
         ...state,
         pipelineStatus: result,
       }
-    case PIPELINE__ARCHIVE_ITEM:
     case PIPELINE__UNARCHIVE_ITEM:
       return {
         ...state,
