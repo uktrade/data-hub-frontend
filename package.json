@@ -142,7 +142,7 @@
     "react-lines-ellipsis": "^0.14.1",
     "react-markdown": "^7.1.0",
     "react-redux": "^7.2.6",
-    "react-router-dom": "^5.3.0",
+    "react-router-dom": "^6.1.1",
     "react-select": "^5.2.1",
     "react-string-replace": "^0.4.4",
     "react-use": "^17.3.1",
