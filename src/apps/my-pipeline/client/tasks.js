@@ -74,9 +74,8 @@ export async function archivePipelineItem({ values, pipelineItemId }) {
   return data
 }
 
-export async function unarchivePipelineItem({ projectName, pipelineItemId }) {
+export async function unarchivePipelineItem({ pipelineItemId }) {
   const { data } = await pipelineApi.unarchive(pipelineItemId)
-  addMessage('success', `You unarchived ${projectName}`)
   return data
 }
 
