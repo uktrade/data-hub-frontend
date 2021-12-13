@@ -44,6 +44,7 @@ async function createAttendee(req, res, next) {
       kind: 'service_delivery',
       theme: 'other',
       service: get(event, 'service.id'),
+      service_answers: {},
       subject: `Attended ${event.name}`,
       was_policy_feedback_provided: false,
       were_countries_discussed: false,
