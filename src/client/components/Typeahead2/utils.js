@@ -65,6 +65,14 @@ export const getFilteredOptions = ({ input, options }) =>
       )
     : options
 
+/**
+ * Converts value to an array if it is not one already.
+ *
+ * If value is undefined, returns an empty array.
+ **/
+export const valueAsArray = (value) =>
+  value ? (Array.isArray(value) ? value : [value]) : []
+
 export const maintainScrollVisibility = ({ parent, target }) => {
   if (!parent || !target) {
     return
