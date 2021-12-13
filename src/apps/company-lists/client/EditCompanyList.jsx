@@ -8,7 +8,7 @@ import TaskForm from '../../../client/components/Task/Form'
 const EditCompanyList = ({ cancelUrl, listName, csrfToken, id, returnUrl }) => (
   <TaskForm
     id="edit-company-list"
-    analyticsFormName="edit-company-list"
+    analyticsFormName="editCompanyList"
     submissionTaskName="Edit company list"
     initialValues={{ listName }}
     actionLinks={[{ children: 'Cancel', href: cancelUrl }]}

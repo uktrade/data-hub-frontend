@@ -9,5 +9,7 @@ export const editCompanyList = ({ listName, id, csrfToken }) =>
     url: `/company-lists/${id}/rename?_csrf=${csrfToken}`,
     data: { name: listName, id },
   })
-    .catch(() => Promise.reject(NOT_FOUND_MESSAGE))
+    .catch(({ message, response: { status } }) =>
+      Promise.reject(status === 404 ? NOT_FOUND_MESSAGE : message)
+    )
     .then((response) => response.data)
