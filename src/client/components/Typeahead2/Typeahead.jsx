@@ -141,6 +141,7 @@ const Typeahead = ({
   error = false,
   closeMenuOnSelect = false,
   isMulti = false,
+  noOptionsMessage = 'No Options',
   defaultValue,
   value,
   menuOpen,
@@ -288,7 +289,7 @@ const Typeahead = ({
             </ListboxOption>
           ))}
           {!filteredOptions.length && (
-            <NoOptionsMessage>No Options</NoOptionsMessage>
+            <NoOptionsMessage>{noOptionsMessage}</NoOptionsMessage>
           )}
         </Menu>
       </InputWrapper>
@@ -308,6 +309,7 @@ Typeahead.propTypes = {
   error: PropTypes.bool,
   closeMenuOnSelect: PropTypes.bool,
   isMulti: PropTypes.bool,
+  noOptionsMessage: PropTypes.string,
   defaultValue: PropTypes.oneOfType([
     keyPairPropType,
     PropTypes.arrayOf(keyPairPropType),
