@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
@@ -9,13 +9,8 @@ import { SPACING } from '@govuk-react/constants'
 
 import urls from '../../../lib/urls'
 import Task from '../../../client/components/Task'
-import { PIPELINE__UNARCHIVE_ITEM } from '../../../client/actions'
 
-import {
-  Main,
-  MultiInstanceForm,
-  FormActions,
-} from '../../../client/components'
+import { Main, FormActions } from '../../../client/components'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 
 import {
@@ -28,6 +23,8 @@ import PipelineDetails from './PipelineDetails'
 import GetPipelineData from './GetPipelineData'
 import { getPipelineUrl } from './utils'
 
+import TaskForm from '../../../client/components/Task/Form'
+
 const StyledP = styled.p`
   margin: ${SPACING.SCALE_2} 0 ${SPACING.SCALE_5} 0;
 `
@@ -37,16 +34,6 @@ function UnarchivePipelineItemForm({
   currentPipelineItem,
   savedPipelineItem,
 }) {
-  useEffect(() => {
-    if (savedPipelineItem) {
-      /**
-       * TODO: Replace with react router navigation.
-       * As we move to SPA clear the saveId from the state before navigation.
-       */
-      window.location.href = getPipelineUrl(savedPipelineItem)
-    }
-  }, [savedPipelineItem])
-
   return (
     <>
       <LocalHeader
@@ -80,18 +67,12 @@ function UnarchivePipelineItemForm({
                     <PipelineDetails
                       item={currentPipelineItem}
                     ></PipelineDetails>
-                    <MultiInstanceForm
+                    <TaskForm
                       id={STATE_ID}
-                      onSubmit={() => {
-                        unarchivePipelineItem.start({
-                          payload: {
-                            projectName: currentPipelineItem.name,
-                            pipelineItemId,
-                          },
-                          onSuccessDispatch: PIPELINE__UNARCHIVE_ITEM,
-                        })
-                      }}
-                      submissionError={unarchivePipelineItem.errorMessage}
+                      submissionTaskName={TASK_UNARCHIVE_PIPELINE_ITEM}
+                      analyticsFormName="unarchive-pipeline-item-form"
+                      flashMessage={() => unarchivePipelineItem.errorMessage}
+                      redirectTo={() => getPipelineUrl(savedPipelineItem)}
                     >
                       <FormActions>
                         <Button>Unarchive project</Button>
@@ -99,7 +80,7 @@ function UnarchivePipelineItemForm({
                           Cancel
                         </Link>
                       </FormActions>
-                    </MultiInstanceForm>
+                    </TaskForm>
                   </LoadingBox>
                 )}
               </GetPipelineData>
