@@ -13,3 +13,11 @@ export const editCompanyList = ({ listName, id, csrfToken }) =>
       Promise.reject(status === 404 ? NOT_FOUND_MESSAGE : message)
     )
     .then((response) => response.data)
+
+export const createList = ({ csrfToken, id, values }) => {
+  const postUrl = `/companies/${id}/lists/create?_csrf=${csrfToken}`
+  return axios
+    .post(postUrl, { name: values.listName })
+    .catch((e) => Promise.reject(e.message))
+    .then((response) => response.data)
+}
