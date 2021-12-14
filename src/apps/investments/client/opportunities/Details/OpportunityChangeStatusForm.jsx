@@ -1,20 +1,17 @@
-import axios from 'axios'
 import React from 'react'
 import PropTypes from 'prop-types'
 
 import urls from '../../../../../lib/urls'
 import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeader'
-import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
 
-import {
-  Main,
-  FormActions,
-  FormStateful,
-} from '../../../../../client/components'
+import { Main } from '../../../../../client/components'
 
 import OpportunityResource from '../../../../../client/components/Resource/Opportunity'
 import FieldOpportunityStatuses from '../../../../../client/components/Form/elements/FieldOpportunityStatuses'
+
+import TaskForm from '../../../../../client/components/Task/Form'
+
+import { TASK_SAVE_OPPORTUNITY_STATUS } from './state'
 
 const OpportunityChangeStatusForm = ({ opportunityId }) => {
   const opportunityUrl = urls.investments.opportunities.details(opportunityId)
@@ -40,27 +37,27 @@ const OpportunityChangeStatusForm = ({ opportunityId }) => {
             heading="Change opportunity status"
           />
           <Main>
-            <FormStateful
-              showErrorSummary={true}
-              onSubmit={async (values) => {
-                await axios.patch(
-                  `/api-proxy/v4/large-capital-opportunity/${opportunityId}`,
-                  {
-                    status: values.status,
-                  }
-                )
-                return opportunityUrl
-              }}
+            <TaskForm
+              id="opportunity-change-status"
+              analyticsFormName="opportunityChangeStatus"
+              submissionTaskName={TASK_SAVE_OPPORTUNITY_STATUS}
+              transformPayload={(values) => ({
+                values,
+                opportunityId,
+              })}
+              redirectTo={() => opportunityUrl}
+              actionLinks={[
+                {
+                  href: opportunityUrl,
+                  children: 'Cancel',
+                },
+              ]}
             >
               <FieldOpportunityStatuses
                 name="status"
                 initialValue={status.id}
               />
-              <FormActions>
-                <Button data-test="edit-button">Save</Button>
-                <Link href={opportunityUrl}>Cancel</Link>
-              </FormActions>
-            </FormStateful>
+            </TaskForm>
           </Main>
         </>
       )}
