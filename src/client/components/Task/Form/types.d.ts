@@ -4,11 +4,13 @@ import React from 'react'
 
 type GovukReactLinkProps = {
   href: string,
-  children: React.ReactChild
+  children: React.ReactChild,
+  linkProps: Object,
 }
 type ReactRouterLinkProps = {
   to: string,
-  children: React.ReactChild
+  children: React.ReactChild,
+  linksProps: Object,
 }
 type LinkProps = GovukReactLinkProps | ReactRouterLinkProps
 

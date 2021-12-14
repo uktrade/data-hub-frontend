@@ -26,10 +26,17 @@ const AddRemoveFromListForm = ({
       id="add-remove-from-list"
       analyticsFormName="addRemoveFromList"
       submissionTaskName="Add or remove from list"
-      actionLinks={[{ children: 'Cancel', href: cancelLinkUrl }]}
       initialValues={initState}
       transformPayload={(list) => ({ list, token, companyId })}
       redirectTo={() => cancelLinkUrl}
+      submitButtonProps={{ 'data-test': 'submit-button' }}
+      actionLinks={[
+        {
+          children: 'Cancel',
+          href: cancelLinkUrl,
+          linkProps: { 'data-test': 'cancel-button' },
+        },
+      ]}
     >
       {() => (
         <>

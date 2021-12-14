@@ -63,6 +63,7 @@ const _TaskForm = ({
   touched = {},
   steps = [],
   initialStepIndex = 0,
+  submitButtonProps = {},
   ...props
 }) => {
   useEffect(() => {
@@ -282,17 +283,24 @@ const _TaskForm = ({
                             */}
                             {!steps.length && (
                               <FormActions>
-                                <Button>{submitButtonLabel}</Button>
-                                {actionLinks.map(({ to, href, children }, i) =>
-                                  to ? (
-                                    <ReactRouter.Link key={i} to={to}>
-                                      {children}
-                                    </ReactRouter.Link>
-                                  ) : (
-                                    <Link key={i} href={href}>
-                                      {children}
-                                    </Link>
-                                  )
+                                <Button {...submitButtonProps}>
+                                  {submitButtonLabel}
+                                </Button>
+                                {actionLinks.map(
+                                  ({ to, href, children, linkProps = {} }, i) =>
+                                    to ? (
+                                      <ReactRouter.Link
+                                        key={i}
+                                        to={to}
+                                        {...linkProps}
+                                      >
+                                        {children}
+                                      </ReactRouter.Link>
+                                    ) : (
+                                      <Link key={i} href={href} {...linkProps}>
+                                        {children}
+                                      </Link>
+                                    )
                                 )}
                               </FormActions>
                             )}
@@ -472,9 +480,11 @@ TaskForm.propTypes = {
       children: PropTypes.node,
       href: PropTypes.string,
       to: PropTypes.string,
+      linkProps: PropTypes.object,
     })
   ),
   initialStepIndex: PropTypes.number,
+  submitButtonProps: PropTypes.object,
 }
 
 export default TaskForm

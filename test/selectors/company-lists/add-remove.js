@@ -39,6 +39,6 @@ module.exports = {
       '#add-remove-list-form > form > div > div:nth-child(4) > div > fieldset > div > label:nth-child(3)',
   },
   createButton: '#add-remove-list-form > form > div > a',
-  saveButton: '#add-remove-list-form > form div div:nth-child(6) button',
-  cancelLink: '#add-remove-list-form > form div div:nth-child(6) a',
+  saveButton: '#add-remove-list-form [data-test="submit-button"]',
+  cancelLink: '#add-remove-list-form [data-test="cancel-button"]',
 }
