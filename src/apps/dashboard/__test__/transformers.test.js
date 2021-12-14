@@ -2,7 +2,6 @@ const { getDifferenceInWords } = require('../../../client/utils/date')
 const {
   formatHelpCentreAnnouncements,
 } = require('../../../../src/apps/dashboard/transformers')
-const { omit } = require('lodash')
 
 describe('#formatHelpCentreAnnouncements', () => {
   const mockData = {
@@ -82,7 +81,7 @@ describe('#formatHelpCentreAnnouncements', () => {
   ]
   context('Successful API response', () => {
     beforeEach(() => {
-      this.transformed = formatHelpCentreAnnouncements({ data: mockData })
+      this.transformed = formatHelpCentreAnnouncements(mockData.articles)
     })
     it('should format Help centre articles', () => {
       expect(this.transformed).to.deep.equal(expected)
@@ -91,14 +90,8 @@ describe('#formatHelpCentreAnnouncements', () => {
 
   context('malformed api responses', () => {
     it('should return empty array', () => {
-      expect(formatHelpCentreAnnouncements({ data: {} })).to.deep.equal([])
-      expect(formatHelpCentreAnnouncements({ data: undefined })).to.deep.equal(
-        []
-      )
-      expect(formatHelpCentreAnnouncements({ data: [] })).to.deep.equal([])
-      expect(
-        formatHelpCentreAnnouncements(omit(expected, ['articles']))
-      ).to.deep.equal([])
+      expect(formatHelpCentreAnnouncements([])).to.deep.equal([])
+      expect(formatHelpCentreAnnouncements(undefined)).to.deep.equal([])
     })
   })
 })

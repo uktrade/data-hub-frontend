@@ -4,8 +4,14 @@ const GLOBAL_NAV_ITEMS = require('../global-nav-items')
 
 const { isPermittedRoute } = require('../middleware')
 const config = require('../../config')
-const request = require('../../lib/request')
+const hawkRequest = require('../../lib/axios-hawk-request')
 const { formatHelpCentreAnnouncements } = require('./transformers')
+
+const getarticles = (req) => {
+  const testParam = req.query.test ? `?test=${req.query.test}` : ''
+  const url = `${config.helpCentre.apiFeed}${testParam}`
+  return hawkRequest(url, config.hawkCredentials.helpCentre, 1000)
+}
 
 async function renderDashboard(req, res, next) {
   try {
@@ -16,13 +22,8 @@ async function renderDashboard(req, res, next) {
     let articleFeed
 
     try {
-      const helpCentreArticleFeed = await request({
-        url: config.helpCentre.apiFeed,
-        headers: { Authorization: `Bearer ${config.helpCentre.token}` },
-        params: { test: req.query.test },
-        timeout: 1000,
-      })
-      articleFeed = formatHelpCentreAnnouncements(helpCentreArticleFeed) || []
+      const { articles } = await getarticles(req)
+      articleFeed = formatHelpCentreAnnouncements(articles) || []
     } catch (e) {
       // If we encounter an error when fetching the latest help centre articles,
       // just show an empty feed
