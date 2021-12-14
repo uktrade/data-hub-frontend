@@ -15,7 +15,14 @@ const GlobalStyles = createGlobalStyle`
   }
 `
 
-const DefaultLayout = ({ heading, pageTitle, children }) => {
+const DefaultLayout = ({
+  heading,
+  pageTitle,
+  flashMessages,
+  breadcrumbs,
+  children,
+  useReactRouter = false,
+}) => {
   const [showVerticalNav, setShowVerticalNav] = useState(false)
   useEffect(() => {
     document.title = `${pageTitle} - DIT Data Hub`
@@ -29,7 +36,11 @@ const DefaultLayout = ({ heading, pageTitle, children }) => {
       />
       <LocalHeader
         heading={heading}
-        breadcrumbs={[{ link: '/', text: 'Home' }, { text: heading }]}
+        flashMessages={flashMessages}
+        breadcrumbs={
+          breadcrumbs || [{ link: '/', text: 'Home' }, { text: heading }]
+        }
+        useReactRouter={useReactRouter}
       />
       <Main>
         <GridRow>

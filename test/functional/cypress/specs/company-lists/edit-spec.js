@@ -91,7 +91,7 @@ describe('Edit company list page', () => {
     it('displays the "List edited" error flash message', () => {
       cy.get(selectors.companyList.edit.errorHeader).should(
         'have.text',
-        'There was an error editing this list'
+        'Could not load Edit company list'
       )
     })
   })

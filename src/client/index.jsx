@@ -42,14 +42,12 @@ import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyLocalHeader from './components/CompanyLocalHeader'
 import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/CompanyOrdersCollection'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
-import EventDetails from '../client/modules/Events/EventDetails'
 import CompanyProjectsCollection from '../apps/investments/client/projects/CompanyProjectsCollection.jsx'
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
 import OpportunityChangeStatusForm from './components/OpportunityChangeStatusForm'
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
 import createUKInvestmentOpportunityTask from './components/CreateUKInvestmentOpportunity/tasks'
-import EventForm from '../client/modules/Events/EventForm'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -209,6 +207,7 @@ import AddRemoveFromListForm from '../client/components/CompanyLists/AddRemoveFr
 import routes from './routes'
 
 import * as matchCompanyTasks from '../apps/companies/apps/match-company/client/tasks'
+import * as companyListTasks from '../apps/company-lists/client/tasks'
 import { editCompany } from '../apps/companies/apps/edit-company/client/tasks'
 
 function parseProps(domNode) {
@@ -241,6 +240,7 @@ function App() {
       tasks={{
         'Edit company': editCompany,
         'Create company': createCompany,
+        'Edit company list': companyListTasks.editCompanyList,
         'Match confirmation': matchCompanyTasks.onMatchSubmit,
         'Cannot find match': matchCompanyTasks.cannotFindMatchSubmit,
         'Submit merge request': matchCompanyTasks.submitMergeRequest,
@@ -498,12 +498,6 @@ function App() {
       </Mount>
       <Mount selector="#company-orders-collection">
         {(props) => <CompanyOrdersCollection {...props} />}
-      </Mount>
-      <Mount selector="#event-details">
-        {(props) => <EventDetails {...props} />}
-      </Mount>
-      <Mount selector="#event-form">
-        {(props) => <EventForm {...props} />}
       </Mount>
 
       <Mount selector="#react-app">
