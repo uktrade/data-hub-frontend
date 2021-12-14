@@ -78,3 +78,9 @@ export function saveOpportunityRequirements({ values, opportunityId }) {
     })
     .then(({ data }) => transformInvestmentOpportunityDetails(data))
 }
+
+export function saveOpportunityStatus({ opportunityId, values }) {
+  return apiProxyAxios.patch(`v4/large-capital-opportunity/${opportunityId}`, {
+    status: values.status,
+  })
+}
