@@ -9,8 +9,14 @@ import { SPACING } from '@govuk-react/constants'
 
 import urls from '../../../lib/urls'
 import Task from '../../../client/components/Task'
+import { PIPELINE__ARCHIVE_ITEM } from '../../../client/actions'
 
-import { Main, FieldTextarea, FormActions } from '../../../client/components'
+import {
+  Main,
+  FieldTextarea,
+  FormActions,
+  MultiInstanceForm,
+} from '../../../client/components'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 
 import {
@@ -22,8 +28,6 @@ import { PipelineItemPropType } from './constants'
 import PipelineDetails from './PipelineDetails'
 import GetPipelineData from './GetPipelineData'
 import { getPipelineUrl } from './utils'
-
-import TaskForm from '../../../client/components/Task/Form'
 
 const StyledP = styled.p`
   margin: ${SPACING.SCALE_2} 0 ${SPACING.SCALE_5} 0;
@@ -79,16 +83,19 @@ function ArchivePipelineItemForm({
                     <PipelineDetails
                       item={currentPipelineItem}
                     ></PipelineDetails>
-                    <TaskForm
+                    <MultiInstanceForm
                       id={STATE_ID}
-                      submissionTaskName={TASK_ARCHIVE_PIPELINE_ITEM}
-                      analyticsFormName="archive-pipeline-item-form"
-                      transformPayload={(values) => ({
-                        ...values,
-                        pipelineItemId,
-                        projectName: currentPipelineItem.name,
-                      })}
-                      redirectTo={() => getPipelineUrl(savedPipelineItem)}
+                      onSubmit={(values) => {
+                        archivePipelineItem.start({
+                          payload: {
+                            values,
+                            pipelineItemId,
+                            projectName: currentPipelineItem.name,
+                          },
+                          onSuccessDispatch: PIPELINE__ARCHIVE_ITEM,
+                        })
+                      }}
+                      showErrorSummary={false}
                     >
                       <br />
                       <FieldTextarea
@@ -105,7 +112,7 @@ function ArchivePipelineItemForm({
                           Cancel
                         </Link>
                       </FormActions>
-                    </TaskForm>
+                    </MultiInstanceForm>
                   </LoadingBox>
                 )}
               </GetPipelineData>

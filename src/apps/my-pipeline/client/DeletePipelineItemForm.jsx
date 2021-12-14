@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -11,8 +11,13 @@ import { SPACING } from '@govuk-react/constants'
 
 import urls from '../../../lib/urls'
 import Task from '../../../client/components/Task'
+import { PIPELINE__DELETE_ITEM } from '../../../client/actions'
 
-import { Main, FormActions } from '../../../client/components'
+import {
+  Main,
+  FormActions,
+  MultiInstanceForm,
+} from '../../../client/components'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 
 import { ID as STATE_ID, TASK_DELETE_PIPELINE_ITEM, state2props } from './state'
@@ -21,13 +26,25 @@ import PipelineDetails from './PipelineDetails'
 import GetPipelineData from './GetPipelineData'
 import { getPipelineUrl } from './utils'
 
-import TaskForm from '../../../client/components/Task/Form'
-
 const StyledWarningText = styled(WarningText)`
   margin-bottom: ${SPACING.SCALE_5};
 `
 
-function DeletePipelineItemForm({ pipelineItemId, currentPipelineItem }) {
+function DeletePipelineItemForm({
+  pipelineItemId,
+  currentPipelineItem,
+  itemDeleted,
+}) {
+  useEffect(() => {
+    if (itemDeleted) {
+      /**
+       * TODO: Replace with react router navigation.
+       * As we move to SPA clear the saveId from the state before navigation.
+       */
+      window.location.href = getPipelineUrl(currentPipelineItem)
+    }
+  }, [itemDeleted])
+
   return (
     <>
       <LocalHeader
@@ -61,16 +78,18 @@ function DeletePipelineItemForm({ pipelineItemId, currentPipelineItem }) {
                     <PipelineDetails
                       item={currentPipelineItem}
                     ></PipelineDetails>
-                    <TaskForm
+                    <MultiInstanceForm
                       id={STATE_ID}
-                      submissionTaskName={TASK_DELETE_PIPELINE_ITEM}
-                      analyticsFormName="delete-pipeline-item-form"
-                      transformPayload={() => ({
-                        projectName: currentPipelineItem.name,
-                        pipelineItemId,
-                      })}
-                      redirectTo={() => getPipelineUrl(currentPipelineItem)}
-                      flashMessage={() => deletePipelineItem.errorMessage}
+                      onSubmit={() => {
+                        deletePipelineItem.start({
+                          payload: {
+                            projectName: currentPipelineItem.name,
+                            pipelineItemId,
+                          },
+                          onSuccessDispatch: PIPELINE__DELETE_ITEM,
+                        })
+                      }}
+                      submissionError={deletePipelineItem.errorMessage}
                     >
                       <FormActions>
                         <Button buttonColour={RED}>Delete project</Button>
@@ -78,7 +97,7 @@ function DeletePipelineItemForm({ pipelineItemId, currentPipelineItem }) {
                           Cancel
                         </Link>
                       </FormActions>
-                    </TaskForm>
+                    </MultiInstanceForm>
                   </LoadingBox>
                 )}
               </GetPipelineData>
@@ -93,6 +112,7 @@ function DeletePipelineItemForm({ pipelineItemId, currentPipelineItem }) {
 DeletePipelineItemForm.propTypes = {
   pipelineItemId: PropTypes.string.isRequired,
   currentPipeline: PipelineItemPropType,
+  itemDeleted: PropTypes.bool,
 }
 
 export default connect(state2props)(DeletePipelineItemForm)
