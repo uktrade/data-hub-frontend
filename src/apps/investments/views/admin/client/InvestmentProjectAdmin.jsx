@@ -47,7 +47,7 @@ const InvestmentProjectAdmin = ({
         <TaskForm
           actionLinks={[
             {
-              children: 'Save',
+              children: 'Cancel',
               href: urls.investments.projects.project(projectId),
             },
           ]}
