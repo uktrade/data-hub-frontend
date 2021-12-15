@@ -40,8 +40,8 @@ const AddRemoveFromListForm = ({
     >
       {() => (
         <>
-          {companyLists.map(({ listId, listName }) => (
-            <div key={listId}>
+          {companyLists.map(({ listId, listName }, index) => (
+            <div key={listId} data-test={`company-${index}`}>
               <FieldRadios
                 name={listId}
                 legend={`Do you want to add ${companyName} to the ${listName} list?`}
@@ -65,6 +65,7 @@ const AddRemoveFromListForm = ({
             href={createNewListUrl}
             buttonColour={GREY_3}
             buttonTextColour={TEXT_COLOUR}
+            data-test="create-list-button"
           >
             Create a new list
           </Button>
