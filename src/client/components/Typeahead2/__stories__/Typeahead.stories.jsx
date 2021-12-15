@@ -5,6 +5,38 @@ import usageReadme from '../usage.md'
 import exampleReadme from '../example.md'
 import Typeahead from '../Typeahead'
 
+const asyncOptions = [
+  {
+    value: '379f390a-e083-4a2c-9cea-e3b9a08606a7',
+    label: 'Holly Clins - Heart of the South West LEP',
+  },
+  {
+    value: '8dcd2bb8-dc73-4a42-8655-4ae42d4d3c5a',
+    label: 'Bernard Harris-Patelc - Welsh Government (Investment)',
+  },
+  {
+    value: 'a6f39399-5bf4-46cb-a686-826f73e9f0ca',
+    label: 'Dennis Kennedy',
+  },
+  {
+    value: 'eecd2bb8-dc73-4a42-8655-4ae42d4d3cff',
+    label: 'Denzil Lincoln',
+  },
+]
+
+export const mockLoadOptions = (query = '') =>
+  new Promise((resolve) =>
+    query && query.length > 2
+      ? setTimeout(
+          resolve,
+          1000,
+          asyncOptions.filter(({ label }) =>
+            label.toLowerCase().includes(query.toLowerCase())
+          )
+        )
+      : resolve([])
+  )
+
 const options = [
   { value: '0001', label: 'Apple' },
   { value: '0002', label: 'Banana' },
@@ -95,4 +127,25 @@ storiesOf('Typeahead2', module)
       defaultValue={[options[2], options[0]]}
       label="Pick a fruit"
     />
+  ))
+  .add('Multi - async options', () => (
+    <div style={{ width: '600px' }}>
+      <h2>Search for</h2>
+      <ul>
+        <li>Bernard</li>
+        <li>Dennis</li>
+        <li>Denzil</li>
+        <li>Holly</li>
+      </ul>
+      <Typeahead
+        id="ms-async"
+        isMulti={true}
+        closeMenuOnSelect={false}
+        name="multiselect-async"
+        loadOptions={mockLoadOptions}
+        placeholder="Search advisers..."
+        noOptionsMessage="No advisers found"
+        aria-label="search"
+      />
+    </div>
   ))
