@@ -56,7 +56,7 @@ const InvestmentProjectAdmin = ({
           id={'investmentProjectAdmin'}
           redirectTo={() => urls.investments.projects.project(projectId)}
           submissionTaskName={TASK_UPDATE_STAGE}
-          transformPayload={(values) => ({ ...values, projectId })}
+          transformPayload={(values) => ({ values, projectId })}
         >
           <H4 as="h2">Change the stage to</H4>
           <FieldRadios
