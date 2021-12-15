@@ -29,6 +29,7 @@ function CreateUKInvestmentOpportunity() {
           label="Opportunity name"
           type="text"
           spellcheck="false"
+          required="Enter an opportunity name"
         />
       </TaskForm>
     </Main>
