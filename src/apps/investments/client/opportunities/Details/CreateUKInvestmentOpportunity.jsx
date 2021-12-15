@@ -4,20 +4,19 @@ import InputField from '@govuk-react/input-field'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
 
-import multiInstance from '../../utils/multiinstance'
+import multiInstance from '../../../../../client/utils/multiinstance'
 
 import {
   CREATE_UK_INVESTMENT_OPPORTUNITY__CHANGE,
   CREATE_UK_INVESTMENT_OPPORTUNITY__SUBMIT,
   CREATE_UK_INVESTMENT_OPPORTUNITY__SUCCESS,
-} from '../../actions'
-import { FormActions, ErrorSummary } from '..'
-import Task from '../Task'
-import TaskLoadingBox from '../Task/LoadingBox'
-import HardRedirect from '../HardRedirect'
-import ReferrerLink from '../ReferrerLink'
-
-const TASK_NAME = 'CREATE_INVESTMENT_OPPORTUNITY'
+} from '../../../../../client/actions'
+import { ID, TASK_CREATE_INVESTMENT_OPPORTUNITY } from './state'
+import { FormActions, ErrorSummary } from '../../../../../client/components'
+import Task from '../../../../../client/components/Task'
+import TaskLoadingBox from '../../../../../client/components/Task/LoadingBox'
+import HardRedirect from '../../../../../client/components/HardRedirect'
+import ReferrerLink from '../../../../../client/components/ReferrerLink'
 
 const StyledInputField = styled(InputField)({
   marginBottom: SPACING.SCALE_5,
@@ -27,19 +26,22 @@ const CreateUKInvestmentOpportunity = ({
   error,
   newOpportunityId,
   dispatch,
-  id,
   name = '',
 }) => (
   <Task>
     {(t) => {
-      const task = t(TASK_NAME, id)
+      const task = t(TASK_CREATE_INVESTMENT_OPPORTUNITY, ID)
 
       return (
         <HardRedirect
           to={`/investments/opportunities/${newOpportunityId}/details`}
           when={newOpportunityId}
         >
-          <TaskLoadingBox name={TASK_NAME} id={id} when={newOpportunityId}>
+          <TaskLoadingBox
+            name={TASK_CREATE_INVESTMENT_OPPORTUNITY}
+            id={ID}
+            when={newOpportunityId}
+          >
             <form
               onSubmit={(e) => {
                 e.preventDefault()

@@ -47,8 +47,7 @@ import CompanyProjectsCollection from '../apps/investments/client/projects/Compa
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
 import OpportunityChangeStatusForm from '../apps/investments/client/opportunities/Details/OpportunityChangeStatusForm.jsx'
-import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
-import createUKInvestmentOpportunityTask from './components/CreateUKInvestmentOpportunity/tasks'
+import CreateUKInvestmentOpportunity from '../apps/investments/client/opportunities/Details/CreateUKInvestmentOpportunity'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -142,6 +141,7 @@ import {
   TASK_SAVE_OPPORTUNITY_STATUS,
   TASK_GET_OPPORTUNITY_DETAILS,
   TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA,
+  TASK_CREATE_INVESTMENT_OPPORTUNITY,
 } from '../apps/investments/client/opportunities/Details/state'
 import * as investmentOpportunitiesDetailsTasks from '../apps/investments/client/opportunities/Details/tasks'
 
@@ -290,6 +290,8 @@ function App() {
           investmentOpportunitiesListTasks.getOpportunities,
         [TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA]:
           investmentOpportunitiesDetailsTasks.getRequirementsMetadata,
+        [TASK_CREATE_INVESTMENT_OPPORTUNITY]:
+          investmentOpportunitiesDetailsTasks.createOpportunity,
         [DNB__CHECK_PENDING_REQUEST]: businessDetails.checkIfPendingRequest,
         [TASK_GET_PROFILES_LIST]:
           investmentProfilesTasks.getLargeCapitalProfiles,
@@ -307,7 +309,6 @@ function App() {
         [TASK_GET_OUTSTANDING_PROPOSITIONS]: fetchOutstandingPropositions,
         'Large investment profiles filters':
           investmentProfilesTasks.loadFilterOptions,
-        CREATE_INVESTMENT_OPPORTUNITY: createUKInvestmentOpportunityTask,
         [TASK_GET_CONTACTS_LIST]: getContacts,
         [TASK_GET_CONTACTS_METADATA]: getContactsMetadata,
         [TASK_GET_INTERACTIONS_LIST]: getInteractions,
