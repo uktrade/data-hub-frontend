@@ -1,24 +1,37 @@
 import React from 'react'
-import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
-import {
-  FormStateful,
-  FieldInput,
-  FormActions,
-} from '../../../client/components'
+import { FieldInput } from '../../../client/components'
+import TaskForm from '../../../client/components/Task/Form'
 
 const CreateListForm = ({
+  id,
   name,
-  label,
   hint,
-  maxLength,
-  onSubmitHandler,
+  label,
   cancelUrl,
-}) => {
-  const cancelLink = `${cancelUrl}`
-  return (
-    <FormStateful onSubmit={onSubmitHandler}>
+  maxLength,
+  csrfToken,
+}) => (
+  <TaskForm
+    id="create-list-form"
+    submissionTaskName="Create list"
+    analyticsFormName="create-list-form"
+    redirectTo={() => cancelUrl}
+    flashMessage={() => 'Company list created'}
+    submitButtonLabel="Create list"
+    actionLinks={[
+      {
+        href: cancelUrl,
+        children: 'Cancel',
+      },
+    ]}
+    transformPayload={(values) => ({
+      id,
+      values,
+      csrfToken,
+    })}
+  >
+    {() => (
       <FieldInput
         name={name}
         type="text"
@@ -31,16 +44,11 @@ const CreateListForm = ({
             : null
         }
       />
-      <FormActions>
-        <Button>Create list</Button>
-        <Link href={cancelLink}>Cancel</Link>
-      </FormActions>
-    </FormStateful>
-  )
-}
+    )}
+  </TaskForm>
+)
 
 CreateListForm.propTypes = {
-  onSubmitHandler: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   hint: PropTypes.string,
   cancelUrl: PropTypes.string.isRequired,
