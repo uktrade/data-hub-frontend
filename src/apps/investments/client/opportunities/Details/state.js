@@ -8,6 +8,8 @@ export const TASK_SAVE_OPPORTUNITY_DETAILS = 'TASK_SAVE_OPPORTUNITY_DETAILS'
 export const TASK_SAVE_OPPORTUNITY_REQUIREMENTS =
   'TASK_SAVE_OPPORTUNITY_REQUIREMENTS'
 
+export const TASK_SAVE_OPPORTUNITY_STATUS = 'TASK_SAVE_OPPORTUNITY_STATUS'
+
 export const ID = 'opportunityDetails'
 
 export const state2props = (state) => state[ID]

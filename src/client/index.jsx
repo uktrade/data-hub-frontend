@@ -45,7 +45,7 @@ import InvestmentProjectsCollection from '../apps/investments/client/projects/Pr
 import CompanyProjectsCollection from '../apps/investments/client/projects/CompanyProjectsCollection.jsx'
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
-import OpportunityChangeStatusForm from './components/OpportunityChangeStatusForm'
+import OpportunityChangeStatusForm from '../apps/investments/client/opportunities/Details/OpportunityChangeStatusForm.jsx'
 import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
 import createUKInvestmentOpportunityTask from './components/CreateUKInvestmentOpportunity/tasks'
 
@@ -138,6 +138,7 @@ import * as investmentOpportunitiesListTasks from '../apps/investments/client/op
 import {
   TASK_SAVE_OPPORTUNITY_DETAILS,
   TASK_SAVE_OPPORTUNITY_REQUIREMENTS,
+  TASK_SAVE_OPPORTUNITY_STATUS,
   TASK_GET_OPPORTUNITY_DETAILS,
   TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA,
 } from '../apps/investments/client/opportunities/Details/state'
@@ -278,6 +279,8 @@ function App() {
         [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
         [TASK_SAVE_OPPORTUNITY_DETAILS]:
           investmentOpportunitiesDetailsTasks.saveOpportunityDetails,
+        [TASK_SAVE_OPPORTUNITY_STATUS]:
+          investmentOpportunitiesDetailsTasks.saveOpportunityStatus,
         [TASK_SAVE_OPPORTUNITY_REQUIREMENTS]:
           investmentOpportunitiesDetailsTasks.saveOpportunityRequirements,
         [TASK_GET_OPPORTUNITY_DETAILS]:

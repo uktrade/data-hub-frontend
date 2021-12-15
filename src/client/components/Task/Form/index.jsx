@@ -28,6 +28,8 @@ import { validateForm } from '../../Form/MultiInstanceForm'
 import Effect from '../../Effect'
 import HardRedirect from '../../HardRedirect'
 
+import { BUTTON_COLOUR } from 'govuk-colours'
+
 const addFlashMessage = (message) =>
   Array.isArray(message)
     ? addMessageWithBody('success', ...message)
@@ -53,6 +55,7 @@ const _TaskForm = ({
   transformPayload = (x) => x,
   onSuccess,
   submitButtonLabel = 'Save',
+  submitButtonColour = BUTTON_COLOUR,
   actionLinks = [],
   // State props
   onLoad,
@@ -283,7 +286,10 @@ const _TaskForm = ({
                             */}
                             {!steps.length && (
                               <FormActions>
-                                <Button {...submitButtonProps}>
+                                <Button
+                                  buttonColour={submitButtonColour}
+                                  {...submitButtonProps}
+                                >
                                   {submitButtonLabel}
                                 </Button>
                                 {actionLinks.map(
@@ -443,6 +449,8 @@ const dispatchToProps = (dispatch) => ({
  * For the exact shape of the objects refrer to `./types.d.ts`.
  * @param {Props['submitButtonLabel']} [props.submitButtonLabel='Save'] -
  * The label of the submit button.
+ * @param {Props['submitButtonColour']} [props.submitButtonColour=BUTTON_COLOUR] -
+ * The colour of the submit button.
  * @param {Props['children']} [props.children] - The form fields should be
  * passed as children. Note that the form communicates with it's fields
  * through the context it provides to the {useFormContext} hook, which is used

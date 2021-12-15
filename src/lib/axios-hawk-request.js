@@ -70,7 +70,8 @@ function hawkRequestPromise(...params) {
 
 async function sendHawkRequest(
   url,
-  credentials = config.hawkCredentials.dataHubBackend
+  credentials = config.hawkCredentials.dataHubBackend,
+  timeout
 ) {
   if (!url) {
     throw new Error('Url is required')
@@ -86,6 +87,7 @@ async function sendHawkRequest(
 
   const clientHeader = getHawkHeader(credentials, requestOptions)
   requestOptions.headers.Authorization = clientHeader.header || clientHeader
+  timeout && (requestOptions.timeout = timeout)
 
   return hawkRequestPromise(requestOptions, credentials, clientHeader.artifacts)
 }
