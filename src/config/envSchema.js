@@ -85,8 +85,10 @@ const envSchema = Joi.object({
   HELP_CENTRE_ANNOUNCMENTS_URL: Joi.string().uri().required(),
   // Help centre feed API url
   HELP_CENTRE_API_FEED: Joi.string().uri().required(),
-  // Help centre API token
-  HELP_CENTRE_FEED_API_TOKEN: Joi.string().required(),
+  // Help centre API Hawk Auth ID
+  HELP_CENTRE_ACCESS_KEY_ID: Joi.string().required(),
+  // Help centre API Hawk Auth Key
+  HELP_CENTRE_SECRET_ACCESS_KEY: Joi.string().required(),
   // Help centre url
   HELP_CENTRE_URL: Joi.string().uri().required(),
 
