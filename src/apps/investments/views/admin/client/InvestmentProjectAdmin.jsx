@@ -53,7 +53,7 @@ const InvestmentProjectAdmin = ({
           ]}
           analyticsFormName="investmentProjectAdmin"
           flashMessage={() => 'Project stage saved'}
-          id={'investmentProjectAdmin'}
+          id="investmentProjectAdmin"
           redirectTo={() => urls.investments.projects.project(projectId)}
           submissionTaskName={TASK_UPDATE_STAGE}
           transformPayload={(values) => ({ values, projectId })}
