@@ -1,124 +1,38 @@
 import React from 'react'
-import Button from '@govuk-react/button'
-import InputField from '@govuk-react/input-field'
-import styled from 'styled-components'
-import { SPACING } from '@govuk-react/constants'
 
-import multiInstance from '../../../../../client/utils/multiinstance'
-
-import {
-  CREATE_UK_INVESTMENT_OPPORTUNITY__CHANGE,
-  CREATE_UK_INVESTMENT_OPPORTUNITY__SUBMIT,
-  CREATE_UK_INVESTMENT_OPPORTUNITY__SUCCESS,
-} from '../../../../../client/actions'
 import { ID, TASK_CREATE_INVESTMENT_OPPORTUNITY } from './state'
-import { FormActions, ErrorSummary } from '../../../../../client/components'
-import Task from '../../../../../client/components/Task'
-import TaskLoadingBox from '../../../../../client/components/Task/LoadingBox'
-import HardRedirect from '../../../../../client/components/HardRedirect'
-import ReferrerLink from '../../../../../client/components/ReferrerLink'
+import { FieldInput, Main } from '../../../../../client/components'
+import TaskForm from '../../../../../client/components/Task/Form'
 
-const StyledInputField = styled(InputField)({
-  marginBottom: SPACING.SCALE_5,
-})
+import urls from '../../../../../lib/urls'
 
-const CreateUKInvestmentOpportunity = ({
-  error,
-  newOpportunityId,
-  dispatch,
-  name = '',
-}) => (
-  <Task>
-    {(t) => {
-      const task = t(TASK_CREATE_INVESTMENT_OPPORTUNITY, ID)
+function CreateUKInvestmentOpportunity() {
+  return (
+    <Main>
+      <TaskForm
+        id={ID}
+        analyticsFormName="createUKInvestmentOpportunity"
+        submissionTaskName={TASK_CREATE_INVESTMENT_OPPORTUNITY}
+        transformPayload={(name) => ({
+          name,
+        })}
+        redirectTo={(result) => urls.investments.opportunities.details(result)}
+        actionLinks={[
+          {
+            href: urls.investments.opportunities.index(),
+            children: 'Cancel',
+          },
+        ]}
+      >
+        <FieldInput
+          name="name"
+          label="Opportunity name"
+          type="text"
+          spellcheck="false"
+        />
+      </TaskForm>
+    </Main>
+  )
+}
 
-      return (
-        <HardRedirect
-          to={`/investments/opportunities/${newOpportunityId}/details`}
-          when={newOpportunityId}
-        >
-          <TaskLoadingBox
-            name={TASK_CREATE_INVESTMENT_OPPORTUNITY}
-            id={ID}
-            when={newOpportunityId}
-          >
-            <form
-              onSubmit={(e) => {
-                e.preventDefault()
-                const name = e.target.name.value
-                dispatch({
-                  type: CREATE_UK_INVESTMENT_OPPORTUNITY__SUBMIT,
-                  name,
-                })
-
-                if (name) {
-                  task.start({
-                    payload: name,
-                    onSuccessDispatch:
-                      CREATE_UK_INVESTMENT_OPPORTUNITY__SUCCESS,
-                  })
-                }
-              }}
-            >
-              {error && (
-                <ErrorSummary
-                  heading="There is a problem"
-                  errors={[
-                    {
-                      text: error,
-                      targetName: 'name',
-                    },
-                  ]}
-                />
-              )}
-              <StyledInputField
-                meta={
-                  error && {
-                    touched: true,
-                    error: error,
-                  }
-                }
-                input={{
-                  value: name,
-                  name: 'name',
-                  id: 'field-name',
-                  onChange: (e) =>
-                    dispatch({
-                      type: CREATE_UK_INVESTMENT_OPPORTUNITY__CHANGE,
-                      name: e.target.value,
-                    }),
-                }}
-              >
-                Opportunity name
-              </StyledInputField>
-              <FormActions>
-                <Button>Save</Button>
-                <ReferrerLink>Cancel</ReferrerLink>
-              </FormActions>
-            </form>
-          </TaskLoadingBox>
-        </HardRedirect>
-      )
-    }}
-  </Task>
-)
-
-export default multiInstance({
-  name: 'CreateUKInvestmentOpportunity',
-  actionPattern: 'CREATE_UK_INVESTMENT_OPPORTUNITY__',
-  component: CreateUKInvestmentOpportunity,
-  reducer: (state = {}, { type, name, result }) => {
-    switch (type) {
-      case CREATE_UK_INVESTMENT_OPPORTUNITY__CHANGE:
-        return { ...state, name }
-      case CREATE_UK_INVESTMENT_OPPORTUNITY__SUBMIT:
-        return name
-          ? { name }
-          : { ...state, error: 'Enter an opportunity name' }
-      case CREATE_UK_INVESTMENT_OPPORTUNITY__SUCCESS:
-        return { ...state, newOpportunityId: result }
-      default:
-        return state
-    }
-  },
-})
+export default CreateUKInvestmentOpportunity

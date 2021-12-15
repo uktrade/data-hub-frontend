@@ -85,8 +85,9 @@ export function saveOpportunityStatus({ opportunityId, values }) {
   })
 }
 
-export function createOpportunity(name) {
+export function createOpportunity(values) {
+  const opportunityName = values.name
   return apiProxyAxios
-    .post('v4/large-capital-opportunity', { name })
+    .post('v4/large-capital-opportunity', opportunityName)
     .then(({ data: { id } }) => id)
 }
