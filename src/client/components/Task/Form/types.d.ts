@@ -48,6 +48,7 @@ export type Props = {
   actionLinks?: LinkProps[],
   children?: Children,
   submitButtonLabel?: string,
+  submitButtonColour?: string,
   initialStepIndex?: number,
 }
 

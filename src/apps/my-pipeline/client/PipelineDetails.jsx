@@ -8,7 +8,11 @@ import { SummaryTable } from '../../../client/components/'
 import { WIDTHS } from '@govuk-react/constants'
 import { currencyGBP } from '../../../client/utils/number-utils'
 
-const { format } = require('../../../client/utils/date')
+const {
+  format,
+  formatWithoutParsing,
+  parseDateString,
+} = require('../../../client/utils/date')
 
 function getLabels(acc, { value, label }) {
   acc[value] = label
@@ -39,9 +43,9 @@ export default function PipelineDetails({ item }) {
     ['Project name', item.name],
     ['Company', item.company.name, urls.companies.detail(item.company.id)],
     ['Status', STATUS_LABELS[item.status]],
-    item.likelihood_to_win && [
+    item.likelihoodToWin && [
       'Export win potential',
-      LIKELIHOOD_LABELS[item.likelihood_to_win],
+      LIKELIHOOD_LABELS[item.likelihoodToWin],
     ],
     item.sector && ['Export sector', item.sector.segment],
     item.contact && [
@@ -49,17 +53,20 @@ export default function PipelineDetails({ item }) {
       item.contact.name,
       urls.contacts.details(item.contact.id),
     ],
-    item.potential_value && [
+    item.potentialValue && [
       'Potential export value',
-      currencyGBP(item.potential_value),
+      currencyGBP(item.potentialValue),
     ],
-    item.expected_win_date && [
+    item.expectedWinDate && [
       'Expected date for win',
-      format(item.expected_win_date, 'MMM y'),
+      format(item.expectedWinDate, 'MMM y'),
     ],
-    ['Created', format(item.created_on)],
-    item.archived && ['Reason for archive', item.archived_reason],
-    item.archived && ['Archived', format(item.archived_on)],
+    ['Created', formatWithoutParsing(parseDateString(item.createdOn))],
+    item.archived && ['Reason for archive', item.archivedReason],
+    item.archived && [
+      'Archived',
+      formatWithoutParsing(parseDateString(item.archivedOn)),
+    ],
   ]
 
   return (

@@ -1,6 +1,5 @@
 import axios from 'axios'
 import pipelineApi from './api'
-import { addMessage } from '../../../client/utils/flash-messages'
 import { transformValueForAPI } from '../../../client/utils/date'
 
 function transformValuesForApi(values) {
@@ -67,26 +66,19 @@ export async function editPipelineItem({ values, pipelineItemId }) {
   return data
 }
 
-export async function archivePipelineItem({
-  values,
-  pipelineItemId,
-  projectName,
-}) {
+export async function archivePipelineItem({ values, pipelineItemId }) {
   const { data } = await pipelineApi.archive(pipelineItemId, {
     reason: values.reason,
   })
-  addMessage('success', `You archived ${projectName}`)
   return data
 }
 
-export async function unarchivePipelineItem({ projectName, pipelineItemId }) {
+export async function unarchivePipelineItem({ pipelineItemId }) {
   const { data } = await pipelineApi.unarchive(pipelineItemId)
-  addMessage('success', `You unarchived ${projectName}`)
   return data
 }
 
-export async function deletePipelineItem({ projectName, pipelineItemId }) {
+export async function deletePipelineItem({ pipelineItemId }) {
   const { status } = await pipelineApi.delete(pipelineItemId)
-  addMessage('success', `You deleted ${projectName} from your pipeline`)
   return status
 }
