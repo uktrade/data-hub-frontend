@@ -2,15 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import { InsetText, H4, Button, Link } from 'govuk-react'
+import { InsetText, H4 } from 'govuk-react'
 import { SPACING } from '@govuk-react/constants'
 import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeader.jsx'
 import Task from '../../../../../client/components/Task'
-import {
-  Main,
-  FieldRadios,
-  FormActions,
-} from '../../../../../client/components'
+import { Main, FieldRadios } from '../../../../../client/components'
 import { ID as STATE_ID, TASK_UPDATE_STAGE, state2props } from './state'
 import urls from '../../../../../lib/urls'
 
@@ -52,11 +48,18 @@ const InvestmentProjectAdmin = ({
             <StyledP>Current stage: {projectStage.name}</StyledP>
           </InsetText>
           <TaskForm
-            id={STATE_ID}
+            actionLinks={[
+              {
+                children: 'Save',
+                href: urls.investments.projects.project(projectId),
+              },
+            ]}
             analyticsFormName="investment-project-admin"
-            submissionTaskName={TASK_UPDATE_STAGE}
-            redirectTo={() => urls.investments.projects.project(projectId)}
             flashMessage={() => 'Project stage saved'}
+            id={STATE_ID}
+            redirectTo={() => urls.investments.projects.project(projectId)}
+            submissionTaskName={TASK_UPDATE_STAGE}
+            transformPayload={(values) => ({ ...values, projectId })}
           >
             <H4 as="h2">Change the stage to</H4>
             <FieldRadios
@@ -64,12 +67,6 @@ const InvestmentProjectAdmin = ({
               required="Select a new stage"
               options={newStageOptions}
             />
-            <FormActions>
-              <Button>Save</Button>
-              <Link href={urls.investments.projects.project(projectId)}>
-                Cancel
-              </Link>
-            </FormActions>
           </TaskForm>
         </Main>
       </>
