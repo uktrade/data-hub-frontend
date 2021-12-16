@@ -43,9 +43,6 @@ import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/
 import * as addCompanyState from '../apps/companies/apps/add-company/client/state'
 import addCompanyPostcodeToRegionReducer from '../apps/companies/apps/add-company/client/reducer'
 
-import { ID as ONE_LIST_DETAILS_ID } from '../apps/companies/apps/edit-one-list/client/state'
-import editOneListReducer from '../apps/companies/apps/edit-one-list/client/reducer'
-
 import { ID as ADD_TO_PIPELINE_ID } from '../apps/my-pipeline/client/state'
 import addToPipelineReducer from '../apps/my-pipeline/client/reducer'
 
@@ -148,7 +145,6 @@ const store = createStore(
     [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
     [REFERRALS_SEND_ID]: referralsSendReducer,
     [EXPORTS_WINS_ID]: exportWinsReducer,
-    [ONE_LIST_DETAILS_ID]: editOneListReducer,
     [addCompanyState.ID]: addCompanyPostcodeToRegionReducer,
     [ADD_TO_PIPELINE_ID]: addToPipelineReducer,
     [PIPELINE_LIST_ID]: pipelineListReducer,
