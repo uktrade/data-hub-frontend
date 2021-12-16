@@ -52,10 +52,6 @@ import addToPipelineReducer from '../apps/my-pipeline/client/reducer'
 import { ID as PIPELINE_LIST_ID } from './components/Pipeline/state'
 import pipelineListReducer from './components/Pipeline/reducer'
 
-import { ID as INVESTEMENT_PROJECT_ADMIN_ID } from '../apps/investments/views/admin/client/state'
-
-import investmentProjectAdminReducer from '../apps/investments/views/admin/client/reducer'
-
 import { ID as INVESTMENT_OPPORTUNITIES_LIST_ID } from '../apps/investments/client/opportunities/List/state'
 import investmentOpportunitiesListReducer from '../apps/investments/client/opportunities/List/reducer'
 
@@ -170,7 +166,6 @@ const store = createStore(
     ...TaskReactSelect.reducerSpread,
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
-    [INVESTEMENT_PROJECT_ADMIN_ID]: investmentProjectAdminReducer,
     [DNB_CHECK_ID]: dnbCheckReducer,
     [INVESTMENT_OPPORTUNITIES_LIST_ID]: investmentOpportunitiesListReducer,
     [INVESTMENT_OPPORTUNITIES_DETAILS_ID]:
