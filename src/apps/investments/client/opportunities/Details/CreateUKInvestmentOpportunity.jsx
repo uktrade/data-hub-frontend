@@ -6,34 +6,31 @@ import TaskForm from '../../../../../client/components/Task/Form'
 
 import urls from '../../../../../lib/urls'
 
-function CreateUKInvestmentOpportunity() {
-  return (
-    <Main>
-      <TaskForm
-        id={ID}
-        analyticsFormName="createUKInvestmentOpportunity"
-        submissionTaskName={TASK_CREATE_INVESTMENT_OPPORTUNITY}
-        transformPayload={(name) => ({
-          name,
-        })}
-        redirectTo={(result) => urls.investments.opportunities.details(result)}
-        actionLinks={[
-          {
-            href: urls.investments.opportunities.index(),
-            children: 'Cancel',
-          },
-        ]}
-      >
-        <FieldInput
-          name="name"
-          label="Opportunity name"
-          type="text"
-          spellcheck="false"
-          required="Enter an opportunity name"
-        />
-      </TaskForm>
-    </Main>
-  )
-}
+const CreateUKInvestmentOpportunity = () => (
+  <Main>
+    <TaskForm
+      id={ID}
+      analyticsFormName="createUKInvestmentOpportunity"
+      submissionTaskName={TASK_CREATE_INVESTMENT_OPPORTUNITY}
+      redirectTo={(newOpportunityId) =>
+        urls.investments.opportunities.details(newOpportunityId)
+      }
+      actionLinks={[
+        {
+          href: urls.investments.opportunities.index(),
+          children: 'Cancel',
+        },
+      ]}
+    >
+      <FieldInput
+        name="name"
+        label="Opportunity name"
+        type="text"
+        spellcheck="false"
+        required="Enter an opportunity name"
+      />
+    </TaskForm>
+  </Main>
+)
 
 export default CreateUKInvestmentOpportunity
