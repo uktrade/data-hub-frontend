@@ -5,12 +5,10 @@ import React from 'react'
 type GovukReactLinkProps = {
   href: string,
   children: React.ReactChild,
-  linkProps: Object,
 }
 type ReactRouterLinkProps = {
   to: string,
   children: React.ReactChild,
-  linksProps: Object,
 }
 type LinkProps = GovukReactLinkProps | ReactRouterLinkProps
 
@@ -38,6 +36,8 @@ export type Props = {
   id: string,
   analyticsFormName: string,
   analyticsData?: (values: Values) => object,
+  cancelRedirectTo?: () => string,
+  cancelButtonLabel?: string | React.ReactNode,
   initialValuesTaskName?: string,
   initialValuesPayload?: any,
   initialValues?: Record<string, any>,

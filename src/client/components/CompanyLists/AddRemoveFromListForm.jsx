@@ -29,14 +29,7 @@ const AddRemoveFromListForm = ({
       initialValues={initState}
       transformPayload={(list) => ({ list, token, companyId })}
       redirectTo={() => cancelLinkUrl}
-      submitButtonProps={{ 'data-test': 'submit-button' }}
-      actionLinks={[
-        {
-          children: 'Cancel',
-          href: cancelLinkUrl,
-          linkProps: { 'data-test': 'cancel-button' },
-        },
-      ]}
+      cancelRedirectTo={() => cancelLinkUrl}
     >
       {() => (
         <>
