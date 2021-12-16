@@ -11,6 +11,7 @@ const testTab = (tabText) => {
     cy.contains('View options').click()
     cy.contains('Add to or remove from lists').click()
     cy.get(cancelLink).click()
+
     cy.get(tabbedLocalNav().tabs)
       .contains(tabText)
       .should('have.class', 'govuk-tabs__tab--selected')

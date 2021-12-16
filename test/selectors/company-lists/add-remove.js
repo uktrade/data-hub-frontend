@@ -1,44 +1,44 @@
 module.exports = {
   listA: {
-    legend: `#add-remove-list-form > form > div > div:nth-child(2) > div > fieldset > legend`,
+    legend: `#add-remove-list-form [data-test="company-0"] > div > fieldset > legend`,
     radios:
-      '#add-remove-list-form > form > div > div:nth-child(2) > div > fieldset > div input',
+      '#add-remove-list-form [data-test="company-0"] > div > fieldset > div input',
     radioYes:
-      '#add-remove-list-form > form > div > div:nth-child(2) > div > fieldset > div input[value="yes"]',
+      '#add-remove-list-form [data-test="company-0"] > div > fieldset > div input[value="yes"]',
     radioNo:
-      '#add-remove-list-form > form > div > div:nth-child(2) > div > fieldset > div input[value="no"]',
+      '#add-remove-list-form [data-test="company-0"] > div > fieldset > div input[value="no"]',
     labelYes:
-      '#add-remove-list-form > form > div > div:nth-child(2) > div > fieldset > div > label:nth-child(2)',
+      '#add-remove-list-form [data-test="company-0"] > div > fieldset > div > label:nth-child(2)',
     labelNo:
-      '#add-remove-list-form > form > div > div:nth-child(2) > div > fieldset > div > label:nth-child(3)',
+      '#add-remove-list-form [data-test="company-0"] > div > fieldset > div > label:nth-child(3)',
   },
   listB: {
-    legend: `#add-remove-list-form > form > div > div:nth-child(3) > div > fieldset > legend`,
+    legend: `#add-remove-list-form [data-test="company-1"] > div > fieldset > legend`,
     radios:
-      '#add-remove-list-form > form > div > div:nth-child(3) > div > fieldset > div input',
+      '#add-remove-list-form [data-test="company-1"] > div > fieldset > div input',
     radioYes:
-      '#add-remove-list-form > form > div > div:nth-child(3) > div > fieldset > div input[value="yes"]',
+      '#add-remove-list-form [data-test="company-1"] > div > fieldset > div input[value="yes"]',
     radioNo:
-      '#add-remove-list-form > form > div > div:nth-child(3) > div > fieldset > div input[value="no"]',
+      '#add-remove-list-form [data-test="company-1"] > div > fieldset > div input[value="no"]',
     labelYes:
-      '#add-remove-list-form > form > div > div:nth-child(3) > div > fieldset > div > label:nth-child(2)',
+      '#add-remove-list-form [data-test="company-1"] > div > fieldset > div > label:nth-child(2)',
     labelNo:
-      '#add-remove-list-form > form > div > div:nth-child(3) > div > fieldset > div > label:nth-child(3)',
+      '#add-remove-list-form [data-test="company-1"] > div > fieldset > div > label:nth-child(3)',
   },
   listC: {
-    legend: `#add-remove-list-form > form > div > div:nth-child(4) > div > fieldset > legend`,
+    legend: `#add-remove-list-form [data-test="company-2"] > div > fieldset > legend`,
     radios:
-      '#add-remove-list-form > form > div > div:nth-child(4) > div > fieldset > div input',
+      '#add-remove-list-form [data-test="company-2"] > div > fieldset > div input',
     radioYes:
-      '#add-remove-list-form > form > div > div:nth-child(4) > div > fieldset > div input[value="yes"]',
+      '#add-remove-list-form [data-test="company-2"] > div > fieldset > div input[value="yes"]',
     radioNo:
-      '#add-remove-list-form > form > div > div:nth-child(4) > div > fieldset > div input[value="no"]',
+      '#add-remove-list-form [data-test="company-2"] > div > fieldset > div input[value="no"]',
     labelYes:
-      '#add-remove-list-form > form > div > div:nth-child(4) > div > fieldset > div > label:nth-child(2)',
+      '#add-remove-list-form [data-test="company-2"] > div > fieldset > div > label:nth-child(2)',
     labelNo:
-      '#add-remove-list-form > form > div > div:nth-child(4) > div > fieldset > div > label:nth-child(3)',
+      '#add-remove-list-form [data-test="company-2"] > div > fieldset > div > label:nth-child(3)',
   },
-  createButton: '#add-remove-list-form > form > div > a',
-  saveButton: '#add-remove-list-form > form div div:nth-child(6) button',
-  cancelLink: '#add-remove-list-form > form div div:nth-child(6) a',
+  createButton: '#add-remove-list-form [data-test="create-list-button"]',
+  saveButton: '#add-remove-list-form [data-test="submit-button"]',
+  cancelLink: '#add-remove-list-form [data-test="cancel-button"]',
 }

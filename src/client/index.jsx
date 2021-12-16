@@ -15,7 +15,6 @@ import MatchConfirmation from '../apps/companies/apps/match-company/client/Match
 import CannotFindMatch from '../apps/companies/apps/match-company/client/CannotFindMatch'
 import EditCompanyList from '../apps/company-lists/client/EditCompanyList'
 import CreateListForm from '../apps/company-lists/client/CreateListForm'
-import AddRemoveFromListSection from '../apps/company-lists/client/AddRemoveFromListSection'
 import DnbHierarchy from '../apps/companies/apps/dnb-hierarchy/client/DnbHierarchy'
 import LeadAdvisers from '../apps/companies/apps/advisers/client/LeadAdvisers'
 import LargeCapitalProfileCollection from '../apps/investments/client/profiles/LargeCapitalProfileCollection'
@@ -204,6 +203,7 @@ import Footer from '../client/components/Footer'
 import ContactForm from '../client/components/ContactForm'
 import resourceTasks from '../client/components/Resource/tasks'
 import { ProtectedRoute } from '../client/components'
+import AddRemoveFromListForm from '../client/components/CompanyLists/AddRemoveFromListForm'
 
 import routes from './routes'
 
@@ -249,6 +249,7 @@ function App() {
         'Submit merge request': matchCompanyTasks.submitMergeRequest,
         'Company lists': companyListsTasks.fetchCompanyLists,
         'Company list': companyListsTasks.fetchCompanyList,
+        'Add or remove from list': companyListsTasks.addOrRemoveFromList,
         'Exports history': exportsHistoryTasks.fetchExportsHistory,
         'Referral details': referralTasks.fetchReferralDetails,
         Referrals: referralListTask,
@@ -401,7 +402,7 @@ function App() {
         )}
       </Mount>
       <Mount selector="#add-remove-list-form">
-        {(props) => <AddRemoveFromListSection {...props} />}
+        {(props) => <AddRemoveFromListForm {...props} />}
       </Mount>
       <Mount selector="#lead-advisers">
         {(props) => <LeadAdvisers {...props} />}

@@ -42,6 +42,8 @@ const _TaskForm = ({
   analyticsFormName,
   // Optional
   analyticsData,
+  cancelButtonLabel = 'Cancel',
+  cancelRedirectTo,
   initialValuesTaskName,
   initialValuesPayload,
   redirectTo,
@@ -285,19 +287,35 @@ const _TaskForm = ({
                             */}
                             {!steps.length && (
                               <FormActions>
-                                <Button buttonColour={submitButtonColour}>
+                                <Button
+                                  buttonColour={submitButtonColour}
+                                  data-test="submit-button"
+                                >
                                   {submitButtonLabel}
                                 </Button>
-                                {actionLinks.map(({ to, href, children }, i) =>
-                                  to ? (
-                                    <ReactRouter.Link key={i} to={to}>
-                                      {children}
-                                    </ReactRouter.Link>
-                                  ) : (
-                                    <Link key={i} href={href}>
-                                      {children}
-                                    </Link>
-                                  )
+                                {cancelRedirectTo && (
+                                  <Link
+                                    href={cancelRedirectTo()}
+                                    data-test="cancel-button"
+                                  >
+                                    {cancelButtonLabel}
+                                  </Link>
+                                )}
+                                {actionLinks.map(
+                                  ({ to, href, children, linkProps = {} }, i) =>
+                                    to ? (
+                                      <ReactRouter.Link
+                                        key={i}
+                                        to={to}
+                                        {...linkProps}
+                                      >
+                                        {children}
+                                      </ReactRouter.Link>
+                                    ) : (
+                                      <Link key={i} href={href} {...linkProps}>
+                                        {children}
+                                      </Link>
+                                    )
                                 )}
                               </FormActions>
                             )}
@@ -398,6 +416,11 @@ const dispatchToProps = (dispatch) => ({
  * @param {Props['analyticsData']} props.analyticsData - A function which takes
  * the values of the form as an argument, and which returns an object
  * containing additional - non-sensitive - data to be passed to google analytics.
+ * @param {Props['cancelRedirectTo']} props.cancelRedirectTo - A function which
+ * returns a URL to redirect to when the cancel button is clicked. If unset the
+ * cancel button will not display.
+ * @param {Props['cancelButtonLabel']} props.cancelButtonLabel - The content to
+ * display within the react button, defaults to 'Cancel'.
  * @param {Props['submissionTaskName']} props.submissionTaskName - Name of the
  * task that should be started when the form is submitted. The task will receive
  * the form values as payload.
@@ -467,6 +490,8 @@ TaskForm.propTypes = {
   id: PropTypes.string.isRequired,
   analyticsFormName: PropTypes.string.isRequired,
   analyticsData: PropTypes.func,
+  cancelRedirectTo: PropTypes.func,
+  cancelButtonLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   submissionTaskName: PropTypes.string.isRequired,
   redirectTo: PropTypes.func,
   redirectMode: PropTypes.oneOf(['hard', 'soft']),
