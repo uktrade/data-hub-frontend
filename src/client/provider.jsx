@@ -101,7 +101,7 @@ import {
 } from './modules/Omis/CollectionList/state'
 import ordersReducer from './modules/Omis/CollectionList/reducer'
 
-import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
+import CreateUKInvestmentOpportunity from '../apps/investments/client/opportunities/Details/CreateUKInvestmentOpportunity'
 
 import RoutedInput from './components/RoutedInput'
 
