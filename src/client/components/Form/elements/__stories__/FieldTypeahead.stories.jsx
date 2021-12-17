@@ -1,10 +1,8 @@
 import React from 'react'
 import { addDecorator, storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
 import { withKnobs } from '@storybook/addon-knobs'
-import Button from '@govuk-react/button'
 
-import FormStateful from '../../FormStateful'
+import TaskForm from '../../../Task/Form'
 import FieldTypeahead from '../FieldTypeahead'
 
 import exampleReadme from '../FieldTypeahead/example.md'
@@ -39,7 +37,11 @@ storiesOf('Forms/Typeahead', module)
     },
   })
   .add('Default', () => (
-    <FormStateful onSubmit={action('onSubmit')}>
+    <TaskForm
+      id="fieldTypeaheadExample"
+      analyticsFormName="fieldTypeaheadExample"
+      submissionTaskName="Submit TaskForm example"
+    >
       {(state) => (
         <>
           <FieldTypeahead
@@ -80,9 +82,8 @@ storiesOf('Forms/Typeahead', module)
             loadOptions={getOptions}
             isMulti={true}
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(state, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </TaskForm>
   ))

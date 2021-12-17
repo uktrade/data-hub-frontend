@@ -5,12 +5,14 @@ FieldTypeahead
 
 A Typeahead for use in forms. This is a wrapper around the `react-select` by Jed Watson, for indepth documention refer to [Github](https://github.com/JedWatson/react-select) or the [api docs](https://react-select.com/home)
 
-**Note: The `<FieldTypeahead>` has to be wrapped with `<FormStateful>`.** 
-
 ### Usage
 
 ```jsx
-<FormStateful onSubmit={action('onSubmit')}>
+<TaskForm
+      id="fieldTypeaheadExample"
+      analyticsFormName="fieldTypeaheadExample"
+      submissionTaskName="Submit TaskForm example"
+    >
   {(state) => (
     <>
       <FieldTypeahead
@@ -22,7 +24,7 @@ A Typeahead for use in forms. This is a wrapper around the `react-select` by Jed
       />
     </>
   )}
-</FormStateful>
+</TaskForm>
 ```
 
 ### Properties

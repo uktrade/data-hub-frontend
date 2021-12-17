@@ -1,12 +1,10 @@
 import React from 'react'
 import { addDecorator, storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
 import { object, text, withKnobs } from '@storybook/addon-knobs'
-import Button from '@govuk-react/button'
 
 import FieldSelect from '../FieldSelect'
 import FieldInput from '../FieldInput'
-import FormStateful from '../../FormStateful'
+import TaskForm from '../../../Task/Form'
 
 addDecorator(withKnobs)
 
@@ -22,7 +20,11 @@ storiesOf('Forms/Select', module)
     },
   })
   .add('Default', () => (
-    <FormStateful onSubmit={action('onSubmit')}>
+    <TaskForm
+      id="fieldSelectExample"
+      analyticsFormName="fieldSelectExample"
+      submissionTaskName="Submit TaskForm example"
+    >
       {(form) => (
         <>
           <FieldSelect
@@ -70,9 +72,8 @@ storiesOf('Forms/Select', module)
                 : null
             }
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </TaskForm>
   ))
