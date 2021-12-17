@@ -1,5 +1,4 @@
 import { apiProxyAxios } from '../../../../../client/components/Task/utils'
-import { SAVED, API_ERROR } from './state'
 import {
   NONE,
   ACCOUNT_MANAGER_FIELD_NAME,
@@ -62,16 +61,9 @@ export function saveOneListDetails({ values, companyId }) {
 
   return request
     .catch((e) => {
-      const is400 = e?.response?.status === 400
-      const nonFieldMessages = is400 && e.response.data?.non_field_errors
-      if (nonFieldMessages?.length) {
-        return Promise.reject({
-          message: { [API_ERROR]: nonFieldMessages.join(', ') },
-        })
-      }
-      return Promise.reject({
-        message: { [API_ERROR]: e.toString() },
-      })
+      return Promise.reject(e.message || e.toString())
     })
-    .then(() => ({ [SAVED]: 'ok' }))
+    .then((response) => {
+      response.data
+    })
 }
