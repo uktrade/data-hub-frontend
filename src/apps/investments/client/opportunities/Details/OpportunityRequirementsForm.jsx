@@ -82,12 +82,9 @@ const OpportunityRequirementsForm = (state) => {
                     opportunity,
                   })
                 }
-                actionLinks={[
-                  {
-                    children: 'Cancel',
-                    href: urls.investments.opportunities.details(opportunityId),
-                  },
-                ]}
+                cancelRedirectTo={() =>
+                  urls.investments.opportunities.details(opportunityId)
+                }
               >
                 <FieldInput
                   label="Total investment sought"

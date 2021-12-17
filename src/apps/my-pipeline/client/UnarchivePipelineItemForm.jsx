@@ -46,12 +46,7 @@ const UnarchivePipelineItemForm = ({ pipelineItemId }) => (
             })}
             redirectTo={(result) => getPipelineUrl(result.status)}
             submitButtonLabel={'Unarchive project'}
-            actionLinks={[
-              {
-                href: getPipelineUrl(pipelineItem.status),
-                children: 'Cancel',
-              },
-            ]}
+            cancelRedirectTo={() => getPipelineUrl(pipelineItem.status)}
             flashMessage={() => `You unarchived ${pipelineItem.name}`}
           />
         </Main>

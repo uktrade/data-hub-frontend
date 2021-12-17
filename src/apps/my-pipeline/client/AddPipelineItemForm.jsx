@@ -129,12 +129,7 @@ function AddPipelineItemForm({
                       `You added ${result.name} to your pipeline`
                     }
                     submitButtonLabel="Create project"
-                    actionLinks={[
-                      {
-                        href: urls.companies.detail(companyId),
-                        children: 'Cancel',
-                      },
-                    ]}
+                    cancelRedirectTo={() => urls.companies.detail(companyId)}
                   />
                 </PipelineCheck>
               </>

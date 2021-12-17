@@ -48,12 +48,7 @@ const DeletePipelineItemForm = ({ pipelineItemId }) => (
             })}
             redirectTo={() => getPipelineUrl(pipelineItem.status)}
             submitButtonLabel={'Delete project'}
-            actionLinks={[
-              {
-                href: getPipelineUrl(pipelineItem.status),
-                children: 'Cancel',
-              },
-            ]}
+            cancelRedirectTo={() => getPipelineUrl(pipelineItem.status)}
             flashMessage={() =>
               `You deleted ${pipelineItem.name} from your pipeline`
             }

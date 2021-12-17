@@ -62,12 +62,8 @@ export default ({ companyId, countryOptions, fields }) => {
           redirectTo={() => urls.companies.exports.index(companyId)}
           submissionTaskName={TASK_NAME}
           analyticsFormName="exportCountriesEdit"
-          actionLinks={[
-            {
-              children: 'Return without saving',
-              href: urls.companies.exports.index(companyId),
-            },
-          ]}
+          cancelRedirectTo={() => urls.companies.exports.index(companyId)}
+          cancelButtonLabel="Return without saving"
           initialValues={fields
             .filter(({ values }) => !!values?.length)
             .reduce((acc, { name, values }) => {

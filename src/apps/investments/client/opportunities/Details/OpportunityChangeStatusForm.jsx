@@ -46,12 +46,7 @@ const OpportunityChangeStatusForm = ({ opportunityId }) => {
                 opportunityId,
               })}
               redirectTo={() => opportunityUrl}
-              actionLinks={[
-                {
-                  href: opportunityUrl,
-                  children: 'Cancel',
-                },
-              ]}
+              cancelRedirectTo={() => opportunityUrl}
             >
               <FieldOpportunityStatuses
                 name="status"

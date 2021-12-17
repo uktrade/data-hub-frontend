@@ -41,12 +41,7 @@ const SectionArchive = ({ isArchived, isDnbCompany, urls }) => {
           submitButtonLabel="Archive"
           redirectTo={() => urls.companyBusinessDetails}
           analyticsFormName="archiveCompany"
-          actionLinks={[
-            {
-              href: urls.companyBusinessDetails,
-              children: 'Cancel',
-            },
-          ]}
+          cancelRedirectTo={() => urls.companyBusinessDetails}
         >
           <FieldRadios
             label="Archive reason"

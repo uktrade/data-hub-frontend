@@ -26,9 +26,8 @@ const MatchDuplicate = ({ company, dnbCompany, csrfToken }) => (
       csrfToken,
     })}
     submitButtonLabel="Request merge"
-    actionLinks={[
-      { href: urls.companies.match.index(company.id), children: 'Back' },
-    ]}
+    cancelRedirectTo={() => urls.companies.match.index(company.id)}
+    cancelButtonLabel="Back"
     flashMessage={() =>
       'Company merge requested. Thanks for keeping Data Hub running smoothly.'
     }

@@ -34,13 +34,6 @@ const EventForm = () => {
     },
   ]
 
-  const cancelLink = [
-    {
-      children: DISPLAY_CANCEL,
-      to: id ? urls.events.details(id) : urls.events.index(),
-    },
-  ]
-
   const flashMessage = (submissionTaskResult) => {
     const { name } = submissionTaskResult?.data
     return `'${name}' event has been ${id ? 'updated' : 'created'}`
@@ -65,8 +58,11 @@ const EventForm = () => {
         redirectMode="soft"
         flashMessage={flashMessage}
         submitButtonLabel={id ? DISPLAY_SAVE : DISPLAY_ADD_EVENT}
-        actionLinks={cancelLink}
         transformPayload={transformEventFormForAPIRequest}
+        cancelButtonLabel={DISPLAY_CANCEL}
+        cancelRedirectTo={() =>
+          id ? urls.events.details(id) : urls.events.index()
+        } //this originally used the react to: instead of a hard redirect, so it might break after being switched, watch out
       >
         {({ values }) => <EventFormFields values={values} />}
       </TaskForm>

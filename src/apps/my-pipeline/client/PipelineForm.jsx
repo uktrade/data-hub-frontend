@@ -31,7 +31,8 @@ function PipelineForm({
   flashMessage,
   submitButtonLabel,
   companyId,
-  actionLinks,
+  cancelRedirectTo,
+  cancelButtonLabel,
   initialValues,
 }) {
   return (
@@ -43,8 +44,9 @@ function PipelineForm({
       redirectTo={redirectTo}
       flashMessage={flashMessage}
       submitButtonLabel={submitButtonLabel}
-      actionLinks={actionLinks}
       initialValues={initialValues}
+      cancelRedirectTo={cancelRedirectTo}
+      cancelButtonLabel={cancelButtonLabel}
     >
       {({ values }) => (
         <>
@@ -77,8 +79,8 @@ function PipelineForm({
             isClearable={true}
             className="govuk-!-width-two-thirds"
           />
-          {/* 
-            This template form needs to cater for both the Add and Edit use cases. 
+          {/*
+            This template form needs to cater for both the Add and Edit use cases.
             As both use cases have different params we need to check where to get
             the company information from before firing the resource.
           */}

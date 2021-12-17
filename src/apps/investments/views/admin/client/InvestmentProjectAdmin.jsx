@@ -45,12 +45,7 @@ const InvestmentProjectAdmin = ({
           <StyledP>Current stage: {projectStage.name}</StyledP>
         </InsetText>
         <TaskForm
-          actionLinks={[
-            {
-              children: 'Cancel',
-              href: urls.investments.projects.project(projectId),
-            },
-          ]}
+          cancelRedirectTo={() => urls.investments.projects.project(projectId)}
           analyticsFormName="investmentProjectAdmin"
           flashMessage={() => 'Project stage saved'}
           id="investmentProjectAdmin"

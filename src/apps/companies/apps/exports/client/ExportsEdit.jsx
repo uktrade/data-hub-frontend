@@ -29,12 +29,8 @@ export default ({
     transformPayload={(values) => ({ ...values, companyId })}
     redirectTo={() => urls.companies.exports.index(companyId)}
     submitButtonLabel="Save and return"
-    actionLinks={[
-      {
-        children: 'Return without saving',
-        href: urls.companies.exports.index(companyId),
-      },
-    ]}
+    cancelRedirectTo={() => urls.companies.exports.index(companyId)}
+    cancelButtonLabel="Return without saving"
   >
     <FieldSelect
       emptyOption="-- Select category --"

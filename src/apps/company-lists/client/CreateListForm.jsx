@@ -19,12 +19,7 @@ const CreateListForm = ({
     redirectTo={() => cancelUrl}
     flashMessage={() => 'Company list created'}
     submitButtonLabel="Create list"
-    actionLinks={[
-      {
-        href: cancelUrl,
-        children: 'Cancel',
-      },
-    ]}
+    cancelRedirectTo={() => cancelUrl}
     transformPayload={(values) => ({
       id,
       values,

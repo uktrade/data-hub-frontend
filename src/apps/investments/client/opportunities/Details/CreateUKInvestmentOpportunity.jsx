@@ -15,12 +15,7 @@ const CreateUKInvestmentOpportunity = () => (
       redirectTo={(newOpportunityId) =>
         urls.investments.opportunities.details(newOpportunityId)
       }
-      actionLinks={[
-        {
-          href: urls.investments.opportunities.index(),
-          children: 'Cancel',
-        },
-      ]}
+      cancelRedirectTo={() => urls.investments.opportunities.index()}
     >
       <FieldInput
         name="name"

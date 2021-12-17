@@ -58,9 +58,8 @@ function MatchConfirmation({
           csrfToken,
         })}
         submitButtonLabel="Verify"
-        actionLinks={[
-          { href: urls.companies.match.index(company.id), children: 'Back' },
-        ]}
+        cancelRedirectTo={() => urls.companies.match.index(company.id)}
+        cancelButtonLabel="Back"
       >
         {() => (
           <>

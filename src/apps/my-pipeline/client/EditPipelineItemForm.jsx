@@ -65,12 +65,7 @@ function EditPipelineItemForm({ pipelineItemId, contacts, sectors }) {
               initialValues={formatInitialValues(pipelineItem)}
               sectors={sectors}
               contacts={contacts}
-              actionLinks={[
-                {
-                  href: getPipelineUrl(pipelineItem.status),
-                  children: 'Cancel',
-                },
-              ]}
+              cancelRedirectTo={() => getPipelineUrl(pipelineItem.status)}
               flashMessage={(result) => `You saved changes to ${result.name}`}
               redirectTo={(result) => getPipelineUrl(result.status)}
             />
