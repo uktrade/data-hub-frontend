@@ -1,7 +1,10 @@
+{% set investableCapital = profile.investorDetails.investableCapital.value or '' %}
+{% set globalAssetsUnderManagement = profile.investorDetails.globalAssetsUnderManagement.value or '' %}
+
 <ul class="task-list">
   {{ taskListItem({ name: 'Investor type', value: profile.investorDetails.investorType.text }) }}
-  {{ taskListItem({ name: 'Global assets under management', value: profile.investorDetails.globalAssetsUnderManagement.value }) }}
-  {{ taskListItem({ name: 'Investable capital', value: profile.investorDetails.investableCapital.value }) }}
+  {{ taskListItem({ name: 'Global assets under management', value: globalAssetsUnderManagement | formatNumber}) }}
+  {{ taskListItem({ name: 'Investable capital', value: investableCapital | formatNumber }) }}
   {{ taskListItem({ name: 'Investor description', value: profile.investorDetails.investorDescription.value }) }}
   {{ taskListItem({ name: 'Has this investor cleared the required checks within the last 12 months?', value: profile.investorDetails.requiredChecks.value }) }}
 </ul>
