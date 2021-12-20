@@ -11,7 +11,7 @@ const EditCompanyList = ({ cancelUrl, listName, csrfToken, id, returnUrl }) => (
     analyticsFormName="editCompanyList"
     submissionTaskName="Edit company list"
     initialValues={{ listName }}
-    actionLinks={[{ children: 'Cancel', href: cancelUrl }]}
+    cancelRedirectTo={() => cancelUrl}
     transformPayload={(values) => ({ ...values, id, csrfToken })}
     redirectTo={() => returnUrl}
   >

@@ -54,12 +54,8 @@ function EditCompanyForm({
         }
       }}
       submitButtonLabel="Submit"
-      actionLinks={[
-        {
-          href: urls.companies.businessDetails(company.id),
-          children: 'Return without saving',
-        },
-      ]}
+      cancelButtonLabel="Return without saving"
+      cancelRedirectTo={() => urls.companies.businessDetails(company.id)}
       transformPayload={(values) => ({
         company,
         csrfToken,

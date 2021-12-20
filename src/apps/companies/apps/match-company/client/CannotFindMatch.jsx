@@ -54,12 +54,8 @@ function CannotFindMatch({ company, csrfToken }) {
             'Verification request sent for third party review'
           }
           submitButtonLabel="Send"
-          actionLinks={[
-            {
-              children: 'Back',
-              href: urls.companies.match.index(company.id),
-            },
-          ]}
+          cancelRedirectTo={() => urls.companies.match.index(company.id)}
+          cancelButtonLabel="Back"
         >
           {() => (
             <>

@@ -218,12 +218,12 @@ const _ContactForm = ({
                     submitButtonLabel={
                       update ? 'Save and return' : 'Add contact'
                     }
-                    actionLinks={[
-                      {
-                        href: referrerUrl ? stripHost(referrerUrl) : '/',
-                        children: update ? 'Return without saving' : 'Cancel',
-                      },
-                    ]}
+                    cancelRedirectTo={() =>
+                      referrerUrl ? stripHost(referrerUrl) : '/'
+                    }
+                    cancelButtonLabel={
+                      update ? 'Return without saving' : 'Cancel'
+                    }
                     initialValues={{
                       ...props,
                       postcode,

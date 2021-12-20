@@ -82,7 +82,7 @@ const Add = ({ cancelUrl, currentLeadITA, companyName, companyId }) => (
               email ? `: <a href="mailto:${email}">${email}</a>` : '.'
             }`,
         ]}
-        actionLinks={[{ children: 'Cancel', href: cancelUrl }]}
+        cancelRedirectTo={() => cancelUrl}
         submitButtonLabel="Add Lead ITA"
       >
         <FieldActiveITA
