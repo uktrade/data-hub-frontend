@@ -48,12 +48,12 @@ const ChipButton = styled('button')(FOCUSABLE, {
 })
 
 const SelectedChips = ({ name, selectedOptions, onOptionRemove }) => (
-  <ChipList id={`${name}-selected`}>
+  <ChipList id={`${name}-selected`} data-test="typeahead-chip-list">
     <span id={`${name}-remove`} style={{ display: 'none' }}>
       remove
     </span>
     {selectedOptions.map((option) => (
-      <Chip key={option.value}>
+      <Chip key={option.value} data-test="typeahead-chip">
         <ChipButton
           type="button"
           aria-describedby={`${name}-remove`}
