@@ -9,7 +9,7 @@ import { Main } from '../../../../../client/components'
 import OpportunityResource from '../../../../../client/components/Resource/Opportunity'
 import FieldOpportunityStatuses from '../../../../../client/components/Form/elements/FieldOpportunityStatuses'
 
-import TaskForm from '../../../../../client/components/Task/Form'
+import TaskForm from '../../../../../client/components/Form'
 
 import { TASK_SAVE_OPPORTUNITY_STATUS } from './state'
 

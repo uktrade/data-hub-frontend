@@ -10,7 +10,7 @@ import {
   CONTACT_FORM__SUBMIT,
 } from '../../actions'
 
-import TaskForm from '../Task/Form'
+import TaskForm from '../Form'
 import {
   FieldInput,
   FieldRadios,

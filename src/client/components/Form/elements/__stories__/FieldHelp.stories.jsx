@@ -6,7 +6,7 @@ import FieldHelp from '../FieldHelp'
 
 addDecorator(withKnobs)
 
-storiesOf('Forms/Help', module)
+storiesOf('Form/Form Elements/Help', module)
   .addParameters({
     options: { theme: undefined },
   })

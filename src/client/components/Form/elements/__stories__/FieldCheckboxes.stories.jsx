@@ -4,7 +4,7 @@ import { withKnobs } from '@storybook/addon-knobs'
 import { H1 } from '@govuk-react/heading'
 
 import FieldCheckboxes from '../FieldCheckboxes'
-import TaskForm from '../../../Task/Form'
+import TaskForm from '../../../Form'
 
 import exampleReadme from '../FieldCheckboxes/example.md'
 import usageReadme from '../FieldCheckboxes/usage.md'
@@ -31,7 +31,7 @@ const options = [
 
 addDecorator(withKnobs)
 
-storiesOf('Forms/Checkboxes', module)
+storiesOf('Form/Form Elements/Checkboxes', module)
   .addParameters({
     options: { theme: undefined },
     readme: {

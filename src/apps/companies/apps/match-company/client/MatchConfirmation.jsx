@@ -9,7 +9,7 @@ import { SPACING } from '@govuk-react/constants'
 import Details from '@govuk-react/details'
 
 import { SummaryList } from '../../../../../client/components'
-import TaskForm from '../../../../../client/components/Task/Form'
+import TaskForm from '../../../../../client/components/Form'
 import urls from '../../../../../lib/urls'
 import MatchDuplicate from './MatchDuplicate'
 

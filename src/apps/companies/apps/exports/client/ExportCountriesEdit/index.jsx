@@ -3,7 +3,7 @@ import { ERROR_COLOUR } from 'govuk-colours'
 import styled from 'styled-components'
 
 import Task from '../../../../../../client/components/Task'
-import TaskForm from '../../../../../../client/components/Task/Form'
+import TaskForm from '../../../../../../client/components/Form'
 import { ID as TASK_ID, TASK_NAME, API_ERROR, API_WARN } from './state'
 import urls from '../../../../../../lib/urls'
 import {

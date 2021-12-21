@@ -2,28 +2,27 @@ import React from 'react'
 import { Switch, Route, Link } from 'react-router-dom'
 import { storiesOf } from '@storybook/react'
 
-import { Step } from '../../../'
-
-import TaskForm from '..'
-import FieldInput from '../../../Form/elements/FieldInput'
-import FieldSelect from '../../../Form/elements/FieldSelect'
-import FieldRadios from '../../../Form/elements/FieldRadios'
-import FieldCheckboxes from '../../../Form/elements/FieldCheckboxes'
-import FieldTypeahead from '../../../Form/elements/FieldTypeahead'
+import TaskForm from '../index'
+import FieldInput from '../elements/FieldInput'
+import FieldSelect from '../elements/FieldSelect'
+import FieldRadios from '../elements/FieldRadios'
+import FieldCheckboxes from '../elements/FieldCheckboxes'
+import FieldTypeahead from '../elements/FieldTypeahead'
+import Step from '../elements/Step'
 
 import rejectInitialValuesReadme from './reject-initial-values.md'
 import basicExampleReadme from './basic-example.md'
 import initialValuesAsPropExampleReadme from './initial-values-as-prop.md'
 import softRedirectExampleReadme from './soft-redirect.md'
 import multiStepExampleReadme from './multi-step.md'
-import ResourceOptionsField from '../../../Form/elements/ResourceOptionsField'
+import ResourceOptionsField from '../elements/ResourceOptionsField'
 
-import Resource from '../../../Resource'
+import Resource from '../../Resource'
 
 const DummyResource = (props) => <Resource {...props} name="Load options" />
 
-storiesOf('Task/Form', module)
-  .add('Task/Resource options fields', () => (
+storiesOf('Form', module)
+  .add('Resource options fields', () => (
     <TaskForm
       id="lazy-field-example"
       submissionTaskName="Submit TaskForm example"

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { FieldInput } from '../../../client/components'
 
-import TaskForm from '../../../client/components/Task/Form'
+import TaskForm from '../../../client/components/Form'
 
 const EditCompanyList = ({ cancelUrl, listName, csrfToken, id, returnUrl }) => (
   <TaskForm

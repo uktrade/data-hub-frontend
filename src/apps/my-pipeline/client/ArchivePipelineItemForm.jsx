@@ -5,7 +5,7 @@ import { SPACING } from '@govuk-react/constants'
 import PipelineItemResource from '../../../client/components/Resource/PipelineItem'
 
 import urls from '../../../lib/urls'
-import TaskForm from '../../../client/components/Task/Form'
+import TaskForm from '../../../client/components/Form'
 
 import { Main, FieldTextarea } from '../../../client/components'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'

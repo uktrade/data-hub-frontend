@@ -4,7 +4,7 @@ import { withKnobs } from '@storybook/addon-knobs'
 
 import FieldAddAnother from '../FieldAddAnother'
 import Typeahead from '../../../Typeahead/Typeahead'
-import TaskForm from '../../../Task/Form'
+import TaskForm from '../../../Form'
 
 import exampleReadme from '../FieldAddAnother/example.md'
 import usageReadme from '../FieldAddAnother/usage.md'
@@ -26,7 +26,7 @@ const options = [
   },
 ]
 
-storiesOf('Forms/FieldAddAnother', module)
+storiesOf('Form/Form Elements/FieldAddAnother', module)
   .addParameters({
     options: { theme: undefined },
     readme: {

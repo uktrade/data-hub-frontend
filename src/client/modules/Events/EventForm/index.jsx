@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import urls from '../../../../lib/urls'
 import { DefaultLayout } from '../../../components'
-import TaskForm from '../../../components/Task/Form'
+import TaskForm from '../../../components/Form'
 import { TASK_GET_EVENTS_FORM_AND_METADATA, TASK_SAVE_EVENT } from './state'
 import { EventFormFields } from './EventFormFields'
 import { transformEventFormForAPIRequest } from './transformers'

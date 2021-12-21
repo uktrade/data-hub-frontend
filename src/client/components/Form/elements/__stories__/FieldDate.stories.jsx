@@ -3,7 +3,7 @@ import { addDecorator, storiesOf } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
 
 import FieldDate from '../FieldDate'
-import TaskForm from '../../../Task/Form'
+import TaskForm from '../../../Form'
 
 import exampleReadme from '../FieldDate/example.md'
 import usageReadme from '../FieldDate/usage.md'
@@ -16,7 +16,7 @@ const ERRORS = {
   YEAR: 'Enter a valid Epoch year',
 }
 
-storiesOf('Forms/Date', module)
+storiesOf('Form/Form Elements/Date', module)
   .addParameters({
     options: { theme: undefined },
     readme: {

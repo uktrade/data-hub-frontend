@@ -9,7 +9,7 @@ import {
   Step,
   AdviserTypeAhead,
 } from '../../../../../client/components'
-import TaskForm from '../../../../../client/components/Task/Form'
+import TaskForm from '../../../../../client/components/Form'
 import { TASK_SAVE_ONE_LIST_DETAILS } from './state'
 
 import {

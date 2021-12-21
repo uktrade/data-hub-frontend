@@ -7,7 +7,7 @@ import urls from '../../../lib/urls'
 
 import { Main } from '../../../client/components'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
-import TaskForm from '../../../client/components/Task/Form'
+import TaskForm from '../../../client/components/Form'
 import PipelineItemResource from '../../../client/components/Resource/PipelineItem'
 
 import { ID as STATE_ID, TASK_UNARCHIVE_PIPELINE_ITEM } from './state'

@@ -12,7 +12,7 @@ import { INVESTMENT_OPPORTUNITY__UPDATED } from '../../../../../client/actions'
 
 import { transformDateStringToDateObject } from '../../../../transformers'
 
-import TaskForm from '../../../../../client/components/Task/Form'
+import TaskForm from '../../../../../client/components/Form'
 import {
   Main,
   FieldInput,

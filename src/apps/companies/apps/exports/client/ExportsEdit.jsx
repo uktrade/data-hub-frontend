@@ -5,7 +5,7 @@ import { FieldInput, FieldSelect } from '../../../../../client/components'
 
 import GreatProfile from './GreatProfile'
 import urls from '../../../../../lib/urls'
-import TaskForm from '../../../../../client/components/Task/Form'
+import TaskForm from '../../../../../client/components/Form'
 
 const StyledDt = styled.dt`
   margin-bottom: ${SPACING_POINTS[1]}px;

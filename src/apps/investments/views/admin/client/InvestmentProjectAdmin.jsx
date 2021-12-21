@@ -8,7 +8,7 @@ import { Main, FieldRadios } from '../../../../../client/components'
 import { TASK_UPDATE_STAGE } from './state'
 import urls from '../../../../../lib/urls'
 
-import TaskForm from '../../../../../client/components/Task/Form'
+import TaskForm from '../../../../../client/components/Form'
 
 const StyledP = styled('p')`
   margin-bottom: ${SPACING.SCALE_2};

@@ -3,7 +3,7 @@ import { addDecorator, storiesOf } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
 import { H1, H2, H3 } from '@govuk-react/heading'
 
-import TaskForm from '../../../Task/Form'
+import TaskForm from '../../../Form'
 import FieldWrapper from '../FieldWrapper'
 import FieldInput from '../FieldInput'
 

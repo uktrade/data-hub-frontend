@@ -18,7 +18,7 @@ import {
 } from '../../../../../client/actions'
 
 import Task from '../../../../../client/components/Task'
-import TaskForm from '../../../../../client/components/Task/Form'
+import TaskForm from '../../../../../client/components/Form'
 import {
   Main,
   FieldInput,

@@ -21,7 +21,7 @@ import {
   Main,
 } from '../../../../../client/components'
 
-import TaskForm from '../../../../../client/components/Task/Form'
+import TaskForm from '../../../../../client/components/Form'
 
 import FieldActiveITA from '../../../../../client/components/Form/elements/FieldActiveITA'
 

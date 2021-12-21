@@ -3,14 +3,14 @@ import { addDecorator, storiesOf } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
 
 import FieldInput from '../FieldInput'
-import TaskForm from '../../../Task/Form'
+import TaskForm from '../../../Form'
 
 import exampleReadme from '../FieldInput/example.md'
 import usageReadme from '../FieldInput/usage.md'
 
 addDecorator(withKnobs)
 
-storiesOf('Forms/Input', module)
+storiesOf('Form/Form Elements/Input', module)
   .addParameters({
     options: { theme: undefined },
     readme: {

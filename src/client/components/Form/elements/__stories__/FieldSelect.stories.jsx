@@ -4,14 +4,14 @@ import { object, text, withKnobs } from '@storybook/addon-knobs'
 
 import FieldSelect from '../FieldSelect'
 import FieldInput from '../FieldInput'
-import TaskForm from '../../../Task/Form'
+import TaskForm from '../../../Form'
 
 addDecorator(withKnobs)
 
 import exampleReadme from '../FieldSelect/example.md'
 import usageReadme from '../FieldSelect/usage.md'
 
-storiesOf('Forms/Select', module)
+storiesOf('Form/Form Elements/Select', module)
   .addParameters({
     options: { theme: undefined },
     readme: {

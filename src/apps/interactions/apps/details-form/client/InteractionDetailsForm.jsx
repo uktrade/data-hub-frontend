@@ -8,7 +8,7 @@ import StepInteractionType from './StepInteractionType'
 import StepInteractionDetails from './StepInteractionDetails'
 import Step from '../../../../../client/components/Form/elements/Step.jsx'
 import Task from '../../../../../client/components/Task'
-import TaskForm from '../../../../../client/components/Task/Form/index.jsx'
+import TaskForm from '../../../../../client/components/Form/index.jsx'
 import {
   ID as STATE_ID,
   TASK_SAVE_INTERACTION,

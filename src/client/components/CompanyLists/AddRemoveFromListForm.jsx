@@ -6,7 +6,7 @@ import { GREY_3, TEXT_COLOUR } from 'govuk-colours'
 
 import { FieldRadios } from '../../../client/components'
 
-import TaskForm from '../../../client/components/Task/Form'
+import TaskForm from '../../../client/components/Form'
 
 const AddRemoveFromListForm = ({
   list,

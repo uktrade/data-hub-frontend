@@ -6,7 +6,7 @@ import InsetText from '@govuk-react/inset-text'
 import urls from '../../../../../lib/urls'
 import { SummaryList, FieldDnbCompany } from '../../../../../client/components'
 import EntityListItem from '../../../../../client/components/EntityList/EntityListItem'
-import TaskForm from '../../../../../client/components/Task/Form'
+import TaskForm from '../../../../../client/components/Form'
 
 function FindCompany({ company, csrfToken }) {
   return (

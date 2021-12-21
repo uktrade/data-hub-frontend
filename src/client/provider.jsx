@@ -107,7 +107,7 @@ import RoutedInput from './components/RoutedInput'
 import Resource from './components/Resource'
 
 import { ContactForm } from './components/ContactForm'
-import TaskForm from './components/Task/Form'
+import TaskForm from './components/Form'
 import TaskReactSelect from './components/Task/ReactSelect'
 
 const sagaMiddleware = createSagaMiddleware()

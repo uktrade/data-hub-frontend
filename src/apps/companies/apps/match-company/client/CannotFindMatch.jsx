@@ -8,7 +8,7 @@ import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeade
 import { Main, SummaryList, FieldInput } from '../../../../../client/components'
 import urls from '../../../../../lib/urls'
 import { WEBSITE_REGEX } from '../../add-company/client/constants'
-import TaskForm from '../../../../../client/components/Task/Form'
+import TaskForm from '../../../../../client/components/Form'
 
 const requiredWebsiteOrPhoneValidator = (
   value,

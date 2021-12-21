@@ -19,7 +19,7 @@ import CompanyRegionAndSector from './CompanyRegionAndSector'
 import InformationList from './InformationList'
 import { ISO_CODE } from './constants'
 
-import TaskForm from '../../../../../client/components/Task/Form'
+import TaskForm from '../../../../../client/components/Form'
 
 function AddCompanyForm({
   csrfToken,

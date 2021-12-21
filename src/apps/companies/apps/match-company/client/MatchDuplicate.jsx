@@ -5,7 +5,7 @@ import { H4 } from '@govuk-react/heading'
 import styled from 'styled-components'
 import { UnorderedList } from 'govuk-react'
 import { SPACING } from '@govuk-react/constants'
-import TaskForm from '../../../../../client/components/Task/Form/index.jsx'
+import TaskForm from '../../../../../client/components/Form/index.jsx'
 
 import urls from '../../../../../lib/urls'
 

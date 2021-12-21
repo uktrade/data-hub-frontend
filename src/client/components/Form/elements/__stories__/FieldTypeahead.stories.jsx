@@ -2,7 +2,7 @@ import React from 'react'
 import { addDecorator, storiesOf } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
 
-import TaskForm from '../../../Task/Form'
+import TaskForm from '../../../Form'
 import FieldTypeahead from '../FieldTypeahead'
 
 import exampleReadme from '../FieldTypeahead/example.md'
@@ -28,7 +28,7 @@ const options = [
 const getOptions = () =>
   new Promise((resolve) => setTimeout(resolve, 1000, options))
 
-storiesOf('Forms/Typeahead', module)
+storiesOf('Form/Form Elements/Typeahead', module)
   .addParameters({
     options: { theme: undefined },
     readme: {

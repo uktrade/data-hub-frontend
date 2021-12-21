@@ -8,7 +8,7 @@ import {
   FieldDate,
 } from '../../../client/components'
 
-import TaskForm from '../../../client/components/Task/Form'
+import TaskForm from '../../../client/components/Form'
 import Resource from '../../../client/components/Resource'
 
 import { ID as STATE_ID, TASK_GET_PIPELINE_COMPANY_CONTACTS } from './state'

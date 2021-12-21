@@ -5,7 +5,7 @@ import usageReadme from '../usage.md'
 import exampleReadme from '../example.md'
 
 import FieldInput from '../../Form/elements/FieldInput'
-import TaskForm from '../../Task/Form'
+import TaskForm from '../../Form'
 
 import NotificationBadge from 'NotificationBadge'
 import {

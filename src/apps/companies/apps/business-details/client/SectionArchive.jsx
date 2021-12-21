@@ -8,7 +8,7 @@ import { SPACING } from '@govuk-react/constants'
 
 import { FieldRadios, FieldInput } from '../../../../../client/components'
 
-import TaskForm from '../../../../../client/components/Task/Form'
+import TaskForm from '../../../../../client/components/Form'
 
 import { ID, TASK_ARCHIVE_COMPANY } from './state'
 

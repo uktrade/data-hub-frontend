@@ -7,25 +7,25 @@ import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import * as ReactRouter from 'react-router-dom'
 
-import multiInstance from '../../../utils/multiinstance'
-import { ErrorSummary } from '../..'
-import Task from '..'
-import TaskLoadingBox from '../LoadingBox'
-import Resource from '../../Resource'
-import Wrap from '../../Wrap'
-import Analytics from '../../Analytics'
+import multiInstance from '../../utils/multiinstance'
+import ErrorSummary from '../ErrorSummary'
+import Task from '../Task'
+import TaskLoadingBox from '../Task/LoadingBox'
+import Resource from '../Resource'
+import Wrap from '../Wrap'
+import Analytics from '../Analytics'
 
 import reducer from './reducer'
-import FormActions from '../../Form/elements/FormActions'
-import { FormContextProvider } from '../../Form/hooks'
+import FormActions from './elements/FormActions'
+import { FormContextProvider } from './hooks'
 
 import {
   addMessage,
   addMessageWithBody,
   getMessages,
-} from '../../../utils/flash-messages'
-import Effect from '../../Effect'
-import HardRedirect from '../../HardRedirect'
+} from '../../utils/flash-messages'
+import Effect from '../Effect'
+import HardRedirect from '../HardRedirect'
 
 import { BUTTON_COLOUR } from 'govuk-colours'
 
