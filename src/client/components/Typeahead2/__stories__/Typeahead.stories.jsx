@@ -93,6 +93,26 @@ storiesOf('Typeahead2', module)
       label="Pick a fruit"
     />
   ))
+  .add('Single - async options', () => (
+    <div style={{ width: '600px' }}>
+      <h2>Search for</h2>
+      <ul>
+        <li>Bernard</li>
+        <li>Dennis</li>
+        <li>Denzil</li>
+        <li>Holly</li>
+      </ul>
+      <Typeahead
+        id="typeahead-single-4"
+        isMulti={false}
+        closeMenuOnSelect={true}
+        name="singleselect"
+        loadOptions={mockLoadOptions}
+        placeholder="Search..."
+        label="Pick an adviser"
+      />
+    </div>
+  ))
   .add('Multi - standard options', () => (
     <Typeahead
       id="typeahead-multi-1"
