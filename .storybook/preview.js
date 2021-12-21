@@ -6,6 +6,7 @@ import { createGlobalStyle } from 'styled-components'
 
 const req = require.context('../src', true, /.*\.stories\.(js|jsx)$/)
 
+import '../src/client/components'
 import DataHubProvider from '../src/client/provider'
 import referralsTask from '../src/client/components/ReferralList/tasks/dummy/spread'
 import companyListsTasks from '../src/client/components/CompanyLists/tasks/dummy/spread'
