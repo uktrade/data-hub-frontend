@@ -24,7 +24,6 @@ import {
   addMessageWithBody,
   getMessages,
 } from '../../../utils/flash-messages'
-import { validateForm } from '../../Form/MultiInstanceForm'
 import Effect from '../../Effect'
 import HardRedirect from '../../HardRedirect'
 
@@ -34,6 +33,30 @@ const addFlashMessage = (message) =>
   Array.isArray(message)
     ? addMessageWithBody('success', ...message)
     : addMessage('success', message)
+
+const validateForm = (state) =>
+  Object.values(state.fields)
+    .map((field) => ({
+      name: field.name,
+      error: []
+        .concat(field.validate)
+        .map((validator) => validator(state.values?.[field.name], field, state))
+        .filter(Boolean)[0],
+    }))
+    .filter(({ error }) => error)
+    .reduce(
+      (acc, { name, error }) => ({
+        errors: {
+          ...acc.errors,
+          [name]: error,
+        },
+        touched: {
+          ...acc.touched,
+          [name]: true,
+        },
+      }),
+      {}
+    )
 
 const _TaskForm = ({
   // Required

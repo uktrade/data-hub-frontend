@@ -1,11 +1,9 @@
 import React from 'react'
 import { addDecorator, storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
 import { withKnobs } from '@storybook/addon-knobs'
-import Button from '@govuk-react/button'
 
 import FieldInput from '../FieldInput'
-import FormStateful from '../../FormStateful'
+import TaskForm from '../../../Task/Form'
 
 import exampleReadme from '../FieldInput/example.md'
 import usageReadme from '../FieldInput/usage.md'
@@ -21,7 +19,11 @@ storiesOf('Forms/Input', module)
     },
   })
   .add('Text', () => (
-    <FormStateful onSubmit={action('onSubmit')}>
+    <TaskForm
+      id="fieldInputExample"
+      analyticsFormName="fieldInputExample"
+      submissionTaskName="Submit TaskForm example"
+    >
       {(state) => (
         <>
           <FieldInput
@@ -31,14 +33,17 @@ storiesOf('Forms/Input', module)
             required="Enter text"
             type="text"
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(state, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </TaskForm>
   ))
   .add('Number', () => (
-    <FormStateful onSubmit={action('onSubmit')}>
+    <TaskForm
+      id="fieldInputExample"
+      analyticsFormName="fieldInputExample"
+      submissionTaskName="Submit TaskForm example"
+    >
       {(state) => (
         <>
           <FieldInput
@@ -48,14 +53,17 @@ storiesOf('Forms/Input', module)
             required="Enter number"
             type="number"
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(state, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </TaskForm>
   ))
   .add('Text (reduced)', () => (
-    <FormStateful onSubmit={action('onSubmit')}>
+    <TaskForm
+      id="fieldInputExample"
+      analyticsFormName="fieldInputExample"
+      submissionTaskName="Submit TaskForm example"
+    >
       {(state) => (
         <>
           <FieldInput
@@ -66,9 +74,8 @@ storiesOf('Forms/Input', module)
             type="text"
             reduced={true}
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(state, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </TaskForm>
   ))

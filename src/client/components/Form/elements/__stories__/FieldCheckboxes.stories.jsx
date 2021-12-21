@@ -1,11 +1,10 @@
 import React from 'react'
 import { addDecorator, storiesOf } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
-import Button from '@govuk-react/button'
 import { H1 } from '@govuk-react/heading'
 
 import FieldCheckboxes from '../FieldCheckboxes'
-import FormStateful from '../../FormStateful'
+import TaskForm from '../../../Task/Form'
 
 import exampleReadme from '../FieldCheckboxes/example.md'
 import usageReadme from '../FieldCheckboxes/usage.md'
@@ -41,7 +40,11 @@ storiesOf('Forms/Checkboxes', module)
     },
   })
   .add('Default', () => (
-    <FormStateful>
+    <TaskForm
+      id="fieldCheckboxExample"
+      analyticsFormName="fieldCheckboxExample"
+      submissionTaskName="Submit TaskForm example"
+    >
       {(form) => (
         <>
           <FieldCheckboxes
@@ -50,14 +53,17 @@ storiesOf('Forms/Checkboxes', module)
             required="Select at least one country"
             options={options}
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </TaskForm>
   ))
   .add('Checkboxes - hint', () => (
-    <FormStateful>
+    <TaskForm
+      id="fieldCheckboxExample"
+      analyticsFormName="fieldCheckboxExample"
+      submissionTaskName="Submit TaskForm example"
+    >
       {(form) => (
         <>
           <FieldCheckboxes
@@ -67,14 +73,17 @@ storiesOf('Forms/Checkboxes', module)
             required="Select at least one country"
             options={options}
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </TaskForm>
   ))
   .add('Checkboxes - legend', () => (
-    <FormStateful>
+    <TaskForm
+      id="fieldCheckboxExample"
+      analyticsFormName="fieldCheckboxExample"
+      submissionTaskName="Submit TaskForm example"
+    >
       {(form) => (
         <>
           <FieldCheckboxes
@@ -84,15 +93,17 @@ storiesOf('Forms/Checkboxes', module)
             required="Select at least one country"
             options={options}
           />
-
-          <Button>Submit</Button>
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </TaskForm>
   ))
   .add('Default (reduced)', () => (
-    <FormStateful>
+    <TaskForm
+      id="fieldCheckboxExample"
+      analyticsFormName="fieldCheckboxExample"
+      submissionTaskName="Submit TaskForm example"
+    >
       {(form) => (
         <>
           <FieldCheckboxes
@@ -104,14 +115,17 @@ storiesOf('Forms/Checkboxes', module)
             reduced={true}
             reducedPadding={true}
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </TaskForm>
   ))
   .add('Checkboxes - legend (reduced)', () => (
-    <FormStateful>
+    <TaskForm
+      id="fieldCheckboxExample"
+      analyticsFormName="fieldCheckboxExample"
+      submissionTaskName="Submit TaskForm example"
+    >
       {(form) => (
         <>
           <FieldCheckboxes
@@ -124,9 +138,8 @@ storiesOf('Forms/Checkboxes', module)
             reduced={true}
             reducedPadding={true}
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </TaskForm>
   ))

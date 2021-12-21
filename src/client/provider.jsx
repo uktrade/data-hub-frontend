@@ -12,7 +12,6 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
 import createSagaMiddleware from 'redux-saga'
 
-import { MultiInstanceForm } from './components'
 import DropdownMenu from './components/DropdownMenu/ConnectedDropdownMenu'
 import tasks from './components/Task/reducer'
 import rootSaga from './root-saga'
@@ -150,7 +149,6 @@ const store = createStore(
     [PIPELINE_LIST_ID]: pipelineListReducer,
     ...TabNav.reducerSpread,
     ...ReferralList.reducerSpread,
-    ...MultiInstanceForm.reducerSpread,
     ...DropdownMenu.reducerSpread,
     ...ToggleSection.reducerSpread,
     ...Typeahead.reducerSpread,

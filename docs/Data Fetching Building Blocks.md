@@ -170,7 +170,7 @@ which use API endpoints which just expose Elastic Search API and require `POST`
 requests, although we are only reading data. A simpler alternative would be to
 parametrize the HTTP method in the resource factories.
 
-### TaskTypeahead (coming soon)
+### TaskTypeahead
 
 The existing `Typeahead` component deviates from the Redux architecture with the
 mechanism it uses to resolve its options asynchronously as the user types.
@@ -209,7 +209,7 @@ I have a working `TaskTypeahead` prototype which can uses a task instead.
 </TaskForm>
 ```
 
-### ResourceOptionsField (coming soon)
+### ResourceOptionsField
 
 I keep advocating for not having the logic of loading options for fields which
 have options (select, radios, checkboxes) on the form level, but to instead
@@ -242,8 +242,8 @@ If the field is required, and the user submits the form before the field loads
 it's options, the form will not show a validation error for the field even though
 the field is required and the form will be submitted.
 
-This due to the mechanism of how the form communicates with its fields. The form
-component (`FormStateful`, `MultiinstanceForm` or `TaskForm`) will only learn
+This is due to the mechanism of how the form communicates with its fields. The form
+component (`TaskForm`) will only learn
 that it has a field (required or not) when the field component is mounted and it
 registers itself by the form.
 

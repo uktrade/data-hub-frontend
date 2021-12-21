@@ -5,12 +5,14 @@ FieldInput
 
 A basic input field for numbers and text. 
 
-**Note: The `<FieldInput>` has to be wrapped with `<FormStateful>`.** 
-
 ### Usage
 
 ```jsx
-<FormStateful onSubmit={action('onSubmit')}>
+<TaskForm
+      id="fieldInputExample"
+      analyticsFormName="fieldInputExample"
+      submissionTaskName="Submit TaskForm example"
+    >
   {(state) => (
     <>
       <FieldInput
@@ -23,7 +25,7 @@ A basic input field for numbers and text.
       />
     </>
   )}
-</FormStateful>
+</TaskForm>
 ```
 
 ### Properties

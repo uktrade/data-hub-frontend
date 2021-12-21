@@ -2,9 +2,8 @@ import React from 'react'
 import { addDecorator, storiesOf } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
 import { H1, H2, H3 } from '@govuk-react/heading'
-import Button from '@govuk-react/button'
 
-import FormStateful from '../../FormStateful'
+import TaskForm from '../../../Task/Form'
 import FieldWrapper from '../FieldWrapper'
 import FieldInput from '../FieldInput'
 
@@ -26,7 +25,12 @@ storiesOf('Forms', module)
     },
   })
   .add('FieldWrapper - Label', () => (
-    <FormStateful>
+    <TaskForm
+      id="fieldWrapperExample"
+      analyticsFormName="fieldWrapperExample"
+      submissionTaskName="Submit TaskForm example"
+      submitButtonLabel="Click to show error"
+    >
       {(form) => (
         <>
           <FieldWrapper
@@ -37,14 +41,17 @@ storiesOf('Forms', module)
           >
             {testInput}
           </FieldWrapper>
-
-          <Button>Click to show error</Button>
         </>
       )}
-    </FormStateful>
+    </TaskForm>
   ))
   .add('FieldWrapper - Legend', () => (
-    <FormStateful>
+    <TaskForm
+      id="fieldWrapperExample"
+      analyticsFormName="fieldWrapperExample"
+      submissionTaskName="Submit TaskForm example"
+      submitButtonLabel="Click to show error"
+    >
       {(form) => (
         <>
           <FieldWrapper
@@ -102,9 +109,7 @@ storiesOf('Forms', module)
           >
             {testInput}
           </FieldWrapper>
-
-          <Button>Click to show error</Button>
         </>
       )}
-    </FormStateful>
+    </TaskForm>
   ))
