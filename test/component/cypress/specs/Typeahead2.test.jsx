@@ -43,15 +43,13 @@ const asyncOptions = [
 
 export const mockLoadOptions = (query = '') =>
   new Promise((resolve) =>
-    query && query.length > 2
-      ? setTimeout(
-          resolve,
-          1000,
-          asyncOptions.filter(({ label }) =>
+    resolve(
+      query
+        ? asyncOptions.filter(({ label }) =>
             label.toLowerCase().includes(query.toLowerCase())
           )
-        )
-      : resolve([])
+        : []
+    )
   )
 
 describe('Typeahead2', () => {

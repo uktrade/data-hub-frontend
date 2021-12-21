@@ -169,3 +169,25 @@ storiesOf('Typeahead2', module)
       />
     </div>
   ))
+  .add('Multi - async pre-selected options', () => (
+    <div style={{ width: '600px' }}>
+      <h2>Search for</h2>
+      <ul>
+        <li>Bernard</li>
+        <li>Dennis</li>
+        <li>Denzil</li>
+        <li>Holly</li>
+      </ul>
+      <Typeahead
+        id="ms-async"
+        isMulti={true}
+        closeMenuOnSelect={false}
+        name="multiselect-async"
+        loadOptions={mockLoadOptions}
+        placeholder="Search advisers..."
+        noOptionsMessage="No advisers found"
+        defaultValue={[asyncOptions[2], asyncOptions[0]]}
+        aria-label="search"
+      />
+    </div>
+  ))
