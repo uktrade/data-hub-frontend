@@ -1,10 +1,13 @@
 import React from 'react'
 import { mount } from '@cypress/react'
-import { BrowserRouter } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import { createStore, combineReducers } from 'redux'
-
 import Typeahead from '../../../../src/client/components/Typeahead2/Typeahead'
+import typeaheadTasks from '../../../../src/client/components/Typeahead2/tasks'
+
+import DataHubProvider, { store } from './provider'
+
+const RESET_ACTION = {
+  type: 'RESET',
+}
 
 const options = [
   { value: '0001', label: 'Apple' },
@@ -19,36 +22,23 @@ const options = [
   { value: '0010', label: 'Prickly Pear That Has a Very Very Long Name' },
 ]
 
-const RESET_ACTION = {
-  type: 'RESET',
-}
-const reducer = (state, action) =>
-  combineReducers(Typeahead.reducerSpread)(
-    action.type === 'RESET' ? undefined : state,
-    action
-  )
-
-const store = createStore(reducer)
-
 describe('Typeahead2', () => {
   context('single-select with standard options', () => {
     beforeEach(() => {
       store.dispatch(RESET_ACTION)
       mount(
-        <Provider store={store}>
-          <BrowserRouter>
-            <Typeahead
-              id="typeahead-single-1"
-              isMulti={false}
-              closeMenuOnSelect={true}
-              name="typeahead"
-              options={options}
-              placeholder="Search..."
-              label="Pick a fruit"
-              data-test="test-component"
-            />
-          </BrowserRouter>
-        </Provider>
+        <DataHubProvider tasks={typeaheadTasks}>
+          <Typeahead
+            id="typeahead-single-1"
+            isMulti={false}
+            closeMenuOnSelect={true}
+            name="typeahead"
+            options={options}
+            placeholder="Search..."
+            label="Pick a fruit"
+            data-test="test-component"
+          />
+        </DataHubProvider>
       )
       cy.get('[data-test="test-component"]').as('component')
     })
@@ -113,20 +103,18 @@ describe('Typeahead2', () => {
     beforeEach(() => {
       store.dispatch(RESET_ACTION)
       mount(
-        <Provider store={store}>
-          <BrowserRouter>
-            <Typeahead
-              id="typeahead-multi-1"
-              isMulti={true}
-              closeMenuOnSelect={false}
-              name="typeahead-ms"
-              options={options}
-              placeholder="Search..."
-              label="Pick a fruit"
-              data-test="test-component-ms"
-            />
-          </BrowserRouter>
-        </Provider>
+        <DataHubProvider tasks={typeaheadTasks}>
+          <Typeahead
+            id="typeahead-multi-1"
+            isMulti={true}
+            closeMenuOnSelect={false}
+            name="typeahead-ms"
+            options={options}
+            placeholder="Search..."
+            label="Pick a fruit"
+            data-test="test-component-ms"
+          />
+        </DataHubProvider>
       )
       cy.get('[data-test="test-component-ms"]').as('component')
     })
