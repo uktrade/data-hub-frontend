@@ -1,16 +1,16 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
-import TaskForm from '../../../Form'
+import Form from '../../../Form'
 import FieldTaskTypeahead from '../FieldTaskTypeahead'
 
 storiesOf('Form/Form Elements/FieldTaskTypeahead', module).add(
   'Default',
   () => (
-    <TaskForm
+    <Form
       id="field-task-typeahead-example"
       analyticsFormName="foo"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
       {({ values }) => (
         <>
@@ -33,6 +33,6 @@ storiesOf('Form/Form Elements/FieldTaskTypeahead', module).add(
           <pre>{JSON.stringify({ values }, null, 2)}</pre>
         </>
       )}
-    </TaskForm>
+    </Form>
   )
 )

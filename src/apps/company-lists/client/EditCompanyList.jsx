@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 
 import { FieldInput } from '../../../client/components'
 
-import TaskForm from '../../../client/components/Form'
+import Form from '../../../client/components/Form'
 
 const EditCompanyList = ({ cancelUrl, listName, csrfToken, id, returnUrl }) => (
-  <TaskForm
+  <Form
     id="edit-company-list"
     analyticsFormName="editCompanyList"
     submissionTaskName="Edit company list"
@@ -27,7 +27,7 @@ const EditCompanyList = ({ cancelUrl, listName, csrfToken, id, returnUrl }) => (
           : null
       }
     />
-  </TaskForm>
+  </Form>
 )
 
 EditCompanyList.propTypes = {

@@ -2,7 +2,7 @@ import React from 'react'
 import { Switch, Route, Link } from 'react-router-dom'
 import { storiesOf } from '@storybook/react'
 
-import TaskForm from '../index'
+import Form from '../index'
 import FieldInput from '../elements/FieldInput'
 import FieldSelect from '../elements/FieldSelect'
 import FieldRadios from '../elements/FieldRadios'
@@ -23,10 +23,10 @@ const DummyResource = (props) => <Resource {...props} name="Load options" />
 
 storiesOf('Form', module)
   .add('Resource options fields', () => (
-    <TaskForm
+    <Form
       id="lazy-field-example"
-      submissionTaskName="Submit TaskForm example"
-      analyticsFormName="taskFormExample"
+      submissionTaskName="Submit Form example"
+      analyticsFormName="formExample"
       initialValues={{
         select: 'b',
         // radios: 'b',
@@ -102,21 +102,21 @@ storiesOf('Form', module)
         hint="Default value should be 'b'"
         required="Required"
       />
-    </TaskForm>
+    </Form>
   ))
   .add(
     'Basics',
     () => (
-      <TaskForm
+      <Form
         id="task-form-example-resolve-initial-values"
-        submissionTaskName="Submit TaskForm example"
+        submissionTaskName="Submit Form example"
         initialValuesTaskName="Load initial values"
         initialValuesPayload="resolve"
         transformInitialValues={(initialValues) => ({
           ...initialValues,
           reject: 'yes',
         })}
-        analyticsFormName="taskFormExample"
+        analyticsFormName="formExample"
         redirectTo={(submissionTaskResult, formValues) =>
           '#' + JSON.stringify({ submissionTaskResult, formValues })
         }
@@ -165,7 +165,7 @@ storiesOf('Form', module)
         <p>
           The form stays in the progress state until the next page is loaded
         </p>
-      </TaskForm>
+      </Form>
     ),
     {
       readme: {
@@ -176,12 +176,12 @@ storiesOf('Form', module)
   .add(
     'Rejected initial values',
     () => (
-      <TaskForm
+      <Form
         id="task-form-example-reject-initial-values"
-        submissionTaskName="Submit TaskForm example"
+        submissionTaskName="Submit Form example"
         initialValuesTaskName="Load initial values"
         initialValuesPayload="reject"
-        analyticsFormName="taskFormExample"
+        analyticsFormName="formExample"
         redirectTo={(submissionTaskResult, formValues) =>
           '#' + JSON.stringify({ submissionTaskResult, formValues })
         }
@@ -200,7 +200,7 @@ storiesOf('Form', module)
             { label: 'C', value: 'c' },
           ]}
         />
-      </TaskForm>
+      </Form>
     ),
     {
       readme: {
@@ -211,10 +211,10 @@ storiesOf('Form', module)
   .add(
     'Initial values passed as prop',
     () => (
-      <TaskForm
+      <Form
         id="task-form-example-initialValues-prop"
-        submissionTaskName="Submit TaskForm example"
-        analyticsFormName="taskFormExample"
+        submissionTaskName="Submit Form example"
+        analyticsFormName="formExample"
         initialValues={{ foo: 'Foo', bar: 'b' }}
         redirectTo={(submissionTaskResult, formValues) =>
           '#' + JSON.stringify({ submissionTaskResult, formValues })
@@ -248,7 +248,7 @@ storiesOf('Form', module)
           required="Baz is required"
           initialValue="Baz"
         />
-      </TaskForm>
+      </Form>
     ),
     {
       readme: {
@@ -259,16 +259,16 @@ storiesOf('Form', module)
   .add(
     'Multi step',
     () => (
-      <TaskForm
+      <Form
         id="task-form-example-multi-step"
-        submissionTaskName="Submit TaskForm example"
+        submissionTaskName="Submit Form example"
         initialValuesTaskName="Load initial values"
         initialValuesPayload="resolve"
         transformInitialValues={(initialValues) => ({
           ...initialValues,
           reject: 'yes',
         })}
-        analyticsFormName="taskFormExample"
+        analyticsFormName="formExample"
         redirectTo={(submissionTaskResult, formValues) =>
           '#' + JSON.stringify({ submissionTaskResult, formValues })
         }
@@ -313,7 +313,7 @@ storiesOf('Form', module)
             ]}
           />
         </Step>
-      </TaskForm>
+      </Form>
     ),
     {
       readme: {
@@ -326,9 +326,9 @@ storiesOf('Form', module)
     () => (
       <Switch>
         <Route path="/iframe.html">
-          <TaskForm
+          <Form
             id="task-form-example-resolve-initial-values"
-            submissionTaskName="Submit TaskForm example"
+            submissionTaskName="Submit Form example"
             initialValuesTaskName="Load initial values"
             initialValuesPayload="resolve"
             redirectMode="soft"
@@ -336,7 +336,7 @@ storiesOf('Form', module)
               ...initialValues,
               reject: 'yes',
             })}
-            analyticsFormName="taskFormExample"
+            analyticsFormName="formExample"
             // eslint-disable-next-line no-unused-vars
             redirectTo={(submissionTaskResult, formValues) => '/success'}
             // eslint-disable-next-line no-unused-vars
@@ -371,7 +371,7 @@ storiesOf('Form', module)
                 { label: 'No', value: 'no' },
               ]}
             />
-          </TaskForm>
+          </Form>
         </Route>
         <Route path="/success">
           The submission task resolved

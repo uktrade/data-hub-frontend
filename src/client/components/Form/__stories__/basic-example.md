@@ -1,6 +1,6 @@
-# A basic TaskForm example
+# A basic Form example
 
-This is a basic example of all the capabilities of `TaskForm`. It:
+This is a basic example of all the capabilities of `Form`. It:
 
 - Can resolve initial values for its fields with a _task_
 - Will start a task when the form is submitted with a map of field values sent
@@ -21,7 +21,7 @@ This is a basic example of all the capabilities of `TaskForm`. It:
           bar: 'b',
         })
     ),
-  'Submit TaskForm example': (formValues, formId) =>
+  'Submit Form example': (formValues, formId) =>
     new Promise((resolve, reject) =>
       formValues.reject === 'yes'
         ? setTimeout(reject, 2000, 'You broke the internet!')
@@ -30,13 +30,13 @@ This is a basic example of all the capabilities of `TaskForm`. It:
         })
     ),
 }}>  
-  <TaskForm
+  <Form
     id="task-form-example-resolve-initial-values"
-    submissionTaskName="Submit TaskForm example"
+    submissionTaskName="Submit Form example"
     initialValuesTaskName="Load initial values"
     initialValuesPayload="resolve"
     transformInitialValues={initialValues => ({...initialValues, reject: 'yes'})}
-    analyticsFormName="taskFormExample"
+    analyticsFormName="formExample"
     redirectTo={(submissionTaskResult, formValues) => '#' + JSON.stringify({submissionTaskResult, formValues})}
     flashMessage={(submissionTaskResult, formValues) => 'Form was submitted successfully'}
   >
@@ -73,6 +73,6 @@ This is a basic example of all the capabilities of `TaskForm`. It:
     <p>
       The form stays in the progress state until the next page is loaded
     </p>
-  </TaskForm>
+  </Form>
 <DataHubProvider>
 ```

@@ -5,7 +5,7 @@ import { FieldInput, FieldSelect } from '../../../../../client/components'
 
 import GreatProfile from './GreatProfile'
 import urls from '../../../../../lib/urls'
-import TaskForm from '../../../../../client/components/Form'
+import Form from '../../../../../client/components/Form'
 
 const StyledDt = styled.dt`
   margin-bottom: ${SPACING_POINTS[1]}px;
@@ -22,7 +22,7 @@ export default ({
   exportPotential,
   exportWinCategories,
 }) => (
-  <TaskForm
+  <Form
     id="exports-edit"
     submissionTaskName="Exports Edit"
     analyticsFormName="exportsEdit"
@@ -51,5 +51,5 @@ export default ({
       </StyledDd>
     </dl>
     <FieldInput type="hidden" name="companyId" initialValue={companyId} />
-  </TaskForm>
+  </Form>
 )

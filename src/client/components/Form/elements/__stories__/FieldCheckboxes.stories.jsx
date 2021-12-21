@@ -4,7 +4,7 @@ import { withKnobs } from '@storybook/addon-knobs'
 import { H1 } from '@govuk-react/heading'
 
 import FieldCheckboxes from '../FieldCheckboxes'
-import TaskForm from '../../../Form'
+import Form from '../../../Form'
 
 import exampleReadme from '../FieldCheckboxes/example.md'
 import usageReadme from '../FieldCheckboxes/usage.md'
@@ -40,10 +40,10 @@ storiesOf('Form/Form Elements/Checkboxes', module)
     },
   })
   .add('Default', () => (
-    <TaskForm
+    <Form
       id="fieldCheckboxExample"
       analyticsFormName="fieldCheckboxExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
       {(form) => (
         <>
@@ -56,13 +56,13 @@ storiesOf('Form/Form Elements/Checkboxes', module)
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </TaskForm>
+    </Form>
   ))
   .add('Checkboxes - hint', () => (
-    <TaskForm
+    <Form
       id="fieldCheckboxExample"
       analyticsFormName="fieldCheckboxExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
       {(form) => (
         <>
@@ -76,13 +76,13 @@ storiesOf('Form/Form Elements/Checkboxes', module)
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </TaskForm>
+    </Form>
   ))
   .add('Checkboxes - legend', () => (
-    <TaskForm
+    <Form
       id="fieldCheckboxExample"
       analyticsFormName="fieldCheckboxExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
       {(form) => (
         <>
@@ -96,13 +96,13 @@ storiesOf('Form/Form Elements/Checkboxes', module)
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </TaskForm>
+    </Form>
   ))
   .add('Default (reduced)', () => (
-    <TaskForm
+    <Form
       id="fieldCheckboxExample"
       analyticsFormName="fieldCheckboxExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
       {(form) => (
         <>
@@ -118,13 +118,13 @@ storiesOf('Form/Form Elements/Checkboxes', module)
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </TaskForm>
+    </Form>
   ))
   .add('Checkboxes - legend (reduced)', () => (
-    <TaskForm
+    <Form
       id="fieldCheckboxExample"
       analyticsFormName="fieldCheckboxExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
       {(form) => (
         <>
@@ -141,5 +141,5 @@ storiesOf('Form/Form Elements/Checkboxes', module)
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </TaskForm>
+    </Form>
   ))

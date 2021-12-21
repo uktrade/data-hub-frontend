@@ -4,7 +4,7 @@ import { object, text, withKnobs } from '@storybook/addon-knobs'
 
 import FieldSelect from '../FieldSelect'
 import FieldInput from '../FieldInput'
-import TaskForm from '../../../Form'
+import Form from '../../../Form'
 
 addDecorator(withKnobs)
 
@@ -20,10 +20,10 @@ storiesOf('Form/Form Elements/Select', module)
     },
   })
   .add('Default', () => (
-    <TaskForm
+    <Form
       id="fieldSelectExample"
       analyticsFormName="fieldSelectExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
       {(form) => (
         <>
@@ -75,5 +75,5 @@ storiesOf('Form/Form Elements/Select', module)
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </TaskForm>
+    </Form>
   ))

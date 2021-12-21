@@ -8,7 +8,7 @@ export default {
             bar: 'b',
           })
     ),
-  'Submit TaskForm example': (formValues) =>
+  'Submit Form example': (formValues) =>
     new Promise((resolve, reject) =>
       formValues.reject === 'yes'
         ? setTimeout(reject, 2000, 'You broke the internet!')

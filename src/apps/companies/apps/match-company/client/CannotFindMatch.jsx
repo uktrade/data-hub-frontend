@@ -8,7 +8,7 @@ import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeade
 import { Main, SummaryList, FieldInput } from '../../../../../client/components'
 import urls from '../../../../../lib/urls'
 import { WEBSITE_REGEX } from '../../add-company/client/constants'
-import TaskForm from '../../../../../client/components/Form'
+import Form from '../../../../../client/components/Form'
 
 const requiredWebsiteOrPhoneValidator = (
   value,
@@ -45,7 +45,7 @@ function CannotFindMatch({ company, csrfToken }) {
         </Paragraph>
       </LocalHeader>
       <Main>
-        <TaskForm
+        <Form
           id="cannot-find-match-form"
           submissionTaskName="Cannot find match"
           redirectTo={() => urls.companies.detail(company.id)}
@@ -95,7 +95,7 @@ function CannotFindMatch({ company, csrfToken }) {
               </Paragraph>
             </>
           )}
-        </TaskForm>
+        </Form>
       </Main>
     </>
   )

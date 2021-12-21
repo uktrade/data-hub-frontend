@@ -58,7 +58,7 @@ const validateForm = (state) =>
       {}
     )
 
-const _TaskForm = ({
+const _Form = ({
   // Required
   submissionTaskName,
   id,
@@ -418,7 +418,7 @@ const dispatchToProps = (dispatch) => ({
 })
 
 /**
- * @function TaskForm
+ * @function Form
  * @description A form component which
  * - Starts a _task_ when the form is submitted
  * - Renders a {ProgressBox} overlay while the _task_ is in progress
@@ -430,7 +430,7 @@ const dispatchToProps = (dispatch) => ({
  * - Success flash message on _task_ resolution
  * - Redirection after the _submission task_ resolves
  * - Recording Google Tag Manager events
- * @type {import("./types").TaskForm} TaskForm
+ * @type {import("./types").Form} Form
  * @typedef { import("./types").Props } Props
  * @param {Props} props
  * @param {string} props.id - A unique component instance ID
@@ -501,15 +501,15 @@ const dispatchToProps = (dispatch) => ({
  * is rendered, if the form has multiple steps. This is then set as the currentStep
  * property in the form's state.
  * */
-const TaskForm = multiInstance({
-  name: 'TaskForm',
+const Form = multiInstance({
+  name: 'Form',
   reducer,
-  component: _TaskForm,
+  component: _Form,
   dispatchToProps,
   actionPattern: 'TASK_FORM__',
 })
 
-TaskForm.propTypes = {
+Form.propTypes = {
   id: PropTypes.string.isRequired,
   analyticsFormName: PropTypes.string.isRequired,
   analyticsData: PropTypes.func,
@@ -532,4 +532,4 @@ TaskForm.propTypes = {
   initialStepIndex: PropTypes.number,
 }
 
-export default TaskForm
+export default Form

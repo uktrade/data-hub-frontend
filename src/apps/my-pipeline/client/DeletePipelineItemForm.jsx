@@ -9,7 +9,7 @@ import urls from '../../../lib/urls'
 
 import { Main } from '../../../client/components'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
-import TaskForm from '../../../client/components/Form'
+import Form from '../../../client/components/Form'
 import PipelineItemResource from '../../../client/components/Resource/PipelineItem'
 
 import { ID as STATE_ID, TASK_DELETE_PIPELINE_ITEM } from './state'
@@ -38,7 +38,7 @@ const DeletePipelineItemForm = ({ pipelineItemId }) => (
             pipeline.
           </StyledWarningText>
           <PipelineDetails item={pipelineItem}></PipelineDetails>
-          <TaskForm
+          <Form
             id={STATE_ID}
             analyticsFormName="deletePipelineItem"
             submissionTaskName={TASK_DELETE_PIPELINE_ITEM}

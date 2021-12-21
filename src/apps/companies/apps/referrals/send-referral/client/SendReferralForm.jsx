@@ -9,7 +9,7 @@ import LocalHeader from '../../../../../../client/components/LocalHeader/LocalHe
 import { Main } from '../../../../../../client/components/'
 import { companies, dashboard } from '../../../../../../lib/urls'
 import Task from '../../../../../../client/components/Task'
-import TaskForm from '../../../../../../client/components/Form'
+import Form from '../../../../../../client/components/Form'
 
 import {
   ID as STATE_ID,
@@ -41,7 +41,7 @@ const SendReferralForm = ({
     />
 
     <Main>
-      <TaskForm
+      <Form
         id={STATE_ID}
         transformPayload={(values) => ({
           values,
@@ -88,7 +88,7 @@ const SendReferralForm = ({
         >
           <StepReferralConfirmation cancelUrl={cancelUrl} />
         </Step>
-      </TaskForm>
+      </Form>
     </Main>
   </>
 )

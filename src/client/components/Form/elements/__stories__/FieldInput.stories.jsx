@@ -3,7 +3,7 @@ import { addDecorator, storiesOf } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
 
 import FieldInput from '../FieldInput'
-import TaskForm from '../../../Form'
+import Form from '../../../Form'
 
 import exampleReadme from '../FieldInput/example.md'
 import usageReadme from '../FieldInput/usage.md'
@@ -19,10 +19,10 @@ storiesOf('Form/Form Elements/Input', module)
     },
   })
   .add('Text', () => (
-    <TaskForm
+    <Form
       id="fieldInputExample"
       analyticsFormName="fieldInputExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
       {(state) => (
         <>
@@ -36,13 +36,13 @@ storiesOf('Form/Form Elements/Input', module)
           <pre>{JSON.stringify(state, null, 2)}</pre>
         </>
       )}
-    </TaskForm>
+    </Form>
   ))
   .add('Number', () => (
-    <TaskForm
+    <Form
       id="fieldInputExample"
       analyticsFormName="fieldInputExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
       {(state) => (
         <>
@@ -56,13 +56,13 @@ storiesOf('Form/Form Elements/Input', module)
           <pre>{JSON.stringify(state, null, 2)}</pre>
         </>
       )}
-    </TaskForm>
+    </Form>
   ))
   .add('Text (reduced)', () => (
-    <TaskForm
+    <Form
       id="fieldInputExample"
       analyticsFormName="fieldInputExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
       {(state) => (
         <>
@@ -77,5 +77,5 @@ storiesOf('Form/Form Elements/Input', module)
           <pre>{JSON.stringify(state, null, 2)}</pre>
         </>
       )}
-    </TaskForm>
+    </Form>
   ))

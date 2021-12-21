@@ -3,7 +3,7 @@ import { addDecorator, storiesOf } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
 
 import FieldDate from '../FieldDate'
-import TaskForm from '../../../Form'
+import Form from '../../../Form'
 
 import exampleReadme from '../FieldDate/example.md'
 import usageReadme from '../FieldDate/usage.md'
@@ -25,10 +25,10 @@ storiesOf('Form/Form Elements/Date', module)
     },
   })
   .add('FieldDate - default validation', () => (
-    <TaskForm
+    <Form
       id="fieldDateExample"
       analyticsFormName="fieldDateExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
       {(form) => (
         <>
@@ -41,13 +41,13 @@ storiesOf('Form/Form Elements/Date', module)
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </TaskForm>
+    </Form>
   ))
   .add('FieldDate - custom validation', () => (
-    <TaskForm
+    <Form
       id="fieldDateExample"
       analyticsFormName="fieldDateExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
       {(form) => (
         <>
@@ -67,13 +67,13 @@ storiesOf('Form/Form Elements/Date', module)
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </TaskForm>
+    </Form>
   ))
   .add('FieldDate - short format', () => (
-    <TaskForm
+    <Form
       id="fieldDateExample"
       analyticsFormName="fieldDateExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
       {(form) => (
         <>
@@ -87,13 +87,13 @@ storiesOf('Form/Form Elements/Date', module)
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </TaskForm>
+    </Form>
   ))
   .add('FieldDate (reduced)', () => (
-    <TaskForm
+    <Form
       id="fieldDateExample"
       analyticsFormName="fieldDateExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
       {(form) => (
         <>
@@ -107,5 +107,5 @@ storiesOf('Form/Form Elements/Date', module)
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </TaskForm>
+    </Form>
   ))

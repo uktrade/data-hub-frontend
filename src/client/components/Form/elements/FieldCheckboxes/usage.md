@@ -7,10 +7,10 @@ Checkboxes for use in forms and filters.
 ### Usage
 
 ```jsx
-  <TaskForm
+  <Form
       id="fieldCheckboxExample"
       analyticsFormName="fieldCheckboxExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
   {(state) => (
     <>
@@ -31,7 +31,7 @@ Checkboxes for use in forms and filters.
       />
     </>
   )}
-</TaskForm>
+</Form>
 ```
 
 ### Properties

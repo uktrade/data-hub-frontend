@@ -107,7 +107,7 @@ import RoutedInput from './components/RoutedInput'
 import Resource from './components/Resource'
 
 import { ContactForm } from './components/ContactForm'
-import TaskForm from './components/Form'
+import Form from './components/Form'
 import TaskReactSelect from './components/Task/ReactSelect'
 
 const sagaMiddleware = createSagaMiddleware()
@@ -156,7 +156,7 @@ const store = createStore(
     ...CreateUKInvestmentOpportunity.reducerSpread,
     ...Resource.reducerSpread,
     ...ContactForm.reducerSpread,
-    ...TaskForm.reducerSpread,
+    ...Form.reducerSpread,
     ...TaskReactSelect.reducerSpread,
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,

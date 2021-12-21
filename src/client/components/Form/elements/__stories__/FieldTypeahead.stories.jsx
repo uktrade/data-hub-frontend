@@ -2,7 +2,7 @@ import React from 'react'
 import { addDecorator, storiesOf } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
 
-import TaskForm from '../../../Form'
+import Form from '../../../Form'
 import FieldTypeahead from '../FieldTypeahead'
 
 import exampleReadme from '../FieldTypeahead/example.md'
@@ -37,10 +37,10 @@ storiesOf('Form/Form Elements/Typeahead', module)
     },
   })
   .add('Default', () => (
-    <TaskForm
+    <Form
       id="fieldTypeaheadExample"
       analyticsFormName="fieldTypeaheadExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
       {(state) => (
         <>
@@ -85,5 +85,5 @@ storiesOf('Form/Form Elements/Typeahead', module)
           <pre>{JSON.stringify(state, null, 2)}</pre>
         </>
       )}
-    </TaskForm>
+    </Form>
   ))

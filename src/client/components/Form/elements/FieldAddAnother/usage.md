@@ -12,10 +12,10 @@ When onChange is triggered for a given subfield the field value is set to an arr
 ### Usage
 
 ```jsx
-<TaskForm
+<Form
       id="fieldAddAnotherExample"
       analyticsFormName="fieldAddAnotherExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
   {(state) => (
     <FieldAddAnother
@@ -42,7 +42,7 @@ When onChange is triggered for a given subfield the field value is set to an arr
       )}
     </FieldAddAnother>
   )}
-</TaskForm>
+</Form>
 ```
 
 ### Properties

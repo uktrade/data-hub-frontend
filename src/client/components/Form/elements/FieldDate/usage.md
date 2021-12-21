@@ -7,10 +7,10 @@ Date field for use in forms and filters.
 ### Usage
 
 ```jsx
-    <TaskForm
+    <Form
       id="fieldDateExample"
       analyticsFormName="fieldDateExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
   {(state) => (
     <>
@@ -22,7 +22,7 @@ Date field for use in forms and filters.
       />
     </>
   )}
-</TaskForm>
+</Form>
 ```
 
 ### Properties

@@ -8,10 +8,10 @@ A Typeahead for use in forms. This is a wrapper around the `react-select` by Jed
 ### Usage
 
 ```jsx
-<TaskForm
+<Form
       id="fieldTypeaheadExample"
       analyticsFormName="fieldTypeaheadExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
   {(state) => (
     <>
@@ -24,7 +24,7 @@ A Typeahead for use in forms. This is a wrapper around the `react-select` by Jed
       />
     </>
   )}
-</TaskForm>
+</Form>
 ```
 
 ### Properties

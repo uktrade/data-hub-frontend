@@ -18,7 +18,7 @@ import {
 } from '../../../../../client/actions'
 
 import Task from '../../../../../client/components/Task'
-import TaskForm from '../../../../../client/components/Form'
+import Form from '../../../../../client/components/Form'
 import {
   Main,
   FieldInput,
@@ -71,7 +71,7 @@ const OpportunityRequirementsForm = (state) => {
         !!metadata.investmentTypes.length && (
           <>
             <Main>
-              <TaskForm
+              <Form
                 id="opportunity-requirements"
                 submissionTaskName={TASK_SAVE_OPPORTUNITY_REQUIREMENTS}
                 analyticsFormName="opportunityRequirementsForm"
@@ -135,7 +135,7 @@ const OpportunityRequirementsForm = (state) => {
                   options={timeScalesOptions}
                   data-test="timescales"
                 />
-              </TaskForm>
+              </Form>
             </Main>
           </>
         )
