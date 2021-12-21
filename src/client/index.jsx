@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import * as Sentry from '@sentry/browser'
 import { Switch } from 'react-router-dom'
 
+import './components'
 import Provider from './provider'
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
 import InteractionDetailsForm from '../apps/interactions/apps/details-form/client/InteractionDetailsForm'
