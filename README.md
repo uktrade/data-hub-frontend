@@ -34,11 +34,11 @@ and be provided with a back end server to provide the API, data storage and sear
 
 ## Getting started
 
-### Running the project within Docker (recommended method)
+### Running the project within Docker 
 
 Please view the dedicated [Docker readme](./docs/Docker.md).
 
-### Running the project natively
+### Running the project natively (recommended method)
 
 **Note for all users** If you wish to run the functional tests against your native frontend, you will need to pass a config flag to point cypress to run against port 3000 - `npm run test:functional:watch --config baseUrl=http://localhost:3000`.
 
@@ -59,7 +59,7 @@ Please view the dedicated [Docker readme](./docs/Docker.md).
     npm install
     ```
 
-4.  Create a copy of the sample `.env` file which points to a mocked API:
+4.  Create a copy of the sample `.env` file which points to a mocked API. (Alternatively, check Vault for environment variables that point to other environments, such as staging and dev):
 
     ```bash
     cp sample.env .env
@@ -124,6 +124,8 @@ These instructions work for both the dockerised environment and the native envir
 ### Environment variables
 
 List of all environment variables can be found in the source code of [envSchema.js](./src/config/envSchema.js).
+
+Check Vault for environment variables that point to other environments, such as staging and dev.
 
 ## Making changes
 
