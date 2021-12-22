@@ -1,6 +1,6 @@
 # Soft redirect
 
-The `TaskForm` component supports a _hard_ and _soft_ redirection mode, which
+The `Form` component supports a _hard_ and _soft_ redirection mode, which
 you can control with the `redirectMode` prop.
 The default _hard_ mode redirects by altering `window.location.href`, the
 _soft_ mode uses React-Router.
@@ -20,7 +20,7 @@ import { Switch, Route, Link } from 'react-router-dom'
           bar: 'b',
         })
     ),
-  'Submit TaskForm example': (formValues, formId) =>
+  'Submit Form example': (formValues, formId) =>
     new Promise((resolve, reject) =>
       formValues.reject === 'yes'
         ? setTimeout(reject, 2000, 'You broke the internet!')
@@ -31,9 +31,9 @@ import { Switch, Route, Link } from 'react-router-dom'
 }}>  
   <Switch>
     <Route path="/iframe.html">
-      <TaskForm
+      <Form
         id="task-form-example-resolve-initial-values"
-        submissionTaskName="Submit TaskForm example"
+        submissionTaskName="Submit Form example"
         initialValuesTaskName="Load initial values"
         initialValuesPayload="resolve"
         redirectMode="soft"
@@ -41,7 +41,7 @@ import { Switch, Route, Link } from 'react-router-dom'
           ...initialValues,
           reject: 'yes',
         })}
-        analyticsFormName="taskFormExample"
+        analyticsFormName="formExample"
         redirectTo={(submissionTaskResult, formValues) => '/success'}
         // eslint-disable-next-line no-unused-vars
         flashMessage={(submissionTaskResult, formValues) =>
@@ -75,7 +75,7 @@ import { Switch, Route, Link } from 'react-router-dom'
             { label: 'No', value: 'no' },
           ]}
         />
-      </TaskForm>
+      </Form>
     </Route>
     <Route path="/success">
       The submission task resolved

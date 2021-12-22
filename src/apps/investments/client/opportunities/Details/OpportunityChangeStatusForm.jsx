@@ -9,7 +9,7 @@ import { Main } from '../../../../../client/components'
 import OpportunityResource from '../../../../../client/components/Resource/Opportunity'
 import FieldOpportunityStatuses from '../../../../../client/components/Form/elements/FieldOpportunityStatuses'
 
-import TaskForm from '../../../../../client/components/Task/Form'
+import Form from '../../../../../client/components/Form'
 
 import { TASK_SAVE_OPPORTUNITY_STATUS } from './state'
 
@@ -37,7 +37,7 @@ const OpportunityChangeStatusForm = ({ opportunityId }) => {
             heading="Change opportunity status"
           />
           <Main>
-            <TaskForm
+            <Form
               id="opportunity-change-status"
               analyticsFormName="opportunityChangeStatus"
               submissionTaskName={TASK_SAVE_OPPORTUNITY_STATUS}
@@ -52,7 +52,7 @@ const OpportunityChangeStatusForm = ({ opportunityId }) => {
                 name="status"
                 initialValue={status.id}
               />
-            </TaskForm>
+            </Form>
           </Main>
         </>
       )}

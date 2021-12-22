@@ -1,10 +1,10 @@
 # Initial values as prop
 
-The initial values of `TaskForm` can also be set with the `initialValues` prop.
+The initial values of `Form` can also be set with the `initialValues` prop.
 
 ```jsx
 <DataHubProvider tasks={{
-  'Submit TaskForm example': (formValues, formId) =>
+  'Submit Form example': (formValues, formId) =>
     new Promise((resolve, reject) =>
       formValues.reject === 'yes'
         ? setTimeout(reject, 2000, 'You broke the internet!')
@@ -13,11 +13,11 @@ The initial values of `TaskForm` can also be set with the `initialValues` prop.
         })
     ),
 }}>
-  <TaskForm
+  <Form
     id="task-form-example-reject-initial-values"
     initialValues={{ foo: 'Foo', bar: 'b' }}
-    submissionTaskName="Submit TaskForm example"
-    analyticsFormName="taskFormExample"
+    submissionTaskName="Submit Form example"
+    analyticsFormName="fformExample"
     redirectTo={(submissionTaskResult, formValues) => '#'}
     flashMessage={(submissionTaskResult, formValues) =>
       'Form was submitted successfully'
@@ -29,6 +29,6 @@ The initial values of `TaskForm` can also be set with the `initialValues` prop.
       {label: 'B', value: 'b'},
       {label: 'C', value: 'c'},
     ]}/>
-  </TaskForm>
+  </Form>
 <DataHubProvider>
 ```

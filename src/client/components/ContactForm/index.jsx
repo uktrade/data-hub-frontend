@@ -10,7 +10,7 @@ import {
   CONTACT_FORM__SUBMIT,
 } from '../../actions'
 
-import TaskForm from '../Task/Form'
+import Form from '../Form'
 import {
   FieldInput,
   FieldRadios,
@@ -146,7 +146,7 @@ const _ContactForm = ({
                     : urls.contacts.details(id)
                 }
                 return (
-                  <TaskForm
+                  <Form
                     id="add-contact-form"
                     analyticsFormName={update ? 'editContact' : 'addContact'}
                     submissionTaskName="Save contact"
@@ -360,7 +360,7 @@ const _ContactForm = ({
                         <FieldTextarea label="Notes (optional)" name="notes" />
                       </>
                     )}
-                  </TaskForm>
+                  </Form>
                 )
               }}
             </State>

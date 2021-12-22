@@ -8,7 +8,7 @@ import {
   FieldDate,
 } from '../../../client/components'
 
-import TaskForm from '../../../client/components/Task/Form'
+import Form from '../../../client/components/Form'
 import Resource from '../../../client/components/Resource'
 
 import { ID as STATE_ID, TASK_GET_PIPELINE_COMPANY_CONTACTS } from './state'
@@ -36,7 +36,7 @@ function PipelineForm({
   initialValues,
 }) {
   return (
-    <TaskForm
+    <Form
       id={STATE_ID}
       analyticsFormName={analyticsFormName}
       submissionTaskName={submissionTaskName}
@@ -130,7 +130,7 @@ function PipelineForm({
           />
         </>
       )}
-    </TaskForm>
+    </Form>
   )
 }
 

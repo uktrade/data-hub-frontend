@@ -185,10 +185,10 @@ I have a working `TaskTypeahead` prototype which can uses a task instead.
 />
 ```
 
-### TaskForm
+### Form
 
 ```js
-<TaskForm
+<Form
   id="foo"
   submissionTaskName="update something"
   initialValuesTaskName="load something"
@@ -206,7 +206,7 @@ I have a working `TaskTypeahead` prototype which can uses a task instead.
   }
 >
   {/* Here come the form fields */}
-</TaskForm>
+</Form>
 ```
 
 ### ResourceOptionsField
@@ -230,10 +230,10 @@ const FieldCountrySelect = (props) => (
 
 const YourFavouriteCountryForm = () =>
   // The form doesn't need to care about loading countries metadata...
-  <TaskForm {...props}>
+  <Form {...props}>
     {/* ...because the field takes care of it internally */}
     <FieldCountrySelect name="country">
-  </TaskForm>
+  </Form>
 ```
 
 This however has a flaw:
@@ -243,7 +243,7 @@ it's options, the form will not show a validation error for the field even thoug
 the field is required and the form will be submitted.
 
 This is due to the mechanism of how the form communicates with its fields. The form
-component (`TaskForm`) will only learn
+component will only learn
 that it has a field (required or not) when the field component is mounted and it
 registers itself by the form.
 

@@ -54,4 +54,4 @@ export type Props = {
   initialStepIndex?: number,
 }
 
-export type TaskForm = (props: Props) => any
+export type Form = (props: Props) => any

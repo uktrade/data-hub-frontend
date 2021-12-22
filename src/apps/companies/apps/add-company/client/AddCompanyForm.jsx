@@ -19,7 +19,7 @@ import CompanyRegionAndSector from './CompanyRegionAndSector'
 import InformationList from './InformationList'
 import { ISO_CODE } from './constants'
 
-import TaskForm from '../../../../../client/components/Task/Form'
+import Form from '../../../../../client/components/Form'
 
 function AddCompanyForm({
   csrfToken,
@@ -67,7 +67,7 @@ function AddCompanyForm({
   }
 
   return (
-    <TaskForm
+    <Form
       id="add-company-form"
       submissionTaskName="Create company"
       analyticsFormName="addCompanyForm"
@@ -156,7 +156,7 @@ function AddCompanyForm({
           </>
         )
       }}
-    </TaskForm>
+    </Form>
   )
 }
 

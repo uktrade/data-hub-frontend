@@ -3,7 +3,7 @@ import { ERROR_COLOUR } from 'govuk-colours'
 import styled from 'styled-components'
 
 import Task from '../../../../../../client/components/Task'
-import TaskForm from '../../../../../../client/components/Task/Form'
+import Form from '../../../../../../client/components/Form'
 import { ID as TASK_ID, TASK_NAME, API_ERROR, API_WARN } from './state'
 import urls from '../../../../../../lib/urls'
 import {
@@ -54,7 +54,7 @@ export default ({ companyId, countryOptions, fields }) => {
       renderError={ErrorHandler}
     >
       {() => (
-        <TaskForm
+        <Form
           id={TASK_ID}
           name={TASK_NAME}
           submitButtonLabel="Save and return"
@@ -81,7 +81,7 @@ export default ({ companyId, countryOptions, fields }) => {
               placeholder="Search countries..."
             />
           ))}
-        </TaskForm>
+        </Form>
       )}
     </Task.Status>
   )

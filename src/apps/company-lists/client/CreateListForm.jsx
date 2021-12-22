@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FieldInput } from '../../../client/components'
-import TaskForm from '../../../client/components/Task/Form'
+import Form from '../../../client/components/Form'
 
 const CreateListForm = ({
   id,
@@ -12,7 +12,7 @@ const CreateListForm = ({
   maxLength,
   csrfToken,
 }) => (
-  <TaskForm
+  <Form
     id="create-list-form"
     submissionTaskName="Create list"
     analyticsFormName="create-list-form"
@@ -40,7 +40,7 @@ const CreateListForm = ({
         }
       />
     )}
-  </TaskForm>
+  </Form>
 )
 
 CreateListForm.propTypes = {

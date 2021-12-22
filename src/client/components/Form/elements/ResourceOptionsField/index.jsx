@@ -12,7 +12,7 @@ import Resource from '../../../Resource'
  * You need to either specify {props.resource} or {props.taskName}.
  * All other props not specified here will be forwarded to the field component
  * passed to {props.field}.
- * @type {import("./types").ResourceOptionsField} TaskForm
+ * @type {import("./types").ResourceOptionsField} Form
  * @typedef {import("./types").Props} Props
  * @param {Object} props
  * @param {Function} [props.field] - The _options form field_ to be wrapped.

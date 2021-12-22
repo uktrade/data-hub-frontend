@@ -12,7 +12,7 @@ import { INVESTMENT_OPPORTUNITY__UPDATED } from '../../../../../client/actions'
 
 import { transformDateStringToDateObject } from '../../../../transformers'
 
-import TaskForm from '../../../../../client/components/Task/Form'
+import Form from '../../../../../client/components/Form'
 import {
   Main,
   FieldInput,
@@ -52,7 +52,7 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
 
   return (
     <Main>
-      <TaskForm
+      <Form
         id="opportunity-details"
         submissionTaskName={TASK_SAVE_OPPORTUNITY_DETAILS}
         analyticsFormName="opportunityDetailsForm"
@@ -203,7 +203,7 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
             </p>
           </>
         )}
-      </TaskForm>
+      </Form>
     </Main>
   )
 }

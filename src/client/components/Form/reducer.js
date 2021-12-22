@@ -12,7 +12,7 @@ import {
   TASK_FORM__STEP_REGISTER,
   TASK_FORM__VALIDATE,
   TASK_FORM__FIELD_TOUCHED,
-} from '../../../actions'
+} from '../../actions'
 
 export default (
   state = {

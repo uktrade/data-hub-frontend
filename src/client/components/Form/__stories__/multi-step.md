@@ -11,7 +11,7 @@
           bar: 'b',
         })
     ),
-  'Submit TaskForm example': (formValues, formId) =>
+  'Submit Form example': (formValues, formId) =>
     new Promise((resolve, reject) =>
       formValues.reject === 'yes'
         ? setTimeout(reject, 2000, 'You broke the internet!')
@@ -20,9 +20,9 @@
         })
     ),
 }}>
-  <TaskForm
+  <Form
     id="task-form-example-multi-step"
-    submissionTaskName="Submit TaskForm example"
+    submissionTaskName="Submit Form example"
     initialValuesTaskName="Load initial values"
     initialValuesPayload="resolve"
     transformInitialValues={(initialValues) => ({
@@ -68,6 +68,6 @@
         ]}
       />
     </Step>
-  </TaskForm>
+  </Form>
 <DataHubProvider>
 ```

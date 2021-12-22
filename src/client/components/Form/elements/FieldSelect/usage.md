@@ -7,10 +7,10 @@ A Select dropdown field for use in forms.
 ### Usage
 
 ```jsx
-  <TaskForm
+  <Form
       id="fieldSelectExample"
       analyticsFormName="fieldSelectExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
   {(state) => (
     <>
@@ -33,7 +33,7 @@ A Select dropdown field for use in forms.
       />
     </>
   )}
-</TaskForm>
+</Form>
 ```
 
 ### Properties

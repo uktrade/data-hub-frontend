@@ -6,7 +6,7 @@ import { GREY_3, TEXT_COLOUR } from 'govuk-colours'
 
 import { FieldRadios } from '../../../client/components'
 
-import TaskForm from '../../../client/components/Task/Form'
+import Form from '../../../client/components/Form'
 
 const AddRemoveFromListForm = ({
   list,
@@ -22,7 +22,7 @@ const AddRemoveFromListForm = ({
   }, {})
 
   return (
-    <TaskForm
+    <Form
       id="add-remove-from-list"
       analyticsFormName="addRemoveFromList"
       submissionTaskName="Add or remove from list"
@@ -64,7 +64,7 @@ const AddRemoveFromListForm = ({
           </Button>
         </>
       )}
-    </TaskForm>
+    </Form>
   )
 }
 

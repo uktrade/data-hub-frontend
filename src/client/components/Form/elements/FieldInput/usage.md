@@ -8,10 +8,10 @@ A basic input field for numbers and text.
 ### Usage
 
 ```jsx
-<TaskForm
+<Form
       id="fieldInputExample"
       analyticsFormName="fieldInputExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
     >
   {(state) => (
     <>
@@ -25,7 +25,7 @@ A basic input field for numbers and text.
       />
     </>
   )}
-</TaskForm>
+</Form>
 ```
 
 ### Properties

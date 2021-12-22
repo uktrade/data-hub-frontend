@@ -8,7 +8,7 @@ import { Main, FieldRadios } from '../../../../../client/components'
 import { TASK_UPDATE_STAGE } from './state'
 import urls from '../../../../../lib/urls'
 
-import TaskForm from '../../../../../client/components/Task/Form'
+import Form from '../../../../../client/components/Form'
 
 const StyledP = styled('p')`
   margin-bottom: ${SPACING.SCALE_2};
@@ -44,7 +44,7 @@ const InvestmentProjectAdmin = ({
           <p>Project name: {projectName}</p>
           <StyledP>Current stage: {projectStage.name}</StyledP>
         </InsetText>
-        <TaskForm
+        <Form
           cancelRedirectTo={() => urls.investments.projects.project(projectId)}
           analyticsFormName="investmentProjectAdmin"
           flashMessage={() => 'Project stage saved'}
@@ -59,7 +59,7 @@ const InvestmentProjectAdmin = ({
             required="Select a new stage"
             options={newStageOptions}
           />
-        </TaskForm>
+        </Form>
       </Main>
     </>
   )

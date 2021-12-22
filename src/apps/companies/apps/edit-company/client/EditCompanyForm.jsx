@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import CompanyMatched from './CompanyMatched'
 import CompanyUnmatched from './CompanyUnmatched'
-import TaskForm from '../../../../../client/components/Task/Form'
+import Form from '../../../../../client/components/Form'
 import { UNITED_STATES_ID, CANADA_ID } from '../../../../../common/constants'
 import urls from '../../../../../lib/urls'
 
@@ -35,7 +35,7 @@ function EditCompanyForm({
 
   // TODO: Support nested form values to avoid transformation
   return (
-    <TaskForm
+    <Form
       id="edit-company-form"
       submissionTaskName="Edit company"
       analyticsFormName="edit-company-form"
@@ -101,7 +101,7 @@ function EditCompanyForm({
           </>
         )
       }}
-    </TaskForm>
+    </Form>
   )
 }
 

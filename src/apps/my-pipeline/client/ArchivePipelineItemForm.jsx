@@ -5,7 +5,7 @@ import { SPACING } from '@govuk-react/constants'
 import PipelineItemResource from '../../../client/components/Resource/PipelineItem'
 
 import urls from '../../../lib/urls'
-import TaskForm from '../../../client/components/Task/Form'
+import Form from '../../../client/components/Form'
 
 import { Main, FieldTextarea } from '../../../client/components'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
@@ -38,7 +38,7 @@ const ArchivePipelineItemForm = ({ pipelineItemId }) => (
             dashboard.
           </StyledP>
           <PipelineDetails item={pipelineItem}></PipelineDetails>
-          <TaskForm
+          <Form
             id={STATE_ID}
             analyticsFormName="archivePipelineItem"
             submissionTaskName={TASK_ARCHIVE_PIPELINE_ITEM}
@@ -60,7 +60,7 @@ const ArchivePipelineItemForm = ({ pipelineItemId }) => (
               required="Enter the reason why you are archiving this project"
               className="govuk-!-width-two-thirds"
             />
-          </TaskForm>
+          </Form>
         </Main>
       </>
     )}

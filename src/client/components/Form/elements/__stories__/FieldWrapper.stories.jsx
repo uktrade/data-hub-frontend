@@ -3,7 +3,7 @@ import { addDecorator, storiesOf } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
 import { H1, H2, H3 } from '@govuk-react/heading'
 
-import TaskForm from '../../../Task/Form'
+import Form from '../../../Form'
 import FieldWrapper from '../FieldWrapper'
 import FieldInput from '../FieldInput'
 
@@ -16,7 +16,7 @@ const testInput = (
   <FieldInput name="testField" type="text" required="Some error" />
 )
 
-storiesOf('Forms', module)
+storiesOf('Form/Form Elements/FieldWrapper', module)
   .addParameters({
     options: { theme: undefined },
     readme: {
@@ -25,10 +25,10 @@ storiesOf('Forms', module)
     },
   })
   .add('FieldWrapper - Label', () => (
-    <TaskForm
+    <Form
       id="fieldWrapperExample"
       analyticsFormName="fieldWrapperExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
       submitButtonLabel="Click to show error"
     >
       {(form) => (
@@ -43,13 +43,13 @@ storiesOf('Forms', module)
           </FieldWrapper>
         </>
       )}
-    </TaskForm>
+    </Form>
   ))
   .add('FieldWrapper - Legend', () => (
-    <TaskForm
+    <Form
       id="fieldWrapperExample"
       analyticsFormName="fieldWrapperExample"
-      submissionTaskName="Submit TaskForm example"
+      submissionTaskName="Submit Form example"
       submitButtonLabel="Click to show error"
     >
       {(form) => (
@@ -111,5 +111,5 @@ storiesOf('Forms', module)
           </FieldWrapper>
         </>
       )}
-    </TaskForm>
+    </Form>
   ))

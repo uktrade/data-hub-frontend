@@ -2,13 +2,13 @@ import React from 'react'
 
 import { ID, TASK_CREATE_INVESTMENT_OPPORTUNITY } from './state'
 import { FieldInput, Main } from '../../../../../client/components'
-import TaskForm from '../../../../../client/components/Task/Form'
+import Form from '../../../../../client/components/Form'
 
 import urls from '../../../../../lib/urls'
 
 const CreateUKInvestmentOpportunity = () => (
   <Main>
-    <TaskForm
+    <Form
       id={ID}
       analyticsFormName="createUKInvestmentOpportunity"
       submissionTaskName={TASK_CREATE_INVESTMENT_OPPORTUNITY}
@@ -24,7 +24,7 @@ const CreateUKInvestmentOpportunity = () => (
         spellcheck="false"
         required="Enter an opportunity name"
       />
-    </TaskForm>
+    </Form>
   </Main>
 )
 
