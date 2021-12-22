@@ -1,4 +1,4 @@
-import { xor } from 'lodash'
+import { isEqual, xorWith } from 'lodash'
 
 import {
   TYPEAHEAD__BLUR,
@@ -10,6 +10,7 @@ import {
   TYPEAHEAD__OPTION_MOUSE_DOWN,
   TYPEAHEAD__OPTION_TOGGLE,
   TYPEAHEAD__OPTION_REMOVE,
+  TYPEAHEAD__OPTIONS_LOADED,
 } from '../../actions'
 
 import { getFilteredOptions, valueAsArray } from './utils'
@@ -28,7 +29,7 @@ const initialState = {
 
 export default (
   state = initialState,
-  { type, value, input, isMulti, option, options, activeIndex, focusIndex }
+  { type, value, input, isMulti, option, activeIndex, focusIndex, result }
 ) => {
   const selectedValue = !state.isMulti && state.selectedOptions[0]?.label
   const filteredOptions = getFilteredOptions({
@@ -41,7 +42,6 @@ export default (
       const useInitialValue = !state.initialised && value
       return {
         ...state,
-        options,
         isMulti,
         selectedOptions: useInitialValue
           ? valueAsArray(value)
@@ -51,6 +51,15 @@ export default (
             ? valueAsArray(value)[0]?.label
             : state.input,
         initialised: true,
+      }
+    case TYPEAHEAD__OPTIONS_LOADED:
+      return {
+        ...state,
+        options: result,
+        activeIndex: getFilteredOptions({
+          options: result,
+          input: state.input,
+        }).indexOf(filteredOptions[state.activeIndex]),
       }
     case TYPEAHEAD__BLUR:
       return {
@@ -106,7 +115,7 @@ export default (
       return {
         ...state,
         selectedOptions: state.isMulti
-          ? xor(state.selectedOptions, [option])
+          ? xorWith(state.selectedOptions, [option], isEqual)
           : [option],
         input: newInput,
         activeIndex: toggledIndex,

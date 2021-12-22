@@ -19,4 +19,11 @@ describe('Single select', () => {
       .should('be.visible')
       .compareSnapshot('typeahead2-single-pre-selected-option')
   })
+
+  it('should render the async typeahead2 single select correctly', () => {
+    cy.visit('/iframe.html?id=typeahead2--single-async-options')
+    cy.get('#root')
+      .should('be.visible')
+      .compareSnapshot('typeahead2-single-async-options')
+  })
 })
