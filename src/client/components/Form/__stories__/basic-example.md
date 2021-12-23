@@ -102,7 +102,7 @@ Prop | Required | Default | Type | Description
 `submissionTaskName` | true | `````` | string | Name of the task that should be started when the form is submitted
 `analyticsData` | false | `````` | object | A function which takes the values of the form as an argument, and which returns an object containing additional - non-sensitive - data to be passed to Google Analytics.
 `cancelButtonLabel` | false | Cancel | string | The label for the built-in cancel button
-`cancelRedirectTo` | false | `````` | string | A function which returns a URL to redirect to when the cancel button is clicked. If unset the cancel button will not display.
+`cancelRedirectTo` | false | `````` | function | A function which returns a URL to redirect to when the cancel button is clicked. If unset the cancel button will not display.
 `flashMessage` | false | `````` | function | A function that will be passed the result of the submission task and the form values, which hould return a string used as a flash message when the submission task succeeds
 `initialStepIndex` | false | 0 | integer | An optional integer representing the index of the step which the user will land on when the form is rendered, if the form has multiple steps. This is then set as the currentStep property in the form's state.
 `initialValues` | false | `````` | object | An object mapping field names to their initial values.
