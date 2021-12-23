@@ -60,13 +60,51 @@ Please view the dedicated [Docker readme](./docs/Docker.md).
     npm install
     ```
 
-4.  Create a copy of the sample `.env` file which points to a mocked API. (Alternatively, check Vault for environment variables that point to other environments, such as staging and dev):
+4.  Create a copy of the `sample.env` file.
 
     ```bash
     cp sample.env .env
     ```
 
-6.  [Install](./docs/Installing%20redis%20natively.md) the redis server and bring it up:
+Steps 5 onwards differ depending on which API you are using.
+
+**Running with the local API**
+5. The environment variables copied from `sample.env` are set up for running both the frontend and the API using the docker set-up outlined [here](./docs/Docker.md). To run the frontend natively, the following variables will need to be changed to:
+    ```
+    API_ROOT=http://localhost:8000
+    REDIS_HOST=localhost
+    REDIS_URL=redis://localhost:6379
+    ```
+
+6. Bring up Data Hub API via the `docker-compose up` command or natively, using the instructions outlined in Data Hub API's `README.md`.
+
+7. Go to [Django Admin](http://localhost:8000/admin/add-access-token/) and get an access token. Add a frontend environment variable `OAUTH2_DEV_TOKEN` and set this as equal to the access token. 
+
+8.  Start the node server
+
+    **In development mode:**
+
+    ```bash
+    npm run develop
+    ```
+
+    The server will watch for changes and rebuild sass or compile js using webpack as
+    needed. Changes to server side code will result in the server autorestarting.
+    The server will run with the node debug flag so you can debug with Webstorm
+    or Visual Studio Code.
+
+
+**Running with other APIs (e.g. staging)**
+
+5. Go to Vault, look in datahub-fe, and add the relevant environment variables specified in the `.env` file for the environment you are interested in developing with.
+
+6. The environment variables copied from `sample.env` are set up for running both the frontend and the API using the docker set-up outlined [here](./docs/Docker.md). To run the frontend natively, the following variables will need to be changed to:
+    ```
+    REDIS_HOST=localhost
+    REDIS_URL=redis://localhost:6379
+    ```
+
+7.  [Install](./docs/Installing%20redis%20natively.md) the redis server and bring it up:
 
     ```bash
     redis-server
@@ -78,21 +116,8 @@ Please view the dedicated [Docker readme](./docs/Docker.md).
     docker run -it -p 6379:6379 redis:3.2
     ```
 
-6.  Start the mocked SSO:
-
-    ```bash
-    docker run -it -p 8080:8080 gcr.io/sre-docker-registry/github.com/uktrade/mock-sso:latest
-    ```
-
-7.  Start the mocked backend (this command is included in `.bin.sample` as `start-sandbox`):
-
-    ```bash
-    cd test/sandbox
-    docker build -t data-hub-sandbox .
-    docker run --rm --name data-hub-sandbox -it -p 8001:8000 data-hub-sandbox
-    ```
-
-8.  Start the node server
+8.
+9.  Start the node server
 
     **In production mode:**
 
@@ -114,9 +139,24 @@ Please view the dedicated [Docker readme](./docs/Docker.md).
     The server will run with the node debug flag so you can debug with Webstorm
     or Visual Studio Code.
 
-### Working with live SSO
+### Working with SSO
 
-To use the live SSO service, add the environment variables from sample.env below the line `To use live SSO` into your `.env` file and uncomment
+**Mock SSO**
+
+To use the mock SSO service, add the environment variables from sample.env below the line `To use mock-SSO` into your `.env` file and uncomment.
+
+  Start the mocked SSO:
+
+    ```bash
+    docker run -it -p 8080:8080 gcr.io/sre-docker-registry/github.com/uktrade/mock-sso:latest
+    ```
+
+
+**Live SSO**
+
+To use the live SSO service, add the environment variables from sample.env below the line `To use live SSO` into your `.env` file and uncomment.
+
+Set SSO_ENABLED=false
 
 Then restart your development environment
 
