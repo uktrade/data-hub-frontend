@@ -18,6 +18,7 @@ and be provided with a back end server to provide the API, data storage and sear
 - [Getting started](#getting-started)
   - [Running project within Docker](#running-project-within-docker)
   - [Running project natively](#running-project-natively)
+  - [Navigating the code](./docs/CodePathMap.png)
 - [Environment variables](#environment-variables)
 - [Deployments](./docs/Deployments.md)
 - [Conventions](./docs/Conventions.md)
