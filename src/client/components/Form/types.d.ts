@@ -2,16 +2,6 @@
 /* eslint-disable no-undef */
 import React from 'react'
 
-type GovukReactLinkProps = {
-  href: string,
-  children: React.ReactChild,
-}
-type ReactRouterLinkProps = {
-  to: string,
-  children: React.ReactChild,
-}
-type LinkProps = GovukReactLinkProps | ReactRouterLinkProps
-
 type Values = Record<string, string>
 type Errors = Record<string, string>
 type FlashMessageHeading = string
@@ -47,7 +37,6 @@ export type Props = {
   onSuccess?: (successActionResult: any, values: Values, actions: OnSuccessActions) => any,
   transformInitialValues?: (initialValuesTaskResult: any) => Values,
   transformPayload?: (values: Values) => any,
-  actionLinks?: LinkProps[],
   children?: Children,
   submitButtonLabel?: string,
   submitButtonColour?: string,
