@@ -1,17 +1,17 @@
 import { omit } from 'lodash'
 
 import {
-  TASK_FORM__BACK,
-  TASK_FORM__FIELD_DEREGISTER,
-  TASK_FORM__FIELD_REGISTER,
-  TASK_FORM__FIELD_SET_VALUE,
-  TASK_FORM__FORWARD,
-  TASK_FORM__LOADED,
-  TASK_FORM__RESOLVED,
-  TASK_FORM__STEP_DEREGISTER,
-  TASK_FORM__STEP_REGISTER,
-  TASK_FORM__VALIDATE,
-  TASK_FORM__FIELD_TOUCHED,
+  FORM__BACK,
+  FORM__FIELD_DEREGISTER,
+  FORM__FIELD_REGISTER,
+  FORM__FIELD_SET_VALUE,
+  FORM__FORWARD,
+  FORM__LOADED,
+  FORM__RESOLVED,
+  FORM__STEP_DEREGISTER,
+  FORM__STEP_REGISTER,
+  FORM__VALIDATE,
+  FORM__FIELD_TOUCHED,
 } from '../../actions'
 
 export default (
@@ -26,7 +26,7 @@ export default (
   { type, result, ...action }
 ) => {
   switch (type) {
-    case TASK_FORM__LOADED:
+    case FORM__LOADED:
       return {
         ...state,
         values: {
@@ -35,15 +35,15 @@ export default (
         },
         currentStep: action.initialStepIndex,
       }
-    case TASK_FORM__RESOLVED:
+    case FORM__RESOLVED:
       return {
         ...state,
         result,
         resolved: true,
       }
-    case 'TASK_FORM__RESET_RESOLVED':
+    case 'FORM__RESET_RESOLVED':
       return omit(state, 'result', 'resolved')
-    case TASK_FORM__FIELD_REGISTER:
+    case FORM__FIELD_REGISTER:
       return {
         ...state,
         values: {
@@ -61,7 +61,7 @@ export default (
           [action.field.name]: action.field,
         },
       }
-    case TASK_FORM__FIELD_DEREGISTER:
+    case FORM__FIELD_DEREGISTER:
       return {
         ...state,
         values: omit(state.values, action.fieldName),
@@ -69,7 +69,7 @@ export default (
         touched: omit(state.touched, action.fieldName),
         fields: omit(state.fields, action.fieldName),
       }
-    case TASK_FORM__FIELD_SET_VALUE:
+    case FORM__FIELD_SET_VALUE:
       return {
         ...state,
         values: {
@@ -77,7 +77,7 @@ export default (
           [action.fieldName]: action.fieldValue,
         },
       }
-    case TASK_FORM__FIELD_TOUCHED:
+    case FORM__FIELD_TOUCHED:
       return {
         ...state,
         touched: {
@@ -85,32 +85,32 @@ export default (
           [action.fieldName]: true,
         },
       }
-    case TASK_FORM__VALIDATE:
+    case FORM__VALIDATE:
       return {
         ...state,
         errors: action.errors,
         touched: action.touched,
       }
-    case TASK_FORM__FORWARD:
+    case FORM__FORWARD:
       return {
         ...state,
         currentStep: state.currentStep + 1,
         previousValues: state.values,
       }
-    case TASK_FORM__BACK:
+    case FORM__BACK:
       return {
         ...state,
         currentStep: state.currentStep - 1,
         previousValues: state.values,
       }
-    case TASK_FORM__STEP_REGISTER:
+    case FORM__STEP_REGISTER:
       return {
         ...state,
         steps: !state.steps.includes(action.stepName)
           ? [...state.steps, action.stepName]
           : state.steps,
       }
-    case TASK_FORM__STEP_DEREGISTER:
+    case FORM__STEP_DEREGISTER:
       return {
         ...state,
         steps: state.steps.filter((s) => s !== action.stepName),

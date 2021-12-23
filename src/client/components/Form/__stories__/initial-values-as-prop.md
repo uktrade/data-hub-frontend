@@ -1,4 +1,5 @@
-# Initial values as prop
+Initial values as prop
+=========
 
 The initial values of `Form` can also be set with the `initialValues` prop.
 

@@ -5,7 +5,6 @@ import { Route } from 'react-router-dom'
 import { isEmpty } from 'lodash'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
-import * as ReactRouter from 'react-router-dom'
 
 import multiInstance from '../../utils/multiinstance'
 import ErrorSummary from '../ErrorSummary'
@@ -81,7 +80,6 @@ const _Form = ({
   onSuccess,
   submitButtonLabel = 'Save',
   submitButtonColour = BUTTON_COLOUR,
-  actionLinks = [],
   // State props
   onLoad,
   result,
@@ -199,7 +197,7 @@ const _Form = ({
                                 if (contextProps.isLastStep()) {
                                   submissionTask.start({
                                     payload: transformPayload(values),
-                                    onSuccessDispatch: 'TASK_FORM__RESOLVED',
+                                    onSuccessDispatch: 'FORM__RESOLVED',
                                   })
 
                                   analytics('Submit')
@@ -324,22 +322,6 @@ const _Form = ({
                                     {cancelButtonLabel}
                                   </Link>
                                 )}
-                                {actionLinks.map(
-                                  ({ to, href, children, linkProps = {} }, i) =>
-                                    to ? (
-                                      <ReactRouter.Link
-                                        key={i}
-                                        to={to}
-                                        {...linkProps}
-                                      >
-                                        {children}
-                                      </ReactRouter.Link>
-                                    ) : (
-                                      <Link key={i} href={href} {...linkProps}>
-                                        {children}
-                                      </Link>
-                                    )
-                                )}
                               </FormActions>
                             )}
                           </form>
@@ -361,58 +343,58 @@ const _Form = ({
 const dispatchToProps = (dispatch) => ({
   onLoad: (initialValues, initialStepIndex) =>
     dispatch({
-      type: 'TASK_FORM__LOADED',
+      type: 'FORM__LOADED',
       initialValues,
       initialStepIndex,
     }),
   resetResolved: () =>
     dispatch({
-      type: 'TASK_FORM__RESET_RESOLVED',
+      type: 'FORM__RESET_RESOLVED',
     }),
   registerField: (initialValues) => (field) =>
     dispatch({
-      type: 'TASK_FORM__FIELD_REGISTER',
+      type: 'FORM__FIELD_REGISTER',
       field: { initialValue: initialValues?.[field.name], ...field },
     }),
   deregisterField: (fieldName) =>
     dispatch({
-      type: 'TASK_FORM__FIELD_DEREGISTER',
+      type: 'FORM__FIELD_DEREGISTER',
       fieldName,
     }),
   setFieldValue: (fieldName, fieldValue) =>
     dispatch({
-      type: 'TASK_FORM__FIELD_SET_VALUE',
+      type: 'FORM__FIELD_SET_VALUE',
       fieldName,
       fieldValue,
     }),
   setFieldTouched: (fieldName) =>
     dispatch({
-      type: 'TASK_FORM__FIELD_TOUCHED',
+      type: 'FORM__FIELD_TOUCHED',
       fieldName,
     }),
   onValidate: (errors, touched) =>
     dispatch({
-      type: 'TASK_FORM__VALIDATE',
+      type: 'FORM__VALIDATE',
       errors,
       touched,
     }),
   goForward: (values) =>
     dispatch({
-      type: 'TASK_FORM__FORWARD',
+      type: 'FORM__FORWARD',
       values,
     }),
   goBack: () =>
     dispatch({
-      type: 'TASK_FORM__BACK',
+      type: 'FORM__BACK',
     }),
   registerStep: (stepName) =>
     dispatch({
-      type: 'TASK_FORM__STEP_REGISTER',
+      type: 'FORM__STEP_REGISTER',
       stepName,
     }),
   deregisterStep: (stepName) =>
     dispatch({
-      type: 'TASK_FORM__STEP_DEREGISTER',
+      type: 'FORM__STEP_DEREGISTER',
       stepName,
     }),
 })
@@ -481,9 +463,6 @@ const dispatchToProps = (dispatch) => ({
  * whose return value will be used as the payload of the submission task.
  * You can use this to mix in values into the payload which are not coming from
  * the form fields.
- * @param {Props['actionLinks']} [props.actionLinks] - An optional array of
- * objects representing action links rendered to the right of the submit button.
- * For the exact shape of the objects refrer to `./types.d.ts`.
  * @param {Props['submitButtonLabel']} [props.submitButtonLabel='Save'] -
  * The label of the submit button.
  * @param {Props['submitButtonColour']} [props.submitButtonColour=BUTTON_COLOUR] -
@@ -506,7 +485,7 @@ const Form = multiInstance({
   reducer,
   component: _Form,
   dispatchToProps,
-  actionPattern: 'TASK_FORM__',
+  actionPattern: 'FORM__',
 })
 
 Form.propTypes = {
@@ -522,13 +501,6 @@ Form.propTypes = {
   initialValuesTaskName: PropTypes.string,
   transformInitialValues: PropTypes.func,
   transformPayload: PropTypes.func,
-  actionLinks: PropTypes.arrayOf(
-    PropTypes.shape({
-      children: PropTypes.node,
-      href: PropTypes.string,
-      to: PropTypes.string,
-    })
-  ),
   initialStepIndex: PropTypes.number,
 }
 

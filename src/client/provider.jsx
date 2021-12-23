@@ -100,8 +100,6 @@ import {
 } from './modules/Omis/CollectionList/state'
 import ordersReducer from './modules/Omis/CollectionList/reducer'
 
-import CreateUKInvestmentOpportunity from '../apps/investments/client/opportunities/Details/CreateUKInvestmentOpportunity'
-
 import RoutedInput from './components/RoutedInput'
 
 import Resource from './components/Resource'
@@ -153,7 +151,6 @@ const store = createStore(
     ...ToggleSection.reducerSpread,
     ...Typeahead.reducerSpread,
     ...RoutedInput.reducerSpread,
-    ...CreateUKInvestmentOpportunity.reducerSpread,
     ...Resource.reducerSpread,
     ...ContactForm.reducerSpread,
     ...Form.reducerSpread,

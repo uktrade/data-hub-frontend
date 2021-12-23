@@ -152,7 +152,8 @@ PipelineForm.propTypes = {
   redirectTo: PropTypes.func.isRequired,
   flashMessage: PropTypes.func.isRequired,
   submitButtonLabel: PropTypes.string,
-  actionLinks: PropTypes.array,
+  cancelRedirectTo: PropTypes.func,
+  cancelButtonLabel: PropTypes.string,
 }
 
 export default PipelineForm
