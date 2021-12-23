@@ -1,4 +1,5 @@
-# Soft redirect
+Soft redirect
+=========
 
 The `Form` component supports a _hard_ and _soft_ redirection mode, which
 you can control with the `redirectMode` prop.
