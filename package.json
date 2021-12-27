@@ -137,7 +137,7 @@
     "qs": "^6.10.2",
     "raven": "^2.6.2",
     "react": "^17.0.2",
-    "react-app-polyfill": "^2.0.0",
+    "react-app-polyfill": "^3.0.0",
     "react-dom": "^17.0.2",
     "react-lines-ellipsis": "^0.14.1",
     "react-markdown": "^7.1.0",
