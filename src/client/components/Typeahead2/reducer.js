@@ -39,17 +39,11 @@ export default (
 
   switch (type) {
     case TYPEAHEAD__INITIALISE:
-      const useInitialValue = !state.initialised && value
       return {
         ...state,
         isMulti,
-        selectedOptions: useInitialValue
-          ? valueAsArray(value)
-          : state.selectedOptions,
-        input:
-          useInitialValue && !isMulti
-            ? valueAsArray(value)[0]?.label
-            : state.input,
+        selectedOptions: valueAsArray(value),
+        input: isMulti ? '' : valueAsArray(value)[0]?.label,
         initialised: true,
       }
     case TYPEAHEAD__OPTIONS_LOADED:

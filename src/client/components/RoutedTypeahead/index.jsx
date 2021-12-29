@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { FONT_WEIGHTS, LINE_HEIGHT } from '@govuk-react/constants'
 
 import FieldWrapper from '../Form/elements/FieldWrapper'
-import Typeahead from '../Typeahead/Typeahead'
+import Typeahead from '../Typeahead2'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
   label {
@@ -23,15 +23,15 @@ const getParamIds = (qsParam, pickedOptions) => ({
 const RoutedTypeahead = ({
   name,
   qsParam,
-  label = '',
-  hint = '',
-  isMulti = false,
-  placeholder = '',
-  closeMenuOnSelect = false,
-  selectedOptions = null,
-  loadOptions = null,
-  noOptionsMessage = () => null,
-  options = null,
+  label,
+  hint,
+  isMulti,
+  placeholder,
+  closeMenuOnSelect,
+  selectedOptions,
+  loadOptions,
+  noOptionsMessage,
+  options,
   ...props
 }) => (
   <Route>
@@ -54,7 +54,7 @@ const RoutedTypeahead = ({
             options={options}
             closeMenuOnSelect={closeMenuOnSelect}
             isMulti={isMulti}
-            value={selectedOptions}
+            defaultValue={selectedOptions}
             loadOptions={loadOptions}
             noOptionsMessage={noOptionsMessage}
             onChange={(pickedOptions) => {

@@ -164,6 +164,7 @@ const Typeahead = ({
   onOptionRemove,
   onMenuClose,
   onMenuOpen,
+  onChange = () => {},
   'data-test': testId,
   ...inputProps
 }) => {
@@ -173,6 +174,7 @@ const Typeahead = ({
       value: value || defaultValue,
     })
   }, [])
+  useEffect(() => onChange(selectedOptions), [selectedOptions])
   const inputRef = React.useRef(null)
   const menuRef = React.useRef(null)
   const ignoreFilter =
@@ -223,7 +225,7 @@ const Typeahead = ({
     }
   }
   return (
-    <div id={name} data-test={testId}>
+    <div id={`${name}-wrapper`} data-test={testId}>
       <Label id={`${name}-label`} data-test="typeahead-label">
         {label}
       </Label>
@@ -339,6 +341,7 @@ const keyPairPropType = PropTypes.shape({
 })
 
 Typeahead.propTypes = {
+  id: PropTypes.string.isRequired,
   name: PropTypes.string,
   label: PropTypes.string,
   error: PropTypes.bool,
@@ -355,6 +358,7 @@ Typeahead.propTypes = {
   ]),
   menuOpen: PropTypes.bool,
   loadOptions: PropTypes.func,
+  onChange: PropTypes.func,
   options: PropTypes.arrayOf(keyPairPropType),
   input: PropTypes.string,
   selectedOptions: PropTypes.arrayOf(keyPairPropType),
@@ -375,10 +379,9 @@ export default multiInstance({
   name: 'Typeahead',
   actionPattern: 'TYPEAHEAD__',
   dispatchToProps: (dispatch) => ({
-    onInitialise: ({ options, isMulti, value }) => {
+    onInitialise: ({ isMulti, value }) => {
       dispatch({
         type: TYPEAHEAD__INITIALISE,
-        options,
         isMulti,
         value,
       })
