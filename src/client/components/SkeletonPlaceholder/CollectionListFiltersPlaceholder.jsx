@@ -38,8 +38,8 @@ const FilterCheckboxes = ({ count }) =>
       <CheckboxList>
         {Array(count)
           .fill()
-          .map(() => (
-            <CheckboxListItem>
+          .map((el, i) => (
+            <CheckboxListItem key={i}>
               <Checkbox />
               <CheckboxLabel />
             </CheckboxListItem>
@@ -53,7 +53,9 @@ const InputList = styled('ul')`
 `
 
 const InputListItem = styled('li')`
-  ${({ marginTop }) => marginTop && `margin-top: ${marginTop}px;`};
+  &::first-child {
+    ${({ checkboxCount }) => checkboxCount && `margin-top: 50px;`};
+  }
 `
 
 const InputListItemLabel = styled('div')`
@@ -71,8 +73,8 @@ const InputListItemField = styled('div')`
 
 const FilterInputs = ({ inputCount, checkboxCount }) => (
   <InputList>
-    {Array.from(Array(inputCount).keys()).map((i) => (
-      <InputListItem marginTop={i === 0 ? (checkboxCount ? 50 : 0) : 50}>
+    {Array.from(Array(inputCount).keys()).map((el, i) => (
+      <InputListItem key={i} checkboxCount={checkboxCount}>
         <InputListItemLabel />
         <InputListItemField />
       </InputListItem>

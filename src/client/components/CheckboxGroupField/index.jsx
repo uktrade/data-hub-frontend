@@ -186,10 +186,9 @@ const CheckboxGroupField = ({
                 }
                 const getCheckboxId = (name) => `field-${name}-${i + 1}`
                 return (
-                  <li>
+                  <li key={optionValue}>
                     <Checkbox
                       id={getCheckboxId(name)}
-                      key={optionValue}
                       name={name}
                       initialChecked={checked}
                       value={optionValue}
