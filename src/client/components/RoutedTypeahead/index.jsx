@@ -40,21 +40,16 @@ const RoutedTypeahead = ({
       return (
         <StyledFieldWrapper label={label} name={name} hint={hint} {...props}>
           <Typeahead
-            styles={{
-              multiValueRemove: () => ({
-                display: 'none',
-              }),
-              clearIndicator: () => ({
-                display: 'none',
-              }),
-            }}
             name={name}
             aria-label={name}
             placeholder={placeholder}
-            options={options}
+            initialOptions={options}
             closeMenuOnSelect={closeMenuOnSelect}
             isMulti={isMulti}
-            defaultValue={selectedOptions}
+            value={selectedOptions.map(({ value, label }) => ({
+              value,
+              label,
+            }))}
             loadOptions={loadOptions}
             noOptionsMessage={noOptionsMessage}
             onChange={(pickedOptions) => {

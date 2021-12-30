@@ -16,7 +16,6 @@ import {
 import { getFilteredOptions, valueAsArray } from './utils'
 
 const initialState = {
-  initialised: false,
   menuOpen: false,
   activeIndex: -1,
   focusIndex: -1,
@@ -43,8 +42,7 @@ export default (
         ...state,
         isMulti,
         selectedOptions: valueAsArray(value),
-        input: isMulti ? '' : valueAsArray(value)[0]?.label,
-        initialised: true,
+        input: isMulti ? state.input : valueAsArray(value)[0]?.label,
       }
     case TYPEAHEAD__OPTIONS_LOADED:
       return {
@@ -119,7 +117,7 @@ export default (
       return {
         ...state,
         selectedOptions: state.selectedOptions.filter(
-          (selectedOptionId) => selectedOptionId !== option
+          ({ value }) => value !== option.value
         ),
       }
     default:

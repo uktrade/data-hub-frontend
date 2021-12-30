@@ -1,3 +1,5 @@
+import { isEqual, xorWith } from 'lodash'
+
 export const keys = {
   down: 'ArrowDown',
   end: 'End',
@@ -64,6 +66,9 @@ export const getFilteredOptions = ({ input, options }) =>
         option.label.toLowerCase().includes(input.toLowerCase())
       )
     : options
+
+export const getNewSelectedOptions = ({ selectedOptions, option, isMulti }) =>
+  isMulti ? xorWith(selectedOptions, [option], isEqual) : [option]
 
 /**
  * Converts value to an array if it is not one already.
