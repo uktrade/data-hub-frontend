@@ -36,7 +36,7 @@ const minimumPayload = {
 
 const getFinancialYearStart = () => {
   const now = new Date()
-  return now.month < 3 ? now.getFullYear() - 1 : now.getFullYear()
+  return now.getMonth() < 2 ? now.getFullYear() - 1 : now.getFullYear()
 }
 
 const yearStartToRange = (yearStart) =>
