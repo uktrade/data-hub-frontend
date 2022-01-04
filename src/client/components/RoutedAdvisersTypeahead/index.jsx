@@ -33,7 +33,13 @@ const RoutedAdvisersTypeahead = ({
   ...props
 }) => (
   <Task.Status {...taskProps}>
-    {() => <RoutedTypeahead loadOptions={loadOptions} {...props} />}
+    {() => (
+      <RoutedTypeahead
+        loadOptions={loadOptions}
+        closeMenuOnSelect={true}
+        {...props}
+      />
+    )}
   </Task.Status>
 )
 

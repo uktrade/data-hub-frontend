@@ -1,4 +1,4 @@
-import { isEqual, xorWith } from 'lodash'
+import { xorWith } from 'lodash'
 
 import {
   TYPEAHEAD__BLUR,
@@ -13,7 +13,7 @@ import {
   TYPEAHEAD__OPTIONS_LOADED,
 } from '../../actions'
 
-import { getFilteredOptions, valueAsArray } from './utils'
+import { getFilteredOptions, valueAsArray, valueEqual } from './utils'
 
 const initialState = {
   menuOpen: false,
@@ -42,16 +42,18 @@ export default (
         ...state,
         isMulti,
         selectedOptions: valueAsArray(value),
-        input: isMulti ? state.input : valueAsArray(value)[0]?.label,
+        input: isMulti ? state.input : valueAsArray(value)[0]?.label || '',
       }
     case TYPEAHEAD__OPTIONS_LOADED:
+      const newOptions = getFilteredOptions({
+        options: result,
+        input: state.input,
+      })
       return {
         ...state,
-        options: result,
-        activeIndex: getFilteredOptions({
-          options: result,
-          input: state.input,
-        }).indexOf(filteredOptions[state.activeIndex]),
+        options: result || [],
+        activeIndex: newOptions.indexOf(filteredOptions[state.activeIndex]),
+        focusIndex: newOptions.indexOf(filteredOptions[state.focusIndex]),
       }
     case TYPEAHEAD__BLUR:
       return {
@@ -64,13 +66,17 @@ export default (
         ignoreBlur: false,
       }
     case TYPEAHEAD__INPUT:
+      const newInputOptions = getFilteredOptions({
+        options: state.options,
+        input: input,
+      })
       return {
         ...state,
         input,
-        activeIndex: getFilteredOptions({
-          options: state.options,
-          input,
-        }).indexOf(filteredOptions[state.activeIndex]),
+        activeIndex: newInputOptions.indexOf(
+          filteredOptions[state.activeIndex]
+        ),
+        focusIndex: newInputOptions.indexOf(filteredOptions[state.focusIndex]),
         menuOpen: true,
       }
     case TYPEAHEAD__SET_ACTIVE_OPTION:
@@ -81,6 +87,7 @@ export default (
     case TYPEAHEAD__MENU_CLOSE:
       return {
         ...state,
+        input: state.isMulti ? '' : state.input,
         menuOpen: false,
       }
     case TYPEAHEAD__MENU_OPEN:
@@ -107,7 +114,7 @@ export default (
       return {
         ...state,
         selectedOptions: state.isMulti
-          ? xorWith(state.selectedOptions, [option], isEqual)
+          ? xorWith(state.selectedOptions, [option], valueEqual)
           : [option],
         input: newInput,
         activeIndex: toggledIndex,

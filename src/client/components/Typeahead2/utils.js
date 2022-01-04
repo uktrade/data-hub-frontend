@@ -1,4 +1,4 @@
-import { isEqual, xorWith } from 'lodash'
+import { xorWith } from 'lodash'
 
 export const keys = {
   down: 'ArrowDown',
@@ -61,14 +61,16 @@ export const getUpdatedIndex = (current, max, action) => {
 }
 
 export const getFilteredOptions = ({ input, options }) =>
-  input
+  (input
     ? options.filter((option) =>
         option.label.toLowerCase().includes(input.toLowerCase())
       )
-    : options
+    : options) || []
+
+export const valueEqual = (item1, item2) => item1.value == item2.value
 
 export const getNewSelectedOptions = ({ selectedOptions, option, isMulti }) =>
-  isMulti ? xorWith(selectedOptions, [option], isEqual) : [option]
+  isMulti ? xorWith(selectedOptions, [option], valueEqual) : [option]
 
 /**
  * Converts value to an array if it is not one already.

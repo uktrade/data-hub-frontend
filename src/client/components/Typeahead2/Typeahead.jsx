@@ -194,198 +194,167 @@ const Typeahead = ({
       parent: menuRef.current,
       target: menuRef.current.children[index],
     })
-  return (
-    <Task>
-      {(t) => {
-        const optionsTask = t(TASK_GET_TYPEAHEAD_OPTIONS, id)
-        const onInputKeyDown = (event) => {
-          const max = filteredOptions.length - 1
-          const action = getActionFromKey(event.code, menuOpen)
-          switch (action) {
-            case menuActions.next:
-            case menuActions.last:
-            case menuActions.first:
-            case menuActions.previous:
-              event.preventDefault()
-              const newActiveIndex = getUpdatedIndex(activeIndex, max, action)
-              onActiveChange(newActiveIndex)
-              scrollMenuToIndex(newActiveIndex)
-              return
-            case menuActions.closeSelect:
-              event.preventDefault()
-              if (filteredOptions[activeIndex]) {
-                onOptionToggle(filteredOptions[activeIndex])
-                onChange(
-                  getNewSelectedOptions({
-                    selectedOptions,
-                    isMulti,
-                    option: filteredOptions[activeIndex],
-                  })
-                )
-              }
-              if (closeMenuOnSelect) {
-                optionsTask.cancel()
-                onMenuClose()
-              }
-              return
-            case menuActions.close:
-              event.preventDefault()
-              optionsTask.cancel()
-              onMenuClose()
-              return
-            case menuActions.open:
-              optionsTask.cancel()
-              optionsTask.start({
-                onSuccessDispatch: TYPEAHEAD__OPTIONS_LOADED,
-                payload: { autocomplete: input },
-              })
-              onMenuOpen()
-              scrollMenuToIndex(activeIndex)
-              return
-          }
+  const onInputKeyDown = (event) => {
+    const max = filteredOptions.length - 1
+    const action = getActionFromKey(event.code, menuOpen)
+    switch (action) {
+      case menuActions.next:
+      case menuActions.last:
+      case menuActions.first:
+      case menuActions.previous:
+        event.preventDefault()
+        const newActiveIndex = getUpdatedIndex(activeIndex, max, action)
+        onActiveChange(newActiveIndex)
+        scrollMenuToIndex(newActiveIndex)
+        return
+      case menuActions.closeSelect:
+        event.preventDefault()
+        if (filteredOptions[activeIndex]) {
+          onOptionToggle(filteredOptions[activeIndex])
+          onChange(
+            getNewSelectedOptions({
+              selectedOptions,
+              isMulti,
+              option: filteredOptions[activeIndex],
+            })
+          )
         }
-        return (
-          <div id={`${name}-wrapper`} data-test={testId}>
-            <Label id={`${name}-label`} data-test="typeahead-label">
-              {label}
-            </Label>
-            {isMulti && Boolean(selectedOptions.length) && (
-              <SelectedChips
-                name={name}
-                selectedOptions={selectedOptions}
-                onOptionRemove={(option) => {
-                  onOptionRemove(option)
-                  onChange(
-                    selectedOptions.filter(
-                      ({ value }) => value !== option.value
-                    )
-                  )
-                }}
-              />
-            )}
-            <InputWrapper>
-              <AutocompleteInput
-                {...inputProps}
-                autoComplete="off"
-                aria-activedescendant={activeId}
-                aria-autocomplete="list"
-                aria-controls={`${name}-listbox`}
-                aria-expanded={menuOpen ? 'true' : 'false'}
-                aria-haspopup="listbox"
-                aria-labelledby={`${name}-label ${name}-selected`}
-                role="combobox"
-                type="text"
-                value={input}
-                onBlur={onBlur}
-                onClick={() => {
-                  optionsTask.cancel()
-                  optionsTask.start({
-                    onSuccessDispatch: TYPEAHEAD__OPTIONS_LOADED,
-                    payload: {
-                      loadOptions,
-                      options: initialOptions,
-                      autocomplete: input,
-                    },
-                  })
-                  onMenuOpen()
-                  scrollMenuToIndex(activeIndex)
-                }}
-                onInput={(e) => {
-                  optionsTask.cancel()
-                  optionsTask.start({
-                    onSuccessDispatch: TYPEAHEAD__OPTIONS_LOADED,
-                    payload: {
-                      loadOptions,
-                      options: initialOptions,
-                      autocomplete: e.target.value,
-                    },
-                  })
-                  onInput(e)
-                }}
-                onKeyDown={onInputKeyDown}
-                error={error}
-                ref={inputRef}
-                data-test="typeahead-input"
-              />
-              <Menu
-                id={`${name}-listbox`}
-                open={menuOpen}
-                role="listbox"
-                aria-labelledby={`${name}-label`}
-                aria-multiselectable="true"
-                ref={menuRef}
-                data-test="typeahead-menu"
-              >
-                <>
-                  {filteredOptions.map((option, index) => (
-                    <ListboxOption
-                      id={`${name}-${option.value}`}
-                      key={option.value}
-                      active={index === activeIndex}
-                      focussed={index === focusIndex}
-                      isMulti={isMulti}
-                      role="option"
-                      aria-selected={
-                        selectedOptions
-                          .map(({ value }) => value)
-                          .indexOf(option.value) > -1
+        if (closeMenuOnSelect) {
+          onMenuClose()
+        }
+        return
+      case menuActions.close:
+        event.preventDefault()
+        onMenuClose()
+        return
+      case menuActions.open:
+        onMenuOpen()
+        scrollMenuToIndex(activeIndex)
+        return
+    }
+  }
+  return (
+    <div id={`${name}-wrapper`} data-test={testId}>
+      <Label id={`${name}-label`} data-test="typeahead-label">
+        {label}
+      </Label>
+      {isMulti && Boolean(selectedOptions.length) && (
+        <SelectedChips
+          name={name}
+          selectedOptions={selectedOptions}
+          onOptionRemove={(option) => {
+            onOptionRemove(option)
+            onChange(
+              selectedOptions.filter(({ value }) => value !== option.value)
+            )
+          }}
+        />
+      )}
+      <InputWrapper>
+        <AutocompleteInput
+          {...inputProps}
+          autoComplete="off"
+          aria-activedescendant={activeId}
+          aria-autocomplete="list"
+          aria-controls={`${name}-listbox`}
+          aria-expanded={menuOpen ? 'true' : 'false'}
+          aria-haspopup="listbox"
+          aria-labelledby={`${name}-label ${name}-selected`}
+          role="combobox"
+          type="text"
+          value={input}
+          onBlur={onBlur}
+          onClick={() => {
+            onMenuOpen()
+            scrollMenuToIndex(activeIndex)
+          }}
+          onInput={(e) => {
+            onInput(e)
+          }}
+          onKeyDown={onInputKeyDown}
+          error={error}
+          ref={inputRef}
+          data-test="typeahead-input"
+        />
+        <Menu
+          id={`${name}-listbox`}
+          open={menuOpen}
+          role="listbox"
+          aria-labelledby={`${name}-label`}
+          aria-multiselectable="true"
+          ref={menuRef}
+          data-test="typeahead-menu"
+        >
+          <Task.Status
+            name={TASK_GET_TYPEAHEAD_OPTIONS}
+            id={id}
+            progressMessage="Loading options"
+            startOnRender={{
+              payload: {
+                options: initialOptions,
+                loadOptions,
+                autocomplete: input,
+              },
+              onSuccessDispatch: TYPEAHEAD__OPTIONS_LOADED,
+            }}
+          >
+            {() => (
+              <>
+                {filteredOptions.map((option, index) => (
+                  <ListboxOption
+                    id={`${name}-${option.value}`}
+                    key={option.value}
+                    active={index === activeIndex}
+                    focussed={index === focusIndex}
+                    isMulti={isMulti}
+                    role="option"
+                    aria-selected={
+                      selectedOptions
+                        .map(({ value }) => value)
+                        .indexOf(option.value) > -1
+                    }
+                    aria-setsize={filteredOptions.length}
+                    aria-posinset={index}
+                    onClick={() => {
+                      inputRef.current && inputRef.current.focus()
+                      onOptionToggle(option)
+                      onChange(
+                        getNewSelectedOptions({
+                          selectedOptions,
+                          isMulti,
+                          option,
+                        })
+                      )
+                      if (closeMenuOnSelect) {
+                        onMenuClose()
                       }
-                      aria-setsize={filteredOptions.length}
-                      aria-posinset={index}
-                      onClick={() => {
-                        inputRef.current && inputRef.current.focus()
-                        onOptionToggle(option)
-                        onChange(
-                          getNewSelectedOptions({
-                            selectedOptions,
-                            isMulti,
-                            option,
-                          })
-                        )
-                        if (closeMenuOnSelect) {
-                          optionsTask.cancel()
-                          onMenuClose()
-                        }
-                      }}
-                      onMouseMove={() => {
-                        onActiveChange(index)
-                      }}
-                      onMouseDown={() => {
-                        onOptionMouseDown(index)
-                      }}
-                      data-test="typeahead-menu-option"
-                    >
-                      <span>
-                        <Highlighter
-                          optionLabel={option.label}
-                          searchStr={input}
-                        />
-                      </span>
-                    </ListboxOption>
-                  ))}
-                  {!filteredOptions.length && (
-                    <NoOptionsMessage>
-                      {optionsTask.progress ? (
-                        <>Loading...</>
-                      ) : optionsTask.error ? (
-                        <>
-                          Error: {optionsTask.errorMessage}
-                          <br />
-                          Type to retry.
-                        </>
-                      ) : (
-                        noOptionsMessage
-                      )}
-                    </NoOptionsMessage>
-                  )}
-                </>
-              </Menu>
-            </InputWrapper>
-            <AssistiveText name={name} />
-          </div>
-        )
-      }}
-    </Task>
+                    }}
+                    onMouseMove={() => {
+                      onActiveChange(index)
+                    }}
+                    onMouseDown={() => {
+                      onOptionMouseDown(index)
+                    }}
+                    data-test="typeahead-menu-option"
+                  >
+                    <span>
+                      <Highlighter
+                        optionLabel={option.label}
+                        searchStr={input}
+                      />
+                    </span>
+                  </ListboxOption>
+                ))}
+                {!filteredOptions.length && (
+                  <NoOptionsMessage>{noOptionsMessage}</NoOptionsMessage>
+                )}
+              </>
+            )}
+          </Task.Status>
+        </Menu>
+      </InputWrapper>
+      <AssistiveText name={name} />
+    </div>
   )
 }
 
