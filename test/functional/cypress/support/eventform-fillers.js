@@ -37,6 +37,10 @@ export const fillEventForm = ({
   teams,
   service,
 } = {}) => {
+  // fill optional field first, as form gets submitted once
+  // all required fields are filled in
+  fillProgrammes(relatedProgrammes)
+
   fillHasRelatedTradeAgreementsRadio(hasRelatedTradeAgreements)
   if (hasRelatedTradeAgreements && relatedTradeAgreements) {
     fillRelatedTradeAgreements(relatedTradeAgreements)
@@ -63,7 +67,6 @@ export const fillEventForm = ({
   if (eventShared && teams) {
     fillTeams(teams)
   }
-  fillProgrammes(relatedProgrammes)
 }
 
 export const fillEventNotes = (notes) => {
@@ -119,7 +122,7 @@ export const fillAndAssertProgrammes = (programmes = []) => {
 
   assertMultiOptionTypeaheadValues(
     selectors.relatedProgrammesFieldId,
-    'Related programmes',
+    'Related programmes (optional)',
     programmes
   )
 }

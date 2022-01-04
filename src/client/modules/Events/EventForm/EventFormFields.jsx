@@ -145,7 +145,7 @@ export const EventFormFields = ({ values }) => (
       options={values?.metadata?.teams}
       required="Select at least one team hosting the event"
       placeholder="Select team"
-      aria-label="Select an team"
+      aria-label="Select a team"
       noOptionsMessage={() => <span>No hosting team found</span>}
     />
     <FieldTypeahead
@@ -188,14 +188,13 @@ export const EventFormFields = ({ values }) => (
       inline={true}
     />
     <FieldTypeahead
-      label="Related programmes"
+      label="Related programmes (optional)"
       isMulti={true}
       closeMenuOnSelect={true}
       name="related_programmes"
       options={values?.metadata?.programmes}
       placeholder="Select programme"
-      required="Select at least one related programme"
-      aria-label="Select at least one related programme"
+      aria-label="Select programme"
       noOptionsMessage={() => <span>No programmes found</span>}
     />
   </>
