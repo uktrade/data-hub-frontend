@@ -298,7 +298,7 @@ const Typeahead = ({
                     payload: {
                       loadOptions,
                       options: initialOptions,
-                      autocomplete: input,
+                      autocomplete: e.target.value,
                     },
                   })
                   onInput(e)
