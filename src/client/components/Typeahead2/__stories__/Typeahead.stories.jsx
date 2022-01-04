@@ -26,7 +26,7 @@ const asyncOptions = [
 
 export const mockLoadOptions = (query = '') =>
   new Promise((resolve) =>
-    query && query.length > 2
+    query && query.length
       ? setTimeout(
           resolve,
           1000,
@@ -63,7 +63,7 @@ storiesOf('Typeahead2', module)
       name="singleselect"
       isMulti={false}
       closeMenuOnSelect={true}
-      options={options}
+      initialOptions={options}
       placeholder="Search..."
       label="Pick a fruit"
     />
@@ -73,7 +73,7 @@ storiesOf('Typeahead2', module)
       name="singleselect-pre-select"
       isMulti={false}
       closeMenuOnSelect={true}
-      options={options}
+      initialOptions={options}
       placeholder="Search..."
       defaultValue={options[2]}
       label="Pick a fruit"
@@ -85,7 +85,7 @@ storiesOf('Typeahead2', module)
       error={true}
       isMulti={false}
       closeMenuOnSelect={false}
-      options={options}
+      initialOptions={options}
       placeholder="Search..."
       label="Pick a fruit"
     />
@@ -114,7 +114,7 @@ storiesOf('Typeahead2', module)
       isMulti={true}
       closeMenuOnSelect={false}
       name="multiselect"
-      options={options}
+      initialOptions={options}
       placeholder="Search..."
       label="Pick a fruit"
     />
@@ -124,7 +124,7 @@ storiesOf('Typeahead2', module)
       isMulti={true}
       closeMenuOnSelect={false}
       name="multiselect-pre-select"
-      options={options}
+      initialOptions={options}
       placeholder="Search..."
       defaultValue={options[2]}
       label="Pick a fruit"
@@ -135,7 +135,7 @@ storiesOf('Typeahead2', module)
       isMulti={true}
       closeMenuOnSelect={false}
       name="multiselect-pre-select-multiple"
-      options={options}
+      initialOptions={options}
       placeholder="Search..."
       defaultValue={[options[2], options[0]]}
       label="Pick a fruit"

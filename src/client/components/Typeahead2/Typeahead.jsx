@@ -177,7 +177,6 @@ const Typeahead = ({
       value: initialValue,
     })
   }, [JSON.stringify(initialValue), isMulti])
-  //useEffect(() => onChange(selectedOptions), [JSON.stringify(selectedOptions)])
   const inputRef = React.useRef(null)
   const menuRef = React.useRef(null)
   const ignoreFilter =
