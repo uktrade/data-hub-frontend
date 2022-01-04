@@ -4,7 +4,7 @@
 
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { get } from 'lodash'
+import { get, omit } from 'lodash'
 
 import {
   FieldRadios,
@@ -66,6 +66,13 @@ function AddCompanyForm({
     return {}
   }
 
+  function transformPayload(values) {
+    return {
+      ...omit(values, [!values?.telephone_number && 'telephone_number']),
+      csrfToken,
+    }
+  }
+
   return (
     <Form
       id="add-company-form"
@@ -73,7 +80,7 @@ function AddCompanyForm({
       analyticsFormName="addCompanyForm"
       redirectTo={(company) => `/companies/${company.id}`}
       flashMessage={() => 'Company added to Data Hub'}
-      transformPayload={(values) => ({ ...values, csrfToken })}
+      transformPayload={transformPayload}
     >
       {({ values, setFieldValue }) => {
         const country = getCountry(values)
