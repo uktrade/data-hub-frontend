@@ -18,6 +18,7 @@ const CompanyProjectsCollection = ({
   payload,
   optionMetadata,
   selectedFilters,
+  hideAddInvestmentButtonEnabled,
   ...props
 }) => {
   const collectionListTask = {
@@ -33,7 +34,7 @@ const CompanyProjectsCollection = ({
       onSuccessDispatch: INVESTMENTS__PROJECTS_LOADED,
     },
   }
-
+  const isUkCompany = company.uk_region != null
   return (
     <>
       {company.archived && (
@@ -54,7 +55,9 @@ const CompanyProjectsCollection = ({
         taskProps={collectionListTask}
         selectedFilters={selectedFilters}
         addItemUrl={
-          company.archived ? null : `/investments/projects/create/${company.id}`
+          company.archived || (hideAddInvestmentButtonEnabled && isUkCompany)
+            ? null
+            : `/investments/projects/create/${company.id}`
         }
         defaultQueryParams={{
           page: 1,

@@ -60,7 +60,7 @@
     {% endif %}
 
   {% elseif company %}
-    {% if showForeignEquityQuestion %}
+
       {{
         Form(form | assign({
           buttonText: 'Continue',
@@ -89,18 +89,6 @@
         }))
       }}
 
-    {% else %}
-
-      {{
-        Form(form | assign({
-          buttonText: 'Continue',
-          hiddenFields: {
-            company_id: company.id
-          }
-        }))
-      }}
-
     {% endif %}
-  {% endif %}
 
 {% endblock %}
