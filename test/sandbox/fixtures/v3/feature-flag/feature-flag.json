@@ -2,5 +2,9 @@
   {
     "code": "cfe1",
     "is_active": true
+  },
+  {
+    "code": "investment-show-foreign-equity-question",
+    "is_active": true
   }
 ]

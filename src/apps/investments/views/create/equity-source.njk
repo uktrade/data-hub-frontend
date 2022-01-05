@@ -60,34 +60,47 @@
     {% endif %}
 
   {% elseif company %}
+    {% if showForeignEquityQuestion %}
+      {{
+        Form(form | assign({
+          buttonText: 'Continue',
+          hiddenFields: {
+            company_id: company.id
+          },
+          children: [
+            {
+              macroName: 'MultipleChoiceField',
+              type: 'radio',
+              name: 'is_equity_source',
+              label: 'Will this company be the source of foreign equity investment?',
+              modifier: 'inline',
+              error: form.errors.messages.is_equity_source,
+              options: [
+                {
+                  value: 'true',
+                  label: 'Yes'
+                }, {
+                  value: 'false',
+                  label: 'No'
+                }
+              ]
+            }
+          ]
+        }))
+      }}
 
-    {{
-      Form(form | assign({
-        buttonText: 'Continue',
-        hiddenFields: {
-          company_id: company.id
-        },
-        children: [
-          {
-            macroName: 'MultipleChoiceField',
-            type: 'radio',
-            name: 'is_equity_source',
-            label: 'Will this company be the source of foreign equity investment?',
-            modifier: 'inline',
-            error: form.errors.messages.is_equity_source,
-            options: [
-              {
-                value: 'true',
-                label: 'Yes'
-              }, {
-                value: 'false',
-                label: 'No'
-              }
-            ]
+    {% else %}
+
+      {{
+        Form(form | assign({
+          buttonText: 'Continue',
+          hiddenFields: {
+            company_id: company.id
           }
-        ]
-      }))
-    }}
+        }))
+      }}
+
+    {% endif %}
   {% endif %}
 
 {% endblock %}
