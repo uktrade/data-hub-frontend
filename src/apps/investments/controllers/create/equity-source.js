@@ -12,6 +12,7 @@ const {
 const { ENTITIES } = require('../../../search/constants')
 
 function renderEquitySourcePage(req, res) {
+  // TODO(RR-290): Clean up feature flag and delete code in the template
   return res
     .breadcrumb('Add investment project')
     .render('investments/views/create/equity-source', {
@@ -77,6 +78,7 @@ async function getHandler(req, res, next) {
 }
 
 function postHandler(req, res, next) {
+  // TODO(RR-290): Delete the else part and fix the tests when the feature flag is ready
   const isEquitySourceDefaultValue = !res.locals.features[
     'investment-show-foreign-equity-question'
   ]
