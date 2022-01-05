@@ -3,8 +3,7 @@ const urls = require('../../../../../../lib/urls')
 function renderProjects(req, res) {
   const { company, returnUrl, dnbRelatedCompaniesCount, features } = res.locals
   const hideAddInvestmentButtonEnabled =
-    features['investment-hide-add-investement-button-for-uk'] ?? false
-  // console.debug(hideAddInvestmentButtonEnabled, isUKCompany)
+    features['company-hide-add-investment-button-for-uk'] ?? false
   res.locals.title = `Investments - ${company.name} - Companies`
 
   res.render('companies/apps/investments/projects/views/list', {
