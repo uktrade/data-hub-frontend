@@ -14,7 +14,10 @@ const { ENTITIES } = require('../../../search/constants')
 function renderEquitySourcePage(req, res) {
   return res
     .breadcrumb('Add investment project')
-    .render('investments/views/create/equity-source')
+    .render('investments/views/create/equity-source', {
+      showForeignEquityQuestion:
+        res.locals.features['investment-show-foreign-equity-question'],
+    })
 }
 
 function transformListItemForEquitySource(company, projects) {
@@ -74,7 +77,13 @@ async function getHandler(req, res, next) {
 }
 
 function postHandler(req, res, next) {
-  const isEquitySource = req.body.is_equity_source
+  const isEquitySourceDefaultValue = !res.locals.features[
+    'investment-show-foreign-equity-question'
+  ]
+    ? 'true'
+    : undefined
+  const isEquitySource = req.body.is_equity_source ?? isEquitySourceDefaultValue
+
   const clientCompanyId = req.body.company_id
   const { projects } = res.locals.paths
 
