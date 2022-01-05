@@ -79,11 +79,11 @@ async function getHandler(req, res, next) {
 
 function postHandler(req, res, next) {
   // TODO(RR-290): Delete the else part and fix the tests when the feature flag is ready
-  const isEquitySourceDefaultValue = !res.locals.features[
-    'investment-show-foreign-equity-question'
-  ]
-    ? 'true'
-    : undefined
+  const isEquitySourceDefaultValue =
+    res.locals.features &&
+    !res?.locals?.features['investment-show-foreign-equity-question']
+      ? 'true'
+      : undefined
   const isEquitySource = req.body.is_equity_source ?? isEquitySourceDefaultValue
 
   const clientCompanyId = req.body.company_id
