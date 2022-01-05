@@ -407,15 +407,15 @@ describe('events Collections Filter', () => {
       cy.get('[data-test=clear-filters]').click()
       cy.get('[data-test=filter-chips]').children().should('have.length', 0)
       cy.get('[data-test="event-name-filter"]').should('have.value', '')
-      cy.get('[data-test="country-filter"]').should('contain', 'Search country')
-      cy.get('[data-test="uk-region-filter"]').should(
-        'contain',
-        'Search UK region'
-      )
-      cy.get('[data-test="organiser-filter"]').should(
-        'contain',
-        'Search organiser'
-      )
+      cy.get('[data-test="country-filter"]')
+        .find('[data-test="typeahead-chip"]')
+        .should('have.length', 0)
+      cy.get('[data-test="uk-region-filter"]')
+        .find('[data-test="typeahead-chip"]')
+        .should('have.length', 0)
+      cy.get('[data-test="organiser-filter"]')
+        .find('[data-test="typeahead-chip"]')
+        .should('have.length', 0)
       assertDateInput({
         element: '[data-test="start-date-after-filter"]',
         label: 'From',

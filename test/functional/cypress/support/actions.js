@@ -8,9 +8,9 @@ export const selectFirstAdvisersTypeaheadOption = ({ element, input }) =>
   cy.get(element).within(() => {
     cy.server()
     cy.route('/api-proxy/adviser/?*').as('adviserResults')
-    cy.get('div').eq(0).type(input)
+    cy.get('input').type(input)
     cy.wait('@adviserResults')
-    cy.get('[class*="menu"] > div').click()
+    cy.get('input').eq(0).type('{downarrow}{enter}')
   })
 
 /**

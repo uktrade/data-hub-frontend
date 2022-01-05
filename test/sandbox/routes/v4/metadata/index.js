@@ -160,7 +160,13 @@ exports.ukRegion = function (req, res) {
 }
 
 exports.administrativeArea = function (req, res) {
-  res.json(administrativeArea)
+  res.json(
+    req.query.country
+      ? administrativeArea.filter(
+          ({ country }) => country.id == req.query.country
+        )
+      : administrativeArea
+  )
 }
 
 exports.referralSourceWebsite = function (req, res) {
