@@ -25,8 +25,7 @@ export const clickCheckboxGroupOption = ({ element, value }) => {
  */
 export const selectFirstTypeaheadOption = ({ element, input }) => {
   cy.get(element).type(input)
-  cy.get(element).find('[class*="menu"] ul > li:first-child').click()
-  cy.get(element).click()
+  cy.get(element).find('[data-test="typeahead-menu-option"]').first().click()
 }
 
 /**
