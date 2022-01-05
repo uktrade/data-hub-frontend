@@ -253,7 +253,7 @@ const Typeahead = ({
       <InputWrapper>
         <AutocompleteInput
           {...inputProps}
-          autoComplete="off"
+          autoComplete={`typeahead-${name}`}
           aria-activedescendant={activeId}
           aria-autocomplete="list"
           aria-controls={`${name}-listbox`}

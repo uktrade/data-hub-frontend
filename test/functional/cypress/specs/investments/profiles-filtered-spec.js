@@ -17,7 +17,9 @@ const testTypeaheadFilter = ({
       cy.visit(urls.investments.profiles.index())
       expandToggleSections()
       cy.get(`[data-test="${selector}"]`).within((e) =>
-        options.forEach((option) => cy.wrap(e).type(`${option}{enter}`))
+        options.forEach((option) =>
+          cy.wrap(e).find('input').clear().type(`${option}{downarrow}{enter}`)
+        )
       )
       cy.contains(
         `${expectedNumberOfResults} profile${
