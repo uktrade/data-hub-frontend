@@ -38,28 +38,30 @@ describe('Contact Collections Sort', () => {
     })
 
     it('should sort by "Recently updated"', () => {
-      cy.get(element).select('modified_on:desc')
+      cy.get(element).select('modified_on:desc', { waitForAnimations: false })
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('modified_on:desc')
       })
     })
 
     it('should sort by "Least recently updated"', () => {
-      cy.get(element).select('modified_on:asc')
+      cy.get(element).select('modified_on:asc', { waitForAnimations: false })
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('modified_on:asc')
       })
     })
 
     it('should sort by "Company A-Z"', () => {
-      cy.get(element).select('name:asc')
+      cy.get(element).select('name:asc', { waitForAnimations: false })
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('name:asc')
       })
     })
 
     it('should sort by "Last interaction date"', () => {
-      cy.get(element).select('latest_interaction_date:desc')
+      cy.get(element).select('latest_interaction_date:desc', {
+        waitForAnimations: false,
+      })
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('latest_interaction_date:desc')
       })

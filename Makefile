@@ -12,7 +12,7 @@ ifdef CI
 	cypress-args = -- --parallel --record --key $(CYPRESS_DASHBOARD_KEY) --ci-build-id $(CIRCLE_BUILD_NUM)
 else
 	start-command = up --build --force-recreate
-	cypress-args = -- --spec test/functional/cypress/specs/companies/sort-spec.js
+	cypress-args =
 endif
 
 # Helper commands to execute docker-compose for a specific setup
