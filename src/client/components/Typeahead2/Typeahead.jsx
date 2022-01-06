@@ -253,13 +253,16 @@ const Typeahead = ({
       <InputWrapper>
         <AutocompleteInput
           {...inputProps}
-          autoComplete={`typeahead-${name}`}
+          // Tell autocomplete that this is a password to stop Chrome autofilling.
+          // Setting 'off' is ignored by Chrome and a custom string fails accessibility.
+          autoComplete="new-password"
+          inputMode="search"
           aria-activedescendant={activeId}
           aria-autocomplete="list"
           aria-controls={`${name}-listbox`}
           aria-expanded={menuOpen ? 'true' : 'false'}
           aria-haspopup="listbox"
-          aria-labelledby={`${name}-label ${name}-selected`}
+          aria-labelledby={`${name}-label`}
           role="combobox"
           type="text"
           value={input}
