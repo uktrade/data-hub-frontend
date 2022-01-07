@@ -18,7 +18,6 @@ import reducer from './reducer'
 import FormActions from './elements/FormActions'
 import { FormContextProvider } from './hooks'
 
-import { getMessages } from '../../utils/flash-messages'
 import Effect from '../Effect'
 import HardRedirect from '../HardRedirect'
 
@@ -234,8 +233,7 @@ const _Form = ({
                                           redirectMode === 'soft' &&
                                             redirectTo &&
                                             history.push(
-                                              redirectTo(result, values),
-                                              { messages: getMessages() }
+                                              redirectTo(result, values)
                                             )
                                           onSuccess &&
                                             onSuccess(result, values, {
