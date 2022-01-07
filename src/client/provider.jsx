@@ -113,6 +113,9 @@ import Resource from './components/Resource'
 import { ContactForm } from './components/ContactForm'
 import Form from './components/Form'
 
+import { ID as FLASH_MESSAGE_ID } from './components/LocalHeader/state'
+import flashMessageReducer from './components/LocalHeader/reducer'
+
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
   // The baseURI is set to the <base/> tag by the spaFallbackSpread
@@ -141,6 +144,7 @@ const store = createStore(
     modulePermissions: () => modulePermissions,
     router: connectRouter(history),
     tasks,
+    [FLASH_MESSAGE_ID]: flashMessageReducer,
     [COMPANY_LISTS_STATE_ID]: companyListsReducer,
     [COMPANIES_ID]: companiesReducer,
     [EXPORTS_HISTORY_ID]: exportsHistoryReducer,
