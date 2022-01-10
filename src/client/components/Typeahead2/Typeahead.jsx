@@ -235,9 +235,11 @@ const Typeahead = ({
   }
   return (
     <div id={`${name}-wrapper`} data-test={testId}>
-      <Label id={`${name}-label`} data-test="typeahead-label">
-        {label}
-      </Label>
+      {label && (
+        <Label id={`${name}-label`} data-test="typeahead-label" htmlFor={name}>
+          {label}
+        </Label>
+      )}
       {isMulti && Boolean(selectedOptions.length) && (
         <SelectedChips
           name={name}
@@ -253,6 +255,7 @@ const Typeahead = ({
       <InputWrapper>
         <AutocompleteInput
           {...inputProps}
+          id={name}
           // Tell autocomplete that this is a password to stop Chrome autofilling.
           // Setting 'off' is ignored by Chrome and a custom string fails accessibility.
           autoComplete="new-password"
@@ -262,7 +265,6 @@ const Typeahead = ({
           aria-controls={`${name}-listbox`}
           aria-expanded={menuOpen ? 'true' : 'false'}
           aria-haspopup="listbox"
-          aria-labelledby={`${name}-label`}
           role="combobox"
           type="text"
           value={input}
