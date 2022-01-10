@@ -202,6 +202,8 @@ describe('Typeahead2', () => {
         .find('[data-test="typeahead-chip"]')
         .should('have.length', 1)
 
+      cy.get('@component').find('[data-test="typeahead-input"]').click()
+
       cy.get('@component')
         .find('[data-test="typeahead-menu-option"]')
         .eq(3)

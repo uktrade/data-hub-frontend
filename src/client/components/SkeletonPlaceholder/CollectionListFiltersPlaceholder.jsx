@@ -53,8 +53,11 @@ const InputList = styled('ul')`
 `
 
 const InputListItem = styled('li')`
-  &::first-child {
-    ${({ checkboxCount }) => checkboxCount && `margin-top: 50px;`};
+  &:first-child {
+    margin-top: 50px;
+  }
+  &:only-child {
+    margin-top: 0;
   }
 `
 
@@ -71,10 +74,10 @@ const InputListItemField = styled('div')`
   margin-top: ${SPACING.SCALE_1};
 `
 
-const FilterInputs = ({ inputCount, checkboxCount }) => (
+const FilterInputs = ({ inputCount }) => (
   <InputList>
     {Array.from(Array(inputCount).keys()).map((el, i) => (
-      <InputListItem key={i} checkboxCount={checkboxCount}>
+      <InputListItem key={i}>
         <InputListItemLabel />
         <InputListItemField />
       </InputListItem>
@@ -88,10 +91,7 @@ const collectionListFilters =
     (
       <>
         <FilterCheckboxes count={filterCheckboxCount} />
-        <FilterInputs
-          inputCount={filterInputCount}
-          checkboxCount={filterCheckboxCount}
-        />
+        <FilterInputs inputCount={filterInputCount} />
       </>
     )
 

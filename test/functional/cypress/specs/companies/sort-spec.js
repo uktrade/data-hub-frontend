@@ -38,21 +38,21 @@ describe('Contact Collections Sort', () => {
     })
 
     it('should sort by "Recently updated"', () => {
-      cy.get(element).select('modified_on:desc', { waitForAnimations: false })
+      cy.get(element).select('modified_on:desc')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('modified_on:desc')
       })
     })
 
     it('should sort by "Least recently updated"', () => {
-      cy.get(element).select('modified_on:asc', { waitForAnimations: false })
+      cy.get(element).select('modified_on:asc')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('modified_on:asc')
       })
     })
 
     it('should sort by "Company A-Z"', () => {
-      cy.get(element).select('name:asc', { waitForAnimations: false })
+      cy.get(element).select('name:asc')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('name:asc')
       })

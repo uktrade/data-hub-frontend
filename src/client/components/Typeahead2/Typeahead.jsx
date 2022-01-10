@@ -130,7 +130,7 @@ const Menu = styled('div')(({ open }) => ({
   backgroundColor: WHITE,
   boxSizing: 'border-box',
   border: `1px solid ${BLACK}`,
-  maxHeight: 318,
+  maxHeight: 336,
   overflowY: 'scroll',
   left: 0,
   position: 'absolute',
@@ -288,72 +288,74 @@ const Typeahead = ({
           ref={menuRef}
           data-test="typeahead-menu"
         >
-          <Task.Status
-            name={TASK_GET_TYPEAHEAD_OPTIONS}
-            id={id}
-            progressMessage="Loading options"
-            startOnRender={{
-              payload: {
-                options: initialOptions,
-                loadOptions,
-                autocomplete: input,
-              },
-              onSuccessDispatch: TYPEAHEAD__OPTIONS_LOADED,
-            }}
-          >
-            {() => (
-              <>
-                {filteredOptions.map((option, index) => (
-                  <ListboxOption
-                    id={`${name}-${option.value}`}
-                    key={option.value}
-                    active={index === activeIndex}
-                    focussed={index === focusIndex}
-                    isMulti={isMulti}
-                    role="option"
-                    aria-selected={
-                      selectedOptions
-                        .map(({ value }) => value)
-                        .indexOf(option.value) > -1
-                    }
-                    aria-setsize={filteredOptions.length}
-                    aria-posinset={index}
-                    onClick={() => {
-                      inputRef.current && inputRef.current.focus()
-                      onOptionToggle(option)
-                      onChange(
-                        getNewSelectedOptions({
-                          selectedOptions,
-                          isMulti,
-                          option,
-                        })
-                      )
-                      if (closeMenuOnSelect) {
-                        onMenuClose()
+          {menuOpen && (
+            <Task.Status
+              name={TASK_GET_TYPEAHEAD_OPTIONS}
+              id={id}
+              progressMessage="Loading options"
+              startOnRender={{
+                payload: {
+                  options: initialOptions,
+                  loadOptions,
+                  autocomplete: input,
+                },
+                onSuccessDispatch: TYPEAHEAD__OPTIONS_LOADED,
+              }}
+            >
+              {() => (
+                <>
+                  {filteredOptions.map((option, index) => (
+                    <ListboxOption
+                      id={`${name}-${option.value}`}
+                      key={option.value}
+                      active={index === activeIndex}
+                      focussed={index === focusIndex}
+                      isMulti={isMulti}
+                      role="option"
+                      aria-selected={
+                        selectedOptions
+                          .map(({ value }) => value)
+                          .indexOf(option.value) > -1
                       }
-                    }}
-                    onMouseMove={() => {
-                      onActiveChange(index)
-                    }}
-                    onMouseDown={() => {
-                      onOptionMouseDown(index)
-                    }}
-                    data-test="typeahead-menu-option"
-                  >
-                    <span>
-                      <Highlighter
-                        optionLabel={option.label}
-                        searchStr={input}
-                      />
-                    </span>
-                  </ListboxOption>
-                ))}
-                {!filteredOptions.length && (
-                  <NoOptionsMessage>{noOptionsMessage}</NoOptionsMessage>
-                )}
-              </>
-            )}
-          </Task.Status>
+                      aria-setsize={filteredOptions.length}
+                      aria-posinset={index}
+                      onClick={() => {
+                        inputRef.current && inputRef.current.focus()
+                        onOptionToggle(option)
+                        onChange(
+                          getNewSelectedOptions({
+                            selectedOptions,
+                            isMulti,
+                            option,
+                          })
+                        )
+                        if (closeMenuOnSelect) {
+                          onMenuClose()
+                        }
+                      }}
+                      onMouseMove={() => {
+                        onActiveChange(index)
+                      }}
+                      onMouseDown={() => {
+                        onOptionMouseDown(index)
+                      }}
+                      data-test="typeahead-menu-option"
+                    >
+                      <span>
+                        <Highlighter
+                          optionLabel={option.label}
+                          searchStr={input}
+                        />
+                      </span>
+                    </ListboxOption>
+                  ))}
+                  {!filteredOptions.length && (
+                    <NoOptionsMessage>{noOptionsMessage}</NoOptionsMessage>
+                  )}
+                </>
+              )}
+            </Task.Status>
+          )}
         </Menu>
       </InputWrapper>
       <AssistiveText name={name} />
