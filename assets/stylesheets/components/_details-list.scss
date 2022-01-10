@@ -14,21 +14,21 @@
 
 .details-list__item-section {
   @include grid-row;
-  margin-bottom: $gutter / 4;
+  margin-bottom: $gutter * 0.25;
 }
 
 .details-list__item-heading {
   display: block;
-  margin-bottom: $gutter / 2;
+  margin-bottom: $gutter * 0.5;
 }
 
 .details-list__item-title {
-  @include grid-column(1 / 4);
+  @include grid-column(1 * 0.25);
   color: $grey-1;
 }
 
 .details-list__item-description {
-  @include grid-column(3 / 4);
+  @include grid-column(3 * 0.25);
   display: inline;
 }
 
@@ -36,7 +36,7 @@
   .details-list__item-heading {
     &::before {
       font-family: "FontAwesome";
-      width: $gutter / 2;
+      width: $gutter * 0.5;
       display: inline-block;
       content: "\f0da";
     }

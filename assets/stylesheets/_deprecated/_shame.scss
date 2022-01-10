@@ -9,5 +9,5 @@ strong {
 }
 
 .column-three-quarters {
-  @include grid-column(3 / 4, tablet);
+  @include grid-column(3 * 0.25, tablet);
 }

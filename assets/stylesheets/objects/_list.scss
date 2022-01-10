@@ -15,7 +15,7 @@
 
 .list-lined li {
   border-bottom: 1px solid $border-colour;
-  padding: ($gutter / 2) ($gutter / 2) ($gutter / 2) 0;
+  padding: ($gutter * 0.5) ($gutter * 0.5) ($gutter * 0.5) 0;
 
   &:first-child {
     border-top: 1px solid $border-colour;
@@ -33,7 +33,7 @@
   }
 
   li + li {
-    margin-top: $default-spacing-unit / 2;
+    margin-top: $default-spacing-unit * 0.5;
   }
 }
 

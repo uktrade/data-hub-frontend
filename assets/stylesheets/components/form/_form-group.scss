@@ -125,7 +125,7 @@ fieldset.c-form-group.c-form-fieldset--subfield {
 
     .c-form-group__label:not(legend) {
       display: inline-block;
-      margin-right: $default-spacing-unit / 2;
+      margin-right: $default-spacing-unit * 0.5;
     }
 
     .c-form-control {
@@ -173,7 +173,7 @@ fieldset.c-form-group.c-form-fieldset--subfield {
 
 .c-form-group--filter {
   background: $grey-3;
-  padding: $default-spacing-unit / 2;
+  padding: $default-spacing-unit * 0.5;
   margin-top: $default-spacing-unit;
 }
 
@@ -182,7 +182,7 @@ fieldset.c-form-group.c-form-fieldset--subfield {
 }
 
 .c-form-group--filter.c-form-group--hide-label {
-  padding-top: ($default-spacing-unit / 2) - 3;
+  padding-top: ($default-spacing-unit * 0.5) - 3;
 }
 
 .c-form-group--hide-label {
