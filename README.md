@@ -70,18 +70,26 @@ Steps 5 onwards differ depending on which API you are using. Skip to section 'Ru
 
 **Running with the local API**
 
-5. The environment variables copied from `sample.env` are set up for running both the frontend and the API using the docker set-up outlined [here](./docs/Docker.md). To run the frontend natively, the following variables will need to be changed to:
+5.  The environment variables copied from `sample.env` are set up for running both the frontend and the API using the docker set-up outlined [here](./docs/Docker.md). To run the frontend natively, the following variables will need to be changed to:
     ```
     API_ROOT=http://localhost:8000
     REDIS_HOST=localhost
     REDIS_URL=redis://localhost:6379
     ```
 
-6. Bring up Data Hub API via the `docker-compose up` command or natively, using the instructions outlined in Data Hub API's `README.md`.
+6.  Bring up Data Hub API using the instructions outlined in the repository's [`README.md`](https://github.com/uktrade/data-hub-api/blob/develop/README.md).
 
-7. Go to [Django Admin](http://localhost:8000/admin/add-access-token/) and get an access token. Add a frontend environment variable `OAUTH2_DEV_TOKEN` and set this as equal to the access token. 
+7.  Go to http://localhost:8000/admin/add-access-token/ to get an access token. Add a frontend environment variable `OAUTH2_DEV_TOKEN` and set this as equal to the access token. 
 
 8.  Start the node server
+
+    **In production mode:**
+
+    ```bash
+    export NODE_ENV=production
+    npm run build && npm start
+    ```
+    This will build static assets beforehand and then run the app.
 
     **In development mode:**
 
@@ -94,17 +102,17 @@ Steps 5 onwards differ depending on which API you are using. Skip to section 'Ru
     The server will run with the node debug flag so you can debug with Webstorm
     or Visual Studio Code.
 
-
 **Running with other APIs (e.g. staging)**
 
-5. Go to the [Playbook](https://readme.trade.gov.uk/docs/playbooks/datahub.html#environments) and use the Admin URLs to set the environment variable `API_ROOT`.
-6. Go to Vault, look in datahub-fe, and click on the environment you want to use. Change the following environment variables in your `.env` file to the ones specified in Vault:
+5.  Go to the [Playbook](https://readme.trade.gov.uk/docs/playbooks/datahub.html#environments) and use the Admin URLs to set the environment variable `API_ROOT`. You will need to remove `/admin` from the end of the API paths.
+
+6.  Go to Vault, look in datahub-fe, and click on the environment you want to use. Change the following environment variables in your `.env` file to the ones specified in Vault:
     ``` 
     DATA_HUB_BACKEND_ACCESS_KEY_ID=frontend-key-id
     DATA_HUB_BACKEND_SECRET_ACCESS_KEY=frontend-key
     ```
 
-7. The environment variables copied from Vault and `sample.env` are set up for running both the frontend and the API using the docker. To run the frontend natively, the following variables will need to be changed to:
+7.  The environment variables copied from Vault and `sample.env` are set up for running both the frontend and the API using the docker. To run the frontend natively, the following variables will need to be changed to:
     ```
     REDIS_HOST=localhost
     REDIS_URL=redis://localhost:6379
@@ -122,9 +130,9 @@ Steps 5 onwards differ depending on which API you are using. Skip to section 'Ru
     docker run -it -p 6379:6379 redis:3.2
     ```
 
-9. Go to the Django admin site for your relevant environment and get an access token by adding the following path `/add-access-token/` to the URL. Add a frontend environment variable `OAUTH2_DEV_TOKEN` and set this as equal to the access token. 
+9.  Go to the Django admin site for your relevant environment and get an access token by adding the following path `/add-access-token/` to the URL. Add a frontend environment variable `OAUTH2_DEV_TOKEN` and set this as equal to the access token. 
 
-10.  Start the node server
+10. Start the node server
 
     **In production mode:**
 
@@ -132,7 +140,6 @@ Steps 5 onwards differ depending on which API you are using. Skip to section 'Ru
     export NODE_ENV=production
     npm run build && npm start
     ```
-
     This will build static assets beforehand and then run the app.
 
     **In development mode:**
@@ -148,28 +155,26 @@ Steps 5 onwards differ depending on which API you are using. Skip to section 'Ru
 
 ### Working with SSO
 
+`SSO_ENABLED` is set to false by default which will bypass any authentication. However, if working on integration with SSO, these sets of instructions can be followed to enable SSO. 
+
 **Mock SSO**
 
 To use the mock SSO service, add the environment variables from `sample.env` below the line 'To use mock-SSO' into your `.env` file and uncomment.
 
-Set `SSO_ENABLED=true`
+Set `SSO_ENABLED=true`  and start the mocked SSO:
 
-  Start the mocked SSO:
-
-    ```bash
-    docker run -it -p 8080:8080 gcr.io/sre-docker-registry/github.com/uktrade/mock-sso:latest
-    ```
+```bash
+docker run -it -p 8080:8080 gcr.io/sre-docker-registry/github.com/uktrade/mock-sso:latest
+```
 
 
 **Live SSO**
 
 To use the live SSO service, add the environment variables from `sample.env` below the line 'To use live SSO' into your `.env` file and uncomment.
 
-Set `SSO_ENABLED=true`
+Set `SSO_ENABLED=true` and then restart your development environment.
 
-Then restart your development environment
-
-These instructions work for both the dockerised environment and the native environment
+These instructions work for both the dockerised environment and the native environment.
 
 ### Environment variables
 
