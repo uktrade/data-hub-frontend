@@ -259,12 +259,17 @@ const Typeahead = ({
           // Tell autocomplete that this is a password to stop Chrome autofilling.
           // Setting 'off' is ignored by Chrome and a custom string fails accessibility.
           autoComplete="new-password"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck="false"
           inputMode="search"
           aria-activedescendant={activeId}
           aria-autocomplete="list"
+          aria-owns={`${name}-listbox`}
           aria-controls={`${name}-listbox`}
           aria-expanded={menuOpen ? 'true' : 'false'}
           aria-haspopup="listbox"
+          aria-describedby={`autocomplete-${name}-assistiveHint`}
           role="combobox"
           type="text"
           value={input}
