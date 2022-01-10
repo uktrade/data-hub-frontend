@@ -233,6 +233,7 @@ const Typeahead = ({
         return
     }
   }
+  const menuActive = loadOptions ? !!input : true
   return (
     <div id={`${name}-wrapper`} data-test={testId}>
       {label && (
@@ -288,14 +289,14 @@ const Typeahead = ({
         />
         <Menu
           id={`${name}-listbox`}
-          open={menuOpen}
+          open={menuOpen && menuActive}
           role="listbox"
           aria-labelledby={`${name}-label`}
           aria-multiselectable="true"
           ref={menuRef}
           data-test="typeahead-menu"
         >
-          {menuOpen && (
+          {menuOpen && menuActive && (
             <Task.Status
               name={TASK_GET_TYPEAHEAD_OPTIONS}
               id={id}

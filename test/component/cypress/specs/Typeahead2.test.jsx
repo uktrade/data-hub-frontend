@@ -272,9 +272,7 @@ describe('Typeahead2', () => {
       cy.get('@component').find('[data-test="typeahead-input"]').click()
       cy.get('@component')
         .find('[data-test="typeahead-menu"]')
-        .should('be.visible')
-        .find('[data-test="typeahead-menu-option"]')
-        .should('have.length', 0)
+        .should('not.be.visible')
     })
 
     it('should select an option when it is clicked', () => {
@@ -350,9 +348,7 @@ describe('Typeahead2', () => {
       cy.get('@component').find('[data-test="typeahead-input"]').click()
       cy.get('@component')
         .find('[data-test="typeahead-menu"]')
-        .should('be.visible')
-        .find('[data-test="typeahead-menu-option"]')
-        .should('have.length', 0)
+        .should('not.be.visible')
     })
 
     it('should get options when input is typed', () => {
