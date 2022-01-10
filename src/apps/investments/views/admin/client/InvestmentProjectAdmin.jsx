@@ -1,21 +1,14 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { connect } from 'react-redux'
 
-import { InsetText, H4, Button, Link } from 'govuk-react'
+import { InsetText, H4 } from 'govuk-react'
 import { SPACING } from '@govuk-react/constants'
 import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeader.jsx'
-import Task from '../../../../../client/components/Task'
-import {
-  Main,
-  MultiInstanceForm,
-  FieldRadios,
-  FormActions,
-} from '../../../../../client/components'
-import { ID as STATE_ID, TASK_UPDATE_STAGE, state2props } from './state'
-import { INVESTMENT_PROJECT_ADMIN__UPDATE_STAGE } from '../../../../../client/actions'
+import { Main, FieldRadios } from '../../../../../client/components'
+import { TASK_UPDATE_STAGE } from './state'
 import urls from '../../../../../lib/urls'
-import { addMessage } from '../../../../../client/utils/flash-messages'
+
+import Form from '../../../../../client/components/Form'
 
 const StyledP = styled('p')`
   margin-bottom: ${SPACING.SCALE_2};
@@ -26,72 +19,50 @@ const InvestmentProjectAdmin = ({
   projectName,
   projectStage,
   stages,
-  stageUpdated,
 }) => {
-  useEffect(() => {
-    if (stageUpdated) {
-      addMessage('success', 'Project stage saved')
-      window.location.href = urls.investments.projects.project(projectId)
-    }
-  }, [stageUpdated])
   const newStageOptions = stages.filter(
     (stage) => stage.value != projectStage.id
   )
   return (
-    <Task>
-      {(getTask) => {
-        const updateStageTask = getTask(TASK_UPDATE_STAGE, STATE_ID)
-
-        return (
-          <>
-            <LocalHeader
-              heading={'Change the project stage'}
-              breadcrumbs={[
-                { link: urls.dashboard(), text: 'Home' },
-                { link: urls.investments.index(), text: 'Investments' },
-                { link: urls.investments.projects.index(), text: 'Projects' },
-                {
-                  link: urls.investments.projects.project(projectId),
-                  text: projectName,
-                },
-                { text: 'Admin' },
-              ]}
-            />
-            <Main>
-              <H4 as="h2">Project details</H4>
-              <InsetText>
-                <p>Project name: {projectName}</p>
-                <StyledP>Current stage: {projectStage.name}</StyledP>
-              </InsetText>
-              <MultiInstanceForm
-                id={STATE_ID}
-                onSubmit={(values) => {
-                  updateStageTask.start({
-                    payload: { values, projectId },
-                    onSuccessDispatch: INVESTMENT_PROJECT_ADMIN__UPDATE_STAGE,
-                  })
-                }}
-                submissionError={updateStageTask.errorMessage}
-              >
-                <H4 as="h2">Change the stage to</H4>
-                <FieldRadios
-                  name="projectStageId"
-                  required="Select a new stage"
-                  options={newStageOptions}
-                />
-                <FormActions>
-                  <Button>Save</Button>
-                  <Link href={urls.investments.projects.project(projectId)}>
-                    Cancel
-                  </Link>
-                </FormActions>
-              </MultiInstanceForm>
-            </Main>
-          </>
-        )
-      }}
-    </Task>
+    <>
+      <LocalHeader
+        heading={'Change the project stage'}
+        breadcrumbs={[
+          { link: urls.dashboard(), text: 'Home' },
+          { link: urls.investments.index(), text: 'Investments' },
+          { link: urls.investments.projects.index(), text: 'Projects' },
+          {
+            link: urls.investments.projects.project(projectId),
+            text: projectName,
+          },
+          { text: 'Admin' },
+        ]}
+      />
+      <Main>
+        <H4 as="h2">Project details</H4>
+        <InsetText>
+          <p>Project name: {projectName}</p>
+          <StyledP>Current stage: {projectStage.name}</StyledP>
+        </InsetText>
+        <Form
+          cancelRedirectTo={() => urls.investments.projects.project(projectId)}
+          analyticsFormName="investmentProjectAdmin"
+          flashMessage={() => 'Project stage saved'}
+          id="investmentProjectAdmin"
+          redirectTo={() => urls.investments.projects.project(projectId)}
+          submissionTaskName={TASK_UPDATE_STAGE}
+          transformPayload={(values) => ({ values, projectId })}
+        >
+          <H4 as="h2">Change the stage to</H4>
+          <FieldRadios
+            name="projectStageId"
+            required="Select a new stage"
+            options={newStageOptions}
+          />
+        </Form>
+      </Main>
+    </>
   )
 }
 
-export default connect(state2props)(InvestmentProjectAdmin)
+export default InvestmentProjectAdmin

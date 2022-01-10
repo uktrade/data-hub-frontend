@@ -14,7 +14,7 @@
   border: 1px solid $grey-2;
   display: block;
   margin-top: -1px;
-  padding: 0 ($gutter / 2) ($gutter / 2);
+  padding: 0 ($gutter * 0.5) ($gutter * 0.5);
   text-decoration: none;
 
   &:hover,
@@ -29,6 +29,6 @@
 
   .c-entity-list__item {
     border-top: 0;
-    margin-top: $default-spacing-unit / 2;
+    margin-top: $default-spacing-unit * 0.5;
   }
 }

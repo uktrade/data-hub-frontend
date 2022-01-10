@@ -8,7 +8,7 @@ import {
   FieldDate,
 } from '../../../client/components'
 
-import TaskForm from '../../../client/components/Task/Form'
+import Form from '../../../client/components/Form'
 import Resource from '../../../client/components/Resource'
 
 import { ID as STATE_ID, TASK_GET_PIPELINE_COMPANY_CONTACTS } from './state'
@@ -31,11 +31,12 @@ function PipelineForm({
   flashMessage,
   submitButtonLabel,
   companyId,
-  actionLinks,
+  cancelRedirectTo,
+  cancelButtonLabel,
   initialValues,
 }) {
   return (
-    <TaskForm
+    <Form
       id={STATE_ID}
       analyticsFormName={analyticsFormName}
       submissionTaskName={submissionTaskName}
@@ -43,8 +44,9 @@ function PipelineForm({
       redirectTo={redirectTo}
       flashMessage={flashMessage}
       submitButtonLabel={submitButtonLabel}
-      actionLinks={actionLinks}
       initialValues={initialValues}
+      cancelRedirectTo={cancelRedirectTo}
+      cancelButtonLabel={cancelButtonLabel}
     >
       {({ values }) => (
         <>
@@ -77,8 +79,8 @@ function PipelineForm({
             isClearable={true}
             className="govuk-!-width-two-thirds"
           />
-          {/* 
-            This template form needs to cater for both the Add and Edit use cases. 
+          {/*
+            This template form needs to cater for both the Add and Edit use cases.
             As both use cases have different params we need to check where to get
             the company information from before firing the resource.
           */}
@@ -128,7 +130,7 @@ function PipelineForm({
           />
         </>
       )}
-    </TaskForm>
+    </Form>
   )
 }
 
@@ -150,7 +152,8 @@ PipelineForm.propTypes = {
   redirectTo: PropTypes.func.isRequired,
   flashMessage: PropTypes.func.isRequired,
   submitButtonLabel: PropTypes.string,
-  actionLinks: PropTypes.array,
+  cancelRedirectTo: PropTypes.func,
+  cancelButtonLabel: PropTypes.string,
 }
 
 export default PipelineForm

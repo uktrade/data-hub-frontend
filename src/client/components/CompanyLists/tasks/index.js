@@ -1,5 +1,6 @@
 import { get, pick } from 'lodash'
 import { apiProxyAxios } from '../../Task/utils'
+import axios from 'axios'
 
 export const fetchCompanyLists = () =>
   apiProxyAxios.get('v4/company-list').then((res) =>
@@ -27,3 +28,22 @@ export const fetchCompanyList = (id) =>
       ),
     }))
   )
+
+export const addOrRemoveFromList = ({ token, companyId, list }) =>
+  axios({
+    method: 'POST',
+    url: `/companies/${companyId}/lists/add-remove?_csrf=${token}`,
+    data: {
+      list,
+    },
+  })
+    .catch((error) => {
+      if (get(error, 'response.status') === 404) {
+        return Promise.reject('Request failed with status code 404')
+      } else {
+        return Promise.reject(error.message || error.toString())
+      }
+    })
+    .then((response) => {
+      response.data
+    })

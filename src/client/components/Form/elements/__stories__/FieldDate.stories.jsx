@@ -1,11 +1,9 @@
 import React from 'react'
 import { addDecorator, storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
 import { withKnobs } from '@storybook/addon-knobs'
-import Button from '@govuk-react/button'
 
 import FieldDate from '../FieldDate'
-import FormStateful from '../../FormStateful'
+import Form from '../../../Form'
 
 import exampleReadme from '../FieldDate/example.md'
 import usageReadme from '../FieldDate/usage.md'
@@ -18,7 +16,7 @@ const ERRORS = {
   YEAR: 'Enter a valid Epoch year',
 }
 
-storiesOf('Forms/Date', module)
+storiesOf('Form/Form Elements/Date', module)
   .addParameters({
     options: { theme: undefined },
     readme: {
@@ -27,7 +25,11 @@ storiesOf('Forms/Date', module)
     },
   })
   .add('FieldDate - default validation', () => (
-    <FormStateful onSubmit={action('onSubmit')}>
+    <Form
+      id="fieldDateExample"
+      analyticsFormName="fieldDateExample"
+      submissionTaskName="Submit Form example"
+    >
       {(form) => (
         <>
           <FieldDate
@@ -36,14 +38,17 @@ storiesOf('Forms/Date', module)
             hint="For example, 01 09 2019"
             required="Enter a valid date of birth"
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </Form>
   ))
   .add('FieldDate - custom validation', () => (
-    <FormStateful onSubmit={action('onSubmit')}>
+    <Form
+      id="fieldDateExample"
+      analyticsFormName="fieldDateExample"
+      submissionTaskName="Submit Form example"
+    >
       {(form) => (
         <>
           <FieldDate
@@ -59,14 +64,17 @@ storiesOf('Forms/Date', module)
               return dayErr || monthErr || yearErr
             }}
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </Form>
   ))
   .add('FieldDate - short format', () => (
-    <FormStateful onSubmit={action('onSubmit')}>
+    <Form
+      id="fieldDateExample"
+      analyticsFormName="fieldDateExample"
+      submissionTaskName="Submit Form example"
+    >
       {(form) => (
         <>
           <FieldDate
@@ -76,14 +84,17 @@ storiesOf('Forms/Date', module)
             hint="For example, 09 2019"
             required="Enter a valid date"
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </Form>
   ))
   .add('FieldDate (reduced)', () => (
-    <FormStateful onSubmit={action('onSubmit')}>
+    <Form
+      id="fieldDateExample"
+      analyticsFormName="fieldDateExample"
+      submissionTaskName="Submit Form example"
+    >
       {(form) => (
         <>
           <FieldDate
@@ -93,9 +104,8 @@ storiesOf('Forms/Date', module)
             required="Enter a valid date"
             reduced={true}
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </Form>
   ))

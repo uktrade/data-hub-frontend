@@ -8,7 +8,7 @@ import StepInteractionType from './StepInteractionType'
 import StepInteractionDetails from './StepInteractionDetails'
 import Step from '../../../../../client/components/Form/elements/Step.jsx'
 import Task from '../../../../../client/components/Task'
-import TaskForm from '../../../../../client/components/Task/Form/index.jsx'
+import Form from '../../../../../client/components/Form/index.jsx'
 import {
   ID as STATE_ID,
   TASK_SAVE_INTERACTION,
@@ -79,7 +79,7 @@ const InteractionDetailsForm = ({
               const contactCreated =
                 location.search.includes('new-contact-name')
               return (
-                <TaskForm
+                <Form
                   id={STATE_ID}
                   submissionTaskName={TASK_SAVE_INTERACTION}
                   analyticsFormName={
@@ -159,7 +159,7 @@ const InteractionDetailsForm = ({
                       </Step>
                     </>
                   )}
-                </TaskForm>
+                </Form>
               )
             }}
           </Route>

@@ -98,7 +98,7 @@ describe('Event edit', () => {
   context('when a user cancels', () => {
     it('should return without saving and return to the correct endpoint', () => {
       clickReturnWithoutSavingButton()
-      assertUrl(urls.events.details('63af73a6-5d95-e211-aaaa-e4115bead28a'))
+      assertUrl(urls.events.details('8253a4d2-0a61-4928-80cb-ebd70cce9971'))
     })
   })
 })

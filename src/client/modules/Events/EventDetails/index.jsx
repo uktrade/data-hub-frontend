@@ -1,26 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { isEmpty } from 'lodash'
+import { useParams, Link, useLocation } from 'react-router-dom'
 
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
 import styled from 'styled-components'
 
 import urls from '../../../../lib/urls'
 import { TASK_GET_EVENT_DETAILS, ID, state2props } from './state'
 import { EVENTS__DETAILS_LOADED } from '../../../actions'
 import Task from '../../../components/Task'
-
 import {
-  LocalHeader,
   LocalNav,
   LocalNavLink,
-  Main,
   SummaryTable,
   FormActions,
   NewWindowLink,
+  DefaultLayout,
 } from '../../../components'
 
 const StyledSummaryTable = styled(SummaryTable)({
@@ -28,7 +26,6 @@ const StyledSummaryTable = styled(SummaryTable)({
 })
 
 const EventDetails = ({
-  eventId,
   name,
   eventType,
   startDate,
@@ -46,8 +43,10 @@ const EventDetails = ({
   service,
   archivedDocumentsUrlPath,
   disabledOn,
-  flashMessages,
 }) => {
+  const { id } = useParams()
+  const { state } = useLocation()
+  const messages = state?.messages
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -61,37 +60,39 @@ const EventDetails = ({
       text: name,
     },
   ]
+
   return (
-    <Task.Status
-      name={TASK_GET_EVENT_DETAILS}
-      id={ID}
-      progressMessage="loading event details"
-      startOnRender={{
-        payload: eventId,
-        onSuccessDispatch: EVENTS__DETAILS_LOADED,
-      }}
+    <DefaultLayout
+      heading="Events"
+      pageTitle="Events"
+      flashMessages={messages}
+      breadcrumbs={breadcrumbs}
+      useReactRouter={true}
     >
-      {() =>
-        name && (
-          <>
-            <LocalHeader
-              breadcrumbs={breadcrumbs}
-              heading={name}
-              flashMessages={flashMessages}
-            />
-            <Main>
+      <Task.Status
+        name={TASK_GET_EVENT_DETAILS}
+        id={ID}
+        progressMessage="loading event details"
+        startOnRender={{
+          payload: id,
+          onSuccessDispatch: EVENTS__DETAILS_LOADED,
+        }}
+      >
+        {() => {
+          return (
+            name && (
               <GridRow data-test="eventDetails">
                 <GridCol setWidth="one-quarter">
                   <LocalNav data-test="event-details-nav">
                     <LocalNavLink
                       data-test="event-details-nav-link"
-                      href={urls.events.details(eventId)}
+                      href={urls.events.details(id)}
                     >
                       Details
                     </LocalNavLink>
                     <LocalNavLink
                       data-test="event-details-nav-link"
-                      href={urls.events.attendees(eventId)}
+                      href={urls.events.attendees(id)}
                     >
                       Attendees
                     </LocalNavLink>
@@ -162,18 +163,18 @@ const EventDetails = ({
                   </StyledSummaryTable>
                   {!disabledOn && (
                     <FormActions>
-                      <Button as={Link} href={urls.events.edit(eventId)}>
+                      <Button as={Link} to={urls.events.edit(id)}>
                         Edit event
                       </Button>
                     </FormActions>
                   )}
                 </GridCol>
               </GridRow>
-            </Main>
-          </>
-        )
-      }
-    </Task.Status>
+            )
+          )
+        }}
+      </Task.Status>
+    </DefaultLayout>
   )
 }
 

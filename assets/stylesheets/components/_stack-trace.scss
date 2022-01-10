@@ -8,7 +8,7 @@
 
 .stack-trace__heading {
   @include core-font(24);
-  margin-bottom: $gutter / 2;
+  margin-bottom: $gutter * 0.5;
 }
 
 .stack-trace__details {

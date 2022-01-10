@@ -114,6 +114,11 @@ const config = {
       key: envVars.DATA_STORE_SERVICE_SECRET_ACCESS_KEY,
       algorithm: 'sha256',
     },
+    helpCentre: {
+      id: envVars.HELP_CENTRE_ACCESS_KEY_ID,
+      key: envVars.HELP_CENTRE_SECRET_ACCESS_KEY,
+      algorithm: 'sha256',
+    },
   },
   oneList: {
     email: envVars.ONE_LIST_EMAIL,

@@ -164,7 +164,6 @@ describe('Event create', () => {
         'Select at least one team hosting the event',
         'Select at least one service',
         'Enter at least one organiser',
-        'Select at least one related programme',
       ])
     })
 
@@ -187,7 +186,6 @@ describe('Event create', () => {
         'Select at least one team hosting the event',
         'Select at least one service',
         'Enter at least one organiser',
-        'Select at least one related programme',
         'Select at least one trade agreement',
         'Select at least one team',
         'Select a UK region',
@@ -197,6 +195,7 @@ describe('Event create', () => {
 
   context('when filling in a valid event form', () => {
     it('should save with expected values and endpoint', () => {
+      // it automatically submits the form
       fillEventForm({
         address1: 'Bussiness 1',
         address2: 'Street 2',
@@ -221,7 +220,7 @@ describe('Event create', () => {
           'Comprehensive and Progressive Agreement for Trans-Pacific Partnership',
           'UK-Australia Mutual Recognition Agreement',
         ],
-        relatedProgrammes: ['Aid Funded Business Service (AFBS)', 'CEN Energy'],
+        relatedProgrammes: ['CEN Energy', 'CEN Services'],
         startDate: {
           year: '2021',
           month: '12',
@@ -231,8 +230,6 @@ describe('Event create', () => {
         teams: ['BPI', 'BN America', 'BPI'],
         service: 'Making Other Introductions : UK Export Finance (UKEF)',
       })
-
-      clickAddEventButton()
 
       const expectedBody = {
         has_related_trade_agreements: true,
@@ -253,8 +250,8 @@ describe('Event create', () => {
         organiser: '3442c516-9898-e211-a939-e4115bead28a',
         event_shared: true,
         related_programmes: [
-          'e2a8be20-7a54-e311-a33a-e4115bead28a',
           '058dde7c-19d5-e311-8a2b-e4115bead28a',
+          'cad5df2e-1ad5-e311-8a2b-e4115bead28a',
         ],
         related_trade_agreements: [
           'af704a93-5404-4bc6-adda-381756993902',

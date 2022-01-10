@@ -32,10 +32,6 @@ export const SORT_OPTIONS = [
     name: 'Project name A-Z',
     value: 'name:asc',
   },
-  {
-    name: 'Stage',
-    value: 'stage.name',
-  },
 ]
 
 export const INVOLVEMENT_LEVEL_OPTIONS = [

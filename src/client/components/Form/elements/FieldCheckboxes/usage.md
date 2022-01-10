@@ -4,12 +4,14 @@
 
 Checkboxes for use in forms and filters.
 
-**Note: The `<FieldCheckboxes>` has to be wrapped with `<FormStateful>`.** 
-
 ### Usage
 
 ```jsx
-<FormStateful onSubmit={action('onSubmit')}>
+  <Form
+      id="fieldCheckboxExample"
+      analyticsFormName="fieldCheckboxExample"
+      submissionTaskName="Submit Form example"
+    >
   {(state) => (
     <>
       <FieldCheckboxes
@@ -29,7 +31,7 @@ Checkboxes for use in forms and filters.
       />
     </>
   )}
-</FormStateful>
+</Form>
 ```
 
 ### Properties

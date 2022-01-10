@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import "../../settings";
 @import "../../tools";
 
@@ -20,8 +22,8 @@
       border-width: 0 0 5px 5px;
     }
 
-    width: round($input-size / 1.7);
-    height: round($input-size / 3);
+    width: round(math.div($input-size, 1.7));
+    height: round(math.div($input-size, 3));
   }
 
   & + .c-multiple-choice__label {
@@ -31,9 +33,9 @@
     }
 
     &::after {
-      border: ceil($font-size / 2) solid $text-colour;
-      left: floor($font-size / 2);
-      top: floor($font-size / 2);
+      border: ceil($font-size * 0.5) solid $text-colour;
+      left: floor($font-size * 0.5);
+      top: floor($font-size * 0.5);
     }
   }
 }
@@ -98,7 +100,7 @@
   cursor: pointer;
   vertical-align: middle;
   display: inline-block;
-  padding: ($default-spacing-unit / 2) ($default-spacing-unit / 2) ($default-spacing-unit / 2) ($default-spacing-unit * 3);
+  padding: ($default-spacing-unit * 0.5) ($default-spacing-unit * 0.5) ($default-spacing-unit * 0.5) ($default-spacing-unit * 3);
   line-height: 1.2;
 }
 
@@ -127,7 +129,7 @@
   }
 
   .c-multiple-choice__label {
-    padding-left: round($default-spacing-unit * 3 * (16 / 19));
+    padding-left: round($default-spacing-unit * 3 * math.div(16, 19));
     line-height: 16px;
   }
 }
@@ -138,7 +140,7 @@
   }
 
   .c-multiple-choice__label {
-    padding-left: round($default-spacing-unit * 3 * (10 / 19));
+    padding-left: round($default-spacing-unit * 3 * math.div(10, 19));
     line-height: 18px;
   }
 }
@@ -155,21 +157,21 @@
   }
 
   .c-multiple-choice__input {
-    left: $default-spacing-unit / 2;
-    top: $default-spacing-unit / 2;
+    left: $default-spacing-unit * 0.5;
+    top: $default-spacing-unit * 0.5;
 
     + .c-multiple-choice__label {
       &:after,
       &:before {
-        margin-left: $default-spacing-unit / 2;
-        margin-top: $default-spacing-unit / 2;
+        margin-left: $default-spacing-unit * 0.5;
+        margin-top: $default-spacing-unit * 0.5;
       }
     }
   }
 
   .c-multiple-choice__label {
     display: block;
-    padding-left: round($default-spacing-unit * 3 * (10 / 19) + ($default-spacing-unit / 2));
+    padding-left: round($default-spacing-unit * 3 * math.div(10, 19) + ($default-spacing-unit * 0.5));
 
     &:hover {
       background-color: $grey-4;

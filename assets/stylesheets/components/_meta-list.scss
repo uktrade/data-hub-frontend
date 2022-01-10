@@ -3,7 +3,7 @@
 
 .c-meta-list__item {
   & + & {
-    margin-top: $default-spacing-unit / 4;
+    margin-top: $default-spacing-unit * 0.25;
   }
 }
 
@@ -34,7 +34,7 @@
 
 .c-meta-list--inline {
   display: inline-block;
-  margin-top: -($default-spacing-unit / 2);
+  margin-top: -($default-spacing-unit * 0.5);
 
   .c-meta-list__item-label {
     display: inline-block;
@@ -43,7 +43,7 @@
   .c-meta-list__item {
     display: inline-block;
     margin-right: $default-spacing-unit * 2;
-    margin-top: $default-spacing-unit / 2;
+    margin-top: $default-spacing-unit * 0.5;
 
     &:last-child {
       margin-right: 0;
@@ -53,7 +53,7 @@
 
 .c-meta-list--condensed {
   &.c-meta-list--inline .c-meta-list__item {
-    margin-right: $default-spacing-unit / 4;
+    margin-right: $default-spacing-unit * 0.25;
 
     &:last-child {
       margin-right: 0;
@@ -65,7 +65,7 @@
   display: block;
 
   & + & {
-    margin-top: $default-spacing-unit / 2;
+    margin-top: $default-spacing-unit * 0.5;
   }
 
   .c-meta-list__item-label {
@@ -75,12 +75,12 @@
 
 .c-meta-list--split {
   @include clearfix;
-  margin-top: -($default-spacing-unit / 4);
+  margin-top: -($default-spacing-unit * 0.25);
   width: 100%;
 
   .c-meta-list__item {
     display: block;
-    margin-top: $default-spacing-unit / 4;
+    margin-top: $default-spacing-unit * 0.25;
   }
 
   @include media(tablet) {

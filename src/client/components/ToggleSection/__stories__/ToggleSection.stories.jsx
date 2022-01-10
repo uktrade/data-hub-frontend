@@ -5,7 +5,7 @@ import usageReadme from '../usage.md'
 import exampleReadme from '../example.md'
 
 import FieldInput from '../../Form/elements/FieldInput'
-import FormStateful from '../../Form/FormStateful'
+import Form from '../../Form'
 
 import NotificationBadge from 'NotificationBadge'
 import {
@@ -24,7 +24,11 @@ storiesOf('ToggleSection', module)
   })
   .add('Default - Single', () => (
     <ToggleSection label="Toggle me" id="toggle.four" isOpen={true}>
-      <FormStateful>
+      <Form
+        id="toggleSectionExample"
+        analyticsFormName="toggleSectionExample"
+        submissionTaskName="Submit Form example"
+      >
         {() => (
           <FieldInput
             label="Text"
@@ -34,13 +38,17 @@ storiesOf('ToggleSection', module)
             type="text"
           />
         )}
-      </FormStateful>
+      </Form>
     </ToggleSection>
   ))
   .add('Default - Multiple', () => (
     <>
       <ToggleSection label="Toggle me" id="toggle.five" isOpen={true}>
-        <FormStateful>
+        <Form
+          id="toggleSectionExample"
+          analyticsFormName="toggleSectionExample"
+          submissionTaskName="Submit Form example"
+        >
           {() => (
             <FieldInput
               label="Text"
@@ -50,10 +58,14 @@ storiesOf('ToggleSection', module)
               type="text"
             />
           )}
-        </FormStateful>
+        </Form>
       </ToggleSection>
       <ToggleSection label="Toggle me" id="toggle.six">
-        <FormStateful>
+        <Form
+          id="toggleSectionExample"
+          analyticsFormName="toggleSectionExample"
+          submissionTaskName="Submit Form example"
+        >
           {() => (
             <FieldInput
               label="Text"
@@ -63,13 +75,17 @@ storiesOf('ToggleSection', module)
               type="text"
             />
           )}
-        </FormStateful>
+        </Form>
       </ToggleSection>
     </>
   ))
   .add('No Highlight - Single', () => (
     <NoHighlightToggleSection label="Toggle me" id="toggle.seven" isOpen={true}>
-      <FormStateful>
+      <Form
+        id="toggleSectionExample"
+        analyticsFormName="toggleSectionExample"
+        submissionTaskName="Submit Form example"
+      >
         {() => (
           <FieldInput
             label="Text"
@@ -79,7 +95,7 @@ storiesOf('ToggleSection', module)
             type="text"
           />
         )}
-      </FormStateful>
+      </Form>
     </NoHighlightToggleSection>
   ))
   .add('No Highlight - Multiple', () => (
@@ -89,7 +105,11 @@ storiesOf('ToggleSection', module)
         id="toggle.eight"
         isOpen={true}
       >
-        <FormStateful>
+        <Form
+          id="toggleSectionExample"
+          analyticsFormName="toggleSectionExample"
+          submissionTaskName="Submit Form example"
+        >
           {() => (
             <FieldInput
               label="Text"
@@ -99,10 +119,14 @@ storiesOf('ToggleSection', module)
               type="text"
             />
           )}
-        </FormStateful>
+        </Form>
       </NoHighlightToggleSection>
       <NoHighlightToggleSection label="Toggle me" id="toggle.nine">
-        <FormStateful>
+        <Form
+          id="toggleSectionExample"
+          analyticsFormName="toggleSectionExample"
+          submissionTaskName="Submit Form example"
+        >
           {() => (
             <FieldInput
               label="Text"
@@ -112,7 +136,7 @@ storiesOf('ToggleSection', module)
               type="text"
             />
           )}
-        </FormStateful>
+        </Form>
       </NoHighlightToggleSection>
     </>
   ))
@@ -123,7 +147,11 @@ storiesOf('ToggleSection', module)
       isOpen={true}
       badge={<NotificationBadge label="15" />}
     >
-      <FormStateful>
+      <Form
+        id="toggleSectionExample"
+        analyticsFormName="toggleSectionExample"
+        submissionTaskName="Submit Form example"
+      >
         {() => (
           <FieldInput
             label="Text"
@@ -133,7 +161,7 @@ storiesOf('ToggleSection', module)
             type="text"
           />
         )}
-      </FormStateful>
+      </Form>
     </DashboardToggleSection>
   ))
   .add('Dashboard - Multiple', () => (
@@ -144,7 +172,11 @@ storiesOf('ToggleSection', module)
         isOpen={true}
         major={true}
       >
-        <FormStateful>
+        <Form
+          id="toggleSectionExample"
+          analyticsFormName="toggleSectionExample"
+          submissionTaskName="Submit Form example"
+        >
           {() => (
             <FieldInput
               label="Text"
@@ -154,10 +186,14 @@ storiesOf('ToggleSection', module)
               type="text"
             />
           )}
-        </FormStateful>
+        </Form>
       </DashboardToggleSection>
       <DashboardToggleSection label="Toggle me" id="toggle.three">
-        <FormStateful>
+        <Form
+          id="toggleSectionExample"
+          analyticsFormName="toggleSectionExample"
+          submissionTaskName="Submit Form example"
+        >
           {() => (
             <FieldInput
               label="Text"
@@ -167,7 +203,7 @@ storiesOf('ToggleSection', module)
               type="text"
             />
           )}
-        </FormStateful>
+        </Form>
       </DashboardToggleSection>
     </>
   ))

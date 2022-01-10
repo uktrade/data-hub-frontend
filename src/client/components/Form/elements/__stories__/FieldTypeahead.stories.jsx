@@ -1,10 +1,8 @@
 import React from 'react'
 import { addDecorator, storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
 import { withKnobs } from '@storybook/addon-knobs'
-import Button from '@govuk-react/button'
 
-import FormStateful from '../../FormStateful'
+import Form from '../../../Form'
 import FieldTypeahead from '../FieldTypeahead'
 
 import exampleReadme from '../FieldTypeahead/example.md'
@@ -30,7 +28,7 @@ const options = [
 const getOptions = () =>
   new Promise((resolve) => setTimeout(resolve, 1000, options))
 
-storiesOf('Forms/Typeahead', module)
+storiesOf('Form/Form Elements/Typeahead', module)
   .addParameters({
     options: { theme: undefined },
     readme: {
@@ -39,7 +37,11 @@ storiesOf('Forms/Typeahead', module)
     },
   })
   .add('Default', () => (
-    <FormStateful onSubmit={action('onSubmit')}>
+    <Form
+      id="fieldTypeaheadExample"
+      analyticsFormName="fieldTypeaheadExample"
+      submissionTaskName="Submit Form example"
+    >
       {(state) => (
         <>
           <FieldTypeahead
@@ -80,9 +82,8 @@ storiesOf('Forms/Typeahead', module)
             loadOptions={getOptions}
             isMulti={true}
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(state, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </Form>
   ))

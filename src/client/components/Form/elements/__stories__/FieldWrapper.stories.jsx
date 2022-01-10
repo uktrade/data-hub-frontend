@@ -2,9 +2,8 @@ import React from 'react'
 import { addDecorator, storiesOf } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
 import { H1, H2, H3 } from '@govuk-react/heading'
-import Button from '@govuk-react/button'
 
-import FormStateful from '../../FormStateful'
+import Form from '../../../Form'
 import FieldWrapper from '../FieldWrapper'
 import FieldInput from '../FieldInput'
 
@@ -17,7 +16,7 @@ const testInput = (
   <FieldInput name="testField" type="text" required="Some error" />
 )
 
-storiesOf('Forms', module)
+storiesOf('Form/Form Elements/FieldWrapper', module)
   .addParameters({
     options: { theme: undefined },
     readme: {
@@ -26,7 +25,12 @@ storiesOf('Forms', module)
     },
   })
   .add('FieldWrapper - Label', () => (
-    <FormStateful>
+    <Form
+      id="fieldWrapperExample"
+      analyticsFormName="fieldWrapperExample"
+      submissionTaskName="Submit Form example"
+      submitButtonLabel="Click to show error"
+    >
       {(form) => (
         <>
           <FieldWrapper
@@ -37,14 +41,17 @@ storiesOf('Forms', module)
           >
             {testInput}
           </FieldWrapper>
-
-          <Button>Click to show error</Button>
         </>
       )}
-    </FormStateful>
+    </Form>
   ))
   .add('FieldWrapper - Legend', () => (
-    <FormStateful>
+    <Form
+      id="fieldWrapperExample"
+      analyticsFormName="fieldWrapperExample"
+      submissionTaskName="Submit Form example"
+      submitButtonLabel="Click to show error"
+    >
       {(form) => (
         <>
           <FieldWrapper
@@ -102,9 +109,7 @@ storiesOf('Forms', module)
           >
             {testInput}
           </FieldWrapper>
-
-          <Button>Click to show error</Button>
         </>
       )}
-    </FormStateful>
+    </Form>
   ))

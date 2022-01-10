@@ -14,6 +14,16 @@ describe('Investment opportunities', () => {
       cy.get('h1').contains('UK opportunities')
     })
 
+    it('should render the opportunities note', () => {
+      cy.get('[data-test="opportunities-note"]')
+        .should('be.visible')
+        .get('[data-test="opportunities-note"] > p')
+        .should('have.length', 3)
+        .find('a')
+        .should('have.attr', 'href', 'mailto:capitalinvestment@trade.gov.uk')
+        .should('have.text', 'capitalinvestment@trade.gov.uk')
+    })
+
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',

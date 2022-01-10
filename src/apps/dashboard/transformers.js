@@ -1,9 +1,8 @@
 /* eslint camelcase: 0 */
 const { getDifferenceInWords } = require('../../client/utils/date')
 
-const formatHelpCentreAnnouncements = ({ data = {} }) => {
-  const { articles = [] } = data
-  return articles.map((item) => {
+const formatHelpCentreAnnouncements = (articles = []) =>
+  articles.map((item) => {
     if (item.title && item.html_url && item.created_at) {
       return {
         heading: item.title,
@@ -12,7 +11,6 @@ const formatHelpCentreAnnouncements = ({ data = {} }) => {
       }
     }
   })
-}
 
 module.exports = {
   formatHelpCentreAnnouncements,

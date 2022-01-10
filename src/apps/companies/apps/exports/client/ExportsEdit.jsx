@@ -5,7 +5,7 @@ import { FieldInput, FieldSelect } from '../../../../../client/components'
 
 import GreatProfile from './GreatProfile'
 import urls from '../../../../../lib/urls'
-import TaskForm from '../../../../../client/components/Task/Form'
+import Form from '../../../../../client/components/Form'
 
 const StyledDt = styled.dt`
   margin-bottom: ${SPACING_POINTS[1]}px;
@@ -22,19 +22,15 @@ export default ({
   exportPotential,
   exportWinCategories,
 }) => (
-  <TaskForm
+  <Form
     id="exports-edit"
     submissionTaskName="Exports Edit"
     analyticsFormName="exportsEdit"
     transformPayload={(values) => ({ ...values, companyId })}
     redirectTo={() => urls.companies.exports.index(companyId)}
     submitButtonLabel="Save and return"
-    actionLinks={[
-      {
-        children: 'Return without saving',
-        href: urls.companies.exports.index(companyId),
-      },
-    ]}
+    cancelRedirectTo={() => urls.companies.exports.index(companyId)}
+    cancelButtonLabel="Return without saving"
   >
     <FieldSelect
       emptyOption="-- Select category --"
@@ -55,5 +51,5 @@ export default ({
       </StyledDd>
     </dl>
     <FieldInput type="hidden" name="companyId" initialValue={companyId} />
-  </TaskForm>
+  </Form>
 )

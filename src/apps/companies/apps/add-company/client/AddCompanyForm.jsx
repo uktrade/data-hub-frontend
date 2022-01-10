@@ -4,7 +4,7 @@
 
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { get } from 'lodash'
+import { get, omit } from 'lodash'
 
 import {
   FieldRadios,
@@ -19,7 +19,7 @@ import CompanyRegionAndSector from './CompanyRegionAndSector'
 import InformationList from './InformationList'
 import { ISO_CODE } from './constants'
 
-import TaskForm from '../../../../../client/components/Task/Form'
+import Form from '../../../../../client/components/Form'
 
 function AddCompanyForm({
   csrfToken,
@@ -66,14 +66,21 @@ function AddCompanyForm({
     return {}
   }
 
+  function transformPayload(values) {
+    return {
+      ...omit(values, [!values?.telephone_number && 'telephone_number']),
+      csrfToken,
+    }
+  }
+
   return (
-    <TaskForm
+    <Form
       id="add-company-form"
       submissionTaskName="Create company"
       analyticsFormName="addCompanyForm"
       redirectTo={(company) => `/companies/${company.id}`}
       flashMessage={() => 'Company added to Data Hub'}
-      transformPayload={(values) => ({ ...values, csrfToken })}
+      transformPayload={transformPayload}
     >
       {({ values, setFieldValue }) => {
         const country = getCountry(values)
@@ -156,7 +163,7 @@ function AddCompanyForm({
           </>
         )
       }}
-    </TaskForm>
+    </Form>
   )
 }
 

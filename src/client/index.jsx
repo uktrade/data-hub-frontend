@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import * as Sentry from '@sentry/browser'
 import { Switch } from 'react-router-dom'
 
+import './components'
 import Provider from './provider'
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
 import InteractionDetailsForm from '../apps/interactions/apps/details-form/client/InteractionDetailsForm'
@@ -14,8 +15,7 @@ import DeleteCompanyList from '../apps/company-lists/client/DeleteCompanyList'
 import MatchConfirmation from '../apps/companies/apps/match-company/client/MatchConfirmation'
 import CannotFindMatch from '../apps/companies/apps/match-company/client/CannotFindMatch'
 import EditCompanyList from '../apps/company-lists/client/EditCompanyList'
-import CreateListFormSection from '../apps/company-lists/client/CreateListFormSection'
-import AddRemoveFromListSection from '../apps/company-lists/client/AddRemoveFromListSection'
+import CreateListForm from '../apps/company-lists/client/CreateListForm'
 import DnbHierarchy from '../apps/companies/apps/dnb-hierarchy/client/DnbHierarchy'
 import LeadAdvisers from '../apps/companies/apps/advisers/client/LeadAdvisers'
 import LargeCapitalProfileCollection from '../apps/investments/client/profiles/LargeCapitalProfileCollection'
@@ -43,14 +43,11 @@ import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyLocalHeader from './components/CompanyLocalHeader'
 import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/CompanyOrdersCollection'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
-import EventDetails from '../client/modules/Events/EventDetails'
 import CompanyProjectsCollection from '../apps/investments/client/projects/CompanyProjectsCollection.jsx'
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
-import OpportunityChangeStatusForm from './components/OpportunityChangeStatusForm'
-import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
-import createUKInvestmentOpportunityTask from './components/CreateUKInvestmentOpportunity/tasks'
-import EventForm from '../client/modules/Events/EventForm'
+import OpportunityChangeStatusForm from '../apps/investments/client/opportunities/Details/OpportunityChangeStatusForm.jsx'
+import CreateUKInvestmentOpportunity from '../apps/investments/client/opportunities/Details/CreateUKInvestmentOpportunity'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -141,8 +138,10 @@ import * as investmentOpportunitiesListTasks from '../apps/investments/client/op
 import {
   TASK_SAVE_OPPORTUNITY_DETAILS,
   TASK_SAVE_OPPORTUNITY_REQUIREMENTS,
+  TASK_SAVE_OPPORTUNITY_STATUS,
   TASK_GET_OPPORTUNITY_DETAILS,
   TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA,
+  TASK_CREATE_INVESTMENT_OPPORTUNITY,
 } from '../apps/investments/client/opportunities/Details/state'
 import * as investmentOpportunitiesDetailsTasks from '../apps/investments/client/opportunities/Details/tasks'
 
@@ -161,6 +160,8 @@ import { TASK_CHECK_FOR_INVESTMENTS } from './components/PersonalisedDashboard/s
 
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
 import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentReminders/state'
+
+import { TASK_GET_TYPEAHEAD_OPTIONS } from './components/Typeahead2/state'
 
 import * as exportsEdit from '../apps/companies/apps/exports/client/tasks'
 
@@ -204,12 +205,16 @@ import Footer from '../client/components/Footer'
 
 import ContactForm from '../client/components/ContactForm'
 import resourceTasks from '../client/components/Resource/tasks'
+import { getTypeaheadOptions } from '../client/components/Typeahead2/tasks'
 import { ProtectedRoute } from '../client/components'
+import AddRemoveFromListForm from '../client/components/CompanyLists/AddRemoveFromListForm'
 
 import routes from './routes'
 
 import * as matchCompanyTasks from '../apps/companies/apps/match-company/client/tasks'
+import * as companyListTasks from '../apps/company-lists/client/tasks'
 import { editCompany } from '../apps/companies/apps/edit-company/client/tasks'
+import { createList } from '../apps/company-lists/client/tasks.js'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -239,13 +244,16 @@ function App() {
   return (
     <Provider
       tasks={{
+        'Create list': createList,
         'Edit company': editCompany,
         'Create company': createCompany,
+        'Edit company list': companyListTasks.editCompanyList,
         'Match confirmation': matchCompanyTasks.onMatchSubmit,
         'Cannot find match': matchCompanyTasks.cannotFindMatchSubmit,
         'Submit merge request': matchCompanyTasks.submitMergeRequest,
         'Company lists': companyListsTasks.fetchCompanyLists,
         'Company list': companyListsTasks.fetchCompanyList,
+        'Add or remove from list': companyListsTasks.addOrRemoveFromList,
         'Exports history': exportsHistoryTasks.fetchExportsHistory,
         'Referral details': referralTasks.fetchReferralDetails,
         Referrals: referralListTask,
@@ -277,6 +285,8 @@ function App() {
         [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
         [TASK_SAVE_OPPORTUNITY_DETAILS]:
           investmentOpportunitiesDetailsTasks.saveOpportunityDetails,
+        [TASK_SAVE_OPPORTUNITY_STATUS]:
+          investmentOpportunitiesDetailsTasks.saveOpportunityStatus,
         [TASK_SAVE_OPPORTUNITY_REQUIREMENTS]:
           investmentOpportunitiesDetailsTasks.saveOpportunityRequirements,
         [TASK_GET_OPPORTUNITY_DETAILS]:
@@ -285,6 +295,8 @@ function App() {
           investmentOpportunitiesListTasks.getOpportunities,
         [TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA]:
           investmentOpportunitiesDetailsTasks.getRequirementsMetadata,
+        [TASK_CREATE_INVESTMENT_OPPORTUNITY]:
+          investmentOpportunitiesDetailsTasks.createOpportunity,
         [DNB__CHECK_PENDING_REQUEST]: businessDetails.checkIfPendingRequest,
         [TASK_GET_PROFILES_LIST]:
           investmentProfilesTasks.getLargeCapitalProfiles,
@@ -302,7 +314,6 @@ function App() {
         [TASK_GET_OUTSTANDING_PROPOSITIONS]: fetchOutstandingPropositions,
         'Large investment profiles filters':
           investmentProfilesTasks.loadFilterOptions,
-        CREATE_INVESTMENT_OPPORTUNITY: createUKInvestmentOpportunityTask,
         [TASK_GET_CONTACTS_LIST]: getContacts,
         [TASK_GET_CONTACTS_METADATA]: getContactsMetadata,
         [TASK_GET_INTERACTIONS_LIST]: getInteractions,
@@ -319,6 +330,7 @@ function App() {
         [TASK_GET_INTERACTIONS_TEAM_NAME]: getTeamNames,
         [TASK_ARCHIVE_COMPANY]: businessDetails.archiveSubmitCallback,
         'Exports Edit': exportsEdit.saveWinCategory,
+        [TASK_GET_TYPEAHEAD_OPTIONS]: getTypeaheadOptions,
         ...resourceTasks,
       }}
     >
@@ -392,11 +404,11 @@ function App() {
       </Mount>
       <Mount selector="#create-company-list-form">
         {(props) => (
-          <CreateListFormSection csrfToken={globalProps.csrfToken} {...props} />
+          <CreateListForm csrfToken={globalProps.csrfToken} {...props} />
         )}
       </Mount>
       <Mount selector="#add-remove-list-form">
-        {(props) => <AddRemoveFromListSection {...props} />}
+        {(props) => <AddRemoveFromListForm {...props} />}
       </Mount>
       <Mount selector="#lead-advisers">
         {(props) => <LeadAdvisers {...props} />}
@@ -497,12 +509,6 @@ function App() {
       </Mount>
       <Mount selector="#company-orders-collection">
         {(props) => <CompanyOrdersCollection {...props} />}
-      </Mount>
-      <Mount selector="#event-details">
-        {(props) => <EventDetails {...props} />}
-      </Mount>
-      <Mount selector="#event-form">
-        {(props) => <EventForm {...props} />}
       </Mount>
 
       <Mount selector="#react-app">

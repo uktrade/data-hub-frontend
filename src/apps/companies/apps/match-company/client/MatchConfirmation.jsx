@@ -9,7 +9,7 @@ import { SPACING } from '@govuk-react/constants'
 import Details from '@govuk-react/details'
 
 import { SummaryList } from '../../../../../client/components'
-import TaskForm from '../../../../../client/components/Task/Form'
+import Form from '../../../../../client/components/Form'
 import urls from '../../../../../lib/urls'
 import MatchDuplicate from './MatchDuplicate'
 
@@ -43,7 +43,7 @@ function MatchConfirmation({
 
   return (
     <StyledRoot>
-      <TaskForm
+      <Form
         id="match-confirmation-form"
         submissionTaskName="Match confirmation"
         analyticsFormName="matchConfirmationForm"
@@ -58,9 +58,8 @@ function MatchConfirmation({
           csrfToken,
         })}
         submitButtonLabel="Verify"
-        actionLinks={[
-          { href: urls.companies.match.index(company.id), children: 'Back' },
-        ]}
+        cancelRedirectTo={() => urls.companies.match.index(company.id)}
+        cancelButtonLabel="Back"
       >
         {() => (
           <>
@@ -113,7 +112,7 @@ function MatchConfirmation({
             </StyledList>
           </>
         )}
-      </TaskForm>
+      </Form>
     </StyledRoot>
   )
 }

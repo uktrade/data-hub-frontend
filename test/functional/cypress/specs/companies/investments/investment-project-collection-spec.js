@@ -152,7 +152,6 @@ describe('Company Investments Collection Page', () => {
           { value: 'estimated_land_date:asc', label: 'Earliest land date' },
           { value: 'estimated_land_date:desc', label: 'Latest land date' },
           { value: 'name:asc', label: 'Project name A-Z' },
-          { value: 'stage.name', label: 'Stage' },
         ])
       })
     })

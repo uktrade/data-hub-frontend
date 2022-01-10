@@ -90,6 +90,11 @@ describe('Referrals', () => {
         .parents()
         .find(selectors.interaction.details.interaction.referralDetails)
         .should('contain', 'Example subject')
+      cy.location().then(({ pathname }) =>
+        cy
+          .contains('a', 'Edit interaction')
+          .should('have.attr', 'href', `${pathname}/edit`)
+      )
     })
   })
 })

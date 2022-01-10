@@ -4,11 +4,14 @@
 
 Date field for use in forms and filters.
 
-**Note: The `<FieldDate>` has to be wrapped with `<FormStateful>`.** 
 ### Usage
 
 ```jsx
-<FormStateful onSubmit={action('onSubmit')}>
+    <Form
+      id="fieldDateExample"
+      analyticsFormName="fieldDateExample"
+      submissionTaskName="Submit Form example"
+    >
   {(state) => (
     <>
       <FieldDate
@@ -19,7 +22,7 @@ Date field for use in forms and filters.
       />
     </>
   )}
-</FormStateful>
+</Form>
 ```
 
 ### Properties

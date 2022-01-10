@@ -21,7 +21,11 @@ export const delay = curry((duration, task, payload) =>
 
 export const catchApiError = ({ response, message }) =>
   Promise.reject(
-    response?.data?.detail || response?.text || response?.statusText || message
+    response?.data?.detail ||
+      response?.text ||
+      response?.data?.non_field_errors ||
+      response?.statusText ||
+      message
   )
 
 /**

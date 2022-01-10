@@ -12,7 +12,11 @@ When onChange is triggered for a given subfield the field value is set to an arr
 ### Usage
 
 ```jsx
-<FormStateful onSubmit={action('onSubmit')}>
+<Form
+      id="fieldAddAnotherExample"
+      analyticsFormName="fieldAddAnotherExample"
+      submissionTaskName="Submit Form example"
+    >
   {(state) => (
     <FieldAddAnother
       name="related_trade_agreements"
@@ -38,7 +42,7 @@ When onChange is triggered for a given subfield the field value is set to an arr
       )}
     </FieldAddAnother>
   )}
-</FormStateful>
+</Form>
 ```
 
 ### Properties

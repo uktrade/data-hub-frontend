@@ -6,11 +6,11 @@ import InsetText from '@govuk-react/inset-text'
 import urls from '../../../../../lib/urls'
 import { SummaryList, FieldDnbCompany } from '../../../../../client/components'
 import EntityListItem from '../../../../../client/components/EntityList/EntityListItem'
-import TaskForm from '../../../../../client/components/Task/Form'
+import Form from '../../../../../client/components/Form'
 
 function FindCompany({ company, csrfToken }) {
   return (
-    <TaskForm
+    <Form
       id="find-company"
       initialValues={{
         dnbCompanyName: company.name,
@@ -54,7 +54,7 @@ function FindCompany({ company, csrfToken }) {
          company. You'll be given a chance to review the new business details
           before you verify."
       />
-    </TaskForm>
+    </Form>
   )
 }
 

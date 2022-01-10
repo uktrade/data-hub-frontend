@@ -1,17 +1,18 @@
 import { omit } from 'lodash'
 
 import {
-  FORM__LOADED,
-  FORM__FIELD_SET_VALUE,
-  FORM__FIELD_TOUCHED,
-  FORM__FIELD_REGISTER,
-  FORM__FIELD_DEREGISTER,
-  FORM__STEP_REGISTER,
-  FORM__STEP_DEREGISTER,
-  FORM__FORWARD,
   FORM__BACK,
+  FORM__FIELD_DEREGISTER,
+  FORM__FIELD_REGISTER,
+  FORM__FIELD_SET_VALUE,
+  FORM__FORWARD,
+  FORM__LOADED,
+  FORM__RESOLVED,
+  FORM__STEP_DEREGISTER,
+  FORM__STEP_REGISTER,
   FORM__VALIDATE,
-} from '../../../client/actions'
+  FORM__FIELD_TOUCHED,
+} from '../../actions'
 
 export default (
   state = {
@@ -22,17 +23,26 @@ export default (
     currentStep: 0,
     steps: [],
   },
-  { type, ...action }
+  { type, result, ...action }
 ) => {
   switch (type) {
     case FORM__LOADED:
       return {
         ...state,
         values: {
-          ...action.initialValues,
           ...state.values,
+          ...action.initialValues,
         },
+        currentStep: action.initialStepIndex,
       }
+    case FORM__RESOLVED:
+      return {
+        ...state,
+        result,
+        resolved: true,
+      }
+    case 'FORM__RESET_RESOLVED':
+      return omit(state, 'result', 'resolved')
     case FORM__FIELD_REGISTER:
       return {
         ...state,

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import {
@@ -25,8 +25,10 @@ import {
   TYPEAHEAD__OPTION_MOUSE_DOWN,
   TYPEAHEAD__OPTION_TOGGLE,
   TYPEAHEAD__OPTION_REMOVE,
+  TYPEAHEAD__OPTIONS_LOADED,
 } from '../../actions'
 
+import Task from '../Task'
 import Highlighter from '../Typeahead/Highlighter'
 import AssistiveText from './AssistiveText'
 import SelectedChips from './SelectedChips'
@@ -38,6 +40,7 @@ import {
   menuActions,
 } from './utils'
 import reducer from './reducer'
+import { TASK_GET_TYPEAHEAD_OPTIONS } from './state'
 
 const ListboxOption = styled('div')((props) => ({
   display: 'flex',
@@ -136,14 +139,17 @@ const Menu = styled('div')(({ open }) => ({
 }))
 
 const Typeahead = ({
+  id,
   name,
   label = '',
   error = false,
   closeMenuOnSelect = false,
   isMulti = false,
+  noOptionsMessage = 'No Options',
   defaultValue,
   value,
   menuOpen,
+  loadOptions,
   options = [],
   input = '',
   selectedOptions = [],
@@ -158,9 +164,15 @@ const Typeahead = ({
   onOptionRemove,
   onMenuClose,
   onMenuOpen,
+  'data-test': testId,
   ...inputProps
 }) => {
-  onInitialise({ options, isMulti, value: value || defaultValue })
+  useEffect(() => {
+    onInitialise({
+      isMulti,
+      value: value || defaultValue,
+    })
+  }, [])
   const inputRef = React.useRef(null)
   const menuRef = React.useRef(null)
   const ignoreFilter =
@@ -211,8 +223,10 @@ const Typeahead = ({
     }
   }
   return (
-    <div id={name}>
-      <Label id={`${name}-label`}>{label}</Label>
+    <div id={name} data-test={testId}>
+      <Label id={`${name}-label`} data-test="typeahead-label">
+        {label}
+      </Label>
       {isMulti && Boolean(selectedOptions.length) && (
         <SelectedChips
           name={name}
@@ -242,6 +256,7 @@ const Typeahead = ({
           onKeyDown={onInputKeyDown}
           error={error}
           ref={inputRef}
+          data-test="typeahead-input"
         />
         <Menu
           id={`${name}-listbox`}
@@ -250,40 +265,67 @@ const Typeahead = ({
           aria-labelledby={`${name}-label`}
           aria-multiselectable="true"
           ref={menuRef}
+          data-test="typeahead-menu"
         >
-          {filteredOptions.map((option, index) => (
-            <ListboxOption
-              id={`${name}-${option.value}`}
-              key={option.value}
-              active={index === activeIndex}
-              focussed={index === focusIndex}
-              isMulti={isMulti}
-              role="option"
-              aria-selected={selectedOptions.indexOf(option) > -1}
-              aria-setsize={filteredOptions.length}
-              aria-posinset={index}
-              onClick={() => {
-                inputRef.current && inputRef.current.focus()
-                onOptionToggle(option)
-                if (closeMenuOnSelect) {
-                  onMenuClose()
-                }
-              }}
-              onMouseMove={() => {
-                onActiveChange(index)
-              }}
-              onMouseDown={() => {
-                onOptionMouseDown(index)
-              }}
-            >
-              <span>
-                <Highlighter optionLabel={option.label} searchStr={input} />
-              </span>
-            </ListboxOption>
-          ))}
-          {!filteredOptions.length && (
-            <NoOptionsMessage>No Options</NoOptionsMessage>
-          )}
+          <Task.Status
+            name={TASK_GET_TYPEAHEAD_OPTIONS}
+            id={id}
+            progressMessage="Loading options"
+            startOnRender={{
+              payload: {
+                options,
+                loadOptions,
+                autocomplete: input,
+              },
+              onSuccessDispatch: TYPEAHEAD__OPTIONS_LOADED,
+            }}
+          >
+            {() => (
+              <>
+                {filteredOptions.map((option, index) => (
+                  <ListboxOption
+                    id={`${name}-${option.value}`}
+                    key={option.value}
+                    active={index === activeIndex}
+                    focussed={index === focusIndex}
+                    isMulti={isMulti}
+                    role="option"
+                    aria-selected={
+                      selectedOptions
+                        .map(({ value }) => value)
+                        .indexOf(option.value) > -1
+                    }
+                    aria-setsize={filteredOptions.length}
+                    aria-posinset={index}
+                    onClick={() => {
+                      inputRef.current && inputRef.current.focus()
+                      onOptionToggle(option)
+                      if (closeMenuOnSelect) {
+                        onMenuClose()
+                      }
+                    }}
+                    onMouseMove={() => {
+                      onActiveChange(index)
+                    }}
+                    onMouseDown={() => {
+                      onOptionMouseDown(index)
+                    }}
+                    data-test="typeahead-menu-option"
+                  >
+                    <span>
+                      <Highlighter
+                        optionLabel={option.label}
+                        searchStr={input}
+                      />
+                    </span>
+                  </ListboxOption>
+                ))}
+                {!filteredOptions.length && (
+                  <NoOptionsMessage>{noOptionsMessage}</NoOptionsMessage>
+                )}
+              </>
+            )}
+          </Task.Status>
         </Menu>
       </InputWrapper>
       <AssistiveText name={name} />
@@ -302,6 +344,7 @@ Typeahead.propTypes = {
   error: PropTypes.bool,
   closeMenuOnSelect: PropTypes.bool,
   isMulti: PropTypes.bool,
+  noOptionsMessage: PropTypes.string,
   defaultValue: PropTypes.oneOfType([
     keyPairPropType,
     PropTypes.arrayOf(keyPairPropType),
@@ -311,6 +354,7 @@ Typeahead.propTypes = {
     PropTypes.arrayOf(keyPairPropType),
   ]),
   menuOpen: PropTypes.bool,
+  loadOptions: PropTypes.func,
   options: PropTypes.arrayOf(keyPairPropType),
   input: PropTypes.string,
   selectedOptions: PropTypes.arrayOf(keyPairPropType),

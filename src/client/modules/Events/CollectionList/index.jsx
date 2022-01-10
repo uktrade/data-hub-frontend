@@ -84,6 +84,7 @@ const EventsCollection = ({
         entityName="event"
         entityNamePlural="events"
         addItemUrl="/events/create"
+        useReactRouter={true}
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
           <RoutedInputField

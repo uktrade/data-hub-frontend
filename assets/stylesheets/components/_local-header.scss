@@ -128,7 +128,7 @@
 }
 
 * + .c-local-header__heading-after {
-  margin-top: $default-spacing-unit / 2;
+  margin-top: $default-spacing-unit * 0.5;
   margin-bottom: $default-spacing-unit * 0.75;
 }
 
@@ -160,12 +160,12 @@
   margin: 0;
 
   & + & {
-    margin-top: $default-spacing-unit / 2;
+    margin-top: $default-spacing-unit * 0.5;
   }
 }
 
 .c-local-header__description {
-  padding: $default-spacing-unit / 2;
+  padding: $default-spacing-unit * 0.5;
   background-color: $grey-3;
 
   * + & {
@@ -177,11 +177,11 @@
     margin-bottom: 0;
 
     &:not(:last-child) {
-      margin-bottom: $default-spacing-unit / 2;
+      margin-bottom: $default-spacing-unit * 0.5;
     }
 
     a {
-      margin-left: $default-spacing-unit / 2;
+      margin-left: $default-spacing-unit * 0.5;
     }
   }
 

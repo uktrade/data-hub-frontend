@@ -5,7 +5,7 @@ import { H4 } from '@govuk-react/heading'
 import styled from 'styled-components'
 import { UnorderedList } from 'govuk-react'
 import { SPACING } from '@govuk-react/constants'
-import TaskForm from '../../../../../client/components/Task/Form/index.jsx'
+import Form from '../../../../../client/components/Form/index.jsx'
 
 import urls from '../../../../../lib/urls'
 
@@ -16,7 +16,7 @@ const StyledList = styled(UnorderedList)`
 `
 
 const MatchDuplicate = ({ company, dnbCompany, csrfToken }) => (
-  <TaskForm
+  <Form
     id="match-duplicate-form"
     analyticsFormName="matchDuplicate"
     submissionTaskName="Submit merge request"
@@ -26,9 +26,8 @@ const MatchDuplicate = ({ company, dnbCompany, csrfToken }) => (
       csrfToken,
     })}
     submitButtonLabel="Request merge"
-    actionLinks={[
-      { href: urls.companies.match.index(company.id), children: 'Back' },
-    ]}
+    cancelRedirectTo={() => urls.companies.match.index(company.id)}
+    cancelButtonLabel="Back"
     flashMessage={() =>
       'Company merge requested. Thanks for keeping Data Hub running smoothly.'
     }
@@ -56,7 +55,7 @@ const MatchDuplicate = ({ company, dnbCompany, csrfToken }) => (
         </ListItem>
       </StyledList>
     </>
-  </TaskForm>
+  </Form>
 )
 
 MatchDuplicate.props = {

@@ -1,19 +1,17 @@
 import React from 'react'
 import { addDecorator, storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
 import { object, text, withKnobs } from '@storybook/addon-knobs'
-import Button from '@govuk-react/button'
 
 import FieldSelect from '../FieldSelect'
 import FieldInput from '../FieldInput'
-import FormStateful from '../../FormStateful'
+import Form from '../../../Form'
 
 addDecorator(withKnobs)
 
 import exampleReadme from '../FieldSelect/example.md'
 import usageReadme from '../FieldSelect/usage.md'
 
-storiesOf('Forms/Select', module)
+storiesOf('Form/Form Elements/Select', module)
   .addParameters({
     options: { theme: undefined },
     readme: {
@@ -22,7 +20,11 @@ storiesOf('Forms/Select', module)
     },
   })
   .add('Default', () => (
-    <FormStateful onSubmit={action('onSubmit')}>
+    <Form
+      id="fieldSelectExample"
+      analyticsFormName="fieldSelectExample"
+      submissionTaskName="Submit Form example"
+    >
       {(form) => (
         <>
           <FieldSelect
@@ -70,9 +72,8 @@ storiesOf('Forms/Select', module)
                 : null
             }
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </Form>
   ))

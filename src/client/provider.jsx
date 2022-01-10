@@ -12,7 +12,6 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
 import createSagaMiddleware from 'redux-saga'
 
-import { MultiInstanceForm } from './components'
 import DropdownMenu from './components/DropdownMenu/ConnectedDropdownMenu'
 import tasks from './components/Task/reducer'
 import rootSaga from './root-saga'
@@ -43,18 +42,11 @@ import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/
 import * as addCompanyState from '../apps/companies/apps/add-company/client/state'
 import addCompanyPostcodeToRegionReducer from '../apps/companies/apps/add-company/client/reducer'
 
-import { ID as ONE_LIST_DETAILS_ID } from '../apps/companies/apps/edit-one-list/client/state'
-import editOneListReducer from '../apps/companies/apps/edit-one-list/client/reducer'
-
 import { ID as ADD_TO_PIPELINE_ID } from '../apps/my-pipeline/client/state'
 import addToPipelineReducer from '../apps/my-pipeline/client/reducer'
 
 import { ID as PIPELINE_LIST_ID } from './components/Pipeline/state'
 import pipelineListReducer from './components/Pipeline/reducer'
-
-import { ID as INVESTEMENT_PROJECT_ADMIN_ID } from '../apps/investments/views/admin/client/state'
-
-import investmentProjectAdminReducer from '../apps/investments/views/admin/client/reducer'
 
 import { ID as INVESTMENT_OPPORTUNITIES_LIST_ID } from '../apps/investments/client/opportunities/List/state'
 import investmentOpportunitiesListReducer from '../apps/investments/client/opportunities/List/reducer'
@@ -108,14 +100,12 @@ import {
 } from './modules/Omis/CollectionList/state'
 import ordersReducer from './modules/Omis/CollectionList/reducer'
 
-import CreateUKInvestmentOpportunity from './components/CreateUKInvestmentOpportunity'
-
 import RoutedInput from './components/RoutedInput'
 
 import Resource from './components/Resource'
 
 import { ContactForm } from './components/ContactForm'
-import TaskForm from './components/Task/Form'
+import Form from './components/Form'
 import TaskReactSelect from './components/Task/ReactSelect'
 
 const sagaMiddleware = createSagaMiddleware()
@@ -152,25 +142,21 @@ const store = createStore(
     [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
     [REFERRALS_SEND_ID]: referralsSendReducer,
     [EXPORTS_WINS_ID]: exportWinsReducer,
-    [ONE_LIST_DETAILS_ID]: editOneListReducer,
     [addCompanyState.ID]: addCompanyPostcodeToRegionReducer,
     [ADD_TO_PIPELINE_ID]: addToPipelineReducer,
     [PIPELINE_LIST_ID]: pipelineListReducer,
     ...TabNav.reducerSpread,
     ...ReferralList.reducerSpread,
-    ...MultiInstanceForm.reducerSpread,
     ...DropdownMenu.reducerSpread,
     ...ToggleSection.reducerSpread,
     ...Typeahead.reducerSpread,
     ...RoutedInput.reducerSpread,
-    ...CreateUKInvestmentOpportunity.reducerSpread,
     ...Resource.reducerSpread,
     ...ContactForm.reducerSpread,
-    ...TaskForm.reducerSpread,
+    ...Form.reducerSpread,
     ...TaskReactSelect.reducerSpread,
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
-    [INVESTEMENT_PROJECT_ADMIN_ID]: investmentProjectAdminReducer,
     [DNB_CHECK_ID]: dnbCheckReducer,
     [INVESTMENT_OPPORTUNITIES_LIST_ID]: investmentOpportunitiesListReducer,
     [INVESTMENT_OPPORTUNITIES_DETAILS_ID]:

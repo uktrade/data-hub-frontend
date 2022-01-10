@@ -1,11 +1,10 @@
 import React from 'react'
 import { addDecorator, storiesOf } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
-import Button from '@govuk-react/button'
 import { H1 } from '@govuk-react/heading'
 
 import FieldCheckboxes from '../FieldCheckboxes'
-import FormStateful from '../../FormStateful'
+import Form from '../../../Form'
 
 import exampleReadme from '../FieldCheckboxes/example.md'
 import usageReadme from '../FieldCheckboxes/usage.md'
@@ -32,7 +31,7 @@ const options = [
 
 addDecorator(withKnobs)
 
-storiesOf('Forms/Checkboxes', module)
+storiesOf('Form/Form Elements/Checkboxes', module)
   .addParameters({
     options: { theme: undefined },
     readme: {
@@ -41,7 +40,11 @@ storiesOf('Forms/Checkboxes', module)
     },
   })
   .add('Default', () => (
-    <FormStateful>
+    <Form
+      id="fieldCheckboxExample"
+      analyticsFormName="fieldCheckboxExample"
+      submissionTaskName="Submit Form example"
+    >
       {(form) => (
         <>
           <FieldCheckboxes
@@ -50,14 +53,17 @@ storiesOf('Forms/Checkboxes', module)
             required="Select at least one country"
             options={options}
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </Form>
   ))
   .add('Checkboxes - hint', () => (
-    <FormStateful>
+    <Form
+      id="fieldCheckboxExample"
+      analyticsFormName="fieldCheckboxExample"
+      submissionTaskName="Submit Form example"
+    >
       {(form) => (
         <>
           <FieldCheckboxes
@@ -67,14 +73,17 @@ storiesOf('Forms/Checkboxes', module)
             required="Select at least one country"
             options={options}
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </Form>
   ))
   .add('Checkboxes - legend', () => (
-    <FormStateful>
+    <Form
+      id="fieldCheckboxExample"
+      analyticsFormName="fieldCheckboxExample"
+      submissionTaskName="Submit Form example"
+    >
       {(form) => (
         <>
           <FieldCheckboxes
@@ -84,15 +93,17 @@ storiesOf('Forms/Checkboxes', module)
             required="Select at least one country"
             options={options}
           />
-
-          <Button>Submit</Button>
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </Form>
   ))
   .add('Default (reduced)', () => (
-    <FormStateful>
+    <Form
+      id="fieldCheckboxExample"
+      analyticsFormName="fieldCheckboxExample"
+      submissionTaskName="Submit Form example"
+    >
       {(form) => (
         <>
           <FieldCheckboxes
@@ -104,14 +115,17 @@ storiesOf('Forms/Checkboxes', module)
             reduced={true}
             reducedPadding={true}
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </Form>
   ))
   .add('Checkboxes - legend (reduced)', () => (
-    <FormStateful>
+    <Form
+      id="fieldCheckboxExample"
+      analyticsFormName="fieldCheckboxExample"
+      submissionTaskName="Submit Form example"
+    >
       {(form) => (
         <>
           <FieldCheckboxes
@@ -124,9 +138,8 @@ storiesOf('Forms/Checkboxes', module)
             reduced={true}
             reducedPadding={true}
           />
-          <Button>Submit</Button>
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </Form>
   ))

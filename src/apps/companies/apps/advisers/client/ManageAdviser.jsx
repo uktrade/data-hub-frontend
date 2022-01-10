@@ -21,7 +21,7 @@ import {
   Main,
 } from '../../../../../client/components'
 
-import TaskForm from '../../../../../client/components/Task/Form'
+import Form from '../../../../../client/components/Form'
 
 import FieldActiveITA from '../../../../../client/components/Form/elements/FieldActiveITA'
 
@@ -69,7 +69,7 @@ const Add = ({ cancelUrl, currentLeadITA, companyName, companyId }) => (
           <CurrentLeadIta {...currentLeadITA} />
         </>
       )}
-      <TaskForm
+      <Form
         id="manage-adviser"
         submissionTaskName="Update Lead ITA"
         analyticsFormName="updateLeadITA"
@@ -82,7 +82,7 @@ const Add = ({ cancelUrl, currentLeadITA, companyName, companyId }) => (
               email ? `: <a href="mailto:${email}">${email}</a>` : '.'
             }`,
         ]}
-        actionLinks={[{ children: 'Cancel', href: cancelUrl }]}
+        cancelRedirectTo={() => cancelUrl}
         submitButtonLabel="Add Lead ITA"
       >
         <FieldActiveITA
@@ -113,7 +113,7 @@ const Add = ({ cancelUrl, currentLeadITA, companyName, companyId }) => (
           </p>
         </StyledStatusMessage>
         <FieldInput type="hidden" name="companyId" initialValue={companyId} />
-      </TaskForm>
+      </Form>
     </Main>
   </>
 )

@@ -4,12 +4,14 @@
 
 A Select dropdown field for use in forms.
 
-**Note: The `<FieldSelect>` has to be wrapped with `<FormStateful>`.**
-
 ### Usage
 
 ```jsx
-<FormStateful onSubmit={action('onSubmit')}>
+  <Form
+      id="fieldSelectExample"
+      analyticsFormName="fieldSelectExample"
+      submissionTaskName="Submit Form example"
+    >
   {(state) => (
     <>
       <FieldSelect
@@ -31,7 +33,7 @@ A Select dropdown field for use in forms.
       />
     </>
   )}
-</FormStateful>
+</Form>
 ```
 
 ### Properties

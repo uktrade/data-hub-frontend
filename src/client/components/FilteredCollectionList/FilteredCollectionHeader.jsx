@@ -8,6 +8,7 @@ import Button from '@govuk-react/button'
 import styled from 'styled-components'
 import pluralize from 'pluralize'
 import { kebabCase } from 'lodash'
+import { Link } from 'react-router-dom'
 
 import {
   CollectionHeaderRow,
@@ -25,6 +26,10 @@ const StyledHeaderText = styled(H2)`
 `
 
 const StyledLink = styled.a`
+  margin-bottom: 0;
+`
+
+const StyledReactRouterLink = styled(Link)`
   margin-bottom: 0;
 `
 
@@ -86,21 +91,35 @@ function FilteredCollectionHeader({
   addItemUrl = null,
   selectedFilters,
   hasFilters,
+  useReactRouter = false,
 }) {
   const formattedTotal = decimal(totalItems)
   const counterSuffix = pluralize(collectionName, totalItems)
-  const actions = addItemUrl && (
-    <Button
-      id={`add-${kebabCase(collectionName)}`}
-      as={StyledLink}
-      href={addItemUrl}
-      buttonColour={GREY_3}
-      buttonTextColour={BLACK}
-      data-test="add-collection-item-button"
-    >
-      Add {collectionName}
-    </Button>
-  )
+  const actions =
+    addItemUrl &&
+    (useReactRouter ? (
+      <Button
+        id={`add-${kebabCase(collectionName)}`}
+        as={StyledReactRouterLink}
+        to={addItemUrl}
+        buttonColour={GREY_3}
+        buttonTextColour={BLACK}
+        data-test="add-collection-item-button"
+      >
+        Add {collectionName}
+      </Button>
+    ) : (
+      <Button
+        id={`add-${kebabCase(collectionName)}`}
+        as={StyledLink}
+        href={addItemUrl}
+        buttonColour={GREY_3}
+        buttonTextColour={BLACK}
+        data-test="add-collection-item-button"
+      >
+        Add {collectionName}
+      </Button>
+    ))
 
   return (
     <CollectionHeaderRowContainer>

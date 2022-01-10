@@ -4,7 +4,7 @@
 $search-button-width: 50px;
 
 .c-entity-search__input {
-  padding-right: $search-button-width + ($default-spacing-unit / 2);
+  padding-right: $search-button-width + ($default-spacing-unit * 0.5);
 }
 
 .c-entity-search__button {
@@ -35,7 +35,7 @@ $search-button-width: 50px;
 
 .c-entity-search__aggregations-item {
   display: inline-block;
-  padding: $default-spacing-unit / 2;
+  padding: $default-spacing-unit * 0.5;
   white-space: nowrap;
   cursor: default;
 }

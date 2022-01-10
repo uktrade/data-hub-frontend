@@ -1,12 +1,10 @@
 import React from 'react'
 import { addDecorator, storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
 import { withKnobs } from '@storybook/addon-knobs'
-import Button from '@govuk-react/button'
 
-import FormStateful from '../../FormStateful'
 import FieldAddAnother from '../FieldAddAnother'
 import Typeahead from '../../../Typeahead/Typeahead'
+import Form from '../../../Form'
 
 import exampleReadme from '../FieldAddAnother/example.md'
 import usageReadme from '../FieldAddAnother/usage.md'
@@ -28,7 +26,7 @@ const options = [
   },
 ]
 
-storiesOf('Forms/FieldAddAnother', module)
+storiesOf('Form/Form Elements/FieldAddAnother', module)
   .addParameters({
     options: { theme: undefined },
     readme: {
@@ -37,7 +35,11 @@ storiesOf('Forms/FieldAddAnother', module)
     },
   })
   .add('Default', () => (
-    <FormStateful onSubmit={action('onSubmit')}>
+    <Form
+      id="fieldAddAnotherExample"
+      analyticsFormName="fieldAddAnotherExample"
+      submissionTaskName="Submit Form example"
+    >
       {(state) => (
         <>
           <FieldAddAnother
@@ -64,9 +66,8 @@ storiesOf('Forms/FieldAddAnother', module)
               />
             )}
           </FieldAddAnother>
-          <Button>Submit</Button>
           <pre>{JSON.stringify(state, null, 2)}</pre>
         </>
       )}
-    </FormStateful>
+    </Form>
   ))

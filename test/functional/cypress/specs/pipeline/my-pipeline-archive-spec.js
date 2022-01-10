@@ -53,11 +53,9 @@ describe('Archive pipeline item form', () => {
       cy.visit(urls.pipeline.archive('INCORRECT-PIPELINE-ID'))
     })
 
-    assertHeader()
-
     it('should render a 404 error message', () => {
-      cy.contains('There is a problem')
-      cy.contains('Not Found')
+      cy.contains('Could not load PipelineItem')
+      cy.contains('Error: Not Found')
     })
   })
 
