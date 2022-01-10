@@ -54,7 +54,7 @@
     border: 0;
     color: $grey-5;
     font-size: inherit;
-    padding: $default-spacing-unit/4 0;
+    padding: $default-spacing-unit*0.25 0;
     @include media (mobile) {
       display:block;
     }

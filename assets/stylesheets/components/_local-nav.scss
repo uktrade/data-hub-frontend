@@ -5,8 +5,8 @@
 
 .c-local-nav {
   @include core-font(20);
-  margin-left: -($gutter / 2);
-  margin-right: -($gutter / 2);
+  margin-left: -($gutter * 0.5);
+  margin-right: -($gutter * 0.5);
 
   @include media(tablet) {
     padding-right: 0;
@@ -17,7 +17,7 @@
 
 .c-local-nav__link {
   display: block;
-  padding: ($default-spacing-unit / 2) $default-spacing-unit;
+  padding: ($default-spacing-unit * 0.5) $default-spacing-unit;
 
   &:link,
   &:visited {

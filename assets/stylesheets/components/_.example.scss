@@ -6,8 +6,8 @@
 }
 
 .example__header {
-  padding-top: $default-spacing-unit / 4;
-  padding-bottom: $default-spacing-unit / 4;
+  padding-top: $default-spacing-unit * 0.25;
+  padding-bottom: $default-spacing-unit * 0.25;
 
   &::before {
     content: attr(data-tab-title);
@@ -17,8 +17,8 @@
     font-size: 16px;
     line-height: 32px;
     font-weight: 600;
-    padding: 0 ($default-spacing-unit / 2);
-    margin-right: $default-spacing-unit / 2;
+    padding: 0 ($default-spacing-unit * 0.5);
+    margin-right: $default-spacing-unit * 0.5;
     display: inline-block;
     vertical-align: top;
   }

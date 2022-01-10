@@ -33,7 +33,7 @@
   }
 
   div + ul {
-    margin-top: $default-spacing-unit / 2;
+    margin-top: $default-spacing-unit * 0.5;
   }
 }
 
@@ -79,7 +79,7 @@ table.table--key-value.table--small {
   color: $secondary-text-colour;
 
   .table__details-name {
-    padding-top: $default-spacing-unit / 4;
+    padding-top: $default-spacing-unit * 0.25;
   }
 
   .table__details-content {
@@ -110,5 +110,5 @@ table.table--key-value.table--small {
 }
 
 .table__action {
-  padding-left: $default-spacing-unit / 2;
+  padding-left: $default-spacing-unit * 0.5;
 }

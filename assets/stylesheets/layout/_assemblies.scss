@@ -23,7 +23,7 @@
 
   .c-multiple-choice,
   .c-meta-list {
-    margin-top: $default-spacing-unit / 2;
+    margin-top: $default-spacing-unit * 0.5;
   }
 
   .c-meta-container,
@@ -32,7 +32,7 @@
   }
 
   .metadata-list {
-    margin-top: $default-spacing-unit / 4;
+    margin-top: $default-spacing-unit * 0.25;
   }
 
   .c-form-fieldset--subfield,

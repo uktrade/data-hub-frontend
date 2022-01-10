@@ -34,7 +34,7 @@
 
 .c-badge {
   @include _style-badge($green);
-  padding: ($baseline-grid-unit / 2) $baseline-grid-unit;
+  padding: ($baseline-grid-unit * 0.5) $baseline-grid-unit;
   text-decoration: none;
   font-weight: 600;
 

@@ -16,7 +16,7 @@
 
   .dashboard-list {
     li + li {
-      padding-top: $default-spacing-unit / 2;
+      padding-top: $default-spacing-unit * 0.5;
     }
   }
 

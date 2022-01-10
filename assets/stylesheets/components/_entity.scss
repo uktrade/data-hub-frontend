@@ -28,7 +28,7 @@
   @include core-font(16);
 
   * + & {
-    margin-top: $default-spacing-unit / 2;
+    margin-top: $default-spacing-unit * 0.5;
   }
 }
 
