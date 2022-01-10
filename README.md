@@ -66,9 +66,10 @@ Please view the dedicated [Docker readme](./docs/Docker.md).
     cp sample.env .env
     ```
 
-Steps 5 onwards differ depending on which API you are using.
+Steps 5 onwards differ depending on which API you are using. Skip to section 'Running with the local API' or 'Running with other APIs (e.g. staging)' depending on what you want to do.
 
 **Running with the local API**
+
 5. The environment variables copied from `sample.env` are set up for running both the frontend and the API using the docker set-up outlined [here](./docs/Docker.md). To run the frontend natively, the following variables will need to be changed to:
     ```
     API_ROOT=http://localhost:8000
@@ -96,15 +97,20 @@ Steps 5 onwards differ depending on which API you are using.
 
 **Running with other APIs (e.g. staging)**
 
-5. Go to Vault, look in datahub-fe, and add the relevant environment variables specified in the `.env` file for the environment you are interested in developing with.
+5. Go to the [Playbook](https://readme.trade.gov.uk/docs/playbooks/datahub.html#environments) and use the Admin URLs to set the environment variable `API_ROOT`.
+6. Go to Vault, look in datahub-fe, and click on the environment you want to use. Change the following environment variables in your `.env` file to the ones specified in Vault:
+    ``` 
+    DATA_HUB_BACKEND_ACCESS_KEY_ID=frontend-key-id
+    DATA_HUB_BACKEND_SECRET_ACCESS_KEY=frontend-key
+    ```
 
-6. The environment variables copied from `sample.env` are set up for running both the frontend and the API using the docker set-up outlined [here](./docs/Docker.md). To run the frontend natively, the following variables will need to be changed to:
+7. The environment variables copied from Vault and `sample.env` are set up for running both the frontend and the API using the docker. To run the frontend natively, the following variables will need to be changed to:
     ```
     REDIS_HOST=localhost
     REDIS_URL=redis://localhost:6379
     ```
 
-7.  [Install](./docs/Installing%20redis%20natively.md) the redis server and bring it up:
+8.  [Install](./docs/Installing%20redis%20natively.md) the redis server and bring it up:
 
     ```bash
     redis-server
@@ -116,8 +122,9 @@ Steps 5 onwards differ depending on which API you are using.
     docker run -it -p 6379:6379 redis:3.2
     ```
 
-8.
-9.  Start the node server
+9. Go to the Django admin site for your relevant environment and get an access token by adding the following path `/add-access-token/` to the URL. Add a frontend environment variable `OAUTH2_DEV_TOKEN` and set this as equal to the access token. 
+
+10.  Start the node server
 
     **In production mode:**
 
@@ -143,7 +150,9 @@ Steps 5 onwards differ depending on which API you are using.
 
 **Mock SSO**
 
-To use the mock SSO service, add the environment variables from sample.env below the line `To use mock-SSO` into your `.env` file and uncomment.
+To use the mock SSO service, add the environment variables from `sample.env` below the line 'To use mock-SSO' into your `.env` file and uncomment.
+
+Set `SSO_ENABLED=true`
 
   Start the mocked SSO:
 
@@ -154,9 +163,9 @@ To use the mock SSO service, add the environment variables from sample.env below
 
 **Live SSO**
 
-To use the live SSO service, add the environment variables from sample.env below the line `To use live SSO` into your `.env` file and uncomment.
+To use the live SSO service, add the environment variables from `sample.env` below the line 'To use live SSO' into your `.env` file and uncomment.
 
-Set SSO_ENABLED=false
+Set `SSO_ENABLED=true`
 
 Then restart your development environment
 
