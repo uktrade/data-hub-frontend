@@ -19,7 +19,7 @@ import {
   FieldTextarea,
   FieldDate,
   FieldTypeahead,
-  AdviserTypeAhead,
+  FieldAdvisersTypeahead,
 } from '../../../../../client/components'
 import { FieldUKRegionTypeahead } from '../../../../../client/components/Form/elements/UKRegionOptions'
 import { FieldRequiredChecksRadios } from '../../../../../client/components/Form/elements/RequiredChecksOptions'
@@ -128,7 +128,7 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
                     requiredChecksConductedOn
                   )}
                 />
-                <AdviserTypeAhead
+                <FieldAdvisersTypeahead
                   name="requiredChecksConductedBy"
                   label="Person responsible for most recent checks"
                   placeholder="-- Search for an adviser --"
@@ -142,7 +142,7 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
               name="constructionRisks"
               initialValue={constructionRisks[0]?.value}
             />
-            <AdviserTypeAhead
+            <FieldAdvisersTypeahead
               name="leadRelationshipManager"
               label="Lead DIT relationship manager"
               initialValue={leadRelationshipManager}
@@ -150,16 +150,14 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
               isMulti={false}
             />
             {values.values.leadRelationshipManager && (
-              <>
-                <AdviserTypeAhead
-                  name="otherDitContacts"
-                  label="Other DIT contacts"
-                  initialValue={otherDitContacts}
-                  placeholder="-- Select adviser --"
-                  aria-label="Select an adviser"
-                  isMulti={true}
-                />
-              </>
+              <FieldAdvisersTypeahead
+                name="otherDitContacts"
+                label="Other DIT contacts"
+                initialValue={otherDitContacts}
+                placeholder="-- Select adviser --"
+                aria-label="Select an adviser"
+                isMulti={true}
+              />
             )}
             <FieldOpportunityValueTypeRadios
               name="valueType"

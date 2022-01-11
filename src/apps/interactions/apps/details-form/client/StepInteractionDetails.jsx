@@ -15,7 +15,7 @@ import { throttle } from 'lodash'
 
 import { idNamesToValueLabels } from '../../../../../client/utils'
 import {
-  AdviserTypeAhead,
+  FieldAdvisersTypeahead,
   NewWindowLink,
   FieldCheckboxes,
   FieldDate,
@@ -296,7 +296,7 @@ const StepInteractionDetails = ({
         }
       />
 
-      <AdviserTypeAhead
+      <FieldAdvisersTypeahead
         name="dit_participants"
         label="Adviser(s)"
         required="Select at least one adviser"

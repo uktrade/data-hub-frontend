@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
 
 import {
-  AdviserTypeAhead,
+  FieldAdvisersTypeahead,
   FieldRadios,
   FieldInput,
   FieldDate,
@@ -157,7 +157,7 @@ export const EventFormFields = ({ values }) => (
       aria-label="Select a service"
       noOptionsMessage="No service found"
     />
-    <AdviserTypeAhead
+    <FieldAdvisersTypeahead
       name="organiser"
       label="Organiser"
       required="Enter at least one organiser"
