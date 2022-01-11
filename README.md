@@ -70,6 +70,8 @@ Steps 5 onwards differ depending on which API you are using. Skip to section 'Ru
 
 **Running with the local API**
 
+Use this method if you want to make backend changes or run against an API branch which hasn't yet been deployed.
+
 5.  The environment variables copied from `sample.env` are set up for running both the frontend and the API using the docker set-up outlined [here](./docs/Docker.md). To run the frontend natively, the following variables will need to be changed to:
     ```
     API_ROOT=http://localhost:8000
@@ -104,6 +106,8 @@ Steps 5 onwards differ depending on which API you are using. Skip to section 'Ru
 
 **Running with other APIs (e.g. staging)**
 
+This method is recommended if you are only making frontend changes.
+
 5.  Go to the [Playbook](https://readme.trade.gov.uk/docs/playbooks/datahub.html#environments) and use the Admin URLs to set the environment variable `API_ROOT`. You will need to remove `/admin` from the end of the API paths.
 
 6.  Go to Vault, look in datahub-fe, and click on the environment you want to use. Change the following environment variables in your `.env` file to the ones specified in Vault:
@@ -112,7 +116,7 @@ Steps 5 onwards differ depending on which API you are using. Skip to section 'Ru
     DATA_HUB_BACKEND_SECRET_ACCESS_KEY=frontend-key
     ```
 
-7.  The environment variables copied from Vault and `sample.env` are set up for running both the frontend and the API using the docker. To run the frontend natively, the following variables will need to be changed to:
+7.  The environment variables copied from `sample.env` are set up for running both the frontend and the API using the docker. To run the frontend natively, the following variables will need to be changed to:
     ```
     REDIS_HOST=localhost
     REDIS_URL=redis://localhost:6379
