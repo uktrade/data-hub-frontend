@@ -98,7 +98,7 @@ function PipelineForm({
                     value: id,
                     label: name + (job_title ? ', ' + job_title : ''),
                   }))}
-                  noOptionsMessage={() => 'This company has no contacts'}
+                  noOptionsMessage="This company has no contacts"
                   placeholder="Select a contact..."
                   isClearable={true}
                   className="govuk-!-width-two-thirds"

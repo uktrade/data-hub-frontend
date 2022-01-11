@@ -19,7 +19,7 @@ const AdviserTypeAhead = ({
       name={name}
       label={label}
       placeholder={placeholder}
-      noOptionsMessage={() => 'Type to search for advisers'}
+      noOptionsMessage="Type to search for advisers"
       required={required}
       loadOptions={throttle(
         (searchString) =>

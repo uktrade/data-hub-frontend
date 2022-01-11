@@ -53,7 +53,7 @@ export const EventFormFields = ({ values }) => (
               placeholder="Search trade agreements"
               required="Select at least one trade agreement"
               aria-label="Select a trade agreement"
-              noOptionsMessage={() => <span>No trade agreement found</span>}
+              noOptionsMessage="No trade agreement found"
             />
           ),
         }),
@@ -73,7 +73,7 @@ export const EventFormFields = ({ values }) => (
       placeholder="Select event type"
       required="Select at least one event type"
       aria-label="Select an event type"
-      noOptionsMessage={() => <span>No event type found</span>}
+      noOptionsMessage="No event type found"
     />
     <FieldDate
       name="start_date"
@@ -92,7 +92,7 @@ export const EventFormFields = ({ values }) => (
       options={values?.metadata?.eventLocationTypes}
       placeholder="Select event"
       aria-label="Select an event"
-      noOptionsMessage={() => <span>No event location found</span>}
+      noOptionsMessage="No event location found"
     />
     <FieldInput
       label="Address line 1"
@@ -125,7 +125,7 @@ export const EventFormFields = ({ values }) => (
       required="Enter a country"
       placeholder="Select country"
       aria-label="Select a country"
-      noOptionsMessage={() => <span>No country found</span>}
+      noOptionsMessage="No country found"
     />
     {values.address_country?.value === UNITED_KINGDOM_ID && (
       <FieldTypeahead
@@ -135,7 +135,7 @@ export const EventFormFields = ({ values }) => (
         required="Select a UK region"
         placeholder="Select region"
         aria-label="Select a region"
-        noOptionsMessage={() => <span>No region found</span>}
+        noOptionsMessage="No region found"
       />
     )}
     <FieldTextarea type="text" name="notes" label="Event Notes (optional)" />
@@ -146,7 +146,7 @@ export const EventFormFields = ({ values }) => (
       required="Select at least one team hosting the event"
       placeholder="Select team"
       aria-label="Select a team"
-      noOptionsMessage={() => <span>No hosting team found</span>}
+      noOptionsMessage="No hosting team found"
     />
     <FieldTypeahead
       name="service"
@@ -155,7 +155,7 @@ export const EventFormFields = ({ values }) => (
       options={values?.metadata?.services}
       placeholder="Select service"
       aria-label="Select a service"
-      noOptionsMessage={() => <span>No service found</span>}
+      noOptionsMessage="No service found"
     />
     <AdviserTypeAhead
       name="organiser"
@@ -180,7 +180,7 @@ export const EventFormFields = ({ values }) => (
               placeholder="Select team"
               required="Select at least one team"
               aria-label="Select at least one team"
-              noOptionsMessage={() => <span>No shared team found</span>}
+              noOptionsMessage="No shared team found"
             />
           ),
         }),
@@ -195,7 +195,7 @@ export const EventFormFields = ({ values }) => (
       options={values?.metadata?.programmes}
       placeholder="Select programme"
       aria-label="Select programme"
-      noOptionsMessage={() => <span>No programmes found</span>}
+      noOptionsMessage="No programmes found"
     />
   </>
 )

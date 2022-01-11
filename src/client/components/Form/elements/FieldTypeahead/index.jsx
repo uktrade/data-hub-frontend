@@ -10,7 +10,7 @@ import { ERROR_COLOUR } from 'govuk-colours'
 
 import { useField, useFormContext } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
-import Typeahead from '../../../Typeahead/Typeahead'
+import Typeahead from '../../../Typeahead2'
 
 const StyledWrapper = styled('div')`
   ${(props) =>
@@ -33,6 +33,7 @@ const FieldTypeahead = ({
   legend,
   hint,
   initialValue,
+  options,
   ...rest
 }) => {
   const { value, error, touched, onBlur } = useField({
@@ -56,6 +57,7 @@ const FieldTypeahead = ({
           onChange={(newValue) => setFieldValue(name, newValue)}
           error={error}
           value={value}
+          initialOptions={options}
           {...rest}
         />
       </StyledWrapper>
@@ -73,7 +75,7 @@ FieldTypeahead.propTypes = {
   required: PropTypes.string,
   label: PropTypes.node,
   legend: PropTypes.node,
-  hint: PropTypes.string,
+  hint: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   initialValue: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.arrayOf(PropTypes.object),
