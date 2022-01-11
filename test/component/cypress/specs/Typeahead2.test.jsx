@@ -63,7 +63,7 @@ describe('Typeahead2', () => {
             isMulti={false}
             closeMenuOnSelect={true}
             name="typeahead"
-            options={options}
+            initialOptions={options}
             placeholder="Search..."
             label="Pick a fruit"
             data-test="test-component"
@@ -139,7 +139,7 @@ describe('Typeahead2', () => {
             isMulti={true}
             closeMenuOnSelect={false}
             name="typeahead-ms"
-            options={options}
+            initialOptions={options}
             placeholder="Search..."
             label="Pick a fruit"
             data-test="test-component-ms"
@@ -201,6 +201,8 @@ describe('Typeahead2', () => {
       cy.get('@component')
         .find('[data-test="typeahead-chip"]')
         .should('have.length', 1)
+
+      cy.get('@component').find('[data-test="typeahead-input"]').click()
 
       cy.get('@component')
         .find('[data-test="typeahead-menu-option"]')
@@ -270,9 +272,7 @@ describe('Typeahead2', () => {
       cy.get('@component').find('[data-test="typeahead-input"]').click()
       cy.get('@component')
         .find('[data-test="typeahead-menu"]')
-        .should('be.visible')
-        .find('[data-test="typeahead-menu-option"]')
-        .should('have.length', 0)
+        .should('not.be.visible')
     })
 
     it('should select an option when it is clicked', () => {
@@ -348,9 +348,7 @@ describe('Typeahead2', () => {
       cy.get('@component').find('[data-test="typeahead-input"]').click()
       cy.get('@component')
         .find('[data-test="typeahead-menu"]')
-        .should('be.visible')
-        .find('[data-test="typeahead-menu-option"]')
-        .should('have.length', 0)
+        .should('not.be.visible')
     })
 
     it('should get options when input is typed', () => {

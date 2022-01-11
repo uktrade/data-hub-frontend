@@ -2,7 +2,7 @@
 ```js
 import {
   Typeahead
-} from 'components/Typeahead2/Typeahead' // Path to the components index
+} from 'components/Typeahead2' // Path to the components index
 ```
 
 ### Output

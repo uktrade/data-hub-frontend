@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 
 import usageReadme from '../usage.md'
 import exampleReadme from '../example.md'
-import Typeahead from '../Typeahead'
+import Typeahead from '../'
 
 const asyncOptions = [
   {
@@ -26,7 +26,7 @@ const asyncOptions = [
 
 export const mockLoadOptions = (query = '') =>
   new Promise((resolve) =>
-    query && query.length > 2
+    query && query.length
       ? setTimeout(
           resolve,
           1000,
@@ -60,22 +60,20 @@ storiesOf('Typeahead2', module)
   })
   .add('Single - standard options', () => (
     <Typeahead
-      id="typeahead-single-1"
+      name="singleselect"
       isMulti={false}
       closeMenuOnSelect={true}
-      name="singleselect"
-      options={options}
+      initialOptions={options}
       placeholder="Search..."
       label="Pick a fruit"
     />
   ))
   .add('Single - pre-selected option', () => (
     <Typeahead
-      id="typeahead-single-2"
+      name="singleselect-pre-select"
       isMulti={false}
       closeMenuOnSelect={true}
-      name="singleselect-pre-select"
-      options={options}
+      initialOptions={options}
       placeholder="Search..."
       defaultValue={options[2]}
       label="Pick a fruit"
@@ -83,12 +81,11 @@ storiesOf('Typeahead2', module)
   ))
   .add('Single - error', () => (
     <Typeahead
-      id="typeahead-single-3"
+      name="singleselect-error"
       error={true}
       isMulti={false}
       closeMenuOnSelect={false}
-      name="singleselect-error"
-      options={options}
+      initialOptions={options}
       placeholder="Search..."
       label="Pick a fruit"
     />
@@ -103,7 +100,6 @@ storiesOf('Typeahead2', module)
         <li>Holly</li>
       </ul>
       <Typeahead
-        id="typeahead-single-4"
         isMulti={false}
         closeMenuOnSelect={true}
         name="singleselect"
@@ -115,22 +111,20 @@ storiesOf('Typeahead2', module)
   ))
   .add('Multi - standard options', () => (
     <Typeahead
-      id="typeahead-multi-1"
       isMulti={true}
       closeMenuOnSelect={false}
       name="multiselect"
-      options={options}
+      initialOptions={options}
       placeholder="Search..."
       label="Pick a fruit"
     />
   ))
   .add('Multi - pre-selected option', () => (
     <Typeahead
-      id="typeahead-multi-2"
       isMulti={true}
       closeMenuOnSelect={false}
       name="multiselect-pre-select"
-      options={options}
+      initialOptions={options}
       placeholder="Search..."
       defaultValue={options[2]}
       label="Pick a fruit"
@@ -138,11 +132,10 @@ storiesOf('Typeahead2', module)
   ))
   .add('Multi - pre-selected multiple options', () => (
     <Typeahead
-      id="typeahead-multi-3"
       isMulti={true}
       closeMenuOnSelect={false}
       name="multiselect-pre-select-multiple"
-      options={options}
+      initialOptions={options}
       placeholder="Search..."
       defaultValue={[options[2], options[0]]}
       label="Pick a fruit"
@@ -158,7 +151,6 @@ storiesOf('Typeahead2', module)
         <li>Holly</li>
       </ul>
       <Typeahead
-        id="ms-async"
         isMulti={true}
         closeMenuOnSelect={false}
         name="multiselect-async"
@@ -179,7 +171,6 @@ storiesOf('Typeahead2', module)
         <li>Holly</li>
       </ul>
       <Typeahead
-        id="ms-async"
         isMulti={true}
         closeMenuOnSelect={false}
         name="multiselect-async"

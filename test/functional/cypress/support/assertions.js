@@ -467,13 +467,12 @@ const assertCheckboxGroupNoneSelected = (element) => {
 /**
  * Asserts that a typeahead `element` has the given `legend` and `placeholder`
  */
-const assertTypeaheadHints = ({ element, legend, label, placeholder }) =>
-  cy
-    .get(element)
+const assertTypeaheadHints = ({ element, legend, label, placeholder }) => {
+  cy.get(element)
     .find(`${label ? 'label' : 'legend'}`)
     .should('have.text', label ? label : legend)
-    .next()
-    .should('contain', placeholder)
+  cy.get(element).find('input').should('have.attr', 'placeholder', placeholder)
+}
 
 /**
  * Asserts that the typeahead `element` has the `expectedOption` selected

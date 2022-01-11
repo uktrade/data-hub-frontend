@@ -139,7 +139,7 @@ const InteractionCollection = ({
             name="advisers"
             qsParam="dit_participants__adviser"
             placeholder="Search adviser"
-            noOptionsMessage={() => <>No advisers found</>}
+            noOptionsMessage="No advisers found"
             selectedOptions={selectedFilters.advisers.options}
             data-test="adviser-filter"
           />
@@ -162,7 +162,7 @@ const InteractionCollection = ({
             name="dit_participants__team"
             qsParam="dit_participants__team"
             placeholder="Search teams"
-            noOptionsMessage={() => <>No teams found</>}
+            noOptionsMessage="No teams found"
             selectedOptions={selectedFilters.teams.options}
             data-test="team-filter"
           />

@@ -16,17 +16,19 @@ const parseTeamData = (teams) =>
     }))
 
 const fetchTeams = () =>
-  throttle(
-    (searchString) =>
-      axios
+  throttle((searchString) => {
+    if (searchString.length) {
+      return axios
         .get(urls.metadata.team(), {
           params: {
             autocomplete: searchString,
           },
         })
-        .then(({ data }) => parseTeamData(data)),
-    500
-  )
+        .then(({ data }) => parseTeamData(data))
+    } else {
+      return Promise.resolve([])
+    }
+  }, 500)
 
 const RoutedTeamsTypeahead = ({
   taskProps,
@@ -34,7 +36,13 @@ const RoutedTeamsTypeahead = ({
   ...props
 }) => (
   <Task.Status {...taskProps}>
-    {() => <RoutedTypeahead loadOptions={loadOptions} {...props} />}
+    {() => (
+      <RoutedTypeahead
+        loadOptions={loadOptions}
+        closeMenuOnSelect={true}
+        {...props}
+      />
+    )}
   </Task.Status>
 )
 

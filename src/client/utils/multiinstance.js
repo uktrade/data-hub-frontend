@@ -118,7 +118,7 @@ export const connect = (componentState2props, dispatch2props, ...rest) =>
     ))
 
     Connected.propTypes = {
-      id: PropTypes.string.isRequired,
+      [idProp]: PropTypes.string.isRequired,
     }
     return Connected
   })

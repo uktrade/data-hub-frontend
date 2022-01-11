@@ -30,7 +30,10 @@ export const testTypeahead = ({
  * Test that a typeahead has the correct number of options
  */
 export const testTypeaheadOptionsLength = ({ element, length }) => {
-  cy.get(element).click().find('ul').children().should('have.length', length)
+  cy.get(element)
+    .click()
+    .find('[data-test="typeahead-menu-option"]')
+    .should('have.length', length)
 }
 
 /**

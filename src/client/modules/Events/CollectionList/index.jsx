@@ -102,7 +102,7 @@ const EventsCollection = ({
             name="organiser"
             qsParam="organiser"
             placeholder="Search organiser"
-            noOptionsMessage={() => <>No organisers found</>}
+            noOptionsMessage="No organisers found"
             selectedOptions={selectedFilters.organisers.options}
             data-test="organiser-filter"
           />

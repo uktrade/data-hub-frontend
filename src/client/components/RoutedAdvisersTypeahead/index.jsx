@@ -10,18 +10,20 @@ import Task from '../Task'
 import { parseAdviserData } from '../../../common/formatAdviser'
 
 const fetchAdvisers = (onlyShowActiveAdvisers) => {
-  return throttle(
-    (searchString) =>
-      axios
+  return throttle((searchString) => {
+    if (searchString.length) {
+      return axios
         .get('/api-proxy/adviser/', {
           params: {
             autocomplete: searchString,
             is_active: onlyShowActiveAdvisers ? true : null,
           },
         })
-        .then(({ data: { results } }) => parseAdviserData(results)),
-    500
-  )
+        .then(({ data: { results } }) => parseAdviserData(results))
+    } else {
+      return Promise.resolve([])
+    }
+  }, 500)
 }
 
 const RoutedAdvisersTypeahead = ({
@@ -31,7 +33,13 @@ const RoutedAdvisersTypeahead = ({
   ...props
 }) => (
   <Task.Status {...taskProps}>
-    {() => <RoutedTypeahead loadOptions={loadOptions} {...props} />}
+    {() => (
+      <RoutedTypeahead
+        loadOptions={loadOptions}
+        closeMenuOnSelect={true}
+        {...props}
+      />
+    )}
   </Task.Status>
 )
 

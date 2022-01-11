@@ -210,7 +210,7 @@ const CompaniesCollection = ({
             name="one_list_group_global_account_manager"
             qsParam="one_list_group_global_account_manager"
             placeholder="Search adviser"
-            noOptionsMessage={() => <>No advisers found</>}
+            noOptionsMessage="No advisers found"
             selectedOptions={
               selectedFilters.leadItaOrGlobalAccountManagers.options
             }

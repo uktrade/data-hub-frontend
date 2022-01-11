@@ -38,8 +38,8 @@ const FilterCheckboxes = ({ count }) =>
       <CheckboxList>
         {Array(count)
           .fill()
-          .map(() => (
-            <CheckboxListItem>
+          .map((el, i) => (
+            <CheckboxListItem key={i}>
               <Checkbox />
               <CheckboxLabel />
             </CheckboxListItem>
@@ -53,7 +53,12 @@ const InputList = styled('ul')`
 `
 
 const InputListItem = styled('li')`
-  ${({ marginTop }) => marginTop && `margin-top: ${marginTop}px;`};
+  &:first-child {
+    margin-top: 50px;
+  }
+  &:only-child {
+    margin-top: 0;
+  }
 `
 
 const InputListItemLabel = styled('div')`
@@ -69,10 +74,10 @@ const InputListItemField = styled('div')`
   margin-top: ${SPACING.SCALE_1};
 `
 
-const FilterInputs = ({ inputCount, checkboxCount }) => (
+const FilterInputs = ({ inputCount }) => (
   <InputList>
-    {Array.from(Array(inputCount).keys()).map((i) => (
-      <InputListItem marginTop={i === 0 ? (checkboxCount ? 50 : 0) : 50}>
+    {Array.from(Array(inputCount).keys()).map((el, i) => (
+      <InputListItem key={i}>
         <InputListItemLabel />
         <InputListItemField />
       </InputListItem>
@@ -86,10 +91,7 @@ const collectionListFilters =
     (
       <>
         <FilterCheckboxes count={filterCheckboxCount} />
-        <FilterInputs
-          inputCount={filterInputCount}
-          checkboxCount={filterCheckboxCount}
-        />
+        <FilterInputs inputCount={filterInputCount} />
       </>
     )
 

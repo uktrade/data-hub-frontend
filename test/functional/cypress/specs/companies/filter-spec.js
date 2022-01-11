@@ -796,30 +796,29 @@ describe('Companies Collections Filter', () => {
       cy.get('[data-test=filter-chips]').children().should('have.length', 0)
       assertCheckboxGroupNoneSelected('[data-test="headquarter-type-filter"]')
       cy.get('[data-test="company-name-filter"]').should('have.value', '')
-      cy.get('[data-test="sector-filter"]').should('contain', 'Search sector')
-      cy.get('[data-test="country-filter"]').should('contain', 'Search country')
+      cy.get('[data-test="sector-filter"]')
+        .find('[data-test="typeahead-chip"]')
+        .should('have.length', 0)
+      cy.get('[data-test="country-filter"]')
+        .find('[data-test="typeahead-chip"]')
+        .should('have.length', 0)
       cy.get('[data-test="uk-postcode-filter"]').should('have.value', '')
-      cy.get('[data-test="us-state-filter"]').should(
-        'contain',
-        'Search US state'
-      )
-      cy.get('[data-test="canadian-province-filter"]').should(
-        'contain',
-        'Search Canadian province'
-      )
-      cy.get('[data-test="uk-region-filter"]').should(
-        'contain',
-        'Search UK region'
-      )
+      cy.get('[data-test="us-state-filter"]')
+        .find('[data-test="typeahead-chip"]')
+        .should('have.length', 0)
+      cy.get('[data-test="canadian-province-filter"]')
+        .find('[data-test="typeahead-chip"]')
+        .should('have.length', 0)
+      cy.get('[data-test="uk-region-filter"]')
+        .find('[data-test="typeahead-chip"]')
+        .should('have.length', 0)
       assertCheckboxGroupNoneSelected('[data-test="company-status-filter"]')
-      cy.get('[data-test="currently-exporting-to-country-filter"]').should(
-        'contain',
-        'Search country'
-      )
-      cy.get('[data-test="future-countries-of-interest-filter"]').should(
-        'contain',
-        'Search country'
-      )
+      cy.get('[data-test="currently-exporting-to-country-filter"]')
+        .find('[data-test="typeahead-chip"]')
+        .should('have.length', 0)
+      cy.get('[data-test="future-countries-of-interest-filter"]')
+        .find('[data-test="typeahead-chip"]')
+        .should('have.length', 0)
       assertDateInput({
         element: '[data-test="last-interaction-after-filter"]',
         label: 'Last interaction from',
@@ -830,10 +829,9 @@ describe('Companies Collections Filter', () => {
         label: 'Last interaction to',
         value: '',
       })
-      cy.get('[data-test="lead-ita-global-account-manager-filter"]').should(
-        'contain',
-        'Search adviser'
-      )
+      cy.get('[data-test="lead-ita-global-account-manager-filter"]')
+        .find('[data-test="typeahead-chip"]')
+        .should('have.length', 0)
     })
   })
 })

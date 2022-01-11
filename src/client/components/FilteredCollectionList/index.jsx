@@ -90,18 +90,16 @@ const FilteredCollectionList = ({
                 <Task.Status {...taskProps}>
                   {() =>
                     isComplete && (
-                      <>
-                        <ol>
-                          {results.map((item) => (
-                            <CollectionItem
-                              {...item}
-                              key={item.id}
-                              titleRenderer={titleRenderer}
-                              useReactRouter={useReactRouter}
-                            />
-                          ))}
-                        </ol>
-                      </>
+                      <ol>
+                        {results.map((item) => (
+                          <CollectionItem
+                            {...item}
+                            key={item.id}
+                            titleRenderer={titleRenderer}
+                            useReactRouter={useReactRouter}
+                          />
+                        ))}
+                      </ol>
                     )
                   }
                 </Task.Status>
