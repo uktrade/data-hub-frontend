@@ -25,8 +25,6 @@ import {
   FieldSelect,
   FieldTextarea,
   FieldTypeahead,
-  FieldAddAnother,
-  Typeahead,
 } from '../../../../../client/components'
 import Resource from '../../../../../client/components/Resource'
 
@@ -250,7 +248,7 @@ const StepInteractionDetails = ({
         </>
       )}
 
-      <>
+      <div style={{ marginBottom: 30 }}>
         <FieldRadios
           inline={true}
           name="has_related_trade_agreements"
@@ -260,32 +258,17 @@ const StepInteractionDetails = ({
         />
 
         {values.has_related_trade_agreements === OPTION_YES && (
-          <FieldAddAnother
+          <FieldTypeahead
             name="related_trade_agreements"
             label="Related named trade agreement(s)"
-            data-test-prefix="trade-agreement-field-"
+            placeholder="-- Search trade agreements --"
             required="Select at least one Trade Agreement"
-            item-name="trade agreement"
-          >
-            {({ value, onChange, error }) => (
-              <Typeahead
-                name="related_trade_agreements"
-                inputId="related_trade_agreements"
-                label=""
-                options={relatedTradeAgreements}
-                placeholder="-- Search trade agreements --"
-                required="Select at least one Trade Agreement"
-                aria-label="Select a trade agreement"
-                value={relatedTradeAgreements.find(
-                  ({ value: option_value }) => option_value === value
-                )}
-                onChange={onChange}
-                error={error}
-              />
-            )}
-          </FieldAddAnother>
+            options={relatedTradeAgreements}
+            aria-label="Select a trade agreement"
+            isMulti={true}
+          />
         )}
-      </>
+      </div>
 
       <H3 as="h2">Participants</H3>
 
