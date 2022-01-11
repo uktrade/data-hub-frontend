@@ -170,6 +170,7 @@ const Typeahead = ({
   'data-test': testId,
   ...inputProps
 }) => {
+  const closeOnSelect = isMulti ? closeMenuOnSelect : true
   const initialValue = value || defaultValue
   useEffect(() => {
     onInitialise({
@@ -219,7 +220,7 @@ const Typeahead = ({
             })
           )
         }
-        if (closeMenuOnSelect) {
+        if (closeOnSelect) {
           onMenuClose()
         }
         return
@@ -337,7 +338,7 @@ const Typeahead = ({
                             option,
                           })
                         )
-                        if (closeMenuOnSelect) {
+                        if (closeOnSelect) {
                           onMenuClose()
                         }
                       }}

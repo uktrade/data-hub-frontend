@@ -62,7 +62,6 @@ storiesOf('Typeahead2', module)
     <Typeahead
       name="singleselect"
       isMulti={false}
-      closeMenuOnSelect={true}
       initialOptions={options}
       placeholder="Search..."
       label="Pick a fruit"
@@ -72,7 +71,6 @@ storiesOf('Typeahead2', module)
     <Typeahead
       name="singleselect-pre-select"
       isMulti={false}
-      closeMenuOnSelect={true}
       initialOptions={options}
       placeholder="Search..."
       defaultValue={options[2]}
@@ -84,7 +82,6 @@ storiesOf('Typeahead2', module)
       name="singleselect-error"
       error={true}
       isMulti={false}
-      closeMenuOnSelect={false}
       initialOptions={options}
       placeholder="Search..."
       label="Pick a fruit"
@@ -101,7 +98,6 @@ storiesOf('Typeahead2', module)
       </ul>
       <Typeahead
         isMulti={false}
-        closeMenuOnSelect={true}
         name="singleselect"
         loadOptions={mockLoadOptions}
         placeholder="Search..."
