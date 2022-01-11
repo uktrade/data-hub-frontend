@@ -118,7 +118,7 @@ Cypress.Commands.add(
   (subject, text) => {
     cy.wrap(subject).find('input').click().clear().type(text)
     cy.wrap(subject).find('[data-test="typeahead-menu-option"]').first().click()
-    cy.wrap(subject).find('input').blur()
+    cy.wrap(subject).find('input').type('{esc}')
     return cy.wrap(subject)
   }
 )

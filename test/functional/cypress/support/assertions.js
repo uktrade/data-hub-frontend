@@ -482,6 +482,13 @@ const assertTypeaheadOptionSelected = ({ element, expectedOption }) => {
 }
 
 /**
+ * Asserts that a single-select typeahead `element` has the `expectedOption` selected
+ */
+const assertSingleTypeaheadOptionSelected = ({ element, expectedOption }) => {
+  cy.get(element).find('input').should('have.attr', 'value', expectedOption)
+}
+
+/**
  * Asserts that a chip indicator exists in the specified position
  */
 const assertChipExists = ({ label, position }) => {
@@ -617,6 +624,7 @@ module.exports = {
   assertCheckboxGroupOption,
   assertCheckboxGroupNoneSelected,
   assertTypeaheadHints,
+  assertSingleTypeaheadOptionSelected,
   assertTypeaheadOptionSelected,
   assertChipExists,
   assertChipsEmpty,

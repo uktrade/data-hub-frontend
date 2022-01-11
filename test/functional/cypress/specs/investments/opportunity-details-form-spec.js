@@ -13,7 +13,10 @@ const valueType = require('../../../../sandbox/fixtures/metadata/capital-investm
 const assetClasses = require('../../../../sandbox/fixtures/metadata/capital-investment-asset-class-interest.json')
 
 import { selectFirstAdvisersTypeaheadOption } from '../../support/actions'
-import { assertTypeaheadOptionSelected } from '../../support/assertions'
+import {
+  assertTypeaheadOptionSelected,
+  assertSingleTypeaheadOptionSelected,
+} from '../../support/assertions'
 
 const filteredUKRegions = ukRegions.filter((region) => !region.disabled_on)
 
@@ -145,7 +148,7 @@ describe('A capital opportunity with no existing details', () => {
       ).click()
       cy.get('#opportunity_details_toggle').contains('Edit').click()
     })
-    it('should diplay existing values in the form', () => {
+    it('should display existing values in the form', () => {
       cy.get('#name').should('have.value', completeOpportunity.name)
       cy.get('#description').should(
         'have.value',
@@ -165,14 +168,14 @@ describe('A capital opportunity with no existing details', () => {
       cy.get('#requiredChecksConductedOn\\.day').should('have.value', '06')
       cy.get('#requiredChecksConductedOn\\.month').should('have.value', '07')
       cy.get('#requiredChecksConductedOn\\.year').should('have.value', '2018')
-      assertTypeaheadOptionSelected({
+      assertSingleTypeaheadOptionSelected({
         element: '#field-requiredChecksConductedBy',
         expectedOption: completeOpportunity.required_checks_conducted_by.name,
       })
       cy.get(`[value=${completeOpportunity.construction_risks[0].id}]`).should(
         'be.checked'
       )
-      assertTypeaheadOptionSelected({
+      assertSingleTypeaheadOptionSelected({
         element: '#field-leadRelationshipManager',
         expectedOption: completeOpportunity.lead_dit_relationship_manager.name,
       })

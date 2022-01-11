@@ -34,7 +34,7 @@ const FieldTypeahead = ({
   hint,
   initialValue,
   options,
-  ...rest
+  ...props
 }) => {
   const { value, error, touched, onBlur } = useField({
     name,
@@ -54,11 +54,13 @@ const FieldTypeahead = ({
           inputId={name}
           aria-label={label || legend}
           onBlur={onBlur}
-          onChange={(newValue) => setFieldValue(name, newValue)}
+          onChange={(newValue) =>
+            setFieldValue(name, props.isMulti ? newValue : newValue[0])
+          }
           error={error}
           value={value}
           initialOptions={options}
-          {...rest}
+          {...props}
         />
       </StyledWrapper>
     </FieldWrapper>
