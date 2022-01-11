@@ -108,7 +108,7 @@ Use this method if you want to make backend changes or run against an API branch
 
 This method is recommended if you are only making frontend changes.
 
-5.  Go to the [Playbook](https://readme.trade.gov.uk/docs/playbooks/datahub.html#environments) and use the Admin URLs to set the environment variable `API_ROOT`. You will need to remove `/admin` from the end of the API paths.
+5.  Go to the [Playbook](https://readme.trade.gov.uk/docs/playbooks/datahub.html#environments), find the environment you want to use in the Admin URLs section, and set this URL to the environment variable `API_ROOT`. You will need to remove `/admin` from the end of the API path.
 
 6.  Go to Vault, look in datahub-fe, and click on the environment you want to use. Change the following environment variables in your `.env` file to the ones specified in Vault:
     ``` 
