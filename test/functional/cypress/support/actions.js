@@ -10,7 +10,7 @@ export const selectFirstAdvisersTypeaheadOption = ({ element, input }) =>
     cy.route('/api-proxy/adviser/?*').as('adviserResults')
     cy.get('input').type(input)
     cy.wait('@adviserResults')
-    cy.get('input').eq(0).type('{downarrow}{enter}')
+    cy.get('input').type('{downarrow}{enter}').blur()
   })
 
 /**
@@ -26,6 +26,7 @@ export const clickCheckboxGroupOption = ({ element, value }) => {
 export const selectFirstTypeaheadOption = ({ element, input }) => {
   cy.get(element).type(input)
   cy.get(element).find('[data-test="typeahead-menu-option"]').first().click()
+  cy.get(element).find('input').blur()
 }
 
 /**
