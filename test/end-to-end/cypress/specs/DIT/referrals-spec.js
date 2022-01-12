@@ -1,18 +1,12 @@
 const urls = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
+const {
+  selectFirstAdvisersTypeaheadOption,
+} = require('../../../../functional/cypress/support/actions')
 
 const formSelectors = selectors.interactionForm
 const companyLocalHeader = selectors.companyLocalHeader()
-
-const selectTypeahead = (fieldName, input) =>
-  cy.get(fieldName).within(() => {
-    cy.server()
-    cy.route('/api-proxy/adviser/?*').as('adviserResults')
-    cy.get('div').eq(0).type(input)
-    cy.wait('@adviserResults')
-    cy.get('[class*="menu"] > div').click()
-  })
 
 describe('Referrals', () => {
   const company = fixtures.company.create.lambda()
@@ -25,7 +19,10 @@ describe('Referrals', () => {
   })
   context('when adding a referral', () => {
     it('should create a referral for a company', () => {
-      selectTypeahead(selectors.sendReferral.adviserField, 'dennis')
+      selectFirstAdvisersTypeaheadOption(
+        selectors.sendReferral.adviserField,
+        'dennis'
+      )
       cy.get(selectors.sendReferral.subjectField)
         .click()
         .type('Example subject')
@@ -73,10 +70,12 @@ describe('Referrals', () => {
 
       cy.get(formSelectors.service).select('Export Win')
       cy.get(formSelectors.hasRelatedTradeAgreementsNo).click()
-      cy.get(formSelectors.contact).selectTypeaheadOption('Johnny Cakeman')
-      cy.get(formSelectors.communicationChannel).selectTypeaheadOption(
-        'Email/Website'
+      cy.get(formSelectors.contact).selectFirstAdvisersTypeaheadOptionOption(
+        'Johnny Cakeman'
       )
+      cy.get(
+        formSelectors.communicationChannel
+      ).selectFirstAdvisersTypeaheadOptionOption('Email/Website')
       cy.get(formSelectors.subject).type('Subject')
       cy.get(formSelectors.notes).type('Conversation with potential client')
       cy.get(formSelectors.policyFeedbackNo).click()
