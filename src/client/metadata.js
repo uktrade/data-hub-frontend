@@ -9,9 +9,10 @@ const HQ_TYPE_LABELS = {
 const filterDisabledOption = ({ disabled_on }) =>
   disabled_on ? Date.parse(disabled_on) > Date.now() : true
 
-const transformMetadataOption = ({ id, name }) => ({
+const transformMetadataOption = ({ id, name, contexts }) => ({
   value: id,
   label: name,
+  contexts: contexts,
 })
 
 /**

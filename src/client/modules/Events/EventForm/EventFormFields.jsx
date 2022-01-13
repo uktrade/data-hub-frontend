@@ -152,7 +152,9 @@ export const EventFormFields = ({ values }) => (
       name="service"
       label="Service"
       required="Select at least one service"
-      options={values?.metadata?.services}
+      options={values?.metadata?.services.filter((service) =>
+        service.contexts.includes('event')
+      )}
       placeholder="Select service"
       aria-label="Select a service"
       noOptionsMessage={() => <span>No service found</span>}
