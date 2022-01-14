@@ -1,5 +1,8 @@
 import urls from '../../../../lib/urls'
-import { getMetadataOptions } from '../../../../client/metadata'
+import {
+  getMetadataOptions,
+  getMetadataWithContextOptions,
+} from '../../../../client/metadata'
 import { transformResponseToEventForm } from './transformers'
 import {
   catchApiError,
@@ -22,7 +25,7 @@ const getEventFormAndMetadata = (data) => {
     getMetadataOptions(urls.metadata.locationType()),
     getMetadataOptions(urls.metadata.country()),
     getMetadataOptions(urls.metadata.team()),
-    getMetadataOptions(urls.metadata.service()),
+    getMetadataWithContextOptions(urls.metadata.service(), 'event'),
     getMetadataOptions(urls.metadata.programme()),
     getMetadataOptions(urls.metadata.ukRegion()),
     getEventDetails(data.eventId),

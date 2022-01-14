@@ -9,10 +9,9 @@ const HQ_TYPE_LABELS = {
 const filterDisabledOption = ({ disabled_on }) =>
   disabled_on ? Date.parse(disabled_on) > Date.now() : true
 
-const transformMetadataOption = ({ id, name, contexts }) => ({
+const transformMetadataOption = ({ id, name }) => ({
   value: id,
   label: name,
-  contexts: contexts,
 })
 
 /**
@@ -33,6 +32,23 @@ async function getMetadataOptions(
     : data.map(transformMetadataOption)
 }
 
+async function getMetadataWithContextOptions(
+  url,
+  context,
+  { filterDisabled = true, params = {} } = {}
+) {
+  const { data } = await axios.get(url, {
+    params,
+  })
+  const filteringDisabledOptions = filterDisabled
+    ? data.filter(filterDisabledOption)
+    : data
+
+  return filteringDisabledOptions
+    .filter((service) => service.contexts.includes(context))
+    .map(transformMetadataOption)
+}
+
 /**
  * Get the hq type options as a list of values and labels
  */
@@ -46,4 +62,8 @@ const getHeadquarterTypeOptions = (url) =>
       .sort((item1, item2) => (item1.label > item2.label ? 1 : -1))
   )
 
-export { getMetadataOptions, getHeadquarterTypeOptions }
+export {
+  getMetadataOptions,
+  getHeadquarterTypeOptions,
+  getMetadataWithContextOptions,
+}
