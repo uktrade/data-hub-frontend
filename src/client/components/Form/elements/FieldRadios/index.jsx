@@ -48,6 +48,7 @@ const FieldRadios = ({
             label: optionLabel,
             value: optionValue,
             children: optionChildren,
+            link: optionLink,
             ...optionProps
           }) => (
             <React.Fragment key={optionValue}>
@@ -62,6 +63,7 @@ const FieldRadios = ({
                 {...optionProps}
               >
                 {optionLabel}
+                {optionLink && <>{optionLink}</>}
               </StyledRadio>
 
               {value === optionValue && optionChildren && (
