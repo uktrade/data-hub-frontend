@@ -1,11 +1,8 @@
-{% extends "_layouts/two-column.njk" %}
+{% extends "_layouts/collection.njk" %}
 
-{% block main_grid_left_column %}{% endblock %}
-
-{% block main_grid_right_column %}
-  {% if not company %}
-    {% call Message({ type: 'error' }) %}
-      A client company is required. <a href="/companies">Find a company</a>
-    {% endcall %}
-  {% endif %}
+{% block content %}
+  {% component 'react-slot', {
+    id: 'investment-project-form',
+    props: props
+  } %}
 {% endblock %}

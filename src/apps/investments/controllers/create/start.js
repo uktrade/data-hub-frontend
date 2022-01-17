@@ -1,22 +1,13 @@
-const { get } = require('lodash')
-
-function redirectHandler(req, res, next) {
-  const companyId = get(res, 'locals.company.id')
-
-  if (companyId) {
-    const { projects } = res.locals.paths
-    return res.redirect(`${projects}/create/investment-type/${companyId}`)
-  }
-  next()
-}
-
 function renderCreatePage(req, res) {
+  const props = {
+    company: res.locals.company,
+  }
+
   return res
     .breadcrumb('Add investment project')
-    .render('investments/views/create/start')
+    .render('investments/views/create/start', { props })
 }
 
 module.exports = {
   renderCreatePage,
-  redirectHandler,
 }

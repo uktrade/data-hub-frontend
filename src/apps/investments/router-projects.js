@@ -123,11 +123,11 @@ router.get(
   editHistory.fetchProjectsHistoryHandler
 )
 
-router.get(
-  '/create/:companyId?',
-  create.start.redirectHandler,
-  create.start.renderCreatePage
-)
+// Add investment from Companies
+router.get('/create/:companyId?', create.start.renderCreatePage)
+
+// Add investment from Investments
+router.get('/create', create.start.renderCreatePage)
 
 router.get(
   '/create/investment-type/info',
