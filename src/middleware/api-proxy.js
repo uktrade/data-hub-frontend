@@ -7,6 +7,7 @@ const API_PROXY_PATH = '/api-proxy'
 const ALLOWLIST = [
   '/v3/interaction',
   '/v4/interaction',
+  '/v3/investment',
   '/v3/investment/:id/update-stage',
   '/whoami/',
   '/v4/adviser/:id/investment-summary',
