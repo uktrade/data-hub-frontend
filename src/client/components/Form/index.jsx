@@ -186,6 +186,7 @@ const _Form = ({
                           }
                         >
                           <form
+                            autoComplete="off"
                             noValidate={true}
                             onSubmit={(e) => {
                               e.preventDefault()
@@ -291,6 +292,7 @@ const _Form = ({
                                 ref={ref}
                                 // TODO: Rewrite the tests that rely on this and remove it
                                 id="form-errors"
+                                data-test="summary-form-errors"
                                 errors={Object.entries(errors).map(
                                   ([name, error]) => ({
                                     targetName: name,
