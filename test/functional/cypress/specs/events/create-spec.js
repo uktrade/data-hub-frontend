@@ -228,7 +228,7 @@ describe('Event create', () => {
         },
         eventShared: true,
         teams: ['BPI', 'BN America', 'BPI'],
-        service: 'Making Other Introductions : UK Export Finance (UKEF)',
+        service: 'Events : Market Visit',
       })
 
       const expectedBody = {
@@ -246,7 +246,7 @@ describe('Event create', () => {
         address_country: '80756b9a-5d95-e211-a939-e4115bead28a',
         notes: 'Testing a valid form for all fields',
         lead_team: '08c14624-2f50-e311-a56a-e4115bead28a',
-        service: '6fd4b203-8e73-4a39-96ea-188bdb623b69',
+        service: '340bba2b-3499-e211-a939-e4115bead28a',
         organiser: '3442c516-9898-e211-a939-e4115bead28a',
         event_shared: true,
         related_programmes: [

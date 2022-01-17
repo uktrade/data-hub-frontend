@@ -33,6 +33,31 @@ async function getMetadataOptions(
 }
 
 /**
+ * Get an alphabetically sorted list of metadata options filtered by disabled on and context
+ * @url the metadata endpoint
+ * @context the service context for which to filter on
+ * @filterDisabled whether to filter each option based on its
+ * disabled_on key, defaulting to true
+ */
+async function getMetadataWithContextOptions(
+  url,
+  context,
+  { filterDisabled = true, params = {} } = {}
+) {
+  const { data } = await axios.get(url, {
+    params,
+  })
+  const filteringDisabledOptions = filterDisabled
+    ? data.filter(filterDisabledOption)
+    : data
+
+  return filteringDisabledOptions
+    .filter((service) => service.contexts.includes(context))
+    .map(transformMetadataOption)
+    .sort((service1, service2) => (service1.label > service2.label ? 1 : -1))
+}
+
+/**
  * Get the hq type options as a list of values and labels
  */
 const getHeadquarterTypeOptions = (url) =>
@@ -45,4 +70,8 @@ const getHeadquarterTypeOptions = (url) =>
       .sort((item1, item2) => (item1.label > item2.label ? 1 : -1))
   )
 
-export { getMetadataOptions, getHeadquarterTypeOptions }
+export {
+  getMetadataOptions,
+  getHeadquarterTypeOptions,
+  getMetadataWithContextOptions,
+}
