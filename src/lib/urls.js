@@ -274,6 +274,7 @@ module.exports = {
       project: url('/investments', '/projects/:projectId'),
       status: url('/investments', '/projects/:projectId/status'),
       admin: url('/investments', '/projects/:projectId/admin'),
+      create: url('/investments', '/projects/create/:companyId'),
     },
     profiles: {
       index: url('/investments', '/profiles'),
