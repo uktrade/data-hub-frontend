@@ -49,6 +49,21 @@ const assertValueTable = (dataTest, expected) => {
   })
 }
 
+const assertSummaryTable = ({ dataTest, heading, showEditLink, content }) => {
+  const summaryTableSelector = `[data-test="${dataTest}"]`
+
+  cy.get(summaryTableSelector).find('caption').should('contain', heading)
+  cy.get(summaryTableSelector)
+    .contains('Edit')
+    .should(showEditLink ? 'be.visible' : 'not.exist')
+
+  if (typeof content !== 'undefined') {
+    Array.isArray(content)
+      ? assertValueTable(dataTest, content)
+      : assertKeyValueTable(dataTest, content)
+  }
+}
+
 /**
  * @description Asserts the presence of breadcrumbs with minimal knowledge about
  * implementation details e.g. class names and ids.
@@ -127,6 +142,41 @@ const assertFieldSelect = ({
           .find('option[selected]')
           .should('have.text', value)
     })
+
+/**
+ * @description Asserts a list of <select> options
+ * @param {String} element - the CSS <select> selector
+ * @param {Array} options - an array of options to assert
+ * @example
+ * it('Should assert a list of <select> options' =>
+ *   assertSelectOptions({
+ *     'element': 'select option',
+ *     'options': [
+ *        {
+ *          value: "1",
+ *          label: "Commitment to invest",
+ *        },
+ *        {
+ *          value: "2",
+ *          label: "FDI",
+ *        },
+ *        {
+ *          "value": "3",
+ *          "label": "Non-FDI",
+ *        }
+ *      ]
+ *   })
+ * )
+ */
+const assertSelectOptions = (element, expectedOptions) =>
+  cy.get(element).then((options) => {
+    expect(
+      [...options].map((o) => ({
+        value: o.value,
+        label: o.label,
+      }))
+    ).to.deep.eq(expectedOptions)
+  })
 
 const assertFieldAddAnother = ({
   element,
@@ -605,6 +655,7 @@ const assertUrl = (url) => {
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
+  assertSummaryTable,
   assertBreadcrumbs,
   testBreadcrumbs,
   assertFieldTypeahead,
@@ -612,6 +663,7 @@ module.exports = {
   assertFieldInput,
   assertFieldTextarea,
   assertFieldSelect,
+  assertSelectOptions,
   assertFieldAddAnother,
   assertFieldRadios,
   assertFieldRadiosWithLegend,

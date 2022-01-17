@@ -151,6 +151,7 @@ const FieldWrapper = ({
 }) => (
   <StyledFormGroup
     id={`field-${name}`}
+    data-test={`field-${name}`}
     reduced={reduced}
     hint={hint}
     reducedPadding={reducedPadding}

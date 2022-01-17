@@ -1,6 +1,5 @@
 const {
-  assertKeyValueTable,
-  assertValueTable,
+  assertSummaryTable,
   assertBreadcrumbs,
 } = require('../../support/assertions')
 const fixtures = require('../../fixtures')
@@ -13,21 +12,6 @@ const HIERARCHY_STRINGS = {
   dnbEmpty: 'This company is not related to any other company records.',
   manualHierarchyDescription:
     'This hierarchy information is manually recorded (linked) by Data Hub users. This means it can be different from the Dun & Bradstreet hierarchy, which in the future will replace this manually recorded information.',
-}
-
-const assertSummaryTable = ({ dataTest, heading, showEditLink, content }) => {
-  const summaryTableSelector = `[data-test="${dataTest}"]`
-
-  cy.get(summaryTableSelector).find('caption').should('contain', heading)
-  cy.get(summaryTableSelector)
-    .contains('Edit')
-    .should(showEditLink ? 'be.visible' : 'not.exist')
-
-  if (typeof content !== 'undefined') {
-    Array.isArray(content)
-      ? assertValueTable(dataTest, content)
-      : assertKeyValueTable(dataTest, content)
-  }
 }
 
 const assertAddress = ({ address, registeredAddress }) => {
