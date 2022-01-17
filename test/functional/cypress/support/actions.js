@@ -6,9 +6,10 @@
  */
 export const selectFirstAdvisersTypeaheadOption = ({ element, input }) =>
   cy.get(element).within(() => {
-    cy.server()
-    cy.route('/api-proxy/adviser/?*').as('adviserResults')
-    cy.get('input').type(input)
+    cy.intercept(`/api-proxy/adviser/?*${input.replace(' ', '+')}*`).as(
+      'adviserResults'
+    )
+    cy.get('input').clear().type(input)
     cy.wait('@adviserResults')
     cy.get('input').type('{downarrow}{enter}{esc}')
   })

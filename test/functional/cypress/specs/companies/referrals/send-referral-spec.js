@@ -11,9 +11,9 @@ const {
 const selectTypeahead = (field, input) =>
   cy.get(field).within(() => {
     cy.intercept('/api-proxy/adviser/?*').as('adviserResults')
-    cy.get('div').eq(0).type(input)
+    cy.get('input').clear().type(input)
     cy.wait('@adviserResults')
-    cy.get('[class*="menu"] > div').click()
+    cy.get('[data-test="typeahead-menu-option"]').first().click()
   })
 
 const enterAdviserDefault = () =>
@@ -270,10 +270,9 @@ describe('Send a referral form', () => {
         enterContactDefault()
         cy.contains('button', 'Continue').click()
         cy.contains('Edit Referral').click()
-        cy.get(selectors.sendReferral.adviserField).should(
-          'contain',
-          'Shawn Cohen'
-        )
+        cy.get(selectors.sendReferral.adviserField)
+          .find('input')
+          .should('have.attr', 'value', 'Shawn Cohen, Charles Gilbert')
         cy.get(selectors.sendReferral.subjectFieldInput).should(
           'have.attr',
           'value',
@@ -283,10 +282,9 @@ describe('Send a referral form', () => {
           'contain',
           'Example notes'
         )
-        cy.get(selectors.sendReferral.contactField).should(
-          'contain',
-          'Johnny Cakeman'
-        )
+        cy.get(selectors.sendReferral.contactField)
+          .find('input')
+          .should('have.attr', 'value', 'Johnny Cakeman')
       })
     }
   )
@@ -389,10 +387,9 @@ describe('Contact loop', () => {
         'Test if values are restored'
       )
 
-      cy.get(selectors.sendReferral.contactField).should(
-        'contain',
-        'Json Russel'
-      )
+      cy.get(selectors.sendReferral.contactField)
+        .find('input')
+        .should('have.attr', 'value', 'Json Russel')
     })
   })
 })

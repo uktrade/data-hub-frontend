@@ -25,6 +25,7 @@ import {
   TYPEAHEAD__OPTION_MOUSE_DOWN,
   TYPEAHEAD__OPTION_TOGGLE,
   TYPEAHEAD__OPTION_REMOVE,
+  TYPEAHEAD__OPTIONS_CLEAR,
   TYPEAHEAD__OPTIONS_LOADED,
 } from '../../actions'
 
@@ -164,6 +165,7 @@ const Typeahead = ({
   onOptionMouseDown,
   onOptionToggle,
   onOptionRemove,
+  onOptionsClear,
   onMenuClose,
   onMenuOpen,
   onChange = () => {},
@@ -282,6 +284,10 @@ const Typeahead = ({
           }}
           onInput={(e) => {
             onInput(e)
+            if (!isMulti && !e.target.value) {
+              onOptionsClear()
+              onChange([])
+            }
           }}
           onKeyDown={onInputKeyDown}
           error={error}
@@ -408,6 +414,7 @@ Typeahead.propTypes = {
   onOptionMouseDown: PropTypes.func,
   onOptionToggle: PropTypes.func,
   onOptionRemove: PropTypes.func,
+  onOptionsClear: PropTypes.func,
   onMenuClose: PropTypes.func,
   onMenuOpen: PropTypes.func,
 }
@@ -466,6 +473,11 @@ export default multiInstance({
       dispatch({
         type: TYPEAHEAD__OPTION_REMOVE,
         option,
+      })
+    },
+    onOptionsClear: () => {
+      dispatch({
+        type: TYPEAHEAD__OPTIONS_CLEAR,
       })
     },
   }),

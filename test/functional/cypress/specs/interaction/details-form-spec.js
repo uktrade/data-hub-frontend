@@ -63,9 +63,6 @@ const ELEMENT_TRADE_AGREEMENTS = {
   legend: 'Related named trade agreement(s)',
   placeholder: '-- Select named trade agreement --',
 }
-const ELEMENT_TRADE_AGREEMENT_ADD = {
-  text: 'Add another',
-}
 const ELEMENT_RELATED_OPPORTUNITY = {
   legend: 'Does this interaction relate to a large capital opportunity?',
   assert: assertFieldRadiosWithLegend,
@@ -204,17 +201,13 @@ function fillCommonFields({
     .find('input')
     .check('yes')
 
-  cy.contains(ELEMENT_TRADE_AGREEMENT_ADD.text).click()
-
   cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
     .parent()
-    .find("[data-test='trade-agreement-field-0']")
     .selectTypeaheadOption('UK-Australia Mutual Recognition Agreement')
     .should('contain', 'UK-Australia Mutual Recognition Agreement')
 
   cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
     .parent()
-    .find("[data-test='trade-agreement-field-1']")
     .selectTypeaheadOption('UK-Mexico Trade Continuity Agreement')
     .should('contain', 'UK-Mexico Trade Continuity Agreement')
 
@@ -284,7 +277,8 @@ function submitForm(kind, theme, values) {
       cy.contains(ELEMENT_COMMUNICATION_CHANNEL.label)
         .next()
         .selectTypeaheadOption('Telephone')
-        .should('contain', 'Telephone')
+        .find('input')
+        .should('have.attr', 'value', 'Telephone')
     } else if (kind === KINDS.SERVICE_DELIVERY) {
       cy.contains(ELEMENT_SERVICE_STATUS.label)
         .next()
@@ -307,7 +301,8 @@ function submitForm(kind, theme, values) {
         .parent()
         .selectTypeaheadOption('Sort event')
         .parent()
-        .should('contain', 'Sort Event')
+        .find('input')
+        .should('have.attr', 'value', 'Sort Event')
     }
 
     if (theme == THEMES.INVESTMENT) {
@@ -318,7 +313,8 @@ function submitForm(kind, theme, values) {
       cy.contains(ELEMENT_OPPORTUNITY.legend)
         .next()
         .selectTypeaheadOption('A modified opportunity')
-        .should('contain', 'A modified opportunity')
+        .find('input')
+        .should('have.attr', 'value', 'A modified opportunity')
     }
 
     clickAddInteraction()
@@ -440,8 +436,10 @@ describe('Interaction theme', () => {
         .next()
         .next()
         .click()
-        .find('> div > div > div')
-        .should('have.text', '-- Select contact --Johnny Cakeman')
+        .find('[data-test="typeahead-menu-option"]')
+        .should('have.length', 1)
+        .eq(0)
+        .should('have.text', 'Johnny Cakeman')
     })
 
     it('should validate the form', () => {

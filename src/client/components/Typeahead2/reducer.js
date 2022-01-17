@@ -10,6 +10,7 @@ import {
   TYPEAHEAD__OPTION_MOUSE_DOWN,
   TYPEAHEAD__OPTION_TOGGLE,
   TYPEAHEAD__OPTION_REMOVE,
+  TYPEAHEAD__OPTIONS_CLEAR,
   TYPEAHEAD__OPTIONS_LOADED,
 } from '../../actions'
 
@@ -126,6 +127,11 @@ export default (
         selectedOptions: state.selectedOptions.filter(
           ({ value }) => value !== option.value
         ),
+      }
+    case TYPEAHEAD__OPTIONS_CLEAR:
+      return {
+        ...state,
+        selectedOptions: [],
       }
     default:
       return state

@@ -117,8 +117,8 @@ Cypress.Commands.add(
   { prevSubject: 'element' },
   (subject, text) => {
     cy.wrap(subject).find('input').click().clear().type(text)
-    cy.wrap(subject).find('[data-test="typeahead-menu-option"]').first().click()
-    cy.wrap(subject).find('input').type('{esc}')
+    cy.wait(100) //wait for typeahead options to load
+    cy.wrap(subject).find('input').type('{downarrow}{enter}{esc}')
     return cy.wrap(subject)
   }
 )

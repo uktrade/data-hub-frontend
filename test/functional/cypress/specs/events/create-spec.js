@@ -122,11 +122,15 @@ describe('Event create', () => {
 
   it('should toggle uk region field', () => {
     fillCountry('United Kingdom')
-    cy.get(selectors.addressCountryFieldId).should('contain', 'United Kingdom')
+    cy.get(selectors.addressCountryFieldId)
+      .find('input')
+      .should('have.attr', 'value', 'United Kingdom')
     assertVisible(selectors.ukRegionId)
 
     fillCountry('Uganda')
-    cy.get(selectors.addressCountryFieldId).should('contain', 'Uganda')
+    cy.get(selectors.addressCountryFieldId)
+      .find('input')
+      .should('have.attr', 'value', 'Uganda')
     assertNotExists(selectors.ukRegionId)
   })
 
@@ -227,9 +231,11 @@ describe('Event create', () => {
           day: '12',
         },
         eventShared: true,
-        teams: ['BPI', 'BN America', 'BPI'],
+        teams: ['BPI', 'BN America', 'Advanced Manufacturing Sector'],
         service: 'Events : Market Visit',
       })
+
+      cy.get('[data-test="submit-button"]').click()
 
       const expectedBody = {
         has_related_trade_agreements: true,

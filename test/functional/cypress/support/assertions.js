@@ -226,7 +226,8 @@ const assertFieldTypeahead = ({
   isMulti = true,
 }) =>
   cy.wrap(element).should(($typeahead) => {
-    placeholder && expect($typeahead).to.have.attr('placeholder', placeholder)
+    placeholder &&
+      expect($typeahead.find('input')).to.have.attr('placeholder', placeholder)
 
     label
       ? expect($typeahead.find('label')).to.contain(label)
@@ -238,6 +239,9 @@ const assertFieldTypeahead = ({
 
     hint && expect($typeahead).to.contain(hint)
   })
+
+const assertFieldSingleTypeahead = (props) =>
+  assertFieldTypeahead({ ...props, isMulti: false })
 
 const assertFieldInput = ({ element, label, hint, value }) =>
   cy
@@ -604,6 +608,7 @@ module.exports = {
   assertBreadcrumbs,
   testBreadcrumbs,
   assertFieldTypeahead,
+  assertFieldSingleTypeahead,
   assertFieldInput,
   assertFieldTextarea,
   assertFieldSelect,

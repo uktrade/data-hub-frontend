@@ -79,7 +79,11 @@ describe('Pipeline edit form', () => {
 
       it('Should render the export sector typeahead', () => {
         cy.get(formSelectors.fields.sector).then((element) => {
-          assertFieldTypeahead({ element, label: 'Export sector (optional)' })
+          assertFieldTypeahead({
+            element,
+            label: 'Export sector (optional)',
+            isMulti: false,
+          })
         })
       })
 
@@ -171,6 +175,7 @@ describe('Pipeline edit form', () => {
             element,
             label: 'Export sector (optional)',
             value: 'Advanced Engineering',
+            isMulti: false,
           })
         })
       })
@@ -204,7 +209,7 @@ describe('Pipeline edit form', () => {
         })
 
         it('should call the api with a null value for each field', () => {
-          cy.get(formSelectors.fields.sector).removeAllTypeaheadValues()
+          cy.get(formSelectors.fields.sector).find('input').clear().blur()
           cy.get(formSelectors.fields.contacts).removeAllTypeaheadValues()
           cy.get(formSelectors.value).clear()
           cy.get(formSelectors.fields.expectedWinDate).find('input').clear()

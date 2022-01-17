@@ -51,7 +51,6 @@ const FieldTypeahead = ({
         {touched && error && <ErrorText>{error}</ErrorText>}
         <Typeahead
           name={name}
-          inputId={name}
           aria-label={label || legend}
           onBlur={onBlur}
           onChange={(newValue) =>
