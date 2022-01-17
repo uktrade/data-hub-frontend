@@ -51,7 +51,7 @@ const StyledList = styled('div')({
 })
 
 const getValidator =
-  (required, format) =>
+  (required, invalid, format) =>
   ({ day, month, year }) => {
     const isLong = format === FORMAT_LONG
     const isValid = isLong
@@ -60,9 +60,13 @@ const getValidator =
 
     const isDateEmpty = isLong ? !day && !month && !year : !month && !year
 
-    return !isValid && (!isDateEmpty || required)
-      ? required || 'Enter a valid date'
-      : null
+    if (required && isDateEmpty) {
+      return required
+    }
+
+    if (!isValid && !isDateEmpty) {
+      return invalid || 'Enter a valid date'
+    }
   }
 
 const getDefaultInitialValue = (format) => {
@@ -84,13 +88,14 @@ const FieldDate = ({
   initialValue,
   labels,
   required,
+  invalid,
   format,
   reduced,
 }) => {
   const { value, error, touched, onBlur } = useField({
     name,
     initialValue: initialValue || getDefaultInitialValue(format),
-    validate: [getValidator(required, format), ...castArray(validate)],
+    validate: [getValidator(required, invalid, format), ...castArray(validate)],
   })
 
   const { setFieldValue } = useFormContext()
@@ -177,6 +182,7 @@ FieldDate.propTypes = {
   legend: PropTypes.node,
   hint: PropTypes.string,
   required: PropTypes.string,
+  invalid: PropTypes.string,
   format: PropTypes.string,
   validate: PropTypes.oneOfType([
     PropTypes.func,
@@ -200,8 +206,9 @@ FieldDate.defaultProps = {
   legend: null,
   hint: null,
   required: null,
-  validate: null,
+  invalid: null,
   format: FORMAT_LONG,
+  validate: null,
   initialValue: null,
   labels: {
     day: 'Day',
