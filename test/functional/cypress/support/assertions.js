@@ -223,15 +223,18 @@ const assertFieldTypeahead = ({
   value,
   placeholder = '',
   hint = '',
+  isMulti = true,
 }) =>
   cy.wrap(element).should(($typeahead) => {
-    placeholder && expect($typeahead).to.contain(placeholder)
+    placeholder && expect($typeahead).to.have.attr('placeholder', placeholder)
 
     label
       ? expect($typeahead.find('label')).to.contain(label)
       : expect($typeahead.find('label')).to.not.exist
 
-    value && expect($typeahead).to.contain(value)
+    isMulti
+      ? value && expect($typeahead).to.contain(value)
+      : value && expect($typeahead.find('input')).to.have.attr('value', value)
 
     hint && expect($typeahead).to.contain(hint)
   })
