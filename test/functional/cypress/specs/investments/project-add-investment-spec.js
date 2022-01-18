@@ -6,7 +6,7 @@ const {
   assertSummaryTable,
 } = require('../../support/assertions')
 
-const { ukCompany, usCompany } = company
+const { usCompany } = company
 
 const commonTests = () => {
   it('should display a form"', () => {
@@ -25,7 +25,7 @@ const commonTests = () => {
     cy.get('form')
       .find('label')
       .eq(0)
-      .should('have.text', 'FDI')
+      .should('contain', 'FDI')
       .should('not.be.checked')
   })
 
@@ -33,7 +33,7 @@ const commonTests = () => {
     cy.get('form')
       .find('label')
       .eq(1)
-      .should('have.text', 'Non-FDI')
+      .should('contain', 'Non-FDI')
       .should('not.be.checked')
   })
 
@@ -41,7 +41,7 @@ const commonTests = () => {
     cy.get('form')
       .find('label')
       .eq(2)
-      .should('have.text', 'Commitment to invest')
+      .should('contain', 'Commitment to invest')
       .should('not.be.checked')
   })
 
@@ -88,118 +88,91 @@ const commonTests = () => {
   })
 }
 
-describe('Add investment', () => {
-  context('UK Company', () => {
-    before(() => {
-      cy.visit(urls.investments.projects.create(ukCompany.id))
-    })
-    it('should display the "Client company" table', () => {
-      assertSummaryTable({
-        dataTest: 'clientCompanyTable',
-        heading: 'Client company',
-        content: {
-          Company: 'Venus Ltd',
-          Country: 'United Kingdom',
-          'Company investments': '5 investment projects in the UK',
-          'One List tier': 'Tier A - Strategic Account',
-          'Global Account Manager': 'Travis Greene',
-        },
-      })
-    })
-    commonTests()
+describe('Adding an investment via "Companies"', () => {
+  before(() => {
+    cy.visit(urls.companies.investments.companyInvestmentProjects(usCompany.id))
+    cy.get('[data-test="add-collection-item-button"]').click()
   })
-  context('Foreign Company', () => {
-    before(() => {
-      cy.visit(urls.investments.projects.create(usCompany.id))
+  it('should display the "Source of foreign equity investment" table', () => {
+    assertSummaryTable({
+      dataTest: 'clientCompanyTable',
+      heading: 'Source of foreign equity investment',
+      content: {
+        Company: 'Texports Ltd',
+        Country: 'United States',
+        'Company investments': '5 investment projects in the UK',
+        'One List tier': 'Tier A - Strategic Account',
+        'Global Account Manager': 'Travis Greene',
+      },
     })
-
-    it('should display the "Client company" table', () => {
-      assertSummaryTable({
-        dataTest: 'clientCompanyTable',
-        heading: 'Client company',
-        content: {
-          Company: 'Texports Ltd',
-          Country: 'United States',
-          'Company investments': '5 investment projects in the UK',
-        },
-      })
-    })
-    commonTests()
   })
-  context('Investment', () => {
-    before(() => {
-      cy.visit(urls.investments.projects.index())
-    })
+  commonTests()
+})
 
-    it('should display "Find the source of foreign equity"', () => {
-      cy.get('[data-test="add-collection-item-button"]').click()
-      cy.get('h3').should('have.text', 'Find the source of foreign equity')
-    })
+describe('Adding an investment via "Investments"', () => {
+  before(() => {
+    cy.visit(urls.investments.projects.index())
+  })
 
-    it('should display a "Find company" button', () => {
-      cy.get('form button:contains("Find company")').should('be.visible')
-    })
+  it('should display "Search for a company as the source of foreign equity"', () => {
+    cy.get('[data-test="add-collection-item-button"]').click()
+    cy.get('label').should(
+      'have.text',
+      'Search for a company as the source of foreign equity'
+    )
+  })
 
-    it('should display error messages when the "Company name" search field is not filled in', () => {
-      cy.get('form button').click()
-      cy.get('[data-test="summary-form-errors"] h2').should(
-        'contain',
-        'There is a problem'
-      )
-      cy.get('[data-test="summary-form-errors"] ul').should(
-        'contain',
-        'Enter company name'
-      )
-      cy.get('[data-test="field-companyName"]').should(
-        'contain',
-        'Enter company name'
-      )
-    })
+  it('should display a "Search" button', () => {
+    cy.get('form button:contains("Search")').should('be.visible')
+  })
 
-    it('should display error messages when the search character count is below the threshold', () => {
-      cy.get('input[data-test="company-name"]').type('a')
-      cy.get('form button').click()
-      cy.get('[data-test="summary-form-errors"] ul').should(
-        'contain',
-        'Enter at least 2 characters'
-      )
-    })
+  it('should display error messages when the "Company name" search field is not filled in', () => {
+    cy.get('form button').click()
+    cy.get('[data-test="summary-form-errors"] h2').should(
+      'contain',
+      'There is a problem'
+    )
+    cy.get('[data-test="summary-form-errors"] ul').should(
+      'contain',
+      'Enter company name'
+    )
+    cy.get('[data-test="field-companyName"]').should(
+      'contain',
+      'Enter company name'
+    )
+  })
 
-    it('should display error messages when the search character count is above the threshold', () => {
-      cy.get('input[data-test="company-name"]').clear()
-      cy.get('input[data-test="company-name"]').type(
-        'This company name is 13 characters too long'
-      )
-      cy.get('form button').click()
-      cy.get('[data-test="summary-form-errors"] ul').should(
-        'contain',
-        '13 characters too long'
-      )
-    })
+  it('should display error messages when the search character count is below the threshold', () => {
+    cy.get('input[data-test="company-name"]').type('a')
+    cy.get('form button').click()
+    cy.get('[data-test="summary-form-errors"] ul').should(
+      'contain',
+      'Enter at least 2 characters'
+    )
+  })
 
-    it('should produce search results when searching for a company', () => {
-      cy.get('input[data-test="company-name"]').clear()
-      cy.get('input[data-test="company-name"]').type('alphabet')
-      cy.get('form button').click()
-      cy.get('form ol li:nth-child(1)').should('exist')
-      cy.get('form ol li:nth-child(2)').should('exist')
-      cy.get('form ol li:nth-child(3)').should('exist')
-    })
+  it('should produce search results when searching for a company', () => {
+    cy.get('input[data-test="company-name"]').clear()
+    cy.get('input[data-test="company-name"]').type('alphabet')
+    cy.get('form button').click()
+    cy.get('form ol li:nth-child(1)').should('exist')
+    cy.get('form ol li:nth-child(2)').should('exist')
+    cy.get('form ol li:nth-child(3)').should('exist')
+  })
 
-    it('should take you to the next step when clicking a company from the search results', () => {
-      cy.get('input[data-test="company-name"]').clear()
-      cy.get('input[data-test="company-name"]').type('alphabet')
-      cy.get('form button').click()
-      cy.get('form ol li:nth-child(1)').click()
-      assertSummaryTable({
-        dataTest: 'clientCompanyTable',
-        heading: 'Client company',
-        content: {
-          Company: 'Lambda plc',
-          Country: 'France',
-          'Company investments': '5 investment projects in the UK',
-        },
-      })
+  it('should take you to the next step when clicking a company from the search results', () => {
+    cy.get('input[data-test="company-name"]').clear()
+    cy.get('input[data-test="company-name"]').type('alphabet')
+    cy.get('form button').click()
+    cy.get('form ol li:nth-child(1)').click()
+    assertSummaryTable({
+      dataTest: 'clientCompanyTable',
+      heading: 'Source of foreign equity investment',
+      content: {
+        Company: 'Lambda plc',
+        Country: 'France',
+        'Company investments': '5 investment projects in the UK',
+      },
     })
   })
 })
