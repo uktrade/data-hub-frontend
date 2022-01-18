@@ -275,6 +275,10 @@ module.exports = {
       status: url('/investments', '/projects/:projectId/status'),
       admin: url('/investments', '/projects/:projectId/admin'),
       create: url('/investments', '/projects/create/:companyId'),
+      typeInfo: url(
+        '/investments',
+        '/projects/create/investment-type/info/:anchor'
+      ),
     },
     profiles: {
       index: url('/investments', '/profiles'),
