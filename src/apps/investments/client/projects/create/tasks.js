@@ -7,8 +7,9 @@ import urls from '../../../../../lib/urls'
 import { CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID } from './state'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
+const orderInvestmentTypes = ([first, ...rest]) => [...rest, first]
 
-export function openContactForm({ values, url }) {
+export const openContactForm = ({ values, url }) => {
   window.sessionStorage.setItem(
     CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID,
     JSON.stringify(values)
@@ -18,8 +19,6 @@ export function openContactForm({ values, url }) {
 
 export const createInvestmentProject = (formValues) =>
   axios.post('/api-proxy/v3/investment', formValues).catch(handleError)
-
-const orderInvestmentTypes = ([first, ...rest]) => [...rest, first]
 
 export const getCompanyInvestmentsCount = (companyId) =>
   axios
@@ -87,8 +86,8 @@ const fetchValuesFromSessionStorage = (contact) => {
   }
 }
 
-const fetchValuesFromAPI = () => {
-  const promises = [
+const fetchValuesFromAPI = () =>
+  Promise.all([
     getAdviser(),
     getAdvisers(),
     getMetadataOptions(urls.metadata.sector(), {
@@ -105,9 +104,7 @@ const fetchValuesFromAPI = () => {
     getMetadataOptions(urls.metadata.investmentInvolvement()),
     getMetadataOptions(urls.metadata.investmentSpecificProgramme()),
     getMetadataOptions(urls.metadata.investmentBusinessActivity()),
-  ]
-
-  return Promise.all(promises)
+  ])
     .then(
       ([
         adviser,
@@ -138,4 +135,3 @@ const fetchValuesFromAPI = () => {
       })
     )
     .catch(handleError)
-}

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
 import { get } from 'lodash'
 
-import urls from '../../../../../lib/urls'
 import { Form, Main } from '../../../../../client/components'
 import CompanySummaryTable from './CompanySummaryTable'
 import InvestmentTypeStep from './InvestmentTypeStep'
@@ -12,17 +11,17 @@ import InvestmentDetailsStep from './InvestmentDetailsStep'
 
 import { getQueryParamsFromLocation } from '../../../../../client/utils/url'
 import { transformFormValuesToPayload } from './transformers'
+import urls from '../../../../../lib/urls'
+import {
+  TASK_CREATE_INVESTMENT_PROJECT,
+  TASK_GET_INVESTMENT_PROJECT_INITIAL_VALUES,
+} from './state'
 
 const getContactFromQueryParams = (queryParams) => {
   const label = get(queryParams, 'new-contact-name')
   const value = get(queryParams, 'new-contact-id')
   return label && value ? { label, value } : null
 }
-
-import {
-  TASK_CREATE_INVESTMENT_PROJECT,
-  TASK_GET_INVESTMENT_PROJECT_INITIAL_VALUES,
-} from './state'
 
 const InvestmentProjectForm = ({ company, csrfToken }) => (
   <Main>

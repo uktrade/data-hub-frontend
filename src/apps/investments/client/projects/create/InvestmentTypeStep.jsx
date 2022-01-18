@@ -44,6 +44,7 @@ const InvestmentTypeDescriptionLink = ({ url, text }) => (
     </StyledLink>
   </StyledLinkContainer>
 )
+
 const InvestmentTypeStep = ({ investmentTypes = [], fdiTypes = [] }) => (
   <Step name="investmentType">
     <FieldRadios
