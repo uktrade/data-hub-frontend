@@ -88,7 +88,6 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
               name="ukRegions"
               aria-label="Select a uk location"
             />
-            {/* TODO: Use FieldTaskTypeahead */}
             <FieldTypeahead
               isMulti={true}
               label="Promoters"

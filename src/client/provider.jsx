@@ -34,7 +34,7 @@ import ReferralList from './components/ReferralList'
 
 import ToggleSection from './components/ToggleSection/BaseToggleSection'
 
-import Typeahead from './components/Typeahead2/Typeahead'
+import Typeahead from './components/Typeahead/Typeahead'
 
 import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/ExportWins/state'
 import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/reducer'
@@ -106,7 +106,6 @@ import Resource from './components/Resource'
 
 import { ContactForm } from './components/ContactForm'
 import Form from './components/Form'
-import TaskReactSelect from './components/Task/ReactSelect'
 
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
@@ -154,7 +153,6 @@ const store = createStore(
     ...Resource.reducerSpread,
     ...ContactForm.reducerSpread,
     ...Form.reducerSpread,
-    ...TaskReactSelect.reducerSpread,
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
     [DNB_CHECK_ID]: dnbCheckReducer,

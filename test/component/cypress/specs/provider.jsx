@@ -6,7 +6,7 @@ import createSagaMiddleware from 'redux-saga'
 
 import rootSaga from '../../../../src/client/root-saga'
 import tasks from '../../../../src/client/components/Task/reducer'
-import Typeahead from '../../../../src/client/components/Typeahead2/Typeahead'
+import Typeahead from '../../../../src/client/components/Typeahead/Typeahead'
 
 const sagaMiddleware = createSagaMiddleware()
 

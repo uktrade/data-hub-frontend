@@ -161,7 +161,7 @@ import { TASK_CHECK_FOR_INVESTMENTS } from './components/PersonalisedDashboard/s
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
 import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentReminders/state'
 
-import { TASK_GET_TYPEAHEAD_OPTIONS } from './components/Typeahead2/state'
+import { TASK_GET_TYPEAHEAD_OPTIONS } from './components/Typeahead/state'
 
 import * as exportsEdit from '../apps/companies/apps/exports/client/tasks'
 
@@ -205,7 +205,7 @@ import Footer from '../client/components/Footer'
 
 import ContactForm from '../client/components/ContactForm'
 import resourceTasks from '../client/components/Resource/tasks'
-import { getTypeaheadOptions } from '../client/components/Typeahead2/tasks'
+import { getTypeaheadOptions } from '../client/components/Typeahead/tasks'
 import { ProtectedRoute } from '../client/components'
 import AddRemoveFromListForm from '../client/components/CompanyLists/AddRemoveFromListForm'
 
