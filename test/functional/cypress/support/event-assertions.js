@@ -135,6 +135,7 @@ export const assertEventFormFields = ({
       label: 'Type of event',
       placeholder: !eventType ? 'Select event type' : undefined,
       value: eventType,
+      isMulti: false,
     },
     {
       assert: assertFieldDate,
@@ -151,6 +152,7 @@ export const assertEventFormFields = ({
       label: 'Event location type (optional)',
       placeholder: !locationType ? 'Select event' : undefined,
       value: locationType,
+      isMulti: false,
     },
     {
       assert: assertFieldInput,
@@ -182,6 +184,7 @@ export const assertEventFormFields = ({
       label: 'Country',
       placeholder: !country ? 'Select country' : undefined,
       value: country,
+      isMulti: false,
     },
     (element) =>
       assertUkRegionOrNotesFields({ element, country, ukRegion, notes }),
@@ -190,18 +193,21 @@ export const assertEventFormFields = ({
       label: 'Team hosting the event',
       placeholder: !leadTeam ? 'Select team' : undefined,
       value: leadTeam,
+      isMulti: false,
     },
     {
       assert: assertFieldTypeahead,
       label: 'Service',
       placeholder: !service ? 'Select service' : undefined,
       value: service,
+      isMulti: false,
     },
     {
       assert: assertFieldTypeahead,
       label: 'Organiser',
       placeholder: !organiser ? 'Type to search for organiser' : undefined,
       value: organiser,
+      isMulti: false,
     },
     (element) => assertTeamsFields(element, teams, isEventShared),
     {

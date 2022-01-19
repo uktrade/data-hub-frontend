@@ -1,3 +1,5 @@
+// TODO: RR-237 - this should become the default Typeahead and
+// moved from Typeahead2 to Typeahead
 import React from 'react'
 
 import MultiInstanceTypeahead from './Typeahead'

@@ -1,3 +1,5 @@
+// TODO: RR-237 - this Typeahead is no longer used and can be removed -
+// please use Typeahead2 instead (which uses tasks)
 import React from 'react'
 import { components } from 'react-select'
 

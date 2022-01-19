@@ -136,7 +136,7 @@ const StepReferralDetails = ({
           label: name,
           value: id,
         }))}
-        noOptionsMessage={() => 'This company has no contacts'}
+        noOptionsMessage="This company has no contacts"
         placeholder="Select a contact"
         isClearable={true}
       />

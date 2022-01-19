@@ -296,10 +296,11 @@ describe('Typeahead2', () => {
         .click()
         .clear()
         .type('den')
+      // option should no longer be selected after input is cleared
       cy.get('@component')
         .find('[data-test="typeahead-menu-option"]')
         .eq(1)
-        .should('have.attr', 'aria-selected', 'true')
+        .should('have.attr', 'aria-selected', 'false')
     })
 
     it('should get options when input is typed', () => {

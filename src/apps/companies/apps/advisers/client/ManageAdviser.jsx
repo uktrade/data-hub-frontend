@@ -23,7 +23,7 @@ import {
 
 import Form from '../../../../../client/components/Form'
 
-import FieldActiveITA from '../../../../../client/components/Form/elements/FieldActiveITA'
+import FieldActiveITATypeahead from '../../../../../client/components/Form/elements/FieldActiveITATypeahead'
 
 const StyledStatusMessage = styled(StatusMessage)`
   p {
@@ -85,7 +85,7 @@ const Add = ({ cancelUrl, currentLeadITA, companyName, companyId }) => (
         cancelRedirectTo={() => cancelUrl}
         submitButtonLabel="Add Lead ITA"
       >
-        <FieldActiveITA
+        <FieldActiveITATypeahead
           name="dit_participants"
           hint="Who should be the primary point of contact?"
           required="Select an ITA"

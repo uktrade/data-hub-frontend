@@ -140,7 +140,9 @@ export const fillAndAssertSharedTeams = (teams = []) => {
 export const fillAndAssertRelatedTradeAgreements = (tradeAgreements = []) => {
   assertTextVisible('Does the event relate to a trade agreement?')
   fillHasRelatedTradeAgreementsRadio(true)
-  assertTextVisible('Search trade agreements')
+  cy.get(selectors.relatedTradeAgreementsFieldId)
+    .find('input')
+    .should('have.attr', 'placeholder', 'Search trade agreements')
 
   fillRelatedTradeAgreements(tradeAgreements)
   assertMultiOptionTypeaheadValues(

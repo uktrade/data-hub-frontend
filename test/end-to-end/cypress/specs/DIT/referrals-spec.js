@@ -1,18 +1,12 @@
 const urls = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
+const {
+  selectFirstAdvisersTypeaheadOption,
+} = require('../../../../functional/cypress/support/actions')
 
 const formSelectors = selectors.interactionForm
 const companyLocalHeader = selectors.companyLocalHeader()
-
-const selectTypeahead = (fieldName, input) =>
-  cy.get(fieldName).within(() => {
-    cy.server()
-    cy.route('/api-proxy/adviser/?*').as('adviserResults')
-    cy.get('div').eq(0).type(input)
-    cy.wait('@adviserResults')
-    cy.get('[class*="menu"] > div').click()
-  })
 
 describe('Referrals', () => {
   const company = fixtures.company.create.lambda()
@@ -25,7 +19,10 @@ describe('Referrals', () => {
   })
   context('when adding a referral', () => {
     it('should create a referral for a company', () => {
-      selectTypeahead(selectors.sendReferral.adviserField, 'dennis')
+      selectFirstAdvisersTypeaheadOption({
+        element: selectors.sendReferral.adviserField,
+        input: 'dennis',
+      })
       cy.get(selectors.sendReferral.subjectField)
         .click()
         .type('Example subject')

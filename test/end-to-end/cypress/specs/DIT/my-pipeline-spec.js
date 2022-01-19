@@ -143,7 +143,7 @@ describe('My Pipeline tab on the dashboard', () => {
 
           cy.get(tabPanelSelector).contains('a', 'Edit').click()
 
-          cy.get(formSelectors.fields.sector).removeAllTypeaheadValues()
+          cy.get(formSelectors.fields.sector).find('input').clear().blur()
           cy.get(formSelectors.fields.contacts).removeAllTypeaheadValues()
           cy.get(formSelectors.value).clear()
           cy.get(formSelectors.fields.expectedWinDate).find('input').clear()
