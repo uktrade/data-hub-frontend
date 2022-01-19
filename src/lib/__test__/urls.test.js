@@ -14,7 +14,7 @@ describe('urls', () => {
       )
 
       expect(urls.external.findExporters()).to.equal(
-        'https://find-exporters.datahub.trade.gov.uk/'
+        'https://data.trade.gov.uk/datasets/a70a3967-2352-4230-b556-61bf875dc28c'
       )
 
       expect(urls.external.exportWins()).to.equal(

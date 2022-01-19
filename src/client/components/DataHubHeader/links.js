@@ -58,7 +58,8 @@ export default [
     module: 'find-exporters',
     useRouter: false,
     to: {
-      pathname: 'https://find-exporters.datahub.trade.gov.uk/',
+      pathname:
+        'https://data.trade.gov.uk/datasets/a70a3967-2352-4230-b556-61bf875dc28c',
     },
   },
   {
