@@ -143,6 +143,7 @@ const Menu = styled('div')(({ open }) => ({
 const Typeahead = ({
   id,
   name,
+  className,
   label = '',
   error = false,
   closeMenuOnSelect = false,
@@ -238,7 +239,7 @@ const Typeahead = ({
   }
   const menuActive = loadOptions ? !!input : true
   return (
-    <div id={`${name}-wrapper`} data-test={testId}>
+    <div id={`${name}-wrapper`} data-test={testId} className={className}>
       {label && (
         <Label id={`${name}-label`} data-test="typeahead-label" htmlFor={name}>
           {label}
@@ -386,6 +387,7 @@ const keyPairPropType = PropTypes.shape({
 Typeahead.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string,
+  className: PropTypes.string,
   label: PropTypes.string,
   error: PropTypes.bool,
   closeMenuOnSelect: PropTypes.bool,

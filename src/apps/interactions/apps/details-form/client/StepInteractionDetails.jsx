@@ -75,6 +75,10 @@ const StyledSubserviceField = styled(FieldSelect)`
   width: 100%;
 `
 
+const StyledRelatedTradeAgreementsWrapper = styled.div`
+  margin-bottom: ${SPACING_POINTS[6]}px;
+`
+
 const getServiceContext = (theme, kind, investmentProject) => {
   if (investmentProject) {
     return SERVICE_CONTEXTS.INVESTMENT_PROJECT_INTERACTION
@@ -248,7 +252,7 @@ const StepInteractionDetails = ({
         </>
       )}
 
-      <div style={{ marginBottom: 30 }}>
+      <StyledRelatedTradeAgreementsWrapper>
         <FieldRadios
           inline={true}
           name="has_related_trade_agreements"
@@ -268,7 +272,7 @@ const StepInteractionDetails = ({
             isMulti={true}
           />
         )}
-      </div>
+      </StyledRelatedTradeAgreementsWrapper>
 
       <H3 as="h2">Participants</H3>
 

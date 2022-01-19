@@ -36,99 +36,100 @@ function PipelineForm({
   initialValues,
 }) {
   return (
-    <div className="govuk-!-width-two-thirds">
-      <Form
-        id={STATE_ID}
-        analyticsFormName={analyticsFormName}
-        submissionTaskName={submissionTaskName}
-        transformPayload={transformPayload}
-        redirectTo={redirectTo}
-        flashMessage={flashMessage}
-        submitButtonLabel={submitButtonLabel}
-        initialValues={initialValues}
-        cancelRedirectTo={cancelRedirectTo}
-        cancelButtonLabel={cancelButtonLabel}
-      >
-        {({ values }) => (
-          <>
-            <FieldInput
-              label="Project name"
-              name="name"
-              type="text"
-              required="Enter a Project name"
-            />
-            <FieldRadios
-              legend="Choose a status"
-              name="category"
-              required="Choose a status"
-              options={statusOptions}
-            />
-            <FieldRadios
-              legend="Likelihood to export (optional)"
-              name="likelihood"
-              options={likelihoodOptions.map(({ value, label }) => ({
-                label,
-                value: String(value),
-              }))}
-            />
-            <FieldTypeahead
-              label="Export sector (optional)"
-              name="sector"
-              options={sectors}
-              placeholder="Search sectors..."
-            />
-            {/*
-              This template form needs to cater for both the Add and Edit use cases.
-              As both use cases have different params we need to check where to get
-              the company information from before firing the resource.
-            */}
-            {(values.company || companyId) && (
-              <Resource
-                name={TASK_GET_PIPELINE_COMPANY_CONTACTS}
-                id="getCompanyContacts"
-                payload={{ companyId: companyId || values.company.id }}
-              >
-                {(contacts) => (
-                  <FieldTypeahead
-                    label="Company contacts (optional)"
-                    name="contacts"
-                    options={contacts.map(({ id, name, job_title }) => ({
-                      value: id,
-                      label: name + (job_title ? ', ' + job_title : ''),
-                    }))}
-                    noOptionsMessage="This company has no contacts"
-                    placeholder="Select a contact..."
-                    isClearable={true}
-                    isMulti={true}
-                  />
-                )}
-              </Resource>
-            )}
-            <FieldInput
-              label="Potential export value (optional)"
-              hint="Amount in GBP"
-              name="export_value"
-              type="text"
-              pattern="[0-9]*"
-              inputmode="numeric"
-              spellcheck="false"
-              className="govuk-input--width-10"
-              validate={(value) =>
-                !value || IS_NUMBER.test(value)
-                  ? null
-                  : 'Potential export value must be a number'
-              }
-            />
-            <FieldDate
-              format="short"
-              label="Expected date for win (optional)"
-              hint="For example 11 2020"
-              name="expected_win_date"
-            />
-          </>
-        )}
-      </Form>
-    </div>
+    <Form
+      id={STATE_ID}
+      analyticsFormName={analyticsFormName}
+      submissionTaskName={submissionTaskName}
+      transformPayload={transformPayload}
+      redirectTo={redirectTo}
+      flashMessage={flashMessage}
+      submitButtonLabel={submitButtonLabel}
+      initialValues={initialValues}
+      cancelRedirectTo={cancelRedirectTo}
+      cancelButtonLabel={cancelButtonLabel}
+    >
+      {({ values }) => (
+        <>
+          <FieldInput
+            label="Project name"
+            name="name"
+            type="text"
+            required="Enter a Project name"
+            className="govuk-!-width-two-thirds"
+          />
+          <FieldRadios
+            legend="Choose a status"
+            name="category"
+            required="Choose a status"
+            options={statusOptions}
+          />
+          <FieldRadios
+            legend="Likelihood to export (optional)"
+            name="likelihood"
+            options={likelihoodOptions.map(({ value, label }) => ({
+              label,
+              value: String(value),
+            }))}
+          />
+          <FieldTypeahead
+            label="Export sector (optional)"
+            name="sector"
+            options={sectors}
+            placeholder="Search sectors..."
+            className="govuk-!-width-two-thirds"
+          />
+          {/*
+            This template form needs to cater for both the Add and Edit use cases.
+            As both use cases have different params we need to check where to get
+            the company information from before firing the resource.
+          */}
+          {(values.company || companyId) && (
+            <Resource
+              name={TASK_GET_PIPELINE_COMPANY_CONTACTS}
+              id="getCompanyContacts"
+              payload={{ companyId: companyId || values.company.id }}
+            >
+              {(contacts) => (
+                <FieldTypeahead
+                  label="Company contacts (optional)"
+                  name="contacts"
+                  options={contacts.map(({ id, name, job_title }) => ({
+                    value: id,
+                    label: name + (job_title ? ', ' + job_title : ''),
+                  }))}
+                  noOptionsMessage="This company has no contacts"
+                  placeholder="Select a contact..."
+                  isClearable={true}
+                  className="govuk-!-width-two-thirds"
+                  isMulti={true}
+                />
+              )}
+            </Resource>
+          )}
+          <FieldInput
+            label="Potential export value (optional)"
+            hint="Amount in GBP"
+            name="export_value"
+            type="text"
+            pattern="[0-9]*"
+            inputmode="numeric"
+            spellcheck="false"
+            className="govuk-input--width-10"
+            validate={(value) =>
+              !value || IS_NUMBER.test(value)
+                ? null
+                : 'Potential export value must be a number'
+            }
+          />
+          <FieldDate
+            format="short"
+            label="Expected date for win (optional)"
+            hint="For example 11 2020"
+            name="expected_win_date"
+          />
+        </>
+      )}
+    </Form>
   )
 }
 
