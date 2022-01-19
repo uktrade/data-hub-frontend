@@ -79,7 +79,8 @@ module.exports = {
       `https://www.great.gov.uk/international/trade/suppliers/${id}`,
     companiesHouse: (companyNumber) =>
       `https://beta.companieshouse.gov.uk/company/${companyNumber}`,
-    findExporters: () => 'https://find-exporters.datahub.trade.gov.uk/',
+    findExporters: () =>
+      'https://data.trade.gov.uk/datasets/a70a3967-2352-4230-b556-61bf875dc28c',
     exportWins: () => 'https://www.exportwins.service.trade.gov.uk/',
     digitalWorkspace: {
       teams:

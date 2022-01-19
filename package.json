@@ -80,7 +80,7 @@
     "@storybook/addon-knobs": "^6.3.0",
     "@storybook/addons": "^6.4.13",
     "@storybook/react": "^6.4.13",
-    "@uktrade/datahub-header": "^1.4.4",
+    "@uktrade/datahub-header": "^1.5.0",
     "autoprefixer": "^9.8.8",
     "axios": "^0.24.0",
     "babel-loader": "^8.2.3",
