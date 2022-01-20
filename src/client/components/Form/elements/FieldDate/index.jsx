@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { castArray } from 'lodash'
+import { castArray, snakeCase } from 'lodash'
 import styled from 'styled-components'
 import { ERROR_COLOUR } from 'govuk-colours'
 import ErrorText from '@govuk-react/error-text'
@@ -91,6 +91,7 @@ const FieldDate = ({
   invalid,
   format,
   reduced,
+  ...props
 }) => {
   const { value, error, touched, onBlur } = useField({
     name,
@@ -99,6 +100,8 @@ const FieldDate = ({
   })
 
   const { setFieldValue } = useFormContext()
+
+  const dataTest = props['data-test'] ? props['data-test'] : snakeCase(name)
 
   const onChange = (valueKey, e) => {
     const date = e.target.value.split('-')
@@ -137,6 +140,7 @@ const FieldDate = ({
                 <Input
                   id={`${name}.day`}
                   name={`${name}.day`}
+                  data-test={`${dataTest}-day`}
                   error={touched && error}
                   type="number"
                   value={value.day}
@@ -150,6 +154,7 @@ const FieldDate = ({
               <Input
                 id={`${name}.month`}
                 name={`${name}.month`}
+                data-test={`${dataTest}-month`}
                 error={touched && error}
                 type="number"
                 value={value.month}
@@ -162,6 +167,7 @@ const FieldDate = ({
               <Input
                 id={`${name}.year`}
                 name={`${name}.year`}
+                data-test={`${dataTest}-year`}
                 error={touched && error}
                 type="number"
                 value={value.year}

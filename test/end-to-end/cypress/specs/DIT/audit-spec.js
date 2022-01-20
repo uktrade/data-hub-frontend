@@ -73,7 +73,7 @@ describe('Investment Project', () => {
   })
 
   it('should display name of the person who made investment project record changes', () => {
-    cy.get(selectors.investment.form.saveButton).click()
+    cy.get('[data-test="submit"]').click()
     cy.get(selectors.message.successful).should('be.visible')
 
     cy.visit(urls.investments.editHistory.index(investmentProjectObj.pk))

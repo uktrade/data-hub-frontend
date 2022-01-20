@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Radio from '@govuk-react/radio'
 import MultiChoice from '@govuk-react/multi-choice'
 import styled from 'styled-components'
+import { kebabCase } from 'lodash'
 
 import { useField } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
@@ -59,6 +60,7 @@ const FieldRadios = ({
                 onChange={onChange}
                 onBlur={onBlur}
                 name={name}
+                data-test={kebabCase(`${name}-${optionLabel}`)}
                 aria-label={optionLabel}
                 {...optionProps}
               >

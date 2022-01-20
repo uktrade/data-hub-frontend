@@ -133,6 +133,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
         name="name"
         label="Project name"
         required="Enter a project name"
+        data-test="name"
       />
 
       <FieldTextarea
@@ -141,6 +142,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
         label="Project description"
         hint="Provide a short description of the project"
         required="Enter a project description"
+        data-test="description"
       />
 
       <FieldTextarea
@@ -149,6 +151,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
         label="Anonymous project details"
         hint="Do not include company names, financial details or addresses"
         required="Enter anonymous project details"
+        data-test="anonymous-description"
       />
 
       <FieldTypeahead
@@ -157,6 +160,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
         options={values.sectors}
         placeholder="Choose a sector"
         required="Choose a sector"
+        data-test="primary-sector"
       />
 
       <FieldTypeahead
@@ -167,6 +171,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
         required="Choose a business activity"
         options={values.investmentBusinessActivity}
         isMulti={true}
+        data-test="business-activities"
       />
 
       <FieldRadios
@@ -204,6 +209,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
                     label="Client contact details"
                     placeholder="Search"
                     required="Choose a client contact"
+                    data-test="client-contact"
                     options={results.map(({ name, id }) => ({
                       label: name,
                       value: id,
@@ -284,6 +290,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
         emptyOption="Choose a referral source activity"
         options={referralSourceHierarchy}
         required="Choose a referral source activity"
+        data-test="referral-source-activity"
       />
 
       <FieldDate
@@ -293,6 +300,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
         hint="An estimated date of when investment project activities will start"
         required="Enter an estimated land date"
         invalid="Enter a valid estimated land date"
+        data-test="estimated-land-date"
       />
 
       <FieldDate
@@ -300,6 +308,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
         label="Actual land date (optional)"
         hint="The date investment project activities started"
         invalid="Enter a valid actual land date"
+        data-test="actual-land-date"
       />
 
       <FieldTypeahead
@@ -307,6 +316,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
         label="Is the investor new or existing? (optional)"
         options={values.investmentInvestorType}
         placeholder="Choose an investor type"
+        data-test="investor-type"
       />
 
       <FieldTypeahead
@@ -314,6 +324,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
         label="Level of investor involvement (optional)"
         options={values.investmentInvolvement}
         placeholder="Choose a level of involvement"
+        data-test="level-of-involvement"
       />
 
       <FieldTypeahead
@@ -321,6 +332,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
         label="Specific investment programme (optional)"
         options={values.investmentSpecificProgramme}
         placeholder="Choose a specific programme"
+        data-test="specific-investment-programme"
       />
     </Step>
   )

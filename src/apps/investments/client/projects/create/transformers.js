@@ -1,5 +1,7 @@
 import { OPTION_YES, OPTION_NO } from './constants'
 
+const getLandDate = ({ year, month, day = '01' }) => `${year}-${month}-${day}`
+
 export const transformFormValuesToPayload = (values, csrfToken) => ({
   _csrf: csrfToken,
   investor_company: values.company.id,
@@ -22,18 +24,12 @@ export const transformFormValuesToPayload = (values, csrfToken) => ({
     values.referralSourceAdviser === OPTION_NO
       ? values.referral_source_adviser
       : values.adviser.id,
-  // Referral source activity - event/marketing/website
   referral_source_activity: values.referral_source_activity,
   referral_source_activity_event: values.referral_source_activity_event,
   referral_source_activity_marketing: values.referral_source_activity_marketing,
   referral_source_activity_website: values.referral_source_activity_website,
-  // Estimated/Actual land date
-  estimated_land_date_month: values.estimated_land_date.month,
-  estimated_land_date_year: values.estimated_land_date.year,
-  actual_land_date_day: values.actual_land_date.day,
-  actual_land_date_month: values.actual_land_date.month,
-  actual_land_date_year: values.actual_land_date.year,
-  // Optional fields
+  estimated_land_date: getLandDate(values.estimated_land_date),
+  actual_land_date: getLandDate(values.actual_land_date),
   investor_type: values.investor_type?.value,
   level_of_involvement: values.level_of_involvement?.value,
   specific_programme: values.specific_programme?.value,

@@ -54,8 +54,11 @@ function Step({ name, backButton, forwardButton, children }) {
 
   const renderForwardButton = () => {
     if (typeof forwardButton === 'undefined') {
+      const label = isLastStep() ? 'Submit' : 'Continue'
       return (
-        <Button name="forward">{isLastStep() ? 'Submit' : 'Continue'}</Button>
+        <Button data-test={label.toLowerCase()} name="forward">
+          {label}
+        </Button>
       )
     }
 
