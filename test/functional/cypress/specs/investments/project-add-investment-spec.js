@@ -100,7 +100,7 @@ describe('Adding an investment via "Companies"', () => {
       content: {
         Company: 'Texports Ltd',
         Country: 'United States',
-        'Company investments': '5 investment projects in the UK',
+        'Company investments': '12 investment projects in the UK',
         'One List tier': 'Tier A - Strategic Account',
         'Global Account Manager': 'Travis Greene',
       },
@@ -171,7 +171,7 @@ describe('Adding an investment via "Investments"', () => {
       content: {
         Company: 'Lambda plc',
         Country: 'France',
-        'Company investments': '5 investment projects in the UK',
+        'Company investments': '12 investment projects in the UK',
       },
     })
   })
