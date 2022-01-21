@@ -223,18 +223,25 @@ const assertFieldTypeahead = ({
   value,
   placeholder = '',
   hint = '',
+  isMulti = true,
 }) =>
   cy.wrap(element).should(($typeahead) => {
-    placeholder && expect($typeahead).to.contain(placeholder)
+    placeholder &&
+      expect($typeahead.find('input')).to.have.attr('placeholder', placeholder)
 
     label
       ? expect($typeahead.find('label')).to.contain(label)
       : expect($typeahead.find('label')).to.not.exist
 
-    value && expect($typeahead).to.contain(value)
+    isMulti
+      ? value && expect($typeahead).to.contain(value)
+      : value && expect($typeahead.find('input')).to.have.attr('value', value)
 
     hint && expect($typeahead).to.contain(hint)
   })
+
+const assertFieldSingleTypeahead = (props) =>
+  assertFieldTypeahead({ ...props, isMulti: false })
 
 const assertFieldInput = ({ element, label, hint, value }) =>
   cy
@@ -482,6 +489,13 @@ const assertTypeaheadOptionSelected = ({ element, expectedOption }) => {
 }
 
 /**
+ * Asserts that a single-select typeahead `element` has the `expectedOption` selected
+ */
+const assertSingleTypeaheadOptionSelected = ({ element, expectedOption }) => {
+  cy.get(element).find('input').should('have.attr', 'value', expectedOption)
+}
+
+/**
  * Asserts that a chip indicator exists in the specified position
  */
 const assertChipExists = ({ label, position }) => {
@@ -594,6 +608,7 @@ module.exports = {
   assertBreadcrumbs,
   testBreadcrumbs,
   assertFieldTypeahead,
+  assertFieldSingleTypeahead,
   assertFieldInput,
   assertFieldTextarea,
   assertFieldSelect,
@@ -617,6 +632,7 @@ module.exports = {
   assertCheckboxGroupOption,
   assertCheckboxGroupNoneSelected,
   assertTypeaheadHints,
+  assertSingleTypeaheadOptionSelected,
   assertTypeaheadOptionSelected,
   assertChipExists,
   assertChipsEmpty,

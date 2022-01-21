@@ -116,10 +116,9 @@ Cypress.Commands.add(
   'selectTypeaheadOption',
   { prevSubject: 'element' },
   (subject, text) => {
-    cy.wrap(subject).find('input').type(text, { force: true })
+    cy.wrap(subject).find('input').click().clear().type(text)
     cy.wait(100) //wait for typeahead options to load
-    cy.wrap(subject).find('input').type('{enter}', { force: true })
-
+    cy.wrap(subject).find('input').type('{downarrow}{enter}{esc}')
     return cy.wrap(subject)
   }
 )
@@ -150,10 +149,7 @@ Cypress.Commands.add(
   'removeAllTypeaheadValues',
   { prevSubject: 'element' },
   (subject) => {
-    cy.wrap(subject)
-      .find('> div > div > div > div:nth-child(2) > div:nth-child(1)')
-      .click()
-
+    cy.wrap(subject).find('[data-test="typeahead-chip"]').each((el) => cy.wrap(el).click())
     return cy.wrap(subject)
   }
 )
@@ -162,7 +158,7 @@ Cypress.Commands.add(
   'getTypeaheadValues',
   { prevSubject: 'element' },
   (subject) => {
-    return cy.wrap(subject).find('div > div > div > div[class*="-multiValue"]')
+    return cy.wrap(subject).find('[data-test="typeahead-chip-list"]')
   }
 )
 

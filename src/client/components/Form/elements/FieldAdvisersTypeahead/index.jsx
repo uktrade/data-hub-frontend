@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import { throttle } from 'lodash'
-import { FieldTypeahead } from '../../../client/components'
-import { parseAdviserData } from '../../../common/formatAdviser'
+import FieldTypeahead from '../FieldTypeahead'
+import { parseAdviserData } from '../../../../../common/formatAdviser'
 
-const AdviserTypeAhead = ({
+const FieldAdvisersTypeahead = ({
   name,
   label,
   required,
@@ -19,7 +19,7 @@ const AdviserTypeAhead = ({
       name={name}
       label={label}
       placeholder={placeholder}
-      noOptionsMessage={() => 'Type to search for advisers'}
+      noOptionsMessage="Type to search for advisers"
       required={required}
       loadOptions={throttle(
         (searchString) =>
@@ -39,7 +39,7 @@ const AdviserTypeAhead = ({
   )
 }
 
-AdviserTypeAhead.propTypes = {
+FieldAdvisersTypeahead.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   required: PropTypes.string,
@@ -47,4 +47,4 @@ AdviserTypeAhead.propTypes = {
   placeholder: PropTypes.string,
 }
 
-export default AdviserTypeAhead
+export default FieldAdvisersTypeahead

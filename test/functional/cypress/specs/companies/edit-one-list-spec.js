@@ -59,9 +59,14 @@ describe('Edit One List', () => {
     it('should have the account manager pre-selected', () => {
       cy.contains('Continue').click()
 
-      cy.get(selectors.companyEditOneList.globalAccountManagerField).contains(
-        testCompany.one_list_group_global_account_manager.name
-      )
+      cy.get(selectors.companyEditOneList.globalAccountManagerField)
+        .find('input')
+        .invoke('val')
+        .then((val) =>
+          expect(val).to.contain(
+            testCompany.one_list_group_global_account_manager.name
+          )
+        )
     })
 
     it('should submit updated data', () => {
@@ -69,7 +74,7 @@ describe('Edit One List', () => {
         selectors.companyEditOneList.globalAccountManagerField
       ).selectTypeaheadOption('shawn')
 
-      cy.contains('Holly Collins').next().click({ force: true })
+      cy.contains('Holly Collins').click({ force: true })
 
       cy.get(selectors.companyEditOneList.coreTeamFieldText).should(
         'not.contain',
@@ -106,21 +111,22 @@ describe('Edit One List', () => {
         cy.contains('Tier A - Strategic Account').click()
         cy.contains('Continue').click()
 
-        cy.get(selectors.companyEditOneList.globalAccountManagerField).contains(
-          'Type to search for advisers'
-        )
+        cy.get(selectors.companyEditOneList.globalAccountManagerField)
+          .find('input')
+          .should('have.attr', 'value', '')
       })
 
       it('should not have a core team pre-listed', () => {
-        cy.get(selectors.companyEditOneList.coreTeamFieldText).contains(
-          'Type to search for advisers'
-        )
+        cy.get(selectors.companyEditOneList.coreTeamFieldText)
+          .find('input')
+          .should('have.attr', 'value', '')
       })
 
       it('should submit updated data', () => {
         cy.get(selectors.companyEditOneList.globalAccountManagerField)
           .selectTypeaheadOption('shawn')
-          .contains('Shawn Cohen')
+          .find('input')
+          .should('have.attr', 'value', 'Shawn Cohen, Charles Gilbert')
 
         cy.contains('Submit').click()
 

@@ -25,6 +25,7 @@ import {
   TYPEAHEAD__OPTION_MOUSE_DOWN,
   TYPEAHEAD__OPTION_TOGGLE,
   TYPEAHEAD__OPTION_REMOVE,
+  TYPEAHEAD__OPTIONS_CLEAR,
   TYPEAHEAD__OPTIONS_LOADED,
 } from '../../actions'
 
@@ -142,6 +143,7 @@ const Menu = styled('div')(({ open }) => ({
 const Typeahead = ({
   id,
   name,
+  className,
   label = '',
   error = false,
   closeMenuOnSelect = false,
@@ -164,12 +166,14 @@ const Typeahead = ({
   onOptionMouseDown,
   onOptionToggle,
   onOptionRemove,
+  onOptionsClear,
   onMenuClose,
   onMenuOpen,
   onChange = () => {},
   'data-test': testId,
   ...inputProps
 }) => {
+  const closeOnSelect = isMulti ? closeMenuOnSelect : true
   const initialValue = value || defaultValue
   useEffect(() => {
     onInitialise({
@@ -219,7 +223,7 @@ const Typeahead = ({
             })
           )
         }
-        if (closeMenuOnSelect) {
+        if (closeOnSelect) {
           onMenuClose()
         }
         return
@@ -235,7 +239,7 @@ const Typeahead = ({
   }
   const menuActive = loadOptions ? !!input : true
   return (
-    <div id={`${name}-wrapper`} data-test={testId}>
+    <div id={`${name}-wrapper`} data-test={testId} className={className}>
       {label && (
         <Label id={`${name}-label`} data-test="typeahead-label" htmlFor={name}>
           {label}
@@ -281,6 +285,10 @@ const Typeahead = ({
           }}
           onInput={(e) => {
             onInput(e)
+            if (!isMulti && !e.target.value) {
+              onOptionsClear()
+              onChange([])
+            }
           }}
           onKeyDown={onInputKeyDown}
           error={error}
@@ -337,7 +345,7 @@ const Typeahead = ({
                             option,
                           })
                         )
-                        if (closeMenuOnSelect) {
+                        if (closeOnSelect) {
                           onMenuClose()
                         }
                       }}
@@ -379,6 +387,7 @@ const keyPairPropType = PropTypes.shape({
 Typeahead.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string,
+  className: PropTypes.string,
   label: PropTypes.string,
   error: PropTypes.bool,
   closeMenuOnSelect: PropTypes.bool,
@@ -407,6 +416,7 @@ Typeahead.propTypes = {
   onOptionMouseDown: PropTypes.func,
   onOptionToggle: PropTypes.func,
   onOptionRemove: PropTypes.func,
+  onOptionsClear: PropTypes.func,
   onMenuClose: PropTypes.func,
   onMenuOpen: PropTypes.func,
 }
@@ -465,6 +475,11 @@ export default multiInstance({
       dispatch({
         type: TYPEAHEAD__OPTION_REMOVE,
         option,
+      })
+    },
+    onOptionsClear: () => {
+      dispatch({
+        type: TYPEAHEAD__OPTIONS_CLEAR,
       })
     },
   }),
