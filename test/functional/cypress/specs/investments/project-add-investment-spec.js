@@ -1,5 +1,6 @@
-const { company } = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
+const { company } = require('../../fixtures')
+const { expect } = require('chai')
 
 const {
   assertSelectOptions,
@@ -112,10 +113,10 @@ describe('Adding an investment via "Companies"', () => {
 describe('Adding an investment via "Investments"', () => {
   before(() => {
     cy.visit(urls.investments.projects.index())
+    cy.get('[data-test="add-collection-item-button"]').click()
   })
 
   it('should display "Search for a company as the source of foreign equity"', () => {
-    cy.get('[data-test="add-collection-item-button"]').click()
     cy.get('label').should(
       'have.text',
       'Search for a company as the source of foreign equity'
@@ -173,6 +174,39 @@ describe('Adding an investment via "Investments"', () => {
         Country: 'France',
         'Company investments': '12 investment projects in the UK',
       },
+    })
+  })
+})
+
+describe('Validation error messages', () => {
+  const validationErrorMessages = [
+    'Enter a project name',
+    'Enter a project description',
+    'Enter anonymous project details',
+    'Choose a sector',
+    'Choose a business activity',
+    "Select yes if you're the client relationship manager for this project",
+    "Select yes if you're the referral source for this project",
+    'Choose a referral source activity',
+    'Enter an estimated land date',
+    'Choose a client contact',
+  ]
+
+  before(() => {
+    cy.visit(urls.investments.projects.index())
+    cy.get('[data-test="add-collection-item-button"]').click()
+  })
+
+  it('should display all validation error messages', () => {
+    cy.get('input[data-test="company-name"]').clear()
+    cy.get('input[data-test="company-name"]').type('alphabet')
+    cy.get('form button').click()
+    cy.get('form ol li:nth-child(1)').click()
+    cy.get('[data-test="investment-type-non-fdi"]').click()
+    cy.get('[data-test="continue"]').click()
+    cy.get('[data-test="submit"]').click()
+    cy.get('[data-test="summary-form-errors"] ul > li').each(($li, i) => {
+      expect($li.text()).to.equal(validationErrorMessages[i])
     })
   })
 })
