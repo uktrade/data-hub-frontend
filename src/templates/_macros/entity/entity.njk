@@ -14,7 +14,8 @@
  # @param {array}  [props.metaItems{}] - an array of metadata item objects
  # @param {string} [props.highlightTerm] - text to use to apply highlight filter
  # @param {boolean} [props.isBlockLink] - whether the entity container should be link
- # @param {sting|array} [props.contentMetaModifier] - A modified to apply to metadata to control it's display
+ # @param {string|array} [props.contentMetaModifier] - A modifier to apply to metadata to control its display
+ # @param {integer} [props.index] - index at which this appears on page
  #}
 {% macro Entity (props) %}
   {% if props.name and props.type %}
@@ -50,7 +51,13 @@
 
         <h3 class="c-entity__title">
           {% if props.id and not props.isBlockLink %}
-            <a href="{{ url }}" class="c-entity__link">{{ highlightedName }}</a>
+            <a
+              href="{{ url }}"
+              class="c-entity__link js-search-entity"
+              data-search-result-rank="{{ props.index }}"
+            >
+              {{ highlightedName }}
+            </a>
           {% else %}
             {{ highlightedName }}
           {% endif %}
