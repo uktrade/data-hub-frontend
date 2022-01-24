@@ -17,7 +17,10 @@ const StyledEntityListItem = styled('li')`
 const EntityList = ({ entities, entityRenderer: EntityRenderer }) => (
   <StyledEntityList data-test="entity-list">
     {entities.map((entity) => (
-      <StyledEntityListItem key={`entity-list-item_${entity.id}`}>
+      <StyledEntityListItem
+        data-test="entity-list-item"
+        key={`entity-list-item_${entity.id}`}
+      >
         <EntityRenderer {...entity} />
       </StyledEntityListItem>
     ))}
