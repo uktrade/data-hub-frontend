@@ -16,7 +16,7 @@ import {
   SummaryTable,
 } from '../../../../../client/components'
 import CompanyContactsResource from '../../../../../client/components/Resource/CompanyContacts'
-import { OPTION_YES, OPTION_NO, OPTIONS_YES_NO } from './constants'
+import { OPTION_YES, OPTION_NO, OPTIONS_YES_NO } from '../../../../constants'
 import Task from '../../../../../client/components/Task'
 import urls from '../../../../../lib/urls'
 import {

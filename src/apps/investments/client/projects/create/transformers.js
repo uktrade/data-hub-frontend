@@ -1,4 +1,4 @@
-import { OPTION_YES, OPTION_NO } from './constants'
+import { OPTION_YES, OPTION_NO } from '../../../../constants'
 
 const getLandDate = ({ year, month, day = '01' }) => `${year}-${month}-${day}`
 

@@ -47,6 +47,7 @@ const getAdvisers = () =>
           value: id,
         }))
     )
+    .catch(handleError)
 
 export const searchCompany = ({ searchTerm }) =>
   axios
