@@ -81,12 +81,13 @@ const ProjectsCollection = ({
   return (
     <FilteredCollectionList
       {...props}
-      collectionName="project"
+      collectionName="investment project"
       sortOptions={optionMetadata.sortOptions}
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}
       baseDownloadLink="/investments/projects/export"
       entityName="project"
+      addItemUrl="/investments/projects/create"
       defaultQueryParams={{
         page: 1,
         sortby: 'created_on:desc',

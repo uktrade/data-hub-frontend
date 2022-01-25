@@ -1,0 +1,94 @@
+{
+  "id": "0f5216e0-849f-11e6-ae22-56b6b6499622",
+  "reference_code": "ORG-10096257",
+  "name": "Venus Ltd",
+  "trading_names": [],
+  "uk_based": true,
+  "company_number": null,
+  "vat_number": "",
+  "duns_number": null,
+  "created_on": "2016-06-15T10:00:00Z",
+  "modified_on": "2019-04-25T14:23:39.657399Z",
+  "archived": false,
+  "archived_documents_url_path": "/documents/123",
+  "archived_on": null,
+  "archived_reason": null,
+  "archived_by": null,
+  "description": "This is a dummy company for testing",
+  "transferred_by": null,
+  "transferred_on": null,
+  "transferred_to": null,
+  "transfer_reason": "",
+  "website": "",
+  "business_type": {
+      "name": "Company",
+      "id": "98d14e94-5d95-e211-a939-e4115bead28a"
+  },
+  "one_list_group_tier": {
+      "name": "Tier A - Strategic Account",
+      "id": "b91bf800-8d53-e311-aef3-441ea13961e2"
+  },
+  "contacts": [],
+  "employee_range": null,
+  "number_of_employees": null,
+  "is_number_of_employees_estimated": null,
+  "export_to_countries": [],
+  "future_interest_countries": [],
+  "headquarter_type": null,
+  "one_list_group_global_account_manager": {
+      "name": "Travis Greene",
+      "first_name": "Travis",
+      "last_name": "Greene",
+      "dit_team": {
+          "name": "IST - Sector Advisory Services",
+          "uk_region": {
+              "name": "London",
+              "id": "874cd12a-6095-e211-a939-e4115bead28a"
+          },
+          "country": {
+              "name": "United Kingdom",
+              "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+          },
+          "id": "fc3a6667-cfe9-e511-8ffa-e4115bead28a"
+      },
+      "id": "8eefe6b4-2816-4e47-94b5-a13409dcef70"
+  },
+  "global_headquarters": {
+      "name": "Archived Ltd",
+      "id": "346f78a5-1d23-4213-b4c2-bf48246a13c3"
+  },
+  "sector": {
+      "name": "Retail",
+      "id": "355f977b-8ac3-e211-a646-e4115bead28a"
+  },
+  "turnover_range": null,
+  "turnover": null,
+  "is_turnover_estimated": null,
+  "uk_region": {
+      "name": "North West",
+      "id": "824cd12a-6095-e211-a939-e4115bead28a"
+  },
+  "export_experience_category": null,
+  "address": {
+      "line_1": "66 Marcham Road",
+      "line_2": "",
+      "town": "Bordley",
+      "county": "",
+      "postcode": "BD23 8RZ",
+      "country": {
+          "name": "United Kingdom",
+          "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+      }
+  },
+  "registered_address": {
+      "line_1": "66 Marcham Road",
+      "line_2": "",
+      "town": "Bordley",
+      "county": "",
+      "postcode": "BD23 8RZ",
+      "country": {
+          "name": "United Kingdom",
+          "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+      }
+  }
+}

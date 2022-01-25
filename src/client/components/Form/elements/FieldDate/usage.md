@@ -35,6 +35,7 @@ Date field for use in forms and filters.
 | `hint`         | false    | null                                                                    | node                           | Node for hint element                         |
 | `validate`     | false    | null                                                                    | function or array of functions | Validate functions for input                  |
 | `required`     | false    | `` | Boolean | Text 'required' sets wether the input is required or not |
+| `invalid`      | false    | `` | Text 'invalid' sets a custom error message for invalid dates       |
 | `initialValue` | false    | `` | Text | Sets initial value of the input                             |
 | `options` | true | empty array | array | Defines the checkbox labels and values
 | `reduced`      | false    | false                                                                   | Boolean                        | Toggles wether the element is a filter or not |

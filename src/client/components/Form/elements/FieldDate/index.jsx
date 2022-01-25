@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { castArray } from 'lodash'
+import { castArray, snakeCase } from 'lodash'
 import styled from 'styled-components'
 import { ERROR_COLOUR } from 'govuk-colours'
 import ErrorText from '@govuk-react/error-text'
@@ -51,7 +51,7 @@ const StyledList = styled('div')({
 })
 
 const getValidator =
-  (required, format) =>
+  (required, invalid, format) =>
   ({ day, month, year }) => {
     const isLong = format === FORMAT_LONG
     const isValid = isLong
@@ -60,9 +60,13 @@ const getValidator =
 
     const isDateEmpty = isLong ? !day && !month && !year : !month && !year
 
-    return !isValid && (!isDateEmpty || required)
-      ? required || 'Enter a valid date'
-      : null
+    if (required && isDateEmpty) {
+      return required
+    }
+
+    if (!isValid && !isDateEmpty) {
+      return invalid || 'Enter a valid date'
+    }
   }
 
 const getDefaultInitialValue = (format) => {
@@ -84,16 +88,20 @@ const FieldDate = ({
   initialValue,
   labels,
   required,
+  invalid,
   format,
   reduced,
+  ...props
 }) => {
   const { value, error, touched, onBlur } = useField({
     name,
     initialValue: initialValue || getDefaultInitialValue(format),
-    validate: [getValidator(required, format), ...castArray(validate)],
+    validate: [getValidator(required, invalid, format), ...castArray(validate)],
   })
 
   const { setFieldValue } = useFormContext()
+
+  const dataTest = props['data-test'] ? props['data-test'] : snakeCase(name)
 
   const onChange = (valueKey, e) => {
     const date = e.target.value.split('-')
@@ -132,6 +140,7 @@ const FieldDate = ({
                 <Input
                   id={`${name}.day`}
                   name={`${name}.day`}
+                  data-test={`${dataTest}-day`}
                   error={touched && error}
                   type="number"
                   value={value.day}
@@ -145,6 +154,7 @@ const FieldDate = ({
               <Input
                 id={`${name}.month`}
                 name={`${name}.month`}
+                data-test={`${dataTest}-month`}
                 error={touched && error}
                 type="number"
                 value={value.month}
@@ -157,6 +167,7 @@ const FieldDate = ({
               <Input
                 id={`${name}.year`}
                 name={`${name}.year`}
+                data-test={`${dataTest}-year`}
                 error={touched && error}
                 type="number"
                 value={value.year}
@@ -177,6 +188,7 @@ FieldDate.propTypes = {
   legend: PropTypes.node,
   hint: PropTypes.string,
   required: PropTypes.string,
+  invalid: PropTypes.string,
   format: PropTypes.string,
   validate: PropTypes.oneOfType([
     PropTypes.func,
@@ -200,8 +212,9 @@ FieldDate.defaultProps = {
   legend: null,
   hint: null,
   required: null,
-  validate: null,
+  invalid: null,
   format: FORMAT_LONG,
+  validate: null,
   initialValue: null,
   labels: {
     day: 'Day',

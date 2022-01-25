@@ -1,9 +1,13 @@
 /* eslint camelcase: 0 */
-const { format } = require('../../../../client/utils/date')
+const {
+  format,
+  formatMediumDateTime,
+} = require('../../../../client/utils/date')
 
 import urls from '../../../../lib/urls'
+import { addressToString } from '../../../../client/utils/addresses'
 
-const transformInvestmentProjectToListItem = ({
+export const transformInvestmentProjectToListItem = ({
   id,
   name,
   project_code,
@@ -39,4 +43,26 @@ const transformInvestmentProjectToListItem = ({
   }
 }
 
-export default transformInvestmentProjectToListItem
+export const transformCompanyToListItem = (company) => ({
+  id: company.id,
+  heading: company.name,
+  data: { ...company },
+  meta: [
+    {
+      label: 'Updated on',
+      value: formatMediumDateTime(company.modified_on),
+    },
+    {
+      label: 'Company address',
+      value: addressToString(company.address),
+    },
+    {
+      label: 'Global HQ',
+      value: company.global_headquarters?.name,
+    },
+    {
+      label: 'Last interaction date',
+      value: company.latest_interaction_date,
+    },
+  ].filter((meta) => meta.value),
+})

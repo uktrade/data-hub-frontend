@@ -44,6 +44,7 @@ import CompanyLocalHeader from './components/CompanyLocalHeader'
 import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/CompanyOrdersCollection'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 import CompanyProjectsCollection from '../apps/investments/client/projects/CompanyProjectsCollection.jsx'
+import InvestmentProjectForm from '../apps/investments/client/projects/create/InvestmentProjectForm'
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
 import OpportunityChangeStatusForm from '../apps/investments/client/opportunities/Details/OpportunityChangeStatusForm.jsx'
@@ -150,7 +151,16 @@ import {
   TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME,
   TASK_GET_INVESTMENTS_PROJECTS_METADATA,
 } from '../apps/investments/client/projects/state'
-import * as getInvestmentProjects from '../apps/investments/client/projects/tasks'
+import * as investmentProjectTasks from '../apps/investments/client/projects/tasks'
+
+import {
+  TASK_SEARCH_COMPANY,
+  TASK_CREATE_INVESTMENT_PROJECT,
+  TASK_GET_COMPANY_INVESTMENT_COUNT,
+  TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM,
+  TASK_GET_INVESTMENT_PROJECT_INITIAL_VALUES,
+} from '../apps/investments/client/projects/create/state'
+import * as createInvestmentProjectTasks from '../apps/investments/client/projects/create/tasks'
 
 import * as myInvestmentProjects from './components/MyInvestmentProjects/tasks'
 import { TASK_GET_MY_INVESTMENTS_LIST } from './components/MyInvestmentProjects/state'
@@ -300,14 +310,23 @@ function App() {
         [DNB__CHECK_PENDING_REQUEST]: businessDetails.checkIfPendingRequest,
         [TASK_GET_PROFILES_LIST]:
           investmentProfilesTasks.getLargeCapitalProfiles,
-        [TASK_GET_PROJECTS_LIST]: getInvestmentProjects.getProjects,
+        [TASK_GET_PROJECTS_LIST]: investmentProjectTasks.getProjects,
+        [TASK_CREATE_INVESTMENT_PROJECT]:
+          createInvestmentProjectTasks.createInvestmentProject,
+        [TASK_GET_INVESTMENT_PROJECT_INITIAL_VALUES]:
+          createInvestmentProjectTasks.getInitialFormValues,
+        [TASK_SEARCH_COMPANY]: createInvestmentProjectTasks.searchCompany,
+        [TASK_GET_COMPANY_INVESTMENT_COUNT]:
+          createInvestmentProjectTasks.getCompanyInvestmentsCount,
+        [TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM]:
+          createInvestmentProjectTasks.openContactForm,
         [TASK_GET_COMPANIES_LIST]: getCompanies,
         [TASK_GET_COMPANIES_METADATA]: getCompaniesMetadata,
         [TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME]: getAdviserNames,
         [TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME]:
           getAdviserNames,
         [TASK_GET_INVESTMENTS_PROJECTS_METADATA]:
-          getInvestmentProjects.getMetadata,
+          investmentProjectTasks.getMetadata,
         [TASK_CHECK_FOR_INVESTMENTS]: personalisedDashboard.checkForInvestments,
         [TASK_GET_MY_INVESTMENTS_LIST]:
           myInvestmentProjects.fetchMyInvestmentsList,
@@ -496,6 +515,11 @@ function App() {
       <Mount selector="#footer">{() => <Footer />}</Mount>
       <Mount selector="#investment-projects-collection">
         {(props) => <InvestmentProjectsCollection {...props} />}
+      </Mount>
+      <Mount selector="#investment-project-form">
+        {(props) => (
+          <InvestmentProjectForm csrfToken={globalProps.csrfToken} {...props} />
+        )}
       </Mount>
       <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
       <Mount selector="#contact-form">

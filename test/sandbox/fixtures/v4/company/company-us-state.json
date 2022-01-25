@@ -24,7 +24,10 @@
     "name": "Company",
     "id": "98d14e94-5d95-e211-a939-e4115bead28a"
   },
-  "one_list_group_tier": null,
+  "one_list_group_tier": {
+    "name": "Tier A - Strategic Account",
+    "id": "b91bf800-8d53-e311-aef3-441ea13961e2"
+  },
   "contacts": [
     {
       "id": "6791d583-7a52-418f-a0d3-d8d527f20d43",
@@ -126,7 +129,24 @@
     }
   ],
   "headquarter_type": null,
-  "one_list_group_global_account_manager": null,
+  "one_list_group_global_account_manager": {
+    "name": "Travis Greene",
+    "first_name": "Travis",
+    "last_name": "Greene",
+    "dit_team": {
+        "name": "IST - Sector Advisory Services",
+        "uk_region": {
+            "name": "London",
+            "id": "874cd12a-6095-e211-a939-e4115bead28a"
+        },
+        "country": {
+            "name": "United Kingdom",
+            "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+        },
+        "id": "fc3a6667-cfe9-e511-8ffa-e4115bead28a"
+    },
+    "id": "8eefe6b4-2816-4e47-94b5-a13409dcef70"
+},
   "global_headquarters": null,
   "sector": {
     "name": "Retail",

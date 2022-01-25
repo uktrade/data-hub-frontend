@@ -14,7 +14,8 @@ exports.investmentProjects = function (req, res) {
     req.body.stage ||
     req.body.investment_type ||
     req.body.likelihood_to_land ||
-    req.body.level_of_involvement_simplified
+    req.body.level_of_involvement_simplified ||
+    req.body.investor_company
   )
   const { results, summary } = investmentProjects
 

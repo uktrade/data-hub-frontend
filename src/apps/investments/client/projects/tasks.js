@@ -1,12 +1,11 @@
 import axios from 'axios'
 
 import { getMetadataOptions } from '../../../../client/metadata'
-
-import transformInvestmentProjectToListItem from './transformers'
+import { transformInvestmentProjectToListItem } from './transformers'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
-function getProjects({ limit = 10, page, companyId, ...rest }) {
+export const getProjects = ({ limit = 10, page, companyId, ...rest }) => {
   let offset = limit * (parseInt(page, 10) - 1) || 0
 
   return axios
@@ -36,7 +35,7 @@ function getProjects({ limit = 10, page, companyId, ...rest }) {
  *
  * @returns {promise} - the promise containing a list of options for each category
  */
-function getMetadata(metadataUrls) {
+export const getMetadata = (metadataUrls) => {
   const optionCategories = Object.keys(metadataUrls)
   return Promise.all(
     optionCategories.map((name) =>
@@ -55,5 +54,3 @@ function getMetadata(metadataUrls) {
     )
   )
 }
-
-export { getProjects, getMetadata }

@@ -35,3 +35,7 @@ exports.patchInvestmentProject = function (req, res) {
     client_requirements: ['required'],
   })
 }
+
+exports.postInvestmentProject = function (req, res) {
+  res.json(project)
+}

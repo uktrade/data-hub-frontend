@@ -27,6 +27,7 @@ const StyledHeaderText = styled(H2)`
 
 const StyledLink = styled.a`
   margin-bottom: 0;
+  white-space: nowrap;
 `
 
 const StyledReactRouterLink = styled(Link)`

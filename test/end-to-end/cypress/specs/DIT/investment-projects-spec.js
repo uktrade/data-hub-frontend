@@ -2,16 +2,30 @@ const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 
 const { assertKeyValueTable } = require('../../support/assertions')
-const { companies } = require('../../../../../src/lib/urls')
+const {
+  selectFirstTypeaheadOption,
+} = require('../../../../functional/cypress/support/actions')
+
+const { companies, investments } = require('../../../../../src/lib/urls')
 
 const populateForm = (data) => {
   cy.get(selectors.investment.form.name).type(data.name)
   cy.get(selectors.investment.form.description).type(data.description)
-  cy.get(selectors.investment.form.primarySector).select(data.sector)
-  cy.get(selectors.investment.form.businessActivity).select(
-    data.businessActivity
+  cy.get(selectors.investment.form.anonymousDescription).type(
+    data.anonymousDescription
   )
-  cy.get(selectors.investment.form.clientContact).select(data.contact)
+  selectFirstTypeaheadOption({
+    element: selectors.investment.form.primarySector,
+    input: data.sector,
+  })
+  selectFirstTypeaheadOption({
+    element: selectors.investment.form.businessActivities,
+    input: data.businessActivities,
+  })
+  selectFirstTypeaheadOption({
+    element: selectors.investment.form.clientContact,
+    input: data.contact,
+  })
   cy.get(selectors.investment.form.clientRelationshipManagerYes).click()
   cy.get(selectors.investment.form.referralSourceYes).click()
   cy.get(selectors.investment.form.referralSourceActivity).select(
@@ -26,22 +40,28 @@ const populateForm = (data) => {
   cy.get(selectors.investment.form.actualLandDateYear).type(data.year)
   cy.get(selectors.investment.form.actualLandDateMonth).type(data.month)
   cy.get(selectors.investment.form.actualLandDateDay).type(data.day)
-  cy.get(selectors.investment.form.investorType).select(data.investor)
-  cy.get(selectors.investment.form.levelOfInvolvement).select(
-    data.investorLevel
-  )
-  cy.get(selectors.investment.form.specificInvestmentProgramme).select(
-    data.investorProgramme
-  )
-  cy.contains('Save').click()
+  selectFirstTypeaheadOption({
+    element: selectors.investment.form.investorType,
+    input: data.investor,
+  })
+  selectFirstTypeaheadOption({
+    element: selectors.investment.form.levelOfInvolvement,
+    input: data.investorLevel,
+  })
+  selectFirstTypeaheadOption({
+    element: selectors.investment.form.specificInvestmentProgramme,
+    input: data.specificInvestmentProgramme,
+  })
+  cy.get(selectors.investment.form.submitButton).click()
 }
 
-describe('Investment project', () => {
+describe('Creating an investment project', () => {
   const data = {
     name: 'FDI Auto Project',
     description: 'FDI Auto Description',
+    anonymousDescription: 'Anonymous description',
     sector: 'Aerospace',
-    businessActivity: 'Assembly',
+    businessActivities: 'Assembly',
     contact: 'Johnny Cakeman',
     referralSource: 'Bank',
     estimateMonth: '10',
@@ -50,11 +70,11 @@ describe('Investment project', () => {
     month: '5',
     year: '2031',
     investor: 'New Investor',
-    investorLevel: 'Post Only',
-    investorProgramme: 'Space',
+    investorLevel: 'HQ and Post Only',
+    specificInvestmentProgramme: 'Space',
   }
 
-  describe('FDI investment', () => {
+  describe('Creating an "FDI" project from Companies', () => {
     const company = fixtures.company.create.lambda()
     const contact = fixtures.contact.create(company.pk)
 
@@ -64,17 +84,14 @@ describe('Investment project', () => {
       cy.visit(companies.investments.companyInvestment(company.pk))
     })
 
-    it('should create a FDI investment project', () => {
+    it('should create an FDI project', () => {
       cy.contains('Add investment project').click()
       cy.get(selectors.companyInvestmentProjects.fdiInvestmentType).click()
       cy.get(selectors.companyInvestmentProjects.fdiType).select('Merger')
       cy.get(selectors.companyInvestmentProjects.continue).click()
 
-      cy.get(selectors.companyInvestmentProjects.sourceOfEquityYes).click()
-      cy.get(selectors.companyInvestmentProjects.continue).click()
-
       populateForm(data)
-      cy.get(selectors.message.successful).should(
+      cy.get('[data-test="status-message"]').should(
         'contain',
         'Investment project created'
       )
@@ -83,14 +100,15 @@ describe('Investment project', () => {
         Client: 'Lambda plc',
         'Type of investment': 'FDI, Merger',
         'Primary sector': data.sector,
-        'Business activity': data.businessActivity,
+        'Business activity': data.businessActivities,
         'Client contacts': data.contact,
         'Project description': data.description,
+        'Anonymised description': data.anonymousDescription,
         'Estimated land date': 'October 2030',
         'Actual land date': '5 May 2031',
         'New or existing investor': data.investor,
         'Level of involvement': data.investorLevel,
-        'Specific investment programme': data.investorProgramme,
+        'Specific investment programme': data.specificInvestmentProgramme,
       })
     })
 
@@ -124,7 +142,7 @@ describe('Investment project', () => {
     })
   })
 
-  describe('non FDI investment', () => {
+  describe('Creating a "Non-FDI" project from Companies', () => {
     const company = fixtures.company.create.lambda()
     const contact = fixtures.contact.create(company.pk)
 
@@ -134,16 +152,13 @@ describe('Investment project', () => {
       cy.visit(companies.investments.companyInvestment(company.pk))
     })
 
-    it('should create a non FDI investment project', () => {
+    it('should create a Non-FDI project', () => {
       cy.contains('Add investment project').click()
       cy.get(selectors.companyInvestmentProjects.nonFdiInvestmentType).click()
       cy.get(selectors.companyInvestmentProjects.continue).click()
 
-      cy.get(selectors.companyInvestmentProjects.sourceOfEquityYes).click()
-      cy.get(selectors.companyInvestmentProjects.continue).click()
-
       populateForm(data)
-      cy.get(selectors.message.successful).should(
+      cy.get('[data-test="status-message"]').should(
         'contain',
         'Investment project created'
       )
@@ -152,14 +167,15 @@ describe('Investment project', () => {
         Client: 'Lambda plc',
         'Type of investment': 'Non-FDI',
         'Primary sector': data.sector,
-        'Business activity': data.businessActivity,
+        'Business activity': data.businessActivities,
         'Client contacts': data.contact,
         'Project description': data.description,
+        'Anonymised description': data.anonymousDescription,
         'Estimated land date': 'October 2030',
         'Actual land date': '5 May 2031',
         'New or existing investor': data.investor,
         'Level of involvement': data.investorLevel,
-        'Specific investment programme': data.investorProgramme,
+        'Specific investment programme': data.specificInvestmentProgramme,
       })
     })
 
@@ -190,51 +206,7 @@ describe('Investment project', () => {
     })
   })
 
-  describe('FDI investment with different company source', () => {
-    const company = fixtures.company.create.lambda()
-    const contact = fixtures.contact.create(company.pk)
-
-    before(() => {
-      cy.loadFixture([company])
-      cy.loadFixture([contact])
-      cy.visit(companies.investments.companyInvestment(company.pk))
-    })
-
-    it('should create a FDI investment project with a different source of equity company', () => {
-      cy.contains('Add investment project').click()
-      cy.get(selectors.companyInvestmentProjects.fdiInvestmentType).click()
-      cy.get(selectors.companyInvestmentProjects.fdiType).select('Merger')
-      cy.get(selectors.companyInvestmentProjects.continue).click()
-
-      cy.get(selectors.companyInvestmentProjects.sourceOfEquityNo).click()
-      cy.get(selectors.companyInvestmentProjects.continue).click()
-
-      cy.get(selectors.nav.searchTerm).type('Mars Exports Ltd').type('{enter}')
-      cy.get('a').contains('Mars Exports Ltd').click()
-
-      populateForm({ ...data, contact: 'Fred Peterson' })
-      cy.get(selectors.message.successful).should(
-        'contain',
-        'Investment project created'
-      )
-
-      assertKeyValueTable('summaryContainer', {
-        Client: 'Mars Exports Ltd',
-        'Type of investment': 'FDI, Merger',
-        'Primary sector': data.sector,
-        'Business activity': data.businessActivity,
-        'Client contacts': 'Fred Peterson',
-        'Project description': data.description,
-        'Estimated land date': 'October 2030',
-        'Actual land date': '5 May 2031',
-        'New or existing investor': data.investor,
-        'Level of involvement': data.investorLevel,
-        'Specific investment programme': data.investorProgramme,
-      })
-    })
-  })
-
-  describe('Commitment investment project', () => {
+  describe('Creating a "Commitment to invest" project from Companies', () => {
     const company = fixtures.company.create.lambda()
     const contact = fixtures.contact.create(company.pk)
 
@@ -249,11 +221,9 @@ describe('Investment project', () => {
       cy.get(selectors.companyInvestmentProjects.ctiInvestmentType).click()
       cy.get(selectors.companyInvestmentProjects.continue).click()
 
-      cy.get(selectors.companyInvestmentProjects.sourceOfEquityYes).click()
-      cy.get(selectors.companyInvestmentProjects.continue).click()
-
       populateForm(data)
-      cy.get(selectors.message.successful).should(
+
+      cy.get('[data-test="status-message"]').should(
         'contain',
         'Investment project created'
       )
@@ -262,14 +232,146 @@ describe('Investment project', () => {
         Client: 'Lambda plc',
         'Type of investment': 'Commitment to invest',
         'Primary sector': data.sector,
-        'Business activity': data.businessActivity,
+        'Business activity': data.businessActivities,
         'Client contacts': data.contact,
         'Project description': data.description,
+        'Anonymised description': data.anonymousDescription,
         'Estimated land date': 'October 2030',
         'Actual land date': '5 May 2031',
         'New or existing investor': data.investor,
         'Level of involvement': data.investorLevel,
-        'Specific investment programme': data.investorProgramme,
+        'Specific investment programme': data.specificInvestmentProgramme,
+      })
+    })
+  })
+
+  describe('Creating an "FDI" project from Investments', () => {
+    before(() => {
+      cy.visit(investments.projects.index())
+      cy.contains('Add investment project').click()
+    })
+    it('should create an FDI project', () => {
+      cy.get('input[data-test="company-name"]')
+        .type('Mars Exports Ltd')
+        .type('{enter}')
+      cy.get('[data-test="entity-list-item"]')
+        .first()
+        .contains('Mars Exports Ltd')
+        .click()
+      cy.get(selectors.companyInvestmentProjects.fdiInvestmentType).click()
+      cy.get(selectors.companyInvestmentProjects.fdiType).select('Merger')
+      cy.get(selectors.companyInvestmentProjects.continue).click()
+
+      populateForm({
+        ...data,
+        contact: 'Fred Peterson',
+      })
+
+      cy.get('[data-test="status-message"]').should(
+        'contain',
+        'Investment project created'
+      )
+
+      assertKeyValueTable('summaryContainer', {
+        Client: 'Mars Exports Ltd',
+        'Type of investment': 'FDI, Merger',
+        'Primary sector': data.sector,
+        'Business activity': data.businessActivities,
+        'Client contacts': 'Fred Peterson',
+        'Project description': data.description,
+        'Anonymised description': data.anonymousDescription,
+        'Estimated land date': 'October 2030',
+        'Actual land date': '5 May 2031',
+        'New or existing investor': data.investor,
+        'Level of involvement': data.investorLevel,
+        'Specific investment programme': data.specificInvestmentProgramme,
+      })
+    })
+
+    describe('Creating a "Non-FDI" project from Investments', () => {
+      before(() => {
+        cy.visit(investments.projects.index())
+        cy.contains('Add investment project').click()
+      })
+      it('should create a Non-FDI project', () => {
+        cy.get('input[data-test="company-name"]')
+          .type('Mars Exports Ltd')
+          .type('{enter}')
+        cy.get('[data-test="entity-list-item"]')
+          .first()
+          .contains('Mars Exports Ltd')
+          .click()
+        cy.get(selectors.companyInvestmentProjects.nonFdiInvestmentType).click()
+        cy.get(selectors.companyInvestmentProjects.continue).click()
+
+        populateForm({
+          ...data,
+          contact: 'Fred Peterson',
+        })
+
+        cy.get('[data-test="status-message"]').should(
+          'contain',
+          'Investment project created'
+        )
+
+        assertKeyValueTable('summaryContainer', {
+          Client: 'Mars Exports Ltd',
+          'Type of investment': 'Non-FDI',
+          'Primary sector': data.sector,
+          'Business activity': data.businessActivities,
+          'Client contacts': 'Fred Peterson',
+          'Project description': data.description,
+          'Anonymised description': data.anonymousDescription,
+          'Estimated land date': 'October 2030',
+          'Actual land date': '5 May 2031',
+          'New or existing investor': data.investor,
+          'Level of involvement': data.investorLevel,
+          'Specific investment programme': data.specificInvestmentProgramme,
+        })
+      })
+    })
+
+    describe('Creating a "Commitment to invest" project from Investments', () => {
+      before(() => {
+        cy.visit(investments.projects.index())
+        cy.contains('Add investment project').click()
+      })
+
+      it('should create a commitment to investment project', () => {
+        cy.get('input[data-test="company-name"]')
+          .type('Mars Exports Ltd')
+          .type('{enter}')
+        cy.get('[data-test="entity-list-item"]')
+          .first()
+          .contains('Mars Exports Ltd')
+          .click()
+        cy.get(selectors.companyInvestmentProjects.ctiInvestmentType).click()
+        cy.get(selectors.companyInvestmentProjects.continue).click()
+
+        populateForm({
+          ...data,
+          contact: 'Fred Peterson',
+        })
+
+        cy.get('[data-test="status-message"]').should(
+          'contain',
+          'Investment project created'
+        )
+
+        assertKeyValueTable('summaryContainer', {
+          Client: 'Mars Exports Ltd',
+          'Type of investment': 'Commitment to invest',
+          'Primary sector': data.sector,
+          'Business activity': data.businessActivities,
+          'Client contacts': 'Fred Peterson',
+          'Project description': data.description,
+          'Anonymised description': data.anonymousDescription,
+          'Estimated land date': 'October 2030',
+          'Actual land date': '5 May 2031',
+          'New or existing investor': data.investor,
+          'Level of involvement': data.investorLevel,
+          'Specific investment programme': data.specificInvestmentProgramme,
+        })
       })
     })
   })

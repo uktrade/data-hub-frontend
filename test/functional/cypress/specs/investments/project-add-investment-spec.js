@@ -1,0 +1,212 @@
+const urls = require('../../../../../src/lib/urls')
+const { company } = require('../../fixtures')
+const { expect } = require('chai')
+
+const {
+  assertSelectOptions,
+  assertSummaryTable,
+} = require('../../support/assertions')
+
+const { usCompany } = company
+
+const commonTests = () => {
+  it('should display a form"', () => {
+    cy.get('form').should('be.visible')
+  })
+
+  it('should display the "Type of investment"', () => {
+    cy.get('form legend').should('contain', 'Type of investment')
+  })
+
+  it('should display 3 radio buttons', () => {
+    cy.get('input[type="radio"]').should('have.length', 3)
+  })
+
+  it('should display an "FDI" radio button label', () => {
+    cy.get('form')
+      .find('label')
+      .eq(0)
+      .should('contain', 'FDI')
+      .should('not.be.checked')
+  })
+
+  it('should display a "Non-FDI" radio button label', () => {
+    cy.get('form')
+      .find('label')
+      .eq(1)
+      .should('contain', 'Non-FDI')
+      .should('not.be.checked')
+  })
+
+  it('should display a "Commitment to invest" radio button label', () => {
+    cy.get('form')
+      .find('label')
+      .eq(2)
+      .should('contain', 'Commitment to invest')
+      .should('not.be.checked')
+  })
+
+  it('should display a list of "FDI types" when selecting "FDI"', () => {
+    cy.checkRadioGroup('Type of investment', 'FDI')
+    assertSelectOptions('select option', [
+      {
+        label: 'Select an FDI type',
+        value: '',
+      },
+      {
+        label: 'Acquisition',
+        value: 'ac035522-ad0b-4eeb-87f4-0ce964e4b104',
+      },
+      {
+        label: 'Capital only',
+        value: '840f62c1-bbcb-44e4-b6d4-a258d2ffa07d',
+      },
+      {
+        label: 'Creation of new site or activity',
+        value: 'f8447013-cfdc-4f35-a146-6619665388b3',
+      },
+      {
+        label: 'Expansion of existing site or activity',
+        value: 'd08a2f07-c366-4133-9a7e-35b6c88a3270',
+      },
+      {
+        label: 'Joint venture',
+        value: 'a7dbf6b3-9c04-43a7-9be9-d3072f138fab',
+      },
+      {
+        label: 'Merger',
+        value: '32018db0-fd2d-4b8c-aee4-a931bde3abe8',
+      },
+      {
+        label: 'Retention',
+        value: '0657168e-8a58-4f37-914f-ec541556fc28',
+      },
+    ])
+  })
+
+  it('should display a "Continue" button', () => {
+    cy.get('form button').should('have.text', 'Continue')
+  })
+}
+
+describe('Adding an investment via "Companies"', () => {
+  before(() => {
+    cy.visit(urls.companies.investments.companyInvestmentProjects(usCompany.id))
+    cy.get('[data-test="add-collection-item-button"]').click()
+  })
+  it('should display the "Source of foreign equity investment" table', () => {
+    assertSummaryTable({
+      dataTest: 'clientCompanyTable',
+      heading: 'Source of foreign equity investment',
+      content: {
+        Company: 'Texports Ltd',
+        Country: 'United States',
+        'Company investments': '12 investment projects in the UK',
+        'One List tier': 'Tier A - Strategic Account',
+        'Global Account Manager': 'Travis Greene',
+      },
+    })
+  })
+  commonTests()
+})
+
+describe('Adding an investment via "Investments"', () => {
+  before(() => {
+    cy.visit(urls.investments.projects.index())
+    cy.get('[data-test="add-collection-item-button"]').click()
+  })
+
+  it('should display "Search for a company as the source of foreign equity"', () => {
+    cy.get('label').should(
+      'have.text',
+      'Search for a company as the source of foreign equity'
+    )
+  })
+
+  it('should display a "Search" button', () => {
+    cy.get('form button:contains("Search")').should('be.visible')
+  })
+
+  it('should display error messages when the "Company name" search field is not filled in', () => {
+    cy.get('form button').click()
+    cy.get('[data-test="summary-form-errors"] h2').should(
+      'contain',
+      'There is a problem'
+    )
+    cy.get('[data-test="summary-form-errors"] ul').should(
+      'contain',
+      'Enter company name'
+    )
+    cy.get('[data-test="field-companyName"]').should(
+      'contain',
+      'Enter company name'
+    )
+  })
+
+  it('should display error messages when the search character count is below the threshold', () => {
+    cy.get('input[data-test="company-name"]').type('a')
+    cy.get('form button').click()
+    cy.get('[data-test="summary-form-errors"] ul').should(
+      'contain',
+      'Enter at least 2 characters'
+    )
+  })
+
+  it('should produce search results when searching for a company', () => {
+    cy.get('input[data-test="company-name"]').clear()
+    cy.get('input[data-test="company-name"]').type('alphabet')
+    cy.get('form button').click()
+    cy.get('form ol li:nth-child(1)').should('exist')
+    cy.get('form ol li:nth-child(2)').should('exist')
+    cy.get('form ol li:nth-child(3)').should('exist')
+  })
+
+  it('should take you to the next step when clicking a company from the search results', () => {
+    cy.get('input[data-test="company-name"]').clear()
+    cy.get('input[data-test="company-name"]').type('alphabet')
+    cy.get('form button').click()
+    cy.get('form ol li:nth-child(1)').click()
+    assertSummaryTable({
+      dataTest: 'clientCompanyTable',
+      heading: 'Source of foreign equity investment',
+      content: {
+        Company: 'Lambda plc',
+        Country: 'France',
+        'Company investments': '12 investment projects in the UK',
+      },
+    })
+  })
+})
+
+describe('Validation error messages', () => {
+  const validationErrorMessages = [
+    'Enter a project name',
+    'Enter a project description',
+    'Enter anonymous project details',
+    'Choose a sector',
+    'Choose a business activity',
+    "Select yes if you're the client relationship manager for this project",
+    "Select yes if you're the referral source for this project",
+    'Choose a referral source activity',
+    'Enter an estimated land date',
+    'Choose a client contact',
+  ]
+
+  before(() => {
+    cy.visit(urls.investments.projects.index())
+    cy.get('[data-test="add-collection-item-button"]').click()
+  })
+
+  it('should display all validation error messages', () => {
+    cy.get('input[data-test="company-name"]').clear()
+    cy.get('input[data-test="company-name"]').type('alphabet')
+    cy.get('form button').click()
+    cy.get('form ol li:nth-child(1)').click()
+    cy.get('[data-test="investment-type-non-fdi"]').click()
+    cy.get('[data-test="continue"]').click()
+    cy.get('[data-test="submit"]').click()
+    cy.get('[data-test="summary-form-errors"] ul > li').each(($li, i) => {
+      expect($li.text()).to.equal(validationErrorMessages[i])
+    })
+  })
+})
