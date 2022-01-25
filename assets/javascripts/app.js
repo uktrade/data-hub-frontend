@@ -16,6 +16,7 @@ const ClearInputs = require('./modules/clear-inputs.js')
 const PreventMultipleSubmits = require('./modules/prevent-multiple-submits.js')
 const PreventLinkDoubleClick = require('./modules/prevent-link-double-click.js')
 const LastInteractionFilter = require('./modules/last-interaction-filter')
+const SearchAnalytics = require('./modules/search-analytics')
 
 LastInteractionFilter.init() // register before AutoSubmit so it should add the params before getting submitted
 LabelSelect.init()
@@ -32,6 +33,7 @@ ClearInputs.init()
 PreventMultipleSubmits.init()
 PreventLinkDoubleClick.init()
 LastInteractionFilter.init()
+SearchAnalytics.init()
 
 // Deprecated
 require('./_deprecated/company-add').init()

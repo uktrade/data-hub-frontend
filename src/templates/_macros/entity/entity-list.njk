@@ -7,7 +7,7 @@
   <ol class="c-entity-list {{ listModifier }}">
     {% for item in props.items %}
       <li class="c-entity-list__item"
-      {% if item.type %} 
+      {% if item.type %}
         data-test="item-{{item.type}}-{{loop.index0}}"
       {% endif %}
       >
@@ -15,7 +15,8 @@
           highlightTerm: props.highlightTerm,
           isBlockLink: hasBlockLinks,
           preventDoubleClick: props.preventDoubleClick,
-          features: props.features
+          features: props.features,
+          index: loop.index0
         })) }}
       </li>
     {% endfor %}
