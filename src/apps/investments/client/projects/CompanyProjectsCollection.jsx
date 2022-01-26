@@ -34,7 +34,7 @@ const CompanyProjectsCollection = ({
       onSuccessDispatch: INVESTMENTS__PROJECTS_LOADED,
     },
   }
-  const isUkCompany = company.uk_region != null
+  const isUkCompany = company.uk_based
   return (
     <>
       {company.archived && (
