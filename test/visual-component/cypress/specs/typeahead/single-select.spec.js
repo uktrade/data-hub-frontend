@@ -1,7 +1,9 @@
 describe('Single select', () => {
   it('should render the typeahead single select correctly', () => {
     cy.visit('/iframe.html?id=typeahead--single-standard-options')
-    cy.get('#root').should('be.visible').compareSnapshot('typeahead-single')
+    cy.get('#root')
+      .should('be.visible')
+      .compareSnapshot('typeahead-single-select')
   })
 
   it('should render the typeahead with error correctly', () => {
@@ -16,5 +18,12 @@ describe('Single select', () => {
     cy.get('#root')
       .should('be.visible')
       .compareSnapshot('typeahead-single-pre-selected-option')
+  })
+
+  it('should render the async typeahead single select correctly', () => {
+    cy.visit('/iframe.html?id=typeahead--single-async-options')
+    cy.get('#root')
+      .should('be.visible')
+      .compareSnapshot('typeahead-single-async-options')
   })
 })

@@ -10,7 +10,7 @@ import { ERROR_COLOUR } from 'govuk-colours'
 
 import { useField, useFormContext } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
-import Typeahead from '../../../Typeahead2'
+import Typeahead from '../../../Typeahead'
 
 const StyledWrapper = styled('div')`
   ${(props) =>

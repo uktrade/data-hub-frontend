@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from '@cypress/react'
-import Typeahead from '../../../../src/client/components/Typeahead2/Typeahead'
-import typeaheadTasks from '../../../../src/client/components/Typeahead2/tasks'
+import Typeahead from '../../../../src/client/components/Typeahead/Typeahead'
+import typeaheadTasks from '../../../../src/client/components/Typeahead/tasks'
 
 import DataHubProvider, { store } from './provider'
 
