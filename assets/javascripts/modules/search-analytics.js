@@ -12,13 +12,17 @@ const SearchAnalytics = {
     }
   },
 
-  pushAnalyticsEvent({ searchResultRank, searchResultPageNumber }) {
+  pushAnalyticsEvent({
+    searchResultRank,
+    searchResultPageNumber,
+    searchCategory,
+  }) {
     window.dataLayer = window.dataLayer || []
     window.dataLayer.push({
       event: 'searchResultClick',
       searchResultPageNumber,
       searchResultRank,
-      searchCategory: 'Contacts',
+      searchCategory,
     })
   },
 
@@ -28,6 +32,7 @@ const SearchAnalytics = {
       this.pushAnalyticsEvent({
         searchResultRank: target.dataset.searchResultRank,
         searchResultPageNumber: this.pageNumber,
+        searchCategory: target.dataset.searchCategory,
       })
     }
   },
