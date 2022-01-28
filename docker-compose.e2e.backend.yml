@@ -35,7 +35,7 @@ services:
       - es
       - redis
     entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://es:9200 -wait tcp://redis:6379 -timeout 5m
-    command: celery worker -A config -l info -Q celery -B
+    command: celery -A config worker -l info -Q celery -B
 
   postgres:
     image: postgres:12
