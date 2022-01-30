@@ -218,7 +218,6 @@
     "pre-commit": "^1.2.2",
     "prettier": "^2.5.1",
     "proxyquire": "^2.0.0",
-    "react-scripts": "^4.0.3",
     "reqres": "^3.0.1",
     "rewire": "^6.0.0",
     "sass-lint": "^1.12.1",

@@ -3,7 +3,7 @@ require('dotenv').config()
 
 module.exports = (on, config) => {
   if (config.testingType === 'component') {
-    require('@cypress/react/plugins/react-scripts')(on, config)
+    require('@cypress/react/plugins/load-webpack')(on, config, {webpackFilename: './webpack.config.js'})
 
     return config
   }
