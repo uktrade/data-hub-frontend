@@ -1,14 +1,11 @@
 import React from 'react'
-import { addDecorator, storiesOf } from '@storybook/react'
-import { withKnobs } from '@storybook/addon-knobs'
+import { storiesOf } from '@storybook/react'
 
 import Form from '../../../Form'
 import FieldTypeahead from '../FieldTypeahead'
 
 import exampleReadme from '../FieldTypeahead/example.md'
 import usageReadme from '../FieldTypeahead/usage.md'
-
-addDecorator(withKnobs)
 
 const options = [
   {

@@ -1,14 +1,11 @@
 import React from 'react'
-import { addDecorator, storiesOf } from '@storybook/react'
-import { withKnobs } from '@storybook/addon-knobs'
+import { storiesOf } from '@storybook/react'
 
 import FieldDate from '../FieldDate'
 import Form from '../../../Form'
 
 import exampleReadme from '../FieldDate/example.md'
 import usageReadme from '../FieldDate/usage.md'
-
-addDecorator(withKnobs)
 
 const ERRORS = {
   DAY: 'Enter a valid Epoch day',

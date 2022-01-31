@@ -8,7 +8,7 @@ import {
 } from './transformers'
 
 import { getMetadataOptions } from '../../../metadata'
-import { getPageOffset } from '../../../../lib/pagination'
+import { getPageOffset } from '../../../utils/pagination'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 

@@ -42,7 +42,9 @@ describe('Order Collections Sort', () => {
       cy.wait('@apiRequest')
     })
 
-    it('should sort by "Recently created"', () => {
+    it('should sort by "Recently created" when changed back to default', () => {
+      cy.get(element).select('Oldest')
+      cy.wait('@apiRequest')
       cy.get(element).select('Recently created')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('created_on:desc')

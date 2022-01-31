@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import urls from '../../../../lib/urls'
 import { getMetadataOptions } from '../../../metadata'
-import { getPageOffset } from '../../../../lib/pagination'
+import { getPageOffset } from '../../../utils/pagination'
 
 import { transformResponseToEventCollection } from '../transformers'
 

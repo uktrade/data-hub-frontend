@@ -29,6 +29,7 @@ describe('The interactions tab on an opportunity page', () => {
       ).as('apiRequest')
       cy.visit(urls.investments.opportunities.details(incompleteOpportunity.id))
     })
+
     it('should display the interactions list after clicking the interactions tab', () => {
       cy.get('[data-test="tablist"] button').contains('Interactions').click()
       cy.wait('@apiRequest')
@@ -37,6 +38,7 @@ describe('The interactions tab on an opportunity page', () => {
         '1 interaction'
       )
     })
+
     it('should display the correct breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
@@ -46,12 +48,15 @@ describe('The interactions tab on an opportunity page', () => {
         Interactions: '',
       })
     })
+
     it('should show the current and number of pages', () => {
       cy.contains('Page 1 of 1').should('be.visible')
     })
+
     it('should display the correct number of interactions', () => {
       cy.get('[data-test="collection-item"]').should('have.length', 1)
     })
+
     it('should show the interaction details in the collection list item', () => {
       cy.get('[data-test="collection-item"]')
         .find('a')
@@ -69,10 +74,12 @@ describe('The interactions tab on an opportunity page', () => {
         )
         .and('contain', `Service ${interaction.service.name}`)
     })
+
     it('should not show pagination', () => {
       cy.get('[data-test=pagination]').should('not.exist')
     })
   })
+
   context('When the opportunity has more than 10 interactions linked', () => {
     beforeEach(() => {
       cy.intercept(
@@ -90,26 +97,33 @@ describe('The interactions tab on an opportunity page', () => {
       )
       cy.wait('@apiRequest')
     })
+
     it('should show the number of interactions', () => {
       cy.get('[data-test="collection-header').should(
         'have.text',
         '11 interactions'
       )
     })
+
     it('should show the current and number of pages', () => {
       cy.contains('Page 1 of 2').should('be.visible')
     })
+
     it('should allow sort by oldest interactions', () => {
       cy.get('[data-test="sortby"] select').select('date')
       assertQueryParams('sortby', 'date')
     })
-    it('should allow sort by recently created interactions', () => {
+
+    it('should allow sort by recently created interactions when changed back to default', () => {
+      cy.get('[data-test="sortby"] select').select('date')
       cy.get('[data-test="sortby"] select').select('-date')
       assertQueryParams('sortby', '-date')
     })
+
     it('should display 10 interactions per page', () => {
       cy.get('[data-test="collection-item"]').should('have.length', 10)
     })
+
     it('should show the pagination', () => {
       cy.get('[data-test="pagination"]').should('be.visible')
       cy.get('[data-test="page-number-active"]').should('have.text', '1')
@@ -118,6 +132,7 @@ describe('The interactions tab on an opportunity page', () => {
         .and('have.text', 2)
       cy.get('[data-test="next"]').should('be.visible')
     })
+
     it('should display 1 interaction on the second page', () => {
       cy.intercept(
         'GET',

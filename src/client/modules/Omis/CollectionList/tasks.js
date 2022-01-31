@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import { getMetadataOptions } from '../../../metadata'
 import { transformResponseToCollection } from './transformers'
-import { getPageOffset } from '../../../../lib/pagination'
+import { getPageOffset } from '../../../utils/pagination'
 import { metadata } from '../../../../lib/urls'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))

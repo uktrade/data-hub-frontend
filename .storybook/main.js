@@ -5,7 +5,7 @@ module.exports = {
     'storybook-readme',
     '@storybook/addon-a11y',
     '@storybook/addon-actions',
-    '@storybook/addon-knobs',
+    '@storybook/addon-controls',
   ],
   webpackFinal: async (config) => {
     return {
@@ -14,5 +14,8 @@ module.exports = {
         ...resolve,
       },
     }
+  },
+  core: {
+    builder: 'webpack5',
   },
 }

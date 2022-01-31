@@ -1,6 +1,5 @@
 import React from 'react'
-import { addDecorator, storiesOf } from '@storybook/react'
-import { withKnobs } from '@storybook/addon-knobs'
+import { storiesOf } from '@storybook/react'
 
 import FieldAddAnother from '../FieldAddAnother'
 import FieldTypeahead from '../FieldTypeahead'
@@ -10,8 +9,6 @@ import { transformArrayToObject } from '../FieldAddAnother/utils'
 
 import exampleReadme from '../FieldAddAnother/example.md'
 import usageReadme from '../FieldAddAnother/usage.md'
-
-addDecorator(withKnobs)
 
 const options = [
   {
