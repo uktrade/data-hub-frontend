@@ -1,4 +1,4 @@
-Typeahead 2
+Typeahead
 ===========
 
 ### Description
