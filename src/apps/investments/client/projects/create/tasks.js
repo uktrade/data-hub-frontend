@@ -37,6 +37,8 @@ const getAdvisers = () =>
     .get('/api-proxy/adviser/', {
       params: {
         is_active: true,
+        limit: 100000,
+        offset: 0,
       },
     })
     .then(({ data: { results } }) =>
