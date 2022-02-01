@@ -53,7 +53,7 @@
           {% if props.id and not props.isBlockLink %}
             <a
               href="{{ url }}"
-              class="c-entity__link js-search-entity"
+              class="c-entity__link{% if props.index and props.type %} js-search-entity{% endif %}"
               data-search-result-rank="{{ props.index }}"
               data-search-category="{{ props.type }}"
             >
