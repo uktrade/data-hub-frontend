@@ -327,29 +327,4 @@
 
     {% endcall %}
   {% endcall %}
-
-  {% call Example('Typeahead') %}
-    <form class="js-vue-wrapper">
-      {{ Typeahead({
-        entity: 'adviser',
-        name: 'adviser',
-        label: 'Adviser',
-        selectedOptions: advisers,
-        target: 'metadata'
-      }) }}
-    </form>
-
-    <hr>
-
-    {% block xhr_content %}
-      <div data-xhr="4dddfbfb-bdf6-425e-8ebe-15499aa8fe57">
-        <h2>Advisers selected</h2>
-        <ul>
-          {% for adviser in advisers %}
-            <li>{{ adviser.label }}</li>
-          {% endfor %}
-        </ul>
-      </div>
-    {% endblock %}
-  {% endcall %}
 {% endblock %}
