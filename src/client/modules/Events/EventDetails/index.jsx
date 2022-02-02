@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { isEmpty } from 'lodash'
-import { useParams, Link, useLocation } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
@@ -45,8 +45,6 @@ const EventDetails = ({
   disabledOn,
 }) => {
   const { id } = useParams()
-  const { state } = useLocation()
-  const messages = state?.messages
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -65,7 +63,6 @@ const EventDetails = ({
     <DefaultLayout
       heading="Events"
       pageTitle="Events"
-      flashMessages={messages}
       breadcrumbs={breadcrumbs}
       useReactRouter={true}
     >

@@ -18,20 +18,10 @@ import reducer from './reducer'
 import FormActions from './elements/FormActions'
 import { FormContextProvider } from './hooks'
 
-import {
-  addMessage,
-  addMessageWithBody,
-  getMessages,
-} from '../../utils/flash-messages'
 import Effect from '../Effect'
 import HardRedirect from '../HardRedirect'
 
 import { BUTTON_COLOUR } from 'govuk-colours'
-
-const addFlashMessage = (message) =>
-  Array.isArray(message)
-    ? addMessageWithBody('success', ...message)
-    : addMessage('success', message)
 
 const validateForm = (state) =>
   Object.values(state.fields)
@@ -238,17 +228,17 @@ const _Form = ({
                                               result,
                                               values
                                             )
-                                            addFlashMessage(message)
+                                            props.writeFlashMessage(message)
                                           }
                                           redirectMode === 'soft' &&
                                             redirectTo &&
                                             history.push(
-                                              redirectTo(result, values),
-                                              { messages: getMessages() }
+                                              redirectTo(result, values)
                                             )
                                           onSuccess &&
                                             onSuccess(result, values, {
-                                              flashMessage: addFlashMessage,
+                                              flashMessage:
+                                                props.writeFlashMessage,
                                               hardRedirect,
                                               softRedirect: history.push,
                                             })
@@ -398,6 +388,12 @@ const dispatchToProps = (dispatch) => ({
     dispatch({
       type: 'FORM__STEP_DEREGISTER',
       stepName,
+    }),
+  writeFlashMessage: (message) =>
+    dispatch({
+      type: 'FLASH_MESSAGE__WRITE_TO_SESSION',
+      messageType: 'success',
+      message,
     }),
 })
 

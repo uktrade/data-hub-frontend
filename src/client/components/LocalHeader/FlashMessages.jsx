@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { isEmpty } from 'lodash'
+import { connect } from 'react-redux'
 
 import {
   ERROR_COLOUR,
@@ -14,7 +15,11 @@ import {
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import UnorderedList from '@govuk-react/unordered-list'
 import StatusMessage from '../../components/StatusMessage'
-import { getMessages, clearMessages } from '../../utils/flash-messages'
+import { state2props } from './state'
+import {
+  FLASH_MESSAGE__CLEAR_FROM_STATE,
+  FLASH_MESSAGE__GET_FROM_SESSION,
+} from '../../actions'
 
 const StyledBody = styled('p')`
   margin-bottom: 0;
@@ -46,19 +51,24 @@ const messageColours = {
   muted: BLACK,
 }
 
-export const FlashMessagesStateless = ({ flashMessages }) => {
-  /*
-  Flash message component used just for presentation which does not interact with
-  the session storage. Takes an object of flash messages as a prop.
-  */
+const FlashMessages = ({
+  // Can be passed in as prop or from redux store
+  flashMessages,
+  getFlashMessages,
+  clearFlashMessages,
+}) => {
+  useEffect(() => {
+    getFlashMessages()
+    return () => clearFlashMessages()
+  }, [])
   return !isEmpty(flashMessages) ? (
     <UnorderedList listStyleType="none" data-test="flash">
       {Object.entries(flashMessages).map(([type, messages]) => {
         /*
-        Example "success:with-body" -  If the string you pass in the first argument "type"
-        has a colon then the message argument accepts two props in an object, one for the heading
-        and one for the body. The first part of the string is used to indicate colour, success - green, info - blue
-        */
+          Example "success:with-body" -  If the string you pass in the first argument "type"
+          has a colon then the message argument accepts two props in an object, one for the heading
+          and one for the body. The first part of the string is used to indicate colour, success - green, info - blue
+          */
         const parts = String(type).split(':')
         return parts.length > 1
           ? messages.map(({ body, heading }) => (
@@ -81,19 +91,6 @@ export const FlashMessagesStateless = ({ flashMessages }) => {
   ) : null
 }
 
-const FlashMessages = ({ flashMessages }) => {
-  /*
-  Flash message component that will get messages from either session storage,
-  or via the flashMessages prop.
-  */
-  const flashMessagesFromStorage = getMessages()
-  const messages = !isEmpty(flashMessages)
-    ? flashMessages
-    : flashMessagesFromStorage
-  clearMessages()
-  return <FlashMessagesStateless flashMessages={messages} />
-}
-
 const flashMessagePropTypes = {
   flashMessages: PropTypes.shape({
     type: PropTypes.oneOfType([
@@ -109,7 +106,17 @@ const flashMessagePropTypes = {
   }),
 }
 
-FlashMessagesStateless.propTypes = flashMessagePropTypes
 FlashMessages.propTypes = flashMessagePropTypes
 
-export default FlashMessages
+export default connect(state2props, (dispatch) => ({
+  getFlashMessages: () => {
+    dispatch({
+      type: FLASH_MESSAGE__GET_FROM_SESSION,
+    })
+  },
+  clearFlashMessages: () => {
+    dispatch({
+      type: FLASH_MESSAGE__CLEAR_FROM_STATE,
+    })
+  },
+}))(FlashMessages)

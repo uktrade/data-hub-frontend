@@ -5,10 +5,10 @@ import { GREY_4 } from 'govuk-colours'
 import { SPACING } from '@govuk-react/constants'
 import Main from '@govuk-react/main'
 import Breadcrumbs from '@govuk-react/breadcrumbs'
+import { Link } from 'react-router-dom'
 
 import LocalHeaderHeading from './LocalHeaderHeading'
 import FlashMessages from './FlashMessages'
-import { Link } from 'react-router-dom'
 
 // Using <div> as there is already a <header> on the page
 // role="region" gives the element significance as a landmark
@@ -68,7 +68,7 @@ const LocalHeader = ({
           )
         )}
       </BreadcrumbsWrapper>
-      {flashMessages && <FlashMessages flashMessages={flashMessages} />}
+      <FlashMessages flashMessages={flashMessages} />
       {superheading && <StyledSuperheading>{superheading}</StyledSuperheading>}
       {heading && <LocalHeaderHeading>{heading}</LocalHeaderHeading>}
       {children}
@@ -106,5 +106,4 @@ LocalHeader.defaultProps = {
   heading: null,
   children: null,
 }
-
 export default LocalHeader
