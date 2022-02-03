@@ -18,7 +18,6 @@ const CompanyProjectsCollection = ({
   payload,
   optionMetadata,
   selectedFilters,
-  hideAddInvestmentButtonEnabled,
   ...props
 }) => {
   const collectionListTask = {
@@ -55,7 +54,7 @@ const CompanyProjectsCollection = ({
         taskProps={collectionListTask}
         selectedFilters={selectedFilters}
         addItemUrl={
-          company.archived || (hideAddInvestmentButtonEnabled && isUkCompany)
+          company.archived || isUkCompany
             ? null
             : `/investments/projects/create/${company.id}`
         }

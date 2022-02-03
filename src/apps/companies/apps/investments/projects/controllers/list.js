@@ -1,9 +1,7 @@
 const urls = require('../../../../../../lib/urls')
 
 function renderProjects(req, res) {
-  const { company, returnUrl, dnbRelatedCompaniesCount, features } = res.locals
-  const hideAddInvestmentButtonEnabled =
-    features['company-hide-add-investment-button-for-uk'] ?? false
+  const { company, returnUrl, dnbRelatedCompaniesCount } = res.locals
   res.locals.title = `Investments - ${company.name} - Companies`
 
   res.render('companies/apps/investments/projects/views/list', {
@@ -20,7 +18,6 @@ function renderProjects(req, res) {
       ],
       returnUrl,
       dnbRelatedCompaniesCount,
-      hideAddInvestmentButtonEnabled,
     },
   })
 }
