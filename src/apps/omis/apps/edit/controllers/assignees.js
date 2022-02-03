@@ -59,4 +59,12 @@ class EditAssigneesController extends EditController {
   }
 }
 
-module.exports = EditAssigneesController
+function editAssigneesHandler(req, res) {
+  // console.log(res.locals)
+  const { id, reference, canEditOrder } = res.locals.order
+  res.render('omis/apps/edit/views/assignees', {
+    props: { reference, id, canRemoveAssignees: canEditOrder },
+  })
+}
+
+module.exports = { EditAssigneesController, editAssigneesHandler }
