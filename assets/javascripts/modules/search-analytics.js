@@ -27,7 +27,7 @@ const SearchAnalytics = {
   },
 
   onClickHandler(e) {
-    const target = e.target
+    const target = e.currentTarget
     if (target) {
       this.pushAnalyticsEvent({
         searchResultRank: target.dataset.searchResultRank,
