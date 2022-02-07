@@ -1,12 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Checkbox from '@govuk-react/checkbox'
 import MultiChoice from '@govuk-react/multi-choice'
 import styled from 'styled-components'
 import { WHITE } from 'govuk-colours'
 
-import { BODY_SIZES } from '@govuk-react/constants'
-
+import Checkbox from '../../../Checkbox'
 import useField from '../../hooks/useField'
 import FieldWrapper from '../FieldWrapper'
 import { useFormContext } from '../../hooks'
@@ -17,40 +15,6 @@ const StyledDiv = styled('div')`
     `
     background-color: ${WHITE};
     margin: 0 -4px;
-    `}
-`
-
-const StyledCheckbox = styled(Checkbox)`
-  ${(props) =>
-    props.reduced &&
-    `
-      padding: 8px 0 8px 33px !important;
-      min-height: auto;
-      margin-bottom: 1px;
-
-      input {
-        width: 18px;
-        height: 18px;
-      }
-      input + span {
-        padding: 0;
-        &:before {
-          margin: 8px 0 0 8px;
-          height: 18px;
-          width: 18px;
-          border-width: 1px;
-        }
-        &:after{
-          border-width: 0 0 2px 2px;
-          width: 10px;
-          height: 5px;
-          left: 11px;
-        }
-      }
-      input + span + span {
-        padding-left: 0;
-        font-size: ${BODY_SIZES.S}px;
-      }
     `}
 `
 
@@ -112,7 +76,7 @@ const FieldCheckboxes = ({
             ...optionProps
           }) => (
             <StyledDiv key={optionValue} reduced={reduced}>
-              <StyledCheckbox
+              <Checkbox
                 key={optionValue}
                 name={optionValue}
                 checked={value.includes(optionValue)}
@@ -123,7 +87,7 @@ const FieldCheckboxes = ({
                 {...optionProps}
               >
                 {optionLabel}
-              </StyledCheckbox>
+              </Checkbox>
 
               {value.includes(optionValue) && !!children ? children : null}
             </StyledDiv>
