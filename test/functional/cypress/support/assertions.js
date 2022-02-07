@@ -524,11 +524,18 @@ const assertCheckboxGroupNoneSelected = (element) => {
 /**
  * Asserts that a typeahead `element` has the given `legend` and `placeholder`
  */
-const assertTypeaheadHints = ({ element, legend, label, placeholder }) => {
+const assertTypeaheadHints = ({
+  element,
+  legend,
+  label,
+  placeholder,
+  hintText,
+}) => {
   cy.get(element)
     .find(`${label ? 'label' : 'legend'}`)
     .should('have.text', label ? label : legend)
   cy.get(element).find('input').should('have.attr', 'placeholder', placeholder)
+  hintText && cy.get(element).find('span').should('contain', hintText)
 }
 
 /**
@@ -652,6 +659,13 @@ const assertUrl = (url) => {
   cy.url().should('contain', url)
 }
 
+/**
+ * Assert flash message is contained
+ */
+const assertFlashMessage = (message) => {
+  cy.get('[data-test="status-message"]').contains(message)
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
@@ -698,4 +712,5 @@ module.exports = {
   assertNotExists,
   assertTextVisible,
   assertUrl,
+  assertFlashMessage,
 }
