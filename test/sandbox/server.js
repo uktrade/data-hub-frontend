@@ -369,6 +369,7 @@ app.get('/v3/omis/order/:id/subscriber-list', v3OMIS.subscriberList)
 app.get('/v3/omis/order/:id/payment', v3OMIS.payments)
 app.post('/v3/omis/order/:id/payment', v3OMIS.createPayments)
 app.get('/v3/omis/order/:id/quote', v3OMIS.quote)
+app.patch('/v3/omis/order/:id/assignee', v3OMIS.assignees)
 
 // V3 Search
 app.get('/v3/search', v3SearchCompany.companies)
