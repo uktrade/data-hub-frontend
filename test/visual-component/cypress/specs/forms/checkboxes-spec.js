@@ -25,20 +25,4 @@ describe('Forms', () => {
       cy.get('#root').should('be.visible').compareSnapshot('legend')
     })
   })
-
-  describe('Reduced', () => {
-    it('should render the reduced checkbox component correctly', () => {
-      cy.visit('/iframe.html?id=form-form-elements-checkboxes--default-reduced')
-      cy.get('#root').should('be.visible').compareSnapshot('default-reduced')
-    })
-  })
-
-  describe('Legend reduced', () => {
-    it('should render the reduced legend checkbox component correctly', () => {
-      cy.visit(
-        '/iframe.html?id=form-form-elements-checkboxes--checkboxes-legend-reduced'
-      )
-      cy.get('#root').should('be.visible').compareSnapshot('legend-reduced')
-    })
-  })
 })
