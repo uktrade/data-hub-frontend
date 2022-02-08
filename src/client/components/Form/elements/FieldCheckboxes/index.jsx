@@ -1,22 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import MultiChoice from '@govuk-react/multi-choice'
-import styled from 'styled-components'
-import { WHITE } from 'govuk-colours'
 
 import Checkbox from '../../../Checkbox'
 import useField from '../../hooks/useField'
 import FieldWrapper from '../FieldWrapper'
 import { useFormContext } from '../../hooks'
-
-const StyledDiv = styled('div')`
-  ${(props) =>
-    props.reduced &&
-    `
-    background-color: ${WHITE};
-    margin: 0 -4px;
-    `}
-`
 
 const FieldCheckboxes = ({
   name,
@@ -28,8 +17,6 @@ const FieldCheckboxes = ({
   hint,
   options,
   initialValue,
-  reduced,
-  reducedPadding,
   ...props
 }) => {
   const { value, error, touched, onBlur } = useField({
@@ -63,11 +50,9 @@ const FieldCheckboxes = ({
         bigLegend,
         hint,
         error,
-        reduced,
-        reducedPadding,
       }}
     >
-      <MultiChoice meta={{ error, touched }} reduced={reduced}>
+      <MultiChoice meta={{ error, touched }}>
         {options.map(
           ({
             value: optionValue,
@@ -75,22 +60,20 @@ const FieldCheckboxes = ({
             children,
             ...optionProps
           }) => (
-            <StyledDiv key={optionValue} reduced={reduced}>
+            <>
               <Checkbox
                 key={optionValue}
                 name={optionValue}
                 checked={value.includes(optionValue)}
                 onChange={onChange}
                 onBlur={onBlur}
-                reduced={reduced}
                 aria-label={optionLabel}
                 {...optionProps}
               >
                 {optionLabel}
               </Checkbox>
-
               {value.includes(optionValue) && !!children ? children : null}
-            </StyledDiv>
+            </>
           )
         )}
       </MultiChoice>
@@ -109,8 +92,6 @@ FieldCheckboxes.propTypes = {
   legend: PropTypes.node,
   hint: PropTypes.node,
   initialValue: PropTypes.arrayOf(PropTypes.string),
-  reduced: PropTypes.bool,
-  reducedPadding: PropTypes.bool,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
@@ -128,8 +109,6 @@ FieldCheckboxes.defaultProps = {
   hint: null,
   initialValue: [],
   options: [],
-  reduced: false,
-  reducedPadding: false,
 }
 
 export default FieldCheckboxes
