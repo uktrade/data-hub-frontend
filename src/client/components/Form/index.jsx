@@ -63,6 +63,7 @@ const _Form = ({
   children,
   initialValues,
   redirectMode = 'hard',
+  scrollToTopOnStep = false,
   // TODO: Allow for react router redirection
   reactRouterRedirect,
   transformInitialValues = (x) => x,
@@ -84,6 +85,9 @@ const _Form = ({
   useEffect(() => {
     onLoad(initialValues, initialStepIndex)
   }, [])
+  useEffect(() => {
+    scrollToTopOnStep && window.scrollTo(0, 0)
+  }, [scrollToTopOnStep, props.currentStep])
 
   // TODO: Clean up this mess
   const contextProps = {
@@ -477,6 +481,8 @@ const dispatchToProps = (dispatch) => ({
  * representing the index of the step which the user will land on when the form
  * is rendered, if the form has multiple steps. This is then set as the currentStep
  * property in the form's state.
+ * @param {Props['scrollToTopOnStep']} [props.scrollToTopOnStep] - Whether or not page
+ * should scroll to the top when navigating between steps.
  * */
 const Form = multiInstance({
   name: 'Form',
@@ -500,6 +506,7 @@ Form.propTypes = {
   transformInitialValues: PropTypes.func,
   transformPayload: PropTypes.func,
   initialStepIndex: PropTypes.number,
+  scrollToTopOnStep: PropTypes.bool,
 }
 
 export default Form
