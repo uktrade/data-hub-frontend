@@ -163,10 +163,7 @@ import {
 } from '../apps/investments/client/projects/create/state'
 import * as createInvestmentProjectTasks from '../apps/investments/client/projects/create/tasks'
 
-import {
-  TASK_SAVE_ORDER_ASSIGNEES,
-  TASK_GET_ORDER_ASSIGNEES,
-} from '../apps/omis/apps/edit/client/state'
+import { TASK_SAVE_ORDER_ASSIGNEES } from '../apps/omis/apps/edit/client/state'
 import * as editOMISTasks from '../apps/omis/apps/edit/client/tasks'
 
 import * as myInvestmentProjects from './components/MyInvestmentProjects/tasks'
@@ -358,7 +355,6 @@ function App() {
         'Exports Edit': exportsEdit.saveWinCategory,
         [TASK_GET_TYPEAHEAD_OPTIONS]: getTypeaheadOptions,
         [TASK_SAVE_ORDER_ASSIGNEES]: editOMISTasks.saveOrderAssignees,
-        [TASK_GET_ORDER_ASSIGNEES]: editOMISTasks.getAssignees,
         ...resourceTasks,
       }}
     >

@@ -41,14 +41,6 @@ const Order = {
     })
   },
 
-  forceSaveAssignees(req, id, body) {
-    return authorisedRequest(req, {
-      url: `${config.apiRoot}/v3/omis/order/${id}/assignee?force-delete=1`,
-      method: 'PATCH',
-      body,
-    })
-  },
-
   getSubscribers(req, id) {
     return authorisedRequest(
       req,

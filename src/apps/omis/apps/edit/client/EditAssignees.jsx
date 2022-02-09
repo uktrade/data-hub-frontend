@@ -8,7 +8,6 @@ import {
   LocalHeader,
 } from '../../../../../client/components'
 import urls from '../../../../../lib/urls.js'
-// TODO: Remove TASK_GET_ORDER_ASSIGNEES and associated task
 import { TASK_SAVE_ORDER_ASSIGNEES } from './state'
 import { transformAdvisersForTypeahead } from './transformers'
 import OrderAssigneesResource from '../../../../../client/components/Resource/OrderAssignees'
@@ -47,7 +46,7 @@ const EditAssignees = ({ reference, id, canRemoveAssignees }) => (
             <FieldAdvisersTypeahead
               name="assignees"
               label="Adviser"
-              /* check if order has previous assignees, 
+              /* check if order has previous assignees,
                   if not enable validation
                 */
               required={
