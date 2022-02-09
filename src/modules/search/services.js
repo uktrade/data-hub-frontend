@@ -33,6 +33,7 @@ function search({
   isAggregation = true,
   limit = 10,
   page = 1,
+  showArchived = true,
 }) {
   const apiVersion = !isAggregation && searchEntity === 'company' ? 'v4' : 'v3'
   const searchUrl = `${config.apiRoot}/${apiVersion}/search`
@@ -42,6 +43,7 @@ function search({
     limit,
     term,
     offset: page * limit - limit,
+    archived: showArchived,
   }
 
   const options = buildOptions(isAggregation, searchUrl, body, searchEntity)
