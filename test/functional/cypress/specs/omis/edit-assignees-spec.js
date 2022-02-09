@@ -191,7 +191,7 @@ function removeFirstAssignee() {
 }
 
 function clickSave() {
-  cy.contains('button', 'Save').click()
+  cy.contains('button', 'Save and return').click()
 }
 
 function assertBodyContains(xhr, expectedBody) {
