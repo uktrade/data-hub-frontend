@@ -1,58 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Checkbox from '@govuk-react/checkbox'
 import MultiChoice from '@govuk-react/multi-choice'
-import styled from 'styled-components'
-import { WHITE } from 'govuk-colours'
 
-import { BODY_SIZES } from '@govuk-react/constants'
-
+import Checkbox from '../../../Checkbox'
 import useField from '../../hooks/useField'
 import FieldWrapper from '../FieldWrapper'
 import { useFormContext } from '../../hooks'
-
-const StyledDiv = styled('div')`
-  ${(props) =>
-    props.reduced &&
-    `
-    background-color: ${WHITE};
-    margin: 0 -4px;
-    `}
-`
-
-const StyledCheckbox = styled(Checkbox)`
-  ${(props) =>
-    props.reduced &&
-    `
-      padding: 8px 0 8px 33px !important;
-      min-height: auto;
-      margin-bottom: 1px;
-
-      input {
-        width: 18px;
-        height: 18px;
-      }
-      input + span {
-        padding: 0;
-        &:before {
-          margin: 8px 0 0 8px;
-          height: 18px;
-          width: 18px;
-          border-width: 1px;
-        }
-        &:after{
-          border-width: 0 0 2px 2px;
-          width: 10px;
-          height: 5px;
-          left: 11px;
-        }
-      }
-      input + span + span {
-        padding-left: 0;
-        font-size: ${BODY_SIZES.S}px;
-      }
-    `}
-`
 
 const FieldCheckboxes = ({
   name,
@@ -64,8 +17,6 @@ const FieldCheckboxes = ({
   hint,
   options,
   initialValue,
-  reduced,
-  reducedPadding,
   ...props
 }) => {
   const { value, error, touched, onBlur } = useField({
@@ -99,11 +50,9 @@ const FieldCheckboxes = ({
         bigLegend,
         hint,
         error,
-        reduced,
-        reducedPadding,
       }}
     >
-      <MultiChoice meta={{ error, touched }} reduced={reduced}>
+      <MultiChoice meta={{ error, touched }}>
         {options.map(
           ({
             value: optionValue,
@@ -111,22 +60,20 @@ const FieldCheckboxes = ({
             children,
             ...optionProps
           }) => (
-            <StyledDiv key={optionValue} reduced={reduced}>
-              <StyledCheckbox
+            <>
+              <Checkbox
                 key={optionValue}
                 name={optionValue}
                 checked={value.includes(optionValue)}
                 onChange={onChange}
                 onBlur={onBlur}
-                reduced={reduced}
                 aria-label={optionLabel}
                 {...optionProps}
               >
                 {optionLabel}
-              </StyledCheckbox>
-
+              </Checkbox>
               {value.includes(optionValue) && !!children ? children : null}
-            </StyledDiv>
+            </>
           )
         )}
       </MultiChoice>
@@ -145,8 +92,6 @@ FieldCheckboxes.propTypes = {
   legend: PropTypes.node,
   hint: PropTypes.node,
   initialValue: PropTypes.arrayOf(PropTypes.string),
-  reduced: PropTypes.bool,
-  reducedPadding: PropTypes.bool,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
@@ -164,8 +109,6 @@ FieldCheckboxes.defaultProps = {
   hint: null,
   initialValue: [],
   options: [],
-  reduced: false,
-  reducedPadding: false,
 }
 
 export default FieldCheckboxes

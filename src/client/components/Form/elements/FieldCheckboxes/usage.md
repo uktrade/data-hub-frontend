@@ -45,6 +45,4 @@ Checkboxes for use in forms and filters.
 | `validate`     | false    | null                                                                    | function or array of functions | Validate functions for input                  |
 | `required`     | false    | `` | Boolean | Text 'required' sets wether the input is required or not |
 | `initialValue` | false    | `` | Text | Sets initial value of the input                             |
-| `options` | true | empty array | array | Defines the checkbox labels and values
-| `reduced`      | false    | false                                                                   | Boolean                        | Toggles wether the element is a filter or not |
-| `reducedPadding`      | false    | false                                                                   | Boolean                        | Toggles wether the surrounding padding is reduced for the likes of checkboxes |
+| `options` | true | empty array | array | Defines the checkbox labels and values                     |
