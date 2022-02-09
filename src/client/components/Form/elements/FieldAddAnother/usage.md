@@ -2,45 +2,69 @@
 
 ### Description
 
-This is a form component renders a list in a form. The fields of this list are specified by a function based as a child to the component that is called with the arguments `{onChange, value, error}`, where:
+This is a form component renders a list in a form. The fields of this list are specified by a function based as a child to the component that is called with the arguments `{index}`, where:
 
-- onChange is the callback triggered by modification of the child component's value which takes the single argument `(new_value)`.
-- value is the current value of that particular subfield
-- error is the error of the whole FieldAddAnother component
-  When onChange is triggered for a given subfield the field value is set to an array of objects with a key `value` containing the value of that field.
+- ***index*** is the the index of FieldAddAnother component item
+
+The ***initialValues*** is an array of grouped items. The ***transformArrayToObject*** function that will flatten this for the ***form*** component to deliver the values to the relative Field type components. 
+
+The **initialChildCount** is an attribute informing the component of how many items need to be synchronised within the *FieldAddAnother* children and is primarilly used in edit mode when showing values within the *FieldAddAnother* component. So in the example below there are two groups of adviser roles [adviser_0, role_0] and (adviser_1, role_1) and so the *initialChildCount* should be ***2***. By default this is ***1*** and when no data is being assigned will show no component details until the Add another button is clicked.
 
 ### Usage
 
 ```jsx
+const initialValues = [
+  {
+    adviser_0: {
+      label: 'Bob Bobertson',
+      value: '1379f390a-e083-4a2c-9cea-e3b9a08606a723',
+    },
+    role_0: 'Boss',
+  },
+  {
+    adviser_1: {
+      label: 'Mary Maryson',
+      value: '8dcd2bb8-dc73-4a42-8655-4ae42d4d3c5a',
+    },
+    role_1: 'Minion',
+  },
+]
+
+const transformArrayToObject = (array) => {
+  return array.reduce((previous, current) => ({ ...previous, ...current }))
+}
+
 <Form
   id="fieldAddAnotherExample"
   analyticsFormName="fieldAddAnotherExample"
   submissionTaskName="Submit Form example"
+  initialValues={transformArrayToObject(initialValues)}
 >
   {(state) => (
-    <FieldAddAnother
-      name="related_trade_agreements"
-      label="Related named trade agreement(s)"
-      data-test-prefix="trade-agreement-field-"
-      required="Select at least one Trade Agreement"
-    >
-      {({ value, onChange, error }) => (
-        <Typeahead
-          name="related_trade_agreements"
-          inputId="related_trade_agreements"
-          label={''}
-          options={options}
-          placeholder="-- Search trade agreements --"
-          required="Select at least one Trade Agreement"
-          aria-label="Select a trade agreement"
-          value={options.find(
-            ({ value: option_value }) => option_value === value
-          )}
-          onChange={onChange}
-          error={error}
-        />
-      )}
-    </FieldAddAnother>
+    <>
+      <FieldAddAnother
+        name="teams"
+        label="Related teams with role(s)"
+        data-test-prefix="teams-field-"
+        item-name="team"
+        initialChildCount={initialValues.length}
+      >
+        {({ index }) => (
+          <>
+            <FieldTypeahead
+              name={`adviser_${index}`}
+              inputId={`related_adviser_${index}`}
+              label={''}
+              options={options}
+              placeholder="Search advisers"
+              required="Select at least one Adviser"
+              aria-label="Select an adviser"
+            />
+            <FieldInput name={`role_${index}`} type="text" />
+          </>
+        )}
+      </FieldAddAnother>
+    </>
   )}
 </Form>
 ```
@@ -50,9 +74,9 @@ This is a form component renders a list in a form. The fields of this list are s
 | Prop               | Required | Default | Type                           | Description                                                                                                                                            |
 | :----------------- | :------- | :------ | :----------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `name`             | true     | ``````  | string                         | Text for name attribute value                                                                                                                          |
-| `required`         | false    | ``````  | boolean                        | Text 'required' sets whether the input is required or not                                                                                              |
 | `label`            | false    | null    | string                         | Text for the label element                                                                                                                             |
-| `validate`         | false    | null    | function or array of functions | Validation functions for input                                                                                                                         |
 | `children`         | true     | ``````  | function                       | Function that returns components to be rendered for each item in the list                                                                              |
-| `data-test-prefix` | false    | ``````  | string                         | Allows children to be selected via `[data-test='<data-test-prefix><index>']`                                                                           |
-| `item-name`        | true     | ``````  | string                         | For screen readers; What this field is a list of, for example if this were set to 'trade agreements' screen readers would read 'first trade agreement' |
+| `data-test-prefix` | false    | ``````  | string                         | Allows children to be selected via `[data-test='<data-test-prefix><index>']`                                                                           |||
+| `initialChildCount` | false    | 0                                                            | number   | Number of child items that need to be repeated or added as a children from form on initial load |
+| `item-name` | true | `````` | string | For screen readers; What this field is a list of, for example if this were set to 'trade agreements' screen readers would read 'first trade agreement' |
+|                     |          |                                                              |          |                                                              |
