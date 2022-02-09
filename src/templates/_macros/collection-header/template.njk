@@ -19,6 +19,12 @@
       {% endif %}
     </h2>
 
+    {% if props.showArchived %}
+      <a href="{{ props.urlWithoutShowArchivedQueryParam }}"><input type="checkbox" checked>Show archived records</a>
+    {% else %}
+      <a href="{{ props.urlWithoutShowArchivedQueryParam + "&showArchived=true" }}"><input type="checkbox">Show archived records</a>
+    {% endif %}
+
     {% if props.selectedFilters | length or actionButtons.length %}
       <div class="c-collection__header-actions">
         {% if props.selectedFilters | length %}
