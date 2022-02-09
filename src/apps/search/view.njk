@@ -17,7 +17,9 @@
   {{
     CollectionContent(results | assign({
       actionButtons: actionButtons,
-      features: features
+      features: features,
+      showArchived: showArchived,
+      urlWithoutShowArchivedQueryParam: urlWithoutShowArchivedQueryParam
     }))
   }}
 {% endblock %}
