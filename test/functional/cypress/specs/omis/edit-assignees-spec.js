@@ -1,5 +1,4 @@
 const fixtures = require('../../fixtures/index')
-// const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
 
 const {
@@ -34,7 +33,6 @@ describe('View edit assignees page', () => {
     beforeEach(() => {
       cy.visit(urls.omis.edit.assignees(draftOrder.id))
     })
-    // TODO: Add test for when the Resource fails (there are examples from the Forms work we can reuse)
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: urls.dashboard(),

@@ -10,9 +10,7 @@ const subscribers = require('../../../fixtures/v3/omis/subscribers.json')
 const quoteAwaitOrder = require('../../../fixtures/v3/omis/quote-awaiting-order.json')
 
 exports.assignees = function (req, res) {
-  req.params.id == '7d3d26c7-9698-f211-b939-d4115adde28eNOASSIGNEE'
-    ? res.json({})
-    : res.json(assignees)
+  res.json(assignees)
 }
 
 exports.invoice = function (req, res) {
