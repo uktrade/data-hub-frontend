@@ -56,6 +56,12 @@ async function renderSearchResults(req, res) {
     itemTransformers.push(transformInteractionToListItem())
   }
 
+  // let url = new URL(req.URL)
+  const urlWithoutShowArchivedQueryParam = new URL(
+    req.protocol + '://' + req.get('host') + req.originalUrl
+  )
+  urlWithoutShowArchivedQueryParam.searchParams.delete('showArchived')
+
   const results = await search({
     searchTerm,
     searchEntity,
@@ -79,6 +85,9 @@ async function renderSearchResults(req, res) {
     searchEntity,
     searchTerm,
     results,
+    showArchived,
+    urlWithoutShowArchivedQueryParam:
+      urlWithoutShowArchivedQueryParam.toString(),
   })
 }
 
