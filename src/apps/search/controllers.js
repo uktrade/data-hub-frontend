@@ -25,48 +25,43 @@ async function renderSearchResults(req, res) {
 
   const actionButtons = []
   const searchTerm = get(req, 'query.term', '').trim()
+  const showArchived =
+    get(req, 'query.showArchived', '').trim().toLowerCase() === 'true'
   const searchEntity = entity.entity
   const itemTransformers = []
 
   if (searchEntity === 'investment_project') {
     itemTransformers.push(transformInvestmentProjectToListItem)
-  }
-  if (searchEntity === 'contact') {
+  } else if (searchEntity === 'contact') {
     itemTransformers.push(transformContactToListItem)
-  }
-  if (searchEntity === 'event') {
+  } else if (searchEntity === 'event') {
     itemTransformers.push(transformEventToListItem)
     actionButtons.push({
       label: 'Add event',
       url: '/events/create',
     })
-  }
-  if (searchEntity === 'order') {
+  } else if (searchEntity === 'order') {
     itemTransformers.push(transformOrderToListItem)
     actionButtons.push({
       label: 'Add order',
       url: '/omis/create',
     })
-  }
-
-  if (searchEntity === 'company') {
+  } else if (searchEntity === 'company') {
     itemTransformers.push(transformCompanyToListItem)
     actionButtons.push({
       label: 'Add company',
       url: '/companies/create',
     })
-  }
-
-  if (searchEntity === 'interaction') {
+  } else if (searchEntity === 'interaction') {
     itemTransformers.push(transformInteractionToListItem())
   }
 
   const results = await search({
     searchTerm,
     searchEntity,
-    requestBody: req.body,
     req,
     page: req.query.page,
+    showArchived: showArchived,
   }).then(
     transformApiResponseToSearchCollection(
       {
