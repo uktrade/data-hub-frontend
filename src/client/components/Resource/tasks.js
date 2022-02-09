@@ -12,6 +12,7 @@ import ConstructionRisks from './ConstructionRisks'
 import AssetClasses from './AssetClasses'
 import OpportunityValueType from './OpportunityValueType'
 import PipelineItem from './PipelineItem'
+import OrderAssignees from './OrderAssignees'
 
 export default {
   ...Advisers.tasks,
@@ -28,4 +29,5 @@ export default {
   ...AssetClasses.tasks,
   ...OpportunityValueType.tasks,
   ...PipelineItem.tasks,
+  ...OrderAssignees.tasks,
 }

@@ -46,6 +46,7 @@ const ALLOWLIST = [
   '/v3/event/',
   '/v4/event/',
   '/v4/event/:id',
+  '/v3/omis/order/:id/assignee',
 ]
 
 module.exports = (app) => {

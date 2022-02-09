@@ -69,28 +69,6 @@ const editFields = merge({}, globalFields, {
     dependent: null,
     modifier: '',
   },
-  assignees: {
-    fieldType: 'AddAnother',
-    legend: 'fields.assignees.legend',
-    label: 'fields.assignees.label',
-    hint: 'fields.assignees.hint',
-    multiple: true,
-    name: 'assignees',
-    children: [
-      {
-        macroName: 'Typeahead',
-        entity: 'adviser',
-        name: 'assignees',
-        label: 'subscribers',
-        placeholder: 'Search team member',
-        classes: 'c-form-group--no-filter',
-        options: [],
-        optional: false,
-        multipleSelect: false,
-        isLabelHidden: true,
-      },
-    ],
-  },
   assignee_time: {
     fieldType: 'TextField',
     label: 'fields.assignee_time.label',

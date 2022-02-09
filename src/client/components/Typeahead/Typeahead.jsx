@@ -389,7 +389,7 @@ Typeahead.propTypes = {
   name: PropTypes.string,
   className: PropTypes.string,
   label: PropTypes.string,
-  error: PropTypes.bool,
+  error: PropTypes.string,
   closeMenuOnSelect: PropTypes.bool,
   isMulti: PropTypes.bool,
   noOptionsMessage: PropTypes.string,

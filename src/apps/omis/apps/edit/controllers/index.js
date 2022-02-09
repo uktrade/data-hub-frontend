@@ -1,4 +1,3 @@
-const EditAssigneesController = require('./assignees')
 const EditAssigneeTimeController = require('./assignee-time')
 const EditContactController = require('./contact')
 const EditSubscribersController = require('./subscribers')
@@ -8,7 +7,6 @@ const editLeadAssignee = require('./edit-lead-assignee')
 const editRedirect = require('./edit-redirect')
 
 module.exports = {
-  EditAssigneesController,
   EditAssigneeTimeController,
   EditContactController,
   EditSubscribersController,

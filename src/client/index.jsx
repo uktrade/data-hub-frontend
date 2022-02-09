@@ -49,6 +49,7 @@ import Opportunity from '../apps/investments/client/opportunities/Details/Opport
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
 import OpportunityChangeStatusForm from '../apps/investments/client/opportunities/Details/OpportunityChangeStatusForm.jsx'
 import CreateUKInvestmentOpportunity from '../apps/investments/client/opportunities/Details/CreateUKInvestmentOpportunity'
+import EditAssignees from '../apps/omis/apps/edit/client/EditAssignees'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -161,6 +162,9 @@ import {
   TASK_GET_INVESTMENT_PROJECT_INITIAL_VALUES,
 } from '../apps/investments/client/projects/create/state'
 import * as createInvestmentProjectTasks from '../apps/investments/client/projects/create/tasks'
+
+import { TASK_SAVE_ORDER_ASSIGNEES } from '../apps/omis/apps/edit/client/state'
+import * as editOMISTasks from '../apps/omis/apps/edit/client/tasks'
 
 import * as myInvestmentProjects from './components/MyInvestmentProjects/tasks'
 import { TASK_GET_MY_INVESTMENTS_LIST } from './components/MyInvestmentProjects/state'
@@ -350,6 +354,7 @@ function App() {
         [TASK_ARCHIVE_COMPANY]: businessDetails.archiveSubmitCallback,
         'Exports Edit': exportsEdit.saveWinCategory,
         [TASK_GET_TYPEAHEAD_OPTIONS]: getTypeaheadOptions,
+        [TASK_SAVE_ORDER_ASSIGNEES]: editOMISTasks.saveOrderAssignees,
         ...resourceTasks,
       }}
     >
@@ -533,6 +538,9 @@ function App() {
       </Mount>
       <Mount selector="#company-orders-collection">
         {(props) => <CompanyOrdersCollection {...props} />}
+      </Mount>
+      <Mount selector="#edit-assignees">
+        {(props) => <EditAssignees {...props} />}
       </Mount>
 
       <Mount selector="#react-app">
