@@ -93,6 +93,8 @@ jobs:
       - run_make:
           label: Run a11y tests
           target: start-mock a11y-tests
+      - store_artifacts:
+          path: cypress/videos
 
   visual_tests:
     machine:
@@ -151,7 +153,6 @@ jobs:
           target: start-e2e-<< parameters.staff >> e2e-tests-<< parameters.staff >>
       - store_cypress_artifacts
 
-  
   component_tests:
     machine:
       docker_layer_caching: false
@@ -171,7 +172,6 @@ jobs:
       - run:
           name: Release storybook
           command: npm run storybook:release
-
 
   merge-and-publish-coverage:
     docker:
