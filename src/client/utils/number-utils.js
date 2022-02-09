@@ -44,26 +44,25 @@ export const currencyUSD = (
   return formatter.format(number)
 }
 
-export const indexToOrdinal = (index) => {
-  const naturalIndex = index + 1
-
+export const indexToOrdinal = (zeroBasedIndex) => {
+  const naturalIndex = zeroBasedIndex + 1
   const units = naturalIndex % 10
   if (units > 3) {
-    return index + 'th'
+    return naturalIndex + 'th'
   }
 
   const tens = ~~(naturalIndex / 10) % 10
   if (tens === 1) {
-    return index + 'th'
+    return naturalIndex + 'th'
   }
 
   if (units === 1) {
-    return index + 'st'
+    return naturalIndex + 'st'
   }
   if (units === 2) {
-    return index + 'nd'
+    return naturalIndex + 'nd'
   }
   if (units === 3) {
-    return index + 'rd'
+    return naturalIndex + 'rd'
   }
 }
