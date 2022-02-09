@@ -6,9 +6,9 @@ import { Route } from 'react-router-dom'
 
 import StepInteractionType from './StepInteractionType'
 import StepInteractionDetails from './StepInteractionDetails'
-import Step from '../../../../../client/components/Form/elements/Step.jsx'
+import Step from '../../../../../client/components/Form/elements/Step'
 import Task from '../../../../../client/components/Task'
-import Form from '../../../../../client/components/Form/index.jsx'
+import Form from '../../../../../client/components/Form'
 import {
   ID as STATE_ID,
   TASK_SAVE_INTERACTION,
@@ -122,6 +122,7 @@ const InteractionDetailsForm = ({
                       data.was_policy_feedback_provided
                     )
                   }
+                  scrollToTopOnStep={true}
                 >
                   {({ values, currentStep }) => (
                     <>
