@@ -10,14 +10,13 @@ import {
 import {
   CollectionFilters,
   FilteredCollectionList,
-  RoutedAdvisersTypeahead,
   RoutedCheckboxGroupField,
-  RoutedDateField,
   RoutedInputField,
-  RoutedTypeahead,
   DefaultLayout,
 } from '../../../components'
-
+import RoutedAdvisersTypeahead from '../../../components/RoutedAdvisersTypeahead/Filter'
+import RoutedDateField from '../../../components/RoutedDateField/Filter'
+import RoutedTypeahead from '../../../components/RoutedTypeahead/Filter'
 import {
   listSkeletonPlaceholder,
   filterSkeletonPlaceholder,

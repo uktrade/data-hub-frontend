@@ -6,10 +6,10 @@ import qs from 'qs'
 import {
   FilteredCollectionList,
   CollectionFilters,
-  RoutedTypeahead,
   ToggleSection,
 } from '../../../../client/components/'
 import { listSkeletonPlaceholder } from '../../../../client/components/SkeletonPlaceholder'
+import RoutedTypeahead from '../../../../client/components/RoutedTypeahead/Filter'
 import RoutedInputField from '../../../../client/components/RoutedInputField'
 import RoutedNumericRangeField from '../../../../client/components/RoutedNumericRangeField'
 import { TASK_GET_PROFILES_LIST, ID } from './state'

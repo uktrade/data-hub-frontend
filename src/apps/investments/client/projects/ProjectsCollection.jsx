@@ -3,13 +3,13 @@ import { connect } from 'react-redux'
 
 import urls from '../../../../lib/urls'
 import {
-  RoutedAdvisersTypeahead,
-  RoutedTypeahead,
   CollectionFilters,
   FilteredCollectionList,
-  RoutedDateField,
   RoutedCheckboxGroupField,
 } from '../../../../client/components'
+import RoutedAdvisersTypeahead from '../../../../client/components/RoutedAdvisersTypeahead/Filter'
+import RoutedDateField from '../../../../client/components/RoutedDateField/Filter'
+import RoutedTypeahead from '../../../../client/components/RoutedTypeahead/Filter'
 
 import {
   listSkeletonPlaceholder,

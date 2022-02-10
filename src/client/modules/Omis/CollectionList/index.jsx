@@ -11,14 +11,14 @@ import { LABELS } from './constants'
 import { ORDERS__LOADED, ORDERS__METADATA_LOADED } from '../../../actions'
 
 import {
-  RoutedDateField,
-  RoutedTypeahead,
-  RoutedInputField,
   CollectionFilters,
   FilteredCollectionList,
   RoutedCheckboxGroupField,
+  RoutedInputField,
   DefaultLayout,
 } from '../../../components'
+import RoutedDateField from '../../../components/RoutedDateField/Filter'
+import RoutedTypeahead from '../../../components/RoutedTypeahead/Filter'
 
 import {
   listSkeletonPlaceholder,

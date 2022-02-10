@@ -5,13 +5,13 @@ import { LABELS } from './constants'
 import { CONTACTS__LOADED, CONTACTS__METADATA_LOADED } from '../../../actions'
 
 import {
-  RoutedTypeahead,
-  RoutedInputField,
   CollectionFilters,
   FilteredCollectionList,
   RoutedCheckboxGroupField,
+  RoutedInputField,
   DefaultLayout,
 } from '../../../components'
+import RoutedTypeahead from '../../../components/RoutedTypeahead/Filter'
 
 import {
   listSkeletonPlaceholder,

@@ -17,9 +17,6 @@ const checkboxGroupElementStyles = css`
   legend {
     font-size: ${FONT_SIZE.SIZE_16};
     font-weight: ${FONT_WEIGHTS.bold};
-    @media (min-width: ${BREAKPOINTS.TABLET}) {
-      font-size: ${FONT_SIZE.SIZE_19};
-    }
   }
   label {
     font-weight: normal;
@@ -69,9 +66,6 @@ const StyledFieldWrapper = styled(FieldWrapper)`
       fieldset > legend {
         font-size: ${FONT_SIZE.SIZE_16};
         font-weight: ${FONT_WEIGHTS.bold};
-        @media (min-width: ${BREAKPOINTS.TABLET}) {
-          font-size: ${FONT_SIZE.SIZE_19};
-        }
       }
       fieldset > div {
         overflow-y: scroll;
@@ -103,6 +97,12 @@ const StyledList = styled('ul')`
   padding: 0;
   margin: 0;
   list-style: none;
+`
+
+const StyledCheckbox = styled(Checkbox)`
+  @media (min-width: ${BREAKPOINTS.TABLET}) {
+    font-size: ${FONT_SIZE.SIZE_16};
+  }
 `
 
 /**
@@ -187,7 +187,7 @@ const CheckboxGroupField = ({
                 const getCheckboxId = (name) => `field-${name}-${i + 1}`
                 return (
                   <li key={optionValue}>
-                    <Checkbox
+                    <StyledCheckbox
                       id={getCheckboxId(name)}
                       name={name}
                       initialChecked={checked}
@@ -198,7 +198,7 @@ const CheckboxGroupField = ({
                       {...optionProps}
                     >
                       {optionLabel}
-                    </Checkbox>
+                    </StyledCheckbox>
                   </li>
                 )
               })}

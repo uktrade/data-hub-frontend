@@ -13,15 +13,15 @@ import {
 import { LABELS, KIND_OPTIONS, BUSINESS_INTELLIGENCE_OPTION } from './constants'
 
 import {
+  CollectionFilters,
   FilteredCollectionList,
   RoutedCheckboxGroupField,
-  RoutedAdvisersTypeahead,
-  RoutedTypeahead,
-  RoutedDateField,
-  RoutedTeamsTypeahead,
-  CollectionFilters,
   DefaultLayout,
 } from '../../../components'
+import RoutedAdvisersTypeahead from '../../../components/RoutedAdvisersTypeahead/Filter'
+import RoutedTeamsTypeahead from '../../../components/RoutedTeamsTypeahead/Filter'
+import RoutedDateField from '../../../components/RoutedDateField/Filter'
+import RoutedTypeahead from '../../../components/RoutedTypeahead/Filter'
 
 import {
   listSkeletonPlaceholder,
