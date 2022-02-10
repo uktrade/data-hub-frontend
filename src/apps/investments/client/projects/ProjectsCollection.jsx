@@ -5,11 +5,8 @@ import urls from '../../../../lib/urls'
 import {
   CollectionFilters,
   FilteredCollectionList,
-  RoutedCheckboxGroupField,
+  Filters,
 } from '../../../../client/components'
-import RoutedAdvisersTypeahead from '../../../../client/components/RoutedAdvisersTypeahead/Filter'
-import RoutedDateField from '../../../../client/components/RoutedDateField/Filter'
-import RoutedTypeahead from '../../../../client/components/RoutedTypeahead/Filter'
 
 import {
   listSkeletonPlaceholder,
@@ -94,7 +91,7 @@ const ProjectsCollection = ({
       }}
     >
       <CollectionFilters taskProps={collectionListMetadataTask}>
-        <RoutedCheckboxGroupField
+        <Filters.CheckboxGroup
           legend="Stage"
           name="stage"
           qsParam="stage"
@@ -103,7 +100,7 @@ const ProjectsCollection = ({
           data-test="stage-filter"
           groupId="stage-filter"
         />
-        <RoutedCheckboxGroupField
+        <Filters.CheckboxGroup
           legend="My projects"
           name="my_projects"
           qsParam="adviser"
@@ -111,7 +108,7 @@ const ProjectsCollection = ({
           selectedOptions={myProjectsSelected ? [myProjectsOption] : []}
           data-test="my-projects-filter"
         />
-        <RoutedAdvisersTypeahead
+        <Filters.AdvisersTypeahead
           taskProps={adviserListTask}
           isMulti={true}
           onlyShowActiveAdvisers={false}
@@ -123,7 +120,7 @@ const ProjectsCollection = ({
           selectedOptions={selectedFilters.advisers.options}
           data-test="adviser-filter"
         />
-        <RoutedTypeahead
+        <Filters.Typeahead
           isMulti={true}
           label="Sector"
           name="sector"
@@ -133,7 +130,7 @@ const ProjectsCollection = ({
           selectedOptions={selectedFilters.sectors.options}
           data-test="sector-filter"
         />
-        <RoutedTypeahead
+        <Filters.Typeahead
           isMulti={true}
           label="Country of origin"
           name="country"
@@ -143,7 +140,7 @@ const ProjectsCollection = ({
           selectedOptions={selectedFilters.countries.options}
           data-test="country-filter"
         />
-        <RoutedTypeahead
+        <Filters.Typeahead
           isMulti={true}
           label="UK region"
           name="uk_region"
@@ -153,7 +150,7 @@ const ProjectsCollection = ({
           selectedOptions={selectedFilters.ukRegions.options}
           data-test="uk-region-filter"
         />
-        <RoutedCheckboxGroupField
+        <Filters.CheckboxGroup
           legend="Status"
           name="project_status"
           qsParam="status"
@@ -162,7 +159,7 @@ const ProjectsCollection = ({
           data-test="project-status-filter"
           groupId="status-filter"
         />
-        <RoutedCheckboxGroupField
+        <Filters.CheckboxGroup
           legend="Type of investment"
           name="investment_type"
           qsParam="investment_type"
@@ -171,7 +168,7 @@ const ProjectsCollection = ({
           data-test="investment-type-filter"
           groupId="investment-type-filter"
         />
-        <RoutedCheckboxGroupField
+        <Filters.CheckboxGroup
           legend="Land date"
           name="land_date_financial_year_start"
           qsParam="land_date_financial_year_start"
@@ -179,7 +176,7 @@ const ProjectsCollection = ({
           selectedOptions={selectedFilters.financialYears.options}
           data-test="financial-year-filter"
         />
-        <RoutedCheckboxGroupField
+        <Filters.CheckboxGroup
           legend="Likelihood to land"
           name="likelihood_to_land"
           qsParam="likelihood_to_land"
@@ -188,31 +185,31 @@ const ProjectsCollection = ({
           data-test="likelihood-to-land-filter"
           groupId="likelihood-to-land-filter"
         />
-        <RoutedDateField
+        <Filters.Date
           label="Estimated land date before"
           name="estimated_land_date_before"
           qsParamName="estimated_land_date_before"
           data-test="estimated-land-date-before-filter"
         />
-        <RoutedDateField
+        <Filters.Date
           label="Estimated land date after"
           name="estimated_land_date_after"
           qsParamName="estimated_land_date_after"
           data-test="estimated-land-date-after-filter"
         />
-        <RoutedDateField
+        <Filters.Date
           label="Actual land date before"
           name="actual_land_date_before"
           qsParamName="actual_land_date_before"
           data-test="actual-land-date-before-filter"
         />
-        <RoutedDateField
+        <Filters.Date
           label="Actual land date after"
           name="actual_land_date_after"
           qsParamName="actual_land_date_after"
           data-test="actual-land-date-after-filter"
         />
-        <RoutedCheckboxGroupField
+        <Filters.CheckboxGroup
           legend="Level of involvement specified"
           name="involvement_level"
           qsParam="level_of_involvement_simplified"

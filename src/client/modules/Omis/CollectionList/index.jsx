@@ -12,13 +12,10 @@ import { ORDERS__LOADED, ORDERS__METADATA_LOADED } from '../../../actions'
 
 import {
   CollectionFilters,
-  FilteredCollectionList,
-  RoutedCheckboxGroupField,
-  RoutedInputField,
   DefaultLayout,
+  FilteredCollectionList,
+  Filters,
 } from '../../../components'
-import RoutedDateField from '../../../components/RoutedDateField/Filter'
-import RoutedTypeahead from '../../../components/RoutedTypeahead/Filter'
 
 import {
   listSkeletonPlaceholder,
@@ -96,7 +93,7 @@ const OrdersCollection = ({
         titleRenderer={TitleRenderer}
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
-          <RoutedCheckboxGroupField
+          <Filters.CheckboxGroup
             legend={LABELS.status}
             name="status"
             qsParam="status"
@@ -105,7 +102,7 @@ const OrdersCollection = ({
             data-test="status-filter"
             groupId="status-filter"
           />
-          <RoutedInputField
+          <Filters.Input
             id="OrdersCollection.reference"
             qsParam="reference"
             name="reference"
@@ -113,31 +110,31 @@ const OrdersCollection = ({
             placeholder="Search order reference"
             data-test="reference-filter"
           />
-          <RoutedDateField
+          <Filters.Date
             label={LABELS.completedOnAfter}
             name="completed_on_after"
             qsParamName="completed_on_after"
             data-test="completed-on-after-filter"
           />
-          <RoutedDateField
+          <Filters.Date
             label={LABELS.completedOnBefore}
             name="completed_on_before"
             qsParamName="completed_on_before"
             data-test="completed-on-before-filter"
           />
-          <RoutedDateField
+          <Filters.Date
             label={LABELS.deliveryDateAfter}
             name="delivery_date_after"
             qsParamName="delivery_date_after"
             data-test="delivery-date-after-filter"
           />
-          <RoutedDateField
+          <Filters.Date
             label={LABELS.deliveryDateBefore}
             name="delivery_date_before"
             qsParamName="delivery_date_before"
             data-test="delivery-date-before-filter"
           />
-          <RoutedInputField
+          <Filters.Input
             id="OrdersCollection.company-name"
             qsParam="company_name"
             name="company_name"
@@ -145,7 +142,7 @@ const OrdersCollection = ({
             placeholder="Search company name"
             data-test="company-name-filter"
           />
-          <RoutedInputField
+          <Filters.Input
             id="OrdersCollection.contact_name"
             qsParam="contact_name"
             name="contact_name"
@@ -153,7 +150,7 @@ const OrdersCollection = ({
             placeholder="Search contact name"
             data-test="contact-name-filter"
           />
-          <RoutedTypeahead
+          <Filters.Typeahead
             isMulti={true}
             label={LABELS.sector}
             name="sector_descends"
@@ -163,7 +160,7 @@ const OrdersCollection = ({
             selectedOptions={selectedFilters.sectors.options}
             data-test="sector-filter"
           />
-          <RoutedTypeahead
+          <Filters.Typeahead
             isMulti={true}
             label={LABELS.primaryMarket}
             name="primary_market"
@@ -173,7 +170,7 @@ const OrdersCollection = ({
             selectedOptions={selectedFilters.omisMarkets.options}
             data-test="country-filter"
           />
-          <RoutedTypeahead
+          <Filters.Typeahead
             isMulti={true}
             label={LABELS.ukRegion}
             name="uk_region"

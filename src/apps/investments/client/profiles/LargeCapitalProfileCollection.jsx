@@ -4,14 +4,12 @@ import { Route } from 'react-router-dom'
 import qs from 'qs'
 
 import {
-  FilteredCollectionList,
   CollectionFilters,
+  FilteredCollectionList,
+  Filters,
   ToggleSection,
 } from '../../../../client/components/'
 import { listSkeletonPlaceholder } from '../../../../client/components/SkeletonPlaceholder'
-import RoutedTypeahead from '../../../../client/components/RoutedTypeahead/Filter'
-import RoutedInputField from '../../../../client/components/RoutedInputField'
-import RoutedNumericRangeField from '../../../../client/components/RoutedNumericRangeField'
 import { TASK_GET_PROFILES_LIST, ID } from './state'
 import { INVESTMENTS__PROFILES_LOADED } from '../../../../client/actions'
 
@@ -279,7 +277,7 @@ const LargeCapitalProfileCollection = ({
               id="FilteredLargeCapitalProfileCollection.core-filters"
               label="Core filters"
             >
-              <RoutedTypeahead
+              <Filters.Typeahead
                 isMulti={true}
                 label="Sector of interest"
                 name="asset-class"
@@ -289,7 +287,7 @@ const LargeCapitalProfileCollection = ({
                 selectedOptions={selectedAssetClassesOfInterest}
                 data-test="asset-class-filter"
               />
-              <RoutedTypeahead
+              <Filters.Typeahead
                 isMulti={true}
                 label="Country of origin"
                 name="country"
@@ -299,7 +297,7 @@ const LargeCapitalProfileCollection = ({
                 selectedOptions={selectedCountries}
                 data-test="country-filter"
               />
-              <RoutedInputField
+              <Filters.Input
                 id="LargeCapitalProfileCollection.investor-company-name"
                 qsParam="investor_company_name"
                 name="investor-company-name"
@@ -311,7 +309,7 @@ const LargeCapitalProfileCollection = ({
               id="FilteredLargeCapitalProfileCollection.investor-details-filters"
               label="Investor details"
             >
-              <RoutedTypeahead
+              <Filters.Typeahead
                 isMulti={true}
                 label="Investor type"
                 name="investor-type"
@@ -321,17 +319,17 @@ const LargeCapitalProfileCollection = ({
                 selectedOptions={selectedInvestorTypes}
                 data-test="investor-type-filter"
               />
-              <RoutedNumericRangeField
+              <Filters.NumericRange
                 qsParam={QS_PARAMS.globalAssetsUnderManagement}
                 id="LargeCapitalProfileCollection.global-assets-under-management"
                 label="Global assets under management £"
               />
-              <RoutedNumericRangeField
+              <Filters.NumericRange
                 qsParam={QS_PARAMS.investableCapital}
                 id="LargeCapitalProfileCollection.investable-capital"
                 label="Investable capital £"
               />
-              <RoutedTypeahead
+              <Filters.Typeahead
                 isMulti={true}
                 label="Check clearance"
                 name="required-checks-conducted"
@@ -346,7 +344,7 @@ const LargeCapitalProfileCollection = ({
               id="FilteredLargeCapitalProfileCollection.investor-requirements-filters"
               label="Investor requirements"
             >
-              <RoutedTypeahead
+              <Filters.Typeahead
                 isMulti={true}
                 label="Deal ticket size"
                 name="deal-ticket-size"
@@ -356,7 +354,7 @@ const LargeCapitalProfileCollection = ({
                 selectedOptions={selectedDealTicketSize}
                 data-test="deal-ticket-size-filter"
               />
-              <RoutedTypeahead
+              <Filters.Typeahead
                 isMulti={true}
                 label="Types of investment"
                 name="types-of-investment"
@@ -366,7 +364,7 @@ const LargeCapitalProfileCollection = ({
                 selectedOptions={selectedInvestmentTypes}
                 data-test="types-of-investment-filter"
               />
-              <RoutedTypeahead
+              <Filters.Typeahead
                 isMulti={true}
                 label="Minimum return rate"
                 name="minimum-return-rate"
@@ -376,7 +374,7 @@ const LargeCapitalProfileCollection = ({
                 selectedOptions={selectedMinimumReturnRate}
                 data-test="minimum-return-rate-filter"
               />
-              <RoutedTypeahead
+              <Filters.Typeahead
                 isMulti={true}
                 label="Time horizon"
                 name="time-horizon-tenor"
@@ -386,7 +384,7 @@ const LargeCapitalProfileCollection = ({
                 selectedOptions={selectedTimeHorizon}
                 data-test="time-horizon-tenor-filter"
               />
-              <RoutedTypeahead
+              <Filters.Typeahead
                 isMulti={true}
                 label="Restrictions and conditions"
                 name="restrictions-conditions"
@@ -396,7 +394,7 @@ const LargeCapitalProfileCollection = ({
                 selectedOptions={selectedRestrictions}
                 data-test="restrictions-conditions-filter"
               />
-              <RoutedTypeahead
+              <Filters.Typeahead
                 isMulti={true}
                 label="Construction risk"
                 name="construction-risk"
@@ -406,7 +404,7 @@ const LargeCapitalProfileCollection = ({
                 selectedOptions={selectedConstructionRisk}
                 data-test="construction-risk-filter"
               />
-              <RoutedTypeahead
+              <Filters.Typeahead
                 isMulti={true}
                 label="Minimum equity percentage"
                 name="minimum-equity-percentage"
@@ -416,7 +414,7 @@ const LargeCapitalProfileCollection = ({
                 selectedOptions={selectedMinimumEquityPercentage}
                 data-test="minimum-equity-percentage-filter"
               />
-              <RoutedTypeahead
+              <Filters.Typeahead
                 isMulti={true}
                 label="Desired deal role"
                 name="desired-deal-role"
@@ -431,7 +429,7 @@ const LargeCapitalProfileCollection = ({
               id="FilteredLargeCapitalProfileCollection.location-filters"
               label="Location"
             >
-              <RoutedTypeahead
+              <Filters.Typeahead
                 isMulti={true}
                 label="UK regions of interest"
                 name="uk-regions-of-interest"

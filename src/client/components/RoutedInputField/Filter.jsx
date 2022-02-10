@@ -9,15 +9,15 @@ const StyledFilterLabel = styled(FilterLabel)({
   marginBottom: 38,
 })
 
-const RoutedInputField = ({ label, ...props }) => (
+const RoutedInputFieldFilter = ({ label, ...props }) => (
   <StyledFilterLabel>
     {label}
     <RoutedFilterInput {...props} />
   </StyledFilterLabel>
 )
 
-RoutedInputField.propTypes = {
+RoutedInputFieldFilter.propTypes = {
   label: PropTypes.node.isRequired,
 }
 
-export default RoutedInputField
+export default RoutedInputFieldFilter

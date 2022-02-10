@@ -46,14 +46,12 @@ export { default as Step } from './Form/elements/Step'
 export { default as SecondaryButton } from './SecondaryButton'
 export { default as ReadMore } from './ReadMore'
 export { default as RoutedAdvisersTypeahead } from './RoutedAdvisersTypeahead'
-export { default as RoutedInputField } from './RoutedInputField'
 export { default as RoutedTypeahead } from './RoutedTypeahead'
 export {
   DashboardToggleSection,
   NoHighlightToggleSection,
   ToggleSection,
 } from './ToggleSection'
-export { default as RoutedDateField } from './RoutedDateField'
 export { default as RoutedPagination } from './RoutedPagination'
 export { default as FilteredCollectionList } from './FilteredCollectionList'
 export { default as FilteredCollectionHeader } from './FilteredCollectionList/FilteredCollectionHeader'
@@ -79,3 +77,4 @@ export { default as DefaultLayout } from './Layout/DefaultLayout'
 export { default as ProtectedRoute } from './ProtectedRoute'
 export { default as ProtectedLink } from './ProtectedLink'
 export { default as LocalHeader } from './LocalHeader/LocalHeader'
+export { default as Filters } from './Filters'

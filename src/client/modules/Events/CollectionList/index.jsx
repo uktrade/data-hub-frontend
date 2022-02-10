@@ -9,13 +9,9 @@ import {
 import {
   CollectionFilters,
   FilteredCollectionList,
-  RoutedCheckboxGroupField,
-  RoutedInputField,
+  Filters,
   DefaultLayout,
 } from '../../../components'
-import RoutedAdvisersTypeahead from '../../../components/RoutedAdvisersTypeahead/Filter'
-import RoutedDateField from '../../../components/RoutedDateField/Filter'
-import RoutedTypeahead from '../../../components/RoutedTypeahead/Filter'
 
 import {
   listSkeletonPlaceholder,
@@ -87,7 +83,7 @@ const EventsCollection = ({
         useReactRouter={true}
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
-          <RoutedInputField
+          <Filters.Input
             id="EventsCollection.name"
             qsParam="name"
             name="name"
@@ -95,7 +91,7 @@ const EventsCollection = ({
             placeholder="Search event name"
             data-test="event-name-filter"
           />
-          <RoutedAdvisersTypeahead
+          <Filters.AdvisersTypeahead
             isMulti={true}
             taskProps={organisersTask}
             label={LABELS.organiser}
@@ -106,19 +102,19 @@ const EventsCollection = ({
             selectedOptions={selectedFilters.organisers.options}
             data-test="organiser-filter"
           />
-          <RoutedDateField
+          <Filters.Date
             label={LABELS.startDateAfter}
             name="start_date_after"
             qsParamName="start_date_after"
             data-test="start-date-after-filter"
           />
-          <RoutedDateField
+          <Filters.Date
             label={LABELS.startDateBefore}
             name="start_date_before"
             qsParamName="start_date_before"
             data-test="start-date-before-filter"
           />
-          <RoutedTypeahead
+          <Filters.Typeahead
             isMulti={true}
             label={LABELS.country}
             name="address_country"
@@ -128,7 +124,7 @@ const EventsCollection = ({
             selectedOptions={selectedFilters.countries.options}
             data-test="country-filter"
           />
-          <RoutedTypeahead
+          <Filters.Typeahead
             isMulti={true}
             label={LABELS.ukRegion}
             name="uk_region"
@@ -138,7 +134,7 @@ const EventsCollection = ({
             selectedOptions={selectedFilters.ukRegions.options}
             data-test="uk-region-filter"
           />
-          <RoutedCheckboxGroupField
+          <Filters.CheckboxGroup
             maxScrollHeight={345}
             legend={LABELS.eventType}
             name="event_type"

@@ -15,13 +15,9 @@ import { LABELS, KIND_OPTIONS, BUSINESS_INTELLIGENCE_OPTION } from './constants'
 import {
   CollectionFilters,
   FilteredCollectionList,
-  RoutedCheckboxGroupField,
+  Filters,
   DefaultLayout,
 } from '../../../components'
-import RoutedAdvisersTypeahead from '../../../components/RoutedAdvisersTypeahead/Filter'
-import RoutedTeamsTypeahead from '../../../components/RoutedTeamsTypeahead/Filter'
-import RoutedDateField from '../../../components/RoutedDateField/Filter'
-import RoutedTypeahead from '../../../components/RoutedTypeahead/Filter'
 
 import {
   listSkeletonPlaceholder,
@@ -37,7 +33,7 @@ import {
   TASK_GET_INTERACTIONS_TEAM_NAME,
 } from './state'
 
-const StyledRoutedCheckboxGroupField = styled(RoutedCheckboxGroupField)`
+const StyledCheckboxGroup = styled(Filters.CheckboxGroup)`
   /* This just tightens up the gap for when a single checkbox option group
   (with no label) is beneath a multiple checkbox option group */
   margin-bottom: ${SPACING.SCALE_2};
@@ -114,7 +110,7 @@ const InteractionCollection = ({
         entityName="interaction"
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
-          <StyledRoutedCheckboxGroupField
+          <StyledCheckboxGroup
             legend={LABELS.kind}
             name="kind"
             qsParam="kind"
@@ -122,7 +118,7 @@ const InteractionCollection = ({
             selectedOptions={selectedFilters.kind.options}
             data-test="status-filter"
           />
-          <RoutedCheckboxGroupField
+          <Filters.CheckboxGroup
             name="my_interactions"
             qsParam="dit_participants__adviser"
             options={[myInteractionsOption]}
@@ -131,7 +127,7 @@ const InteractionCollection = ({
             }
             data-test="my-interactions-filter"
           />
-          <RoutedAdvisersTypeahead
+          <Filters.AdvisersTypeahead
             taskProps={adviserListTask}
             isMulti={true}
             onlyShowActiveAdvisers={false}
@@ -143,19 +139,19 @@ const InteractionCollection = ({
             selectedOptions={selectedFilters.advisers.options}
             data-test="adviser-filter"
           />
-          <RoutedDateField
+          <Filters.Date
             label={LABELS.dateAfter}
             name="date_after"
             qsParamName="date_after"
             data-test="date-after-filter"
           />
-          <RoutedDateField
+          <Filters.Date
             label={LABELS.dateBefore}
             name="date_before"
             qsParamName="date_before"
             data-test="date-before-filter"
           />
-          <RoutedTeamsTypeahead
+          <Filters.TeamsTypeahead
             taskProps={teamListTask}
             isMulti={true}
             label={LABELS.teams}
@@ -166,7 +162,7 @@ const InteractionCollection = ({
             selectedOptions={selectedFilters.teams.options}
             data-test="team-filter"
           />
-          <RoutedCheckboxGroupField
+          <Filters.CheckboxGroup
             maxScrollHeight={350}
             legend={LABELS.service}
             name="service"
@@ -176,7 +172,7 @@ const InteractionCollection = ({
             data-test="service-filter"
             groupId="service-filter"
           />
-          <RoutedTypeahead
+          <Filters.Typeahead
             isMulti={true}
             label={LABELS.sector}
             name="sector"
@@ -186,7 +182,7 @@ const InteractionCollection = ({
             selectedOptions={selectedFilters.sectors.options}
             data-test="sector-filter"
           />
-          <RoutedCheckboxGroupField
+          <Filters.CheckboxGroup
             legend={LABELS.businessIntelligence}
             name="was_policy_feedback_provided"
             qsParam="was_policy_feedback_provided"
@@ -194,7 +190,7 @@ const InteractionCollection = ({
             selectedOptions={selectedFilters.businessIntelligence.options}
             data-test="business-intelligence-filter"
           />
-          <RoutedCheckboxGroupField
+          <Filters.CheckboxGroup
             maxScrollHeight={345}
             legend={LABELS.policyAreas}
             name="policy_areas"
@@ -204,7 +200,7 @@ const InteractionCollection = ({
             data-test="policy-area-filter"
             groupId="policy-area-filter"
           />
-          <RoutedCheckboxGroupField
+          <Filters.CheckboxGroup
             legend={LABELS.policyIssueType}
             name="policy_issue_types"
             qsParam="policy_issue_types"
@@ -213,7 +209,7 @@ const InteractionCollection = ({
             data-test="policy-issue-type-filter"
             groupId="policy-issue-type-filter"
           />
-          <RoutedCheckboxGroupField
+          <Filters.CheckboxGroup
             maxScrollHeight={370}
             legend={LABELS.companyOneListGroupTier}
             name="company_one_list_group_tier"
