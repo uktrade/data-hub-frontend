@@ -19,6 +19,7 @@ import CreateListForm from '../apps/company-lists/client/CreateListForm'
 import DnbHierarchy from '../apps/companies/apps/dnb-hierarchy/client/DnbHierarchy'
 import LeadAdvisers from '../apps/companies/apps/advisers/client/LeadAdvisers'
 import LargeCapitalProfileCollection from '../apps/investments/client/profiles/LargeCapitalProfileCollection'
+import EditLargeCapitalInvestorDetails from '../apps/companies/apps/investments/large-capital-profile/client/EditLargeCapitalInvestorDetails'
 import UnfilteredLargeCapitalOpportunityCollection from '../apps/investments/client/opportunities/List/UnfilteredLargeCapitalOpportunityCollection'
 import InvestmentEditHistory from '../apps/investments/client/InvestmentEditHistory'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
@@ -471,6 +472,9 @@ function App() {
       </Mount>
       <Mount selector="#large-capital-profile-collection">
         {(props) => <LargeCapitalProfileCollection {...props} />}
+      </Mount>
+      <Mount selector="#edit-large-capital-investor-details">
+        {(props) => <EditLargeCapitalInvestorDetails {...props} />}
       </Mount>
       <Mount selector="#unfiltered-large-capital-opportunity-collection">
         {(props) => <UnfilteredLargeCapitalOpportunityCollection {...props} />}

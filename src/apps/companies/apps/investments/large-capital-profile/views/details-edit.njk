@@ -1,5 +1,12 @@
 {% from "select/macro.njk" import govukSelect %}
 
+{% block body %}
+    {% component 'react-slot', {
+        id: 'edit-large-capital-investor-details',
+        props: props
+    } %}
+{% endblock %}
+
 {% call Form({
   buttonText: 'Save',
   buttonDataAttr: 'investorDetailsSave',
@@ -13,7 +20,8 @@
   }
 }) %}
 
-  {{
+{# TODO: Remove this block of code when is done #}
+  {# {{
     govukSelect({
       name: 'investorType',
       label: {
@@ -131,9 +139,9 @@
     }}
   {% endmacro %}
 
-  {% set requiredChecks =  profile.investorDetails.requiredChecks %}
+  {% set requiredChecks =  profile.investorDetails.requiredChecks %} #}
 
-  {{
+  {# {{
     govukRadios({
       name: 'requiredChecks',
       fieldset: {
@@ -174,6 +182,6 @@
         }
       ]
     })
-  }}
+  }} #}
 
 {% endcall %}
