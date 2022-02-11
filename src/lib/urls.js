@@ -436,6 +436,7 @@ module.exports = {
     edit: {
       quote: url('/omis', '/:orderId/edit/quote-details'),
       assignees: url('/omis', '/:orderId/edit/assignees'),
+      subscribers: url('/omis', '/:orderId/edit/subscribers'),
     },
   },
   support: url('/support'),
