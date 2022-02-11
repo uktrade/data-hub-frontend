@@ -3,7 +3,6 @@ const { cloneDeep, mapValues, merge, omit } = require('lodash')
 const createJourney = require('../create/steps')
 const EditAssigneeTimeController = require('./controllers/assignee-time')
 const EditContactController = require('./controllers/contact')
-const EditSubscribersController = require('./controllers/subscribers')
 const EditQuoteDetailsController = require('./controllers/quote-details')
 const EditInternalDetailsController = require('./controllers/internal-details')
 const EditInvoiceDetailsController = require('./controllers/invoice-details')
@@ -21,11 +20,6 @@ const steps = merge({}, createSteps, {
   '/contact': {
     heading: 'Edit contact',
     controller: EditContactController,
-  },
-  '/subscribers': {
-    heading: 'Add or remove advisers in the UK',
-    fields: ['subscribers'],
-    controller: EditSubscribersController,
   },
   '/assignee-time': {
     heading: 'Edit estimated hours of work',
