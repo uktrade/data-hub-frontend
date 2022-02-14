@@ -220,7 +220,7 @@
     "reqres": "^3.0.1",
     "rewire": "^6.0.0",
     "sass-lint": "^1.12.1",
-    "sinon": "^12.0.1",
+    "sinon": "^13.0.1",
     "sinon-chai": "^3.7.0",
     "storybook-readme": "^5.0.9",
     "supertest": "^6.1.6",
