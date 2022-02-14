@@ -7,9 +7,16 @@ const {
   assertUrl,
   assertFlashMessage,
   assertErrorSummary,
+  assertParamContainedInUrl,
+  assertParamNotContainedInUrl,
+  assertRequestBody,
 } = require('../../support/assertions')
 
-const { selectFirstAdvisersTypeaheadOption } = require('../../support/actions')
+const {
+  selectFirstAdvisersTypeaheadOption,
+  removeFirstTypeaheadItem,
+  clickButton,
+} = require('../../support/actions')
 
 const {
   draftOrder,
@@ -71,11 +78,11 @@ describe('View edit assignees page', () => {
         input: 'Blake',
       })
 
-      clickSave()
+      clickButton('Save and return')
 
       assertAPI((xhr) => {
-        assertForceDeleteContainedInUrl(xhr)
-        assertBodyContains(xhr, expectedBody)
+        assertParamContainedInUrl(xhr, 'force-delete=1')
+        assertRequestBody(xhr, expectedBody)
         assertRedirectToOmisWorkOrder()
         assertFlashMessage('Changes saved')
 
@@ -104,7 +111,7 @@ describe('View edit assignees page', () => {
     })
 
     it('should display an error when form submitted with no values', () => {
-      clickSave()
+      clickButton('Save and return')
       assertErrorSummary(['Enter at least one team member'])
     })
   })
@@ -128,13 +135,13 @@ describe('View edit assignees page', () => {
       const expectedBody = [
         { adviser: { id: '3cfad090-8f7e-4a8b-beb0-14c909d6f052' } },
       ]
-      removeFirstAssignee()
+      removeFirstTypeaheadItem()
 
-      clickSave()
+      clickButton('Save and return')
 
       assertAPI((xhr) => {
-        assertForceDeleteContainedInUrl(xhr)
-        assertBodyContains(xhr, expectedBody)
+        assertParamContainedInUrl(xhr, 'force-delete=1')
+        assertRequestBody(xhr, expectedBody)
       })
     })
   })
@@ -170,36 +177,16 @@ function assertApiPreventsDeletions(orderId) {
   const expectedBody = [
     { adviser: { id: '3cfad090-8f7e-4a8b-beb0-14c909d6f052' } },
   ]
-  removeFirstAssignee()
+  removeFirstTypeaheadItem()
 
-  clickSave()
+  clickButton('Save and return')
 
   assertAPI((xhr) => {
-    assertForceDeleteNotContainedInUrl(xhr)
-    assertBodyContains(xhr, expectedBody)
+    assertParamNotContainedInUrl(xhr, 'force-delete=1')
+    assertRequestBody(xhr, expectedBody)
   })
 }
 
 function assertAPI(validateCallback) {
   cy.wait('@omisAssigneesHttpRequest').then((xhr) => validateCallback(xhr))
-}
-
-function removeFirstAssignee() {
-  cy.get('[data-test="typeahead-chip"]').eq(0).click()
-}
-
-function clickSave() {
-  cy.contains('button', 'Save and return').click()
-}
-
-function assertBodyContains(xhr, expectedBody) {
-  expect(xhr.request.body).to.deep.equal(expectedBody)
-}
-
-function assertForceDeleteContainedInUrl(xhr) {
-  expect(xhr.response.url).to.contain('force-delete=1')
-}
-
-function assertForceDeleteNotContainedInUrl(xhr) {
-  expect(xhr.response.url).to.not.contain('force-delete=1')
 }

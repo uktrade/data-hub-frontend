@@ -43,3 +43,18 @@ export const removeChip = (dataValue) => {
 export const inputDateValue = ({ element, value }) => {
   cy.get(element).type(value)
 }
+
+/**
+ * Remove the first item in a multi-select Typeahead
+ */
+export const removeFirstTypeaheadItem = () => {
+  cy.get('[data-test="typeahead-chip"]').eq(0).click()
+}
+
+/**
+ * Click on a button
+ * @param {*} buttonText The text of the button you want to click
+ */
+export const clickButton = (buttonText) => {
+  cy.contains('button', buttonText).click()
+}

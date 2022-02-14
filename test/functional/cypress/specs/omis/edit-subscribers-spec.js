@@ -7,9 +7,16 @@ const {
   assertUrl,
   assertFlashMessage,
   assertErrorSummary,
+  assertParamContainedInUrl,
+  assertParamNotContainedInUrl,
+  assertRequestBody,
 } = require('../../support/assertions')
 
-const { selectFirstAdvisersTypeaheadOption } = require('../../support/actions')
+const {
+  selectFirstAdvisersTypeaheadOption,
+  removeFirstTypeaheadItem,
+  clickButton,
+} = require('../../support/actions')
 
 const {
   draftOrder,
@@ -72,11 +79,11 @@ describe('View edit subscribers page', () => {
         input: 'Blake',
       })
 
-      clickSave()
+      clickButton('Save and return')
 
       assertAPI((xhr) => {
-        assertForceDeleteContainedInUrl(xhr)
-        assertBodyContains(xhr, expectedBody)
+        assertParamContainedInUrl(xhr, 'force-delete=1')
+        assertRequestBody(xhr, expectedBody)
         assertRedirectToOmisWorkOrder()
         assertFlashMessage('Changes saved')
 
@@ -105,7 +112,7 @@ describe('View edit subscribers page', () => {
     })
 
     it('should display an error when form submitted with no values', () => {
-      clickSave()
+      clickButton('Save and return')
       assertErrorSummary(['Enter at least one team member'])
     })
   })
@@ -123,13 +130,13 @@ describe('View edit subscribers page', () => {
 
     it('should allow subscribers to be removed', () => {
       const expectedBody = [{ id: '25628b23-c75b-4aef-b120-dac2d64c0696' }]
-      removeFirstSubscriber()
+      removeFirstTypeaheadItem()
 
-      clickSave()
+      clickButton('Save and return')
 
       assertAPI((xhr) => {
-        assertForceDeleteContainedInUrl(xhr)
-        assertBodyContains(xhr, expectedBody)
+        assertParamContainedInUrl(xhr, 'force-delete=1')
+        assertRequestBody(xhr, expectedBody)
       })
     })
   })
@@ -163,36 +170,16 @@ function assertApiPreventsDeletions(orderId) {
   cy.visit(urls.omis.edit.subscribers(orderId))
 
   const expectedBody = [{ id: '25628b23-c75b-4aef-b120-dac2d64c0696' }]
-  removeFirstSubscriber()
+  removeFirstTypeaheadItem()
 
-  clickSave()
+  clickButton('Save and return')
 
   assertAPI((xhr) => {
-    assertForceDeleteNotContainedInUrl(xhr)
-    assertBodyContains(xhr, expectedBody)
+    assertParamNotContainedInUrl(xhr, 'force-delete=1')
+    assertRequestBody(xhr, expectedBody)
   })
 }
 
 function assertAPI(validateCallback) {
   cy.wait('@omisSubscribersHttpRequest').then((xhr) => validateCallback(xhr))
-}
-
-function removeFirstSubscriber() {
-  cy.get('[data-test="typeahead-chip"]').eq(0).click()
-}
-
-function clickSave() {
-  cy.contains('button', 'Save and return').click()
-}
-
-function assertBodyContains(xhr, expectedBody) {
-  expect(xhr.request.body).to.deep.equal(expectedBody)
-}
-
-function assertForceDeleteContainedInUrl(xhr) {
-  expect(xhr.response.url).to.contain('force-delete=1')
-}
-
-function assertForceDeleteNotContainedInUrl(xhr) {
-  expect(xhr.response.url).to.not.contain('force-delete=1')
 }
