@@ -5,9 +5,9 @@ import { GREY_2, YELLOW } from 'govuk-colours'
 import styled, { css } from 'styled-components'
 import {
   FONT_SIZE,
+  MEDIA_QUERIES,
   SPACING,
   FONT_WEIGHTS,
-  BREAKPOINTS,
 } from '@govuk-react/constants'
 
 import Checkbox from '../Checkbox'
@@ -60,6 +60,12 @@ const checkboxGroupElementStyles = css`
 `
 
 const StyledFieldWrapper = styled(FieldWrapper)`
+  margin-bottom: 14px;
+
+  ${MEDIA_QUERIES.TABLET} {
+    margin-bottom: 14px;
+  }
+
   ${({ maxScrollHeight }) =>
     maxScrollHeight
       ? `
@@ -100,7 +106,7 @@ const StyledList = styled('ul')`
 `
 
 const StyledCheckbox = styled(Checkbox)`
-  @media (min-width: ${BREAKPOINTS.TABLET}) {
+  ${MEDIA_QUERIES.TABLET} {
     font-size: ${FONT_SIZE.SIZE_16};
   }
 `

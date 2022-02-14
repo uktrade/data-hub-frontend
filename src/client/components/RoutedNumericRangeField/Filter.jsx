@@ -15,7 +15,7 @@ const StyledDivider = styled.div({
 })
 
 const StyledFieldset = styled.fieldset({
-  marginBottom: 38,
+  marginBottom: 32,
 })
 
 const RoutedNumericRangeField = ({ id, qsParam, label, ...props }) => (

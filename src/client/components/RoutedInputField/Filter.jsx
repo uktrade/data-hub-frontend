@@ -6,7 +6,7 @@ import RoutedFilterInput from '../RoutedInput/Filter'
 import FilterLabel from '../FilterLabel'
 
 const StyledFilterLabel = styled(FilterLabel)({
-  marginBottom: 38,
+  marginBottom: 32,
 })
 
 const RoutedInputFieldFilter = ({ label, ...props }) => (

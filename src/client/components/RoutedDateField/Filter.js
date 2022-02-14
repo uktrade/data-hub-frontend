@@ -10,6 +10,7 @@ export default styled(RoutedDateField)({
   },
   [MEDIA_QUERIES.TABLET]: {
     fontSize: FONT_SIZE.SIZE_16,
+    marginBottom: 24,
     input: {
       fontSize: FONT_SIZE.SIZE_16,
     },
