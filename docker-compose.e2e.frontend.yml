@@ -17,7 +17,6 @@ services:
       OAUTH2_BYPASS_SSO: 'False'
       OAUTH2_CLIENT_SECRET: youAintSeenMyRight
       OAUTH2_CLIENT_ID: randomClientId
-      ELASTIC_APM_SERVER_URL: http://es-apm:8200
 
   mock-sso:
     image: gcr.io/sre-docker-registry/github.com/uktrade/mock-sso:latest
