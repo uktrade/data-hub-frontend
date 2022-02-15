@@ -8,7 +8,11 @@
 
 <header class="c-collection__header">
   <div class="c-collection__header-row">
-    <h2 class="c-collection__header-intro">
+    <h2
+      class="c-collection__header-intro js-search-results"
+      data-results-returned="{{ count }}"
+      data-search-category="{{ props.type }}"
+    >
       <span class="c-collection__result-count">{{ count | formatNumber }}</span>
       {{ countLabel | pluralise(count) }}
       {% if props.highlightTerm or selectedFilters | length %}
