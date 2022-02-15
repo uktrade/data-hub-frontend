@@ -12,6 +12,7 @@ import {
   FORM__STEP_REGISTER,
   FORM__VALIDATE,
   FORM__FIELD_TOUCHED,
+  FORM__GO_TO_STEP,
 } from '../../actions'
 
 export default (
@@ -101,6 +102,16 @@ export default (
       return {
         ...state,
         currentStep: state.currentStep - 1,
+        previousValues: state.values,
+      }
+    case FORM__GO_TO_STEP:
+      const nextCurrentStep = action.stepName
+        ? state.steps.indexOf(action.stepName)
+        : 0
+      return {
+        ...state,
+        currentStep: nextCurrentStep,
+
         previousValues: state.values,
       }
     case FORM__STEP_REGISTER:
