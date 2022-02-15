@@ -65,6 +65,7 @@ const _Form = ({
   initialValues,
   redirectMode = 'hard',
   scrollToTopOnStep = false,
+  showStepInURL = false,
   reactRouterRedirect,
   transformInitialValues = (x) => x,
   transformPayload = (x) => x,
@@ -95,7 +96,7 @@ const _Form = ({
   }, [scrollToTopOnStep, props.currentStep])
   useEffect(() => {
     goToStep(parseInt(qsParams.step) || 0)
-  }, [qsParams])
+  }, [qsParams.step])
 
   // TODO: Clean up this mess
   const contextProps = {
@@ -157,12 +158,14 @@ const _Form = ({
                     analytics('previous step', {
                       currentStep: props.currentStep,
                     })
-                    history.push({
-                      search: qs.stringify({
-                        ...qsParams,
-                        step: props.currentStep - 1,
-                      }),
-                    })
+                    if (showStepInURL) {
+                      history.push({
+                        search: qs.stringify({
+                          ...qsParams,
+                          step: props.currentStep - 1,
+                        }),
+                      })
+                    }
                   }}
                   validateForm={(fieldNamesToValidate) => {
                     // This method is supposed to validate only the fields whose names
@@ -214,12 +217,14 @@ const _Form = ({
                                   analytics('Next step', {
                                     currentStep: props.currentStep,
                                   })
-                                  history.push({
-                                    search: qs.stringify({
-                                      ...qsParams,
-                                      step: props.currentStep + 1,
-                                    }),
-                                  })
+                                  if (showStepInURL) {
+                                    history.push({
+                                      search: qs.stringify({
+                                        ...qsParams,
+                                        step: props.currentStep + 1,
+                                      }),
+                                    })
+                                  }
                                 }
                               } else {
                                 requestAnimationFrame(() =>

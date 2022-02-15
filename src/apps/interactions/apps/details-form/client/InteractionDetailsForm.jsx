@@ -123,6 +123,7 @@ const InteractionDetailsForm = ({
                     )
                   }
                   scrollToTopOnStep={true}
+                  showStepInURL={true}
                 >
                   {({ values, currentStep }) => (
                     <>
