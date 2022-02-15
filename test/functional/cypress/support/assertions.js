@@ -666,6 +666,25 @@ const assertFlashMessage = (message) => {
   cy.get('[data-test="status-message"]').contains(message)
 }
 
+/**
+ * Assert that a given param is either present or not present in a URL
+ */
+const assertParamContainedInUrl = (xhr, param) => {
+  expect(xhr.response.url).to.contain(param)
+}
+
+const assertParamNotContainedInUrl = (xhr, param) => {
+  expect(xhr.response.url).to.not.contain(param)
+}
+
+/**
+ * Assert that the body of an intercepted request is as expected
+ */
+
+const assertRequestBody = (xhr, expectedBody) => {
+  expect(xhr.request.body).to.deep.equal(expectedBody)
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
@@ -713,4 +732,7 @@ module.exports = {
   assertTextVisible,
   assertUrl,
   assertFlashMessage,
+  assertParamContainedInUrl,
+  assertParamNotContainedInUrl,
+  assertRequestBody,
 }

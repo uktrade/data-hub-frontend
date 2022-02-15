@@ -20,37 +20,37 @@ const {
 
 const {
   draftOrder,
-  assignees,
+  subscribers,
   cancelledOrder,
   paidOrder,
   quoteAccepted,
   quoteAwaitOrder,
 } = fixtures.omis
 
-describe('View edit assignees page', () => {
-  const element = '[data-test="field-assignees"]'
+describe('View edit subscribers page', () => {
+  const element = '[data-test="field-subscribers"]'
 
   beforeEach(() => {
-    cy.intercept('PATCH', '/api-proxy/v3/omis/order/*/assignee*').as(
-      'omisAssigneesHttpRequest'
+    cy.intercept('PUT', '/api-proxy/v3/omis/order/*/subscriber-list*').as(
+      'omisSubscribersHttpRequest'
     )
   })
 
   context('When the order is draft', () => {
     beforeEach(() => {
-      cy.visit(urls.omis.edit.assignees(draftOrder.id))
+      cy.visit(urls.omis.edit.subscribers(draftOrder.id))
     })
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: urls.dashboard(),
         'Orders (OMIS)': urls.omis.index(),
         [draftOrder.reference]: urls.omis.workOrder(draftOrder.id),
-        'Add or remove advisers in the market': undefined,
+        'Add or remove advisers in the UK': undefined,
       })
     })
 
     it('should render heading', () => {
-      cy.contains('Add or remove advisers in the market').should('exist')
+      cy.contains('Add or remove advisers in the UK').should('exist')
     })
 
     it('should render field label and hint text', () => {
@@ -58,16 +58,17 @@ describe('View edit assignees page', () => {
         element,
         label: 'Adviser',
         placeholder: 'Search team member',
-        hintText: 'For example post advisers or other in-country staff',
+        hintText:
+          'People who need to be kept informed about this order, for example, international trade advisers or language advisors.',
       })
     })
 
-    it('should add multiple assignees and redirect to work order', () => {
+    it('should add multiple subscribers and redirect to work order', () => {
       const expectedBody = [
-        { adviser: { id: '33736be0-3e6b-4d4e-9fa8-32f23d0ba55e' } },
-        { adviser: { id: '3cfad090-8f7e-4a8b-beb0-14c909d6f052' } },
-        { adviser: { id: '2c42c516-9898-e211-a939-e4115bead28a' } },
-        { adviser: { id: '8242c516-9898-e211-a939-e4115bead28a' } },
+        { id: 'e83a608e-84a4-11e6-ae22-56b6b6499611' },
+        { id: '25628b23-c75b-4aef-b120-dac2d64c0696' },
+        { id: '2c42c516-9898-e211-a939-e4115bead28a' },
+        { id: '8242c516-9898-e211-a939-e4115bead28a' },
       ]
       selectFirstAdvisersTypeaheadOption({
         element,
@@ -98,16 +99,16 @@ describe('View edit assignees page', () => {
     })
   })
 
-  context('When there are no existing assignees', () => {
+  context('When there are no existing subscribers', () => {
     before(() => {
       cy.intercept(
         {
           method: 'GET',
-          url: `/api-proxy/v3/omis/order/${draftOrder.id}/assignee`,
+          url: `/api-proxy/v3/omis/order/${draftOrder.id}/subscriber-list`,
         },
         []
       )
-      cy.visit(urls.omis.edit.assignees(draftOrder.id))
+      cy.visit(urls.omis.edit.subscribers(draftOrder.id))
     })
 
     it('should display an error when form submitted with no values', () => {
@@ -116,25 +117,19 @@ describe('View edit assignees page', () => {
     })
   })
 
-  context('When there are existing assignees', () => {
+  context('When there are existing subscribers', () => {
     before(() => {
-      cy.visit(urls.omis.edit.assignees(draftOrder.id))
+      cy.visit(urls.omis.edit.subscribers(draftOrder.id))
     })
 
-    it('should display existing assignees', () => {
+    it('should display existing subscribers', () => {
       cy.get('[data-test="typeahead-chip"]').should('have.length', 2)
-      cy.get('[data-test="typeahead-chip"]')
-        .eq(0)
-        .contains(assignees[0].adviser.name)
-      cy.get('[data-test="typeahead-chip"]')
-        .eq(1)
-        .contains(assignees[1].adviser.name)
+      cy.get('[data-test="typeahead-chip"]').eq(0).contains(subscribers[0].name)
+      cy.get('[data-test="typeahead-chip"]').eq(1).contains(subscribers[1].name)
     })
 
-    it('should allow assignee to be removed', () => {
-      const expectedBody = [
-        { adviser: { id: '3cfad090-8f7e-4a8b-beb0-14c909d6f052' } },
-      ]
+    it('should allow subscribers to be removed', () => {
+      const expectedBody = [{ id: '25628b23-c75b-4aef-b120-dac2d64c0696' }]
       removeFirstTypeaheadItem()
 
       clickButton('Save and return')
@@ -172,11 +167,9 @@ describe('View edit assignees page', () => {
 })
 
 function assertApiPreventsDeletions(orderId) {
-  cy.visit(urls.omis.edit.assignees(orderId))
+  cy.visit(urls.omis.edit.subscribers(orderId))
 
-  const expectedBody = [
-    { adviser: { id: '3cfad090-8f7e-4a8b-beb0-14c909d6f052' } },
-  ]
+  const expectedBody = [{ id: '25628b23-c75b-4aef-b120-dac2d64c0696' }]
   removeFirstTypeaheadItem()
 
   clickButton('Save and return')
@@ -188,5 +181,5 @@ function assertApiPreventsDeletions(orderId) {
 }
 
 function assertAPI(validateCallback) {
-  cy.wait('@omisAssigneesHttpRequest').then((xhr) => validateCallback(xhr))
+  cy.wait('@omisSubscribersHttpRequest').then((xhr) => validateCallback(xhr))
 }

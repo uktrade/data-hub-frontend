@@ -13,6 +13,7 @@ import AssetClasses from './AssetClasses'
 import OpportunityValueType from './OpportunityValueType'
 import PipelineItem from './PipelineItem'
 import OrderAssignees from './OrderAssignees'
+import OrderSubscribers from './OrderSubscribers'
 
 export default {
   ...Advisers.tasks,
@@ -30,4 +31,5 @@ export default {
   ...OpportunityValueType.tasks,
   ...PipelineItem.tasks,
   ...OrderAssignees.tasks,
+  ...OrderSubscribers.tasks,
 }

@@ -50,6 +50,7 @@ import CompaniesContactsCollection from '../client/modules/Contacts/CollectionLi
 import OpportunityChangeStatusForm from '../apps/investments/client/opportunities/Details/OpportunityChangeStatusForm.jsx'
 import CreateUKInvestmentOpportunity from '../apps/investments/client/opportunities/Details/CreateUKInvestmentOpportunity'
 import EditAssignees from '../apps/omis/apps/edit/client/EditAssignees'
+import EditSubscribers from '../apps/omis/apps/edit/client/EditSubscribers'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -163,7 +164,10 @@ import {
 } from '../apps/investments/client/projects/create/state'
 import * as createInvestmentProjectTasks from '../apps/investments/client/projects/create/tasks'
 
-import { TASK_SAVE_ORDER_ASSIGNEES } from '../apps/omis/apps/edit/client/state'
+import {
+  TASK_SAVE_ORDER_ASSIGNEES,
+  TASK_SAVE_ORDER_SUBSCRIBERS,
+} from '../apps/omis/apps/edit/client/state'
 import * as editOMISTasks from '../apps/omis/apps/edit/client/tasks'
 
 import * as myInvestmentProjects from './components/MyInvestmentProjects/tasks'
@@ -355,6 +359,7 @@ function App() {
         'Exports Edit': exportsEdit.saveWinCategory,
         [TASK_GET_TYPEAHEAD_OPTIONS]: getTypeaheadOptions,
         [TASK_SAVE_ORDER_ASSIGNEES]: editOMISTasks.saveOrderAssignees,
+        [TASK_SAVE_ORDER_SUBSCRIBERS]: editOMISTasks.saveOrderSubscribers,
         ...resourceTasks,
       }}
     >
@@ -541,6 +546,9 @@ function App() {
       </Mount>
       <Mount selector="#edit-assignees">
         {(props) => <EditAssignees {...props} />}
+      </Mount>
+      <Mount selector="#edit-subscribers">
+        {(props) => <EditSubscribers {...props} />}
       </Mount>
 
       <Mount selector="#react-app">
