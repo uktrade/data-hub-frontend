@@ -20,11 +20,11 @@ services:
       - 8000:8000
     depends_on:
       - postgres
-      - es
+      - opensearch
       - redis
       - celery
       - mock-sso
-    entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://es:9200 -wait tcp://redis:6379 -timeout 5m
+    entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://opensearch:9200 -wait tcp://redis:6379 -timeout 5m
     command: /app/setup-uat.sh || echo "all good"
 
   celery:
@@ -32,9 +32,9 @@ services:
     env_file: .env
     depends_on:
       - postgres
-      - es
+      - opensearch
       - redis
-    entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://es:9200 -wait tcp://redis:6379 -timeout 5m
+    entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://opensearch:9200 -wait tcp://redis:6379 -timeout 5m
     command: celery -A config worker -l info -Q celery -B
 
   postgres:
@@ -44,18 +44,11 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
 
-  es:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.4
+  opensearch:
+    image: opensearchproject/opensearch:1.2.4
     environment:
-      discovery.type: single-node
-      cluster.routing.allocation.disk.threshold_enabled: 'false'
-
-  es-apm:
-    image: docker.elastic.co/apm/apm-server:7.7.1
-    ports:
-      - 8200:8200
-    command: >
-      apm-server -e
-        -E output.elasticsearch.hosts=["es:9200"]
-    depends_on:
-      - es
+      - plugins.security.disabled=true
+      - cluster.name=cluster-001
+      - node.name=node-001
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
