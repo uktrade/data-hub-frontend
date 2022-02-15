@@ -1,8 +1,9 @@
 import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React, { useRef, useEffect } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, useHistory, useLocation } from 'react-router-dom'
 import { isEmpty } from 'lodash'
+import qs from 'qs'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 
@@ -79,14 +80,22 @@ const _Form = ({
   touched = {},
   steps = [],
   initialStepIndex = 0,
+  goToStep,
   ...props
 }) => {
+  const history = useHistory()
+  const location = useLocation()
+  const qsParams = qs.parse(location.search.slice(1))
+
   useEffect(() => {
     onLoad(initialValues, initialStepIndex)
   }, [])
   useEffect(() => {
     scrollToTopOnStep && window.scrollTo(0, 0)
   }, [scrollToTopOnStep, props.currentStep])
+  useEffect(() => {
+    goToStep(parseInt(qsParams.step) || 0)
+  }, [qsParams])
 
   // TODO: Clean up this mess
   const contextProps = {
@@ -110,7 +119,6 @@ const _Form = ({
   }
 
   const ref = useRef()
-
   return (
     <Wrap
       with={Resource}
@@ -148,6 +156,12 @@ const _Form = ({
                     props.goBack()
                     analytics('previous step', {
                       currentStep: props.currentStep,
+                    })
+                    history.push({
+                      search: qs.stringify({
+                        ...qsParams,
+                        step: props.currentStep - 1,
+                      }),
                     })
                   }}
                   validateForm={(fieldNamesToValidate) => {
@@ -199,6 +213,12 @@ const _Form = ({
                                   props.goForward()
                                   analytics('Next step', {
                                     currentStep: props.currentStep,
+                                  })
+                                  history.push({
+                                    search: qs.stringify({
+                                      ...qsParams,
+                                      step: props.currentStep + 1,
+                                    }),
                                   })
                                 }
                               } else {
@@ -382,6 +402,12 @@ const dispatchToProps = (dispatch) => ({
     dispatch({
       type: 'FORM__BACK',
     }),
+  goToStep: (stepIndex) => {
+    dispatch({
+      type: 'FORM__GO_TO_STEP',
+      stepIndex,
+    })
+  },
   registerStep: (stepName) =>
     dispatch({
       type: 'FORM__STEP_REGISTER',

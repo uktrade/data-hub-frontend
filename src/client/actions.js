@@ -72,6 +72,7 @@ export const FORM__STEP_REGISTER = 'FORM__STEP_REGISTER'
 export const FORM__STEP_DEREGISTER = 'FORM__STEP_DEREGISTER'
 export const FORM__FORWARD = 'FORM__FORWARD'
 export const FORM__BACK = 'FORM__BACK'
+export const FORM__GO_TO_STEP = 'FORM__GO_TO_STEP'
 export const FORM__VALIDATE = 'FORM__VALIDATE'
 export const FORM__RESOLVED = 'FORM__RESOLVED'
 
