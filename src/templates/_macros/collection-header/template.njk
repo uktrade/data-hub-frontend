@@ -19,12 +19,6 @@
       {% endif %}
     </h2>
 
-    {% if props.showArchived %}
-      <a href="{{ props.urlWithoutShowArchivedQueryParam }}"><input type="checkbox" checked>Show archived records</a>
-    {% else %}
-      <a href="{{ props.urlWithoutShowArchivedQueryParam + "&showArchived=true" }}"><input type="checkbox">Show archived records</a>
-    {% endif %}
-
     {% if props.selectedFilters | length or actionButtons.length %}
       <div class="c-collection__header-actions">
         {% if props.selectedFilters | length %}
@@ -43,6 +37,17 @@
         {% endfor %}
       </div>
     {% endif %}
+
+    <label class="flip-show-archived-container">
+      <input
+        name="checkbox"
+        type="checkbox"
+        class="styled-checkbox"
+        onClick="location.href='{{ props.flipShowArchivedURL }}'"
+        {% if props.showArchived %}checked{% endif %}
+      />
+      <span class="checkmark">Show archived records</label>
+    </label>
 
     {% if props.selectedFilters %}
       <div class="c-collection__filter-summary">

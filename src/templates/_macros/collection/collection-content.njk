@@ -13,13 +13,14 @@
  # @param {string, array} [props.listModifier] - entity list modifier
  # @param {string}  [props.highlightTerm] - text to use to apply highlight filter
  # @param {object,array}   [props.actionButtons] - An object or array of objects with a label and url to generate an action button
+ # @param {boolean} [props.showArchived] - Whether we should show archived resuls when linking to different entities
+ # @param {string} [props.flipShowArchivedURL] - URL to redirect to if changing show archived option
  #
  # @param {function} props.caller - Inner contents
 #}
 {% macro CollectionContent(props) %}
   <article class="c-collection" {% if props.id %}id="{{ props.id }}"{% endif %}>
     {{ CollectionHeader(props) }}
-
     {% if props.items | length %}
       {% if caller %}
         {{ caller() }}
