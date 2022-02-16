@@ -24,3 +24,17 @@ export const saveClientRelationshipManager = ({
       client_relationship_manager: clientRelationshipManagerId,
     })
     .then((results) => results.client_relationship_manager)
+
+export const saveProjectManagementStaff = ({
+  id,
+  projectAssuranceAdviserId,
+  projectManagerId,
+}) =>
+  apiProxyAxios
+    .patch(`/v3/investment/${id}`, {
+      project_assurance_adviser: projectAssuranceAdviserId,
+      project_manager: projectManagerId,
+    })
+    .then((results) => {
+      results.project_assurance_adviser, results.project_manager
+    })

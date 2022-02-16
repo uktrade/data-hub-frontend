@@ -212,7 +212,7 @@ router
   .get(
     getBriefInvestmentSummary,
     projectManagementFormMiddleware.populateForm,
-    team.editProjectManagement.getHandler
+    team.editProjectManagement.editProjectManagementHandler
   )
   .post(
     getBriefInvestmentSummary,

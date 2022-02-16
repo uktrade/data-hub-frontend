@@ -51,6 +51,7 @@ import OpportunityChangeStatusForm from '../apps/investments/client/opportunitie
 import CreateUKInvestmentOpportunity from '../apps/investments/client/opportunities/Details/CreateUKInvestmentOpportunity'
 import EditAssignees from '../apps/omis/apps/edit/client/EditAssignees'
 import EditSubscribers from '../apps/omis/apps/edit/client/EditSubscribers'
+import EditProjectManagement from '../apps/investments/client/projects/team/EditProjectManagement'
 import { EditTeamMembers } from '../apps/investments/client/projects/team/EditTeamMembers'
 import EditClientRelationshipManagement from '../apps/investments/client/projects/team/EditClientRelationshipManagement'
 
@@ -155,15 +156,14 @@ import {
   TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME,
   TASK_GET_INVESTMENTS_PROJECTS_METADATA,
 } from '../apps/investments/client/projects/state'
+import * as investmentProjectTasks from '../apps/investments/client/projects/tasks'
+
 import {
   TASK_EDIT_PROJECT_TEAM_MEMBERS,
   TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER,
+  TASK_SAVE_INVESTMENT_PROJECT_MANAGERS,
 } from '../apps/investments/client/projects/team/state'
-import * as investmentProjectTasks from '../apps/investments/client/projects/tasks'
-import {
-  saveClientRelationshipManager,
-  updateTeamMembers,
-} from '../apps/investments/client/projects/team/tasks'
+import * as editInvestmentProjectTeamTasks from '../apps/investments/client/projects/team/tasks'
 
 import {
   TASK_SEARCH_COMPANY,
@@ -345,8 +345,12 @@ function App() {
           getAdviserNames,
         [TASK_GET_INVESTMENTS_PROJECTS_METADATA]:
           investmentProjectTasks.getMetadata,
-        [TASK_EDIT_PROJECT_TEAM_MEMBERS]: updateTeamMembers,
-        [TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER]: saveClientRelationshipManager,
+        [TASK_EDIT_PROJECT_TEAM_MEMBERS]:
+          editInvestmentProjectTeamTasks.updateTeamMembers,
+        [TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER]:
+          editInvestmentProjectTeamTasks.saveClientRelationshipManager,
+        [TASK_SAVE_INVESTMENT_PROJECT_MANAGERS]:
+          editInvestmentProjectTeamTasks.saveProjectManagementStaff,
         [TASK_CHECK_FOR_INVESTMENTS]: personalisedDashboard.checkForInvestments,
         [TASK_GET_MY_INVESTMENTS_LIST]:
           myInvestmentProjects.fetchMyInvestmentsList,
@@ -567,6 +571,9 @@ function App() {
       </Mount>
       <Mount selector="#edit-client-relationship-management">
         {(props) => <EditClientRelationshipManagement {...props} />}
+      </Mount>
+      <Mount selector="#edit-project-management">
+        {(props) => <EditProjectManagement {...props} />}
       </Mount>
 
       <Mount selector="#react-app">
