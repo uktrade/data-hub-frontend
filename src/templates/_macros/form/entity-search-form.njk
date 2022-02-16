@@ -16,6 +16,8 @@
  # @param {object} [props.hiddenFields] - Custom fields to be added as hidden inputs
  # @param {boolean} [props.isLabelHidden=true] - Whether input label should be hidden
  # @param {array} [props.aggregations] - Search aggregations summary
+ # @param {boolean} [props.showArchived] - Whether we should show archived resuls when linking to different entities
+ # @param {string} [props.flipShowArchivedURL] - URL to redirect to if changing show archived option
  #}
 {% macro EntitySearchForm(props) %}
   {% set method = props.method | default('GET') -%}
@@ -58,7 +60,7 @@
               {% if isCurrentPage %}
                 <span aria-label="{{item.text}} search results">{{ item.text }}</span>
               {% else %}
-                <a class="c-entity-search__aggregations-link" href="{{ urls.search.type(item.path) }}?term={{ props.searchTerm }}"  aria-label="{{item.text}} search results">{{ item.text }}</a>
+                <a class="c-entity-search__aggregations-link" href="{{ urls.search.type(item.path) }}?term={{ props.searchTerm }}{{ "&showArchived=true" if props.showArchived else ""}}"  aria-label="{{item.text}} search results">{{ item.text }}</a>
               {% endif %}
               <span class="c-entity-search__aggregations-count">({{ item.count | formatNumber }})</span>
             </li>
