@@ -8,7 +8,8 @@
       searchTerm: searchTerm,
       entityType: searchEntity,
       inputLabel: 'Search for company, contact, event, investment project or OMIS order',
-      aggregations: results.aggregations
+      aggregations: results.aggregations,
+      showArchived: showArchived
     }) }}
   {% endcall %}
 {% endblock %}
@@ -19,7 +20,7 @@
       actionButtons: actionButtons,
       features: features,
       showArchived: showArchived,
-      urlWithoutShowArchivedQueryParam: urlWithoutShowArchivedQueryParam
+      flipShowArchivedURL: flipShowArchivedURL
     }))
   }}
 {% endblock %}
