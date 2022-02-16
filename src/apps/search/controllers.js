@@ -56,11 +56,14 @@ async function renderSearchResults(req, res) {
     itemTransformers.push(transformInteractionToListItem())
   }
 
-  // let url = new URL(req.URL)
-  const urlWithoutShowArchivedQueryParam = new URL(
+  const flipShowArchivedURL = new URL(
     req.protocol + '://' + req.get('host') + req.originalUrl
   )
-  urlWithoutShowArchivedQueryParam.searchParams.delete('showArchived')
+  if (showArchived) {
+    flipShowArchivedURL.searchParams.delete('showArchived')
+  } else {
+    flipShowArchivedURL.searchParams.append('showArchived', 'true')
+  }
 
   const results = await search({
     searchTerm,
@@ -86,8 +89,7 @@ async function renderSearchResults(req, res) {
     searchTerm,
     results,
     showArchived,
-    urlWithoutShowArchivedQueryParam:
-      urlWithoutShowArchivedQueryParam.toString(),
+    flipShowArchivedURL: flipShowArchivedURL.toString(),
   })
 }
 
