@@ -7,6 +7,7 @@ import createSagaMiddleware from 'redux-saga'
 import rootSaga from '../../../../src/client/root-saga'
 import tasks from '../../../../src/client/components/Task/reducer'
 import Typeahead from '../../../../src/client/components/Typeahead/Typeahead'
+import FieldAddAnother from '../../../../src/client/components/Form/elements/FieldAddAnother/FieldAddAnother'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -14,6 +15,7 @@ const reducer = (state, action) =>
   combineReducers({
     tasks,
     ...Typeahead.reducerSpread,
+    ...FieldAddAnother.reducerSpread,
   })(action.type === 'RESET' ? undefined : state, action)
 
 export const store = createStore(reducer, applyMiddleware(sagaMiddleware))

@@ -74,24 +74,24 @@ storiesOf('Form/Form Elements/FieldAddAnother', module)
       {(state) => (
         <>
           <FieldAddAnother
-            name="teams"
+            name="teams_edit-example"
             label="Related teams with role(s)"
             data-test-prefix="teams-field-"
             item-name="team"
-            initialChildCount={initialValues.length}
+            initialChildGroupCount={initialValues.length}
           >
-            {({ index }) => (
+            {({ groupIndex }) => (
               <>
                 <FieldTypeahead
-                  name={`adviser_${index}`}
-                  inputId={`related_adviser_${index}`}
+                  name={`adviser_${groupIndex}`}
+                  inputId={`related_adviser_${groupIndex}`}
                   label={''}
                   options={options}
                   placeholder="Search advisers"
                   required="Select at least one Adviser"
                   aria-label="Select an adviser"
                 />
-                <FieldInput name={`role_${index}`} type="text" />
+                <FieldInput name={`role_${groupIndex}`} type="text" />
               </>
             )}
           </FieldAddAnother>
@@ -116,7 +116,7 @@ storiesOf('Form/Form Elements/FieldAddAnother', module)
       {(state) => (
         <>
           <FieldAddAnother
-            name="teams"
+            name="teams_new_edit_example"
             label="Related teams with role(s)"
             data-test-prefix="teams-field-"
             item-name="team"

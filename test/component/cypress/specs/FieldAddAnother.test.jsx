@@ -1,19 +1,31 @@
 import React from 'react'
 import { mount } from '@cypress/react'
+
 import FieldAddAnother from '../../../../src/client/components/Form/elements/FieldAddAnother'
+import DataHubProvider, { store } from './provider'
+
+const RESET_ACTION = {
+  type: 'RESET',
+}
 
 describe('FieldAddAnother', () => {
   beforeEach(() => {
+    store.dispatch(RESET_ACTION)
     mount(
-      <FieldAddAnother
-        name="div-items"
-        label="Label"
-        data-test-prefix="test-field-"
-        item-name="item"
-        initialChildCount={2}
-      >
-        {({ index }) => <div id={`test_${index}`}>Item {index} rendered</div>}
-      </FieldAddAnother>
+      <DataHubProvider>
+        <FieldAddAnother
+          id="div-items"
+          name="div-items"
+          label="Label"
+          data-test-prefix="test-field-"
+          item-name="item"
+          initialChildGroupCount={2}
+        >
+          {({ groupIndex }) => (
+            <div id={`test_${groupIndex}`}>Item {groupIndex} rendered</div>
+          )}
+        </FieldAddAnother>
+      </DataHubProvider>
     )
   })
 
