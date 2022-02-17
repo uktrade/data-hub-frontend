@@ -16,7 +16,7 @@ describe('FieldAddAnother', () => {
         <FieldAddAnother
           id="div-items"
           name="div-items"
-          label="Label"
+          legend="Legend"
           data-test-prefix="test-field-"
           item-name="item"
           initialChildGroupCount={2}
@@ -37,6 +37,10 @@ describe('FieldAddAnother', () => {
     it('should render accessibility items in the correct order', () => {
       cy.get('[aria-label="1st item"]')
       cy.get('[aria-label="2nd item"]')
+    })
+
+    it('should render a legend', () => {
+      cy.get('legend').should('have.text', 'Legend')
     })
 
     it('should render two removes with accessibility', () => {
@@ -65,15 +69,10 @@ describe('FieldAddAnother', () => {
       cy.get('[aria-label="3rd item"]')
     })
 
-    it('should add 22 controls with the 22nd item displaying the [22](nd) accessibility information', () => {
+    it('should add 2 controls with the 2nd item displaying the [2](nd) accessibility information', () => {
       getComponentItems().should('have.length', 2)
 
-      for (let index = 0; index < 20; index++) {
-        clickAddAnotherButton()
-      }
-
-      getComponentItems().should('have.length', 22)
-      cy.get('[aria-label="22nd item"]')
+      cy.get('[aria-label="2nd item"]')
     })
   })
 

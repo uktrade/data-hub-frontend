@@ -19,18 +19,26 @@ import reducer from './reducer'
 const StyledChildren = styled('div')`
   padding-bottom: ${SPACING.SCALE_1};
 `
-const StyledButton = styled('div')``
+
+const StyledGroup = styled('div')`
+  padding-left: ${SPACING.SCALE_2};
+  padding-bottom: ${SPACING.SCALE_3};
+`
+
+const StyledButton = styled('div')`
+  padding-left: ${SPACING.SCALE_2};
+`
 
 const StyledLink = styled('div')`
   padding-bottom: ${SPACING.SCALE_1};
 `
 const FieldAddAnother = ({
   name,
-  label,
+  legend,
   children,
   'data-test-prefix': dataTestPrefix,
   'item-name': ariaItemName,
-  initialChildGroupCount = 0,
+  initialChildGroupCount = 1,
   fieldGroupIds,
   initialise,
   add,
@@ -47,10 +55,10 @@ const FieldAddAnother = ({
 
   return (
     <>
-      <FieldWrapper {...{ name, label }}>
+      <FieldWrapper {...{ name, legend, bigLegend: true }}>
         {fieldGroupIds &&
           fieldGroupIds.map((item, index) => (
-            <div
+            <StyledGroup
               role="region"
               aria-label={`${indexToOrdinal(index)} ${ariaItemName}`}
               data-test={`${dataTestPrefix}${index}`}
@@ -77,7 +85,7 @@ const FieldAddAnother = ({
                   </Link>
                 </StyledLink>
               )}
-            </div>
+            </StyledGroup>
           ))}
         <StyledButton>
           <SecondaryButton
@@ -98,7 +106,7 @@ FieldAddAnother.propTypes = {
   'data-test-prefix': PropTypes.string,
   'item-name': PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  label: PropTypes.node,
+  legend: PropTypes.string.isRequired,
   children: PropTypes.func,
   initialChildGroupCount: PropTypes.number,
   // multiInstance internal properties
@@ -113,8 +121,7 @@ FieldAddAnother.propTypes = {
 }
 
 FieldAddAnother.defaultProps = {
-  label: null,
-  initialChildGroupCount: 0,
+  initialChildGroupCount: 1,
 }
 
 export default multiInstance({

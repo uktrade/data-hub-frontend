@@ -8,7 +8,7 @@ This is a form component renders a list in a form. The fields of this list are s
 
 The ***initialValues*** is an array of grouped items. The ***transformArrayToObject*** function that will flatten this for the ***form*** component to deliver the values to the relative Field type components. 
 
-The **initialChildGroupCount** is an attribute informing the component of how many items need to be synchronised within the *FieldAddAnother* children and is primarilly used in edit mode when showing values within the *FieldAddAnother* component. So in the example below there are two groups of adviser roles [adviser_0, role_0] and (adviser_1, role_1) and so the *initialChildGroupCount* should be ***2***. By default this is ***0*** and when no data is being assigned will show no component details until the Add another button is clicked.
+The **initialChildGroupCount** is an attribute informing the component of how many items need to be synchronised within the *FieldAddAnother* children and is primarilly used in edit mode when showing values within the *FieldAddAnother* component. So in the example below there are two groups of adviser roles [adviser_0, role_0] and (adviser_1, role_1) and so the *initialChildGroupCount* should be ***2***. By default this is ***1*** and when no data is being assigned will show no component details until the Add another button is clicked.
 
 ### Usage
 
@@ -77,6 +77,6 @@ const transformArrayToObject = (array) => {
 | `label`            | false    | null    | string                         | Text for the label element                                                                                                                             |
 | `children`         | true     | ``````  | function                       | Function that returns components to be rendered for each item in the list                                                                              |
 | `data-test-prefix` | false    | ``````  | string                         | Allows children to be selected via `[data-test='<data-test-prefix><index>']`                                                                           |||
-| `initialChildGroupCount` | false    | 0                                                            | number   | Number of child items groups that need to be repeated or added as a children from form on initial load |
+| `initialChildGroupCount` | false    | 1                                                            | number   | Number of child items groups that need to be repeated or added as a children from form on initial load |
 | `item-name` | true | `````` | string | For screen readers; What this field is a list of, for example if this were set to 'trade agreements' screen readers would read 'first trade agreement' |
 |                     |          |                                                              |          |                                                              |

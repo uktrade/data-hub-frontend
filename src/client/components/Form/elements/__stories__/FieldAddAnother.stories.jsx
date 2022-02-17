@@ -75,7 +75,7 @@ storiesOf('Form/Form Elements/FieldAddAnother', module)
         <>
           <FieldAddAnother
             name="teams_edit-example"
-            label="Team members with roles"
+            legend="Team members with roles"
             data-test-prefix="teams-field-"
             item-name="team member"
             initialChildGroupCount={initialValues.length}
@@ -121,7 +121,7 @@ storiesOf('Form/Form Elements/FieldAddAnother', module)
         <>
           <FieldAddAnother
             name="teams_new_edit_example"
-            label="Team members with roles"
+            legend="Team members with roles"
             data-test-prefix="teams-field-"
             item-name="team member"
           >
