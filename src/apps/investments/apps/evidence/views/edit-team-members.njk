@@ -1,0 +1,8 @@
+{% extends "_layouts/template-no-local-header.njk" %}
+
+{% block body %}
+    {% component 'react-slot', {
+        id: 'edit-team-members',
+        props: props
+    } %}
+{% endblock %}
