@@ -75,23 +75,27 @@ storiesOf('Form/Form Elements/FieldAddAnother', module)
         <>
           <FieldAddAnother
             name="teams_edit-example"
-            label="Related teams with role(s)"
+            label="Team members with roles"
             data-test-prefix="teams-field-"
-            item-name="team"
+            item-name="team member"
             initialChildGroupCount={initialValues.length}
           >
             {({ groupIndex }) => (
               <>
                 <FieldTypeahead
                   name={`adviser_${groupIndex}`}
-                  inputId={`related_adviser_${groupIndex}`}
-                  label={''}
+                  inputId={`adviser_${groupIndex}`}
+                  label="Team Member"
                   options={options}
                   placeholder="Search advisers"
                   required="Select at least one Adviser"
                   aria-label="Select an adviser"
                 />
-                <FieldInput name={`role_${groupIndex}`} type="text" />
+                <FieldInput
+                  name={`role_${groupIndex}`}
+                  type="text"
+                  label="Role"
+                />
               </>
             )}
           </FieldAddAnother>
@@ -117,22 +121,26 @@ storiesOf('Form/Form Elements/FieldAddAnother', module)
         <>
           <FieldAddAnother
             name="teams_new_edit_example"
-            label="Related teams with role(s)"
+            label="Team members with roles"
             data-test-prefix="teams-field-"
-            item-name="team"
+            item-name="team member"
           >
-            {({ index }) => (
+            {({ groupIndex }) => (
               <>
                 <FieldTypeahead
-                  name={`adviser_${index}`}
-                  inputId={`related_adviser_${index}`}
-                  label={''}
+                  name={`adviser_${groupIndex}`}
+                  inputId={`adviser_${groupIndex}`}
+                  label="Team Member"
                   options={options}
                   placeholder="Search advisers"
                   required="Select at least one Adviser"
                   aria-label="Select an adviser"
                 />
-                <FieldInput name={`role_${index}`} type="text" />
+                <FieldInput
+                  name={`role_${groupIndex}`}
+                  type="text"
+                  label="Role"
+                />
               </>
             )}
           </FieldAddAnother>

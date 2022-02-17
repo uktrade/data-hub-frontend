@@ -52,15 +52,15 @@ const transformArrayToObject = (array) => {
         {({ groupIndex }) => (
           <>
             <FieldTypeahead
-              name={`adviser_${index}`}
-              inputId={`related_adviser_${index}`}
+              name={`adviser_${groupIndex}`}
+              inputId={`related_adviser_${groupIndex}`}
               label={''}
               options={options}
               placeholder="Search advisers"
               required="Select at least one Adviser"
               aria-label="Select an adviser"
             />
-            <FieldInput name={`role_${index}`} type="text" />
+            <FieldInput name={`role_${groupIndex}`} type="text" />
           </>
         )}
       </FieldAddAnother>

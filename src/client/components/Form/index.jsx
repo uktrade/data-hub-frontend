@@ -134,10 +134,6 @@ const _Form = ({
               )
             return (
               <>
-                {/* By wrapping the form in the Provider, it gives all consumers access to context */}
-
-                {/* registerField, setIsLoading, goBack and validateForm are all props which get passed
-                down to consumers. They are dispatch functions defined at the bottom of this file. */}
                 <FormContextProvider
                   {...contextProps}
                   // FIXME: This needs to be called also when the initial values load

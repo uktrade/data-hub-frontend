@@ -260,7 +260,7 @@ const Typeahead = ({
       <InputWrapper>
         <AutocompleteInput
           {...inputProps}
-          id={inputProps.inputId || name}
+          id={name}
           // Tell autocomplete that this is a password to stop Chrome autofilling.
           // Setting 'off' is ignored by Chrome and a custom string fails accessibility.
           autoComplete="new-password"
