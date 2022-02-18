@@ -17,8 +17,8 @@ describe('FieldAddAnother', () => {
           id="div-items"
           name="div-items"
           legend="Legend"
-          data-test-prefix="test-field-"
-          item-name="item"
+          dataTestPrefix="test-field-"
+          itemName="item"
           initialChildGroupCount={2}
         >
           {({ groupIndex }) => (

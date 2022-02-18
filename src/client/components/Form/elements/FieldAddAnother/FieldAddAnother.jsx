@@ -36,8 +36,8 @@ const FieldAddAnother = ({
   name,
   legend,
   children,
-  'data-test-prefix': dataTestPrefix,
-  'item-name': ariaItemName,
+  dataTestPrefix,
+  itemName,
   initialChildGroupCount = 1,
   fieldGroupIds,
   initialise,
@@ -60,7 +60,7 @@ const FieldAddAnother = ({
           fieldGroupIds.map((item, index) => (
             <StyledGroup
               role="region"
-              aria-label={`${indexToOrdinal(index)} ${ariaItemName}`}
+              aria-label={`${indexToOrdinal(index)} ${itemName}`}
               data-test={`${dataTestPrefix}${index}`}
               key={item.fieldGroupId}
             >
@@ -73,9 +73,7 @@ const FieldAddAnother = ({
                 <StyledLink>
                   <Link
                     href="#"
-                    aria-label={`Remove ${indexToOrdinal(
-                      index
-                    )} ${ariaItemName}`}
+                    aria-label={`Remove ${indexToOrdinal(index)} ${itemName}`}
                     onClick={(event) => {
                       event.preventDefault()
                       remove(item.fieldGroupId)
@@ -92,9 +90,9 @@ const FieldAddAnother = ({
             onClick={addAnotherHandler}
             aria-label={`Add a ${indexToOrdinal(
               fieldGroupIds?.length || 0
-            )} ${ariaItemName}`}
+            )} ${itemName}`}
           >
-            Add another {ariaItemName}
+            Add another {itemName}
           </SecondaryButton>
         </StyledButton>
       </FieldWrapper>
@@ -103,13 +101,13 @@ const FieldAddAnother = ({
 }
 
 FieldAddAnother.propTypes = {
-  'data-test-prefix': PropTypes.string,
-  'item-name': PropTypes.string.isRequired,
+  dataTestPrefix: PropTypes.string,
+  itemName: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   legend: PropTypes.string.isRequired,
   children: PropTypes.func,
   initialChildGroupCount: PropTypes.number,
-  // multiInstance internal properties
+  // Props from redux state
   fieldGroupIds: PropTypes.arrayOf(
     PropTypes.shape({
       fieldGroupId: PropTypes.number.isRequired,
