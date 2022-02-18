@@ -1,6 +1,12 @@
 {% extends "../template.njk" %}
 
 {% block main_grid_right_column %}
+    {% component 'react-slot', {
+        id: 'edit-team-members',
+        props: props
+    } %}
+{% endblock %}
+{# {% block main_grid_right_column %}
   <h2 
     class="govuk-heading-m"
     data-test="assign-team-members-header"
@@ -45,4 +51,4 @@
       </div>
     </div>
   {% endcall %}
-{% endblock %}
+{% endblock %} #}
