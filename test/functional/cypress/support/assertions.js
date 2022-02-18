@@ -667,9 +667,21 @@ const assertParamNotContainedInUrl = (xhr, param) => {
 /**
  * Assert that the body of an intercepted request is as expected
  */
-
 const assertRequestBody = (xhr, expectedBody) => {
   expect(xhr.request.body).to.deep.equal(expectedBody)
+}
+
+/**
+ * Assert that the error dialog contains a task name and error message
+ */
+const assertErrorDialog = (taskName, errorMessage) => {
+  const getErrorDialog = () => {
+    return cy.get('[data-test="error-dialog"]')
+  }
+
+  getErrorDialog().should('exist')
+  getErrorDialog().contains('h2', taskName)
+  getErrorDialog().contains('p', errorMessage)
 }
 
 module.exports = {
@@ -721,4 +733,5 @@ module.exports = {
   assertParamContainedInUrl,
   assertParamNotContainedInUrl,
   assertRequestBody,
+  assertErrorDialog,
 }

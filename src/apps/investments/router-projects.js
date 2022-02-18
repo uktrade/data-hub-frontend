@@ -66,10 +66,6 @@ const {
 } = require('./middleware/evidence')
 
 const { renderTeamEdit } = require('./controllers/team/edit-team-members')
-const {
-  populateTeamEditForm,
-  postTeamEdit,
-} = require('./middleware/forms/team-members')
 
 const { renderStatusPage, postStatus } = require('./controllers/status')
 
@@ -240,10 +236,7 @@ router
     team.editClientRelationshipManagement.getHandler
   )
 
-router
-  .route('/:investmentId/edit-team-members')
-  .get(populateTeamEditForm, renderTeamEdit)
-  .post(postTeamEdit, renderTeamEdit)
+router.route('/:investmentId/edit-team-members').get(renderTeamEdit)
 
 router.get(
   '/:investmentId/propositions',

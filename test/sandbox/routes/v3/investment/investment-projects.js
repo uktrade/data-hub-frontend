@@ -39,3 +39,7 @@ exports.patchInvestmentProject = function (req, res) {
 exports.postInvestmentProject = function (req, res) {
   res.json(project)
 }
+
+exports.postInvestmentProjectEditTeams = function (req, res) {
+  res.sendStatus(200).json(allProjectsMap[req.params.id] || project)
+}

@@ -16,6 +16,7 @@ const {
   selectFirstAdvisersTypeaheadOption,
   removeFirstTypeaheadItem,
   clickButton,
+  clickCancelLink,
 } = require('../../support/actions')
 
 const {
@@ -94,7 +95,8 @@ describe('View edit subscribers page', () => {
     })
 
     it('should redirect back to work order when cancelled', () => {
-      cy.get('[data-test="cancel-button"]').click()
+      clickCancelLink()
+
       assertUrl(urls.omis.workOrder(draftOrder.id))
     })
   })
