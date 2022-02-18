@@ -293,7 +293,12 @@ const assertFieldTypeahead = ({
 const assertFieldSingleTypeahead = (props) =>
   assertFieldTypeahead({ ...props, isMulti: false })
 
-const assertFieldInput = ({ element, label, hint, value }) =>
+const assertFieldInput = ({
+  element,
+  label,
+  hint = undefined,
+  value = undefined,
+}) =>
   cy
     .wrap(element)
     .find('label')
@@ -684,6 +689,14 @@ const assertErrorDialog = (taskName, errorMessage) => {
   getErrorDialog().contains('p', errorMessage)
 }
 
+/**
+ * Assert an endpoint value where a wait has been setup
+ * @@param endPointAlias defined with wait and no need to assign the @ value
+ * @@param assertCallback callback function to assert
+ */
+const assertAPIRequest = (endPointAlias, assertCallback) =>
+  cy.wait(`@${endPointAlias}`).then((xhr) => assertCallback(xhr))
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
@@ -734,4 +747,5 @@ module.exports = {
   assertParamNotContainedInUrl,
   assertRequestBody,
   assertErrorDialog,
+  assertAPIRequest,
 }

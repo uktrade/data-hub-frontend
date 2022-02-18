@@ -220,6 +220,12 @@ function parseInvestmentDate(dateStr) {
   }
 }
 
+function createDateFromObject({ day, month, year }) {
+  const monthIndex = parseInt(month, 10) - 1
+  const result = new Date(year, monthIndex, day)
+  return result
+}
+
 module.exports = {
   addDays,
   addMonths,
@@ -251,4 +257,5 @@ module.exports = {
   subtractWeeks,
   today,
   transformValueForAPI,
+  createDateFromObject,
 }

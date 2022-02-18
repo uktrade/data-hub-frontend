@@ -10,6 +10,7 @@ const {
   assertParamContainedInUrl,
   assertParamNotContainedInUrl,
   assertRequestBody,
+  assertAPIRequest,
 } = require('../../support/assertions')
 
 const {
@@ -28,12 +29,14 @@ const {
   quoteAwaitOrder,
 } = fixtures.omis
 
+const OMIS_SUBSCRIBERS_INTERCEPT = 'omisSubscribersHttpRequest'
+
 describe('View edit subscribers page', () => {
   const element = '[data-test="field-subscribers"]'
 
   beforeEach(() => {
     cy.intercept('PUT', '/api-proxy/v3/omis/order/*/subscriber-list*').as(
-      'omisSubscribersHttpRequest'
+      OMIS_SUBSCRIBERS_INTERCEPT
     )
   })
 
@@ -82,7 +85,7 @@ describe('View edit subscribers page', () => {
 
       clickButton('Save and return')
 
-      assertAPI((xhr) => {
+      assertAPIRequest(OMIS_SUBSCRIBERS_INTERCEPT, (xhr) => {
         assertParamContainedInUrl(xhr, 'force-delete=1')
         assertRequestBody(xhr, expectedBody)
         assertRedirectToOmisWorkOrder()
@@ -136,7 +139,7 @@ describe('View edit subscribers page', () => {
 
       clickButton('Save and return')
 
-      assertAPI((xhr) => {
+      assertAPIRequest(OMIS_SUBSCRIBERS_INTERCEPT, (xhr) => {
         assertParamContainedInUrl(xhr, 'force-delete=1')
         assertRequestBody(xhr, expectedBody)
       })
@@ -176,12 +179,8 @@ function assertApiPreventsDeletions(orderId) {
 
   clickButton('Save and return')
 
-  assertAPI((xhr) => {
+  assertAPIRequest(OMIS_SUBSCRIBERS_INTERCEPT, (xhr) => {
     assertParamNotContainedInUrl(xhr, 'force-delete=1')
     assertRequestBody(xhr, expectedBody)
   })
-}
-
-function assertAPI(validateCallback) {
-  cy.wait('@omisSubscribersHttpRequest').then((xhr) => validateCallback(xhr))
 }

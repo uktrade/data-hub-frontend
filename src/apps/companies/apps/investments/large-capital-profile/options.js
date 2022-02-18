@@ -3,7 +3,6 @@ const {
 } = require('../../../../../apps/transformers')
 const { transformAssetClasses } = require('./transformers')
 const { getOptions } = require('../../../../../lib/options')
-const { getAdvisers } = require('../../../../adviser/repos')
 
 const OPTIONS = {
   sorted: false,
@@ -14,7 +13,6 @@ const getInvestorDetailsOptions = (req) => {
   return [
     getOptions(req, 'capital-investment/investor-type', OPTIONS),
     getOptions(req, 'capital-investment/required-checks-conducted', OPTIONS),
-    getAdvisers(req),
   ]
 }
 

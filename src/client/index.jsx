@@ -175,6 +175,9 @@ import {
 } from '../apps/investments/client/projects/create/state'
 import * as createInvestmentProjectTasks from '../apps/investments/client/projects/create/tasks'
 
+import { TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS } from '../apps/companies/apps/investments/large-capital-profile/client/state'
+import * as updateLargeCapitalInvestorDetails from '../apps/companies/apps/investments/large-capital-profile/client/tasks'
+
 import {
   TASK_SAVE_ORDER_ASSIGNEES,
   TASK_SAVE_ORDER_SUBSCRIBERS,
@@ -332,6 +335,8 @@ function App() {
         [TASK_GET_PROJECTS_LIST]: investmentProjectTasks.getProjects,
         [TASK_CREATE_INVESTMENT_PROJECT]:
           createInvestmentProjectTasks.createInvestmentProject,
+        [TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS]:
+          updateLargeCapitalInvestorDetails.updateInvestorDetails,
         [TASK_GET_INVESTMENT_PROJECT_INITIAL_VALUES]:
           createInvestmentProjectTasks.getInitialFormValues,
         [TASK_SEARCH_COMPANY]: createInvestmentProjectTasks.searchCompany,

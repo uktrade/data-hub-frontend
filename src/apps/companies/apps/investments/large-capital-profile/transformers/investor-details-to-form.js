@@ -2,9 +2,6 @@
 const { find, get } = require('lodash')
 const { requiredChecks: types } = require('../constants')
 
-const {
-  transformAdviserToOption,
-} = require('../../../../../adviser/transformers')
 const { parseInvestmentDate } = require('../../../../../../client/utils/date')
 
 const transformInvestorTypes = (investorTypesMetadata, { investorType }) => {
@@ -65,12 +62,7 @@ const transformRequiredChecks = (
   return transformed
 }
 
-const transformAdvisers = (advisers) => {
-  return advisers.map(transformAdviserToOption)
-}
-
 module.exports = {
-  transformAdvisers,
   transformInvestorTypes,
   transformRequiredChecks,
 }

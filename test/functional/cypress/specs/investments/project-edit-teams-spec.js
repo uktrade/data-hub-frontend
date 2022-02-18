@@ -6,6 +6,7 @@ const {
   assertFlashMessage,
   assertErrorSummary,
   assertErrorDialog,
+  assertAPIRequest,
 } = require('../../support/assertions')
 const {
   selectFirstAdvisersTypeaheadOption,
@@ -16,10 +17,12 @@ const {
 const projectWithCompleteTeam = require('../../fixtures/investment/investment-complete-team.json')
 const projectWithIncompleteTeam = require('../../fixtures/investment/investment-incomplete-team.json')
 
+const EDIT_TEAMS_INTERCEPT = 'projectEditTeamsHttpRequest'
+
 describe('View edit team members page', () => {
   beforeEach(() => {
     cy.intercept('PUT', '/api-proxy/v3/investment/*/team-member').as(
-      'projectEditTeamsHttpRequest'
+      EDIT_TEAMS_INTERCEPT
     )
   })
 
@@ -131,7 +134,7 @@ describe('View edit team members page', () => {
 
       clickButton('Save and return')
 
-      assertAPI((xhr) => {
+      assertAPIRequest(EDIT_TEAMS_INTERCEPT, (xhr) => {
         assertRequestBody(xhr, expectedBody)
         assertRedirectToProjectsTeamUrl(projectWithIncompleteTeam.id)
         assertFlashMessage('Changes saved')
@@ -157,7 +160,7 @@ describe('View edit team members page', () => {
 
       clickButton('Save and return')
 
-      assertAPI((xhr) => {
+      assertAPIRequest(EDIT_TEAMS_INTERCEPT, (xhr) => {
         assertRequestBody(xhr, expectedBody)
         assertRedirectToProjectsTeamUrl(projectWithCompleteTeam.id)
         assertFlashMessage('Changes saved')
@@ -228,8 +231,4 @@ function getAllTeamMemberFields() {
 
 function getAllRoleFields() {
   return cy.get('[data-test^="field-role_"]')
-}
-
-function assertAPI(validateCallback) {
-  cy.wait(`@projectEditTeamsHttpRequest`).then((xhr) => validateCallback(xhr))
 }

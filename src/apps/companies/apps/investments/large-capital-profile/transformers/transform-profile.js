@@ -14,7 +14,7 @@ const getRequiredChecksDetails = (type, date, adviser) => {
       `Date of most recent background checks: ${formatDate(date, 'dd MM yyyy')}`
     )
     details.push(
-      `Person responsible for most recent background checks: ${adviser.name}`
+      `Person responsible for most recent background checks: ${adviser?.name}`
     )
   }
 

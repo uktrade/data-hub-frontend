@@ -10,6 +10,7 @@ const {
   assertParamContainedInUrl,
   assertParamNotContainedInUrl,
   assertRequestBody,
+  assertAPIRequest,
 } = require('../../support/assertions')
 
 const {
@@ -28,6 +29,8 @@ const {
   quoteAwaitOrder,
 } = fixtures.omis
 
+const OMIS_ASSIGNEES_INTERCEPT = 'omisAssigneesHttpRequest'
+
 describe('View edit assignees page', () => {
   const element = '[data-test="field-assignees"]'
 
@@ -41,6 +44,7 @@ describe('View edit assignees page', () => {
     beforeEach(() => {
       cy.visit(urls.omis.edit.assignees(draftOrder.id))
     })
+
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: urls.dashboard(),
@@ -81,7 +85,7 @@ describe('View edit assignees page', () => {
 
       clickButton('Save and return')
 
-      assertAPI((xhr) => {
+      assertAPIRequest(OMIS_ASSIGNEES_INTERCEPT, (xhr) => {
         assertParamContainedInUrl(xhr, 'force-delete=1')
         assertRequestBody(xhr, expectedBody)
         assertRedirectToOmisWorkOrder()
@@ -141,7 +145,7 @@ describe('View edit assignees page', () => {
 
       clickButton('Save and return')
 
-      assertAPI((xhr) => {
+      assertAPIRequest(OMIS_ASSIGNEES_INTERCEPT, (xhr) => {
         assertParamContainedInUrl(xhr, 'force-delete=1')
         assertRequestBody(xhr, expectedBody)
       })
@@ -183,12 +187,8 @@ function assertApiPreventsDeletions(orderId) {
 
   clickButton('Save and return')
 
-  assertAPI((xhr) => {
+  assertAPIRequest(OMIS_ASSIGNEES_INTERCEPT, (xhr) => {
     assertParamNotContainedInUrl(xhr, 'force-delete=1')
     assertRequestBody(xhr, expectedBody)
   })
-}
-
-function assertAPI(validateCallback) {
-  cy.wait('@omisAssigneesHttpRequest').then((xhr) => validateCallback(xhr))
 }

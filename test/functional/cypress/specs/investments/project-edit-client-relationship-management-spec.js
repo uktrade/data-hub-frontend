@@ -8,6 +8,7 @@ const {
   assertUrl,
   assertFlashMessage,
   assertErrorSummary,
+  assertAPIRequest,
 } = require('../../support/assertions')
 const {
   clickButton,
@@ -18,11 +19,13 @@ const {
   investmentWithNoExistingRequirements,
   investmentWithNoGlobalAccountManager,
 } = fixtures.investment
+const CLIENT_MANAGEMENT_INTERCEPT = 'clientManagementHttpRequest'
+
 describe('Edit client relationship management page', () => {
   beforeEach(() => {
     cy.intercept('PATCH', '/api-proxy/v3/investment/*', {
       statusCode: 200,
-    }).as('clientManagementHttpRequest')
+    }).as(CLIENT_MANAGEMENT_INTERCEPT)
   })
 
   context('When the edit page is first rendered', () => {
@@ -113,7 +116,7 @@ describe('Edit client relationship management page', () => {
 
       clickButton('Save')
 
-      assertAPI((xhr) => {
+      assertAPIRequest(CLIENT_MANAGEMENT_INTERCEPT, (xhr) => {
         assertRequestBody(xhr, expectedBody)
         assertUrl(
           urls.investments.projects.team(
@@ -178,7 +181,7 @@ describe('Edit client relationship management page', () => {
 
       clickButton('Save')
 
-      assertAPI((xhr) => {
+      assertAPIRequest(CLIENT_MANAGEMENT_INTERCEPT, (xhr) => {
         assertRequestBody(xhr, expectedBody)
         assertUrl(
           urls.investments.projects.team(
@@ -218,7 +221,3 @@ describe('Edit client relationship management page', () => {
     })
   })
 })
-
-function assertAPI(validateCallback) {
-  cy.wait('@clientManagementHttpRequest').then((xhr) => validateCallback(xhr))
-}
