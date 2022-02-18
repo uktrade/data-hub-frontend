@@ -36,6 +36,8 @@ import ToggleSection from './components/ToggleSection/BaseToggleSection'
 
 import Typeahead from './components/Typeahead/Typeahead'
 
+import FieldAddAnother from './components/Form/elements/FieldAddAnother/FieldAddAnother'
+
 import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/ExportWins/state'
 import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/reducer'
 
@@ -163,6 +165,7 @@ const store = createStore(
     ...Resource.reducerSpread,
     ...ContactForm.reducerSpread,
     ...Form.reducerSpread,
+    ...FieldAddAnother.reducerSpread,
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
     [DNB_CHECK_ID]: dnbCheckReducer,
