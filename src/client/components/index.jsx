@@ -49,6 +49,7 @@ export { default as RoutedAdvisersTypeahead } from './RoutedAdvisersTypeahead'
 export { default as RoutedTypeahead } from './RoutedTypeahead'
 export {
   DashboardToggleSection,
+  FilterToggleSection,
   NoHighlightToggleSection,
   ToggleSection,
 } from './ToggleSection'

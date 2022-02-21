@@ -10,6 +10,7 @@ import Form from '../../Form'
 import NotificationBadge from 'NotificationBadge'
 import {
   DashboardToggleSection,
+  FilterToggleSection,
   NoHighlightToggleSection,
   ToggleSection,
 } from 'ToggleSection'
@@ -205,5 +206,23 @@ storiesOf('ToggleSection', module)
           )}
         </Form>
       </DashboardToggleSection>
+    </>
+  ))
+  .add('Filter - Single', () => (
+    <FilterToggleSection label="Toggle me" id="toggle.eight" isOpen={true}>
+      <p>Some filters</p>
+    </FilterToggleSection>
+  ))
+  .add('Filter - Multiple', () => (
+    <>
+      <FilterToggleSection label="Toggle me" id="toggle.nine" isOpen={true}>
+        <p>Some filters</p>
+      </FilterToggleSection>
+      <FilterToggleSection label="Toggle me" id="toggle.ten" isOpen={false}>
+        <p>Some filters</p>
+      </FilterToggleSection>
+      <FilterToggleSection label="Toggle me" id="toggle.eleven" isOpen={false}>
+        <p>Some filters</p>
+      </FilterToggleSection>
     </>
   ))

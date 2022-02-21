@@ -1,8 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { SPACING } from '@govuk-react/constants'
-import { GREY_2 } from 'govuk-colours'
 
 import {
   COMPANIES__LOADED,
@@ -13,7 +10,7 @@ import {
 import {
   CollectionFilters,
   FilteredCollectionList,
-  ToggleSection,
+  FilterToggleSection,
   DefaultLayout,
   Filters,
 } from '../../../components'
@@ -32,14 +29,6 @@ import {
   TASK_GET_COMPANIES_METADATA,
   state2props,
 } from './state'
-
-const StyledToggleSection = styled(ToggleSection)({
-  borderBottom: `solid 1px ${GREY_2}`,
-  paddingBottom: SPACING.SCALE_2,
-  '&:last-child': {
-    borderBottom: 'none',
-  },
-})
 
 const CompaniesCollection = ({
   payload,
@@ -93,7 +82,7 @@ const CompaniesCollection = ({
         addItemUrl="/companies/create"
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
-          <StyledToggleSection
+          <FilterToggleSection
             id="CompanyCollection.company-details-filters"
             label="Company Details"
             isOpen={true}
@@ -146,9 +135,9 @@ const CompaniesCollection = ({
               }
               data-test="lead-ita-global-account-manager-filter"
             />
-          </StyledToggleSection>
+          </FilterToggleSection>
 
-          <StyledToggleSection
+          <FilterToggleSection
             id="CompanyCollection.location-details-filters"
             label="Location Details"
             isOpen={false}
@@ -201,9 +190,9 @@ const CompaniesCollection = ({
               selectedOptions={selectedFilters.canadianProvinces.options}
               data-test="canadian-province-filter"
             />
-          </StyledToggleSection>
+          </FilterToggleSection>
 
-          <StyledToggleSection
+          <FilterToggleSection
             id="CompanyCollection.company-activity-details-filters"
             label="Company Activity Details"
             isOpen={false}
@@ -242,7 +231,7 @@ const CompaniesCollection = ({
               }
               data-test="future-countries-of-interest-filter"
             />
-          </StyledToggleSection>
+          </FilterToggleSection>
         </CollectionFilters>
       </FilteredCollectionList>
     </DefaultLayout>

@@ -23,4 +23,12 @@ describe('ToggleSection', () => {
     cy.visit('/iframe.html?id=togglesection--dashboard-multiple')
     cy.get('#root').should('be.visible').compareSnapshot('dashboard-multi')
   })
+  it('should render the filter single toggle section correctly', () => {
+    cy.visit('/iframe.html?id=togglesection--filter-single')
+    cy.get('#root').should('be.visible').compareSnapshot('filter-single')
+  })
+  it('should render the filter multiple toggle section correctly', () => {
+    cy.visit('/iframe.html?id=togglesection--filter-multiple')
+    cy.get('#root').should('be.visible').compareSnapshot('filter-multi')
+  })
 })
