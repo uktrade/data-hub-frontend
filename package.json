@@ -167,7 +167,7 @@
     "webpack": "^4.46.0",
     "webpack-assets-manifest": "^4.0.6",
     "webpack-cli": "^4.9.2",
-    "winston": "^3.3.3"
+    "winston": "^3.6.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "7.16.7",
