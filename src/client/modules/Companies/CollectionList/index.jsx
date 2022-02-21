@@ -84,7 +84,7 @@ const CompaniesCollection = ({
         <CollectionFilters taskProps={collectionListMetadataTask}>
           <FilterToggleSection
             id="CompanyCollection.company-details-filters"
-            label="Company Details"
+            label="Company details"
             isOpen={true}
           >
             <Filters.Input
@@ -139,7 +139,7 @@ const CompaniesCollection = ({
 
           <FilterToggleSection
             id="CompanyCollection.location-details-filters"
-            label="Location Details"
+            label="Location details"
             isOpen={false}
           >
             <Filters.Typeahead
@@ -194,7 +194,7 @@ const CompaniesCollection = ({
 
           <FilterToggleSection
             id="CompanyCollection.company-activity-details-filters"
-            label="Company Activity Details"
+            label="Company activity details"
             isOpen={false}
           >
             <Filters.Date
