@@ -5,12 +5,10 @@ import { LABELS } from './constants'
 import { CONTACTS__LOADED, CONTACTS__METADATA_LOADED } from '../../../actions'
 
 import {
-  RoutedTypeahead,
-  RoutedInputField,
   CollectionFilters,
   FilteredCollectionList,
-  RoutedCheckboxGroupField,
   DefaultLayout,
+  Filters,
 } from '../../../components'
 
 import {
@@ -67,7 +65,7 @@ const ContactsCollection = ({
         entityName="contact"
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
-          <RoutedInputField
+          <Filters.Input
             id="ContactsCollection.name"
             qsParam="name"
             name="name"
@@ -75,7 +73,7 @@ const ContactsCollection = ({
             placeholder="Search contact name"
             data-test="contact-name-filter"
           />
-          <RoutedInputField
+          <Filters.Input
             id="ContactsCollection.company-name"
             qsParam="company_name"
             name="company_name"
@@ -83,7 +81,7 @@ const ContactsCollection = ({
             placeholder="Search company name"
             data-test="company-name-filter"
           />
-          <RoutedTypeahead
+          <Filters.Typeahead
             isMulti={true}
             label={LABELS.sector}
             name="sector"
@@ -93,7 +91,7 @@ const ContactsCollection = ({
             selectedOptions={selectedFilters.companySectors.options}
             data-test="sector-filter"
           />
-          <RoutedTypeahead
+          <Filters.Typeahead
             isMulti={true}
             label={LABELS.country}
             name="country"
@@ -103,7 +101,7 @@ const ContactsCollection = ({
             selectedOptions={selectedFilters.addressCountries.options}
             data-test="country-filter"
           />
-          <RoutedTypeahead
+          <Filters.Typeahead
             isMulti={true}
             label={LABELS.ukRegion}
             name="uk_region"
@@ -113,7 +111,7 @@ const ContactsCollection = ({
             selectedOptions={selectedFilters.companyUkRegions.options}
             data-test="uk-region-filter"
           />
-          <RoutedCheckboxGroupField
+          <Filters.CheckboxGroup
             legend={LABELS.status}
             name="archived"
             qsParam="archived"

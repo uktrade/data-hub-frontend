@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import { FONT_SIZE, MEDIA_QUERIES } from '@govuk-react/constants'
+import { FONT_SIZE } from '@govuk-react/constants'
 import { FOCUS_COLOUR, BLACK } from 'govuk-colours'
 
-import RoutedInput from '../RoutedInput'
+import RoutedInput from '.'
 
 export default styled(RoutedInput)({
   fontSize: FONT_SIZE.SIZE_16,
@@ -17,9 +17,5 @@ export default styled(RoutedInput)({
   '&:focus': {
     outline: `3px solid ${FOCUS_COLOUR}`,
     outlineOffset: 0,
-  },
-
-  [MEDIA_QUERIES.TABLET]: {
-    fontSize: FONT_SIZE.SIZE_19,
   },
 })

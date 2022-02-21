@@ -10,12 +10,8 @@ import {
 import {
   CollectionFilters,
   FilteredCollectionList,
-  RoutedAdvisersTypeahead,
-  RoutedCheckboxGroupField,
-  RoutedDateField,
-  RoutedInputField,
-  RoutedTypeahead,
   DefaultLayout,
+  Filters,
 } from '../../../components'
 
 import {
@@ -85,7 +81,7 @@ const CompaniesCollection = ({
         addItemUrl="/companies/create"
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
-          <RoutedCheckboxGroupField
+          <Filters.CheckboxGroup
             legend={LABELS.headquarterType}
             name="headquarter_type"
             qsParam="headquarter_type"
@@ -93,7 +89,7 @@ const CompaniesCollection = ({
             selectedOptions={selectedFilters.headquarterTypes.options}
             data-test="headquarter-type-filter"
           />
-          <RoutedInputField
+          <Filters.Input
             id="CompanyCollection.name"
             qsParam="name"
             name="name"
@@ -101,7 +97,7 @@ const CompaniesCollection = ({
             placeholder="Search company name"
             data-test="company-name-filter"
           />
-          <RoutedTypeahead
+          <Filters.Typeahead
             isMulti={true}
             label={LABELS.sector}
             name="sector"
@@ -111,7 +107,7 @@ const CompaniesCollection = ({
             selectedOptions={selectedFilters.sectors.options}
             data-test="sector-filter"
           />
-          <RoutedTypeahead
+          <Filters.Typeahead
             isMulti={true}
             label={LABELS.country}
             name="country"
@@ -121,8 +117,7 @@ const CompaniesCollection = ({
             selectedOptions={selectedFilters.countries.options}
             data-test="country-filter"
           />
-
-          <RoutedTypeahead
+          <Filters.Typeahead
             isMulti={true}
             label={LABELS.usState}
             name="us_state"
@@ -132,8 +127,7 @@ const CompaniesCollection = ({
             selectedOptions={selectedFilters.usStates.options}
             data-test="us-state-filter"
           />
-
-          <RoutedTypeahead
+          <Filters.Typeahead
             isMulti={true}
             label={LABELS.canadianProvince}
             name="canadian_province"
@@ -143,8 +137,7 @@ const CompaniesCollection = ({
             selectedOptions={selectedFilters.canadianProvinces.options}
             data-test="canadian-province-filter"
           />
-
-          <RoutedInputField
+          <Filters.Input
             id="CompanyCollection.postcode"
             qsParam="uk_postcode"
             name="uk_postcode"
@@ -152,7 +145,7 @@ const CompaniesCollection = ({
             placeholder="Search UK postcode"
             data-test="uk-postcode-filter"
           />
-          <RoutedTypeahead
+          <Filters.Typeahead
             isMulti={true}
             label={LABELS.ukRegion}
             name="uk_region"
@@ -162,7 +155,7 @@ const CompaniesCollection = ({
             selectedOptions={selectedFilters.ukRegions.options}
             data-test="uk-region-filter"
           />
-          <RoutedCheckboxGroupField
+          <Filters.CheckboxGroup
             legend={LABELS.companyStatus}
             name="archived"
             qsParam="archived"
@@ -171,7 +164,7 @@ const CompaniesCollection = ({
             data-test="company-status-filter"
             groupId="company-status-filter"
           />
-          <RoutedTypeahead
+          <Filters.Typeahead
             isMulti={true}
             label={LABELS.currentlyExportingTo}
             name="export_to_countries"
@@ -181,7 +174,7 @@ const CompaniesCollection = ({
             selectedOptions={selectedFilters.exportToCountries.options}
             data-test="currently-exporting-to-country-filter"
           />
-          <RoutedTypeahead
+          <Filters.Typeahead
             isMulti={true}
             label={LABELS.futureCountriesOfInterest}
             name="future_interest_countries"
@@ -191,19 +184,19 @@ const CompaniesCollection = ({
             selectedOptions={selectedFilters.futureCountriesOfInterest.options}
             data-test="future-countries-of-interest-filter"
           />
-          <RoutedDateField
+          <Filters.Date
             label={LABELS.lastInteractionAfter}
             name="latest_interaction_date_after"
             qsParamName="latest_interaction_date_after"
             data-test="last-interaction-after-filter"
           />
-          <RoutedDateField
+          <Filters.Date
             label={LABELS.lastInteractionBefore}
             name="latest_interaction_date_before"
             qsParamName="latest_interaction_date_before"
             data-test="last-interaction-before-filter"
           />
-          <RoutedAdvisersTypeahead
+          <Filters.AdvisersTypeahead
             isMulti={true}
             taskProps={leadItaGlobalAccountManagerTask}
             label={LABELS.leadItaOrGlobalAccountManager}
