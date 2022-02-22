@@ -7,6 +7,7 @@ import { CONTACTS__LOADED, CONTACTS__METADATA_LOADED } from '../../../actions'
 import {
   CollectionFilters,
   FilteredCollectionList,
+  FilterToggleSection,
   DefaultLayout,
   Filters,
 } from '../../../components'
@@ -65,61 +66,74 @@ const ContactsCollection = ({
         entityName="contact"
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
-          <Filters.Input
-            id="ContactsCollection.name"
-            qsParam="name"
-            name="name"
-            label={LABELS.contactName}
-            placeholder="Search contact name"
-            data-test="contact-name-filter"
-          />
-          <Filters.Input
-            id="ContactsCollection.company-name"
-            qsParam="company_name"
-            name="company_name"
-            label={LABELS.companyName}
-            placeholder="Search company name"
-            data-test="company-name-filter"
-          />
-          <Filters.Typeahead
-            isMulti={true}
-            label={LABELS.sector}
-            name="sector"
-            qsParam="company_sector_descends"
-            placeholder="Search sector"
-            options={optionMetadata.sectorOptions}
-            selectedOptions={selectedFilters.companySectors.options}
-            data-test="sector-filter"
-          />
-          <Filters.Typeahead
-            isMulti={true}
-            label={LABELS.country}
-            name="country"
-            qsParam="address_country"
-            placeholder="Search country"
-            options={optionMetadata.countryOptions}
-            selectedOptions={selectedFilters.addressCountries.options}
-            data-test="country-filter"
-          />
-          <Filters.Typeahead
-            isMulti={true}
-            label={LABELS.ukRegion}
-            name="uk_region"
-            qsParam="company_uk_region"
-            placeholder="Search UK region"
-            options={optionMetadata.ukRegionOptions}
-            selectedOptions={selectedFilters.companyUkRegions.options}
-            data-test="uk-region-filter"
-          />
-          <Filters.CheckboxGroup
-            legend={LABELS.status}
-            name="archived"
-            qsParam="archived"
-            options={optionMetadata.statusOptions}
-            selectedOptions={selectedFilters.statuses.options}
-            data-test="status-filter"
-            groupId="status-filter"
-          />
+          <FilterToggleSection
+            id="ContactCollection.contact-details-filters"
+            label="Contact details"
+            isOpen={true}
+          >
+            <Filters.Input
+              id="ContactsCollection.name"
+              qsParam="name"
+              name="name"
+              label={LABELS.contactName}
+              placeholder="Search contact name"
+              data-test="contact-name-filter"
+            />
+            <Filters.Input
+              id="ContactsCollection.company-name"
+              qsParam="company_name"
+              name="company_name"
+              label={LABELS.companyName}
+              placeholder="Search company name"
+              data-test="company-name-filter"
+            />
+            <Filters.Typeahead
+              isMulti={true}
+              label={LABELS.sector}
+              name="sector"
+              qsParam="company_sector_descends"
+              placeholder="Search sector"
+              options={optionMetadata.sectorOptions}
+              selectedOptions={selectedFilters.companySectors.options}
+              data-test="sector-filter"
+            />
+            <Filters.CheckboxGroup
+              legend={LABELS.status}
+              name="archived"
+              qsParam="archived"
+              options={optionMetadata.statusOptions}
+              selectedOptions={selectedFilters.statuses.options}
+              data-test="status-filter"
+              groupId="status-filter"
+            />
+          </FilterToggleSection>
+
+          <FilterToggleSection
+            id="ContactCollection.contact-location-details-filters"
+            label="Contact location details"
+            isOpen={false}
+          >
+            <Filters.Typeahead
+              isMulti={true}
+              label={LABELS.country}
+              name="country"
+              qsParam="address_country"
+              placeholder="Search country"
+              options={optionMetadata.countryOptions}
+              selectedOptions={selectedFilters.addressCountries.options}
+              data-test="country-filter"
+            />
+            <Filters.Typeahead
+              isMulti={true}
+              label={LABELS.ukRegion}
+              name="uk_region"
+              qsParam="company_uk_region"
+              placeholder="Search UK region"
+              options={optionMetadata.ukRegionOptions}
+              selectedOptions={selectedFilters.companyUkRegions.options}
+              data-test="uk-region-filter"
+            />
+          </FilterToggleSection>
         </CollectionFilters>
       </FilteredCollectionList>
     </DefaultLayout>

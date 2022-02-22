@@ -12,6 +12,8 @@ import {
 
 import { contactsListFaker } from '../../fakers/contacts'
 
+const searchEndpoint = '/api-proxy/v3/search/contact'
+
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
     // Default query params
@@ -33,7 +35,7 @@ describe('Contacts Collections Filter', () => {
   context('Default Params', () => {
     it('should set the default params', () => {
       const contactsList = contactsListFaker(10)
-      cy.intercept('POST', '/api-proxy/v3/search/contact', {
+      cy.intercept('POST', searchEndpoint, {
         body: {
           count: contactsList.length,
           results: contactsList,
@@ -64,6 +66,19 @@ describe('Contacts Collections Filter', () => {
     })
   })
 
+  context('Toggle groups', () => {
+    it('should show contact details filters and hide them on toggle', () => {
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit('/contacts')
+      cy.wait('@apiRequest')
+      cy.get('[data-test="contact-name-filter"]').should('be.visible')
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Contact details')
+        .click()
+      cy.get('[data-test="contact-name-filter"]').should('not.be.visible')
+    })
+  })
+
   context('Contact', () => {
     const element = '[data-test="contact-name-filter"]'
     const name = 'David Jones'
@@ -77,7 +92,7 @@ describe('Contacts Collections Filter', () => {
 
     it('should filter from the url', () => {
       const queryString = buildQueryString({ name })
-      cy.intercept('POST', '/api-proxy/v3/search/contact').as('apiRequest')
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`/contacts?${queryString}`)
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body).to.deep.equal(expectedPayload)
@@ -88,7 +103,7 @@ describe('Contacts Collections Filter', () => {
 
     it('should filter from user input and remove the chips', () => {
       const queryString = buildQueryString()
-      cy.intercept('POST', '/api-proxy/v3/search/contact').as('apiRequest')
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`/contacts?${queryString}`)
       cy.wait('@apiRequest')
 
@@ -123,9 +138,10 @@ describe('Contacts Collections Filter', () => {
       archived: false,
       sortby: 'modified_on:desc',
     }
+
     it('should filter from the url', () => {
       const queryString = buildQueryString({ company_name: name })
-      cy.intercept('POST', '/api-proxy/v3/search/contact').as('apiRequest')
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`/contacts?${queryString}`)
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body).to.deep.equal(expectedPayload)
@@ -134,9 +150,10 @@ describe('Contacts Collections Filter', () => {
       assertChipExists({ label: name, position: 1 })
       assertChipExists({ label: 'Active', position: 2 })
     })
+
     it('should filter from user input and remove the chips', () => {
       const queryString = buildQueryString()
-      cy.intercept('POST', '/api-proxy/v3/search/contact').as('apiRequest')
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`/contacts?${queryString}`)
       cy.wait('@apiRequest')
 
@@ -171,11 +188,12 @@ describe('Contacts Collections Filter', () => {
       archived: false,
       sortby: 'modified_on:desc',
     }
+
     it('should filter from the url', () => {
       const queryString = buildQueryString({
         company_sector_descends: [aerospaceId],
       })
-      cy.intercept('POST', '/api-proxy/v3/search/contact').as('apiRequest')
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`/contacts?${queryString}`)
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body).to.deep.equal(expectedPayload)
@@ -183,9 +201,10 @@ describe('Contacts Collections Filter', () => {
       cy.get(element).should('contain', 'Aerospace')
       assertChipExists({ label: 'Aerospace', position: 1 })
     })
+
     it('should filter from user input and remove the chips', () => {
       const queryString = buildQueryString()
-      cy.intercept('POST', '/api-proxy/v3/search/contact').as('apiRequest')
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`/contacts?${queryString}`)
       cy.wait('@apiRequest')
 
@@ -226,11 +245,12 @@ describe('Contacts Collections Filter', () => {
       archived: false,
       sortby: 'modified_on:desc',
     }
+
     it('should filter from the url', () => {
       const queryString = buildQueryString({
         address_country: [brazilId],
       })
-      cy.intercept('POST', '/api-proxy/v3/search/contact').as('apiRequest')
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`/contacts?${queryString}`)
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body).to.deep.equal(expectedPayload)
@@ -238,11 +258,16 @@ describe('Contacts Collections Filter', () => {
       cy.get(element).should('contain', 'Brazil')
       assertChipExists({ label: 'Brazil', position: 1 })
     })
+
     it('should filter from user input and remove the chips', () => {
       const queryString = buildQueryString()
-      cy.intercept('POST', '/api-proxy/v3/search/contact').as('apiRequest')
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`/contacts?${queryString}`)
       cy.wait('@apiRequest')
+
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Contact location details')
+        .click()
 
       testTypeahead({
         element,
@@ -281,11 +306,12 @@ describe('Contacts Collections Filter', () => {
       archived: false,
       sortby: 'modified_on:desc',
     }
+
     it('should filter from the url', () => {
       const queryString = buildQueryString({
         company_uk_region: [londonId],
       })
-      cy.intercept('POST', '/api-proxy/v3/search/contact').as('apiRequest')
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`/contacts?${queryString}`)
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body).to.deep.equal(expectedPayload)
@@ -293,11 +319,16 @@ describe('Contacts Collections Filter', () => {
       cy.get(element).should('contain', 'London')
       assertChipExists({ label: 'London', position: 1 })
     })
+
     it('should filter from user input and remove the chips', () => {
       const queryString = buildQueryString()
-      cy.intercept('POST', '/api-proxy/v3/search/contact').as('apiRequest')
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`/contacts?${queryString}`)
       cy.wait('@apiRequest')
+
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Contact location details')
+        .click()
 
       testTypeahead({
         element,
@@ -324,9 +355,13 @@ describe('Contacts Collections Filter', () => {
       assertChipsEmpty()
       assertFieldEmpty(element)
     })
+
     it('should contain all UK regions (including the disabled ones)', () => {
       const queryString = buildQueryString()
       cy.visit(`/contacts?${queryString}`)
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Contact location details')
+        .click()
       testTypeaheadOptionsLength({ element, length: 23 })
     })
   })
@@ -337,6 +372,7 @@ describe('Contacts Collections Filter', () => {
       cy.get('[data-test="status-filter"]').find('input').eq(0).as('active')
       cy.get('[data-test="status-filter"]').find('input').eq(1).as('inactive')
     })
+
     it('should filter by Active Status (explicit query params)', () => {
       const queryString = buildQueryString({ archived: ['false'] })
       cy.visit(`/contacts?${queryString}`)
@@ -344,6 +380,7 @@ describe('Contacts Collections Filter', () => {
       cy.get('@inactive').should('not.be.checked')
       assertChipExists({ label: 'Active', position: 1 })
     })
+
     it('should filter by Inactive Status', () => {
       const queryString = buildQueryString({ archived: ['true'] })
       cy.visit(`/contacts?${queryString}`)
@@ -351,6 +388,7 @@ describe('Contacts Collections Filter', () => {
       cy.get('@inactive').should('be.checked')
       assertChipExists({ label: 'Inactive', position: 1 })
     })
+
     it('should filter by both Active and Inactive statuses (no filter)', () => {
       const queryString = buildQueryString({ archived: ['false', 'true'] })
       cy.visit(`/contacts?${queryString}`)
@@ -375,6 +413,7 @@ describe('Contacts Collections Filter', () => {
       cy.visit(`/contacts?${queryString}`)
       cy.get('[data-test=filter-chips]').children().as('filterChips')
     })
+
     it('should remove all filters and chips', () => {
       cy.get('[data-test=clear-filters]').click()
       cy.get('[data-test=filter-chips]').children().should('have.length', 0)
