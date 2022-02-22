@@ -7,11 +7,11 @@ export const LABELS = {
   projectStatus: 'Status',
   investmentType: 'Investment type',
   likelihoodToLand: 'Likelihood to land',
-  actualLandDateAfter: 'Actual land date after',
-  actualLandDateBefore: 'Actual land date before',
+  actualLandDateAfter: 'Actual land date from',
+  actualLandDateBefore: 'Actual land date to',
   involvementLevel: 'Level of involvement specified',
-  estimatedLandDateAfter: 'Estimated land date after',
-  estimatedLandDateBefore: 'Estimated land date before',
+  estimatedLandDateAfter: 'Estimated land date from',
+  estimatedLandDateBefore: 'Estimated land date to',
   landDate: 'Land date',
 }
 
