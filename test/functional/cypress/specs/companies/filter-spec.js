@@ -723,7 +723,7 @@ describe('Companies Collections Filter', () => {
     })
   })
 
-  context('Lead ITA or Global Account Manager', () => {
+  context('Lead ITA or global account manager', () => {
     const element = '[data-test="lead-ita-global-account-manager-filter"]'
     const adviserId = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
     const adviserName = 'Puck Head'
@@ -757,7 +757,7 @@ describe('Companies Collections Filter', () => {
       assertQueryParams('one_list_group_global_account_manager', [adviserId])
       assertChipExists({ label: 'Active', position: 1 })
       assertChipExists({
-        label: `Lead ITA or Global Account Manager: ${adviserName}`,
+        label: `Lead ITA or global account manager: ${adviserName}`,
         position: 2,
       })
       removeChip(adviserId)
