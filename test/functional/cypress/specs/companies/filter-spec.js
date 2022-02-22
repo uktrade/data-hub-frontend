@@ -227,6 +227,9 @@ describe('Companies Collections Filter', () => {
       cy.visit(`/companies?${queryString}`)
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Location details')
+        .click()
       testTypeahead({
         element,
         label: 'Country',
@@ -281,6 +284,9 @@ describe('Companies Collections Filter', () => {
       cy.wait('@usStatesApiRequest')
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Location details')
+        .click()
       testTypeahead({
         element,
         label: 'US state',
@@ -342,6 +348,9 @@ describe('Companies Collections Filter', () => {
       cy.wait('@canadianProvincesApiRequest')
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Location details')
+        .click()
       testTypeahead({
         element,
         label: 'Canadian province',
@@ -407,6 +416,9 @@ describe('Companies Collections Filter', () => {
       cy.wait('@ukRegionsApiRequest')
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Location details')
+        .click()
       testTypeaheadOptionsLength({ element, length: ukRegions.length })
       testTypeahead({
         element,
@@ -532,6 +544,9 @@ describe('Companies Collections Filter', () => {
       cy.visit(`/companies?${queryString}`)
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Company activity details')
+        .click()
       testTypeahead({
         element,
         label: 'Currently exporting to',
@@ -581,6 +596,9 @@ describe('Companies Collections Filter', () => {
       cy.visit(`/companies?${queryString}`)
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Company activity details')
+        .click()
       testTypeahead({
         element,
         label: 'Future countries of interest',
@@ -649,6 +667,9 @@ describe('Companies Collections Filter', () => {
       cy.visit(`/companies?${queryString}`)
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Company activity details')
+        .click()
       inputDateValue({
         element: fromElement,
         value: fromDate,
