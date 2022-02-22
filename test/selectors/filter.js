@@ -20,9 +20,6 @@ module.exports = {
     country: '#group-field-address_country',
     ukRegion: '#group-field-company_uk_region',
   },
-  interaction: {
-    myInteractions: '[data-test="adviser-filter"]',
-  },
   investments: {
     companyName: '#group-field-sector_descends',
     country: '#group-field-investor_company_country',

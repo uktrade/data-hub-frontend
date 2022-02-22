@@ -672,21 +672,21 @@ describe('Investments Collections Filter', () => {
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       assertChipExists({
-        label: `Actual land date before: ${formattedToDate}`,
+        label: `Actual land date to: ${formattedToDate}`,
         position: 1,
       })
       assertChipExists({
-        label: `Actual land date after: ${formattedFromDate}`,
+        label: `Actual land date from: ${formattedFromDate}`,
         position: 2,
       })
       assertDateInput({
         element: fromElement,
-        label: 'Actual land date after',
+        label: 'Actual land date from',
         value: fromDate,
       })
       assertDateInput({
         element: toElement,
-        label: 'Actual land date before',
+        label: 'Actual land date to',
         value: toDate,
       })
     })
@@ -714,21 +714,21 @@ describe('Investments Collections Filter', () => {
       assertQueryParams('actual_land_date_after', fromDate)
       assertQueryParams('actual_land_date_before', toDate)
       assertChipExists({
-        label: `Actual land date before: ${formattedToDate}`,
+        label: `Actual land date to: ${formattedToDate}`,
         position: 1,
       })
       assertChipExists({
-        label: `Actual land date after: ${formattedFromDate}`,
+        label: `Actual land date from: ${formattedFromDate}`,
         position: 2,
       })
       assertDateInput({
         element: fromElement,
-        label: 'Actual land date after',
+        label: 'Actual land date from',
         value: fromDate,
       })
       assertDateInput({
         element: toElement,
-        label: 'Actual land date before',
+        label: 'Actual land date to',
         value: toDate,
       })
 
@@ -740,12 +740,12 @@ describe('Investments Collections Filter', () => {
 
       assertDateInput({
         element: fromElement,
-        label: 'Actual land date after',
+        label: 'Actual land date from',
         value: '',
       })
       assertDateInput({
         element: toElement,
-        label: 'Actual land date before',
+        label: 'Actual land date to',
         value: '',
       })
     })
