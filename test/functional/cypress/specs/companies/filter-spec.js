@@ -62,6 +62,19 @@ describe('Companies Collections Filter', () => {
     })
   })
 
+  context('Toggle groups', () => {
+    it('should show company details filters and hide them on toggle', () => {
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit('/companies')
+      cy.wait('@apiRequest')
+      cy.get('[data-test="company-name-filter"]').should('be.visible')
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Company details')
+        .click()
+      cy.get('[data-test="company-name-filter"]').should('not.be.visible')
+    })
+  })
+
   context('Headquarter Type', () => {
     const element = '[data-test="headquarter-type-filter"]'
     const globalHqId = '43281c5e-92a4-4794-867b-b4d5f801e6f3'
