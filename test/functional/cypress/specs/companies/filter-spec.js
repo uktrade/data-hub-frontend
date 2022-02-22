@@ -62,6 +62,19 @@ describe('Companies Collections Filter', () => {
     })
   })
 
+  context('Toggle groups', () => {
+    it('should show company details filters and hide them on toggle', () => {
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit('/companies')
+      cy.wait('@apiRequest')
+      cy.get('[data-test="company-name-filter"]').should('be.visible')
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Company details')
+        .click()
+      cy.get('[data-test="company-name-filter"]').should('not.be.visible')
+    })
+  })
+
   context('Headquarter Type', () => {
     const element = '[data-test="headquarter-type-filter"]'
     const globalHqId = '43281c5e-92a4-4794-867b-b4d5f801e6f3'
@@ -227,6 +240,9 @@ describe('Companies Collections Filter', () => {
       cy.visit(`/companies?${queryString}`)
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Location details')
+        .click()
       testTypeahead({
         element,
         label: 'Country',
@@ -281,6 +297,9 @@ describe('Companies Collections Filter', () => {
       cy.wait('@usStatesApiRequest')
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Location details')
+        .click()
       testTypeahead({
         element,
         label: 'US state',
@@ -342,6 +361,9 @@ describe('Companies Collections Filter', () => {
       cy.wait('@canadianProvincesApiRequest')
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Location details')
+        .click()
       testTypeahead({
         element,
         label: 'Canadian province',
@@ -407,6 +429,9 @@ describe('Companies Collections Filter', () => {
       cy.wait('@ukRegionsApiRequest')
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Location details')
+        .click()
       testTypeaheadOptionsLength({ element, length: ukRegions.length })
       testTypeahead({
         element,
@@ -532,6 +557,9 @@ describe('Companies Collections Filter', () => {
       cy.visit(`/companies?${queryString}`)
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Company activity details')
+        .click()
       testTypeahead({
         element,
         label: 'Currently exporting to',
@@ -581,6 +609,9 @@ describe('Companies Collections Filter', () => {
       cy.visit(`/companies?${queryString}`)
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Company activity details')
+        .click()
       testTypeahead({
         element,
         label: 'Future countries of interest',
@@ -649,6 +680,9 @@ describe('Companies Collections Filter', () => {
       cy.visit(`/companies?${queryString}`)
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Company activity details')
+        .click()
       inputDateValue({
         element: fromElement,
         value: fromDate,
@@ -702,7 +736,7 @@ describe('Companies Collections Filter', () => {
     })
   })
 
-  context('Lead ITA or Global Account Manager', () => {
+  context('Lead ITA or global account manager', () => {
     const element = '[data-test="lead-ita-global-account-manager-filter"]'
     const adviserId = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
     const adviserName = 'Puck Head'
@@ -736,7 +770,7 @@ describe('Companies Collections Filter', () => {
       assertQueryParams('one_list_group_global_account_manager', [adviserId])
       assertChipExists({ label: 'Active', position: 1 })
       assertChipExists({
-        label: `Lead ITA or Global Account Manager: ${adviserName}`,
+        label: `Lead ITA or global account manager: ${adviserName}`,
         position: 2,
       })
       removeChip(adviserId)

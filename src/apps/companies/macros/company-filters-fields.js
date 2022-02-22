@@ -140,7 +140,7 @@ const companyFiltersFields = function ({ sectorOptions }) {
       entity: 'adviser',
       hideInactive: false,
       target: 'metadata',
-      label: 'Lead ITA or Global Account Manager',
+      label: 'Lead ITA or global account manager',
     },
   ].map((filter) => {
     return Object.assign(filter, {
