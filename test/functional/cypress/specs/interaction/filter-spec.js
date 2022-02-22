@@ -70,8 +70,10 @@ describe('Interactions Collections Filter', () => {
       })
     })
   })
+
   context('Interaction Kind', () => {
     const element = '[data-test="status-filter"]'
+
     it('should filter from the url', () => {
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
       const queryParams = buildQueryString({
@@ -176,6 +178,10 @@ describe('Interactions Collections Filter', () => {
 
       cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
+
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Interaction details')
+        .click()
       selectFirstAdvisersTypeaheadOption({
         element: advisersFilter,
         input: adviser.name,
@@ -264,6 +270,7 @@ describe('Interactions Collections Filter', () => {
   context('Dates', () => {
     const dateAfter = '[data-test="date-after-filter"]'
     const dateBefore = '[data-test="date-before-filter"]'
+
     it('should filter from the url', () => {
       const queryString = buildQueryString({
         date_after: '2021-06-24',
@@ -289,11 +296,16 @@ describe('Interactions Collections Filter', () => {
       assertChipExists({ label: 'From: 24 June 2021', position: 1 })
       assertChipExists({ label: 'To: 24 June 2023', position: 2 })
     })
+
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
       cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
+
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Interaction details')
+        .click()
       inputDateValue({
         element: dateAfter,
         value: '2021-06-24',
@@ -346,6 +358,7 @@ describe('Interactions Collections Filter', () => {
       })
       assertChipExists({ label: service.name, position: 1 })
     })
+
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
@@ -355,6 +368,10 @@ describe('Interactions Collections Filter', () => {
       cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
       cy.wait('@metaApiRequest')
+
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Service details')
+        .click()
       clickCheckboxGroupOption({
         element,
         value: service.id,
@@ -366,6 +383,7 @@ describe('Interactions Collections Filter', () => {
       assertChipsEmpty()
     })
   })
+
   context('Sector', () => {
     const element = '[data-test="sector-filter"]'
     const aerospaceId = '9538cecc-5f95-e211-a939-e4115bead28a'
@@ -373,6 +391,7 @@ describe('Interactions Collections Filter', () => {
       ...minimumPayload,
       sector_descends: [aerospaceId],
     }
+
     it('should filter from the url', () => {
       const queryString = buildQueryString({
         sector_descends: [aerospaceId],
@@ -383,11 +402,16 @@ describe('Interactions Collections Filter', () => {
       cy.get(element).should('contain', 'Aerospace')
       assertChipExists({ label: 'Aerospace', position: 1 })
     })
+
     it('should filter from user input and remove the chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
       cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
+
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Interaction details')
+        .click()
 
       testTypeahead({
         element,
@@ -428,11 +452,17 @@ describe('Interactions Collections Filter', () => {
       })
       assertChipExists({ label: 'Includes business intelligence', position: 1 })
     })
+
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
       cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
+
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Interaction details')
+        .click()
+
       clickCheckboxGroupOption({
         element,
         value: 'true',
@@ -444,6 +474,7 @@ describe('Interactions Collections Filter', () => {
       assertChipsEmpty()
     })
   })
+
   context('Policy area(s)', () => {
     const element = '[data-test="policy-area-filter"]'
     const policyArea = policyAreaFaker()
@@ -481,6 +512,9 @@ describe('Interactions Collections Filter', () => {
       cy.wait('@apiRequest')
       cy.wait('@metaApiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Policy details')
+        .click()
       clickCheckboxGroupOption({
         element,
         value: policyArea.id,
@@ -532,6 +566,9 @@ describe('Interactions Collections Filter', () => {
       cy.wait('@apiRequest')
       cy.wait('@metaApiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Policy details')
+        .click()
       clickCheckboxGroupOption({
         element,
         value: policyIssueType.id,
@@ -545,6 +582,7 @@ describe('Interactions Collections Filter', () => {
       assertFieldEmpty(element)
     })
   })
+
   context('Company One List Group Tier', () => {
     const element = '[data-test="company-one-list-group-tier-filter"]'
     const companyOneListgroupTier = companyOneListgroupTierFaker()
@@ -582,6 +620,9 @@ describe('Interactions Collections Filter', () => {
       cy.wait('@apiRequest')
       cy.wait('@metaApiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Interaction details')
+        .click()
       clickCheckboxGroupOption({
         element,
         value: companyOneListgroupTier.id,
