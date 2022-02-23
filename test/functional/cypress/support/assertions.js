@@ -588,19 +588,6 @@ const assertQueryParams = (key, value) => {
 }
 
 /**
- * Assert that child elements exist in the expected order
- */
-const assertElementsInOrder = ({ parentElement, expectedIdentifiers }) => {
-  let filterElement = cy.get(parentElement).first()
-  for (const [index, identifier] of expectedIdentifiers.entries()) {
-    filterElement.should('have.attr', 'data-test', identifier)
-    if (index !== expectedIdentifiers.length - 1) {
-      filterElement.next()
-    }
-  }
-}
-
-/**
  * Assert the expected payload to the API
  */
 
@@ -723,7 +710,6 @@ module.exports = {
   assertChipsEmpty,
   assertFieldEmpty,
   assertQueryParams,
-  assertElementsInOrder,
   assertPayload,
   assertDateInput,
   assertErrorSummary,

@@ -98,7 +98,7 @@ describe('Creating an investment project', () => {
 
       assertKeyValueTable('summaryContainer', {
         Client: 'Lambda plc',
-        'Type of investment': 'FDI, Merger',
+        'Investment type': 'FDI, Merger',
         'Primary sector': data.sector,
         'Business activity': data.businessActivities,
         'Client contacts': data.contact,
@@ -165,7 +165,7 @@ describe('Creating an investment project', () => {
 
       assertKeyValueTable('summaryContainer', {
         Client: 'Lambda plc',
-        'Type of investment': 'Non-FDI',
+        'Investment type': 'Non-FDI',
         'Primary sector': data.sector,
         'Business activity': data.businessActivities,
         'Client contacts': data.contact,
@@ -230,7 +230,7 @@ describe('Creating an investment project', () => {
 
       assertKeyValueTable('summaryContainer', {
         Client: 'Lambda plc',
-        'Type of investment': 'Commitment to invest',
+        'Investment type': 'Commitment to invest',
         'Primary sector': data.sector,
         'Business activity': data.businessActivities,
         'Client contacts': data.contact,
@@ -274,7 +274,7 @@ describe('Creating an investment project', () => {
 
       assertKeyValueTable('summaryContainer', {
         Client: 'Mars Exports Ltd',
-        'Type of investment': 'FDI, Merger',
+        'Investment type': 'FDI, Merger',
         'Primary sector': data.sector,
         'Business activity': data.businessActivities,
         'Client contacts': 'Fred Peterson',
@@ -316,7 +316,7 @@ describe('Creating an investment project', () => {
 
         assertKeyValueTable('summaryContainer', {
           Client: 'Mars Exports Ltd',
-          'Type of investment': 'Non-FDI',
+          'Investment type': 'Non-FDI',
           'Primary sector': data.sector,
           'Business activity': data.businessActivities,
           'Client contacts': 'Fred Peterson',
@@ -360,7 +360,7 @@ describe('Creating an investment project', () => {
 
         assertKeyValueTable('summaryContainer', {
           Client: 'Mars Exports Ltd',
-          'Type of investment': 'Commitment to invest',
+          'Investment type': 'Commitment to invest',
           'Primary sector': data.sector,
           'Business activity': data.businessActivities,
           'Client contacts': 'Fred Peterson',

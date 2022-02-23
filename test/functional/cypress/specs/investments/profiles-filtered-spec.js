@@ -79,7 +79,7 @@ const inputFilterTestCases = ({ filterName, selector, cases }) =>
 
 describe('Investor profiles filters', () => {
   typeaheadFilterTestCases({
-    filterName: 'Country of origin',
+    filterName: 'Country of company origin',
     selector: 'country-filter',
     cases: [
       {

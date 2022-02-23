@@ -7,7 +7,7 @@ import {
   CollectionFilters,
   FilteredCollectionList,
   Filters,
-  ToggleSection,
+  FilterToggleSection,
 } from '../../../../client/components/'
 import { listSkeletonPlaceholder } from '../../../../client/components/SkeletonPlaceholder'
 import { TASK_GET_PROFILES_LIST, ID } from './state'
@@ -273,7 +273,7 @@ const LargeCapitalProfileCollection = ({
               },
             }}
           >
-            <ToggleSection
+            <FilterToggleSection
               id="FilteredLargeCapitalProfileCollection.core-filters"
               label="Core filters"
             >
@@ -289,7 +289,7 @@ const LargeCapitalProfileCollection = ({
               />
               <Filters.Typeahead
                 isMulti={true}
-                label="Country of origin"
+                label="Country of company origin"
                 name="country"
                 qsParam={QS_PARAMS.countryOfOrigin}
                 placeholder="Search country"
@@ -304,8 +304,8 @@ const LargeCapitalProfileCollection = ({
                 label="Company name"
                 placeholder="Search company name"
               />
-            </ToggleSection>
-            <ToggleSection
+            </FilterToggleSection>
+            <FilterToggleSection
               id="FilteredLargeCapitalProfileCollection.investor-details-filters"
               label="Investor details"
             >
@@ -339,8 +339,8 @@ const LargeCapitalProfileCollection = ({
                 selectedOptions={selectedRequiredChecksConducted}
                 data-test="required-checks-conducted-filter"
               />
-            </ToggleSection>
-            <ToggleSection
+            </FilterToggleSection>
+            <FilterToggleSection
               id="FilteredLargeCapitalProfileCollection.investor-requirements-filters"
               label="Investor requirements"
             >
@@ -424,8 +424,8 @@ const LargeCapitalProfileCollection = ({
                 selectedOptions={selectedDesiredDealRole}
                 data-test="desired-deal-role-filter"
               />
-            </ToggleSection>
-            <ToggleSection
+            </FilterToggleSection>
+            <FilterToggleSection
               id="FilteredLargeCapitalProfileCollection.location-filters"
               label="Location"
             >
@@ -439,7 +439,7 @@ const LargeCapitalProfileCollection = ({
                 selectedOptions={selectedUkRegionsOfInterest}
                 data-test="uk-regions-of-interest"
               />
-            </ToggleSection>
+            </FilterToggleSection>
           </CollectionFilters>
         </FilteredCollectionList>
       )

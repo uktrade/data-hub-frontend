@@ -45,7 +45,7 @@ describe('Interaction', () => {
       cy.contains('h1', subject)
 
       cy.visit(interactions.index())
-      cy.get(selectors.filter.interaction.myInteractions).click()
+      cy.get('[data-test="my-interactions-filter"]').find('input').click()
 
       cy.get('[data-test="collection-item"]')
         .should('contain', 'Some interesting interaction')
@@ -183,7 +183,7 @@ describe('Service delivery', () => {
 
   it('should display newly created service delivery', () => {
     cy.visit(interactions.index())
-    cy.get(selectors.filter.interaction.myInteractions).click()
+    cy.get('[data-test="my-interactions-filter"]').find('input').click()
 
     cy.get('[data-test="collection-item"]')
       .should('contain', 'Some interesting service delivery')

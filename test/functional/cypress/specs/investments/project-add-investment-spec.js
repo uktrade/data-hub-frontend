@@ -14,8 +14,8 @@ const commonTests = () => {
     cy.get('form').should('be.visible')
   })
 
-  it('should display the "Type of investment"', () => {
-    cy.get('form legend').should('contain', 'Type of investment')
+  it('should display the "Investment type"', () => {
+    cy.get('form legend').should('contain', 'Investment type')
   })
 
   it('should display 3 radio buttons', () => {
@@ -47,7 +47,7 @@ const commonTests = () => {
   })
 
   it('should display a list of "FDI types" when selecting "FDI"', () => {
-    cy.checkRadioGroup('Type of investment', 'FDI')
+    cy.checkRadioGroup('Investment type', 'FDI')
     assertSelectOptions('select option', [
       {
         label: 'Select an FDI type',

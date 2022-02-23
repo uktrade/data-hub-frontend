@@ -14,7 +14,6 @@ import {
   assertChipsEmpty,
   assertChipExists,
   assertDateInput,
-  assertElementsInOrder,
   assertFieldEmpty,
   assertPayload,
   assertTypeaheadOptionSelected,
@@ -53,32 +52,16 @@ const adviserAutocompleteEndpoint = '/api-proxy/adviser/?autocomplete=*'
 const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
 
 describe('Investments Collections Filter', () => {
-  it('should contain filter fields in the right order', () => {
-    const expectedIdentifiers = [
-      'stage-filter',
-      'my-projects-filter',
-      'adviser-filter',
-      'sector-filter',
-      'country-filter',
-      'uk-region-filter',
-      'project-status-filter',
-      'investment-type-filter',
-      'financial-year-filter',
-      'likelihood-to-land-filter',
-      'estimated-land-date-before-filter',
-      'estimated-land-date-after-filter',
-      'actual-land-date-before-filter',
-      'actual-land-date-after-filter',
-      'involvement-level-filter',
-    ]
-
-    cy.visit(urls.investments.projects.index())
-
-    cy.get('[data-test="collection-filters"]').children().as('filterFields')
-
-    assertElementsInOrder({
-      parentElement: '@filterFields',
-      expectedIdentifiers,
+  context('Toggle groups', () => {
+    it('should show stage and status filters and hide them on toggle', () => {
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit('/investments/projects')
+      cy.wait('@apiRequest')
+      cy.get('[data-test="stage-filter"]').should('be.visible')
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Stage and status')
+        .click()
+      cy.get('[data-test="stage-filter"]').should('not.be.visible')
     })
   })
 
@@ -165,6 +148,9 @@ describe('Investments Collections Filter', () => {
       cy.intercept('GET', myAdviserEndpoint, myAdviser).as('adviserApiRequest')
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
       cy.wait('@apiRequest')
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Project details')
+        .click()
       clickCheckboxGroupOption({
         element: myProjectsFilter,
         value: myAdviser.id,
@@ -189,6 +175,9 @@ describe('Investments Collections Filter', () => {
       }).as('adviserListApiRequest')
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
       cy.wait('@apiRequest')
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Project details')
+        .click()
       selectFirstAdvisersTypeaheadOption({
         element: advisersFilter,
         input: myAdviser.name,
@@ -247,6 +236,9 @@ describe('Investments Collections Filter', () => {
       cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
       cy.wait('@apiRequest')
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Project details')
+        .click()
 
       testTypeahead({
         element,
@@ -290,10 +282,13 @@ describe('Investments Collections Filter', () => {
       cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
       cy.wait('@apiRequest')
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Location details')
+        .click()
 
       testTypeahead({
         element,
-        label: 'Country of origin',
+        label: 'Country of company origin',
         placeholder: 'Search country',
         input: 'braz',
         expectedOption: 'Brazil',
@@ -343,6 +338,9 @@ describe('Investments Collections Filter', () => {
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
       cy.wait('@ukRegionsApiRequest')
       cy.wait('@apiRequest')
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Location details')
+        .click()
 
       testTypeaheadOptionsLength({ element, length: ukRegions.length })
       testTypeahead({
@@ -436,6 +434,9 @@ describe('Investments Collections Filter', () => {
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Investment and involvement details')
+        .click()
       clickCheckboxGroupOption({
         element,
         value: investmentTypeFdi,
@@ -481,6 +482,9 @@ describe('Investments Collections Filter', () => {
       cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
       cy.wait('@apiRequest')
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Project details')
+        .click()
 
       clickCheckboxGroupOption({
         element,
@@ -526,6 +530,9 @@ describe('Investments Collections Filter', () => {
       cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
       cy.wait('@apiRequest')
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Land date details')
+        .click()
 
       clickCheckboxGroupOption({
         element,
@@ -564,21 +571,21 @@ describe('Investments Collections Filter', () => {
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       assertChipExists({
-        label: `Estimated land date before: ${formattedToDate}`,
+        label: `Estimated land date to: ${formattedToDate}`,
         position: 1,
       })
       assertChipExists({
-        label: `Estimated land date after: ${formattedFromDate}`,
+        label: `Estimated land date from: ${formattedFromDate}`,
         position: 2,
       })
       assertDateInput({
         element: fromElement,
-        label: 'Estimated land date after',
+        label: 'Estimated land date from',
         value: fromDate,
       })
       assertDateInput({
         element: toElement,
-        label: 'Estimated land date before',
+        label: 'Estimated land date to',
         value: toDate,
       })
     })
@@ -589,6 +596,9 @@ describe('Investments Collections Filter', () => {
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Land date details')
+        .click()
       inputDateValue({
         element: fromElement,
         value: fromDate,
@@ -603,21 +613,21 @@ describe('Investments Collections Filter', () => {
       assertQueryParams('estimated_land_date_after', fromDate)
       assertQueryParams('estimated_land_date_before', toDate)
       assertChipExists({
-        label: `Estimated land date before: ${formattedToDate}`,
+        label: `Estimated land date to: ${formattedToDate}`,
         position: 1,
       })
       assertChipExists({
-        label: `Estimated land date after: ${formattedFromDate}`,
+        label: `Estimated land date from: ${formattedFromDate}`,
         position: 2,
       })
       assertDateInput({
         element: fromElement,
-        label: 'Estimated land date after',
+        label: 'Estimated land date from',
         value: fromDate,
       })
       assertDateInput({
         element: toElement,
-        label: 'Estimated land date before',
+        label: 'Estimated land date to',
         value: toDate,
       })
 
@@ -629,12 +639,12 @@ describe('Investments Collections Filter', () => {
 
       assertDateInput({
         element: fromElement,
-        label: 'Estimated land date after',
+        label: 'Estimated land date from',
         value: '',
       })
       assertDateInput({
         element: toElement,
-        label: 'Estimated land date before',
+        label: 'Estimated land date to',
         value: '',
       })
     })
@@ -662,21 +672,21 @@ describe('Investments Collections Filter', () => {
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       assertChipExists({
-        label: `Actual land date before: ${formattedToDate}`,
+        label: `Actual land date to: ${formattedToDate}`,
         position: 1,
       })
       assertChipExists({
-        label: `Actual land date after: ${formattedFromDate}`,
+        label: `Actual land date from: ${formattedFromDate}`,
         position: 2,
       })
       assertDateInput({
         element: fromElement,
-        label: 'Actual land date after',
+        label: 'Actual land date from',
         value: fromDate,
       })
       assertDateInput({
         element: toElement,
-        label: 'Actual land date before',
+        label: 'Actual land date to',
         value: toDate,
       })
     })
@@ -687,6 +697,9 @@ describe('Investments Collections Filter', () => {
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Land date details')
+        .click()
       inputDateValue({
         element: fromElement,
         value: fromDate,
@@ -701,21 +714,21 @@ describe('Investments Collections Filter', () => {
       assertQueryParams('actual_land_date_after', fromDate)
       assertQueryParams('actual_land_date_before', toDate)
       assertChipExists({
-        label: `Actual land date before: ${formattedToDate}`,
+        label: `Actual land date to: ${formattedToDate}`,
         position: 1,
       })
       assertChipExists({
-        label: `Actual land date after: ${formattedFromDate}`,
+        label: `Actual land date from: ${formattedFromDate}`,
         position: 2,
       })
       assertDateInput({
         element: fromElement,
-        label: 'Actual land date after',
+        label: 'Actual land date from',
         value: fromDate,
       })
       assertDateInput({
         element: toElement,
-        label: 'Actual land date before',
+        label: 'Actual land date to',
         value: toDate,
       })
 
@@ -727,12 +740,12 @@ describe('Investments Collections Filter', () => {
 
       assertDateInput({
         element: fromElement,
-        label: 'Actual land date after',
+        label: 'Actual land date from',
         value: '',
       })
       assertDateInput({
         element: toElement,
-        label: 'Actual land date before',
+        label: 'Actual land date to',
         value: '',
       })
     })
@@ -767,6 +780,9 @@ describe('Investments Collections Filter', () => {
       cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
       cy.wait('@apiRequest')
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Investment and involvement details')
+        .click()
 
       clickCheckboxGroupOption({
         element,

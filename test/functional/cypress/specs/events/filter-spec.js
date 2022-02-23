@@ -56,6 +56,19 @@ describe('events Collections Filter', () => {
     })
   })
 
+  context('Toggle groups', () => {
+    it('should show event details filters and hide them on toggle', () => {
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit('/events')
+      cy.wait('@apiRequest')
+      cy.get('[data-test="event-name-filter"]').should('be.visible')
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Event details')
+        .click()
+      cy.get('[data-test="event-name-filter"]').should('not.be.visible')
+    })
+  })
+
   context('Event Name', () => {
     const element = '[data-test="event-name-filter"]'
     const eventNameQuery = 'Big Event'
@@ -120,6 +133,10 @@ describe('events Collections Filter', () => {
       cy.visit(`/events?${queryString}`)
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Event location details')
+        .click()
+
       testTypeahead({
         element,
         label: 'Country',
@@ -177,6 +194,9 @@ describe('events Collections Filter', () => {
       cy.wait('@ukRegionsApiRequest')
       cy.wait('@apiRequest')
 
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Event location details')
+        .click()
       testTypeaheadOptionsLength({ element, length: ukRegions.length })
       testTypeahead({
         element,

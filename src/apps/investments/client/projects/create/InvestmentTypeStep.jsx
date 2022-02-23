@@ -36,7 +36,7 @@ const InvestmentTypeStep = ({ investmentTypes = [], fdiTypes = [] }) => (
   <Step name="investmentType">
     <FieldRadios
       name="investment_type"
-      legend="Type of investment"
+      legend="Investment type"
       required="Specify the type of investment"
       options={investmentTypes.map((option) => ({
         ...option,

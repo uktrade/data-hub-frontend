@@ -29,7 +29,7 @@ function validateForm(req, res, next) {
 
   if (!req.body.investment_type) {
     errors.messages.investment_type = [
-      'Please choose the type of investment for this project',
+      'Please choose the Investment type for this project',
     ]
   }
 
