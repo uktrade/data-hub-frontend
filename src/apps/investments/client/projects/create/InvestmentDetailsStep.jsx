@@ -116,11 +116,8 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
   const fdiType = findSelectedItem(values.fdiTypes, values.fdi_type)
   return (
     <Step name="details">
-      <SummaryTable
-        caption="Type of investment"
-        data-test="typeOfInvestmentTable"
-      >
-        <SummaryTable.Row heading="Type of investment">
+      <SummaryTable caption="Investment type" data-test="typeOfInvestmentTable">
+        <SummaryTable.Row heading="Investment type">
           {investmentType ? investmentType.label : null}
         </SummaryTable.Row>
         <SummaryTable.Row heading="Type of FDI" hideWhenEmpty={true}>

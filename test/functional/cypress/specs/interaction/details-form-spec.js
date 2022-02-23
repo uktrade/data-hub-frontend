@@ -131,7 +131,7 @@ const ELEMENT_POLICY_ISSUE_TYPES = {
   label: 'Policy issue types',
 }
 const ELEMENT_POLICY_AREAS = {
-  label: 'Policy area(s)',
+  label: 'Policy areas',
 }
 const ELEMENT_POLICY_FEEDBACK_NOTES = {
   label: 'Business intelligence',

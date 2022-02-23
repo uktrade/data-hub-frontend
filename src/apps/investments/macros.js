@@ -60,7 +60,7 @@ const investmentFiltersFields = function ({
       options: get(metadata, 'countryOptions', []).map(transformObjectToOption),
       hideInactive: false,
       target: 'metadata',
-      label: 'Country of origin',
+      label: 'Country of company origin',
     },
     {
       macroName: 'Typeahead',

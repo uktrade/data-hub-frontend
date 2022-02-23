@@ -289,7 +289,7 @@ const LargeCapitalProfileCollection = ({
               />
               <Filters.Typeahead
                 isMulti={true}
-                label="Country of origin"
+                label="Country of company origin"
                 name="country"
                 qsParam={QS_PARAMS.countryOfOrigin}
                 placeholder="Search country"

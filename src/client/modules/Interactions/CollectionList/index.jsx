@@ -112,6 +112,7 @@ const InteractionCollection = ({
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
           <Filters.CheckboxGroup
+            legend={LABELS.myInteractions}
             name="my_interactions"
             qsParam="dit_participants__adviser"
             options={[myInteractionsOption]}
@@ -131,7 +132,7 @@ const InteractionCollection = ({
           <FilterToggleSection
             id="InteractionCollection.interaction-details-filters"
             label="Interaction details"
-            isOpen={false}
+            isOpen={true}
           >
             <Filters.AdvisersTypeahead
               taskProps={adviserListTask}

@@ -19,7 +19,7 @@ const interaction = {
   communication_channel: 'Communication channel',
   documents: 'Documents',
   policy_issue_types: 'Policy issue types',
-  policy_areas: 'Policy area(s)',
+  policy_areas: 'Policy areas',
   policy_feedback_notes: 'Business intelligence',
   multiple_contacts: 'Multiple contacts',
   multiple_advisers: 'Multiple advisers',
@@ -53,7 +53,7 @@ const serviceDelivery = {
   communication_channel: 'Communication channel',
   documents: 'Documents',
   policy_issue_types: 'Policy issue types',
-  policy_areas: 'Policy area(s)',
+  policy_areas: 'Policy areas',
   policy_feedback_notes: 'Business intelligence',
   is_event: 'Is this an event?',
   was_policy_feedback_provided:
@@ -65,7 +65,7 @@ const serviceDelivery = {
 }
 
 const filters = {
-  kind: 'Kind',
+  kind: 'Interaction type',
   communication_channel: 'Communication channel',
   dit_participants__adviser: 'Adviser(s)',
   date_after: 'From',
@@ -74,9 +74,9 @@ const filters = {
   sector_descends: 'Sector',
   service: 'Service',
   was_policy_feedback_provided: 'Business intelligence',
-  policy_areas: 'Policy area(s)',
+  policy_areas: 'Policy areas',
   policy_issue_types: 'Policy issue type',
-  company_one_list_group_tier: 'Company One List Group Tier',
+  company_one_list_group_tier: 'Company One List group tier',
 }
 
 const metaItems = {

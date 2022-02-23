@@ -1,5 +1,5 @@
 export const LABELS = {
-  kind: 'Kind',
+  kind: 'Interaction type',
   interaction: 'Interaction',
   serviceDelivery: 'Service delivery',
   advisers: 'Adviser',
@@ -10,7 +10,7 @@ export const LABELS = {
   teams: 'Teams',
   sector: 'Sector',
   businessIntelligence: 'Business intelligence',
-  policyAreas: 'Policy area(s)',
+  policyAreas: 'Policy areas',
   policyIssueType: 'Policy issue type',
-  companyOneListGroupTier: 'Company One List Group Tier',
+  companyOneListGroupTier: 'Company One List group tier',
 }

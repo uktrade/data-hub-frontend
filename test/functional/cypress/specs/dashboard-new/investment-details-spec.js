@@ -91,7 +91,7 @@ describe('Dashboard - Investment details', () => {
       .should('have.text', investmentProject.sector.name)
   })
 
-  it('should display the country of origin details', () => {
+  it('should display the Country of origin details', () => {
     cy.get('@firstProjectTerms').eq(2).should('have.text', 'Country of origin:')
     cy.get('@firstProjectDescriptions')
       .eq(2)

@@ -288,7 +288,7 @@ describe('Investments Collections Filter', () => {
 
       testTypeahead({
         element,
-        label: 'Country of origin',
+        label: 'Country of company origin',
         placeholder: 'Search country',
         input: 'braz',
         expectedOption: 'Brazil',

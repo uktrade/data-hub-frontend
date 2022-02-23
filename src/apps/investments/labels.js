@@ -8,7 +8,7 @@ const labels = {
   detailsLabels: {
     view: {
       investor_company: 'Client',
-      investment_type: 'Type of investment',
+      investment_type: 'Investment type',
       sector: 'Primary sector',
       business_activities: 'Business activity',
       client_contacts: 'Client contacts',
@@ -104,7 +104,7 @@ const labels = {
   },
   evaluationFdiLabels: {
     view: {
-      type_of_investment: 'Type of investment',
+      type_of_investment: 'Investment type',
       foreign_investor: 'Foreign investor',
       foreign_country: 'Foreign country',
       uk_company: 'UK company',
@@ -145,7 +145,7 @@ const labels = {
     edit: {
       adviser: 'Adviser',
       stage: 'Stage',
-      investment_type: 'Type of investment',
+      investment_type: 'Investment type',
       sector_descends: 'Sector',
       sector: 'Sector',
       total_investment: 'Investment value',
@@ -153,10 +153,10 @@ const labels = {
       estimated_land_date_after: 'Estimated land date after',
       actual_land_date_before: 'Actual land date before',
       actual_land_date_after: 'Actual land date after',
-      level_of_involvement_simplified: 'Level of involvement specified',
+      level_of_involvement_simplified: 'Involvement level',
       status: 'Status',
       uk_region_location: 'UK Region',
-      investor_company_country: 'Country of origin',
+      investor_company_country: 'Country of company origin',
       likelihood_to_land: 'Likelihood to land',
     },
   },

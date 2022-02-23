@@ -71,6 +71,19 @@ describe('Interactions Collections Filter', () => {
     })
   })
 
+  context('Toggle groups', () => {
+    it('should show interaction details filters and hide them on toggle', () => {
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.visit('/interactions')
+      cy.wait('@apiRequest')
+      cy.get('[data-test="adviser-filter"]').should('be.visible')
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Interaction details')
+        .click()
+      cy.get('[data-test="adviser-filter"]').should('not.be.visible')
+    })
+  })
+
   context('Interaction Kind', () => {
     const element = '[data-test="status-filter"]'
 
@@ -179,9 +192,6 @@ describe('Interactions Collections Filter', () => {
       cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
 
-      cy.get('[data-test="toggle-section-button"]')
-        .contains('Interaction details')
-        .click()
       selectFirstAdvisersTypeaheadOption({
         element: advisersFilter,
         input: adviser.name,
@@ -303,9 +313,6 @@ describe('Interactions Collections Filter', () => {
       cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
 
-      cy.get('[data-test="toggle-section-button"]')
-        .contains('Interaction details')
-        .click()
       inputDateValue({
         element: dateAfter,
         value: '2021-06-24',
@@ -409,10 +416,6 @@ describe('Interactions Collections Filter', () => {
       cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
 
-      cy.get('[data-test="toggle-section-button"]')
-        .contains('Interaction details')
-        .click()
-
       testTypeahead({
         element,
         label: 'Sector',
@@ -459,10 +462,6 @@ describe('Interactions Collections Filter', () => {
       cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
 
-      cy.get('[data-test="toggle-section-button"]')
-        .contains('Interaction details')
-        .click()
-
       clickCheckboxGroupOption({
         element,
         value: 'true',
@@ -475,7 +474,7 @@ describe('Interactions Collections Filter', () => {
     })
   })
 
-  context('Policy area(s)', () => {
+  context('Policy areas', () => {
     const element = '[data-test="policy-area-filter"]'
     const policyArea = policyAreaFaker()
     const expectedPayload = {
@@ -583,7 +582,7 @@ describe('Interactions Collections Filter', () => {
     })
   })
 
-  context('Company One List Group Tier', () => {
+  context('Company One List group tier', () => {
     const element = '[data-test="company-one-list-group-tier-filter"]'
     const companyOneListgroupTier = companyOneListgroupTierFaker()
     const expectedPayload = {
@@ -620,9 +619,6 @@ describe('Interactions Collections Filter', () => {
       cy.wait('@apiRequest')
       cy.wait('@metaApiRequest')
 
-      cy.get('[data-test="toggle-section-button"]')
-        .contains('Interaction details')
-        .click()
       clickCheckboxGroupOption({
         element,
         value: companyOneListgroupTier.id,

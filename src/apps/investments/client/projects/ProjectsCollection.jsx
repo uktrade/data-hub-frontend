@@ -208,7 +208,7 @@ const ProjectsCollection = ({
           isOpen={false}
         >
           <Filters.CheckboxGroup
-            legend="Type of investment"
+            legend="Investment type"
             name="investment_type"
             qsParam="investment_type"
             options={optionMetadata.investmentTypeOptions}
@@ -217,7 +217,7 @@ const ProjectsCollection = ({
             groupId="investment-type-filter"
           />
           <Filters.CheckboxGroup
-            legend="Level of involvement specified"
+            legend="Involvement level"
             name="involvement_level"
             qsParam="level_of_involvement_simplified"
             options={optionMetadata.involvementLevelOptions}
@@ -234,7 +234,7 @@ const ProjectsCollection = ({
         >
           <Filters.Typeahead
             isMulti={true}
-            label="Country of origin"
+            label="Country of company origin"
             name="country"
             qsParam="country_investment_originates_from"
             placeholder="Search country"

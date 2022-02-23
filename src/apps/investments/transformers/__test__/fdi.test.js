@@ -50,7 +50,7 @@ describe('Investment FDI transformer', () => {
         )
       })
 
-      it('should set type of investment', () => {
+      it('should set Investment type', () => {
         expect(this.transformed.type_of_investment).to.equal(
           'FDI, Creation of new site or activity'
         )

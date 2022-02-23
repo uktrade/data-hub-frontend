@@ -393,14 +393,14 @@ const StepInteractionDetails = ({
           <FieldTypeahead
             isMulti={true}
             name="policy_areas"
-            label="Policy area(s)"
+            label="Policy areas"
             placeholder="-- Select policy area --"
             options={policyAreas}
             required="Select at least one policy area"
           />
 
           <FieldHelp
-            helpSummary="Help with policy area(s)"
+            helpSummary="Help with Policy areas"
             helpText="A policy area is the specific area that the information fits into. Completing this enables the correct team(s) to find the information and input into their reports to support businesses and ministers effectively."
             footerUrl={helpUrl(3)}
             footerUrlDescription="See more guidance"

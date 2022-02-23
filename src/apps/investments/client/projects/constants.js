@@ -9,7 +9,7 @@ export const LABELS = {
   likelihoodToLand: 'Likelihood to land',
   actualLandDateAfter: 'Actual land date from',
   actualLandDateBefore: 'Actual land date to',
-  involvementLevel: 'Level of involvement specified',
+  involvementLevel: 'Involvement level',
   estimatedLandDateAfter: 'Estimated land date from',
   estimatedLandDateBefore: 'Estimated land date to',
   landDate: 'Land date',
