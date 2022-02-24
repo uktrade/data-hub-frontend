@@ -105,7 +105,7 @@
     "dotenv": "^16.0.0",
     "elastic-apm-node": "^3.26.0",
     "element-closest": "^3.0.2",
-    "express": "^4.17.2",
+    "express": "^4.17.3",
     "express-minify-html-2": "^1.0.1",
     "express-session": "^1.17.2",
     "express-sslify": "^1.2.0",
