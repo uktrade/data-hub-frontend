@@ -87,6 +87,9 @@ const _Form = ({
   const history = useHistory()
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
+  // Grabs the params from the url.
+
+  const searchy = qs.parse(location.pathname.includes('/create'))
 
   useEffect(() => {
     onLoad(initialValues, initialStepIndex)
@@ -95,17 +98,22 @@ const _Form = ({
     scrollToTopOnStep && window.scrollTo(0, 0)
   }, [scrollToTopOnStep, props.currentStep])
   useEffect(() => {
-    if (qsParams.step) {
-      goToStep(qsParams.step)
-    } else {
-      history.push({
-        search: qs.stringify({
-          ...qsParams,
-          step: steps[initialStepIndex],
-        }),
-      })
+    if (showStepInURL && searchy) {
+      if (qsParams.step) {
+        goToStep(qsParams.step)
+        // if there's a step in the params, use goToStep("")
+      } else {
+        // Otherwise, push the initial step name to the URL as the step.
+        history.push({
+          search: qs.stringify({
+            ...qsParams,
+            step: steps[initialStepIndex],
+          }),
+        })
+      }
     }
   }, [qsParams.step, steps])
+  // Run this code any time the step in the url changes, or the names of the steps.
 
   // TODO: Clean up this mess
   const contextProps = {
@@ -168,6 +176,7 @@ const _Form = ({
                       currentStep: props.currentStep,
                     })
                     if (showStepInURL) {
+                      // if showStepInURL is true, then push the previous step's name to the url.
                       history.push({
                         search: qs.stringify({
                           ...qsParams,
@@ -227,6 +236,7 @@ const _Form = ({
                                     currentStep: props.currentStep,
                                   })
                                   if (showStepInURL) {
+                                    // if showStepInURL is true, then push the next step's name to the url.
                                     history.push({
                                       search: qs.stringify({
                                         ...qsParams,

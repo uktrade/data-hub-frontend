@@ -106,7 +106,7 @@ export default (
       }
     case FORM__GO_TO_STEP:
       const nextCurrentStep = action.stepName
-        ? Math.max(state.steps.indexOf(action.stepName), 0)
+        ? state.steps.indexOf(action.stepName)
         : 0
       return {
         ...state,
