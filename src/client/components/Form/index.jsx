@@ -95,8 +95,17 @@ const _Form = ({
     scrollToTopOnStep && window.scrollTo(0, 0)
   }, [scrollToTopOnStep, props.currentStep])
   useEffect(() => {
-    goToStep(parseInt(qsParams.step) || 0)
-  }, [qsParams.step])
+    if (qsParams.step) {
+      goToStep(qsParams.step)
+    } else {
+      history.push({
+        search: qs.stringify({
+          ...qsParams,
+          step: steps[initialStepIndex],
+        }),
+      })
+    }
+  }, [qsParams.step, steps])
 
   // TODO: Clean up this mess
   const contextProps = {
@@ -162,7 +171,7 @@ const _Form = ({
                       history.push({
                         search: qs.stringify({
                           ...qsParams,
-                          step: props.currentStep - 1,
+                          step: steps[props.currentStep - 1],
                         }),
                       })
                     }
@@ -221,7 +230,7 @@ const _Form = ({
                                     history.push({
                                       search: qs.stringify({
                                         ...qsParams,
-                                        step: props.currentStep + 1,
+                                        step: steps[props.currentStep + 1],
                                       }),
                                     })
                                   }
@@ -407,10 +416,10 @@ const dispatchToProps = (dispatch) => ({
     dispatch({
       type: 'FORM__BACK',
     }),
-  goToStep: (stepIndex) => {
+  goToStep: (stepName) => {
     dispatch({
       type: 'FORM__GO_TO_STEP',
-      stepIndex,
+      stepName,
     })
   },
   registerStep: (stepName) =>

@@ -24,7 +24,7 @@ export default (
     currentStep: 0,
     steps: [],
   },
-  { type, result, stepIndex, ...action }
+  { type, result, ...action }
 ) => {
   switch (type) {
     case FORM__LOADED:
@@ -105,9 +105,13 @@ export default (
         previousValues: state.values,
       }
     case FORM__GO_TO_STEP:
+      const nextCurrentStep = action.stepName
+        ? Math.max(state.steps.indexOf(action.stepName), 0)
+        : 0
       return {
         ...state,
-        currentStep: stepIndex,
+        currentStep: nextCurrentStep,
+
         previousValues: state.values,
       }
     case FORM__STEP_REGISTER:
