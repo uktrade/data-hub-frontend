@@ -22,7 +22,6 @@
     "lint": "run-p lint:*",
     "lint:js": "npx eslint --ext .jsx,.js ./test ./src ./assets",
     "lint:js:fix": "npx eslint --ext .jsx,.js ./test ./src ./assets --fix",
-    "lint:sass": "npx sass-lint -v -q -c .sass-lint.yml 'assets/stylesheets/**/*.scss'",
     "test": "run-s test:*",
     "test:unit": "NODE_ENV=test API_ROOT=http://test LOG_LEVEL=silent MOCHA_FILE=junit/test-results.xml npx mocha ./src/**/*.test.js",
     "test:functional": "CYPRESS_retries=3 nyc cypress run --browser chrome",
@@ -56,8 +55,7 @@
   },
   "pre-commit": "lint-staged",
   "lint-staged": {
-    "*.{js,jsx}": "eslint",
-    "*.scss": "sass-lint -v -q -c .sass-lint.yml"
+    "*.{js,jsx}": "eslint"
   },
   "license": "MIT",
   "engines": {
@@ -219,14 +217,12 @@
     "proxyquire": "^2.0.0",
     "reqres": "^3.0.1",
     "rewire": "^6.0.0",
-    "sass-lint": "^1.12.1",
     "sinon": "^13.0.1",
     "sinon-chai": "^3.7.0",
     "storybook-readme": "^5.0.9",
     "supertest": "^6.1.6",
     "webpack-dev-server": "^4.7.4"
   },
-  "sasslintConfig": ".sass-lint.yml",
   "resolutions": {
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.0",
     "immer": "9.0.6",
