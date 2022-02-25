@@ -153,7 +153,7 @@ describe('View edit team members page', () => {
           role: 'Sector adviser',
         },
       ]
-      removeEditAndSecondExistingTeamMember()
+      removeFirstAndSecondTeamMember()
 
       clickButton('Save and return')
 
@@ -163,7 +163,7 @@ describe('View edit team members page', () => {
         assertFlashMessage('Changes saved')
       })
 
-      function removeEditAndSecondExistingTeamMember() {
+      function removeFirstAndSecondTeamMember() {
         getAllTeamMemberFields().eq(1).find('a').click()
         getAllTeamMemberFields().eq(1).find('a').click()
       }
