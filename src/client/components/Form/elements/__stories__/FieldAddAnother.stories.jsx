@@ -6,6 +6,7 @@ import FieldAddAnother from '../FieldAddAnother'
 import FieldTypeahead from '../FieldTypeahead'
 import FieldInput from '../FieldInput'
 import Form from '../../../Form'
+import { transformArrayToObject } from '../FieldAddAnother/utils'
 
 import exampleReadme from '../FieldAddAnother/example.md'
 import usageReadme from '../FieldAddAnother/usage.md'
@@ -43,10 +44,6 @@ const initialValues = [
     role_1: 'Minion',
   },
 ]
-
-const transformArrayToObject = (array) => {
-  return array.reduce((previous, current) => ({ ...previous, ...current }))
-}
 
 const transformObjectBackToArray = (valueAsObject) => {
   return Object.entries(valueAsObject).reduce((acc, [key, val]) => {

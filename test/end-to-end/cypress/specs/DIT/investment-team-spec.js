@@ -1,17 +1,15 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const { investments } = require('../../../../../src/lib/urls')
+const {
+  clickButton,
+  selectFirstAdvisersTypeaheadOption,
+} = require('../../../../functional/cypress/support/actions')
+const {
+  assertFlashMessage,
+} = require('../../../../functional/cypress/support/assertions')
 
 const teamSelectors = selectors.investment.team
-
-const selectTypeahead = (field, input) =>
-  cy.get(field).within(() => {
-    cy.server()
-    cy.route('/api/options/adviser?*').as('adviserResults')
-    cy.get('.multiselect__tags').type(input)
-    cy.wait('@adviserResults')
-    cy.get('.multiselect__content-wrapper').contains(input).click()
-  })
 
 const assertTable = ({ element, headings, rows }) => {
   cy.get(element).as('table')
@@ -38,15 +36,12 @@ const assertTable = ({ element, headings, rows }) => {
 
 const testSubForm = ({ selector, header, checkForm, expectedResults }) => {
   cy.get(teamSelectors[selector].button).click()
-  cy.get(teamSelectors[selector].header).should('have.text', header)
+  cy.get('[data-test="field-edit-team-members"]').contains('legend', header)
 
   checkForm()
 
-  cy.get(teamSelectors[selector].save).click()
-  cy.get(teamSelectors.flash).should(
-    'have.text',
-    'Investment details updatedDismiss'
-  )
+  clickButton('Save and return')
+  assertFlashMessage('Changes saved')
 
   assertTable({
     element: teamSelectors[selector].table,
@@ -67,13 +62,11 @@ describe('Investment team', () => {
       selector: 'teamMembers',
       header: 'Assign project specialist and team members',
       checkForm: () => {
-        cy.get(teamSelectors.removeMethod).click()
-        cy.get(teamSelectors.addTypeahead).click()
-        selectTypeahead(teamSelectors.teamMembers.typeahead, 'Jenny')
-        cy.get(teamSelectors.teamMembers.teamRole)
-          .click()
-          .clear()
-          .type('Test role')
+        selectFirstAdvisersTypeaheadOption({
+          element: '[data-test="field-adviser_0"]',
+          input: 'Jenny',
+        })
+        cy.get('[data-test="field-role_0"]').find('input').type('Test role')
       },
       expectedResults: [
         [

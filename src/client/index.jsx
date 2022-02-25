@@ -51,6 +51,7 @@ import OpportunityChangeStatusForm from '../apps/investments/client/opportunitie
 import CreateUKInvestmentOpportunity from '../apps/investments/client/opportunities/Details/CreateUKInvestmentOpportunity'
 import EditAssignees from '../apps/omis/apps/edit/client/EditAssignees'
 import EditSubscribers from '../apps/omis/apps/edit/client/EditSubscribers'
+import { EditTeamMembers } from '../apps/investments/client/projects/team/EditTeamMembers'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -152,6 +153,7 @@ import {
   TASK_GET_PROJECTS_LIST,
   TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME,
   TASK_GET_INVESTMENTS_PROJECTS_METADATA,
+  TASK_EDIT_PROJECT_TEAM_MEMBERS,
 } from '../apps/investments/client/projects/state'
 import * as investmentProjectTasks from '../apps/investments/client/projects/tasks'
 
@@ -335,6 +337,8 @@ function App() {
           getAdviserNames,
         [TASK_GET_INVESTMENTS_PROJECTS_METADATA]:
           investmentProjectTasks.getMetadata,
+        [TASK_EDIT_PROJECT_TEAM_MEMBERS]:
+          investmentProjectTasks.updateTeamMembers,
         [TASK_CHECK_FOR_INVESTMENTS]: personalisedDashboard.checkForInvestments,
         [TASK_GET_MY_INVESTMENTS_LIST]:
           myInvestmentProjects.fetchMyInvestmentsList,
@@ -549,6 +553,9 @@ function App() {
       </Mount>
       <Mount selector="#edit-subscribers">
         {(props) => <EditSubscribers {...props} />}
+      </Mount>
+      <Mount selector="#edit-team-members">
+        {(props) => <EditTeamMembers {...props} />}
       </Mount>
 
       <Mount selector="#react-app">

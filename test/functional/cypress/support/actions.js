@@ -58,3 +58,10 @@ export const removeFirstTypeaheadItem = () => {
 export const clickButton = (buttonText) => {
   cy.contains('button', buttonText).click()
 }
+
+/**
+ * Click on a Cancel anchor
+ */
+export const clickCancelLink = () => {
+  cy.get('[data-test="cancel-button"]').click()
+}

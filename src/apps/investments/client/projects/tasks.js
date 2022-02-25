@@ -1,14 +1,15 @@
-import axios from 'axios'
+import { apiProxyAxios } from '../../../../client/components/Task/utils'
 
 import { getMetadataOptions } from '../../../../client/metadata'
 import { transformInvestmentProjectToListItem } from './transformers'
+import { validateTeamAdvisersAreUnique } from './validator'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
 export const getProjects = ({ limit = 10, page, companyId, ...rest }) => {
   let offset = limit * (parseInt(page, 10) - 1) || 0
 
-  return axios
+  return apiProxyAxios
     .post('/api-proxy/v3/search/investment_project', {
       limit,
       offset,
@@ -53,4 +54,18 @@ export const getMetadata = (metadataUrls) => {
       results.map((options, index) => [optionCategories[index], options])
     )
   )
+}
+
+export const updateTeamMembers = ({ teamMembers, id }) => {
+  return new Promise(async (resolve, reject) => {
+    const reasonAdvisersAreNotUnique =
+      validateTeamAdvisersAreUnique(teamMembers)
+    if (reasonAdvisersAreNotUnique) {
+      reject(reasonAdvisersAreNotUnique)
+    } else {
+      const url = `v3/investment/${id}/team-member`
+      const response = await apiProxyAxios.put(url, teamMembers)
+      resolve(response)
+    }
+  })
 }

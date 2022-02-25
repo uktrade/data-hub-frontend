@@ -39,7 +39,7 @@ const StyledSecondaryButton = styled(SecondaryButton)({
 })
 
 const Err = ({ errorMessage, retry, dismiss, noun, dismissable = true }) => (
-  <StyledRoot>
+  <StyledRoot data-test="error-dialog">
     <H2 size="MEDIUM">Could not load {noun}</H2>
     <p>Error: {errorMessage}</p>
     <FormActions>

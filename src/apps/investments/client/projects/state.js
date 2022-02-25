@@ -21,6 +21,7 @@ export const TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME =
   'TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME'
 export const TASK_GET_INVESTMENTS_PROJECTS_METADATA =
   'TASK_GET_INVESTMENTS_PROJECTS_METADATA'
+export const TASK_EDIT_PROJECT_TEAM_MEMBERS = 'TASK_EDIT_PROJECT_TEAM_MEMBERS'
 
 const parseQueryString = (queryString) => {
   const queryParams = omitBy({ ...qs.parse(queryString) }, isEmpty)
