@@ -66,7 +66,7 @@ lint:
 ifdef CI
 	$(docker-base) build frontend
 endif
-	$(docker-base) run --no-deps --rm frontend bash -c 'mkdir -p reports && npm run lint:sass && npm run lint:js -- --format junit --output-file reports/eslint.xml'
+	$(docker-base) run --no-deps --rm frontend bash -c 'mkdir -p reports && npm run lint:js -- --format junit --output-file reports/eslint.xml'
 
 unit-tests:
 ifdef CI
