@@ -183,7 +183,7 @@
     "chai-subset": "^1.6.0",
     "cypress": "^9.4.1",
     "cypress-image-diff-js": "1.16.1",
-    "eslint": "^7.32.0",
+    "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
