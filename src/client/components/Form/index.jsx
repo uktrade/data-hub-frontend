@@ -89,8 +89,6 @@ const _Form = ({
   const qsParams = qs.parse(location.search.slice(1))
   // Grabs the params from the url.
 
-  const searchy = qs.parse(location.pathname.includes('/create'))
-
   useEffect(() => {
     onLoad(initialValues, initialStepIndex)
   }, [])
@@ -98,18 +96,20 @@ const _Form = ({
     scrollToTopOnStep && window.scrollTo(0, 0)
   }, [scrollToTopOnStep, props.currentStep])
   useEffect(() => {
-    if (showStepInURL && searchy) {
+    if (showStepInURL) {
       if (qsParams.step) {
         goToStep(qsParams.step)
         // if there's a step in the params, use goToStep("")
       } else {
         // Otherwise, push the initial step name to the URL as the step.
-        history.push({
-          search: qs.stringify({
-            ...qsParams,
-            step: steps[initialStepIndex],
-          }),
-        })
+        if (history.action != 'POP') {
+          history.push({
+            search: qs.stringify({
+              ...qsParams,
+              step: steps[initialStepIndex],
+            }),
+          })
+        }
       }
     }
   }, [qsParams.step, steps])
