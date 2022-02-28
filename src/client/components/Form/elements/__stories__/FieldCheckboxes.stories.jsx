@@ -98,3 +98,42 @@ storiesOf('Form/Form Elements/Checkboxes', module)
       )}
     </Form>
   ))
+  .add('Checkboxes - exclusive', () => (
+    <Form
+      id="fieldCheckboxExample"
+      analyticsFormName="fieldCheckboxExample"
+      submissionTaskName="Submit Form example"
+    >
+      {(form) => (
+        <>
+          <FieldCheckboxes
+            name="countries"
+            label="Estimated land date notification preferences"
+            hint="Select all that apply"
+            required="Select at least one country or select 'No, ...'"
+            exclusive={true}
+            initialValue={['no']}
+            options={[
+              {
+                label: 'France',
+                value: 'fr',
+              },
+              {
+                label: 'Portugal',
+                value: 'pr',
+              },
+              {
+                label: 'Spain',
+                value: 'sp',
+              },
+              {
+                label: 'No, I will not be travelling to any of these countries',
+                value: 'no',
+              },
+            ]}
+          />
+          <pre>{JSON.stringify(form, null, 2)}</pre>
+        </>
+      )}
+    </Form>
+  ))
