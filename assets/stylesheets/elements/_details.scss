@@ -32,7 +32,6 @@ details {
     @-moz-document regexp(".*") {
       &:not([tabindex]) {
         // Allow duplicate properties, override the summary display property
-        // sass-lint:disable no-duplicate-properties
         display: list-item;
         display: revert;
       }
