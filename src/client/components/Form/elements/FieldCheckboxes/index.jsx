@@ -1,11 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import MultiChoice from '@govuk-react/multi-choice'
+import styled from 'styled-components'
+import { SPACING } from '@govuk-react/constants'
 
 import Checkbox from '../../../Checkbox'
 import useField from '../../hooks/useField'
 import FieldWrapper from '../FieldWrapper'
 import { useFormContext } from '../../hooks'
+
+const StyledOr = styled('div')({
+  paddingLeft: SPACING.SCALE_2,
+  paddingRight: SPACING.SCALE_2,
+  marginBottom: SPACING.SCALE_2,
+})
 
 const FieldCheckboxes = ({
   name,
@@ -15,8 +23,9 @@ const FieldCheckboxes = ({
   legend,
   bigLegend,
   hint,
-  options,
-  initialValue,
+  options = [],
+  initialValue = [],
+  exclusive = false,
   ...props
 }) => {
   const { value, error, touched, onBlur } = useField({
@@ -27,17 +36,34 @@ const FieldCheckboxes = ({
   })
   const { setFieldValue } = useFormContext()
 
-  const onChange = (e) => {
-    const { name: optionName, checked } = e.target
-    let newValue = Array.isArray(value) ? [...value] : []
-
-    if (checked) {
-      newValue.push(optionName)
-    } else if (newValue.includes(optionName)) {
-      newValue = newValue.filter((item) => item !== optionName)
+  const onChange = (event) => {
+    if (event.target.checked) {
+      setFieldValue(name, [...value, event.target.name])
+    } else {
+      setFieldValue(
+        name,
+        value.filter((v) => v !== event.target.name)
+      )
     }
+  }
 
-    setFieldValue(name, newValue)
+  const onChangeExclusive = (event) => {
+    if (event.target.checked) {
+      const lastOption = options.slice(options.length - 1)[0]
+      if (lastOption.value === event.target.name) {
+        setFieldValue(name, [event.target.name])
+      } else {
+        setFieldValue(name, [
+          ...value.filter((v) => v !== lastOption.value),
+          event.target.name,
+        ])
+      }
+    } else {
+      setFieldValue(
+        name,
+        value.filter((v) => v !== event.target.name)
+      )
+    }
   }
 
   return (
@@ -54,18 +80,24 @@ const FieldCheckboxes = ({
     >
       <MultiChoice meta={{ error, touched }}>
         {options.map(
-          ({
-            value: optionValue,
-            label: optionLabel,
-            children,
-            ...optionProps
-          }) => (
+          (
+            {
+              value: optionValue,
+              label: optionLabel,
+              children,
+              ...optionProps
+            },
+            index
+          ) => (
             <>
+              {exclusive && index === options.length - 1 && (
+                <StyledOr>or</StyledOr>
+              )}
               <Checkbox
                 key={optionValue}
                 name={optionValue}
                 checked={value.includes(optionValue)}
-                onChange={onChange}
+                onChange={exclusive ? onChangeExclusive : onChange}
                 onBlur={onBlur}
                 aria-label={optionLabel}
                 {...optionProps}
@@ -91,7 +123,8 @@ FieldCheckboxes.propTypes = {
   label: PropTypes.node,
   legend: PropTypes.node,
   hint: PropTypes.node,
-  initialValue: PropTypes.arrayOf(PropTypes.string),
+  exclusive: PropTypes.bool,
+  initialValue: PropTypes.array,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
@@ -99,16 +132,6 @@ FieldCheckboxes.propTypes = {
       children: PropTypes.node,
     })
   ),
-}
-
-FieldCheckboxes.defaultProps = {
-  validate: null,
-  required: null,
-  label: null,
-  legend: null,
-  hint: null,
-  initialValue: [],
-  options: [],
 }
 
 export default FieldCheckboxes

@@ -43,6 +43,7 @@ Checkboxes for use in forms and filters.
 | `legend`       | false    | null                                                                    | node                           | Node for legend element                       |
 | `hint`         | false    | null                                                                    | node                           | Node for hint element                         |
 | `validate`     | false    | null                                                                    | function or array of functions | Validate functions for input                  |
-| `required`     | false    | `` | Boolean | Text 'required' sets wether the input is required or not |
-| `initialValue` | false    | `` | Text | Sets initial value of the input                             |
-| `options` | true | empty array | array | Defines the checkbox labels and values                     |
+| `required`     | false    | `` | boolean | Text 'required' sets wether the input is required or not |
+| `initialValue` | false    | [] | array of strings | Sets initial value of the input                 |
+| `options` | true | [] | array | Defines the checkbox labels and values                              |
+| `exclusive` | false | false | boolean | Splits the last checkbox from the others where the choice is exclusive between them|
