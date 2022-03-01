@@ -1,8 +1,6 @@
-import { apiProxyAxios } from '../../../../client/components/Task/utils'
-
+import { apiProxyAxios } from './../../../../client/components/Task/utils'
 import { getMetadataOptions } from '../../../../client/metadata'
 import { transformInvestmentProjectToListItem } from './transformers'
-import { validateTeamAdvisersAreUnique } from './validator'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
@@ -54,18 +52,4 @@ export const getMetadata = (metadataUrls) => {
       results.map((options, index) => [optionCategories[index], options])
     )
   )
-}
-
-export const updateTeamMembers = ({ teamMembers, id }) => {
-  return new Promise(async (resolve, reject) => {
-    const reasonAdvisersAreNotUnique =
-      validateTeamAdvisersAreUnique(teamMembers)
-    if (reasonAdvisersAreNotUnique) {
-      reject(reasonAdvisersAreNotUnique)
-    } else {
-      const url = `v3/investment/${id}/team-member`
-      const response = await apiProxyAxios.put(url, teamMembers)
-      resolve(response)
-    }
-  })
 }

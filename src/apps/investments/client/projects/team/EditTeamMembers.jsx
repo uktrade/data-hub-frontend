@@ -7,7 +7,7 @@ import {
 } from '../../../../../client/components'
 import urls from '../../../../../lib/urls'
 import FieldAddAnother from '../../../../../client/components/Form/elements/FieldAddAnother/index.jsx'
-import { TASK_EDIT_PROJECT_TEAM_MEMBERS } from '../state'
+import { TASK_EDIT_PROJECT_TEAM_MEMBERS } from './state'
 import {
   transformTeamMembersForFieldAddAnother,
   transformValuesToArray,
