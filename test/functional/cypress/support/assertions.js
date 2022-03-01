@@ -668,7 +668,15 @@ const assertParamNotContainedInUrl = (xhr, param) => {
  * Assert that the body of an intercepted request is as expected
  */
 const assertRequestBody = (xhr, expectedBody) => {
-  expect(xhr.request.body).to.deep.equal(expectedBody)
+  const printableXhr = JSON.stringify(xhr)
+  const printableExpectedBody = JSON.stringify(expectedBody)
+  expect(xhr.request.body).to.deep.equal(
+    expectedBody,
+    'Expected the request body to deep equal\n\n' +
+      printableExpectedBody +
+      '\n\nbut got\n\n' +
+      printableXhr
+  )
 }
 
 /**
