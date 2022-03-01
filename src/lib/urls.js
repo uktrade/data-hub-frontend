@@ -85,6 +85,8 @@ module.exports = {
     digitalWorkspace: {
       teams:
         'https://people.trade.gov.uk/teams/department-for-international-trade',
+      accountManagement:
+        'https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/strategic-relationship-account-management/',
     },
     helpCentre: {
       accessibilityStatement: () =>
@@ -271,6 +273,10 @@ module.exports = {
         '/projects/:investmentId/propositions/:propositionId'
       ),
       team: url('/investments', '/projects/:investmentId/team'),
+      clientRelationshipManagement: url(
+        '/investments',
+        '/projects/:investmentId/edit-client-relationship-management'
+      ),
       interactions: createInteractionsSubApp(
         '/investments/projects',
         '/:investmentId/interactions'

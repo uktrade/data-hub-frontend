@@ -1,10 +1,27 @@
 const { isEmpty } = require('lodash')
+const config = require('../../../../config')
+const urls = require('../../../../lib/urls')
 
 function getHandler(req, res) {
+  const {
+    id,
+    client_relationship_manager,
+    investor_company: { one_list_group_global_account_manager },
+  } = res.locals.investment
   res
-    .breadcrumb('Project team', 'team')
+    .breadcrumb({
+      text: 'Project team',
+      href: urls.investments.projects.team(id),
+    })
     .breadcrumb('Client relationship management')
-    .render('investments/views/team/edit-client-relationship-management')
+  res.render('investments/views/team/edit-client-relationship-management', {
+    props: {
+      id,
+      clientRelationshipManager: client_relationship_manager,
+      globalAccountManager: one_list_group_global_account_manager,
+      oneListEmail: config.oneList.email,
+    },
+  })
 }
 
 function postHandler(req, res, next) {

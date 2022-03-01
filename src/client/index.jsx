@@ -52,6 +52,7 @@ import CreateUKInvestmentOpportunity from '../apps/investments/client/opportunit
 import EditAssignees from '../apps/omis/apps/edit/client/EditAssignees'
 import EditSubscribers from '../apps/omis/apps/edit/client/EditSubscribers'
 import { EditTeamMembers } from '../apps/investments/client/projects/team/EditTeamMembers'
+import EditClientRelationshipManagement from '../apps/investments/client/projects/team/EditClientRelationshipManagement'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -563,6 +564,9 @@ function App() {
       </Mount>
       <Mount selector="#edit-team-members">
         {(props) => <EditTeamMembers {...props} />}
+      </Mount>
+      <Mount selector="#edit-client-relationship-management">
+        {(props) => <EditClientRelationshipManagement {...props} />}
       </Mount>
 
       <Mount selector="#react-app">

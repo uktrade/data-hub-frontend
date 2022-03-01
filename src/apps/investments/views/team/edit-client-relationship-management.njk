@@ -1,36 +1,8 @@
 {% extends "../template.njk" %}
 
 {% block main_grid_right_column %}
-  <h2 class="govuk-heading-m" data-test="client-relationship-header">
-    Edit client relationship management
-  </h2>
-
-  {% call Form(form) %}
-    {{ Typeahead({
-      name: 'client_relationship_manager',
-      entity: 'adviser',
-      placeholder: 'Search client relationship manager',
-      classes: 'c-form-group c-form-group--no-filter',
-      multipleSelect: false,
-      label: form.labels.client_relationship_manager,
-      error: form.errors.client_relationship_manager,
-      options: form.options.clientRelationshipManagers,
-      value: form.state.client_relationship_manager
-    }) }}
-
-    {{ FormGroup({} | assign(props, {
-      label: form.labels.global_account_manager,
-      name: 'global_account_manager',
-      innerHTML: form.state.global_account_manager
-    })) }}
-
-    {% call HiddenContent({ summary: 'Need to edit the Global Account Manager information?', dataTest: 'global-account-manager' }) %}
-      {% call Message({ type: 'muted' }) %}
-        If you need to change the Global Account Manager for this company,
-        go to the <a href="https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/strategic-relationship-account-management/">Digital Workspace</a>
-        or email <a href="mailto:{{form.oneListEmail}}">{{form.oneListEmail}}</a>.
-      {% endcall %}
-    {% endcall %}
-
-  {% endcall %}
+    {% component 'react-slot', {
+        id: 'edit-client-relationship-management',
+        props: props
+    } %}
 {% endblock %}
