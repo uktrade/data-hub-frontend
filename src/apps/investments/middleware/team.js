@@ -1,16 +1,4 @@
-const { transformBriefInvestmentSummary } = require('../transformers')
 const { getAdviser } = require('../../adviser/repos')
-
-function getBriefInvestmentSummary(req, res, next) {
-  try {
-    res.locals.briefInvestmentSummaryData = transformBriefInvestmentSummary(
-      res.locals.investment
-    )
-    next()
-  } catch (error) {
-    next(error)
-  }
-}
 
 async function expandTeamMembers(req, res, next) {
   try {
@@ -35,6 +23,5 @@ async function expandTeamMembers(req, res, next) {
 }
 
 module.exports = {
-  getBriefInvestmentSummary,
   expandTeamMembers,
 }

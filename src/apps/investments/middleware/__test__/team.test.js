@@ -4,7 +4,6 @@ const investmentData = require('../../../../../test/unit/data/investment/investm
 
 describe('Investment team middleware', () => {
   beforeEach(() => {
-    this.transformBriefInvestmentSummaryStub = sinon.stub()
     this.investmentData = Object.assign({}, investmentData, {
       team_members: [
         {
@@ -38,32 +37,9 @@ describe('Investment team middleware', () => {
     }
 
     this.teamMiddleware = proxyquire('../team', {
-      '../transformers': {
-        transformBriefInvestmentSummary:
-          this.transformBriefInvestmentSummaryStub,
-      },
       '../../adviser/repos': {
         getAdviser: this.getAdviserStub,
       },
-    })
-  })
-
-  describe('#getBriefInvestmentSummary', () => {
-    it('should call brief investment summary formatter with expanded project', (done) => {
-      this.teamMiddleware.getBriefInvestmentSummary(
-        {
-          session: {
-            token: 'mock-token',
-          },
-        },
-        this.resMock,
-        () => {
-          expect(this.transformBriefInvestmentSummaryStub).to.be.calledWith(
-            this.investmentData
-          )
-          done()
-        }
-      )
     })
   })
 
