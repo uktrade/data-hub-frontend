@@ -154,9 +154,15 @@ import {
   TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME,
   TASK_GET_INVESTMENTS_PROJECTS_METADATA,
 } from '../apps/investments/client/projects/state'
-import { TASK_EDIT_PROJECT_TEAM_MEMBERS } from '../apps/investments/client/projects/team/state'
+import {
+  TASK_EDIT_PROJECT_TEAM_MEMBERS,
+  TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER,
+} from '../apps/investments/client/projects/team/state'
 import * as investmentProjectTasks from '../apps/investments/client/projects/tasks'
-import { updateTeamMembers } from '../apps/investments/client/projects/team/tasks'
+import {
+  saveClientRelationshipManager,
+  updateTeamMembers,
+} from '../apps/investments/client/projects/team/tasks'
 
 import {
   TASK_SEARCH_COMPANY,
@@ -339,6 +345,7 @@ function App() {
         [TASK_GET_INVESTMENTS_PROJECTS_METADATA]:
           investmentProjectTasks.getMetadata,
         [TASK_EDIT_PROJECT_TEAM_MEMBERS]: updateTeamMembers,
+        [TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER]: saveClientRelationshipManager,
         [TASK_CHECK_FOR_INVESTMENTS]: personalisedDashboard.checkForInvestments,
         [TASK_GET_MY_INVESTMENTS_LIST]:
           myInvestmentProjects.fetchMyInvestmentsList,

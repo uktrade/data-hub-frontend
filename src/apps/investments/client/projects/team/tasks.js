@@ -14,3 +14,13 @@ export const updateTeamMembers = ({ teamMembers, id }) => {
     }
   })
 }
+
+export const saveClientRelationshipManager = ({
+  id,
+  clientRelationshipManagerId,
+}) =>
+  apiProxyAxios
+    .patch(`/v3/investment/${id}`, {
+      client_relationship_manager: clientRelationshipManagerId,
+    })
+    .then((results) => results.client_relationship_manager)
