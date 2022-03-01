@@ -2762,6 +2762,24 @@
       "project_arrived_in_triage_on": null,
       "proposal_deadline": null,
       "stage_log": []
+    },
+    {
+      "id": "ac4b1006-56af-40e0-8615-7aba53e0e4bf",
+      "name": "A nice investment",
+      "investor_company": {
+        "id": "ba3h7106-56af-40e0-8615-7aba53e0e4bf"
+      },
+      "stage": {
+        "name": "Active",
+        "id": "7606cc19-20da-4b74-aba1-2cec0d753ad8"
+      },
+      "project_code": "DHP-00000071",
+      "client_relationship_manager": {
+        "name": "Puck Head",
+        "first_name": "Puck",
+        "last_name": "Head",
+        "id": "e83a608e-84a4-11e6-ae22-56b6b6499611"
+      }
     }
   ]
 }

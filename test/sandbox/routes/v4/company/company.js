@@ -28,6 +28,7 @@ var exportWins = require('../../../fixtures/v4/company-export-wins/export-wins.j
 var exportWinsPage1 = require('../../../fixtures/v4/company-export-wins/export-wins-page-1.json')
 var exportWinsPage2 = require('../../../fixtures/v4/company-export-wins/export-wins-page-2.json')
 var companyCreateInvestigation = require('../../../fixtures/v4/dnb/company-create-investigation.json')
+var companyWithNoGlobalAccountManager = require('../../../fixtures/v4/company/company-with-no-global-account-manager.json')
 
 var largeCapitalProfileEmpty = require('../../../fixtures/v4/company/large-capital-profile-empty.json')
 var largeCapitalProfileNew = require('../../../fixtures/v4/company/large-capital-profile-new.json')
@@ -116,6 +117,7 @@ exports.company = function (req, res) {
     '375094ac-f79a-43e5-9c88-059a7caa17f0': companyOneListCorp,
     'ca8fae21-2895-47cf-90ba-9273c94dab92': companySomeOtherCompany,
     '0f5216e0-849f-11e6-ae22-56b6b6499611': companyWithInvestment1,
+    'ba3h7106-56af-40e0-8615-7aba53e0e4bf': companyWithNoGlobalAccountManager,
     'a73efeba-8499-11e6-ae22-56b6b6499611': companyWithInvestment2,
     '0f5216e0-849f-11e6-ae22-56b6b6499622': companyWithContacts,
     'w2c34b41-1d5a-4b4b-7685-7c53ff2868dg': companyOneListTierDIta,
