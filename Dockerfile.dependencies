@@ -1,4 +1,4 @@
-FROM node:14.17.0
+FROM node:14.17.0-buster
 
 ENV DOCKERIZE_VERSION      v0.6.1
 ENV NPM_CONFIG_LOGLEVEL    warn
@@ -17,12 +17,6 @@ RUN apt-get install -y \
   make \
   git
 
-# Fix error when libpng cannot be found after CircleCI restores cache for pngquant-bin.
-# See https://github.com/tcoopman/image-webpack-loader/issues/95
-RUN wget -q -O /tmp/libpng12.deb http://mirrors.kernel.org/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1_amd64.deb \
-  && dpkg -i /tmp/libpng12.deb \
-  && rm /tmp/libpng12.deb
-
 # Install dockerize
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
@@ -37,10 +31,12 @@ RUN apt-get install -y \
   libnss3 \
   libxss1 \
   libasound2 \
+  libpng-dev \
+  zlib1g-dev  \
   xvfb
 
 # Install visual test dependencies
-RUN apt-get install -y imagemagick
+RUN apt-get install -y imagemagick libgbm1
 
 # Install Chrome (Version 85)
 # See all available versions for download on: http://170.210.201.179/linux/chrome/deb/pool/main/g/google-chrome-stable/
