@@ -1,4 +1,3 @@
-const clientRelationshipManagementFormMiddleware = require('./client-relationship-management')
 const detailsFormMiddleware = require('./details')
 const investmentTypeFormMiddleware = require('./investment-type')
 const projectManagementFormMiddleware = require('./project-management')
@@ -7,7 +6,6 @@ const requirementsFormMiddleware = require('./requirements')
 const valueFormMiddleware = require('./value')
 
 module.exports = {
-  clientRelationshipManagementFormMiddleware,
   detailsFormMiddleware,
   investmentTypeFormMiddleware,
   projectManagementFormMiddleware,
