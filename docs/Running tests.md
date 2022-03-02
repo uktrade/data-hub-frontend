@@ -131,6 +131,8 @@ or
 The aim of this suite is taking screenshots from pages and comparing to baselines
 to ensure consistency between builds.
 
+**NOTE** Compression algorithm differences can cause test failures between operating systems, and underlying C-library differences. To run these tests **you must use Docker**, which is also what Circle CI uses. Similarly when updating the baseline files, they must be generated using Docker as well (otherwise Circle CI will fail).
+
 ### Folder structure
 
 Screenshots will be stored in the root of the project. We commit the baselines and ignore the comparison diff images. If we need to update the baseline screenshot we need to delete the old baseline and rerun the test (it will then copy the new screenshot saved in comparison folder into the baseline folder)
