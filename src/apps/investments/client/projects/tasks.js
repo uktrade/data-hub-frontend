@@ -1,4 +1,5 @@
-import { apiProxyAxios } from './../../../../client/components/Task/utils'
+import { apiProxyAxios } from '../../../../client/components/Task/utils'
+
 import { getMetadataOptions } from '../../../../client/metadata'
 import { transformInvestmentProjectToListItem } from './transformers'
 

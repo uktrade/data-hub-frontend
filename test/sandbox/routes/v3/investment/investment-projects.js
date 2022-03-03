@@ -28,6 +28,8 @@ exports.patchInvestmentProject = function (req, res) {
       req.body.client_requirements.length
     ) {
       res.sendStatus(200)
+    } else if (req.body.project_assurance_adviser || req.body.project_manager) {
+      res.sendStatus(200)
     }
   }
 

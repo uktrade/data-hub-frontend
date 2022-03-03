@@ -20,10 +20,7 @@ const {
   handleRoutePermissions,
 } = require('../middleware')
 const { shared } = require('./middleware')
-const {
-  getBriefInvestmentSummary,
-  expandTeamMembers,
-} = require('./middleware/team')
+const { expandTeamMembers } = require('./middleware/team')
 
 const {
   create,
@@ -39,7 +36,6 @@ const {
 const {
   detailsFormMiddleware,
   investmentTypeFormMiddleware,
-  projectManagementFormMiddleware,
   projectStageFormMiddleware,
   requirementsFormMiddleware,
   valueFormMiddleware,
@@ -209,15 +205,8 @@ router.get(
 
 router
   .route('/:investmentId/edit-project-management')
-  .get(
-    getBriefInvestmentSummary,
-    projectManagementFormMiddleware.populateForm,
-    team.editProjectManagement.getHandler
-  )
+  .get(team.editProjectManagement.editProjectManagementHandler)
   .post(
-    getBriefInvestmentSummary,
-    projectManagementFormMiddleware.populateForm,
-    projectManagementFormMiddleware.handleFormPost,
     team.editProjectManagement.postHandler,
     team.editProjectManagement.getHandler
   )

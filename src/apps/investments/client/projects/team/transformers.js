@@ -24,3 +24,20 @@ export const transformTeamMembersForFieldAddAnother = (teamMembers = []) => {
 
   return transformArrayToObject(teamMemberArray)
 }
+
+export const transformAdviserForTypeahead = (adviser) =>
+  adviser
+    ? {
+        label: adviser.name,
+        value: adviser.id,
+      }
+    : null
+
+export const transformAdviserForAPI = (adviser) =>
+  adviser ? adviser.value : null
+
+export const transformObjectForTable = (object, emptyText = '') =>
+  object ? object.name : emptyText
+
+export const transformLocationsForTable = (locations) =>
+  locations ? locations.map((location) => location.name).join(', ') : ''

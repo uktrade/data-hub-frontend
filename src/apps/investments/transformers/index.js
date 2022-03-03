@@ -8,7 +8,6 @@ const {
   transformToApi,
   transformFromApi,
   transformInvestmentForView,
-  transformBriefInvestmentSummary,
 } = require('./project')
 
 const {
@@ -31,7 +30,6 @@ module.exports = {
   transformInvestmentLandingForView,
   transformToApi,
   transformFromApi,
-  transformBriefInvestmentSummary,
   transformProjectManagementForView,
   transformClientRelationshipManagementForView,
   transformTeamMembersForView,

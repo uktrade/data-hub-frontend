@@ -285,6 +285,10 @@ module.exports = {
       status: url('/investments', '/projects/:projectId/status'),
       admin: url('/investments', '/projects/:projectId/admin'),
       create: url('/investments', '/projects/create/:companyId'),
+      editProjectManagement: url(
+        '/investments',
+        '/projects/:projectId/edit-project-management'
+      ),
       typeInfo: url(
         '/investments',
         '/projects/create/investment-type/info/:anchor'

@@ -1,41 +1,8 @@
 {% extends "../template.njk" %}
 
-{% set phase = investment.stage.name %}
-{% set crm = investment.client_relationship_manager %}
-{% set rsa = investment.referral_source_adviser %}
-
 {% block main_grid_right_column %}
-  {% call DetailsContainer({ 
-    heading: 'Assign project management', 
-    dataTest: 'assign-project-management' 
-  }) %}
-    {% component 'key-value-table', items=briefInvestmentSummary, variant='striped', dataTest="project-management-table"%}
-  {% endcall %}
-
-  {% call Form(form) %}
-    {{ Typeahead({
-      name: 'project_assurance_adviser',
-      entity: 'adviser',
-      placeholder: 'Select an adviser',
-      multipleSelect: false,
-      classes: 'c-form-group c-form-group--no-filter',
-      label: form.labels.project_assurance_adviser,
-      error: form.errors.project_assurance_adviser,
-      options: form.options.projectManagers,
-      value: form.state.project_assurance_adviser
-    }) }}
-
-    {{ Typeahead({
-      name: 'project_manager',
-      entity: 'adviser',
-      placeholder: 'Select a manager',
-      multipleSelect: false,
-      classes: 'c-form-group c-form-group--no-filter',
-      label: form.labels.project_manager,
-      error: form.labels.project_manager,
-      options: form.options.projectManagers,
-      value: form.state.project_manager
-    }) }}
-
-  {% endcall %}
+   {% component 'react-slot', {
+        id: 'edit-project-management',
+        props: props
+    } %}
 {% endblock %}

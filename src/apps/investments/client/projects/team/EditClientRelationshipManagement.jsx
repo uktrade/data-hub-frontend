@@ -8,6 +8,10 @@ import FieldAdvisersTypeahead from '../../../../../client/components/Form/elemen
 import urls from '../../../../../lib/urls'
 import { TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER } from './state'
 import { GlobalAccountManagerDetails } from './GlobalAccountManagerDetails'
+import {
+  transformAdviserForTypeahead,
+  transformAdviserForAPI,
+} from './transformers'
 
 const StyledLegend = styled('legend')`
   font-weight: ${FONT_WEIGHTS.bold};
@@ -29,15 +33,16 @@ const EditClientRelationshipManagement = ({
     cancelButtonLabel="Back"
     cancelRedirectTo={() => urls.investments.projects.team(id)}
     initialValues={{
-      client_relationship_manager: {
-        label: clientRelationshipManager.name,
-        value: clientRelationshipManager.id,
-      },
+      client_relationship_manager: transformAdviserForTypeahead(
+        clientRelationshipManager
+      ),
     }}
     submissionTaskName={TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER}
     transformPayload={(values) => ({
       id,
-      clientRelationshipManagerId: values.client_relationship_manager.value,
+      clientRelationshipManagerId: transformAdviserForAPI(
+        values.client_relationship_manager
+      ),
     })}
   >
     <StyledLegend>Edit client relationship management</StyledLegend>
@@ -45,7 +50,6 @@ const EditClientRelationshipManagement = ({
       name="client_relationship_manager"
       label="Client Relationship Manager"
       placeholder="Search client relationship manager"
-      isMulti={false}
       required="Enter a client relationship manager"
     />
     <GlobalAccountManagerDetails
