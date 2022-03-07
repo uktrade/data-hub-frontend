@@ -1,10 +1,6 @@
 import { createDateFromObject } from '../../../../../../client/utils/date'
 
-export const validateDateWithinOneYearFromToday = (
-  value,
-  field,
-  { values }
-) => {
+export const validateDateWithinTheLastYear = (value, field, { values }) => {
   if (values && values.date) {
     const date = createDateFromObject(values.date)
     if (date) {

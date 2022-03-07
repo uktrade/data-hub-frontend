@@ -7,7 +7,7 @@ import {
   FieldDate,
 } from '../../../../../../client/components'
 
-import { validateDateWithinOneYearFromToday } from './validators'
+import { validateDateWithinTheLastYear } from './validators'
 
 export const InvestorCheckDetails = ({ date, adviser, label }) => {
   return (
@@ -17,7 +17,7 @@ export const InvestorCheckDetails = ({ date, adviser, label }) => {
         name="date"
         label="Date of most recent checks"
         initialValue={date}
-        validate={validateDateWithinOneYearFromToday}
+        validate={validateDateWithinTheLastYear}
         required="Enter the date of the most recent checks"
         hint="For example, 12 11 2015"
       />
