@@ -22,6 +22,7 @@ import LargeCapitalProfileCollection from '../apps/investments/client/profiles/L
 import EditLargeCapitalInvestorDetails from '../apps/companies/apps/investments/large-capital-profile/client/EditLargeCapitalInvestorDetails'
 import UnfilteredLargeCapitalOpportunityCollection from '../apps/investments/client/opportunities/List/UnfilteredLargeCapitalOpportunityCollection'
 import InvestmentEditHistory from '../apps/investments/client/InvestmentEditHistory'
+import EstimatedLandDateForm from '../apps/investments/client/projects/notifications/EstimatedLandDateForm'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
 import EditOneListForm from '../apps/companies/apps/edit-one-list/client/EditOneListForm'
@@ -233,6 +234,12 @@ import {
   TASK_GET_INTERACTIONS_TEAM_NAME,
 } from './modules/Interactions/CollectionList/state'
 
+import * as notifications from '../apps/investments/client/projects/notifications/tasks'
+import {
+  TASK__GET_NOTIFY_SETTINGS_ESTIMATED_LAND_DATE,
+  TASK__SAVE_NOTIFY_SETTINGS_ESTIMATED_LAND_DATE,
+} from '../apps/investments/client/projects/notifications/state'
+
 import Footer from '../client/components/Footer'
 
 import ContactForm from '../client/components/ContactForm'
@@ -382,6 +389,10 @@ function App() {
         [TASK_GET_TYPEAHEAD_OPTIONS]: getTypeaheadOptions,
         [TASK_SAVE_ORDER_ASSIGNEES]: editOMISTasks.saveOrderAssignees,
         [TASK_SAVE_ORDER_SUBSCRIBERS]: editOMISTasks.saveOrderSubscribers,
+        [TASK__GET_NOTIFY_SETTINGS_ESTIMATED_LAND_DATE]:
+          notifications.getEstimatedLandDate,
+        [TASK__SAVE_NOTIFY_SETTINGS_ESTIMATED_LAND_DATE]:
+          notifications.saveEstimatedLandDate,
         ...resourceTasks,
       }}
     >
@@ -411,6 +422,11 @@ function App() {
       <Mount selector="#investment-edit-history">
         {(props) => (
           <InvestmentEditHistory csrfToken={globalProps.csrfToken} {...props} />
+        )}
+      </Mount>
+      <Mount selector="#estimated-land-date">
+        {(props) => (
+          <EstimatedLandDateForm csrfToken={globalProps.csrfToken} {...props} />
         )}
       </Mount>
       <Mount selector="#match-confirmation">

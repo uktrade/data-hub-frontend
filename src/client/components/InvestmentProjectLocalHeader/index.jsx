@@ -56,7 +56,7 @@ const InvestmentProjectLocalHeader = ({ investment, breadcrumbs }) => (
     heading={investment.name}
     breadcrumbs={breadcrumbs}
   >
-    <MetaList>
+    <MetaList data-test="meta-list">
       <MetaListItem text={'Status'}>
         {upperFirst(investment.status)} -{' '}
         <a href={urls.investments.projects.status(investment.id)}>change</a>

@@ -91,7 +91,7 @@ const FieldCheckboxes = ({
           ) => (
             <>
               {exclusive && index === options.length - 1 && (
-                <StyledOr>or</StyledOr>
+                <StyledOr data-test="exclusive-or">or</StyledOr>
               )}
               <Checkbox
                 key={optionValue}

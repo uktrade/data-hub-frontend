@@ -80,9 +80,13 @@ const LocalHeader = ({
       <FlashMessages flashMessages={flashMessages} />
       {superheading && <StyledSuperheading>{superheading}</StyledSuperheading>}
       {headingLink && (
-        <StyledLink href={headingLink.url}>{headingLink.text}</StyledLink>
+        <StyledLink data-test="heading-link" href={headingLink.url}>
+          {headingLink.text}
+        </StyledLink>
       )}
-      {heading && <LocalHeaderHeading>{heading}</LocalHeaderHeading>}
+      {heading && (
+        <LocalHeaderHeading data-test="heading">{heading}</LocalHeaderHeading>
+      )}
       {children}
     </StyledMain>
   </StyledHeader>

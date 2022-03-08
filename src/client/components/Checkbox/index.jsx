@@ -55,7 +55,7 @@ const Checkbox = ({
         setChecked(e.target.checked)
         onChange(e)
       }}
-      data-test="checkbox"
+      data-test={`checkbox-${name}`}
       {...props}
     />
   )
