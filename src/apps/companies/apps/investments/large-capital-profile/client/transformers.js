@@ -34,6 +34,8 @@ export const transformInvestorDetailsToApi = ({
     notes_on_locations: investor_notes,
     required_checks_conducted: required_checks,
     required_checks_conducted_on: transformDateObjectToDateString(date),
-    required_checks_conducted_by: transformOption(adviser),
+    required_checks_conducted_by: adviser
+      ? transformOption(adviser)
+      : undefined,
   }
 }

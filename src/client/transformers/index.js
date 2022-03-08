@@ -3,8 +3,13 @@ import { OPTION_NO, OPTION_YES } from '../../common/constants'
 import { format, isDateValid } from '../../client/utils/date'
 
 export const transformDateObjectToDateString = (value) => {
-  const dateString = `${value?.year}-${value?.month}-${value?.day}`
-  return dateString === '--' ? null : dateString
+  if (value) {
+    const dateString = `${value?.year ?? ''}-${value?.month ?? ''}-${
+      value?.day ?? ''
+    }`
+    return dateString === '--' ? null : dateString
+  }
+  return null
 }
 
 export const transformOption = (option) => {

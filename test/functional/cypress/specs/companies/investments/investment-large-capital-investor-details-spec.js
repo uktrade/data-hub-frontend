@@ -136,7 +136,7 @@ describe('View large capital investor details page', () => {
   })
 
   context('when the company is new ', () => {
-    before(() => {
+    beforeEach(() => {
       gotoEditInvestorDetails(newCompany.id)
     })
 
@@ -203,6 +203,46 @@ describe('View large capital investor details page', () => {
             input: 'shawn',
           })
         )
+      })
+
+      clickButton('Save and return')
+
+      assertAPIRequest(EDIT_INVESTOR_INTERCEPT, (xhr) => {
+        assertRequestBody(xhr, expectedBody)
+        assertUrl(urls.companies.investments.largeCapitalProfile(newCompany.id))
+        assertFlashMessage('Investor details changes saved')
+      })
+    })
+
+    it('should save new investment with not yet checked', () => {
+      const expectedBody = {
+        id: 'a84f8405-c419-40a6-84c8-642b7c3209b2',
+        investor_company_id: '0fb3379c-341c-4da4-b825-bf8d47b26baa',
+        investor_type: '80168d31-fa91-494e-9ad5-b9255e01b5da',
+        global_assets_under_management: '500',
+        investable_capital: '700',
+        notes_on_locations: 'Notes about investment',
+        required_checks_conducted: '81fafe5a-ed32-4f46-bdc5-2cafedf828e8',
+        required_checks_conducted_on: null,
+      }
+
+      assertInvestorType().then((element) => {
+        selectFirstTypeaheadOption({ element, input: 'Asset manager' })
+      })
+      assertGlobalAssetsAmount().then((element) => {
+        clearAndTypeInput({ element, value: '500' })
+      })
+      assertCapitalValue().then((element) => {
+        clearAndTypeInput({ element, value: '700' })
+      })
+      assertInvestorDescription().then((element) => {
+        clearAndTypeTextArea({ element, value: 'Notes about investment' })
+      })
+      assertRequiredChecks().then((element) => {
+        clickRadioGroupOption({
+          element,
+          label: 'Not yet checked',
+        })
       })
 
       clickButton('Save and return')
