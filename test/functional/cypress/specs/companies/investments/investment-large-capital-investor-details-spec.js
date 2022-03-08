@@ -136,7 +136,7 @@ describe('View large capital investor details page', () => {
   })
 
   context('when the company is new ', () => {
-    before(() => {
+    beforeEach(() => {
       gotoEditInvestorDetails(newCompany.id)
     })
 
