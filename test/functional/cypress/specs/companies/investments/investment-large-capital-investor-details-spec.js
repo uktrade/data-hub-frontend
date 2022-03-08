@@ -213,6 +213,37 @@ describe('View large capital investor details page', () => {
         assertFlashMessage('Investor details changes saved')
       })
     })
+
+    it('should save new investment with not yet checked', () => {
+      const expectedBody = {}
+
+      assertInvestorType().then((element) => {
+        selectFirstTypeaheadOption({ element, input: 'Asset manager' })
+      })
+      assertGlobalAssetsAmount().then((element) => {
+        clearAndTypeInput({ element, value: '500' })
+      })
+      assertCapitalValue().then((element) => {
+        clearAndTypeInput({ element, value: '700' })
+      })
+      assertInvestorDescription().then((element) => {
+        clearAndTypeTextArea({ element, value: 'Notes about investment' })
+      })
+      assertRequiredChecks().then((element) => {
+        clickRadioGroupOption({
+          element,
+          label: 'Not yet checked',
+        })
+      })
+
+      clickButton('Save and return')
+
+      assertAPIRequest(EDIT_INVESTOR_INTERCEPT, (xhr) => {
+        assertRequestBody(xhr, expectedBody)
+        assertUrl(urls.companies.investments.largeCapitalProfile(newCompany.id))
+        assertFlashMessage('Investor details changes saved')
+      })
+    })
   })
 
   context('when successfully saved', () => {
