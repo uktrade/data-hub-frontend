@@ -8,7 +8,7 @@ async function createAttendee(req, res, next) {
   try {
     const { user: adviser } = req.session
     const contactId = req.params.contactId
-    const { event, features } = res.locals
+    const { event } = res.locals
 
     if (!event || !contactId) {
       throw new Error('Missing eventId or contactId')
@@ -28,7 +28,7 @@ async function createAttendee(req, res, next) {
       return res.redirect(`/events/${event.id}/attendees`)
     }
 
-    const contact = await getContact(req, contactId, features)
+    const contact = await getContact(req, contactId)
 
     const serviceDelivery = {
       contacts: [contact.id],
