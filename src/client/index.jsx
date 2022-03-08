@@ -19,6 +19,7 @@ import CreateListForm from '../apps/company-lists/client/CreateListForm'
 import DnbHierarchy from '../apps/companies/apps/dnb-hierarchy/client/DnbHierarchy'
 import LeadAdvisers from '../apps/companies/apps/advisers/client/LeadAdvisers'
 import LargeCapitalProfileCollection from '../apps/investments/client/profiles/LargeCapitalProfileCollection'
+import EditLargeCapitalInvestorDetails from '../apps/companies/apps/investments/large-capital-profile/client/EditLargeCapitalInvestorDetails'
 import UnfilteredLargeCapitalOpportunityCollection from '../apps/investments/client/opportunities/List/UnfilteredLargeCapitalOpportunityCollection'
 import InvestmentEditHistory from '../apps/investments/client/InvestmentEditHistory'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
@@ -173,6 +174,9 @@ import {
   TASK_GET_INVESTMENT_PROJECT_INITIAL_VALUES,
 } from '../apps/investments/client/projects/create/state'
 import * as createInvestmentProjectTasks from '../apps/investments/client/projects/create/tasks'
+
+import { TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS } from '../apps/companies/apps/investments/large-capital-profile/client/state'
+import * as updateLargeCapitalInvestorDetails from '../apps/companies/apps/investments/large-capital-profile/client/tasks'
 
 import {
   TASK_SAVE_ORDER_ASSIGNEES,
@@ -331,6 +335,8 @@ function App() {
         [TASK_GET_PROJECTS_LIST]: investmentProjectTasks.getProjects,
         [TASK_CREATE_INVESTMENT_PROJECT]:
           createInvestmentProjectTasks.createInvestmentProject,
+        [TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS]:
+          updateLargeCapitalInvestorDetails.updateInvestorDetails,
         [TASK_GET_INVESTMENT_PROJECT_INITIAL_VALUES]:
           createInvestmentProjectTasks.getInitialFormValues,
         [TASK_SEARCH_COMPANY]: createInvestmentProjectTasks.searchCompany,
@@ -471,6 +477,9 @@ function App() {
       </Mount>
       <Mount selector="#large-capital-profile-collection">
         {(props) => <LargeCapitalProfileCollection {...props} />}
+      </Mount>
+      <Mount selector="#edit-large-capital-investor-details">
+        {(props) => <EditLargeCapitalInvestorDetails {...props} />}
       </Mount>
       <Mount selector="#unfiltered-large-capital-opportunity-collection">
         {(props) => <UnfilteredLargeCapitalOpportunityCollection {...props} />}

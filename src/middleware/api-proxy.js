@@ -35,6 +35,7 @@ const ALLOWLIST = [
   '/v4/company/:id/assign-regional-account-manager',
   '/v4/dnb/company-change-request',
   '/v4/large-investor-profile',
+  '/v4/large-investor-profile/:id',
   '/v3/search/investment_project',
   '/v4/search/large-investor-profile',
   '/v4/large-capital-opportunity/:id',

@@ -1,6 +1,5 @@
 const {
   transformProfile,
-  transformAdvisers,
   transformCheckboxes,
   transformRadioButtons,
   transformInvestorTypes,
@@ -38,7 +37,7 @@ const renderProfile = async (req, res, next) => {
 
     if (editType === INVESTOR_DETAILS) {
       await Promise.all(getInvestorDetailsOptions(req)).then(
-        ([investorTypeMD, requiredCheckMD, adviserMD]) => {
+        ([investorTypeMD, requiredCheckMD]) => {
           profile.investorDetails.investorType.items = transformInvestorTypes(
             investorTypeMD,
             profile.investorDetails
@@ -47,10 +46,6 @@ const renderProfile = async (req, res, next) => {
             requiredCheckMD,
             profile.investorDetails
           )
-          profile.investorDetails.requiredChecks.cleared.advisers =
-            transformAdvisers(adviserMD.results)
-          profile.investorDetails.requiredChecks.issuesIdentified.advisers =
-            transformAdvisers(adviserMD.results)
         }
       )
     } else if (editType === INVESTOR_REQUIREMENTS) {

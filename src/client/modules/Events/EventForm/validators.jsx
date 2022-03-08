@@ -1,8 +1,4 @@
-const getDate = (value) => {
-  const { day, month, year } = value
-  const result = new Date(year, month, day)
-  return result
-}
+import { createDateFromObject } from '../../../utils/date'
 
 export const validateStartDateBeforeOrEqualToEndDate = (
   value,
@@ -10,8 +6,8 @@ export const validateStartDateBeforeOrEqualToEndDate = (
   { values }
 ) => {
   if (values && values.start_date && values.end_date) {
-    const startDate = getDate(values.start_date)
-    const endDate = getDate(values.end_date)
+    const startDate = createDateFromObject(values.start_date)
+    const endDate = createDateFromObject(values.end_date)
     if (startDate && endDate) {
       const result =
         startDate > endDate

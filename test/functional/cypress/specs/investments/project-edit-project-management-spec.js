@@ -6,6 +6,7 @@ const {
   assertRequestBody,
   assertFlashMessage,
   assertSingleTypeaheadOptionSelected,
+  assertAPIRequest,
 } = require('../../support/assertions')
 
 const {
@@ -17,11 +18,11 @@ const incompleteProject = require('../../fixtures/investment/investment-no-manag
 const completeProject = require('../../fixtures/investment/investment-has-management-staff.json')
 const { investments } = require('../../../../../src/lib/urls')
 
+const INVESTMENT_INTERCEPT = 'investmentsHttpRequest'
+
 describe('Edit the management advisers for a project', () => {
   beforeEach(() => {
-    cy.intercept('PATCH', '/api-proxy/v3/investment/*').as(
-      'investmentsHttpRequest'
-    )
+    cy.intercept('PATCH', '/api-proxy/v3/investment/*').as(INVESTMENT_INTERCEPT)
   })
   context(
     'When editing an incomplete project with no project management staff',
@@ -35,6 +36,7 @@ describe('Edit the management advisers for a project', () => {
       it('should render the header', () => {
         assertLocalHeader(incompleteProject.name)
       })
+
       it('should render breadcrumbs', () => {
         assertBreadcrumbs({
           Home: '/',
@@ -43,9 +45,11 @@ describe('Edit the management advisers for a project', () => {
           [incompleteProject.name]: null,
         })
       })
+
       it('should render the subheading', () => {
         cy.contains('Assign project management').should('exist')
       })
+
       it('should render the summary table', () => {
         assertKeyValueTable('briefProjectSummary', {
           'Primary sector': incompleteProject.sector.name,
@@ -71,6 +75,7 @@ describe('Edit the management advisers for a project', () => {
           placeholder: 'Select a manager',
         })
       })
+
       it('should submit the form with only assurance typeahead filled in and redirect to the project details page', () => {
         const expectedBody = {
           project_assurance_adviser: '2c42c516-9898-e211-a939-e4115bead28a',
@@ -82,11 +87,10 @@ describe('Edit the management advisers for a project', () => {
         })
         clickButton('Save')
 
-        assertAPI((xhr) => {
+        assertAPIRequest(INVESTMENT_INTERCEPT, (xhr) => {
           assertRequestBody(xhr, expectedBody)
+          assertFlashMessage('Investment details updated')
         })
-
-        assertFlashMessage('Investment details updated')
       })
 
       it('should submit the form with only PM typeahead filled in and redirect', () => {
@@ -100,10 +104,9 @@ describe('Edit the management advisers for a project', () => {
         })
         clickButton('Save')
 
-        assertAPI((xhr) => {
+        assertAPIRequest(INVESTMENT_INTERCEPT, (xhr) => {
           assertRequestBody(xhr, expectedBody)
         })
-
         assertFlashMessage('Investment details updated')
       })
 
@@ -124,7 +127,7 @@ describe('Edit the management advisers for a project', () => {
         })
         clickButton('Save')
 
-        assertAPI((xhr) => {
+        assertAPIRequest(INVESTMENT_INTERCEPT, (xhr) => {
           assertRequestBody(xhr, expectedBody)
         })
 
@@ -180,7 +183,3 @@ describe('Edit the management advisers for a project', () => {
     }
   )
 })
-
-function assertAPI(validateCallback) {
-  cy.wait('@investmentsHttpRequest').then((xhr) => validateCallback(xhr))
-}

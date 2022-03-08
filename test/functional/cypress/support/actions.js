@@ -22,6 +22,13 @@ export const clickCheckboxGroupOption = ({ element, value }) => {
 }
 
 /**
+ * Clicks the radiogroup option with the label
+ */
+export const clickRadioGroupOption = ({ element, label }) => {
+  cy.get(element).contains('span', label).parent().click()
+}
+
+/**
  * Enter `input` into a typeahead `element` and select the first result
  */
 export const selectFirstTypeaheadOption = ({ element, input }) => {
@@ -42,6 +49,47 @@ export const removeChip = (dataValue) => {
  */
 export const inputDateValue = ({ element, value }) => {
   cy.get(element).type(value)
+}
+
+/**
+ * Adds a date object of {day, month, year} to the relevent input fields
+ */
+export const clearAndInputDateValueObject = ({ element, value }) => {
+  cy.wrap(element).then(($el) => {
+    cy.wrap($el).find('[data-test$="-day"]').clear().type(value.day.toString())
+    cy.wrap($el)
+      .find('[data-test$="-month"]')
+      .clear()
+      .type(value.month.toString())
+    cy.wrap($el)
+      .find('[data-test$="-year"]')
+      .clear()
+      .type(value.year.toString())
+  })
+}
+
+/**
+ * Clears and Types a value in an input field
+ */
+export const clearAndTypeInput = ({ element, value }) => {
+  cy.wrap(element).then(($el) => {
+    cy.wrap($el)
+      .find('input')
+      .clear()
+      .type(value ?? '')
+  })
+}
+
+/**
+ * Clears and Types a value in an textarea field
+ */
+export const clearAndTypeTextArea = ({ element, value }) => {
+  cy.wrap(element).then(($el) => {
+    cy.wrap($el)
+      .find('textarea')
+      .clear()
+      .type(value ?? '')
+  })
 }
 
 /**

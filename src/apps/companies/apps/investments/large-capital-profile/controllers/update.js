@@ -1,17 +1,11 @@
 const {
-  transformInvestorDetails,
   transformInvestorRequirements,
   transformLocation,
 } = require('../transformers')
 const { updateCompanyProfile } = require('../repos')
-const {
-  INVESTOR_DETAILS,
-  INVESTOR_REQUIREMENTS,
-  LOCATION,
-} = require('../sections')
+const { INVESTOR_REQUIREMENTS, LOCATION } = require('../sections')
 
 const transformer = {
-  [INVESTOR_DETAILS]: transformInvestorDetails,
   [INVESTOR_REQUIREMENTS]: transformInvestorRequirements,
   [LOCATION]: transformLocation,
 }
