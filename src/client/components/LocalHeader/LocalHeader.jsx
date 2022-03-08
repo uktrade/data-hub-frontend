@@ -32,10 +32,19 @@ const StyledSuperheading = styled.div({
   lineHeight: '32px',
 })
 
+const StyledLink = styled('a')({
+  fontSize: 20,
+  display: 'inline-block',
+  fontFamily: 'Arial, sans-serif',
+  marginTop: 8,
+  marginBottom: 8,
+})
+
 const LocalHeader = ({
   breadcrumbs,
   flashMessages,
   heading,
+  headingLink,
   superheading,
   children,
   useReactRouter = false,
@@ -70,6 +79,9 @@ const LocalHeader = ({
       </BreadcrumbsWrapper>
       <FlashMessages flashMessages={flashMessages} />
       {superheading && <StyledSuperheading>{superheading}</StyledSuperheading>}
+      {headingLink && (
+        <StyledLink href={headingLink.url}>{headingLink.text}</StyledLink>
+      )}
       {heading && <LocalHeaderHeading>{heading}</LocalHeaderHeading>}
       {children}
     </StyledMain>
@@ -96,14 +108,12 @@ LocalHeader.propTypes = {
     ]),
   }),
   heading: PropTypes.string,
+  headingLink: PropTypes.shape({
+    url: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+  }),
   superheading: PropTypes.node,
   children: PropTypes.node,
 }
 
-LocalHeader.defaultProps = {
-  breadcrumbs: null,
-  flashMessages: null,
-  heading: null,
-  children: null,
-}
 export default LocalHeader

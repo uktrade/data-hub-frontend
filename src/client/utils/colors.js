@@ -33,6 +33,7 @@ export const LIGHT_GREY = '#dee0e2'
 
 // We require this specific blue for the navigation hover/selection.
 // This blue has to match the colour of both 'Find Exporters' and 'Market Access'.
+// It is also used for the investment project timeline.
 export const DARK_BLUE = '#005ea5'
 
 export const DARK_GREY = '#505a5f'
