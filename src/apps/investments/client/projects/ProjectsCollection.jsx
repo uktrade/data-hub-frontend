@@ -11,7 +11,8 @@ import {
 
 import {
   listSkeletonPlaceholder,
-  filterSkeletonPlaceholder,
+  CheckboxPlaceholder,
+  ToggleHeadingPlaceholder,
 } from '../../../../client/components/SkeletonPlaceholder'
 
 import {
@@ -58,7 +59,14 @@ const ProjectsCollection = ({
     name: TASK_GET_INVESTMENTS_PROJECTS_METADATA,
     id: INVESTMENT_PROJECTS_ID,
     progressMessage: 'Loading filters',
-    renderProgress: filterSkeletonPlaceholder(),
+    renderProgress: () => (
+      <>
+        <ToggleHeadingPlaceholder />
+        <CheckboxPlaceholder count={5} />
+        <CheckboxPlaceholder count={5} />
+        <ToggleHeadingPlaceholder count={4} />
+      </>
+    ),
     startOnRender: {
       payload: {
         projectStageOptions: urls.metadata.investmentProjectStage(),

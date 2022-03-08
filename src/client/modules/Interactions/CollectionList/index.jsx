@@ -22,7 +22,9 @@ import {
 
 import {
   listSkeletonPlaceholder,
-  filterSkeletonPlaceholder,
+  CheckboxPlaceholder,
+  InputPlaceholder,
+  ToggleHeadingPlaceholder,
 } from '../../../components/SkeletonPlaceholder'
 
 import {
@@ -71,10 +73,17 @@ const InteractionCollection = ({
     name: TASK_GET_INTERACTIONS_METADATA,
     id: ID,
     progressMessage: 'Loading filters',
-    renderProgress: filterSkeletonPlaceholder({
-      filterCheckboxCount: 3,
-      filterInputFields: 4,
-    }),
+    renderProgress: () => (
+      <>
+        <CheckboxPlaceholder count={1} />
+        <CheckboxPlaceholder count={2} />
+        <ToggleHeadingPlaceholder />
+        <InputPlaceholder count={5} />
+        <CheckboxPlaceholder count={1} />
+        <CheckboxPlaceholder count={7} />
+        <ToggleHeadingPlaceholder count={2} />
+      </>
+    ),
     startOnRender: {
       onSuccessDispatch: INTERACTIONS__METADATA_LOADED,
     },

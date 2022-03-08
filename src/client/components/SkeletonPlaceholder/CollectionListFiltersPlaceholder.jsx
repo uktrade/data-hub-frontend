@@ -10,7 +10,7 @@ const CheckboxHeading = styled('div')`
   height: ${SPACING.SCALE_4};
 `
 const CheckboxList = styled('ul')`
-  margin-bottom: 75px;
+  margin-bottom: 40px;
 `
 
 const CheckboxListItem = styled('li')`
@@ -31,7 +31,7 @@ const CheckboxLabel = styled('div')`
   margin-left: ${SPACING.SCALE_2};
 `
 
-const FilterCheckboxes = ({ count }) =>
+export const CheckboxPlaceholder = ({ count = 1 }) =>
   count ? (
     <>
       <CheckboxHeading />
@@ -49,7 +49,7 @@ const FilterCheckboxes = ({ count }) =>
   ) : null
 
 const InputList = styled('ul')`
-  ${({ marginTop }) => marginTop && `margin-top: ${marginTop}px;`};
+  margin-bottom: 30px;
 `
 
 const InputListItem = styled('li')`
@@ -74,9 +74,9 @@ const InputListItemField = styled('div')`
   margin-top: ${SPACING.SCALE_1};
 `
 
-const FilterInputs = ({ inputCount }) => (
+export const InputPlaceholder = ({ count = 1 }) => (
   <InputList>
-    {Array.from(Array(inputCount).keys()).map((el, i) => (
+    {Array.from(Array(count).keys()).map((el, i) => (
       <InputListItem key={i}>
         <InputListItemLabel />
         <InputListItemField />
@@ -85,14 +85,17 @@ const FilterInputs = ({ inputCount }) => (
   </InputList>
 )
 
-const collectionListFilters =
-  ({ filterCheckboxCount = 6, filterInputCount = 10 } = {}) =>
-  () =>
-    (
-      <>
-        <FilterCheckboxes count={filterCheckboxCount} />
-        <FilterInputs inputCount={filterInputCount} />
-      </>
-    )
+const ToggleHeadingText = styled('div')`
+  ${animation};
+  width: 250px;
+  height: ${SPACING.SCALE_5};
+  margin-bottom: ${SPACING.SCALE_4};
+`
 
-export default collectionListFilters
+export const ToggleHeadingPlaceholder = ({ count = 1 }) => (
+  <>
+    {Array.from(Array(count).keys()).map((el, i) => (
+      <ToggleHeadingText key={i} />
+    ))}
+  </>
+)

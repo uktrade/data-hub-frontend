@@ -14,7 +14,9 @@ import {
 
 import {
   listSkeletonPlaceholder,
-  filterSkeletonPlaceholder,
+  CheckboxPlaceholder,
+  InputPlaceholder,
+  ToggleHeadingPlaceholder,
 } from '../../../components/SkeletonPlaceholder'
 
 import {
@@ -45,10 +47,14 @@ const ContactsCollection = ({
     name: TASK_GET_CONTACTS_METADATA,
     id: CONTACTS_LIST_ID,
     progressMessage: 'Loading filters',
-    renderProgress: filterSkeletonPlaceholder({
-      filterCheckboxCount: 0,
-      filterInputFields: 6,
-    }),
+    renderProgress: () => (
+      <>
+        <ToggleHeadingPlaceholder />
+        <InputPlaceholder count={3} />
+        <CheckboxPlaceholder count={2} />
+        <ToggleHeadingPlaceholder />
+      </>
+    ),
     startOnRender: {
       onSuccessDispatch: CONTACTS__METADATA_LOADED,
     },
