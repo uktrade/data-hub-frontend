@@ -173,7 +173,9 @@ const FieldWrapper = ({
         (showBorder ? (
           <Paragraph>{hint}</Paragraph>
         ) : (
-          <StyledHint error={error}>{hint}</StyledHint>
+          <StyledHint data-test="hint-text" error={error}>
+            {hint}
+          </StyledHint>
         ))}
       {children}
     </FieldInner>

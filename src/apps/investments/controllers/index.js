@@ -7,6 +7,7 @@ const edit = require('./edit')
 const evaluation = require('./evaluation')
 const propositions = require('./propositions')
 const team = require('./team')
+const estimatedLandDate = require('./estimated-land-date')
 
 module.exports = {
   create,
@@ -18,4 +19,5 @@ module.exports = {
   evaluation,
   propositions,
   team,
+  estimatedLandDate,
 }

@@ -1475,7 +1475,7 @@
       "description": "This is a dummy investment project for testing",
       "anonymous_description": "",
       "allow_blank_estimated_land_date": false,
-      "estimated_land_date": null,
+      "estimated_land_date": "2020-04-01",
       "actual_land_date": null,
       "quotable_as_public_case_study": null,
       "likelihood_to_land": null,

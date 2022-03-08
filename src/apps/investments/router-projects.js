@@ -31,6 +31,7 @@ const {
   edit,
   evaluation,
   team,
+  estimatedLandDate,
 } = require('./controllers')
 
 const {
@@ -103,6 +104,12 @@ router.post(
 router.get(
   '/:investmentId/unarchive',
   archive.unarchiveInvestmentProjectHandler
+)
+
+// TODO: revisit this once Pawel has merged his notifications route
+router.get(
+  '/:investmentId/notifications/estimated-land-date',
+  estimatedLandDate.renderView
 )
 
 router.get(
