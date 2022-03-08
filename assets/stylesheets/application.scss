@@ -1,28 +1,26 @@
-$images-dir: "/images/";
+$images-dir: '/images/';
 
 $govuk-canvas-background-colour: #f3f2f1;
 $govuk-font-family: Arial, sans-serif;
-@import "../../node_modules/@uktrade/datahub-header/component/header.css";;
-@import "../../node_modules/govuk-frontend/all";
+@import '../../node_modules/@uktrade/datahub-header/component/header.css';
+@import '../../node_modules/govuk-frontend/all';
 
 $toolkit-font-stack: $govuk-font-family;
-@import "_deprecated/trade-elements";
+@import '_deprecated/trade-elements';
 
-@import "../../node_modules/vue-multiselect/dist/vue-multiselect.min.css";
+@import 'settings';
+@import 'tools';
+@import 'generic';
+@import 'layout';
+@import 'elements';
+@import 'objects';
+@import 'components';
+@import '../../src/templates/_macros/all';
+@import 'trumps';
 
-@import "settings";
-@import "tools";
-@import "generic";
-@import "layout";
-@import "elements";
-@import "objects";
-@import "components";
-@import "../../src/templates/_macros/all";
-@import "trumps";
-
-@import "../../src/apps/companies/apps/investments/styles";
-@import "../../src/apps/contacts/styles";
+@import '../../src/apps/companies/apps/investments/styles';
+@import '../../src/apps/contacts/styles';
 
 //// application specific (deprecated)
-@import "_deprecated/dashboard";
-@import "_deprecated/shame";
+@import '_deprecated/dashboard';
+@import '_deprecated/shame';

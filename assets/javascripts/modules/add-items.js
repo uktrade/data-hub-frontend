@@ -1,6 +1,4 @@
 /* eslint-disable no-new */
-const Vue = require('vue')
-
 const assign = require('lodash/assign')
 const pickBy = require('lodash/pickBy')
 const {
@@ -12,13 +10,7 @@ const {
   updateCypressDataAttribute,
 } = require('../lib/helpers')
 
-const Typeahead = require('../vue/typeahead.vue').default
-const { highlight } = require('../vue/filters')
-
-Vue.filter('highlight', highlight)
-
 let addButtonClass = 'js-AddItems__add'
-const addTypeaheadButtonClass = 'js-AddItems__add--typeahead'
 const removeButtonClass = 'js-AddItems__remove'
 
 /**
@@ -58,7 +50,6 @@ const AddItems = {
     itemSelector: '.js-AddItems__item',
     itemName: 'item',
     addButtonSelector: `.${addButtonClass}`,
-    addTypeaheadButtonSelector: `.${addTypeaheadButtonClass}`,
     addButtonText: 'Add another {{itemName}}',
     removeButtonSelector: `.${removeButtonClass}`,
     removeButtonText: 'Remove',
@@ -105,9 +96,6 @@ const AddItems = {
     const addButton = this.wrapper.querySelector(
       this.settings.addButtonSelector
     )
-    const addTypeaheadButton = this.wrapper.querySelector(
-      this.settings.addTypeaheadButtonSelector
-    )
 
     if (addButton) {
       addButton.setAttribute('data-method', 'add')
@@ -121,21 +109,6 @@ const AddItems = {
       }
     }
 
-    if (addTypeaheadButton) {
-      addTypeaheadButton.setAttribute('data-method', 'add-typeahead')
-      addTypeaheadButton.innerText = this.settings.addButtonText.replace(
-        '{{itemName}}',
-        this.settings.itemName
-      )
-
-      if (!removeButtons.length) {
-        addTypeaheadButton.innerText = addTypeaheadButton.innerText.replace(
-          'another',
-          ''
-        )
-      }
-    }
-
     removeButtons.forEach((element) => {
       element.setAttribute('data-method', 'remove')
       element.innerHTML = this.settings.removeButtonText.replace(
@@ -146,15 +119,8 @@ const AddItems = {
   },
 
   insertAddButton() {
-    if (
-      this.wrapper.querySelector(this.settings.addButtonSelector) ||
-      this.wrapper.querySelector(this.settings.addTypeaheadButtonSelector)
-    ) {
+    if (this.wrapper.querySelector(this.settings.addButtonSelector)) {
       return
-    }
-
-    if (this.wrapper.getAttribute('data-add-button-type') === 'typeahead') {
-      addButtonClass = addTypeaheadButtonClass
     }
 
     const addButtonElement = this.document.createElement('button')
@@ -202,9 +168,6 @@ const AddItems = {
     switch (target.getAttribute('data-method')) {
       case 'add':
         this.addItem()
-        break
-      case 'add-typeahead':
-        this.addTypeaheadItem()
         break
       case 'remove':
         const element = closest(target, this.settings.itemSelector)
@@ -254,48 +217,11 @@ const AddItems = {
 
     insertAfter(newItem, lastItem)
   },
-  addTypeaheadItem() {
-    const lastItem = this.wrapper.querySelector(
-      `${this.settings.itemSelector}:last-of-type`
-    )
-    const attr = this.getItemAttribute()
-    const newItem = regenIds(this.template.cloneNode(true), attr)
-    const typeaheadWrapper = newItem.querySelector('.js-vue-wrapper')
-    const typeaheadType = typeaheadWrapper.getAttribute('data-typeahead-type')
-    typeaheadWrapper.innerHTML = this.buildTypeaheadTemplate(typeaheadType)
-    this.buildTypeahead(typeaheadWrapper)
 
-    if (!lastItem) {
-      return this.itemContainer.appendChild(newItem)
-    }
-
-    insertAfter(newItem, lastItem)
-  },
   removeItem(item) {
     if (this.settings.canRemove) {
       item.parentNode.removeChild(item)
     }
-  },
-  buildTypeaheadTemplate(name) {
-    return `<typeahead
-            entity="adviser"
-            model="[]"
-            selected-value=""
-            name="${name}"
-            :hide-label="true"
-            label="Advisers"
-            placeholder="Search team member"
-            :multiple-select="false"
-            value=""
-            classes="c-form-group c-form-group--no-filter"></typeahead>`
-  },
-  buildTypeahead(wrapper) {
-    new Vue({
-      el: wrapper,
-      components: {
-        typeahead: Typeahead,
-      },
-    })
   },
 }
 
