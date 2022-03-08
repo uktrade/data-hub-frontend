@@ -498,6 +498,22 @@ describe('Interaction theme', () => {
         }
       )
     })
+
+    it('should persist form fields after navigating back', () => {
+      cy.url().should('include', '?step=interaction_details')
+      cy.contains(ELEMENT_SUBJECT.label)
+        .next()
+        .find('input')
+        .type('Persisting subject')
+      cy.go('back')
+      cy.url().should('include', '?step=interaction_type')
+      cy.contains('button', 'Continue').click()
+      cy.url().should('include', '?step=interaction_details')
+      cy.contains(ELEMENT_SUBJECT.label)
+        .next()
+        .find('input')
+        .should('have.attr', 'value', 'Persisting subject')
+    })
   })
 })
 
@@ -864,7 +880,9 @@ describe('Contact loop', () => {
       cy.contains('a', 'Cancel').should(
         'have.attr',
         'href',
-        urls.companies.interactions.create(company.id)
+        `${urls.companies.interactions.create(
+          company.id
+        )}?step=interaction_details`
       )
 
       cy.contains('div', 'First name').find('input').type('John')

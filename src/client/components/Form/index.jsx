@@ -1,8 +1,9 @@
 import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React, { useRef, useEffect } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, useHistory, useLocation } from 'react-router-dom'
 import { isEmpty } from 'lodash'
+import qs from 'qs'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 
@@ -64,6 +65,7 @@ const _Form = ({
   initialValues,
   redirectMode = 'hard',
   scrollToTopOnStep = false,
+  showStepInUrl = false,
   reactRouterRedirect,
   transformInitialValues = (x) => x,
   transformPayload = (x) => x,
@@ -79,14 +81,33 @@ const _Form = ({
   touched = {},
   steps = [],
   initialStepIndex = 0,
+  goToStep,
   ...props
 }) => {
+  const history = useHistory()
+  const location = useLocation()
+  const qsParams = qs.parse(location.search.slice(1))
+
   useEffect(() => {
     onLoad(initialValues, initialStepIndex)
   }, [])
   useEffect(() => {
     scrollToTopOnStep && window.scrollTo(0, 0)
   }, [scrollToTopOnStep, props.currentStep])
+  useEffect(() => {
+    if (showStepInUrl) {
+      if (qsParams.step) {
+        goToStep(qsParams.step || steps[initialStepIndex])
+      } else {
+        history.replace({
+          search: qs.stringify({
+            ...qsParams,
+            step: steps[initialStepIndex],
+          }),
+        })
+      }
+    }
+  }, [showStepInUrl, qsParams.step, steps])
 
   // TODO: Clean up this mess
   const contextProps = {
@@ -110,7 +131,6 @@ const _Form = ({
   }
 
   const ref = useRef()
-
   return (
     <Wrap
       with={Resource}
@@ -149,6 +169,14 @@ const _Form = ({
                     analytics('previous step', {
                       currentStep: props.currentStep,
                     })
+                    if (showStepInUrl) {
+                      history.push({
+                        search: qs.stringify({
+                          ...qsParams,
+                          step: steps[props.currentStep - 1],
+                        }),
+                      })
+                    }
                   }}
                   validateForm={(fieldNamesToValidate) => {
                     // This method is supposed to validate only the fields whose names
@@ -200,6 +228,14 @@ const _Form = ({
                                   analytics('Next step', {
                                     currentStep: props.currentStep,
                                   })
+                                  if (showStepInUrl) {
+                                    history.push({
+                                      search: qs.stringify({
+                                        ...qsParams,
+                                        step: steps[props.currentStep + 1],
+                                      }),
+                                    })
+                                  }
                                 }
                               } else {
                                 requestAnimationFrame(() =>
@@ -382,6 +418,12 @@ const dispatchToProps = (dispatch) => ({
     dispatch({
       type: 'FORM__BACK',
     }),
+  goToStep: (stepName) => {
+    dispatch({
+      type: 'FORM__GO_TO_STEP',
+      stepName,
+    })
+  },
   registerStep: (stepName) =>
     dispatch({
       type: 'FORM__STEP_REGISTER',
