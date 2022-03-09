@@ -17,8 +17,10 @@ import {
 
 import {
   listSkeletonPlaceholder,
-  filterSkeletonPlaceholder,
-} from '../../../components/SkeletonPlaceholder/'
+  CheckboxPlaceholder,
+  InputPlaceholder,
+  ToggleHeadingPlaceholder,
+} from '../../../components/SkeletonPlaceholder'
 
 import { LABELS } from './constants'
 
@@ -52,7 +54,17 @@ const CompaniesCollection = ({
     name: TASK_GET_COMPANIES_METADATA,
     id: ID,
     progressMessage: 'Loading filters',
-    renderProgress: filterSkeletonPlaceholder({ filterCheckboxCount: 3 }),
+    renderProgress: () => (
+      <>
+        <ToggleHeadingPlaceholder />
+        <InputPlaceholder />
+        <CheckboxPlaceholder count={3} />
+        <InputPlaceholder />
+        <CheckboxPlaceholder count={2} />
+        <InputPlaceholder />
+        <ToggleHeadingPlaceholder count={2} />
+      </>
+    ),
     startOnRender: {
       onSuccessDispatch: COMPANIES__METADATA_LOADED,
     },

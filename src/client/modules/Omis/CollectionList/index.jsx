@@ -18,8 +18,9 @@ import {
 } from '../../../components'
 
 import {
+  CheckboxPlaceholder,
+  InputPlaceholder,
   listSkeletonPlaceholder,
-  filterSkeletonPlaceholder,
 } from '../../../components/SkeletonPlaceholder'
 
 import {
@@ -63,7 +64,12 @@ const OrdersCollection = ({
     name: TASK_GET_ORDERS_METADATA,
     id: ORDERS_LIST_ID,
     progressMessage: 'Loading filters',
-    renderProgress: filterSkeletonPlaceholder(),
+    renderProgress: () => (
+      <>
+        <CheckboxPlaceholder count={6} />
+        <InputPlaceholder count={10} />
+      </>
+    ),
     startOnRender: {
       payload: {},
       onSuccessDispatch: ORDERS__METADATA_LOADED,

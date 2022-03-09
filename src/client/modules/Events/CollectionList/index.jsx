@@ -16,7 +16,9 @@ import {
 
 import {
   listSkeletonPlaceholder,
-  filterSkeletonPlaceholder,
+  CheckboxPlaceholder,
+  InputPlaceholder,
+  ToggleHeadingPlaceholder,
 } from '../../../components/SkeletonPlaceholder'
 
 import { LABELS } from './constants'
@@ -51,10 +53,14 @@ const EventsCollection = ({
     name: TASK_GET_EVENTS_METADATA,
     id: ID,
     progressMessage: 'Loading filters',
-    renderProgress: filterSkeletonPlaceholder({
-      filterCheckboxCount: 0,
-      filterInputFields: 6,
-    }),
+    renderProgress: () => (
+      <>
+        <ToggleHeadingPlaceholder />
+        <InputPlaceholder count={4} />
+        <CheckboxPlaceholder count={8} />
+        <ToggleHeadingPlaceholder />
+      </>
+    ),
     startOnRender: {
       onSuccessDispatch: EVENTS__METADATA_LOADED,
     },

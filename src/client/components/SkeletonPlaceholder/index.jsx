@@ -1,2 +1,6 @@
 export { default as listSkeletonPlaceholder } from './CollectionListPlaceholder'
-export { default as filterSkeletonPlaceholder } from './CollectionListFiltersPlaceholder'
+export {
+  CheckboxPlaceholder,
+  InputPlaceholder,
+  ToggleHeadingPlaceholder,
+} from './CollectionListFiltersPlaceholder'
