@@ -1,7 +1,6 @@
 {% from "./form-group.njk" import FormGroup %}
 {% from "./text-field.njk" import TextField %}
 {% from "./multiple-choice-field.njk" import MultipleChoiceField %}
-{% from "./typeahead.njk" import Typeahead %}
 
 {##
  # Render a collection for multiple fields for add another functionality
@@ -13,7 +12,6 @@
 {% macro AddAnother(props) %}
   {% set fieldId = 'field-' + props.name + ('-' + props.idSuffix if props.idSuffix) if props.name %}
   {% set element = props.element | default('fieldset') %}
-  {% set typeaheadClassModifier = '--typeahead' if props.children[0].macroName === 'Typeahead' %}
   {% set data = props.inputData if props.inputData %}
 
   {% call FormGroup(props | assign({ fieldId: fieldId, element: element, groupClassName: 'c-form-group c-form-fieldset' })) %}

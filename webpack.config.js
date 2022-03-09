@@ -1,7 +1,6 @@
 const path = require('path')
 const { spawn } = require('child_process')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
 
 const config = require('./src/config')
@@ -37,7 +36,6 @@ module.exports = (env) => ({
     app: [
       './assets/javascripts/govuk-frontend-all.js',
       './assets/javascripts/app.js',
-      './assets/javascripts/app-vue.js',
     ],
     'react-app': [
       'react-app-polyfill/stable',
@@ -60,7 +58,6 @@ module.exports = (env) => ({
         : 'css/[name].css',
       chunkFilename: 'css/[name].[id].css',
     }),
-    new VueLoaderPlugin(),
     new WebpackAssetsManifest(),
     env && env.development ? StartServerAfterBuild() : null,
   ].filter(Boolean),
@@ -70,10 +67,7 @@ module.exports = (env) => ({
       path.resolve(__dirname, 'src'),
       path.resolve(__dirname, 'src', 'client', 'components'),
     ],
-    alias: {
-      vue$: 'vue/dist/vue.common.js',
-    },
-    extensions: ['*', '.js', '.jsx', '.vue', '.json'],
+    extensions: ['*', '.js', '.jsx', '.json'],
   },
   module: {
     rules: [
@@ -86,10 +80,6 @@ module.exports = (env) => ({
         options: {
           cacheDirectory: './babel_cache',
         },
-      },
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
       },
       {
         test: /\.(eot|ttf|woff|woff2)$/,

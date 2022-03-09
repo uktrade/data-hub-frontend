@@ -30,8 +30,8 @@ describe('Referral help', () => {
     })
 
     it('should render the content and conform to design', () => {
-      cy.get('#referral-help h2:first-child')
-        .should('have.text', 'I need more information')
+      cy.get('#referral-help')
+        .contains('h2', 'I need more information')
         .next()
         .should('match', 'p')
         .should(
@@ -65,6 +65,7 @@ describe('Referral help', () => {
         )
         .should('have.text', 'Back to the referral')
     })
+
     it("should link to digital workspace's people finder", () => {
       cy.contains('Digital Workspace').should(
         'have.attr',
