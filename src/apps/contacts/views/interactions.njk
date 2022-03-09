@@ -6,17 +6,9 @@
     An interaction could be a meeting, call, email or another activity where you have been in touch with a contact.
   </p>
 
-  {% block xhr_content %}
-    <article data-xhr="31fa63e9-1923-4565-af98-93c07a4a4f0d">
-      {{
-        CollectionContent(results | assignCopy({
-          countLabel: 'interaction',
-          actionButtons: actionButtons,
-          sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
-          query: QUERY
-        }))
-      }}
-    </article>
-  {% endblock %}
+  {% component 'react-slot', {
+    id: 'contact-interactions-app',
+    props: props
+  } %}
 
 {% endblock %}
