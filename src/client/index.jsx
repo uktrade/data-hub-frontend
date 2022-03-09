@@ -57,6 +57,7 @@ import EditSubscribers from '../apps/omis/apps/edit/client/EditSubscribers'
 import EditProjectManagement from '../apps/investments/client/projects/team/EditProjectManagement'
 import { EditTeamMembers } from '../apps/investments/client/projects/team/EditTeamMembers'
 import EditClientRelationshipManagement from '../apps/investments/client/projects/team/EditClientRelationshipManagement'
+import ContactInteractionsApp from '../apps/contacts/client/ContactInteractionsApp'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -610,6 +611,9 @@ function App() {
       </Mount>
       <Mount selector="#edit-project-management">
         {(props) => <EditProjectManagement {...props} />}
+      </Mount>
+      <Mount selector="#contact-interactions-app">
+        {(props) => <ContactInteractionsApp {...props} />}
       </Mount>
 
       <Mount selector="#react-app">
