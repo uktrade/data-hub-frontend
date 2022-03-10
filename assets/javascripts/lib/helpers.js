@@ -39,19 +39,6 @@ function hasClass(element, className) {
   )
 }
 
-function toggleClass(element, className) {
-  if (!element) return
-  if (isNodeList(element)) {
-    for (let pos = element.length - 1; pos > -1; pos -= 1) {
-      toggleClass(element.item(pos), className)
-    }
-  } else if (hasClass(element, className)) {
-    removeClass(element, className)
-  } else {
-    addClass(element, className)
-  }
-}
-
 /**
  * generateId
  *
@@ -230,7 +217,6 @@ module.exports = {
   addClass,
   removeClass,
   hasClass,
-  toggleClass,
   generateID,
   isNodeList,
   findDoc,
