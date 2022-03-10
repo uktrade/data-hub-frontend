@@ -4,7 +4,6 @@ const { omit } = require('lodash')
 
 const config = require('../../../../config')
 const {
-  renderInteractionList,
   renderInteractionsForEntity,
   getInteractionOptions,
 } = require('../list')
@@ -104,36 +103,6 @@ describe('interaction list', () => {
       .reply(200, metadataMock.policyIssueType)
       .get('/v4/metadata/one-list-tier')
       .reply(200, metadataMock.oneListTierOptions)
-  })
-
-  context('#renderInteractionList', () => {
-    beforeEach(async () => {
-      await renderInteractionList(req, res, next)
-    })
-
-    it('displays the kind filters', () => {
-      const options = res.render.firstCall.args[1]
-      const filterFields = options.filtersFields
-
-      const kindField = filterFields.find((field) => field.name === 'kind')
-      expect(kindField.options).to.deep.equal([
-        { value: 'interaction', label: 'Interaction' },
-        { value: 'service_delivery', label: 'Service delivery' },
-      ])
-    })
-
-    it('displays the one list group tier filters', () => {
-      const options = res.render.firstCall.args[1]
-      const filterFields = options.filtersFields
-
-      const oneListGroupTierField = filterFields.find(
-        (field) => field.name === 'company_one_list_group_tier'
-      )
-      expect(oneListGroupTierField.options).to.deep.equal([
-        { value: '1', label: 'tier1' },
-        { value: '3', label: 'tier3' },
-      ])
-    })
   })
 
   context('#renderInteractionsForEntity', () => {

@@ -1,9 +1,4 @@
-const { assign, flatten, reject, merge } = require('lodash')
-
-const { globalFields } = require('../macros')
-const FILTER_CONSTANTS = require('../../lib/filter-constants')
-
-const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.CONTACTS.SECTOR.PRIMARY.NAME
+const { reject, merge } = require('lodash')
 
 const sortFormBase = {
   method: 'get',
@@ -34,69 +29,6 @@ const contactSortOptions = [
   { value: 'company.name:asc', label: 'Company: A-Z' },
 ]
 
-const contactFiltersFields = function ({ sectorOptions }) {
-  return [
-    {
-      macroName: 'TextField',
-      label: 'Contact name',
-      name: 'name',
-    },
-    {
-      macroName: 'TextField',
-      label: 'Company name',
-      name: 'company_name',
-    },
-    {
-      macroName: 'Typeahead',
-      name: PRIMARY_SECTOR_NAME,
-      isAsync: false,
-      placeholder: 'Search sector',
-      useSubLabel: false,
-      options: sectorOptions,
-      hideInactive: false,
-      target: 'metadata',
-      label: 'Sector',
-    },
-    {
-      macroName: 'Typeahead',
-      name: 'address_country',
-      isAsync: false,
-      placeholder: 'Search country',
-      useSubLabel: false,
-      options: globalFields.countries.options(),
-      hideInactive: false,
-      target: 'metadata',
-      label: 'Country',
-    },
-    {
-      macroName: 'Typeahead',
-      name: 'company_uk_region',
-      isAsync: false,
-      placeholder: 'Search UK region',
-      useSubLabel: false,
-      options: globalFields.ukRegions.options(),
-      hideInactive: false,
-      target: 'metadata',
-      label: 'UK region',
-    },
-    {
-      macroName: 'MultipleChoiceField',
-      name: 'archived',
-      type: 'checkbox',
-      label: 'Status',
-      options: [
-        { value: 'false', label: 'Active' },
-        { value: 'true', label: 'Inactive' },
-      ],
-      modifier: 'option-select',
-    },
-  ].map((filter) => {
-    return assign(filter, {
-      modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
-    })
-  })
-}
-
 const contactSortForm = merge({}, sortFormBase, {
   children: [{ options: contactSortOptions }],
 })
@@ -112,7 +44,6 @@ const companyContactSortForm = merge({}, sortFormBase, {
 })
 
 module.exports = {
-  contactFiltersFields,
   contactSortForm,
   companyContactSortForm,
 }

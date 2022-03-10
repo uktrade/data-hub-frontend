@@ -39,19 +39,6 @@ function hasClass(element, className) {
   )
 }
 
-function toggleClass(element, className) {
-  if (!element) return
-  if (isNodeList(element)) {
-    for (let pos = element.length - 1; pos > -1; pos -= 1) {
-      toggleClass(element.item(pos), className)
-    }
-  } else if (hasClass(element, className)) {
-    removeClass(element, className)
-  } else {
-    addClass(element, className)
-  }
-}
-
 /**
  * generateId
  *
@@ -78,13 +65,6 @@ function isNodeList(nodes) {
   )
 }
 
-function findDoc(el) {
-  while (el.parentNode) {
-    el = el.parentNode
-  }
-  return el
-}
-
 function insertAfter(newElement, targetElement) {
   // target is what you want it to go after. Look for this elements parent.
   const parent = targetElement.parentNode
@@ -107,13 +87,6 @@ function hide(element) {
 function show(element) {
   removeClass(element, 'u-hidden')
   element.setAttribute('aria-hidden', false)
-}
-
-function createElementFromMarkup(markup, docToCreateIn) {
-  const documentRef = docToCreateIn || document
-  const tmp = documentRef.createElement('body')
-  tmp.innerHTML = markup
-  return tmp.firstElementChild
 }
 
 function removeElement(element) {
@@ -226,48 +199,18 @@ function closest(element, selector) {
   return null
 }
 
-/**
- * matchWords
- *
- * breaks your search query into an array containing a word/character or words/characters
- * loops through your array and increments a count whenever it gets a match
- * returns true when the count value matches the array length
- * Useful when doing a fuzzy search on a string
- *
- * @param {string} str is the data to search on
- * @param {string} words is your query
- *
- * @returns {boolean}
- */
-
-function matchWords(str, words) {
-  const queryWords = words.split(' ')
-  const count = queryWords.reduce((allWords, word) => {
-    if (str.search(new RegExp(word, 'i')) !== -1) {
-      allWords++
-    }
-    return allWords
-  }, 0)
-
-  return queryWords.length === count
-}
-
 module.exports = {
   addClass,
   removeClass,
   hasClass,
-  toggleClass,
   generateID,
   isNodeList,
-  findDoc,
   insertAfter,
   hide,
   show,
-  createElementFromMarkup,
   removeElement,
   regenIds,
   resetFieldValues,
   closest,
-  matchWords,
   updateCypressDataAttribute,
 }

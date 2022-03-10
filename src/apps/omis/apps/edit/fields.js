@@ -4,28 +4,6 @@ const globalFields = require('../../fields')
 const { arrayrequired, duration, euvatnumber } = require('../../validators')
 
 const editFields = merge({}, globalFields, {
-  subscribers: {
-    fieldType: 'AddAnother',
-    legend: 'fields.subscribers.legend',
-    label: 'fields.subscribers.label',
-    hint: 'fields.subscribers.hint',
-    name: 'subscribers',
-    multiple: true,
-    children: [
-      {
-        macroName: 'Typeahead',
-        entity: 'adviser',
-        name: 'subscribers',
-        label: 'subscribers',
-        placeholder: 'Search team member',
-        classes: 'c-form-group--no-filter',
-        options: [],
-        optional: false,
-        multipleSelect: false,
-        isLabelHidden: true,
-      },
-    ],
-  },
   service_types: {
     fieldType: 'MultipleChoiceField',
     type: 'checkbox',
