@@ -1,141 +1,8 @@
-const { assign, flatten, get } = require('lodash')
+const { assign, flatten } = require('lodash')
 
 const metadata = require('../../lib/metadata')
 const { globalFields } = require('../macros')
-const { transformObjectToOption } = require('../transformers')
 const { collectionFilterLabels, requirementsLabels } = require('./labels')
-const FILTER_CONSTANTS = require('../../lib/filter-constants')
-
-const PRIMARY_SECTOR_NAME =
-  FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.PRIMARY.NAME
-
-const investmentFiltersFields = function ({
-  currentAdviserId,
-  sectorOptions,
-  adviserOptions,
-}) {
-  return [
-    {
-      macroName: 'MultipleChoiceField',
-      name: 'stage',
-      type: 'checkbox',
-      modifier: 'option-select',
-      options() {
-        return metadata.investmentStageOptions.map(transformObjectToOption)
-      },
-    },
-    {
-      macroName: 'MultipleChoiceField',
-      name: 'adviser',
-      type: 'checkbox',
-      modifier: ['option-select', 'hide-label'],
-      options: [{ value: currentAdviserId, label: 'My Projects' }],
-    },
-    {
-      macroName: 'Typeahead',
-      name: 'adviser',
-      entity: 'adviser',
-      placeholder: 'Search adviser',
-      options: adviserOptions,
-      hideInactive: false,
-      target: 'metadata',
-    },
-    {
-      macroName: 'Typeahead',
-      name: PRIMARY_SECTOR_NAME,
-      isAsync: false,
-      placeholder: 'Search sector',
-      useSubLabel: false,
-      options: sectorOptions,
-      hideInactive: false,
-      target: 'metadata',
-      label: 'Sector',
-    },
-    {
-      macroName: 'Typeahead',
-      name: 'investor_company_country',
-      isAsync: false,
-      placeholder: 'Search country',
-      useSubLabel: false,
-      options: get(metadata, 'countryOptions', []).map(transformObjectToOption),
-      hideInactive: false,
-      target: 'metadata',
-      label: 'Country of company origin',
-    },
-    {
-      macroName: 'Typeahead',
-      name: 'uk_region_location',
-      isAsync: false,
-      placeholder: 'Search UK region',
-      useSubLabel: false,
-      options: get(metadata, 'regionOptions', []).map(transformObjectToOption),
-      hideInactive: false,
-      target: 'metadata',
-      label: 'UK region',
-    },
-    {
-      macroName: 'MultipleChoiceField',
-      name: 'status',
-      type: 'checkbox',
-      modifier: 'option-select',
-      options: metadata.investmentStatusOptions,
-    },
-    {
-      macroName: 'MultipleChoiceField',
-      name: 'investment_type',
-      type: 'checkbox',
-      modifier: 'option-select',
-      options() {
-        return metadata.investmentTypeOptions.map(transformObjectToOption)
-      },
-    },
-    {
-      macroName: 'MultipleChoiceField',
-      name: 'likelihood_to_land',
-      type: 'checkbox',
-      modifier: 'option-select',
-      options() {
-        return metadata.likelihoodToLandOptions.map(transformObjectToOption)
-      },
-    },
-    {
-      macroName: 'DateField',
-      type: 'date',
-      name: 'estimated_land_date_before',
-    },
-    {
-      macroName: 'DateField',
-      type: 'date',
-      name: 'estimated_land_date_after',
-    },
-    {
-      macroName: 'DateField',
-      type: 'date',
-      name: 'actual_land_date_before',
-    },
-    {
-      macroName: 'DateField',
-      type: 'date',
-      name: 'actual_land_date_after',
-    },
-    {
-      macroName: 'MultipleChoiceField',
-      name: 'level_of_involvement_simplified',
-      type: 'checkbox',
-      modifier: 'option-select',
-      options: [
-        { value: 'involved', label: 'Involved' },
-        { value: 'not_involved', label: 'Not involved' },
-        { value: 'unspecified', label: 'Unspecified' },
-      ],
-    },
-  ].map((filter) => {
-    return Object.assign(filter, {
-      label: collectionFilterLabels.edit[filter.name],
-      modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
-    })
-  })
-}
 
 const investmentSortForm = {
   method: 'get',
@@ -395,7 +262,6 @@ const investmentProfilesFiltersFields = function () {
 }
 
 module.exports = {
-  investmentFiltersFields,
   investmentSortForm,
   requirementsFormConfig,
   statusFormConfig,
