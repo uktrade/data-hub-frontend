@@ -48,7 +48,6 @@ describe('CollectionFilters macro', () => {
         renderedFilter1.querySelectorAll('[type=radio]')
       const rendererFilter2Options = renderedFilter2.querySelectorAll('option')
 
-      expect(component.className).not.to.contain('js-vue-wrapper')
       expect(renderedFilter1).to.exist
       expect(renderedFilter2).to.exist
       expect(rendererFilter1Inputs).to.have.length(2)
