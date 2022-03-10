@@ -89,13 +89,6 @@ function show(element) {
   element.setAttribute('aria-hidden', false)
 }
 
-function createElementFromMarkup(markup, docToCreateIn) {
-  const documentRef = docToCreateIn || document
-  const tmp = documentRef.createElement('body')
-  tmp.innerHTML = markup
-  return tmp.firstElementChild
-}
-
 function removeElement(element) {
   if (!element) return
   element.parentNode.removeChild(element)
@@ -215,7 +208,6 @@ module.exports = {
   insertAfter,
   hide,
   show,
-  createElementFromMarkup,
   removeElement,
   regenIds,
   resetFieldValues,
