@@ -219,7 +219,6 @@
     "webpack-dev-server": "^4.7.4"
   },
   "resolutions": {
-    "immer": "9.0.6",
     "is-plain-obj": "1.1.0",
     "highlight.js": "11.2.0",
     "prismjs": "1.25.0",
