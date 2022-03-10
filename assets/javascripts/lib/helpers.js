@@ -65,13 +65,6 @@ function isNodeList(nodes) {
   )
 }
 
-function findDoc(el) {
-  while (el.parentNode) {
-    el = el.parentNode
-  }
-  return el
-}
-
 function insertAfter(newElement, targetElement) {
   // target is what you want it to go after. Look for this elements parent.
   const parent = targetElement.parentNode
@@ -219,7 +212,6 @@ module.exports = {
   hasClass,
   generateID,
   isNodeList,
-  findDoc,
   insertAfter,
   hide,
   show,
