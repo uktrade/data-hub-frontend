@@ -65,6 +65,7 @@
   "dependencies": {
     "@babel/core": "^7.17.2",
     "@babel/helper-call-delegate": "^7.12.13",
+    "@babel/plugin-proposal-object-rest-spread": "^7.17.3",
     "@babel/plugin-proposal-optional-chaining": "^7.16.7",
     "@babel/preset-react": "^7.16.7",
     "@babel/runtime": "^7.17.2",
@@ -168,7 +169,6 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
     "@babel/plugin-proposal-class-properties": "7.16.7",
-    "@babel/plugin-proposal-object-rest-spread": "7.16.0",
     "@babel/preset-env": "7.16.11",
     "@babel/preset-typescript": "7.16.7",
     "@cypress/code-coverage": "^3.9.12",
