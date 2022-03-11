@@ -1,5 +1,5 @@
-import axios from 'axios'
 import urls from '../lib/urls'
+import { apiProxyAxios } from './components/Task/utils'
 
 export const getTeamNames = (team) => {
   if (!team) {
@@ -8,12 +8,14 @@ export const getTeamNames = (team) => {
 
   const teams = Array.isArray(team) ? team : [team]
 
-  return axios
+  return apiProxyAxios
     .all(
-      teams.map((teamId) => axios.get(`${urls.metadata.team()}?id=${teamId}`))
+      teams.map((teamId) =>
+        apiProxyAxios.get(`${urls.metadata.team()}?id=${teamId}`)
+      )
     )
     .then(
-      axios.spread((...responses) =>
+      apiProxyAxios.spread((...responses) =>
         responses.map(({ data }) => ({
           teams: data[0],
         }))

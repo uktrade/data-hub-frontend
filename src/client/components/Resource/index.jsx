@@ -141,7 +141,7 @@ export const createEntityResource = (name, endpoint) => {
   Component.tasks = {
     [name]: (payload, id) =>
       apiProxyAxios
-        .get(`/api-proxy/${endpoint(id)}`, { params: payload })
+        .get(`/${endpoint(id)}`, { params: payload })
         .then(({ data }) => {
           return data
         }),

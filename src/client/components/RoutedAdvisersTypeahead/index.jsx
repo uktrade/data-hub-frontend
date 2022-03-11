@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
 import { throttle } from 'lodash'
 
 import RoutedTypeahead from '../RoutedTypeahead'
@@ -8,12 +7,13 @@ import RoutedTypeahead from '../RoutedTypeahead'
 import Task from '../Task'
 
 import { parseAdviserData } from '../../../common/formatAdviser'
+import { apiProxyAxios } from '../Task/utils'
 
 const fetchAdvisers = (onlyShowActiveAdvisers) => {
   return throttle((searchString) => {
     if (searchString.length) {
-      return axios
-        .get('/api-proxy/adviser/', {
+      return apiProxyAxios
+        .get('/adviser/', {
           params: {
             autocomplete: searchString,
             is_active: onlyShowActiveAdvisers ? true : null,

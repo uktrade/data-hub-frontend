@@ -1,6 +1,5 @@
-import axios from 'axios'
-
 import urls from '../../../../lib/urls'
+import { apiProxyAxios } from '../../../components/Task/utils'
 import { getMetadataOptions } from '../../../metadata'
 import { getPageOffset } from '../../../utils/pagination'
 
@@ -20,8 +19,8 @@ const getEvents = ({
   uk_region,
   event_type,
 }) =>
-  axios
-    .post('/api-proxy/v3/search/event', {
+  apiProxyAxios
+    .post('/v3/search/event', {
       limit,
       offset: getPageOffset({ limit, page }),
       sortby,

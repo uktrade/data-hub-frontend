@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
 import { throttle } from 'lodash'
 
 import RoutedTypeahead from '../RoutedTypeahead'
 import Task from '../Task'
 import urls from '../../../lib/urls'
+import { apiProxyAxios } from '../Task/utils'
 
 const parseTeamData = (teams) =>
   teams
@@ -18,7 +18,7 @@ const parseTeamData = (teams) =>
 const fetchTeams = () =>
   throttle((searchString) => {
     if (searchString.length) {
-      return axios
+      return apiProxyAxios
         .get(urls.metadata.team(), {
           params: {
             autocomplete: searchString,

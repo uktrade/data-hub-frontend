@@ -1,6 +1,5 @@
 import React from 'react'
 import { throttle } from 'lodash'
-import axios from 'axios'
 import styled from 'styled-components'
 import { H2, Button, Link } from 'govuk-react'
 import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
@@ -16,6 +15,7 @@ import {
 } from '../../../../../../client/components'
 
 import { useFormContext } from '../../../../../../client/components/Form/hooks'
+import { apiProxyAxios } from '../../../../../../client/components/Task/utils'
 
 const StyledPanel = styled(Panel)({
   marginBottom: SPACING.SCALE_4,
@@ -54,8 +54,8 @@ const StepReferralDetails = ({
           required="Select an adviser for the referral"
           loadOptions={throttle(
             (searchString) =>
-              axios
-                .get('/api-proxy/adviser/', {
+              apiProxyAxios
+                .get('/adviser/', {
                   params: {
                     autocomplete: searchString,
                     permission__has: 'company_referral.change_companyreferral',

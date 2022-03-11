@@ -4,6 +4,8 @@ const lambdaPlc = require('../../../../../sandbox/fixtures/v4/company/company-la
 const dnbCorp = require('../../../../../sandbox/fixtures/v4/company/company-dnb-corp.json')
 const oneListCorp = require('../../../../../end-to-end/cypress/fixtures/company/one-list-corp.json')
 const metadataCountries = require('../../../../../sandbox/fixtures/v4/metadata/country.json')
+const { assertAPIRequest, assertUrl } = require('../../../support/assertions')
+const { clickButton } = require('../../../support/actions')
 
 const selectors = {
   currentlyExporting: '#field-currently_exporting',
@@ -87,9 +89,9 @@ describe('Company Export tab - Edit export countries', () => {
     })
 
     it('Should try an save the values then show an alert', () => {
-      cy.contains('Save and return').click()
+      clickButton('Save and return')
 
-      cy.wait('@' + XHR_ALIAS).then((xhr) => {
+      assertAPIRequest(XHR_ALIAS, (xhr) => {
         expect(xhr.response.url).to.contain(lambdaPlc.id)
         expect(xhr.request.body.export_countries).to.deep.equal(
           getExportCountries([
@@ -100,11 +102,11 @@ describe('Company Export tab - Edit export countries', () => {
             { name: 'Honduras', status: 'not_interested' },
           ])
         )
-
-        cy.get('[role="alert"]').contains(
-          'Export countries could not be saved, try again later'
-        )
       })
+
+      cy.get('[role="alert"]').contains(
+        'Export countries could not be saved, try again later'
+      )
     })
   })
 
@@ -140,9 +142,9 @@ describe('Company Export tab - Edit export countries', () => {
     })
 
     it('Should try an save the values then show an alert', () => {
-      cy.contains('Save and return').click()
+      clickButton('Save and return')
 
-      cy.wait('@' + XHR_ALIAS).then((xhr) => {
+      assertAPIRequest(XHR_ALIAS, (xhr) => {
         expect(xhr.response.url).to.contain(dnbCorp.id)
         expect(xhr.request.body.export_countries).to.deep.equal(
           getExportCountries([
@@ -167,12 +169,12 @@ describe('Company Export tab - Edit export countries', () => {
     })
 
     it('Should save and return back to the exports index', () => {
-      cy.contains('Save and return').click()
+      clickButton('Save and return')
 
-      cy.wait('@' + XHR_ALIAS).then((xhr) => {
+      assertAPIRequest(XHR_ALIAS, (xhr) => {
         expect(xhr.response.url).to.contain(oneListCorp.id)
         expect(xhr.request.body.export_countries).to.deep.equal([])
-        cy.url().should('contain', urls.companies.exports.index(oneListCorp.id))
+        assertUrl(urls.companies.exports.index(oneListCorp.id))
       })
     })
   })

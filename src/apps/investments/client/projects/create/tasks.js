@@ -1,10 +1,9 @@
-import axios from 'axios'
-
 import { getMetadataOptions } from '../../../../../client/metadata'
 import { transformCompanyToListItem } from '../transformers'
 import urls from '../../../../../lib/urls'
 
 import { CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID } from './state'
+import { apiProxyAxios } from '../../../../../client/components/Task/utils'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 const orderInvestmentTypes = ([first, ...rest]) => [...rest, first]
@@ -18,11 +17,11 @@ export const openContactForm = ({ values, url }) => {
 }
 
 export const createInvestmentProject = (formValues) =>
-  axios.post('/api-proxy/v3/investment', formValues).catch(handleError)
+  apiProxyAxios.post('/v3/investment', formValues).catch(handleError)
 
 export const getCompanyInvestmentsCount = (companyId) =>
-  axios
-    .post('/api-proxy/v3/search/investment_project', {
+  apiProxyAxios
+    .post('/v3/search/investment_project', {
       limit: 1,
       offset: 0,
       investor_company: [companyId],
@@ -33,8 +32,8 @@ export const getCompanyInvestmentsCount = (companyId) =>
     .catch(handleError)
 
 const getAdvisers = () =>
-  axios
-    .get('/api-proxy/adviser/', {
+  apiProxyAxios
+    .get('/adviser/', {
       params: {
         is_active: true,
         limit: 100000,
@@ -52,8 +51,8 @@ const getAdvisers = () =>
     .catch(handleError)
 
 export const searchCompany = ({ searchTerm }) =>
-  axios
-    .post('/api-proxy/v4/search/company', {
+  apiProxyAxios
+    .post('/v4/search/company', {
       limit: 10,
       offset: 0,
       archived: false,
@@ -67,8 +66,8 @@ export const searchCompany = ({ searchTerm }) =>
     .catch(handleError)
 
 const getAdviser = () =>
-  axios
-    .get('/api-proxy/whoami/')
+  apiProxyAxios
+    .get('/whoami/')
     .then(({ data }) => data)
     .catch(handleError)
 

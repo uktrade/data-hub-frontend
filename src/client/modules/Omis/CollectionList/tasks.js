@@ -1,9 +1,8 @@
-import axios from 'axios'
-
 import { getMetadataOptions } from '../../../metadata'
 import { transformResponseToCollection } from './transformers'
 import { getPageOffset } from '../../../utils/pagination'
 import { metadata } from '../../../../lib/urls'
+import { apiProxyAxios } from '../../../components/Task/utils'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 
@@ -24,8 +23,8 @@ export const getOrders = ({
   delivery_date_after,
   delivery_date_before,
 }) =>
-  axios
-    .post('/api-proxy/v3/search/order', {
+  apiProxyAxios
+    .post('/v3/search/order', {
       limit,
       offset: getPageOffset({ limit, page }),
       status,

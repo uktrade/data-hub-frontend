@@ -4,10 +4,7 @@ import {
   getMetadataWithContextOptions,
 } from '../../../../client/metadata'
 import { transformResponseToEventForm } from './transformers'
-import {
-  catchApiError,
-  apiProxyAxios,
-} from '../../../../client/components/Task/utils'
+import { apiProxyAxios } from '../../../../client/components/Task/utils'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
@@ -64,7 +61,7 @@ const saveEvent = (values) => {
   const { metadata, disabled_on, archived_documents_url_path, ...payload } =
     values
   const endpoint = values.id ? `/v4/event/${values.id}` : '/v4/event'
-  return request(endpoint, payload).catch(catchApiError)
+  return request(endpoint, payload)
 }
 
 export { getEventFormAndMetadata, saveEvent }

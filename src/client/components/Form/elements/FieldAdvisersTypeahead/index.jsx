@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
 import { throttle } from 'lodash'
 import FieldTypeahead from '../FieldTypeahead'
 import { parseAdviserData } from '../../../../../common/formatAdviser'
+import { apiProxyAxios } from '../../../Task/utils'
 
 const FieldAdvisersTypeahead = ({
   name,
@@ -23,7 +23,7 @@ const FieldAdvisersTypeahead = ({
       required={required}
       loadOptions={throttle(
         (searchString) =>
-          axios
+          apiProxyAxios
             .get('/api-proxy/adviser/', {
               params: {
                 autocomplete: searchString,

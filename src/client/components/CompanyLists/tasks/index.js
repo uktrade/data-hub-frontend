@@ -1,6 +1,5 @@
 import { get, pick } from 'lodash'
 import { apiProxyAxios } from '../../Task/utils'
-import axios from 'axios'
 
 export const fetchCompanyLists = () =>
   apiProxyAxios.get('v4/company-list').then((res) =>
@@ -30,7 +29,7 @@ export const fetchCompanyList = (id) =>
   )
 
 export const addOrRemoveFromList = ({ token, companyId, list }) =>
-  axios({
+  apiProxyAxios({
     method: 'POST',
     url: `/companies/${companyId}/lists/add-remove?_csrf=${token}`,
     data: {

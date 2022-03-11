@@ -1,6 +1,5 @@
-import axios from 'axios'
-
 import urls from '../../../../lib/urls'
+import { apiProxyAxios } from '../../../components/Task/utils'
 import {
   getHeadquarterTypeOptions,
   getMetadataOptions,
@@ -34,8 +33,8 @@ const getCompanies = ({
   sortby = 'modified_on:desc',
 }) => {
   const administrativeAreas = [...us_state, ...canadian_province]
-  return axios
-    .post('/api-proxy/v4/search/company', {
+  return apiProxyAxios
+    .post('v4/search/company', {
       limit,
       offset: getPageOffset({ limit, page }),
       headquarter_type,

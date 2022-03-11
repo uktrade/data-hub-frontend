@@ -1,5 +1,5 @@
-import axios from 'axios'
 import { get, omit, pick } from 'lodash'
+import axios from 'axios'
 
 import urls from '../../../../../lib/urls'
 import {
@@ -224,10 +224,10 @@ export function saveInteraction({ values, companyIds, referralId }) {
   window.sessionStorage.removeItem(STORE_ID)
 
   const endpoint = referralId
-    ? `/api-proxy/v4/company-referral/${referralId}/complete`
-    : `/api-proxy/v4/interaction`
+    ? `/v4/company-referral/${referralId}/complete`
+    : `/v4/interaction`
 
-  const request = values.id ? axios.patch : axios.post
+  const request = values.id ? apiProxyAxios.patch : apiProxyAxios.post
 
   const commonPayload = {
     status: INTERACTION_STATUS.COMPLETE,
