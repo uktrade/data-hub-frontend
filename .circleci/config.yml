@@ -71,7 +71,7 @@ jobs:
       image: ubuntu-2004:202201-02
       docker_layer_caching: false
     parallelism: 9
-    resource_class: xlarge
+    resource_class: 2xlarge
     steps:
       - checkout
       - run_make:
@@ -93,6 +93,7 @@ jobs:
     machine:
       image: ubuntu-2004:202201-02
       docker_layer_caching: false
+    resource_class: xlarge
     steps:
       - checkout
       - run_make:
@@ -105,6 +106,7 @@ jobs:
     machine:
       image: ubuntu-2004:202201-02
       docker_layer_caching: false
+    resource_class: xlarge
     steps:
       - checkout
       - run_make:
