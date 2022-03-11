@@ -58,7 +58,7 @@ module.exports = (env) => ({
         : 'css/[name].css',
       chunkFilename: 'css/[name].[id].css',
     }),
-    new WebpackAssetsManifest(),
+    new WebpackAssetsManifest({ output: 'assets-manifest.json' }),
     env && env.development ? StartServerAfterBuild() : null,
   ].filter(Boolean),
   resolve: {
