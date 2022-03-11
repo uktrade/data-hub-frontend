@@ -88,13 +88,9 @@ describe('View edit subscribers page', () => {
       assertAPIRequest(OMIS_SUBSCRIBERS_INTERCEPT, (xhr) => {
         assertParamContainedInUrl(xhr, 'force-delete=1')
         assertRequestBody(xhr, expectedBody)
-        assertRedirectToOmisWorkOrder()
-        assertFlashMessage('Changes saved')
-
-        function assertRedirectToOmisWorkOrder() {
-          assertUrl(urls.omis.workOrder(draftOrder.id))
-        }
       })
+      assertRedirectToOmisWorkOrder()
+      assertFlashMessage('Changes saved')
     })
 
     it('should redirect back to work order when cancelled', () => {
@@ -170,6 +166,10 @@ describe('View edit subscribers page', () => {
     })
   })
 })
+
+function assertRedirectToOmisWorkOrder() {
+  assertUrl(urls.omis.workOrder(draftOrder.id))
+}
 
 function assertApiPreventsDeletions(orderId) {
   cy.visit(urls.omis.edit.subscribers(orderId))
