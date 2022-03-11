@@ -177,7 +177,6 @@
     "@storybook/builder-webpack5": "^6.4.19",
     "@storybook/manager-webpack5": "^6.4.19",
     "babel-plugin-istanbul": "6.1.1",
-    "browser-sync": "^2.27.7",
     "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
     "chai-subset": "^1.6.0",
