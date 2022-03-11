@@ -86,7 +86,7 @@ describe('A capital opportunity with no existing details', () => {
     it('should allow the user to complete all fields', () => {
       cy.intercept(
         'PATCH',
-        `/api-proxy/v4/large-capital-opportunity/${incompleteOpportunity.id}`
+        `/v4/large-capital-opportunity/${incompleteOpportunity.id}`
       ).as('apiRequest')
 
       cy.get('#name').clear().type('A really good Opportunity')

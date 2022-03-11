@@ -7,9 +7,7 @@ describe('Investment Opportunity Collections Sort', () => {
     cy.get('#unfiltered-large-capital-opportunity-collection')
       .should('contain', '12 opportunities')
       .and('contain', 'Page 1 of 2')
-    cy.intercept('/api-proxy/v4/search/large-capital-opportunity').as(
-      'sortResults'
-    )
+    cy.intercept('/v4/search/large-capital-opportunity').as('sortResults')
   })
 
   it('should load sort by dropdown', () => {

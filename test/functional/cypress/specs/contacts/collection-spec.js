@@ -52,7 +52,7 @@ describe('Contacts Collections', () => {
   ]
 
   before(() => {
-    cy.intercept('POST', '/api-proxy/v3/search/contact', {
+    cy.intercept('POST', '/v3/search/contact', {
       body: {
         count: contactsList.length,
         results: contactsList,

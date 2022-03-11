@@ -103,39 +103,35 @@ describe('Event Details', () => {
 
   describe('Certain fields that are null', () => {
     before(() => {
-      cy.intercept(
-        'GET',
-        `/api-proxy/v4/event/${fixtures.event.teddyBearExpo.id}`,
-        {
-          address_1: '16 Grande Parade',
-          address_2: '',
-          address_country: {
-            name: 'China',
-            id: '63af72a6-5d95-e211-a939-e4115bead28a',
-          },
-          address_county: '',
-          address_postcode: '',
-          address_town: 'Shanghai',
-          end_date: '2016-03-16',
-          event_type: {
-            name: 'Exhibition',
-            id: '2fade471-e868-4ea9-b125-945eb90ae5d4',
-          },
-          lead_team: {
-            name: 'UK Fashion and Textile Association Ltd (UKFT)',
-            id: '23f12898-9698-e211-a939-e4115bead28a',
-          },
-          name: 'Shanghai Fashion Week including The Hub, Chic-Pure-Intertextile March 2016',
-          notes: null,
-          organiser: null,
-          start_date: '2016-03-16',
-          service: {
-            name: 'A Specific DIT Export Service or Funding : Tradeshow Access Programme (TAP)',
-            id: '380bba2b-3499-e211-a939-e4115bead28a',
-          },
-          uk_region: null,
-        }
-      ).as('apiRequest')
+      cy.intercept('GET', `/v4/event/${fixtures.event.teddyBearExpo.id}`, {
+        address_1: '16 Grande Parade',
+        address_2: '',
+        address_country: {
+          name: 'China',
+          id: '63af72a6-5d95-e211-a939-e4115bead28a',
+        },
+        address_county: '',
+        address_postcode: '',
+        address_town: 'Shanghai',
+        end_date: '2016-03-16',
+        event_type: {
+          name: 'Exhibition',
+          id: '2fade471-e868-4ea9-b125-945eb90ae5d4',
+        },
+        lead_team: {
+          name: 'UK Fashion and Textile Association Ltd (UKFT)',
+          id: '23f12898-9698-e211-a939-e4115bead28a',
+        },
+        name: 'Shanghai Fashion Week including The Hub, Chic-Pure-Intertextile March 2016',
+        notes: null,
+        organiser: null,
+        start_date: '2016-03-16',
+        service: {
+          name: 'A Specific DIT Export Service or Funding : Tradeshow Access Programme (TAP)',
+          id: '380bba2b-3499-e211-a939-e4115bead28a',
+        },
+        uk_region: null,
+      }).as('apiRequest')
       cy.visit(urls.events.details(fixtures.event.teddyBearExpo.id))
       cy.wait('@apiRequest')
     })

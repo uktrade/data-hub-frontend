@@ -17,7 +17,7 @@ describe('Dashboard - Investment project tags', () => {
   })
 
   it('should contain stage tags for each project', () => {
-    cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
+    cy.intercept('POST', '/v3/search/investment_project', {
       body: {
         count: 5,
         results: INVESTMENT_PROJECT_STAGES_LIST.map((stage) =>
@@ -67,7 +67,7 @@ describe('Dashboard - Investment project tags', () => {
   })
 
   it('should contain status tags for each project', () => {
-    cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
+    cy.intercept('POST', '/v3/search/investment_project', {
       body: {
         count: 5,
         results: INVESTMENT_PROJECT_STATUSES_LIST.map((status) =>

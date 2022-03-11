@@ -224,8 +224,8 @@ export function saveInteraction({ values, companyIds, referralId }) {
   window.sessionStorage.removeItem(STORE_ID)
 
   const endpoint = referralId
-    ? `/api-proxy/v4/company-referral/${referralId}/complete`
-    : `/api-proxy/v4/interaction`
+    ? `/v4/company-referral/${referralId}/complete`
+    : `/v4/interaction`
 
   const request = values.id ? axios.patch : axios.post
 

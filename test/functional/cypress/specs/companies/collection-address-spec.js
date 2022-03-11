@@ -26,7 +26,7 @@ describe('Company Collection Address', () => {
   const companyList = [usCompany, ...otherCompanies]
 
   before(() => {
-    cy.intercept('POST', '/api-proxy/v4/search/company', {
+    cy.intercept('POST', '/v4/search/company', {
       body: {
         count: companyList.length,
         results: companyList,

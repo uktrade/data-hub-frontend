@@ -40,17 +40,15 @@ const minimumPayload = {
   sortby: 'date:desc',
 }
 
-const interactionsSearchEndpoint = '/api-proxy/v3/search/interaction'
-const adviserAutocompleteEndpoint = '/api-proxy/adviser/?autocomplete=*'
-const serviceMetadataEndpoint = '/api-proxy/v4/metadata/service'
-const policyAreaMetadataEndpoint = '/api-proxy/v4/metadata/policy-area'
-const policyIssueTypeMetadataEndpoint =
-  '/api-proxy/v4/metadata/policy-issue-type'
-const companyOneListTierGroupMetadataEndpoint =
-  '/api-proxy/v4/metadata/one-list-tier'
+const interactionsSearchEndpoint = '/v3/search/interaction'
+const adviserAutocompleteEndpoint = '/adviser/?autocomplete=*'
+const serviceMetadataEndpoint = '/v4/metadata/service'
+const policyAreaMetadataEndpoint = '/v4/metadata/policy-area'
+const policyIssueTypeMetadataEndpoint = '/v4/metadata/policy-issue-type'
+const companyOneListTierGroupMetadataEndpoint = '/v4/metadata/one-list-tier'
 
 const myAdviserId = '7d19d407-9aec-4d06-b190-d3f404627f21'
-const myAdviserEndpoint = `/api-proxy/adviser/${myAdviserId}`
+const myAdviserEndpoint = `/adviser/${myAdviserId}`
 
 const advisersFilter = '[data-test="adviser-filter"]'
 const myInteractionsFilter = '[data-test="my-interactions-filter"]'

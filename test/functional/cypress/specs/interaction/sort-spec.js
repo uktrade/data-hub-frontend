@@ -1,7 +1,7 @@
 import urls from '../../../../../src/lib/urls'
 import { assertUrl } from '../../support/assertions'
 
-const interactionsSearchEndpoint = '/api-proxy/v3/search/interaction'
+const interactionsSearchEndpoint = '/v3/search/interaction'
 
 describe('Interactions Collections Sort', () => {
   context('Default sort', () => {

@@ -18,11 +18,11 @@ export const openContactForm = ({ values, url }) => {
 }
 
 export const createInvestmentProject = (formValues) =>
-  axios.post('/api-proxy/v3/investment', formValues).catch(handleError)
+  axios.post('/v3/investment', formValues).catch(handleError)
 
 export const getCompanyInvestmentsCount = (companyId) =>
   axios
-    .post('/api-proxy/v3/search/investment_project', {
+    .post('/v3/search/investment_project', {
       limit: 1,
       offset: 0,
       investor_company: [companyId],
@@ -34,7 +34,7 @@ export const getCompanyInvestmentsCount = (companyId) =>
 
 const getAdvisers = () =>
   axios
-    .get('/api-proxy/adviser/', {
+    .get('/adviser/', {
       params: {
         is_active: true,
         limit: 100000,
@@ -53,7 +53,7 @@ const getAdvisers = () =>
 
 export const searchCompany = ({ searchTerm }) =>
   axios
-    .post('/api-proxy/v4/search/company', {
+    .post('/v4/search/company', {
       limit: 10,
       offset: 0,
       archived: false,
@@ -68,7 +68,7 @@ export const searchCompany = ({ searchTerm }) =>
 
 const getAdviser = () =>
   axios
-    .get('/api-proxy/whoami/')
+    .get('/whoami/')
     .then(({ data }) => data)
     .catch(handleError)
 

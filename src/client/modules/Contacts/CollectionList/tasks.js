@@ -19,7 +19,7 @@ export const getContacts = ({
   company_sector_descends,
 }) =>
   axios
-    .post('/api-proxy/v3/search/contact', {
+    .post('/v3/search/contact', {
       name,
       limit,
       sortby,

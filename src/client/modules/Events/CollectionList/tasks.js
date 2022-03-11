@@ -21,7 +21,7 @@ const getEvents = ({
   event_type,
 }) =>
   axios
-    .post('/api-proxy/v3/search/event', {
+    .post('/v3/search/event', {
       limit,
       offset: getPageOffset({ limit, page }),
       sortby,

@@ -1,6 +1,6 @@
 import { events } from '../../../../../src/lib/urls'
 
-const searchEndpoint = '/api-proxy/v3/search/event'
+const searchEndpoint = '/v3/search/event'
 
 describe('Event Collections Sort', () => {
   context('Default sort', () => {

@@ -46,10 +46,10 @@ const myAdviser = {
   name: 'Barry Oling',
 }
 
-const searchEndpoint = '/api-proxy/v3/search/investment_project'
-const myAdviserEndpoint = `/api-proxy/adviser/${myAdviser.id}`
-const adviserAutocompleteEndpoint = '/api-proxy/adviser/?autocomplete=*'
-const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
+const searchEndpoint = '/v3/search/investment_project'
+const myAdviserEndpoint = `/adviser/${myAdviser.id}`
+const adviserAutocompleteEndpoint = '/adviser/?autocomplete=*'
+const ukRegionsEndpoint = '/v4/metadata/uk-region'
 
 describe('Investments Collections Filter', () => {
   context('Toggle groups', () => {

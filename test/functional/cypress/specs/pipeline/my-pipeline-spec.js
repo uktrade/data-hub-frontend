@@ -266,7 +266,7 @@ describe('My pipeline app', () => {
 
   context('When filtering pipeline by archived', () => {
     beforeEach(() => {
-      cy.intercept('GET', '/api-proxy/v4/pipeline-item*').as('pipelineGet')
+      cy.intercept('GET', '/v4/pipeline-item*').as('pipelineGet')
       cy.visit(urls.pipeline.index())
     })
 
@@ -355,7 +355,7 @@ describe('My pipeline app', () => {
 
   context('When sorting pipeline', () => {
     beforeEach(() => {
-      cy.intercept('GET', '/api-proxy/v4/pipeline-item*').as('pipelineGet')
+      cy.intercept('GET', '/v4/pipeline-item*').as('pipelineGet')
       cy.visit(urls.pipeline.index())
       cy.wait('@pipelineGet')
     })

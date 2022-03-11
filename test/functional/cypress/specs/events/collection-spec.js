@@ -41,7 +41,7 @@ describe('Event Collection List Page - React', () => {
   before(() => {
     // Visit the new react events page - note this will need to be changed
     // to `events.index()` when ready
-    cy.intercept('POST', '/api-proxy/v3/search/event', {
+    cy.intercept('POST', '/v3/search/event', {
       body: {
         count: eventList.length,
         results: eventList,

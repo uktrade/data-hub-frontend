@@ -10,7 +10,7 @@ describe('Dashboard - no investment projects', () => {
   })
 
   beforeEach(() => {
-    cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
+    cy.intercept('POST', '/v3/search/investment_project', {
       body: {
         count: 0,
         results: [],

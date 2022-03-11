@@ -31,7 +31,7 @@ const EDIT_INVESTOR_INTERCEPT = 'editInvestorHttpRequest'
 
 describe('View large capital investor details page', () => {
   beforeEach(() => {
-    cy.intercept('PATCH', '/api-proxy/v4/large-investor-profile/*').as(
+    cy.intercept('PATCH', '/v4/large-investor-profile/*').as(
       EDIT_INVESTOR_INTERCEPT
     )
   })

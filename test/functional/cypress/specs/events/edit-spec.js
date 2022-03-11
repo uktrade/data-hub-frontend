@@ -16,7 +16,7 @@ import urls from '../../../../../src/lib/urls'
 
 describe('Event edit', () => {
   beforeEach(() => {
-    cy.intercept('PATCH', '/api-proxy/v4/event/*').as('eventHttpRequest')
+    cy.intercept('PATCH', '/v4/event/*').as('eventHttpRequest')
     cy.visit('/events/8253a4d2-0a61-4928-80cb-ebd70cce9971/edit')
   })
 

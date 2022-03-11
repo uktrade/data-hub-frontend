@@ -5,7 +5,7 @@ import { omis } from '../../../../../src/lib/urls'
 
 const downloadHeader = '[data-test="download-data-header"]'
 const downloadButton = '[data-test="download-data-header"] a'
-const apiEndpoint = '/api-proxy/v3/search/order'
+const apiEndpoint = '/v3/search/order'
 
 describe('Download CSV', () => {
   context('When there are 0 orders', () => {

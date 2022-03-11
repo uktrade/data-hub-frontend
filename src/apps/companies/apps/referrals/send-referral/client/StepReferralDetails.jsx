@@ -55,7 +55,7 @@ const StepReferralDetails = ({
           loadOptions={throttle(
             (searchString) =>
               axios
-                .get('/api-proxy/adviser/', {
+                .get('/adviser/', {
                   params: {
                     autocomplete: searchString,
                     permission__has: 'company_referral.change_companyreferral',

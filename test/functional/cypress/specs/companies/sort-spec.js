@@ -1,6 +1,6 @@
 import urls from '../../../../../src/lib/urls'
 
-const companySearchEndpoint = '/api-proxy/v4/search/company'
+const companySearchEndpoint = '/v4/search/company'
 
 describe('Contact Collections Sort', () => {
   context('Default sort', () => {

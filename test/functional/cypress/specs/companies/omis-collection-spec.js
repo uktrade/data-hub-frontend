@@ -45,7 +45,7 @@ describe('Company Orders (OMIS) Collection Page', () => {
   const ordersList = [order1, order2]
 
   before(() => {
-    cy.intercept('POST', '/api-proxy/v3/search/order', {
+    cy.intercept('POST', '/v3/search/order', {
       body: {
         count: ordersList.length,
         results: ordersList,
@@ -128,7 +128,7 @@ describe('Company Orders (OMIS) Collection Page', () => {
   context('API payload', () => {
     it('should have the correct payload', () => {
       const queryString = buildQueryString()
-      cy.intercept('POST', '/api-proxy/v3/search/order', {
+      cy.intercept('POST', '/v3/search/order', {
         body: {
           count: ordersList.length,
           results: ordersList,
@@ -226,7 +226,7 @@ describe('Company Orders (OMIS) Collection Page', () => {
 
   context('when viewing orders for an archived company', () => {
     before(() => {
-      cy.intercept('POST', '/api-proxy/v3/search/order', {
+      cy.intercept('POST', '/v3/search/order', {
         body: {
           count: ordersList.length,
           results: ordersList,

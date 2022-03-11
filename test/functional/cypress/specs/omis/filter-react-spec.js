@@ -63,7 +63,7 @@ const statuses = [
   },
 ]
 
-const searchEndpoint = '/api-proxy/v3/search/order'
+const searchEndpoint = '/v3/search/order'
 
 describe('Orders Collections Filter', () => {
   context('Default Params', () => {

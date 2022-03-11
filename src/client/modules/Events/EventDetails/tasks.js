@@ -3,5 +3,5 @@ import { transformResponseToEventDetails } from '../transformers'
 
 export const getEventDetails = (eventId) =>
   apiProxyAxios
-    .get(`/api-proxy/v4/event/${eventId}`)
+    .get(`/v4/event/${eventId}`)
     .then(({ data }) => transformResponseToEventDetails(data))

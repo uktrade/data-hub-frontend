@@ -45,7 +45,7 @@ describe('Dashboard items - estimated land date', () => {
   })
 
   beforeEach(() => {
-    cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
+    cy.intercept('POST', '/v3/search/investment_project', {
       body: {
         count: myProjects.length,
         results: myProjects,

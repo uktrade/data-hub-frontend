@@ -35,7 +35,7 @@ describe('View edit subscribers page', () => {
   const element = '[data-test="field-subscribers"]'
 
   beforeEach(() => {
-    cy.intercept('PUT', '/api-proxy/v3/omis/order/*/subscriber-list*').as(
+    cy.intercept('PUT', '/v3/omis/order/*/subscriber-list*').as(
       OMIS_SUBSCRIBERS_INTERCEPT
     )
   })
@@ -109,7 +109,7 @@ describe('View edit subscribers page', () => {
       cy.intercept(
         {
           method: 'GET',
-          url: `/api-proxy/v3/omis/order/${draftOrder.id}/subscriber-list`,
+          url: `/v3/omis/order/${draftOrder.id}/subscriber-list`,
         },
         []
       )

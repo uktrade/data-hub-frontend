@@ -52,7 +52,7 @@ describe('Company Collections - React', () => {
   const companyList = [company1, company2, company3, ...otherCompanies]
 
   before(() => {
-    cy.intercept('POST', '/api-proxy/v4/search/company', {
+    cy.intercept('POST', '/v4/search/company', {
       body: {
         count: companyList.length,
         results: companyList,

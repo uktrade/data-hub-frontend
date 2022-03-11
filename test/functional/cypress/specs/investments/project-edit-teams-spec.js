@@ -21,9 +21,7 @@ const EDIT_TEAMS_INTERCEPT = 'projectEditTeamsHttpRequest'
 
 describe('View edit team members page', () => {
   beforeEach(() => {
-    cy.intercept('PUT', '/api-proxy/v3/investment/*/team-member').as(
-      EDIT_TEAMS_INTERCEPT
-    )
+    cy.intercept('PUT', '/v3/investment/*/team-member').as(EDIT_TEAMS_INTERCEPT)
   })
 
   context('When there are existing advisers and roles', () => {

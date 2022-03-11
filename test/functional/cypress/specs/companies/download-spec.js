@@ -6,7 +6,7 @@ import { companyListFaker } from '../../fakers/companies'
 const downloadHeader = '[data-test="download-data-header"]'
 const downloadButton = '[data-test="download-data-header"] a'
 
-const apiEndpoint = '/api-proxy/v4/search/company'
+const apiEndpoint = '/v4/search/company'
 const pageUrl = urls.companies.index()
 
 describe('Download CSV', () => {

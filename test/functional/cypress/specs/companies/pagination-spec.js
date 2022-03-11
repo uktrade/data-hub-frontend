@@ -6,7 +6,7 @@ describe('Company Collections - Pagination', () => {
   const companyList = companyListFaker(10)
 
   it('should show a maximum of 1000 pages', () => {
-    cy.intercept('POST', '/api-proxy/v4/search/company', {
+    cy.intercept('POST', '/v4/search/company', {
       body: {
         // 10 items per page, so 20000 items require 2000 pages
         count: 20000,
@@ -24,7 +24,7 @@ describe('Company Collections - Pagination', () => {
   })
 
   it('should show 1000 pages', () => {
-    cy.intercept('POST', '/api-proxy/v4/search/company', {
+    cy.intercept('POST', '/v4/search/company', {
       body: {
         // 10 items per page, so 9991 items require 1000 pages
         count: 9991,
@@ -42,7 +42,7 @@ describe('Company Collections - Pagination', () => {
   })
 
   it('should show up to 999 pages', () => {
-    cy.intercept('POST', '/api-proxy/v4/search/company', {
+    cy.intercept('POST', '/v4/search/company', {
       body: {
         // 10 items per page, so 9990 items require 999 pages.
         count: 9990,

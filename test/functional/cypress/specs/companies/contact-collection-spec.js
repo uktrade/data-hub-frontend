@@ -61,7 +61,7 @@ describe('Company Contacts Collections', () => {
   context('API payload', () => {
     it('should have the correct payload', () => {
       const queryString = buildQueryString()
-      cy.intercept('POST', '/api-proxy/v3/search/contact', {
+      cy.intercept('POST', '/v3/search/contact', {
         body: {
           count: 0,
           results: [],
@@ -84,7 +84,7 @@ describe('Company Contacts Collections', () => {
 
   context('Viewing the companies contacts collection list page', () => {
     before(() => {
-      cy.intercept('POST', '/api-proxy/v3/search/contact', {
+      cy.intercept('POST', '/v3/search/contact', {
         body: {
           count: contacts.length,
           results: contacts,
@@ -149,7 +149,7 @@ describe('Company Contacts Collections', () => {
 
   context('UK contact', () => {
     before(() => {
-      cy.intercept('POST', '/api-proxy/v3/search/contact', {
+      cy.intercept('POST', '/v3/search/contact', {
         body: {
           count: contacts.length,
           results: contacts,
@@ -240,7 +240,7 @@ describe('Company Contacts Collections', () => {
 
   context('Foreign contact', () => {
     before(() => {
-      cy.intercept('POST', '/api-proxy/v3/search/contact', {
+      cy.intercept('POST', '/v3/search/contact', {
         body: {
           count: contacts.length,
           results: contacts,

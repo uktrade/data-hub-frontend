@@ -13,7 +13,7 @@ const fetchAdvisers = (onlyShowActiveAdvisers) => {
   return throttle((searchString) => {
     if (searchString.length) {
       return axios
-        .get('/api-proxy/adviser/', {
+        .get('/adviser/', {
           params: {
             autocomplete: searchString,
             is_active: onlyShowActiveAdvisers ? true : null,

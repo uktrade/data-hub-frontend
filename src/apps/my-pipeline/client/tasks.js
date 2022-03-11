@@ -51,7 +51,7 @@ export async function getPipelineItem({ pipelineItemId }) {
 }
 
 export async function getCompanyContacts({ companyId }) {
-  const { data } = await axios.get(`/api-proxy/v4/contact`, {
+  const { data } = await axios.get(`/v4/contact`, {
     params: { company_id: companyId, limit: 500 },
   })
 

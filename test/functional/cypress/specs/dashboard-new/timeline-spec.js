@@ -7,7 +7,7 @@ describe('Dashboard timeline', () => {
     const project = investmentProjectFaker({
       stage: INVESTMENT_PROJECT_STAGES.active,
     })
-    cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
+    cy.intercept('POST', '/v3/search/investment_project', {
       body: {
         count: 1,
         results: [project],

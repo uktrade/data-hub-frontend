@@ -86,7 +86,7 @@ describe('UK Opportunity with missing data', () => {
     it('should show interactions when the interactions tab is selected', () => {
       cy.intercept(
         'GET',
-        `/api-proxy/v4/interaction?large_capital_opportunity_id=${incompleteOpportunity.id}&limit=10&offset=0`,
+        `/v4/interaction?large_capital_opportunity_id=${incompleteOpportunity.id}&limit=10&offset=0`,
         {
           body: {
             count: 1,

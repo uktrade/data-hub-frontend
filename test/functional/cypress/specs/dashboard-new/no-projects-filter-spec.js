@@ -15,7 +15,7 @@ describe('Dashboard - no investment projects', () => {
 
   context('When a filter is applied and there are zero projects', () => {
     before(() => {
-      cy.intercept('POST', '/api-proxy/v3/search/investment_project', (req) => {
+      cy.intercept('POST', '/v3/search/investment_project', (req) => {
         req.reply(
           req.body.stage === INVESTMENT_PROJECT_STAGES.verifyWin.id
             ? { body: { count: 0, results: [], summary } }

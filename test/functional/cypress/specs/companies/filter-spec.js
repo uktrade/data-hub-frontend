@@ -41,12 +41,12 @@ const minimumPayload = {
 
 const activeStatusFlag = 'false'
 const inactiveStatusFlag = 'true'
-const searchEndpoint = '/api-proxy/v4/search/company'
-const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
+const searchEndpoint = '/v4/search/company'
+const ukRegionsEndpoint = '/v4/metadata/uk-region'
 const usaCountryId = '81756b9a-5d95-e211-a939-e4115bead28a'
 const canadaCountryId = '5daf72a6-5d95-e211-a939-e4115bead28a'
-const usStatesEndpoint = `/api-proxy/v4/metadata/administrative-area?country=${usaCountryId}`
-const canadianProvincesEndpoint = `/api-proxy/v4/metadata/administrative-area?country=${canadaCountryId}`
+const usStatesEndpoint = `/v4/metadata/administrative-area?country=${usaCountryId}`
+const canadianProvincesEndpoint = `/v4/metadata/administrative-area?country=${canadaCountryId}`
 
 describe('Companies Collections Filter', () => {
   context('Default Params', () => {

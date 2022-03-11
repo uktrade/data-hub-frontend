@@ -19,7 +19,7 @@ describe('The interactions tab on an opportunity page', () => {
     before(() => {
       cy.intercept(
         'GET',
-        `/api-proxy/v4/interaction?large_capital_opportunity_id=${incompleteOpportunity.id}&limit=10&offset=0`,
+        `/v4/interaction?large_capital_opportunity_id=${incompleteOpportunity.id}&limit=10&offset=0`,
         {
           body: {
             count: 1,
@@ -84,7 +84,7 @@ describe('The interactions tab on an opportunity page', () => {
     beforeEach(() => {
       cy.intercept(
         'GET',
-        `/api-proxy/v4/interaction?large_capital_opportunity_id=${completeOpportunity.id}&limit=10&offset=0`,
+        `/v4/interaction?large_capital_opportunity_id=${completeOpportunity.id}&limit=10&offset=0`,
         {
           body: {
             count: 11,
@@ -136,7 +136,7 @@ describe('The interactions tab on an opportunity page', () => {
     it('should display 1 interaction on the second page', () => {
       cy.intercept(
         'GET',
-        `/api-proxy/v4/interaction?large_capital_opportunity_id=${completeOpportunity.id}&limit=10&offset=10`,
+        `/v4/interaction?large_capital_opportunity_id=${completeOpportunity.id}&limit=10&offset=10`,
         {
           body: {
             count: 11,

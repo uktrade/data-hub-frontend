@@ -5,7 +5,7 @@ describe('Contact Collections Sort', () => {
   context('Default sort', () => {
     const contactsList = contactsListFaker(10)
     before(() => {
-      cy.intercept('POST', '/api-proxy/v3/search/contact', {
+      cy.intercept('POST', '/v3/search/contact', {
         body: {
           count: contactsList.length,
           results: contactsList,
@@ -44,7 +44,7 @@ describe('Contact Collections Sort', () => {
     const contactsList = contactsListFaker(10)
     const element = '[data-test="sortby"] select'
     beforeEach(() => {
-      cy.intercept('POST', '/api-proxy/v3/search/contact', {
+      cy.intercept('POST', '/v3/search/contact', {
         body: {
           count: contactsList.length,
           results: contactsList,

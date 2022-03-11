@@ -33,7 +33,7 @@ const selectors = require('../../../../selectors/event/createOrEdit')
 
 describe('Event create', () => {
   beforeEach(() => {
-    cy.intercept('POST', '/api-proxy/v4/event').as('eventHttpRequest')
+    cy.intercept('POST', '/v4/event').as('eventHttpRequest')
     cy.visit('/events/create')
   })
 

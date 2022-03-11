@@ -35,7 +35,7 @@ describe('View edit assignees page', () => {
   const element = '[data-test="field-assignees"]'
 
   beforeEach(() => {
-    cy.intercept('PATCH', '/api-proxy/v3/omis/order/*/assignee*').as(
+    cy.intercept('PATCH', '/v3/omis/order/*/assignee*').as(
       'omisAssigneesHttpRequest'
     )
   })
@@ -109,7 +109,7 @@ describe('View edit assignees page', () => {
       cy.intercept(
         {
           method: 'GET',
-          url: `/api-proxy/v3/omis/order/${draftOrder.id}/assignee`,
+          url: `/v3/omis/order/${draftOrder.id}/assignee`,
         },
         []
       )

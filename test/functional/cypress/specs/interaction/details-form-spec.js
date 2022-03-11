@@ -325,7 +325,7 @@ function clickAddInteraction() {
   cy.contains('button', 'Add interaction').click()
 }
 
-function spyOnRequest(url = '/api-proxy/v4/interaction') {
+function spyOnRequest(url = '/v4/interaction') {
   cy.intercept('POST', url).as('interactionHttpRequest')
 }
 
@@ -711,7 +711,7 @@ describe('Investment theme', () => {
         )
         cy.intercept(
           'PATCH',
-          `/api-proxy/v4/interaction/${fixtures.interaction.withInvestmentTheme.id}`
+          `/v4/interaction/${fixtures.interaction.withInvestmentTheme.id}`
         ).as('apiRequest')
       })
       it('should remove the opportunity from the interaction if user selects no related opportunity', () => {
@@ -920,7 +920,7 @@ describe('Adding an interaction from a referral', () => {
   const referral = fixtures.referrals.referalDetails
 
   it('should be able to create an interaction from referral', () => {
-    spyOnRequest(`/api-proxy/v4/company-referral/${referral.id}/complete`)
+    spyOnRequest(`/v4/company-referral/${referral.id}/complete`)
 
     cy.visit(urls.companies.referrals.details(referral.company.id, referral.id))
 

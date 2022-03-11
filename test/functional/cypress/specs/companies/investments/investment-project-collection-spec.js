@@ -96,7 +96,7 @@ describe('Company Investments Collection Page', () => {
 
   before(() => {
     const queryString = buildQueryString()
-    cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
+    cy.intercept('POST', '/v3/search/investment_project', {
       body: {
         count: investmentProjects.length,
         results: investmentProjects,
@@ -234,7 +234,7 @@ describe('Company Investments Collection Page', () => {
   context('API payload', () => {
     it('should have the correct payload', () => {
       const queryString = buildQueryString()
-      cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
+      cy.intercept('POST', '/v3/search/investment_project', {
         body: {
           count: investmentProjects.length,
           results: investmentProjects,

@@ -5,12 +5,12 @@ import { interactionsListFaker } from '../../fakers/interactions'
 
 const downloadHeader = '[data-test="download-data-header"]'
 const downloadButton = '[data-test="download-data-header"] a'
-const interactionSearchEndpoint = '/api-proxy/v3/search/interaction'
+const interactionSearchEndpoint = '/v3/search/interaction'
 
 describe('Download CSV', () => {
   context('When there are 0 interactions', () => {
     before(() => {
-      cy.intercept('POST', '/api-proxy/v3/search/interaction', {
+      cy.intercept('POST', '/v3/search/interaction', {
         body: {
           results: [],
           count: 0,

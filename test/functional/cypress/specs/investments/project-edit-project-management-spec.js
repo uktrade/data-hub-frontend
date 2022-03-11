@@ -22,7 +22,7 @@ const INVESTMENT_INTERCEPT = 'investmentsHttpRequest'
 
 describe('Edit the management advisers for a project', () => {
   beforeEach(() => {
-    cy.intercept('PATCH', '/api-proxy/v3/investment/*').as(INVESTMENT_INTERCEPT)
+    cy.intercept('PATCH', '/v3/investment/*').as(INVESTMENT_INTERCEPT)
   })
   context(
     'When editing an incomplete project with no project management staff',

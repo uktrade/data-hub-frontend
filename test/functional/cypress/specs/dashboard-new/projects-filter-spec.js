@@ -34,7 +34,7 @@ describe('Dashboard - my projects list filters', () => {
 
   context('When a filter is applied and there are zero projects', () => {
     before(() => {
-      cy.intercept('POST', '/api-proxy/v3/search/investment_project', (req) => {
+      cy.intercept('POST', '/v3/search/investment_project', (req) => {
         req.reply(
           req.body.stage === INVESTMENT_PROJECT_STAGES.verifyWin.id
             ? { body: { count: 0, results: [], summary } }
@@ -64,9 +64,7 @@ describe('Dashboard - my projects list filters', () => {
 
   context('When filters are applied', () => {
     beforeEach(() => {
-      cy.intercept('POST', '/api-proxy/v3/search/investment_project').as(
-        'apiRequest'
-      )
+      cy.intercept('POST', '/v3/search/investment_project').as('apiRequest')
       cy.visit('/')
       cy.wait('@apiRequest')
     })

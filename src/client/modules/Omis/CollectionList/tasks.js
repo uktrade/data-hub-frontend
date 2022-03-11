@@ -25,7 +25,7 @@ export const getOrders = ({
   delivery_date_before,
 }) =>
   axios
-    .post('/api-proxy/v3/search/order', {
+    .post('/v3/search/order', {
       limit,
       offset: getPageOffset({ limit, page }),
       status,

@@ -36,7 +36,7 @@ describe('Dashboard - Investment details', () => {
   ]
   before(() => {
     cy.setUserFeatures(['personalised-dashboard'])
-    cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
+    cy.intercept('POST', '/v3/search/investment_project', {
       body: {
         count: investmentProjects.length,
         results: investmentProjects,

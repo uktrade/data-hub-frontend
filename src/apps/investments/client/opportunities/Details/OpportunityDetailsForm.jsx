@@ -98,7 +98,7 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
               loadOptions={throttle(
                 (searchString) =>
                   axios
-                    .post('/api-proxy/v4/search/company', {
+                    .post('/v4/search/company', {
                       params: {
                         autocomplete: searchString,
                         archived: false,

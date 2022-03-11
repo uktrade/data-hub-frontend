@@ -158,7 +158,7 @@ const assertInteractionDetails = ({
 
 describe('Interactions Collections', () => {
   before(() => {
-    cy.intercept('POST', '/api-proxy/v3/search/interaction', {
+    cy.intercept('POST', '/v3/search/interaction', {
       body: {
         count: interactionsList.length,
         results: interactionsList,

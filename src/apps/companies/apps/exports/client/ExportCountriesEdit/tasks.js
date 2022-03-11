@@ -14,7 +14,7 @@ function transformFieldValues(fields) {
 
 export function saveExportCountries({ values, companyId }) {
   return axios
-    .patch(`/api-proxy/v4/company/${companyId}/export-detail`, {
+    .patch(`/v4/company/${companyId}/export-detail`, {
       export_countries: getExportCountries(transformFieldValues(values)) || [],
     })
     .catch((e) => {

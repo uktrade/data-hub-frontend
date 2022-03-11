@@ -12,7 +12,7 @@ import {
 
 import { contactsListFaker } from '../../fakers/contacts'
 
-const searchEndpoint = '/api-proxy/v3/search/contact'
+const searchEndpoint = '/v3/search/contact'
 
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({

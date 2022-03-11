@@ -203,9 +203,7 @@ describe('Pipeline edit form', () => {
 
       context('When removing the values', () => {
         before(() => {
-          cy.intercept('PATCH', '/api-proxy/v4/pipeline-item/*').as(
-            'updatePipelineItem'
-          )
+          cy.intercept('PATCH', '/v4/pipeline-item/*').as('updatePipelineItem')
         })
 
         it('should call the api with a null value for each field', () => {

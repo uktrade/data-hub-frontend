@@ -44,7 +44,7 @@ describe('Dashboard reminders', () => {
 
   context('View reminders', () => {
     before(() => {
-      cy.intercept('GET', '/api-proxy/v4/proposition*', {
+      cy.intercept('GET', '/v4/proposition*', {
         body: {
           count: myPropositions.length,
           results: myPropositions,
@@ -118,7 +118,7 @@ describe('Dashboard reminders', () => {
 
   context('View empty reminders', () => {
     before(() => {
-      cy.intercept('GET', '/api-proxy/v4/proposition*', {
+      cy.intercept('GET', '/v4/proposition*', {
         body: {
           count: 0,
           results: [],

@@ -16,7 +16,7 @@ describe('API proxy middleware', () => {
     apiProxy(app)
 
     await request(app)
-      .get('/api-proxy/whoami')
+      .get('/whoami')
       .set({
         'X-B3-TraceId': 'fake-trace-id',
         'X-B3-SpanId': 'fake-span-id',

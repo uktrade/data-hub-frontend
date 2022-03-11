@@ -315,123 +315,96 @@ module.exports = {
     },
   },
   metadata: {
-    likelihoodToLand: url('/api-proxy/v4/metadata', '/likelihood-to-land'),
-    investmentInvestorType: url(
-      '/api-proxy/v4/metadata',
-      '/investment-investor-type'
-    ),
-    investmentInvolvement: url(
-      '/api-proxy/v4/metadata',
-      '/investment-involvement'
-    ),
+    likelihoodToLand: url('/v4/metadata', '/likelihood-to-land'),
+    investmentInvestorType: url('/v4/metadata', '/investment-investor-type'),
+    investmentInvolvement: url('/v4/metadata', '/investment-involvement'),
     investmentSpecificProgramme: url(
-      '/api-proxy/v4/metadata',
+      '/v4/metadata',
       '/investment-specific-programme'
     ),
-    investmentProjectStage: url(
-      '/api-proxy/v4/metadata',
-      '/investment-project-stage'
-    ),
+    investmentProjectStage: url('/v4/metadata', '/investment-project-stage'),
     investmentBusinessActivity: url(
-      '/api-proxy/v4/metadata',
+      '/v4/metadata',
       '/investment-business-activity'
     ),
-    investmentType: url('/api-proxy/v4/metadata', '/investment-type'),
+    investmentType: url('/v4/metadata', '/investment-type'),
     investmentStrategicDriver: url(
-      '/api-proxy/v4/metadata',
+      '/v4/metadata',
       '/investment-strategic-driver'
     ),
-    orderServiceType: url('/api-proxy/v4/metadata', '/order-service-type'),
-    orderCancellationReason: url(
-      '/api-proxy/v4/metadata',
-      '/order-cancellation-reason'
-    ),
-    omisMarket: url('/api-proxy/v4/metadata', '/omis-market'),
-    salaryRange: url('/api-proxy/v4/metadata', '/salary-range'),
-    fdiValue: url('/api-proxy/v4/metadata', '/fdi-value'),
-    fdiType: url('/api-proxy/v4/metadata', '/fdi-type'),
-    turnover: url('/api-proxy/v4/metadata', '/turnover'),
-    sector: url('/api-proxy/v4/metadata', '/sector'),
-    locationType: url('/api-proxy/v4/metadata', '/location-type'),
-    eventType: url('/api-proxy/v4/metadata', '/event-type'),
-    programme: url('/api-proxy/v4/metadata', '/programme'),
-    businessType: url('/api-proxy/v4/metadata', '/business-type'),
-    evidenceTag: url('/api-proxy/v4/metadata', '/evidence-tag'),
-    employeeRange: url('/api-proxy/v4/metadata', '/employee-range'),
-    country: url('/api-proxy/v4/metadata', '/country'),
-    ukRegion: url('/api-proxy/v4/metadata', '/uk-region'),
-    administrativeArea: url('/api-proxy/v4/metadata', '/administrative-area'),
-    referralSourceWebsite: url(
-      '/api-proxy/v4/metadata',
-      '/referral-source-website'
-    ),
-    referralSourceMarketing: url(
-      '/api-proxy/v4/metadata',
-      '/referral-source-marketing'
-    ),
-    referralSourceActivity: url(
-      '/api-proxy/v4/metadata',
-      '/referral-source-activity'
-    ),
-    headquarterType: url('/api-proxy/v4/metadata', '/headquarter-type'),
-    service: url('/api-proxy/v4/metadata', '/service'),
-    communicationChannel: url(
-      '/api-proxy/v4/metadata',
-      '/communication-channel'
-    ),
-    team: url('/api-proxy/v4/metadata', '/team'),
-    policyArea: url('/api-proxy/v4/metadata', '/policy-area'),
-    policyIssueType: url('/api-proxy/v4/metadata', '/policy-issue-type'),
-    serviceDeliveryStatus: url(
-      '/api-proxy/v4/metadata',
-      '/service-delivery-status'
-    ),
+    orderServiceType: url('/v4/metadata', '/order-service-type'),
+    orderCancellationReason: url('/v4/metadata', '/order-cancellation-reason'),
+    omisMarket: url('/v4/metadata', '/omis-market'),
+    salaryRange: url('/v4/metadata', '/salary-range'),
+    fdiValue: url('/v4/metadata', '/fdi-value'),
+    fdiType: url('/v4/metadata', '/fdi-type'),
+    turnover: url('/v4/metadata', '/turnover'),
+    sector: url('/v4/metadata', '/sector'),
+    locationType: url('/v4/metadata', '/location-type'),
+    eventType: url('/v4/metadata', '/event-type'),
+    programme: url('/v4/metadata', '/programme'),
+    businessType: url('/v4/metadata', '/business-type'),
+    evidenceTag: url('/v4/metadata', '/evidence-tag'),
+    employeeRange: url('/v4/metadata', '/employee-range'),
+    country: url('/v4/metadata', '/country'),
+    ukRegion: url('/v4/metadata', '/uk-region'),
+    administrativeArea: url('/v4/metadata', '/administrative-area'),
+    referralSourceWebsite: url('/v4/metadata', '/referral-source-website'),
+    referralSourceMarketing: url('/v4/metadata', '/referral-source-marketing'),
+    referralSourceActivity: url('/v4/metadata', '/referral-source-activity'),
+    headquarterType: url('/v4/metadata', '/headquarter-type'),
+    service: url('/v4/metadata', '/service'),
+    communicationChannel: url('/v4/metadata', '/communication-channel'),
+    team: url('/v4/metadata', '/team'),
+    policyArea: url('/v4/metadata', '/policy-area'),
+    policyIssueType: url('/v4/metadata', '/policy-issue-type'),
+    serviceDeliveryStatus: url('/v4/metadata', '/service-delivery-status'),
     capitalInvestmentInvestorType: url(
-      '/api-proxy/v4/metadata/capital-investment',
+      '/v4/metadata/capital-investment',
       '/investor-type'
     ),
     capitalInvestmentRequiredChecksConducted: url(
-      '/api-proxy/v4/metadata/capital-investment',
+      '/v4/metadata/capital-investment',
       '/required-checks-conducted'
     ),
     capitalInvestmentDealTicketSize: url(
-      '/api-proxy/v4/metadata/capital-investment',
+      '/v4/metadata/capital-investment',
       '/deal-ticket-size'
     ),
     capitalInvestmentLargeCapitalInvestment: url(
-      '/api-proxy/v4/metadata/capital-investment',
+      '/v4/metadata/capital-investment',
       '/large-capital-investment'
     ),
     capitalInvestmentReturnRate: url(
-      '/api-proxy/v4/metadata/capital-investment',
+      '/v4/metadata/capital-investment',
       '/return-rate'
     ),
     capitalInvestmentTimeHorizon: url(
-      '/api-proxy/v4/metadata/capital-investment',
+      '/v4/metadata/capital-investment',
       '/time-horizon'
     ),
     capitalInvestmentRestriction: url(
-      '/api-proxy/v4/metadata/capital-investment',
+      '/v4/metadata/capital-investment',
       '/restriction'
     ),
     capitalInvestmentConstructionRisk: url(
-      '/api-proxy/v4/metadata/capital-investment',
+      '/v4/metadata/capital-investment',
       '/construction-risk'
     ),
     capitalInvestmentEquityPercentage: url(
-      '/api-proxy/v4/metadata/capital-investment',
+      '/v4/metadata/capital-investment',
       '/equity-percentage'
     ),
     capitalInvestmentDesiredDealRole: url(
-      '/api-proxy/v4/metadata/capital-investment',
+      '/v4/metadata/capital-investment',
       '/desired-deal-role'
     ),
     capitalInvestmentAssetClassInterest: url(
-      '/api-proxy/v4/metadata/capital-investment',
+      '/v4/metadata/capital-investment',
       '/asset-class-interest'
     ),
-    oneListTier: url('/api-proxy/v4/metadata', '/one-list-tier'),
-    tradeAgreement: url('/api-proxy/v4/metadata', '/trade-agreement'),
+    oneListTier: url('/v4/metadata', '/one-list-tier'),
+    tradeAgreement: url('/v4/metadata', '/trade-agreement'),
   },
   omis: {
     index: url('/omis', PRIMARY_LINK_PARAMS.omis),

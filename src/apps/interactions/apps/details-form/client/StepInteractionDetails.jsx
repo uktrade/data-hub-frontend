@@ -510,7 +510,7 @@ const StepInteractionDetails = ({
               loadOptions={throttle(
                 (searchString) =>
                   axios
-                    .get('/api-proxy/v4/large-capital-opportunity', {
+                    .get('/v4/large-capital-opportunity', {
                       params: {
                         autocomplete: searchString,
                         archived: false,

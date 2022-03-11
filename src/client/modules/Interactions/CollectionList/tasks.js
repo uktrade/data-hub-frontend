@@ -63,7 +63,7 @@ const getInteractions = ({
   dit_participants__team,
 }) =>
   axios
-    .post('/api-proxy/v3/search/interaction', {
+    .post('/v3/search/interaction', {
       limit,
       offset: getPageOffset({ limit, page }),
       kind,

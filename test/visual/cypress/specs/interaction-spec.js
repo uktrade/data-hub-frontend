@@ -3,7 +3,7 @@ const urls = require('../../../../src/lib/urls')
 describe('interaction page', () => {
   before(() => {
     cy.viewport(1980, 1440)
-    cy.intercept('POST', '/api-proxy/v3/search/interaction').as('apiRequest')
+    cy.intercept('POST', '/v3/search/interaction').as('apiRequest')
     cy.visit(urls.interactions.index())
     cy.wait('@apiRequest')
   })

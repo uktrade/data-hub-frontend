@@ -208,7 +208,7 @@ describe('Edit contact', () => {
 
     describe('when a UK company is submitted', () => {
       it('should explicitly submit area as null', () => {
-        cy.intercept('PATCH', `/api-proxy/v4/contact/${EDIT_UK_CONTACT_ID}`).as(
+        cy.intercept('PATCH', `/v4/contact/${EDIT_UK_CONTACT_ID}`).as(
           'editContactResponse'
         )
 
@@ -227,10 +227,9 @@ describe('Edit contact', () => {
     describe('when changing countries', () => {
       describe('when changing a Canadian contact country to UK', () => {
         it('should clear the province value', () => {
-          cy.intercept(
-            'PATCH',
-            `/api-proxy/v4/contact/${EDIT_US_CONTACT_ID}`
-          ).as('editContactResponse')
+          cy.intercept('PATCH', `/v4/contact/${EDIT_US_CONTACT_ID}`).as(
+            'editContactResponse'
+          )
 
           cy.visit(`/contacts/${EDIT_US_CONTACT_ID}/edit`)
           cy.get('#country').select('United Kingdom')

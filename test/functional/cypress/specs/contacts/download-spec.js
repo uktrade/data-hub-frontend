@@ -9,7 +9,7 @@ const downloadButton = '[data-test="download-data-header"] a'
 describe('Download CSV', () => {
   context('When there are 0 contacts', () => {
     before(() => {
-      cy.intercept('POST', '/api-proxy/v3/search/contact', {
+      cy.intercept('POST', '/v3/search/contact', {
         body: {
           results: [],
           count: 0,
@@ -24,7 +24,7 @@ describe('Download CSV', () => {
   context('When there is a single contact', () => {
     const contactsList = contactsListFaker(1)
     before(() => {
-      cy.intercept('POST', '/api-proxy/v3/search/contact', {
+      cy.intercept('POST', '/v3/search/contact', {
         body: {
           results: contactsList,
           count: contactsList.length,
@@ -57,7 +57,7 @@ describe('Download CSV', () => {
   context('When there are 4999 contacts or less', () => {
     const contactsList = contactsListFaker(9)
     before(() => {
-      cy.intercept('POST', '/api-proxy/v3/search/contact', {
+      cy.intercept('POST', '/v3/search/contact', {
         body: {
           results: contactsList,
           count: 4999,
@@ -75,7 +75,7 @@ describe('Download CSV', () => {
   context('When there are 5000 contacts or more', () => {
     const contactsList = contactsListFaker(10)
     before(() => {
-      cy.intercept('POST', '/api-proxy/v3/search/contact', {
+      cy.intercept('POST', '/v3/search/contact', {
         body: {
           results: contactsList,
           count: 5000,
@@ -100,7 +100,7 @@ describe('Download CSV', () => {
       company_uk_region: '924cd12a-6095-e211-a939-e4115bead28a',
     })
     before(() => {
-      cy.intercept('POST', '/api-proxy/v3/search/contact', {
+      cy.intercept('POST', '/v3/search/contact', {
         body: {
           results: contactsList,
           count: contactsList.length,

@@ -23,7 +23,7 @@ const CLIENT_MANAGEMENT_INTERCEPT = 'clientManagementHttpRequest'
 
 describe('Edit client relationship management page', () => {
   beforeEach(() => {
-    cy.intercept('PATCH', '/api-proxy/v3/investment/*', {
+    cy.intercept('PATCH', '/v3/investment/*', {
       statusCode: 200,
     }).as(CLIENT_MANAGEMENT_INTERCEPT)
   })

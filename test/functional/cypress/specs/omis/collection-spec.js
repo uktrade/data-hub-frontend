@@ -34,7 +34,7 @@ describe('Orders (OMIS) Collection List Page', () => {
   const ordersList = [order1, order2, ...ordersListFaker(8)]
 
   before(() => {
-    cy.intercept('POST', '/api-proxy/v3/search/order', {
+    cy.intercept('POST', '/v3/search/order', {
       body: {
         count: ordersList.length,
         results: ordersList,

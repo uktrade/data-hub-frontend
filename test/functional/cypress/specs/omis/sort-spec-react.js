@@ -1,6 +1,6 @@
 import { omis } from '../../../../../src/lib/urls'
 
-const searchEndpoint = '/api-proxy/v3/search/order'
+const searchEndpoint = '/v3/search/order'
 
 describe('Order Collections Sort', () => {
   context('Default sort', () => {
