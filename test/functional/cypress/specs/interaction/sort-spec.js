@@ -1,4 +1,5 @@
 import urls from '../../../../../src/lib/urls'
+import { assertUrl } from '../../support/assertions'
 
 const interactionsSearchEndpoint = '/api-proxy/v3/search/interaction'
 
@@ -41,23 +42,17 @@ describe('Interactions Collections Sort', () => {
 
     it('should sort by "Recently created"', () => {
       cy.get(element).select('Recently created')
-      cy.wait('@apiRequest').then(({ request }) => {
-        expect(request.body.sortby).to.equal('date:desc')
-      })
+      assertUrl('sortby=date:desc')
     })
 
     it('should sort by "Company name A-Z"', () => {
       cy.get(element).select('Company name A-Z')
-      cy.wait('@apiRequest').then(({ request }) => {
-        expect(request.body.sortby).to.equal('company.name')
-      })
+      assertUrl('sortby=company.name')
     })
 
     it('should sort by "Subject A-Z"', () => {
       cy.get(element).select('Subject A-Z')
-      cy.wait('@apiRequest').then(({ request }) => {
-        expect(request.body.sortby).to.equal('subject')
-      })
+      assertUrl('sortby=subject')
     })
   })
 })

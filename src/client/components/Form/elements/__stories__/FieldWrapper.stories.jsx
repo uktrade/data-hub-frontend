@@ -1,6 +1,5 @@
 import React from 'react'
-import { addDecorator, storiesOf } from '@storybook/react'
-import { withKnobs } from '@storybook/addon-knobs'
+import { storiesOf } from '@storybook/react'
 import { H1, H2, H3 } from '@govuk-react/heading'
 
 import Form from '../../../Form'
@@ -9,8 +8,6 @@ import FieldInput from '../FieldInput'
 
 import exampleReadme from '../FieldWrapper/example.md'
 import useageReadme from '../FieldWrapper/usage.md'
-
-addDecorator(withKnobs)
 
 const testInput = (
   <FieldInput name="testField" type="text" required="Some error" />

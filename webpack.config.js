@@ -14,7 +14,7 @@ const StartServerAfterBuild = () => {
   let server = false
   return {
     apply: (compiler) => {
-      compiler.plugin('done', () => {
+      compiler.hooks.done.tap('StartServerAfterBuild', () => {
         if (server) {
           server.stdin.write('rs\n')
         } else {
@@ -29,7 +29,7 @@ const StartServerAfterBuild = () => {
 }
 
 module.exports = (env) => ({
-  devtool: config.isProd ? 'false' : 'source-map',
+  devtool: config.isProd ? false : 'source-map',
   mode: config.isProd ? 'production' : 'development',
   entry: {
     styles: './assets/stylesheets/application.scss',
@@ -58,7 +58,7 @@ module.exports = (env) => ({
         : 'css/[name].css',
       chunkFilename: 'css/[name].[id].css',
     }),
-    new WebpackAssetsManifest(),
+    new WebpackAssetsManifest({ output: 'assets-manifest.json' }),
     env && env.development ? StartServerAfterBuild() : null,
   ].filter(Boolean),
   resolve: {
@@ -67,6 +67,20 @@ module.exports = (env) => ({
       path.resolve(__dirname, 'src'),
       path.resolve(__dirname, 'src', 'client', 'components'),
     ],
+    fallback: {
+      path: false,
+      fs: false,
+      child_process: false,
+      module: false,
+      net: false,
+      tls: false,
+      process: false,
+      os: false,
+      http: false,
+      https: false,
+      stream: false,
+      zlib: false,
+    },
     extensions: ['*', '.js', '.jsx', '.json'],
   },
   module: {
@@ -82,14 +96,28 @@ module.exports = (env) => ({
         },
       },
       {
+        test: /\.m?js/,
+        resolve: {
+          fullySpecified: false,
+        },
+      },
+      {
         test: /\.(eot|ttf|woff|woff2)$/,
-        loader: 'file-loader?name=fonts/[name].[hash:8].[ext]',
+        loader: 'file-loader',
+        options: {
+          name: 'fonts/[name].[hash:8].[ext]',
+        },
       },
       {
         test: /\.(png|svg|jpe?g)$/,
-        loader: [
-          'file-loader?name=images/[name].[hash:8].[ext]',
-          'image-webpack-loader',
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'images/[name].[hash:8].[ext]',
+            },
+          },
+          { loader: 'image-webpack-loader' },
         ],
       },
       {
@@ -130,12 +158,5 @@ module.exports = (env) => ({
         ],
       },
     ],
-  },
-  node: {
-    fs: 'empty',
-    child_process: 'empty',
-    module: 'empty',
-    net: 'empty',
-    tls: 'empty',
   },
 })

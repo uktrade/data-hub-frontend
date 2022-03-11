@@ -1,6 +1,5 @@
 import React from 'react'
-import { addDecorator, storiesOf } from '@storybook/react'
-import { withKnobs } from '@storybook/addon-knobs'
+import { storiesOf } from '@storybook/react'
 import { H1 } from '@govuk-react/heading'
 
 import FieldCheckboxes from '../FieldCheckboxes'
@@ -28,8 +27,6 @@ const options = [
     hint: 'Hints are supported!',
   },
 ]
-
-addDecorator(withKnobs)
 
 storiesOf('Form/Form Elements/Checkboxes', module)
   .addParameters({

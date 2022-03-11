@@ -1,6 +1,5 @@
 import React from 'react'
-import { storiesOf, addDecorator } from '@storybook/react'
-import { withKnobs } from '@storybook/addon-knobs'
+import { storiesOf } from '@storybook/react'
 import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
 import Main from '@govuk-react/main'
@@ -26,7 +25,6 @@ import outstandingReferralFixture from '../__fixtures__/referrals/outstandingRef
 import exportEnquiryFixture from '../__fixtures__/great_gov_uk_forms/export-enquiry.json'
 import maxemailCampaignFixture from '../__fixtures__/maxemail/maxemail-campaign.json'
 
-addDecorator(withKnobs)
 class ActivityFeedDemoApp extends React.Component {
   constructor(props) {
     super(props)

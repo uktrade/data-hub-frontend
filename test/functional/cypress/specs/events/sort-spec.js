@@ -38,7 +38,9 @@ describe('Event Collections Sort', () => {
       cy.wait('@apiRequest')
     })
 
-    it('should sort by "Event name A-Z"', () => {
+    it('should sort by "Event name A-Z" when changed back to default', () => {
+      cy.get(element).select('modified_on:desc')
+      cy.wait('@apiRequest')
       cy.get(element).select('name:asc')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('name:asc')

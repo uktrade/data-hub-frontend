@@ -6,7 +6,7 @@ const config = require('../config')
 let webpackManifest = {}
 
 try {
-  webpackManifest = require(`${config.buildDir}/manifest.json`)
+  webpackManifest = require(`${config.buildDir}/assets-manifest.json`)
 } catch (err) {
   logger.error('Manifest file is not found. Ensure assets are built.')
 }

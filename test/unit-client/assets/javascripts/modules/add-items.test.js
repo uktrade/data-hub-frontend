@@ -433,9 +433,7 @@ describe('Add another', function () {
           data-item-selector=".c-form-fieldset"
           data-add-button-selector="#add"
           >
-
           ${fieldset}
-
           <p>
             <a id="add" href="page">Add more stuff</a>
           </p>

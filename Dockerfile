@@ -1,5 +1,7 @@
 FROM gcr.io/sre-docker-registry/data-hub-frontend-dependencies:1.0.7
 
+RUN npm install -g cypress@9.5.1
+
 ENV NPM_CONFIG_LOGLEVEL    warn
 ENV NPM_CONFIG_UNSAFE_PERM true
 ENV TZ                     Europe/London

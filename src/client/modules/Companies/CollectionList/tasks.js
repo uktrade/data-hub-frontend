@@ -5,7 +5,7 @@ import {
   getHeadquarterTypeOptions,
   getMetadataOptions,
 } from '../../../metadata'
-import { getPageOffset } from '../../../../lib/pagination'
+import { getPageOffset } from '../../../utils/pagination'
 
 import { transformResponseToCompanyCollection } from './transformers'
 

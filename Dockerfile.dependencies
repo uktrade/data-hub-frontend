@@ -49,7 +49,7 @@ RUN apt-get install -y xvfb xdg-utils libgtk-3-0 lsb-release libappindicator3-1 
 # Install cypress
 COPY package.json .
 COPY package-lock.json .
-RUN npm install -g cypress@8.7.0
+RUN npm install -g cypress@9.5.1
 RUN cypress verify
 
 RUN cypress cache path

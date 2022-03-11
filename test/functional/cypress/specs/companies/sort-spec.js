@@ -37,17 +37,19 @@ describe('Contact Collections Sort', () => {
       cy.wait('@apiRequest')
     })
 
-    it('should sort by "Recently updated"', () => {
-      cy.get(element).select('modified_on:desc')
-      cy.wait('@apiRequest').then(({ request }) => {
-        expect(request.body.sortby).to.equal('modified_on:desc')
-      })
-    })
-
     it('should sort by "Least recently updated"', () => {
       cy.get(element).select('modified_on:asc')
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('modified_on:asc')
+      })
+    })
+
+    it('should sort by "Recently updated" when changed back to default', () => {
+      cy.get(element).select('modified_on:asc')
+      cy.wait('@apiRequest')
+      cy.get(element).select('modified_on:desc')
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body.sortby).to.equal('modified_on:desc')
       })
     })
 

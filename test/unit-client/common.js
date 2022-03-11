@@ -25,6 +25,7 @@ global.sinon = sinon
 global.proxyquire = proxyquire
 global.TextEncoder = TextEncoder
 global.TextDecoder = TextDecoder
+global.SVGElement = window.SVGElement
 chai.config.truncateThreshold = 0
 
 process.setMaxListeners(0)
