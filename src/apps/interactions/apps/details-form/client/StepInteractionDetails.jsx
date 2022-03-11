@@ -3,7 +3,6 @@ import _ from 'lodash'
 import qs from 'qs'
 import { H3 } from '@govuk-react/heading'
 import InsetText from '@govuk-react/inset-text'
-import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
 import { GREY_1 } from 'govuk-colours'
 import styled from 'styled-components'
@@ -25,6 +24,7 @@ import {
   FieldSelect,
   FieldTextarea,
   FieldTypeahead,
+  ContactDetails,
 } from '../../../../../client/components'
 import Resource from '../../../../../client/components/Resource'
 
@@ -278,26 +278,15 @@ const StepInteractionDetails = ({
 
       <FieldTypeahead
         name="contacts"
-        label="Contact(s)"
-        placeholder="-- Select contact --"
+        label="Contacts"
+        placeholder="Select contact"
         required="Select at least one contact"
         options={contacts}
         isMulti={true}
-        hint={
-          <>
-            If the contact you are looking for is not listed you can{' '}
-            <Link
-              onClick={onOpenContactForm}
-              href={urls.contacts.create(companyId, {
-                origin_url: window.location.pathname,
-                origin_type: 'interaction',
-              })}
-            >
-              add a new contact
-            </Link>
-            .
-          </>
-        }
+      />
+      <ContactDetails
+        onOpenContactForm={onOpenContactForm}
+        companyId={companyId}
       />
 
       <FieldAdvisersTypeahead
