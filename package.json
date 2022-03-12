@@ -157,7 +157,7 @@
     "sass-loader": "^10.2.1",
     "serve-favicon": "^2.5.0",
     "sniffr": "^1.1.4",
-    "style-loader": "^2.0.0",
+    "style-loader": "^3.3.1",
     "styled-components": "^5.3.3",
     "tar": "^6.1.11",
     "uuid": "^8.3.2",
