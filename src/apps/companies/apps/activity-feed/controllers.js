@@ -18,6 +18,7 @@ const {
   maxemailCampaignQuery,
   maxemailEmailSentQuery,
 } = require('./es-queries')
+const { contactActivityQuery } = require('./es-queries/contact-activity-query')
 
 async function renderActivityFeed(req, res, next) {
   const { company, dnbHierarchyCount, dnbRelatedCompaniesCount } = res.locals
@@ -145,6 +146,24 @@ async function getMaxemailCampaigns(req, next, contacts) {
   }
 }
 
+async function fetchActivitiesForContact(req, res, next) {
+  const { contact } = res.locals
+  const results = await fetchActivityFeed(
+    req,
+    contactActivityQuery(
+      contact.email,
+      contact.id,
+      DATA_HUB_AND_EXTERNAL_ACTIVITY
+    )
+  ).catch((error) => {
+    next(error)
+  })
+
+  let activities = results.hits.hits.map((hit) => hit._source)
+
+  res.json({ activities })
+}
+
 async function fetchActivityFeedHandler(req, res, next) {
   try {
     const { company, user } = res.locals
@@ -200,4 +219,5 @@ async function fetchActivityFeedHandler(req, res, next) {
 module.exports = {
   renderActivityFeed,
   fetchActivityFeedHandler,
+  fetchActivitiesForContact,
 }
