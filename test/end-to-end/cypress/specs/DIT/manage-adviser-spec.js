@@ -55,12 +55,7 @@ describe('Manage Lead ITA', () => {
     cy.visit(urls.companies.detail(company.pk))
     cy.get(selectors.tabbedLocalNav().item(3)).click()
     cy.get('#lead-advisers a').contains('Replace Lead ITA').click()
-    cy.get('form label').next().next().selectTypeaheadOption('Ava')
-    cy.get('[data-test="submit-button"]').click()
-    cy.get('#form-errors').should(
-      'have.text',
-      'There is a problemSelect an ITA'
-    )
+    cy.get('form label').next().next().checkNoTypeaheadOptionsDisplayed('Ava')
   })
   it('should be able to remove an adviser', () => {
     cy.visit(urls.companies.detail(company.pk))

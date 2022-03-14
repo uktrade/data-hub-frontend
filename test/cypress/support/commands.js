@@ -123,6 +123,16 @@ Cypress.Commands.add(
   }
 )
 
+Cypress.Commands.add(
+  'checkNoTypeaheadOptionsDisplayed',
+  { prevSubject: 'element' },
+  (subject, text) => {
+    cy.wrap(subject).find('input').click().clear().type(text)
+    cy.get('[data-test="typeahead-no-options"]').should('be.visible')
+    return cy.wrap(subject)
+  }
+)
+
 /**
  * _Selects_ a _tab_ element of the `TabNav` component and _gets_ its _tabpanel_
  * element.

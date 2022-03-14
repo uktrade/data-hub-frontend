@@ -366,7 +366,9 @@ const Typeahead = ({
                     </ListboxOption>
                   ))}
                   {!filteredOptions.length && (
-                    <NoOptionsMessage>{noOptionsMessage}</NoOptionsMessage>
+                    <NoOptionsMessage data-test="typeahead-no-options">
+                      {noOptionsMessage}
+                    </NoOptionsMessage>
                   )}
                 </>
               )}
