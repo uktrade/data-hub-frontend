@@ -41,8 +41,8 @@
     "test:component": "CYPRESS_coverage=false CYPRESS_integrationFolder=test/component/cypress/specs cypress run-ct",
     "test:component:watch": "CYPRESS_coverage=false CYPRESS_integrationFolder=test/component/cypress/specs cypress open-ct",
     "coverage": "npx nyc --reporter=html --reporter=json --reporter=text --reporter=lcov --report-dir=coverage npm run test:unit",
-    "circle:unit": "npx nyc --reporter=lcov --reporter=json --report-dir=coverage npm run test:unit -- --reporter mocha-circleci-reporter",
-    "circle:unit-client": "npm run test:unit-client --reporter mocha-circleci-reporter",
+    "circle:unit": "npx nyc --reporter=lcov --reporter=json --report-dir=coverage npm run test:unit -- --reporter mocha-junit-reporter",
+    "circle:unit-client": "npm run test:unit-client --reporter mocha-junit-reporter",
     "heroku-postbuild": "npm cache verify && npm rebuild && npm run build",
     "lint-staged": "lint-staged"
   },
