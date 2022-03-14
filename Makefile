@@ -10,9 +10,11 @@ wait-for-storybook = dockerize -wait tcp://localhost:65200 -timeout 5m -wait-ret
 ifdef CI
 	start-command = up --build --force-recreate -d
 	cypress-args = -- --parallel --record --key $(CYPRESS_DASHBOARD_KEY) --ci-build-id $(CIRCLE_BUILD_NUM)
+	log-command = logs --follow
 else
 	start-command = up --build --force-recreate
 	cypress-args =
+	log-command = version
 endif
 
 # Helper commands to execute docker-compose for a specific setup
@@ -29,18 +31,23 @@ dev:
 start-base:
 	@echo "*** To stop this stack run 'make stop-base' ***"
 	$(docker-base) $(start-command)
+	$(docker-base) $(log-command) &
 start-mock:
 	@echo "*** To stop this stack run 'make stop-mock' ***"
 	$(docker-mock) $(start-command)
+	$(docker-mock) $(log-command) &
 start-e2e-lep:
 	@echo "*** To stop this stack run 'make stop-e2e' ***"
 	OAUTH2_DEV_TOKEN=lepStaffToken $(docker-e2e) $(start-command)
+	$(docker-e2e) $(log-command) &
 start-e2e-da:
 	@echo "*** To stop this stack run 'make stop-e2e' ***"
 	OAUTH2_DEV_TOKEN=daStaffToken $(docker-e2e) $(start-command)
+	$(docker-e2e) $(log-command) &
 start-e2e-dit:
 	@echo "*** To stop this stack run 'make stop-e2e' ***"
 	OAUTH2_DEV_TOKEN=ditStaffToken $(docker-e2e) $(start-command)
+	$(docker-e2e) $(log-command) &
 start-dev:
 	@echo "*** To stop this stack run 'make stop-dev' ***"
 	@echo "*** IMPORTANT This will now use ../data-hub-api/.env for 'api' and 'celery' services ***"
@@ -49,6 +56,7 @@ start-dev:
 start-storybook:
 	@echo "*** To stop this stack run 'make stop-storybook' ***"
 	$(docker-storybook) $(start-command)
+	$(docker-storybook) $(log-command) &
 
 stop-base:
 	$(docker-base) down -v --remove-orphans
