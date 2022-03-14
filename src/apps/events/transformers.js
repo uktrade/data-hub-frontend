@@ -1,9 +1,8 @@
 /* eslint-disable camelcase */
-const { assign, get, reject, uniq } = require('lodash')
+const { assign, get, uniq } = require('lodash')
 
 const castCompactArray = require('../../lib/cast-compact-array')
 const { transformDateObjectToDateString } = require('../transformers')
-const config = require('../../config')
 
 function transformEventToListItem({
   id,
@@ -89,90 +88,6 @@ function transformEventToListItem({
   return item
 }
 
-function transformEventResponseToViewRecord({
-  event_type,
-  start_date,
-  end_date,
-  location_type,
-  address_1,
-  address_2,
-  address_town,
-  address_county,
-  address_postcode,
-  address_country,
-  uk_region,
-  notes,
-  lead_team,
-  organiser,
-  teams,
-  related_programmes,
-  related_trade_agreements,
-  service,
-  archived_documents_url_path,
-}) {
-  teams = teams || []
-  related_programmes = related_programmes || []
-  related_trade_agreements = related_trade_agreements || []
-
-  const transformedEvent = {
-    'Type of event': event_type,
-  }
-
-  if (start_date === end_date) {
-    transformedEvent['Event date'] = {
-      type: 'date',
-      name: start_date,
-    }
-  } else {
-    transformedEvent['Event start date'] = {
-      type: 'date',
-      name: start_date,
-    }
-    transformedEvent['Event end date'] = {
-      type: 'date',
-      name: end_date,
-    }
-  }
-
-  const otherTeams = lead_team ? reject(teams, lead_team) : teams
-
-  const viewRecord = assign({}, transformedEvent, {
-    'Event location type': location_type,
-    Address: {
-      type: 'address',
-      address: {
-        line_1: address_1,
-        line_2: address_2,
-        town: address_town,
-        county: address_county,
-        postcode: address_postcode,
-        country: address_country,
-      },
-    },
-    Region: uk_region,
-    Notes: notes,
-    'Lead team': lead_team,
-    Organiser: organiser,
-    'Other teams': otherTeams ? otherTeams.map((x) => x.name) : '',
-    'Related programmes': related_programmes.map((item) => item.name),
-    'Related Trade Agreements': related_trade_agreements.map(
-      (item) => item.name
-    ),
-    Service: service,
-  })
-
-  if (archived_documents_url_path) {
-    viewRecord.Documents = {
-      url: config.archivedDocumentsBaseUrl + archived_documents_url_path,
-      name: 'View files and documents',
-      hint: '(will open another website)',
-      hintId: 'external-link-label',
-    }
-  }
-
-  return viewRecord
-}
-
 function transformEventResponseToFormBody(props = {}) {
   const teams = props.teams || []
 
@@ -213,7 +128,6 @@ function transformEventFormBodyToApiRequest(props) {
 
 module.exports = {
   transformEventToListItem,
-  transformEventResponseToViewRecord,
   transformEventResponseToFormBody,
   transformEventFormBodyToApiRequest,
 }

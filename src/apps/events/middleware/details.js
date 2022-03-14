@@ -1,9 +1,6 @@
 const { assign } = require('lodash')
 
-const {
-  transformEventResponseToViewRecord,
-  transformEventFormBodyToApiRequest,
-} = require('../transformers')
+const { transformEventFormBodyToApiRequest } = require('../transformers')
 const { fetchEvent, saveEvent } = require('../repos')
 
 async function postDetails(req, res, next) {
@@ -33,9 +30,6 @@ async function postDetails(req, res, next) {
 async function getEventDetails(req, res, next, eventId) {
   try {
     res.locals.event = await fetchEvent(req, eventId)
-    res.locals.eventViewRecord = transformEventResponseToViewRecord(
-      res.locals.event
-    )
     next()
   } catch (err) {
     next(err)

@@ -21,10 +21,6 @@ function fetchEvent(req, id) {
   return authorisedRequest(req, `${config.apiRoot}/v3/event/${id}`)
 }
 
-function getEvents(req) {
-  return authorisedRequest(req, `${config.apiRoot}/v3/event`)
-}
-
 function getAllEvents(req) {
   return authorisedRequest(
     req,
@@ -53,7 +49,6 @@ async function getActiveEvents(req, createdOn) {
 module.exports = {
   saveEvent,
   fetchEvent,
-  getEvents,
   getAllEvents,
   getActiveEvents,
 }
