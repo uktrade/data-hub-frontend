@@ -79,4 +79,6 @@ RUN npm install
 
 COPY --chown=root:root . .
 
+RUN chown root: /usr/src/app
+
 CMD npm run develop
