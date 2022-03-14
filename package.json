@@ -173,7 +173,7 @@
     "@babel/preset-typescript": "7.16.7",
     "@cypress/code-coverage": "^3.9.12",
     "@cypress/react": "^5.12.4",
-    "@cypress/webpack-dev-server": "^1.8.1",
+    "@cypress/webpack-dev-server": "^1.8.2",
     "@storybook/builder-webpack5": "^6.4.19",
     "@storybook/manager-webpack5": "^6.4.19",
     "babel-plugin-istanbul": "6.1.1",
