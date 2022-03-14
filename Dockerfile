@@ -47,6 +47,7 @@ RUN apt-get install -y xvfb xdg-utils libgtk-3-0 lsb-release libappindicator3-1 
   && google-chrome --version
 
 # Install cypress
+ENV CYPRESS_CACHE_FOLDER=/app/.cache
 COPY package.json .
 COPY package-lock.json .
 RUN npm install -g cypress@9.5.1
