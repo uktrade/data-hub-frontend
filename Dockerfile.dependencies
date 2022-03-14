@@ -1,4 +1,4 @@
-FROM node:14.17.0-buster
+FROM node:16.14.0-buster
 
 ENV DOCKERIZE_VERSION      v0.6.1
 ENV NPM_CONFIG_LOGLEVEL    warn
