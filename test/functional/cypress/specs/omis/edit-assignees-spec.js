@@ -88,13 +88,9 @@ describe('View edit assignees page', () => {
       assertAPIRequest(OMIS_ASSIGNEES_INTERCEPT, (xhr) => {
         assertParamContainedInUrl(xhr, 'force-delete=1')
         assertRequestBody(xhr, expectedBody)
-        assertRedirectToOmisWorkOrder()
-        assertFlashMessage('Changes saved')
-
-        function assertRedirectToOmisWorkOrder() {
-          assertUrl(urls.omis.workOrder(draftOrder.id))
-        }
       })
+      assertRedirectToOmisWorkOrder()
+      assertFlashMessage('Changes saved')
     })
 
     it('should redirect back to work order when cancelled', () => {
@@ -176,6 +172,10 @@ describe('View edit assignees page', () => {
     })
   })
 })
+
+function assertRedirectToOmisWorkOrder() {
+  assertUrl(urls.omis.workOrder(draftOrder.id))
+}
 
 function assertApiPreventsDeletions(orderId) {
   cy.visit(urls.omis.edit.assignees(orderId))
