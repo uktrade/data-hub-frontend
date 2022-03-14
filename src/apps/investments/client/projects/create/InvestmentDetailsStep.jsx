@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Link from '@govuk-react/link'
 import styled from 'styled-components'
 import { GREY_2 } from 'govuk-colours'
 import { SPACING } from '@govuk-react/constants'
@@ -14,11 +13,11 @@ import {
   FieldTextarea,
   FieldTypeahead,
   SummaryTable,
+  ContactDetails,
 } from '../../../../../client/components'
 import CompanyContactsResource from '../../../../../client/components/Resource/CompanyContacts'
 import { OPTION_YES, OPTION_NO, OPTIONS_YES_NO } from '../../../../constants'
 import Task from '../../../../../client/components/Task'
-import urls from '../../../../../lib/urls'
 import {
   CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID,
   TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM,
@@ -201,41 +200,32 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
             <CompanyContactsResource id={company.id}>
               {({ results }) => {
                 return (
-                  <FieldTypeahead
-                    name="client_contacts"
-                    label="Client contact details"
-                    placeholder="Search"
-                    required="Choose a client contact"
-                    data-test="client-contact"
-                    options={results.map(({ name, id }) => ({
-                      label: name,
-                      value: id,
-                    }))}
-                    isMulti={true}
-                    hint={
-                      <>
-                        If you can not find a contact you're looking for, you
-                        can{' '}
-                        <Link
-                          onClick={(e) => {
-                            e.preventDefault()
-                            openContactFormTask.start({
-                              payload: {
-                                values,
-                                url: e.target.href,
-                              },
-                            })
-                          }}
-                          href={urls.contacts.create(company.id, {
-                            origin_url: window.location.pathname,
-                          })}
-                        >
-                          add a new contact
-                        </Link>
-                        .
-                      </>
-                    }
-                  />
+                  <>
+                    <FieldTypeahead
+                      name="client_contacts"
+                      label="Client contact details"
+                      placeholder="Search"
+                      required="Choose a client contact"
+                      data-test="client-contact"
+                      options={results.map(({ name, id }) => ({
+                        label: name,
+                        value: id,
+                      }))}
+                      isMulti={true}
+                    />
+                    <ContactDetails
+                      onOpenContactForm={(e) => {
+                        e.preventDefault()
+                        openContactFormTask.start({
+                          payload: {
+                            values,
+                            url: e.target.href,
+                          },
+                        })
+                      }}
+                      companyId={company.id}
+                    />
+                  </>
                 )
               }}
             </CompanyContactsResource>

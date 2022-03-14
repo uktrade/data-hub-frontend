@@ -14,6 +14,7 @@ const ContactDetails = ({ onOpenContactForm, companyId }) => {
     <>
       If a contact isn't listed{' '}
       <Link
+        data-test="add-a-new-contact-link"
         onClick={onOpenContactForm}
         href={urls.contacts.create(companyId, {
           origin_url: window.location.pathname,
@@ -23,7 +24,10 @@ const ContactDetails = ({ onOpenContactForm, companyId }) => {
       </Link>
       . After completing the form you'll return to this page without losing
       data.
-      <StyledDetails summary="Information you'll need to add a contact">
+      <StyledDetails
+        summary="Information you'll need to add a contact"
+        data-test="add-a-new-contact-details"
+      >
         <Paragraph>You need to give the new contact's:</Paragraph>
         <UnorderedList listStyleType="bullet">
           <ListItem>full name</ListItem>
