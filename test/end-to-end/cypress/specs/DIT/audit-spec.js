@@ -59,7 +59,7 @@ describe('Contact', () => {
 
     cy.get(selectors.collection.items)
       .should('contain', 'DIT Staff')
-      .and('contain', '2 changes')
+      .and('contain', '3 changes')
       .and('contain', todaysDate)
     cy.get(selectors.collection.header).should('contain', '1 result')
   })
