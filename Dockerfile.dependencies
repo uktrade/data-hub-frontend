@@ -54,6 +54,7 @@ RUN mkdir -p /home/node
 RUN chown -R node: /home/node
 RUN mkdir -p /usr/src/app
 RUN chown -R node: /usr/src/app
+RUN chmod -R 775 /usr/src/app
 
 USER node
 ENV HOME=/home/node
