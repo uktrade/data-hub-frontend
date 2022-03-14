@@ -47,7 +47,6 @@ RUN apt-get install -y xvfb xdg-utils libgtk-3-0 lsb-release libappindicator3-1 
   && google-chrome --version
 
 # Install cypress
-ENV CYPRESS_CACHE_FOLDER=/app/.cache
 COPY package.json .
 COPY package-lock.json .
 RUN npm install -g cypress@9.5.1
@@ -74,10 +73,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
 WORKDIR /usr/src/app
 
 # Install dev packages
-COPY package.json .
-COPY package-lock.json .
+COPY --chown=root:root package.json .
+COPY --chown=root:root package-lock.json .
 RUN npm install
 
-COPY . .
+COPY --chown=root:root . .
 
 CMD npm run develop
