@@ -7,8 +7,10 @@ import InvestmentProject from './InvestmentProject'
 import Interaction from './Interaction'
 import Omis from './Omis'
 import Referral from './Referral'
+import AventriAttendee from './AventriAttendee'
 
 export default [
+  AventriAttendee,
   CompaniesHouseAccount,
   CompaniesHouseCompany,
   DirectoryFormsApi,
