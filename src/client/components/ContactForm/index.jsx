@@ -283,18 +283,8 @@ const _ContactForm = ({
                           ]}
                         />
                         <FieldInput
-                          label="Telephone country code"
-                          name="telephoneCountrycode"
-                          type="text"
-                          required="Enter a telephone country code"
-                          validate={(x) =>
-                            !x?.match(/^\d{1,4}$/) &&
-                            'Country code should consist of one to four numbers'
-                          }
-                        />
-                        <FieldInput
                           label="Telephone number"
-                          name="telephoneNumber"
+                          name="fullTelephoneNumber"
                           type="text"
                           required="Enter a telephone number"
                           validate={(x) =>
@@ -402,8 +392,7 @@ ContactForm.propTypes = {
   lastName: PropTypes.string,
   jobTitle: PropTypes.string,
   primary: PropTypes.bool,
-  telephoneCountrycode: PropTypes.string,
-  telephoneNumber: PropTypes.string,
+  fullTelephoneNumber: PropTypes.string,
   email: PropTypes.string,
   acceptsDitEmailMarketing: PropTypes.bool,
   addressSameAsCompany: PropTypes.bool,
