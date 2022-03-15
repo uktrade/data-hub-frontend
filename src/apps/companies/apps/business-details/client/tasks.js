@@ -9,7 +9,9 @@ const {
 export function checkIfPendingRequest(duns_number) {
   if (duns_number) {
     return axios
-      .get(`/v4/dnb/company-change-request?duns_number=${duns_number}`)
+      .get(
+        `/api-proxy/v4/dnb/company-change-request?duns_number=${duns_number}`
+      )
       .then(({ data }) => checkIfRequestIsValid(data))
   }
   return false
