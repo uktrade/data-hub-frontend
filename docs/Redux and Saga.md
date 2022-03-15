@@ -22,12 +22,12 @@ This is where you will put your task. The task function takes exactly one parame
 type Task = (payload: any) => Promise<any>
 ```
 
-In the example below it returns the promise created by `axios.get()`. This example is making the axios call through the api-proxy (so be sure to add your api url to the api-proxy allowlist).
+In the example below it returns the promise created by `apiProxyAxios.get()`. This example is making the axios (so be sure to add your api url to the api-proxy allowlist).
 
 ```
 export function getPipelineList() {
-    return axios
-        .get('/api-proxy/v4/pipeline-item', { params: ... })
+    return apiProxyAxios
+        .get('/v4/pipeline-item', { params: ... })
         .then(handleSuccess, handleError)}
 ```
 
@@ -60,7 +60,7 @@ export default function rootSaga() {
 
 We also need to namespace our Redux action that will trigger once our Saga task has successfully completed. We do this so we don't give any two different actions the same name and accidentally trigger both actions.
 
-It should follow the pattern of [COMPONENT_NAME]__[ACTION_VERB].
+It should follow the pattern of [COMPONENT_NAME]\_\_[ACTION_VERB].
 
 ```
 export const PIPELINE__LIST_LOADED = "PIPELINE__LIST_LOADED"

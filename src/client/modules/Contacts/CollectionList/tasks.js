@@ -1,8 +1,7 @@
-import axios from 'axios'
-
 import { transformResponseToCollection } from './transformers'
 import urls from '../../../../lib/urls'
 import { getMetadataOptions } from '../../../metadata'
+import { apiProxyAxios } from '../../../components/Task/utils'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 
@@ -18,8 +17,8 @@ export const getContacts = ({
   company_uk_region,
   company_sector_descends,
 }) =>
-  axios
-    .post('/api-proxy/v3/search/contact', {
+  apiProxyAxios
+    .post('/v3/search/contact', {
       name,
       limit,
       sortby,

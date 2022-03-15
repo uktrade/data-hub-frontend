@@ -201,17 +201,6 @@ describe('Export', () => {
         })
       })
 
-      context('Adding the same country to more than one field', () => {
-        it('Should show an error', () => {
-          cy.visit(companies.exports.editCountries(company.pk))
-          cy.get(
-            selectors.companyExport.countries.future
-          ).selectTypeaheadOption('Germ')
-          cy.contains('button', 'Save and return').click()
-          cy.contains('You cannot enter the same country in multiple fields.')
-        })
-      })
-
       context('Editing all countries', () => {
         it('should update the countries', () => {
           cy.visit(companies.exports.editCountries(company.pk))

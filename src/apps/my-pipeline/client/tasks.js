@@ -1,6 +1,6 @@
-import axios from 'axios'
 import pipelineApi from './api'
 import { transformValueForAPI } from '../../../client/utils/date'
+import { apiProxyAxios } from '../../../client/components/Task/utils'
 
 function transformValuesForApi(values) {
   const sector = values.sector?.value || null
@@ -51,7 +51,7 @@ export async function getPipelineItem({ pipelineItemId }) {
 }
 
 export async function getCompanyContacts({ companyId }) {
-  const { data } = await axios.get(`/api-proxy/v4/contact`, {
+  const { data } = await apiProxyAxios.get(`/v4/contact`, {
     params: { company_id: companyId, limit: 500 },
   })
 

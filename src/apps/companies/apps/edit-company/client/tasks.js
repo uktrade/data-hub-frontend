@@ -1,6 +1,6 @@
-import axios from 'axios'
 import urls from '../../../../../lib/urls'
 import { UNITED_STATES_ID, CANADA_ID } from '../../../../../common/constants'
+import axios from 'axios'
 
 export const editCompany = ({ csrfToken, company, values }) => {
   values.address = { ...values.address, area: null }

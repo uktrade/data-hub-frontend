@@ -1,9 +1,9 @@
 import React from 'react'
-import axios from 'axios'
 import { throttle } from 'lodash'
 
 import { parseAdviserData } from '../../../../common/formatAdviser'
 import FieldTypeahead from './FieldTypeahead'
+import { apiProxyAxios } from '../../Task/utils'
 
 const FieldActiveITATypeahead = (props) => (
   <FieldTypeahead
@@ -13,8 +13,8 @@ const FieldActiveITATypeahead = (props) => (
     noOptionsMessage="Type to search for advisers"
     loadOptions={throttle(
       (searchString) =>
-        axios
-          .get('/api-proxy/adviser/', {
+        apiProxyAxios
+          .get('/adviser/', {
             params: {
               autocomplete: searchString,
               is_active: 'true',

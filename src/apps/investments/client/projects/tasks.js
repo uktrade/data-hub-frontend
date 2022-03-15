@@ -9,7 +9,7 @@ export const getProjects = ({ limit = 10, page, companyId, ...rest }) => {
   let offset = limit * (parseInt(page, 10) - 1) || 0
 
   return apiProxyAxios
-    .post('/api-proxy/v3/search/investment_project', {
+    .post('/v3/search/investment_project', {
       limit,
       offset,
       ...(companyId && {

@@ -7,10 +7,10 @@ import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
 import { GREY_1 } from 'govuk-colours'
 import styled from 'styled-components'
+import axios from 'axios'
 
 import { SPACING_POINTS } from '@govuk-react/constants'
 
-import axios from 'axios'
 import { throttle } from 'lodash'
 
 import { idNamesToValueLabels } from '../../../../../client/utils'

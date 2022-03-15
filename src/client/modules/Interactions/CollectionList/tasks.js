@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 import urls from '../../../../lib/urls'
 
 import {
@@ -9,6 +7,7 @@ import {
 
 import { getMetadataOptions } from '../../../metadata'
 import { getPageOffset } from '../../../utils/pagination'
+import { apiProxyAxios } from '../../../components/Task/utils'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 
@@ -62,8 +61,8 @@ const getInteractions = ({
   company_one_list_group_tier,
   dit_participants__team,
 }) =>
-  axios
-    .post('/api-proxy/v3/search/interaction', {
+  apiProxyAxios
+    .post('/v3/search/interaction', {
       limit,
       offset: getPageOffset({ limit, page }),
       kind,

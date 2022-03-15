@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 
-import axios from 'axios'
 import { compact, isEmpty } from 'lodash'
 import { getCompanyAddress } from '../../utils/addresses'
+import axios from 'axios'
 
 function getTradingNames(dnb_company) {
   return isEmpty(dnb_company.trading_names)

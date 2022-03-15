@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import axios from 'axios'
 import { throttle } from 'lodash'
 
 import { TASK_SAVE_OPPORTUNITY_DETAILS, state2props } from './state'
@@ -30,6 +29,7 @@ import { CLEARED_REFERENCE, ISSUES_IDENTIFIED_REFERENCE } from './constants'
 import { idNamesToValueLabels } from '../../../../../client/utils'
 
 import { FieldOpportunityValueTypeRadios } from '../../../../../client/components/Form/elements/FieldOpportunityValueType'
+import { apiProxyAxios } from '../../../../../client/components/Task/utils'
 
 function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
   const {
@@ -97,8 +97,8 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
               initialValue={promoters}
               loadOptions={throttle(
                 (searchString) =>
-                  axios
-                    .post('/api-proxy/v4/search/company', {
+                  apiProxyAxios
+                    .post('/v4/search/company', {
                       params: {
                         autocomplete: searchString,
                         archived: false,
