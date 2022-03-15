@@ -74,7 +74,6 @@ describe('Create contact form', () => {
       'First name': '',
       'Last name': '',
       'Job title': '',
-      'Telephone country code': '',
       'Telephone number': '',
       Email: '',
       'Alternative telephone number (optional)': '',
@@ -91,7 +90,6 @@ describe('Create contact form', () => {
       'Job title': 'Enter a job title',
       'Is this person a primary contact?':
         'Select yes if this person is a primary contact',
-      'Telephone country code': 'Enter a telephone country code',
       'Telephone number': 'Enter a telephone number',
       Email: 'Enter an email',
       'Is the contact’s address the same as the company address?':
@@ -113,7 +111,6 @@ describe('Create contact form', () => {
       'Job title': 'Enter a job title',
       'Is this person a primary contact?':
         'Select yes if this person is a primary contact',
-      'Telephone country code': 'Enter a telephone country code',
       'Telephone number': 'Enter a telephone number',
       Email: 'Enter an email',
       'Address line 1': 'Enter an address line 1',
@@ -158,7 +155,6 @@ describe('Create contact form', () => {
       'First name': 'Andy',
       'Last name': 'Pipkin',
       'Job title': 'On dole',
-      'Telephone country code': '12345',
       'Telephone number': '12345',
       Email: 'foo',
     })
@@ -166,8 +162,6 @@ describe('Create contact form', () => {
     cy.clickSubmitButton('Add contact')
 
     assertErrors({
-      'Telephone country code':
-        'Country code should consist of one to four numbers',
       Email: 'Enter a valid email address',
     })
   })
@@ -183,7 +177,6 @@ describe('Create contact form', () => {
       'First name': 'Andy',
       'Last name': 'Pipkin',
       'Job title': 'On dole',
-      'Telephone country code': '1234',
       'Telephone number': '456789',
       Email: 'andy@new.email',
     })
@@ -304,8 +297,7 @@ describe('Edit contact', () => {
       'First name': 'Joseph',
       'Last name': 'Woof',
       'Job title': 'Dog master',
-      'Telephone country code': '222',
-      'Telephone number': '3453454',
+      'Telephone number': '222 3453454',
       Email: 'contact@bob.com',
       'Alternative telephone number (optional)': '',
       'Alternative email (optional)': '',

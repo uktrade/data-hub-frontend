@@ -1,6 +1,6 @@
 const contactDetailsLabels = {
   job_title: 'Job title',
-  telephone_number: 'Phone number',
+  full_telephone_number: 'Phone number',
   telephone_alternative: 'Alternative telephone',
   address: 'Address',
   email: 'Email',

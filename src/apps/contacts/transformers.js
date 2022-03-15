@@ -22,12 +22,6 @@ function getContactAddress(
       }
 }
 
-function getTelephoneNumber(telephone_countrycode, telephone_number) {
-  return telephone_countrycode
-    ? `(${telephone_countrycode}) ${telephone_number}`
-    : telephone_number
-}
-
 // The new react collection page no longer uses this transformer as it
 // has its own. When searching for a contact '/search/contacts?term=<search-term>'
 // or viewing a contact within companies '/companies/<company-id>/contacts'
@@ -46,18 +40,12 @@ function transformContactToListItem({
   archived_on,
   company_sector,
   primary,
-  telephone_countrycode,
-  telephone_number,
+  full_telephone_number,
   email,
 } = {}) {
   if (!id || (!first_name && !last_name)) {
     return
   }
-
-  const telephoneNumber = getTelephoneNumber(
-    telephone_countrycode,
-    telephone_number
-  )
 
   const metaItems = [
     { key: 'company', value: get(company, 'name') },
@@ -65,7 +53,7 @@ function transformContactToListItem({
     { key: 'company_sector', value: get(company_sector, 'name') },
     { key: 'address_country', value: get(address_country, 'name') },
     { key: 'company_uk_region', value: company_uk_region },
-    { key: 'telephone', value: telephoneNumber },
+    { key: 'telephone', value: full_telephone_number },
     { key: 'email', value: email },
     {
       key: 'contact_type',
@@ -109,8 +97,7 @@ function transformContactToListItem({
  */
 function transformContactToView(
   {
-    telephone_countrycode,
-    telephone_number,
+    full_telephone_number,
     job_title,
     email,
     accepts_dit_email_marketing,
@@ -134,10 +121,7 @@ function transformContactToView(
     telephone_alternative,
     email_alternative,
     notes,
-    telephone_number: getTelephoneNumber(
-      telephone_countrycode,
-      telephone_number
-    ),
+    full_telephone_number,
     email_marketing: accepts_dit_email_marketing
       ? 'Can be marketed to'
       : 'Cannot be marketed to',
