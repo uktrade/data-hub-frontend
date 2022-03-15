@@ -6,3 +6,5 @@ applications:
     health-check-http-endpoint: /healthcheck
     memory: 2G
     disk_quota: 2G
+    env:
+      NPM_CONFIG_PRODUCTION: false
