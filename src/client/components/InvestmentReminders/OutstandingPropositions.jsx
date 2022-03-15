@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { H3 } from '@govuk-react/heading'
-import { LINK_COLOUR, RED, TEXT } from 'govuk-colours'
+import { LINK_COLOUR, RED, TEXT_COLOUR } from 'govuk-colours'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
 import { DATE_DAY_LONG_FORMAT } from '../../../common/constants'
@@ -42,7 +42,7 @@ const StyledProjectCode = styled('div')`
 
 const StyledDueDate = styled('span')`
   font-size: ${FONT_SIZE.SIZE_16};
-  color: ${TEXT};
+  color: ${TEXT_COLOUR};
 `
 
 const StyledDueCountdown = styled('span')`
@@ -50,7 +50,7 @@ const StyledDueCountdown = styled('span')`
   text-align: right;
   white-space: nowrap;
   font-size: ${FONT_SIZE.SIZE_16};
-  color: ${TEXT};
+  color: ${TEXT_COLOUR};
 `
 
 const StyledList = styled('ul')`
