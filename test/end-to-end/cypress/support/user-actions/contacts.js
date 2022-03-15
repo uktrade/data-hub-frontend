@@ -3,7 +3,6 @@ const fillOut = (data) => {
   cy.contains('Last name').type(data.lastName)
   cy.contains('Job title').type(data.jobTitle)
   cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
-  cy.contains('Telephone country code').type(data.countryCode)
   cy.contains('Telephone number').type(data.phone)
   cy.contains('Email').type(data.email)
 }

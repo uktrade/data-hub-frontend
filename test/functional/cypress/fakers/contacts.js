@@ -50,6 +50,9 @@ const contactFaker = (overrides = {}) => ({
   },
   primary: faker.datatype.boolean(),
   telephone_countrycode: UK.COUNTRY_CODE,
+  full_telephone_number: `+44 ${faker.random.arrayElement(
+    UK.TELEPHONE_NUMBERS
+  )}`,
   telephone_number: faker.random.arrayElement(UK.TELEPHONE_NUMBERS),
   telephone_alternative: faker.random.arrayElement(UK.TELEPHONE_NUMBERS),
   email: faker.unique(faker.internet.email).toLocaleLowerCase(),

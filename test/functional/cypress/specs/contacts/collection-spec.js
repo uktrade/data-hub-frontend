@@ -21,7 +21,7 @@ describe('Contacts Collections', () => {
       name: 'Advanced Engineering',
     },
     primary: true,
-    telephone_number: '02071234567',
+    full_telephone_number: '+44 02071234567',
     modified_on: '2020-08-10T19:09:35.276Z',
   })
 
@@ -37,6 +37,7 @@ describe('Contacts Collections', () => {
     primary: false,
     telephone_countrycode: '0045',
     telephone_number: '48770000',
+    full_telephone_number: '0045 48770000',
   })
 
   const archivedContact = contactFaker({
@@ -152,7 +153,7 @@ describe('Contacts Collections', () => {
       cy.get('@firstListItem')
         .find('[data-test="metadata-item"]')
         .eq(5)
-        .should('contain', 'Phone number (0044) 02071234567')
+        .should('contain', 'Phone number +44 02071234567')
     })
 
     it('should render the email', () => {
@@ -191,7 +192,7 @@ describe('Contacts Collections', () => {
       cy.get('@secondListItem')
         .find('[data-test="metadata-item"]')
         .eq(4)
-        .should('contain', 'Phone number (0045) 48770000')
+        .should('contain', 'Phone number 0045 48770000')
     })
   })
 

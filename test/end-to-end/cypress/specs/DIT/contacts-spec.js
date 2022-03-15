@@ -11,8 +11,7 @@ describe('Contacts', () => {
     name: 'NewAddress',
     lastName: 'Contact',
     jobTitle: 'Coffee machine operator',
-    countryCode: '44',
-    phone: '0778877778800',
+    phone: '(44) 0778877778800',
     email: CONTACT_EMAIL,
     address1: 'Rua Candido Portinari',
     address2: 'Numero 521',
@@ -49,7 +48,6 @@ describe('Contacts', () => {
       'First name': 'Andy',
       'Last name': 'Pipkin',
       'Job title': 'On dole',
-      'Telephone country code': '1234',
       'Telephone number': '56789',
       Email: EMAIL,
     })
@@ -68,7 +66,6 @@ describe('Contacts', () => {
       'First name': 'Lou',
       'Last name': 'Todd',
       'Job title': 'Carer',
-      'Telephone country code': '4567',
       'Telephone number': '987654321',
       Email: EMAIL,
     })

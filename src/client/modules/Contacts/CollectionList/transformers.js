@@ -5,27 +5,17 @@ import { formatMediumDateTime } from '../../../utils/date'
 
 import urls from '../../../../lib/urls'
 
-const getTelephoneNumber = (telephone_countrycode, telephone_number) =>
-  telephone_countrycode
-    ? `(${telephone_countrycode}) ${telephone_number}`
-    : telephone_number
-
 export const transformArchivedToApi = (archived) =>
   archived?.length === 1 ? archived[0] === 'true' : undefined
 
 export const transformContactToListItem = (companyId) => (contact) => {
-  const telephoneNumber = getTelephoneNumber(
-    contact.telephone_countrycode,
-    contact.telephone_number
-  )
-
   const metadata = [
     { label: 'Company', value: get(contact.company, 'name') },
     { label: 'Job title', value: contact.job_title },
     { label: 'Sector', value: get(contact.company_sector, 'name') },
     { label: 'Country', value: get(contact.address_country, 'name') },
     { label: 'UK region', value: get(contact.company_uk_region, 'name') },
-    { label: 'Phone number', value: telephoneNumber },
+    { label: 'Phone number', value: contact.full_telephone_number },
     { label: 'Email', value: contact.email },
   ].filter((item) => !(item.label === 'Company' && companyId))
 
