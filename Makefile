@@ -87,7 +87,7 @@ endif
 unit-tests:
 ifdef CI
 	$(docker-base) build frontend
-	$(docker-base) run --no-deps --rm frontend bash -c 'npx nyc --reporter=lcov --reporter=json --report-dir=coverage npm run test:unit -- --reporter mocha-circleci-reporter'
+	$(docker-base) run --no-deps --rm frontend bash -c 'npx nyc --reporter=lcov --reporter=json --report-dir=coverage npm run test:unit -- --reporter mocha-junit-reporter'
 else
 	$(docker-base) run --no-deps --rm frontend bash -c 'npm run test:unit'
 endif
@@ -96,7 +96,7 @@ unit-client-tests:
 ifdef CI
 	$(docker-base) build frontend
 endif
-	$(docker-base) run --no-deps --rm frontend bash -c 'npm run test:unit-client -- --reporter mocha-circleci-reporter'
+	$(docker-base) run --no-deps --rm frontend bash -c 'npm run test:unit-client -- --reporter mocha-junit-reporter'
 
 functional-tests:
 	@echo "*** Requires the mock stack, it can be started with 'make start-mock' ***"
