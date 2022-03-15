@@ -1,4 +1,4 @@
-import { apiProxyAxios } from './components/Task/utils'
+import axios from 'axios'
 
 const HQ_TYPE_LABELS = {
   ukhq: 'UK HQ',
@@ -24,7 +24,7 @@ async function getMetadataOptions(
   url,
   { filterDisabled = true, params = {} } = {}
 ) {
-  const { data } = await apiProxyAxios.get(url, {
+  const { data } = await axios.get(url, {
     params,
   })
   return filterDisabled
@@ -44,7 +44,7 @@ async function getMetadataWithContextOptions(
   context,
   { filterDisabled = true, params = {} } = {}
 ) {
-  const { data } = await apiProxyAxios.get(url, {
+  const { data } = await axios.get(url, {
     params,
   })
   const filteringDisabledOptions = filterDisabled

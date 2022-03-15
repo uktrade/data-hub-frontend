@@ -1,9 +1,9 @@
+import axios from 'axios'
 import { metadata } from '../../../lib/urls'
-import { apiProxyAxios } from '../Task/utils'
 
 export default function useAdministrativeAreaLookup() {
   return async function findAreaByCountryId(countryId = undefined) {
-    const { data } = await apiProxyAxios(metadata.administrativeArea())
+    const { data } = await axios(metadata.administrativeArea())
     return countryId ? filterAreaDataByCountry(data, countryId) : data
   }
 }

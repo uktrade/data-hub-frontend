@@ -24,7 +24,7 @@ const FieldAdvisersTypeahead = ({
       loadOptions={throttle(
         (searchString) =>
           apiProxyAxios
-            .get('/api-proxy/adviser/', {
+            .get('/adviser/', {
               params: {
                 autocomplete: searchString,
                 is_active: onlyShowActiveAdvisers,
