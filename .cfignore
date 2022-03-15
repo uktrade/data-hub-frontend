@@ -1,42 +1,14 @@
-/.git
-/.build
-
-# Ignore cache
-/.sass-cache
-/.cache
-/babel_cache
-
-# Ignore .DS_store file
-.DS_Store
-
-# Ignore gulp/webpack assets
-/.tmp
-
-# Ignore node packages
-node_modules/
-
-/cypress
-/cypress-visual-screenshots
-
-/test
-/docs
-
-test.sh
-apitest.js
+.build
+.sass-cache
+.cache
+babel_cache
+.tmp
+node_modules
+cypress
+cypress-visual-screenshots
+test
+docs
 reports
-.idea/
-*.env
-!*.sample.env
-npm*.log
-yarn-error.log
-yarn.lock
-stats.json
-.vscode/launch.json
-.vscode/settings.json
-.envrc
-.nvmrc
-
-# Tests
 .nyc_output
 coverage
 cypress-coverage
@@ -52,35 +24,3 @@ visual-screenshots/comparison
 visual-screenshots/diff
 visual-report
 cypress-visual-report
-cypress-visual-screenshots/comparison
-cypress-visual-screenshots/diff
-
-# IDE configurations
-.vscode/
-
-# Redis
-dump.rdb
-
-# Generated trello number file
-scripts/trello-numbers.txt
-scripts/trello-story-description.txt
-
-# BrowserStack local log
-local.log
-
-# VScode history plugin
-/.history
-
-# Yarn version policy
-.yarnrc
-.yarn/
-
-# Yalc packages
-.yalc
-yalc.lock
-
-# Ignore bin scripts
-.bin
-
-# Ignore gh pages for Storybook
-storybook-static/
