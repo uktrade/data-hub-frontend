@@ -5,6 +5,7 @@ ARG CURRENT_GID
 
 USER root
 RUN chown -R $CURRENT_UID:$CURRENT_GID /home/node
+RUN chown -R $CURRENT_UID:$CURRENT_GID /usr/src/app
 
 WORKDIR /usr/src/app
 
