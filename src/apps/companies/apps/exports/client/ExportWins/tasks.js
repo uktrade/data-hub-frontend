@@ -1,8 +1,9 @@
+import axios from 'axios'
+
 import { currencyGBP } from '../../../../../../client/utils/number-utils'
 import { GREEN, BLUE } from 'govuk-colours'
 
 import { NOT_IMPLEMENTED } from './state'
-import { apiProxyAxios } from '../../../../../../client/components/Task/utils'
 
 const { format } = require('../../../../../../client/utils/date')
 
@@ -69,8 +70,8 @@ export function fetchExportWins({ companyId, companyName, activePage }) {
   const offset = activePage * 10 - 10
   const param = offset ? '?offset=' + offset : ''
 
-  return apiProxyAxios
-    .get(`/v4/company/${companyId}/export-win${param}`)
+  return axios
+    .get(`/api-proxy/v4/company/${companyId}/export-win${param}`)
     .catch((e) => {
       if (e.response?.status === 501) {
         return { [NOT_IMPLEMENTED]: true }
