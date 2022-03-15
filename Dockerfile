@@ -15,4 +15,5 @@ RUN npm install
 
 COPY --chown=$CURRENT_UID:$CURRENT_GID . .
 
+CMD npm config set loglevel info
 CMD npm run develop
