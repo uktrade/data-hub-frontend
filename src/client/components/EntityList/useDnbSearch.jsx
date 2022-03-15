@@ -2,7 +2,7 @@
 
 import { compact, isEmpty } from 'lodash'
 import { getCompanyAddress } from '../../utils/addresses'
-import { apiProxyAxios } from '../Task/utils'
+import axios from 'axios'
 
 function getTradingNames(dnb_company) {
   return isEmpty(dnb_company.trading_names)
@@ -36,7 +36,7 @@ function useDnbSearch(apiEndpoint, features) {
   }
 
   async function findCompany(filters) {
-    const { data } = await apiProxyAxios.post(apiEndpoint, filters)
+    const { data } = await axios.post(apiEndpoint, filters)
 
     return data.results.map(transformCompanyRecord)
   }
