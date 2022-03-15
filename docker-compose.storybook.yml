@@ -3,6 +3,9 @@ services:
   storybook:
     build:
       context: .
+      args:
+        CURRENT_UID: ${CURRENT_UID}
+        CURRENT_GID: ${CURRENT_GID}
     volumes:
       - ./:/usr/src/app:delegated
       # Ensures that the local node_modules dir is not used in the container
