@@ -177,7 +177,7 @@ jobs:
 
   release-storybook:
     docker:
-      - image: node:14.17.0
+      - image: node:16.14.0-buster
     steps:
       - checkout
       - run: npm install storybook

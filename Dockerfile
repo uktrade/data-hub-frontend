@@ -1,23 +1,25 @@
-FROM gcr.io/sre-docker-registry/data-hub-frontend-dependencies:1.0.7
+FROM gcr.io/sre-docker-registry/data-hub-frontend-dependencies:2.0.0
 
-RUN npm install -g cypress@9.5.1
+ARG CURRENT_UID
+ARG CURRENT_GID
 
-ENV NPM_CONFIG_LOGLEVEL    warn
-ENV NPM_CONFIG_UNSAFE_PERM true
-ENV TZ                     Europe/London
-ENV NODE_ENV               development
-
-# Set timezone
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
-  && echo "Timezone: $(date +%z)"
+USER root
+RUN chown -R $CURRENT_UID:$CURRENT_GID /home/node
+RUN chown -R $CURRENT_UID:$CURRENT_GID /usr/src/app
 
 WORKDIR /usr/src/app
 
 # Install dev packages
-COPY package.json .
-COPY package-lock.json .
+COPY --chown=$CURRENT_UID:$CURRENT_GID package.json .
+COPY --chown=$CURRENT_UID:$CURRENT_GID package-lock.json .
+
+USER "$CURRENT_UID:$CURRENT_GID"
+CMD npm config set loglevel info
+
+ENV NODE_OPTIONS="--max-old-space-size=8192"
+
 RUN npm install
 
-COPY . .
+COPY --chown=$CURRENT_UID:$CURRENT_GID . .
 
 CMD npm run develop

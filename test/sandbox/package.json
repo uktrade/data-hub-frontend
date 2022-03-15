@@ -12,9 +12,6 @@
   "engines": {
     "yarn": "YARN NO LONGER USED - use npm instead."
   },
-  "scripts": {
-    "preinstall": "npx npm-force-resolutions"
-  },
   "resolutions": {
     "ansi-regex": "5.0.1"
   }

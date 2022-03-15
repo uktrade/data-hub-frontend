@@ -3,6 +3,9 @@ services:
   frontend:
     build:
       context: .
+      args:
+        CURRENT_UID: ${CURRENT_UID}
+        CURRENT_GID: ${CURRENT_GID}
     depends_on:
       - redis
     volumes:
@@ -13,6 +16,7 @@ services:
       - ${PORT:-3000}:3000
       - 9229:9229
     env_file: .env
+    user: "${CURRENT_UID}:${CURRENT_GID}"
     environment:
       API_ROOT: ${API_ROOT}
       # Required to test Data Hub roles in e2e tests, make sure this var
