@@ -1,3 +1,11 @@
+SHELL = /bin/sh
+
+CURRENT_UID := $(shell id -u)
+CURRENT_GID := $(shell id -g)
+
+export CURRENT_UID
+export CURRENT_GID
+
 docker-base = docker-compose -p dh -f docker-compose.base.yml
 docker-mock = docker-compose -p dh -f docker-compose.base.yml -f docker-compose.mock.yml
 docker-e2e = docker-compose -p dh -f docker-compose.base.yml -f docker-compose.e2e.frontend.yml -f docker-compose.e2e.backend.yml -f docker-compose.services.yml
