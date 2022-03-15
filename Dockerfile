@@ -15,7 +15,7 @@ COPY --chown=$CURRENT_UID:$CURRENT_GID package-lock.json .
 USER "$CURRENT_UID:$CURRENT_GID"
 CMD npm config set loglevel info
 
-export NODE_OPTIONS="--max-old-space-size=8192"
+ENV NODE_OPTIONS="--max-old-space-size=8192"
 
 RUN npm install
 
