@@ -13,7 +13,7 @@ import {
   FieldTextarea,
   FieldTypeahead,
   SummaryTable,
-  ContactDetails,
+  ContactInformation,
 } from '../../../../../client/components'
 import CompanyContactsResource from '../../../../../client/components/Resource/CompanyContacts'
 import { OPTION_YES, OPTION_NO, OPTIONS_YES_NO } from '../../../../constants'
@@ -213,7 +213,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
                       }))}
                       isMulti={true}
                     />
-                    <ContactDetails
+                    <ContactInformation
                       onOpenContactForm={(e) => {
                         e.preventDefault()
                         openContactFormTask.start({

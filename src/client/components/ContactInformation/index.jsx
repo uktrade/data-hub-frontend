@@ -9,7 +9,7 @@ const StyledDetails = styled(Details)`
   margin-top: ${SPACING_POINTS[1]};
 `
 
-const ContactDetails = ({ onOpenContactForm, companyId }) => {
+const ContactInformation = ({ onOpenContactForm, companyId }) => {
   return (
     <>
       If a contact isn't listed{' '}
@@ -26,7 +26,7 @@ const ContactDetails = ({ onOpenContactForm, companyId }) => {
       data.
       <StyledDetails
         summary="Information you'll need to add a contact"
-        data-test="add-a-new-contact-details"
+        data-test="contact-information-details"
       >
         <Paragraph>You need to give the new contact's:</Paragraph>
         <UnorderedList listStyleType="bullet">
@@ -40,4 +40,4 @@ const ContactDetails = ({ onOpenContactForm, companyId }) => {
     </>
   )
 }
-export default ContactDetails
+export default ContactInformation

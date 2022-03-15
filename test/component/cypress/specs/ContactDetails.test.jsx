@@ -1,11 +1,11 @@
 import React from 'react'
 import { mount } from '@cypress/react'
-import ContactDetails from '../../../../src/client/components/ContactDetails'
+import ContactInformation from '../../../../src/client/components/ContactInformation'
 
-describe('ContactDetails', () => {
+describe('ContactInformation', () => {
   context('Default component use', () => {
     beforeEach(() => {
-      mount(<ContactDetails />)
+      mount(<ContactInformation />)
     })
 
     it('should show the add a new contact link', () => {
@@ -16,12 +16,12 @@ describe('ContactDetails', () => {
     })
 
     it('should render the contact information details component', () => {
-      cy.get('[data-test="add-a-new-contact-details"]').should('be.visible')
-      cy.get('[data-test="add-a-new-contact-details"]> Summary').should(
+      cy.get('[data-test="contact-information-details"]').should('be.visible')
+      cy.get('[data-test="contact-information-details"]> Summary').should(
         'contain.text',
         "Information you'll need to add a contact"
       )
-      cy.get('[data-test="add-a-new-contact-details"]> div').should(
+      cy.get('[data-test="contact-information-details"]> div').should(
         'contain.text',
         "You need to give the new contact's:"
       )
