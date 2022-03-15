@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 import { apiProxyAxios } from './components/Task/utils'
 
 export const getAdviserNames = (adviser) => {
@@ -7,10 +9,10 @@ export const getAdviserNames = (adviser) => {
 
   const advisers = Array.isArray(adviser) ? adviser : [adviser]
 
-  return apiProxyAxios
+  return axios
     .all(advisers.map((adviser) => apiProxyAxios.get(`/adviser/${adviser}/`)))
     .then(
-      apiProxyAxios.spread((...responses) =>
+      axios.spread((...responses) =>
         responses.map(({ data }) => ({
           advisers: data,
         }))

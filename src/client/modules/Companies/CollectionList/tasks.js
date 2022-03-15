@@ -34,7 +34,7 @@ const getCompanies = ({
 }) => {
   const administrativeAreas = [...us_state, ...canadian_province]
   return apiProxyAxios
-    .post('v4/search/company', {
+    .post('/v4/search/company', {
       limit,
       offset: getPageOffset({ limit, page }),
       headquarter_type,
