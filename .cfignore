@@ -15,6 +15,12 @@
 # Ignore node packages
 node_modules/
 
+/cypress
+/cypress-visual-screenshots
+
+/test
+/docs
+
 test.sh
 apitest.js
 reports
