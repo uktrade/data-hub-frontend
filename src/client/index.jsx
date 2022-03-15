@@ -22,6 +22,7 @@ import LargeCapitalProfileCollection from '../apps/investments/client/profiles/L
 import EditLargeCapitalInvestorDetails from '../apps/companies/apps/investments/large-capital-profile/client/EditLargeCapitalInvestorDetails'
 import UnfilteredLargeCapitalOpportunityCollection from '../apps/investments/client/opportunities/List/UnfilteredLargeCapitalOpportunityCollection'
 import InvestmentEditHistory from '../apps/investments/client/InvestmentEditHistory'
+import InvestmentNotificationSettings from '../apps/investments/client/InvestmentNotificationSettings'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
 import EditOneListForm from '../apps/companies/apps/edit-one-list/client/EditOneListForm'
@@ -217,6 +218,9 @@ import {
   getOrdersMetadata,
 } from './modules/Omis/CollectionList/tasks'
 
+import { getNotificationSettings } from '../apps/investments/client/tasks'
+import { TASK_GET_NOTIFICATION_SETTINGS } from '../apps/investments/client/state'
+
 import { getAdviserNames } from './advisers'
 
 import { getTeamNames } from './teams'
@@ -382,6 +386,7 @@ function App() {
         [TASK_GET_TYPEAHEAD_OPTIONS]: getTypeaheadOptions,
         [TASK_SAVE_ORDER_ASSIGNEES]: editOMISTasks.saveOrderAssignees,
         [TASK_SAVE_ORDER_SUBSCRIBERS]: editOMISTasks.saveOrderSubscribers,
+        [TASK_GET_NOTIFICATION_SETTINGS]: getNotificationSettings,
         ...resourceTasks,
       }}
     >
@@ -411,6 +416,14 @@ function App() {
       <Mount selector="#investment-edit-history">
         {(props) => (
           <InvestmentEditHistory csrfToken={globalProps.csrfToken} {...props} />
+        )}
+      </Mount>
+      <Mount selector="#investment-notification-settings">
+        {(props) => (
+          <InvestmentNotificationSettings
+            csrfToken={globalProps.csrfToken}
+            {...props}
+          />
         )}
       </Mount>
       <Mount selector="#match-confirmation">
