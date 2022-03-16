@@ -236,6 +236,6 @@
     "json-schema": "0.4.0",
     "jsonpointer": ">=5.0.0",
     "node-forge": ">=1.0.0",
-    "glob-parent": "6.0.2"
+    "glob-parent": "5.1.2"
   }
 }
