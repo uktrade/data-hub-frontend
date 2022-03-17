@@ -76,8 +76,6 @@ describe('Create contact form', () => {
       'Job title': '',
       'Telephone number': '',
       Email: '',
-      'Alternative telephone number (optional)': '',
-      'Alternative email (optional)': '',
     })
   })
 
@@ -299,8 +297,6 @@ describe('Edit contact', () => {
       'Job title': 'Dog master',
       'Telephone number': '222 3453454',
       Email: 'contact@bob.com',
-      'Alternative telephone number (optional)': '',
-      'Alternative email (optional)': '',
     })
   })
 })

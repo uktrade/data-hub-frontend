@@ -336,17 +336,6 @@ const _ContactForm = ({
                             },
                           ]}
                         />
-                        <FieldInput
-                          label="Alternative telephone number (optional)"
-                          name="telephoneAlternative"
-                          type="text"
-                        />
-                        <FieldInput
-                          label="Alternative email (optional)"
-                          name="emailAlternative"
-                          type="email"
-                          validate={(x) => x && validators.email(x)}
-                        />
                         <FieldTextarea label="Notes (optional)" name="notes" />
                       </>
                     )}
@@ -401,8 +390,6 @@ ContactForm.propTypes = {
   addressTown: PropTypes.string,
   addressCounty: PropTypes.string,
   addressPostcode: PropTypes.string,
-  telephoneAlternative: PropTypes.string,
-  emailAlternative: PropTypes.string,
   notes: PropTypes.string,
 }
 
