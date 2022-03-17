@@ -20,7 +20,7 @@ const StartServerAfterBuild = () => {
         } else {
           server = spawn(
             "npx nodemon --inspect --ignore 'src/**/__test__/**/*'",
-            { stdio: 'pipe', shell: true }
+            { stdio: ['pipe', 'inherit', 'inherit'], shell: true }
           )
         }
       })
