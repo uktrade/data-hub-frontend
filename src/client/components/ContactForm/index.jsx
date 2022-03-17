@@ -297,7 +297,7 @@ const _ContactForm = ({
                           }
                         />
                         <FieldInput
-                          label="Email"
+                          label="Email address"
                           name="email"
                           type="email"
                           required="Enter an email"

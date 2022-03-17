@@ -75,7 +75,7 @@ describe('Create contact form', () => {
       'Last name': '',
       'Job title': '',
       'Telephone number': '',
-      Email: '',
+      'Email address': '',
     })
   })
 
@@ -89,7 +89,7 @@ describe('Create contact form', () => {
       'Is this person a primary contact?':
         'Select yes if this person is a primary contact',
       'Telephone number': 'Enter a telephone number',
-      Email: 'Enter an email',
+      'Email address': 'Enter an email',
       'Is this contact’s work address the same as the company address?':
         "Select yes if the contact's address is the same as the company address",
     })
@@ -110,7 +110,7 @@ describe('Create contact form', () => {
       'Is this person a primary contact?':
         'Select yes if this person is a primary contact',
       'Telephone number': 'Enter a telephone number',
-      Email: 'Enter an email',
+      'Email address': 'Enter an email',
       'Address line 1': 'Enter an address line 1',
       'Town or city': 'Enter a town or city',
     })
@@ -154,13 +154,13 @@ describe('Create contact form', () => {
       'Last name': 'Pipkin',
       'Job title': 'On dole',
       'Telephone number': '12345',
-      Email: 'foo',
+      'Email address': 'foo',
     })
 
     cy.clickSubmitButton('Add contact')
 
     assertErrors({
-      Email: 'Enter a valid email address',
+      'Email address': 'Enter a valid email address',
     })
   })
 
@@ -176,7 +176,7 @@ describe('Create contact form', () => {
       'Last name': 'Pipkin',
       'Job title': 'On dole',
       'Telephone number': '456789',
-      Email: 'andy@new.email',
+      'Email address': 'andy@new.email',
     })
 
     cy.clickSubmitButton('Add contact')
@@ -296,7 +296,7 @@ describe('Edit contact', () => {
       'Last name': 'Woof',
       'Job title': 'Dog master',
       'Telephone number': '222 3453454',
-      Email: 'contact@bob.com',
+      'Email address': 'contact@bob.com',
     })
   })
 })
