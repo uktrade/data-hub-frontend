@@ -72,6 +72,7 @@ const _ContactForm = ({
   duplicateEmail,
   dispatch,
   id,
+  notes: moreDetails,
   ...props
 }) => {
   const findAdministrativeAreas = useAdministrativeAreaLookup()
@@ -160,6 +161,7 @@ const _ContactForm = ({
                       addressSameAsCompany,
                       primary,
                       email,
+                      moreDetails,
                       ...values
                     }) => ({
                       contactId,
@@ -167,6 +169,7 @@ const _ContactForm = ({
                       values: {
                         ...keysToSnakeCase(values),
                         email,
+                        notes: moreDetails,
                         accepts_dit_email_marketing:
                           acceptsDitEmailMarketing.includes(YES),
                         primary,
@@ -226,6 +229,7 @@ const _ContactForm = ({
                     }
                     initialValues={{
                       ...props,
+                      moreDetails,
                       postcode,
                       county,
                       city,
@@ -336,7 +340,10 @@ const _ContactForm = ({
                             },
                           ]}
                         />
-                        <FieldTextarea label="Notes (optional)" name="notes" />
+                        <FieldTextarea
+                          label="More details (optional)"
+                          name="moreDetails"
+                        />
                       </>
                     )}
                   </Form>
