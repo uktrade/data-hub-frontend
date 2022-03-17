@@ -67,7 +67,7 @@ describe('Create contact form', () => {
 
     assertRadioGroupNoOptionChecked('Is this person a primary contact?')
     assertRadioGroupNoOptionChecked(
-      'Is the contact’s address the same as the company address?'
+      'Is this contact’s work address the same as the company address?'
     )
 
     assertInputValuesByLabels({
@@ -90,14 +90,14 @@ describe('Create contact form', () => {
         'Select yes if this person is a primary contact',
       'Telephone number': 'Enter a telephone number',
       Email: 'Enter an email',
-      'Is the contact’s address the same as the company address?':
+      'Is this contact’s work address the same as the company address?':
         "Select yes if the contact's address is the same as the company address",
     })
   })
 
   it('Should show errors when only the same as company address is checked', () => {
     cy.checkRadioGroup(
-      'Is the contact’s address the same as the company address?',
+      'Is this contact’s work address the same as the company address?',
       'No'
     )
 
@@ -119,7 +119,7 @@ describe('Create contact form', () => {
   describe('country specific address fields', () => {
     beforeEach(() => {
       cy.checkRadioGroup(
-        'Is the contact’s address the same as the company address?',
+        'Is this contact’s work address the same as the company address?',
         'No'
       )
     })
@@ -144,7 +144,7 @@ describe('Create contact form', () => {
 
   it('Should show errors for invalid field values', () => {
     cy.checkRadioGroup(
-      'Is the contact’s address the same as the company address?',
+      'Is this contact’s work address the same as the company address?',
       'Yes'
     )
     cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
@@ -167,7 +167,7 @@ describe('Create contact form', () => {
   it('Should redirect to the new contact page when required fields are filled out', () => {
     cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
     cy.checkRadioGroup(
-      'Is the contact’s address the same as the company address?',
+      'Is this contact’s work address the same as the company address?',
       'Yes'
     )
 
@@ -287,7 +287,7 @@ describe('Edit contact', () => {
 
     assertRadioGroup('Is this person a primary contact?', 'Yes')
     assertRadioGroup(
-      'Is the contact’s address the same as the company address?',
+      'Is this contact’s work address the same as the company address?',
       'No'
     )
 

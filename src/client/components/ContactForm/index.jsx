@@ -315,7 +315,7 @@ const _ContactForm = ({
                           ]}
                         />
                         <FieldRadios
-                          legend="Is the contact’s address the same as the company address?"
+                          legend="Is this contact’s work address the same as the company address?"
                           name="addressSameAsCompany"
                           required="Select yes if the contact's address is the same as the company address"
                           options={[

@@ -10,7 +10,7 @@ const fillOut = (data) => {
 const create = (data) => {
   fillOut(data)
   cy.checkRadioGroup(
-    'Is the contact’s address the same as the company address?',
+    'Is this contact’s work address the same as the company address?',
     'Yes'
   )
   cy.getSubmitButtonByLabel('Add contact').click()
@@ -19,7 +19,7 @@ const create = (data) => {
 const createWithNewAddress = (data) => {
   fillOut(data)
   cy.checkRadioGroup(
-    'Is the contact’s address the same as the company address?',
+    'Is this contact’s work address the same as the company address?',
     'No'
   )
   cy.contains('Address line 1').type(data.address1)

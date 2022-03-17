@@ -366,7 +366,7 @@ describe('Contact loop', () => {
       cy.contains('div', 'Telephone number').find('input').type('123 567 789')
       cy.contains('div', 'Email').find('input').type('john@new.com')
       cy.checkRadioGroup(
-        'Is the contact’s address the same as the company address?',
+        'Is this contact’s work address the same as the company address?',
         'Yes'
       )
       cy.getSubmitButtonByLabel('Add contact').click()
