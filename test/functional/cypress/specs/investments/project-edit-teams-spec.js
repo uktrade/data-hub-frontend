@@ -143,7 +143,7 @@ describe('View edit team members page', () => {
   })
 
   context('When removing an item and then saving', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.editTeamMembers(projectWithCompleteTeam.id)
       )
@@ -168,6 +168,30 @@ describe('View edit team members page', () => {
 
       function removeFirstAndSecondTeamMember() {
         getAllTeamMemberFields().eq(1).find('a').click()
+        getAllTeamMemberFields().eq(1).find('a').click()
+      }
+    })
+
+    it('should not contain any null data', () => {
+      const expectedBody = [
+        {
+          adviser: 'a6f39399-5bf4-46cb-a686-826f73e9f0ca',
+          role: 'Region adviser',
+        },
+      ]
+
+      removeFirstAndEmptyTeamMember()
+
+      clickButton('Save and return')
+
+      assertAPIRequest(EDIT_TEAMS_INTERCEPT, (xhr) => {
+        assertRequestBody(xhr, expectedBody)
+        assertRedirectToProjectsTeamUrl(projectWithCompleteTeam.id)
+        assertFlashMessage('Changes saved')
+      })
+
+      function removeFirstAndEmptyTeamMember() {
+        getAllTeamMemberFields().eq(0).find('a').click()
         getAllTeamMemberFields().eq(1).find('a').click()
       }
     })
