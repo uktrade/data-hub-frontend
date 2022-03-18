@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { GREY_2 } from 'govuk-colours'
 import { H2, H3 } from 'govuk-react'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
+import { isEmpty } from 'lodash'
 
 import {
   Main,
@@ -15,8 +16,8 @@ import {
 import { format } from '../../../../../client/utils/date'
 
 import {
-  TASK__GET_NOTIFY_SETTINGS_ESTIMATED_LAND_DATE,
-  TASK__SAVE_NOTIFY_SETTINGS_ESTIMATED_LAND_DATE,
+  TASK_GET_NOTIFICATION_SETTINGS,
+  TASK_SAVE_NOTIFICATION_SETTINGS,
 } from './state'
 
 import urls from '../../../../../lib/urls'
@@ -83,9 +84,11 @@ const EstimatedLandDateForm = ({ investment }) => (
       <Form
         id="notify-settings-estimated-land-date"
         initialValuesPayload={investment}
-        initialValuesTaskName={TASK__GET_NOTIFY_SETTINGS_ESTIMATED_LAND_DATE}
-        submissionTaskName={TASK__SAVE_NOTIFY_SETTINGS_ESTIMATED_LAND_DATE}
-        redirectTo={() => urls.investments.projects.details(investment.id)}
+        initialValuesTaskName={TASK_GET_NOTIFICATION_SETTINGS}
+        submissionTaskName={TASK_SAVE_NOTIFICATION_SETTINGS}
+        redirectTo={() =>
+          urls.investments.projects.notifications(investment.id)
+        }
         transformPayload={({ estimated_land_date }) => ({
           investment,
           estimated_land_date: estimated_land_date.filter(
@@ -95,7 +98,7 @@ const EstimatedLandDateForm = ({ investment }) => (
         analyticsFormName="Notify settings - estimated land date"
         flashMessage={() => 'Estimated land date notifications updated'}
         cancelRedirectTo={() =>
-          `/investments/projects/${investment.id}/details`
+          urls.investments.projects.notifications(investment.id)
         }
       >
         {({ values }) => (
@@ -111,7 +114,11 @@ const EstimatedLandDateForm = ({ investment }) => (
                 hint="Select all that apply"
                 required={`Select notification email or select "${NONE_LABEL}"`}
                 exclusive={true}
-                initialValue={values.estimatedLandDate}
+                initialValue={
+                  isEmpty(values.estimatedLandDate)
+                    ? ['none']
+                    : values.estimatedLandDate
+                }
                 options={options}
               />
             )}

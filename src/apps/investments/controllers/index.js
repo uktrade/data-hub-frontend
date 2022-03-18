@@ -8,7 +8,6 @@ const evaluation = require('./evaluation')
 const notificationSettings = require('./notification-settings')
 const propositions = require('./propositions')
 const team = require('./team')
-const estimatedLandDate = require('./estimated-land-date')
 
 module.exports = {
   create,
@@ -21,5 +20,4 @@ module.exports = {
   notificationSettings,
   propositions,
   team,
-  estimatedLandDate,
 }

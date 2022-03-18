@@ -9,11 +9,21 @@ const renderNotificationSettingsView = async (req, res, next) => {
     .breadcrumb('Notifications')
     .render('investments/views/notification-settings', {
       props: {
-        investment: investment,
+        investment,
       },
     })
 }
 
+const renderNotificationsEstimatedLandDateView = (req, res) => {
+  const { investment } = res.locals
+  res.render('investments/views/estimated-land-date', {
+    props: {
+      investment,
+    },
+  })
+}
+
 module.exports = {
   renderNotificationSettingsView,
+  renderNotificationsEstimatedLandDateView,
 }

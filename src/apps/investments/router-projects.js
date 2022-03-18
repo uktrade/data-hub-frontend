@@ -32,7 +32,6 @@ const {
   evaluation,
   notificationSettings,
   team,
-  estimatedLandDate,
 } = require('./controllers')
 
 const {
@@ -108,12 +107,6 @@ router.get(
   archive.unarchiveInvestmentProjectHandler
 )
 
-// TODO: revisit this once Pawel has merged his notifications route
-router.get(
-  '/:investmentId/notifications/estimated-land-date',
-  estimatedLandDate.renderView
-)
-
 router.get(
   urls.investments.editHistory.index.route,
   editHistory.renderProjectsView
@@ -126,6 +119,11 @@ router.get(
 router.get(
   urls.investments.notificationSettings.index.route,
   notificationSettings.renderNotificationSettingsView
+)
+
+router.get(
+  urls.investments.notificationSettings.estimatedLandDate.route,
+  notificationSettings.renderNotificationsEstimatedLandDateView
 )
 
 // Add investment from Companies

@@ -23,7 +23,7 @@ import EditLargeCapitalInvestorDetails from '../apps/companies/apps/investments/
 import UnfilteredLargeCapitalOpportunityCollection from '../apps/investments/client/opportunities/List/UnfilteredLargeCapitalOpportunityCollection'
 import InvestmentEditHistory from '../apps/investments/client/InvestmentEditHistory'
 import EstimatedLandDateForm from '../apps/investments/client/projects/notifications/EstimatedLandDateForm'
-import InvestmentNotificationSettings from '../apps/investments/client/InvestmentNotificationSettings'
+import InvestmentNotificationSettings from '../apps/investments/client/projects/notifications/InvestmentNotificationSettings'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
 import EditOneListForm from '../apps/companies/apps/edit-one-list/client/EditOneListForm'
@@ -219,9 +219,6 @@ import {
   getOrdersMetadata,
 } from './modules/Omis/CollectionList/tasks'
 
-import { getNotificationSettings } from '../apps/investments/client/tasks'
-import { TASK_GET_NOTIFICATION_SETTINGS } from '../apps/investments/client/state'
-
 import { getAdviserNames } from './advisers'
 
 import { getTeamNames } from './teams'
@@ -240,8 +237,8 @@ import {
 
 import * as notifications from '../apps/investments/client/projects/notifications/tasks'
 import {
-  TASK__GET_NOTIFY_SETTINGS_ESTIMATED_LAND_DATE,
-  TASK__SAVE_NOTIFY_SETTINGS_ESTIMATED_LAND_DATE,
+  TASK_GET_NOTIFICATION_SETTINGS,
+  TASK_SAVE_NOTIFICATION_SETTINGS,
 } from '../apps/investments/client/projects/notifications/state'
 
 import Footer from '../client/components/Footer'
@@ -393,11 +390,9 @@ function App() {
         [TASK_GET_TYPEAHEAD_OPTIONS]: getTypeaheadOptions,
         [TASK_SAVE_ORDER_ASSIGNEES]: editOMISTasks.saveOrderAssignees,
         [TASK_SAVE_ORDER_SUBSCRIBERS]: editOMISTasks.saveOrderSubscribers,
-        [TASK_GET_NOTIFICATION_SETTINGS]: getNotificationSettings,
-        [TASK__GET_NOTIFY_SETTINGS_ESTIMATED_LAND_DATE]:
-          notifications.getEstimatedLandDate,
-        [TASK__SAVE_NOTIFY_SETTINGS_ESTIMATED_LAND_DATE]:
-          notifications.saveEstimatedLandDate,
+        [TASK_GET_NOTIFICATION_SETTINGS]: notifications.getNotificationSettings,
+        [TASK_SAVE_NOTIFICATION_SETTINGS]:
+          notifications.saveNotificationSettings,
         ...resourceTasks,
       }}
     >
