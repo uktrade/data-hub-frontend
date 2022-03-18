@@ -11,8 +11,9 @@ export const transformValuesToArray = (values) => {
       [prefix]: value.value || value,
     }
   })
-  return result
+  return result.filter((item) => item !== null)
 }
+
 export const transformTeamMembersForFieldAddAnother = (teamMembers = []) => {
   const teamMemberArray = teamMembers.map((teamMember, index) => ({
     ['adviser' + `_${index}`]: {
