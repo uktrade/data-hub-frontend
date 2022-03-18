@@ -317,6 +317,13 @@ module.exports = {
       index: url('/investments/projects', '/:investmentId/edit-history'),
       data: url('/investments/projects', '/:investmentId/edit-history/data'),
     },
+    notificationSettings: {
+      index: url('/investments/projects', '/:investmentId/notifications'),
+      estimatedLandDate: url(
+        '/investments/projects',
+        '/:investmentId/notifications/estimated-land-date'
+      ),
+    },
   },
   metadata: {
     likelihoodToLand: url('/api-proxy/v4/metadata', '/likelihood-to-land'),

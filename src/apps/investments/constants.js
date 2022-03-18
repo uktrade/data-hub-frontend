@@ -60,6 +60,10 @@ const LOCAL_NAV = [
     label: 'Evidence',
   },
   {
+    path: 'notifications',
+    label: 'Notifications',
+  },
+  {
     path: 'admin',
     label: 'Admin',
     permissions: ['investment.change_to_any_stage_investmentproject'],

@@ -1,0 +1,10 @@
+{% extends "./template.njk" %}
+
+{% block main_grid_right_column %}
+  <h2 class="govuk-heading-m">Notification settings</h2>
+
+{% component 'react-slot', {
+    id: 'investment-notification-settings',
+    props: props
+  } %}
+{% endblock %}
