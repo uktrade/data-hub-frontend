@@ -10,6 +10,7 @@ function getRedisConfig() {
   let redisConfig = {
     port: config.redis.port,
     host: config.redis.host,
+    legacyMode: true,
   }
 
   if (config.redis.url) {
@@ -41,6 +42,13 @@ let asyncGet
 function getClient() {
   if (!client) {
     client = redis.createClient(getRedisConfig())
+
+    // eslint-disable-next-line no-console
+    client.connect().catch((e) => {
+      logger.error('Error during connect step to redis')
+      logger.error(e)
+      reporter.captureException(e)
+    })
 
     client.on('error', (e) => {
       logger.error('Error connecting to redis')
