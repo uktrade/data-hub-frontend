@@ -146,7 +146,6 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
         name="anonymous_description"
         label="Anonymous project details"
         hint="Do not include company names, financial details or addresses"
-        required="Enter anonymous project details"
         data-test="anonymous-description"
       />
 
