@@ -71,7 +71,7 @@
     "@nivo/tooltip": "^0.73.0",
     "@sentry/browser": "^6.18.2",
     "@uktrade/datahub-header": "^1.5.0",
-    "autoprefixer": "^9.8.8",
+    "autoprefixer": "^10.4.4",
     "axios": "^0.26.1",
     "basic-auth": "^2.0.1",
     "body-parser": "^1.19.2",
