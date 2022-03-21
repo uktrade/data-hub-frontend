@@ -151,7 +151,7 @@
     "winston": "^3.6.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.7",
+    "@babel/core": "^7.17.8",
     "@babel/helper-call-delegate": "^7.12.13",
     "@babel/plugin-proposal-object-rest-spread": "^7.17.3",
     "@babel/plugin-proposal-optional-chaining": "^7.16.7",
