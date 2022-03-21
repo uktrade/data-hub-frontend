@@ -230,7 +230,7 @@ const filters = {
       address.county,
       address.postcode,
       address.area && featureFlag ? address.area.name : null,
-      address.country.name,
+      address.country?.name,
     ]).join(join)
   },
 
