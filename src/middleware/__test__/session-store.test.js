@@ -1,21 +1,24 @@
 const { redisStore } = require('../session-store')
 const uid = require('uid-safe').sync
 
-describe('Session middleware', () => {
-  it('', () => {
+describe('Session middleware', (done) => {
+  it('should store the same session value', () => {
     const sessionId = uid(24)
     redisStore.set(sessionId, {
       anArray: ['one', 'two', 'three'],
     })
 
-    const sessionRead1 = redisStore.get(sessionId)
+    redisStore.get(sessionId, (data) => {
+      expect(data).to.deep.equal({
+        anArray: ['one', 'two', 'three'],
+      })
+    })
 
-    redisStore.set(sessionId, sessionRead1)
-
-    const sessionRead2 = redisStore.get(sessionId)
-
-    expect(sessionRead2).to.deep.equal({
-      anArray: ['one', 'two', 'three'],
+    redisStore.get(sessionId, (data) => {
+      expect(data).to.deep.equal({
+        anArray: ['one', 'two', 'three'],
+      })
+      done()
     })
   })
 })
