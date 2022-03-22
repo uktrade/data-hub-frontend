@@ -23,7 +23,7 @@
     "lint:js:fix": "npx eslint --ext .jsx,.js ./test ./src ./assets --fix",
     "test": "run-s test:*",
     "test:unit:files": "f() { NODE_ENV=test API_ROOT=http://test LOG_LEVEL=silent MOCHA_FILE=junit/test-results.xml npx mocha \"${@:-./src/**/*.test.js}\"; }; f",
-    "test:unit": "NODE_ENV=test API_ROOT=http://test LOG_LEVEL=silent MOCHA_FILE=junit/test-results.xml npx mocha ./src/**/*.test.js",
+    "test:unit": "NODE_ENV=test API_ROOT=http://test MOCHA_FILE=junit/test-results.xml npx mocha ./src/**/*.test.js",
     "test:functional": "CYPRESS_retries=3 nyc cypress run --browser chrome",
     "test:a11y": "CYPRESS_pluginsFile=test/a11y/plugins/index.js CYPRESS_supportFile=test/a11y/support/index.js CYPRESS_coverage=false CYPRESS_integrationFolder=test/a11y/cypress/specs cypress run --browser chrome",
     "test:unit-client": "NODE_ENV=test WEBPACK_ENV=develop MOCHA_FILE=junit/test-results.xml npx mochapack --webpack-config webpack.node.config.js --opts ./test/unit-client/mocha.opts ./test/unit-client/assets/javascripts/**/*.test.{js,jsx}",
