@@ -36,11 +36,11 @@ const VENUS_LTD = 'dit:DataHubCompany:0f5216e0-849f-11e6-ae22-56b6b6499611'
 
 exports.activityFeed = function (req, res) {
   // // Aventri activity
-  var aventriActivity = get(
+  var contactWithAventriActivity = get(
     req.body,
     "query.bool.must[0].bool.should[1].bool.must[0].term['object.type']"
   )
-  if (isEqual(aventriActivity, 'dit:aventri:Attendee')) {
+  if (isEqual(contactWithAventriActivity, 'dit:aventri:Attendee')) {
     return res.json(dataHubAndExternalActivities)
   }
 
