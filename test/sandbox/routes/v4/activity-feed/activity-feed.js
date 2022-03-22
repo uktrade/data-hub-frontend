@@ -17,6 +17,8 @@ var myActivities = require('../../../fixtures/v4/activity-feed/my-activities.jso
 var dataHubActivities = require('../../../fixtures/v4/activity-feed/data-hub-activities.json')
 var noActivity = require('../../../fixtures/v4/activity-feed/no-activity.json')
 
+const AVENTRI_ACTIVITY = 'dit:aventri:Attendee'
+
 const DATA_HUB_ACTIVITY = [
   'dit:Interaction',
   'dit:ServiceDelivery',
@@ -40,7 +42,7 @@ exports.activityFeed = function (req, res) {
     req.body,
     "query.bool.must[0].bool.should[1].bool.must[0].term['object.type']"
   )
-  if (isEqual(contactWithAventriActivity, 'dit:aventri:Attendee')) {
+  if (isEqual(contactWithAventriActivity, AVENTRI_ACTIVITY)) {
     return res.json(dataHubAndExternalActivities)
   }
 
