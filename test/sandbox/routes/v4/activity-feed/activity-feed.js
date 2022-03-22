@@ -35,6 +35,15 @@ const DATA_HUB_AND_EXTERNAL_ACTIVITY = [
 const VENUS_LTD = 'dit:DataHubCompany:0f5216e0-849f-11e6-ae22-56b6b6499611'
 
 exports.activityFeed = function (req, res) {
+  // // Aventri activity
+  var aventriActivity = get(
+    req.body,
+    "query.bool.must[0].bool.should[1].bool.must[0].term['object.type']"
+  )
+  if (isEqual(aventriActivity, 'dit:aventri:Attendee')) {
+    return res.json(dataHubAndExternalActivities)
+  }
+
   // Data Hub activity
   var dataHubTypes = get(req.body, "query.bool.must[0].terms['object.type']")
   if (isEqual(dataHubTypes, DATA_HUB_ACTIVITY)) {
