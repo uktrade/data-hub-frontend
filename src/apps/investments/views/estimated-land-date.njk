@@ -1,0 +1,12 @@
+{% extends "_layouts/template.njk" %}
+
+{% block local_header %}
+{% endblock %}
+
+{% block main %}
+  {% component 'react-slot', {
+    id: 'estimated-land-date',
+    props: props
+  } %}
+
+{% endblock %}
