@@ -436,38 +436,6 @@ describe('Global builders', () => {
 
       expect(actual.stage.valueLabel).to.equals('B, C')
     })
-
-    context('when a filter has selected options', () => {
-      beforeEach(() => {
-        const fields = [
-          {
-            macroName: 'typeahead',
-            name: 'adviser',
-            label: 'Adviser',
-            entity: 'adviser',
-            selectedOptions: [
-              { value: '1', label: 'Adviser 1' },
-              { value: '2', label: 'Adviser 2' },
-            ],
-            apiVersion: 'metadata',
-          },
-        ]
-
-        const query = {
-          adviser: ['1', '2'],
-        }
-
-        this.summary = builders.buildSelectedFiltersSummary(fields, query)
-      })
-
-      it('transforms the summary to display selected options', () => {
-        expect(this.summary.adviser.valueLabel).to.equal('Adviser 1, Adviser 2')
-      })
-
-      it('transforms the summary to display the correct label for selected options', () => {
-        expect(this.summary.adviser.label).to.equal('Adviser')
-      })
-    })
   })
 
   describe('#buildFieldsWithSelectedEntities', () => {
@@ -483,7 +451,7 @@ describe('Global builders', () => {
 
       this.fields = [
         {
-          macroName: 'Typeahead',
+          macroName: 'MultipleChoiceField',
           name: 'dit_adviser',
           entity: 'adviser',
         },
