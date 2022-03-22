@@ -383,7 +383,6 @@ describe('Validation error messages', () => {
   const validationErrorMessages = [
     'Enter a project name',
     'Enter a project description',
-    'Enter anonymous project details',
     'Choose a sector',
     'Choose a business activity',
     "Select yes if you're the client relationship manager for this project",
