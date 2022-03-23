@@ -14,6 +14,8 @@ docker-storybook = docker-compose -p dh -f docker-compose.storybook.yml
 
 wait-for-frontend = dockerize -wait tcp://localhost:3000/healthcheck -timeout 5m -wait-retry-interval 5s
 wait-for-storybook = dockerize -wait tcp://localhost:65200 -timeout 5m -wait-retry-interval 5s
+wait-for-redis = dockerize -wait tcp://redis:6379 -timeout 5m
+
 
 ifdef CI
 	start-command = up --build --force-recreate -d
@@ -87,9 +89,9 @@ endif
 unit-tests:
 ifdef CI
 	$(docker-base) build frontend
-	$(docker-base) run --no-deps --rm frontend bash -c 'npx nyc --reporter=lcov --reporter=json --report-dir=coverage npm run test:unit -- --reporter mocha-junit-reporter'
+	$(docker-base) run --rm frontend bash -c '$(wait-for-redis) && npx nyc --reporter=lcov --reporter=json --report-dir=coverage npm run test:unit -- --reporter mocha-junit-reporter'
 else
-	$(docker-base) run --no-deps --rm frontend bash -c 'npm run test:unit'
+	$(docker-base) run --rm frontend bash -c '$(wait-for-redis) && npm run test:unit'
 endif
 
 unit-client-tests:

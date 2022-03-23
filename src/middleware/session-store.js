@@ -27,4 +27,7 @@ const sessionStore = session({
   key: 'datahub.sid',
 })
 
-module.exports = sessionStore
+module.exports = {
+  sessionStore,
+  redisStore,
+}
