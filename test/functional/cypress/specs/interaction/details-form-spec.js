@@ -891,7 +891,6 @@ describe('Contact loop', () => {
       cy.contains('fieldset', 'Is this person a primary contact?')
         .contains('label', 'Yes')
         .click()
-      cy.contains('div', 'Telephone country code').find('input').type('44')
       cy.contains('div', 'Telephone number').find('input').type('123 567 789')
       cy.contains('div', 'Email').find('input').type('john@new.com')
       cy.contains(

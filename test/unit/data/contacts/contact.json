@@ -16,8 +16,9 @@
       "id": "8036f207-ae3e-e611-8d53-e4115bed50dc"
   },
   "primary": false,
-  "telephone_countrycode": "96500",
-  "telephone_number": "(581) 143-9692 x01862",
+  "telephone_countrycode": "",
+  "telephone_number": "",
+  "full_telephone_number": "+44 07814 333 777",
   "email": "Rebecca.Lowe@example.com",
   "address_same_as_company": true,
   "address_1": null,

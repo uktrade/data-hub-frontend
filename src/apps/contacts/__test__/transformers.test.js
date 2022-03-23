@@ -94,7 +94,7 @@ describe('Contact transformers', () => {
               { label: 'Job title', value: 'Director' },
               { label: 'Sector', value: 'Aerospace' },
               { label: 'Country', value: 'United Kingdom' },
-              { label: 'Phone number', value: '(+44) 07814 333 777' },
+              { label: 'Phone number', value: '+44 07814 333 777' },
               { label: 'Email', value: 'fred@test.com' },
               {
                 label: 'Contact type',
@@ -138,7 +138,7 @@ describe('Contact transformers', () => {
               { label: 'Job title', value: 'Director' },
               { label: 'Sector', value: 'Aerospace' },
               { label: 'Country', value: 'United Kingdom' },
-              { label: 'Phone number', value: '(+44) 07814 333 777' },
+              { label: 'Phone number', value: '+44 07814 333 777' },
               { label: 'Email', value: 'fred@test.com' },
               {
                 label: 'Contact type',
@@ -242,54 +242,18 @@ describe('Contact transformers', () => {
       }
     )
 
-    context('when the contact has an empty international dialling code', () => {
+    context('when the contact has a full telephone number', () => {
       beforeEach(() => {
         this.view = transformContactToView(
           assign({}, contact, {
-            telephone_countrycode: '',
-            telephone_number: '1234',
+            full_telephone_number: '+44 1234567',
           }),
           company
         )
       })
 
-      it('should set the telephone number without a dialling code', () => {
-        expect(this.view).to.have.property('Phone number', '1234')
-      })
-    })
-
-    context(
-      'when the contact does not have an international dialling code',
-      () => {
-        beforeEach(() => {
-          this.view = transformContactToView(
-            assign({}, contact, {
-              telephone_countrycode: null,
-              telephone_number: '1234',
-            }),
-            company
-          )
-        })
-
-        it('should set the telephone number without a dialling code', () => {
-          expect(this.view).to.have.property('Phone number', '1234')
-        })
-      }
-    )
-
-    context('when the contact has an international dialling code', () => {
-      beforeEach(() => {
-        this.view = transformContactToView(
-          assign({}, contact, {
-            telephone_countrycode: '44',
-            telephone_number: '1234',
-          }),
-          company
-        )
-      })
-
-      it('should set the telephone number with the dialling code', () => {
-        expect(this.view).to.have.property('Phone number', '(44) 1234')
+      it('should show the full telephone number', () => {
+        expect(this.view).to.have.property('Phone number', '+44 1234567')
       })
     })
 

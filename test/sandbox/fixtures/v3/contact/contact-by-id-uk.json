@@ -16,8 +16,9 @@
      "id":"7d19d407-9aec-4d06-b190-d3f404627f21"
   },
   "primary":true,
-  "telephone_countrycode":"222",
-  "telephone_number":"3453454",
+  "telephone_countrycode":"",
+  "telephone_number":"",
+  "full_telephone_number":"222 3453454",
   "email":"contact@bob.com",
   "address_same_as_company":false,
   "address_1": null,

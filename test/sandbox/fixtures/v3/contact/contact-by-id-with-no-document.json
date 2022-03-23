@@ -1,23 +1,24 @@
-{  
+{
   "id":"5555d636-1d24-416a-aaf0-3fb220d59aaa",
   "title":null,
   "first_name":"Joseph",
   "last_name":"Woof",
   "name":"Joseph Woof",
   "job_title":"Dog master",
-  "company":{  
+  "company":{
      "name":"Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978",
      "id":"4cd4128b-1bad-4f1e-9146-5d4678c6a018"
   },
-  "adviser":{  
+  "adviser":{
      "name":"DIT Staff",
      "first_name":"DIT",
      "last_name":"Staff",
      "id":"7d19d407-9aec-4d06-b190-d3f404627f21"
   },
   "primary":true,
-  "telephone_countrycode":"222",
-  "telephone_number":"3453454",
+  "telephone_countrycode":"",
+  "telephone_number":"",
+  "full_telephone_number": "222 3453454",
   "email":"contact@bob.com",
   "address_same_as_company":true,
   "address_1":null,
