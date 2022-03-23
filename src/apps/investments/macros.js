@@ -4,32 +4,6 @@ const metadata = require('../../lib/metadata')
 const { globalFields } = require('../macros')
 const { collectionFilterLabels, requirementsLabels } = require('./labels')
 
-const investmentSortForm = {
-  method: 'get',
-  class: 'c-collection__sort-form js-AutoSubmit',
-  hideFormActions: true,
-  hiddenFields: { custom: true },
-  children: [
-    {
-      macroName: 'MultipleChoiceField',
-      label: 'Sort by',
-      name: 'sortby',
-      modifier: ['small', 'inline', 'light'],
-      inputClass: 'js-MirrorValue',
-      inputData: {
-        'target-selector': '.c-collection-filters input[name="sortby"]',
-      },
-      options: [
-        { value: 'created_on:desc', label: 'Most recently created' },
-        { value: 'estimated_land_date:asc', label: 'Earliest land date' },
-        { value: 'estimated_land_date:desc', label: 'Latest land date' },
-        { value: 'name:asc', label: 'Project name' },
-        { value: 'stage.name', label: 'Stage' },
-      ],
-    },
-  ],
-}
-
 const requirementsFormConfig = ({
   strategicDrivers,
   countries,
@@ -262,7 +236,6 @@ const investmentProfilesFiltersFields = function () {
 }
 
 module.exports = {
-  investmentSortForm,
   requirementsFormConfig,
   statusFormConfig,
   investmentProfilesFiltersFields,
