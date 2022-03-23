@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import urls from '../../../lib/urls'
-import Activity from '../ActivityFeed/Activity'
+import Activity from '../../../client/components/ActivityFeed/Activity'
 
 export default function ContactInteractionsApp(props) {
   const [activityData, setActivityData] = useState()

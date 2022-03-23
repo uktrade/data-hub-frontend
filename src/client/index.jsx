@@ -55,7 +55,7 @@ import EditSubscribers from '../apps/omis/apps/edit/client/EditSubscribers'
 import EditProjectManagement from '../apps/investments/client/projects/team/EditProjectManagement'
 import { EditTeamMembers } from '../apps/investments/client/projects/team/EditTeamMembers'
 import EditClientRelationshipManagement from '../apps/investments/client/projects/team/EditClientRelationshipManagement'
-import ContactInteractionsApp from './components/ContactInteractions/ContactInteractionsApp'
+import ContactInteractionsApp from '../apps/contacts/client/ContactInteractionsApp'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
