@@ -114,12 +114,14 @@ function renderInteractionsForEntity(req, res, next) {
           },
         ]
       : undefined
-
     res.breadcrumb('Interactions').render(view, {
       actionButtons,
       props: {
         contactId: contactId,
       },
+      isAventriFeatureOn: res.locals.userFeatures.includes(
+        'aventri-activities-contacts-user'
+      ),
     })
   } catch (error) {
     next(error)

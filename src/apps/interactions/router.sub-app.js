@@ -10,6 +10,7 @@ const {
   getInteractionCollectionForEntity,
   getInteractionSortForm,
 } = require('./middleware/collection')
+const userFeatures = require('../../middleware/user-features')
 
 const detailsFormRouter = require('./apps/details-form/router')
 
@@ -20,6 +21,7 @@ router.get(
   getInteractionsRequestBody,
   getInteractionCollectionForEntity,
   getInteractionSortForm,
+  userFeatures('aventri-activities-contacts-user'),
   renderInteractionsForEntity
 )
 
