@@ -1,4 +1,4 @@
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import { snakeCase } from 'lodash'
 
 import { INVESTMENT_PROJECT_STAGES_LIST } from './constants'

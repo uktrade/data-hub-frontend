@@ -1,4 +1,4 @@
-const { uuid } = require('faker').datatype
+const { faker } = require('@faker-js/faker')
 const { EXPORT_INTEREST_STATUS } = require('../../apps/constants')
 
 const {
@@ -16,7 +16,7 @@ function createExpected(countries) {
 function createCountry(name, status) {
   return {
     country: {
-      id: uuid(),
+      id: faker.datatype.uuid(),
       name,
     },
     status,

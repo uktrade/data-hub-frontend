@@ -1,6 +1,7 @@
 const proxyquire = require('proxyquire')
-const { words } = require('faker').lorem
+const { faker } = require('@faker-js/faker')
 
+const words = faker.lorem.words
 const modulePath = '../user-locals'
 
 describe('user-locals middleware', () => {

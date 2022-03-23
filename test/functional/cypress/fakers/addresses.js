@@ -1,4 +1,4 @@
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 
 const addressFaker = (overrides = {}) => ({
   line_1: faker.address.streetAddress(),

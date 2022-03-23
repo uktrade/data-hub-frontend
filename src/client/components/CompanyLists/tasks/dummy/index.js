@@ -1,4 +1,4 @@
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 
 const randomLists = ({ length, max = 10 }) =>
   Array(length || faker.datatype.number(max))

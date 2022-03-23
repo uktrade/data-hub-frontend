@@ -1,5 +1,7 @@
-const { words } = require('faker').lorem
+const { faker } = require('@faker-js/faker')
 const flashWithBody = require('../flash-with-body')
+
+const words = faker.lorem.words
 
 describe('flashWithBody middleware', () => {
   let req, res, next
