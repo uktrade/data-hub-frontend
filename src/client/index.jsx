@@ -255,6 +255,8 @@ import * as matchCompanyTasks from '../apps/companies/apps/match-company/client/
 import * as companyListTasks from '../apps/company-lists/client/tasks'
 import { editCompany } from '../apps/companies/apps/edit-company/client/tasks'
 import { createList } from '../apps/company-lists/client/tasks.js'
+import { TASK_GET_CONTACT_INTERACTIONS } from '../apps/contacts/client/state'
+import { getContactInteractions } from '../apps/contacts/client/tasks'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -393,6 +395,7 @@ function App() {
         [TASK_GET_NOTIFICATION_SETTINGS]: notifications.getNotificationSettings,
         [TASK_SAVE_NOTIFICATION_SETTINGS]:
           notifications.saveNotificationSettings,
+        [TASK_GET_CONTACT_INTERACTIONS]: getContactInteractions,
         ...resourceTasks,
       }}
     >
