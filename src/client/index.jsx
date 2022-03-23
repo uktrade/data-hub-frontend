@@ -248,6 +248,8 @@ import * as matchCompanyTasks from '../apps/companies/apps/match-company/client/
 import * as companyListTasks from '../apps/company-lists/client/tasks'
 import { editCompany } from '../apps/companies/apps/edit-company/client/tasks'
 import { createList } from '../apps/company-lists/client/tasks.js'
+import { TASK_GET_CONTACT_INTERACTIONS } from '../apps/contacts/client/state'
+import { getContactInteractionList } from '../apps/contacts/client/tasks'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -383,6 +385,7 @@ function App() {
         [TASK_GET_TYPEAHEAD_OPTIONS]: getTypeaheadOptions,
         [TASK_SAVE_ORDER_ASSIGNEES]: editOMISTasks.saveOrderAssignees,
         [TASK_SAVE_ORDER_SUBSCRIBERS]: editOMISTasks.saveOrderSubscribers,
+        [TASK_GET_CONTACT_INTERACTIONS]: getContactInteractionList,
         ...resourceTasks,
       }}
     >
