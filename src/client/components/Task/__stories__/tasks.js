@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 
 const OPTIONS = Array(1000)
   .fill()

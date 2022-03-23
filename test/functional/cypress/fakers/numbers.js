@@ -1,4 +1,4 @@
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 
 /**
  * Pad a number with leading zeroes to ensure it has the given length

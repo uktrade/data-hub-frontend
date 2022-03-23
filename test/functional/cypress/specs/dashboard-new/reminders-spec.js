@@ -4,7 +4,7 @@ const {
 } = require('../../../../../src/client/utils/date')
 const { DATE_DAY_LONG_FORMAT } = require('../../../../../src/common/constants')
 
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import urls from '../../../../../src/lib/urls'
 import {
   propositionFaker,

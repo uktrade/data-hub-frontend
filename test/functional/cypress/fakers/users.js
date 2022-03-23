@@ -1,4 +1,4 @@
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 
 const userFaker = () => {
   const first_name = faker.name.firstName()

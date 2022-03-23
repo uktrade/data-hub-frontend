@@ -1,4 +1,4 @@
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import jsf from 'json-schema-faker'
 
 import apiSchema from '../../../api-schema.json'

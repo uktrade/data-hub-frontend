@@ -1,4 +1,4 @@
-const faker = require('faker')
+const { faker } = require('@faker-js/faker')
 
 const minimalCompany = require('../../../../../../test/unit/data/companies/minimal-company.json')
 const { transformCompanyToExportDetailsView } = require('../transformer')
