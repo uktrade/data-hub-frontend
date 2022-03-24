@@ -16,6 +16,7 @@ const {
   assertFieldTypeahead,
   assertFormActions,
   assertFormFields,
+  assertDetails,
 } = require('../../support/assertions')
 
 const {
@@ -81,9 +82,19 @@ const ELEMENT_PARTICIPANTS_HEADER = {
   assert: assertHeader,
 }
 const ELEMENT_CONTACT = {
-  label: 'Contact(s)',
-  placeholder: '-- Select contact --',
+  label: 'Contacts',
+  placeholder: 'Select contact',
   assert: assertFieldTypeahead,
+}
+const ELEMENT_ADD_CONTACT_LINK = {
+  assert: ({ element }) => cy.wrap(element).contains('add a new contact'),
+}
+const ELEMENT_CONTACT_INFO_DETAILS = {
+  summary: "Information you'll need to add a contact",
+  content:
+    "You need to give the new contact's:full namejob titleemail" +
+    ' addressphone numberwork address if different to the company address',
+  assert: assertDetails,
 }
 const ELEMENT_ADVISER = {
   label: 'Adviser(s)',
@@ -213,7 +224,6 @@ function fillCommonFields({
 
   if (contact) {
     cy.contains(ELEMENT_CONTACT.label)
-      .next()
       .next()
       .selectTypeaheadOption(contact)
       .should('contain', contact)
@@ -418,6 +428,8 @@ describe('Interaction theme', () => {
         ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
+        ELEMENT_ADD_CONTACT_LINK,
+        ELEMENT_CONTACT_INFO_DETAILS,
         ELEMENT_ADVISER,
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
@@ -432,8 +444,7 @@ describe('Interaction theme', () => {
     })
 
     it('should only show non-archived contacts in the contacts field', () => {
-      cy.contains(ELEMENT_CONTACT.label)
-        .next()
+      cy.contains(ELEMENT_PARTICIPANTS_HEADER.text)
         .next()
         .click()
         .find('[data-test="typeahead-menu-option"]')
@@ -536,6 +547,8 @@ describe('Service delivery theme', () => {
         ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
+        ELEMENT_ADD_CONTACT_LINK,
+        ELEMENT_CONTACT_INFO_DETAILS,
         ELEMENT_ADVISER,
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
@@ -629,6 +642,8 @@ describe('Investment theme', () => {
         ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
+        ELEMENT_ADD_CONTACT_LINK,
+        ELEMENT_CONTACT_INFO_DETAILS,
         ELEMENT_ADVISER,
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
@@ -744,6 +759,8 @@ describe('Trade Agreement theme', () => {
         ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
+        ELEMENT_ADD_CONTACT_LINK,
+        ELEMENT_CONTACT_INFO_DETAILS,
         ELEMENT_ADVISER,
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
