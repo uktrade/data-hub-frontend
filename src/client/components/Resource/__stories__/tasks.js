@@ -32,8 +32,6 @@ export default {
             addressCounty: 'County',
             addressPostcode: null,
             addressCountry: '87756b9a-5d95-e211-a939-e4115bead28a',
-            telephoneAlternative: '33333',
-            emailAlternative: 'alternative@email.keket',
             notes: 'Notes',
           }),
         2000
@@ -101,8 +99,6 @@ export default {
                 addressCounty: null,
                 addressCountry: null,
                 addressPostcode: null,
-                telephoneAlternative: null,
-                emailAlternative: null,
                 notes: null,
                 acceptsDitEmailMarketing: false,
                 archived: false,

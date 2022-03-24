@@ -72,6 +72,7 @@ const _ContactForm = ({
   duplicateEmail,
   dispatch,
   id,
+  notes: moreDetails,
   ...props
 }) => {
   const findAdministrativeAreas = useAdministrativeAreaLookup()
@@ -160,6 +161,7 @@ const _ContactForm = ({
                       addressSameAsCompany,
                       primary,
                       email,
+                      moreDetails,
                       ...values
                     }) => ({
                       contactId,
@@ -167,6 +169,7 @@ const _ContactForm = ({
                       values: {
                         ...keysToSnakeCase(values),
                         email,
+                        notes: moreDetails,
                         accepts_dit_email_marketing:
                           acceptsDitEmailMarketing.includes(YES),
                         primary,
@@ -226,6 +229,7 @@ const _ContactForm = ({
                     }
                     initialValues={{
                       ...props,
+                      moreDetails,
                       postcode,
                       county,
                       city,
@@ -293,7 +297,7 @@ const _ContactForm = ({
                           }
                         />
                         <FieldInput
-                          label="Email"
+                          label="Email address"
                           name="email"
                           type="email"
                           required="Enter an email"
@@ -315,7 +319,7 @@ const _ContactForm = ({
                           ]}
                         />
                         <FieldRadios
-                          legend="Is the contact’s address the same as the company address?"
+                          legend="Is this contact’s work address the same as the company address?"
                           name="addressSameAsCompany"
                           required="Select yes if the contact's address is the same as the company address"
                           options={[
@@ -336,18 +340,10 @@ const _ContactForm = ({
                             },
                           ]}
                         />
-                        <FieldInput
-                          label="Alternative telephone number (optional)"
-                          name="telephoneAlternative"
-                          type="text"
+                        <FieldTextarea
+                          label="More details (optional)"
+                          name="moreDetails"
                         />
-                        <FieldInput
-                          label="Alternative email (optional)"
-                          name="emailAlternative"
-                          type="email"
-                          validate={(x) => x && validators.email(x)}
-                        />
-                        <FieldTextarea label="Notes (optional)" name="notes" />
                       </>
                     )}
                   </Form>
@@ -401,8 +397,6 @@ ContactForm.propTypes = {
   addressTown: PropTypes.string,
   addressCounty: PropTypes.string,
   addressPostcode: PropTypes.string,
-  telephoneAlternative: PropTypes.string,
-  emailAlternative: PropTypes.string,
   notes: PropTypes.string,
 }
 

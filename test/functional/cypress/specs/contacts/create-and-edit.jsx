@@ -67,7 +67,7 @@ describe('Create contact form', () => {
 
     assertRadioGroupNoOptionChecked('Is this person a primary contact?')
     assertRadioGroupNoOptionChecked(
-      'Is the contact’s address the same as the company address?'
+      'Is this contact’s work address the same as the company address?'
     )
 
     assertInputValuesByLabels({
@@ -75,9 +75,7 @@ describe('Create contact form', () => {
       'Last name': '',
       'Job title': '',
       'Telephone number': '',
-      Email: '',
-      'Alternative telephone number (optional)': '',
-      'Alternative email (optional)': '',
+      'Email address': '',
     })
   })
 
@@ -91,15 +89,15 @@ describe('Create contact form', () => {
       'Is this person a primary contact?':
         'Select yes if this person is a primary contact',
       'Telephone number': 'Enter a telephone number',
-      Email: 'Enter an email',
-      'Is the contact’s address the same as the company address?':
+      'Email address': 'Enter an email',
+      'Is this contact’s work address the same as the company address?':
         "Select yes if the contact's address is the same as the company address",
     })
   })
 
   it('Should show errors when only the same as company address is checked', () => {
     cy.checkRadioGroup(
-      'Is the contact’s address the same as the company address?',
+      'Is this contact’s work address the same as the company address?',
       'No'
     )
 
@@ -112,7 +110,7 @@ describe('Create contact form', () => {
       'Is this person a primary contact?':
         'Select yes if this person is a primary contact',
       'Telephone number': 'Enter a telephone number',
-      Email: 'Enter an email',
+      'Email address': 'Enter an email',
       'Address line 1': 'Enter an address line 1',
       'Town or city': 'Enter a town or city',
     })
@@ -121,7 +119,7 @@ describe('Create contact form', () => {
   describe('country specific address fields', () => {
     beforeEach(() => {
       cy.checkRadioGroup(
-        'Is the contact’s address the same as the company address?',
+        'Is this contact’s work address the same as the company address?',
         'No'
       )
     })
@@ -146,7 +144,7 @@ describe('Create contact form', () => {
 
   it('Should show errors for invalid field values', () => {
     cy.checkRadioGroup(
-      'Is the contact’s address the same as the company address?',
+      'Is this contact’s work address the same as the company address?',
       'Yes'
     )
     cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
@@ -156,20 +154,20 @@ describe('Create contact form', () => {
       'Last name': 'Pipkin',
       'Job title': 'On dole',
       'Telephone number': '12345',
-      Email: 'foo',
+      'Email address': 'foo',
     })
 
     cy.clickSubmitButton('Add contact')
 
     assertErrors({
-      Email: 'Enter a valid email address',
+      'Email address': 'Enter a valid email address',
     })
   })
 
   it('Should redirect to the new contact page when required fields are filled out', () => {
     cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
     cy.checkRadioGroup(
-      'Is the contact’s address the same as the company address?',
+      'Is this contact’s work address the same as the company address?',
       'Yes'
     )
 
@@ -178,7 +176,7 @@ describe('Create contact form', () => {
       'Last name': 'Pipkin',
       'Job title': 'On dole',
       'Telephone number': '456789',
-      Email: 'andy@new.email',
+      'Email address': 'andy@new.email',
     })
 
     cy.clickSubmitButton('Add contact')
@@ -289,7 +287,7 @@ describe('Edit contact', () => {
 
     assertRadioGroup('Is this person a primary contact?', 'Yes')
     assertRadioGroup(
-      'Is the contact’s address the same as the company address?',
+      'Is this contact’s work address the same as the company address?',
       'No'
     )
 
@@ -298,9 +296,7 @@ describe('Edit contact', () => {
       'Last name': 'Woof',
       'Job title': 'Dog master',
       'Telephone number': '222 3453454',
-      Email: 'contact@bob.com',
-      'Alternative telephone number (optional)': '',
-      'Alternative email (optional)': '',
+      'Email address': 'contact@bob.com',
     })
   })
 })

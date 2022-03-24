@@ -40,7 +40,7 @@ describe('Contacts', () => {
     cy.visit(contacts.create(company.pk))
 
     cy.checkRadioGroup(
-      'Is the contact’s address the same as the company address?',
+      'Is this contact’s work address the same as the company address?',
       'Yes'
     )
     cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
@@ -58,7 +58,7 @@ describe('Contacts', () => {
     cy.visit(contacts.create(company.pk))
 
     cy.checkRadioGroup(
-      'Is the contact’s address the same as the company address?',
+      'Is this contact’s work address the same as the company address?',
       'Yes'
     )
     cy.checkRadioGroup('Is this person a primary contact?', 'Yes')

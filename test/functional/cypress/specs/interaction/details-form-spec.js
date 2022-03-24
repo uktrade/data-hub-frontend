@@ -912,7 +912,7 @@ describe('Contact loop', () => {
       cy.contains('div', 'Email').find('input').type('john@new.com')
       cy.contains(
         'fieldset',
-        'Is the contact’s address the same as the company address?'
+        'Is this contact’s work address the same as the company address?'
       )
         .contains('label', 'Yes')
         .click()
