@@ -1,9 +1,12 @@
-const config = require('../../../../../config')
 const activityFeedRawFixture = require('../../../../../../test/unit/data/activity-feed/activity-feed-from-es.json')
 const { DATA_HUB_ACTIVITY } = require('../constants')
 
 describe('Activity feed repos', () => {
-  const stubRequest = { session: { token: 'abcd' } }
+  const BASE_URL = 'https://example.com'
+  const stubRequest = {
+    session: { token: 'abcd' },
+    res: { locals: { BASE_URL } },
+  }
 
   describe('#fetchActivityFeed', () => {
     const authorisedRequestStub = sinon.stub().resolves(activityFeedRawFixture)
@@ -54,7 +57,7 @@ describe('Activity feed repos', () => {
       it('should make a request including the filters', () => {
         expect(authorisedRequestStub).to.be.calledOnceWith(stubRequest, {
           body,
-          url: `${config.apiRoot}/v4/activity-feed`,
+          url: `${BASE_URL}/api-proxy/v4/activity-feed`,
         })
       })
 
