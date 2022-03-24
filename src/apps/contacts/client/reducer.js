@@ -1,8 +1,10 @@
-import { CONTACTS__INTERACTION_LIST_LOADED } from '../../../client/actions'
+import { CONTACTS__INTERACTIONS_LOADED } from '../../../client/actions'
 
-export default (state = {}, { type, result }) => {
+const defaultState = { activities: null }
+
+export default (state = defaultState, { type, result }) => {
   switch (type) {
-    case CONTACTS__INTERACTION_LIST_LOADED:
+    case CONTACTS__INTERACTIONS_LOADED:
       return {
         ...state,
         ...result,
