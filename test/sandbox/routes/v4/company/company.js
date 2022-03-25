@@ -76,7 +76,7 @@ exports.largeInvestorProfilePatched = function (req, res) {
 
 exports.largeInvestorProfilePostCreate = function (req, res) {
   if (req.body.investor_company === '400094ac-f79a-43e5-9c88-059a7baa17f3') {
-    return res.json(400, largeCapitalProfileCreateError)
+    return res.status(400).json(largeCapitalProfileCreateError)
   }
 
   res.json(largeCapitalProfileCreateSuccess)
@@ -183,7 +183,7 @@ exports.getCompanyList = function (req, res) {
 }
 
 exports.manageAdviser = function (req, res) {
-  return res.json(204, {})
+  return res.status(204).json({})
 }
 
 exports.companyAudit = function (req, res) {
