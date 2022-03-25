@@ -102,6 +102,7 @@ function renderInteractionsForEntity(req, res, next) {
       theme = '',
       contactId,
     } = res.locals.interactions
+
     const actionButtons = canAdd
       ? [
           {
@@ -114,12 +115,13 @@ function renderInteractionsForEntity(req, res, next) {
           },
         ]
       : undefined
+
     res.breadcrumb('Interactions').render(view, {
       actionButtons,
       props: {
         contactId: contactId,
       },
-      isAventriFeatureOn: res.locals.userFeatures.includes(
+      isAventriFeatureOn: res.locals.userFeatures?.includes(
         'user-contact-activities'
       ),
     })
