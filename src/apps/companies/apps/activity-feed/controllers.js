@@ -150,7 +150,11 @@ async function fetchActivitiesForContact(req, res, next) {
   const { contact } = res.locals
   const results = await fetchActivityFeed(
     req,
-    contactActivityQuery(contact.email, contact.id, DATA_HUB_ACTIVITY)
+    contactActivityQuery(
+      contact.email,
+      contact.id,
+      DATA_HUB_AND_EXTERNAL_ACTIVITY
+    )
   ).catch((error) => {
     next(error)
   })

@@ -29,8 +29,11 @@ const contactActivityQuery = (email, contactId, objectTypes) => {
                   bool: {
                     must: [
                       {
-                        term: {
-                          'object.type': 'dit:aventri:Attendee',
+                        terms: {
+                          'object.type': [
+                            'dit:aventri:Attendee',
+                            'dit:maxemail:Email:Sent',
+                          ],
                         },
                       },
                       {

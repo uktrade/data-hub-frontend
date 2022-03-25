@@ -13,6 +13,7 @@ describe('Contacts router', () => {
       '/:id/unarchive',
       '/:contactId/audit',
       '/:contactId/documents',
+      '/:contactId/activity/data',
     ])
   })
 })
