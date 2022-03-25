@@ -21,7 +21,7 @@ router.get(
   getInteractionsRequestBody,
   getInteractionCollectionForEntity,
   getInteractionSortForm,
-  userFeatures('aventri-activities-contacts-user'),
+  userFeatures('user-contact-activities'),
   renderInteractionsForEntity
 )
 

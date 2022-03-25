@@ -120,7 +120,7 @@ function renderInteractionsForEntity(req, res, next) {
         contactId: contactId,
       },
       isAventriFeatureOn: res.locals.userFeatures.includes(
-        'aventri-activities-contacts-user'
+        'user-contact-activities'
       ),
     })
   } catch (error) {
