@@ -8,7 +8,7 @@
 {% from "_macros/common.njk" import Message, MessageList, Pagination, LocalNav, Progress, FromNow, AnswersSummary, HiddenContent, TabbedLocalNav %}
 {% from "_macros/collection.njk" import CollectionContent, CollectionFilters %}
 {% from "_macros/entity.njk" import MetaList %}
-{% from "datahub-header/component/header.njk" import datahubHeader %}
+{% from "_components/header.njk" import datahubHeader %}
 
 {% if IS_XHR %}
   {% extends "./xhr.njk" %}
