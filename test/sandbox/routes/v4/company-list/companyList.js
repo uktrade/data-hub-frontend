@@ -29,7 +29,7 @@ exports.getCompanyList = function (req, res) {
     return
   }
 
-  res.send(404)
+  res.sendStatus(404)
 }
 
 exports.getCompanyListItems = function (req, res) {
@@ -44,31 +44,31 @@ exports.getCompanyListItems = function (req, res) {
 }
 
 exports.createCompanyList = function (req, res) {
-  res.send(201)
+  res.sendStatus(201)
 }
 
 exports.deleteCompanyList = function (req, res) {
   if (req.params.listId === multipleItemCompanyList.id) {
-    res.send(204)
+    res.sendStatus(204)
     return
   }
 
-  res.send(404)
+  res.sendStatus(404)
 }
 
 exports.editCompanyList = function (req, res) {
   if (req.params.listId === multipleItemCompanyList.id) {
-    res.send(204)
+    res.sendStatus(204)
     return
   }
 
-  res.send(404)
+  res.sendStatus(404)
 }
 
 exports.addCompanyToList = function (req, res) {
-  res.send(204)
+  res.sendStatus(204)
 }
 
 exports.removeCompanyFromList = function (req, res) {
-  res.send(204)
+  res.sendStatus(204)
 }

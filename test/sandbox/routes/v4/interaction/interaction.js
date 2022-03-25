@@ -60,7 +60,7 @@ var getInteractionById = function (req, res) {
 
 var createInteraction = function (req, res) {
   if (_.isEqual(req.body.companies, ['4e6a4edb-55e3-4461-a88d-84d329ee7eb8'])) {
-    return res.json(400, interactionValidationError)
+    return res.status(400).json(interactionValidationError)
   }
 
   if (req.body.subject) {
@@ -70,13 +70,13 @@ var createInteraction = function (req, res) {
   }
 
   if (req.body.were_countries_discussed === 'true') {
-    return res.json(201, {
+    return res.status(201).json({
       ...interactionCreate,
       were_countries_discussed: true,
     })
   }
 
-  res.json(201, interactionCreate)
+  res.status(201).json(interactionCreate)
 }
 
 var archiveInteraction = function (req, res) {

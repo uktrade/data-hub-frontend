@@ -11,7 +11,7 @@ function getEventById(res, req) {
     '8253a4d2-0a61-4928-80cb-ebd70cce9971': eventById,
     '777f73a6-5d95-e211-aaaa-e4115bead28b': missingTeams,
   }
-  return res.json(200, events[req.params.eventId] || eventById)
+  return res.status(200).json(events[req.params.eventId] || eventById)
 }
 
 exports.eventById = function (req, res) {
@@ -19,7 +19,7 @@ exports.eventById = function (req, res) {
 }
 
 exports.createEvent = function (req, res) {
-  return res.json(201, eventCreate)
+  return res.status(201).json(eventCreate)
 }
 
 exports.patchEvent = function (req, res) {
