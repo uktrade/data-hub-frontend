@@ -1,0 +1,160 @@
+{% macro datahubHeader(permittedApps, params) %}
+
+	{%- set crmApps = params.crmApps %}
+	{%- set datahubDomain = ( params.domains.datahub or 'https://www.datahub.trade.gov.uk/' ) %}
+	{%- set miDomain = ( params.domains.mi or 'https://mi.exportwins.service.trade.gov.uk/' ) %}
+	{%- set findExportersDomain = ( params.domains.findExporters or 'https://data.trade.gov.uk/datasets/a70a3967-2352-4230-b556-61bf875dc28c' ) %}
+	{%- set marketAcessDomain = ( params.domains.marketAccess or 'https://market-access.trade.gov.uk/' ) %}
+	{%- set dataWorkspaceDomain = (params.domains.dataWorkspaceDomain or 'https://data.trade.gov.uk' ) %}
+
+	{%- set datahubCrmKey = 'datahub-crm' %}
+	{%- set hasCrmPermission = false %}
+	{%- for permitted in permittedApps %}
+		{%- if permitted.key === datahubCrmKey %}
+			{%- set hasCrmPermission = true %}
+		{%- endif %}
+	{%- endfor %}
+	{%- set companiesKey = 'datahub-companies' %}
+	{%- set contactsKey = 'datahub-contacts' %}
+	{%- set eventsKey = 'datahub-events' %}
+	{%- set interactionsKey = 'datahub-interactions' %}
+	{%- set investmentsKey = 'datahub-investments' %}
+	{%- set ordersKey = 'datahub-orders' %}
+	{%- set supportApp = {
+    activeKey: 'support',
+    name: 'Support',
+    href: ( datahubDomain + 'support' ),
+    active: ( 'datahub-support' === params.active )
+} %}
+	{%- set apps = [
+	{
+		permittedKey: datahubCrmKey,
+		activeKey: companiesKey,
+		canShow: ( companiesKey in crmApps ) if crmApps else true,
+		name: 'Companies',
+		href: ( datahubDomain + 'companies?archived[0]=false&sortby=modified_on:desc&page=1' )
+	}, {
+		permittedKey: datahubCrmKey,
+		activeKey: contactsKey,
+		canShow: ( contactsKey in crmApps ) if crmApps else true,
+		name: 'Contacts',
+		href: ( datahubDomain + 'contacts?archived[0]=false&sortby=modified_on:desc&page=1' )
+	}, {
+		permittedKey: datahubCrmKey,
+		activeKey: eventsKey,
+		canShow: ( eventsKey in crmApps ) if crmApps else true,
+		name: 'Events',
+		href: ( datahubDomain + 'events?page=1&sortby=modified_on:desc' )
+	}, {
+		permittedKey: datahubCrmKey,
+		activeKey: interactionsKey,
+		canShow: ( interactionsKey in crmApps ) if crmApps else true,
+		name: 'Interactions',
+		href: ( datahubDomain + 'interactions?sortby=date:desc&page=1' )
+	}, {
+		permittedKey: datahubCrmKey,
+		activeKey: investmentsKey,
+		canShow: ( investmentsKey in crmApps ) if crmApps else true,
+		name: 'Investments',
+		href: ( datahubDomain + 'investments?page=1&sortby=created_on:desc' )
+	}, {
+		permittedKey: datahubCrmKey,
+		activeKey: ordersKey,
+		canShow: ( ordersKey in crmApps ) if crmApps else true,
+		name: 'Orders',
+		href: ( datahubDomain + 'omis?page=1&sortby=created_on:desc' )
+	}, {
+		permittedKey: 'find-exporters',
+		activeKey: 'find-exporters',
+		canShow: true,
+		name: 'Find exporters',
+		href: findExportersDomain
+	}, {
+		permittedKey: 'market-access',
+		activeKey: 'market-access',
+		canShow: true,
+		name: 'Market Access',
+		href: marketAcessDomain
+	}
+] %}
+
+	{%- set headerLinks = [
+	{
+		text: 'Switch to Data Workspace',
+		href: dataWorkspaceDomain
+	}
+] -%}
+
+	<header class="datahub-header js-datahub-header{% if params.fluid == false %} datahub-header--max-width{% endif %}" role="banner" data-module="header"
+	{%- for attribute, value in params.attributes %} {{attribute}}="{{value}}"{% endfor %}>
+		<div class="datahub-header__logo-container">
+			<div class="datahub-header__logo">
+				<span class="datahub-header__logo__site-name">Department for International Trade</span>
+				{%- set logoText %}
+				<span class="datahub-header__logo__text">Data Hub</span>{% endset %}
+				{%- if hasCrmPermission %}
+					<a href="{{ datahubDomain }}" class="datahub-header__logo__link">{{ logoText | safe }}</a>
+				{%- else %}
+					{{ logoText | safe }}
+				{%- endif %}
+				<strong class="datahub-header__logo__tag">beta</strong>
+			</div>
+			<ul id="logo-navigation" class="datahub-header__links" aria-label="Header links">
+				{%- for link in headerLinks %}
+					{%- if link.text -%}
+						<li class="datahub-header__links__item">
+							{%- if link.href %}
+								<a class="datahub-header__links__item__text{{ ' datahub-header__links__item__text--active' if link.active }}" href="{{ link.href }}">{{ link.text }}</a>
+							{%- else %}
+								<span class="datahub-header__links__item__text{{ ' datahub-header__links__item__text--active' if link.active }}">{{ link.text }}</span>
+							{%- endif %}
+						</li>
+					{%- endif %}
+				{%- endfor %}
+			</ul>
+		</div>
+		<button role="button" class="datahub-header__menu-button js-datahub-header-toggle" aria-controls="navigation sub-navigation logo-navigation" aria-label="Show or hide navigation">Menu</button>
+		<div class="datahub-header__navigation-container">
+			<nav class="datahub-header__navigation-wrapper" aria-labelledby="navigation">
+				<ul id="navigation" class="datahub-header__navigation {{ params.navigationClasses if params.navigationClasses }}" aria-label="Top Level Navigation">
+					{%- for item in apps %}
+
+						{%- set allowed = false %}
+
+						{%- if item.canShow %}
+							{%- for permitted in permittedApps %}
+								{%- if permitted.key === item.permittedKey %}
+									{%- set allowed = true %}
+								{%- endif %}
+							{%- endfor %}
+						{%- endif %}
+
+						{%- if allowed -%}
+							<li class="datahub-header__navigation__item">
+								<a class="datahub-header__navigation__item__link{{ ' datahub-header__navigation__item__link--active' if item.activeKey == params.active }}" href="{{ item.href }}">
+									{{- item.name -}}
+								</a>
+							</li>
+						{%- endif %}
+					{%- endfor %}
+					<li class="datahub-header__navigation__item">
+						<a class="datahub-header__navigation__item__link{{ ' datahub-header__navigation__item__link--active' if supportApp.active }}" href="{{ supportApp.href }}">
+							{{- supportApp.name -}}
+						</a>
+					</li>
+				</ul>
+			</nav>
+			{%- if params.subNavigation %}
+				<nav class="datahub-header__navigation-wrapper datahub-header__navigation-wrapper--sub" aria-labelledby="sub-navigation">
+					<ul id="sub-navigation" class="datahub-header__navigation" aria-label="Second Level Navigation">
+						{%- for item in params.subNavigation %}
+							<li class="datahub-header__navigation__item">
+								<a class="datahub-header__navigation__item__link{{ ' datahub-header__navigation__item__link--active' if item.active }}" href="{{ item.href }}">{{ item.text }}</a>
+							</li>
+						{%- endfor %}
+					</ul>
+				</nav>
+			{%- endif %}
+		</div>
+	</header>
+{%- endmacro %}
