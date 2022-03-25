@@ -17,8 +17,6 @@ var myActivities = require('../../../fixtures/v4/activity-feed/my-activities.jso
 var dataHubActivities = require('../../../fixtures/v4/activity-feed/data-hub-activities.json')
 var noActivity = require('../../../fixtures/v4/activity-feed/no-activity.json')
 
-const AVENTRI_ACTIVITY = 'dit:aventri:Attendee'
-
 const DATA_HUB_ACTIVITY = [
   'dit:Interaction',
   'dit:ServiceDelivery',
@@ -37,12 +35,12 @@ const DATA_HUB_AND_EXTERNAL_ACTIVITY = [
 const VENUS_LTD = 'dit:DataHubCompany:0f5216e0-849f-11e6-ae22-56b6b6499611'
 
 exports.activityFeed = function (req, res) {
-  // Aventri activity
-  var contactWithAventriActivity = get(
+  // Activities by contact
+  var isContactActivityQuery = get(
     req.body,
-    "query.bool.must[0].bool.should[1].bool.must[0].term['object.type']"
+    "query.bool.must[0].bool.should[1].bool.must[1].term['object.dit:emailAddress']"
   )
-  if (isEqual(contactWithAventriActivity, AVENTRI_ACTIVITY)) {
+  if (isContactActivityQuery) {
     return res.json(dataHubAndExternalActivities)
   }
 
