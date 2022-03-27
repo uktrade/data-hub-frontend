@@ -146,7 +146,7 @@
     "serve-favicon": "^2.5.0",
     "sniffr": "^1.2.0",
     "style-loader": "^3.3.1",
-    "styled-components": "^5.3.3",
+    "styled-components": "^5.3.5",
     "uuid": "^8.3.2",
     "winston": "^3.6.0"
   },
