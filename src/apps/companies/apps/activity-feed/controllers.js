@@ -160,12 +160,12 @@ async function fetchActivitiesForContact(req, res, next) {
       next(error)
     })
 
-    results = undefined
-    let activities = results.hits.hits.map((hit) => hit._source)
+    let activities = results
+      ? results.hits.hits.map((hit) => hit._source)
+      : { error: 'error' }
 
     res.json({ activities })
   } catch (error) {
-    console.log("error >>>>", error)
     next(error)
   }
 }
