@@ -34,7 +34,7 @@ export const EditTeamMembers = ({ id, teamMembers }) => (
       itemName="team member"
       dataTestPrefix="team-member-field-"
       legend="Assign project specialist and team members"
-      initialChildGroupCount={teamMembers.length == 0 ? 1 : teamMembers.length}
+      initialChildGroupCount={teamMembers.length === 0 ? 1 : teamMembers.length}
     >
       {({ groupIndex }) => (
         <>

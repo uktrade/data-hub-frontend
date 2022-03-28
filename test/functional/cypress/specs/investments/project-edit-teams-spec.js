@@ -67,7 +67,7 @@ describe('View edit team members page', () => {
         .should('have.value', 'Dennis Kennedy')
     })
 
-    it('should render three role inputs, two roles assigned', () => {
+    it('should render two role inputs, two roles assigned', () => {
       getAllRoleFields().should('have.length', 2)
 
       getAllRoleFields()
