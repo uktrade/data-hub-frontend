@@ -53,8 +53,8 @@ describe('View edit team members page', () => {
       )
     })
 
-    it('should render three team member controls, two members assigned and one ready to edit', () => {
-      getAllTeamMemberFields().should('have.length', 3)
+    it('should render two team member controls, two members assigned', () => {
+      getAllTeamMemberFields().should('have.length', 2)
 
       getAllTeamMemberFields()
         .eq(0)
@@ -65,15 +65,10 @@ describe('View edit team members page', () => {
         .eq(1)
         .find('[data-test="typeahead-input"]')
         .should('have.value', 'Dennis Kennedy')
-
-      getAllTeamMemberFields()
-        .eq(2)
-        .find('[data-test="typeahead-input"]')
-        .should('have.value', '')
     })
 
-    it('should render three role inputs, two roles assigned and one ready to edit', () => {
-      getAllRoleFields().should('have.length', 3)
+    it('should render two role inputs, two roles assigned', () => {
+      getAllRoleFields().should('have.length', 2)
 
       getAllRoleFields()
         .eq(0)
@@ -84,8 +79,6 @@ describe('View edit team members page', () => {
         .eq(1)
         .find('input')
         .should('have.value', 'Region adviser')
-
-      getAllRoleFields().eq(2).find('input').should('have.value', '')
     })
   })
 
@@ -156,7 +149,7 @@ describe('View edit team members page', () => {
           role: 'Sector adviser',
         },
       ]
-      removeFirstAndSecondTeamMember()
+      removeSecondTeamMember()
 
       clickButton('Save and return')
 
@@ -166,8 +159,7 @@ describe('View edit team members page', () => {
         assertFlashMessage('Changes saved')
       })
 
-      function removeFirstAndSecondTeamMember() {
-        getAllTeamMemberFields().eq(1).find('a').click()
+      function removeSecondTeamMember() {
         getAllTeamMemberFields().eq(1).find('a').click()
       }
     })
@@ -180,7 +172,7 @@ describe('View edit team members page', () => {
         },
       ]
 
-      removeFirstAndEmptyTeamMember()
+      removeFirstTeamMember()
 
       clickButton('Save and return')
 
@@ -190,9 +182,8 @@ describe('View edit team members page', () => {
         assertFlashMessage('Changes saved')
       })
 
-      function removeFirstAndEmptyTeamMember() {
+      function removeFirstTeamMember() {
         getAllTeamMemberFields().eq(0).find('a').click()
-        getAllTeamMemberFields().eq(1).find('a').click()
       }
     })
   })
@@ -209,11 +200,14 @@ describe('View edit team members page', () => {
         element: '[data-test="field-adviser_0"]',
         input: 'shawn',
       })
+      cy.get('[data-test="field-role_0"]').find('input').type('­­Role')
+
       clickButton('Add another team member')
       selectFirstAdvisersTypeaheadOption({
         element: '[data-test="field-adviser_1"]',
         input: 'shawn',
       })
+      cy.get('[data-test="field-role_1"]').find('input').type('­­Role')
 
       clickButton('Save and return')
 
@@ -226,7 +220,10 @@ describe('View edit team members page', () => {
     it('should fail for no values on role or team member', () => {
       clickButton('Save and return')
 
-      assertErrorSummary(['Select at least one adviser'])
+      assertErrorSummary([
+        'Select at least one adviser',
+        'Enter a role for the adviser',
+      ])
     })
   })
 
