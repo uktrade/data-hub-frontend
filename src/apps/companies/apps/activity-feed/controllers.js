@@ -147,21 +147,27 @@ async function getMaxemailCampaigns(req, next, contacts) {
 }
 
 async function fetchActivitiesForContact(req, res, next) {
-  const { contact } = res.locals
-  const results = await fetchActivityFeed(
-    req,
-    contactActivityQuery(
-      contact.email,
-      contact.id,
-      DATA_HUB_AND_EXTERNAL_ACTIVITY
-    )
-  ).catch((error) => {
+  try {
+    const { contact } = res.locals
+    let results = await fetchActivityFeed(
+      req,
+      contactActivityQuery(
+        contact.email,
+        contact.id,
+        DATA_HUB_AND_EXTERNAL_ACTIVITY
+      )
+    ).catch((error) => {
+      next(error)
+    })
+
+    let activities = results
+      ? results.hits.hits.map((hit) => hit._source)
+      : { error: 'error' }
+
+    res.json({ activities })
+  } catch (error) {
     next(error)
-  })
-
-  let activities = results.hits.hits.map((hit) => hit._source)
-
-  res.json({ activities })
+  }
 }
 
 async function fetchActivityFeedHandler(req, res, next) {
