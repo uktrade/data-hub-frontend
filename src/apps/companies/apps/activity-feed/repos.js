@@ -1,9 +1,8 @@
-const config = require('../../../../config')
 const { authorisedRequest } = require('../../../../lib/authorised-request')
 
-function fetchActivityFeed(req, body) {
+async function fetchActivityFeed(req, body) {
   return authorisedRequest(req, {
-    url: `${config.apiRoot}/v4/activity-feed`,
+    url: `${req.res.locals.BASE_URL}/api-proxy/v4/activity-feed`,
     body,
   })
 }

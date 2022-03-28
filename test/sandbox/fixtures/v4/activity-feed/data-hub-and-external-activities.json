@@ -15,6 +15,42 @@
     "max_score": null,
     "hits": [
       {
+        "_index": "activities__feed_id_dummy-data-feed__date_2022-03-11__timestamp_1646998003__batch_id_kc0ew8vl__",
+        "_type": "_doc",
+        "_id": "dit:aventri:Event:1111:Attendee:1111:Create",
+        "_score": null,
+        "_source": {
+          "dit:application": "aventri",
+          "id": "dit:aventri:Event:1111:Attendee:1111:Create",
+          "object": {
+            "attributedTo": {
+              "id": "dit:aventri:Event:1111",
+              "type": "dit:aventri:Event"
+            },
+            "dit:aventri:approvalstatus": null,
+            "dit:aventri:companyname": "Acme Ltd",
+            "dit:aventri:createdby": "attendee",
+            "dit:aventri:email": "firstname1.lastname1@example.host",
+            "dit:aventri:firstname": "Firstname1",
+            "dit:aventri:language": "eng",
+            "dit:aventri:lastmodified": "2022-01-24T11:12:13",
+            "dit:aventri:lastname": "Lastname1",
+            "dit:aventri:modifiedby": "attendee",
+            "dit:aventri:registrationstatus": "Confirmed",
+            "id": "dit:aventri:Attendee:1234",
+            "published": "1970-01-01T00:00:00",
+            "type": [
+              "dit:aventri:Attendee"
+            ]
+          },
+          "published": "2022-02-24T11:28:57",
+          "type": "dit:aventri:Attendee"
+        },
+        "sort": [
+          1645702137000
+        ]
+      },
+      {
         "_index": "activities__feed_id_datahub-interactions__date_2019-06-20__timestamp_1561034480__batch_id_xputyeio__",
         "_type": "_doc",
         "_id": "dit:DataHubInteraction:856b95f1-c221-4c41-9649-625e2a7d5262:Announce",

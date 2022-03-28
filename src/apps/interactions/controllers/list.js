@@ -100,7 +100,9 @@ function renderInteractionsForEntity(req, res, next) {
       createKind,
       canAdd,
       theme = '',
+      contactId,
     } = res.locals.interactions
+
     const actionButtons = canAdd
       ? [
           {
@@ -116,6 +118,12 @@ function renderInteractionsForEntity(req, res, next) {
 
     res.breadcrumb('Interactions').render(view, {
       actionButtons,
+      props: {
+        contactId: contactId,
+      },
+      isContactActivitiesFeatureOn: res.locals.userFeatures?.includes(
+        'user-contact-activities'
+      ),
     })
   } catch (error) {
     next(error)

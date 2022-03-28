@@ -118,6 +118,9 @@ import Form from './components/Form'
 import { ID as FLASH_MESSAGE_ID } from './components/LocalHeader/state'
 import flashMessageReducer from './components/LocalHeader/reducer'
 
+import { ID as CONTACT_INTERACTIONS_ID } from '../apps/contacts/client/state'
+import contactInteractionsReducer from '../apps/contacts/client/reducer'
+
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
   // The baseURI is set to the <base/> tag by the spaFallbackSpread
@@ -181,6 +184,7 @@ const store = createStore(
     [CHECK_FOR_INVESTMENTS_ID]: personalDashboardReducer,
     [INVESTMENT_REMINDERS_ID]: investmentRemindersReducer,
     [CONTACTS_LIST_ID]: contactsReducer,
+    [CONTACT_INTERACTIONS_ID]: contactInteractionsReducer,
     [COMPANY_CONTACTS_LIST_ID]: contactsReducer,
     [INTERACTIONS_ID]: interactionsReducer,
     [EVENTS_ID]: eventsReducer,

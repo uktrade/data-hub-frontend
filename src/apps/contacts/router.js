@@ -23,6 +23,9 @@ const { getAudit } = require('./controllers/audit')
 const { setInteractionsDetails } = require('./middleware/interactions')
 
 const interactionsRouter = require('../interactions/router.sub-app')
+const {
+  fetchActivitiesForContact,
+} = require('../companies/apps/activity-feed/controllers')
 
 router.get(urls.contacts.index(), renderContactsView)
 router.get(['/create', '/:contactId/edit'], createAndEdit)
@@ -51,5 +54,7 @@ router.use(
   setInteractionsDetails,
   interactionsRouter
 )
+
+router.get(urls.contacts.activity.data.route, fetchActivitiesForContact)
 
 module.exports = router

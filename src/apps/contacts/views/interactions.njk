@@ -6,6 +6,12 @@
     An interaction could be a meeting, call, email or another activity where you have been in touch with a contact.
   </p>
 
+{% if isContactActivitiesFeatureOn %}
+  {% component 'react-slot', {
+    id: 'contact-interactions-app',
+    props: props
+  } %}
+{% else %}
   {% block xhr_content %}
     <article data-xhr="31fa63e9-1923-4565-af98-93c07a4a4f0d">
       {{
@@ -18,5 +24,6 @@
       }}
     </article>
   {% endblock %}
+{% endif %}
 
 {% endblock %}

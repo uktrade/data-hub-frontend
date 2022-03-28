@@ -48,6 +48,7 @@ export const SOURCE_TYPES = {
 }
 
 export const ACTIVITY_TYPE = {
+  AventriAttendee: ['dit:aventri:Attendee'],
   CompaniesHouseAccount: ['dit:Accounts'],
   CompaniesHouseCompany: ['dit:Company'],
   HmrcExporter: ['dit:Export'],
