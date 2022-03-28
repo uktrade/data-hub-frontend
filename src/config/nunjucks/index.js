@@ -81,7 +81,6 @@ module.exports = (app, config) => {
       `${config.root}/src/templates`,
       `${config.root}/node_modules/govuk-frontend`,
       `${config.root}/node_modules/govuk-frontend/components`,
-      `${config.root}/node_modules/@uktrade`,
     ],
     {
       autoescape: true,

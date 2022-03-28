@@ -1,4 +1,4 @@
-require('@uktrade/datahub-header/component/header')
+require('./modules/header.js')
 require('element-closest')
 require('classlist.js')
 
