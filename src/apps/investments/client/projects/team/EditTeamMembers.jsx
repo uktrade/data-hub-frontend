@@ -34,7 +34,7 @@ export const EditTeamMembers = ({ id, teamMembers }) => (
       itemName="team member"
       dataTestPrefix="team-member-field-"
       legend="Assign project specialist and team members"
-      initialChildGroupCount={teamMembers.length + 1}
+      initialChildGroupCount={teamMembers.length == 0 ? 1 : teamMembers.length}
     >
       {({ groupIndex }) => (
         <>
@@ -45,7 +45,12 @@ export const EditTeamMembers = ({ id, teamMembers }) => (
             required="Select at least one adviser"
             aria-label="Select an adviser"
           />
-          <FieldInput name={`role_${groupIndex}`} type="text" label="Role" />
+          <FieldInput
+            name={`role_${groupIndex}`}
+            type="text"
+            label="Role"
+            required="Enter a role for the adviser"
+          />
         </>
       )}
     </FieldAddAnother>
