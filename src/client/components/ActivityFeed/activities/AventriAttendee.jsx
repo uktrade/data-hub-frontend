@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import CardUtils from './card/CardUtils'
 import { ACTIVITY_TYPE } from '../constants'
 import { Card, CardHeader } from './card'
@@ -16,7 +17,7 @@ export default function AventriAttendee({ activity }) {
     transformAventriAttendee(activity)
 
   return (
-    <div data-test={'aventri'}>
+    <div data-test={'aventri-activity'}>
       <Card>
         <CardHeader
           badge={{ borderColour: GREEN, text: 'Aventri Service Delivery' }}
@@ -27,6 +28,10 @@ export default function AventriAttendee({ activity }) {
       </Card>
     </div>
   )
+}
+
+AventriAttendee.propTypes = {
+  activity: PropTypes.object.isRequired,
 }
 
 AventriAttendee.canRender = (activity) => {

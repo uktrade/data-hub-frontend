@@ -21,7 +21,7 @@ const ContactInteractionsApp = ({ contactId, activities }) => (
   <Task.Status
     name={TASK_GET_CONTACT_INTERACTIONS}
     id={ID}
-    progressMessage="Loading Contact Interactions"
+    progressMessage="Loading contact interactions"
     startOnRender={{
       payload: contactId,
       onSuccessDispatch: CONTACTS__INTERACTIONS_LOADED,

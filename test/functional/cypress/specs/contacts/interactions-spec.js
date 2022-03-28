@@ -13,7 +13,7 @@ describe('Contact interactions', () => {
       })
 
       it('should display the Activity Stream activities', () => {
-        cy.get('[data-test=aventri]').should('be.visible')
+        cy.get('[data-test=aventri-activity]').should('be.visible')
       })
 
       after(() => {

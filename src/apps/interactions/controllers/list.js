@@ -121,7 +121,7 @@ function renderInteractionsForEntity(req, res, next) {
       props: {
         contactId: contactId,
       },
-      isAventriFeatureOn: res.locals.userFeatures?.includes(
+      isContactActivitiesFeatureOn: res.locals.userFeatures?.includes(
         'user-contact-activities'
       ),
     })
