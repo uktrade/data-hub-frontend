@@ -30,15 +30,11 @@ const ContactInteractionsApp = ({ contactId, activities }) => (
     {() =>
       activities && (
         <ContactInteractionsList>
-          {activities?.error ? (
-            <div>Error occurred while loading activities.</div>
-          ) : (
-            activities.map((activity, index) => (
-              <li key={`activity-${index}`}>
-                <Activity activity={activity} />
-              </li>
-            ))
-          )}
+          {activities.map((activity, index) => (
+            <li key={`activity-${index}`}>
+              <Activity activity={activity} />
+            </li>
+          ))}
         </ContactInteractionsList>
       )
     }
