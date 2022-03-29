@@ -263,7 +263,9 @@ const FieldAddress = ({
         label="Town or city"
         required="Enter a town or city"
       />
-      <FieldInput type="text" name="county" label="County (optional)" />
+      {!(isUS || isCanada) && (
+        <FieldInput type="text" name="county" label="County (optional)" />
+      )}
       <>
         {renderUsStateField()}
         {renderCanadaProvinceField()}

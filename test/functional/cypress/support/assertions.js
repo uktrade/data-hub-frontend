@@ -383,11 +383,12 @@ const assertFieldAddress = ({ element, hint = null, value = {} }) => {
       value: value.town,
       assert: assertFieldInput,
     },
-    {
-      label: 'County (optional)',
-      value: value.county,
-      assert: assertFieldInput,
-    },
+    !isUSBased &&
+      !isCanadianBased && {
+        label: 'County (optional)',
+        value: value.county,
+        assert: assertFieldInput,
+      },
   ]
 
   if (hasStateField) {
