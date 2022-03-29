@@ -287,10 +287,9 @@ const _ContactForm = ({
                           ]}
                         />
                         <FieldInput
-                          label="Telephone number"
+                          label="Telephone number (optional)"
                           name="fullTelephoneNumber"
                           type="text"
-                          required="Enter a telephone number"
                           validate={(x) =>
                             !x?.match(GENERIC_PHONE_NUMBER_REGEX) &&
                             'Telephone number should consist of numbers'
