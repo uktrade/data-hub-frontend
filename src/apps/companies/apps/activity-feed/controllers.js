@@ -160,7 +160,7 @@ async function fetchActivitiesForContact(req, res, next) {
       next(error)
     })
 
-    let activities = results?.hits.hits.map((hit) => hit._source)
+    let activities = results.hits.hits.map((hit) => hit._source)
 
     res.json({ activities })
   } catch (error) {
