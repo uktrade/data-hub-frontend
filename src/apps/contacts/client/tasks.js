@@ -5,4 +5,4 @@ export const getContactInteractions = (contactId) =>
   axios
     .get(urls.contacts.activity.data(contactId))
     .then(({ data }) => data)
-    .catch(() => Promise.reject('Unable to load Contact Interactions'))
+    .catch(() => Promise.reject('Unable to load Contact Interactions.'))
