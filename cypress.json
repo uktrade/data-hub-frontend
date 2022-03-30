@@ -15,5 +15,7 @@
       "url": "http://localhost:3000/__coverage__"
     }
   },
-  "$schema": "https://on.cypress.io/cypress.schema.json"
+  "$schema": "https://on.cypress.io/cypress.schema.json",
+  "viewportWidth": 1280,
+  "viewportHeight": 720
 }
