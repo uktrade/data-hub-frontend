@@ -2,7 +2,7 @@ import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React, { useRef, useEffect } from 'react'
 import { Route, useHistory, useLocation } from 'react-router-dom'
-import { isEmpty } from 'lodash'
+import { camelCase, isEmpty } from 'lodash'
 import qs from 'qs'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
@@ -70,6 +70,7 @@ const _Form = ({
   transformInitialValues = (x) => x,
   transformPayload = (x) => x,
   onSuccess,
+  onError,
   submitButtonLabel = 'Save',
   submitButtonColour = BUTTON_COLOUR,
   // State props
@@ -108,6 +109,20 @@ const _Form = ({
       }
     }
   }, [showStepInUrl, qsParams.step, steps])
+
+  // Update form errors after getting a response from API
+  useEffect(() => {
+    if (result?.errors) {
+      onError(
+        Object.fromEntries(
+          Object.entries(result.errors).map(([k, v]) => [
+            camelCase(k),
+            v.join(', '),
+          ])
+        )
+      )
+    }
+  }, [result])
 
   // TODO: Clean up this mess
   const contextProps = {
@@ -254,9 +269,10 @@ const _Form = ({
                                         submissionTaskName,
                                         id,
                                         resolved,
+                                        result,
                                       ]}
                                       effect={() => {
-                                        if (resolved) {
+                                        if (resolved && !result?.errors) {
                                           analytics(
                                             'Submission request success',
                                             analyticsData &&
@@ -408,6 +424,11 @@ const dispatchToProps = (dispatch) => ({
       type: 'FORM__VALIDATE',
       errors,
       touched,
+    }),
+  onError: (errors) =>
+    dispatch({
+      type: 'FORM__ERRORED',
+      errors,
     }),
   goForward: (values) =>
     dispatch({

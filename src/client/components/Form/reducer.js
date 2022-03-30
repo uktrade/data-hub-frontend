@@ -5,6 +5,7 @@ import {
   FORM__FIELD_DEREGISTER,
   FORM__FIELD_REGISTER,
   FORM__FIELD_SET_VALUE,
+  FORM__ERRORED,
   FORM__FORWARD,
   FORM__LOADED,
   FORM__RESOLVED,
@@ -91,6 +92,14 @@ export default (
         ...state,
         errors: action.errors,
         touched: action.touched,
+      }
+    case FORM__ERRORED:
+      return {
+        ...state,
+        errors: action.errors,
+        touched: Object.fromEntries(
+          Object.keys(action.errors).map((key) => [key, true])
+        ),
       }
     case FORM__FORWARD:
       return {

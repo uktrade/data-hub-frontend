@@ -47,7 +47,7 @@ const FieldInput = ({
         {touched && error && <ErrorText>{error}</ErrorText>}
         <Input
           key={name}
-          error={touched && error}
+          error={touched && Boolean(error)}
           id={name}
           type={type}
           name={name}

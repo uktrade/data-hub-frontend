@@ -33,53 +33,60 @@ describe('Contacts', () => {
       .and('contain', 'Rua Candido Portinari, Numero 521, Campinas, Brazil')
   })
 
-  it('Should show a warning message when adding contact with duplicate email', () => {
-    const EMAIL = 'andy.pipkin@andyandlou.co.uk'
-    const company = fixtures.company.create.defaultCompany('contact testing')
-    cy.loadFixture([company])
-    cy.visit(contacts.create(company.pk))
+  /*
+   * Commenting this test out rather than deleting.
+   *
+   * TODO: This will need to be adapted once the API changes are deployed. These
+   * will strictly enforce uniqueness on company contact emails with an error message
+   * instead of a warning.
+   */
+  // it('Should show a warning message when adding contact with duplicate email', () => {
+  //   const EMAIL = 'andy.pipkin@andyandlou.co.uk'
+  //   const company = fixtures.company.create.defaultCompany('contact testing')
+  //   cy.loadFixture([company])
+  //   cy.visit(contacts.create(company.pk))
 
-    cy.checkRadioGroup(
-      'Is this contact’s work address the same as the company address?',
-      'Yes'
-    )
-    cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
-    cy.typeIntoInputs({
-      'First name': 'Andy',
-      'Last name': 'Pipkin',
-      'Job title': 'On dole',
-      'Telephone number': '56789',
-      Email: EMAIL,
-    })
+  //   cy.checkRadioGroup(
+  //     'Is this contact’s work address the same as the company address?',
+  //     'Yes'
+  //   )
+  //   cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
+  //   cy.typeIntoInputs({
+  //     'First name': 'Andy',
+  //     'Last name': 'Pipkin',
+  //     'Job title': 'On dole',
+  //     'Telephone number': '56789',
+  //     Email: EMAIL,
+  //   })
 
-    cy.clickSubmitButton('Add contact')
-    cy.contains('You have successfully added a new contact Andy Pipkin')
+  //   cy.clickSubmitButton('Add contact')
+  //   cy.contains('You have successfully added a new contact Andy Pipkin')
 
-    cy.visit(contacts.create(company.pk))
+  //   cy.visit(contacts.create(company.pk))
 
-    cy.checkRadioGroup(
-      'Is this contact’s work address the same as the company address?',
-      'Yes'
-    )
-    cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
-    cy.typeIntoInputs({
-      'First name': 'Lou',
-      'Last name': 'Todd',
-      'Job title': 'Carer',
-      'Telephone number': '987654321',
-      Email: EMAIL,
-    })
+  //   cy.checkRadioGroup(
+  //     'Is this contact’s work address the same as the company address?',
+  //     'Yes'
+  //   )
+  //   cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
+  //   cy.typeIntoInputs({
+  //     'First name': 'Lou',
+  //     'Last name': 'Todd',
+  //     'Job title': 'Carer',
+  //     'Telephone number': '987654321',
+  //     Email: EMAIL,
+  //   })
 
-    cy.clickSubmitButton('Add contact')
+  //   cy.clickSubmitButton('Add contact')
 
-    cy.contains('You have successfully added a new contact').should('not.exist')
-    cy.contains(
-      `The email ${EMAIL} already exists at contact testing. ` +
-        "To continue adding this contact select 'Add contact'. " +
-        "To return to the previous screen, select 'Cancel'."
-    )
+  //   cy.contains('You have successfully added a new contact').should('not.exist')
+  //   cy.contains(
+  //     `The email ${EMAIL} already exists at contact testing. ` +
+  //       "To continue adding this contact select 'Add contact'. " +
+  //       "To return to the previous screen, select 'Cancel'."
+  //   )
 
-    cy.clickSubmitButton('Add contact')
-    cy.contains('You have successfully added a new contact Lou Todd')
-  })
+  //   cy.clickSubmitButton('Add contact')
+  //   cy.contains('You have successfully added a new contact Lou Todd')
+  // })
 })
