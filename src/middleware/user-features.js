@@ -23,10 +23,15 @@ module.exports = (feature) => async (req, res, next) => {
     const user = await authorisedRequest(req, `${config.apiRoot}/whoami/`)
     res.locals.userFeatures = get(user, 'active_features', [])
   }
+
   res.locals.isFeatureTesting = res.locals.userFeatures.includes(feature)
 
-  if (res.locals.isFeatureTesting && isEmpty(req.query)) {
-    return res.redirect(`${req.originalUrl}?featureTesting=${feature}`)
+  if (res.locals.isFeatureTesting && !req.query.featureTesting) {
+    res.redirect(
+      `${req.originalUrl}${
+        isEmpty(req.query) ? '?' : '&'
+      }featureTesting=${feature}`
+    )
   } else {
     next()
   }
