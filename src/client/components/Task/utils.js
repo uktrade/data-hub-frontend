@@ -24,6 +24,7 @@ export const catchApiError = ({ response, message }) =>
     response?.data?.detail ||
       response?.text ||
       response?.data?.non_field_errors ||
+      (response?.data && { errors: response.data }) ||
       response?.statusText ||
       message
   )

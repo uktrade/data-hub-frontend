@@ -5,10 +5,7 @@ import _ from 'lodash'
 import Link from '@govuk-react/link'
 
 import multiInstance from '../../utils/multiinstance'
-import {
-  CONTACT_FORM__DUPLICATE_EMAIL,
-  CONTACT_FORM__SUBMIT,
-} from '../../actions'
+import { CONTACT_FORM__SUBMIT } from '../../actions'
 
 import Form from '../Form'
 import {
@@ -20,7 +17,6 @@ import {
   Main,
 } from '..'
 import LocalHeader from '../LocalHeader/LocalHeader'
-import FlashMessages from '../LocalHeader/FlashMessages'
 import ContactResource from '../Resource/Contact'
 import CompanyResource from '../Resource/Company'
 import * as validators from '../Form/validators'
@@ -37,11 +33,6 @@ import urls from '../../../lib/urls'
 
 const YES = 'Yes'
 const NO = 'No'
-
-const duplicateEmailMessage = (email, companyName) =>
-  `The email ${email} already exists at ${companyName}. ` +
-  `To continue adding this contact select 'Add contact'. ` +
-  "To return to the previous screen, select 'Cancel'."
 
 const boolToYesNo = (x) => (x === true ? YES : x === false ? NO : null)
 
@@ -69,7 +60,6 @@ const _ContactForm = ({
   addressArea,
   addressCountry,
   // State props
-  duplicateEmail,
   dispatch,
   id,
   notes: moreDetails,
@@ -165,7 +155,6 @@ const _ContactForm = ({
                       ...values
                     }) => ({
                       contactId,
-                      duplicateEmail,
                       values: {
                         ...keysToSnakeCase(values),
                         email,
@@ -204,19 +193,12 @@ const _ContactForm = ({
                       values,
                       { hardRedirect, flashMessage }
                     ) => {
-                      if (typeof result === 'string') {
-                        dispatch({
-                          type: CONTACT_FORM__DUPLICATE_EMAIL,
-                          duplicateEmail: result,
-                        })
-                      } else {
-                        flashMessage(
-                          update
-                            ? 'Contact record updated'
-                            : `You have successfully added a new contact ${result.name}`
-                        )
-                        hardRedirect(redirectTo(result))
-                      }
+                      flashMessage(
+                        update
+                          ? 'Contact record updated'
+                          : `You have successfully added a new contact ${result.name}`
+                      )
+                      hardRedirect(redirectTo(result))
                     }}
                     submitButtonLabel={
                       update ? 'Save and return' : 'Add contact'
@@ -246,18 +228,6 @@ const _ContactForm = ({
                   >
                     {({ values }) => (
                       <>
-                        {duplicateEmail && (
-                          <FlashMessages
-                            flashMessages={{
-                              info: [
-                                duplicateEmailMessage(
-                                  values.email,
-                                  company.name
-                                ),
-                              ],
-                            }}
-                          />
-                        )}
                         <FieldInput
                           label="First name"
                           name="firstName"
@@ -360,10 +330,8 @@ const _ContactForm = ({
 export const ContactForm = multiInstance({
   name: 'ContactForm',
   actionPattern: 'CONTACT_FORM__',
-  reducer: (state, { type, duplicateEmail }) => {
+  reducer: (state, { type }) => {
     switch (type) {
-      case CONTACT_FORM__DUPLICATE_EMAIL:
-        return { duplicateEmail }
       case CONTACT_FORM__SUBMIT:
         return {}
       default:
