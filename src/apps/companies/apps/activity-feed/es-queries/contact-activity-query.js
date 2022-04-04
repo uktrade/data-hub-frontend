@@ -1,6 +1,7 @@
-const contactActivityQuery = (email, contactId, objectTypes) => {
+const contactActivityQuery = (from, size, email, contactId, objectTypes) => {
   return {
-    size: 10,
+    from,
+    size,
     query: {
       bool: {
         must: [
