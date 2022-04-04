@@ -121,6 +121,7 @@ const _Form = ({
           ])
         )
       )
+      window.scrollTo({ top: 0 })
     }
   }, [result])
 
