@@ -7,10 +7,17 @@ import { get } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
+import { LoadingBox } from 'govuk-react'
 
 import { TASK__START, TASK__DISMISS_ERROR, TASK__CANCEL } from '../../actions'
 import Err from './Error'
 import ProgressIndicator from '../ProgressIndicator'
+
+import styled from 'styled-components'
+
+const StyledLoadingBox = styled(LoadingBox)({
+  paddingBottom: 0,
+})
 
 const nameIdPropTypes = {
   name: PropTypes.string.isRequired,
@@ -218,6 +225,7 @@ Task.Status = ({
   progressMessage,
   renderError = Err,
   renderProgress = ProgressIndicator,
+  progressOverlay = false,
   dismissable = true,
   children = () => null,
 }) => (
@@ -239,7 +247,9 @@ Task.Status = ({
           {!!startOnRender && (
             <Task.StartOnRender {...startOnRender} {...{ name, id }} />
           )}
-          {progress && renderProgress({ message: progressMessage })}
+          {!progressOverlay &&
+            progress &&
+            renderProgress({ message: progressMessage })}
           {error &&
             renderError({
               noun,
@@ -248,7 +258,9 @@ Task.Status = ({
               dismiss: dismissError,
               dismissable,
             })}
-          {!status && children()}
+          <StyledLoadingBox loading={progress && progressOverlay}>
+            {(!status || progressOverlay) && children()}
+          </StyledLoadingBox>
         </>
       )
     }}
@@ -259,6 +271,7 @@ Task.Status.propTypes = {
   ...nameIdPropTypes,
   noun: PropTypes.string,
   progressMessage: PropTypes.string,
+  progressOverlay: PropTypes.bool,
   startOnRender: PropTypes.shape(startOnRenderPropTypes),
   renderProgress: PropTypes.elementType,
   renderError: PropTypes.elementType,

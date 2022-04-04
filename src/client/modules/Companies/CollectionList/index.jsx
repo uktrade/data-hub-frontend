@@ -73,7 +73,6 @@ const CompaniesCollection = ({
   const leadItaGlobalAccountManagerTask = {
     name: TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME,
     id: ID,
-    progressMessage: 'Loading advisers',
     startOnRender: {
       payload: payload.one_list_group_global_account_manager,
       onSuccessDispatch: COMPANIES__SELECTED_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER,

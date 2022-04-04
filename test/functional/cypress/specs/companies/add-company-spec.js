@@ -684,6 +684,7 @@ describe('Add company form', () => {
         .parent()
         .parent()
         .parent()
+        .parent()
         .next()
         .contains('DIT sector')
         .next()

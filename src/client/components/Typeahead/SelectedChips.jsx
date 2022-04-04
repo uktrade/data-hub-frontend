@@ -61,7 +61,7 @@ const SelectedChips = ({ name, selectedOptions, onOptionRemove }) => (
             onOptionRemove(option)
           }}
         >
-          {option.label}
+          {option.chipLabel || option.label}
         </ChipButton>
       </Chip>
     ))}

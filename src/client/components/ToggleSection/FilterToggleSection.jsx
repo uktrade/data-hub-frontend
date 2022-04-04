@@ -17,6 +17,9 @@ export const FilterToggleSection = styled(ToggleSection)({
     '> *:last-child': {
       marginBottom: 0,
     },
+    '> *:last-child div:last-child': {
+      marginBottom: 0,
+    },
   },
 })
 
