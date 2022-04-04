@@ -1,5 +1,13 @@
 # Data Fetching Building Blocks
 
+**TLDR** 
+
+Use the [`Resource`](#resource) component for calling the Data Hub API and using the data it returns.
+
+Use the [`Task`](#task) component if you're calling a different end point (e.g. on the express side).
+
+For a step-by-step guide to setting up state management read the [Redux and Saga](https://github.com/uktrade/data-hub-frontend/blob/cad09f7ee4a59b48f74ece3d01350d108fecfc86/docs/Redux%20and%20Saga.md) docs
+
 ## Low level
 
 ### Task
