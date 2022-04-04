@@ -54,9 +54,7 @@ describe('Company activity feed', () => {
     })
 
     it('should display the "There are no activities to show." message', () => {
-      cy.get(selectors.companyActivity.activityFeed.noActivites).should(
-        'be.visible'
-      )
+      cy.get('[data-test="noActivites"]').should('be.visible')
     })
   })
 
@@ -101,9 +99,7 @@ describe('Company activity feed', () => {
     })
 
     it('should not display the "There are no activities to show." message', () => {
-      cy.get(selectors.companyActivity.activityFeed.noActivites).should(
-        'not.exist'
-      )
+      cy.get('[data-test="noActivites"]').should('not.exist')
     })
   })
 
