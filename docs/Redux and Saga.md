@@ -41,18 +41,19 @@ export const TASK_GET_PIPELINE_LIST = "TASK_GET_PIPELINE_LIST"
 export const ID = "pipelineList"
 ```
 
-### 3. root-saga.js
+### 3. src/client/index.jsx
 
 This is where you register your task with saga.
 
 ```
 import { TASK_GET_PIPELINE_LIST } from './components/Pipeline/state'
-import * as pipelineListTasks from './components/Pipeline/tasks'
+import getPipelineList from './components/Pipeline/tasks'
 
-export default function rootSaga() {
-    yield fork(
-        tasksSaga({
-            [TASK_GET_PIPELINE_LIST]: pipelineTasks.getPipelineList,
+function App() {
+  return (
+    <Provider
+      tasks={{
+            [TASK_GET_PIPELINE_LIST]: getPipelineList,
             ...
 ```
 
@@ -129,18 +130,18 @@ export default (state = initialState, { type, result }) => {
 }
 ```
 
-### 7. src/client/index.jsx
+### 7. src/client/provider.jsx
 
 This is the last step. We just need to compose our reducer into the root reducer.
 
 ```
 import { ID as PIPELINE_LIST_ID } from './components/Pipeline/state'
-import pipelineListReducer from './components/Pipeline/reducer'
+import * as pipelineListTasks from './components/Pipeline/tasks'
 
 const store = createStore(
     combineReducers({
         ...
-        [PIPELINE_LIST_ID]: pipelineListReducer,
+        [PIPELINE_LIST_ID]: pipelineTasks.getPipelineList,
         ...
     })
 )
