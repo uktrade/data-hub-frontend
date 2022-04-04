@@ -9,7 +9,7 @@
   },
   "hits": {
     "total": {
-      "value": 0,
+      "value": 1233,
       "relation": "eq"
     },
     "max_score": null,
