@@ -96,15 +96,35 @@ describe('Contact interactions', () => {
 
   context('when viewing a contact with the feature flag disabled', () => {
     before(() => {
+      cy.intercept('GET', `${urls.contacts.activity.data(contactId)}?page=1`, {
+        statusCode: 500,
+      })
       cy.visit(urls.contacts.contactInteractions(contactId))
     })
 
-    it('should not render the ActivityStream activities', () => {
-      cy.get('#contact-interactions-app').should('not.exist')
+    it('should render an error message', () => {
+      assertErrorDialog(
+        'TASK_GET_CONTACT_INTERACTIONS',
+        'Unable to load Contact Interactions.'
+      )
     })
+  })
 
-    it('should only display Data Hub interactions', () => {
-      cy.get('[data-test=item-interaction-0]').should('exist')
-    })
+  after(() => {
+    cy.resetUser()
+  })
+})
+
+context('when viewing a contact with the feature flag disabled', () => {
+  before(() => {
+    cy.visit(urls.contacts.contactInteractions(contactId))
+  })
+
+  it('should not render the ActivityStream activities', () => {
+    cy.get('#contact-interactions-app').should('not.exist')
+  })
+
+  it('should only display Data Hub interactions', () => {
+    cy.get('[data-test=item-interaction-0]').should('exist')
   })
 })
