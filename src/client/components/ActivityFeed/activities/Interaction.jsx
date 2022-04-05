@@ -21,6 +21,7 @@ export default class Interaction extends React.PureComponent {
     activity: PropTypes.object.isRequired,
     showDetails: PropTypes.bool.isRequired,
     showDnbHierarchy: PropTypes.bool.isRequired,
+    isContactActivitiesFeatureOn: PropTypes.bool.isRequired,
   }
 
   static canRender(activity) {
@@ -28,7 +29,12 @@ export default class Interaction extends React.PureComponent {
   }
 
   render() {
-    const { activity, showDetails, showDnbHierarchy } = this.props
+    const {
+      activity,
+      showDetails,
+      showDnbHierarchy,
+      isContactActivitiesFeatureOn,
+    } = this.props
     const transformed = {
       ...CardUtils.transform(activity),
       ...InteractionUtils.transform(activity),
@@ -37,6 +43,11 @@ export default class Interaction extends React.PureComponent {
     const company = showDnbHierarchy && CardUtils.getCompany(activity)
     const contacts = CardUtils.getContacts(activity)
     const advisers = CardUtils.getAdvisers(activity)
+    // REMOVE THIS LATER
+    console.log(
+      'isContactActivitiesFeatureOn =>>',
+      isContactActivitiesFeatureOn
+    )
 
     return (
       <Card isUpcoming={transformed.isUpcoming}>
