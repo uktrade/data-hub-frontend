@@ -45,6 +45,7 @@ const ContactActivity = ({
   total,
   onPaginationClick,
   page = 1,
+  isContactActivitiesFeatureOn,
 }) => {
   const totalPages = Math.ceil(total / ACTIVITIES_PER_PAGE)
 
@@ -85,7 +86,12 @@ const ContactActivity = ({
                 <ContactActivityList>
                   {activities.map((activity, index) => (
                     <li key={`activity-${index}`}>
-                      <Activity activity={activity} />
+                      <Activity
+                        activity={activity}
+                        isContactActivitiesFeatureOn={
+                          isContactActivitiesFeatureOn
+                        }
+                      />
                     </li>
                   ))}
                 </ContactActivityList>

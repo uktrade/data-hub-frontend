@@ -128,6 +128,7 @@ function renderInteractionsForEntity(req, res, next) {
       actionButtons,
       props: {
         contactId: contactId,
+        isContactActivitiesFeatureOn,
       },
       isContactActivitiesFeatureOn,
     })
