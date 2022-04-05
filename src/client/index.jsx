@@ -57,7 +57,7 @@ import EditSubscribers from '../apps/omis/apps/edit/client/EditSubscribers'
 import EditProjectManagement from '../apps/investments/client/projects/team/EditProjectManagement'
 import { EditTeamMembers } from '../apps/investments/client/projects/team/EditTeamMembers'
 import EditClientRelationshipManagement from '../apps/investments/client/projects/team/EditClientRelationshipManagement'
-import ContactActivity from '../apps/contacts/client/ContactActivity'
+import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -256,8 +256,8 @@ import * as matchCompanyTasks from '../apps/companies/apps/match-company/client/
 import * as companyListTasks from '../apps/company-lists/client/tasks'
 import { editCompany } from '../apps/companies/apps/edit-company/client/tasks'
 import { createList } from '../apps/company-lists/client/tasks.js'
-import { TASK_GET_CONTACT_ACTIVITIES } from '../apps/contacts/client/state'
-import { getContactActivities } from '../apps/contacts/client/tasks'
+import { TASK_GET_CONTACT_ACTIVITIES } from '../client/modules/Contacts/ContactActivity/state'
+import { getContactActivities } from '../client/modules/Contacts/ContactActivity/tasks'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}

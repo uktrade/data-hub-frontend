@@ -10,15 +10,15 @@ import { TASK_GET_CONTACT_ACTIVITIES, ID, state2props } from './state'
 import {
   CONTACTS__ACTIVITIES_LOADED,
   CONTACTS__ACTIVITIES_PAGINATION_CLICKED,
-} from '../../../client/actions'
-import Task from '../../../client/components/Task'
-import Activity from '../../../client/components/ActivityFeed/Activity'
+} from '../../../actions'
+import Task from '../../../components/Task'
+import Activity from '../../../components/ActivityFeed/Activity'
 import {
   CollectionHeader,
   CollectionHeaderRow,
   Pagination,
-} from '../../../client/components'
-import { ACTIVITIES_PER_PAGE } from '../constants'
+} from '../../../components'
+import { ACTIVITIES_PER_PAGE } from '../../../../apps/contacts/constants'
 
 const ContactActivityList = styled('ol')`
   list-style-type: none;

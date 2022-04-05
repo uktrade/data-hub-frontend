@@ -1,7 +1,7 @@
 import {
   CONTACTS__ACTIVITIES_LOADED,
   CONTACTS__ACTIVITIES_PAGINATION_CLICKED,
-} from '../../../client/actions'
+} from '../../../actions'
 
 const defaultState = { activities: null, total: 0, page: 1 }
 

@@ -118,8 +118,8 @@ import Form from './components/Form'
 import { ID as FLASH_MESSAGE_ID } from './components/LocalHeader/state'
 import flashMessageReducer from './components/LocalHeader/reducer'
 
-import { ID as CONTACT_ACTIVITIES_ID } from '../apps/contacts/client/state'
-import contactActivitiesReducer from '../apps/contacts/client/reducer'
+import { ID as CONTACT_ACTIVITIES_ID } from '../client/modules/Contacts/ContactActivity/state'
+import contactActivitiesReducer from '../client/modules/Contacts/ContactActivity/reducer'
 
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({

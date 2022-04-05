@@ -1,5 +1,5 @@
 import axios from 'axios'
-import urls from '../../../lib/urls'
+import urls from '../../../../lib/urls'
 
 export const getContactActivities = ({ contactId, page }) =>
   axios
