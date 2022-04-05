@@ -11,6 +11,9 @@ import { Provider } from 'react-redux'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
 import createSagaMiddleware from 'redux-saga'
+import { persistStore, persistReducer } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
+import storage from 'redux-persist/lib/storage'
 
 import DropdownMenu from './components/DropdownMenu/ConnectedDropdownMenu'
 import tasks from './components/Task/reducer'
@@ -143,55 +146,63 @@ const appWrapper = document.getElementById('react-app')
 
 const { modulePermissions, currentAdviserId } = parseProps(appWrapper)
 
+const rootReducer = combineReducers({
+  currentAdviserId: () => currentAdviserId,
+  modulePermissions: () => modulePermissions,
+  router: connectRouter(history),
+  tasks,
+  [FLASH_MESSAGE_ID]: flashMessageReducer,
+  [COMPANY_LISTS_STATE_ID]: companyListsReducer,
+  [COMPANIES_ID]: companiesReducer,
+  [EXPORTS_HISTORY_ID]: exportsHistoryReducer,
+  [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
+  [REFERRALS_SEND_ID]: referralsSendReducer,
+  [EXPORTS_WINS_ID]: exportWinsReducer,
+  [addCompanyState.ID]: addCompanyPostcodeToRegionReducer,
+  [ADD_TO_PIPELINE_ID]: addToPipelineReducer,
+  [PIPELINE_LIST_ID]: pipelineListReducer,
+  ...TabNav.reducerSpread,
+  ...ReferralList.reducerSpread,
+  ...DropdownMenu.reducerSpread,
+  ...ToggleSection.reducerSpread,
+  ...Typeahead.reducerSpread,
+  ...RoutedInput.reducerSpread,
+  ...Resource.reducerSpread,
+  ...ContactForm.reducerSpread,
+  ...Form.reducerSpread,
+  ...FieldAddAnother.reducerSpread,
+  // A reducer is required to be able to set a preloadedState parameter
+  referrerUrl: (state = {}) => state,
+  [DNB_CHECK_ID]: dnbCheckReducer,
+  [INVESTMENT_OPPORTUNITIES_LIST_ID]: investmentOpportunitiesListReducer,
+  [INVESTMENT_OPPORTUNITIES_DETAILS_ID]: investmentOpportunitiesDetailsReducer,
+  [INVESTMENT_PROFILES_ID]: investmentProfileReducer,
+  [INVESTMENT_PROJECTS_ID]: investmentProjectsReducer,
+  [COMPANY_PROJECTS_LIST_ID]: investmentProjectsReducer,
+  [MY_INVESTMENT_PROJECTS_ID]: myInvestmentProjectsReducer,
+  [CREATE_INVESTMENT_PROJECT_ID]: createInvestmentProjectsReducer,
+  [COMPANY_INVESTMENT_COUNT_ID]: createInvestmentProjectsReducer,
+  [CHECK_FOR_INVESTMENTS_ID]: personalDashboardReducer,
+  [INVESTMENT_REMINDERS_ID]: investmentRemindersReducer,
+  [CONTACTS_LIST_ID]: contactsReducer,
+  [CONTACT_INTERACTIONS_ID]: contactInteractionsReducer,
+  [COMPANY_CONTACTS_LIST_ID]: contactsReducer,
+  [INTERACTIONS_ID]: interactionsReducer,
+  [EVENTS_ID]: eventsReducer,
+  [EVENTS_DETAILS_ID]: eventDetailsReducer,
+  [ORDERS_LIST_ID]: ordersReducer,
+  [COMPANY_ORDERS_LIST_ID]: ordersReducer,
+})
+
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
 const store = createStore(
-  combineReducers({
-    currentAdviserId: () => currentAdviserId,
-    modulePermissions: () => modulePermissions,
-    router: connectRouter(history),
-    tasks,
-    [FLASH_MESSAGE_ID]: flashMessageReducer,
-    [COMPANY_LISTS_STATE_ID]: companyListsReducer,
-    [COMPANIES_ID]: companiesReducer,
-    [EXPORTS_HISTORY_ID]: exportsHistoryReducer,
-    [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
-    [REFERRALS_SEND_ID]: referralsSendReducer,
-    [EXPORTS_WINS_ID]: exportWinsReducer,
-    [addCompanyState.ID]: addCompanyPostcodeToRegionReducer,
-    [ADD_TO_PIPELINE_ID]: addToPipelineReducer,
-    [PIPELINE_LIST_ID]: pipelineListReducer,
-    ...TabNav.reducerSpread,
-    ...ReferralList.reducerSpread,
-    ...DropdownMenu.reducerSpread,
-    ...ToggleSection.reducerSpread,
-    ...Typeahead.reducerSpread,
-    ...RoutedInput.reducerSpread,
-    ...Resource.reducerSpread,
-    ...ContactForm.reducerSpread,
-    ...Form.reducerSpread,
-    ...FieldAddAnother.reducerSpread,
-    // A reducer is required to be able to set a preloadedState parameter
-    referrerUrl: (state = {}) => state,
-    [DNB_CHECK_ID]: dnbCheckReducer,
-    [INVESTMENT_OPPORTUNITIES_LIST_ID]: investmentOpportunitiesListReducer,
-    [INVESTMENT_OPPORTUNITIES_DETAILS_ID]:
-      investmentOpportunitiesDetailsReducer,
-    [INVESTMENT_PROFILES_ID]: investmentProfileReducer,
-    [INVESTMENT_PROJECTS_ID]: investmentProjectsReducer,
-    [COMPANY_PROJECTS_LIST_ID]: investmentProjectsReducer,
-    [MY_INVESTMENT_PROJECTS_ID]: myInvestmentProjectsReducer,
-    [CREATE_INVESTMENT_PROJECT_ID]: createInvestmentProjectsReducer,
-    [COMPANY_INVESTMENT_COUNT_ID]: createInvestmentProjectsReducer,
-    [CHECK_FOR_INVESTMENTS_ID]: personalDashboardReducer,
-    [INVESTMENT_REMINDERS_ID]: investmentRemindersReducer,
-    [CONTACTS_LIST_ID]: contactsReducer,
-    [CONTACT_INTERACTIONS_ID]: contactInteractionsReducer,
-    [COMPANY_CONTACTS_LIST_ID]: contactsReducer,
-    [INTERACTIONS_ID]: interactionsReducer,
-    [EVENTS_ID]: eventsReducer,
-    [EVENTS_DETAILS_ID]: eventDetailsReducer,
-    [ORDERS_LIST_ID]: ordersReducer,
-    [COMPANY_ORDERS_LIST_ID]: ordersReducer,
-  }),
+  persistedReducer,
   {
     referrerUrl: window.document.referrer,
   },
@@ -199,6 +210,7 @@ const store = createStore(
     applyMiddleware(sagaMiddleware, routerMiddleware(history))
   )
 )
+const persistor = persistStore(store)
 
 const runMiddlewareOnce = _.once((tasks) => sagaMiddleware.run(rootSaga(tasks)))
 
@@ -227,9 +239,11 @@ export default class DataHubProvider extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <ConnectedRouter history={history}>
-          {this.props.children}
-        </ConnectedRouter>
+        <PersistGate loading={null} persistor={persistor}>
+          <ConnectedRouter history={history}>
+            {this.props.children}
+          </ConnectedRouter>
+        </PersistGate>
       </Provider>
     )
   }
