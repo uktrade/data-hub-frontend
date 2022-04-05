@@ -1,18 +1,18 @@
 import {
-  CONTACTS__INTERACTIONS_LOADED,
-  CONTACTS__INTERACTIONS_PAGINATION_CLICKED,
+  CONTACTS__ACTIVITIES_LOADED,
+  CONTACTS__ACTIVITIES_PAGINATION_CLICKED,
 } from '../../../client/actions'
 
 const defaultState = { activities: null, total: 0, page: 1 }
 
 export default (state = defaultState, { type, result, page }) => {
   switch (type) {
-    case CONTACTS__INTERACTIONS_LOADED:
+    case CONTACTS__ACTIVITIES_LOADED:
       return {
         ...state,
         ...result,
       }
-    case CONTACTS__INTERACTIONS_PAGINATION_CLICKED:
+    case CONTACTS__ACTIVITIES_PAGINATION_CLICKED:
       return { ...state, page }
     default:
       return state

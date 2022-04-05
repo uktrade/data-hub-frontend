@@ -103,6 +103,14 @@ function renderInteractionsForEntity(req, res, next) {
       contactId,
     } = res.locals.interactions
 
+    const isContactActivitiesFeatureOn = res.locals.userFeatures?.includes(
+      'user-contact-activities'
+    )
+
+    const breadcrumbTitle = isContactActivitiesFeatureOn
+      ? 'Activity'
+      : 'Interactions'
+
     const actionButtons = canAdd
       ? [
           {
@@ -116,14 +124,12 @@ function renderInteractionsForEntity(req, res, next) {
         ]
       : undefined
 
-    res.breadcrumb('Interactions').render(view, {
+    res.breadcrumb(breadcrumbTitle).render(view, {
       actionButtons,
       props: {
         contactId: contactId,
       },
-      isContactActivitiesFeatureOn: res.locals.userFeatures?.includes(
-        'user-contact-activities'
-      ),
+      isContactActivitiesFeatureOn,
     })
   } catch (error) {
     next(error)
