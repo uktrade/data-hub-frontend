@@ -31,6 +31,8 @@ const LOCAL_NAV = [
 
 const APP_PERMISSIONS = concat(LOCAL_NAV, GLOBAL_NAV_ITEM)
 
+const ACTIVITIES_PER_PAGE = 10
+
 const QUERY_FIELDS = [
   'archived',
   'name',
@@ -45,4 +47,5 @@ module.exports = {
   LOCAL_NAV,
   APP_PERMISSIONS,
   QUERY_FIELDS,
+  ACTIVITIES_PER_PAGE,
 }

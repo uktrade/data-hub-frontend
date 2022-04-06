@@ -19,6 +19,7 @@ const {
   maxemailEmailSentQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
+const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
 
 async function renderActivityFeed(req, res, next) {
   const { company, dnbHierarchyCount, dnbRelatedCompaniesCount } = res.locals
@@ -149,9 +150,14 @@ async function getMaxemailCampaigns(req, next, contacts) {
 async function fetchActivitiesForContact(req, res, next) {
   try {
     const { contact } = res.locals
+
+    const from = (req.query.page - 1) * ACTIVITIES_PER_PAGE
+
     let results = await fetchActivityFeed(
       req,
       contactActivityQuery(
+        from,
+        ACTIVITIES_PER_PAGE,
         contact.email,
         contact.id,
         DATA_HUB_AND_EXTERNAL_ACTIVITY
@@ -160,9 +166,10 @@ async function fetchActivitiesForContact(req, res, next) {
       next(error)
     })
 
-    let activities = results.hits.hits.map((hit) => hit._source)
+    const total = results.hits.total.value
+    const activities = results.hits.hits.map((hit) => hit._source)
 
-    res.json({ activities })
+    res.json({ activities, total })
   } catch (error) {
     next(error)
   }

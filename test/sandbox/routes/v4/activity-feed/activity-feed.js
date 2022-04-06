@@ -41,7 +41,11 @@ exports.activityFeed = function (req, res) {
     "query.bool.must[0].bool.should[1].bool.must[1].term['object.dit:emailAddress']"
   )
   if (isContactActivityQuery) {
-    return res.json(dataHubAndExternalActivities)
+    const from = get(req.body, 'from')
+
+    return from == 10
+      ? res.json(dataHubActivities)
+      : res.json(dataHubAndExternalActivities)
   }
 
   // Data Hub activity

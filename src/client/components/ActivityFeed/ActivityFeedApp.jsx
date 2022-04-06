@@ -141,7 +141,9 @@ export default class ActivityFeedApp extends React.Component {
         dnbHierarchyCount={dnbHierarchyCount}
         companyIsArchived={companyIsArchived}
       >
-        {isEmptyFeed && !error && <div>There are no activities to show.</div>}
+        {isEmptyFeed && !error && (
+          <div data-test="noActivites">There are no activities to show.</div>
+        )}
         {error && <div>Error occurred while loading activities.</div>}
       </ActivityFeed>
     )
