@@ -157,6 +157,7 @@ const Typeahead = ({
   options = [],
   input = '',
   selectedOptions = [],
+  placeholder = 'Start typing',
   activeIndex,
   focusIndex,
   onInitialise,
@@ -277,6 +278,7 @@ const Typeahead = ({
           aria-describedby={`autocomplete-${name}-assistiveHint`}
           role="combobox"
           type="text"
+          placeholder={placeholder}
           value={input}
           onBlur={onBlur}
           onClick={() => {
