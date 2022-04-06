@@ -83,8 +83,14 @@ const MyInvestmentProjects = ({
         data-test="stage-select"
         label="Stage"
         options={STAGE_OPTIONS}
-        initialValue={stage}
-        onChange={(event) => onStageChange(event.target.value)}
+        initialValue={window.sessionStorage.getItem('myProjects.stageFilter')}
+        onChange={(event) => {
+          window.sessionStorage.setItem(
+            'myProjects.stageFilter',
+            event.target.value
+          )
+          onStageChange(event.target.value)
+        }}
       />
       <InvestmentListSelect
         id="my-projects-status-label"
@@ -92,8 +98,14 @@ const MyInvestmentProjects = ({
         data-test="status-select"
         label="Status"
         options={PROJECT_STATUS_OPTIONS}
-        initialValue={status}
-        onChange={(event) => onStatusChange(event.target.value)}
+        initialValue={window.sessionStorage.getItem('myProjects.statusFilter')}
+        onChange={(event) => {
+          window.sessionStorage.setItem(
+            'myProjects.statusFilter',
+            event.target.value
+          )
+          onStatusChange(event.target.value)
+        }}
       />
       <InvestmentListSelect
         id="my-projects-land-date-label"
@@ -101,8 +113,16 @@ const MyInvestmentProjects = ({
         data-test="land-date-select"
         label="Land date"
         options={landDateOptions}
-        initialValue={landDate}
-        onChange={(event) => onLandDateChange(event.target.value)}
+        initialValue={window.sessionStorage.getItem(
+          'myProjects.landDateFilter'
+        )}
+        onChange={(event) => {
+          window.sessionStorage.setItem(
+            'myProjects.landDateFilter',
+            event.target.value
+          )
+          onLandDateChange(event.target.value)
+        }}
       />
       <InvestmentListSelect
         id="my-projects-sort-label"
@@ -110,8 +130,11 @@ const MyInvestmentProjects = ({
         data-test="sort-select"
         label="Sort"
         options={SORT_OPTIONS}
-        initialValue={sort}
-        onChange={(event) => onSortChange(event.target.value)}
+        initialValue={window.sessionStorage.getItem('myProjects.sort')}
+        onChange={(event) => {
+          window.sessionStorage.setItem('myProjects.sort', event.target.value)
+          onSortChange(event.target.value)
+        }}
       />
     </StyledHeader>
     <StyledListContainer>
