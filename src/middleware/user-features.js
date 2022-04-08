@@ -18,6 +18,8 @@ const { authorisedRequest } = require('../lib/authorised-request')
  * @param {String} feature - the feature to toggle layout for.
  */
 
+const HTTP_GET = 'GET'
+
 module.exports = (feature) => async (req, res, next) => {
   if (!res.locals.userFeatures) {
     const user = await authorisedRequest(req, `${config.apiRoot}/whoami/`)
@@ -26,7 +28,11 @@ module.exports = (feature) => async (req, res, next) => {
 
   res.locals.isFeatureTesting = res.locals.userFeatures.includes(feature)
 
-  if (res.locals.isFeatureTesting && !req.query.featureTesting) {
+  if (
+    res.locals.isFeatureTesting &&
+    !req.query.featureTesting &&
+    req.method == HTTP_GET
+  ) {
     res.redirect(
       `${req.originalUrl}${
         isEmpty(req.query) ? '?' : '&'
