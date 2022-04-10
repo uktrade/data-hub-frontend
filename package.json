@@ -159,7 +159,7 @@
     "@babel/preset-env": "7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "7.16.7",
-    "@babel/runtime": "^7.17.8",
+    "@babel/runtime": "^7.17.9",
     "@cypress/code-coverage": "^3.9.12",
     "@cypress/react": "^5.12.4",
     "@cypress/webpack-dev-server": "^1.8.3",
