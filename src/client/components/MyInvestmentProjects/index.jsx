@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
@@ -16,6 +16,8 @@ import {
   MY_INVESTMENTS__LAND_DATE_CHANGE,
   MY_INVESTMENTS__SORT_CHANGE,
   MY_INVESTMENTS__SHOW_DETAILS_CHANGE,
+  MY_INVESTMENTS__SAVE_TO_SESSION,
+  MY_INVESTMENTS__GET_FROM_SESSION,
 } from '../../actions'
 import Task from '../Task'
 
@@ -57,6 +59,7 @@ const MyInvestmentProjects = ({
   landDateOptions,
   landDate,
   sort,
+  onLoad,
   onSortChange,
   onStageChange,
   onStatusChange,
@@ -65,123 +68,105 @@ const MyInvestmentProjects = ({
   onShowDetailsChange,
   adviser,
   showDetails,
-}) => (
-  <article>
-    <StyledHeader>
-      {false && (
-        <InvestmentListShowDetails
-          onChange={(event) => onShowDetailsChange(event.target.checked)}
-          checked={showDetails}
-          disabled={!results.length}
-        >
-          Show details
-        </InvestmentListShowDetails>
-      )}
-      <InvestmentListSelect
-        id="my-projects-stage-label"
-        input={{ id: 'my-projects-stage-select' }}
-        data-test="stage-select"
-        label="Stage"
-        options={STAGE_OPTIONS}
-        initialValue={window.sessionStorage.getItem('myProjects.stageFilter')}
-        onChange={(event) => {
-          window.sessionStorage.setItem(
-            'myProjects.stageFilter',
-            event.target.value
-          )
-          onStageChange(event.target.value)
-        }}
-      />
-      <InvestmentListSelect
-        id="my-projects-status-label"
-        input={{ id: 'my-projects-status-select' }}
-        data-test="status-select"
-        label="Status"
-        options={PROJECT_STATUS_OPTIONS}
-        initialValue={window.sessionStorage.getItem('myProjects.statusFilter')}
-        onChange={(event) => {
-          window.sessionStorage.setItem(
-            'myProjects.statusFilter',
-            event.target.value
-          )
-          onStatusChange(event.target.value)
-        }}
-      />
-      <InvestmentListSelect
-        id="my-projects-land-date-label"
-        input={{ id: 'my-projects-land-date-select' }}
-        data-test="land-date-select"
-        label="Land date"
-        options={landDateOptions}
-        initialValue={window.sessionStorage.getItem(
-          'myProjects.landDateFilter'
+}) => {
+  useEffect(() => {
+    onLoad()
+  }, [])
+  return (
+    <article>
+      <StyledHeader>
+        {false && (
+          <InvestmentListShowDetails
+            onChange={(event) => onShowDetailsChange(event.target.checked)}
+            checked={showDetails}
+            disabled={!results.length}
+          >
+            Show details
+          </InvestmentListShowDetails>
         )}
-        onChange={(event) => {
-          window.sessionStorage.setItem(
-            'myProjects.landDateFilter',
-            event.target.value
-          )
-          onLandDateChange(event.target.value)
-        }}
-      />
-      <InvestmentListSelect
-        id="my-projects-sort-label"
-        input={{ id: 'my-projects-sort-select' }}
-        data-test="sort-select"
-        label="Sort"
-        options={SORT_OPTIONS}
-        initialValue={window.sessionStorage.getItem('myProjects.sort')}
-        onChange={(event) => {
-          window.sessionStorage.setItem('myProjects.sort', event.target.value)
-          onSortChange(event.target.value)
-        }}
-      />
-    </StyledHeader>
-    <StyledListContainer>
-      <Task.Status
-        name={TASK_GET_MY_INVESTMENTS_LIST}
-        id={ID}
-        progressMessage="Loading your investment projects"
-        startOnRender={{
-          payload: {
-            adviser,
-            page,
-            stage,
-            status,
-            landDate,
-            sort,
-          },
-          onSuccessDispatch: MY_INVESTMENTS__LIST_LOADED,
-        }}
-      >
-        {() => {
-          const totalPages = Math.ceil(count / itemsPerPage)
-          return (
-            <>
-              {results.length ? (
-                <>
-                  <InvestmentList
-                    data-test="my-investment-projects-list"
-                    items={results}
-                    isPaginated={totalPages > 1}
-                    showDetails={showDetails}
-                  />
-                  <Pagination
-                    totalPages={totalPages}
-                    activePage={page}
-                    onPageClick={onPaginationClick}
-                  />
-                </>
-              ) : (
-                <StyledParagraph>No investment projects</StyledParagraph>
-              )}
-            </>
-          )
-        }}
-      </Task.Status>
-    </StyledListContainer>
-  </article>
-)
+        <InvestmentListSelect
+          id="my-projects-stage-label"
+          input={{ id: 'my-projects-stage-select' }}
+          data-test="stage-select"
+          label="Stage"
+          options={STAGE_OPTIONS}
+          initialValue={stage}
+          onChange={(event) => onStageChange(event.target.value)}
+        />
+        <InvestmentListSelect
+          id="my-projects-status-label"
+          input={{ id: 'my-projects-status-select' }}
+          data-test="status-select"
+          label="Status"
+          options={PROJECT_STATUS_OPTIONS}
+          initialValue={status}
+          onChange={(event) => onStatusChange(event.target.value)}
+        />
+        <InvestmentListSelect
+          id="my-projects-land-date-label"
+          input={{ id: 'my-projects-land-date-select' }}
+          data-test="land-date-select"
+          label="Land date"
+          options={landDateOptions}
+          initialValue={landDate}
+          onChange={(event) => onLandDateChange(event.target.value)}
+        />
+        <InvestmentListSelect
+          id="my-projects-sort-label"
+          input={{ id: 'my-projects-sort-select' }}
+          data-test="sort-select"
+          label="Sort"
+          options={SORT_OPTIONS}
+          initialValue={sort}
+          onChange={(event) => onSortChange(event.target.value)}
+        />
+      </StyledHeader>
+      <StyledListContainer>
+        <Task.Status
+          name={TASK_GET_MY_INVESTMENTS_LIST}
+          id={ID}
+          progressMessage="Loading your investment projects"
+          startOnRender={{
+            payload: {
+              adviser,
+              page,
+              stage,
+              status,
+              landDate,
+              sort,
+            },
+            onSuccessDispatch: MY_INVESTMENTS__LIST_LOADED,
+          }}
+        >
+          {() => {
+            const totalPages = Math.ceil(count / itemsPerPage)
+            return (
+              <>
+                {results.length ? (
+                  <>
+                    <InvestmentList
+                      data-test="my-investment-projects-list"
+                      items={results}
+                      isPaginated={totalPages > 1}
+                      showDetails={showDetails}
+                    />
+                    <Pagination
+                      totalPages={totalPages}
+                      activePage={page}
+                      onPageClick={onPaginationClick}
+                    />
+                  </>
+                ) : (
+                  <StyledParagraph>No investment projects</StyledParagraph>
+                )}
+              </>
+            )
+          }}
+        </Task.Status>
+      </StyledListContainer>
+    </article>
+  )
+}
 
 MyInvestmentProjects.propTypes = {
   results: PropTypes.array.isRequired,
@@ -201,39 +186,73 @@ MyInvestmentProjects.propTypes = {
 }
 
 export default connect(state2props, (dispatch) => ({
+  onLoad: () => {
+    dispatch({
+      type: MY_INVESTMENTS__GET_FROM_SESSION,
+    })
+  },
   onShowDetailsChange: (showDetails) => {
     dispatch({
       type: MY_INVESTMENTS__SHOW_DETAILS_CHANGE,
       showDetails,
     })
   },
-  onStageChange: (stage) =>
+  onStageChange: (stage) => {
     dispatch({
       type: MY_INVESTMENTS__STAGE_CHANGE,
       stage,
       page: 1,
-    }),
-  onStatusChange: (status) =>
+    })
+    dispatch({
+      type: MY_INVESTMENTS__SAVE_TO_SESSION,
+      stage,
+      page: 1,
+    })
+  },
+  onStatusChange: (status) => {
     dispatch({
       type: MY_INVESTMENTS__STATUS_CHANGE,
       status,
       page: 1,
-    }),
-  onLandDateChange: (landDate) =>
+    })
+    dispatch({
+      type: MY_INVESTMENTS__SAVE_TO_SESSION,
+      status,
+      page: 1,
+    })
+  },
+  onLandDateChange: (landDate) => {
     dispatch({
       type: MY_INVESTMENTS__LAND_DATE_CHANGE,
       landDate,
       page: 1,
-    }),
-  onSortChange: (sort) =>
+    })
+    dispatch({
+      type: MY_INVESTMENTS__SAVE_TO_SESSION,
+      landDate,
+      page: 1,
+    })
+  },
+  onSortChange: (sort) => {
     dispatch({
       type: MY_INVESTMENTS__SORT_CHANGE,
       sort,
       page: 1,
-    }),
-  onPaginationClick: (page) =>
+    })
+    dispatch({
+      type: MY_INVESTMENTS__SAVE_TO_SESSION,
+      sort,
+      page: 1,
+    })
+  },
+  onPaginationClick: (page) => {
     dispatch({
       type: MY_INVESTMENTS__PAGINATION_CLICK,
       page,
-    }),
+    })
+    dispatch({
+      type: MY_INVESTMENTS__SAVE_TO_SESSION,
+      page,
+    })
+  },
 }))(MyInvestmentProjects)

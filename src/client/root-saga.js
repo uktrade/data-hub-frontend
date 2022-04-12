@@ -7,6 +7,10 @@ import {
   writeFlashMessages,
   readFlashMesages,
 } from './components/LocalHeader/sagas'
+import {
+  writeMyInvestmentsToSession,
+  readMyInvestmentsFromSession,
+} from './components/MyInvestmentProjects/sagas'
 
 export default (tasks) => {
   return function* rootSaga() {
@@ -15,5 +19,7 @@ export default (tasks) => {
     yield fork(hardRedirectSaga)
     yield fork(readFlashMesages)
     yield fork(writeFlashMessages)
+    yield fork(readMyInvestmentsFromSession)
+    yield fork(writeMyInvestmentsToSession)
   }
 }
