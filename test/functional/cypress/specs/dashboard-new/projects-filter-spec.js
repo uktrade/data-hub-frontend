@@ -99,4 +99,55 @@ describe('Dashboard - my projects list filters', () => {
       })
     })
   })
+
+  context('When the user leaves the page and comes back', () => {
+    beforeEach(() => {
+      cy.intercept('POST', '/api-proxy/v3/search/investment_project').as(
+        'apiRequest'
+      )
+      cy.visit('/')
+      cy.wait('@apiRequest')
+    })
+
+    it('should persist filter by stage', () => {
+      cy.get('[data-test="stage-select"] select').select('Prospect')
+      cy.wait('@apiRequest')
+      cy.visit('/companies')
+      cy.visit('/')
+      cy.get('[data-test="stage-select"] select')
+        .find(':selected')
+        .contains('Prospect')
+    })
+
+    it('should persist filter by status', () => {
+      cy.get('[data-test="status-select"] select').select('Ongoing')
+      cy.wait('@apiRequest')
+      cy.visit('/companies')
+      cy.visit('/')
+      cy.get('[data-test="status-select"] select')
+        .find(':selected')
+        .contains('Ongoing')
+    })
+
+    it('should persist filter by land date', () => {
+      const financialYearStart = getFinancialYearStart(new Date()).toString()
+      cy.get('[data-test="land-date-select"] select').select(financialYearStart)
+      cy.wait('@apiRequest')
+      cy.visit('/companies')
+      cy.visit('/')
+      cy.get('[data-test="land-date-select"] select')
+        .find(':selected')
+        .contains(financialYearStart)
+    })
+
+    it('should persist sort by', () => {
+      cy.get('[data-test="sort-select"] select').select('Latest land date')
+      cy.wait('@apiRequest')
+      cy.visit('/companies')
+      cy.visit('/')
+      cy.get('[data-test="sort-select"] select')
+        .find(':selected')
+        .contains('Latest land date')
+    })
+  })
 })
