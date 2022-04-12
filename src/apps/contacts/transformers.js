@@ -108,8 +108,6 @@ function transformContactToView(
     address_postcode,
     address_area,
     address_country,
-    telephone_alternative,
-    email_alternative,
     notes,
     address_same_as_company,
   },
@@ -118,8 +116,6 @@ function transformContactToView(
   const viewRecord = {
     job_title,
     email,
-    telephone_alternative,
-    email_alternative,
     notes,
     full_telephone_number,
     email_marketing: accepts_dit_email_marketing
