@@ -37,8 +37,6 @@ function getContactAsFormData(contact) {
     address_county: contact.address_county,
     address_postcode: contact.address_postcode,
     address_country: getPropertyId(contact, 'address_country'),
-    telephone_alternative: contact.telephone_alternative,
-    email_alternative: contact.email_alternative,
     notes: contact.notes,
   }
 

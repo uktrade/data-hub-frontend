@@ -164,11 +164,9 @@ describe('Contact transformers', () => {
         expect(this.view).to.have.ordered.keys([
           'Job title',
           'Phone number',
-          'Alternative telephone',
           'Address',
           'Email',
-          'Alternative email',
-          'Notes',
+          'More details',
           'Email marketing',
         ])
       })
@@ -180,23 +178,12 @@ describe('Contact transformers', () => {
         )
       })
 
-      it('should return the alternative phone number', () => {
-        expect(this.view).to.have.property('Alternative telephone', '666555444')
-      })
-
       it('should return the main email', () => {
         expect(this.view).to.have.property('Email', 'Rebecca.Lowe@example.com')
       })
 
-      it('should return the alternative email', () => {
-        expect(this.view).to.have.property(
-          'Alternative email',
-          'Lowe.Rebecca@example.com'
-        )
-      })
-
       it('should return the notes', () => {
-        expect(this.view).to.have.property('Notes', 'ProductRebecca')
+        expect(this.view).to.have.property('More details', 'ProductRebecca')
       })
     })
 

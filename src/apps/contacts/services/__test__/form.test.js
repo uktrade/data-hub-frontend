@@ -34,8 +34,6 @@ describe('contact form service', () => {
       email: 'zboasdaan@opasdasdov.com',
       accepts_dit_email_marketing: true,
       address_same_as_company: false,
-      telephone_alternative: '999',
-      email_alternative: 'fred@me.com',
       notes: 'Some notes',
       archived_by: null,
       title: {
@@ -70,8 +68,6 @@ describe('contact form service', () => {
         address_county: 'CA',
         address_postcode: '94043',
         address_country: '81756b9a-5d95-e211-a939-e4115bead28a',
-        telephone_alternative: '999',
-        email_alternative: 'fred@me.com',
         notes: 'Some notes',
       }
 
@@ -110,8 +106,6 @@ describe('contact form service', () => {
         address_county: null,
         address_postcode: null,
         address_country: null,
-        telephone_alternative: '999',
-        email_alternative: 'fred@me.com',
         notes: 'Some notes',
         accepts_dit_email_marketing: true,
       }

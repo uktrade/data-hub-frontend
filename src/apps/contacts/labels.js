@@ -1,11 +1,9 @@
 const contactDetailsLabels = {
   job_title: 'Job title',
   full_telephone_number: 'Phone number',
-  telephone_alternative: 'Alternative telephone',
   address: 'Address',
   email: 'Email',
-  email_alternative: 'Alternative email',
-  notes: 'Notes',
+  notes: 'More details',
   email_marketing: 'Email marketing',
 }
 
@@ -17,9 +15,7 @@ const contactAuditLabels = {
   email: 'Email',
   email_marketing: 'Email marketing',
   address: 'Address',
-  telephone_alternative: 'Alternative telephone',
-  email_alternative: 'Alternative email',
-  notes: 'Notes',
+  notes: 'More details',
   address_same_as_company: 'Address same as company',
   first_name: 'First name',
   last_name: 'Last name',
