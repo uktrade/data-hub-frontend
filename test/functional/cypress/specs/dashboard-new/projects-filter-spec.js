@@ -32,6 +32,8 @@ describe('Dashboard - my projects list filters', () => {
     cy.resetUser()
   })
 
+  beforeEach(() => cy.clearSessionStorage())
+
   context('When a filter is applied and there are zero projects', () => {
     before(() => {
       cy.intercept('POST', '/api-proxy/v3/search/investment_project', (req) => {
