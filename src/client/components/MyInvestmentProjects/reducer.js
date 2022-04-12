@@ -6,6 +6,7 @@ import {
   MY_INVESTMENTS__LAND_DATE_CHANGE,
   MY_INVESTMENTS__PAGINATION_CLICK,
   MY_INVESTMENTS__SHOW_DETAILS_CHANGE,
+  MY_INVESTMENTS__ADD_TO_STATE,
 } from '../../actions'
 
 const ALL_STAGES = 'all-stages'
@@ -28,7 +29,17 @@ const initialState = {
 
 export default (
   state = initialState,
-  { type, result, page, stage, status, landDate, sort, showDetails }
+  {
+    type,
+    result,
+    page,
+    stage,
+    status,
+    landDate,
+    sort,
+    showDetails,
+    sessionState,
+  }
 ) => {
   switch (type) {
     case MY_INVESTMENTS__LIST_LOADED:
@@ -51,6 +62,8 @@ export default (
       return { ...state, page }
     case MY_INVESTMENTS__SHOW_DETAILS_CHANGE:
       return { ...state, showDetails }
+    case MY_INVESTMENTS__ADD_TO_STATE:
+      return { ...state, ...sessionState }
     default:
       return state
   }

@@ -289,3 +289,7 @@ Cypress.Commands.add('setModulePermissions', (permissions) => {
     permissions,
   })
 })
+
+Cypress.Commands.add('clearSessionStorage', () => {
+  cy.window().then((win) => win.sessionStorage.clear())
+})
