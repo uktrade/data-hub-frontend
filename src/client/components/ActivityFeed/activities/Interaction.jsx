@@ -19,6 +19,16 @@ import InteractionUtils from './InteractionUtils'
 import { FONT_SIZE } from '@govuk-react/constants'
 import { GREY_1 } from 'govuk-colours'
 
+const dummyActivityData = [
+  { label: 'Date', value: '20 March 2022' },
+  { label: 'Communication channel', value: 'Email' },
+  { label: 'Adviser(s)', value: 'Dolly Parton' },
+  {
+    label: 'Service',
+    value:
+      'A Specific DIT Export Service or Funding : European Regional Development Fund (ERDF)',
+  },
+]
 export default class Interaction extends React.PureComponent {
   static propTypes = {
     activity: PropTypes.object.isRequired,
@@ -46,14 +56,11 @@ export default class Interaction extends React.PureComponent {
     const company = showDnbHierarchy && CardUtils.getCompany(activity)
     const contacts = CardUtils.getContacts(activity)
     const advisers = CardUtils.getAdvisers(activity)
-    // REMOVE THIS LATER
-    // console.log(
-    //   'isContactActivitiesFeatureOn =>>',
-    //   isContactActivitiesFeatureOn
-    // )
 
     const StyledInteractionActivity = styled('div')`
       color: ${GREY_1};
+      font-size: ${FONT_SIZE.SIZE_16};
+      line-height: ${FONT_SIZE.SIZE_24};
     `
 
     const InteractionActivity = ({ rows }) => (
@@ -67,7 +74,7 @@ export default class Interaction extends React.PureComponent {
     )
 
     return isContactActivitiesFeatureOn ? (
-      <InteractionActivity rows={[{ label: 'Date', value: '20 March 2022' }]} />
+      <InteractionActivity rows={dummyActivityData} />
     ) : (
       <Card isUpcoming={transformed.isUpcoming}>
         <CardHeader

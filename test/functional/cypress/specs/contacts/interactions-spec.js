@@ -56,6 +56,26 @@ describe('Contact interactions', () => {
         it('should display the date', () => {
           cy.get('[data-test=interaction-activity]').contains('Date:')
         })
+
+        it('should display the communication channel', () => {
+          cy.get('[data-test=interaction-activity]').contains(
+            'Communication channel:'
+          )
+        })
+
+        it('should display the communication channel', () => {
+          cy.get('[data-test=interaction-activity]').contains(
+            'Communication channel:'
+          )
+        })
+
+        it('should display the advisers', () => {
+          cy.get('[data-test=interaction-activity]').contains('Adviser(s):')
+        })
+
+        it('should display the service', () => {
+          cy.get('[data-test=interaction-activity]').contains('Service:')
+        })
       })
 
       context('when there are more than 10 activities', () => {
