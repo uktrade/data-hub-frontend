@@ -162,12 +162,12 @@ const _Form = ({
         <Analytics>
           {(pushAnalytics) => {
             const analytics = (action, extra) =>
-              pushAnalytics(
-                'Form interaction',
+              pushAnalytics({
+                category: 'Form interaction',
                 action,
-                analyticsFormName,
-                extra
-              )
+                label: analyticsFormName,
+                extra,
+              })
             return (
               <>
                 <FormContextProvider

@@ -1,4 +1,6 @@
+import { omitBy, isUndefined } from 'lodash'
 import { take } from 'redux-saga/effects'
+
 import { ANALYTICS__PUSH } from '../../actions'
 
 /* This saga pushes data, passed when dispatching the ANALYTICS__PUSH
@@ -7,15 +9,21 @@ data layer. */
 
 export default function* () {
   while (true) {
-    const { category, action, label, extra } = yield take(ANALYTICS__PUSH)
+    const { category, action, label, extra, event } = yield take(
+      ANALYTICS__PUSH
+    )
 
     window.dataLayer = window.dataLayer || []
-    window.dataLayer.push({
-      ...extra,
-      event: 'gaEvent',
-      category,
-      action,
-      label,
-    })
+    const data = omitBy(
+      {
+        ...extra,
+        event,
+        category,
+        action,
+        label,
+      },
+      isUndefined
+    )
+    window.dataLayer.push(data)
   }
 }
