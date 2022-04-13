@@ -20,8 +20,8 @@ import FilteredCollectionHeader from './FilteredCollectionHeader'
 /**
  * Prepare filters data to be sent to analytics data layer.
  */
-const filtersToAnalytics = (filters) => {
-  const data = Object.fromEntries(
+const filtersToAnalytics = (filters) =>
+  Object.fromEntries(
     Object.entries(filters)
       .filter(([, value]) => value && value.options && value.options.length)
       .map(([key, value]) => [
@@ -29,8 +29,6 @@ const filtersToAnalytics = (filters) => {
         value.options.map((option) => option.label),
       ])
   )
-  return data
-}
 
 const FilteredCollectionList = ({
   results = [],
