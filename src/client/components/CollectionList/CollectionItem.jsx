@@ -58,6 +58,7 @@ const CollectionItem = ({
   badges,
   metadata,
   metadataRenderer,
+  onClick,
   titleRenderer = null,
   useReactRouter = false,
 }) => (
@@ -77,11 +78,13 @@ const CollectionItem = ({
     ) : headingUrl ? (
       <StyledLinkHeader>
         {useReactRouter ? (
-          <Link as={RouterLink} to={headingUrl}>
+          <Link as={RouterLink} to={headingUrl} onClick={onClick}>
             {headingText}
           </Link>
         ) : (
-          <Link href={headingUrl}>{headingText}</Link>
+          <Link href={headingUrl} onClick={onClick}>
+            {headingText}
+          </Link>
         )}
       </StyledLinkHeader>
     ) : (

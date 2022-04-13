@@ -9,15 +9,28 @@ import { isEmpty } from 'lodash'
 import qs from 'qs'
 
 import Task from '../Task'
+import Analytics from '../Analytics'
 
-import {
-  CollectionSort,
-  CollectionItem,
-  RoutedDownloadDataHeader,
-  FilteredCollectionHeader,
-} from '../../components'
-
+import CollectionItem from '../../components/CollectionList/CollectionItem'
+import CollectionSort from '../../components/CollectionList/CollectionSort'
+import RoutedDownloadDataHeader from '../../components/RoutedDownloadDataHeader'
 import RoutedPagination from '../../components/Pagination/RoutedPagination'
+import FilteredCollectionHeader from './FilteredCollectionHeader'
+
+/**
+ * Prepare filters data to be sent to analytics data layer.
+ */
+const filtersToAnalytics = (filters) => {
+  const data = Object.fromEntries(
+    Object.entries(filters)
+      .filter(([, value]) => value && value.options && value.options.length)
+      .map(([key, value]) => [
+        value?.queryParam || key,
+        value.options.map((option) => option.label),
+      ])
+  )
+  return data
+}
 
 const FilteredCollectionList = ({
   results = [],
@@ -92,12 +105,22 @@ const FilteredCollectionList = ({
                     isComplete && (
                       <ol>
                         {results.map((item) => (
-                          <CollectionItem
-                            {...item}
-                            key={item.id}
-                            titleRenderer={titleRenderer}
-                            useReactRouter={useReactRouter}
-                          />
+                          <Analytics>
+                            {(pushAnalytics) => (
+                              <CollectionItem
+                                {...item}
+                                key={item.id}
+                                titleRenderer={titleRenderer}
+                                useReactRouter={useReactRouter}
+                                onClick={() => {
+                                  pushAnalytics({
+                                    event: 'filterResultClick',
+                                    extra: filtersToAnalytics(selectedFilters),
+                                  })
+                                }}
+                              />
+                            )}
+                          </Analytics>
                         ))}
                       </ol>
                     )
