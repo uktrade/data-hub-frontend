@@ -1,8 +1,8 @@
 import { assign } from 'lodash'
 
 export const saveToSession = (payload) => {
-  const filters = assign(getFromSession(), payload)
-  window.sessionStorage.setItem('myInvestmentProjects', JSON.stringify(filters))
+  const state = assign(getFromSession(), payload)
+  window.sessionStorage.setItem('myInvestmentProjects', JSON.stringify(state))
 }
 
 export const getFromSession = () => {
