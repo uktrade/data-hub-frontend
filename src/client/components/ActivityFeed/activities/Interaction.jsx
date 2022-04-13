@@ -52,18 +52,22 @@ export default class Interaction extends React.PureComponent {
     //   isContactActivitiesFeatureOn
     // )
 
-    // const InteractionActivity = () => (
-    //   <p>Date: </p>
-    // )
-
     const StyledInteractionActivity = styled('div')`
-          color: ${GREY_1};
-      `
+      color: ${GREY_1};
+    `
+
+    const InteractionActivity = ({ rows }) => (
+      <div data-test="interaction-activity">
+        {rows.map(({ label, value }) => (
+          <StyledInteractionActivity>
+            {label}: {value}
+          </StyledInteractionActivity>
+        ))}
+      </div>
+    )
 
     return isContactActivitiesFeatureOn ? (
-      <StyledInteractionActivity>
-        <div>Date: </div>
-      </StyledInteractionActivity>
+      <InteractionActivity rows={[{ label: 'Date', value: '20 March 2022' }]} />
     ) : (
       <Card isUpcoming={transformed.isUpcoming}>
         <CardHeader
