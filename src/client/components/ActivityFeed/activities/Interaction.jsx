@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
+import styled from 'styled-components'
 
 import {
   Card,
@@ -15,6 +16,7 @@ import { ACTIVITY_TYPE } from '../constants'
 
 import CardUtils from './card/CardUtils'
 import InteractionUtils from './InteractionUtils'
+import { FONT_SIZE } from '@govuk-react/constants'
 
 export default class Interaction extends React.PureComponent {
   static propTypes = {
@@ -44,12 +46,26 @@ export default class Interaction extends React.PureComponent {
     const contacts = CardUtils.getContacts(activity)
     const advisers = CardUtils.getAdvisers(activity)
     // REMOVE THIS LATER
-    console.log(
-      'isContactActivitiesFeatureOn =>>',
-      isContactActivitiesFeatureOn
+    // console.log(
+    //   'isContactActivitiesFeatureOn =>>',
+    //   isContactActivitiesFeatureOn
+    // )
+
+    const InteractionActivity = () => (
+      <div data-test="interaction-activity">
+        <p> Date: </p>
+      </div>
     )
 
-    return (
+    const StyledInteractionActivity = styled(InteractionActivity)`
+      p {
+        font-size: ${FONT_SIZE.SIZE_14};
+      }
+    `
+
+    return isContactActivitiesFeatureOn ? (
+      <StyledInteractionActivity />
+    ) : (
       <Card isUpcoming={transformed.isUpcoming}>
         <CardHeader
           company={showDnbHierarchy ? company : null}

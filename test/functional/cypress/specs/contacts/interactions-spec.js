@@ -52,6 +52,10 @@ describe('Contact interactions', () => {
           'data-total-pages',
           124
         )
+      context('when viewing an Aventri activity', () => {
+        it('should display the date', () => {
+          cy.get('[data-test=interaction-activity]').contains('Date:')
+        })
       })
 
       context('when there are more than 10 activities', () => {
