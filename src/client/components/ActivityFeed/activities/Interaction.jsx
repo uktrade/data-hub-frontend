@@ -17,6 +17,7 @@ import { ACTIVITY_TYPE } from '../constants'
 import CardUtils from './card/CardUtils'
 import InteractionUtils from './InteractionUtils'
 import { FONT_SIZE } from '@govuk-react/constants'
+import { GREY_1 } from 'govuk-colours'
 
 export default class Interaction extends React.PureComponent {
   static propTypes = {
@@ -51,20 +52,18 @@ export default class Interaction extends React.PureComponent {
     //   isContactActivitiesFeatureOn
     // )
 
-    const InteractionActivity = () => (
-      <div data-test="interaction-activity">
-        <p> Date: </p>
-      </div>
-    )
+    // const InteractionActivity = () => (
+    //   <p>Date: </p>
+    // )
 
-    const StyledInteractionActivity = styled(InteractionActivity)`
-      p {
-        font-size: ${FONT_SIZE.SIZE_14};
-      }
-    `
+    const StyledInteractionActivity = styled('div')`
+          color: ${GREY_1};
+      `
 
     return isContactActivitiesFeatureOn ? (
-      <StyledInteractionActivity />
+      <StyledInteractionActivity>
+        <div>Date: </div>
+      </StyledInteractionActivity>
     ) : (
       <Card isUpcoming={transformed.isUpcoming}>
         <CardHeader
