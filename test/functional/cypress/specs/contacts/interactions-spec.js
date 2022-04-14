@@ -52,9 +52,12 @@ describe('Contact interactions', () => {
           'data-total-pages',
           124
         )
-      context('when viewing an Aventri activity', () => {
+
+      context('when viewing a Data Hub interaction', () => {
         it('should display the date', () => {
-          cy.get('[data-test=interaction-activity]').contains('Date:')
+          cy.get('[data-test=interaction-activity]').contains(
+            'Date: 10 Jun 2019'
+          )
         })
 
         it('should display the communication channel', () => {

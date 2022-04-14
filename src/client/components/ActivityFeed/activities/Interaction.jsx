@@ -18,17 +18,8 @@ import CardUtils from './card/CardUtils'
 import InteractionUtils from './InteractionUtils'
 import { FONT_SIZE } from '@govuk-react/constants'
 import { GREY_1 } from 'govuk-colours'
+import { formatMediumDate } from '../../../utils/date'
 
-const dummyActivityData = [
-  { label: 'Date', value: '20 March 2022' },
-  { label: 'Communication channel', value: 'Email' },
-  { label: 'Adviser(s)', value: 'Dolly Parton' },
-  {
-    label: 'Service',
-    value:
-      'A Specific DIT Export Service or Funding : European Regional Development Fund (ERDF)',
-  },
-]
 export default class Interaction extends React.PureComponent {
   static propTypes = {
     activity: PropTypes.object.isRequired,
@@ -56,6 +47,19 @@ export default class Interaction extends React.PureComponent {
     const company = showDnbHierarchy && CardUtils.getCompany(activity)
     const contacts = CardUtils.getContacts(activity)
     const advisers = CardUtils.getAdvisers(activity)
+
+    const date = formatMediumDate(activity.object.startTime)
+
+    const dummyActivityData = [
+      { label: 'Date', value: date },
+      { label: 'Communication channel', value: 'Email' },
+      { label: 'Adviser(s)', value: 'Dolly Parton' },
+      {
+        label: 'Service',
+        value:
+          'A Specific DIT Export Service or Funding : European Regional Development Fund (ERDF)',
+      },
+    ]
 
     const StyledInteractionActivity = styled('div')`
       color: ${GREY_1};
