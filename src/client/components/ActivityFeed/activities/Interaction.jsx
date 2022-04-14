@@ -53,14 +53,27 @@ export default class Interaction extends React.PureComponent {
     const serviceName = activityObject['dit:service'].name
 
     const formattedAdvisers = () => {
-      let string = ''
-      advisers.map((adviser, index) => {
-        const name = adviser.name
+      return advisers.map((adviser, index) => {
+        const adviserName = adviser.name
+        const email = adviser.emailAddress
         const team = adviser.team ? `, ${adviser.team}` : null
-        const isLastItem = index + 1 === advisers.length
-        string += `${name}${team}${isLastItem ? ', ' : ''}`
+        // const isLastItem = index + 1 === advisers.length
+
+        return (
+          <>
+            <span>
+              {adviserName}&nbsp;
+              <Link
+                data-test={`adviser-email-${index}`}
+                href={`mailto:${email}`}
+              >
+                {email}
+              </Link>
+              {team}
+            </span>
+          </>
+        )
       })
-      return string
     }
 
     const dummyActivityData = [
@@ -83,7 +96,7 @@ export default class Interaction extends React.PureComponent {
       <div data-test="interaction-activity">
         {rows.map(({ label, value }) => (
           <StyledInteractionActivity>
-            {label}: {value}
+            <span>{label}:</span> {value}
           </StyledInteractionActivity>
         ))}
       </div>
