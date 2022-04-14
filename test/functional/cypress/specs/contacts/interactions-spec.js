@@ -66,14 +66,10 @@ describe('Contact interactions', () => {
           )
         })
 
-        it('should display the communication channel', () => {
-          cy.get('[data-test=interaction-activity]').contains(
-            'Communication channel:'
-          )
-        })
-
         it('should display the advisers', () => {
-          cy.get('[data-test=interaction-activity]').contains('Adviser(s):')
+          cy.get('[data-test=interaction-activity]').contains(
+            'Adviser(s): Brendan Smith, Digital Data Hub - Live Service'
+          )
         })
 
         it('should display the service', () => {

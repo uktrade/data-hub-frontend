@@ -52,10 +52,21 @@ export default class Interaction extends React.PureComponent {
     const date = formatMediumDate(activityObject.startTime)
     const serviceName = activityObject['dit:service'].name
 
+    const formattedAdvisers = () => {
+      let string = ''
+      advisers.map((adviser, index) => {
+        const name = adviser.name
+        const team = adviser.team ? `, ${adviser.team}` : null
+        const isLastItem = index + 1 === advisers.length
+        string += `${name}${team}${isLastItem ? ', ' : ''}`
+      })
+      return string
+    }
+
     const dummyActivityData = [
       { label: 'Date', value: date },
       { label: 'Communication channel', value: 'Email' },
-      { label: 'Adviser(s)', value: 'Dolly Parton' },
+      { label: 'Adviser(s)', value: formattedAdvisers() },
       {
         label: 'Service',
         value: serviceName,
