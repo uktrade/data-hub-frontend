@@ -48,7 +48,9 @@ export default class Interaction extends React.PureComponent {
     const contacts = CardUtils.getContacts(activity)
     const advisers = CardUtils.getAdvisers(activity)
 
-    const date = formatMediumDate(activity.object.startTime)
+    const activityObject = activity.object
+    const date = formatMediumDate(activityObject.startTime)
+    const serviceName = activityObject['dit:service'].name
 
     const dummyActivityData = [
       { label: 'Date', value: date },
@@ -56,8 +58,7 @@ export default class Interaction extends React.PureComponent {
       { label: 'Adviser(s)', value: 'Dolly Parton' },
       {
         label: 'Service',
-        value:
-          'A Specific DIT Export Service or Funding : European Regional Development Fund (ERDF)',
+        value: serviceName,
       },
     ]
 
