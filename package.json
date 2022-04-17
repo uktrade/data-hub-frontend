@@ -169,7 +169,7 @@
     "@storybook/addon-controls": "^6.4.21",
     "@storybook/addons": "^6.4.21",
     "@storybook/builder-webpack5": "^6.4.21",
-    "@storybook/manager-webpack5": "^6.4.21",
+    "@storybook/manager-webpack5": "^6.4.22",
     "@storybook/react": "^6.4.21",
     "babel-loader": "^8.2.3",
     "babel-plugin-istanbul": "6.1.1",
