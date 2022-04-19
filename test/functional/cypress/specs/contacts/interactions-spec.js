@@ -54,6 +54,12 @@ describe('Contact interactions', () => {
         )
 
       context('when viewing a Data Hub interaction', () => {
+        it('should display the subject', () => {
+          cy.get('[data-test=interaction-activity]').contains(
+            'Meeting between Brendan Smith and Tyson Morar'
+          )
+        })
+
         it('should display the date', () => {
           cy.get('[data-test=interaction-activity]').contains(
             'Date: 10 Jun 2019'

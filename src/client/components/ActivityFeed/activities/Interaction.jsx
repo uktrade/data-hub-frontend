@@ -20,8 +20,8 @@ import { ACTIVITY_TYPE } from '../constants'
 
 import CardUtils from './card/CardUtils'
 import InteractionUtils from './InteractionUtils'
-import { FONT_SIZE } from '@govuk-react/constants'
-import { GREY_1 } from 'govuk-colours'
+import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
+import { BLUE, GREY_1 } from 'govuk-colours'
 import { formatMediumDate } from '../../../utils/date'
 
 export default class Interaction extends React.PureComponent {
@@ -76,8 +76,25 @@ export default class Interaction extends React.PureComponent {
       line-height: ${FONT_SIZE.SIZE_24};
     `
 
+    const StyledSubject = styled('H3')`
+      font-size: ${FONT_SIZE.SIZE_20};
+      font-weight: ${FONT_WEIGHTS.bold};
+      line-height: ${FONT_SIZE.SIZE_24};
+      margin-bottom: ${SPACING.SCALE_2};
+      & > a:link,
+      a:visited,
+      a:hover,
+      a:active {
+        text-decoration: none;
+        color: ${BLUE};
+      }
+    `
+
     const InteractionActivity = () => (
       <div data-test="interaction-activity">
+        <StyledSubject>
+          <Link href={transformed.url}>{transformed.subject}</Link>
+        </StyledSubject>
         {metadata.map(({ label, value }) => (
           <StyledMetadata>
             <span>{label}:</span> {value}
