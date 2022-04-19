@@ -66,7 +66,7 @@ ENV npm_config_prefix=$HOME/.local
 
 COPY --chown=1000:1000 package.json .
 COPY --chown=1000:1000 package-lock.json .
-RUN npm install -g cypress@9.5.3
+RUN npm install -g cypress@9.5.4
 RUN cypress verify
 
 RUN cypress cache path
