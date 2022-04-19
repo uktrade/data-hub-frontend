@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
 import urls from '../../../../lib/urls'
 import {
   CollectionFilters,
@@ -49,7 +48,6 @@ const ProjectsCollection = ({
   const adviserListTask = {
     name: TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME,
     id: INVESTMENT_PROJECTS_ID,
-    progressMessage: 'Loading advisers',
     startOnRender: {
       payload: payload.adviser,
       onSuccessDispatch: INVESTMENTS__PROJECTS_SELECTED_ADVISERS,

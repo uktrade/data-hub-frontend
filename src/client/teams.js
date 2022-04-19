@@ -1,3 +1,4 @@
+import axios from 'axios'
 import urls from '../lib/urls'
 import { apiProxyAxios } from './components/Task/utils'
 
@@ -8,14 +9,14 @@ export const getTeamNames = (team) => {
 
   const teams = Array.isArray(team) ? team : [team]
 
-  return apiProxyAxios
+  return axios
     .all(
       teams.map((teamId) =>
         apiProxyAxios.get(`${urls.metadata.team()}?id=${teamId}`)
       )
     )
     .then(
-      apiProxyAxios.spread((...responses) =>
+      axios.spread((...responses) =>
         responses.map(({ data }) => ({
           teams: data[0],
         }))

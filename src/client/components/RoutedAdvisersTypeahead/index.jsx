@@ -32,7 +32,7 @@ const RoutedAdvisersTypeahead = ({
   loadOptions = fetchAdvisers(onlyShowActiveAdvisers),
   ...props
 }) => (
-  <Task.Status {...taskProps}>
+  <Task.Status {...taskProps} progressOverlay={true}>
     {() => (
       <RoutedTypeahead
         loadOptions={loadOptions}

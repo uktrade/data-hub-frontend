@@ -62,7 +62,6 @@ const InteractionCollection = ({
   const adviserListTask = {
     name: TASK_GET_INTERACTIONS_ADVISER_NAME,
     id: ID,
-    progressMessage: 'Loading advisers',
     startOnRender: {
       payload: payload.dit_participants__adviser,
       onSuccessDispatch: INTERACTIONS_SELECTED_ADVISERS,
@@ -101,7 +100,6 @@ const InteractionCollection = ({
   const teamListTask = {
     name: TASK_GET_INTERACTIONS_TEAM_NAME,
     id: ID,
-    progressMessage: 'Loading teams',
     startOnRender: {
       payload: payload.dit_participants__team,
       onSuccessDispatch: INTERACTIONS_SELECTED_TEAMS,

@@ -69,7 +69,6 @@ const EventsCollection = ({
   const organisersTask = {
     name: TASK_GET_EVENTS_ORGANISER_NAME,
     id: ID,
-    progressMessage: 'Loading organisers',
     startOnRender: {
       payload: payload.organiser,
       onSuccessDispatch: EVENTS__SELECTED_ORGANISER,

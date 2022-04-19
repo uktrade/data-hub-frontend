@@ -30,7 +30,7 @@ describe('Referral details', () => {
     })
 
     it('should render the content and elements in order', () => {
-      cy.get('#referral-details > table')
+      cy.get('#referral-details > div > table')
         .eq(0)
         .find('caption')
         .should('have.text', 'I am a subject')
@@ -127,7 +127,7 @@ describe('Referral details', () => {
     })
 
     it('should render the content and elements in order', () => {
-      cy.get('#referral-details > table')
+      cy.get('#referral-details > div > table')
         .eq(0)
         .find('caption')
         .should('have.text', 'I am a subject')

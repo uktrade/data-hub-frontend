@@ -35,7 +35,7 @@ const RoutedTeamsTypeahead = ({
   loadOptions = fetchTeams(),
   ...props
 }) => (
-  <Task.Status {...taskProps}>
+  <Task.Status {...taskProps} progressOverlay={true}>
     {() => (
       <RoutedTypeahead
         loadOptions={loadOptions}
