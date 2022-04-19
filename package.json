@@ -176,7 +176,7 @@
     "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
     "chai-subset": "^1.6.0",
-    "cypress": "^9.5.3",
+    "cypress": "^9.5.4",
     "cypress-image-diff-js": "1.16.4",
     "eslint": "^8.12.0",
     "eslint-config-prettier": "^8.5.0",
