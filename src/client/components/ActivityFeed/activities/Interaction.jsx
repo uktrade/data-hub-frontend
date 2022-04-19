@@ -55,6 +55,9 @@ export default class Interaction extends React.PureComponent {
     const activityObject = activity.object
     const date = formatMediumDate(activityObject.startTime)
     const serviceName = activityObject['dit:service'].name
+    const serviceNotes =
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+    const COUNT_NOTES = 255
 
     const formattedAdvisers = () => {
       return advisers.map((adviser) => <>{AdviserActivityRenderer(adviser)}</>)
@@ -90,11 +93,29 @@ export default class Interaction extends React.PureComponent {
       }
     `
 
+    const StyledNotes = styled('div')`
+      font-size: ${FONT_SIZE.SIZE_16};
+      font-weight: ${FONT_WEIGHTS.regular};
+      line-height: ${FONT_SIZE.SIZE_24};
+      margin-bottom: ${SPACING.SCALE_1};
+    `
+
     const InteractionActivity = () => (
       <div data-test="interaction-activity">
         <StyledSubject>
           <Link href={transformed.url}>{transformed.subject}</Link>
         </StyledSubject>
+
+        <StyledNotes>
+          {serviceNotes.length < COUNT_NOTES
+            ? serviceNotes
+            : serviceNotes
+                .slice(0, COUNT_NOTES)
+                .split(' ')
+                .slice(0, -1)
+                .join(' ') + ' ...'}{' '}
+        </StyledNotes>
+
         {metadata.map(({ label, value }) => (
           <StyledMetadata>
             <span>{label}:</span> {value}
