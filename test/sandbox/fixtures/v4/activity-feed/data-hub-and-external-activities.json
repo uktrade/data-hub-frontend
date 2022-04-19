@@ -91,6 +91,23 @@
                 ]
               },
               {
+                "dit:emailAddress": "Dolly.Parton@trade.gov.uk",
+                "dit:team": {
+                  "id": "dit:DataHubTeam:3a48318c-9698-e211-a939-e4115bead28a",
+                  "name": "Digital Data Hub - Live Service",
+                  "type": [
+                    "Group",
+                    "dit:Team"
+                  ]
+                },
+                "id": "dit:DataHubAdviser:8891ec72-b4ec-4977-9656-839346bc7122",
+                "name": "Dolly Long Middle Name Parton",
+                "type": [
+                  "Person",
+                  "dit:Adviser"
+                ]
+              },
+              {
                 "dit:emailAddress": "Tyson.Morar@example.com",
                 "dit:jobTitle": "Product Metrics Associate",
                 "id": "dit:DataHubContact:e2eee6cd-acf6-454a-a4a8-f6c8fa604fde",
