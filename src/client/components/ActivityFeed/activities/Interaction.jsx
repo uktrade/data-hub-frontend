@@ -11,7 +11,11 @@ import {
   CardDetailsList,
 } from './card'
 
-import { ContactItemRenderer, AdviserItemRenderer } from './card/item-renderers'
+import {
+  ContactItemRenderer,
+  AdviserActivityRenderer,
+  AdviserItemRenderer,
+} from './card/item-renderers'
 import { ACTIVITY_TYPE } from '../constants'
 
 import CardUtils from './card/CardUtils'
@@ -53,27 +57,7 @@ export default class Interaction extends React.PureComponent {
     const serviceName = activityObject['dit:service'].name
 
     const formattedAdvisers = () => {
-      return advisers.map((adviser, index) => {
-        const adviserName = adviser.name
-        const email = adviser.emailAddress
-        const team = adviser.team ? `, ${adviser.team}` : null
-        // const isLastItem = index + 1 === advisers.length
-
-        return (
-          <>
-            <span>
-              {adviserName}&nbsp;
-              <Link
-                data-test={`adviser-email-${index}`}
-                href={`mailto:${email}`}
-              >
-                {email}
-              </Link>
-              {team}
-            </span>
-          </>
-        )
-      })
+      return advisers.map((adviser) => <>{AdviserActivityRenderer(adviser)}</>)
     }
 
     const dummyActivityData = [

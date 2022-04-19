@@ -67,15 +67,12 @@ describe('Contact interactions', () => {
         })
 
         it('should display the advisers with email', () => {
-          cy.get('[data-test=interaction-activity]').contains(
-            'Adviser(s): Brendan Smith Brendan.Smith@trade.gov.uk, Digital Data Hub - Live Service'
-          )
-
-          cy.get('[data-test=adviser-email-0]').should(
-            'have.attr',
-            'href',
-            'mailto:Brendan.Smith@trade.gov.uk'
-          )
+          cy.get('[data-test=interaction-activity]')
+            .contains(
+              'Adviser(s): Brendan Smith Brendan.Smith@trade.gov.uk, Digital Data Hub - Live Service'
+            )
+            .contains('a', 'Brendan.Smith@trade.gov.uk')
+            .should('have.attr', 'href', 'mailto:Brendan.Smith@trade.gov.uk')
         })
 
         it('should display the service', () => {
