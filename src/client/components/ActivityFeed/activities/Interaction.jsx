@@ -60,7 +60,7 @@ export default class Interaction extends React.PureComponent {
       return advisers.map((adviser) => <>{AdviserActivityRenderer(adviser)}</>)
     }
 
-    const dummyActivityData = [
+    const metadata = [
       { label: 'Date', value: date },
       { label: 'Communication channel', value: 'Email' },
       { label: 'Adviser(s)', value: formattedAdvisers() },
@@ -70,24 +70,24 @@ export default class Interaction extends React.PureComponent {
       },
     ]
 
-    const StyledInteractionActivity = styled('div')`
+    const StyledMetadata = styled('div')`
       color: ${GREY_1};
       font-size: ${FONT_SIZE.SIZE_14};
       line-height: ${FONT_SIZE.SIZE_24};
     `
 
-    const InteractionActivity = ({ rows }) => (
+    const InteractionActivity = () => (
       <div data-test="interaction-activity">
-        {rows.map(({ label, value }) => (
-          <StyledInteractionActivity>
+        {metadata.map(({ label, value }) => (
+          <StyledMetadata>
             <span>{label}:</span> {value}
-          </StyledInteractionActivity>
+          </StyledMetadata>
         ))}
       </div>
     )
 
     return isContactActivitiesFeatureOn ? (
-      <InteractionActivity rows={dummyActivityData} />
+      <InteractionActivity />
     ) : (
       <Card isUpcoming={transformed.isUpcoming}>
         <CardHeader
