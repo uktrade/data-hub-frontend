@@ -88,7 +88,7 @@ export default class Interaction extends React.PureComponent {
 
     const StyledInteractionActivity = styled('div')`
       color: ${GREY_1};
-      font-size: ${FONT_SIZE.SIZE_16};
+      font-size: ${FONT_SIZE.SIZE_14};
       line-height: ${FONT_SIZE.SIZE_24};
     `
 
