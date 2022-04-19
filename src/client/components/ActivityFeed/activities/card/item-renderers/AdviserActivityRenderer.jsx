@@ -11,7 +11,7 @@ const AdviserActivityRenderer = (item) => {
 
   return (
     <>
-      {name} {emailAddress}, {team}
+      {name} {emailAddress}, {team} <br />
     </>
   )
 }
