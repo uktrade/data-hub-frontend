@@ -36,4 +36,6 @@ The `react-dom` and `react` packages should, where possible, be kept at the same
 
 ### Storybook / Nivo
 
-When one of the `@storybook` dependencies is updated, the others need to be updated so they are all on the same version. The same principle applies to the `@nivo` dependencies.
+When one of the `@storybook` dependencies is updated, the others need to be updated so they are all on the same version. This can be done with the script `storybook:update-dependencies`, which will set all Storybook dependencies to the latest version.
+
+The same principle applies to the `@nivo` dependencies.
