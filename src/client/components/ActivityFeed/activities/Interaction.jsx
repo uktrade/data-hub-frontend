@@ -104,11 +104,26 @@ export default class Interaction extends React.PureComponent {
       margin-bottom: ${SPACING.SCALE_1};
     `
 
+    const ListItemTagRow = styled('div')({
+      display: 'inline-block',
+      paddingBottom: SPACING.SCALE_4,
+      marginRight: SPACING.SCALE_1,
+    })
+
     const InteractionActivity = () => (
       <div data-test="interaction-activity">
-        <Tag data-test="interaction-activity-kind-label" colour="grey">
-          {kind}
-        </Tag>
+        <ListItemTagRow>
+          <Tag data-test="interaction-activity-kind-label" colour="default">
+            {kind}
+          </Tag>
+          <Tag data-test="interaction-activity-kind-label" colour="blue">
+            {kind}
+          </Tag>
+          <Tag data-test="interaction-activity-kind-label" colour="grey">
+            {kind}
+          </Tag>
+        </ListItemTagRow>
+
         <StyledSubject>
           <Link href={transformed.url}>{transformed.subject}</Link>
         </StyledSubject>
