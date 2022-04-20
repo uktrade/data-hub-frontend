@@ -85,6 +85,7 @@ export default class Interaction extends React.PureComponent {
       font-size: ${FONT_SIZE.SIZE_20};
       font-weight: ${FONT_WEIGHTS.bold};
       line-height: ${FONT_SIZE.SIZE_24};
+      margin-top: ${SPACING.SCALE_2};
       margin-bottom: ${SPACING.SCALE_2};
       & > a:link,
       a:visited,
@@ -102,20 +103,22 @@ export default class Interaction extends React.PureComponent {
       margin-bottom: ${SPACING.SCALE_1};
     `
 
-    const StyledKindLabel = styled('div')`
+    const StyledKindLabel = styled('span')`
       height: 24px;
       color: #383f43;
       font-family: Arial;
       font-size: 16px;
       font-weight: 700;
       line-height: 18px;
+      background-color: #eeefef;
+      padding: 4px 8px;
     `
 
     const InteractionActivity = () => (
       <div data-test="interaction-activity">
-        <div data-test="interaction-activity-kind-label">
-          <StyledKindLabel>{kind}</StyledKindLabel>
-        </div>
+        <StyledKindLabel data-test="interaction-activity-kind-label">
+          {kind}
+        </StyledKindLabel>
         <StyledSubject>
           <Link href={transformed.url}>{transformed.subject}</Link>
         </StyledSubject>
