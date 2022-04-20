@@ -52,6 +52,7 @@ describe('Contact interactions', () => {
           'data-total-pages',
           124
         )
+      })
 
       context('when viewing a Data Hub interaction', () => {
         it('should display the subject', () => {
