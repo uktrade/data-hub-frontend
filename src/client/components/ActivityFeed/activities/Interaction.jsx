@@ -54,6 +54,8 @@ export default class Interaction extends React.PureComponent {
 
     const activityObject = activity.object
     const date = formatMediumDate(activityObject.startTime)
+
+    const kind = 'SERVICE DELIVERY'
     const serviceName = activityObject['dit:service'].name
     const serviceNotes =
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
@@ -100,8 +102,20 @@ export default class Interaction extends React.PureComponent {
       margin-bottom: ${SPACING.SCALE_1};
     `
 
+    const StyledKindLabel = styled('div')`
+      height: 24px;
+      color: #383f43;
+      font-family: Arial;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 18px;
+    `
+
     const InteractionActivity = () => (
       <div data-test="interaction-activity">
+        <div data-test="interaction-activity-kind-label">
+          <StyledKindLabel>{kind}</StyledKindLabel>
+        </div>
         <StyledSubject>
           <Link href={transformed.url}>{transformed.subject}</Link>
         </StyledSubject>

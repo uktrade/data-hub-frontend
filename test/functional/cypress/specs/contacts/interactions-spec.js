@@ -46,8 +46,8 @@ describe('Contact interactions', () => {
       })
 
       it('should display the expected number of pages', () => {
-        cy.get('[data-test=pagination-summary').contains('Page 1 of 124')
-        cy.get('[data-test=pagination').should(
+        cy.get('[data-test=pagination-summary]').contains('Page 1 of 124')
+        cy.get('[data-test=pagination]').should(
           'have.attr',
           'data-total-pages',
           124
@@ -55,6 +55,12 @@ describe('Contact interactions', () => {
       })
 
       context('when viewing a Data Hub interaction', () => {
+        it('should display interaction activity kind label', () => {
+          cy.get('[data-test=interaction-activity-kind-label]').contains(
+            'SERVICE DELIVERY'
+          )
+        })
+
         it('should display the subject', () => {
           cy.get('[data-test=interaction-activity]').contains(
             'Meeting between Brendan Smith and Tyson Morar'
