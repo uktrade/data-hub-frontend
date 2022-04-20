@@ -57,7 +57,7 @@ describe('Contact interactions', () => {
       context('when viewing a Data Hub interaction', () => {
         it('should display interaction activity kind label', () => {
           cy.get('[data-test=interaction-activity-kind-label]').contains(
-            'SERVICE DELIVERY'
+            'INTERACTION'
           )
         })
 

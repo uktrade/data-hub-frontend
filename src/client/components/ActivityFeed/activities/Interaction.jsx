@@ -23,6 +23,7 @@ import InteractionUtils from './InteractionUtils'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import { BLUE, GREY_1 } from 'govuk-colours'
 import { formatMediumDate } from '../../../utils/date'
+import Tag from '../../Tag'
 
 export default class Interaction extends React.PureComponent {
   static propTypes = {
@@ -55,7 +56,7 @@ export default class Interaction extends React.PureComponent {
     const activityObject = activity.object
     const date = formatMediumDate(activityObject.startTime)
 
-    const kind = 'SERVICE DELIVERY'
+    const kind = transformed.typeText.toUpperCase()
     const serviceName = activityObject['dit:service'].name
     const serviceNotes =
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
@@ -103,22 +104,11 @@ export default class Interaction extends React.PureComponent {
       margin-bottom: ${SPACING.SCALE_1};
     `
 
-    const StyledKindLabel = styled('span')`
-      height: 24px;
-      color: #383f43;
-      font-family: Arial;
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 18px;
-      background-color: #eeefef;
-      padding: 4px 8px;
-    `
-
     const InteractionActivity = () => (
       <div data-test="interaction-activity">
-        <StyledKindLabel data-test="interaction-activity-kind-label">
+        <Tag data-test="interaction-activity-kind-label" colour="grey">
           {kind}
-        </StyledKindLabel>
+        </Tag>
         <StyledSubject>
           <Link href={transformed.url}>{transformed.subject}</Link>
         </StyledSubject>
