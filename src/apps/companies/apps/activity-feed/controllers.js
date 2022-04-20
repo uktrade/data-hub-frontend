@@ -20,6 +20,7 @@ const {
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
+const { aventriEventQuery } = require('./es-queries/aventri-event-query')
 
 async function renderActivityFeed(req, res, next) {
   const { company, dnbHierarchyCount, dnbRelatedCompaniesCount } = res.locals
@@ -153,6 +154,7 @@ async function fetchActivitiesForContact(req, res, next) {
 
     const from = (req.query.page - 1) * ACTIVITIES_PER_PAGE
 
+    //get's list of attendee objects
     let results = await fetchActivityFeed(
       req,
       contactActivityQuery(
@@ -167,7 +169,46 @@ async function fetchActivitiesForContact(req, res, next) {
     })
 
     const total = results.hits.total.value
-    const activities = results.hits.hits.map((hit) => hit._source)
+    let activities = results.hits.hits.map((hit) => hit._source)
+
+    const hasAventriData = activities.some(
+      (attendee) => attendee['dit:application'] === 'aventri'
+    )
+
+    if (hasAventriData) {
+      //create array with only aventri data
+      const aventriAttendees = activities.filter(
+        (attendee) => attendee['dit:application'] === 'aventri'
+      )
+
+      //get the event ids
+      const eventIds = aventriAttendees
+        .map((attendee) => attendee.object.attributedTo.id)
+        .map((id) => `${id}:Create`)
+
+      //get the events from Activity Stream
+      const eventResults = await fetchActivityFeed(
+        req,
+        aventriEventQuery(eventIds)
+      )
+
+      const events = eventResults.hits.hits.map((hit) => hit._source)
+
+      ///filter through activities and add event data if it matches
+      const activitiesWithEventData = activities.map((activity) => {
+        const isAventri = activity['dit:application'] === 'aventri'
+        if (isAventri) {
+          const matchingEvent = events.find(
+            (event) => event.id === `${activity.object.attributedTo.id}:Create`
+          )
+          if (matchingEvent) {
+            activity.eventName = matchingEvent.object.name
+          }
+        }
+        return activity
+      })
+      activities = activitiesWithEventData
+    }
 
     res.json({ activities, total })
   } catch (error) {
