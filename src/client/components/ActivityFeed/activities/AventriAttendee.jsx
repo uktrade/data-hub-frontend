@@ -7,7 +7,7 @@ import { GREEN } from 'govuk-colours'
 
 const transformAventriAttendee = (activity) => {
   return {
-    event: { name: 'Event name tbc' },
+    event: { name: activity.eventName ?? 'Event name tbc' },
     company: { name: activity.object['dit:aventri:companyname'] },
     registrationStatus: activity.object['dit:aventri:registrationstatus'],
   }
@@ -22,7 +22,7 @@ export default function AventriAttendee({ activity }) {
         <CardHeader
           badge={{ borderColour: GREEN, text: 'Aventri Service Delivery' }}
           company={company}
-          heading={`Attended event ${event.name}`}
+          heading={event.name}
         />
         <p>Registration Status: {registrationStatus || 'Unknown'} </p>
       </Card>
