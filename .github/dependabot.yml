@@ -27,6 +27,12 @@ updates:
   - dependency-name: "@storybook/react"
     versions:
     - ">= 0"
+  - dependency-name: "@storybook/builder-webpack5"
+    versions:
+    - ">= 0"
+  - dependency-name: "@storybook/manager-webpack5"
+    versions:
+    - ">= 0"
   # ignore all GitHub linguist patch updates
   - dependency-name: "github-linguist"
     update-types: ["version-update:semver-patch"]
