@@ -108,35 +108,35 @@ export default class Interaction extends React.PureComponent {
       margin-bottom: ${SPACING.SCALE_1};
     `
 
-    const MetadataRow = styled('div')`
+    const TagRow = styled('div')`
       display: flex;
       justify-content: space-between;
       paddingbottom: ${SPACING.SCALE_4};
       marginright: ${SPACING.SCALE_1};
     `
 
-    const MetadataColumn = styled('div')`
+    const TagColumn = styled('div')`
       display: flex;
       justify-content: ${(props) => props.justifyDirection};
     `
 
     const InteractionActivity = () => (
       <StyledCard>
-        <MetadataRow>
-          <MetadataColumn justifyDirection="flex-start">
+        <TagRow>
+          <TagColumn justifyDirection="flex-start">
             <Tag data-test="interaction-activity-kind-label" colour="default">
               {kind}
             </Tag>
             <Tag data-test="interaction-activity-kind-label" colour="blue">
               {kind}
             </Tag>
-          </MetadataColumn>
-          <MetadataColumn justifyDirection="flex-end">
+          </TagColumn>
+          <TagColumn justifyDirection="flex-end">
             <Tag data-test="interaction-activity-kind-label" colour="grey">
               {kind}
             </Tag>
-          </MetadataColumn>
-        </MetadataRow>
+          </TagColumn>
+        </TagRow>
 
         <StyledSubject>
           <Link href={transformed.url}>{transformed.subject}</Link>
