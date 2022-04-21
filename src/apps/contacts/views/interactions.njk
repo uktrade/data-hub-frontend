@@ -1,17 +1,16 @@
 {% extends "./template.njk" %}
 
 {% block main_grid_right_column %}
+{% if isContactActivitiesFeatureOn %}
+  {% component 'react-slot', {
+    id: 'contact-activity',
+    props: props
+  } %}
+{% else %}
   <h2 class="govuk-heading-m">Contact interactions</h2>
   <p>
     An interaction could be a meeting, call, email or another activity where you have been in touch with a contact.
   </p>
-
-{% if isContactActivitiesFeatureOn %}
-  {% component 'react-slot', {
-    id: 'contact-interactions-app',
-    props: props
-  } %}
-{% else %}
   {% block xhr_content %}
     <article data-xhr="31fa63e9-1923-4565-af98-93c07a4a4f0d">
       {{

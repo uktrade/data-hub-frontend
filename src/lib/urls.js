@@ -227,7 +227,7 @@ module.exports = {
     audit: url('/contacts', '/:contactId/audit'),
     contact: url('/contacts', '/:contactId'),
     create: url('/contacts/create?company=', ':companyId'),
-    contactInteractions: url('/contacts', '/:contactId/interactions'),
+    contactActivities: url('/contacts', '/:contactId/interactions'),
     details: url('/contacts', '/:contactId/details'),
     documents: url('/contacts', '/:contactId/documents'),
     edit: url('/contacts', '/:contactId/edit'),

@@ -170,7 +170,7 @@ describe('DA Permission', () => {
       before(() => {
         cy.loadFixture([company])
         cy.loadFixture([contact])
-        cy.visit(contacts.contactInteractions(contact.pk), {
+        cy.visit(contacts.contactActivities(contact.pk), {
           failOnStatusCode: false,
         })
       })

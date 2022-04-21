@@ -3,7 +3,7 @@ const fixtures = require('../../fixtures')
 const dataHubActivities = require('../../../../sandbox/fixtures/v4/activity-feed/data-hub-activities.json')
 const { assertErrorDialog } = require('../../support/assertions')
 
-describe('Contact interactions', () => {
+describe('Contact activity', () => {
   const contactId = fixtures.contact.deanCox.id
 
   context('when the feature flag user-contact-activities is enabled', () => {
@@ -11,7 +11,7 @@ describe('Contact interactions', () => {
       cy.setUserFeatures(['user-contact-activities'])
     })
 
-    context('when viewing a contact with no activities', () => {
+    context('when viewing a contact with no activity', () => {
       before(() => {
         cy.intercept(
           'GET',
@@ -20,11 +20,11 @@ describe('Contact interactions', () => {
             body: { activities: [] },
           }
         )
-        cy.visit(urls.contacts.contactInteractions(contactId))
+        cy.visit(urls.contacts.contactActivities(contactId))
       })
 
       it('should display 0 activities', () => {
-        cy.get('#contact-interactions-app').contains('0 activities')
+        cy.get('#contact-activity').contains('0 activities')
       })
 
       it('should not display the page counter', () => {
@@ -34,7 +34,7 @@ describe('Contact interactions', () => {
 
     context('when viewing a contact with activities', () => {
       before(() => {
-        cy.visit(urls.contacts.contactInteractions(contactId))
+        cy.visit(urls.contacts.contactActivities(contactId))
       })
 
       it('should display the Activity Stream activities', () => {
@@ -42,7 +42,7 @@ describe('Contact interactions', () => {
       })
 
       it('should display the total number of activites', () => {
-        cy.get('#contact-interactions-app').contains('1,233 activities')
+        cy.get('#contact-activity').contains('1,233 activities')
       })
 
       it('should display the expected number of pages', () => {
@@ -57,7 +57,7 @@ describe('Contact interactions', () => {
       context('when there are more than 10 activities', () => {
         it('should be possible to page through', () => {
           cy.get('[data-page-number="2"]').click()
-          cy.get('#contact-interactions-app').contains(
+          cy.get('#contact-activity').contains(
             `${dataHubActivities.hits.hits[0]._source.object['dit:subject']}`
           )
           cy.get('[data-test=aventri-activity]').should('not.exist')
@@ -77,13 +77,13 @@ describe('Contact interactions', () => {
               statusCode: 500,
             }
           )
-          cy.visit(urls.contacts.contactInteractions(contactId))
+          cy.visit(urls.contacts.contactActivities(contactId))
         })
 
         it('should render an error message', () => {
           assertErrorDialog(
-            'TASK_GET_CONTACT_INTERACTIONS',
-            'Unable to load Contact Interactions.'
+            'TASK_GET_CONTACT_ACTIVITIES',
+            'Unable to load contact activity.'
           )
         })
       }
@@ -96,11 +96,11 @@ describe('Contact interactions', () => {
 
   context('when viewing a contact with the feature flag disabled', () => {
     before(() => {
-      cy.visit(urls.contacts.contactInteractions(contactId))
+      cy.visit(urls.contacts.contactActivities(contactId))
     })
 
     it('should not render the ActivityStream activities', () => {
-      cy.get('#contact-interactions-app').should('not.exist')
+      cy.get('#contact-activity').should('not.exist')
     })
 
     it('should only display Data Hub interactions', () => {

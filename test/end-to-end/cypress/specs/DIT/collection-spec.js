@@ -31,7 +31,7 @@ describe('Collection', () => {
     before(() => {
       cy.loadFixture([company])
       cy.loadFixture([contact])
-      cy.visit(contacts.contactInteractions(contact.pk))
+      cy.visit(contacts.contactActivities(contact.pk))
     })
 
     it('should return the results summary for contact interaction collection', () => {
