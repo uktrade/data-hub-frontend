@@ -76,6 +76,10 @@ export default class Interaction extends React.PureComponent {
       },
     ]
 
+    const StyledCard = styled('div')`
+      display: flex;
+      flex-direction: column;
+    `
     const StyledMetadata = styled('div')`
       color: ${GREY_1};
       font-size: ${FONT_SIZE.SIZE_14};
@@ -104,25 +108,35 @@ export default class Interaction extends React.PureComponent {
       margin-bottom: ${SPACING.SCALE_1};
     `
 
-    const ListItemTagRow = styled('div')({
-      display: 'inline-block',
-      paddingBottom: SPACING.SCALE_4,
-      marginRight: SPACING.SCALE_1,
-    })
+    const MetadataRow = styled('div')`
+      display: flex;
+      justify-content: space-between;
+      paddingbottom: ${SPACING.SCALE_4};
+      marginright: ${SPACING.SCALE_1};
+    `
+
+    const MetadataColumn = styled('div')`
+      display: flex;
+      justify-content: ${(props) => props.justifyDirection};
+    `
 
     const InteractionActivity = () => (
-      <div data-test="interaction-activity">
-        <ListItemTagRow>
-          <Tag data-test="interaction-activity-kind-label" colour="default">
-            {kind}
-          </Tag>
-          <Tag data-test="interaction-activity-kind-label" colour="blue">
-            {kind}
-          </Tag>
-          <Tag data-test="interaction-activity-kind-label" colour="grey">
-            {kind}
-          </Tag>
-        </ListItemTagRow>
+      <StyledCard>
+        <MetadataRow>
+          <MetadataColumn justifyDirection="flex-start">
+            <Tag data-test="interaction-activity-kind-label" colour="default">
+              {kind}
+            </Tag>
+            <Tag data-test="interaction-activity-kind-label" colour="blue">
+              {kind}
+            </Tag>
+          </MetadataColumn>
+          <MetadataColumn justifyDirection="flex-end">
+            <Tag data-test="interaction-activity-kind-label" colour="grey">
+              {kind}
+            </Tag>
+          </MetadataColumn>
+        </MetadataRow>
 
         <StyledSubject>
           <Link href={transformed.url}>{transformed.subject}</Link>
@@ -138,12 +152,14 @@ export default class Interaction extends React.PureComponent {
                   .join(' ') + ' ...'}{' '}
           </StyledNotes>
         )}
-        {metadata.map(({ label, value }) => (
-          <StyledMetadata>
-            <span>{label}:</span> {value}
-          </StyledMetadata>
-        ))}
-      </div>
+        <StyledMetadata>
+          {metadata.map(({ label, value }) => (
+            <div>
+              <span>{label}:</span> {value}
+            </div>
+          ))}
+        </StyledMetadata>
+      </StyledCard>
     )
 
     return isContactActivitiesFeatureOn ? (
