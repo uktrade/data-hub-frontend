@@ -91,6 +91,23 @@
                 ]
               },
               {
+                "dit:emailAddress": "Dolly.Parton@trade.gov.uk",
+                "dit:team": {
+                  "id": "dit:DataHubTeam:3a48318c-9698-e211-a939-e4115bead28a",
+                  "name": "Digital Data Hub - Live Service",
+                  "type": [
+                    "Group",
+                    "dit:Team"
+                  ]
+                },
+                "id": "dit:DataHubAdviser:8891ec72-b4ec-4977-9656-839346bc7122",
+                "name": "Dolly Long Middle Name Parton",
+                "type": [
+                  "Person",
+                  "dit:Adviser"
+                ]
+              },
+              {
                 "dit:emailAddress": "Tyson.Morar@example.com",
                 "dit:jobTitle": "Product Metrics Associate",
                 "id": "dit:DataHubContact:e2eee6cd-acf6-454a-a4a8-f6c8fa604fde",
@@ -109,8 +126,10 @@
             "startTime": "2019-06-10T16:00:00Z",
             "type": [
               "dit:Event",
-              "dit:Interaction"
+              "dit:Interaction",
+              "dit:datahub:theme:export"
             ],
+            "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
             "url": "https://www.datahub.dev.uktrade.io/interactions/856b95f1-c221-4c41-9649-625e2a7d5262"
           },
           "published": "2019-06-17T16:02:28.796549Z",
@@ -129,7 +148,6 @@
           "id": "dit:directoryFormsApi:Submission:63208:Create",
           "published": "2020-11-10T11:31:18.256239+00:00",
           "type": "Create",
-
           "actor": {
             "dit:blackListedReason": null,
             "dit:emailAddress": "gary.james@fish.com",
@@ -138,18 +156,15 @@
             "id": "dit:directoryFormsApi:Sender:26731",
             "type": "dit:directoryFormsApi:Submission:Sender"
           },
-
           "object": {
             "id": "dit:directoryFormsApi:Submission:63208",
             "type": "dit:directoryFormsApi:Submission",
             "url": "/contact/export-advice/comment/",
             "published": "2020-11-10T11:31:18.256239+00:00",
-
             "attributedTo": {
               "id": "dit:directoryFormsApi:SubmissionType:Domestic",
               "type": "dit:directoryFormsApi:SubmissionAction:gov-notify-email"
             },
-
             "dit:directoryFormsApi:Submission:Data": {
               "comment": "We export fish products to South Korea. In 2011 we were issued an approved exporter authorisation number by HMRC to be able to export to South Korea. Does this number still stand for exporting to South Korea in 2021 or do we need a new number? Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
               "companies_house_number": "12345678",
@@ -173,12 +188,13 @@
               "region_office_email": "info@tradesoutheast.com",
               "turnover": "25m-50m"
             },
-
             "dit:directoryFormsApi:Submission:Meta": {
               "action_name": "gov-notify-email",
               "email_address": "gary.james@fish.com",
               "email_reply_to_id": "ad1b973d-5c49-4d1d-a197-863fd25b4a97",
-              "funnel_steps": ["domestic"],
+              "funnel_steps": [
+                "domestic"
+              ],
               "ingress_url": "https://www.gov.uk/",
               "sender": {},
               "spam_control": {},

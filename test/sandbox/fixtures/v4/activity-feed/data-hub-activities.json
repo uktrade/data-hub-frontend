@@ -67,6 +67,9 @@
               }
             ],
             "dit:archived": false,
+            "dit:service": {
+              "name": "Making Export Introductions : Someone else in DIT"
+            },
             "dit:status": "draft",
             "dit:subject": "Meeting between Brendan Smith and Tyson Morar",
             "id": "dit:DataHubInteraction:856b95f1-c221-4c41-9649-625e2a7d5262",
