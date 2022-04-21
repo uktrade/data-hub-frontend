@@ -120,13 +120,20 @@ export default class Interaction extends React.PureComponent {
       justify-content: ${(props) => props.justifyDirection};
     `
 
+    const StyledTag = styled(Tag)`
+      margin-right: 10px;
+    `
+
     const InteractionActivity = () => (
       <StyledCard>
         <TagRow>
           <TagColumn justifyDirection="flex-start">
-            <Tag data-test="interaction-activity-kind-label" colour="default">
+            <StyledTag
+              data-test="interaction-activity-kind-label"
+              colour="default"
+            >
               {kind}
-            </Tag>
+            </StyledTag>
             <Tag data-test="interaction-activity-kind-label" colour="blue">
               {kind}
             </Tag>
