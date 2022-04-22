@@ -130,15 +130,19 @@ export default class Interaction extends React.PureComponent {
       <ItemWrapper data-test="interaction-activity">
         <TagRow>
           <TagColumn>
-            <StyledThemeTag
-              data-test="interaction-activity-theme-label"
-              colour="default"
-            >
-              {theme}
-            </StyledThemeTag>
-            <Tag data-test="interaction-activity-service-label" colour="blue">
-              {service}
-            </Tag>
+            {theme && (
+              <StyledThemeTag
+                data-test="interaction-activity-theme-label"
+                colour="default"
+              >
+                {theme}
+              </StyledThemeTag>
+            )}
+            {service && (
+              <Tag data-test="interaction-activity-service-label" colour="blue">
+                {service}
+              </Tag>
+            )}
           </TagColumn>
           <TagColumn>
             <Tag data-test="interaction-activity-kind-label" colour="grey">
