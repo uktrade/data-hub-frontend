@@ -111,7 +111,7 @@
     "http-proxy-middleware": "^2.0.4",
     "image-webpack-loader": "^8.1.0",
     "lodash": "^4.17.21",
-    "markdown-it": "^12.3.2",
+    "markdown-it": "^13.0.0",
     "mini-css-extract-plugin": "^2.6.0",
     "mocha-junit-reporter": "^2.0.2",
     "morgan": "^1.10.0",
