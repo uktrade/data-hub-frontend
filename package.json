@@ -108,7 +108,7 @@
     "govuk-react": "^0.9.1",
     "history": "^4.10.1",
     "hmpo-form-wizard": "^12.0.2",
-    "http-proxy-middleware": "^2.0.4",
+    "http-proxy-middleware": "^2.0.6",
     "image-webpack-loader": "^8.1.0",
     "lodash": "^4.17.21",
     "markdown-it": "^12.3.2",
