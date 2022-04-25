@@ -15,6 +15,7 @@ import { ACTIVITY_TYPE } from '../constants'
 
 import CardUtils from './card/CardUtils'
 import InteractionUtils from './InteractionUtils'
+import Analytics from '../../Analytics'
 
 export default class Interaction extends React.PureComponent {
   static propTypes = {
@@ -46,40 +47,49 @@ export default class Interaction extends React.PureComponent {
           startTime={transformed.startTime}
           badge={transformed.badge}
         />
-
-        <CardDetails
-          summary={`View ${transformed.typeText} details`}
-          summaryVisuallyHidden={` for ${transformed.subject}`}
-          link={{
-            url: transformed.url,
-            text: `You can view more on the ${transformed.typeText} detail page`,
-          }}
-          showDetails={showDetails}
-        >
-          <CardTable
-            rows={[
-              {
-                header: 'Company contact(s)',
-                content: (
-                  <CardDetailsList
-                    itemRenderer={ContactItemRenderer}
-                    items={contacts}
-                  />
-                ),
-              },
-              {
-                header: 'Adviser(s)',
-                content: (
-                  <CardDetailsList
-                    itemRenderer={AdviserItemRenderer}
-                    items={advisers}
-                  />
-                ),
-              },
-              { header: 'Services', content: transformed.service },
-            ]}
-          />
-        </CardDetails>
+        <Analytics>
+          {(pushAnalytics) => (
+            <CardDetails
+              summary={`View ${transformed.typeText} details`}
+              summaryVisuallyHidden={` for ${transformed.subject}`}
+              link={{
+                url: transformed.url,
+                text: `You can view more on the ${transformed.typeText} detail page`,
+              }}
+              showDetails={showDetails}
+              onClick={() => {
+                pushAnalytics({
+                  //TODO: event: '<eventNameHere>',
+                  //TODO: extra: filtersToAnalytics(selectedFilters),
+                })
+              }}
+            >
+              <CardTable
+                rows={[
+                  {
+                    header: 'Company contact(s)',
+                    content: (
+                      <CardDetailsList
+                        itemRenderer={ContactItemRenderer}
+                        items={contacts}
+                      />
+                    ),
+                  },
+                  {
+                    header: 'Adviser(s)',
+                    content: (
+                      <CardDetailsList
+                        itemRenderer={AdviserItemRenderer}
+                        items={advisers}
+                      />
+                    ),
+                  },
+                  { header: 'Services', content: transformed.service },
+                ]}
+              />
+            </CardDetails>
+          )}
+        </Analytics>
       </Card>
     )
   }
