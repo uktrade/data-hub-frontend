@@ -46,12 +46,65 @@ describe('Contact activity', () => {
       })
 
       it('should display the expected number of pages', () => {
-        cy.get('[data-test=pagination-summary').contains('Page 1 of 124')
-        cy.get('[data-test=pagination').should(
+        cy.get('[data-test=pagination-summary]').contains('Page 1 of 124')
+        cy.get('[data-test=pagination]').should(
           'have.attr',
           'data-total-pages',
           124
         )
+      })
+
+      context('when viewing a Data Hub interaction', () => {
+        it('should display interaction activity kind label', () => {
+          cy.get('[data-test=interaction-activity-kind-label]').contains(
+            'interaction'
+          )
+        })
+
+        it('should display interaction activity theme label', () => {
+          cy.get('[data-test=interaction-activity-theme-label]').contains(
+            'export'
+          )
+        })
+
+        it('should display the subject', () => {
+          cy.get('[data-test=interaction-activity]').contains(
+            'Meeting between Brendan Smith and Tyson Morar'
+          )
+        })
+
+        it('should display the notes', () => {
+          cy.get('[data-test=interaction-activity]').contains(
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has ..."
+          )
+        })
+
+        it('should display the date', () => {
+          cy.get('[data-test=interaction-activity]').contains(
+            'Date: 10 Jun 2019'
+          )
+        })
+
+        it('should display the communication channel', () => {
+          cy.get('[data-test=interaction-activity]').contains(
+            'Communication channel:'
+          )
+        })
+
+        it('should display the advisers with email', () => {
+          cy.get('[data-test=interaction-activity]')
+            .contains(
+              'Adviser(s): Brendan Smith Brendan.Smith@trade.gov.uk, Digital Data Hub - Live Service'
+            )
+            .contains('a', 'Brendan.Smith@trade.gov.uk')
+            .should('have.attr', 'href', 'mailto:Brendan.Smith@trade.gov.uk')
+        })
+
+        it('should display the service', () => {
+          cy.get('[data-test=interaction-activity]').contains(
+            'Service: Making Export Introductions : Someone else in DIT'
+          )
+        })
       })
 
       context('when there are more than 10 activities', () => {
