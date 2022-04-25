@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { SPACING, MEDIA_QUERIES, FONT_SIZE } from '@govuk-react/constants'
 import { VisuallyHidden } from 'govuk-react'
 import PropTypes from 'prop-types'
+import Analytics from '../../../Analytics'
 
 const GovUkDetails = styled(Details)`
   font-size: ${FONT_SIZE.SIZE_16};
@@ -61,13 +62,23 @@ export default class CardDetails extends React.PureComponent {
     )
 
     return (
-      <GovUkDetails
-        summary={summaryVisuallyHidden ? SummaryWithHiddenContent : summary}
-        open={showDetails}
-      >
-        {children}
-        {this.renderLink(link)}
-      </GovUkDetails>
+      <Analytics>
+        {(pushAnalytics) => (
+          <GovUkDetails
+            summary={summaryVisuallyHidden ? SummaryWithHiddenContent : summary}
+            open={showDetails}
+            onClick={() => {
+              pushAnalytics({
+                event: '<eventNameHere>',
+                //TODO: extra: filtersToAnalytics(selectedFilters),
+              })
+            }}
+          >
+            {children}
+            {this.renderLink(link)}
+          </GovUkDetails>
+        )}
+      </Analytics>
     )
   }
 }
