@@ -79,10 +79,29 @@ export const ACTIVITY_TYPE_FILTERS = {
   },
 }
 
+export const INTERACTION_SERVICES = {
+  'Account Management': 'Account Management',
+  'A Specific Service': 'Specific Service',
+  'A Specific DIT Export Service or Funding': 'Service or Funding',
+  COP26: 'COP26',
+  'Enquiry received': 'Enquiry',
+  'Enquiry or Referral Received': 'Enquiry or Referral',
+  Events: 'Event',
+  'Export Win': 'Export Win',
+  'Global Investment Summit (2021)': 'Global Investment Summit (2021)',
+  'Investment Enquiry': 'Enquiry',
+  'Investment - IST Aftercare Offered (IST use only)': 'IST Aftercare',
+  'Investment - Services': 'Service',
+  'IST Specific Service': 'IST Service',
+  'Proposition Development': 'Proposition Development',
+  'Trade Agreement Implementation Activity': 'Implementation',
+}
+
 export default {
   ACTIVITY_TYPE,
   ACTIVITY_TYPE_FILTERS,
   SOURCE_TYPES,
   STATUS,
   BADGES,
+  INTERACTION_SERVICES,
 }

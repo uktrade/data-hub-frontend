@@ -1,5 +1,5 @@
 import { get, includes } from 'lodash'
-import { STATUS, BADGES } from '../constants'
+import { STATUS, BADGES, INTERACTION_SERVICES } from '../constants'
 
 const getStatus = (activity) => {
   const apiStatus = get(activity, 'object.dit:status')
@@ -24,42 +24,16 @@ const isServiceDelivery = (activity) => {
 
 const getServiceText = (activity) => {
   const service = get(activity, 'object.dit:service.name')
-  const serviceText = service.includes(
-    'A Specific DIT Export Service or Funding'
-  )
-    ? 'Service or Funding'
-    : service.includes('A Specific Service')
-    ? 'Specific Service'
-    : service.includes('Account Management')
-    ? 'Account Management'
-    : service.includes('COP26')
-    ? 'COP26'
-    : service.includes('Enquiry or Referral Received')
-    ? 'Enquiry or Referral'
-    : service.includes('Enquiry received') ||
-      service.includes('Investment Enquiry')
-    ? 'Enquiry'
-    : service.includes('Events')
-    ? 'Event'
-    : service.includes('Export Win')
-    ? 'Export Win'
-    : service.includes('Global Investment Summit (2021)')
-    ? 'Global Investment Summit (2021)'
-    : service.includes('IST Aftercare Offered')
-    ? 'IST Aftercare'
-    : service.includes('Investment - Services')
-    ? 'Service'
-    : service.includes('IST Specific Service')
-    ? 'IST Service'
-    : service.includes('Making') && service.includes('Introductions')
-    ? 'Introduction'
-    : service.includes('Proposition Development')
-    ? 'Proposition Development'
-    : service.includes('Advice & Information')
-    ? 'Advice & Information'
-    : service.includes('Trade Agreement Implementation Activity')
-    ? 'Implementation'
-    : null
+  const serviceType = service.includes(' : ')
+    ? service.split(' : ')[0]
+    : service
+
+  const serviceText =
+    service.includes('Making') && service.includes('Introductions')
+      ? 'Introduction'
+      : service.includes('Advice & Information')
+      ? 'Advice & Information'
+      : INTERACTION_SERVICES[serviceType]
   return serviceText
 }
 
