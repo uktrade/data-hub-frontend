@@ -152,10 +152,10 @@ export default class ActivityFeed extends React.Component {
                 activityTypeFilter={activityTypeFilter}
                 onActivityTypeFilterChange={
                   (this.onActivityTypeFilterChange,
-                  () =>
+                  (e) =>
                     pushAnalytics({
                       event: 'activityTypeDropDown',
-                      category: activityTypeFilter,
+                      category: e.target.value,
                     }))
                 }
                 showActivitiesFromAllCompanies={
