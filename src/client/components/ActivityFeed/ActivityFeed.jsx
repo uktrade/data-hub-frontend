@@ -8,6 +8,7 @@ import ActivityFeedHeader from './ActivityFeedHeader'
 import ActivityFeedFilters from './ActivityFeedFilters'
 import ActivityFeedShowAll from './ActivityFeedShowAll'
 import ActivityFeedPagination from './ActivityFeedPagination'
+import Analytics from '../Analytics'
 
 const ActivityFeedContainer = styled('div')`
   margin: ${SPACING.SCALE_2} 0;
@@ -144,14 +145,27 @@ export default class ActivityFeed extends React.Component {
           actions={actions}
         />
         {!companyIsArchived && (
-          <ActivityFeedFilters
-            activityTypeFilters={activityTypeFilters}
-            activityTypeFilter={activityTypeFilter}
-            onActivityTypeFilterChange={this.onActivityTypeFilterChange}
-            showActivitiesFromAllCompanies={this.showActivitiesFromAllCompanies}
-            isGlobalUltimate={isGlobalUltimate}
-            dnbHierarchyCount={dnbHierarchyCount}
-          />
+          <Analytics>
+            {(pushAnalytics) => (
+              <ActivityFeedFilters
+                activityTypeFilters={activityTypeFilters}
+                activityTypeFilter={activityTypeFilter}
+                onActivityTypeFilterChange={
+                  (this.onActivityTypeFilterChange,
+                  () =>
+                    pushAnalytics({
+                      event: 'activityTypeDropDown',
+                      category: activityTypeFilter,
+                    }))
+                }
+                showActivitiesFromAllCompanies={
+                  this.showActivitiesFromAllCompanies
+                }
+                isGlobalUltimate={isGlobalUltimate}
+                dnbHierarchyCount={dnbHierarchyCount}
+              />
+            )}
+          </Analytics>
         )}
 
         {activities.length > 0 && (
