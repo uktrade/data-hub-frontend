@@ -24,7 +24,7 @@ const StyledFormActions = styled(FormActions)({
 
 const ListHeader = ({ id, name }) => (
   <StyledRoot>
-    <StyledHeading level={2}>{name}</StyledHeading>
+    <StyledHeading>{name}</StyledHeading>
     <StyledFormActions>
       <SecondaryButton as={Link} href={urls.companyLists.rename(id)}>
         Edit list name

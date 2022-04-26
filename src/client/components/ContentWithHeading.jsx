@@ -17,7 +17,7 @@ const StyledHeader = styled.div({
 const ContentWithHeading = ({ heading, children, headingActions }) => (
   <section>
     <StyledHeader>
-      <StyledHeading level={1}>{heading}</StyledHeading>
+      <StyledHeading size={24}>{heading}</StyledHeading>
       {headingActions}
     </StyledHeader>
     <SpacedSectionBreak />
