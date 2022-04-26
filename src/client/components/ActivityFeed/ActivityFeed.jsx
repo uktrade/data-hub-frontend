@@ -155,7 +155,7 @@ export default class ActivityFeed extends React.Component {
                   (e) =>
                     pushAnalytics({
                       event: 'activityTypeDropDown',
-                      category: e.target.value,
+                      extra: { dropDownOptionSelected: e.target.value },
                     }))
                 }
                 showActivitiesFromAllCompanies={
