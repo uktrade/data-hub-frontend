@@ -103,22 +103,18 @@ module.exports = (env) => ({
       },
       {
         test: /\.(eot|ttf|woff|woff2)$/,
-        loader: 'file-loader',
-        options: {
-          name: 'fonts/[name].[hash:8].[ext]',
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[name].[hash:8].[ext]',
         },
       },
       {
         test: /\.(png|svg|jpe?g)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: 'images/[name].[hash:8].[ext]',
-            },
-          },
-          { loader: 'image-webpack-loader' },
-        ],
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[name].[hash:8].[ext]',
+        },
+        use: [{ loader: 'image-webpack-loader' }],
       },
       {
         test: /\.scss$/,

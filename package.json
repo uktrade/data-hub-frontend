@@ -98,7 +98,6 @@
     "express-minify-html-2": "^1.0.1",
     "express-session": "^1.17.2",
     "express-sslify": "^1.2.0",
-    "file-loader": "^6.2.0",
     "formidable": "^2.0.1",
     "get-form-data": "^3.0.0",
     "govuk_frontend_toolkit": "^9.0.1",
