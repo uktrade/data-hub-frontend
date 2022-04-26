@@ -103,22 +103,18 @@ module.exports = (env) => ({
       },
       {
         test: /\.(eot|ttf|woff|woff2)$/,
-        loader: 'file-loader',
-        options: {
-          name: 'fonts/[name].[hash:8].[ext]',
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[name].[hash:8].[ext]',
         },
       },
       {
         test: /\.(png|svg|jpe?g)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: 'images/[name].[hash:8].[ext]',
-            },
-          },
-          { loader: 'image-webpack-loader' },
-        ],
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[name].[hash:8].[ext]',
+        },
+        use: [{ loader: 'image-webpack-loader' }],
       },
       {
         test: /\.scss$/,
@@ -133,15 +129,16 @@ module.exports = (env) => ({
             options: {
               sourceMap: !config.isProd,
               importLoaders: 3,
-              url: (url) => {
-                const files = [
-                  '/assets/images/icon-pointer.png',
-                  '/assets/images/icon-pointer-2x.png',
-                  '/assets/images/govuk-crest.png',
-                  '/assets/images/govuk-crest-2x.png',
-                ]
-
-                return !files.some((file) => url.includes(file))
+              url: {
+                filter: (url) => {
+                  const files = [
+                    '/assets/images/icon-pointer.png',
+                    '/assets/images/icon-pointer-2x.png',
+                    '/assets/images/govuk-crest.png',
+                    '/assets/images/govuk-crest-2x.png',
+                  ]
+                  return !files.some((file) => url.includes(file))
+                },
               },
             },
           },
