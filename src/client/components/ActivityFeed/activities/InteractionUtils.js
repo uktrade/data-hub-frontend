@@ -24,17 +24,20 @@ const isServiceDelivery = (activity) => {
 
 const getServiceText = (activity) => {
   const service = get(activity, 'object.dit:service.name')
-  const serviceType = service.includes(' : ')
-    ? service.split(' : ')[0]
-    : service
+  if (service) {
+    const serviceType = service.includes(' : ')
+      ? service.split(' : ')[0]
+      : service
 
-  const serviceText =
-    service.includes('Making') && service.includes('Introductions')
-      ? 'Introduction'
-      : service.includes('Advice & Information')
-      ? 'Advice & Information'
-      : INTERACTION_SERVICES[serviceType]
-  return serviceText
+    const serviceText =
+      service.includes('Making') && service.includes('Introductions')
+        ? 'Introduction'
+        : service.includes('Advice & Information')
+        ? 'Advice & Information'
+        : INTERACTION_SERVICES[serviceType]
+    return serviceText
+  }
+  return null
 }
 
 const getThemeText = (activity) => {

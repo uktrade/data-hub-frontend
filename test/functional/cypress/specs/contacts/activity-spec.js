@@ -85,12 +85,6 @@ describe('Contact activity', () => {
           )
         })
 
-        it('should display the communication channel', () => {
-          cy.get('[data-test=interaction-activity]').contains(
-            'Communication channel:'
-          )
-        })
-
         it('should display the advisers with email', () => {
           cy.get('[data-test=interaction-activity]')
             .contains(
@@ -103,6 +97,13 @@ describe('Contact activity', () => {
         it('should display the service', () => {
           cy.get('[data-test=interaction-activity]').contains(
             'Service: Making Export Introductions : Someone else in DIT'
+          )
+        })
+
+        it('should not display entries for missing data', () => {
+          cy.get('[data-test=interaction-activity]').should(
+            'not.have.text',
+            'Communication channel:'
           )
         })
       })

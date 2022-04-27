@@ -61,7 +61,7 @@ export default class Interaction extends React.PureComponent {
     const service = transformed.serviceText
     const kind = transformed.typeText
 
-    const serviceName = activityObject['dit:service'].name
+    const serviceName = activityObject['dit:service']?.name
     const serviceNotes = activityObject.content
     const MAX_NOTE_LENGTH = 255
 
@@ -166,11 +166,14 @@ export default class Interaction extends React.PureComponent {
           </StyledNotes>
         )}
         <StyledMetadata>
-          {metadata.map(({ label, value }) => (
-            <div>
-              <span style={{ fontWeight: 'bold' }}>{label}:</span> {value}
-            </div>
-          ))}
+          {metadata.map(
+            ({ label, value }) =>
+              value && (
+                <div>
+                  <span style={{ fontWeight: 'bold' }}>{label}:</span> {value}
+                </div>
+              )
+          )}
         </StyledMetadata>
       </ItemWrapper>
     )
