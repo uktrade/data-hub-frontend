@@ -61,7 +61,7 @@ export default class Interaction extends React.PureComponent {
     const service = transformed.serviceText
     const kind = transformed.typeText
 
-    const serviceName = activityObject['dit:service'].name
+    const serviceName = activityObject['dit:service']?.name
     const serviceNotes = activityObject.content
     const MAX_NOTE_LENGTH = 255
 
