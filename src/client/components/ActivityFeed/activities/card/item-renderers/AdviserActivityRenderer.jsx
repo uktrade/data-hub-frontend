@@ -2,16 +2,13 @@ import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-const AdviserActivityRenderer = (item) => {
-  const name = <span>{item.name}</span>
-  const emailAddress = (
-    <Link href={`mailto:${item.emailAddress}`}> {item.emailAddress}</Link>
-  )
-  const team = item.team ? `${item.team} ` : null
+const AdviserActivityRenderer = ({ adviser: { name, emailAddress, team } }) => {
+  const emailLink = <Link href={`mailto:${emailAddress}`}> {emailAddress}</Link>
+  const teamString = team ? `${team} ` : null
 
   return (
     <>
-      {name} {emailAddress}, {team} <br />
+      <span>{name}</span> {emailLink}, {teamString} <br />
     </>
   )
 }
