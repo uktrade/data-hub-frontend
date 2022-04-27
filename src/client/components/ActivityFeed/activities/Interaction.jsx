@@ -166,11 +166,14 @@ export default class Interaction extends React.PureComponent {
           </StyledNotes>
         )}
         <StyledMetadata>
-          {metadata.map(({ label, value }) => (
-            <div>
-              <span style={{ fontWeight: 'bold' }}>{label}:</span> {value}
-            </div>
-          ))}
+          {metadata.map(
+            ({ label, value }) =>
+              value && (
+                <div>
+                  <span style={{ fontWeight: 'bold' }}>{label}:</span> {value}
+                </div>
+              )
+          )}
         </StyledMetadata>
       </ItemWrapper>
     )
