@@ -113,11 +113,14 @@ export default class Interaction extends React.PureComponent {
     const MAX_NOTE_LENGTH = 255
 
     const formattedAdvisers = () => {
-      return advisers.map((adviser) => (
-        <span key={adviser.name}>
-          <AdviserActivityRenderer adviser={adviser} />
-        </span>
-      ))
+      return (
+        !!advisers.length &&
+        advisers.map((adviser) => (
+          <span key={adviser.name}>
+            <AdviserActivityRenderer adviser={adviser} />
+          </span>
+        ))
+      )
     }
 
     const metadata = [

@@ -113,6 +113,7 @@ describe('Contact activity', () => {
               .should('exist')
               .should('not.contain', 'Communication channel: Email/Website')
               .should('not.contain', 'Service: ')
+              .should('not.contain', 'Adviser(s): ')
           })
         })
       })
