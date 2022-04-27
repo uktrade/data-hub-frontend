@@ -196,7 +196,7 @@ describe('Referall list on dashboard', () => {
       .eq(0)
       .within(() =>
         cy
-          .contains('h1', '3 received referrals')
+          .contains('3 received referrals')
           .next()
           .contains('View')
           .contains('select', 'Received referrals')

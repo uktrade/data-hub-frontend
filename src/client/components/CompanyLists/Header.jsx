@@ -38,7 +38,7 @@ export const Header = connect(state2props, (dispatch) => ({
   const listLength = Object.keys(lists).length
   return (
     <StyledRoot>
-      <StyledHeading level={1}>
+      <StyledHeading>
         {pluralize('My companies list', listLength, true)}
       </StyledHeading>
       {listLength > 1 && (
