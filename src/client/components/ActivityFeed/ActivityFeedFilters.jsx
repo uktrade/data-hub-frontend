@@ -75,7 +75,9 @@ const ActivityFeedFilters = ({
                   event: 'activityTypeDropDown',
                   extra: {
                     dropDownOptionSelected:
-                      selectEvent.target.selectedOptions[0].text,
+                      selectEvent.target.options[
+                        selectEvent.target.selectedIndex
+                      ].text,
                   },
                 })
               })
