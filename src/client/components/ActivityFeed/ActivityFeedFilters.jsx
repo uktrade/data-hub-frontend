@@ -34,14 +34,6 @@ const StyledTitle = styled('div')`
   white-space: nowrap;
 `
 
-const getDropDownOptionLabel = (options, selectEvent) => {
-  const { label } = options.find(
-    (option) => option.value == selectEvent.target.value
-  )
-
-  return label
-}
-
 const ActivityFeedFilters = ({
   activityTypeFilters,
   activityTypeFilter,
@@ -70,14 +62,11 @@ const ActivityFeedFilters = ({
             filters={activityTypeFilters}
             onActivityTypeFilterChange={
               (onActivityTypeFilterChange,
-              (selectEvent) => {
+              ({ target: { options, selectedIndex } }) => {
                 pushAnalytics({
                   event: 'activityTypeDropDown',
                   extra: {
-                    dropDownOptionSelected: getDropDownOptionLabel(
-                      activityTypeFilters,
-                      selectEvent
-                    ),
+                    dropDownOptionSelected: options[selectedIndex].text,
                   },
                 })
               })
