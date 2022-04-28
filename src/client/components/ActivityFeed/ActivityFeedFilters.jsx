@@ -74,10 +74,8 @@ const ActivityFeedFilters = ({
                 pushAnalytics({
                   event: 'activityTypeDropDown',
                   extra: {
-                    dropDownOptionSelected: getDropDownOptionLabel(
-                      activityTypeFilters,
-                      selectEvent
-                    ),
+                    dropDownOptionSelected:
+                      selectEvent.target.selectedOptions[0].text,
                   },
                 })
               })
