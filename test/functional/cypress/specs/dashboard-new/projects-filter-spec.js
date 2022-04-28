@@ -2,9 +2,10 @@ import { INVESTMENT_PROJECT_STAGES } from '../../fakers/constants'
 import { investmentProjectListFaker } from '../../fakers/investment-projects'
 import { investmentProjectSummaryFaker } from '../../fakers/investment-project-summary'
 import { assertPayload } from '../../support/assertions'
-
-const getFinancialYearStart = (date) =>
-  date.getMonth() < 3 ? date.getFullYear() - 1 : date.getFullYear()
+import {
+  getFinancialYearStart,
+  generateFinancialYearLabel,
+} from '../../../../../src/client/utils/date'
 
 const myAdviser = {
   id: '7d19d407-9aec-4d06-b190-d3f404627f21',
@@ -20,6 +21,12 @@ const minimumPayload = {
   sortby: 'created_on:desc',
   show_summary: true,
 }
+
+const transformOptions = (options) =>
+  [...options].map((o) => ({
+    value: o.value,
+    label: o.label,
+  }))
 
 describe('Dashboard - my projects list filters', () => {
   const summary = investmentProjectSummaryFaker()
@@ -61,6 +68,79 @@ describe('Dashboard - my projects list filters', () => {
         'have.text',
         'No investment projects'
       )
+    })
+  })
+
+  context('Dashboard filter options', () => {
+    it('should render the stage options', () => {
+      cy.get('[data-test="stage-select"] option').then((stageOptions) => {
+        expect(transformOptions(stageOptions)).to.deep.eq([
+          { value: 'all-stages', label: 'Show all' },
+          { value: '8a320cc9-ae2e-443e-9d26-2f36452c2ced', label: 'Prospect' },
+          { value: 'c9864359-fb1a-4646-a4c1-97d10189fc03', label: 'Assign PM' },
+          { value: '7606cc19-20da-4b74-aba1-2cec0d753ad8', label: 'Active' },
+          {
+            value: '49b8f6f3-0c50-4150-a965-2c974f3149e3',
+            label: 'Verify win',
+          },
+          { value: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6', label: 'Won' },
+        ])
+      })
+    })
+
+    it('should render the status options', () => {
+      cy.get('[data-test="status-select"] option').then((statusOptions) => {
+        expect(transformOptions(statusOptions)).to.deep.eq([
+          { value: 'all-statuses', label: 'Show all' },
+          { value: 'ongoing', label: 'Ongoing' },
+          { value: 'delayed', label: 'Delayed' },
+          { value: 'abandoned', label: 'Abandoned' },
+          { value: 'lost', label: 'Lost' },
+          { value: 'dormant', label: 'Dormant' },
+        ])
+      })
+    })
+
+    it('should render the land date options', () => {
+      const financialYearStart = getFinancialYearStart(new Date())
+      cy.get('[data-test="land-date-select"] option').then(
+        (landDateOptions) => {
+          expect(transformOptions(landDateOptions)).to.deep.eq([
+            { value: 'all-land-dates', label: 'Show all' },
+            {
+              value: `${financialYearStart}`,
+              label: `Current year ${generateFinancialYearLabel(
+                financialYearStart
+              )}`,
+            },
+            {
+              value: `${financialYearStart - 1}`,
+              label: `Last year ${generateFinancialYearLabel(
+                financialYearStart - 1
+              )}`,
+            },
+            {
+              value: `${financialYearStart + 1}`,
+              label: `Next year ${generateFinancialYearLabel(
+                financialYearStart + 1
+              )}`,
+            },
+          ])
+        }
+      )
+    })
+
+    it('should render the sort options', () => {
+      cy.get('[data-test="sort-select"] option').then((sortOptions) => {
+        expect(transformOptions(sortOptions)).to.deep.eq([
+          { value: 'created_on:desc', label: 'Recently created' },
+          { value: 'modified_on:desc', label: 'Recently updated' },
+          { value: 'estimated_land_date:asc', label: 'Earliest land date' },
+          { value: 'estimated_land_date:desc', label: 'Latest land date' },
+          { value: 'name:asc', label: 'Project name (A-Z)' },
+          { value: 'name:desc', label: 'Project name (Z-A)' },
+        ])
+      })
     })
   })
 

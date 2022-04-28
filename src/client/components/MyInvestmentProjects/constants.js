@@ -46,6 +46,10 @@ export const SORT_OPTIONS = [
     id: 'created_on:desc',
   },
   {
+    name: 'Recently updated',
+    id: 'modified_on:desc',
+  },
+  {
     name: 'Earliest land date',
     id: 'estimated_land_date:asc',
   },
