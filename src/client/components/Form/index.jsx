@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React, { useRef, useEffect } from 'react'
-import { Route, useHistory, useLocation } from 'react-router-dom'
+import { Route, useNavigate, useLocation } from 'react-router-dom'
 import { camelCase, isEmpty } from 'lodash'
 import qs from 'qs'
 import Button from '@govuk-react/button'
@@ -85,7 +85,7 @@ const _Form = ({
   goToStep,
   ...props
 }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
 
@@ -100,7 +100,7 @@ const _Form = ({
       if (qsParams.step) {
         goToStep(qsParams.step || steps[initialStepIndex])
       } else {
-        history.replace({
+        navigate.replace({
           search: qs.stringify({
             ...qsParams,
             step: steps[initialStepIndex],
@@ -186,7 +186,7 @@ const _Form = ({
                       currentStep: props.currentStep,
                     })
                     if (showStepInUrl) {
-                      history.push({
+                      navigate.push({
                         search: qs.stringify({
                           ...qsParams,
                           step: steps[props.currentStep - 1],
@@ -245,7 +245,7 @@ const _Form = ({
                                     currentStep: props.currentStep,
                                   })
                                   if (showStepInUrl) {
-                                    history.push({
+                                    navigate.push({
                                       search: qs.stringify({
                                         ...qsParams,
                                         step: steps[props.currentStep + 1],

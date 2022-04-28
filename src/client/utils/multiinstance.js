@@ -1,8 +1,9 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
 import { omit, isEmpty, curry } from 'lodash'
 import * as reactRedux from 'react-redux'
 import PropTypes from 'prop-types'
+
+import { withRouter } from './withRouter'
 
 /**
  * Takes an ordinary _id unaware_ reducer and returns its _id aware_ version

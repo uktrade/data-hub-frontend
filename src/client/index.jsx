@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import * as Sentry from '@sentry/browser'
-import { Switch } from 'react-router-dom'
+import { BrowserRouter, Routes } from 'react-router-dom'
 
 import './components'
 import Provider from './provider'
@@ -618,13 +618,15 @@ function App() {
 
       <Mount selector="#react-app">
         {() => (
-          <Switch>
-            {Object.keys(routes).map((module) =>
-              routes[module].map((route) => (
-                <ProtectedRoute exact={true} {...route} />
-              ))
-            )}
-          </Switch>
+          <BrowserRouter>
+            <Routes>
+              {Object.keys(routes).map((module) =>
+                routes[module].map((route) => (
+                  <ProtectedRoute exact={true} {...route} />
+                ))
+              )}
+            </Routes>
+          </BrowserRouter>
         )}
       </Mount>
     </Provider>

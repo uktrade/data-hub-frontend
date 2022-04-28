@@ -11,50 +11,50 @@ const routes = {
     {
       path: '/companies',
       module: 'datahub:companies',
-      component: CompaniesCollectionList,
+      element: CompaniesCollectionList,
     },
   ],
   contacts: [
     {
       path: '/contacts',
       module: 'datahub:contacts',
-      component: ContactsCollectionList,
+      element: ContactsCollectionList,
     },
   ],
   events: [
     {
       path: '/events',
       module: 'datahub:events',
-      component: EventsCollectionList,
+      element: EventsCollectionList,
     },
     {
       path: '/events/create',
       module: 'datahub:events',
-      component: EventForm,
+      element: EventForm,
     },
     {
       path: '/events/:id/edit',
       module: 'datahub:events',
-      component: EventForm,
+      element: EventForm,
     },
     {
       path: '/events/:id/details',
       module: 'datahub:events',
-      component: EventDetails,
+      element: EventDetails,
     },
   ],
   interactions: [
     {
       path: '/interactions',
       module: 'datahub:interactions',
-      component: InteractionsCollectionList,
+      element: InteractionsCollectionList,
     },
   ],
   orders: [
     {
       path: '/omis',
       module: 'datahub:orders',
-      component: OmisCollectionList,
+      element: OmisCollectionList,
     },
   ],
 }

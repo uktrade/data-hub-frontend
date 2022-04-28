@@ -1,5 +1,4 @@
-Soft redirect
-=========
+# Soft redirect
 
 The `Form` component supports a _hard_ and _soft_ redirection mode, which
 you can control with the `redirectMode` prop.
@@ -9,7 +8,7 @@ _soft_ mode uses React-Router.
 This example demonstrates the _soft_ (React-Router) redirection.
 
 ```jsx
-import { Switch, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link } from 'react-router-dom'
 
 <DataHubProvider tasks={{
   'Load initial values': (payload, formId) =>
@@ -29,8 +28,8 @@ import { Switch, Route, Link } from 'react-router-dom'
           task: 'result',
         })
     ),
-}}>  
-  <Switch>
+}}>
+  <Routes>
     <Route path="/iframe.html">
       <Form
         id="task-form-example-resolve-initial-values"
@@ -83,6 +82,6 @@ import { Switch, Route, Link } from 'react-router-dom'
       <br/>
       <Link to="/iframe.html">Back to form</Link>
     </Route>
-  </Switch>
+  </Routes>
 <DataHubProvider>
 ```

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link } from 'react-router-dom'
 import { storiesOf } from '@storybook/react'
 
 import Form from '../index'
@@ -324,7 +324,7 @@ storiesOf('Form', module)
   .add(
     'Soft (React-Router) redirect',
     () => (
-      <Switch>
+      <Routes>
         <Route path="/iframe.html">
           <Form
             id="task-form-example-resolve-initial-values"
@@ -378,7 +378,7 @@ storiesOf('Form', module)
           <br />
           <Link to="/iframe.html">Back to form</Link>
         </Route>
-      </Switch>
+      </Routes>
     ),
     {
       readme: {

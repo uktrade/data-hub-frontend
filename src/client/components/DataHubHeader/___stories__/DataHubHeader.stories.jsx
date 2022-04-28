@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { storiesOf } from '@storybook/react'
 
 import DataHubHeader from '../index'
@@ -21,16 +21,16 @@ const App = () => {
         showVerticalNav={showVerticalNav}
         onShowVerticalNav={setShowVerticalNav}
       />
-      <Switch>
-        <Route exact={true} path="/" component={Dashboard} />
-        <Route path="/companies" component={Companies} />
-        <Route path="/contacts" component={Contacts} />
-        <Route path="/events" component={Events} />
-        <Route path="/interactions" component={Interactions} />
-        <Route path="/investments" component={Investments} />
-        <Route path="/omis" component={Orders} />
-        <Route path="/support" component={Support} />
-      </Switch>
+      <Routes>
+        <Route exact={true} path="/" element={<Dashboard />} />
+        <Route path="/companies" element={<Companies />} />
+        <Route path="/contacts" element={<Contacts />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/interactions" element={<Interactions />} />
+        <Route path="/investments" element={<Investments />} />
+        <Route path="/omis" element={<Orders />} />
+        <Route path="/support" element={<Support />} />
+      </Routes>
     </Router>
   )
 }
