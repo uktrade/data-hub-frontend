@@ -79,6 +79,12 @@ export const ACTIVITY_TYPE_FILTERS = {
   },
 }
 
+export const ANALYTICS_ACCORDION_TYPE = {
+  HMRC: 'HMRC',
+  COMPANIES_HOUSE: 'Companies House',
+  DATA_HUB_ACTIVITY: 'Data Hub Activity',
+}
+
 export const INTERACTION_SERVICES = {
   'Account Management': 'Account Management',
   'A Specific Service': 'Specific Service',
@@ -100,6 +106,7 @@ export const INTERACTION_SERVICES = {
 export default {
   ACTIVITY_TYPE,
   ACTIVITY_TYPE_FILTERS,
+  ANALYTICS_ACCORDION_TYPE,
   SOURCE_TYPES,
   STATUS,
   BADGES,
