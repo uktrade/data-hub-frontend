@@ -13,7 +13,11 @@ import {
 import { DefaultItemRenderer } from './card/item-renderers'
 
 import CardUtils from './card/CardUtils'
-import { ACTIVITY_TYPE, SOURCE_TYPES } from '../constants'
+import {
+  ACTIVITY_TYPE,
+  ANALYTICS_ACCORDION_TYPE,
+  SOURCE_TYPES,
+} from '../constants'
 
 export default class HmrcExporter extends React.PureComponent {
   static propTypes = {
@@ -56,6 +60,7 @@ export default class HmrcExporter extends React.PureComponent {
           summary="View key export details"
           summaryVisuallyHidden={` for ${reference}`}
           showDetails={showDetails}
+          analyticsAccordionType={ANALYTICS_ACCORDION_TYPE.HMRC}
         >
           <CardTable
             rows={[

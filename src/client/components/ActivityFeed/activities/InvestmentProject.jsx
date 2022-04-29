@@ -12,7 +12,7 @@ import {
 } from './card'
 
 import { AdviserItemRenderer, ContactItemRenderer } from './card/item-renderers'
-import { ACTIVITY_TYPE } from '../constants'
+import { ACTIVITY_TYPE, ANALYTICS_ACCORDION_TYPE } from '../constants'
 
 import CardUtils from './card/CardUtils'
 import { currencyGBP, decimal } from '../../../utils/number-utils'
@@ -77,6 +77,7 @@ export default class InvestmentProject extends React.PureComponent {
           summaryVisuallyHidden={` ${name}`}
           link={{ url, text: 'Go to the investment project detail page' }}
           showDetails={showDetails}
+          analyticsAccordionType={ANALYTICS_ACCORDION_TYPE.DATA_HUB_ACTIVITY}
         >
           <CardTable
             rows={[

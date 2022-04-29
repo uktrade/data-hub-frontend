@@ -6,7 +6,11 @@ import { Card, CardDetails, CardHeader, CardTable } from './card'
 
 import CardUtils from './card/CardUtils'
 import { currencyGBP } from '../../../utils/number-utils'
-import { ACTIVITY_TYPE, SOURCE_TYPES } from '../constants'
+import {
+  ACTIVITY_TYPE,
+  ANALYTICS_ACCORDION_TYPE,
+  SOURCE_TYPES,
+} from '../constants'
 
 const { format } = require('../../../utils/date')
 
@@ -61,6 +65,7 @@ export default class CompaniesHouseAccount extends React.PureComponent {
           summaryVisuallyHidden={`${summary} in Companies House`}
           link={{ taxonomy, text: 'Go to the Companies House accounts page' }}
           showDetails={showDetails}
+          analyticsAccordionType={ANALYTICS_ACCORDION_TYPE.COMPANIES_HOUSE}
         >
           <CardTable
             rows={[

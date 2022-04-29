@@ -12,7 +12,7 @@ import {
 } from './card'
 
 import { AdviserItemRenderer, ContactItemRenderer } from './card/item-renderers'
-import { ACTIVITY_TYPE } from '../constants'
+import { ACTIVITY_TYPE, ANALYTICS_ACCORDION_TYPE } from '../constants'
 
 import CardUtils from './card/CardUtils'
 
@@ -53,6 +53,7 @@ export default class Omis extends React.PureComponent {
           summaryVisuallyHidden={` reference ${reference}`}
           link={{ url, text: 'Go to the order detail page' }}
           showDetails={showDetails}
+          analyticsAccordionType={ANALYTICS_ACCORDION_TYPE.DATA_HUB_ACTIVITY}
         >
           <CardTable
             rows={[

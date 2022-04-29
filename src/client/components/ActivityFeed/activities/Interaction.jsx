@@ -16,7 +16,7 @@ import {
   AdviserActivityRenderer,
   AdviserItemRenderer,
 } from './card/item-renderers'
-import { ACTIVITY_TYPE } from '../constants'
+import { ACTIVITY_TYPE, ANALYTICS_ACCORDION_TYPE } from '../constants'
 
 import CardUtils from './card/CardUtils'
 import InteractionUtils from './InteractionUtils'
@@ -194,7 +194,6 @@ export default class Interaction extends React.PureComponent {
           startTime={transformed.startTime}
           badge={transformed.badge}
         />
-
         <CardDetails
           summary={`View ${transformed.typeText} details`}
           summaryVisuallyHidden={` for ${transformed.subject}`}
@@ -203,6 +202,7 @@ export default class Interaction extends React.PureComponent {
             text: `You can view more on the ${transformed.typeText} detail page`,
           }}
           showDetails={showDetails}
+          analyticsAccordionType={ANALYTICS_ACCORDION_TYPE.DATA_HUB_ACTIVITY}
         >
           <CardTable
             rows={[
