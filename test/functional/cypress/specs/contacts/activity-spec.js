@@ -100,11 +100,21 @@ describe('Contact activity', () => {
           )
         })
 
-        it('should not display entries for missing data', () => {
-          cy.get('[data-test=interaction-activity]').should(
-            'not.have.text',
-            'Communication channel:'
+        it('should display the communication channel', () => {
+          cy.get('[data-test=interaction-activity]').contains(
+            'Communication channel: Email/Website'
           )
+        })
+
+        context('when optional data is missing', () => {
+          it('should render without missing data', () => {
+            cy.get('[data-test=interaction-activity]')
+              .eq(1)
+              .should('exist')
+              .should('not.contain', 'Communication channel: Email/Website')
+              .should('not.contain', 'Service: ')
+              .should('not.contain', 'Adviser(s): ')
+          })
         })
       })
 

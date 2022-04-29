@@ -25,6 +25,53 @@ import { BLUE, GREY_1, GREY_2 } from 'govuk-colours'
 import { formatMediumDate } from '../../../utils/date'
 import Tag from '../../Tag'
 
+const ItemWrapper = styled('div')`
+  border-bottom: 1px solid ${GREY_2};
+  padding: ${SPACING.SCALE_3} 0;
+`
+const Metadata = styled('div')`
+  color: ${GREY_1};
+  font-size: ${FONT_SIZE.SIZE_14};
+  line-height: ${FONT_SIZE.SIZE_24};
+`
+
+const Subject = styled('h3')`
+  font-size: ${FONT_SIZE.SIZE_20};
+  font-weight: ${FONT_WEIGHTS.bold};
+  line-height: ${FONT_SIZE.SIZE_24};
+  margin-top: ${SPACING.SCALE_2};
+  margin-bottom: ${SPACING.SCALE_2};
+  & > a:link,
+  a:visited,
+  a:hover,
+  a:active {
+    text-decoration: none;
+    color: ${BLUE};
+  }
+`
+
+const Notes = styled('div')`
+  font-size: ${FONT_SIZE.SIZE_16};
+  font-weight: ${FONT_WEIGHTS.regular};
+  line-height: ${FONT_SIZE.SIZE_24};
+  margin-bottom: ${SPACING.SCALE_1};
+`
+
+const TagRow = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: ${SPACING.SCALE_2};
+  margin-right: ${SPACING.SCALE_1};
+`
+
+const TagColumn = styled('div')`
+  display: flex;
+`
+
+const StyledThemeTag = styled(Tag)`
+  margin-right: ${SPACING.SCALE_1};
+`
+
 export default class Interaction extends React.PureComponent {
   static propTypes = {
     activity: PropTypes.object.isRequired,
@@ -66,7 +113,14 @@ export default class Interaction extends React.PureComponent {
     const MAX_NOTE_LENGTH = 255
 
     const formattedAdvisers = () => {
-      return advisers.map((adviser) => <>{AdviserActivityRenderer(adviser)}</>)
+      return (
+        !!advisers.length &&
+        advisers.map((adviser) => (
+          <span key={adviser.name}>
+            <AdviserActivityRenderer adviser={adviser} />
+          </span>
+        ))
+      )
     }
 
     const metadata = [
@@ -78,53 +132,6 @@ export default class Interaction extends React.PureComponent {
         value: serviceName,
       },
     ]
-
-    const ItemWrapper = styled('div')`
-      border-bottom: 1px solid ${GREY_2};
-      padding: ${SPACING.SCALE_3} 0;
-    `
-    const StyledMetadata = styled('div')`
-      color: ${GREY_1};
-      font-size: ${FONT_SIZE.SIZE_14};
-      line-height: ${FONT_SIZE.SIZE_24};
-    `
-
-    const StyledSubject = styled('H3')`
-      font-size: ${FONT_SIZE.SIZE_20};
-      font-weight: ${FONT_WEIGHTS.bold};
-      line-height: ${FONT_SIZE.SIZE_24};
-      margin-top: ${SPACING.SCALE_2};
-      margin-bottom: ${SPACING.SCALE_2};
-      & > a:link,
-      a:visited,
-      a:hover,
-      a:active {
-        text-decoration: none;
-        color: ${BLUE};
-      }
-    `
-
-    const StyledNotes = styled('div')`
-      font-size: ${FONT_SIZE.SIZE_16};
-      font-weight: ${FONT_WEIGHTS.regular};
-      line-height: ${FONT_SIZE.SIZE_24};
-      margin-bottom: ${SPACING.SCALE_1};
-    `
-
-    const TagRow = styled('div')`
-      display: flex;
-      justify-content: space-between;
-      padding-bottom: ${SPACING.SCALE_2};
-      margin-right: ${SPACING.SCALE_1};
-    `
-
-    const TagColumn = styled('div')`
-      display: flex;
-    `
-
-    const StyledThemeTag = styled(Tag)`
-      margin-right: ${SPACING.SCALE_1};
-    `
 
     const InteractionActivity = () => (
       <ItemWrapper data-test="interaction-activity">
@@ -150,12 +157,11 @@ export default class Interaction extends React.PureComponent {
             </Tag>
           </TagColumn>
         </TagRow>
-
-        <StyledSubject>
+        <Subject>
           <Link href={transformed.url}>{transformed.subject}</Link>
-        </StyledSubject>
+        </Subject>
         {serviceNotes && (
-          <StyledNotes>
+          <Notes>
             {serviceNotes.length < MAX_NOTE_LENGTH
               ? serviceNotes
               : serviceNotes
@@ -163,18 +169,18 @@ export default class Interaction extends React.PureComponent {
                   .split(' ')
                   .slice(0, -1)
                   .join(' ') + ' ...'}{' '}
-          </StyledNotes>
+          </Notes>
         )}
-        <StyledMetadata>
+        <Metadata>
           {metadata.map(
-            ({ label, value }) =>
+            ({ label, value }, index) =>
               value && (
-                <div>
+                <div key={`${label}-${index}`}>
                   <span style={{ fontWeight: 'bold' }}>{label}:</span> {value}
                 </div>
               )
           )}
-        </StyledMetadata>
+        </Metadata>
       </ItemWrapper>
     )
 
