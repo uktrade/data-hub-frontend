@@ -34,6 +34,17 @@ const StyledTitle = styled('div')`
   white-space: nowrap;
 `
 
+const trackAnalytics = (e, pushAnalytics) => {
+  const { options, selectedIndex } = e.target
+  const dropDownOptionSelected = options[selectedIndex].text
+  pushAnalytics({
+    event: 'activityTypeDropDown',
+    extra: {
+      dropDownOptionSelected,
+    },
+  })
+}
+
 const ActivityFeedFilters = ({
   activityTypeFilters,
   activityTypeFilter,
@@ -60,17 +71,10 @@ const ActivityFeedFilters = ({
         {(pushAnalytics) => (
           <SelectFilter
             filters={activityTypeFilters}
-            onActivityTypeFilterChange={
-              (onActivityTypeFilterChange,
-              ({ target: { options, selectedIndex } }) => {
-                pushAnalytics({
-                  event: 'activityTypeDropDown',
-                  extra: {
-                    dropDownOptionSelected: options[selectedIndex].text,
-                  },
-                })
-              })
-            }
+            onActivityTypeFilterChange={(e) => {
+              onActivityTypeFilterChange(e)
+              trackAnalytics(e, pushAnalytics)
+            }}
             value={activityTypeFilter}
           />
         )}
