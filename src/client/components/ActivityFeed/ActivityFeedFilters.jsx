@@ -6,6 +6,7 @@ import styled from 'styled-components'
 
 import SelectFilter from './filters/SelectFilter'
 import ActivityFeedCheckbox from './ActivityFeedCheckbox'
+import Analytics from '../Analytics'
 
 const ActivityFeedFiltersRow = styled('div')`
   padding: ${SPACING.SCALE_2};
@@ -33,6 +34,17 @@ const StyledTitle = styled('div')`
   white-space: nowrap;
 `
 
+const trackAnalytics = (e, pushAnalytics) => {
+  const { options, selectedIndex } = e.target
+  const dropDownOptionSelected = options[selectedIndex].text
+  pushAnalytics({
+    event: 'activityTypeDropDown',
+    extra: {
+      dropDownOptionSelected,
+    },
+  })
+}
+
 const ActivityFeedFilters = ({
   activityTypeFilters,
   activityTypeFilter,
@@ -55,11 +67,18 @@ const ActivityFeedFilters = ({
           </ActivityFeedCheckbox>
         </StyledCheckboxContainer>
       )}
-      <SelectFilter
-        filters={activityTypeFilters}
-        onActivityTypeFilterChange={onActivityTypeFilterChange}
-        value={activityTypeFilter}
-      />
+      <Analytics>
+        {(pushAnalytics) => (
+          <SelectFilter
+            filters={activityTypeFilters}
+            onActivityTypeFilterChange={(e) => {
+              onActivityTypeFilterChange(e)
+              trackAnalytics(e, pushAnalytics)
+            }}
+            value={activityTypeFilter}
+          />
+        )}
+      </Analytics>
     </ActivityFeedFiltersRow>
   )
 }
