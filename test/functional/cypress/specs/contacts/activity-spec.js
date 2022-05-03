@@ -54,7 +54,7 @@ describe('Contact activity', () => {
         )
       })
 
-      context('when viewing a Data Hub interaction', () => {
+      context('when viewing a Contact with Data Hub interaction', () => {
         it('should display interaction activity kind label', () => {
           cy.get('[data-test=interaction-activity-kind-label]').contains(
             'interaction'
@@ -115,6 +115,17 @@ describe('Contact activity', () => {
               .should('not.contain', 'Service: ')
               .should('not.contain', 'Adviser(s): ')
           })
+        })
+      })
+
+      context('when viewing a Contact with Aventri activity', () => {
+        it('should diplay company name from Aventri ', () => {
+          cy.get('[data-test="aventri-activity"]').contains(
+            'Event Template [PST-R2]'
+          )
+        })
+        it('should display event start date from Aventri', () => {
+          cy.get('[data-test="aventri-activity"]').contains('02 May 2022')
         })
       })
 
