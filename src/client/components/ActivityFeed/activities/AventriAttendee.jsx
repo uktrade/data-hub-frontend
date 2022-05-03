@@ -7,8 +7,8 @@ import { GREEN } from 'govuk-colours'
 
 const transformAventriAttendee = (activity) => {
   return {
-    event: { name: activity.object['dit:aventri:name'] },
-    startTime: { name: activity.object['dit:aventri:name'] },
+    event: { name: 'event name TBC' },
+    startTime: 'TBC',
     company: { name: activity.object['dit:aventri:companyname'] },
     registrationStatus: activity.object['dit:aventri:registrationstatus'],
   }

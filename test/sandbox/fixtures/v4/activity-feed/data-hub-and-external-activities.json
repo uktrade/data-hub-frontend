@@ -27,8 +27,6 @@
               "id": "dit:aventri:Event:1111",
               "type": "dit:aventri:Event"
             },
-            "dit:aventri:name": "Event Template [PST-R2]",
-            "dit:aventri:startTime": "2018-11-15T09:00:00",
             "dit:aventri:approvalstatus": null,
             "dit:aventri:companyname": "Acme Ltd",
             "dit:aventri:createdby": "attendee",

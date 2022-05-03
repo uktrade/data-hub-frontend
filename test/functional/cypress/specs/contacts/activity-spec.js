@@ -118,14 +118,14 @@ describe('Contact activity', () => {
         })
       })
 
-      context('when viewing a Contact with Aventri activity', () => {
-        it('should diplay company name from Aventri ', () => {
+      context.only('when viewing a Contact with Aventri activity', () => {
+        it('should diplay event name from Aventri ', () => {
           cy.get('[data-test="aventri-activity"]').contains(
-            'Event Template [PST-R2]'
+            'EITA Test Event 2022'
           )
         })
         it('should display event start date from Aventri', () => {
-          cy.get('[data-test="aventri-activity"]').contains('02 May 2022')
+          cy.get('[data-test="aventri-activity"]').contains('Date: 02 May 2022')
         })
       })
 
