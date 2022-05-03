@@ -4,17 +4,18 @@ import CardUtils from './card/CardUtils'
 import { ACTIVITY_TYPE } from '../constants'
 import { Card, CardHeader } from './card'
 import { GREEN } from 'govuk-colours'
+import { format } from '../../../utils/date'
 
 const transformAventriAttendee = (activity) => {
   return {
-    event: { name: 'event name TBC' },
-    startTime: 'TBC',
+    eventName: activity.eventName,
+    startDate: format(activity.startDate),
     company: { name: activity.object['dit:aventri:companyname'] },
     registrationStatus: activity.object['dit:aventri:registrationstatus'],
   }
 }
 export default function AventriAttendee({ activity }) {
-  const { event, company, registrationStatus, startTime } =
+  const { eventName, company, registrationStatus, startDate } =
     transformAventriAttendee(activity)
 
   return (
@@ -23,10 +24,10 @@ export default function AventriAttendee({ activity }) {
         <CardHeader
           badge={{ borderColour: GREEN, text: 'Aventri Service Delivery' }}
           company={company}
-          heading={`Attended event ${event.name}`}
+          heading={eventName}
         />
         <p>Registration Status: {registrationStatus || 'Unknown'} </p>
-        <p>Start Time: {startTime || 'Unknown'}</p>
+        <p>Date: {startDate || 'Unknown'}</p>
       </Card>
     </div>
   )
