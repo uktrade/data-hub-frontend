@@ -551,15 +551,17 @@ describe('Investments Collections Filter', () => {
 
   context('Estimated land dates', () => {
     const fromElement = '[data-test="estimated-land-date-after-filter"]'
-    const fromDate = '2020-01-01'
-    const formattedFromDate = '1 January 2020'
+    const fromDate = '2020-01'
+    const fromDateAPI = '2020-01-01'
+    const formattedFromDate = 'January 2020'
     const toElement = '[data-test="estimated-land-date-before-filter"]'
-    const toDate = '2021-10-05'
-    const formattedToDate = '5 October 2021'
+    const toDate = '2021-10'
+    const toDateAPI = '2021-10-01'
+    const formattedToDate = 'October 2021'
     const expectedPayload = {
       ...minimumPayload,
-      estimated_land_date_after: fromDate,
-      estimated_land_date_before: toDate,
+      estimated_land_date_after: fromDateAPI,
+      estimated_land_date_before: toDateAPI,
     }
 
     it('should filter from the url', () => {
@@ -652,15 +654,17 @@ describe('Investments Collections Filter', () => {
 
   context('Actual land dates', () => {
     const fromElement = '[data-test="actual-land-date-after-filter"]'
-    const fromDate = '2020-01-01'
-    const formattedFromDate = '1 January 2020'
+    const fromDate = '2020-01'
+    const fromDateAPI = '2020-01-01'
+    const formattedFromDate = 'January 2020'
     const toElement = '[data-test="actual-land-date-before-filter"]'
-    const toDate = '2021-10-05'
-    const formattedToDate = '5 October 2021'
+    const toDate = '2021-10'
+    const toDateAPI = '2021-10-01'
+    const formattedToDate = 'October 2021'
     const expectedPayload = {
       ...minimumPayload,
-      actual_land_date_after: fromDate,
-      actual_land_date_before: toDate,
+      actual_land_date_after: fromDateAPI,
+      actual_land_date_before: toDateAPI,
     }
 
     it('should filter from the url', () => {

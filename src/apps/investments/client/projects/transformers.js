@@ -2,12 +2,31 @@
 const {
   format,
   formatMediumDateTime,
+  formatMonthYearDate,
 } = require('../../../../client/utils/date')
 
-import urls from '../../../../lib/urls'
-import { addressToString } from '../../../../client/utils/addresses'
+const urls = require('../../../../lib/urls')
 
-export const transformInvestmentProjectToListItem = ({
+const { addressToString } = require('../../../../client/utils/addresses')
+
+const MONTH_DATE_FIELD_LIST = [
+  'estimated_land_date_before',
+  'estimated_land_date_after',
+  'actual_land_date_before',
+  'actual_land_date_after',
+]
+
+const transformLandDateFilters = (params) => {
+  // The API only accepts yyyy-MM-dd format, so month-year filters have to be updated
+  MONTH_DATE_FIELD_LIST.forEach((field) => {
+    if (field in params) {
+      params[field] = formatMonthYearDate(params[field])
+    }
+  })
+  return params
+}
+
+const transformInvestmentProjectToListItem = ({
   id,
   name,
   project_code,
@@ -43,7 +62,7 @@ export const transformInvestmentProjectToListItem = ({
   }
 }
 
-export const transformCompanyToListItem = (company) => ({
+const transformCompanyToListItem = (company) => ({
   id: company.id,
   heading: company.name,
   data: { ...company },
@@ -66,3 +85,9 @@ export const transformCompanyToListItem = (company) => ({
     },
   ].filter((meta) => meta.value),
 })
+
+module.exports = {
+  transformLandDateFilters,
+  transformInvestmentProjectToListItem,
+  transformCompanyToListItem,
+}

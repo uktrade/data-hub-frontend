@@ -1,13 +1,17 @@
 import { apiProxyAxios } from '../../../../client/components/Task/utils'
 
 import { getMetadataOptions } from '../../../../client/metadata'
-import { transformInvestmentProjectToListItem } from './transformers'
+import {
+  transformInvestmentProjectToListItem,
+  transformLandDateFilters,
+} from './transformers'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
 export const getProjects = ({ limit = 10, page, companyId, ...rest }) => {
   let offset = limit * (parseInt(page, 10) - 1) || 0
 
+  const transformedRest = transformLandDateFilters(rest)
   return apiProxyAxios
     .post('/v3/search/investment_project', {
       limit,
@@ -15,7 +19,7 @@ export const getProjects = ({ limit = 10, page, companyId, ...rest }) => {
       ...(companyId && {
         investor_company: [companyId],
       }),
-      ...rest,
+      ...transformedRest,
     })
     .then(
       ({ data }) => ({

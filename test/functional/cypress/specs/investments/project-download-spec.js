@@ -112,10 +112,10 @@ describe('Download CSV', () => {
       investment_type: '031269ab-b7ec-40e9-8a4e-7371404f0622',
       land_date_financial_year_start: '2021',
       likelihood_to_land: 'b3515282-dc36-487a-a5af-320cde165575',
-      estimated_land_date_before: '2022-01-25',
-      estimated_land_date_after: '2022-01-01',
-      actual_land_date_before: '2022-02-10',
-      actual_land_date_after: '2022-02-01',
+      estimated_land_date_before: '2022-02',
+      estimated_land_date_after: '2022-01',
+      actual_land_date_before: '2022-02',
+      actual_land_date_after: '2022-01',
       level_of_involvement_simplified: 'involved',
     }
     const queryString = qs.stringify(filters)
