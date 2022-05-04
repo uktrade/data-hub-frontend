@@ -3,15 +3,11 @@ import PropTypes from 'prop-types'
 import CardUtils from './card/CardUtils'
 import { ACTIVITY_TYPE } from '../constants'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
-import { GREY_1, GREY_2 } from 'govuk-colours'
+import { GREY_1 } from 'govuk-colours'
 import { format } from '../../../utils/date'
 import styled from 'styled-components'
 import Tag from '../../Tag'
-
-const ItemWrapper = styled('div')`
-  border-bottom: 1px solid ${GREY_2};
-  padding: ${SPACING.SCALE_3} 0;
-`
+import ActivityCardWrapper from './card/ActivityCardWrapper'
 
 const EventName = styled('h3')`
   color: ${GREY_1};
@@ -49,18 +45,22 @@ export default function AventriAttendee({ activity }) {
   const { eventName, startDate } = transformAventriAttendee(activity)
 
   return (
-    <ItemWrapper data-test={'aventri-activity'}>
+    <ActivityCardWrapper dataTest="aventri-activity">
       <TagRow>
         <TagColumn>
-          <Tag colour="blue">Events</Tag>
+          <Tag data-test="aventri-event-label" colour="blue">
+            Events
+          </Tag>
         </TagColumn>
         <TagColumn>
-          <Tag colour="grey">Aventri Service Delivery</Tag>
+          <Tag data-test="aventri-kind-label" colour="grey">
+            Aventri Service Delivery
+          </Tag>
         </TagColumn>
       </TagRow>
       <EventName>{eventName}</EventName>
       <Metadata>Date: {startDate || 'Unknown'}</Metadata>
-    </ItemWrapper>
+    </ActivityCardWrapper>
   )
 }
 

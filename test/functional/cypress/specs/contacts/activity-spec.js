@@ -127,6 +127,14 @@ describe('Contact activity', () => {
         it('should display event start date from Aventri', () => {
           cy.get('[data-test="aventri-activity"]').contains('Date: 02 May 2022')
         })
+        it('should display the Events label', () => {
+          cy.get('[data-test="aventri-event-label"]').contains('Events')
+        })
+        it('should display the Kind label', () => {
+          cy.get('[data-test="aventri-kind-label"]').contains(
+            'Aventri Service Delivery'
+          )
+        })
       })
 
       context('when there are more than 10 activities', () => {
