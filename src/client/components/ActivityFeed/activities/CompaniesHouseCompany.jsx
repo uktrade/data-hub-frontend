@@ -13,7 +13,11 @@ import {
 import { DefaultItemRenderer } from './card/item-renderers'
 
 import CardUtils from './card/CardUtils'
-import { ACTIVITY_TYPE, SOURCE_TYPES } from '../constants'
+import {
+  ACTIVITY_TYPE,
+  ANALYTICS_ACCORDION_TYPE,
+  SOURCE_TYPES,
+} from '../constants'
 
 const { format } = require('../../../utils/date')
 
@@ -80,6 +84,7 @@ export default class CompaniesHouseCompany extends React.PureComponent {
           summary="View key details for this company"
           summaryVisuallyHidden={`${summary} from Companies House`}
           showDetails={showDetails}
+          analyticsAccordionType={ANALYTICS_ACCORDION_TYPE.COMPANIES_HOUSE}
         >
           <CardTable
             rows={[
@@ -100,7 +105,10 @@ export default class CompaniesHouseCompany extends React.PureComponent {
                 header: 'Returns last made up date',
                 content: returnsLastMadeUpDate,
               },
-              { header: 'Returns next due date', content: returnsNextDueDate },
+              {
+                header: 'Returns next due date',
+                content: returnsNextDueDate,
+              },
               {
                 header: 'SIC code(s)',
                 content: (
