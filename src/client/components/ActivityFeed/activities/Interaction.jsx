@@ -21,33 +21,16 @@ import { ACTIVITY_TYPE } from '../constants'
 import CardUtils from './card/CardUtils'
 import InteractionUtils from './InteractionUtils'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
-import { BLUE, GREY_1, GREY_2 } from 'govuk-colours'
+import { GREY_1 } from 'govuk-colours'
 import { formatMediumDate } from '../../../utils/date'
 import Tag from '../../Tag'
+import ActivityCardSubject from './card/ActivityCardSubject'
+import ActivityCardWrapper from './card/ActivityCardWrapper'
 
-const ItemWrapper = styled('div')`
-  border-bottom: 1px solid ${GREY_2};
-  padding: ${SPACING.SCALE_3} 0;
-`
 const Metadata = styled('div')`
   color: ${GREY_1};
   font-size: ${FONT_SIZE.SIZE_14};
   line-height: ${FONT_SIZE.SIZE_24};
-`
-
-const Subject = styled('h3')`
-  font-size: ${FONT_SIZE.SIZE_20};
-  font-weight: ${FONT_WEIGHTS.bold};
-  line-height: ${FONT_SIZE.SIZE_24};
-  margin-top: ${SPACING.SCALE_2};
-  margin-bottom: ${SPACING.SCALE_2};
-  & > a:link,
-  a:visited,
-  a:hover,
-  a:active {
-    text-decoration: none;
-    color: ${BLUE};
-  }
 `
 
 const Notes = styled('div')`
@@ -134,7 +117,7 @@ export default class Interaction extends React.PureComponent {
     ]
 
     const InteractionActivity = () => (
-      <ItemWrapper data-test="interaction-activity">
+      <ActivityCardWrapper dataTest="interaction-activity">
         <TagRow>
           <TagColumn>
             {theme && (
@@ -157,9 +140,9 @@ export default class Interaction extends React.PureComponent {
             </Tag>
           </TagColumn>
         </TagRow>
-        <Subject>
+        <ActivityCardSubject>
           <Link href={transformed.url}>{transformed.subject}</Link>
-        </Subject>
+        </ActivityCardSubject>
         {serviceNotes && (
           <Notes>
             {serviceNotes.length < MAX_NOTE_LENGTH
@@ -181,7 +164,7 @@ export default class Interaction extends React.PureComponent {
               )
           )}
         </Metadata>
-      </ItemWrapper>
+      </ActivityCardWrapper>
     )
 
     return isContactActivitiesFeatureOn ? (
