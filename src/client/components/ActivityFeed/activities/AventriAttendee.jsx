@@ -10,23 +10,18 @@ const transformAventriAttendee = (activity) => {
   return {
     eventName: activity.eventName,
     startDate: format(activity.startDate),
-    company: { name: activity.object['dit:aventri:companyname'] },
-    registrationStatus: activity.object['dit:aventri:registrationstatus'],
   }
 }
 export default function AventriAttendee({ activity }) {
-  const { eventName, company, registrationStatus, startDate } =
-    transformAventriAttendee(activity)
+  const { eventName, startDate } = transformAventriAttendee(activity)
 
   return (
     <div data-test={'aventri-activity'}>
       <Card>
         <CardHeader
           badge={{ borderColour: GREEN, text: 'Aventri Service Delivery' }}
-          company={company}
           heading={eventName}
         />
-        <p>Registration Status: {registrationStatus || 'Unknown'} </p>
         <p>Date: {startDate || 'Unknown'}</p>
       </Card>
     </div>

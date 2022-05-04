@@ -118,7 +118,7 @@ describe('Contact activity', () => {
         })
       })
 
-      context.only('when viewing a Contact with Aventri activity', () => {
+      context('when viewing a Contact with Aventri activity', () => {
         it('should diplay event name from Aventri ', () => {
           cy.get('[data-test="aventri-activity"]').contains(
             'EITA Test Event 2022'
