@@ -272,14 +272,14 @@ describe('View large capital investor details page', () => {
         required_checks_conducted: '02d6fc9b-fbb9-4621-b247-d86f2487898e',
         required_checks_conducted_on: `${lastMonth.getFullYear()}-${(
           lastMonth.getMonth() + 1
-        ).toString()}-${lastMonth.getDay().toString()}`,
+        ).toString()}-${lastMonth.getDate().toString()}`,
         required_checks_conducted_by: null,
       }
       assertRequiredCheckDate().then((element) => {
         clearAndInputDateValueObject({
           element,
           value: {
-            day: lastMonth.getDay().toString(),
+            day: lastMonth.getDate().toString(),
             month: (lastMonth.getMonth() + 1).toString(),
             year: lastMonth.getFullYear().toString(),
           },
