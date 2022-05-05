@@ -63,7 +63,7 @@ const CollectionList = ({
               entityNamePlural={entityNamePlural}
             />
           )}
-          <ol>
+          <ol aria-live="polite">
             {items.map(
               (
                 { headingText, headingUrl, subheading, badges, metadata },
