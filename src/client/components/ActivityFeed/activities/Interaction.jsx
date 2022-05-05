@@ -21,17 +21,11 @@ import { ACTIVITY_TYPE } from '../constants'
 import CardUtils from './card/CardUtils'
 import InteractionUtils from './InteractionUtils'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
-import { GREY_1 } from 'govuk-colours'
 import { formatMediumDate } from '../../../utils/date'
 import Tag from '../../Tag'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
-
-const Metadata = styled('div')`
-  color: ${GREY_1};
-  font-size: ${FONT_SIZE.SIZE_14};
-  line-height: ${FONT_SIZE.SIZE_24};
-`
+import ActivityCardMetadata from './card/ActivityCardMetadata'
 
 const Notes = styled('div')`
   font-size: ${FONT_SIZE.SIZE_16};
@@ -154,16 +148,7 @@ export default class Interaction extends React.PureComponent {
                   .join(' ') + ' ...'}{' '}
           </Notes>
         )}
-        <Metadata>
-          {metadata.map(
-            ({ label, value }, index) =>
-              value && (
-                <div key={`${label}-${index}`}>
-                  <span style={{ fontWeight: 'bold' }}>{label}:</span> {value}
-                </div>
-              )
-          )}
-        </Metadata>
+        <ActivityCardMetadata metadata={metadata} />
       </ActivityCardWrapper>
     )
 

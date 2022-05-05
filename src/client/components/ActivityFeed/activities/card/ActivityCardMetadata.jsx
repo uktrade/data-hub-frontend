@@ -27,7 +27,7 @@ ActivityCardMetadata.propTypes = {
   metadata: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      value: PropTypes.string,
+      value: PropTypes.any,
     })
   ),
 }
