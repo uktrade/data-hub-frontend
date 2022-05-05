@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import Tag from '../../Tag'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
+import ActivityCardMetadata from './card/ActivityCardMetadata'
 
 const Metadata = styled('div')`
   color: ${GREY_1};
@@ -51,7 +52,9 @@ export default function AventriAttendee({ activity }) {
         </TagColumn>
       </TagRow>
       <ActivityCardSubject>{eventName}</ActivityCardSubject>
-      <Metadata>Date: {startDate || 'Unknown'}</Metadata>
+      <ActivityCardMetadata
+        metadata={[{ label: 'Date', value: startDate || 'Unknown' }]}
+      />
     </ActivityCardWrapper>
   )
 }
