@@ -101,7 +101,7 @@ const FilteredCollectionList = ({
                 <Task.Status {...taskProps}>
                   {() =>
                     isComplete && (
-                      <ol>
+                      <ol aria-live="polite">
                         {results.map((item) => (
                           <Analytics>
                             {(pushAnalytics) => (
