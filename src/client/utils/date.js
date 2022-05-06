@@ -25,6 +25,7 @@ const {
   subYears,
   subWeeks,
 } = require('date-fns')
+const { start } = require('elastic-apm-node')
 
 const {
   DATE_LONG_FORMAT_1,
@@ -226,6 +227,24 @@ function createDateFromObject({ day, month, year }) {
   return result
 }
 
+const formatStartAndEndDate = (startDate, endDate) => {
+  const startDateParsed = parseISO(startDate)
+  const endDateParsed = endDate && parseISO(endDate)
+  if (!endDate || !isDateAfter(endDateParsed, startDateParsed)) {
+    return format(startDate)
+  }
+  if (startDateParsed.toDateString() === endDateParsed.toDateString()) {
+    return format(startDate)
+  }
+  if (isDateAfter(endDateParsed, startDateParsed)) {
+    const startDay = padZero(formatFns(new Date(parseISO(startDate)), 'd'))
+    return `${startDay} to ${format(endDate)}`
+  }
+  
+
+  return startDate && endDate && undefined
+}
+
 module.exports = {
   addDays,
   addMonths,
@@ -236,6 +255,7 @@ module.exports = {
   formatMediumDate,
   formatMediumDateTime,
   formatLongDate,
+  formatStartAndEndDate,
   formatWithoutParsing,
   generateFinancialYearLabel,
   getDifferenceInDays,
