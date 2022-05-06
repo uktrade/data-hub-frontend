@@ -22,31 +22,17 @@ import CardUtils from './card/CardUtils'
 import InteractionUtils from './InteractionUtils'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import { formatMediumDate } from '../../../utils/date'
-import Tag from '../../Tag'
+
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
+import ActivityCardLabels from './card/ActivityCardLabels'
 
 const Notes = styled('div')`
   font-size: ${FONT_SIZE.SIZE_16};
   font-weight: ${FONT_WEIGHTS.regular};
   line-height: ${FONT_SIZE.SIZE_24};
   margin-bottom: ${SPACING.SCALE_1};
-`
-
-const TagRow = styled('div')`
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: ${SPACING.SCALE_2};
-  margin-right: ${SPACING.SCALE_1};
-`
-
-const TagColumn = styled('div')`
-  display: flex;
-`
-
-const StyledThemeTag = styled(Tag)`
-  margin-right: ${SPACING.SCALE_1};
 `
 
 export default class Interaction extends React.PureComponent {
@@ -112,28 +98,7 @@ export default class Interaction extends React.PureComponent {
 
     const InteractionActivity = () => (
       <ActivityCardWrapper dataTest="interaction-activity">
-        <TagRow>
-          <TagColumn>
-            {theme && (
-              <StyledThemeTag
-                data-test="interaction-activity-theme-label"
-                colour="default"
-              >
-                {theme}
-              </StyledThemeTag>
-            )}
-            {service && (
-              <Tag data-test="interaction-activity-service-label" colour="blue">
-                {service}
-              </Tag>
-            )}
-          </TagColumn>
-          <TagColumn>
-            <Tag data-test="interaction-activity-kind-label" colour="grey">
-              {kind}
-            </Tag>
-          </TagColumn>
-        </TagRow>
+        <ActivityCardLabels theme={theme} service={service} kind={kind} />
         <ActivityCardSubject>
           <Link href={transformed.url}>{transformed.subject}</Link>
         </ActivityCardSubject>
