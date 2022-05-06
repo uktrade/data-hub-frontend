@@ -56,17 +56,29 @@ describe('Contact activity', () => {
 
       context('when viewing a Contact with Data Hub interaction', () => {
         it('should display interaction activity kind label', () => {
-          cy.get('[data-test=interaction-activity-kind-label]').contains(
-            'interaction'
-          )
+          cy.get('[data-test="interaction-activity"]').within(() => {
+            cy.get('[data-test=activity-kind-label]').contains('interaction', {
+              matchCase: false,
+            })
+          })
         })
 
         it('should display interaction activity theme label', () => {
-          cy.get('[data-test=interaction-activity-theme-label]').contains(
-            'export'
-          )
+          cy.get('[data-test="interaction-activity"]').within(() => {
+            cy.get('[data-test=activity-theme-label]').contains('export', {
+              matchCase: false,
+            })
+          })
         })
 
+        it('should display interaction activity service label', () => {
+          cy.get('[data-test="interaction-activity"]').within(() => {
+            cy.get('[data-test=activity-service-label]').contains(
+              'introduction',
+              { matchCase: false }
+            )
+          })
+        })
         it('should display the subject', () => {
           cy.get('[data-test=interaction-activity]').contains(
             'Meeting between Brendan Smith and Tyson Morar'
@@ -128,12 +140,19 @@ describe('Contact activity', () => {
           cy.get('[data-test="aventri-activity"]').contains('Date: 02 May 2022')
         })
         it('should display the Events label', () => {
-          cy.get('[data-test="aventri-event-label"]').contains('Events')
+          cy.get('[data-test="aventri-activity"]').within(() => {
+            cy.get('[data-test="activity-service-label"]').contains('events', {
+              matchCase: false,
+            })
+          })
         })
         it('should display the Kind label', () => {
-          cy.get('[data-test="aventri-kind-label"]').contains(
-            'Aventri Service Delivery'
-          )
+          cy.get('[data-test="aventri-activity"]').within(() => {
+            cy.get('[data-test="activity-kind-label"]').contains(
+              'aventri service delivery',
+              { matchCase: false }
+            )
+          })
         })
       })
 
