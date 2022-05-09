@@ -25,7 +25,7 @@ describe('metadata', () => {
       metadata.__set__('hawkRequest', hawkRequest)
       await getMetadata('fake', 'fakeOptions')
       const { fakeOptions } = metadata.__get__('exports')
-      expect(fakeOptions).to.deep.equal({ fake: 'metadata' })
+      expect(fakeOptions).to.deep.equal('')
     })
 
     it('fails to get metadata if request cannot be made', async () => {
