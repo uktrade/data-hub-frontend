@@ -235,6 +235,7 @@ module.exports = {
       '/contacts',
       '/:contactId/interactions'
     ),
+    unarchive: url('/contacts', '/:contactId/unarchive'),
   },
   events: {
     index: url('/events', PRIMARY_LINK_PARAMS.events),

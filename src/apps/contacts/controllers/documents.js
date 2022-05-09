@@ -10,7 +10,6 @@ function renderDocuments(req, res) {
     res.locals,
     'contact.archived_documents_url_path'
   )
-
   return res.breadcrumb('Documents').render('contacts/views/documents', {
     props: {
       contactId: contactId,

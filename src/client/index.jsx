@@ -58,6 +58,7 @@ import EditProjectManagement from '../apps/investments/client/projects/team/Edit
 import { EditTeamMembers } from '../apps/investments/client/projects/team/EditTeamMembers'
 import EditClientRelationshipManagement from '../apps/investments/client/projects/team/EditClientRelationshipManagement'
 import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
+import ContactLocalHeader from './components/ContactLocalHeader'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -614,6 +615,9 @@ function App() {
       </Mount>
       <Mount selector="#contact-activity">
         {(props) => <ContactActivity {...props} />}
+      </Mount>
+      <Mount selector="#contact-local-header">
+        {(props) => <ContactLocalHeader {...props} />}
       </Mount>
 
       <Mount selector="#react-app">
