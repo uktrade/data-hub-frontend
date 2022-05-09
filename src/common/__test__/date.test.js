@@ -36,14 +36,34 @@ describe('Date tests', () => {
       })
     })
 
-    describe('when the end date same as start date', () => {
+    describe('when the end date is same date and time as start date', () => {
       it('should return the start date', () => {
         expect(
           formatStartAndEndDate('2020-06-10T16:00:00Z', '2020-06-10T16:00:00Z')
         ).to.equal('10 Jun 2020')
       })
     })
-    //if start date is missing
+
+    describe('when the end date is same day but different time as start date', () => {
+      it('should return the start date', () => {
+        expect(
+          formatStartAndEndDate('2020-06-10T16:00:00Z', '2020-06-10T19:00:00Z')
+        ).to.equal('10 Jun 2020')
+      })
+    })
+
+    describe('when both dates are missing', () => {
+      it('should return null', () => {
+        expect(formatStartAndEndDate(null, null)).to.be.null
+      })
+    })
+
+    describe('when start date is missing', () => {
+      it('should return null', () => {
+        expect(formatStartAndEndDate(null, '2020-06-10T16:00:00Z')).to.be.null
+      })
+    })
+
     //if end date is exactly the same as the start date
     //if end date is on the same day but a different timestamp
     //if end date is after start date

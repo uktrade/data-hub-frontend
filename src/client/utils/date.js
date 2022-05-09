@@ -227,7 +227,12 @@ function createDateFromObject({ day, month, year }) {
 }
 
 function formatStartAndEndDate(startDate, endDate) {
-  if (!endDate || !isDateAfter(parseISO(endDate), parseISO(startDate))) {
+  const startDateParsed = parseISO(startDate)
+  const endDateParsed = parseISO(endDate)
+  if (!endDate || !isDateAfter(endDateParsed, startDateParsed)) {
+    return format(startDate)
+  }
+  if (startDateParsed.toDateString() === endDateParsed.toDateString()) {
     return format(startDate)
   }
 }
