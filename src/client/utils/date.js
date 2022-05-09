@@ -226,6 +226,12 @@ function createDateFromObject({ day, month, year }) {
   return result
 }
 
+function formatStartAndEndDate(startDate, endDate) {
+  if (!endDate || !isDateAfter(parseISO(endDate), parseISO(startDate))) {
+    return format(startDate)
+  }
+}
+
 module.exports = {
   addDays,
   addMonths,
@@ -258,4 +264,5 @@ module.exports = {
   today,
   transformValueForAPI,
   createDateFromObject,
+  formatStartAndEndDate,
 }
