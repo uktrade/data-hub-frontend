@@ -51,10 +51,9 @@ exports.activityFeed = function (req, res) {
       : res.json(dataHubAndExternalActivities)
   }
 
-  var isAventriEventQuery = get(
-    req.body,
-    "query.bool.must[0].term['object.type']"
-  )
+  var isAventriEventQuery =
+    get(req.body, "query.bool.must[0].term['object.type']") ===
+    'dit:aventri:Event'
 
   if (isAventriEventQuery) {
     return res.json(aventriEvents)
