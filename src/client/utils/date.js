@@ -183,6 +183,17 @@ function getDifferenceInDaysLabel(dateIn) {
   return Math.abs(difference) === 1 ? difference + ' day' : difference + ' days'
 }
 
+/**
+ * Get the number of months different with start and end date to a given date as an integer.
+ */
+function getDifferenceInMonths(startDate, endDate) {
+  return (
+    startDate.getMonth() -
+    endDate.getMonth() +
+    12 * (startDate.getFullYear() - endDate.getFullYear())
+  )
+}
+
 function getFinancialYearStart(date) {
   return date.getMonth() < 3 ? date.getFullYear() - 1 : date.getFullYear()
 }
@@ -234,6 +245,12 @@ function formatStartAndEndDate(startDate, endDate) {
   }
   if (startDateParsed.toDateString() === endDateParsed.toDateString()) {
     return format(startDate)
+  }
+
+  if (getDifferenceInMonths(endDateParsed, startDateParsed) == 0) {
+    return `${startDateParsed.getUTCDate()} to ${format(endDate)}`
+  } else {
+    return `${format(startDate)} to ${format(endDate)}`
   }
 }
 
