@@ -204,6 +204,7 @@ async function fetchActivitiesForContact(req, res, next) {
           if (matchingEvent) {
             activity.eventName = matchingEvent.object.name
             activity.startDate = matchingEvent.object.startTime
+            activity.endDate = matchingEvent.object.endTime
           }
         }
         return activity

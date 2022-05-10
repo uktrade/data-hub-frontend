@@ -124,8 +124,10 @@ describe('Contact activity', () => {
             'EITA Test Event 2022'
           )
         })
-        it('should display event start date from Aventri', () => {
-          cy.get('[data-test="aventri-activity"]').contains('Date: 02 May 2022')
+        it('should display event date from Aventri', () => {
+          cy.get('[data-test="aventri-activity"]').contains(
+            'Event date: 02 Mar 2021 to 04 May 2022'
+          )
         })
         it('should display the Events label', () => {
           cy.get('[data-test="aventri-event-label"]').contains('Events')

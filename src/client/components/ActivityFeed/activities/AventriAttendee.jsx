@@ -2,20 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import CardUtils from './card/CardUtils'
 import { ACTIVITY_TYPE } from '../constants'
-import { FONT_SIZE, SPACING } from '@govuk-react/constants'
-import { GREY_1 } from 'govuk-colours'
-import { format } from '../../../utils/date'
+import { SPACING } from '@govuk-react/constants'
+import { formatStartAndEndDate } from '../../../utils/date'
 import styled from 'styled-components'
 import Tag from '../../Tag'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
-
-const Metadata = styled('div')`
-  color: ${GREY_1};
-  font-size: ${FONT_SIZE.SIZE_14};
-  line-height: ${FONT_SIZE.SIZE_24};
-`
 
 const TagRow = styled('div')`
   display: flex;
@@ -31,11 +24,11 @@ const TagColumn = styled('div')`
 const transformAventriAttendee = (activity) => {
   return {
     eventName: activity.eventName,
-    startDate: format(activity.startDate),
+    date: formatStartAndEndDate(activity.startDate, activity.endDate),
   }
 }
 export default function AventriAttendee({ activity }) {
-  const { eventName, startDate } = transformAventriAttendee(activity)
+  const { eventName, date } = transformAventriAttendee(activity)
 
   return (
     <ActivityCardWrapper dataTest="aventri-activity">
@@ -53,7 +46,7 @@ export default function AventriAttendee({ activity }) {
       </TagRow>
       <ActivityCardSubject>{eventName}</ActivityCardSubject>
       <ActivityCardMetadata
-        metadata={[{ label: 'Date', value: startDate || 'Unknown' }]}
+        metadata={[{ label: 'Event date', value: date || 'Unknown' }]}
       />
     </ActivityCardWrapper>
   )
