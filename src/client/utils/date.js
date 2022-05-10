@@ -34,6 +34,7 @@ const {
   DATE_TIME_MEDIUM_FORMAT,
   DATE_SHORT_FORMAT,
   INTERACTION_TIMESTAMP_FORMAT,
+  DATE_DAY_MONTH,
 } = require('../../common/constants')
 
 /**
@@ -183,6 +184,17 @@ function getDifferenceInDaysLabel(dateIn) {
   return Math.abs(difference) === 1 ? difference + ' day' : difference + ' days'
 }
 
+/**
+ * Get the number of months different with start and end date to a given date as an integer.
+ */
+function getDifferenceInMonths(startDate, endDate) {
+  return (
+    startDate.getMonth() -
+    endDate.getMonth() +
+    12 * (startDate.getFullYear() - endDate.getFullYear())
+  )
+}
+
 function getFinancialYearStart(date) {
   return date.getMonth() < 3 ? date.getFullYear() - 1 : date.getFullYear()
 }
@@ -226,6 +238,25 @@ function createDateFromObject({ day, month, year }) {
   return result
 }
 
+function formatStartAndEndDate(startDate, endDate) {
+  const startDateParsed = parseISO(startDate)
+  const endDateParsed = parseISO(endDate)
+  if (!endDate || !isDateAfter(endDateParsed, startDateParsed)) {
+    return format(startDate)
+  }
+  if (startDateParsed.toDateString() === endDateParsed.toDateString()) {
+    return format(startDate)
+  }
+  if (getDifferenceInMonths(endDateParsed, startDateParsed) == 0) {
+    return `${startDateParsed.getDate()} to ${format(endDate)}`
+  }
+  if (startDateParsed.getFullYear() === endDateParsed.getFullYear()) {
+    return `${format(startDate, DATE_DAY_MONTH)} to ${format(endDate)}`
+  } else {
+    return `${format(startDate)} to ${format(endDate)}`
+  }
+}
+
 module.exports = {
   addDays,
   addMonths,
@@ -258,4 +289,5 @@ module.exports = {
   today,
   transformValueForAPI,
   createDateFromObject,
+  formatStartAndEndDate,
 }

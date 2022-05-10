@@ -58,11 +58,11 @@
               "dit:aventri:timezone" : "Europe/London",
               "dit:public" : true,
               "dit:status" : "Pre-Event",
-              "endTime" : null,
+              "endTime" : "2022-05-04T20:09:14",
               "id" : "dit:aventri:Event:1111",
               "name" : "EITA Test Event 2022",
               "published" : "2022-01-23T20:09:14",
-              "startTime" : "2022-05-02T20:09:14",
+              "startTime" : "2021-03-02T20:09:14",
               "type" : [
                 "dit:aventri:Event"
               ],
