@@ -72,8 +72,8 @@ describe('Date tests', () => {
       })
       it('should return start and end date format with different month', () => {
         expect(
-          formatStartAndEndDate('2020-06-10T16:00:00Z', '2020-07-10T19:00:00Z')
-        ).to.equal('10 Jun 2020 to 10 Jul 2020')
+          formatStartAndEndDate('2020-06-01T16:00:00Z', '2020-07-10T19:00:00Z')
+        ).to.equal('01 Jun to 10 Jul 2020')
       })
       it('should return start and end date format with different year', () => {
         expect(

@@ -34,6 +34,7 @@ const {
   DATE_TIME_MEDIUM_FORMAT,
   DATE_SHORT_FORMAT,
   INTERACTION_TIMESTAMP_FORMAT,
+  DATE_DAY_MONTH,
 } = require('../../common/constants')
 
 /**
@@ -246,9 +247,11 @@ function formatStartAndEndDate(startDate, endDate) {
   if (startDateParsed.toDateString() === endDateParsed.toDateString()) {
     return format(startDate)
   }
-
   if (getDifferenceInMonths(endDateParsed, startDateParsed) == 0) {
-    return `${startDateParsed.getUTCDate()} to ${format(endDate)}`
+    return `${startDateParsed.getDate()} to ${format(endDate)}`
+  }
+  if (startDateParsed.getFullYear() === endDateParsed.getFullYear()) {
+    return `${format(startDate, DATE_DAY_MONTH)} to ${format(endDate)}`
   } else {
     return `${format(startDate)} to ${format(endDate)}`
   }
