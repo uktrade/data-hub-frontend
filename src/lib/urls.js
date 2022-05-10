@@ -102,6 +102,8 @@ module.exports = {
         'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/data-hub-cookie-policy/',
       privacyNotice: () =>
         'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/data-hub-privacy-notice/',
+      allUpdates: () =>
+        'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/',
     },
     copyright:
       'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',

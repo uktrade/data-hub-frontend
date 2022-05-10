@@ -13,3 +13,8 @@ export const checkForInvestments = ({ adviser }) =>
       summary: summaryToDataRange({ summary, adviser }),
       hasInvestmentProjects: !!results.length,
     }))
+
+export const checkDataHubFeed = () =>
+  apiProxyAxios.get('/api-proxy/help-centre/feed').then(({ data }) => ({
+    dataHubFeed: data,
+  }))

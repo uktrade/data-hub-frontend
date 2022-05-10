@@ -72,7 +72,10 @@ import investmentProjectsReducer from '../apps/investments/client/projects/reduc
 import { ID as COMPANIES_ID } from './modules/Companies/CollectionList/state'
 import companiesReducer from './modules/Companies/CollectionList/reducer'
 
-import { ID as CHECK_FOR_INVESTMENTS_ID } from './components/PersonalisedDashboard/state'
+import {
+  DATA_HUB_FEED_ID,
+  ID as CHECK_FOR_INVESTMENTS_ID,
+} from './components/PersonalisedDashboard/state'
 import personalDashboardReducer from './components/PersonalisedDashboard/reducer'
 
 import { ID as MY_INVESTMENT_PROJECTS_ID } from './components/MyInvestmentProjects/state'
@@ -182,6 +185,7 @@ const store = createStore(
     [CREATE_INVESTMENT_PROJECT_ID]: createInvestmentProjectsReducer,
     [COMPANY_INVESTMENT_COUNT_ID]: createInvestmentProjectsReducer,
     [CHECK_FOR_INVESTMENTS_ID]: personalDashboardReducer,
+    [DATA_HUB_FEED_ID]: personalDashboardReducer,
     [INVESTMENT_REMINDERS_ID]: investmentRemindersReducer,
     [CONTACTS_LIST_ID]: contactsReducer,
     [CONTACT_ACTIVITIES_ID]: contactActivitiesReducer,
