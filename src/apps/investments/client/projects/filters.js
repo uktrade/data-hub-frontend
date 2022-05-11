@@ -84,6 +84,7 @@ export const buildSelectedFilters = (
     options: buildDatesFilter({
       value: queryParams.estimated_land_date_before,
       categoryLabel: LABELS.estimatedLandDateBefore,
+      shortDate: true,
     }),
   },
   estimatedLandDatesAfter: {
@@ -91,6 +92,7 @@ export const buildSelectedFilters = (
     options: buildDatesFilter({
       value: queryParams.estimated_land_date_after,
       categoryLabel: LABELS.estimatedLandDateAfter,
+      shortDate: true,
     }),
   },
   actualLandDatesBefore: {
@@ -98,6 +100,7 @@ export const buildSelectedFilters = (
     options: buildDatesFilter({
       value: queryParams.actual_land_date_before,
       categoryLabel: LABELS.actualLandDateBefore,
+      shortDate: true,
     }),
   },
   actualLandDatesAfter: {
@@ -105,6 +108,7 @@ export const buildSelectedFilters = (
     options: buildDatesFilter({
       value: queryParams.actual_land_date_after,
       categoryLabel: LABELS.actualLandDateAfter,
+      shortDate: true,
     }),
   },
   involvementLevels: {

@@ -174,24 +174,28 @@ const ProjectsCollection = ({
           isOpen={false}
         >
           <Filters.Date
+            type="month"
             label="Actual land date from"
             name="actual_land_date_after"
             qsParamName="actual_land_date_after"
             data-test="actual-land-date-after-filter"
           />
           <Filters.Date
+            type="month"
             label="Actual land date to"
             name="actual_land_date_before"
             qsParamName="actual_land_date_before"
             data-test="actual-land-date-before-filter"
           />
           <Filters.Date
+            type="month"
             label="Estimated land date from"
             name="estimated_land_date_after"
             qsParamName="estimated_land_date_after"
             data-test="estimated-land-date-after-filter"
           />
           <Filters.Date
+            type="month"
             label="Estimated land date to"
             name="estimated_land_date_before"
             qsParamName="estimated_land_date_before"

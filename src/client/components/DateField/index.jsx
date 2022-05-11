@@ -18,6 +18,7 @@ const DateField = ({
   legend,
   hint,
   initialValue,
+  type = 'date',
   ...props
 }) => {
   const [value, setValue] = useState(initialValue)
@@ -31,7 +32,7 @@ const DateField = ({
         name={name}
         value={value}
         aria-label={label}
-        type="date"
+        type={type}
         onChange={(e) => {
           setValue(e.target.value)
           onChange(e)

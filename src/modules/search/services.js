@@ -5,6 +5,9 @@ const {
   authorisedRawRequest,
 } = require('../../lib/authorised-request')
 const config = require('../../config')
+const {
+  transformLandDateFilters,
+} = require('../../apps/investments/client/projects/transformers')
 
 const buildOptions = (isAggregation, searchUrl, body, entity) => {
   if (isAggregation) {
@@ -129,6 +132,7 @@ function searchForeignCompanies({ req, searchTerm, page = 1, limit = 10 }) {
 
 function exportSearch({ req, searchTerm = '', searchEntity, requestBody }) {
   let apiVersion
+  let transformedRequestBody
   if (
     ['large-investor-profile', 'large-capital-opportunity', 'company'].includes(
       searchEntity
@@ -137,6 +141,11 @@ function exportSearch({ req, searchTerm = '', searchEntity, requestBody }) {
     apiVersion = 'v4'
   } else {
     apiVersion = 'v3'
+  }
+  if (searchEntity == 'investment_project') {
+    transformedRequestBody = transformLandDateFilters(requestBody)
+  } else {
+    transformedRequestBody = requestBody
   }
   const searchUrl = `${config.apiRoot}/${apiVersion}/search`
   // If the requested CSV export should contain policy feedback, we need to call
@@ -151,7 +160,7 @@ function exportSearch({ req, searchTerm = '', searchEntity, requestBody }) {
     url: url,
     method: 'POST',
     body: {
-      ...requestBody,
+      ...transformedRequestBody,
       term: searchTerm,
     },
     responseType: 'stream',
