@@ -13,7 +13,7 @@ const enforce = require('express-sslify')
 const favicon = require('serve-favicon')
 const cookieParser = require('cookie-parser')
 const minifyHTML = require('express-minify-html-2')
-const Joi = require('@hapi/joi')
+const Joi = require('joi')
 
 const config = require('./config')
 const title = require('./middleware/title')
