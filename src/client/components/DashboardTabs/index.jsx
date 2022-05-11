@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import NoInvestmentProjects from '../MyInvestmentProjects/NoInvestmentProjects'
 import MyInvestmentProjects from '../MyInvestmentProjects'
 import CompanyLists from '../CompanyLists'
+import Pipeline from '../../components/Pipeline'
 import urls from '../../../lib/urls'
 import TabNav from '../TabNav'
 
@@ -31,6 +32,10 @@ const DashboardTabs = ({ id, adviser, hasInvestmentProjects }) => (
         [urls.companyLists.index()]: {
           label: 'Company lists',
           content: <CompanyLists />,
+        },
+        [urls.pipeline.index.mountPoint]: {
+          label: 'Pipeline',
+          content: <Pipeline />,
         },
       }}
     />
