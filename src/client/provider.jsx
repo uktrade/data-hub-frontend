@@ -9,7 +9,7 @@ import {
 } from 'connected-react-router'
 import { Provider } from 'react-redux'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
+import { composeWithDevToolsDevelopmentOnly } from '@redux-devtools/extension'
 import createSagaMiddleware from 'redux-saga'
 
 import DropdownMenu from './components/DropdownMenu/ConnectedDropdownMenu'
@@ -195,7 +195,7 @@ const store = createStore(
   {
     referrerUrl: window.document.referrer,
   },
-  composeWithDevTools(
+  composeWithDevToolsDevelopmentOnly(
     applyMiddleware(sagaMiddleware, routerMiddleware(history))
   )
 )
