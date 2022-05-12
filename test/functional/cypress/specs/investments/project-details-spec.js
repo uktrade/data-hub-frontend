@@ -28,4 +28,30 @@ describe('Investment project details', () => {
       )
     })
   })
+
+  context('When and FDI investment type is missing an FDI Type', () => {
+    before(() => {
+      cy.visit(
+        urls.investments.projects.details(
+          fixtures.investment.fdiInvestmentWithNoFDIType.id
+        )
+      )
+    })
+
+    it('should render breadcrumbs', () => {
+      assertBreadcrumbs({
+        Home: urls.dashboard(),
+        Investments: urls.investments.index(),
+        Projects: urls.investments.projects.index(),
+        [fixtures.investment.fdiInvestmentWithNoFDIType.name]: null,
+      })
+    })
+
+    it('should render a summary containing None FDI type replacing undefined', () => {
+      cy.get("[data-test='summaryContainer-content']").contains(
+        'Investment type'
+      )
+      cy.get("[data-test='summaryContainer-content']").contains('FDI, None')
+    })
+  })
 })
