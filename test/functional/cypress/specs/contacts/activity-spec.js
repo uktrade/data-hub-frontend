@@ -54,19 +54,31 @@ describe('Contact activity', () => {
         )
       })
 
-      context('when viewing a Data Hub interaction', () => {
+      context('when viewing a Contact with Data Hub interaction', () => {
         it('should display interaction activity kind label', () => {
-          cy.get('[data-test=interaction-activity-kind-label]').contains(
-            'interaction'
-          )
+          cy.get('[data-test="interaction-activity"]').within(() => {
+            cy.get('[data-test=activity-kind-label]').contains('interaction', {
+              matchCase: false,
+            })
+          })
         })
 
         it('should display interaction activity theme label', () => {
-          cy.get('[data-test=interaction-activity-theme-label]').contains(
-            'export'
-          )
+          cy.get('[data-test="interaction-activity"]').within(() => {
+            cy.get('[data-test=activity-theme-label]').contains('export', {
+              matchCase: false,
+            })
+          })
         })
 
+        it('should display interaction activity service label', () => {
+          cy.get('[data-test="interaction-activity"]').within(() => {
+            cy.get('[data-test=activity-service-label]').contains(
+              'introduction',
+              { matchCase: false }
+            )
+          })
+        })
         it('should display the subject', () => {
           cy.get('[data-test=interaction-activity]').contains(
             'Meeting between Brendan Smith and Tyson Morar'
@@ -114,6 +126,34 @@ describe('Contact activity', () => {
               .should('not.contain', 'Communication channel: Email/Website')
               .should('not.contain', 'Service: ')
               .should('not.contain', 'Adviser(s): ')
+          })
+        })
+      })
+
+      context('when viewing a Contact with Aventri activity', () => {
+        it('should diplay event name from Aventri ', () => {
+          cy.get('[data-test="aventri-activity"]').contains(
+            'EITA Test Event 2022'
+          )
+        })
+        it('should display event date from Aventri', () => {
+          cy.get('[data-test="aventri-activity"]').contains(
+            'Event date: 02 Mar 2021 to 04 May 2022'
+          )
+        })
+        it('should display the Events label', () => {
+          cy.get('[data-test="aventri-activity"]').within(() => {
+            cy.get('[data-test="activity-service-label"]').contains('events', {
+              matchCase: false,
+            })
+          })
+        })
+        it('should display the Kind label', () => {
+          cy.get('[data-test="aventri-activity"]').within(() => {
+            cy.get('[data-test="activity-kind-label"]').contains(
+              'aventri service delivery',
+              { matchCase: false }
+            )
           })
         })
       })

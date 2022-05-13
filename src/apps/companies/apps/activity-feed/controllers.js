@@ -20,6 +20,7 @@ const {
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
+const { aventriEventQuery } = require('./es-queries/aventri-event-query')
 
 async function renderActivityFeed(req, res, next) {
   const { company, dnbHierarchyCount, dnbRelatedCompaniesCount } = res.locals
@@ -167,12 +168,56 @@ async function fetchActivitiesForContact(req, res, next) {
     })
 
     const total = results.hits.total.value
-    const activities = results.hits.hits.map((hit) => hit._source)
+    let activities = results.hits.hits.map((hit) => hit._source)
+
+    const hasAventriData = activities.some((activity) =>
+      isAventriAttendee(activity)
+    )
+
+    if (hasAventriData) {
+      activities = await getAventriEvents(activities, req)
+    }
 
     res.json({ activities, total })
   } catch (error) {
     next(error)
   }
+}
+
+const getAventriEvents = async (activities, req) => {
+  const aventriAttendees = activities.filter((activity) =>
+    isAventriAttendee(activity)
+  )
+
+  const eventIds = aventriAttendees
+    .map((attendee) => attendee.object.attributedTo.id)
+    .map((id) => `${id}:Create`)
+
+  const aventriEventsResults = await fetchActivityFeed(
+    req,
+    aventriEventQuery(eventIds)
+  )
+
+  const aventriEvents = aventriEventsResults.hits.hits.map((hit) => hit._source)
+
+  const activitiesWithEventData = activities.map((activity) => {
+    if (isAventriAttendee(activity)) {
+      const matchingEvent = aventriEvents.find(
+        (event) => event.id === `${activity.object.attributedTo.id}:Create`
+      )
+      if (matchingEvent) {
+        activity.eventName = matchingEvent.object.name
+        activity.startDate = matchingEvent.object.startTime
+        activity.endDate = matchingEvent.object.endTime
+      }
+    }
+    return activity
+  })
+  return activitiesWithEventData
+}
+
+function isAventriAttendee() {
+  return (attendee) => attendee['dit:application'] === 'aventri'
 }
 
 async function fetchActivityFeedHandler(req, res, next) {
