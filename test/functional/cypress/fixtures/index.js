@@ -47,6 +47,7 @@ module.exports = {
     investmentWithNoGlobalAccountManager: require('./investment/investment-no-global-account-manager.json'),
     notificationSettingsAll: require('./investment/notification-settings-all'),
     notificationSettingsEmpty: require('./investment/notification-settings-empty'),
+    fdiInvestmentWithNoFDIType: require('./investment/investment-fdi-has-no-fdi-type.json'),
   },
   event: {
     emptyOneDayExhibition: require('./event/empty-one-day-exhibition'),
