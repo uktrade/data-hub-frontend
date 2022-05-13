@@ -21,55 +21,18 @@ import { ACTIVITY_TYPE, ANALYTICS_ACCORDION_TYPE } from '../constants'
 import CardUtils from './card/CardUtils'
 import InteractionUtils from './InteractionUtils'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
-import { BLUE, GREY_1, GREY_2 } from 'govuk-colours'
 import { formatMediumDate } from '../../../utils/date'
-import Tag from '../../Tag'
 
-const ItemWrapper = styled('div')`
-  border-bottom: 1px solid ${GREY_2};
-  padding: ${SPACING.SCALE_3} 0;
-`
-const Metadata = styled('div')`
-  color: ${GREY_1};
-  font-size: ${FONT_SIZE.SIZE_14};
-  line-height: ${FONT_SIZE.SIZE_24};
-`
-
-const Subject = styled('h3')`
-  font-size: ${FONT_SIZE.SIZE_20};
-  font-weight: ${FONT_WEIGHTS.bold};
-  line-height: ${FONT_SIZE.SIZE_24};
-  margin-top: ${SPACING.SCALE_2};
-  margin-bottom: ${SPACING.SCALE_2};
-  & > a:link,
-  a:visited,
-  a:hover,
-  a:active {
-    text-decoration: none;
-    color: ${BLUE};
-  }
-`
+import ActivityCardSubject from './card/ActivityCardSubject'
+import ActivityCardWrapper from './card/ActivityCardWrapper'
+import ActivityCardMetadata from './card/ActivityCardMetadata'
+import ActivityCardLabels from './card/ActivityCardLabels'
 
 const Notes = styled('div')`
   font-size: ${FONT_SIZE.SIZE_16};
   font-weight: ${FONT_WEIGHTS.regular};
   line-height: ${FONT_SIZE.SIZE_24};
   margin-bottom: ${SPACING.SCALE_1};
-`
-
-const TagRow = styled('div')`
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: ${SPACING.SCALE_2};
-  margin-right: ${SPACING.SCALE_1};
-`
-
-const TagColumn = styled('div')`
-  display: flex;
-`
-
-const StyledThemeTag = styled(Tag)`
-  margin-right: ${SPACING.SCALE_1};
 `
 
 export default class Interaction extends React.PureComponent {
@@ -134,32 +97,11 @@ export default class Interaction extends React.PureComponent {
     ]
 
     const InteractionActivity = () => (
-      <ItemWrapper data-test="interaction-activity">
-        <TagRow>
-          <TagColumn>
-            {theme && (
-              <StyledThemeTag
-                data-test="interaction-activity-theme-label"
-                colour="default"
-              >
-                {theme}
-              </StyledThemeTag>
-            )}
-            {service && (
-              <Tag data-test="interaction-activity-service-label" colour="blue">
-                {service}
-              </Tag>
-            )}
-          </TagColumn>
-          <TagColumn>
-            <Tag data-test="interaction-activity-kind-label" colour="grey">
-              {kind}
-            </Tag>
-          </TagColumn>
-        </TagRow>
-        <Subject>
+      <ActivityCardWrapper dataTest="interaction-activity">
+        <ActivityCardLabels theme={theme} service={service} kind={kind} />
+        <ActivityCardSubject>
           <Link href={transformed.url}>{transformed.subject}</Link>
-        </Subject>
+        </ActivityCardSubject>
         {serviceNotes && (
           <Notes>
             {serviceNotes.length < MAX_NOTE_LENGTH
@@ -171,17 +113,8 @@ export default class Interaction extends React.PureComponent {
                   .join(' ') + ' ...'}{' '}
           </Notes>
         )}
-        <Metadata>
-          {metadata.map(
-            ({ label, value }, index) =>
-              value && (
-                <div key={`${label}-${index}`}>
-                  <span style={{ fontWeight: 'bold' }}>{label}:</span> {value}
-                </div>
-              )
-          )}
-        </Metadata>
-      </ItemWrapper>
+        <ActivityCardMetadata metadata={metadata} />
+      </ActivityCardWrapper>
     )
 
     return isContactActivitiesFeatureOn ? (
