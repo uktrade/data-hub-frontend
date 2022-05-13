@@ -11,6 +11,7 @@ const {
   addMonths: addMonthsFns,
   addYears: addYearsFns,
   differenceInCalendarDays,
+  differenceInMonths,
   endOfToday,
   endOfYesterday,
   format: formatFns,
@@ -35,6 +36,7 @@ const {
   DATE_SHORT_FORMAT,
   DATE_SHORT_FORMAT_2,
   INTERACTION_TIMESTAMP_FORMAT,
+  DATE_DAY_MONTH,
 } = require('../../common/constants')
 
 /**
@@ -234,6 +236,33 @@ function createDateFromObject({ day, month, year }) {
   return result
 }
 
+function formatStartAndEndDate(startDate, endDate) {
+  const startDateParsed = parseISO(startDate)
+  const endDateParsed = parseISO(endDate)
+  const startDateFormatted = format(startDate)
+  const endDateFormatted = format(endDate)
+
+  //When end date is missing or before start date
+  if (!endDate || !isDateAfter(endDateParsed, startDateParsed)) {
+    return startDateFormatted
+  }
+  //When start and end date are on same day
+  if (startDateParsed.toDateString() === endDateParsed.toDateString()) {
+    return startDateFormatted
+  }
+
+  // When start and end date are in the same month
+  if (differenceInMonths(endDateParsed, startDateParsed) == 0) {
+    return `${startDateParsed.getDate()} to ${endDateFormatted}`
+  }
+  // When start and end date are in the same year
+  if (startDateParsed.getFullYear() === endDateParsed.getFullYear()) {
+    return `${format(startDate, DATE_DAY_MONTH)} to ${endDateFormatted}`
+  }
+  // When start and end date are in different years
+  return `${startDateFormatted} to ${endDateFormatted}`
+}
+
 module.exports = {
   addDays,
   addMonths,
@@ -268,4 +297,5 @@ module.exports = {
   today,
   transformValueForAPI,
   createDateFromObject,
+  formatStartAndEndDate,
 }
