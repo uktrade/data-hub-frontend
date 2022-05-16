@@ -12,6 +12,7 @@ const DATE_DAY_LONG_FORMAT = 'E, dd MMM yyyy'
 const DATE_MEDIUM_FORMAT = 'd MMM yyyy'
 const DATE_TIME_MEDIUM_FORMAT = 'd MMM yyyy, h:mmaaa'
 const DATE_SHORT_FORMAT = 'yyyy-MM'
+const DATE_SHORT_FORMAT_2 = 'MMMM yyyy'
 const DATE_DAY_MONTH = 'dd MMM'
 const INTERACTION_TIMESTAMP_FORMAT = 'y-MM-d'
 

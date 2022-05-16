@@ -143,7 +143,7 @@ describe('Contact activity', () => {
         })
         it('should display the Events label', () => {
           cy.get('[data-test="aventri-activity"]').within(() => {
-            cy.get('[data-test="activity-service-label"]').contains('events', {
+            cy.get('[data-test="activity-service-label"]').contains('event', {
               matchCase: false,
             })
           })
