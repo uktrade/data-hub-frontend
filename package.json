@@ -96,7 +96,7 @@
     "element-closest": "^3.0.2",
     "express": "^4.17.3",
     "express-minify-html-2": "^1.0.1",
-    "express-session": "^1.17.2",
+    "express-session": "^1.17.3",
     "express-sslify": "^1.2.0",
     "formidable": "^2.0.1",
     "get-form-data": "^3.0.0",
