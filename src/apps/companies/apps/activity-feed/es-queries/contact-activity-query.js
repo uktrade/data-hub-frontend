@@ -39,7 +39,10 @@ const contactActivityQuery = (from, size, email, contactId, objectTypes) => {
                       },
                       {
                         term: {
-                          'object.dit:emailAddress': email,
+                          'object.dit:emailAddress': {
+                            value: email,
+                            case_insensitive: true,
+                          },
                         },
                       },
                     ],
