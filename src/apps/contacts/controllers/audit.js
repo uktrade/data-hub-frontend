@@ -10,7 +10,7 @@ async function getAudit(req, res, next) {
     const contactId = req.params.contactId
     const page = req.query.page || 1
 
-    const isContactActivitiesFeatureOn = res.locals.userFeatures?.includes(
+    const isContactActivitiesFeatureOn = res.locals?.userFeatures?.includes(
       'user-contact-activities'
     )
 

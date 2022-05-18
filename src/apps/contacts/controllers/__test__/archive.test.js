@@ -67,43 +67,6 @@ describe('Contact controller, archive', () => {
     contactArchiveController.archiveContact(req, res, next)
   })
 
-  it('should send a flash message that all went well', function (done) {
-    const req = {
-      session: { token },
-      body: { archived_reason: 'Other', archived_reason_other: 'otherreason' },
-      params: { id },
-      flash: flashStub,
-    }
-    const res = {
-      locals: {},
-      redirect: function () {
-        expect(flashStub).to.be.calledWith('success', 'Contact record updated')
-        done()
-      },
-    }
-
-    contactArchiveController.archiveContact(req, res, next)
-  })
-  it('should sent a flash message if there was a problem', function (done) {
-    const req = {
-      session: { token },
-      body: { archived_reason: 'Other', archived_reason_other: '' },
-      params: { id },
-      flash: flashStub,
-    }
-    const res = {
-      locals: {},
-      redirect: function () {
-        expect(flashStub).to.be.calledWith(
-          'error',
-          'Unable to archive contact, no reason given'
-        )
-        done()
-      },
-    }
-
-    contactArchiveController.archiveContact(req, res, next)
-  })
   it('should call unarchive', function (done) {
     const req = {
       session: { token },

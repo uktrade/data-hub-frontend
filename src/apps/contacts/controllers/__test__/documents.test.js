@@ -35,7 +35,14 @@ describe('Contacts documents controller', () => {
       it('should call render with', () => {
         expect(this.resMock.render).to.be.calledWith(
           'contacts/views/documents',
-          { archivedDocumentPath: '' }
+          {
+            props: {
+              contactId: undefined,
+              isContactActivitiesFeatureOn: undefined,
+            },
+            isContactActivitiesFeatureOn: undefined,
+            archivedDocumentPath: '',
+          }
         )
       })
     })
@@ -67,6 +74,11 @@ describe('Contacts documents controller', () => {
         expect(this.resMock.render).to.be.calledWith(
           'contacts/views/documents',
           {
+            props: {
+              contactId: undefined,
+              isContactActivitiesFeatureOn: undefined,
+            },
+            isContactActivitiesFeatureOn: undefined,
             archivedDocumentPath: mockDocumentUrl,
           }
         )
