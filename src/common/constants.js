@@ -1,9 +1,3 @@
-// https://www.bloomberg.com/quote/USDGBP:CUR
-const EXCHANGE_RATE_USD_TO_GBP = 0.7231
-const EXCHANGE_RATE_GBP_TO_USD = parseFloat(
-  Number(1 / EXCHANGE_RATE_USD_TO_GBP).toFixed(4)
-)
-
 // These are date-fns format codes - see https://date-fns.org/v2.23.0/docs/format
 const DATE_LONG_FORMAT_1 = 'd MMMM yyyy'
 const DATE_LONG_FORMAT_2 = 'dd MMM yyyy'
@@ -35,8 +29,6 @@ const OPTIONS_YES_NO = [
 ]
 
 module.exports = {
-  EXCHANGE_RATE_USD_TO_GBP,
-  EXCHANGE_RATE_GBP_TO_USD,
   DATE_DAY_LONG_FORMAT,
   DATE_LONG_FORMAT_1,
   DATE_LONG_FORMAT_2,
