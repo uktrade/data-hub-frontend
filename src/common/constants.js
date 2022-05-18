@@ -7,6 +7,7 @@ const DATE_MEDIUM_FORMAT = 'd MMM yyyy'
 const DATE_TIME_MEDIUM_FORMAT = 'd MMM yyyy, h:mmaaa'
 const DATE_SHORT_FORMAT = 'yyyy-MM'
 const DATE_SHORT_FORMAT_2 = 'MMMM yyyy'
+const DATE_DAY_MONTH = 'dd MMM'
 const INTERACTION_TIMESTAMP_FORMAT = 'y-MM-d'
 
 const UNITED_KINGDOM_ID = '80756b9a-5d95-e211-a939-e4115bead28a'
@@ -30,6 +31,7 @@ const OPTIONS_YES_NO = [
 
 module.exports = {
   DATE_DAY_LONG_FORMAT,
+  DATE_DAY_MONTH,
   DATE_LONG_FORMAT_1,
   DATE_LONG_FORMAT_2,
   DATE_LONG_FORMAT_3,

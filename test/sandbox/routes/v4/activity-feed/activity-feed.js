@@ -17,6 +17,9 @@ var myActivities = require('../../../fixtures/v4/activity-feed/my-activities.jso
 var dataHubActivities = require('../../../fixtures/v4/activity-feed/data-hub-activities.json')
 var noActivity = require('../../../fixtures/v4/activity-feed/no-activity.json')
 
+//Aventri events
+var aventriEvents = require('../../../fixtures/v4/activity-feed/aventri-events.json')
+
 const DATA_HUB_ACTIVITY = [
   'dit:Interaction',
   'dit:ServiceDelivery',
@@ -46,6 +49,14 @@ exports.activityFeed = function (req, res) {
     return from == 10
       ? res.json(dataHubActivities)
       : res.json(dataHubAndExternalActivities)
+  }
+
+  var isAventriEventQuery =
+    get(req.body, "query.bool.must[0].term['object.type']") ===
+    'dit:aventri:Event'
+
+  if (isAventriEventQuery) {
+    return res.json(aventriEvents)
   }
 
   // Data Hub activity

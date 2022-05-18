@@ -2,31 +2,28 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import CardUtils from './card/CardUtils'
 import { ACTIVITY_TYPE } from '../constants'
-import { Card, CardHeader } from './card'
-import { GREEN } from 'govuk-colours'
+import { formatStartAndEndDate } from '../../../utils/date'
 
-const transformAventriAttendee = (activity) => {
-  return {
-    event: { name: 'Event name tbc' },
-    company: { name: activity.object['dit:aventri:companyname'] },
-    registrationStatus: activity.object['dit:aventri:registrationstatus'],
-  }
-}
+import ActivityCardWrapper from './card/ActivityCardWrapper'
+import ActivityCardSubject from './card/ActivityCardSubject'
+import ActivityCardMetadata from './card/ActivityCardMetadata'
+import ActivityCardLabels from './card/ActivityCardLabels'
+
+const transformAventriAttendee = (activity) => ({
+  eventName: activity.eventName,
+  date: formatStartAndEndDate(activity.startDate, activity.endDate),
+})
 export default function AventriAttendee({ activity }) {
-  const { event, company, registrationStatus } =
-    transformAventriAttendee(activity)
+  const { eventName, date } = transformAventriAttendee(activity)
 
   return (
-    <div data-test={'aventri-activity'}>
-      <Card>
-        <CardHeader
-          badge={{ borderColour: GREEN, text: 'Aventri Service Delivery' }}
-          company={company}
-          heading={`Attended event ${event.name}`}
-        />
-        <p>Registration Status: {registrationStatus || 'Unknown'} </p>
-      </Card>
-    </div>
+    <ActivityCardWrapper dataTest="aventri-activity">
+      <ActivityCardLabels service="event" kind="aventri service delivery" />
+      <ActivityCardSubject>{eventName}</ActivityCardSubject>
+      <ActivityCardMetadata
+        metadata={[{ label: 'Event date', value: date || 'Unknown' }]}
+      />
+    </ActivityCardWrapper>
   )
 }
 
