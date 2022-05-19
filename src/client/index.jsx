@@ -193,6 +193,8 @@ import { TASK_GET_MY_INVESTMENTS_LIST } from './components/MyInvestmentProjects/
 import * as personalisedDashboard from './components/PersonalisedDashboard/tasks'
 import { TASK_CHECK_FOR_INVESTMENTS } from './components/PersonalisedDashboard/state'
 
+import { TASK_DATA_HUB_FEED } from './components/PersonalisedDashboard/state'
+
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
 import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentReminders/state'
 
@@ -369,6 +371,7 @@ function App() {
         [TASK_SAVE_INVESTMENT_PROJECT_MANAGERS]:
           editInvestmentProjectTeamTasks.saveProjectManagementStaff,
         [TASK_CHECK_FOR_INVESTMENTS]: personalisedDashboard.checkForInvestments,
+        [TASK_DATA_HUB_FEED]: personalisedDashboard.checkDataHubFeed,
         [TASK_GET_MY_INVESTMENTS_LIST]:
           myInvestmentProjects.fetchMyInvestmentsList,
         [TASK_GET_OUTSTANDING_PROPOSITIONS]: fetchOutstandingPropositions,

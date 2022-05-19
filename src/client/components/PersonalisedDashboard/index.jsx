@@ -11,8 +11,13 @@ import { ID as INVESTMENT_REMINDERS_ID } from '../InvestmentReminders/state'
 import {
   TASK_CHECK_FOR_INVESTMENTS,
   ID as CHECK_FOR_INVESTMENTS_ID,
+  DATA_HUB_FEED_ID,
+  TASK_DATA_HUB_FEED,
 } from './state'
-import { MY_INVESTMENTS__CHECK_COMPLETE } from '../../actions'
+import {
+  MY_INVESTMENTS__CHECK_COMPLETE,
+  DATA_HUB_FEED__FETCHED,
+} from '../../actions'
 
 import NotificationBadge from '../NotificationBadge'
 import { DashboardToggleSection } from '../ToggleSection'
@@ -28,6 +33,7 @@ import {
   Search,
   DashboardTabs,
   CustomContainer,
+  DataHubFeed,
 } from '../../components'
 
 const SearchBackground = styled('div')`
@@ -49,8 +55,10 @@ const SearchContainer = styled(CustomContainer)`
 const state2props = (state) => {
   const { count } = state[INVESTMENT_REMINDERS_ID]
   const { hasInvestmentProjects } = state[CHECK_FOR_INVESTMENTS_ID]
+  const { dataHubFeed } = state[DATA_HUB_FEED_ID]
   return {
     hasInvestmentProjects,
+    dataHubFeed,
     remindersCount: count,
   }
 }
@@ -61,6 +69,7 @@ const PersonalisedDashboard = ({
   csrfToken,
   remindersCount,
   hasInvestmentProjects,
+  dataHubFeed,
 }) => (
   <ThemeProvider theme={blueTheme}>
     <SearchBackground data-test="search-data-hub">
@@ -122,6 +131,21 @@ const PersonalisedDashboard = ({
           </GridRow>
         )}
       </Task.Status>
+      <Task.Status
+        name={TASK_DATA_HUB_FEED}
+        id={DATA_HUB_FEED_ID}
+        startOnRender={{
+          onSuccessDispatch: DATA_HUB_FEED__FETCHED,
+        }}
+      >
+        {() => (
+          <GridRow data-test="data-hub-feed">
+            <GridCol setWidth="full">
+              <DataHubFeed items={dataHubFeed} feedLimit={1} />
+            </GridCol>
+          </GridRow>
+        )}
+      </Task.Status>
     </CustomContainer>
   </ThemeProvider>
 )
@@ -132,6 +156,7 @@ PersonalisedDashboard.propTypes = {
   csrfToken: PropTypes.string.isRequired,
   remindersCount: PropTypes.number.isRequired,
   hasInvestmentProjects: PropTypes.bool.isRequired,
+  dataHubFeed: PropTypes.array.isRequired,
 }
 
 export default connect(state2props)(PersonalisedDashboard)
