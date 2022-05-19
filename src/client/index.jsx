@@ -59,6 +59,7 @@ import { EditTeamMembers } from '../apps/investments/client/projects/team/EditTe
 import EditClientRelationshipManagement from '../apps/investments/client/projects/team/EditClientRelationshipManagement'
 import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 import ContactLocalHeader from './components/ContactLocalHeader'
+import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -259,8 +260,11 @@ import * as matchCompanyTasks from '../apps/companies/apps/match-company/client/
 import * as companyListTasks from '../apps/company-lists/client/tasks'
 import { editCompany } from '../apps/companies/apps/edit-company/client/tasks'
 import { createList } from '../apps/company-lists/client/tasks.js'
+
 import { TASK_GET_CONTACT_ACTIVITIES } from '../client/modules/Contacts/ContactActivity/state'
 import { getContactActivities } from '../client/modules/Contacts/ContactActivity/tasks'
+import { TASK_ARCHIVE_CONTACT } from '../client/modules/Contacts/ContactDetails/state'
+import { archiveContact } from '../client/modules/Contacts/ContactDetails/tasks'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -401,6 +405,7 @@ function App() {
         [TASK_SAVE_NOTIFICATION_SETTINGS]:
           notifications.saveNotificationSettings,
         [TASK_GET_CONTACT_ACTIVITIES]: getContactActivities,
+        [TASK_ARCHIVE_CONTACT]: archiveContact,
         ...resourceTasks,
       }}
     >
@@ -621,6 +626,9 @@ function App() {
       </Mount>
       <Mount selector="#contact-local-header">
         {(props) => <ContactLocalHeader {...props} />}
+      </Mount>
+      <Mount selector="#contact-details">
+        {(props) => <ContactDetails {...props} />}
       </Mount>
 
       <Mount selector="#react-app">

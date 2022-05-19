@@ -237,6 +237,7 @@ module.exports = {
       '/contacts',
       '/:contactId/interactions'
     ),
+    archive: url('/contacts', '/:contactId/archive'),
     unarchive: url('/contacts', '/:contactId/unarchive'),
   },
   events: {

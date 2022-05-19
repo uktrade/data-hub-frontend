@@ -41,6 +41,7 @@ function getDetails(req, res, next) {
   try {
     const contactId = req.params.contactId
     const contact = res.locals.contact
+    const companyAddress = res.locals.company.address
     const isContactActivitiesFeatureOn = res.locals.userFeatures?.includes(
       'user-contact-activities'
     )
@@ -50,6 +51,7 @@ function getDetails(req, res, next) {
         contactId: contactId,
         contact: contact,
         isContactActivitiesFeatureOn,
+        companyAddress: companyAddress,
       },
       contactDetails: transformContactToView(
         res.locals.contact,
