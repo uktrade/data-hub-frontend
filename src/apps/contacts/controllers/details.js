@@ -39,11 +39,21 @@ async function getCommon(req, res, next) {
 
 function getDetails(req, res, next) {
   try {
+    const contactId = req.params.contactId
+    const isContactActivitiesFeatureOn = res.locals.userFeatures?.includes(
+      'user-contact-activities'
+    )
+
     res.render('contacts/views/details', {
+      props: {
+        contactId: contactId,
+        isContactActivitiesFeatureOn,
+      },
       contactDetails: transformContactToView(
         res.locals.contact,
         res.locals.company
       ),
+      isContactActivitiesFeatureOn,
     })
   } catch (error) {
     next(error)

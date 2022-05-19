@@ -10,6 +10,10 @@ async function getAudit(req, res, next) {
     const contactId = req.params.contactId
     const page = req.query.page || 1
 
+    const isContactActivitiesFeatureOn = res.locals?.userFeatures?.includes(
+      'user-contact-activities'
+    )
+
     const auditLog = await getContactAuditLog(req, contactId, page).then(
       transformApiResponseToCollection(
         { entityType: 'audit', query: req.query },
@@ -18,7 +22,12 @@ async function getAudit(req, res, next) {
     )
 
     return res.breadcrumb('Audit history').render('contacts/views/audit', {
+      props: {
+        contactId: contactId,
+        isContactActivitiesFeatureOn,
+      },
       auditLog,
+      isContactActivitiesFeatureOn,
     })
   } catch (error) {
     next(error)

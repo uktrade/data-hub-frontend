@@ -5,10 +5,24 @@ describe('Default', () => {
   })
 })
 
-describe('Custom colour', () => {
-  it('should render the custom colour component correctly', () => {
-    cy.visit('/iframe.html?id=badge--custom-colour')
-    cy.get('#root').should('be.visible').compareSnapshot('custom-colour')
+describe('Custom border colour', () => {
+  it('should render the custom border colour component correctly', () => {
+    cy.visit('/iframe.html?id=badge--custom-border-colour')
+    cy.get('#root').should('be.visible').compareSnapshot('custom-border-colour')
+  })
+})
+
+describe('Custom text colour', () => {
+  it('should render the custom text colour component correctly', () => {
+    cy.visit('/iframe.html?id=badge--custom-text-colour')
+    cy.get('#root').should('be.visible').compareSnapshot('custom-text-colour')
+  })
+})
+
+describe('Custom font size', () => {
+  it('should render the custom font size component correctly', () => {
+    cy.visit('/iframe.html?id=badge--custom-font-size')
+    cy.get('#root').should('be.visible').compareSnapshot('custom-font-size')
   })
 })
 

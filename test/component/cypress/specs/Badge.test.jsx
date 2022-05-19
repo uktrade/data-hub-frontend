@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from '@cypress/react'
+import { FONT_SIZE } from '@govuk-react/constants'
 import Badge from '../../../../src/client/components/Badge'
 
 describe('Badge', () => {
@@ -16,16 +17,28 @@ describe('Badge', () => {
       cy.get('[data-test="badge"]').should('contain', 'example')
     })
 
-    it('should render with a default (grey) border', () => {
+    it('should render with the default border colour', () => {
       cy.get('[data-test="badge"]').should(
         'have.css',
         'border',
         '2px solid rgb(191, 193, 195)'
       )
     })
+
+    it('should render with the default text colour', () => {
+      cy.get('[data-test="badge"]').should(
+        'have.css',
+        'color',
+        'rgb(11, 12, 12)'
+      )
+    })
+
+    it('should render with the default font size', () => {
+      cy.get('[data-test="badge"]').should('have.css', 'font-size', '14px')
+    })
   })
 
-  context('When a "label" prop is passed passed', () => {
+  context('When the label is set', () => {
     beforeEach(() => {
       mount(<Component label="testLabel">{badgeText}</Component>)
     })
@@ -39,7 +52,7 @@ describe('Badge', () => {
     })
   })
 
-  context('When a "borderColour" prop is passed passed', () => {
+  context('When the border colour is set', () => {
     beforeEach(() => {
       mount(<Component borderColour="red">{badgeText}</Component>)
     })
@@ -54,6 +67,38 @@ describe('Badge', () => {
         'border',
         '2px solid rgb(255, 0, 0)'
       )
+    })
+  })
+
+  context('When the text colour is set', () => {
+    beforeEach(() => {
+      mount(<Component textColour="red">{badgeText}</Component>)
+    })
+
+    it('should set the content with children', () => {
+      cy.get('[data-test="badge"]').should('contain', 'example')
+    })
+
+    it('should render with red text', () => {
+      cy.get('[data-test="badge"]').should(
+        'have.css',
+        'color',
+        'rgb(255, 0, 0)'
+      )
+    })
+  })
+
+  context('When the font size is set', () => {
+    beforeEach(() => {
+      mount(<Component fontSize={FONT_SIZE.SIZE_27}>{badgeText}</Component>)
+    })
+
+    it('should set the content with children', () => {
+      cy.get('[data-test="badge"]').should('contain', 'example')
+    })
+
+    it('should render with size 27 font', () => {
+      cy.get('[data-test="badge"]').should('have.css', 'font-size', '27px')
     })
   })
 })
