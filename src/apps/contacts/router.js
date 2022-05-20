@@ -16,7 +16,7 @@ const {
 const { getCommon, getDetails } = require('./controllers/details')
 const { renderContactsView } = require('./controllers/contacts')
 const createAndEdit = require('./controllers/create-and-edit')
-const { archiveContact, unarchiveContact } = require('./controllers/archive')
+const { unarchiveContact } = require('./controllers/archive')
 const { renderDocuments } = require('./controllers/documents')
 const { getAudit } = require('./controllers/audit')
 
@@ -47,7 +47,6 @@ router.get(
   getDetails
 )
 
-router.post('/:id/archive', archiveContact)
 router.get('/:id/unarchive', unarchiveContact)
 
 router.get(

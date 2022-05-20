@@ -1,12 +1,3 @@
-const contactDetailsLabels = {
-  job_title: 'Job title',
-  full_telephone_number: 'Phone number',
-  address: 'Address',
-  email: 'Email',
-  notes: 'More details',
-  email_marketing: 'Email marketing',
-}
-
 const contactAuditLabels = {
   title: 'Title',
   job_title: 'Job title',
@@ -47,7 +38,6 @@ const contactMetaItemLabels = {
 }
 
 module.exports = {
-  contactDetailsLabels,
   contactAuditLabels,
   contactMetaItemLabels,
 }
