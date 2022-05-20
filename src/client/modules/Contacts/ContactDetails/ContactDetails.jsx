@@ -11,6 +11,10 @@ import ContactResource from '../../../components/Resource/Contact'
 import { FieldInput, FieldRadios, SummaryTable } from '../../../components'
 import Form from '../../../components/Form'
 import urls from '../../../../lib/urls'
+import {
+  EMAIL_CONSENT_NO,
+  EMAIL_CONSENT_YES,
+} from '../../../../apps/contacts/constants'
 import { ID, TASK_ARCHIVE_CONTACT } from './state'
 
 const StyledSectionHeader = styled('div')`
@@ -76,8 +80,8 @@ const ContactDetails = ({ contactId, companyAddress }) => {
               heading="Email marketing"
               children={
                 contact.acceptsDitEmailMarketing
-                  ? 'Can be marketed to'
-                  : 'Cannot be marketed to'
+                  ? EMAIL_CONSENT_YES
+                  : EMAIL_CONSENT_NO
               }
             />
           </SummaryTable>
@@ -151,6 +155,7 @@ const ContactDetails = ({ contactId, companyAddress }) => {
                   onClick={() => setFormIsOpen(true)}
                   buttonColour={GREY_3}
                   buttonTextColour={BLACK}
+                  data-test="top-level-archive-button"
                 >
                   Archive
                 </Button>

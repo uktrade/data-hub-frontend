@@ -1,5 +1,4 @@
 const fixtures = require('../../fixtures')
-const selectors = require('../../../../selectors')
 const userActions = require('../../support/user-actions')
 
 const { contacts } = require('../../../../../src/lib/urls')
@@ -26,7 +25,7 @@ describe('Contacts', () => {
     cy.visit(contacts.create(company.pk))
     userActions.contacts.createWithNewAddress(data)
 
-    cy.get(selectors.contactCreate.details)
+    cy.get('[data-test=contact-details-table]')
       .should('contain', 'Coffee machine operator')
       .and('contain', '(44) 0778877778800')
       .and('contain', CONTACT_EMAIL)

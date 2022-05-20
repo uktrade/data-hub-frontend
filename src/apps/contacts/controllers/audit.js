@@ -8,7 +8,7 @@ const { contactAuditLabels } = require('../labels')
 async function getAudit(req, res, next) {
   try {
     const contactId = req.params.contactId
-    const contact = res.locals.contact
+    const contact = res.locals?.contact
     const page = req.query.page || 1
 
     const isContactActivitiesFeatureOn = res.locals?.userFeatures?.includes(
