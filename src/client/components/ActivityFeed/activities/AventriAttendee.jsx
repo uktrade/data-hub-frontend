@@ -12,14 +12,19 @@ import ActivityCardLabels from './card/ActivityCardLabels'
 const transformAventriAttendee = (activity) => ({
   eventName: activity.eventName,
   date: formatStartAndEndDate(activity.startDate, activity.endDate),
+  virtualAttendanceConfirmed:
+    activity.object['dit:aventri:virtual_attendance_confirmed'],
 })
 export default function AventriAttendee({ activity }) {
-  const { eventName, date } = transformAventriAttendee(activity)
+  const { eventName, date, virtualAttendanceConfirmed } =
+    transformAventriAttendee(activity)
 
   return (
     <ActivityCardWrapper dataTest="aventri-activity">
       <ActivityCardLabels service="event" kind="aventri service delivery" />
-      <ActivityCardSubject>{eventName}</ActivityCardSubject>
+      <ActivityCardSubject>
+        {`${eventName}: ${virtualAttendanceConfirmed == 'Yes' && 'Attended'}`}
+      </ActivityCardSubject>
       <ActivityCardMetadata
         metadata={[{ label: 'Event date', value: date || 'Unknown' }]}
       />

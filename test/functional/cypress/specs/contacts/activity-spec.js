@@ -139,9 +139,9 @@ describe('Contact activity', () => {
       })
 
       context('when viewing a Contact with Aventri activity', () => {
-        it('should diplay event name from Aventri ', () => {
+        it('should display event name and virtual event attendance from Aventri ', () => {
           cy.get('[data-test="aventri-activity"]').contains(
-            'EITA Test Event 2022'
+            'EITA Test Event 2022: Attended'
           )
         })
         it('should display event date from Aventri', () => {
