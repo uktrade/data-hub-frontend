@@ -103,6 +103,8 @@ function renderInteractionsForEntity(req, res, next) {
       contactId,
     } = res.locals.interactions
 
+    const contact = res.locals.contact
+
     const isContactActivitiesFeatureOn = res.locals.userFeatures?.includes(
       'user-contact-activities'
     )
@@ -128,6 +130,7 @@ function renderInteractionsForEntity(req, res, next) {
       actionButtons,
       props: {
         contactId: contactId,
+        contact: contact,
         isContactActivitiesFeatureOn,
       },
       isContactActivitiesFeatureOn,

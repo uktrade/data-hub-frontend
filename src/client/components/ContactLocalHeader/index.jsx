@@ -12,7 +12,6 @@ import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 import LocalHeaderHeading from '../../../client/components/LocalHeader/LocalHeaderHeading'
 import { Badge, Main, StatusMessage } from '..'
 import urls from '../../../lib/urls'
-import ContactResource from '../Resource/Contact'
 import { format } from '../../../client/utils/date'
 
 const dispatchToProps = (dispatch) => ({
@@ -72,88 +71,78 @@ const buildBreadcrumbs = (currentTab, id, name) => {
 }
 
 const ContactLocalHeader = ({
-  contactId,
+  contact,
   isContactActivitiesFeatureOn,
   writeFlashMessage,
 }) => {
   return (
-    <ContactResource id={contactId}>
-      {(contact) => (
-        <>
-          <LocalHeader
-            breadcrumbs={buildBreadcrumbs(currentTab, contactId, contact.name)}
-          >
-            <GridRow>
-              <GridCol>
-                <StyledLink
-                  data-test="company-link"
-                  href={urls.companies.details(contact.company.id)}
+    <>
+      <LocalHeader
+        breadcrumbs={buildBreadcrumbs(currentTab, contact.id, contact.name)}
+      >
+        <GridRow>
+          <GridCol>
+            <StyledLink
+              data-test="company-link"
+              href={urls.companies.details(contact.company.id)}
+            >
+              {contact.company.name}
+            </StyledLink>
+            <StyledLocalHeaderHeading data-test="contact-name">
+              {contact.name}
+              {contact.primary && (
+                <Badge
+                  data-test="primary-badge"
+                  borderColour="purple"
+                  textColour="purple"
+                  fontSize={FONT_SIZE.SIZE_24}
                 >
-                  {contact.company.name}
-                </StyledLink>
-              </GridCol>
-            </GridRow>
-            <GridRow>
-              <GridCol>
-                <StyledLocalHeaderHeading data-test="contact-name">
-                  {contact.name}
-                  {contact.primary && (
-                    <Badge
-                      data-test="primary-badge"
-                      borderColour="purple"
-                      textColour="purple"
-                      fontSize={FONT_SIZE.SIZE_24}
-                    >
-                      Primary
-                    </Badge>
-                  )}
-                </StyledLocalHeaderHeading>
-              </GridCol>
-              {isContactActivitiesFeatureOn && !contact.archived && (
-                <GridCol setWidth="one-quarter">
-                  <Button
-                    data-test="add-interaction-button"
-                    as={Link}
-                    href={urls.companies.interactions.create(
-                      contact.company.id
-                    )}
-                  >
-                    Add interaction
-                  </Button>
-                </GridCol>
+                  Primary
+                </Badge>
               )}
-            </GridRow>
-            {contact.archived && (
-              <StyledMain>
-                <StatusMessage data-test="contact-archived-message">
-                  {contact.archivedOn
-                    ? `This contact was archived on ${format(
-                        contact.archivedOn
-                      )} by ${contact.archivedBy.firstName} ${
-                        contact.archivedBy.lastName
-                      }.`
-                    : `This contact was automatically archived on ${format(
-                        contact.archivedOn
-                      )}.`}
-                  <br />
-                  <strong>Reason:</strong> {contact.archivedReason}
-                  <br />
-                  <br />
-                  <Link
-                    onClick={() => {
-                      writeFlashMessage('Contact record updated')
-                    }}
-                    href={urls.contacts.unarchive(contact.id)}
-                  >
-                    Unarchive
-                  </Link>
-                </StatusMessage>
-              </StyledMain>
-            )}
-          </LocalHeader>
-        </>
-      )}
-    </ContactResource>
+            </StyledLocalHeaderHeading>
+          </GridCol>
+          {isContactActivitiesFeatureOn && !contact.archived && (
+            <GridCol setWidth="one-quarter">
+              <Button
+                data-test="add-interaction-button"
+                as={Link}
+                href={urls.companies.interactions.create(contact.company.id)}
+              >
+                Add interaction
+              </Button>
+            </GridCol>
+          )}
+        </GridRow>
+        {contact.archived && (
+          <StyledMain>
+            <StatusMessage data-test="contact-archived-message">
+              {contact.archived_on
+                ? `This contact was archived on ${format(
+                    contact.archived_on
+                  )} by ${contact.archived_by.first_name} ${
+                    contact.archived_by.last_name
+                  }.`
+                : `This contact was automatically archived on ${format(
+                    contact.archived_on
+                  )}.`}
+              <br />
+              <strong>Reason:</strong> {contact.archived_reason}
+              <br />
+              <br />
+              <Link
+                onClick={() => {
+                  writeFlashMessage('Contact record updated')
+                }}
+                href={urls.contacts.unarchive(contact.id)}
+              >
+                Unarchive
+              </Link>
+            </StatusMessage>
+          </StyledMain>
+        )}
+      </LocalHeader>
+    </>
   )
 }
 

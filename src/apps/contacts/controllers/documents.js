@@ -2,6 +2,7 @@ const { get } = require('lodash')
 
 function renderDocuments(req, res) {
   const contactId = req.params.contactId
+  const contact = res.locals.contact
   const isContactActivitiesFeatureOn = res.locals.userFeatures?.includes(
     'user-contact-activities'
   )
@@ -13,6 +14,7 @@ function renderDocuments(req, res) {
   return res.breadcrumb('Documents').render('contacts/views/documents', {
     props: {
       contactId: contactId,
+      contact: contact,
       isContactActivitiesFeatureOn,
     },
     archivedDocumentPath,

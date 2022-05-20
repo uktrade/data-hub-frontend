@@ -40,6 +40,7 @@ async function getCommon(req, res, next) {
 function getDetails(req, res, next) {
   try {
     const contactId = req.params.contactId
+    const contact = res.locals.contact
     const isContactActivitiesFeatureOn = res.locals.userFeatures?.includes(
       'user-contact-activities'
     )
@@ -47,6 +48,7 @@ function getDetails(req, res, next) {
     res.render('contacts/views/details', {
       props: {
         contactId: contactId,
+        contact: contact,
         isContactActivitiesFeatureOn,
       },
       contactDetails: transformContactToView(
