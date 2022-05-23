@@ -27,13 +27,18 @@ const InvestmentNotificationSettings = ({ investment }) => (
   >
     {({ estimatedLandDate }) => (
       <>
-        <p>Change your email preferences for: {investment.name}</p>
-        <Table>
-          <Table.Row>
-            <Table.Header>Notification type</Table.Header>
-            <Table.Header>Subscriptions</Table.Header>
-            <Table.Header>&nbsp;</Table.Header>
-          </Table.Row>
+        <p data-test="notification-preferences">
+          Change your email notification preferences for: {investment.name}
+        </p>
+        <Table
+          head={
+            <Table.Row>
+              <Table.CellHeader>Notification type</Table.CellHeader>
+              <Table.CellHeader>Subscriptions</Table.CellHeader>
+              <Table.CellHeader>&nbsp;</Table.CellHeader>
+            </Table.Row>
+          }
+        >
           <Table.Row>
             <Table.Cell>Estimated land date</Table.Cell>
             <Table.Cell data-test="notifications-estimated-land-date">

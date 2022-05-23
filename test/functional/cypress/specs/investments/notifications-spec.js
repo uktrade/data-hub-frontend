@@ -50,6 +50,13 @@ describe('Notification settings with all options', () => {
       })
     })
 
+    it('should display text above the table', () => {
+      cy.get('[data-test="notification-preferences"]').should(
+        'have.text',
+        'Change your email notification preferences for: Wig factory'
+      )
+    })
+
     it('should display the notificaion options', () => {
       cy.get('[data-test="notifications-estimated-land-date"]').should(
         'have.text',
