@@ -245,6 +245,9 @@ import {
   TASK_SAVE_NOTIFICATION_SETTINGS,
 } from '../apps/investments/client/projects/notifications/state'
 
+import * as reminders from '../client/modules/Reminders/tasks'
+import { TASK_GET_REMINDER_SUBSCRIPTIONS } from '../client/modules/Reminders/state'
+
 import Footer from '../client/components/Footer'
 
 import ContactForm from '../client/components/ContactForm'
@@ -400,6 +403,7 @@ function App() {
         [TASK_GET_NOTIFICATION_SETTINGS]: notifications.getNotificationSettings,
         [TASK_SAVE_NOTIFICATION_SETTINGS]:
           notifications.saveNotificationSettings,
+        [TASK_GET_REMINDER_SUBSCRIPTIONS]: reminders.getSubscriptions,
         [TASK_GET_CONTACT_ACTIVITIES]: getContactActivities,
         ...resourceTasks,
       }}

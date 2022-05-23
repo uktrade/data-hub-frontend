@@ -58,6 +58,7 @@ var v4SearchExports = require('./routes/v4/search/export')
 var v4referralList = require('./routes/v4/referrals/list.js')
 var v4pipelineItem = require('./routes/v4/pipeline-item/index.js')
 var v4Proposition = require('./routes/v4/proposition/proposition.js')
+var v4Reminders = require('./routes/v4/reminders/index.js')
 
 // Datahub API 3rd party dependencies
 var consentService = require('./routes/api/consentService.js')
@@ -482,6 +483,16 @@ app.put(
 app.delete(
   '/v4/company-list/:listId/item/:companyId',
   v4CompanyList.removeCompanyFromList
+)
+
+// V4 Reminders
+app.get(
+  '/v4/reminder/subscription/estimated-land-date',
+  v4Reminders.getEstimatedLandDateSubscriptions
+)
+app.get(
+  '/v4/reminder/subscription/no-recent-investment-interaction',
+  v4Reminders.getNoRecentInteractionsSubscriptions
 )
 
 // V4 Investment

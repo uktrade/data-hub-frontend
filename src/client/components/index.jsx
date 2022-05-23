@@ -52,6 +52,7 @@ export {
   DashboardToggleSection,
   FilterToggleSection,
   NoHighlightToggleSection,
+  RemindersToggleSection,
   ToggleSection,
 } from './ToggleSection'
 export { default as RoutedPagination } from './RoutedPagination'
