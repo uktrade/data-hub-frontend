@@ -91,6 +91,7 @@ const ContactDetails = ({ contactId, companyAddress }) => {
               href={urls.contacts.edit(contactId)}
               buttonColour={GREY_3}
               buttonTextColour={BLACK}
+              data-test="edit-contact-button"
             >
               Edit Contact
             </Button>
@@ -98,9 +99,13 @@ const ContactDetails = ({ contactId, companyAddress }) => {
 
           {!contact.archived && (
             <div data-test="archive-contact-container">
-              <StyledSectionHeader>Archive contact</StyledSectionHeader>
+              <StyledSectionHeader data-test="archive-heading">
+                Archive contact
+              </StyledSectionHeader>
 
-              <p>Archive this contact if it is no longer required or active.</p>
+              <p data-test="archive-hint">
+                Archive this contact if it is no longer required or active.
+              </p>
 
               {formIsOpen && (
                 <Form
@@ -119,7 +124,7 @@ const ContactDetails = ({ contactId, companyAddress }) => {
                   <FieldRadios
                     label="Archive reason"
                     name="archived_reason"
-                    required="Select a reason"
+                    required="You must select a reason"
                     hint="This contact has:"
                     options={[
                       {

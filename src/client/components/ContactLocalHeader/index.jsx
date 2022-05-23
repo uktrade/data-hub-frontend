@@ -131,6 +131,7 @@ const ContactLocalHeader = ({
               <br />
               <br />
               <Link
+                data-test="unarchive-link"
                 onClick={() => {
                   writeFlashMessage('Contact record updated')
                 }}
