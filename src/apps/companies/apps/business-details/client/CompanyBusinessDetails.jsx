@@ -17,8 +17,13 @@ import SectionOneList from './SectionOneList'
 import SectionDocuments from './SectionDocuments'
 import SectionArchive from './SectionArchive'
 import { StatusMessage } from '../../../../../client/components/'
+import { COMPANY_DISSOLVED_OPTION } from '../../../constants'
 
-import { ID as CHECK_PENDING_REQUEST_ID, state2props } from './state'
+import {
+  ID as CHECK_PENDING_REQUEST_ID,
+  TASK_ARCHIVE_COMPANY,
+  state2props,
+} from './state'
 import { DNB__CHECK_PENDING_REQUEST } from '../../../../../client/actions'
 import Task from '../../../../../client/components/Task'
 
@@ -163,9 +168,21 @@ const CompanyBusinessDetails = ({
       />
       <SectionDocuments urls={urls} />
       <SectionArchive
+        type="company"
+        id={CHECK_PENDING_REQUEST_ID}
+        submissionTaskName={TASK_ARCHIVE_COMPANY}
         isArchived={isArchived}
         isDnbCompany={isDnbCompany}
-        urls={urls}
+        analyticsFormName="archiveCompany"
+        redirectUrl={urls.companyBusinessDetails}
+        transformPayload={(values) => ({
+          values,
+          urls,
+        })}
+        archiveReasons={{
+          label: COMPANY_DISSOLVED_OPTION,
+          value: COMPANY_DISSOLVED_OPTION,
+        }}
       />
       {canEditOneList && (
         <Button as={Link} href={urls.editOneList}>

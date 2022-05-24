@@ -5,19 +5,29 @@ import { BLACK, GREY_3 } from 'govuk-colours'
 import Button from '@govuk-react/button'
 import { typography } from '@govuk-react/lib'
 import { SPACING } from '@govuk-react/constants'
+import { kebabCase } from 'lodash'
 
 import { FieldRadios, FieldInput } from '../../../../../client/components'
 
 import Form from '../../../../../client/components/Form'
 
-import { ID, TASK_ARCHIVE_COMPANY } from './state'
-
 const StyledSectionHeader = styled('div')`
   ${typography.font({ size: 24, weight: 'bold' })};
   margin-bottom: ${SPACING.SCALE_4};
 `
+const buttonText = 'Archive'
 
-const SectionArchive = ({ isArchived, isDnbCompany, urls }) => {
+const SectionArchive = ({
+  id,
+  submissionTaskName,
+  type,
+  isArchived,
+  isDnbCompany,
+  analyticsFormName,
+  redirectUrl,
+  transformPayload,
+  archiveReasons,
+}) => {
   const [formIsOpen, setFormIsOpen] = useState(false)
 
   if (isArchived || isDnbCompany) {
@@ -25,30 +35,27 @@ const SectionArchive = ({ isArchived, isDnbCompany, urls }) => {
   }
 
   return (
-    <div data-test="archiveCompanyContainer">
-      <StyledSectionHeader>Archive company</StyledSectionHeader>
+    <div data-test={kebabCase(`archive-${type}-container`)}>
+      <StyledSectionHeader>Archive {type}</StyledSectionHeader>
 
-      <p>Archive this company if it is no longer required or active.</p>
+      <p>Archive this {type} if it is no longer required or active.</p>
 
       {formIsOpen && (
         <Form
-          id={ID}
-          submissionTaskName={TASK_ARCHIVE_COMPANY}
-          transformPayload={(values) => ({
-            values,
-            urls,
-          })}
-          submitButtonLabel="Archive"
-          redirectTo={() => urls.companyBusinessDetails}
-          analyticsFormName="archiveCompany"
-          cancelRedirectTo={() => urls.companyBusinessDetails}
+          id={id}
+          submissionTaskName={submissionTaskName}
+          transformPayload={transformPayload}
+          submitButtonLabel={buttonText}
+          redirectTo={() => redirectUrl}
+          analyticsFormName={analyticsFormName}
+          cancelRedirectTo={() => redirectUrl}
         >
           <FieldRadios
             label="Archive reason"
             name="archived_reason"
             required="Select a reason"
             options={[
-              { label: 'Company is dissolved', value: 'Company is dissolved' },
+              archiveReasons,
               {
                 label: 'Other',
                 value: 'Other',
@@ -71,7 +78,7 @@ const SectionArchive = ({ isArchived, isDnbCompany, urls }) => {
           buttonColour={GREY_3}
           buttonTextColour={BLACK}
         >
-          Archive
+          {buttonText}
         </Button>
       )}
     </div>
@@ -79,9 +86,15 @@ const SectionArchive = ({ isArchived, isDnbCompany, urls }) => {
 }
 
 SectionArchive.propTypes = {
+  type: PropTypes.string.isRequired,
   isArchived: PropTypes.bool.isRequired,
-  isDnbCompany: PropTypes.bool.isRequired,
-  urls: PropTypes.object.isRequired,
+  isDnbCompany: PropTypes.bool,
+  id: PropTypes.string.isRequired,
+  submissionTaskName: PropTypes.string.isRequired,
+  analyticsFormName: PropTypes.string.isRequired,
+  redirectUrl: PropTypes.string.isRequired,
+  transformPayload: PropTypes.func.isRequired,
+  archiveReasons: PropTypes.object.isRequired,
 }
 
 export default SectionArchive
