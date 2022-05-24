@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import Link from '@govuk-react/link'
 import Table from '@govuk-react/table'
-import { SPACING } from '@govuk-react/constants'
+import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 import { get } from 'lodash'
 import qs from 'qs'
 
@@ -21,6 +21,15 @@ const ToggleSectionContainer = styled('div')({
 const StyledTable = styled(Table)({
   marginTop: 0,
   marginLeft: SPACING.SCALE_1,
+})
+
+const StyledCellHeader = styled(Table.CellHeader)({
+  [MEDIA_QUERIES.TABLET]: {
+    width: '33%',
+  },
+  [MEDIA_QUERIES.DESKTOP]: {
+    width: '33%',
+  },
 })
 
 const StyledEditLink = styled(Link)({
@@ -57,13 +66,11 @@ const Reminders = () => {
             >
               <StyledTable data-test="estimated-land-date-table">
                 <Table.Row>
-                  <Table.CellHeader setWidth="33%">Reminders</Table.CellHeader>
+                  <StyledCellHeader>Reminders</StyledCellHeader>
                   <Table.Cell>{estimatedLandDate.reminderDays}</Table.Cell>
                 </Table.Row>
                 <Table.Row>
-                  <Table.CellHeader setWidth="33%">
-                    Email notifications
-                  </Table.CellHeader>
+                  <StyledCellHeader>Email notifications</StyledCellHeader>
                   <Table.Cell>
                     {estimatedLandDate.emailRemindersEnabled}
                   </Table.Cell>
@@ -86,13 +93,11 @@ const Reminders = () => {
             >
               <StyledTable data-test="no-recent-interaction-table">
                 <Table.Row>
-                  <Table.CellHeader setWidth="33%">Reminders</Table.CellHeader>
+                  <StyledCellHeader>Reminders</StyledCellHeader>
                   <Table.Cell>{noRecentInteraction.reminderDays}</Table.Cell>
                 </Table.Row>
                 <Table.Row>
-                  <Table.CellHeader setWidth="33%">
-                    Email notifications
-                  </Table.CellHeader>
+                  <StyledCellHeader>Email notifications</StyledCellHeader>
                   <Table.Cell>
                     {noRecentInteraction.emailRemindersEnabled}
                   </Table.Cell>

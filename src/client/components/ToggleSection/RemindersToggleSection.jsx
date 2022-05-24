@@ -13,6 +13,7 @@ export const RemindersToggleSection = styled(MultiInstanceToggleSection)`
   ${({ borderBottom }) => borderBottom && `border-bottom: 1px solid ${GREY_2};`}
 
   ${ToggleButton} {
+    text-align: left;
     padding-top: ${SPACING.SCALE_3};
     padding-bottom: ${SPACING.SCALE_3};
   }
