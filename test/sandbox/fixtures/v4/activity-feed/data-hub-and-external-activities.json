@@ -37,7 +37,7 @@
             "dit:aventri:lastname": "Lastname1",
             "dit:aventri:modifiedby": "attendee",
             "dit:aventri:registrationstatus": "Confirmed",
-            "dit:aventri:virtual_attendance_confirmed": "Yes",
+            "dit:aventri:virtual_event_attendance": "Yes",
             "id": "dit:aventri:Attendee:1234",
             "published": "1970-01-01T00:00:00",
             "type": ["dit:aventri:Attendee"]
