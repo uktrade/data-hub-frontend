@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
-import { BLUE } from 'govuk-colours'
+import { BLUE, GREY_1 } from 'govuk-colours'
 import styled from 'styled-components'
 
 const StyledActivitySubject = styled('h3')`
@@ -17,10 +17,17 @@ const StyledActivitySubject = styled('h3')`
     text-decoration: none;
     color: ${BLUE};
   }
+  & > span > span {
+    color: ${GREY_1};
+  }
 `
 
 const ActivityCardSubject = ({ children }) => {
-  return <StyledActivitySubject>{children}</StyledActivitySubject>
+  return (
+    <span>
+      <StyledActivitySubject>{children}</StyledActivitySubject>
+    </span>
+  )
 }
 
 ActivityCardSubject.propTypes = {
