@@ -7,9 +7,9 @@ import { typography } from '@govuk-react/lib'
 import { SPACING } from '@govuk-react/constants'
 import { kebabCase } from 'lodash'
 
-import { FieldRadios, FieldInput } from '../../../../../client/components'
+import { FieldRadios, FieldInput } from '..'
 
-import Form from '../../../../../client/components/Form'
+import Form from '../Form'
 
 const StyledSectionHeader = styled('div')`
   ${typography.font({ size: 24, weight: 'bold' })};
@@ -37,7 +37,7 @@ const buildOptions = (type, options) => {
   return options.concat(otherOption)
 }
 
-const SectionArchive = ({
+const ArchiveForm = ({
   id,
   submissionTaskName,
   type,
@@ -101,7 +101,7 @@ const SectionArchive = ({
   )
 }
 
-SectionArchive.propTypes = {
+ArchiveForm.propTypes = {
   type: PropTypes.string.isRequired,
   isArchived: PropTypes.bool.isRequired,
   isDnbCompany: PropTypes.bool,
@@ -113,4 +113,4 @@ SectionArchive.propTypes = {
   archiveReasons: PropTypes.array.isRequired,
 }
 
-export default SectionArchive
+export default ArchiveForm

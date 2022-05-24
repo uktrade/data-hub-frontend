@@ -15,7 +15,7 @@ import SectionRegion from './SectionRegion'
 import SectionSector from './SectionSector'
 import SectionOneList from './SectionOneList'
 import SectionDocuments from './SectionDocuments'
-import SectionArchive from './SectionArchive'
+import ArchiveForm from '../../../../../client/components/ArchiveForm'
 import { StatusMessage } from '../../../../../client/components/'
 import { COMPANY_DISSOLVED_OPTION } from '../../../constants'
 
@@ -167,7 +167,7 @@ const CompanyBusinessDetails = ({
         urls={urls}
       />
       <SectionDocuments urls={urls} />
-      <SectionArchive
+      <ArchiveForm
         type="company"
         id={CHECK_PENDING_REQUEST_ID}
         submissionTaskName={TASK_ARCHIVE_COMPANY}

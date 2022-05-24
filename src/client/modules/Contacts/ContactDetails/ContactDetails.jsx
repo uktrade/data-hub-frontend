@@ -15,7 +15,7 @@ import {
   ROLE_CHANGE_OPTION,
 } from '../../../../apps/contacts/constants'
 import { ID, TASK_ARCHIVE_CONTACT } from './state'
-import SectionArchive from '../../../../apps/companies/apps/business-details/client/SectionArchive'
+import ArchiveForm from '../../../components/ArchiveForm'
 
 const getAddress = (contact, companyAddress) => {
   const address = contact.addressSameAsCompany
@@ -91,7 +91,7 @@ const ContactDetails = ({ contactId, companyAddress }) => {
             </Button>
           )}
 
-          <SectionArchive
+          <ArchiveForm
             id={ID}
             submissionTaskName={TASK_ARCHIVE_CONTACT}
             type="contact"
