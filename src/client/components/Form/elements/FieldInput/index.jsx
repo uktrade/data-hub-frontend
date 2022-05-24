@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { kebabCase } from 'lodash'
 
 import Input from '@govuk-react/input'
 import ErrorText from '@govuk-react/error-text'
@@ -54,6 +55,7 @@ const FieldInput = ({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
+          data-test={kebabCase(`${name}-'input'`)}
           {...rest}
         />
       </StyledInputWrapper>

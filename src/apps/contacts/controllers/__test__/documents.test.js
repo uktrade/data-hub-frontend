@@ -38,6 +38,7 @@ describe('Contacts documents controller', () => {
           {
             props: {
               contactId: undefined,
+              contact: { archived_documents_url_path: '' },
               isContactActivitiesFeatureOn: undefined,
             },
             isContactActivitiesFeatureOn: undefined,
@@ -76,6 +77,7 @@ describe('Contacts documents controller', () => {
           {
             props: {
               contactId: undefined,
+              contact: { archived_documents_url_path: 'mock-document-url' },
               isContactActivitiesFeatureOn: undefined,
             },
             isContactActivitiesFeatureOn: undefined,

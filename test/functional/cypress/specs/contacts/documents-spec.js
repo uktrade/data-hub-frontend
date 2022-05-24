@@ -14,7 +14,7 @@ describe('Contact Documents', () => {
       assertBreadcrumbs({
         Home: '/',
         Contacts: contacts.index(),
-        'Joseph Woof': '/contacts/default-contact-with-document',
+        'Joseph Woof': '/contacts/5e75d636-1d24-416a-aaf0-3fb220d594ce',
         Documents: null,
       })
     })

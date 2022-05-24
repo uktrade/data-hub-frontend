@@ -6,15 +6,6 @@ function getContact(req, contactId) {
   return authorisedRequest(req, `${config.apiRoot}/v4/contact/${contactId}`)
 }
 
-function archiveContact(req, contactId, reason) {
-  const options = {
-    body: { reason },
-    url: `${config.apiRoot}/v3/contact/${contactId}/archive`,
-    method: 'POST',
-  }
-  return authorisedRequest(req, options)
-}
-
 function unarchiveContact(req, contactId) {
   return authorisedRequest(req, {
     method: 'POST',
@@ -44,7 +35,6 @@ function getContactAuditLog(req, contactId, page = 1) {
 
 module.exports = {
   getContact,
-  archiveContact,
   unarchiveContact,
   getContactsForCompany,
   getContactAuditLog,

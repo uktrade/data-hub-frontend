@@ -42,10 +42,15 @@ const QUERY_FIELDS = [
   'company_uk_region',
 ]
 
+const EMAIL_CONSENT_YES = 'Can be marketed to'
+const EMAIL_CONSENT_NO = 'Cannot be marketed to'
+
 module.exports = {
   GLOBAL_NAV_ITEM,
   LOCAL_NAV,
   APP_PERMISSIONS,
   QUERY_FIELDS,
   ACTIVITIES_PER_PAGE,
+  EMAIL_CONSENT_YES,
+  EMAIL_CONSENT_NO,
 }

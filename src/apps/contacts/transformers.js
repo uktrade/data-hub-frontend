@@ -1,26 +1,7 @@
 /* eslint-disable camelcase */
 const { get, pickBy, compact, assign } = require('lodash')
 
-const { getDataLabels } = require('../../lib/controller-utils')
-const { contactDetailsLabels, contactMetaItemLabels } = require('./labels')
-
-function getContactAddress(
-  address_same_as_company,
-  contactAddressFields,
-  company
-) {
-  return address_same_as_company
-    ? company.address
-    : {
-        line_1: contactAddressFields.address_1,
-        line_2: contactAddressFields.address_2,
-        town: contactAddressFields.address_town,
-        county: contactAddressFields.address_county,
-        postcode: contactAddressFields.address_postcode,
-        area: contactAddressFields.address_area,
-        country: contactAddressFields.address_country,
-      }
-}
+const { contactMetaItemLabels } = require('./labels')
 
 // The new react collection page no longer uses this transformer as it
 // has its own. When searching for a contact '/search/contacts?term=<search-term>'
@@ -87,62 +68,6 @@ function transformContactToListItem({
   }
 }
 
-/**
- * Translate a raw contact object into a formatted contact
- * to display on the screen
- * @param {object} contact
- * @param {object} company
- * @returns {object} displayContact A contact that can be put into a key value table
- *
- */
-function transformContactToView(
-  {
-    full_telephone_number,
-    job_title,
-    email,
-    accepts_dit_email_marketing,
-    address_1,
-    address_2,
-    address_town,
-    address_county,
-    address_postcode,
-    address_area,
-    address_country,
-    notes,
-    address_same_as_company,
-  },
-  company
-) {
-  const viewRecord = {
-    job_title,
-    email,
-    notes,
-    full_telephone_number,
-    email_marketing: accepts_dit_email_marketing
-      ? 'Can be marketed to'
-      : 'Cannot be marketed to',
-    address: {
-      type: 'address',
-      address: getContactAddress(
-        address_same_as_company,
-        {
-          address_1,
-          address_2,
-          address_town,
-          address_county,
-          address_postcode,
-          address_area,
-          address_country,
-        },
-        company
-      ),
-    },
-  }
-
-  return pickBy(getDataLabels(viewRecord, contactDetailsLabels))
-}
-
 module.exports = {
   transformContactToListItem,
-  transformContactToView,
 }
