@@ -179,10 +179,12 @@ const CompanyBusinessDetails = ({
           values,
           urls,
         })}
-        archiveReasons={{
-          label: COMPANY_DISSOLVED_OPTION,
-          value: COMPANY_DISSOLVED_OPTION,
-        }}
+        archiveReasons={[
+          {
+            label: COMPANY_DISSOLVED_OPTION,
+            value: COMPANY_DISSOLVED_OPTION,
+          },
+        ]}
       />
       {canEditOneList && (
         <Button as={Link} href={urls.editOneList}>

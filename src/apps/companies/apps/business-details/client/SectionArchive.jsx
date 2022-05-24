@@ -17,6 +17,26 @@ const StyledSectionHeader = styled('div')`
 `
 const buttonText = 'Archive'
 
+const buildOptions = (type, options) => {
+  const isContact = type === 'contact' ? true : false
+  const otherOption = [
+    {
+      label: 'Other',
+      value: 'Other',
+      children: (
+        <FieldInput
+          type="text"
+          label="Other"
+          name="archived_reason_other"
+          required={isContact ? 'You must enter a reason' : null}
+        />
+      ),
+    },
+  ]
+
+  return options.concat(otherOption)
+}
+
 const SectionArchive = ({
   id,
   submissionTaskName,
@@ -27,6 +47,8 @@ const SectionArchive = ({
   redirectUrl,
   transformPayload,
   archiveReasons,
+  radioHint,
+  flashMessage = null,
 }) => {
   const [formIsOpen, setFormIsOpen] = useState(false)
 
@@ -36,9 +58,13 @@ const SectionArchive = ({
 
   return (
     <div data-test={kebabCase(`archive-${type}-container`)}>
-      <StyledSectionHeader>Archive {type}</StyledSectionHeader>
+      <StyledSectionHeader data-test="archive-heading">
+        Archive {type}
+      </StyledSectionHeader>
 
-      <p>Archive this {type} if it is no longer required or active.</p>
+      <p data-test="archive-hint">
+        Archive this {type} if it is no longer required or active.
+      </p>
 
       {formIsOpen && (
         <Form
@@ -49,25 +75,14 @@ const SectionArchive = ({
           redirectTo={() => redirectUrl}
           analyticsFormName={analyticsFormName}
           cancelRedirectTo={() => redirectUrl}
+          flashMessage={flashMessage}
         >
           <FieldRadios
             label="Archive reason"
             name="archived_reason"
-            required="Select a reason"
-            options={[
-              archiveReasons,
-              {
-                label: 'Other',
-                value: 'Other',
-                children: (
-                  <FieldInput
-                    type="text"
-                    label="Other"
-                    name="archived_reason_other"
-                  />
-                ),
-              },
-            ]}
+            required="You must select a reason"
+            hint={radioHint}
+            options={buildOptions(type, archiveReasons)}
           />
         </Form>
       )}
@@ -77,6 +92,7 @@ const SectionArchive = ({
           onClick={() => setFormIsOpen(true)}
           buttonColour={GREY_3}
           buttonTextColour={BLACK}
+          data-test="archive-button"
         >
           {buttonText}
         </Button>
@@ -94,7 +110,7 @@ SectionArchive.propTypes = {
   analyticsFormName: PropTypes.string.isRequired,
   redirectUrl: PropTypes.string.isRequired,
   transformPayload: PropTypes.func.isRequired,
-  archiveReasons: PropTypes.object.isRequired,
+  archiveReasons: PropTypes.array.isRequired,
 }
 
 export default SectionArchive

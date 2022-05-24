@@ -1,26 +1,21 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import { BLACK, GREY_3 } from 'govuk-colours'
-import { typography } from '@govuk-react/lib'
-import { SPACING } from '@govuk-react/constants'
 
 import ContactResource from '../../../components/Resource/Contact'
-import { FieldInput, FieldRadios, SummaryTable } from '../../../components'
-import Form from '../../../components/Form'
+import { SummaryTable } from '../../../components'
 import urls from '../../../../lib/urls'
 import {
   EMAIL_CONSENT_NO,
   EMAIL_CONSENT_YES,
+  LEFT_COMPANY_OPTION,
+  NO_CONTACT_OPTION,
+  ROLE_CHANGE_OPTION,
 } from '../../../../apps/contacts/constants'
 import { ID, TASK_ARCHIVE_CONTACT } from './state'
-
-const StyledSectionHeader = styled('div')`
-  ${typography.font({ size: 24, weight: 'bold' })};
-  margin-bottom: ${SPACING.SCALE_4};
-`
+import SectionArchive from '../../../../apps/companies/apps/business-details/client/SectionArchive'
 
 const getAddress = (contact, companyAddress) => {
   const address = contact.addressSameAsCompany
@@ -49,7 +44,6 @@ const getAddress = (contact, companyAddress) => {
 }
 
 const ContactDetails = ({ contactId, companyAddress }) => {
-  const [formIsOpen, setFormIsOpen] = useState(false)
   return (
     <ContactResource id={contactId}>
       {(contact) => (
@@ -97,76 +91,34 @@ const ContactDetails = ({ contactId, companyAddress }) => {
             </Button>
           )}
 
-          {!contact.archived && (
-            <div data-test="archive-contact-container">
-              <StyledSectionHeader data-test="archive-heading">
-                Archive contact
-              </StyledSectionHeader>
-
-              <p data-test="archive-hint">
-                Archive this contact if it is no longer required or active.
-              </p>
-
-              {formIsOpen && (
-                <Form
-                  id={ID}
-                  submissionTaskName={TASK_ARCHIVE_CONTACT}
-                  submitButtonLabel="Archive"
-                  redirectTo={() => urls.contacts.details(contactId)}
-                  analyticsFormName="archiveContact"
-                  cancelRedirectTo={() => urls.contacts.details(contactId)}
-                  transformPayload={(values) => ({
-                    values,
-                    contactId,
-                  })}
-                  flashMessage={() => `Contact record updated`}
-                >
-                  <FieldRadios
-                    label="Archive reason"
-                    name="archived_reason"
-                    required="You must select a reason"
-                    hint="This contact has:"
-                    options={[
-                      {
-                        label: 'Left the company',
-                        value: 'Left the company',
-                      },
-                      {
-                        label: 'Does not want to be contacted',
-                        value: 'Does not want to be contacted',
-                      },
-                      {
-                        label: 'Changed role/responsibility',
-                        value: 'Changed role/responsibility',
-                      },
-                      {
-                        label: 'Other',
-                        value: 'Other',
-                        children: (
-                          <FieldInput
-                            type="text"
-                            label="Other"
-                            name="archived_reason_other"
-                            required="You must enter a reason"
-                          />
-                        ),
-                      },
-                    ]}
-                  />
-                </Form>
-              )}
-              {!formIsOpen && (
-                <Button
-                  onClick={() => setFormIsOpen(true)}
-                  buttonColour={GREY_3}
-                  buttonTextColour={BLACK}
-                  data-test="top-level-archive-button"
-                >
-                  Archive
-                </Button>
-              )}
-            </div>
-          )}
+          <SectionArchive
+            id={ID}
+            submissionTaskName={TASK_ARCHIVE_CONTACT}
+            type="contact"
+            isArchived={contact.archived}
+            transformPayload={(values) => ({
+              values,
+              contactId,
+            })}
+            flashMessage={() => `Contact record updated`}
+            redirectUrl={urls.contacts.details(contactId)}
+            analyticsFormName="archiveContact"
+            archiveReasons={[
+              {
+                label: LEFT_COMPANY_OPTION,
+                value: LEFT_COMPANY_OPTION,
+              },
+              {
+                label: NO_CONTACT_OPTION,
+                value: NO_CONTACT_OPTION,
+              },
+              {
+                label: ROLE_CHANGE_OPTION,
+                value: ROLE_CHANGE_OPTION,
+              },
+            ]}
+            radioHint="This contact has:"
+          />
         </>
       )}
     </ContactResource>
