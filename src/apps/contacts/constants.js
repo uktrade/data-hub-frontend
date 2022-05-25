@@ -45,6 +45,10 @@ const QUERY_FIELDS = [
 const EMAIL_CONSENT_YES = 'Can be marketed to'
 const EMAIL_CONSENT_NO = 'Cannot be marketed to'
 
+const LEFT_COMPANY_OPTION = 'Left the company'
+const NO_CONTACT_OPTION = 'Does not want to be contacted'
+const ROLE_CHANGE_OPTION = 'Changed role/responsibility'
+
 module.exports = {
   GLOBAL_NAV_ITEM,
   LOCAL_NAV,
@@ -53,4 +57,7 @@ module.exports = {
   ACTIVITIES_PER_PAGE,
   EMAIL_CONSENT_YES,
   EMAIL_CONSENT_NO,
+  LEFT_COMPANY_OPTION,
+  NO_CONTACT_OPTION,
+  ROLE_CHANGE_OPTION,
 }

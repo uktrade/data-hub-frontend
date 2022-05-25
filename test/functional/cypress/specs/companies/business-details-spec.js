@@ -184,9 +184,7 @@ describe('Companies business details', () => {
       })
 
       it('should not display the "Archive company" details container', () => {
-        cy.get(
-          selectors.detailsContainer('archiveCompanyContainer').container
-        ).should('not.exist')
+        cy.get('[data-test=archive-company-container]').should('not.exist')
       })
     }
   )
@@ -390,9 +388,7 @@ describe('Companies business details', () => {
       })
 
       it('should display the "Archive company" details container', () => {
-        cy.get(
-          selectors.detailsContainer('archiveCompanyContainer').container
-        ).should('be.visible')
+        cy.get('[data-test=archive-company-container]').should('be.visible')
       })
     }
   )
@@ -516,9 +512,7 @@ describe('Companies business details', () => {
       })
 
       it('should not display the "Archive company" details container', () => {
-        cy.get(
-          selectors.detailsContainer('archiveCompanyContainer').container
-        ).should('not.exist')
+        cy.get('[data-test=archive-company-container]').should('not.exist')
       })
     }
   )
@@ -679,9 +673,7 @@ describe('Companies business details', () => {
       })
 
       it('should not display the "Archive company" details container', () => {
-        cy.get(
-          selectors.detailsContainer('archiveCompanyContainer').container
-        ).should('not.exist')
+        cy.get('[data-test=archive-company-container]').should('not.exist')
       })
     }
   )
@@ -806,9 +798,7 @@ describe('Companies business details', () => {
       })
 
       it('should display the "Archive company" details container', () => {
-        cy.get(
-          selectors.detailsContainer('archiveCompanyContainer').container
-        ).should('be.visible')
+        cy.get('[data-test=archive-company-container]').should('be.visible')
       })
     }
   )

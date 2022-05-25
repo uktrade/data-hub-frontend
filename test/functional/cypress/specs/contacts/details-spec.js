@@ -74,11 +74,11 @@ describe('View contact details', () => {
           'have.text',
           'Archive this contact if it is no longer required or active.'
         )
-      cy.get('[data-test=top-level-archive-button]')
+      cy.get('[data-test=archive-button]')
         .should('exist')
         .should('have.text', 'Archive')
 
-      cy.get('[data-test=top-level-archive-button]').click()
+      cy.get('[data-test=archive-button]').click()
 
       cy.get('[data-test=field-archived_reason]').then((element) => {
         assertFieldRadios({
@@ -229,7 +229,7 @@ describe('View contact details', () => {
     })
 
     it('should not submit the form if no reason is given', () => {
-      cy.get('[data-test=top-level-archive-button]').click()
+      cy.get('[data-test=archive-button]').click()
       cy.get('[data-test=submit-button]').click()
       assertErrorSummary(['You must select a reason'])
 
@@ -242,7 +242,7 @@ describe('View contact details', () => {
       const expectedBody = {
         reason: 'Left the company',
       }
-      cy.get('[data-test=top-level-archive-button]').click()
+      cy.get('[data-test=archive-button]').click()
       cy.get('[data-test=archived-reason-left-the-company]').click()
       cy.get('[data-test=submit-button]').click()
 
@@ -256,7 +256,7 @@ describe('View contact details', () => {
       const expectedBody = {
         reason: 'Test that the other functionality works',
       }
-      cy.get('[data-test=top-level-archive-button]').click()
+      cy.get('[data-test=archive-button]').click()
       cy.get('[data-test=archived-reason-other]').click()
       cy.get('[data-test=archived-reason-other-input]').type(
         'Test that the other functionality works'
