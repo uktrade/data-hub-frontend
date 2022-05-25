@@ -10,9 +10,9 @@ import PropTypes from 'prop-types'
 
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 import LocalHeaderHeading from '../../../client/components/LocalHeader/LocalHeaderHeading'
-import { Badge, Main, StatusMessage } from '..'
+import { Badge } from '..'
 import urls from '../../../lib/urls'
-import { format } from '../../../client/utils/date'
+import ArchivePanel from '../ArchivePanel'
 
 const dispatchToProps = (dispatch) => ({
   writeFlashMessage: (message) =>
@@ -33,13 +33,6 @@ const StyledLocalHeaderHeading = styled(LocalHeaderHeading)({
   columnGap: SPACING.SCALE_2,
   marginTop: SPACING.SCALE_1,
 })
-
-const StyledMain = styled(Main)`
-  padding-top: ${SPACING.SCALE_1};
-  div {
-    font-size: ${FONT_SIZE.SIZE_20};
-  }
-`
 
 const path = location.pathname
 const getCurrentTab = (currentPath) =>
@@ -114,34 +107,17 @@ const ContactLocalHeader = ({
             </GridCol>
           )}
         </GridRow>
-        {contact.archived && (
-          <StyledMain>
-            <StatusMessage data-test="contact-archived-message">
-              {contact.archived_on
-                ? `This contact was archived on ${format(
-                    contact.archived_on
-                  )} by ${contact.archived_by.first_name} ${
-                    contact.archived_by.last_name
-                  }.`
-                : `This contact was automatically archived on ${format(
-                    contact.archived_on
-                  )}.`}
-              <br />
-              <strong>Reason:</strong> {contact.archived_reason}
-              <br />
-              <br />
-              <Link
-                data-test="unarchive-link"
-                onClick={() => {
-                  writeFlashMessage('Contact record updated')
-                }}
-                href={urls.contacts.unarchive(contact.id)}
-              >
-                Unarchive
-              </Link>
-            </StatusMessage>
-          </StyledMain>
-        )}
+        <ArchivePanel
+          isArchived={contact.archived}
+          archivedBy={contact.archived_by}
+          archivedOn={contact.archived_on}
+          archiveReason={contact.archived_reason}
+          unarchiveUrl={urls.contacts.unarchive(contact.id)}
+          onClick={() => {
+            writeFlashMessage('Contact record updated')
+          }}
+          type="contact"
+        />
       </LocalHeader>
     </>
   )
