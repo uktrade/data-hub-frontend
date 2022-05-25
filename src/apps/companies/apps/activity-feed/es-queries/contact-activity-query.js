@@ -1,4 +1,11 @@
-const contactActivityQuery = (from, size, email, contactId, objectTypes) => {
+const contactActivityQuery = (
+  from,
+  size,
+  email,
+  contactId,
+  objectTypes,
+  sortOrder
+) => {
   return {
     from,
     size,
@@ -57,7 +64,7 @@ const contactActivityQuery = (from, size, email, contactId, objectTypes) => {
     sort: [
       {
         published: {
-          order: 'desc',
+          order: sortOrder,
           unmapped_type: 'long',
         },
       },

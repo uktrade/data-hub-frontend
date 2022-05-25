@@ -4,6 +4,7 @@ const {
   DATA_HUB_ACTIVITY,
   EXTERNAL_ACTIVITY,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
+  CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS,
 } = require('./constants')
 
 const { getGlobalUltimateHierarchy } = require('../../repos')
@@ -151,6 +152,7 @@ async function getMaxemailCampaigns(req, next, contacts) {
 async function fetchActivitiesForContact(req, res, next) {
   try {
     const { contact } = res.locals
+    const { selectedSortBy } = req.query
 
     const from = (req.query.page - 1) * ACTIVITIES_PER_PAGE
 
@@ -161,7 +163,8 @@ async function fetchActivitiesForContact(req, res, next) {
         ACTIVITIES_PER_PAGE,
         contact.email,
         contact.id,
-        DATA_HUB_AND_EXTERNAL_ACTIVITY
+        DATA_HUB_AND_EXTERNAL_ACTIVITY,
+        CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
       )
     ).catch((error) => {
       next(error)
