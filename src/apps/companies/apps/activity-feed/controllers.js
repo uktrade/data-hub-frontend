@@ -203,7 +203,7 @@ const getAventriEvents = async (activities, req) => {
 
   const aventriEvents = aventriEventsResults.hits.hits.map((hit) => hit._source)
 
-  const activitiesWithEventData = activities.map((activity) => {
+  return activities.map((activity) => {
     if (isAventriAttendee(activity)) {
       const matchingEvent = aventriEvents.find(
         (event) => event.id === `${activity.object.attributedTo.id}:Create`
@@ -216,12 +216,10 @@ const getAventriEvents = async (activities, req) => {
     }
     return activity
   })
-  return activitiesWithEventData
 }
 
-function isAventriAttendee() {
-  return (attendee) => attendee['dit:application'] === 'aventri'
-}
+const isAventriAttendee = (attendee) =>
+  attendee['dit:application'] === 'aventri'
 
 async function fetchActivityFeedHandler(req, res, next) {
   try {
