@@ -12,6 +12,7 @@ const reactRoutes = [
   '/contacts',
   '/events',
   '/interactions',
+  '/reminders',
   '/omis',
   '/access-denied',
 ]

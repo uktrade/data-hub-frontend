@@ -5,6 +5,7 @@ import EventDetails from './modules/Events/EventDetails'
 import EventForm from './modules/Events/EventForm'
 import InteractionsCollectionList from './modules/Interactions/CollectionList'
 import OmisCollectionList from './modules/Omis/CollectionList'
+import Reminders from './modules/Reminders'
 
 const routes = {
   companies: [
@@ -55,6 +56,13 @@ const routes = {
       path: '/omis',
       module: 'datahub:orders',
       component: OmisCollectionList,
+    },
+  ],
+  reminders: [
+    {
+      path: '/reminders',
+      module: 'datahub:companies',
+      component: Reminders,
     },
   ],
 }

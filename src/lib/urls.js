@@ -481,4 +481,7 @@ module.exports = {
     unarchive: url('/my-pipeline', '/:pipelineItemId/unarchive'),
     delete: url('/my-pipeline', '/:pipelineItemId/delete'),
   },
+  reminders: {
+    index: url('/reminders'),
+  },
 }
