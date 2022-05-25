@@ -46,9 +46,19 @@ exports.activityFeed = function (req, res) {
   if (isContactActivityQuery) {
     const from = get(req.body, 'from')
 
-    return from == 10
-      ? res.json(dataHubActivities)
-      : res.json(dataHubAndExternalActivities)
+    //if page 2
+    if (from == 10) {
+      return res.json(dataHubActivities)
+    }
+
+    //if the sort by is newest
+    if (req.body.sort[0].published.order === 'desc') {
+      return res.json(dataHubAndExternalActivities)
+    }
+    //if the story by is oldest
+    if (req.body.sort[0].published.order === 'asc') {
+      return res.json(dataHubActivities)
+    }
   }
 
   var isAventriEventQuery =
