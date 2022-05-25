@@ -18,8 +18,7 @@ import urls from '../../../lib/urls'
 import ConnectedDropdownMenu from '../DropdownMenu/ConnectedDropdownMenu'
 import { DropdownButton } from '../DropdownMenu'
 import NewWindowLink from '../NewWindowLink'
-
-const { format } = require('../../utils/date')
+import ArchivePanel from '../ArchivePanel'
 
 const StyledAddress = styled('p')`
   margin-top: ${SPACING.SCALE_2};
@@ -201,26 +200,14 @@ const CompanyLocalHeader = ({
         </p>
       </LocalHeader>
 
-      {company.archived && (
-        <StyledMain>
-          <StatusMessage data-test="archivedMessage">
-            {company.archived_by
-              ? `This company was archived on ${format(
-                  company.archived_on
-                )} by ${company.archived_by.first_name} ${
-                  company.archived_by.last_name
-                }.`
-              : `This company was automatically archived on ${format(
-                  company.archived_on
-                )}.`}
-            <br />
-            <strong>Reason:</strong> {company.archived_reason}
-            <br />
-            <br />
-            <a href={urls.companies.unarchive(company.id)}>Unarchive</a>
-          </StatusMessage>
-        </StyledMain>
-      )}
+      <ArchivePanel
+        isArchived={company.archived}
+        archivedBy={company.archived_by}
+        archivedOn={company.archived_on}
+        archiveReason={company.archived_reason}
+        unarchiveUrl={urls.companies.unarchive(company.id)}
+        type="company"
+      />
 
       {company.pending_dnb_investigation && (
         <StyledMain data-test="investigationMessage">
