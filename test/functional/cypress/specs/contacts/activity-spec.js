@@ -15,7 +15,9 @@ describe('Contact activity', () => {
       before(() => {
         cy.intercept(
           'GET',
-          `${urls.contacts.activity.data(contactId)}?page=1`,
+          `${urls.contacts.activity.data(
+            contactId
+          )}?page=1&selectedSortBy=newest`,
           {
             body: { activities: [] },
           }
@@ -29,10 +31,6 @@ describe('Contact activity', () => {
 
       it('should display 0 activities', () => {
         cy.get('#contact-activity').contains('0 activities')
-      })
-
-      it('should not display the page counter', () => {
-        cy.get('[data-test=pagination-summary]').should('not.exist')
       })
     })
 
@@ -60,6 +58,48 @@ describe('Contact activity', () => {
           'data-total-pages',
           124
         )
+      })
+
+      context('when using the sort by selector', () => {
+        beforeEach(() => {
+          cy.intercept(
+            'GET',
+            `${urls.contacts.activity.data(
+              contactId
+            )}?page=1&selectedSortBy=newest`
+          ).as('newestRequest')
+          cy.intercept(
+            'GET',
+            `${urls.contacts.activity.data(
+              contactId
+            )}?page=1&selectedSortBy=oldest`
+          ).as('oldestRequest')
+          cy.visit(urls.contacts.contactActivities(contactId))
+        })
+
+        after(() => {
+          cy.visit(urls.contacts.contactActivities(contactId))
+        })
+
+        it('should default to sort by newest', () => {
+          cy.wait('@newestRequest').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+          cy.get('[data-test=aventri-activity]').contains(
+            'EITA Test Event 2022'
+          )
+        })
+
+        it('should sort by oldest', () => {
+          const element = '[data-test="sortby"] select'
+          cy.get(element).select('Oldest')
+          cy.wait('@oldestRequest').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+          cy.get('[data-test="interaction-activity"]').contains(
+            'Meeting between Brendan Smith and Tyson Morar'
+          )
+        })
       })
 
       context('when viewing a Contact with Data Hub interaction', () => {
@@ -138,47 +178,44 @@ describe('Contact activity', () => {
         })
       })
 
-      context(
-        'when viewing a Contact with confirmed virtual event attendance from Aventri activity',
-        () => {
+      context('When viewing a Contact with Aventri activities', () => {
+        it('should display event date from Aventri', () => {
+          cy.get('[data-test="aventri-activity"]').contains(
+            'Event date: 02 Mar 2021 to 04 May 2022'
+          )
+        })
+        it('should display the Events label', () => {
+          cy.get('[data-test="aventri-activity"]').within(() => {
+            cy.get('[data-test="activity-service-label"]').contains('event', {
+              matchCase: false,
+            })
+          })
+        })
+        it('should display the Kind label', () => {
+          cy.get('[data-test="aventri-activity"]').within(() => {
+            cy.get('[data-test="activity-kind-label"]').contains(
+              'aventri service delivery',
+              { matchCase: false }
+            )
+          })
+        })
+
+        context('when virtual event attendance is confirmed', () => {
           it('should display event name and with confirmed virtual event attendance', () => {
             cy.get('[data-test="aventri-activity"]').contains(
               'EITA Test Event 2022: Attended'
             )
           })
-          it('should display event date from Aventri', () => {
-            cy.get('[data-test="aventri-activity"]').contains(
-              'Event date: 02 Mar 2021 to 04 May 2022'
-            )
-          })
-          it('should display the Events label', () => {
-            cy.get('[data-test="aventri-activity"]').within(() => {
-              cy.get('[data-test="activity-service-label"]').contains('event', {
-                matchCase: false,
-              })
-            })
-          })
-          it('should display the Kind label', () => {
-            cy.get('[data-test="aventri-activity"]').within(() => {
-              cy.get('[data-test="activity-kind-label"]').contains(
-                'aventri service delivery',
-                { matchCase: false }
-              )
-            })
-          })
-        }
-      )
+        })
 
-      context(
-        'when viewing a Contact with unconfirmed virtual event attendance from Aventri activity',
-        () => {
+        context('when virtual event attendance is unconfirmed', () => {
           it('should display event name with unconfirmed virtual event attendance', () => {
             cy.get('[data-test="aventri-activity"]')
               .contains('EITA Test Event 2 2022')
               .should('not.contain', ': Attended')
           })
-        }
-      )
+        })
+      })
 
       context('when there are more than 10 activities', () => {
         it('should be possible to page through', () => {
@@ -198,7 +235,9 @@ describe('Contact activity', () => {
         before(() => {
           cy.intercept(
             'GET',
-            `${urls.contacts.activity.data(contactId)}?page=1`,
+            `${urls.contacts.activity.data(
+              contactId
+            )}?page=1&selectedSortBy=newest`,
             {
               statusCode: 500,
             }
