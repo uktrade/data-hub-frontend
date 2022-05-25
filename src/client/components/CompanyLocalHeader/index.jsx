@@ -17,6 +17,7 @@ import { addressToString } from '../../../client/utils/addresses'
 import urls from '../../../lib/urls'
 import ConnectedDropdownMenu from '../DropdownMenu/ConnectedDropdownMenu'
 import { DropdownButton } from '../DropdownMenu'
+import NewWindowLink from '../NewWindowLink'
 
 const { format } = require('../../utils/date')
 
@@ -267,13 +268,14 @@ const CompanyLocalHeader = ({
               company and its key priorities. The Global Account Manager is
               responsible for adding and updating the account plan. For further
               information{' '}
-              <a
-                href="https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/the-account-management-strategy-team"
-                target="_blank"
+              <NewWindowLink
+                href={
+                  urls.external.digitalWorkspace.accountManagementStrategyTeam
+                }
+                aria-label="view the Account Management Framework"
               >
                 view the Account Management Framework
-              </a>{' '}
-              (opens in a new window or tab).
+              </NewWindowLink>
             </StyledDetailsMuted>
           </StatusMessage>
         </StyledMainMuted>

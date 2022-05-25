@@ -87,6 +87,8 @@ module.exports = {
         'https://people.trade.gov.uk/teams/department-for-international-trade',
       accountManagement:
         'https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/strategic-relationship-account-management/',
+      accountManagementStrategyTeam:
+        'https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/the-account-management-strategy-team',
     },
     helpCentre: {
       accessibilityStatement: () =>
