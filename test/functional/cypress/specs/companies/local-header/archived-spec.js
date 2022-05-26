@@ -1,625 +1,340 @@
 const selectors = require('../../../../../selectors')
-const { testBreadcrumbs } = require('../../../support/assertions')
 const fixtures = require('../../../fixtures')
 const urls = require('../../../../../../src/lib/urls')
+const {
+  assertCompanyName,
+  assertCompanyAddress,
+  assertBadgeText,
+  assertButtons,
+  assertBreadcrumbs,
+  assertExportCountryHistoryBreadcrumbs,
+  assertViewFullBusinessDetails,
+  assertOneListTierA,
+  assertCoreTeam,
+} = require('../../../support/company-local-header-assertions')
 
 const companyLocalHeader = selectors.companyLocalHeader()
 
 const address = '16 Getabergsvagen, Geta, 22340, Malta'
+const archiveMessage =
+  'This company was archived on 06 Jul 2018 by John Rogers.'
+const company = fixtures.company.archivedLtd
+
+const advisersUrl = urls.companies.advisers.index(company.id)
+const addRemoveFromListUrl = urls.companies.lists.addRemove(company.id)
+const businessDetailsUrl = urls.companies.businessDetails(company.id)
+const detailsUrl = urls.companies.detail(company.id)
+const unarchiveUrl = urls.companies.unarchive(company.id)
 
 describe('Local header for archived company', () => {
   context('when visting an archived company activity page', () => {
     before(() => {
-      cy.visit(urls.companies.activity.index(fixtures.company.archivedLtd.id))
+      cy.visit(urls.companies.activity.index(company.id))
     })
-    testBreadcrumbs({
-      Home: urls.dashboard(),
-      Companies: urls.companies.index(),
-      [fixtures.company.archivedLtd.name]: urls.companies.detail(
-        fixtures.company.archivedLtd.id
-      ),
-      'Activity Feed': null,
-    })
+
+    assertBreadcrumbs(company.name, detailsUrl, 'Activity Feed')
+
     it('should display the company name', () => {
-      cy.get(companyLocalHeader.companyName).contains(
-        fixtures.company.archivedLtd.name
-      )
+      assertCompanyName(company.name)
     })
 
     it('should display the company address', () => {
-      cy.get(companyLocalHeader.address).contains(address)
+      assertCompanyAddress(address)
     })
 
     it('should display the correct buttons', () => {
-      cy.contains('View options').click()
-      cy.contains('Add to or remove from lists').should(
-        'have.attr',
-        'href',
-        `${urls.companies.lists.addRemove(
-          fixtures.company.archivedLtd.id
-        )}?returnUrl=${urls.companies.detail(fixtures.company.archivedLtd.id)}`
-      )
+      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}`)
     })
 
-    it('should display an "Ultimate HQ" badge', () => {
-      cy.get(companyLocalHeader.badge).contains('Global HQ')
+    it('should display a "Global HQ" badge', () => {
+      assertBadgeText('Global HQ')
     })
 
     it('should display the correct description', () => {
-      cy.get(companyLocalHeader.description.paragraph(1)).contains(
-        'This is an account managed company (One List Tier A - Strategic Account)'
-      )
-
-      cy.get(companyLocalHeader.description.paragraph(2))
-        .contains('Global Account Manager: Travis Greene View core team')
-        .contains('View core team')
-        .should(
-          'have.attr',
-          'href',
-          urls.companies.advisers.index(fixtures.company.archivedLtd.id)
-        )
+      assertOneListTierA(1)
+      assertCoreTeam(2, advisersUrl)
     })
 
     it('should display the link to the full business details', () => {
-      cy.contains('View full business details').should(
-        'have.attr',
-        'href',
-        urls.companies.businessDetails(fixtures.company.archivedLtd.id)
-      )
+      assertViewFullBusinessDetails(businessDetailsUrl)
     })
 
     it('should display the archived message', () => {
-      cy.get(companyLocalHeader.archivedMessage)
-        .contains('This company was archived on 06 Jul 2018 by John Rogers.')
-        .contains('Reason: Company is dissolved')
-        .contains('Unarchive')
-        .should(
-          'have.attr',
-          'href',
-          urls.companies.unarchive(fixtures.company.archivedLtd.id)
-        )
+      assertArchiveMessage()
     })
   })
   context('when visting an archived company contacts page', () => {
     before(() => {
-      cy.visit(urls.companies.contacts(fixtures.company.archivedLtd.id))
+      cy.visit(urls.companies.contacts(company.id))
     })
 
-    testBreadcrumbs({
-      Home: urls.dashboard(),
-      Companies: urls.companies.index(),
-      [fixtures.company.archivedLtd.name]: urls.companies.detail(
-        fixtures.company.archivedLtd.id
-      ),
-      Contacts: null,
-    })
+    assertBreadcrumbs(company.name, detailsUrl, 'Contacts')
 
     it('should display the company name', () => {
-      cy.get(companyLocalHeader.companyName).contains(
-        fixtures.company.archivedLtd.name
-      )
+      assertCompanyName(company.name)
     })
 
     it('should display the company address', () => {
-      cy.get(companyLocalHeader.address).contains(address)
+      assertCompanyAddress(address)
     })
 
     it('should display the correct buttons', () => {
-      cy.contains('View options').click()
-      cy.contains('Add to or remove from lists').should(
-        'have.attr',
-        'href',
-        `${urls.companies.lists.addRemove(
-          fixtures.company.archivedLtd.id
-        )}?returnUrl=${urls.companies.detail(
-          fixtures.company.archivedLtd.id
-        )}/contacts`
-      )
+      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/contacts`)
     })
 
-    it('should display an "Ultimate HQ" badge', () => {
-      cy.get(companyLocalHeader.badge).contains('Global HQ')
+    it('should display a "Global HQ" badge', () => {
+      assertBadgeText('Global HQ')
     })
 
     it('should display the correct description', () => {
-      cy.get(companyLocalHeader.description.paragraph(1)).contains(
-        'This is an account managed company (One List Tier A - Strategic Account)'
-      )
-
-      cy.get(companyLocalHeader.description.paragraph(2))
-        .contains('Global Account Manager: Travis Greene View core team')
-        .contains('View core team')
-        .should(
-          'have.attr',
-          'href',
-          urls.companies.advisers.index(fixtures.company.archivedLtd.id)
-        )
+      assertOneListTierA(1)
+      assertCoreTeam(2, advisersUrl)
     })
 
     it('should display the link to the full business details', () => {
-      cy.contains('View full business details').should(
-        'have.attr',
-        'href',
-        urls.companies.businessDetails(fixtures.company.archivedLtd.id)
-      )
+      assertViewFullBusinessDetails(businessDetailsUrl)
     })
 
     it('should display the archived message', () => {
-      cy.get(companyLocalHeader.archivedMessage)
-        .contains('This company was archived on 06 Jul 2018 by John Rogers.')
-        .contains('Reason: Company is dissolved')
-        .contains('Unarchive')
-        .should(
-          'have.attr',
-          'href',
-          urls.companies.unarchive(fixtures.company.archivedLtd.id)
-        )
+      assertArchiveMessage()
     })
   })
   context('when visting an archived company core team page', () => {
     before(() => {
-      cy.visit(urls.companies.advisers.index(fixtures.company.archivedLtd.id))
+      cy.visit(advisersUrl)
     })
-    testBreadcrumbs({
-      Home: urls.dashboard(),
-      Companies: urls.companies.index(),
-      [fixtures.company.archivedLtd.name]: urls.companies.detail(
-        fixtures.company.archivedLtd.id
-      ),
-      'Core Team': null,
-    })
+    assertBreadcrumbs(company.name, detailsUrl, 'Core Team')
     it('should display the company name', () => {
-      cy.get(companyLocalHeader.companyName).contains(
-        fixtures.company.archivedLtd.name
-      )
+      assertCompanyName(company.name)
     })
 
     it('should display the company address', () => {
-      cy.get(companyLocalHeader.address).contains(address)
+      assertCompanyAddress(address)
     })
 
     it('should display the correct buttons', () => {
-      cy.contains('View options').click()
-      cy.contains('Add to or remove from lists').should(
-        'have.attr',
-        'href',
-        `${urls.companies.lists.addRemove(
-          fixtures.company.archivedLtd.id
-        )}?returnUrl=${urls.companies.detail(
-          fixtures.company.archivedLtd.id
-        )}/advisers`
-      )
+      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/advisers`)
     })
 
-    it('should display an "Ultimate HQ" badge', () => {
-      cy.get(companyLocalHeader.badge).contains('Global HQ')
+    it('should display a "Global HQ" badge', () => {
+      assertBadgeText('Global HQ')
     })
 
     it('should display the correct description', () => {
-      cy.get(companyLocalHeader.description.paragraph(1)).contains(
-        'This is an account managed company (One List Tier A - Strategic Account)'
-      )
-
-      cy.get(companyLocalHeader.description.paragraph(2))
-        .contains('Global Account Manager: Travis Greene View core team')
-        .contains('View core team')
-        .should(
-          'have.attr',
-          'href',
-          urls.companies.advisers.index(fixtures.company.archivedLtd.id)
-        )
+      assertOneListTierA(1)
+      assertCoreTeam(2, advisersUrl)
     })
 
     it('should display the link to the full business details', () => {
-      cy.contains('View full business details').should(
-        'have.attr',
-        'href',
-        urls.companies.businessDetails(fixtures.company.archivedLtd.id)
-      )
+      assertViewFullBusinessDetails(businessDetailsUrl)
     })
 
     it('should display the archived message', () => {
-      cy.get(companyLocalHeader.archivedMessage)
-        .contains('This company was archived on 06 Jul 2018 by John Rogers.')
-        .contains('Reason: Company is dissolved')
-        .contains('Unarchive')
-        .should(
-          'have.attr',
-          'href',
-          urls.companies.unarchive(fixtures.company.archivedLtd.id)
-        )
+      assertArchiveMessage()
     })
   })
   context('when visting an archived company investment projects page', () => {
     before(() => {
-      cy.visit(
-        urls.companies.investments.companyInvestment(
-          fixtures.company.archivedLtd.id
-        )
-      )
+      cy.visit(urls.companies.investments.companyInvestment(company.id))
     })
 
-    testBreadcrumbs({
-      Home: urls.dashboard(),
-      Companies: urls.companies.index(),
-      [fixtures.company.archivedLtd.name]: urls.companies.detail(
-        fixtures.company.archivedLtd.id
-      ),
-      Investment: null,
-    })
+    assertBreadcrumbs(company.name, detailsUrl, 'Investment')
 
     it('should display the company name', () => {
-      cy.get(companyLocalHeader.companyName).contains(
-        fixtures.company.archivedLtd.name
-      )
+      assertCompanyName(company.name)
     })
 
     it('should display the company address', () => {
-      cy.get(companyLocalHeader.address).contains(address)
+      assertCompanyAddress(address)
     })
 
     it('should display the correct buttons', () => {
-      cy.contains('View options').click()
-      cy.contains('Add to or remove from lists').should(
-        'have.attr',
-        'href',
-        `${urls.companies.lists.addRemove(
-          fixtures.company.archivedLtd.id
-        )}?returnUrl=${urls.companies.detail(
-          fixtures.company.archivedLtd.id
-        )}/investments/projects`
+      assertButtons(
+        `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/investments/projects`
       )
     })
 
-    it('should display an "Ultimate HQ" badge', () => {
-      cy.get(companyLocalHeader.badge).contains('Global HQ')
+    it('should display a "Global HQ" badge', () => {
+      assertBadgeText('Global HQ')
     })
 
     it('should display the correct description', () => {
-      cy.get(companyLocalHeader.description.paragraph(1)).contains(
-        'This is an account managed company (One List Tier A - Strategic Account)'
-      )
-      cy.get(companyLocalHeader.description.paragraph(2))
-        .contains('Global Account Manager: Travis Greene View core team')
-        .contains('View core team')
-        .should(
-          'have.attr',
-          'href',
-          urls.companies.advisers.index(fixtures.company.archivedLtd.id)
-        )
+      assertOneListTierA(1)
+      assertCoreTeam(2, advisersUrl)
     })
 
     it('should display the link to the full business details', () => {
-      cy.contains('View full business details').should(
-        'have.attr',
-        'href',
-        urls.companies.businessDetails(fixtures.company.archivedLtd.id)
-      )
+      assertViewFullBusinessDetails(businessDetailsUrl)
     })
 
     it('should display the archived message', () => {
-      cy.get(companyLocalHeader.archivedMessage)
-        .contains('This company was archived on 06 Jul 2018 by John Rogers.')
-        .contains('Reason: Company is dissolved')
-        .contains('Unarchive')
-        .should(
-          'have.attr',
-          'href',
-          urls.companies.unarchive(fixtures.company.archivedLtd.id)
-        )
+      assertArchiveMessage()
     })
   })
   context(
     'when visting an archived company investment large capital page',
     () => {
       before(() => {
-        cy.visit(
-          urls.companies.investments.largeCapitalProfile(
-            fixtures.company.archivedLtd.id
-          )
-        )
+        cy.visit(urls.companies.investments.largeCapitalProfile(company.id))
       })
 
-      testBreadcrumbs({
-        Home: urls.dashboard(),
-        Companies: urls.companies.index(),
-        [fixtures.company.archivedLtd.name]: urls.companies.detail(
-          fixtures.company.archivedLtd.id
-        ),
-        Investment: null,
-      })
+      assertBreadcrumbs(company.name, detailsUrl, 'Investment')
 
       it('should display the company name', () => {
-        cy.get(companyLocalHeader.companyName).contains(
-          fixtures.company.archivedLtd.name
-        )
+        assertCompanyName(company.name)
       })
 
       it('should display the company address', () => {
-        cy.get(companyLocalHeader.address).contains(address)
+        assertCompanyAddress(address)
       })
 
       it('should display the correct buttons', () => {
-        cy.contains('View options').click()
-        cy.contains('Add to or remove from lists').should(
-          'have.attr',
-          'href',
+        assertButtons(
           `${urls.companies.lists.addRemove(
-            fixtures.company.archivedLtd.id
+            company.id
           )}?returnUrl=${urls.companies.detail(
-            fixtures.company.archivedLtd.id
+            company.id
           )}/investments/large-capital-profile`
         )
       })
 
-      it('should display an "Ultimate HQ" badge', () => {
-        cy.get(companyLocalHeader.badge).contains('Global HQ')
+      it('should display a "Global HQ" badge', () => {
+        assertBadgeText('Global HQ')
       })
       it('should display the correct description', () => {
-        cy.get(companyLocalHeader.description.paragraph(1)).contains(
-          'This is an account managed company (One List Tier A - Strategic Account)'
-        )
-
-        cy.get(companyLocalHeader.description.paragraph(2))
-          .contains('Global Account Manager: Travis Greene View core team')
-          .contains('View core team')
-          .should(
-            'have.attr',
-            'href',
-            urls.companies.advisers.index(fixtures.company.archivedLtd.id)
-          )
+        assertOneListTierA(1)
+        assertCoreTeam(2, advisersUrl)
       })
 
       it('should display the link to the full business details', () => {
-        cy.contains('View full business details').should(
-          'have.attr',
-          'href',
-          urls.companies.businessDetails(fixtures.company.archivedLtd.id)
-        )
+        assertViewFullBusinessDetails(businessDetailsUrl)
       })
 
       it('should display the archived message', () => {
-        cy.get(companyLocalHeader.archivedMessage)
-          .contains('This company was archived on 06 Jul 2018 by John Rogers.')
-          .contains('Reason: Company is dissolved')
-          .contains('Unarchive')
-          .should(
-            'have.attr',
-            'href',
-            urls.companies.unarchive(fixtures.company.archivedLtd.id)
-          )
+        assertArchiveMessage()
       })
     }
   )
   context('when visting an archived company export page', () => {
     before(() => {
-      cy.visit(urls.companies.exports.index(fixtures.company.archivedLtd.id))
+      cy.visit(urls.companies.exports.index(company.id))
     })
 
-    testBreadcrumbs({
-      Home: urls.dashboard(),
-      Companies: urls.companies.index(),
-      [fixtures.company.archivedLtd.name]: urls.companies.detail(
-        fixtures.company.archivedLtd.id
-      ),
-      Exports: null,
-    })
+    assertBreadcrumbs(company.name, detailsUrl, 'Exports')
 
     it('should display the company name', () => {
-      cy.get(companyLocalHeader.companyName).contains(
-        fixtures.company.archivedLtd.name
-      )
+      assertCompanyName(company.name)
     })
 
     it('should display the company address', () => {
-      cy.get(companyLocalHeader.address).contains(address)
+      assertCompanyAddress(address)
     })
 
     it('should display the correct buttons', () => {
-      cy.contains('View options').click()
-      cy.contains('Add to or remove from lists').should(
-        'have.attr',
-        'href',
-        `${urls.companies.lists.addRemove(
-          fixtures.company.archivedLtd.id
-        )}?returnUrl=${urls.companies.detail(
-          fixtures.company.archivedLtd.id
-        )}/exports`
-      )
+      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/exports`)
     })
 
-    it('should display an "Ultimate HQ" badge', () => {
-      cy.get(companyLocalHeader.badge).contains('Global HQ')
+    it('should display a "Global HQ" badge', () => {
+      assertBadgeText('Global HQ')
     })
 
     it('should display the correct description', () => {
-      cy.get(companyLocalHeader.description.paragraph(1)).contains(
-        'This is an account managed company (One List Tier A - Strategic Account)'
-      )
-
-      cy.get(companyLocalHeader.description.paragraph(2))
-        .contains('Global Account Manager: Travis Greene View core team')
-        .contains('View core team')
-        .should(
-          'have.attr',
-          'href',
-          urls.companies.advisers.index(fixtures.company.archivedLtd.id)
-        )
+      assertOneListTierA(1)
+      assertCoreTeam(2, advisersUrl)
     })
 
     it('should display the link to the full business details', () => {
-      cy.contains('View full business details').should(
-        'have.attr',
-        'href',
-        urls.companies.businessDetails(fixtures.company.archivedLtd.id)
-      )
+      assertViewFullBusinessDetails(businessDetailsUrl)
     })
 
     it('should display the archived message', () => {
-      cy.get(companyLocalHeader.archivedMessage)
-        .contains('This company was archived on 06 Jul 2018 by John Rogers.')
-        .contains('Reason: Company is dissolved')
-        .contains('Unarchive')
-        .should(
-          'have.attr',
-          'href',
-          urls.companies.unarchive(fixtures.company.archivedLtd.id)
-        )
+      assertArchiveMessage()
     })
   })
   context('when visting an archived company export history page', () => {
     before(() => {
-      cy.visit(
-        urls.companies.exports.history.index(fixtures.company.archivedLtd.id)
-      )
+      cy.visit(urls.companies.exports.history.index(company.id))
     })
 
-    testBreadcrumbs({
-      Home: urls.dashboard(),
-      Companies: urls.companies.index(),
-      [fixtures.company.archivedLtd.name]: urls.companies.detail(
-        fixtures.company.archivedLtd.id
-      ),
-      Exports: urls.companies.exports.index(fixtures.company.archivedLtd.id),
-      'Export countries history': null,
-    })
+    assertExportCountryHistoryBreadcrumbs(company, detailsUrl)
 
     it('should display the company name', () => {
-      cy.get(companyLocalHeader.companyName).contains(
-        fixtures.company.archivedLtd.name
-      )
+      assertCompanyName(company.name)
     })
 
     it('should display the company address', () => {
-      cy.get(companyLocalHeader.address).contains(address)
+      assertCompanyAddress(address)
     })
 
     it('should display the correct buttons', () => {
-      cy.contains('View options').click()
-      cy.contains('Add to or remove from lists').should(
-        'have.attr',
-        'href',
-        `${urls.companies.lists.addRemove(
-          fixtures.company.archivedLtd.id
-        )}?returnUrl=${urls.companies.detail(
-          fixtures.company.archivedLtd.id
-        )}/exports/history`
+      assertButtons(
+        `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/exports/history`
       )
     })
 
-    it('should display an "Ultimate HQ" badge', () => {
-      cy.get(companyLocalHeader.badge).contains('Global HQ')
+    it('should display a "Global HQ" badge', () => {
+      assertBadgeText('Global HQ')
     })
 
     it('should display the correct description', () => {
-      cy.get(companyLocalHeader.description.paragraph(1)).contains(
-        'This is an account managed company (One List Tier A - Strategic Account)'
-      )
-
-      cy.get(companyLocalHeader.description.paragraph(2))
-        .contains('Global Account Manager: Travis Greene View core team')
-        .contains('View core team')
-        .should(
-          'have.attr',
-          'href',
-          urls.companies.advisers.index(fixtures.company.archivedLtd.id)
-        )
+      assertOneListTierA(1)
+      assertCoreTeam(2, advisersUrl)
     })
 
     it('should display the link to the full business details', () => {
-      cy.contains('View full business details').should(
-        'have.attr',
-        'href',
-        urls.companies.businessDetails(fixtures.company.archivedLtd.id)
-      )
+      assertViewFullBusinessDetails(businessDetailsUrl)
     })
 
     it('should display the archived message', () => {
-      cy.get(companyLocalHeader.archivedMessage)
-        .contains('This company was archived on 06 Jul 2018 by John Rogers.')
-        .contains('Reason: Company is dissolved')
-        .contains('Unarchive')
-        .should(
-          'have.attr',
-          'href',
-          urls.companies.unarchive(fixtures.company.archivedLtd.id)
-        )
+      assertArchiveMessage()
     })
   })
   context('when visting an archived company orders page', () => {
     before(() => {
-      cy.visit(urls.companies.orders(fixtures.company.archivedLtd.id))
+      cy.visit(urls.companies.orders(company.id))
     })
 
-    testBreadcrumbs({
-      Home: urls.dashboard(),
-      Companies: urls.companies.index(),
-      [fixtures.company.archivedLtd.name]: urls.companies.detail(
-        fixtures.company.archivedLtd.id
-      ),
-      'Orders (OMIS)': null,
-    })
+    assertBreadcrumbs(company.name, detailsUrl, 'Orders (OMIS)')
 
     it('should display the company name', () => {
-      cy.get(companyLocalHeader.companyName).contains(
-        fixtures.company.archivedLtd.name
-      )
+      assertCompanyName(company.name)
     })
 
     it('should display the company address', () => {
-      cy.get(companyLocalHeader.address).contains(address)
+      assertCompanyAddress(address)
     })
 
     it('should display the correct buttons', () => {
-      cy.contains('View options').click()
-      cy.contains('Add to or remove from lists').should(
-        'have.attr',
-        'href',
-        `${urls.companies.lists.addRemove(
-          fixtures.company.archivedLtd.id
-        )}?returnUrl=${urls.companies.detail(
-          fixtures.company.archivedLtd.id
-        )}/orders`
-      )
+      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/orders`)
     })
 
-    it('should display an "Ultimate HQ" badge', () => {
-      cy.get(companyLocalHeader.badge).contains('Global HQ')
+    it('should display a "Global HQ" badge', () => {
+      assertBadgeText('Global HQ')
     })
 
     it('should display the correct description', () => {
-      cy.get(companyLocalHeader.description.paragraph(1)).contains(
-        'This is an account managed company (One List Tier A - Strategic Account)'
-      )
-
-      cy.get(companyLocalHeader.description.paragraph(2))
-        .contains('Global Account Manager: Travis Greene View core team')
-        .contains('View core team')
-        .should(
-          'have.attr',
-          'href',
-          urls.companies.advisers.index(fixtures.company.archivedLtd.id)
-        )
+      assertOneListTierA(1)
+      assertCoreTeam(2, advisersUrl)
     })
 
     it('should display the link to the full business details', () => {
-      cy.contains('View full business details').should(
-        'have.attr',
-        'href',
-        urls.companies.businessDetails(fixtures.company.archivedLtd.id)
-      )
+      assertViewFullBusinessDetails(businessDetailsUrl)
     })
 
     it('should display the archived message', () => {
-      cy.get(companyLocalHeader.archivedMessage)
-        .contains('This company was archived on 06 Jul 2018 by John Rogers.')
-        .contains('Reason: Company is dissolved')
-        .contains('Unarchive')
-        .should(
-          'have.attr',
-          'href',
-          urls.companies.unarchive(fixtures.company.archivedLtd.id)
-        )
+      assertArchiveMessage()
     })
   })
 })
+
+const assertArchiveMessage = () => {
+  cy.get(companyLocalHeader.archiveMessage)
+    .should('exist')
+    .contains(archiveMessage)
+  cy.get(companyLocalHeader.archiveReason)
+    .should('exist')
+    .contains('Reason: Company is dissolved')
+  cy.get(companyLocalHeader.unarchiveButton)
+    .contains('Unarchive')
+    .should('have.attr', 'href', unarchiveUrl)
+}
