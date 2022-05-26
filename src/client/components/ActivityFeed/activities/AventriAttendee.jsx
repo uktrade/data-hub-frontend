@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import CardUtils from './card/CardUtils'
 import { ACTIVITY_TYPE } from '../constants'
 import { formatStartAndEndDate } from '../../../utils/date'
+import { GREY_1 } from 'govuk-colours'
+import styled from 'styled-components'
 
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
@@ -18,6 +20,12 @@ const transformAventriAttendee = (activity) => ({
     activity.object['dit:aventri:virtual_event_attendance'] == 'Yes',
 })
 
+const StyledSpan = styled('span')`
+  & > span {
+    color: ${GREY_1};
+  }
+`
+
 export default function AventriAttendee({ activity }) {
   const { eventName, date, isVirtualAttendanceConfirmed } =
     transformAventriAttendee(activity)
@@ -28,9 +36,9 @@ export default function AventriAttendee({ activity }) {
       <ActivityCardSubject>
         {eventName}
         {isVirtualAttendanceConfirmed && (
-          <span>
+          <StyledSpan>
             : <span>{VIRTUAL_EVENT_ATTENDANCE_STATUS}</span>
-          </span>
+          </StyledSpan>
         )}
       </ActivityCardSubject>
       <ActivityCardMetadata
