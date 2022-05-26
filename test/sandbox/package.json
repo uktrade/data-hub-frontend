@@ -11,7 +11,8 @@
   },
   "engines": {
     "yarn": "YARN NO LONGER USED - use npm instead.",
-    "node": "16.14.0"
+    "node": "16.15.0",
+    "npm": "8.10.0"
   },
   "overrides": {
     "ansi-regex": "5.0.1",
