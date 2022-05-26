@@ -138,33 +138,47 @@ describe('Contact activity', () => {
         })
       })
 
-      context('when viewing a Contact with Aventri activity', () => {
-        it('should display event name and virtual event attendance from Aventri ', () => {
-          cy.get('[data-test="aventri-activity"]').contains(
-            'EITA Test Event 2022: Attended'
-          )
-        })
-        it('should display event date from Aventri', () => {
-          cy.get('[data-test="aventri-activity"]').contains(
-            'Event date: 02 Mar 2021 to 04 May 2022'
-          )
-        })
-        it('should display the Events label', () => {
-          cy.get('[data-test="aventri-activity"]').within(() => {
-            cy.get('[data-test="activity-service-label"]').contains('event', {
-              matchCase: false,
-            })
-          })
-        })
-        it('should display the Kind label', () => {
-          cy.get('[data-test="aventri-activity"]').within(() => {
-            cy.get('[data-test="activity-kind-label"]').contains(
-              'aventri service delivery',
-              { matchCase: false }
+      context(
+        'when viewing a Contact with confirmed virtual event attendance from Aventri activity',
+        () => {
+          it('should display event name and with confirmed virtual event attendance', () => {
+            cy.get('[data-test="aventri-activity"]').contains(
+              'EITA Test Event 2022: Attended'
             )
           })
-        })
-      })
+          it('should display event date from Aventri', () => {
+            cy.get('[data-test="aventri-activity"]').contains(
+              'Event date: 02 Mar 2021 to 04 May 2022'
+            )
+          })
+          it('should display the Events label', () => {
+            cy.get('[data-test="aventri-activity"]').within(() => {
+              cy.get('[data-test="activity-service-label"]').contains('event', {
+                matchCase: false,
+              })
+            })
+          })
+          it('should display the Kind label', () => {
+            cy.get('[data-test="aventri-activity"]').within(() => {
+              cy.get('[data-test="activity-kind-label"]').contains(
+                'aventri service delivery',
+                { matchCase: false }
+              )
+            })
+          })
+        }
+      )
+
+      context(
+        'when viewing a Contact with unconfirmed virtual event attendance from Aventri activity',
+        () => {
+          it('should display event name with unconfirmed virtual event attendance', () => {
+            cy.get('[data-test="aventri-activity"]')
+              .contains('EITA Test Event 2 2022')
+              .should('not.contain', ': Attended')
+          })
+        }
+      )
 
       context('when there are more than 10 activities', () => {
         it('should be possible to page through', () => {
