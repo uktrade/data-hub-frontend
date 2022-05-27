@@ -17,7 +17,7 @@ const transformAventriAttendee = (activity) => ({
   eventName: activity.eventName,
   date: formatStartAndEndDate(activity.startDate, activity.endDate),
   isVirtualAttendanceConfirmed:
-    activity.object['dit:aventri:virtual_event_attendance'] == 'Yes',
+    activity.object['dit:aventri:virtual_event_attendance'] === 'Yes',
 })
 
 const StyledSpan = styled('span')`
