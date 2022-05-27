@@ -182,7 +182,7 @@ jobs:
       - checkout
       - run:
           name: Install specific npm version
-          command: npm install npm@8.10.0
+          command: npm install -g npm@8.10.0
       - run: npm install storybook
       - run:
           name: Release storybook
