@@ -4,6 +4,7 @@ const {
   DATA_HUB_ACTIVITY,
   EXTERNAL_ACTIVITY,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
+  CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS,
 } = require('./constants')
 
 const { getGlobalUltimateHierarchy } = require('../../repos')
@@ -151,6 +152,7 @@ async function getMaxemailCampaigns(req, next, contacts) {
 async function fetchActivitiesForContact(req, res, next) {
   try {
     const { contact } = res.locals
+    const { selectedSortBy } = req.query
 
     const from = (req.query.page - 1) * ACTIVITIES_PER_PAGE
 
@@ -161,7 +163,8 @@ async function fetchActivitiesForContact(req, res, next) {
         ACTIVITIES_PER_PAGE,
         contact.email,
         contact.id,
-        DATA_HUB_AND_EXTERNAL_ACTIVITY
+        DATA_HUB_AND_EXTERNAL_ACTIVITY,
+        CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
       )
     ).catch((error) => {
       next(error)
@@ -200,7 +203,7 @@ const getAventriEvents = async (activities, req) => {
 
   const aventriEvents = aventriEventsResults.hits.hits.map((hit) => hit._source)
 
-  const activitiesWithEventData = activities.map((activity) => {
+  return activities.map((activity) => {
     if (isAventriAttendee(activity)) {
       const matchingEvent = aventriEvents.find(
         (event) => event.id === `${activity.object.attributedTo.id}:Create`
@@ -213,12 +216,10 @@ const getAventriEvents = async (activities, req) => {
     }
     return activity
   })
-  return activitiesWithEventData
 }
 
-function isAventriAttendee() {
-  return (attendee) => attendee['dit:application'] === 'aventri'
-}
+const isAventriAttendee = (attendee) =>
+  attendee['dit:application'] === 'aventri'
 
 async function fetchActivityFeedHandler(req, res, next) {
   try {

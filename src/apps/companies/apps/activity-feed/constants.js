@@ -26,6 +26,15 @@ const FILTER_ITEMS = {
     value: FILTER_KEYS.dataHubActivity,
   },
 }
+const CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS = {
+  newest: 'desc',
+  oldest: 'asc',
+}
+
+const CONTACT_ACTIVITY_SORT_SELECT_OPTIONS = [
+  { name: 'Newest', value: 'newest' },
+  { name: 'Oldest', value: 'oldest' },
+]
 
 const DATA_HUB_ACTIVITY = [
   'dit:Interaction', // Interaction
@@ -52,4 +61,6 @@ module.exports = {
   DATA_HUB_ACTIVITY,
   EXTERNAL_ACTIVITY,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
+  CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS,
+  CONTACT_ACTIVITY_SORT_SELECT_OPTIONS,
 }

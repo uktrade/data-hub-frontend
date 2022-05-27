@@ -2,23 +2,20 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
-import { GREY_1 } from 'govuk-colours'
 import { GridRow, GridCol } from 'govuk-react'
 import { typography } from '@govuk-react/lib'
 
 import { TASK_GET_CONTACT_ACTIVITIES, ID, state2props } from './state'
-import {
-  CONTACTS__ACTIVITIES_LOADED,
-  CONTACTS__ACTIVITIES_PAGINATION_CLICKED,
-} from '../../../actions'
+import { CONTACTS__ACTIVITIES_LOADED } from '../../../actions'
 import Task from '../../../components/Task'
 import Activity from '../../../components/ActivityFeed/Activity'
 import {
   CollectionHeader,
-  CollectionHeaderRow,
-  Pagination,
+  CollectionSort,
+  RoutedPagination,
 } from '../../../components'
 import { ACTIVITIES_PER_PAGE } from '../../../../apps/contacts/constants'
+import { CONTACT_ACTIVITY_SORT_SELECT_OPTIONS } from '../../../../apps/companies/apps/activity-feed/constants'
 
 const ContactActivityList = styled('ol')`
   list-style-type: none;
@@ -30,10 +27,6 @@ const ContactActivityList = styled('ol')`
   }
 `
 
-const StyledSpan = styled('span')`
-  color: ${GREY_1};
-`
-
 const StyledSectionHeader = styled('div')`
   ${typography.font({ size: 24, weight: 'bold' })};
   margin-bottom: ${SPACING.SCALE_4};
@@ -43,8 +36,8 @@ const ContactActivity = ({
   contactId,
   activities,
   total,
-  onPaginationClick,
   page = 1,
+  selectedSortBy,
   isContactActivitiesFeatureOn,
 }) => {
   const totalPages = Math.ceil(total / ACTIVITIES_PER_PAGE)
@@ -64,7 +57,7 @@ const ContactActivity = ({
           id={ID}
           progressMessage="Loading contact activities"
           startOnRender={{
-            payload: { contactId, page },
+            payload: { contactId, page, selectedSortBy },
             onSuccessDispatch: CONTACTS__ACTIVITIES_LOADED,
           }}
         >
@@ -76,13 +69,10 @@ const ContactActivity = ({
                   collectionName="activity"
                   data-test="collection-header"
                 />
-                <CollectionHeaderRow primary={false}>
-                  {total ? (
-                    <StyledSpan data-test="pagination-summary">
-                      Page {page} of {totalPages}
-                    </StyledSpan>
-                  ) : null}
-                </CollectionHeaderRow>
+                <CollectionSort
+                  sortOptions={CONTACT_ACTIVITY_SORT_SELECT_OPTIONS}
+                  totalPages={totalPages}
+                />
                 <ContactActivityList>
                   {activities.map((activity, index) => (
                     <li key={`activity-${index}`}>
@@ -95,10 +85,10 @@ const ContactActivity = ({
                     </li>
                   ))}
                 </ContactActivityList>
-                <Pagination
+                <RoutedPagination
+                  qsParamName="page"
                   totalPages={totalPages}
                   activePage={page}
-                  onPageClick={onPaginationClick}
                 />
               </>
             )
@@ -109,7 +99,4 @@ const ContactActivity = ({
   )
 }
 
-export default connect(state2props, (dispatch) => ({
-  onPaginationClick: (page) =>
-    dispatch({ type: CONTACTS__ACTIVITIES_PAGINATION_CLICKED, page }),
-}))(ContactActivity)
+export default connect(state2props)(ContactActivity)
