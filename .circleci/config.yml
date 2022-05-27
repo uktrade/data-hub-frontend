@@ -180,6 +180,9 @@ jobs:
       - image: node:16.15.0-buster
     steps:
       - checkout
+      - run:
+          name: Install specific npm version
+          command: npm install npm@8.10.0
       - run: npm install storybook
       - run:
           name: Release storybook
