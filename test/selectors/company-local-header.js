@@ -7,7 +7,9 @@ module.exports = () => {
     description: {
       paragraph: (number) => `[data-test="description"] p:nth-child(${number})`,
     },
-    archivedMessage: '[data-test="archivedMessage"]',
+    archiveMessage: '[data-test="archive-message"]',
+    archiveReason: '[data-test="archive-reason"]',
+    unarchiveButton: '[data-test="unarchive-link"]',
     investigationMessage: '[data-test="investigationMessage"]',
     accountPlanMessage: '[data-test="accountPlanMessage"]',
     flashMessageList: '[data-test="flash"]',

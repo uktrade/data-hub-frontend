@@ -18,6 +18,7 @@ import SectionDocuments from './SectionDocuments'
 import ArchiveForm from '../../../../../client/components/ArchiveForm'
 import { StatusMessage } from '../../../../../client/components/'
 import { COMPANY_DISSOLVED_OPTION } from '../../../constants'
+import ArchivePanel from '../../../../../client/components/ArchivePanel'
 
 import {
   ID as CHECK_PENDING_REQUEST_ID,
@@ -35,15 +36,6 @@ const StyledRoot = styled('div')`
     margin-bottom: ${SPACING_POINTS[8]}px;
   }
 `
-
-const getArchivedBy = ({ archived_by, archived_on }) => {
-  const dateStr = format(archived_on)
-  if (archived_by) {
-    const { first_name, last_name } = archived_by
-    return `This company was archived on ${dateStr} by ${first_name} ${last_name}`
-  }
-  return `This company was automatically archived on ${dateStr}.`
-}
 
 const CompanyBusinessDetails = ({
   businessDetails,
@@ -79,17 +71,14 @@ const CompanyBusinessDetails = ({
         <Link href={urls.companyEditHistory}>Edit history page</Link>.
       </div>
       {lastUpdated && <div>Last updated on: {format(lastUpdated)}</div>}
-      {isArchived && (
-        <StatusMessage>
-          <p>{getArchivedBy(businessDetails)}</p>
-          <p>
-            <strong>Reason:</strong> {businessDetails.archived_reason}
-          </p>
-          <p>
-            <Link href={urls.companyUnarchive}>Unarchive</Link>
-          </p>
-        </StatusMessage>
-      )}
+      <ArchivePanel
+        isArchived={isArchived}
+        archivedBy={businessDetails.archived_by}
+        archivedOn={businessDetails.archived_on}
+        archiveReason={businessDetails.archived_reason}
+        unarchiveUrl={urls.companyUnarchive}
+        type="company"
+      />
       <Task.Status
         name={DNB__CHECK_PENDING_REQUEST}
         id={CHECK_PENDING_REQUEST_ID}

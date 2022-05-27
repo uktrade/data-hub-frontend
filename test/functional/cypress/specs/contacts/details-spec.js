@@ -105,7 +105,7 @@ describe('View contact details', () => {
         .should('exist')
         .should('have.value', 'Other')
 
-      cy.get('[data-test=submit-button')
+      cy.get('[data-test=submit-button]')
         .should('exist')
         .should('have.text', 'Archive')
 
@@ -182,12 +182,12 @@ describe('View contact details', () => {
     })
 
     it('should render the archived contact message', () => {
-      cy.get('[data-test=contact-archived-message]')
+      cy.get('[data-test=archive-message]')
         .should('exist')
         .contains(
           'This contact was archived on 04 Jul 2019 by Bernard Harris-Patel.'
         )
-        .contains('Reason: Left the company')
+      cy.get('[data-test=archive-reason]').contains('Reason: Left the company')
 
       cy.get('[data-test=unarchive-link]')
         .should('exist')

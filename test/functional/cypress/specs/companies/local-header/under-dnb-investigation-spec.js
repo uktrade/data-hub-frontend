@@ -1,54 +1,44 @@
 const selectors = require('../../../../../selectors')
-const { testBreadcrumbs } = require('../../../support/assertions')
 const fixtures = require('../../../fixtures')
 const urls = require('../../../../../../src/lib/urls')
+const {
+  assertCompanyName,
+  assertCompanyAddress,
+  assertBreadcrumbs,
+  assertExportCountryHistoryBreadcrumbs,
+  assertButtons,
+  assertViewFullBusinessDetails,
+} = require('../../../support/company-local-header-assertions')
 
 const companyLocalHeader = selectors.companyLocalHeader()
 
 const address = 'Unit 10, Ockham Drive, GREENFORD, UB6 0F2, United Kingdom'
+const company = fixtures.company.investigationLimited
+
+const addRemoveFromListUrl = urls.companies.lists.addRemove(company.id)
+const businessDetailsUrl = urls.companies.businessDetails(company.id)
+const detailsUrl = urls.companies.detail(company.id)
 
 describe('Local header for company under dnb investigation', () => {
   context(
     'when visting a company under dnb investigation activity page',
     () => {
       before(() => {
-        cy.visit(
-          urls.companies.activity.index(
-            fixtures.company.investigationLimited.id
-          )
-        )
+        cy.visit(urls.companies.activity.index(company.id))
       })
 
-      testBreadcrumbs({
-        Home: urls.dashboard(),
-        Companies: urls.companies.index(),
-        [fixtures.company.investigationLimited.name]: urls.companies.detail(
-          fixtures.company.investigationLimited.id
-        ),
-        'Activity Feed': null,
-      })
+      assertBreadcrumbs(company.name, detailsUrl, 'Activity Feed')
 
       it('should display the company name', () => {
-        cy.get(companyLocalHeader.companyName).contains(
-          fixtures.company.investigationLimited.name
-        )
+        assertCompanyName(company.name)
       })
 
       it('should display the company address', () => {
-        cy.get(companyLocalHeader.address).contains(address)
+        assertCompanyAddress(address)
       })
 
       it('should display the correct buttons', () => {
-        cy.contains('View options').click()
-        cy.contains('Add to or remove from lists').should(
-          'have.attr',
-          'href',
-          `${urls.companies.lists.addRemove(
-            fixtures.company.investigationLimited.id
-          )}?returnUrl=${urls.companies.detail(
-            fixtures.company.investigationLimited.id
-          )}`
-        )
+        assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}`)
       })
 
       it('should display a badge', () => {
@@ -64,19 +54,11 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the link to the full business details', () => {
-        cy.contains('View full business details').should(
-          'have.attr',
-          'href',
-          urls.companies.businessDetails(
-            fixtures.company.investigationLimited.id
-          )
-        )
+        assertViewFullBusinessDetails(businessDetailsUrl)
       })
 
       it('should display the investigation message', () => {
-        cy.get(companyLocalHeader.investigationMessage).contains(
-          'This company record is based on information that has not yet been validated. This information is currently being checked by the Data Hub support team.'
-        )
+        assertInvestigationMessage()
       })
     }
   )
@@ -84,40 +66,22 @@ describe('Local header for company under dnb investigation', () => {
     'when visting a company under dnb investigation contacts page',
     () => {
       before(() => {
-        cy.visit(
-          urls.companies.contacts(fixtures.company.investigationLimited.id)
-        )
+        cy.visit(urls.companies.contacts(company.id))
       })
 
-      testBreadcrumbs({
-        Home: urls.dashboard(),
-        Companies: urls.companies.index(),
-        [fixtures.company.investigationLimited.name]: urls.companies.detail(
-          fixtures.company.investigationLimited.id
-        ),
-        Contacts: null,
-      })
+      assertBreadcrumbs(company.name, detailsUrl, 'Contacts')
 
       it('should display the company name', () => {
-        cy.get(companyLocalHeader.companyName).contains(
-          fixtures.company.investigationLimited.name
-        )
+        assertCompanyName(company.name)
       })
 
       it('should display the company address', () => {
-        cy.get(companyLocalHeader.address).contains(address)
+        assertCompanyAddress(address)
       })
 
       it('should display the correct buttons', () => {
-        cy.contains('View options').click()
-        cy.contains('Add to or remove from lists').should(
-          'have.attr',
-          'href',
-          `${urls.companies.lists.addRemove(
-            fixtures.company.investigationLimited.id
-          )}?returnUrl=${urls.companies.detail(
-            fixtures.company.investigationLimited.id
-          )}/contacts`
+        assertButtons(
+          `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/contacts`
         )
       })
 
@@ -134,19 +98,11 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the link to the full business details', () => {
-        cy.contains('View full business details').should(
-          'have.attr',
-          'href',
-          urls.companies.businessDetails(
-            fixtures.company.investigationLimited.id
-          )
-        )
+        assertViewFullBusinessDetails(businessDetailsUrl)
       })
 
       it('should display the investigation message', () => {
-        cy.get(companyLocalHeader.investigationMessage).contains(
-          'This company record is based on information that has not yet been validated. This information is currently being checked by the Data Hub support team.'
-        )
+        assertInvestigationMessage()
       })
     }
   )
@@ -154,42 +110,22 @@ describe('Local header for company under dnb investigation', () => {
     'when visting a company under dnb investigation lead adviser page',
     () => {
       before(() => {
-        cy.visit(
-          urls.companies.advisers.index(
-            fixtures.company.investigationLimited.id
-          )
-        )
+        cy.visit(urls.companies.advisers.index(company.id))
       })
 
-      testBreadcrumbs({
-        Home: urls.dashboard(),
-        Companies: urls.companies.index(),
-        [fixtures.company.investigationLimited.name]: urls.companies.detail(
-          fixtures.company.investigationLimited.id
-        ),
-        'Lead adviser': null,
-      })
+      assertBreadcrumbs(company.name, detailsUrl, 'Lead adviser')
 
       it('should display the company name', () => {
-        cy.get(companyLocalHeader.companyName).contains(
-          fixtures.company.investigationLimited.name
-        )
+        assertCompanyName(company.name)
       })
 
       it('should display the company address', () => {
-        cy.get(companyLocalHeader.address).contains(address)
+        assertCompanyAddress(address)
       })
 
       it('should display the correct buttons', () => {
-        cy.contains('View options').click()
-        cy.contains('Add to or remove from lists').should(
-          'have.attr',
-          'href',
-          `${urls.companies.lists.addRemove(
-            fixtures.company.investigationLimited.id
-          )}?returnUrl=${urls.companies.detail(
-            fixtures.company.investigationLimited.id
-          )}/advisers`
+        assertButtons(
+          `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/advisers`
         )
       })
 
@@ -206,19 +142,11 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the link to the full business details', () => {
-        cy.contains('View full business details').should(
-          'have.attr',
-          'href',
-          urls.companies.businessDetails(
-            fixtures.company.investigationLimited.id
-          )
-        )
+        assertViewFullBusinessDetails(businessDetailsUrl)
       })
 
       it('should display the investigation message', () => {
-        cy.get(companyLocalHeader.investigationMessage).contains(
-          'This company record is based on information that has not yet been validated. This information is currently being checked by the Data Hub support team.'
-        )
+        assertInvestigationMessage()
       })
     }
   )
@@ -226,42 +154,22 @@ describe('Local header for company under dnb investigation', () => {
     'when visting a company under dnb investigation investment projects page',
     () => {
       before(() => {
-        cy.visit(
-          urls.companies.investments.companyInvestment(
-            fixtures.company.investigationLimited.id
-          )
-        )
+        cy.visit(urls.companies.investments.companyInvestment(company.id))
       })
 
-      testBreadcrumbs({
-        Home: urls.dashboard(),
-        Companies: urls.companies.index(),
-        [fixtures.company.investigationLimited.name]: urls.companies.detail(
-          fixtures.company.investigationLimited.id
-        ),
-        Investment: null,
-      })
+      assertBreadcrumbs(company.name, detailsUrl, 'Investment')
 
       it('should display the company name', () => {
-        cy.get(companyLocalHeader.companyName).contains(
-          fixtures.company.investigationLimited.name
-        )
+        assertCompanyName(company.name)
       })
 
       it('should display the company address', () => {
-        cy.get(companyLocalHeader.address).contains(address)
+        assertCompanyAddress(address)
       })
 
       it('should display the correct buttons', () => {
-        cy.contains('View options').click()
-        cy.contains('Add to or remove from lists').should(
-          'have.attr',
-          'href',
-          `${urls.companies.lists.addRemove(
-            fixtures.company.investigationLimited.id
-          )}?returnUrl=${urls.companies.detail(
-            fixtures.company.investigationLimited.id
-          )}/investments/projects`
+        assertButtons(
+          `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/investments/projects`
         )
       })
 
@@ -274,19 +182,11 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the link to the full business details', () => {
-        cy.contains('View full business details').should(
-          'have.attr',
-          'href',
-          urls.companies.businessDetails(
-            fixtures.company.investigationLimited.id
-          )
-        )
+        assertViewFullBusinessDetails(businessDetailsUrl)
       })
 
       it('should display the investigation message', () => {
-        cy.get(companyLocalHeader.investigationMessage).contains(
-          'This company record is based on information that has not yet been validated. This information is currently being checked by the Data Hub support team.'
-        )
+        assertInvestigationMessage()
       })
     }
   )
@@ -294,42 +194,22 @@ describe('Local header for company under dnb investigation', () => {
     'when visting a company under dnb investigation investment large capital page',
     () => {
       before(() => {
-        cy.visit(
-          urls.companies.investments.largeCapitalProfile(
-            fixtures.company.investigationLimited.id
-          )
-        )
+        cy.visit(urls.companies.investments.largeCapitalProfile(company.id))
       })
 
-      testBreadcrumbs({
-        Home: urls.dashboard(),
-        Companies: urls.companies.index(),
-        [fixtures.company.investigationLimited.name]: urls.companies.detail(
-          fixtures.company.investigationLimited.id
-        ),
-        Investment: null,
-      })
+      assertBreadcrumbs(company.name, detailsUrl, 'Investment')
 
       it('should display the company name', () => {
-        cy.get(companyLocalHeader.companyName).contains(
-          fixtures.company.investigationLimited.name
-        )
+        assertCompanyName(company.name)
       })
 
       it('should display the company address', () => {
-        cy.get(companyLocalHeader.address).contains(address)
+        assertCompanyAddress(address)
       })
 
       it('should display the correct buttons', () => {
-        cy.contains('View options').click()
-        cy.contains('Add to or remove from lists').should(
-          'have.attr',
-          'href',
-          `${urls.companies.lists.addRemove(
-            fixtures.company.investigationLimited.id
-          )}?returnUrl=${urls.companies.detail(
-            fixtures.company.investigationLimited.id
-          )}/investments/large-capital-profile`
+        assertButtons(
+          `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/investments/large-capital-profile`
         )
       })
 
@@ -346,59 +226,31 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the link to the full business details', () => {
-        cy.contains('View full business details').should(
-          'have.attr',
-          'href',
-          urls.companies.businessDetails(
-            fixtures.company.investigationLimited.id
-          )
-        )
+        assertViewFullBusinessDetails(businessDetailsUrl)
       })
 
       it('should display the investigation message', () => {
-        cy.get(companyLocalHeader.investigationMessage).contains(
-          'This company record is based on information that has not yet been validated. This information is currently being checked by the Data Hub support team.'
-        )
+        assertInvestigationMessage()
       })
     }
   )
   context('when visting a company under dnb investigation export page', () => {
     before(() => {
-      cy.visit(
-        urls.companies.exports.index(fixtures.company.investigationLimited.id)
-      )
+      cy.visit(urls.companies.exports.index(company.id))
     })
 
-    testBreadcrumbs({
-      Home: urls.dashboard(),
-      Companies: urls.companies.index(),
-      [fixtures.company.investigationLimited.name]: urls.companies.detail(
-        fixtures.company.investigationLimited.id
-      ),
-      Exports: null,
-    })
+    assertBreadcrumbs(company.name, detailsUrl, 'Exports')
 
     it('should display the company name', () => {
-      cy.get(companyLocalHeader.companyName).contains(
-        fixtures.company.investigationLimited.name
-      )
+      assertCompanyName(company.name)
     })
 
     it('should display the company address', () => {
-      cy.get(companyLocalHeader.address).contains(address)
+      assertCompanyAddress(address)
     })
 
     it('should display the correct buttons', () => {
-      cy.contains('View options').click()
-      cy.contains('Add to or remove from lists').should(
-        'have.attr',
-        'href',
-        `${urls.companies.lists.addRemove(
-          fixtures.company.investigationLimited.id
-        )}?returnUrl=${urls.companies.detail(
-          fixtures.company.investigationLimited.id
-        )}/exports`
-      )
+      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/exports`)
     })
 
     it('should not display a badge', () => {
@@ -414,62 +266,33 @@ describe('Local header for company under dnb investigation', () => {
     })
 
     it('should display the link to the full business details', () => {
-      cy.contains('View full business details').should(
-        'have.attr',
-        'href',
-        urls.companies.businessDetails(fixtures.company.investigationLimited.id)
-      )
+      assertViewFullBusinessDetails(businessDetailsUrl)
     })
 
     it('should display the investigation message', () => {
-      cy.get(companyLocalHeader.investigationMessage).contains(
-        'This company record is based on information that has not yet been validated. This information is currently being checked by the Data Hub support team.'
-      )
+      assertInvestigationMessage()
     })
   })
   context(
     'when visting a company under dnb investigation export history page',
     () => {
       before(() => {
-        cy.visit(
-          urls.companies.exports.history.index(
-            fixtures.company.investigationLimited.id
-          )
-        )
+        cy.visit(urls.companies.exports.history.index(company.id))
       })
 
-      testBreadcrumbs({
-        Home: urls.dashboard(),
-        Companies: urls.companies.index(),
-        [fixtures.company.investigationLimited.name]: urls.companies.detail(
-          fixtures.company.investigationLimited.id
-        ),
-        Exports: urls.companies.exports.index(
-          fixtures.company.investigationLimited.id
-        ),
-        'Export countries history': null,
-      })
+      assertExportCountryHistoryBreadcrumbs(company, detailsUrl)
 
       it('should display the company name', () => {
-        cy.get(companyLocalHeader.companyName).contains(
-          fixtures.company.investigationLimited.name
-        )
+        assertCompanyName(company.name)
       })
 
       it('should display the company address', () => {
-        cy.get(companyLocalHeader.address).contains(address)
+        assertCompanyAddress(address)
       })
 
       it('should display the correct buttons', () => {
-        cy.contains('View options').click()
-        cy.contains('Add to or remove from lists').should(
-          'have.attr',
-          'href',
-          `${urls.companies.lists.addRemove(
-            fixtures.company.investigationLimited.id
-          )}?returnUrl=${urls.companies.detail(
-            fixtures.company.investigationLimited.id
-          )}/exports/history`
+        assertButtons(
+          `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/exports/history`
         )
       })
 
@@ -486,57 +309,31 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the link to the full business details', () => {
-        cy.contains('View full business details').should(
-          'have.attr',
-          'href',
-          urls.companies.businessDetails(
-            fixtures.company.investigationLimited.id
-          )
-        )
+        assertViewFullBusinessDetails(businessDetailsUrl)
       })
 
       it('should display the investigation message', () => {
-        cy.get(companyLocalHeader.investigationMessage).contains(
-          'This company record is based on information that has not yet been validated. This information is currently being checked by the Data Hub support team.'
-        )
+        assertInvestigationMessage()
       })
     }
   )
   context('when visting a company under dnb investigation orders page', () => {
     before(() => {
-      cy.visit(urls.companies.orders(fixtures.company.investigationLimited.id))
+      cy.visit(urls.companies.orders(company.id))
     })
 
-    testBreadcrumbs({
-      Home: urls.dashboard(),
-      Companies: urls.companies.index(),
-      [fixtures.company.investigationLimited.name]: urls.companies.detail(
-        fixtures.company.investigationLimited.id
-      ),
-      'Orders (OMIS)': null,
-    })
+    assertBreadcrumbs(company.name, detailsUrl, 'Orders (OMIS)')
 
     it('should display the company name', () => {
-      cy.get(companyLocalHeader.companyName).contains(
-        fixtures.company.investigationLimited.name
-      )
+      assertCompanyName(company.name)
     })
 
     it('should display the company address', () => {
-      cy.get(companyLocalHeader.address).contains(address)
+      assertCompanyAddress(address)
     })
 
     it('should display the correct buttons', () => {
-      cy.contains('View options').click()
-      cy.contains('Add to or remove from lists').should(
-        'have.attr',
-        'href',
-        `${urls.companies.lists.addRemove(
-          fixtures.company.investigationLimited.id
-        )}?returnUrl=${urls.companies.detail(
-          fixtures.company.investigationLimited.id
-        )}/orders`
-      )
+      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/orders`)
     })
 
     it('should not display "What does this mean?" details', () => {
@@ -548,17 +345,17 @@ describe('Local header for company under dnb investigation', () => {
     })
 
     it('should display the link to the full business details', () => {
-      cy.contains('View full business details').should(
-        'have.attr',
-        'href',
-        urls.companies.businessDetails(fixtures.company.investigationLimited.id)
-      )
+      assertViewFullBusinessDetails(businessDetailsUrl)
     })
 
     it('should display the investigation message', () => {
-      cy.get(companyLocalHeader.investigationMessage).contains(
-        'This company record is based on information that has not yet been validated. This information is currently being checked by the Data Hub support team.'
-      )
+      assertInvestigationMessage()
     })
   })
 })
+
+const assertInvestigationMessage = () => {
+  cy.get(companyLocalHeader.investigationMessage).contains(
+    'This company record is based on information that has not yet been validated. This information is currently being checked by the Data Hub support team.'
+  )
+}
