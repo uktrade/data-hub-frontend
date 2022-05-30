@@ -39,7 +39,7 @@ const ArchivePanel = ({
     return null
   }
   return (
-    <StyledMain>
+    <StyledMain data-test="archive-panel">
       <StatusMessage>
         <StyledMessage data-test="archive-message">
           {archivedBy
