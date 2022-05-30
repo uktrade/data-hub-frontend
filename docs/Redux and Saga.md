@@ -138,11 +138,16 @@ This is the last step. We just need to compose our reducer into the root reducer
 import { ID as PIPELINE_LIST_ID } from './components/Pipeline/state'
 import * as pipelineListTasks from './components/Pipeline/tasks'
 
-const store = createStore(
-    combineReducers({
-        ...
-        [PIPELINE_LIST_ID]: pipelineTasks.getPipelineList,
-        ...
-    })
-)
+const reducer = {
+    ...
+    [PIPELINE_LIST_ID]: pipelineTasks.getPipelineList,
+    ...
+}
+
+const store = configureStore({
+    ...
+    reducer
+    ...
+})
+
 ```
