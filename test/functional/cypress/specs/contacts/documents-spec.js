@@ -19,10 +19,6 @@ describe('Contact Documents', () => {
       })
     })
 
-    it('should not render the Add Interaction button', () => {
-      cy.get('[data-test=add-interaction-button]').should('not.exist')
-    })
-
     it('should display appropriate message when there is a link to a document', () => {
       cy.get(selectors.document.documentHeader).should('contain', 'Document')
       cy.get(selectors.document.documentContent).should(
@@ -50,31 +46,12 @@ describe('Contact Documents', () => {
       })
     })
 
-    it('should not render the Add Interaction button', () => {
-      cy.get('[data-test=add-interaction-button]').should('not.exist')
-    })
-
     it('should display appropriate message when there is not a link to a document', () => {
       cy.get(selectors.document.documentHeader).should('contain', 'Document')
       cy.get(selectors.document.documentContent).should(
         'contain',
         'There are no files or documents'
       )
-    })
-  })
-
-  context('when the activities feature flag is set', () => {
-    before(() => {
-      cy.setUserFeatures(['user-contact-activities'])
-      cy.visit('/contacts/default-contact-with-document/documents')
-    })
-
-    it('should display the Add Interaction button in the header', () => {
-      cy.get('[data-test=add-interaction-button]').should('exist')
-    })
-
-    after(() => {
-      cy.resetUser()
     })
   })
 })

@@ -25,10 +25,6 @@ describe('Contact activity', () => {
         cy.visit(urls.contacts.contactActivities(contactId))
       })
 
-      it('should display the Add Interaction button', () => {
-        cy.get('[data-test=add-interaction-button]').should('exist')
-      })
-
       it('should display 0 activities', () => {
         cy.get('#contact-activity').contains('0 activities')
       })
@@ -37,10 +33,6 @@ describe('Contact activity', () => {
     context('when viewing a contact with activities', () => {
       before(() => {
         cy.visit(urls.contacts.contactActivities(contactId))
-      })
-
-      it('should display the Add Interaction button', () => {
-        cy.get('[data-test=add-interaction-button]').should('exist')
       })
 
       it('should display the Activity Stream activities', () => {
@@ -266,10 +258,6 @@ describe('Contact activity', () => {
 
     it('should not render the ActivityStream activities', () => {
       cy.get('#contact-activity').should('not.exist')
-    })
-
-    it('should not render the Add Interaction button', () => {
-      cy.get('[data-test=add-interaction-button]').should('not.exist')
     })
 
     it('should only display Data Hub interactions', () => {
