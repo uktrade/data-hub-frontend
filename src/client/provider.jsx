@@ -143,11 +143,13 @@ const parseProps = (domNode) => {
 
 const appWrapper = document.getElementById('react-app')
 
-const { modulePermissions, currentAdviserId } = parseProps(appWrapper)
+const { modulePermissions, currentAdviserId, userFeatures } =
+  parseProps(appWrapper)
 
 const reducer = {
   currentAdviserId: () => currentAdviserId,
   modulePermissions: () => modulePermissions,
+  userFeatures: () => userFeatures,
   router: connectRouter(history),
   tasks,
   [FLASH_MESSAGE_ID]: flashMessageReducer,
