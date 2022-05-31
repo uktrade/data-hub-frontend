@@ -1,7 +1,7 @@
 ### Import
 
 ```js
-import FlashMessages from 'FlashMessages'
+import LocalHeader from 'LocalHeader'
 ```
 
 ### Output
