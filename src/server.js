@@ -47,6 +47,7 @@ const helpCentreApiProxy = require('./middleware/help-centre-api-proxy')
 const fixSlashes = require('./middleware/fix-slashes')
 
 const routers = require('./apps/routers')
+const { setUserFeatures } = require('./middleware/user-features')
 
 const app = express()
 
@@ -133,6 +134,7 @@ app.use(auth)
 app.use(user)
 app.use(permissions)
 app.use(features)
+app.use(setUserFeatures)
 app.use(userLocals)
 app.use(headers)
 app.use(store())

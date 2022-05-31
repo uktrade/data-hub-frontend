@@ -3,6 +3,13 @@ const { get, isEmpty } = require('lodash')
 const config = require('../config')
 const { authorisedRequest } = require('../lib/authorised-request')
 
+const setUserFeatures = async (req, res, next) => {
+  if (!res.locals.userFeatures) {
+    const user = await authorisedRequest(req, `${config.apiRoot}/whoami/`)
+    res.locals.userFeatures = get(user, 'active_features', [])
+  }
+  next()
+}
 /**
  * Allows users with the given feature flag to trial a new feature.
  *
@@ -20,12 +27,7 @@ const { authorisedRequest } = require('../lib/authorised-request')
 
 const HTTP_GET = 'GET'
 
-module.exports = (feature) => async (req, res, next) => {
-  if (!res.locals.userFeatures) {
-    const user = await authorisedRequest(req, `${config.apiRoot}/whoami/`)
-    res.locals.userFeatures = get(user, 'active_features', [])
-  }
-
+const checkUserFeatures = (feature) => async (req, res, next) => {
   res.locals.isFeatureTesting = res.locals.userFeatures.includes(feature)
 
   if (
@@ -41,4 +43,9 @@ module.exports = (feature) => async (req, res, next) => {
   } else {
     next()
   }
+}
+
+module.exports = {
+  checkUserFeatures,
+  setUserFeatures,
 }

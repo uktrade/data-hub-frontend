@@ -81,11 +81,15 @@ const {
 
 const interactionsRouter = require('../interactions/router.sub-app')
 const propositionsRouter = require('../propositions/router.sub-app')
-const userFeatures = require('../../middleware/user-features')
+const { checkUserFeatures } = require('../../middleware/user-features')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
-router.use('/:investmentId', userFeatures('notifications'), setLocalNavigation)
+router.use(
+  '/:investmentId',
+  checkUserFeatures('notifications'),
+  setLocalNavigation
+)
 router.param('investmentId', shared.getInvestmentDetails)
 router.param('companyId', shared.getCompanyDetails)
 

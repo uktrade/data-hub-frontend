@@ -10,7 +10,7 @@ const {
   getInteractionCollectionForEntity,
   getInteractionSortForm,
 } = require('./middleware/collection')
-const userFeatures = require('../../middleware/user-features')
+const { checkUserFeatures } = require('../../middleware/user-features')
 
 const detailsFormRouter = require('./apps/details-form/router')
 
@@ -21,7 +21,7 @@ router.get(
   getInteractionsRequestBody,
   getInteractionCollectionForEntity,
   getInteractionSortForm,
-  userFeatures('user-contact-activities'),
+  checkUserFeatures('user-contact-activities'),
   renderInteractionsForEntity
 )
 

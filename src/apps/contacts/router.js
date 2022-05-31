@@ -26,7 +26,7 @@ const interactionsRouter = require('../interactions/router.sub-app')
 const {
   fetchActivitiesForContact,
 } = require('../companies/apps/activity-feed/controllers')
-const userFeatures = require('../../middleware/user-features')
+const { checkUserFeatures } = require('../../middleware/user-features')
 
 router.get(urls.contacts.index(), renderContactsView)
 router.get(['/create', '/:contactId/edit'], createAndEdit)
@@ -43,7 +43,7 @@ router.use(
 router.get('/:contactId', redirectToFirstNavItem)
 router.get(
   '/:contactId/details',
-  userFeatures('user-contact-activities'),
+  checkUserFeatures('user-contact-activities'),
   getDetails
 )
 
@@ -51,13 +51,13 @@ router.get('/:id/unarchive', unarchiveContact)
 
 router.get(
   '/:contactId/audit',
-  userFeatures('user-contact-activities'),
+  checkUserFeatures('user-contact-activities'),
   getAudit
 )
 
 router.get(
   '/:contactId/documents',
-  userFeatures('user-contact-activities'),
+  checkUserFeatures('user-contact-activities'),
   renderDocuments
 )
 
