@@ -90,9 +90,9 @@ const interceptDispatch =
  *
  * // The IdAwareCounter expects an id aware reducer to be plugged in to the
  * // root reducer at "counterState"
- * const store = createStore(combineReducers({
+ * const store = configureStore( { reducer: {
  *   counterState: idAwareCounterReducer,
- * }))
+ * } })
  */
 export const connect = (componentState2props, dispatch2props, ...rest) =>
   curry((Component, name, idProp) => {
@@ -162,11 +162,11 @@ export const connect = (componentState2props, dispatch2props, ...rest) =>
  * console.log(Counter.reducerSpread)
  * // {counterState: <decorated counter reducer>}
  *
- * const store = createStore(combineReducers({
+ * const store = configureStore({ reducer: {
  *   // So we can use it like this and we can be sure that both the reducer
  *   // and the component are connected to the same part of the state
  *   ...Counter.reducerSpread,
- * }))
+ * }} ))
  *
  * const App = () =>
  *   <div>
