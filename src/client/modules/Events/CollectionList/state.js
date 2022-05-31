@@ -5,6 +5,8 @@ export const TASK_GET_EVENTS_LIST = 'TASK_GET_EVENTS_LIST'
 export const TASK_GET_EVENTS_METADATA = 'TASK_GET_EVENTS_METADATA'
 export const TASK_GET_EVENTS_ORGANISER_NAME = 'TASK_GET_EVENTS_ORGANISER_NAME'
 
+export const TASK_GET_EVENTS_ACTIVITIES = 'TASK_GET_EVENTS_ACTIVITIES'
+
 export const ID = 'eventsList'
 
 import { buildSelectedFilters } from './filters'
@@ -32,13 +34,12 @@ export const state2props = ({ router, ...state }) => {
     metadata,
     selectedOrganisers
   )
+  console.log('state')
+  console.log(state[ID])
 
   const isContactActivitiesFeatureOn =
-    state.userFeatures['user-contact-activities']
+    state.userFeatureFlags['user-contact-activities']
 
-  console.log(`isContactiActivitiesFeature on ${isContactActivitiesFeatureOn}`)
-
-  console.log(state.userFeatures)
 
   return {
     ...state[ID],

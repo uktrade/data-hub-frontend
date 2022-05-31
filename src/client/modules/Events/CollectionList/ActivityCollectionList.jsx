@@ -1,17 +1,21 @@
 import { GridCol } from 'govuk-react'
 import React from 'react'
-import CollectionList from '.'
+import { CollectionList } from '../../../components'
+import { EVENTS_ACTIVITIES__LOADED } from '../../../actions'
 import { listSkeletonPlaceholder } from '../../../components/SkeletonPlaceholder'
+import { ID, TASK_GET_EVENTS_ACTIVITIES } from './state'
 
-const ActivityCollectionList = () => {
+const ActivityCollectionList = ({ payload, results }) => {
+  console.log('activity comp')
+  console.log(results)
   const collectionListTask = {
-    name: TASK_GET_EVENTS_LIST,
+    name: TASK_GET_EVENTS_ACTIVITIES,
     id: ID,
     progressMessage: 'Loading events',
     renderProgress: listSkeletonPlaceholder(),
     startOnRender: {
       payload,
-      onSuccessDispatch: EVENTS__LOADED,
+      onSuccessDispatch: EVENTS_ACTIVITIES__LOADED,
     },
   }
 
@@ -20,10 +24,10 @@ const ActivityCollectionList = () => {
       <p>activity stream</p>
       <CollectionList
         taskProps={collectionListTask}
+        collectionName="events"
+        itemsPerPage={50}
+        onPageClick={() => {}}
         items={results}
-        count={count}
-        isComplete={isComplete}
-        metadataRenderer={metadataRenderer}
       />
     </GridCol>
   )

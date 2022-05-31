@@ -37,6 +37,7 @@ const EventsCollection = ({
   payload,
   optionMetadata,
   selectedFilters,
+  results,
   ...props
 }) => {
   const collectionListTask = {
@@ -79,7 +80,7 @@ const EventsCollection = ({
   return (
     <DefaultLayout heading="Events" pageTitle="Events">
       {isContactActivitiesFeatureOn ? (
-        <ActivityCollectionList />
+        <ActivityCollectionList payload={payload} results={results} />
       ) : (
         <FilteredCollectionList
           {...props}

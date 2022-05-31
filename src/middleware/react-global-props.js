@@ -17,7 +17,7 @@ module.exports = () => {
         ...res.locals.PERMITTED_APPLICATIONS.map(({ key }) => key),
       ]),
       currentAdviserId: req.session?.user?.id,
-      userFeatures: res.locals.features,
+      userFeatureFlags: res.locals.features,
     }
     next()
   }

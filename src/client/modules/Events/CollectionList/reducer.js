@@ -1,4 +1,5 @@
 import {
+  EVENTS_ACTIVITIES__LOADED,
   EVENTS__LOADED,
   EVENTS__METADATA_LOADED,
   EVENTS__SELECTED_ORGANISER,
@@ -13,6 +14,12 @@ const initialState = {
 
 export default (state = initialState, { type, result }) => {
   switch (type) {
+    case EVENTS_ACTIVITIES__LOADED:
+      return {
+        ...state,
+        ...result,
+        isComplete: true,
+      }
     case EVENTS__LOADED:
       return {
         ...state,

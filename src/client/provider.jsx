@@ -136,6 +136,7 @@ const parseProps = (domNode) => {
     return {
       modulePermissions: [],
       currentAdviserId: '',
+      userFeatureFlags: {},
     }
   }
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -143,13 +144,13 @@ const parseProps = (domNode) => {
 
 const appWrapper = document.getElementById('react-app')
 
-const { modulePermissions, currentAdviserId, userFeatures } =
+const { modulePermissions, currentAdviserId, userFeatureFlags } =
   parseProps(appWrapper)
 
 const reducer = {
   currentAdviserId: () => currentAdviserId,
   modulePermissions: () => modulePermissions,
-  userFeatures: () => userFeatures,
+  userFeatureFlags: () => userFeatureFlags,
   router: connectRouter(history),
   tasks,
   [FLASH_MESSAGE_ID]: flashMessageReducer,

@@ -124,6 +124,7 @@ import {
   TASK_GET_EVENTS_LIST,
   TASK_GET_EVENTS_ORGANISER_NAME,
   TASK_GET_EVENTS_METADATA,
+  TASK_GET_EVENTS_ACTIVITIES,
 } from '../client/modules/Events/CollectionList/state'
 
 import { TASK_GET_EVENT_DETAILS } from '../client/modules/Events/EventDetails/state'
@@ -139,6 +140,7 @@ import {
 
 import {
   getEvents,
+  getEventsFromActivityStream,
   getEventsMetadata,
 } from './modules/Events/CollectionList/tasks'
 
@@ -391,6 +393,7 @@ function App() {
         [TASK_GET_INTERACTIONS_ADVISER_NAME]: getAdviserNames,
         [TASK_GET_INTERACTIONS_METADATA]: getInteractionsMetadata,
         [TASK_GET_EVENTS_LIST]: getEvents,
+        [TASK_GET_EVENTS_ACTIVITIES]: getEventsFromActivityStream,
         [TASK_GET_EVENTS_METADATA]: getEventsMetadata,
         [TASK_GET_EVENTS_ORGANISER_NAME]: getAdviserNames,
         [TASK_GET_EVENT_DETAILS]: getEventDetails,
