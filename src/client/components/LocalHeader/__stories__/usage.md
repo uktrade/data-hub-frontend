@@ -2,38 +2,22 @@
 
 ### Description
 
-Flash messages for users in different colours depending on the message. 
-
-Note: If the props "flashMessages" are not passed down to the component then flash messages will be taken from session storage, if none exist in session storage then `null` is returned.
+The generic local header component.
 
 ### Usage
 
 ```jsx
-<FlashMessages
-  flashMessages={{
-    success: ['Success message'],
-    'success:with-body': [
-      {
-        heading: 'Success message heading',
-        body: 'Success message body',
-      },
-    ],
-    info: ['Info message'],
-    'info:with-body': [
-      {
-        heading: 'Info message heading',
-        body: 'Info message body',
-      },
-    ],
-    error: ['Error test message', 'Another error message'],
-    warning: ['Warning test message'],
-    muted: ['Muted test message'],
-  }}
-/>
+<LocalHeader breadcrumbs={breadcrumbs} heading={heading} />
 ```
 
 ### Properties
+The props where the type is set to `various` can take anything that can be rendered (strings, booleans, numbers or arrays).
 
 | Prop            | Required | Default                                   | Type | Description |
 | :-------------- | :------- | :---------------------------------------- | :--- | :---------- |
-| `flashMessages` | false    | `` | Object | Contains the flash messages |
+| `breadcrumbs` | false    | `` | array | Contains the breadcrumbs |
+| `flashMessages` | false    | `` | object | Contains the flash messages |
+| `heading` | false    | `` | string | Contains the text to be displayed |
+| `headingLink` | false    | `` | object | Contains a link that appears above the heading |
+| `superheading` | false    | `` | various | Contains an item that renders above the heading (in the same position as the headingLink) |
+| `children` | false    | `` | various | Contains an item that renders below the heading |

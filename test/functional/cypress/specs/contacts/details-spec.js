@@ -36,10 +36,6 @@ describe('View contact details', () => {
       })
     })
 
-    it('should not render the Add Interaction button', () => {
-      cy.get('[data-test=add-interaction-button]').should('not.exist')
-    })
-
     it('should render the subheading', () => {
       cy.contains('Contact details').should('exist')
     })
@@ -177,10 +173,6 @@ describe('View contact details', () => {
       })
     })
 
-    it('should not render the Add Interaction button', () => {
-      cy.get('[data-test=add-interaction-button]').should('not.exist')
-    })
-
     it('should render the archived contact message', () => {
       cy.get('[data-test=archive-message]')
         .should('exist')
@@ -266,38 +258,6 @@ describe('View contact details', () => {
       assertAPIRequest(ARCHIVE_INTERCEPT, (xhr) => {
         assertRequestBody(xhr, expectedBody)
         assertFlashMessage('Contact record updated')
-      })
-    })
-  })
-
-  context('when the activities feature flag is set', () => {
-    context('when the contact is not archived', () => {
-      before(() => {
-        cy.setUserFeatures(['user-contact-activities'])
-        cy.visit('/contacts/2676ea91-9dd7-4cf3-a4a3-67b06f841b54')
-      })
-
-      it('should display the Add Interaction button in the header', () => {
-        cy.get('[data-test=add-interaction-button]').should('exist')
-      })
-
-      after(() => {
-        cy.resetUser()
-      })
-    })
-
-    context('when the contact is archived', () => {
-      before(() => {
-        cy.setUserFeatures(['user-contact-activities'])
-        cy.visit('/contacts/1ba51fde-88be-43b3-8701-5c9adcc5cbfb')
-      })
-
-      it('should not display the Add Interaction button', () => {
-        cy.get('[data-test=add-interaction-button]').should('not.exist')
-      })
-
-      after(() => {
-        cy.resetUser()
       })
     })
   })

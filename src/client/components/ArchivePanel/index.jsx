@@ -28,7 +28,7 @@ const StyledReason = styled(StyledMessage)`
 
 const ArchivePanel = ({
   isArchived,
-  archivedBy,
+  archivedBy = null,
   archivedOn,
   archiveReason,
   unarchiveUrl,
@@ -39,7 +39,7 @@ const ArchivePanel = ({
     return null
   }
   return (
-    <StyledMain>
+    <StyledMain data-test="archive-panel">
       <StatusMessage>
         <StyledMessage data-test="archive-message">
           {archivedBy
@@ -61,7 +61,7 @@ const ArchivePanel = ({
 
 ArchivePanel.propTypes = {
   isArchived: PropTypes.bool.isRequired,
-  archivedBy: PropTypes.object.isRequired,
+  archivedBy: PropTypes.object,
   archivedOn: PropTypes.string.isRequired,
   archiveReason: PropTypes.string.isRequired,
   unarchiveUrl: PropTypes.string.isRequired,

@@ -2,8 +2,8 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 
 import FlashMessages from '../FlashMessages'
-import exampleReadme from './example.md'
-import usageReadme from './usage.md'
+import exampleReadme from './example-flash.md'
+import usageReadme from './usage-flash.md'
 
 storiesOf('Flash Messages', module)
   .addParameters({
