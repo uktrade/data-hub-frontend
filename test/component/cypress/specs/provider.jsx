@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { combineReducers, applyMiddleware, legacy_createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 
 import rootSaga from '../../../../src/client/root-saga'
@@ -18,7 +18,10 @@ const reducer = (state, action) =>
     ...FieldAddAnother.reducerSpread,
   })(action.type === 'RESET' ? undefined : state, action)
 
-export const store = createStore(reducer, applyMiddleware(sagaMiddleware))
+export const store = legacy_createStore(
+  reducer,
+  applyMiddleware(sagaMiddleware)
+)
 
 const runMiddlewareOnce = _.once((tasks) => sagaMiddleware.run(rootSaga(tasks)))
 
