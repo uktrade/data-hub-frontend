@@ -33,8 +33,16 @@ export const state2props = ({ router, ...state }) => {
     selectedOrganisers
   )
 
+  const isContactActivitiesFeatureOn =
+    state.userFeatures['user-contact-activities']
+
+  console.log(`isContactiActivitiesFeature on ${isContactActivitiesFeatureOn}`)
+
+  console.log(state.userFeatures)
+
   return {
     ...state[ID],
+    isContactActivitiesFeatureOn,
     payload: { ...queryParams },
     optionMetadata: {
       sortOptions: SORT_OPTIONS,
