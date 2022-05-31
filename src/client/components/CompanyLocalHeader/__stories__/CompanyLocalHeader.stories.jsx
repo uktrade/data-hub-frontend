@@ -1,5 +1,5 @@
 import React from 'react'
-import { createStore, combineReducers } from 'redux'
+import { configureStore } from '@reduxjs/toolkit'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { storiesOf } from '@storybook/react'
@@ -11,7 +11,7 @@ import ConnectedDropdownMenu from '../../../../client/components/DropdownMenu/Co
 import exampleReadme from './example.md'
 import usageReadme from './usage.md'
 
-const store = createStore(combineReducers(ConnectedDropdownMenu.reducerSpread))
+const store = configureStore({ reducer: ConnectedDropdownMenu.reducerSpread })
 
 storiesOf('Company Local Header', module)
   .addParameters({
