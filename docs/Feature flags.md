@@ -18,9 +18,13 @@ To create a feature flag you just need to add one in Django and it will be added
 
 ## User feature flags
 
+### Setting up the backend
+
 1. Create the flag in Django admin - `{api}/admin/feature_flag/userfeatureflag/` -> 'Add User Feature Flag`
 2. Add to user in Django admin - `{api}/admin/company/advisor/` select user, and scroll down to the bottom under the 'other' heading. You should be able to see your flag on the left hand column and add it to the user.
-3. Call the `userFeatures` middleware function with the name of your key (e.g. `userFeatures('user-contact-activities')`) directly before your controller function gets called in the router, e.g.:
+
+### Using Express middleware
+1. Call the `userFeatures` middleware function with the name of your key (e.g. `userFeatures('user-contact-activities')`) directly before your controller function gets called in the router, e.g.:
 
 ```
 router.get(
@@ -30,13 +34,26 @@ router.get(
 )
 ```
 
-4. Check the `res.locals.userFeatures` for your feature in the controller function, e.g.:
+2. Check the `res.locals.userFeatures` for your feature in the controller function, e.g.:
 
 ```
  isAventriFeatureOn: res.locals.userFeatures?.includes(
         'user-contact-activities'
       ),
     ...
+```
+
+### Using React
+
+1. use the `CheckUserFeatureFlag` component to wrap the conditional logic you need . e.g.
+
+```
+
+<CheckUserFeatureFlag userFeatureFlagName="my-user-feature">
+{(isFeatureFlagEnabled) 
+  => {isFeatureFlagEnabled && <MyNewComponent />}} 
+</CheckUserFeature />
+
 ```
 
 ## Adding feature flags in Sandbox
