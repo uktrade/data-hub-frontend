@@ -33,8 +33,14 @@ export const state2props = ({ router, ...state }) => {
     selectedOrganisers
   )
 
+  const isContactActivityFeatureOn =
+    state.userFeatureFlags?.userFeatureFlags?.includes(
+      'user-contact-activities'
+    )
+
   return {
     ...state[ID],
+    isContactActivityFeatureOn,
     payload: { ...queryParams },
     optionMetadata: {
       sortOptions: SORT_OPTIONS,

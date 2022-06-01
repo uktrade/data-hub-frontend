@@ -11,6 +11,7 @@ import {
   writeMyInvestmentsToSession,
   readMyInvestmentsFromSession,
 } from './components/MyInvestmentProjects/sagas'
+import { setUserFeatureFlags } from './utils/userFeatureFlags/sagas'
 
 export default (tasks) => {
   return function* rootSaga() {
@@ -21,5 +22,6 @@ export default (tasks) => {
     yield fork(writeFlashMessages)
     yield fork(readMyInvestmentsFromSession)
     yield fork(writeMyInvestmentsToSession)
+    yield fork(setUserFeatureFlags)
   }
 }
