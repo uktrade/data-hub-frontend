@@ -5,8 +5,12 @@ const { authorisedRequest } = require('../lib/authorised-request')
 
 const setUserFeatures = async (req, res, next) => {
   if (!res.locals.userFeatures) {
-    const user = await authorisedRequest(req, `${config.apiRoot}/whoami/`)
-    res.locals.userFeatures = get(user, 'active_features', [])
+    try {
+      const user = await authorisedRequest(req, `${config.apiRoot}/whoami/`)
+      res.locals.userFeatures = get(user, 'active_features', [])
+    } catch {
+      res.locals.userFeatures = undefined
+    }
   }
   next()
 }
