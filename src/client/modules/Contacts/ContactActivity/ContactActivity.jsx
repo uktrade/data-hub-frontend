@@ -16,6 +16,7 @@ import {
 } from '../../../components'
 import { ACTIVITIES_PER_PAGE } from '../../../../apps/contacts/constants'
 import { CONTACT_ACTIVITY_SORT_SELECT_OPTIONS } from '../../../../apps/companies/apps/activity-feed/constants'
+import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
 
 const ContactActivityList = styled('ol')`
   list-style-type: none;
@@ -38,7 +39,6 @@ const ContactActivity = ({
   total,
   page = 1,
   selectedSortBy,
-  isContactActivitiesFeatureOn,
 }) => {
   const totalPages = Math.ceil(total / ACTIVITIES_PER_PAGE)
 
@@ -73,18 +73,22 @@ const ContactActivity = ({
                   sortOptions={CONTACT_ACTIVITY_SORT_SELECT_OPTIONS}
                   totalPages={totalPages}
                 />
-                <ContactActivityList>
-                  {activities.map((activity, index) => (
-                    <li key={`activity-${index}`}>
-                      <Activity
-                        activity={activity}
-                        isContactActivitiesFeatureOn={
-                          isContactActivitiesFeatureOn
-                        }
-                      />
-                    </li>
-                  ))}
-                </ContactActivityList>
+                <CheckUserFeatureFlag userFeatureFlagName="user-contact-activities">
+                  {(isContactActivitiesFeatureOn) => (
+                    <ContactActivityList>
+                      {activities.map((activity, index) => (
+                        <li key={`activity-${index}`}>
+                          <Activity
+                            activity={activity}
+                            isContactActivitiesFeatureOn={
+                              isContactActivitiesFeatureOn
+                            }
+                          />
+                        </li>
+                      ))}
+                    </ContactActivityList>
+                  )}
+                </CheckUserFeatureFlag>
                 <RoutedPagination
                   qsParamName="page"
                   totalPages={totalPages}
