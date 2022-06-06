@@ -1,11 +1,27 @@
+import axios from 'axios'
 import urls from '../../../../lib/urls'
 import { apiProxyAxios } from '../../../components/Task/utils'
 import { getMetadataOptions } from '../../../metadata'
 import { getPageOffset } from '../../../utils/pagination'
 
-import { transformResponseToEventCollection } from '../transformers'
+import {
+  transformActivityToEvent,
+  transformResponseToEventCollection,
+} from '../transformers'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
+
+const getEventsFromActivityStream = () =>
+  axios
+    .get(urls.events.activity.data())
+    .then(({ data }) => data)
+    //TODO transform the results so that they match what the Collection List expects
+    .then((data) => ({
+      results: data.results.map((activity) =>
+        transformActivityToEvent(activity)
+      ),
+    }))
+    .catch(handleError)
 
 const getEvents = ({
   limit = 10,
@@ -48,4 +64,4 @@ const getEventsMetadata = () =>
     }))
     .catch(handleError)
 
-export { getEvents, getEventsMetadata }
+export { getEventsFromActivityStream, getEvents, getEventsMetadata }
