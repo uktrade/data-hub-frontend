@@ -6,6 +6,12 @@ const { handleRoutePermissions, setLocalNav } = require('../middleware')
 const { getEventDetails } = require('./middleware/details')
 const { renderEventsView } = require('./controllers/events')
 const attendeesRouter = require('./attendees/router')
+const urls = require('../../lib/urls')
+const {
+  fetchActivitiesForEvents,
+} = require('../companies/apps/activity-feed/controllers')
+
+router.get(urls.events.activity.data.route, fetchActivitiesForEvents)
 
 router.get('/create', renderEventsView)
 
