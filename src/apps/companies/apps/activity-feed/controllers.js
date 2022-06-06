@@ -22,6 +22,7 @@ const {
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
 const { aventriEventQuery } = require('./es-queries/aventri-event-query')
+const { eventsActivityQuery } = require('./es-queries/events-activity-query')
 
 async function renderActivityFeed(req, res, next) {
   const { company, dnbHierarchyCount, dnbRelatedCompaniesCount } = res.locals
@@ -144,6 +145,18 @@ async function getMaxemailCampaigns(req, next, contacts) {
     return campaignActivities.filter(
       (campaign) => campaign.object.contacts.length
     )
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function fetchActivitiesForEvents(req, res, next) {
+  try {
+    let results = await fetchActivityFeed(req, eventsActivityQuery())
+    const total = results.hits.total.value
+    results = results.hits.hits.map((hit) => hit._source)
+
+    res.json({ results, total })
   } catch (error) {
     next(error)
   }
@@ -277,4 +290,5 @@ module.exports = {
   renderActivityFeed,
   fetchActivityFeedHandler,
   fetchActivitiesForContact,
+  fetchActivitiesForEvents,
 }
