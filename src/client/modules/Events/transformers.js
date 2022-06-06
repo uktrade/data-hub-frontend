@@ -11,6 +11,18 @@ import {
 
 import { transformIdNameToValueLabel } from '../../transformers'
 
+const transformActivityToEvent = ({ object }) => {
+  const badges = [
+    { text: object['dit:aventri:location_city'] },
+    { text: object['dit:aventri:code'] },
+  ]
+  return {
+    badges: badges.filter((item) => item.text),
+    headingText: object.name,
+    subheading: object.content,
+  }
+}
+
 const transformEventToListItem = ({
   id,
   name,
@@ -132,4 +144,8 @@ const transformResponseToEventDetails = ({
   disabledOn: disabled_on,
 })
 
-export { transformResponseToEventCollection, transformResponseToEventDetails }
+export {
+  transformResponseToEventCollection,
+  transformResponseToEventDetails,
+  transformActivityToEvent,
+}
