@@ -485,5 +485,7 @@ module.exports = {
   },
   reminders: {
     index: url('/reminders'),
+    estimatedLandDate: url('/reminders/estimated-land-date'),
+    settings: url('/reminders/settings'),
   },
 }

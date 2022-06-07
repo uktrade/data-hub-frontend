@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import * as Sentry from '@sentry/browser'
-import { Switch } from 'react-router-dom'
+import { Redirect, Switch } from 'react-router-dom'
 
 import './components'
 import Provider from './provider'
@@ -247,7 +247,10 @@ import {
 } from '../apps/investments/client/projects/notifications/state'
 
 import * as reminders from '../client/modules/Reminders/tasks'
-import { TASK_GET_REMINDER_SUBSCRIPTIONS } from '../client/modules/Reminders/state'
+import {
+  TASK_GET_REMINDER_SUBSCRIPTIONS,
+  TASK_GET_ESTIMATED_LAND_DATE_REMINDERS,
+} from '../client/modules/Reminders/state'
 
 import Footer from '../client/components/Footer'
 
@@ -410,6 +413,8 @@ function App() {
         [TASK_SAVE_NOTIFICATION_SETTINGS]:
           notifications.saveNotificationSettings,
         [TASK_GET_REMINDER_SUBSCRIPTIONS]: reminders.getSubscriptions,
+        [TASK_GET_ESTIMATED_LAND_DATE_REMINDERS]:
+          reminders.getEstimatedLandDateReminders,
         [TASK_GET_CONTACT_ACTIVITIES]: getContactActivities,
         [TASK_ARCHIVE_CONTACT]: archiveContact,
         [TASK_GET_USER_FEATURE_FLAGS]: getUserFeatureFlags,
@@ -642,9 +647,17 @@ function App() {
         {() => (
           <Switch>
             {Object.keys(routes).map((module) =>
-              routes[module].map((route) => (
-                <ProtectedRoute exact={true} {...route} />
-              ))
+              routes[module].map((route) =>
+                route.redirect ? (
+                  <Redirect
+                    exact={true}
+                    from={route.path}
+                    to={route.redirect}
+                  />
+                ) : (
+                  <ProtectedRoute exact={true} {...route} />
+                )
+              )
             )}
           </Switch>
         )}
