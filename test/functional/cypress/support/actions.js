@@ -10,8 +10,9 @@ export const selectFirstAdvisersTypeaheadOption = ({ element, input }) =>
       'adviserResults'
     )
     cy.get('input').clear().type(input)
-    cy.wait('@adviserResults')
-    cy.get('input').type('{downarrow}{enter}{esc}')
+    cy.wait('@adviserResults').then(() => {
+      cy.get('input').type('{downarrow}{enter}{esc}')
+    })
   })
 
 /**
