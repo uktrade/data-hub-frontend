@@ -169,7 +169,7 @@ describe('View large capital investor details page', () => {
         required_checks_conducted: '9beab8fc-1094-49b4-97d0-37bc7a9de631',
         required_checks_conducted_on: `${lastMonth.getFullYear()}-${(
           lastMonth.getMonth() + 1
-        ).toString()}-${lastMonth.getDay().toString()}`,
+        ).toString()}-${lastMonth.getDate().toString()}`,
         required_checks_conducted_by: '2c42c516-9898-e211-a939-e4115bead28a',
       }
       assertInvestorType().then((element) => {
@@ -192,7 +192,7 @@ describe('View large capital investor details page', () => {
         clearAndInputDateValueObject({
           element,
           value: {
-            day: lastMonth.getDay().toString(),
+            day: lastMonth.getDate().toString(),
             month: (lastMonth.getMonth() + 1).toString(),
             year: lastMonth.getFullYear().toString(),
           },
