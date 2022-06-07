@@ -4,8 +4,12 @@ var projectAudit = require('../../../fixtures/v3/investment/project-audit.json')
 var notificationSettings = require('../../../fixtures/v3/investment/notification.json')
 var notificationSettingsEmpty = require('../../../fixtures/v3/investment/notification-empty.json')
 
-const NOTIFICATION_SETTINGS_ALL_PROJECT_ID =
-  '39588dd2-e643-43fa-9141-6e7beb52c140'
+const NOTIFICATION_SETTINGS_ALL_PROJECT_ID = [
+  '39588dd2-e643-43fa-9141-6e7beb52c140',
+  '9e4e3ead-4a5c-4c3a-ab1d-76baeb4d2b54',
+  '24b87b77-d12a-4509-8651-dd9267b06dbc',
+  'b41448d3-5f46-4f01-bd27-ca745dbe4925',
+]
 const NOTIFICATION_SETTINGS_EMPTY_PROJECT_ID =
   '161c7f52-662b-45c3-8ade-8e9a04aaf3c1'
 
@@ -54,7 +58,7 @@ exports.postInvestmentProjectEditTeams = function (req, res) {
 }
 
 exports.getInvestmentNotificationSettings = function (req, res) {
-  if (req.params.id == NOTIFICATION_SETTINGS_ALL_PROJECT_ID) {
+  if (NOTIFICATION_SETTINGS_ALL_PROJECT_ID.includes(req.params.id)) {
     res.json(notificationSettings)
     return
   }
