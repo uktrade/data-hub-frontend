@@ -101,10 +101,14 @@ const PreHeading = styled('span')({
 const RemindersHeaderRow = ({ totalItems }) => {
   const formattedTotal = decimal(totalItems)
   const counterSuffix = pluralize('reminders', totalItems)
-  const actions = <Link href="/reminders/settings">Reminders settings</Link>
+  const actions = (
+    <Link data-test="reminders-settings-link" href="/reminders/settings">
+      Reminders settings
+    </Link>
+  )
   return (
     <StyledCollectionHeaderRow primary={true} actions={actions}>
-      <ListHeader>
+      <ListHeader data-test="reminder-list-header">
         <ResultCount>{formattedTotal}</ResultCount>
         {` ${counterSuffix}`}
       </ListHeader>
@@ -137,22 +141,22 @@ const EstimatedLandDateReminders = () => {
         {({ results, count }) => (
           <GridRow>
             <GridCol setWidth="one-third">
-              <LinkList>
-                <LinkListItem>
+              <LinkList data-test="link-list">
+                <LinkListItem data-test="link-list-item">
                   <LinkListLink
-                    href="/reminders/estimated-land-dates"
+                    href={urls.reminders.estimatedLandDate()}
                     $isActive={true}
                   >
                     Reminders for approaching estimated land dates
                   </LinkListLink>
                 </LinkListItem>
-                <LinkListItem>
-                  <LinkListLink href="/reminders/no-recent-interaction">
+                <LinkListItem data-test="link-list-item">
+                  <LinkListLink href={urls.reminders.noRecentInteraction()}>
                     Reminders for projects with no recent interaction
                   </LinkListLink>
                 </LinkListItem>
-                <LinkListItem>
-                  <LinkListLink href="/reminders/outstanding-propositions">
+                <LinkListItem data-test="link-list-item">
+                  <LinkListLink href={urls.reminders.outstandingProposition()}>
                     Reminders for outstanding propositions
                   </LinkListLink>
                 </LinkListItem>
@@ -160,13 +164,13 @@ const EstimatedLandDateReminders = () => {
             </GridCol>
             <GridCol>
               <RemindersHeaderRow totalItems={count} />
-              <RemindersList>
+              <RemindersList data-test="reminders-list">
                 {results.map(({ id, created_on, event, project }) => (
-                  <RemindersListItem key={id}>
-                    <ItemHeader>
+                  <RemindersListItem key={id} data-test="reminders-list-item">
+                    <ItemHeader data-test="item-header">
                       Received {formatMediumDate(created_on)}
                     </ItemHeader>
-                    <ItemContent>
+                    <ItemContent data-test="item-content">
                       {event} for{' '}
                       <Link
                         href={`${urls.investments.projects.details(
@@ -176,7 +180,9 @@ const EstimatedLandDateReminders = () => {
                         {project.name}
                       </Link>
                     </ItemContent>
-                    <ItemFooter>Project code {project.project_code}</ItemFooter>
+                    <ItemFooter data-test="item-footer">
+                      Project code {project.project_code}
+                    </ItemFooter>
                   </RemindersListItem>
                 ))}
               </RemindersList>
