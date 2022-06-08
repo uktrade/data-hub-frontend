@@ -35,7 +35,7 @@ const LinkListItem = styled('li')({
 const LinkListLink = styled(Link)(({ $isActive }) => ({
   textDecoration: 'none',
   position: 'relative',
-  paddingLeft: 10,
+  paddingLeft: SPACING.SCALE_2,
   display: 'block',
   borderLeft: `solid 5px transparent`,
   ...($isActive
@@ -131,7 +131,7 @@ const EstimatedLandDateReminders = () => {
     <DefaultLayout
       pageTitle={title}
       heading={heading}
-      breadcrumbs={[{ link: '/', text: 'Home' }, { text: title }]}
+      breadcrumbs={[{ link: urls.dashboard(), text: 'Home' }, { text: title }]}
     >
       <Resource
         name={TASK_GET_ESTIMATED_LAND_DATE_REMINDERS}
