@@ -268,6 +268,8 @@ import { TASK_GET_CONTACT_ACTIVITIES } from '../client/modules/Contacts/ContactA
 import { getContactActivities } from '../client/modules/Contacts/ContactActivity/tasks'
 import { TASK_ARCHIVE_CONTACT } from '../client/modules/Contacts/ContactDetails/state'
 import { archiveContact } from '../client/modules/Contacts/ContactDetails/tasks'
+import { TASK_GET_USER_FEATURE_FLAGS } from './components/CheckUserFeatureFlags/state'
+import { getUserFeatureFlags } from './components/CheckUserFeatureFlags/tasks'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -410,6 +412,7 @@ function App() {
         [TASK_GET_REMINDER_SUBSCRIPTIONS]: reminders.getSubscriptions,
         [TASK_GET_CONTACT_ACTIVITIES]: getContactActivities,
         [TASK_ARCHIVE_CONTACT]: archiveContact,
+        [TASK_GET_USER_FEATURE_FLAGS]: getUserFeatureFlags,
         ...resourceTasks,
       }}
     >

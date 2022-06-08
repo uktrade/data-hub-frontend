@@ -8,12 +8,14 @@ import rootSaga from '../../../../src/client/root-saga'
 import tasks from '../../../../src/client/components/Task/reducer'
 import Typeahead from '../../../../src/client/components/Typeahead/Typeahead'
 import FieldAddAnother from '../../../../src/client/components/Form/elements/FieldAddAnother/FieldAddAnother'
+import Resource from '../../../../src/client/components/Resource'
 
 const sagaMiddleware = createSagaMiddleware()
 
 const reducer = (state, action) =>
   combineReducers({
     tasks,
+    ...Resource.reducerSpread,
     ...Typeahead.reducerSpread,
     ...FieldAddAnother.reducerSpread,
   })(action.type === 'RESET' ? undefined : state, action)

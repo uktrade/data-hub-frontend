@@ -131,7 +131,6 @@ function renderInteractionsForEntity(req, res, next) {
       props: {
         contactId: contactId,
         contact: contact,
-        isContactActivitiesFeatureOn,
       },
       isContactActivitiesFeatureOn,
     })
