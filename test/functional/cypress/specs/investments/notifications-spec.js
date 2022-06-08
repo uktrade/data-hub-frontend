@@ -12,7 +12,7 @@ describe('Notification settings with all options', () => {
       cy.resetUser()
       cy.visit(
         urls.investments.notificationSettings.index(
-          fixtures.investment.notificationSettingsAll.id
+          fixtures.investment.notificationSettingsAll.project_manager.id
         ),
         { failOnStatusCode: false }
       )
@@ -29,7 +29,7 @@ describe('Notification settings with all options', () => {
       cy.setUserFeatures(['notifications'])
       cy.visit(
         urls.investments.notificationSettings.index(
-          fixtures.investment.notificationSettingsAll.id
+          fixtures.investment.notificationSettingsAll.project_manager.id
         )
       )
     })
@@ -44,7 +44,7 @@ describe('Notification settings with all options', () => {
         Investments: urls.investments.index(),
         Projects: urls.investments.projects.index(),
         'Wig factory': urls.investments.projects.project(
-          fixtures.investment.notificationSettingsAll.id
+          fixtures.investment.notificationSettingsAll.project_manager.id
         ),
         Notifications: null,
       })
@@ -71,7 +71,7 @@ describe('Notification settings with all options', () => {
           'have.attr',
           'href',
           urls.investments.notificationSettings.estimatedLandDate(
-            fixtures.investment.notificationSettingsAll.id
+            fixtures.investment.notificationSettingsAll.project_manager.id
           )
         )
     })
@@ -105,7 +105,7 @@ describe('Notification settings with no options', () => {
       })
     })
 
-    it('should display the notificaion options', () => {
+    it('should display the notification options', () => {
       cy.get('[data-test="notifications-estimated-land-date"]').should(
         'have.text',
         'None'
@@ -134,7 +134,7 @@ describe('Notification details option visible', () => {
         cy.resetUser()
         cy.visit(
           urls.investments.projects.details(
-            fixtures.investment.notificationSettingsAll.id
+            fixtures.investment.notificationSettingsAll.project_manager.id
           )
         )
       })
@@ -149,7 +149,7 @@ describe('Notification details option visible', () => {
       cy.setUserFeatures(['notifications'])
       cy.visit(
         urls.investments.projects.details(
-          fixtures.investment.notificationSettingsAll.id
+          fixtures.investment.notificationSettingsAll.project_manager.id
         )
       )
     })
@@ -161,9 +161,49 @@ describe('Notification details option visible', () => {
       cy.url().should(
         'contain',
         urls.investments.notificationSettings.index(
-          fixtures.investment.notificationSettingsAll.id
+          fixtures.investment.notificationSettingsAll.project_manager.id
         )
       )
+    })
+  })
+
+  describe('Notification details option for different types of users', () => {
+    ;[
+      [
+        fixtures.investment.notificationSettingsAll.project_manager.id,
+        'project manager',
+      ],
+      [
+        fixtures.investment.notificationSettingsAll.project_assurance_adviser
+          .id,
+        'project assurance adviser',
+      ],
+      [
+        fixtures.investment.notificationSettingsAll.client_relationship_manager
+          .id,
+        'client relationship manager',
+      ],
+      [
+        fixtures.investment.notificationSettingsAll.referral_source_adviser.id,
+        'referral source adviser',
+      ],
+    ].forEach(([projectId, userType]) => {
+      context('When viewing a project details page as ' + userType, () => {
+        before(() => {
+          cy.setUserFeatures(['notifications'])
+          cy.visit(urls.investments.projects.details(projectId))
+        })
+        it('should display the notifications button', () => {
+          cy.get(nav.sideNav).should('contain', 'Notifications')
+        })
+        it('should render the notifications page when the Notifications tab is clicked', () => {
+          cy.get(nav.sideNav).contains('Notifications').click()
+          cy.url().should(
+            'contain',
+            urls.investments.notificationSettings.index(projectId)
+          )
+        })
+      })
     })
   })
 

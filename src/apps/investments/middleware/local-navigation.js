@@ -18,8 +18,19 @@ const filterNotificationNavItem = (
   investment,
   isFeatureTesting
 ) => {
+  const isProjectManager = user?.id === investment?.project_manager?.id
+  const isProjectAssuranceAdviser =
+    user?.id === investment?.project_assurance_adviser?.id
+  const isClientRelationshipManager =
+    user?.id === investment?.client_relationship_manager?.id
+  const isReferralSourceAdviser =
+    user?.id === investment?.referral_source_adviser?.id
   const hasNotifications =
-    user?.id === investment?.project_manager?.id && isFeatureTesting
+    (isProjectManager ||
+      isProjectAssuranceAdviser ||
+      isClientRelationshipManager ||
+      isReferralSourceAdviser) &&
+    isFeatureTesting
 
   if (!hasNotifications) {
     return items.filter(({ path }) => !(path === NOTIFICATIONS))
