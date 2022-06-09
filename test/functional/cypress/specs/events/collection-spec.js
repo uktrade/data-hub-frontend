@@ -2,6 +2,7 @@ import { assertBreadcrumbs } from '../../support/assertions'
 import { events } from '../../../../../src/lib/urls'
 
 import { eventFaker, eventListFaker } from '../../fakers/events'
+import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../../src/apps/companies/apps/activity-feed/constants'
 
 describe('Event Collection List Page - React', () => {
   const event1 = eventFaker({
@@ -131,5 +132,15 @@ describe('Event Collection List Page - React', () => {
       .find('[data-test="metadata"]')
       .should('contain', 'Organiser')
       .and('contain', 'Hannibal Smith')
+  })
+
+  context('when the activity stream flag is on', () => {
+    beforeEach(() => {
+      cy.setUserFeatures([EVENT_ACTIVITY_FEATURE_FLAG])
+      cy.visit(events.index())
+    })
+    it('should not display the data hub API collection list', () => {
+      cy.get('@collectionList').should('not.exist')
+    })
   })
 })
