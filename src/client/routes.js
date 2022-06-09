@@ -2,6 +2,7 @@ import CompaniesCollectionList from './modules/Companies/CollectionList'
 import ContactsCollectionList from './modules/Contacts/CollectionList'
 import EventsCollectionList from './modules/Events/CollectionList'
 import EventDetails from './modules/Events/EventDetails'
+import EventAventriDetails from './modules/Events/EventAventriDetails'
 import EventForm from './modules/Events/EventForm'
 import InteractionsCollectionList from './modules/Interactions/CollectionList'
 import OmisCollectionList from './modules/Omis/CollectionList'
@@ -46,6 +47,11 @@ const routes = {
       path: '/events/:id/details',
       module: 'datahub:events',
       component: EventDetails,
+    },
+    {
+      path: '/events/aventri/:id/details',
+      module: 'datahub:events',
+      component: EventAventriDetails,
     },
   ],
   interactions: [

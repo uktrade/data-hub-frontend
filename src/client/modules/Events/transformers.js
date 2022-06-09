@@ -132,4 +132,12 @@ const transformResponseToEventDetails = ({
   disabledOn: disabled_on,
 })
 
-export { transformResponseToEventCollection, transformResponseToEventDetails }
+const transformResponseToEventAventriDetails = ({ data }) =>
+  // TODO: Implements aventri data transformation
+  console.log('>>>', data)
+
+export {
+  transformResponseToEventCollection,
+  transformResponseToEventDetails,
+  transformResponseToEventAventriDetails,
+}
