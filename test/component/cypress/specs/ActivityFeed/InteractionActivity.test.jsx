@@ -306,30 +306,6 @@ describe('Interaction activity card', () => {
       it('should render the kind label', () => {
         assertKindLabel()
       })
-
-      it('should render the interaction subject', () => {
-        assertInteractionSubject()
-      })
-
-      it('should render the interaction notes', () => {
-        assertNotes()
-      })
-
-      it('should render the date label', () => {
-        assertText('[data-test=date-label]', 'Date: 25 Nov 2058')
-      })
-
-      it('should render the communication channel label', () => {
-        assertCommunicationChannelLabel()
-      })
-
-      it('should render the advisers label', () => {
-        assertText('[data-test=adviser-s-label]', oneAdviserText)
-      })
-
-      it('should render the service label', () => {
-        assertBottomServiceLabel()
-      })
     })
 
     context('When the service is missing', () => {
@@ -356,30 +332,6 @@ describe('Interaction activity card', () => {
       it('should render the kind label', () => {
         assertKindLabel()
       })
-
-      it('should render the interaction subject', () => {
-        assertInteractionSubject()
-      })
-
-      it('should render the interaction notes', () => {
-        assertNotes()
-      })
-
-      it('should render the date label', () => {
-        assertText('[data-test=date-label]', 'Date: 25 Nov 2058')
-      })
-
-      it('should render the communication channel label', () => {
-        assertCommunicationChannelLabel()
-      })
-
-      it('should render the advisers label', () => {
-        assertText('[data-test=adviser-s-label]', oneAdviserText)
-      })
-
-      it('should not render the full service label', () => {
-        cy.get('[data-test=service-label]').should('not.exist')
-      })
     })
 
     context('When the date is missing', () => {
@@ -393,26 +345,6 @@ describe('Interaction activity card', () => {
           null
         )
         cy.get('[data-test=interaction-activity]').should('exist')
-      })
-
-      it('should render the theme label', () => {
-        assertThemeLabel()
-      })
-
-      it('should render the service label', () => {
-        assertServiceLabel()
-      })
-
-      it('should render the kind label', () => {
-        assertKindLabel()
-      })
-
-      it('should render the interaction subject', () => {
-        assertInteractionSubject()
-      })
-
-      it('should render the interaction notes', () => {
-        assertNotes()
       })
 
       it('should not render the date label', () => {
@@ -446,26 +378,6 @@ describe('Interaction activity card', () => {
         cy.get('[data-test=interaction-activity]').should('exist')
       })
 
-      it('should render the theme label', () => {
-        assertThemeLabel()
-      })
-
-      it('should render the service label', () => {
-        assertServiceLabel()
-      })
-
-      it('should render the kind label', () => {
-        assertKindLabel()
-      })
-
-      it('should render the interaction subject', () => {
-        assertInteractionSubject()
-      })
-
-      it('should render the interaction notes', () => {
-        assertNotes()
-      })
-
       it('should render the date label', () => {
         assertText('[data-test=date-label]', 'Date: 25 Nov 2058')
       })
@@ -494,26 +406,6 @@ describe('Interaction activity card', () => {
           date
         )
         cy.get('[data-test=interaction-activity]').should('exist')
-      })
-
-      it('should render the theme label', () => {
-        assertThemeLabel()
-      })
-
-      it('should render the service label', () => {
-        assertServiceLabel()
-      })
-
-      it('should render the kind label', () => {
-        assertKindLabel()
-      })
-
-      it('should render the interaction subject', () => {
-        assertInteractionSubject()
-      })
-
-      it('should render the interaction notes', () => {
-        assertNotes()
       })
 
       it('should render the date label', () => {
