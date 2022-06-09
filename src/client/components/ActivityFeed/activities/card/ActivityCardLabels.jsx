@@ -45,7 +45,7 @@ const ActivityCardLabels = ({ theme, service, kind }) => (
 ActivityCardLabels.propTypes = {
   theme: PropTypes.string,
   service: PropTypes.string,
-  kind: PropTypes.string,
+  kind: PropTypes.string.isRequired,
 }
 
 export default ActivityCardLabels
