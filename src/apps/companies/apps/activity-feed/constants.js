@@ -1,4 +1,5 @@
 const CONTACT_ACTIVITY_FEATURE_FLAG = 'user-contact-activities'
+const EVENT_ACTIVITY_FEATURE_FLAG = 'user-event-activities'
 
 const FILTER_KEYS = {
   dataHubAndExternalActivity: 'dataHubAndExternalActivity',
@@ -59,6 +60,7 @@ const DATA_HUB_AND_EXTERNAL_ACTIVITY = [
 
 module.exports = {
   CONTACT_ACTIVITY_FEATURE_FLAG,
+  EVENT_ACTIVITY_FEATURE_FLAG,
   FILTER_KEYS,
   FILTER_ITEMS,
   DATA_HUB_ACTIVITY,
