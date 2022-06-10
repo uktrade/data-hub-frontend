@@ -25,12 +25,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-addParameters({
-  options: {
-    theme: {},
-  },
-})
-
 addDecorator(addReadme)
 addDecorator((s) => (
   <>
