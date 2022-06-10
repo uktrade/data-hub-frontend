@@ -10,7 +10,7 @@ export const state2props = ({ ...state }) => {
 
   return {
     ...state[ID],
-    page,
+    page: parseInt(page, 10),
     selectedSortBy,
   }
 }

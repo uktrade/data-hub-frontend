@@ -55,7 +55,7 @@ export {
   RemindersToggleSection,
   ToggleSection,
 } from './ToggleSection'
-export { default as RoutedPagination } from './RoutedPagination'
+export { default as RoutedPagination } from './Pagination/RoutedPagination'
 export { default as FilteredCollectionList } from './FilteredCollectionList'
 export { default as FilteredCollectionHeader } from './FilteredCollectionList/FilteredCollectionHeader'
 export { default as RoutedFilterChips } from './RoutedFilterChips'

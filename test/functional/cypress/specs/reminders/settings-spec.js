@@ -41,11 +41,11 @@ const waitForAPICalls = () => {
   cy.wait('@nriApiRequest')
 }
 
-describe('Reminders', () => {
+describe('Reminders Settings', () => {
   context('Breadcrumbs and title', () => {
     before(() => {
       interceptAPICalls()
-      cy.visit(urls.reminders.index())
+      cy.visit(urls.reminders.settings())
       waitForAPICalls()
     })
 
@@ -69,7 +69,7 @@ describe('Reminders', () => {
     () => {
       before(() => {
         interceptAPICalls()
-        cy.visit(urls.reminders.index())
+        cy.visit(urls.reminders.settings())
         waitForAPICalls()
       })
 
@@ -88,7 +88,7 @@ describe('Reminders', () => {
       const queryParams = 'estimated_land_date=true'
       before(() => {
         interceptAPICalls()
-        cy.visit(`${urls.reminders.index()}?${queryParams}`)
+        cy.visit(`${urls.reminders.settings()}?${queryParams}`)
         waitForAPICalls()
       })
 
@@ -128,7 +128,7 @@ describe('Reminders', () => {
       const queryParams = 'no_recent_interaction=true'
       before(() => {
         interceptAPICalls()
-        cy.visit(`${urls.reminders.index()}?${queryParams}`)
+        cy.visit(`${urls.reminders.settings()}?${queryParams}`)
         waitForAPICalls()
       })
 
@@ -168,7 +168,7 @@ describe('Reminders', () => {
       const queryParams = 'estimated_land_date=true&no_recent_interaction=true'
       before(() => {
         interceptAPICalls()
-        cy.visit(`${urls.reminders.index()}?${queryParams}`)
+        cy.visit(`${urls.reminders.settings()}?${queryParams}`)
         waitForAPICalls()
       })
 
@@ -192,7 +192,7 @@ describe('Reminders', () => {
         nri_reminder_days: [],
         nri_email_reminders_enabled: false,
       })
-      cy.visit(urls.reminders.index())
+      cy.visit(urls.reminders.settings())
       waitForAPICalls()
     })
 

@@ -89,11 +89,7 @@ const ContactActivity = ({
                     </ContactActivityList>
                   )}
                 </CheckUserFeatureFlag>
-                <RoutedPagination
-                  qsParamName="page"
-                  totalPages={totalPages}
-                  activePage={page}
-                />
+                <RoutedPagination initialPage={page} items={total} />
               </>
             )
           }

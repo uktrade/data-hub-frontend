@@ -13,6 +13,8 @@ const reactRoutes = [
   '/events',
   '/interactions',
   '/reminders',
+  '/reminders/settings',
+  '/reminders/estimated-land-date',
   '/omis',
   '/access-denied',
 ]
