@@ -1,8 +1,8 @@
 import {
   assertBreadcrumbs,
   assertKeyValueTable,
-} from '../../support/assertions'
-import urls from '../../../../../src/lib/urls'
+} from '../../../support/assertions'
+import urls from '../../../../../../src/lib/urls'
 
 const eslEndpoint = '/api-proxy/v4/reminder/subscription/estimated-land-date'
 const nriEndpoint =
@@ -45,7 +45,7 @@ describe('Reminders Settings', () => {
   context('Breadcrumbs and title', () => {
     before(() => {
       interceptAPICalls()
-      cy.visit(urls.reminders.settings())
+      cy.visit(urls.reminders.settings.index())
       waitForAPICalls()
     })
 
@@ -69,7 +69,7 @@ describe('Reminders Settings', () => {
     () => {
       before(() => {
         interceptAPICalls()
-        cy.visit(urls.reminders.settings())
+        cy.visit(urls.reminders.settings.index())
         waitForAPICalls()
       })
 
@@ -88,7 +88,7 @@ describe('Reminders Settings', () => {
       const queryParams = 'estimated_land_date=true'
       before(() => {
         interceptAPICalls()
-        cy.visit(`${urls.reminders.settings()}?${queryParams}`)
+        cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)
         waitForAPICalls()
       })
 
@@ -128,7 +128,7 @@ describe('Reminders Settings', () => {
       const queryParams = 'no_recent_interaction=true'
       before(() => {
         interceptAPICalls()
-        cy.visit(`${urls.reminders.settings()}?${queryParams}`)
+        cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)
         waitForAPICalls()
       })
 
@@ -168,7 +168,7 @@ describe('Reminders Settings', () => {
       const queryParams = 'estimated_land_date=true&no_recent_interaction=true'
       before(() => {
         interceptAPICalls()
-        cy.visit(`${urls.reminders.settings()}?${queryParams}`)
+        cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)
         waitForAPICalls()
       })
 
@@ -192,7 +192,7 @@ describe('Reminders Settings', () => {
         nri_reminder_days: [],
         nri_email_reminders_enabled: false,
       })
-      cy.visit(urls.reminders.settings())
+      cy.visit(urls.reminders.settings.index())
       waitForAPICalls()
     })
 

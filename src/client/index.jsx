@@ -250,7 +250,9 @@ import {
 
 import * as reminders from '../client/modules/Reminders/tasks'
 import {
-  TASK_GET_REMINDER_SUBSCRIPTIONS,
+  TASK_GET_ALL_REMINDER_SUBSCRIPTIONS,
+  TASK_GET_ELD_REMINDER_SUBSCRIPTIONS,
+  TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS,
   TASK_GET_ESTIMATED_LAND_DATE_REMINDERS,
 } from '../client/modules/Reminders/state'
 
@@ -414,7 +416,9 @@ function App() {
         [TASK_GET_NOTIFICATION_SETTINGS]: notifications.getNotificationSettings,
         [TASK_SAVE_NOTIFICATION_SETTINGS]:
           notifications.saveNotificationSettings,
-        [TASK_GET_REMINDER_SUBSCRIPTIONS]: reminders.getSubscriptions,
+        [TASK_GET_ALL_REMINDER_SUBSCRIPTIONS]: reminders.getAllSubscriptions,
+        [TASK_GET_ELD_REMINDER_SUBSCRIPTIONS]: reminders.getEldSubscriptions,
+        [TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS]: reminders.saveEldSubscriptions,
         [TASK_GET_ESTIMATED_LAND_DATE_REMINDERS]:
           reminders.getEstimatedLandDateReminders,
         [TASK_GET_CONTACT_ACTIVITIES]: getContactActivities,

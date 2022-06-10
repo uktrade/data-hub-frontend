@@ -1,14 +1,21 @@
 exports.getEstimatedLandDateSubscriptions = function (req, res) {
   res.json({
-    reminder_days: [60, 30],
-    email_reminders_enabled: false,
+    reminder_days: [30, 60],
+    email_reminders_enabled: true,
+  })
+}
+
+exports.saveEstimatedLandDateSubscriptions = function (req, res) {
+  res.json({
+    reminder_days: [30, 60],
+    email_reminders_enabled: true,
   })
 }
 
 exports.getNoRecentInteractionsSubscriptions = function (req, res) {
   res.json({
     reminder_days: [30, 50, 70],
-    email_reminders_enabled: false,
+    email_reminders_enabled: true,
   })
 }
 

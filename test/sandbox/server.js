@@ -491,6 +491,12 @@ app.get(
   '/v4/reminder/subscription/estimated-land-date',
   v4Reminders.getEstimatedLandDateSubscriptions
 )
+
+app.patch(
+  '/v4/reminder/subscription/estimated-land-date',
+  v4Reminders.saveEstimatedLandDateSubscriptions
+)
+
 app.get(
   '/v4/reminder/subscription/no-recent-investment-interaction',
   v4Reminders.getNoRecentInteractionsSubscriptions

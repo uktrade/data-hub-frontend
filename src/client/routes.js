@@ -7,6 +7,7 @@ import InteractionsCollectionList from './modules/Interactions/CollectionList'
 import OmisCollectionList from './modules/Omis/CollectionList'
 import {
   RemindersSettings,
+  EstimatedLandDateForm,
   EstimatedLandDateReminders,
 } from './modules/Reminders'
 
@@ -76,6 +77,11 @@ const routes = {
       path: '/reminders/settings',
       module: 'datahub:companies',
       component: RemindersSettings,
+    },
+    {
+      path: '/reminders/settings/estimated-land-date',
+      module: 'datahub:companies',
+      component: EstimatedLandDateForm,
     },
   ],
 }
