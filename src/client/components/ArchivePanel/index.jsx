@@ -25,7 +25,9 @@ const StyledMessage = styled('p')`
 const StyledReason = styled(StyledMessage)`
   margin-top: ${negativeSpacing};
 `
-
+/**
+ * An extension of `StatusMessage` that is used to denote whether a record has been archived.
+ */
 const ArchivePanel = ({
   isArchived,
   archivedBy = null,
@@ -60,12 +62,33 @@ const ArchivePanel = ({
 }
 
 ArchivePanel.propTypes = {
+  /**
+   * The archive status of the record. If set to `false`, the component will return `null` and will not render.
+   */
   isArchived: PropTypes.bool.isRequired,
+  /**
+   * An object containg the first and last name of the person who archived the contact. If this is not defined, the automatic archive text will appear.
+   */
   archivedBy: PropTypes.object,
+  /**
+   * The date the record was archived.
+   */
   archivedOn: PropTypes.string.isRequired,
+  /**
+   * The reason why the record was archived.
+   */
   archiveReason: PropTypes.string.isRequired,
+  /**
+   * The URL to unarchive the record.
+   */
   unarchiveUrl: PropTypes.string.isRequired,
+  /**
+   * This is used when the unarchive link needs to contain an `onClick` event (such as displaying a flash message).
+   */
   onClick: PropTypes.func,
+  /**
+   * The type of record.
+   */
   type: PropTypes.string.isRequired,
 }
 
