@@ -1,4 +1,4 @@
-FROM gcr.io/sre-docker-registry/data-hub-frontend-dependencies:2.0.0
+FROM gcr.io/sre-docker-registry/data-hub-frontend-dependencies:2.0.1
 
 ARG CURRENT_UID
 ARG CURRENT_GID
@@ -12,6 +12,7 @@ WORKDIR /usr/src/app
 # Install dev packages
 COPY --chown=$CURRENT_UID:$CURRENT_GID package.json .
 COPY --chown=$CURRENT_UID:$CURRENT_GID package-lock.json .
+COPY --chown=$CURRENT_UID:$CURRENT_GID .npmrc .
 
 USER "$CURRENT_UID:$CURRENT_GID"
 CMD npm config set loglevel info
