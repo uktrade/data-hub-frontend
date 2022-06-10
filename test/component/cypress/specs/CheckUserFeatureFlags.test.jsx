@@ -4,6 +4,10 @@ import DataHubProvider from './provider'
 import CheckUserFeatureFlag from '../../../../src/client/components/CheckUserFeatureFlags'
 import { TASK_GET_USER_FEATURE_FLAGS } from '../../../../src/client/components/CheckUserFeatureFlags/state'
 import { getUserFeatureFlags } from '../../../../src/client/components/CheckUserFeatureFlags/tasks'
+import {
+  assertNotQueryParams,
+  assertQueryParams,
+} from '../../../functional/cypress/support/assertions'
 
 describe('CheckUserFeatureFlags', () => {
   const Component = ({ userFeatureFlagName }) => (
@@ -23,6 +27,7 @@ describe('CheckUserFeatureFlags', () => {
   )
 
   const enabledFlag = 'flag-enabled'
+  const disabledFlag = 'flag-disabled'
 
   beforeEach(() => {
     cy.intercept('GET', '/api-proxy/whoami/', {
@@ -30,7 +35,21 @@ describe('CheckUserFeatureFlags', () => {
     })
   })
 
-  context('when the feature flag is  enabled', () => {
+  context('when the feature flag is not enabled', () => {
+    beforeEach(() => {
+      mount(<Component userFeatureFlagName={disabledFlag} />)
+    })
+
+    it('should pass false to its children', () => {
+      cy.contains('feature flag is not enabled')
+    })
+
+    it('should not set the flag in the url', () => {
+      assertNotQueryParams('featureTesting', disabledFlag)
+    })
+  })
+
+  context('when the feature flag is enabled', () => {
     beforeEach(() => {
       mount(<Component userFeatureFlagName={enabledFlag} />)
     })
@@ -38,15 +57,9 @@ describe('CheckUserFeatureFlags', () => {
     it('should pass true to the children', () => {
       cy.contains('feature flag is enabled')
     })
-  })
 
-  context('when the feature flag is not enabled', () => {
-    beforeEach(() => {
-      mount(<Component userFeatureFlagName={'disabled-flag'} />)
-    })
-
-    it('should pass false to its children', () => {
-      cy.contains('feature flag is not enabled')
+    it('should set the flag in the url', () => {
+      assertQueryParams('featureTesting', enabledFlag)
     })
   })
 })
