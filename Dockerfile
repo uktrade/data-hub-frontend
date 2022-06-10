@@ -12,6 +12,7 @@ WORKDIR /usr/src/app
 # Install dev packages
 COPY --chown=$CURRENT_UID:$CURRENT_GID package.json .
 COPY --chown=$CURRENT_UID:$CURRENT_GID package-lock.json .
+COPY --chown=$CURRENT_UID:$CURRENT_GID .npmrc .
 
 USER "$CURRENT_UID:$CURRENT_GID"
 CMD npm config set loglevel info
