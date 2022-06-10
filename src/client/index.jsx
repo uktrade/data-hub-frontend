@@ -61,6 +61,7 @@ import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 import ContactLocalHeader from './components/ContactLocalHeader'
 import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
 import ContactDocuments from './modules/Contacts/ContactDocuments/ContactDocuments'
+import InvestmentDocuments from '../apps/investments/client/projects/ProjectDocuments'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -645,6 +646,9 @@ function App() {
       </Mount>
       <Mount selector="#contact-documents">
         {(props) => <ContactDocuments {...props} />}
+      </Mount>
+      <Mount selector="#investment-documents">
+        {(props) => <InvestmentDocuments {...props} />}
       </Mount>
 
       <Mount selector="#react-app">

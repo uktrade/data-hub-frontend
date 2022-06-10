@@ -1,5 +1,4 @@
 const fixtures = require('../../fixtures')
-const selectors = require('../../../../selectors')
 const { assertBreadcrumbs } = require('../../support/assertions')
 const { dashboard, investments } = require('../../../../../src/lib/urls')
 
@@ -26,14 +25,10 @@ describe('Investment Project Documents', () => {
     })
 
     it('should display appropriate message when there is a link to a document', () => {
-      cy.get(selectors.document.documentHeader).should('contain', 'Document')
-      cy.get(selectors.document.documentContent).should(
+      cy.get('[data-test=document-heading]').should('contain', 'Document')
+      cy.get('[data-test=document-link]').should(
         'contain',
         'View files and documents'
-      )
-      cy.get(selectors.document.documentContent).should(
-        'contain',
-        '(will open another website)'
       )
     })
   })
@@ -60,8 +55,9 @@ describe('Investment Project Documents', () => {
     })
 
     it('should display appropriate message when there is not a link to a document', () => {
-      cy.get(selectors.document.documentHeader).should('contain', 'Document')
-      cy.get(selectors.document.documentContent).should(
+      cy.get('[data-test=document-heading]').should('contain', 'Document')
+      cy.get('[data-test=document-link]').should('not.exist')
+      cy.get('[data-test=no-documents-message]').should(
         'contain',
         'There are no files or documents'
       )
