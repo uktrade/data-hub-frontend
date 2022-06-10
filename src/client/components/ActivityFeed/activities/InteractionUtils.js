@@ -22,22 +22,21 @@ const isServiceDelivery = (activity) => {
   return includes(activityTypes, 'dit:ServiceDelivery')
 }
 
-const getServiceText = (activity) => {
-  const service = get(activity, 'object.dit:service.name')
-  if (service) {
-    const serviceType = service.includes(' : ')
-      ? service.split(' : ')[0]
-      : service
+export const getServiceText = (service) => {
+  const serviceType = service.includes(' : ')
+    ? service.split(' : ')[0]
+    : service
 
-    const serviceText =
-      service.includes('Making') && service.includes('Introductions')
-        ? 'Introduction'
-        : service.includes('Advice & Information')
-        ? 'Advice & Information'
-        : INTERACTION_SERVICES[serviceType]
-    return serviceText
-  }
-  return null
+  const serviceText =
+    service.includes('Making') && service.includes('Introductions')
+      ? 'Introduction'
+      : service.includes('Advice & Information')
+      ? 'Advice & Information'
+      : service.includes('Investment Enquiry')
+      ? 'Enquiry'
+      : INTERACTION_SERVICES[serviceType]
+
+  return serviceText
 }
 
 const getThemeText = (activity) => {
@@ -67,7 +66,9 @@ export default class InteractionUtils {
       ? 'service delivery'
       : 'interaction'
 
-    const serviceText = getServiceText(activity)
+    const service = get(activity, 'object.dit:service.name')
+    const serviceText = service ? getServiceText(service) : null
+
     const themeText = getThemeText(activity)
     const communicationChannel = get(
       activity,

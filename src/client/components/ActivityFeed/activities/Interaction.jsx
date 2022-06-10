@@ -100,10 +100,12 @@ export default class Interaction extends React.PureComponent {
       <ActivityCardWrapper dataTest="interaction-activity">
         <ActivityCardLabels theme={theme} service={service} kind={kind} />
         <ActivityCardSubject>
-          <Link href={transformed.url}>{transformed.subject}</Link>
+          <Link data-test="interaction-subject" href={transformed.url}>
+            {transformed.subject}
+          </Link>
         </ActivityCardSubject>
         {serviceNotes && (
-          <Notes>
+          <Notes data-test="interaction-notes">
             {serviceNotes.length < MAX_NOTE_LENGTH
               ? serviceNotes
               : serviceNotes
