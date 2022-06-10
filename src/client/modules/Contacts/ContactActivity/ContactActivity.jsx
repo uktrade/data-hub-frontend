@@ -15,7 +15,10 @@ import {
   RoutedPagination,
 } from '../../../components'
 import { ACTIVITIES_PER_PAGE } from '../../../../apps/contacts/constants'
-import { CONTACT_ACTIVITY_SORT_SELECT_OPTIONS } from '../../../../apps/companies/apps/activity-feed/constants'
+import {
+  CONTACT_ACTIVITY_FEATURE_FLAG,
+  CONTACT_ACTIVITY_SORT_SELECT_OPTIONS,
+} from '../../../../apps/companies/apps/activity-feed/constants'
 import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
 
 const ContactActivityList = styled('ol')`
@@ -73,7 +76,9 @@ const ContactActivity = ({
                   sortOptions={CONTACT_ACTIVITY_SORT_SELECT_OPTIONS}
                   totalPages={totalPages}
                 />
-                <CheckUserFeatureFlag userFeatureFlagName="user-contact-activities">
+                <CheckUserFeatureFlag
+                  userFeatureFlagName={CONTACT_ACTIVITY_FEATURE_FLAG}
+                >
                   {(isContactActivitiesFeatureOn) => (
                     <ContactActivityList>
                       {activities.map((activity, index) => (

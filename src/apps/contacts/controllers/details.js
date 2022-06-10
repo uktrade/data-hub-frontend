@@ -1,5 +1,8 @@
 const contactsRepository = require('../repos')
 const companyRepository = require('../../companies/repos')
+const {
+  CONTACT_ACTIVITY_FEATURE_FLAG,
+} = require('../../companies/apps/activity-feed/constants')
 
 async function getCommon(req, res, next) {
   try {
@@ -33,7 +36,7 @@ function getDetails(req, res, next) {
     const contact = res.locals.contact
     const companyAddress = res.locals.company.address
     const isContactActivitiesFeatureOn = res.locals.userFeatures?.includes(
-      'user-contact-activities'
+      CONTACT_ACTIVITY_FEATURE_FLAG
     )
 
     res.render('contacts/views/details', {

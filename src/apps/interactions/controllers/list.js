@@ -7,6 +7,9 @@ const { transformAdviserToOption } = require('../../adviser/transformers')
 const { saveSession } = require('../../../lib/session-helper')
 
 const FILTER_CONSTANTS = require('../../../lib/filter-constants')
+const {
+  CONTACT_ACTIVITY_FEATURE_FLAG,
+} = require('../../companies/apps/activity-feed/constants')
 
 const QUERY_STRING = FILTER_CONSTANTS.INTERACTIONS.SECTOR.PRIMARY.QUERY_STRING
 const SECTOR = FILTER_CONSTANTS.INTERACTIONS.SECTOR.NAME
@@ -106,7 +109,7 @@ function renderInteractionsForEntity(req, res, next) {
     const contact = res.locals.contact
 
     const isContactActivitiesFeatureOn = res.locals.userFeatures?.includes(
-      'user-contact-activities'
+      CONTACT_ACTIVITY_FEATURE_FLAG
     )
 
     const breadcrumbTitle = isContactActivitiesFeatureOn
