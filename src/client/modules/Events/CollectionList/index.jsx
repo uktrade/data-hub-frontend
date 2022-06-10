@@ -35,7 +35,6 @@ import {
 
 const EventsCollection = ({
   payload,
-  currentAdviserId,
   optionMetadata,
   selectedFilters,
   ...props
