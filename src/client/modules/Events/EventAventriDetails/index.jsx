@@ -9,7 +9,7 @@ import Task from '../../../components/Task'
 import { DefaultLayout } from '../../../components'
 
 const EventAventriDetails = ({ name }) => {
-  const { id } = useParams()
+  const { aventriEventId } = useParams()
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -36,13 +36,13 @@ const EventAventriDetails = ({ name }) => {
         id={ID}
         progressMessage="loading event aventri details"
         startOnRender={{
-          payload: id,
+          payload: aventriEventId,
           onSuccessDispatch: EVENTS__AVENTRI_DETAILS_LOADED,
         }}
       >
         {() => {
           return (
-            <>{name}</>
+            <></>
             // TODO: Implements events aventri details here
           )
         }}
