@@ -1,7 +1,6 @@
 import { EVENTS__AVENTRI_DETAILS_LOADED } from '../../../../client/actions'
 
 export default (state = {}, { type, result }) => {
-  (result)
   switch (type) {
     case EVENTS__AVENTRI_DETAILS_LOADED:
       return {
