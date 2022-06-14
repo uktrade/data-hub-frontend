@@ -49,7 +49,7 @@ const routes = {
       component: EventDetails,
     },
     {
-      path: '/events/aventri/:id/details',
+      path: '/events/aventri/:aventriEventId/details',
       module: 'datahub:events',
       component: EventAventriDetails,
     },
