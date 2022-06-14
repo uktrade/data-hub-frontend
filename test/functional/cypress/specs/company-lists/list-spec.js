@@ -1,4 +1,6 @@
-const helper = require('./view-spec-helper')
+import '../../../../cypress/support/commands'
+import { exports } from './view-spec-helper'
+
 const { assertAriaTablistTabSelected } = require('../../support/assertions')
 
 describe('My companies lists', () => {
@@ -10,16 +12,16 @@ describe('My companies lists', () => {
   it('my companies lists tab should be selected', () =>
     assertAriaTablistTabSelected('Dashboard', 'My companies lists'))
 
-  helper.describeSelectedList({
+  exports.describeSelectedList({
     name: 'List A',
-    ...helper.expectedLists['List A'],
+    ...exports.expectedLists['List A'],
   })
 
-  Object.entries(helper.expectedLists).forEach(([name, expectedValues]) => {
+  Object.entries(exports.expectedLists).forEach(([name, expectedValues]) => {
     describe(`After selecting list "${name}"`, () => {
       before(() => cy.contains('View list').find('select').select(name))
 
-      helper.describeSelectedList({ name, ...expectedValues })
+      exports.describeSelectedList({ name, ...expectedValues })
     })
   })
 })
