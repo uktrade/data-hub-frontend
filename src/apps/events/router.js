@@ -6,6 +6,10 @@ const { handleRoutePermissions, setLocalNav } = require('../middleware')
 const { getEventDetails } = require('./middleware/details')
 const { renderEventsView } = require('./controllers/events')
 const attendeesRouter = require('./attendees/router')
+const userFeatures = require('../../middleware/user-features')
+const {
+  EVENT_ACTIVITY_FEATURE_FLAG,
+} = require('../companies/apps/activity-feed/constants')
 
 router.get('/create', renderEventsView)
 
@@ -17,11 +21,16 @@ router.use(
 )
 
 router.use('/:eventId/attendees', attendeesRouter)
-router.param('eventId', getEventDetails)
+router.param(
+  'eventId',
+  userFeatures(EVENT_ACTIVITY_FEATURE_FLAG),
+  getEventDetails
+)
 // TODO: When everything in the events space is converted to react
 // router.get('/*', renderEventsView)
 router.get('/:eventId/edit', renderEventsView)
 router.get('/:eventId', renderEventsView)
 router.get('/:eventId/details', renderEventsView)
+router.get('/aventri/:eventId/details', renderEventsView)
 
 module.exports = router

@@ -243,6 +243,9 @@ module.exports = {
     unarchive: url('/contacts', '/:contactId/unarchive'),
   },
   events: {
+    aventri: {
+      details: url('/events', 'aventri/:aventriEventId/details'),
+    },
     index: url('/events', PRIMARY_LINK_PARAMS.events),
     create: url('/events/create'),
     details: url('/events', '/:eventId/details'),

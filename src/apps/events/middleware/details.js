@@ -2,6 +2,9 @@ const { assign } = require('lodash')
 
 const { transformEventFormBodyToApiRequest } = require('../transformers')
 const { fetchEvent, saveEvent } = require('../repos')
+const {
+  EVENT_ACTIVITY_FEATURE_FLAG,
+} = require('../../companies/apps/activity-feed/constants')
 
 async function postDetails(req, res, next) {
   res.locals.requestBody = transformEventFormBodyToApiRequest(req.body)
@@ -28,11 +31,19 @@ async function postDetails(req, res, next) {
 }
 
 async function getEventDetails(req, res, next, eventId) {
-  try {
-    res.locals.event = await fetchEvent(req, eventId)
+  const isActivitiesFeatureOn = res.locals?.userFeatures?.includes(
+    EVENT_ACTIVITY_FEATURE_FLAG
+  )
+
+  if (req.originalUrl.includes('aventri') && isActivitiesFeatureOn) {
     next()
-  } catch (err) {
-    next(err)
+  } else {
+    try {
+      res.locals.event = await fetchEvent(req, eventId)
+      next()
+    } catch (err) {
+      next(err)
+    }
   }
 }
 
