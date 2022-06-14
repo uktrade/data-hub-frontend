@@ -41,7 +41,6 @@ exports.omisWorkOrder = require('./omis/work-order')
 
 exports.breadcrumbs = require('./breadcrumbs')
 exports.detailsContainer = require('./details-container')
-exports.document = require('./document')
 exports.editHistory = require('./edit-history')
 exports.entityCollection = require('./entity-collection')
 exports.filter = require('./filter')

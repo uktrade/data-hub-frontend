@@ -35,11 +35,9 @@ const ActivityCardLabels = ({ theme, service, kind }) => (
       )}
     </TagColumn>
     <TagColumn>
-      {kind && (
-        <Tag data-test="activity-kind-label" colour="grey">
-          {kind}
-        </Tag>
-      )}
+      <Tag data-test="activity-kind-label" colour="grey">
+        {kind}
+      </Tag>
     </TagColumn>
   </TagRow>
 )
@@ -47,7 +45,7 @@ const ActivityCardLabels = ({ theme, service, kind }) => (
 ActivityCardLabels.propTypes = {
   theme: PropTypes.string,
   service: PropTypes.string,
-  kind: PropTypes.string,
+  kind: PropTypes.string.isRequired,
 }
 
 export default ActivityCardLabels

@@ -495,6 +495,14 @@ app.get(
   '/v4/reminder/subscription/no-recent-investment-interaction',
   v4Reminders.getNoRecentInteractionsSubscriptions
 )
+app.get(
+  '/v4/reminder/estimated-land-date',
+  v4Reminders.getEstimatedLandDateReminders
+)
+app.get(
+  '/v4/reminder/no-recent-investment-interaction',
+  v4Reminders.getNoRecentInvestmentInteractionReminders
+)
 
 // V4 Investment
 app.get('/v4/large-investor-profile', v4Company.largeInvestorProfile)

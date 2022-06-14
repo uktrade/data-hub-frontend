@@ -5,7 +5,10 @@ import EventDetails from './modules/Events/EventDetails'
 import EventForm from './modules/Events/EventForm'
 import InteractionsCollectionList from './modules/Interactions/CollectionList'
 import OmisCollectionList from './modules/Omis/CollectionList'
-import Reminders from './modules/Reminders'
+import {
+  RemindersSettings,
+  EstimatedLandDateReminders,
+} from './modules/Reminders'
 
 const routes = {
   companies: [
@@ -62,7 +65,17 @@ const routes = {
     {
       path: '/reminders',
       module: 'datahub:companies',
-      component: Reminders,
+      redirect: '/reminders/estimated-land-date',
+    },
+    {
+      path: '/reminders/estimated-land-date',
+      module: 'datahub:companies',
+      component: EstimatedLandDateReminders,
+    },
+    {
+      path: '/reminders/settings',
+      module: 'datahub:companies',
+      component: RemindersSettings,
     },
   ],
 }

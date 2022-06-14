@@ -10,9 +10,7 @@
     "nodemon": "^2.0.12"
   },
   "engines": {
-    "yarn": "YARN NO LONGER USED - use npm instead.",
-    "node": "16.15.1",
-    "npm": "8.11.0"
+    "node": "16.15.1"
   },
   "overrides": {
     "ansi-regex": "5.0.1",

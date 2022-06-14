@@ -2,8 +2,6 @@ import { assertBreadcrumbs } from '../../support/assertions'
 
 const { contacts } = require('../../../../../src/lib/urls')
 
-const selectors = require('../../../../selectors')
-
 describe('Contact Documents', () => {
   context('when there is a document link', () => {
     before(() => {
@@ -20,14 +18,10 @@ describe('Contact Documents', () => {
     })
 
     it('should display appropriate message when there is a link to a document', () => {
-      cy.get(selectors.document.documentHeader).should('contain', 'Document')
-      cy.get(selectors.document.documentContent).should(
+      cy.get('[data-test=document-heading]').should('contain', 'Documents')
+      cy.get('[data-test=document-link]').should(
         'contain',
         'View files and documents'
-      )
-      cy.get(selectors.document.documentContent).should(
-        'contain',
-        '(will open another website)'
       )
     })
   })
@@ -47,8 +41,8 @@ describe('Contact Documents', () => {
     })
 
     it('should display appropriate message when there is not a link to a document', () => {
-      cy.get(selectors.document.documentHeader).should('contain', 'Document')
-      cy.get(selectors.document.documentContent).should(
+      cy.get('[data-test=document-heading]').should('contain', 'Document')
+      cy.get('[data-test=no-documents-message]').should(
         'contain',
         'There are no files or documents'
       )

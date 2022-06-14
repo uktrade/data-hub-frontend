@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import * as Sentry from '@sentry/browser'
-import { Switch } from 'react-router-dom'
+import { Redirect, Switch } from 'react-router-dom'
 
 import './components'
 import Provider from './provider'
@@ -60,6 +60,8 @@ import EditClientRelationshipManagement from '../apps/investments/client/project
 import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 import ContactLocalHeader from './components/ContactLocalHeader'
 import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
+import ContactDocuments from './modules/Contacts/ContactDocuments/ContactDocuments'
+import InvestmentDocuments from '../apps/investments/client/projects/ProjectDocuments'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -247,7 +249,10 @@ import {
 } from '../apps/investments/client/projects/notifications/state'
 
 import * as reminders from '../client/modules/Reminders/tasks'
-import { TASK_GET_REMINDER_SUBSCRIPTIONS } from '../client/modules/Reminders/state'
+import {
+  TASK_GET_REMINDER_SUBSCRIPTIONS,
+  TASK_GET_ESTIMATED_LAND_DATE_REMINDERS,
+} from '../client/modules/Reminders/state'
 
 import Footer from '../client/components/Footer'
 
@@ -268,6 +273,8 @@ import { TASK_GET_CONTACT_ACTIVITIES } from '../client/modules/Contacts/ContactA
 import { getContactActivities } from '../client/modules/Contacts/ContactActivity/tasks'
 import { TASK_ARCHIVE_CONTACT } from '../client/modules/Contacts/ContactDetails/state'
 import { archiveContact } from '../client/modules/Contacts/ContactDetails/tasks'
+import { TASK_GET_USER_FEATURE_FLAGS } from './components/CheckUserFeatureFlags/state'
+import { getUserFeatureFlags } from './components/CheckUserFeatureFlags/tasks'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -408,8 +415,11 @@ function App() {
         [TASK_SAVE_NOTIFICATION_SETTINGS]:
           notifications.saveNotificationSettings,
         [TASK_GET_REMINDER_SUBSCRIPTIONS]: reminders.getSubscriptions,
+        [TASK_GET_ESTIMATED_LAND_DATE_REMINDERS]:
+          reminders.getEstimatedLandDateReminders,
         [TASK_GET_CONTACT_ACTIVITIES]: getContactActivities,
         [TASK_ARCHIVE_CONTACT]: archiveContact,
+        [TASK_GET_USER_FEATURE_FLAGS]: getUserFeatureFlags,
         ...resourceTasks,
       }}
     >
@@ -634,14 +644,28 @@ function App() {
       <Mount selector="#contact-details">
         {(props) => <ContactDetails {...props} />}
       </Mount>
+      <Mount selector="#contact-documents">
+        {(props) => <ContactDocuments {...props} />}
+      </Mount>
+      <Mount selector="#investment-documents">
+        {(props) => <InvestmentDocuments {...props} />}
+      </Mount>
 
       <Mount selector="#react-app">
         {() => (
           <Switch>
             {Object.keys(routes).map((module) =>
-              routes[module].map((route) => (
-                <ProtectedRoute exact={true} {...route} />
-              ))
+              routes[module].map((route) =>
+                route.redirect ? (
+                  <Redirect
+                    exact={true}
+                    from={route.path}
+                    to={route.redirect}
+                  />
+                ) : (
+                  <ProtectedRoute exact={true} {...route} />
+                )
+              )
             )}
           </Switch>
         )}

@@ -61,8 +61,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": "16.15.1",
-    "npm": "8.11.0"
+    "node": "16.15.1"
   },
   "dependencies": {
     "@govuk-react/constants": "^0.10.0",
@@ -142,7 +141,7 @@
     "request-promise": "^4.2.6",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.49.9",
-    "sass-loader": "^12.6.0",
+    "sass-loader": "^13.0.0",
     "serve-favicon": "^2.5.0",
     "sniffr": "^1.2.0",
     "style-loader": "^3.3.1",
