@@ -273,8 +273,13 @@ async function fetchActivityFeedHandler(req, res, next) {
   }
 }
 
+async function fecthAventriEvent(req, res, next) {
+  console.log(res)
+}
+
 module.exports = {
   renderActivityFeed,
   fetchActivityFeedHandler,
   fetchActivitiesForContact,
+  fecthAventriEvent,
 }

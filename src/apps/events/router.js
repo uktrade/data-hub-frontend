@@ -10,6 +10,10 @@ const userFeatures = require('../../middleware/user-features')
 const {
   EVENT_ACTIVITY_FEATURE_FLAG,
 } = require('../companies/apps/activity-feed/constants')
+const urls = require('../../lib/urls')
+const {
+  fetchAventriEvent,
+} = require('../companies/apps/activity-feed/controllers')
 
 router.get('/create', renderEventsView)
 
@@ -32,5 +36,7 @@ router.get('/:eventId/edit', renderEventsView)
 router.get('/:eventId', renderEventsView)
 router.get('/:eventId/details', renderEventsView)
 router.get('/aventri/:eventId/details', renderEventsView)
+
+router.get(urls.events.aventri.data.route, fetchAventriEvent)
 
 module.exports = router
