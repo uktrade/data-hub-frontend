@@ -33,15 +33,11 @@ async function postDetails(req, res, next) {
 async function getEventDetails(req, res, next, eventId) {
   console.log('event details')
 
-  if (req.originalUrl.includes('aventri')) {
+  try {
+    res.locals.event = await fetchEvent(req, eventId)
     next()
-  } else {
-    try {
-      res.locals.event = await fetchEvent(req, eventId)
-      next()
-    } catch (err) {
-      next(err)
-    }
+  } catch (err) {
+    next(err)
   }
 }
 

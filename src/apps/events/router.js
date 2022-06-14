@@ -14,6 +14,10 @@ const {
 router.get('/create', renderEventsView)
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
+
+router.get('/aventri/:aventriEventId/details', renderEventsView)
+router.get(urls.events.aventri.data.route, fetchAventriEvent)
+
 router.use(
   '/:eventId',
   handleRoutePermissions(LOCAL_NAV),
@@ -28,7 +32,6 @@ router.get('/:eventId/edit', renderEventsView)
 router.get('/:eventId', renderEventsView)
 router.get('/:eventId/details', renderEventsView)
 
-router.get('/aventri/:eventId/details', renderEventsView)
-router.get(urls.events.aventri.data.route, fetchAventriEvent)
+
 
 module.exports = router

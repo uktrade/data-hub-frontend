@@ -275,19 +275,22 @@ async function fetchActivityFeedHandler(req, res, next) {
 
 async function fetchAventriEvent(req, res, next) {
   console.log('controller')
-  // console.log(req.params.eventId)
-  const id = req.params.eventId
-  const formattedId = `dit:aventri:Event:${id}:Create`
+  try {
+    const id = req.params.aventriEventId
+    const formattedId = `dit:aventri:Event:${id}:Create`
 
-  const aventriEventsResults = await fetchActivityFeed(
-    req,
-    aventriEventQuery([formattedId])
-  )
+    const aventriEventsResults = await fetchActivityFeed(
+      req,
+      aventriEventQuery([formattedId])
+    )
 
-  const aventriEvent = aventriEventsResults.hits.hits[0]._source
-  // console.log(aventriEvent)
+    const aventriEvent = aventriEventsResults.hits.hits[0]._source
+    // console.log(aventriEvent)
 
-  return res.json({ aventriEvent })
+    return res.json({ aventriEvent })
+  } catch (error) {
+    next(error)
+  }
 }
 
 module.exports = {

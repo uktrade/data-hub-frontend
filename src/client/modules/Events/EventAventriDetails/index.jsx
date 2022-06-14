@@ -8,7 +8,7 @@ import Task from '../../../components/Task'
 import { ID, state2props, TASK_GET_AVENTRI_EVENT_DETAILS } from './state'
 
 const EventAventriDetails = ({ aventriEvent }) => {
-  const { id } = useParams()
+  const { aventriEventId } = useParams()
 
   const breadcrumbs = [
     {
@@ -36,7 +36,7 @@ const EventAventriDetails = ({ aventriEvent }) => {
         id={ID}
         progressMessage="loading event details"
         startOnRender={{
-          payload: id,
+          payload: aventriEventId,
           onSuccessDispatch: EVENTS__AVENTRI_DETAILS_LOADED,
         }}
       ></Task.Status>
