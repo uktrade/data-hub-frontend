@@ -273,13 +273,15 @@ async function fetchActivityFeedHandler(req, res, next) {
   }
 }
 
-async function fecthAventriEvent(req, res, next) {
+async function fetchAventriEvent(req, res, next) {
+  console.log('controller')
   console.log(res)
+  return res.json({ aventriEvent: { name: 'placeholder' } })
 }
 
 module.exports = {
   renderActivityFeed,
   fetchActivityFeedHandler,
   fetchActivitiesForContact,
-  fecthAventriEvent,
+  fetchAventriEvent,
 }

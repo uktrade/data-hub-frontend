@@ -275,6 +275,8 @@ import { TASK_ARCHIVE_CONTACT } from '../client/modules/Contacts/ContactDetails/
 import { archiveContact } from '../client/modules/Contacts/ContactDetails/tasks'
 import { TASK_GET_USER_FEATURE_FLAGS } from './components/CheckUserFeatureFlags/state'
 import { getUserFeatureFlags } from './components/CheckUserFeatureFlags/tasks'
+import { TASK_GET_AVENTRI_EVENT_DETAILS } from './modules/Events/EventAventriDetails/state'
+import { getAventriEventDetails } from './modules/Events/EventAventriDetails/task'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -401,6 +403,7 @@ function App() {
         [TASK_GET_EVENTS_METADATA]: getEventsMetadata,
         [TASK_GET_EVENTS_ORGANISER_NAME]: getAdviserNames,
         [TASK_GET_EVENT_DETAILS]: getEventDetails,
+        [TASK_GET_AVENTRI_EVENT_DETAILS]: getAventriEventDetails,
         [TASK_GET_EVENTS_FORM_AND_METADATA]: getEventFormAndMetadata,
         [TASK_SAVE_EVENT]: saveEvent,
         [TASK_GET_ORDERS_METADATA]: getOrdersMetadata,

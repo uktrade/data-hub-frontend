@@ -244,8 +244,8 @@ module.exports = {
   },
   events: {
     aventri: {
-      details: url('/events', 'aventri/:aventriEventId/details'),
-      data: url('/events', 'aventri/:aventriEventId/activity/data'),
+      details: url('/events', '/aventri/:aventriEventId/details'),
+      data: url('/events', '/aventri/:eventId/activity/data'),
     },
     index: url('/events', PRIMARY_LINK_PARAMS.events),
     create: url('/events/create'),
