@@ -101,6 +101,9 @@ import interactionsReducer from './modules/Interactions/CollectionList/reducer'
 import { ID as EVENTS_DETAILS_ID } from './modules/Events/EventDetails/state'
 import eventDetailsReducer from './modules/Events/EventDetails/reducer'
 
+import { ID as EVENTS_AVENTRI_DETAILS_ID } from './modules/Events/EventAventriDetails/state'
+import eventAventriDetailsReducer from './modules/Events/EventAventriDetails/reducer'
+
 import { ID as EVENTS_ID } from './modules/Events/CollectionList/state'
 import eventsReducer from './modules/Events/CollectionList/reducer'
 
@@ -190,6 +193,7 @@ const reducer = {
   [INTERACTIONS_ID]: interactionsReducer,
   [EVENTS_ID]: eventsReducer,
   [EVENTS_DETAILS_ID]: eventDetailsReducer,
+  [EVENTS_AVENTRI_DETAILS_ID]: eventAventriDetailsReducer,
   [ORDERS_LIST_ID]: ordersReducer,
   [COMPANY_ORDERS_LIST_ID]: ordersReducer,
 }
