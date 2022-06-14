@@ -2,13 +2,16 @@ const urls = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures')
 const dataHubActivities = require('../../../../sandbox/fixtures/v4/activity-feed/data-hub-activities.json')
 const { assertErrorDialog } = require('../../support/assertions')
+const {
+  CONTACT_ACTIVITY_FEATURE_FLAG,
+} = require('../../../../../src/apps/companies/apps/activity-feed/constants')
 
 describe('Contact activity', () => {
   const contactId = fixtures.contact.deanCox.id
 
-  context('when the feature flag user-contact-activities is enabled', () => {
+  context('when the feature flag for activity stream is on', () => {
     before(() => {
-      cy.setUserFeatures(['user-contact-activities'])
+      cy.setUserFeatures([CONTACT_ACTIVITY_FEATURE_FLAG])
     })
 
     context('when viewing a contact with no activity', () => {

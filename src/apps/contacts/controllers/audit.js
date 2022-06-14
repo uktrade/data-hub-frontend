@@ -4,6 +4,9 @@ const {
 } = require('../../../modules/api/transformers')
 const { transformAuditLogToListItem } = require('../../audit/transformers')
 const { contactAuditLabels } = require('../labels')
+const {
+  CONTACT_ACTIVITY_FEATURE_FLAG,
+} = require('../../companies/apps/activity-feed/constants')
 
 async function getAudit(req, res, next) {
   try {
@@ -12,7 +15,7 @@ async function getAudit(req, res, next) {
     const page = req.query.page || 1
 
     const isContactActivitiesFeatureOn = res.locals?.userFeatures?.includes(
-      'user-contact-activities'
+      CONTACT_ACTIVITY_FEATURE_FLAG
     )
 
     const auditLog = await getContactAuditLog(req, contactId, page).then(

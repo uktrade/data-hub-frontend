@@ -13,6 +13,9 @@ const {
 const userFeatures = require('../../middleware/user-features')
 
 const detailsFormRouter = require('./apps/details-form/router')
+const {
+  CONTACT_ACTIVITY_FEATURE_FLAG,
+} = require('../companies/apps/activity-feed/constants')
 
 router.param('interactionId', getInteractionDetails)
 
@@ -21,7 +24,7 @@ router.get(
   getInteractionsRequestBody,
   getInteractionCollectionForEntity,
   getInteractionSortForm,
-  userFeatures('user-contact-activities'),
+  userFeatures(CONTACT_ACTIVITY_FEATURE_FLAG),
   renderInteractionsForEntity
 )
 

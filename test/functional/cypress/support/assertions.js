@@ -594,6 +594,18 @@ const assertQueryParams = (key, value) => {
 }
 
 /**
+ * Asserts the key-value pair are defined within the query params
+ */
+const assertNotQueryParams = (key, value) => {
+  cy.url().should(
+    'not.include',
+    qs.stringify({
+      [key]: value,
+    })
+  )
+}
+
+/**
  * Assert the expected payload to the API
  */
 
@@ -736,6 +748,7 @@ module.exports = {
   assertChipsEmpty,
   assertFieldEmpty,
   assertQueryParams,
+  assertNotQueryParams,
   assertPayload,
   assertDateInput,
   assertErrorSummary,
