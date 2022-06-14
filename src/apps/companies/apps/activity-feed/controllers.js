@@ -275,7 +275,7 @@ async function fetchActivityFeedHandler(req, res, next) {
 
 async function fetchAventriEvent(req, res, next) {
   console.log('controller')
-  console.log(req.params.eventId)
+  // console.log(req.params.eventId)
   const id = req.params.eventId
   const formattedId = `dit:aventri:Event:${id}:Create`
 
@@ -285,7 +285,7 @@ async function fetchAventriEvent(req, res, next) {
   )
 
   const aventriEvent = aventriEventsResults.hits.hits[0]._source
-  console.log(aventriEvent)
+  // console.log(aventriEvent)
 
   return res.json({ aventriEvent })
 }

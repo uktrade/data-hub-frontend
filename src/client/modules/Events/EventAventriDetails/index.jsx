@@ -29,7 +29,7 @@ const EventAventriDetails = ({ aventriEvent }) => {
       breadcrumbs={breadcrumbs}
       heading="Events"
       pageTitle="Events"
-      useReactRouter={true}
+      useReactRouter={false}
     >
       <Task.Status
         name={TASK_GET_AVENTRI_EVENT_DETAILS}

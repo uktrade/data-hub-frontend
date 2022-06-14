@@ -31,11 +31,9 @@ async function postDetails(req, res, next) {
 }
 
 async function getEventDetails(req, res, next, eventId) {
-  const isActivitiesFeatureOn = res.locals?.userFeatures?.includes(
-    EVENT_ACTIVITY_FEATURE_FLAG
-  )
+  console.log('event details')
 
-  if (req.originalUrl.includes('aventri') && isActivitiesFeatureOn) {
+  if (req.originalUrl.includes('aventri')) {
     next()
   } else {
     try {

@@ -5,7 +5,6 @@ export const getAventriEventDetails = (id) => {
   return axios
     .get(urls.events.aventri.data(id))
     .then(({ data }) => {
-      console.log(data)
       return data
     })
     .catch(() => Promise.reject('Unable to load contact activity.'))

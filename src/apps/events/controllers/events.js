@@ -1,4 +1,5 @@
 const renderEventsView = async (req, res, next) => {
+  console.log('render events view ')
   try {
     const { user } = req.session
     const currentAdviserId = user.id
