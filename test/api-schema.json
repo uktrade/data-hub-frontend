@@ -7759,7 +7759,7 @@
           "referral_source_activity",
           "sector",
           "business_activities",
-          "estimated_land_date",
+          "estimated_land_date"
         ]
       },
       "IProjectTeamMember": {
