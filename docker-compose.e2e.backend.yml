@@ -45,7 +45,7 @@ services:
       POSTGRES_PASSWORD: password
 
   opensearch:
-    image: opensearchproject/opensearch:2.0.0
+    image: opensearchproject/opensearch:1.2.4
     environment:
       - plugins.security.disabled=true
       - cluster.name=cluster-001
