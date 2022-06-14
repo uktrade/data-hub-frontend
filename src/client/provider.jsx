@@ -104,6 +104,9 @@ import eventDetailsReducer from './modules/Events/EventDetails/reducer'
 import { ID as EVENTS_ID } from './modules/Events/CollectionList/state'
 import eventsReducer from './modules/Events/CollectionList/reducer'
 
+import { ID as AVENTRI_EVENT_ID } from './modules/Events/EventAventriDetails/state'
+import aventriEventsReducer from './modules/Events/EventAventriDetails/reducer'
+
 import {
   ORDERS_LIST_ID,
   COMPANY_ORDERS_LIST_ID,
@@ -192,6 +195,7 @@ const reducer = {
   [EVENTS_DETAILS_ID]: eventDetailsReducer,
   [ORDERS_LIST_ID]: ordersReducer,
   [COMPANY_ORDERS_LIST_ID]: ordersReducer,
+  [AVENTRI_EVENT_ID]: aventriEventsReducer,
 }
 
 const preloadedState = {

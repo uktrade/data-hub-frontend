@@ -4,6 +4,9 @@ import urls from '../../../../lib/urls'
 export const getAventriEventDetails = (id) => {
   return axios
     .get(urls.events.aventri.data(id))
-    .then(({ data }) => data)
+    .then(({ data }) => {
+      console.log(data)
+      return data
+    })
     .catch(() => Promise.reject('Unable to load contact activity.'))
 }
