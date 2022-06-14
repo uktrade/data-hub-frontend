@@ -3,12 +3,17 @@ import { useLocation } from 'react-router-dom'
 import pluralize from 'pluralize'
 import qs from 'qs'
 import styled from 'styled-components'
-import { FONT_WEIGHTS, HEADING_SIZES, SPACING } from '@govuk-react/constants'
+import {
+  FONT_SIZE,
+  FONT_WEIGHTS,
+  HEADING_SIZES,
+  SPACING,
+} from '@govuk-react/constants'
 import { H2, H3 } from '@govuk-react/heading'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { Link } from 'govuk-react'
-import { BLUE, GREY_1, GREY_2 } from 'govuk-colours'
+import { BLUE, GREY_2 } from 'govuk-colours'
 
 import urls from '../../../lib/urls'
 import {
@@ -17,6 +22,7 @@ import {
   RoutedPagination,
 } from '../../components'
 import Resource from '../../components/Resource'
+import { DARK_GREY } from '../../utils/colors'
 import { formatMediumDate } from '../../utils/date'
 import { decimal } from '../../utils/number-utils'
 
@@ -71,13 +77,14 @@ const ItemContent = styled('div')({
 })
 
 const ItemFooter = styled('div')({
-  color: GREY_1,
+  color: DARK_GREY,
+  fontSize: FONT_SIZE.SIZE_16,
   marginBottom: SPACING.SCALE_4,
 })
 
 const ListHeader = styled(H2)({
   marginTop: 0,
-  fontWeight: FONT_WEIGHTS.normal,
+  fontWeight: FONT_WEIGHTS.regular,
   fontSize: HEADING_SIZES.MEDIUM,
   marginBottom: 0,
 })
@@ -98,13 +105,20 @@ const PreHeading = styled('span')({
   marginBottom: SPACING.SCALE_1,
 })
 
+const SettingsLink = styled(Link)({
+  fontSize: FONT_SIZE.SIZE_19,
+})
+
 const RemindersHeaderRow = ({ totalItems }) => {
   const formattedTotal = decimal(totalItems)
   const counterSuffix = pluralize('reminders', totalItems)
   const actions = (
-    <Link data-test="reminders-settings-link" href="/reminders/settings">
+    <SettingsLink
+      data-test="reminders-settings-link"
+      href="/reminders/settings"
+    >
       Reminders settings
-    </Link>
+    </SettingsLink>
   )
   return (
     <StyledCollectionHeaderRow primary={true} actions={actions}>
