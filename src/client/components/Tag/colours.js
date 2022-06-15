@@ -1,7 +1,7 @@
 import { BLUE, WHITE } from 'govuk-colours'
 
 // Most of these colours aren't included as part of the govuk-colours package so we need to define them here. Currrently we only need them here, but we can lift them out into their own file if we start to use them elsewhere.
-const TAG_COLOURS = {
+export const TAG_COLOURS = {
   default: {
     colour: WHITE,
     background: BLUE,
@@ -43,5 +43,3 @@ const TAG_COLOURS = {
     background: '#fff7bf',
   },
 }
-
-export default TAG_COLOURS
