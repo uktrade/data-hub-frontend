@@ -1,4 +1,4 @@
-const LIKELIHOOD_TO_SUCCEED = {
+export const LIKELIHOOD_TO_SUCCEED = {
   1: {
     text: 'LOW',
     colour: 'red',
@@ -12,5 +12,3 @@ const LIKELIHOOD_TO_SUCCEED = {
     colour: 'green',
   },
 }
-
-export default LIKELIHOOD_TO_SUCCEED

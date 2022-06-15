@@ -1,11 +1,15 @@
 const { BLACK, GREY_1 } = require('govuk-colours')
 const { sortBy } = require('lodash')
 
-const LIKELIHOOD_TO_SUCCEED = require('../../../../../src/client/components/Pipeline/constants')
+const {
+  LIKELIHOOD_TO_SUCCEED,
+} = require('../../../../../src/client/components/Pipeline/constants')
 const inProgress = require('../../../../sandbox/fixtures/v4/pipeline-item/in-progress.json')
 const { currencyGBP } = require('../../../../../src/client/utils/number-utils')
 const leads = require('../../../../sandbox/fixtures/v4/pipeline-item/leads.json')
-const TAG_COLOURS = require('../../../../../src/client/components/Tag/colours')
+const {
+  TAG_COLOURS,
+} = require('../../../../../src/client/components/Tag/colours')
 const win = require('../../../../sandbox/fixtures/v4/pipeline-item/win.json')
 const urls = require('../../../../../src/lib/urls')
 const { format } = require('../../../../../src/client/utils/date')
@@ -97,12 +101,7 @@ function assertPipelineItem(
               .colour
           )
       } else {
-        const values = Object.values(LIKELIHOOD_TO_SUCCEED).map(
-          (item) => item.text
-        )
-        const regex = new RegExp(`${values.join('|')}`, 'g')
         cy.get('span[aria-label="Likelihood to succeed"]').should('not.exist')
-        cy.contains(regex).should('not.exist')
       }
 
       if (result.expected_win_date) {

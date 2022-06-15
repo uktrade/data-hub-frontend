@@ -15,7 +15,7 @@ import Tag from '../../components/Tag'
 import { newlineToBr } from '../../../lib/text-formatting'
 import { PipeLineItemPropType } from './types'
 import urls from '../../../lib/urls'
-import LIKELIHOOD_TO_SUCCEED from './constants'
+import { LIKELIHOOD_TO_SUCCEED } from './constants'
 
 const { format } = require('../../utils/date')
 

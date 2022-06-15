@@ -159,6 +159,8 @@ const describeSortList = (rows) => {
   }).forEach(([option, rows]) => describeSortListBy({ option, rows }))
 }
 
+export let exports = {}
+
 exports.expectedLists = {
   'List B': {
     deleteLinksTo: '/company-lists/75e14e32-292e-4d1b-a361-992d548251f7/delete',
