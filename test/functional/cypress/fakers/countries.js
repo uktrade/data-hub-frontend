@@ -11,5 +11,5 @@ const countries = [
 
 export const countryFaker = () => ({
   id: faker.datatype.uuid(),
-  name: faker.random.arrayElement(countries),
+  name: faker.helpers.arrayElement(countries),
 })
