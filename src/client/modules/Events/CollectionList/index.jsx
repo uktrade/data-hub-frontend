@@ -16,6 +16,10 @@ import {
 } from '../../../components'
 import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
 
+import ActivityCardWrapper from '../../../components/ActivityFeed/activities/card/ActivityCardWrapper'
+import ActivityCardSubject from '../../../components/ActivityFeed/activities/card/ActivityCardSubject'
+import ActivityCardMetadata from '../../../components/ActivityFeed/activities/card/ActivityCardMetadata'
+
 import {
   listSkeletonPlaceholder,
   CheckboxPlaceholder,
@@ -76,11 +80,18 @@ const EventsCollection = ({
     },
   }
 
+  const metadata = [
+    {
+      label: 'Event date',
+      value: '25 to 29 Mar 2019',
+    },
+  ]
+
   return (
     <DefaultLayout heading="Events" pageTitle="Events">
       <CheckUserFeatureFlag userFeatureFlagName={EVENT_ACTIVITY_FEATURE_FLAG}>
         {(isFeatureFlagOn) =>
-          !isFeatureFlagOn && (
+          !isFeatureFlagOn ? (
             <FilteredCollectionList
               {...props}
               collectionName="event"
@@ -168,6 +179,13 @@ const EventsCollection = ({
                 </FilterToggleSection>
               </CollectionFilters>
             </FilteredCollectionList>
+          ) : (
+            <ActivityCardWrapper dataTest="events-collection-list-activity">
+              <ActivityCardSubject dataTest="events-collection-list-activity-subject">
+                2019 DIT Latin America & Caribbean Roadshow
+              </ActivityCardSubject>
+              <ActivityCardMetadata metadata={metadata} />
+            </ActivityCardWrapper>
           )
         }
       </CheckUserFeatureFlag>
