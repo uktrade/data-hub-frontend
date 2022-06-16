@@ -9,5 +9,5 @@ const sectors = [
 export const sectorFaker = () => ({
   ancestors: [],
   id: faker.datatype.uuid(),
-  name: faker.random.arrayElement(sectors),
+  name: faker.helpers.arrayElement(sectors),
 })

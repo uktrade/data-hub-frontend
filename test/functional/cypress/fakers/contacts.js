@@ -40,21 +40,21 @@ const contactFaker = (overrides = {}) => ({
     trading_names: [faker.company.companyName(), faker.company.companyName()],
   },
   company_uk_region: {
-    name: faker.random.arrayElement(UK.REGIONS),
+    name: faker.helpers.arrayElement(UK.REGIONS),
     id: faker.datatype.uuid(),
   },
   company_sector: {
-    name: faker.random.arrayElement(SECTOR_NAMES),
+    name: faker.helpers.arrayElement(SECTOR_NAMES),
     id: faker.datatype.uuid(),
     ancestors: [],
   },
   primary: faker.datatype.boolean(),
   telephone_countrycode: UK.COUNTRY_CODE,
-  full_telephone_number: `+44 ${faker.random.arrayElement(
+  full_telephone_number: `+44 ${faker.helpers.arrayElement(
     UK.TELEPHONE_NUMBERS
   )}`,
-  telephone_number: faker.random.arrayElement(UK.TELEPHONE_NUMBERS),
-  telephone_alternative: faker.random.arrayElement(UK.TELEPHONE_NUMBERS),
+  telephone_number: faker.helpers.arrayElement(UK.TELEPHONE_NUMBERS),
+  telephone_alternative: faker.helpers.arrayElement(UK.TELEPHONE_NUMBERS),
   email: faker.unique(faker.internet.email).toLocaleLowerCase(),
   email_alternative: faker.unique(faker.internet.email),
   address_same_as_company: true,
@@ -62,7 +62,7 @@ const contactFaker = (overrides = {}) => ({
   address_2: faker.address.streetName(),
   address_town: faker.address.city(),
   address_county: faker.address.county(),
-  address_postcode: faker.random.arrayElement(UK.POST_CODES),
+  address_postcode: faker.helpers.arrayElement(UK.POST_CODES),
   address_country: {
     id: faker.datatype.uuid(),
     name: UK.NAME,
@@ -76,7 +76,7 @@ const contactFaker = (overrides = {}) => ({
   created_by: {
     ...userFaker(),
     dit_team: {
-      name: faker.random.arrayElement(DIT_TEAM_NAMES),
+      name: faker.helpers.arrayElement(DIT_TEAM_NAMES),
       id: faker.datatype.uuid(),
     },
   },

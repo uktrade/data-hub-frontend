@@ -31,7 +31,7 @@ const references = [
 const orderFaker = (overrides = {}) => ({
   ...jsf.generate(apiSchema.components.schemas.Order),
   id: faker.datatype.uuid(),
-  reference: faker.random.arrayElement(references),
+  reference: faker.helpers.arrayElement(references),
   company: {
     id: faker.datatype.uuid(),
     name: faker.company.companyName(),
@@ -42,11 +42,11 @@ const orderFaker = (overrides = {}) => ({
   },
   sector: sectorFaker(),
   uk_region: ukRegionFaker(),
-  status: faker.random.arrayElement(status),
+  status: faker.helpers.arrayElement(status),
   primary_market: countryFaker(),
   created_on: faker.date.past(),
   modified_on: faker.date.past(),
-  delivery_date: faker.random.arrayElement([null, faker.date.future()]),
+  delivery_date: faker.helpers.arrayElement([null, faker.date.future()]),
   ...overrides,
 })
 
