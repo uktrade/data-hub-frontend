@@ -9,12 +9,26 @@ updates:
     timezone: Europe/London
   open-pull-requests-limit: 10
   ignore:
-  - dependency-name: govuk-colours
+# When updating this list please ensure that a ticket for unblocking the update has been added to the TechEx backlog.
+  - dependency-name: cypress # TET-218
+    versions:
+    - "> 9.7.0"
+  - dependency-name: cypress-image-diff-js # TET-164
+    versions:
+    - "> 1.16.4"
+  - dependency-name: govuk-frontend # TET-219
     versions:
     - ">= 0"
-  - dependency-name: govuk-frontend
+  - dependency-name: react-redux # TET-154
     versions:
-    - ">= 0"
+    - "> 7.2.8"
+  - dependency-name: react-router-dom # TET-34
+    versions:
+    - "> 5.3.0"
+  - dependency-name: redis # TET-131
+    versions:
+    - "> 3.1.2"
+  # These dependencies are ignored as all Storybook addons should be updated as part of a single PR.
   - dependency-name: "@storybook/addon-a11y"
     versions:
     - ">= 0"
