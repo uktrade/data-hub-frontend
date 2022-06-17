@@ -111,7 +111,7 @@ LocalHeader.propTypes = {
       PropTypes.arrayOf(PropTypes.string).isRequired,
     ]),
   }),
-  heading: PropTypes.string,
+  heading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   headingLink: PropTypes.shape({
     url: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,

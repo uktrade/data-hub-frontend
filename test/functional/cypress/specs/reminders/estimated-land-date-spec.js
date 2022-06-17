@@ -48,7 +48,7 @@ describe('Estimated Land Date Reminders', () => {
 
     it('should render the heading', () => {
       cy.get('[data-test="heading"]').should(
-        'contain',
+        'have.text',
         'Reminders for approaching estimated land dates'
       )
     })

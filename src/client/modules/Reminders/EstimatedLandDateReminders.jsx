@@ -21,6 +21,7 @@ import {
   DefaultLayout,
   RoutedPagination,
 } from '../../components'
+import Heading from './Heading'
 import Resource from '../../components/Resource'
 import { DARK_GREY } from '../../utils/colors'
 import { formatMediumDate } from '../../utils/date'
@@ -99,12 +100,6 @@ const StyledCollectionHeaderRow = styled(CollectionHeaderRow)({
   alignItems: 'flex-end',
 })
 
-const PreHeading = styled('span')({
-  display: 'block',
-  fontWeight: FONT_WEIGHTS.regular,
-  marginBottom: SPACING.SCALE_1,
-})
-
 const SettingsLink = styled(Link)({
   fontSize: FONT_SIZE.SIZE_19,
 })
@@ -135,16 +130,14 @@ const EstimatedLandDateReminders = () => {
   const qsParams = qs.parse(location.search.slice(1))
   const page = parseInt(qsParams.page, 10)
   const title = 'Reminders for approaching estimated land dates'
-  const heading = (
-    <>
-      <PreHeading>Reminders for </PreHeading>approaching estimated land dates
-    </>
-  )
-
   return (
     <DefaultLayout
       pageTitle={title}
-      heading={heading}
+      heading={
+        <Heading preHeading="Reminders for">
+          approaching estimated land dates
+        </Heading>
+      }
       breadcrumbs={[{ link: urls.dashboard(), text: 'Home' }, { text: title }]}
     >
       <Resource

@@ -53,7 +53,7 @@ const DefaultLayout = ({
 }
 
 DefaultLayout.propTypes = {
-  heading: PropTypes.string.isRequired,
+  heading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   pageTitle: PropTypes.string.isRequired,
   children: PropTypes.element.isRequired,
 }
