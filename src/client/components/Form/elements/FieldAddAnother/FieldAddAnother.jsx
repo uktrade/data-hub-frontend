@@ -39,6 +39,8 @@ const FieldAddAnother = ({
   dataTestPrefix,
   itemName,
   initialChildGroupCount = 1,
+  limitChildGroupCount = Number.MAX_VALUE,
+  childCount,
   fieldGroupIds,
   initialise,
   add,
@@ -85,16 +87,19 @@ const FieldAddAnother = ({
               )}
             </StyledGroup>
           ))}
-        <StyledButton>
-          <SecondaryButton
-            onClick={addAnotherHandler}
-            aria-label={`Add a ${indexToOrdinal(
-              fieldGroupIds?.length || 0
-            )} ${itemName}`}
-          >
-            Add another {itemName}
-          </SecondaryButton>
-        </StyledButton>
+        {childCount < limitChildGroupCount && (
+          <StyledButton>
+            <SecondaryButton
+              data-test="add-another"
+              onClick={addAnotherHandler}
+              aria-label={`Add a ${indexToOrdinal(
+                fieldGroupIds?.length || 0
+              )} ${itemName}`}
+            >
+              Add another {itemName}
+            </SecondaryButton>
+          </StyledButton>
+        )}
       </FieldWrapper>
     </>
   )
@@ -107,6 +112,7 @@ FieldAddAnother.propTypes = {
   legend: PropTypes.string.isRequired,
   children: PropTypes.func,
   initialChildGroupCount: PropTypes.number,
+  limitChildGroupCount: PropTypes.number,
   // Props from redux state
   fieldGroupIds: PropTypes.arrayOf(
     PropTypes.shape({
@@ -116,10 +122,6 @@ FieldAddAnother.propTypes = {
   initialise: PropTypes.func,
   add: PropTypes.func,
   remove: PropTypes.func,
-}
-
-FieldAddAnother.defaultProps = {
-  initialChildGroupCount: 1,
 }
 
 export default multiInstance({
