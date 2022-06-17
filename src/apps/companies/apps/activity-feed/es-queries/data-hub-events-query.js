@@ -12,6 +12,4 @@ const dataHubEventsQuery = () => ({
   },
 })
 
-module.exports = {
-  dataHubEventsQuery,
-}
+module.exports = dataHubEventsQuery

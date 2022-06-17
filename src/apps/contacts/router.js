@@ -25,6 +25,7 @@ const { setInteractionsDetails } = require('./middleware/interactions')
 const interactionsRouter = require('../interactions/router.sub-app')
 const {
   fetchActivitiesForContact,
+  fetchDataHubEvents,
 } = require('../companies/apps/activity-feed/controllers')
 const userFeatures = require('../../middleware/user-features')
 const {
@@ -71,5 +72,7 @@ router.use(
 )
 
 router.get(urls.contacts.activity.data.route, fetchActivitiesForContact)
+
+router.get(urls.events.activity.data.route, fetchDataHubEvents)
 
 module.exports = router
