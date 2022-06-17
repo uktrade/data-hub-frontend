@@ -5,7 +5,7 @@ const dataHubEventsQuery = () => {
         must: [
           {
             term: {
-              'object.type': 'dit:Event',
+              'object.type': 'dit:dataHub:Event',
             },
           },
         ],
