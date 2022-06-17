@@ -12,6 +12,7 @@ export default (
     case FIELD_ADD_ANOTHER__INITIALISE:
       return {
         ...state,
+        childCount: initialChildGroupCount,
         fieldGroupIds: [...Array(initialChildGroupCount)].map(
           (value, index) => ({
             fieldGroupId: index,
@@ -26,6 +27,7 @@ export default (
         }, 0)
       return {
         ...state,
+        childCount: state.childCount + 1,
         fieldGroupIds: [
           ...state.fieldGroupIds,
           { fieldGroupId: maximumFieldIdValue + 1 },
@@ -34,6 +36,7 @@ export default (
     case FIELD_ADD_ANOTHER__REMOVE:
       return {
         ...state,
+        childCount: state.childCount - 1,
         fieldGroupIds: state.fieldGroupIds.filter(
           (item) => item.fieldGroupId !== fieldGroupId
         ),

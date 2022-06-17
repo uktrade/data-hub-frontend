@@ -20,6 +20,7 @@ describe('FieldAddAnother', () => {
           dataTestPrefix="test-field-"
           itemName="item"
           initialChildGroupCount={2}
+          limitChildGroupCount={4}
         >
           {({ groupIndex }) => (
             <div id={`test_${groupIndex}`}>Item {groupIndex} rendered</div>
@@ -74,6 +75,12 @@ describe('FieldAddAnother', () => {
 
       cy.get('[aria-label="2nd item"]')
     })
+
+    it('should not render the "Add another" button when the limit has been breached', () => {
+      clickAddAnotherButton()
+      clickAddAnotherButton()
+      cy.get('[data-test="add-another"]').should('not.exist')
+    })
   })
 
   context('When removing items', () => {
@@ -103,6 +110,14 @@ describe('FieldAddAnother', () => {
       getComponentItems().should('have.length', 2)
       cy.get('[data-test="test-field-0"]').contains('Item 1 rendered')
       cy.get('[data-test="test-field-1"]').contains('Item 2 rendered')
+    })
+
+    it('should render the "Add another" button when the limit has not been breached', () => {
+      clickAddAnotherButton()
+      clickAddAnotherButton()
+      cy.get('[data-test="add-another"]').should('not.exist')
+      removeFirstItem()
+      cy.get('[data-test="add-another"]').should('exist')
     })
   })
 })

@@ -73,6 +73,7 @@ storiesOf('Form/Form Elements/FieldAddAnother', module)
             dataTestPrefix="teams-field-"
             itemName="team member"
             initialChildGroupCount={initialValues.length}
+            limitChildGroupCount={4}
           >
             {({ groupIndex }) => (
               <>
