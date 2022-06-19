@@ -193,7 +193,7 @@
     "istanbul": "^0.4.5",
     "istanbul-lib-coverage": "^3.2.0",
     "js-beautify": "^1.14.0",
-    "jsdom": "^19.0.0",
+    "jsdom": "^20.0.0",
     "jsdom-global": "^3.0.2",
     "json-schema-faker": "^0.5.0-rcv.42",
     "lint-staged": "^13.0.2",
