@@ -66,7 +66,7 @@ Please view the dedicated [Docker readme](./docs/Docker.md).
     cp sample.env .env
     ```
 
-Steps 5 onwards differ depending on which API you are using. Skip to section 'Running with the local API' or 'Running with other APIs (e.g. staging)' depending on what you want to do.
+Steps 5 onwards differ depending on which API you are using. Skip to section 'Running with the local API' or 'Running with other APIs (e.g. staging)' depending on what you want to do. If you have any issues, please consult the [troubleshooting guidance](./docs/Troubleshooting.md).
 
 **Running with the local API**
 
