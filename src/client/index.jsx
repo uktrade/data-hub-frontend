@@ -254,6 +254,7 @@ import {
   TASK_GET_ELD_REMINDER_SUBSCRIPTIONS,
   TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS,
   TASK_GET_ESTIMATED_LAND_DATE_REMINDERS,
+  TASK_GET_NO_RECENT_INTERACTION_REMINDERS,
 } from '../client/modules/Reminders/state'
 
 import Footer from '../client/components/Footer'
@@ -421,6 +422,8 @@ function App() {
         [TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS]: reminders.saveEldSubscriptions,
         [TASK_GET_ESTIMATED_LAND_DATE_REMINDERS]:
           reminders.getEstimatedLandDateReminders,
+        [TASK_GET_NO_RECENT_INTERACTION_REMINDERS]:
+          reminders.getNoRecentInteractionReminders,
         [TASK_GET_CONTACT_ACTIVITIES]: getContactActivities,
         [TASK_ARCHIVE_CONTACT]: archiveContact,
         [TASK_GET_USER_FEATURE_FLAGS]: getUserFeatureFlags,

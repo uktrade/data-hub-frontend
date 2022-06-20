@@ -51,3 +51,13 @@ export const getEstimatedLandDateReminders = ({ page = 1, limit = 10 } = {}) =>
       params: { limit, offset: getPageOffset({ page, limit }) },
     })
     .then(({ data }) => data)
+
+export const getNoRecentInteractionReminders = ({
+  page = 1,
+  limit = 10,
+} = {}) =>
+  apiProxyAxios
+    .get('/v4/reminder/no-recent-investment-interaction', {
+      params: { limit, offset: getPageOffset({ page, limit }) },
+    })
+    .then(({ data }) => data)

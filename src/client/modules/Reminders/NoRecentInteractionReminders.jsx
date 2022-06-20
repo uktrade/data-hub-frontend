@@ -5,21 +5,21 @@ import qs from 'qs'
 import Resource from '../../components/Resource'
 
 import RemindersCollection from './RemindersCollection'
-import { TASK_GET_ESTIMATED_LAND_DATE_REMINDERS } from './state'
+import { TASK_GET_NO_RECENT_INTERACTION_REMINDERS } from './state'
 
-const EstimatedLandDateReminders = () => {
+const NoRecentInteractionReminders = () => {
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
   const page = parseInt(qsParams.page, 10)
   return (
     <Resource
-      name={TASK_GET_ESTIMATED_LAND_DATE_REMINDERS}
-      id={TASK_GET_ESTIMATED_LAND_DATE_REMINDERS}
+      name={TASK_GET_NO_RECENT_INTERACTION_REMINDERS}
+      id={TASK_GET_NO_RECENT_INTERACTION_REMINDERS}
       payload={{ page }}
     >
       {({ results, count }) => (
         <RemindersCollection
-          subject="approaching estimated land dates"
+          subject="projects with no recent interaction"
           results={results}
           count={count}
           page={page}
@@ -29,4 +29,4 @@ const EstimatedLandDateReminders = () => {
   )
 }
 
-export default EstimatedLandDateReminders
+export default NoRecentInteractionReminders
