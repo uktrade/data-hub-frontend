@@ -65,8 +65,13 @@ exports.activityFeed = function (req, res) {
     get(req.body, "query.bool.must[0].term['object.type']") ===
     'dit:aventri:Event'
 
+  var getAventriId = (str) => str.match(/\d+/g)[0]
+
   if (isAventriEventQuery) {
-    return res.json(aventriEvents)
+    var aventriEventIdQuery = req.body.query.bool.must[1]
+    var aventriId = getAventriId(aventriEventIdQuery.terms.id[0])
+
+    return res.json(aventriId ? aventriEvents : noActivity)
   }
 
   // Data Hub activity
