@@ -1,4 +1,5 @@
 import {
+  EVENTS__ACTIVITY_STREAM_LOADED,
   EVENTS__LOADED,
   EVENTS__METADATA_LOADED,
   EVENTS__SELECTED_ORGANISER,
@@ -28,6 +29,11 @@ export default (state = initialState, { type, result }) => {
       return {
         ...state,
         selectedOrganisers: result,
+      }
+    case EVENTS__ACTIVITY_STREAM_LOADED:
+      return {
+        ...state,
+        activityStreamEvents: result,
       }
     default:
       return state

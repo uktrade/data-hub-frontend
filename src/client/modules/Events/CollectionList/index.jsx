@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 
 import {
+  EVENTS__ACTIVITY_STREAM_LOADED,
   EVENTS__LOADED,
   EVENTS__METADATA_LOADED,
   EVENTS__SELECTED_ORGANISER,
@@ -27,13 +28,18 @@ import {
   ToggleHeadingPlaceholder,
 } from '../../../components/SkeletonPlaceholder'
 
+import { formatStartAndEndDate } from '../../../utils/date'
+
 import { LABELS } from './constants'
+
+import Task from '../../../components/Task'
 
 import {
   ID,
   TASK_GET_EVENTS_LIST,
   TASK_GET_EVENTS_METADATA,
   TASK_GET_EVENTS_ORGANISER_NAME,
+  TASK_GET_ACTIVITY_STREAM_EVENTS,
   state2props,
 } from './state'
 
@@ -41,6 +47,7 @@ const EventsCollection = ({
   payload,
   optionMetadata,
   selectedFilters,
+  activityStreamEvents,
   ...props
 }) => {
   const collectionListTask = {
@@ -80,12 +87,7 @@ const EventsCollection = ({
     },
   }
 
-  const metadata = [
-    {
-      label: 'Event date',
-      value: '25 to 29 Mar 2019',
-    },
-  ]
+  const events = activityStreamEvents?.dataHubEvents
 
   return (
     <DefaultLayout heading="Events" pageTitle="Events">
@@ -180,12 +182,35 @@ const EventsCollection = ({
               </CollectionFilters>
             </FilteredCollectionList>
           ) : (
-            <ActivityCardWrapper dataTest="events-collection-list-activity">
-              <ActivityCardSubject dataTest="events-collection-list-activity-subject">
-                2019 DIT Latin America & Caribbean Roadshow
-              </ActivityCardSubject>
-              <ActivityCardMetadata metadata={metadata} />
-            </ActivityCardWrapper>
+            <Task.Status
+              name={TASK_GET_ACTIVITY_STREAM_EVENTS}
+              id={ID}
+              progressMessage="Loading Data Hub events"
+              startOnRender={{
+                onSuccessDispatch: EVENTS__ACTIVITY_STREAM_LOADED,
+              }}
+            >
+              {() =>
+                events?.map((event) => (
+                  <ActivityCardWrapper dataTest="events-collection-list-activity">
+                    <ActivityCardSubject dataTest="events-collection-list-activity-subject">
+                      {event.object.name}
+                    </ActivityCardSubject>
+                    <ActivityCardMetadata
+                      metadata={[
+                        {
+                          label: 'Event date',
+                          value: formatStartAndEndDate(
+                            event.object.startTime,
+                            event.object.endTime
+                          ),
+                        },
+                      ]}
+                    />
+                  </ActivityCardWrapper>
+                ))
+              }
+            </Task.Status>
           )
         }
       </CheckUserFeatureFlag>

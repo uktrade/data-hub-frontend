@@ -291,7 +291,7 @@ async function fetchDataHubEvents(req, res, next) {
   try {
     const dataHubEventsResults = await fetchActivityFeed(
       req,
-      dataHubEventsQuery
+      dataHubEventsQuery()
     )
 
     let dataHubEvents = dataHubEventsResults.hits.hits.map((hit) => hit._source)

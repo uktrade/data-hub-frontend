@@ -1,3 +1,4 @@
+import axios from 'axios'
 import urls from '../../../../lib/urls'
 import { apiProxyAxios } from '../../../components/Task/utils'
 import { getMetadataOptions } from '../../../metadata'
@@ -48,4 +49,10 @@ const getEventsMetadata = () =>
     }))
     .catch(handleError)
 
-export { getEvents, getEventsMetadata }
+const getEventsFromActivityStream = () =>
+  axios
+    .get(urls.events.activity.data())
+    .then(({ data }) => data)
+    .catch(() => Promise.reject('Unable to load Data Hub events.'))
+
+export { getEvents, getEventsMetadata, getEventsFromActivityStream }
