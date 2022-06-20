@@ -33,6 +33,7 @@ const FieldRadios = ({
   inline,
   initialValue,
   options,
+  ...props
 }) => {
   const { value, error, touched, onChange, onBlur } = useField({
     name,
@@ -42,7 +43,9 @@ const FieldRadios = ({
   })
 
   return (
-    <FieldWrapper {...{ name, label, legend, hint, error, bigLegend }}>
+    <FieldWrapper
+      {...{ ...props, name, label, legend, hint, error, bigLegend }}
+    >
       <MultiChoice meta={{ error, touched }}>
         {options.map(
           ({

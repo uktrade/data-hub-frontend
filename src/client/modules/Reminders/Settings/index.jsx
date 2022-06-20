@@ -11,7 +11,7 @@ import { DefaultLayout, RemindersToggleSection } from '../../../components'
 import Resource from '../../../components/Resource'
 import urls from '../../../../lib/urls'
 
-import { TASK_GET_REMINDER_SUBSCRIPTIONS } from '../state'
+import { TASK_GET_ALL_REMINDER_SUBSCRIPTIONS } from '../state'
 
 const ToggleSectionContainer = styled('div')({
   marginTop: SPACING.SCALE_3,
@@ -49,8 +49,8 @@ const RemindersSettings = () => {
   const openNRI = get(qsParams, 'no_recent_interaction', false)
   return (
     <Resource
-      name={TASK_GET_REMINDER_SUBSCRIPTIONS}
-      id={TASK_GET_REMINDER_SUBSCRIPTIONS}
+      name={TASK_GET_ALL_REMINDER_SUBSCRIPTIONS}
+      id={TASK_GET_ALL_REMINDER_SUBSCRIPTIONS}
     >
       {({ estimatedLandDate, noRecentInteraction }) => (
         <DefaultLayout
@@ -67,18 +67,20 @@ const RemindersSettings = () => {
               <StyledTable data-test="estimated-land-date-table">
                 <Table.Row>
                   <StyledCellHeader>Reminders</StyledCellHeader>
-                  <Table.Cell>{estimatedLandDate.reminderDays}</Table.Cell>
+                  <Table.Cell>
+                    {estimatedLandDate.formattedReminderDays}
+                  </Table.Cell>
                 </Table.Row>
                 <Table.Row>
                   <StyledCellHeader>Email notifications</StyledCellHeader>
                   <Table.Cell>
-                    {estimatedLandDate.emailRemindersEnabled}
+                    {estimatedLandDate.emailRemindersOnOff}
                   </Table.Cell>
                 </Table.Row>
               </StyledTable>
               <StyledEditLink
                 data-test="estimated-land-date-link"
-                href={'/'}
+                href={urls.reminders.settings.estimatedLandDate()}
                 aria-label="edit"
               >
                 Edit
@@ -94,12 +96,14 @@ const RemindersSettings = () => {
               <StyledTable data-test="no-recent-interaction-table">
                 <Table.Row>
                   <StyledCellHeader>Reminders</StyledCellHeader>
-                  <Table.Cell>{noRecentInteraction.reminderDays}</Table.Cell>
+                  <Table.Cell>
+                    {noRecentInteraction.formattedReminderDays}
+                  </Table.Cell>
                 </Table.Row>
                 <Table.Row>
                   <StyledCellHeader>Email notifications</StyledCellHeader>
                   <Table.Cell>
-                    {noRecentInteraction.emailRemindersEnabled}
+                    {noRecentInteraction.emailRemindersOnOff}
                   </Table.Cell>
                 </Table.Row>
               </StyledTable>

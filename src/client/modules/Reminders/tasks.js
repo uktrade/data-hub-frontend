@@ -1,36 +1,49 @@
 import { getPageOffset } from '../../utils/pagination'
 import { apiProxyAxios } from '../../components/Task/utils'
-import { transformDays } from './transformers'
+import { formatDays } from './transformers'
 import { settings } from './constants'
 
-const transformSubscriptionsResponse = ([esl, nri]) => ({
+const transformAllSubscriptions = ([eld, nri]) => ({
   estimatedLandDate: {
-    reminderDays: transformDays(
-      esl.data.reminder_days.sort((a, b) => a - b).reverse(),
+    formattedReminderDays: formatDays(
+      eld.data.reminder_days.sort((a, b) => a - b).reverse(),
       'days before the estimated land date'
     ),
-    emailRemindersEnabled: esl.data.email_reminders_enabled
+    emailRemindersOnOff: eld.data.email_reminders_enabled
       ? settings.ON
       : settings.OFF,
   },
   noRecentInteraction: {
-    reminderDays: transformDays(
+    formattedReminderDays: formatDays(
       nri.data.reminder_days.sort((a, b) => a - b),
       'days after the last interaction'
     ),
-    emailRemindersEnabled: nri.data.email_reminders_enabled
+    emailRemindersOnOff: nri.data.email_reminders_enabled
       ? settings.ON
       : settings.OFF,
   },
 })
 
-export const getSubscriptions = () =>
+export const getAllSubscriptions = () =>
   Promise.all([
     apiProxyAxios.get('/v4/reminder/subscription/estimated-land-date'),
     apiProxyAxios.get(
       '/v4/reminder/subscription/no-recent-investment-interaction'
     ),
-  ]).then(transformSubscriptionsResponse)
+  ]).then(transformAllSubscriptions)
+
+export const getEldSubscriptions = () =>
+  apiProxyAxios
+    .get('/v4/reminder/subscription/estimated-land-date')
+    .then(({ data }) => ({
+      estimatedLandDate: {
+        reminderDays: data.reminder_days,
+        emailRemindersEnabled: data.email_reminders_enabled,
+      },
+    }))
+
+export const saveEldSubscriptions = (payload) =>
+  apiProxyAxios.patch('/v4/reminder/subscription/estimated-land-date', payload)
 
 export const getEstimatedLandDateReminders = ({ page = 1, limit = 10 } = {}) =>
   apiProxyAxios

@@ -86,7 +86,7 @@ describe('Estimated Land Date Reminders', () => {
     it('should include a link to the reminder settings', () => {
       cy.get('[data-test="reminders-settings-link"]')
         .should('contain', 'Reminders settings')
-        .should('have.attr', 'href', urls.reminders.settings())
+        .should('have.attr', 'href', urls.reminders.settings.index())
     })
 
     it('should include a list of reminders', () => {

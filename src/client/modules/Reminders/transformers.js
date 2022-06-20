@@ -14,7 +14,7 @@ import { settings } from './constants'
  * [35, 40, 60, 80] -> '35, 40, 60 and 80 days after the last interaction'
  * ...
  */
-export const transformDays = (days, message) =>
+export const formatDays = (days, message) =>
   isEmpty(days)
     ? settings.OFF
     : `${days.join(', ').replace(/,([^,]*)$/, ' and$1')} ${message}`

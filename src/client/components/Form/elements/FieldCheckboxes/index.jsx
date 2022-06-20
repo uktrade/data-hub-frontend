@@ -37,12 +37,16 @@ const FieldCheckboxes = ({
   const { setFieldValue } = useFormContext()
 
   const onChange = (event) => {
+    const eventTargetName = isNaN(event.target.name)
+      ? event.target.name
+      : parseInt(event.target.name, 10)
+
     if (event.target.checked) {
-      setFieldValue(name, [...value, event.target.name])
+      setFieldValue(name, [...value, eventTargetName])
     } else {
       setFieldValue(
         name,
-        value.filter((v) => v !== event.target.name)
+        value.filter((v) => v !== eventTargetName)
       )
     }
   }
