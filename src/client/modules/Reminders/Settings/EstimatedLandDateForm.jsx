@@ -49,7 +49,7 @@ const EstimatedLandDateForm = () => (
     ]}
   >
     <Form
-      id="reminders-subscriptions-eld"
+      id="reminders-settings-estimated-land-date"
       initialValuesTaskName={TASK_GET_ELD_REMINDER_SUBSCRIPTIONS}
       submissionTaskName={TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS}
       redirectTo={() => urls.reminders.settings.index()}
@@ -57,7 +57,7 @@ const EstimatedLandDateForm = () => (
         email_reminders_enabled: emailRemindersEnabled === OPTION_YES,
         reminder_days: reminderDays ? reminderDays : [],
       })}
-      analyticsFormName="Notify settings - estimated land date"
+      analyticsFormName="remindersSettingsEstimatedLandDate"
       flashMessage={() => 'Settings updated'}
       cancelRedirectTo={() => urls.reminders.settings.index()}
     >

@@ -495,6 +495,7 @@ module.exports = {
     settings: {
       index: url('/reminders/settings'),
       estimatedLandDate: url('/reminders/settings/estimated-land-date'),
+      noRecentInteraction: url('/reminders/settings/no-recent-interaction'),
     },
   },
 }

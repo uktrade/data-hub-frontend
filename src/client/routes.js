@@ -9,6 +9,7 @@ import OmisCollectionList from './modules/Omis/CollectionList'
 import {
   RemindersSettings,
   EstimatedLandDateForm,
+  NoRecentInteractionForm,
   EstimatedLandDateReminders,
   NoRecentInteractionReminders,
 } from './modules/Reminders'
@@ -94,6 +95,11 @@ const routes = {
       path: '/reminders/settings/estimated-land-date',
       module: 'datahub:companies',
       component: EstimatedLandDateForm,
+    },
+    {
+      path: '/reminders/settings/no-recent-interaction',
+      module: 'datahub:companies',
+      component: NoRecentInteractionForm,
     },
   ],
 }

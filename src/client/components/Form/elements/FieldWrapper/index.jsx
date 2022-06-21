@@ -11,12 +11,10 @@ import {
   SPACING,
   BODY_SIZES,
 } from '@govuk-react/constants'
-import Paragraph from '@govuk-react/paragraph'
 
 const StyledFormGroup = styled(FormGroup)`
   ${(props) => {
     const isReduced = props.reduced
-    const hasReducedPadding = props.reducedPadding
     const hasHint = !!props.hint
 
     return `
@@ -38,7 +36,7 @@ const StyledFormGroup = styled(FormGroup)`
       }
     `
     }
-    ${hasReducedPadding ? `padding: 8px 8px 3px !important; ` : `padding: 8px`};
+    padding: 8px;
     ${hasHint ? `padding-bottom: ${SPACING.SCALE_1};` : `padding-bottom: 8px;`};
     `
   }}
@@ -145,7 +143,6 @@ const FieldWrapper = ({
   showBorder,
   children,
   reduced,
-  reducedPadding,
   groupId,
   ...rest
 }) => (
@@ -154,7 +151,6 @@ const FieldWrapper = ({
     data-test={`field-${name}`}
     reduced={reduced}
     hint={hint}
-    reducedPadding={reducedPadding}
     {...rest}
   >
     <FieldInner
@@ -169,14 +165,11 @@ const FieldWrapper = ({
           {label}
         </StyledLabel>
       )}
-      {hint &&
-        (showBorder ? (
-          <Paragraph>{hint}</Paragraph>
-        ) : (
-          <StyledHint data-test="hint-text" error={error}>
-            {hint}
-          </StyledHint>
-        ))}
+      {hint && (
+        <StyledHint data-test="hint-text" error={error}>
+          {hint}
+        </StyledHint>
+      )}
       {children}
     </FieldInner>
   </StyledFormGroup>

@@ -1,6 +1,6 @@
 import { getPageOffset } from '../../utils/pagination'
 import { apiProxyAxios } from '../../components/Task/utils'
-import { formatDays } from './transformers'
+import { formatDays, transformReminderDaysToForm } from './transformers'
 import { settings } from './constants'
 
 const transformAllSubscriptions = ([eld, nri]) => ({
@@ -44,6 +44,23 @@ export const getEldSubscriptions = () =>
 
 export const saveEldSubscriptions = (payload) =>
   apiProxyAxios.patch('/v4/reminder/subscription/estimated-land-date', payload)
+
+export const getNriSubscriptions = () =>
+  apiProxyAxios
+    .get('/v4/reminder/subscription/no-recent-investment-interaction')
+    .then(({ data }) => ({
+      ...transformReminderDaysToForm(
+        [...data.reminder_days].sort((a, b) => a - b)
+      ),
+      reminder_days: data.reminder_days,
+      email_reminders_enabled: data.email_reminders_enabled,
+    }))
+
+export const saveNriSubscriptions = (payload) =>
+  apiProxyAxios.patch(
+    '/v4/reminder/subscription/no-recent-investment-interaction',
+    payload
+  )
 
 export const getEstimatedLandDateReminders = ({ page = 1, limit = 10 } = {}) =>
   apiProxyAxios

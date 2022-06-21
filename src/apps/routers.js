@@ -17,6 +17,7 @@ const reactRoutes = [
   '/reminders/no-recent-interaction',
   '/reminders/settings',
   '/reminders/settings/estimated-land-date',
+  '/reminders/settings/no-recent-interaction',
   '/omis',
   '/access-denied',
 ]
