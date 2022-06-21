@@ -42,6 +42,7 @@ import {
 } from './state'
 
 const EventsCollection = ({
+  dataHubEvents,
   payload,
   optionMetadata,
   selectedFilters,
@@ -192,12 +193,10 @@ const EventsCollection = ({
                 onSuccessDispatch: EVENTS__ACTIVITY_STREAM_LOADED,
               }}
             >
-              <ActivityCardWrapper dataTest="events-collection-list-activity">
-                <ActivityCardSubject dataTest="events-collection-list-activity-subject">
-                  2019 DIT Latin America & Caribbean Roadshow
-                </ActivityCardSubject>
-                <ActivityCardMetadata metadata={metadata} />
-              </ActivityCardWrapper>
+              {() => {
+                console.log(dataHubEvents)
+                return <p>events</p>
+              }}
             </Task.Status>
           )
         }

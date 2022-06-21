@@ -244,7 +244,7 @@ module.exports = {
   },
   events: {
     activity: {
-      data: url('events/activity/data'),
+      data: url('/events', '/activity/data'),
     },
     index: url('/events', PRIMARY_LINK_PARAMS.events),
     create: url('/events/create'),
