@@ -9,6 +9,7 @@ import {
   RemindersSettings,
   EstimatedLandDateForm,
   EstimatedLandDateReminders,
+  NoRecentInteractionReminders,
 } from './modules/Reminders'
 
 const routes = {
@@ -72,6 +73,11 @@ const routes = {
       path: '/reminders/estimated-land-date',
       module: 'datahub:companies',
       component: EstimatedLandDateReminders,
+    },
+    {
+      path: '/reminders/no-recent-interaction',
+      module: 'datahub:companies',
+      component: NoRecentInteractionReminders,
     },
     {
       path: '/reminders/settings',
