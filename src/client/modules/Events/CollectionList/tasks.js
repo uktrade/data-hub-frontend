@@ -49,10 +49,10 @@ const getEventsMetadata = () =>
     }))
     .catch(handleError)
 
-const getEventsFromActivityStream = () =>
+const getDataHubEvents = () =>
   axios
     .get(urls.events.activity.data())
     .then(({ data }) => data)
     .catch(() => Promise.reject('Unable to load Data Hub events.'))
 
-export { getEvents, getEventsMetadata, getEventsFromActivityStream }
+export { getEvents, getEventsMetadata, getDataHubEvents }

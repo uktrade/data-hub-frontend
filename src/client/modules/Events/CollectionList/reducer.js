@@ -1,5 +1,5 @@
 import {
-  EVENTS__ACTIVITY_STREAM_LOADED,
+  EVENTS__DATA_HUB_LOADED,
   EVENTS__LOADED,
   EVENTS__METADATA_LOADED,
   EVENTS__SELECTED_ORGANISER,
@@ -30,10 +30,10 @@ export default (state = initialState, { type, result }) => {
         ...state,
         selectedOrganisers: result,
       }
-    case EVENTS__ACTIVITY_STREAM_LOADED:
+    case EVENTS__DATA_HUB_LOADED:
       return {
         ...state,
-        activityStreamEvents: result,
+        dataHubEvents: result,
       }
     default:
       return state

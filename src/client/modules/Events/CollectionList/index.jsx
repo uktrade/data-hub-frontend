@@ -1,9 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
+import { SPACING } from '@govuk-react/constants'
 import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 
 import {
-  EVENTS__ACTIVITY_STREAM_LOADED,
+  EVENTS__DATA_HUB_LOADED,
   EVENTS__LOADED,
   EVENTS__METADATA_LOADED,
   EVENTS__SELECTED_ORGANISER,
@@ -17,18 +19,12 @@ import {
 } from '../../../components'
 import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
 
-import ActivityCardWrapper from '../../../components/ActivityFeed/activities/card/ActivityCardWrapper'
-import ActivityCardSubject from '../../../components/ActivityFeed/activities/card/ActivityCardSubject'
-import ActivityCardMetadata from '../../../components/ActivityFeed/activities/card/ActivityCardMetadata'
-
 import {
   listSkeletonPlaceholder,
   CheckboxPlaceholder,
   InputPlaceholder,
   ToggleHeadingPlaceholder,
 } from '../../../components/SkeletonPlaceholder'
-
-import { formatStartAndEndDate } from '../../../utils/date'
 
 import { LABELS } from './constants'
 
@@ -39,15 +35,17 @@ import {
   TASK_GET_EVENTS_LIST,
   TASK_GET_EVENTS_METADATA,
   TASK_GET_EVENTS_ORGANISER_NAME,
-  TASK_GET_ACTIVITY_STREAM_EVENTS,
+  TASK_GET_DATA_HUB_EVENTS,
   state2props,
 } from './state'
+
+import Activity from '../../../components/ActivityFeed/Activity'
 
 const EventsCollection = ({
   payload,
   optionMetadata,
   selectedFilters,
-  activityStreamEvents,
+  dataHubEvents,
   ...props
 }) => {
   const collectionListTask = {
@@ -87,7 +85,16 @@ const EventsCollection = ({
     },
   }
 
-  const events = activityStreamEvents?.dataHubEvents
+  const events = dataHubEvents?.dataHubEvents
+
+  const EventsList = styled('ol')`
+    list-style-type: none;
+    margin-top: ${SPACING.SCALE_2};
+
+    & > li {
+      margin-bottom: ${SPACING.SCALE_2};
+    }
+  `
 
   return (
     <DefaultLayout heading="Events" pageTitle="Events">
@@ -183,33 +190,22 @@ const EventsCollection = ({
             </FilteredCollectionList>
           ) : (
             <Task.Status
-              name={TASK_GET_ACTIVITY_STREAM_EVENTS}
+              name={TASK_GET_DATA_HUB_EVENTS}
               id={ID}
               progressMessage="Loading Data Hub events"
               startOnRender={{
-                onSuccessDispatch: EVENTS__ACTIVITY_STREAM_LOADED,
+                onSuccessDispatch: EVENTS__DATA_HUB_LOADED,
               }}
             >
-              {() =>
-                events?.map((event) => (
-                  <ActivityCardWrapper dataTest="events-collection-list-activity">
-                    <ActivityCardSubject dataTest="events-collection-list-activity-subject">
-                      {event.object.name}
-                    </ActivityCardSubject>
-                    <ActivityCardMetadata
-                      metadata={[
-                        {
-                          label: 'Event date',
-                          value: formatStartAndEndDate(
-                            event.object.startTime,
-                            event.object.endTime
-                          ),
-                        },
-                      ]}
-                    />
-                  </ActivityCardWrapper>
-                ))
-              }
+              {() => (
+                <EventsList>
+                  {events?.map((event, index) => (
+                    <li key={`data-hub-event-${index}`}>
+                      <Activity activity={event} />
+                    </li>
+                  ))}
+                </EventsList>
+              )}
             </Task.Status>
           )
         }
