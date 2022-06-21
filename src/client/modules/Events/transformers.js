@@ -132,4 +132,13 @@ const transformResponseToEventDetails = ({
   disabledOn: disabled_on,
 })
 
-export { transformResponseToEventCollection, transformResponseToEventDetails }
+const transformResponseToEventAventriDetails = ({ id, object }) => ({
+  id,
+  name: object?.name,
+})
+
+export {
+  transformResponseToEventCollection,
+  transformResponseToEventDetails,
+  transformResponseToEventAventriDetails,
+}
