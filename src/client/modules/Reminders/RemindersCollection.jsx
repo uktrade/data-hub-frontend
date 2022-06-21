@@ -17,6 +17,7 @@ import { BLUE, GREY_2 } from 'govuk-colours'
 import urls from '../../../lib/urls'
 import {
   CollectionHeaderRow,
+  CollectionSort,
   DefaultLayout,
   RoutedPagination,
 } from '../../components'
@@ -121,9 +122,26 @@ const RemindersHeaderRow = ({ totalItems }) => {
   )
 }
 
+const sortOptions = [
+  {
+    name: 'Most recent',
+    value: '-created_on',
+  },
+  {
+    name: 'Oldest',
+    value: 'created_on',
+  },
+]
+const maxItemsToPaginate = 10000
+const itemsPerPage = 10
+
 const RemindersCollection = ({ subject, results, count, page }) => {
   const location = useLocation()
   const title = `Reminders for ${subject}`
+  const totalPages = Math.ceil(
+    Math.min(count, maxItemsToPaginate) / itemsPerPage
+  )
+
   return (
     <DefaultLayout
       pageTitle={title}
@@ -167,6 +185,7 @@ const RemindersCollection = ({ subject, results, count, page }) => {
         </GridCol>
         <GridCol>
           <RemindersHeaderRow totalItems={count} />
+          <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
           <RemindersList data-test="reminders-list">
             {results.map(({ id, created_on, event, project }) => (
               <RemindersListItem key={id} data-test="reminders-list-item">

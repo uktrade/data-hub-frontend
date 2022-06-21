@@ -62,19 +62,24 @@ export const saveNriSubscriptions = (payload) =>
     payload
   )
 
-export const getEstimatedLandDateReminders = ({ page = 1, limit = 10 } = {}) =>
+export const getEstimatedLandDateReminders = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) =>
   apiProxyAxios
     .get('/v4/reminder/estimated-land-date', {
-      params: { limit, offset: getPageOffset({ page, limit }) },
+      params: { sortby, limit, offset: getPageOffset({ page, limit }) },
     })
     .then(({ data }) => data)
 
 export const getNoRecentInteractionReminders = ({
+  sortby = '-created_on',
   page = 1,
   limit = 10,
 } = {}) =>
   apiProxyAxios
     .get('/v4/reminder/no-recent-investment-interaction', {
-      params: { limit, offset: getPageOffset({ page, limit }) },
+      params: { sortby, limit, offset: getPageOffset({ page, limit }) },
     })
     .then(({ data }) => data)

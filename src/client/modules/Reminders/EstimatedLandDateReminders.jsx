@@ -15,7 +15,7 @@ const EstimatedLandDateReminders = () => {
     <Resource
       name={TASK_GET_ESTIMATED_LAND_DATE_REMINDERS}
       id={TASK_GET_ESTIMATED_LAND_DATE_REMINDERS}
-      payload={{ page }}
+      payload={{ page, sortby: qsParams.sortby }}
     >
       {({ results, count }) => (
         <RemindersCollection
