@@ -51,7 +51,7 @@ export const ACTIVITY_TYPE = {
   AventriAttendee: ['dit:aventri:Attendee'],
   CompaniesHouseAccount: ['dit:Accounts'],
   CompaniesHouseCompany: ['dit:Company'],
-  DataHubEvents: ['dit:dataHub:Event'],
+  DataHubEvent: ['dit:dataHub:Event'],
   HmrcExporter: ['dit:Export'],
   Interaction: ['dit:Interaction', 'dit:ServiceDelivery'],
   InvestmentProject: ['dit:InvestmentProject'],

@@ -85,8 +85,6 @@ const EventsCollection = ({
     },
   }
 
-  const events = dataHubEvents?.dataHubEvents
-
   const EventsList = styled('ol')`
     list-style-type: none;
     margin-top: ${SPACING.SCALE_2};
@@ -199,7 +197,7 @@ const EventsCollection = ({
             >
               {() => (
                 <EventsList>
-                  {events?.map((event, index) => (
+                  {dataHubEvents?.map((event, index) => (
                     <li key={`data-hub-event-${index}`}>
                       <Activity activity={event} />
                     </li>

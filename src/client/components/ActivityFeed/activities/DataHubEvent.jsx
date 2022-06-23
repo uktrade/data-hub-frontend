@@ -9,7 +9,7 @@ import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 
-export default function DataHubEvents({ activity: event }) {
+export default function DataHubEvent({ activity: event }) {
   const eventObject = event.object
   const name = eventObject.name
   const date = formatStartAndEndDate(eventObject.startTime, eventObject.endTime)
@@ -31,10 +31,10 @@ export default function DataHubEvents({ activity: event }) {
   )
 }
 
-DataHubEvents.propTypes = {
+DataHubEvent.propTypes = {
   event: PropTypes.object.isRequired,
 }
 
-DataHubEvents.canRender = (event) => {
-  return CardUtils.canRenderByTypes(event, ACTIVITY_TYPE.DataHubEvents)
+DataHubEvent.canRender = (event) => {
+  return CardUtils.canRenderByTypes(event, ACTIVITY_TYPE.DataHubEvent)
 }

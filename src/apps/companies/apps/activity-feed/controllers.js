@@ -286,7 +286,11 @@ async function fetchAventriEvent(req, res, next) {
     const aventriEventData = aventriEventResults.hits.hits[0]._source
 
     return res.json({ ...aventriEventData })
-    
+  } catch (error) {
+    next(error)
+  }
+}
+
 async function fetchDataHubEvents(req, res, next) {
   try {
     const dataHubEventsResults = await fetchActivityFeed(
@@ -294,7 +298,9 @@ async function fetchDataHubEvents(req, res, next) {
       dataHubEventsQuery()
     )
 
-    let dataHubEvents = dataHubEventsResults.hits.hits.map((hit) => hit._source)
+    const dataHubEvents = dataHubEventsResults.hits.hits.map(
+      (hit) => hit._source
+    )
 
     res.json({
       dataHubEvents,

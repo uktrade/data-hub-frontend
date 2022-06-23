@@ -33,7 +33,7 @@ export default (state = initialState, { type, result }) => {
     case EVENTS__DATA_HUB_LOADED:
       return {
         ...state,
-        dataHubEvents: result,
+        ...result,
       }
     default:
       return state
