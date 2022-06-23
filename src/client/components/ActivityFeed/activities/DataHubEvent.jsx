@@ -16,7 +16,7 @@ export default function DataHubEvent({ activity: event }) {
 
   return (
     <ActivityCardWrapper dataTest="data-hub-event">
-      <ActivityCardSubject dataTest="data-hub-event-subject">
+      <ActivityCardSubject dataTest="data-hub-event-name">
         {name}
       </ActivityCardSubject>
       <ActivityCardMetadata

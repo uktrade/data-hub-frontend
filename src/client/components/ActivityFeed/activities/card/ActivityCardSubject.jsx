@@ -19,8 +19,15 @@ const StyledActivitySubject = styled('h3')`
   }
 `
 
-const ActivityCardSubject = ({ children }) => {
-  return <StyledActivitySubject>{children}</StyledActivitySubject>
+const ActivityCardSubject = ({
+  children,
+  dataTest = 'activity-card-subject',
+}) => {
+  return (
+    <StyledActivitySubject data-test={dataTest}>
+      {children}
+    </StyledActivitySubject>
+  )
 }
 
 ActivityCardSubject.propTypes = {
