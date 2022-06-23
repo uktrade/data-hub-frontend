@@ -7,6 +7,7 @@ import {
   formatMediumDateTime,
   getDifferenceInDays,
   formatLongDate,
+  formatStartAndEndDate,
 } from '../../utils/date'
 
 import { transformIdNameToValueLabel } from '../../transformers'
@@ -132,9 +133,19 @@ const transformResponseToEventDetails = ({
   disabledOn: disabled_on,
 })
 
-const transformResponseToEventAventriDetails = ({ id, object }) => ({
+const transformResponseToEventAventriDetails = ({ id, object, type }) => ({
   id,
   name: object?.name,
+  type,
+  eventDate: formatStartAndEndDate(object?.startTime, object?.endTime),
+  location: object['dit:aventri:locationname'],
+  fullAddress: compact([
+    object['dit:aventri:location_address1'],
+    object['dit:aventri:location_address2'],
+    object['dit:aventri:location_city'],
+    object['dit:aventri:location_postcode'],
+    object['dit:aventri:location_country'],
+  ]),
 })
 
 export {

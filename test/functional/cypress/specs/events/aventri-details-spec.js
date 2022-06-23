@@ -2,6 +2,7 @@ const urls = require('../../../../../src/lib/urls')
 const {
   assertBreadcrumbs,
   assertErrorDialog,
+  assertKeyValueTable,
 } = require('../../support/assertions')
 const {
   CONTACT_ACTIVITY_FEATURE_FLAG,
@@ -20,6 +21,13 @@ describe('Event Aventri Details', () => {
         Home: urls.dashboard.route,
         Events: urls.events.index(),
         'EITA Test Event 2022': null,
+      })
+
+      assertKeyValueTable('eventAventriDetails', {
+        'Type of event': 'dit:aventri:Event',
+        'Event date': '02 Mar 2021 to 04 May 2022',
+        'Event location type': 'Not set',
+        Address: 'Online',
       })
     })
   })
