@@ -1,7 +1,7 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
-import styled from 'styled-components'
+import { useLocation, Link as RouterLink } from 'react-router-dom'
 import Link from '@govuk-react/link'
+import styled from 'styled-components'
 import Table from '@govuk-react/table'
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 import { get } from 'lodash'
@@ -32,7 +32,7 @@ const StyledCellHeader = styled(Table.CellHeader)({
   },
 })
 
-const StyledEditLink = styled(Link)({
+const StyledRouterLink = styled(RouterLink)({
   marginBottom: SPACING.SCALE_5,
   display: 'block',
 })
@@ -87,13 +87,13 @@ const RemindersSettings = () => {
                   </Table.Cell>
                 </Table.Row>
               </StyledTable>
-              <StyledEditLink
+              <StyledRouterLink
                 data-test="estimated-land-date-link"
-                href={urls.reminders.settings.estimatedLandDate()}
+                to={urls.reminders.settings.estimatedLandDate()}
                 aria-label="edit"
               >
                 Edit
-              </StyledEditLink>
+              </StyledRouterLink>
             </RemindersToggleSection>
             <RemindersToggleSection
               label="No recent interaction settings"
@@ -116,13 +116,13 @@ const RemindersSettings = () => {
                   </Table.Cell>
                 </Table.Row>
               </StyledTable>
-              <StyledEditLink
+              <StyledRouterLink
                 data-test="no-recent-interaction-link"
-                href={urls.reminders.settings.noRecentInteraction()}
+                to={urls.reminders.settings.noRecentInteraction()}
                 aria-label="edit"
               >
                 Edit
-              </StyledEditLink>
+              </StyledRouterLink>
             </RemindersToggleSection>
             <StyledHomeLink href={urls.dashboard()} aria-label="Home">
               Home
