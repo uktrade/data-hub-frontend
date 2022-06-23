@@ -68,26 +68,46 @@ The aim of this test suite is perform end to end tests, simulating a user flow.
 
 Pre-requisites:
 
-Ensure you have [node](https://nodejs.org/en/download/) v10 installed then install dependencies:
+Ensure you have [node](https://nodejs.org/en/download/) v16.15.1 installed then install dependencies:
 
 `$ npm install`
 
-### Setting up E2E tests within docker (preferred method)
-1. In `test/cypress/support/commands.js`, find the `loadFixture` Cypress command and change `${backend_url}` to `http://localhost:8000`. 
+1. In `test/cypress/support/commands.js`, find the `loadFixture` Cypress command and change `backendUrl` to `http://localhost:8000`.
+1. Add `ALLOW_TEST_FIXTURE_SETUP=True` to `.env` in Data Hub API.
 
-2. In `docker-compose.e2e.frontend.yml`, change the environment variable `OAUTH2_AUTH_URL` to point to `http://localhost:8080/o/authorize`.
+Then choose between setting up with docker, or running locally:
 
-3. Run the relevant make command, for example `make start-e2e-dit`.
+### Setup with docker 
 
-### Setting up E2E tests within docker and with local frontend
-1. Add `ALLOW_TEST_FIXTURE_SETUP=True` to `.env` in Data Hub API.  
+This will run against the `develop` branch of the API.
+
+1. In `docker-compose.e2e.frontend.yml`, change the environment variable `OAUTH2_AUTH_URL` to point to `http://localhost:8080/o/authorize`.
+1. Run the relevant make command, for example `make start-e2e-dit`.
+
+### Setup locally
+
+1. You will need the Data Hub API application started with the initial fixtures
+loaded. This can be done by running `start-uat.sh` located on the root of the
+api repository. If that doesn't work, you can try changing the following in `docker-compose.yml` in the API:
+    - Add `-celery` to the `depends_on` list for the `api` job
+    - Replace the existing command on the `api` job with `/app/setup-uat.sh || echo "all good”` 
+    - Remove the `depends_on … api` field from the `celery` job
+    - run `make start-dev`
+    - NOTE: it seems like the `local-nav-spec` will still fail when using this method to run locally.  
+1. Set these variables in the frontend `.env` file, and then run `npm run develop` 
+
+```
+API_ROOT=http://localhost:8000
+
+OAUTH2_AUTH_URL=http://localhost:8080/o/authorize
+OAUTH2_BYPASS_SSO=true
+OAUTH2_DEV_TOKEN=ditStaffToken
+OAUTH2_LOGOUT_URL=http://localhost:8080/o/logout
+```
 
 ### Running the tests
 
-Notice that before running the tests the application should be up and running.
-
-You will also need data hub api application started with the initial fixutres loaded. This can be done
-by running `start-uat.sh` located on the root of the api repository.
+Before running the tests both backend and frontend applications should be up and running.
 
 The main e2e test suite is triggered by running the following command:
 
@@ -186,7 +206,7 @@ make visual-component-tests
 
 ### Updating the baseline image
 
-Updating the baseline consists in 2 steps: 
+Updating the baseline consists in 2 steps:
 
 - 1:. Running the visual component tests locally and verifying the failures are valid
 
@@ -195,16 +215,18 @@ Updating the baseline consists in 2 steps:
 There is work to be done to allow update of a given baseline image rather than only have the option to update all of them at once.
 
 ## Accessibility tests
+
 The aim of this suite is to ensure our HTML pages are usable by as many people as possible.
 
   4 Tabs:
-  
+
   1. cd test/sandbox && npm install && npx nodemon .
   2. redis-server
   3. npm run develop
   4. npm run test:a11y
 
 ## Component unit tests
+
 The aim of this suite is to run tests directly against our React components without having to start the frontend.
 
 To start these tests, run `npm run test:component`. To run these using the Cypress component testing interface, run `npm run test:component:watch`.
