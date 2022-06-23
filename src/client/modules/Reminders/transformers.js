@@ -18,3 +18,46 @@ export const formatDays = (days, message) =>
   isEmpty(days)
     ? settings.OFF
     : `${days.join(', ').replace(/,([^,]*)$/, ' and$1')} ${message}`
+
+/**
+ * A function that transforms an array of `reminder_days` into an object
+ * @param {array} reminder_days - an array of numbers
+ * @returns {object} an object containing the reminder days compatible
+ * with the FieldAddAnother component
+ * @example
+ * From: [5, 10, 15, ...]
+ * To: {
+ *  reminder_days_0: 5,
+ *  reminder_days_1: 10,
+ *  reminder_days_2: 15,
+ *  ...
+ * }
+ */
+export const transformReminderDaysToForm = (reminder_days) =>
+  reminder_days.reduce(
+    (accumulator, value, index) => ({
+      ...accumulator,
+      [`reminder_days_${index}`]: value,
+    }),
+    {}
+  )
+
+/**
+ * A function that loops over the keys of an object extracting all `reminder_days_x`
+ * @param {object} state - the form state
+ * @returns {array} an array of numbers representing reminder days
+ * @example
+ * From: {
+ *  reminder_days_0: 5,
+ *  reminder_days_1: 10,
+ *  reminder_days_2: 15,
+ *  foo: 'x'
+ *  bar: 'y'
+ *  ...
+ * }
+ * To: [5, 10, 15]
+ */
+export const transformReminderDaysToAPI = (state) =>
+  Object.keys(state)
+    .map((key) => (key.startsWith('reminder_days_') ? state[key] : null))
+    .filter((value) => value != null)

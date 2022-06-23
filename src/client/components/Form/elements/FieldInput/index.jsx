@@ -24,12 +24,17 @@ const StyledInputWrapper = styled('div')`
   `}
 `
 
+const StyledText = styled('span')({
+  paddingLeft: SPACING.SCALE_2,
+})
+
 const FieldInput = ({
   name,
   type,
   validate,
   required,
   label,
+  text,
   legend,
   hint,
   initialValue,
@@ -58,6 +63,7 @@ const FieldInput = ({
           data-test={kebabCase(`${name}-'input'`)}
           {...rest}
         />
+        {text && <StyledText>{text}</StyledText>}
       </StyledInputWrapper>
     </FieldWrapper>
   )

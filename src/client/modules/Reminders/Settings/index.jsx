@@ -56,6 +56,15 @@ const RemindersSettings = () => {
         <DefaultLayout
           heading="Reminders and email notifications settings"
           pageTitle="Reminders"
+          breadcrumbs={[
+            {
+              link: urls.dashboard(),
+              text: 'Home',
+            },
+            {
+              text: 'Reminders and email notifications settings',
+            },
+          ]}
         >
           <ToggleSectionContainer>
             <RemindersToggleSection
@@ -109,7 +118,7 @@ const RemindersSettings = () => {
               </StyledTable>
               <StyledEditLink
                 data-test="no-recent-interaction-link"
-                href={'/'}
+                href={urls.reminders.settings.noRecentInteraction()}
                 aria-label="edit"
               >
                 Edit

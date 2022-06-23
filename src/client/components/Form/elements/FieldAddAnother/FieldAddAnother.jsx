@@ -34,10 +34,13 @@ const StyledLink = styled('div')`
 `
 const FieldAddAnother = ({
   name,
+  label,
   legend,
+  hint,
   children,
   dataTestPrefix,
   itemName,
+  buttonText,
   initialChildGroupCount = 1,
   limitChildGroupCount = Number.MAX_VALUE,
   childCount,
@@ -57,7 +60,7 @@ const FieldAddAnother = ({
 
   return (
     <>
-      <FieldWrapper {...{ name, legend, bigLegend: true }}>
+      <FieldWrapper {...{ name, label, legend, hint, bigLegend: true }}>
         {fieldGroupIds &&
           fieldGroupIds.map((item, index) => (
             <StyledGroup
@@ -96,7 +99,7 @@ const FieldAddAnother = ({
                 fieldGroupIds?.length || 0
               )} ${itemName}`}
             >
-              Add another {itemName}
+              {buttonText ? buttonText : `Add another ${itemName}`}
             </SecondaryButton>
           </StyledButton>
         )}
@@ -107,9 +110,12 @@ const FieldAddAnother = ({
 
 FieldAddAnother.propTypes = {
   dataTestPrefix: PropTypes.string,
+  buttonText: PropTypes.string,
   itemName: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  legend: PropTypes.string.isRequired,
+  label: PropTypes.node,
+  legend: PropTypes.node,
+  hint: PropTypes.node,
   children: PropTypes.func,
   initialChildGroupCount: PropTypes.number,
   limitChildGroupCount: PropTypes.number,
