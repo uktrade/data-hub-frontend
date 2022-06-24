@@ -13,6 +13,7 @@ This is the process we have identified for dealing with Dependabot PRs that save
 9. Rebase the dependency branch against `master` to remove all the merge commits, then push the changes and open a PR.
 10. If you are satisfied that everything is in order and all the tests have passed, request reviews as normal.
 11. After merging the PR, ensure that the `release-storybook` job has passed and that Storybook is running as expected.
+12. Deploy to production as soon as possible.
 
 ## Additional actions
 
