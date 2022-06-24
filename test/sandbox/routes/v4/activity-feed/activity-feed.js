@@ -66,13 +66,18 @@ exports.activityFeed = function (req, res) {
     get(req.body, "query.bool.must[0].term['object.type']") ===
     'dit:aventri:Event'
 
-  var getAventriId = (str) => str.match(/\d+/g)[0]
-
   if (isAventriEventQuery) {
     var aventriEventIdQuery = req.body.query.bool.must[1]
-    var aventriId = getAventriId(aventriEventIdQuery.terms.id[0])
+    var aventriId = aventriEventIdQuery.terms.id[0]
 
-    return res.json(aventriId ? aventriEvents : noActivity)
+    //event not found
+    if (aventriId === 'dit:aventri:Event:404:Create') {
+      return res.json(noActivity)
+    } else if (aventriId == 'dit:aventri:Event:500:Create') {
+      return res.status(500).send('something went wrong')
+    } else {
+      return res.json(aventriEvents)
+    }
   }
 
   var isDataHubEventQuery =
