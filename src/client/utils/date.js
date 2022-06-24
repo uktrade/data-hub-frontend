@@ -11,7 +11,6 @@ const {
   addMonths: addMonthsFns,
   addYears: addYearsFns,
   differenceInCalendarDays,
-  differenceInMonths,
   endOfToday,
   endOfYesterday,
   format: formatFns,
@@ -25,6 +24,7 @@ const {
   subMonths,
   subYears,
   subWeeks,
+  differenceInCalendarMonths,
 } = require('date-fns')
 
 const {
@@ -250,9 +250,8 @@ function formatStartAndEndDate(startDate, endDate) {
   if (startDateParsed.toDateString() === endDateParsed.toDateString()) {
     return startDateFormatted
   }
-
   // When start and end date are in the same month
-  if (differenceInMonths(endDateParsed, startDateParsed) == 0) {
+  if (differenceInCalendarMonths(endDateParsed, startDateParsed) == 0) {
     return `${startDateParsed.getDate()} to ${endDateFormatted}`
   }
   // When start and end date are in the same year

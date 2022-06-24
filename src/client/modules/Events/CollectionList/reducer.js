@@ -1,4 +1,5 @@
 import {
+  EVENTS__DATA_HUB_LOADED,
   EVENTS__LOADED,
   EVENTS__METADATA_LOADED,
   EVENTS__SELECTED_ORGANISER,
@@ -28,6 +29,11 @@ export default (state = initialState, { type, result }) => {
       return {
         ...state,
         selectedOrganisers: result,
+      }
+    case EVENTS__DATA_HUB_LOADED:
+      return {
+        ...state,
+        ...result,
       }
     default:
       return state

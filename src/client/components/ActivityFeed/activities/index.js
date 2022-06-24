@@ -8,11 +8,13 @@ import Interaction from './Interaction'
 import Omis from './Omis'
 import Referral from './Referral'
 import AventriAttendee from './AventriAttendee'
+import DataHubEvent from './DataHubEvent'
 
 export default [
   AventriAttendee,
   CompaniesHouseAccount,
   CompaniesHouseCompany,
+  DataHubEvent,
   DirectoryFormsApi,
   MaxemailCampaign,
   HmrcExporter,

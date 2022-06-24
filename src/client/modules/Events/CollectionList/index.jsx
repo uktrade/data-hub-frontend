@@ -1,8 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
+import { SPACING } from '@govuk-react/constants'
 import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 
 import {
+  EVENTS__DATA_HUB_LOADED,
   EVENTS__LOADED,
   EVENTS__METADATA_LOADED,
   EVENTS__SELECTED_ORGANISER,
@@ -25,18 +28,24 @@ import {
 
 import { LABELS } from './constants'
 
+import Task from '../../../components/Task'
+
 import {
   ID,
   TASK_GET_EVENTS_LIST,
   TASK_GET_EVENTS_METADATA,
   TASK_GET_EVENTS_ORGANISER_NAME,
+  TASK_GET_DATA_HUB_EVENTS,
   state2props,
 } from './state'
+
+import Activity from '../../../components/ActivityFeed/Activity'
 
 const EventsCollection = ({
   payload,
   optionMetadata,
   selectedFilters,
+  dataHubEvents,
   ...props
 }) => {
   const collectionListTask = {
@@ -76,11 +85,20 @@ const EventsCollection = ({
     },
   }
 
+  const EventsList = styled('ol')`
+    list-style-type: none;
+    margin-top: ${SPACING.SCALE_2};
+
+    & > li {
+      margin-bottom: ${SPACING.SCALE_2};
+    }
+  `
+
   return (
     <DefaultLayout heading="Events" pageTitle="Events">
       <CheckUserFeatureFlag userFeatureFlagName={EVENT_ACTIVITY_FEATURE_FLAG}>
         {(isFeatureFlagOn) =>
-          !isFeatureFlagOn && (
+          !isFeatureFlagOn ? (
             <FilteredCollectionList
               {...props}
               collectionName="event"
@@ -168,6 +186,25 @@ const EventsCollection = ({
                 </FilterToggleSection>
               </CollectionFilters>
             </FilteredCollectionList>
+          ) : (
+            <Task.Status
+              name={TASK_GET_DATA_HUB_EVENTS}
+              id={ID}
+              progressMessage="Loading Data Hub events"
+              startOnRender={{
+                onSuccessDispatch: EVENTS__DATA_HUB_LOADED,
+              }}
+            >
+              {() => (
+                <EventsList>
+                  {dataHubEvents?.map((event, index) => (
+                    <li key={`data-hub-event-${index}`}>
+                      <Activity activity={event} />
+                    </li>
+                  ))}
+                </EventsList>
+              )}
+            </Task.Status>
           )
         }
       </CheckUserFeatureFlag>
