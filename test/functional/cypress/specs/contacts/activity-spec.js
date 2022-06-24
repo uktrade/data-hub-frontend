@@ -1,6 +1,7 @@
 const urls = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures')
 const dataHubActivities = require('../../../../sandbox/fixtures/v4/activity-feed/data-hub-activities.json')
+const errorContact = require('../../../../sandbox/fixtures/v3/contact/contact-by-id-uk.json')
 const { assertErrorDialog } = require('../../support/assertions')
 const {
   CONTACT_ACTIVITY_FEATURE_FLAG,
@@ -8,6 +9,7 @@ const {
 
 describe('Contact activity', () => {
   const contactId = fixtures.contact.deanCox.id
+  const errorContactId = errorContact.id
 
   context('when the feature flag for activity stream is on', () => {
     before(() => {
@@ -228,16 +230,7 @@ describe('Contact activity', () => {
       'viewing a contact when there is an error loading activities',
       () => {
         before(() => {
-          cy.intercept(
-            'GET',
-            `${urls.contacts.activity.data(
-              contactId
-            )}?page=1&selectedSortBy=newest`,
-            {
-              statusCode: 500,
-            }
-          )
-          cy.visit(urls.contacts.contactActivities(contactId))
+          cy.visit(urls.contacts.contactActivities(errorContactId))
         })
 
         it('should render an error message', () => {

@@ -47,6 +47,19 @@ exports.activityFeed = function (req, res) {
   if (isContactActivityQuery) {
     const from = get(req.body, 'from')
 
+    const contact = get(
+      req.body,
+      'query.bool.must[0].bool.should[0].bool.must[1].terms["object.attributedTo.id"].contactId'
+    )
+
+    // if error
+    if (
+      contact?.contactId ===
+      'dit:DataHubContact:f3d19ea7-d4cf-43e0-8e97-755c57cae313'
+    ) {
+      return res.status(500).send('something went wrong')
+    }
+
     //if page 2
     if (from == 10) {
       return res.json(dataHubActivities)
