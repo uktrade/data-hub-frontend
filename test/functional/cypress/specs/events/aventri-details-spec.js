@@ -33,8 +33,20 @@ describe('Event Aventri Details', () => {
         assertKeyValueTable('eventAventriDetails', {
           'Type of event': 'dit:aventri:Event',
           'Event date': '02 Mar 2021 to 04 May 2022',
-          'Event location type': 'Not set',
-          Address: 'Online',
+          'Event location type': 'Name of Location',
+          Address: '1 street avenueBrockleyLondonABC 123England',
+        })
+      })
+
+      context('when optional details are missing', () => {
+        it('should display "Not set"', () => {
+          cy.visit(urls.events.aventri.details('6666'))
+          assertKeyValueTable('eventAventriDetails', {
+            'Type of event': 'dit:aventri:Event',
+            'Event date': '02 Mar 2021',
+            'Event location type': 'Not set',
+            Address: 'Not set',
+          })
         })
       })
     })

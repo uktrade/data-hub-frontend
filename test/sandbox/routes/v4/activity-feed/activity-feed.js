@@ -20,6 +20,7 @@ var dataHubEvents = require('../../../fixtures/v4/activity-feed/data-hub-events.
 
 //Aventri events
 var aventriEvents = require('../../../fixtures/v4/activity-feed/aventri-events.json')
+var aventriEventsNoDetails = require('../../../fixtures/v4/activity-feed/aventri-events-no-details.json')
 
 const DATA_HUB_ACTIVITY = [
   'dit:Interaction',
@@ -86,11 +87,20 @@ exports.activityFeed = function (req, res) {
     //event not found
     if (aventriId === 'dit:aventri:Event:404:Create') {
       return res.json(noActivity)
-    } else if (aventriId == 'dit:aventri:Event:500:Create') {
-      return res.status(500).send('something went wrong')
-    } else {
-      return res.json(aventriEvents)
     }
+
+    //network error
+    if (aventriId == 'dit:aventri:Event:500:Create') {
+      return res.status(500).send('something went wrong')
+    }
+
+    //no optional details
+    if (aventriId === 'dit:aventri:Event:6666:Create') {
+      return res.json(aventriEventsNoDetails)
+    }
+
+    //happy path
+    return res.json(aventriEvents)
   }
 
   var isDataHubEventQuery =
