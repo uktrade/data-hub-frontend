@@ -256,6 +256,10 @@ module.exports = {
       details: url('/events', '/aventri/:aventriEventId/details'),
       data: url('/events', '/aventri/:aventriEventId/data'),
     },
+    aventriAttendees: {
+      index: url('events/', '/aventri/:aventriEventId/attendees'),
+      data: url('events/', '/aventri/:aventriEventId/attendees/data'),
+    },
   },
   search: {
     index: url('/search'),
