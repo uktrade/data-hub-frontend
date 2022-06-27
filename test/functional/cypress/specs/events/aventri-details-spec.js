@@ -9,25 +9,79 @@ const {
 } = require('../../../../../src/apps/companies/apps/activity-feed/constants')
 
 describe('Event Aventri Details', () => {
-  context('when viewing a aventri details with the feature flag is on', () => {
+  const existingEventId = '1111'
+  const notFoundEventId = '404'
+  const errorEventId = '500'
+
+  context('when the feature flag is on', () => {
     before(() => {
       cy.setUserFeatures([CONTACT_ACTIVITY_FEATURE_FLAG])
     })
 
-    it('should display aventri event name in breadcrumb', () => {
-      cy.visit(urls.events.aventri.details('1111'))
+    context('when it is a valid event', () => {
+      it('should display aventri event name in breadcrumb', () => {
+        cy.visit(urls.events.aventri.details(existingEventId))
 
-      assertBreadcrumbs({
-        Home: urls.dashboard.route,
-        Events: urls.events.index(),
-        'EITA Test Event 2022': null,
+        assertBreadcrumbs({
+          Home: urls.dashboard.route,
+          Events: urls.events.index(),
+          'EITA Test Event 2022': null,
+        })
       })
 
-      assertKeyValueTable('eventAventriDetails', {
-        'Type of event': 'dit:aventri:Event',
-        'Event date': '02 Mar 2021 to 04 May 2022',
-        'Event location type': 'Not set',
-        Address: 'Online',
+      it('should display event details', () => {
+        assertKeyValueTable('eventAventriDetails', {
+          'Type of event': 'dit:aventri:Event',
+          'Event date': '02 Mar 2021 to 04 May 2022',
+          'Event location type': 'Name of Location',
+          Address: '1 street avenueBrockleyLondonABC 123England',
+        })
+      })
+
+      context('when optional details are missing', () => {
+        it('should display "Not set"', () => {
+          cy.visit(urls.events.aventri.details('6666'))
+          assertKeyValueTable('eventAventriDetails', {
+            'Type of event': 'dit:aventri:Event',
+            'Event date': '02 Mar 2021',
+            'Event location type': 'Not set',
+            Address: 'Not set',
+          })
+        })
+      })
+    })
+
+    context('when the event is not found', () => {
+      before(() => {
+        cy.visit(urls.events.aventri.details(notFoundEventId))
+      })
+
+      it('should render an error message', () => {
+        assertBreadcrumbs({
+          Home: urls.dashboard.route,
+          Events: urls.events.index(),
+        })
+        assertErrorDialog(
+          'TASK_GET_EVENT_AVENTRI_DETAILS',
+          'Unable to load aventri event details.'
+        )
+      })
+    })
+
+    context('when there is a network error', () => {
+      before(() => {
+        cy.visit(urls.events.aventri.details(errorEventId))
+      })
+
+      it('should render an error message', () => {
+        assertBreadcrumbs({
+          Home: urls.dashboard.route,
+          Events: urls.events.index(),
+        })
+        assertErrorDialog(
+          'TASK_GET_EVENT_AVENTRI_DETAILS',
+          'Unable to load aventri event details.'
+        )
       })
     })
   })
@@ -35,8 +89,12 @@ describe('Event Aventri Details', () => {
   context(
     'when viewing aventri details with the feature flag is disabled',
     () => {
+      before(() => {
+        cy.setUserFeatures([])
+      })
+
       it('should not display aventri event name in breadcrumb', () => {
-        cy.visit(urls.events.aventri.details('2222'))
+        cy.visit(urls.events.aventri.details(existingEventId))
 
         assertBreadcrumbs({
           Home: urls.dashboard.route,
@@ -45,31 +103,4 @@ describe('Event Aventri Details', () => {
       })
     }
   )
-
-  context('when viewing aventri details with error loading', () => {
-    before(() => {
-      cy.setUserFeatures([CONTACT_ACTIVITY_FEATURE_FLAG])
-      cy.intercept(
-        'GET',
-        `${urls.events.aventri.details(
-          ''
-        )}?featureTesting=user-contact-activities`,
-        {
-          statusCode: 500,
-        }
-      )
-    })
-
-    it('should render an error message', () => {
-      cy.visit(urls.events.aventri.details('no-id'))
-      assertBreadcrumbs({
-        Home: urls.dashboard.route,
-        Events: urls.events.index(),
-      })
-      assertErrorDialog(
-        'TASK_GET_EVENT_AVENTRI_DETAILS',
-        'Unable to load aventri event details.'
-      )
-    })
-  })
 })

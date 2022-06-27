@@ -20,6 +20,7 @@ var dataHubEvents = require('../../../fixtures/v4/activity-feed/data-hub-events.
 
 //Aventri events
 var aventriEvents = require('../../../fixtures/v4/activity-feed/aventri-events.json')
+var aventriEventsNoDetails = require('../../../fixtures/v4/activity-feed/aventri-events-no-details.json')
 
 const DATA_HUB_ACTIVITY = [
   'dit:Interaction',
@@ -44,8 +45,21 @@ exports.activityFeed = function (req, res) {
     req.body,
     "query.bool.must[0].bool.should[1].bool.must[1].term['object.dit:emailAddress']"
   )
+
   if (isContactActivityQuery) {
     const from = get(req.body, 'from')
+
+    const contactId = get(
+      req.body,
+      'query.bool.must[0].bool.should[0].bool.must[1].terms["object.attributedTo.id"][0]'
+    )
+
+    // if there is an error
+    if (
+      contactId === 'dit:DataHubContact:f3d19ea7-d4cf-43e0-8e97-755c57cae313'
+    ) {
+      return res.status(500).send('something went wrong')
+    }
 
     //if page 2
     if (from == 10) {
@@ -66,13 +80,27 @@ exports.activityFeed = function (req, res) {
     get(req.body, "query.bool.must[0].term['object.type']") ===
     'dit:aventri:Event'
 
-  var getAventriId = (str) => str.match(/\d+/g)[0]
-
   if (isAventriEventQuery) {
     var aventriEventIdQuery = req.body.query.bool.must[1]
-    var aventriId = getAventriId(aventriEventIdQuery.terms.id[0])
+    var aventriId = aventriEventIdQuery.terms.id[0]
 
-    return res.json(aventriId ? aventriEvents : noActivity)
+    //event not found
+    if (aventriId === 'dit:aventri:Event:404:Create') {
+      return res.json(noActivity)
+    }
+
+    //network error
+    if (aventriId == 'dit:aventri:Event:500:Create') {
+      return res.status(500).send('something went wrong')
+    }
+
+    //no optional details
+    if (aventriId === 'dit:aventri:Event:6666:Create') {
+      return res.json(aventriEventsNoDetails)
+    }
+
+    //happy path
+    return res.json(aventriEvents)
   }
 
   var isDataHubEventQuery =
