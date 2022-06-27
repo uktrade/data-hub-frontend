@@ -253,6 +253,7 @@ module.exports = {
     attendees: url('/events', '/:eventId/attendees'),
     find: url('/events', '/:eventId/attendees/find-new'),
     aventri: {
+      attendees: url('/events', '/aventri/:aventriEventId/attendees'),
       details: url('/events', '/aventri/:aventriEventId/details'),
       data: url('/events', '/aventri/:aventriEventId/data'),
     },
