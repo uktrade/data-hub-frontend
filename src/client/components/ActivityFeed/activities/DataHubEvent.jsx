@@ -13,6 +13,9 @@ export default function DataHubEvent({ activity: event }) {
   const eventObject = event.object
   const name = eventObject.name
   const date = formatStartAndEndDate(eventObject.startTime, eventObject.endTime)
+  const organiser = eventObject['dit:organiser'].name
+  const serviceType = eventObject['dit:service'].name
+  const leadTeam = eventObject['dit:leadTeam'].name
 
   return (
     <ActivityCardWrapper dataTest="data-hub-event">
