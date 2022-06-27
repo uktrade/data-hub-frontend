@@ -1,60 +1,59 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import Task from '../../../components/Task'
+import { useParams } from 'react-router-dom'
 
-const EventAventriAttendees = () => {
+import urls from '../../../../lib/urls'
+import { DefaultLayout, LocalNav, LocalNavLink } from '../../../components'
+import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
+import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
+import { GridCol, GridRow } from 'govuk-react'
+
+const EventAventriAttendees = ({ name }) => {
+  const { aventriEventId } = useParams()
+  const breadcrumbs = [
+    {
+      link: urls.dashboard(),
+      text: 'Home',
+    },
+    {
+      link: urls.events.index(),
+      text: 'Events',
+    },
+    {
+      text: name,
+    },
+  ]
+
   return (
-    <h1>Hello there</h1>
-    // <CheckUserFeatureFlag userFeatureFlagName={CONTACT_ACTIVITY_FEATURE_FLAG}>
-    //   {(isFeatureFlagEnabled) =>
-    //     isFeatureFlagEnabled && (
-    //       <Task.Status
-    //       // task stuff
-    //       >
-    //         {() => {
-    //           return (
-    //             <GridRow data-test="eventAventriDetails">
-    //               <GridCol setWidth="one-quarter">
-    //                 <LocalNav data-test="event-aventri-details-nav">
-    //                   <LocalNavLink
-    //                     data-test="event-aventri-details-link"
-    //                     href={urls.events.aventri.details(aventriEventId)}
-    //                   >
-    //                     Details
-    //                   </LocalNavLink>
-    //                 </LocalNav>
-    //               </GridCol>
-    //               <GridCol setWidth="three-quarters">
-    //                 <StyledSummaryTable>
-    //                   <SummaryTable.Row
-    //                     heading="Type of event"
-    //                     children={type}
-    //                   />
-    //                   <SummaryTable.Row
-    //                     heading="Event date"
-    //                     children={eventDate}
-    //                   />
-    //                   <SummaryTable.Row
-    //                     heading="Event location type"
-    //                     children={isEmpty(location) ? 'Not set' : location}
-    //                   />
-    //                   <SummaryTable.Row
-    //                     heading="Address"
-    //                     children={
-    //                       isEmpty(fullAddress) ? 'Not set' : fullAddress
-    //                     }
-    //                   />
-    //                 </StyledSummaryTable>
-    //               </GridCol>
-    //             </GridRow>
-    //           )
-    //         }}
-    //       </Task.Status>
-    //     )
-    //   }
-    // </CheckUserFeatureFlag>
+    <DefaultLayout
+      heading="Events"
+      pageTitle="Events Attendees"
+      breadcrumbs={breadcrumbs}
+      useReactRouter={true}
+    >
+      <CheckUserFeatureFlag userFeatureFlagName={EVENT_ACTIVITY_FEATURE_FLAG}>
+        {(isFeatureFlagEnabled) =>
+          isFeatureFlagEnabled && (
+            <GridRow data-test="eventAventriDetails">
+              <GridCol setWidth="one-quarter">
+                <LocalNav data-test="event-aventri-details-nav">
+                  <LocalNavLink
+                    data-test="event-aventri-details-link"
+                    href={urls.events.aventri.details(aventriEventId)}
+                  >
+                    Attendees
+                  </LocalNavLink>
+                </LocalNav>
+              </GridCol>
+              <GridCol setWidth="three-quarters">
+                <h1>Attendees go here!</h1>
+              </GridCol>
+            </GridRow>
+          )
+        }
+      </CheckUserFeatureFlag>
+    </DefaultLayout>
   )
 }
 
-// export default connect(state2props)(EventAventriAttendees)
+// export default connect(state2props)(EventAventriDetails)
 export default EventAventriAttendees
