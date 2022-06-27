@@ -20,6 +20,7 @@ router.get(urls.events.activity.data.route, fetchDataHubEvents)
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.get('/aventri/:aventriEventId/details', renderEventsView)
+router.get('/aventri/:aventriEventId/attendees', renderEventsView)
 router.get(urls.events.aventri.data.route, fetchAventriEvent)
 
 router.use(
