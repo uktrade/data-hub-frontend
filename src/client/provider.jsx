@@ -126,6 +126,9 @@ import flashMessageReducer from './components/LocalHeader/reducer'
 import { ID as CONTACT_ACTIVITIES_ID } from '../client/modules/Contacts/ContactActivity/state'
 import contactActivitiesReducer from '../client/modules/Contacts/ContactActivity/reducer'
 
+import { ID as REMINDERS_ID } from './modules/Reminders/state'
+import remindersReducer from './modules/Reminders/reducer'
+
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
   // The baseURI is set to the <base/> tag by the spaFallbackSpread
@@ -196,6 +199,7 @@ const reducer = {
   [EVENTS_AVENTRI_DETAILS_ID]: eventAventriDetailsReducer,
   [ORDERS_LIST_ID]: ordersReducer,
   [COMPANY_ORDERS_LIST_ID]: ordersReducer,
+  [REMINDERS_ID]: remindersReducer,
 }
 
 const preloadedState = {

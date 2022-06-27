@@ -12,7 +12,7 @@ import { H2, H3 } from '@govuk-react/heading'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { Link } from 'govuk-react'
-import { BLUE, GREY_2 } from 'govuk-colours'
+import { BLUE, GREY_1, GREY_2 } from 'govuk-colours'
 
 import urls from '../../../lib/urls'
 import {
@@ -49,6 +49,23 @@ const LinkListLink = styled(Link)(({ $isActive }) => ({
       }
     : {}),
 }))
+
+const DeleteButton = styled('button')({
+  display: 'inline',
+  padding: 0,
+  margin: `${SPACING.SCALE_3} 0`,
+  background: 'transparent',
+  border: 'none',
+  fontSize: FONT_SIZE.SIZE_16,
+  fontFamily: 'inherit',
+  color: GREY_1,
+  cursor: 'pointer',
+  textDecoration: 'underline',
+})
+
+const RightCol = styled(GridCol)({
+  textAlign: 'right',
+})
 
 const RemindersList = styled('ol')({
   listStyleType: 'none',
@@ -135,7 +152,13 @@ const sortOptions = [
 const maxItemsToPaginate = 10000
 const itemsPerPage = 10
 
-const RemindersCollection = ({ subject, results, count, page }) => {
+const RemindersCollection = ({
+  subject,
+  results,
+  count,
+  page,
+  onDeleteReminder,
+}) => {
   const location = useLocation()
   const title = `Reminders for ${subject}`
   const totalPages = Math.ceil(
@@ -187,22 +210,52 @@ const RemindersCollection = ({ subject, results, count, page }) => {
           <RemindersHeaderRow totalItems={count} />
           <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
           <RemindersList data-test="reminders-list">
-            {results.map(({ id, created_on, event, project }) => (
+            {results.map(({ id, created_on, event, project, deleted }) => (
               <RemindersListItem key={id} data-test="reminders-list-item">
-                <ItemHeader data-test="item-header">
-                  Received {formatMediumDate(created_on)}
-                </ItemHeader>
-                <ItemContent data-test="item-content">
-                  {event} for{' '}
-                  <Link
-                    href={`${urls.investments.projects.details(project.id)}`}
-                  >
-                    {project.name}
-                  </Link>
-                </ItemContent>
-                <ItemFooter data-test="item-footer">
-                  Project code {project.project_code}
-                </ItemFooter>
+                <GridRow>
+                  {deleted ? (
+                    <GridCol>
+                      <ItemHeader data-test="item-header">
+                        Reminder deleted
+                      </ItemHeader>
+                      <ItemContent data-test="item-content">
+                        {event} for {project.name}
+                      </ItemContent>
+                      <ItemFooter data-test="item-footer"></ItemFooter>
+                    </GridCol>
+                  ) : (
+                    <>
+                      <GridCol>
+                        <ItemHeader data-test="item-header">
+                          Received {formatMediumDate(created_on)}
+                        </ItemHeader>
+                        <ItemContent data-test="item-content">
+                          {event} for{' '}
+                          <Link
+                            href={`${urls.investments.projects.details(
+                              project.id
+                            )}`}
+                          >
+                            {project.name}
+                          </Link>
+                        </ItemContent>
+                        <ItemFooter data-test="item-footer">
+                          Project code {project.project_code}
+                        </ItemFooter>
+                      </GridCol>
+                      {onDeleteReminder && (
+                        <RightCol setWidth="one-quarter">
+                          <DeleteButton
+                            data-test="delete-button"
+                            onClick={() => onDeleteReminder(id)}
+                          >
+                            Delete reminder
+                          </DeleteButton>
+                        </RightCol>
+                      )}
+                    </>
+                  )}
+                </GridRow>
               </RemindersListItem>
             ))}
           </RemindersList>
