@@ -15,7 +15,7 @@ const NoRecentInteractionReminders = () => {
     <Resource
       name={TASK_GET_NO_RECENT_INTERACTION_REMINDERS}
       id={TASK_GET_NO_RECENT_INTERACTION_REMINDERS}
-      payload={{ page }}
+      payload={{ page, sortby: qsParams.sortby }}
     >
       {({ results, count }) => (
         <RemindersCollection

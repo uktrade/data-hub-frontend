@@ -2,9 +2,10 @@ import { assertBreadcrumbs } from '../../support/assertions'
 import urls from '../../../../../src/lib/urls'
 import { reminderFaker, reminderListFaker } from '../../fakers/reminders'
 
-const remindersEndpoint = '/api-proxy/v4/reminder/estimated-land-date'
+const remindersEndpoint =
+  '/api-proxy/v4/reminder/no-recent-investment-interaction'
 
-describe('Estimated Land Date Reminders', () => {
+describe('No Recent Interaction Reminders', () => {
   const reminders = [
     reminderFaker({
       created_on: '2022-01-01T10:00:00.000000Z',
@@ -49,21 +50,21 @@ describe('Estimated Land Date Reminders', () => {
   context('Reminders List', () => {
     before(() => {
       interceptApiCalls()
-      cy.visit(urls.reminders.estimatedLandDate())
+      cy.visit(urls.reminders.noRecentInteraction())
       cy.wait('@remindersApiRequest')
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        'Reminders for approaching estimated land dates': null,
+        'Reminders for projects with no recent interaction': null,
       })
     })
 
     it('should render the heading', () => {
       cy.get('[data-test="heading"]').should(
         'have.text',
-        'Reminders for approaching estimated land dates'
+        'Reminders for projects with no recent interaction'
       )
     })
 
@@ -133,7 +134,7 @@ describe('Estimated Land Date Reminders', () => {
   context('Pagination', () => {
     beforeEach(() => {
       interceptApiCalls()
-      cy.visit(urls.reminders.estimatedLandDate())
+      cy.visit(urls.reminders.noRecentInteraction())
       cy.wait('@remindersApiRequest')
     })
 
@@ -164,7 +165,7 @@ describe('Estimated Land Date Reminders', () => {
   context('Sort', () => {
     beforeEach(() => {
       cy.intercept('GET', `${remindersEndpoint}*`).as('remindersApiRequest')
-      cy.visit(urls.reminders.estimatedLandDate())
+      cy.visit(urls.reminders.noRecentInteraction())
     })
 
     it('should apply the default sort', () => {
