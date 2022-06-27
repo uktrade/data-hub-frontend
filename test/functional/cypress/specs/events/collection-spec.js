@@ -159,6 +159,21 @@ describe('Event Collection List Page - React', () => {
         .should('exist')
         .should('contain', '30 May to 14 Jun 2022')
     })
+    it('should display the event organiser', () => {
+      cy.get('[data-test="organiser-label"]')
+        .should('exist')
+        .should('contain', 'Joe Bloggs')
+    })
+    it('should display the service type', () => {
+      cy.get('[data-test="service-type-label"]')
+        .should('exist')
+        .should('contain', 'Best service')
+    })
+    it('should display the lead team', () => {
+      cy.get('[data-test="lead-team-label"]')
+        .should('exist')
+        .should('contain', 'Digital Data Hub - Live Service')
+    })
     context(
       'viewing the events collection page when there is an error loading events',
       () => {
