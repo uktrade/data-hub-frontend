@@ -123,7 +123,7 @@
     "postcss-loader": "^7.0.0",
     "prop-types": "^15.8.1",
     "pure-uuid": "^1.6.2",
-    "qs": "^6.10.3",
+    "qs": "^6.11.0",
     "raven": "^2.6.4",
     "react": "^17.0.2",
     "react-app-polyfill": "^3.0.0",
