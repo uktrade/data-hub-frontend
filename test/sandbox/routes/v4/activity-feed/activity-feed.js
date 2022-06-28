@@ -21,6 +21,7 @@ var dataHubEvents = require('../../../fixtures/v4/activity-feed/data-hub-events.
 //Aventri events
 var aventriEvents = require('../../../fixtures/v4/activity-feed/aventri-events.json')
 var aventriEventsNoDetails = require('../../../fixtures/v4/activity-feed/aventri-events-no-details.json')
+var aventriAttendees = require('../../../fixtures/v4/activity-feed/aventri-attendees.json')
 
 //All Activitiy feed events
 var allActivityFeedEvents = require('../../../fixtures/v4/activity-feed/all-activity-feed-events.json')
@@ -112,6 +113,13 @@ exports.activityFeed = function (req, res) {
 
     //happy path
     return res.json(aventriEvents)
+  }
+
+  var isAventriAttendeeQuery =
+    get(req.body, "query.bool.must[0].term['object.type]") ===
+    'dit:aventri:Attendee'
+  if (isAventriAttendeeQuery) {
+    return res.json(aventriAttendees)
   }
 
   var isDataHubEventQuery =
