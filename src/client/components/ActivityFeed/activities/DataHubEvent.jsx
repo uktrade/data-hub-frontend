@@ -11,19 +11,34 @@ import ActivityCardMetadata from './card/ActivityCardMetadata'
 
 export default function DataHubEvent({ activity: event }) {
   const eventObject = event.object
-  const name = eventObject.name
+  const eventName = eventObject.name
   const date = formatStartAndEndDate(eventObject.startTime, eventObject.endTime)
+  const organiser = eventObject['dit:organiser'].name
+  const serviceType = eventObject['dit:service'].name
+  const leadTeam = eventObject['dit:leadTeam'].name
 
   return (
     <ActivityCardWrapper dataTest="data-hub-event">
       <ActivityCardSubject dataTest="data-hub-event-name">
-        {name}
+        {eventName}
       </ActivityCardSubject>
       <ActivityCardMetadata
         metadata={[
           {
             label: 'Event date',
             value: date,
+          },
+          {
+            label: 'Organiser',
+            value: organiser,
+          },
+          {
+            label: 'Service type',
+            value: serviceType,
+          },
+          {
+            label: 'Lead team',
+            value: leadTeam,
           },
         ]}
       />
