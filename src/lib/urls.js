@@ -257,8 +257,8 @@ module.exports = {
       data: url('/events', '/aventri/:aventriEventId/data'),
     },
     aventriAttendees: {
-      index: url('events/', '/aventri/:aventriEventId/attendees'),
-      data: url('events/', '/aventri/:aventriEventId/attendees/data'),
+      index: url('/events', '/aventri/:aventriEventId/attendees'),
+      data: url('/events', '/aventri/:aventriEventId/attendees/data'),
     },
   },
   search: {
