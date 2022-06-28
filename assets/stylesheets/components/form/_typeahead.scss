@@ -99,6 +99,7 @@
 .multiselect__spinner {
   background: transparent;
   height: 2em;
+
   @include media(desktop) {
     height: 2.5em;
   }
@@ -119,6 +120,7 @@
 
   @include media(tablet) {
     font-size: 19px;
+
     &:focus {
       font-size: 19px;
     }
