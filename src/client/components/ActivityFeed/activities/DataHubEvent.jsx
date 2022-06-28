@@ -8,6 +8,9 @@ import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 
+const UUID_REGEX =
+  /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/
+
 export default function DataHubEvent({ activity: event }) {
   const eventObject = event.object
   const eventName = eventObject.name
