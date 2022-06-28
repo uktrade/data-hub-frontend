@@ -10,6 +10,7 @@ import { GridCol, GridRow } from 'govuk-react'
 import Task from '../../../components/Task'
 import { ID, state2props, TASK_GET_EVENT_AVENTRI_ATTENDEES } from './state'
 import { EVENTS__AVENTRI_ATTENDEES_LOADED } from '../../../actions'
+import EventsAventriAttendee from '../../../components/ActivityFeed/activities/EventsAventriAttendee'
 
 const EventAventriAttendees = ({ aventriAttendees }) => {
   const { aventriEventId } = useParams()
@@ -61,10 +62,9 @@ const EventAventriAttendees = ({ aventriAttendees }) => {
                     </LocalNav>
                   </GridCol>
                   <GridCol setWidth="three-quarters">
-                    {aventriAttendees?.map(
-                      (attendee) =>
-                        `${attendee.object['dit:aventri:firstname']} ${attendee.object['dit:aventri:lastname']}`
-                    )}
+                    {aventriAttendees?.map((attendee) => (
+                      <EventsAventriAttendee activity={attendee} />
+                    ))}
                   </GridCol>
                 </GridRow>
               )}
