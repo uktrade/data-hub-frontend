@@ -20,6 +20,7 @@ var dataHubEvents = require('../../../fixtures/v4/activity-feed/data-hub-events.
 
 //Aventri events
 var aventriEvents = require('../../../fixtures/v4/activity-feed/aventri-events.json')
+var aventriAttendees = require('../../../fixtures/v4/activity-feed/aventri-attendees.json')
 
 const DATA_HUB_ACTIVITY = [
   'dit:Interaction',
@@ -73,6 +74,13 @@ exports.activityFeed = function (req, res) {
     var aventriId = getAventriId(aventriEventIdQuery.terms.id[0])
 
     return res.json(aventriId ? aventriEvents : noActivity)
+  }
+
+  var isAventriAttendeeQuery =
+    get(req.body, "query.bool.must[0].term['object.type]") ===
+    'dit:aventri:Attendee'
+  if (isAventriAttendeeQuery) {
+    return res.json(aventriAttendees)
   }
 
   var isDataHubEventQuery =
