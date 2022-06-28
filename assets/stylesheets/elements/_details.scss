@@ -1,5 +1,5 @@
-@import "../settings/colours";
-@import "../tools/functions/typography";
+@import '../settings/colours';
+@import '../tools/functions/typography';
 
 details {
   clear: both;
@@ -51,7 +51,7 @@ details {
 // Match fallback arrow spacing with -webkit default
 .details__arrow {
   font-style: normal;
-  margin-right: .35em;
+  margin-right: 0.35em;
 
   .details--inline & {
     display: none;
@@ -89,7 +89,8 @@ details {
 
 .govuk-details--inline {
   margin-bottom: 0;
-  .govuk-details__summary-text, .govuk-details__text {
+  .govuk-details__summary-text,
+  .govuk-details__text {
     font-size: initial;
   }
 }

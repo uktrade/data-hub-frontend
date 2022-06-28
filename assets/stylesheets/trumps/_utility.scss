@@ -1,4 +1,4 @@
-@import "../tools/mixins/addons";
+@import '../tools/mixins/addons';
 
 .u-visually-hidden {
   @include visually-hidden;
@@ -53,19 +53,19 @@
 .u-loading {
   &::before {
     animation: growRight 3s;
-    content: "";
+    content: '';
     position: fixed;
     top: 0;
     right: 0;
     left: 0;
     z-index: 10;
     border-top: 2px solid $light-blue;
-    border-bottom: 1px solid rgba($white, .6);
+    border-bottom: 1px solid rgba($white, 0.6);
   }
 }
 
 .u-icon-print {
-  background: url("../../images/icon--print.png") no-repeat 0 50%;
+  background: url('../../images/icon--print.png') no-repeat 0 50%;
   border: 0;
   color: $link-colour;
   cursor: pointer;
@@ -86,7 +86,7 @@
   }
 
   @include device-pixel-ratio {
-    background-image: url("../../images/icon--print@2x.png");
+    background-image: url('../../images/icon--print@2x.png');
     background-size: 16px 18px;
   }
 }

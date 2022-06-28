@@ -1,5 +1,4 @@
-Toggle section
-=========
+# Toggle section
 
 ### Description
 

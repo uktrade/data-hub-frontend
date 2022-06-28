@@ -3,14 +3,15 @@
 ### Description
 
 The **InvestmentProjectLocalHeader** contains the following:
-* A row of breadcrumbs (secondary navigation) that reveals the user's location in Data Hub 
-* Investment metadata such as: Status (Ongoing, Delayed, Abandoned, Lost and Dormant), Project code, Valuation and a Created on date
-* A list of five stages (Prospect', 'Assign PM', 'Active', 'Verify win' and 'Won') in chronological order where the current stage is clear to see
+
+- A row of breadcrumbs (secondary navigation) that reveals the user's location in Data Hub
+- Investment metadata such as: Status (Ongoing, Delayed, Abandoned, Lost and Dormant), Project code, Valuation and a Created on date
+- A list of five stages (Prospect', 'Assign PM', 'Active', 'Verify win' and 'Won') in chronological order where the current stage is clear to see
 
 ### Usage
 
 ```jsx
-  <InvestmentProjectLocalHeader 
+  <InvestmentProjectLocalHeader
     investment={{
       id: '123',
       investor_company: {
@@ -36,13 +37,13 @@ The **InvestmentProjectLocalHeader** contains the following:
         link: urls.investments.projects.details(investment.id),
         text: investment.investor_company.name,
       },
-    ]} 
+    ]}
   />
 ```
 
 ### Properties
 
-| Prop           | Required | Type   | Description             |
-| :------------- | :------- | :----- | :---------------------- |
-| `investment`   | true     | object | An investment project   |
-| `breadcrumbs`  | true     | array  | An array of objects containing two fields (link and text) |
+| Prop          | Required | Type   | Description                                               |
+| :------------ | :------- | :----- | :-------------------------------------------------------- |
+| `investment`  | true     | object | An investment project                                     |
+| `breadcrumbs` | true     | array  | An array of objects containing two fields (link and text) |

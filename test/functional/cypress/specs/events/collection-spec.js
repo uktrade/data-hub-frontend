@@ -184,7 +184,7 @@ describe('Event Collection List Page - React', () => {
 
         it('should render an error message', () => {
           assertErrorDialog(
-            'TASK_GET_DATA_HUB_EVENTS',
+            'TASK_GET_ALL_ACTIVITY_FEED_EVENTS',
             'Unable to load Data Hub events.'
           )
         })

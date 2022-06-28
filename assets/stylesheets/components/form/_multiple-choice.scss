@@ -1,12 +1,14 @@
-@use "sass:math";
+@use 'sass:math';
 
-@import "../../settings";
-@import "../../tools";
+@import '../../settings';
+@import '../../tools';
 
 .c-multiple-choice {
   position: relative;
   clear: left;
-  transform: translateZ(0); // Enforcing GPU acceleration fixes overflow cropping caused by CSS columns
+  transform: translateZ(
+    0
+  ); // Enforcing GPU acceleration fixes overflow cropping caused by CSS columns
 }
 
 @mixin _scale-input($font-size) {
@@ -15,7 +17,7 @@
   width: $input-size;
   height: $input-size;
 
-  &[type="checkbox"] + .c-multiple-choice__label::after {
+  &[type='checkbox'] + .c-multiple-choice__label::after {
     @if round($font-size) < 10 {
       border-width: 0 0 2px 2px;
     } @else {
@@ -49,11 +51,11 @@
   margin: auto;
   opacity: 0;
 
-  &[type="checkbox"] + .c-multiple-choice__label::after {
+  &[type='checkbox'] + .c-multiple-choice__label::after {
     transform: rotate(-45deg);
   }
 
-  &[type="radio"] + .c-multiple-choice__label {
+  &[type='radio'] + .c-multiple-choice__label {
     &::before,
     &::after {
       border-radius: 100%;
@@ -63,7 +65,7 @@
   & + .c-multiple-choice__label {
     &::before,
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       margin: auto;
     }
@@ -100,7 +102,8 @@
   cursor: pointer;
   vertical-align: middle;
   display: inline-block;
-  padding: ($default-spacing-unit * 0.5) ($default-spacing-unit * 0.5) ($default-spacing-unit * 0.5) ($default-spacing-unit * 3);
+  padding: ($default-spacing-unit * 0.5) ($default-spacing-unit * 0.5)
+    ($default-spacing-unit * 0.5) ($default-spacing-unit * 3);
   line-height: 1.2;
 }
 
@@ -171,7 +174,10 @@
 
   .c-multiple-choice__label {
     display: block;
-    padding-left: round($default-spacing-unit * 3 * math.div(10, 19) + ($default-spacing-unit * 0.5));
+    padding-left: round(
+      $default-spacing-unit * 3 * math.div(10, 19) +
+        ($default-spacing-unit * 0.5)
+    );
 
     &:hover {
       background-color: $grey-4;

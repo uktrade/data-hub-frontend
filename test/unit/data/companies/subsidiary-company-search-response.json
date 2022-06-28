@@ -51,9 +51,7 @@
       "sector": {
         "id": "355f977b-8ac3-e211-a646-e4115bead28a",
         "name": "Retail",
-        "ancestors": [
-
-        ]
+        "ancestors": []
       },
       "turnover_range": {
         "id": "7a4cd12a-6095-e211-a939-e4115bead28a",
@@ -94,9 +92,7 @@
         "name": "Partnership"
       },
       "one_list_group_tier": null,
-      "contacts": [
-
-      ],
+      "contacts": [],
       "employee_range": {
         "id": "41afd8d0-5d95-e211-a939-e4115bead28a",
         "name": "500+"
@@ -124,9 +120,7 @@
       "sector": {
         "id": "355f977b-8ac3-e211-a646-e4115bead28a",
         "name": "Retail",
-        "ancestors": [
-
-        ]
+        "ancestors": []
       },
       "turnover_range": {
         "id": "7a4cd12a-6095-e211-a939-e4115bead28a",

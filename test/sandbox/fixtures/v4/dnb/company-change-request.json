@@ -1,8 +1,8 @@
 {
   "company": {
-  "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
-  "duns_number": "218882442",
-  "changes": {
+    "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+    "duns_number": "218882442",
+    "changes": {
       "domain": "example.com",
       "address_line_1": "23 Code Street",
       "address_line_2": "6th Floor, Amp House",
@@ -10,8 +10,8 @@
       "address_county": "",
       "address_country": "GB",
       "address_postcode": "CR0 2LX"
-  },
-  "status": "pending",
-  "created_on": "2020-03-26T16:11:54.593785Z"
+    },
+    "status": "pending",
+    "created_on": "2020-03-26T16:11:54.593785Z"
   }
 }

@@ -18,7 +18,7 @@
 ///       float: left;
 ///     }
 ///   }
-@use "sass:list";
+@use 'sass:list';
 
 @mixin media($size: false, $max-width: false, $min-width: false) {
   @if $size == desktop {

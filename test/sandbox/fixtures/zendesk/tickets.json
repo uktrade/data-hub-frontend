@@ -33,9 +33,7 @@
     "has_incidents": false,
     "is_public": true,
     "due_at": null,
-    "tags": [
-      "dnb_match_request"
-    ],
+    "tags": ["dnb_match_request"],
     "custom_fields": [
       {
         "id": 44394765,
@@ -153,9 +151,7 @@
       {
         "id": 572858735618,
         "type": "Create",
-        "value": [
-          "dnb_match_request"
-        ],
+        "value": ["dnb_match_request"],
         "field_name": "tags"
       },
       {

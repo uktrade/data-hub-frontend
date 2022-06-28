@@ -1,11 +1,6 @@
 {
   "restartable": "rs",
-  "watch": [
-    "common/",
-    "config/**/*.js",
-    "public/",
-    "src/**/*.js"
-  ],
+  "watch": ["common/", "config/**/*.js", "public/", "src/**/*.js"],
   "ignore": ["*.test.js"],
   "env": {
     "NODE_ENV": "development"

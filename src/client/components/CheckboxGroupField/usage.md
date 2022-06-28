@@ -4,7 +4,7 @@
 
 Let users select one or more options by using the checkboxes component.
 
-If you have a lot of options to display consider using the `visibleHeight` 
+If you have a lot of options to display consider using the `visibleHeight`
 property to create a scrollable area. Selected option count will only show
 when you use the `visibleHeight` property.
 

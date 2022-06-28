@@ -1472,9 +1472,7 @@
       "government_assistance": null
     },
     {
-      "incomplete_fields": [
-        "client_cannot_provide_total_investment"
-      ],
+      "incomplete_fields": ["client_cannot_provide_total_investment"],
       "actual_uk_regions": [
         {
           "id": "814cd12a-6095-e211-a939-e4115bead28a",

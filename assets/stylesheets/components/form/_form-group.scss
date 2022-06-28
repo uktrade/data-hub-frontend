@@ -1,10 +1,10 @@
-@import "../../tools";
-@import "../../settings";
+@import '../../tools';
+@import '../../settings';
 
 .c-form-group {
   max-width: 40em;
 
-  [type="hidden"] + &,
+  [type='hidden'] + &,
   .c-form-fieldset__legend + &,
   .c-form-fieldset__hint + & {
     margin-top: 0;
@@ -67,7 +67,7 @@ fieldset.c-form-group.has-error {
     bottom: 0;
     border-left: 5px solid $error-colour;
     margin-left: -$default-spacing-unit;
-    content: "";
+    content: '';
   }
 }
 
@@ -100,14 +100,13 @@ fieldset.c-form-group.c-form-fieldset--subfield {
     bottom: 0;
     border-left: 5px solid $grey-2;
     margin-left: -$default-spacing-unit;
-    content: "";
+    content: '';
   }
 
   &.has-error::before {
     border-left-color: $error-colour;
   }
 }
-
 
 fieldset.c-form-group.c-form-fieldset--subfield {
   border: none;

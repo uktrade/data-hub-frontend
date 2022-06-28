@@ -16,31 +16,35 @@ type ChildFn = ({
 type Children = React.ReactNode | ChildFn
 
 type OnSuccessActions = {
-  hardRedirect: (to: string) => any,
-  softRedirect: (to: string) => any,
-  flashMessage: (message: FlashMessage) => any,
+  hardRedirect: (to: string) => any
+  softRedirect: (to: string) => any
+  flashMessage: (message: FlashMessage) => any
 }
 
 export type Props = {
-  submissionTaskName: string,
-  id: string,
-  analyticsFormName: string,
-  analyticsData?: (values: Values) => object,
-  cancelRedirectTo?: () => string,
-  cancelButtonLabel?: string | React.ReactNode,
-  initialValuesTaskName?: string,
-  initialValuesPayload?: any,
-  initialValues?: Record<string, any>,
-  redirectTo?: (successActionResult: any, values: Values) => string,
-  redirectMode?: 'hard' | 'soft',
-  flashMessage?: (successActionResult: any, values: Values) => FlashMessage,
-  onSuccess?: (successActionResult: any, values: Values, actions: OnSuccessActions) => any,
-  transformInitialValues?: (initialValuesTaskResult: any) => Values,
-  transformPayload?: (values: Values) => any,
-  children?: Children,
-  submitButtonLabel?: string,
-  submitButtonColour?: string,
-  initialStepIndex?: number,
+  submissionTaskName: string
+  id: string
+  analyticsFormName: string
+  analyticsData?: (values: Values) => object
+  cancelRedirectTo?: () => string
+  cancelButtonLabel?: string | React.ReactNode
+  initialValuesTaskName?: string
+  initialValuesPayload?: any
+  initialValues?: Record<string, any>
+  redirectTo?: (successActionResult: any, values: Values) => string
+  redirectMode?: 'hard' | 'soft'
+  flashMessage?: (successActionResult: any, values: Values) => FlashMessage
+  onSuccess?: (
+    successActionResult: any,
+    values: Values,
+    actions: OnSuccessActions
+  ) => any
+  transformInitialValues?: (initialValuesTaskResult: any) => Values
+  transformPayload?: (values: Values) => any
+  children?: Children
+  submitButtonLabel?: string
+  submitButtonColour?: string
+  initialStepIndex?: number
 }
 
 export type Form = (props: Props) => any

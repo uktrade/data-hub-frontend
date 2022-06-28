@@ -6,14 +6,14 @@
   "name": "Rebecca Lowe",
   "job_title": "Forward Quality Associate",
   "company": {
-      "name": "Lambda plc",
-      "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa"
+    "name": "Lambda plc",
+    "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa"
   },
   "adviser": {
-      "first_name": "Test",
-      "last_name": "CMU 1",
-      "name": "Test CMU 1",
-      "id": "8036f207-ae3e-e611-8d53-e4115bed50dc"
+    "first_name": "Test",
+    "last_name": "CMU 1",
+    "name": "Test CMU 1",
+    "id": "8036f207-ae3e-e611-8d53-e4115bed50dc"
   },
   "primary": false,
   "telephone_countrycode": "",

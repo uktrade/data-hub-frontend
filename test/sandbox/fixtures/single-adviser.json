@@ -9,12 +9,12 @@
   "contact_email": "",
   "telephone_number": "",
   "dit_team": {
-      "id": "602b971d-5df6-e511-888e-e4115bead28a",
-      "disabled_on": null,
-      "name": "CBBC North EAST",
-      "tags": [],
-      "role": "886cb21e-6095-e211-a939-e4115bead28a",
-      "uk_region": "814cd12a-6095-e211-a939-e4115bead28a",
-      "country": "80756b9a-5d95-e211-a939-e4115bead28a"
+    "id": "602b971d-5df6-e511-888e-e4115bead28a",
+    "disabled_on": null,
+    "name": "CBBC North EAST",
+    "tags": [],
+    "role": "886cb21e-6095-e211-a939-e4115bead28a",
+    "uk_region": "814cd12a-6095-e211-a939-e4115bead28a",
+    "country": "80756b9a-5d95-e211-a939-e4115bead28a"
   }
 }

@@ -3,31 +3,31 @@
   "created_on": "2019-05-09T13:22:08.011240Z",
   "modified_on": "2019-05-09T13:22:08.011265Z",
   "investor_company": {
-      "name": "Venus Ltd",
-      "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+    "name": "Venus Ltd",
+    "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
   },
   "incomplete_details_fields": [
-      "investor_type",
-      "investable_capital",
-      "global_assets_under_management",
-      "investor_description",
-      "required_checks_conducted"
+    "investor_type",
+    "investable_capital",
+    "global_assets_under_management",
+    "investor_description",
+    "required_checks_conducted"
   ],
   "incomplete_requirements_fields": [
-      "deal_ticket_sizes",
-      "investment_types",
-      "minimum_return_rate",
-      "time_horizons",
-      "construction_risks",
-      "minimum_equity_percentage",
-      "desired_deal_roles",
-      "restrictions",
-      "asset_classes_of_interest"
+    "deal_ticket_sizes",
+    "investment_types",
+    "minimum_return_rate",
+    "time_horizons",
+    "construction_risks",
+    "minimum_equity_percentage",
+    "desired_deal_roles",
+    "restrictions",
+    "asset_classes_of_interest"
   ],
   "incomplete_location_fields": [
-      "uk_region_locations",
-      "notes_on_locations",
-      "other_countries_being_considered"
+    "uk_region_locations",
+    "notes_on_locations",
+    "other_countries_being_considered"
   ],
   "investor_type": null,
   "investable_capital": null,

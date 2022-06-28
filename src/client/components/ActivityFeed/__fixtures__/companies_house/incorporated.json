@@ -18,10 +18,7 @@
           "dit:postcode": 444101
         },
         "name": "SULTRAX",
-        "type": [
-          "Organization",
-          "dit:Company"
-        ]
+        "type": ["Organization", "dit:Company"]
       }
     ],
     "dit:accountRefDay": 21,
@@ -41,10 +38,7 @@
     ],
     "id": "dit:externalSources:companies_house.companies:7",
     "startTime": "1970-10-03T02:18:21",
-    "type": [
-      "Organization",
-      "dit:Company"
-    ]
+    "type": ["Organization", "dit:Company"]
   },
   "published": "1970-10-03T02:18:21",
   "summary": "SULTRAX officially did action number 10.",

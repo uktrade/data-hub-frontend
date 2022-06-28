@@ -1,5 +1,4 @@
-Notification Badge
-==================
+# Notification Badge
 
 ### Description
 
@@ -12,7 +11,7 @@ Show an indicator of how many notifications there are. Based on [MOJ Notificatio
 ```
 
 ### Properties
-Prop | Required | Default | Type | Description
-:--- | :------- | :------ | :--- | :----------
- `label` | false |        | string | Text for badge
 
+| Prop    | Required | Default | Type   | Description    |
+| :------ | :------- | :------ | :----- | :------------- |
+| `label` | false    |         | string | Text for badge |

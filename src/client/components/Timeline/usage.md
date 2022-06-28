@@ -7,10 +7,10 @@ The timeline displays a list of events/stages in chronological order and indicat
 ### Usage
 
 ```jsx
-  <Timeline 
+<Timeline
   stages={['Prospect', 'Assign PM', 'Active', 'Verify win', 'Won']}
-  currentStage="Prospect" 
-  />
+  currentStage="Prospect"
+/>
 ```
 
 ### Properties

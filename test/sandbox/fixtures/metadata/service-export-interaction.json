@@ -72,11 +72,7 @@
     "id": "9984b82b-3499-e211-a939-e4115bead28a",
     "name": "Inbound Referral",
     "disabled_on": null,
-    "contexts": [
-      "other_interaction",
-      "export_interaction",
-      "service_delivery"
-    ]
+    "contexts": ["other_interaction", "export_interaction", "service_delivery"]
   },
   {
     "id": "e96a775a-1ff3-e411-bcbe-e4115bead28a",
@@ -96,11 +92,7 @@
     "id": "c4f9b82b-3499-e211-a939-e4115bead28a",
     "name": "Onward Referral",
     "disabled_on": null,
-    "contexts": [
-      "other_interaction",
-      "export_interaction",
-      "service_delivery"
-    ]
+    "contexts": ["other_interaction", "export_interaction", "service_delivery"]
   },
   {
     "id": "330bba2b-3499-e211-a939-e4115bead28a",

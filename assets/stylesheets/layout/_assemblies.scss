@@ -1,5 +1,5 @@
-@import "../settings";
-@import "../tools/mixins/layout";
+@import '../settings';
+@import '../tools/mixins/layout';
 
 // View assemblies
 // Define how components stack in views
@@ -47,7 +47,7 @@
   }
 }
 
-[type="hidden"] + .c-form-group {
+[type='hidden'] + .c-form-group {
   margin-top: 0;
 }
 

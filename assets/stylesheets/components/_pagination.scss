@@ -1,5 +1,5 @@
-@import "../settings";
-@import "../tools/mixins";
+@import '../settings';
+@import '../tools/mixins';
 
 @mixin _pageless {
   .c-pagination__list {

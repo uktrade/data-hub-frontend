@@ -24,6 +24,6 @@
     "id": "1",
     "name": "abc"
   },
-  "teams": [ "team1", "team2" ],
-  "related_programmes": [ "programme1", "programme2" ]
+  "teams": ["team1", "team2"],
+  "related_programmes": ["programme1", "programme2"]
 }

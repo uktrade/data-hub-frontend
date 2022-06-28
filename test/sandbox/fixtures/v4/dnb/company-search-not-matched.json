@@ -8,9 +8,7 @@
       "dnb_company": {
         "duns_number": "111111111",
         "primary_name": "Some unmatched company",
-        "trading_names": [
-          "Some unmatched company trading name"
-        ],
+        "trading_names": ["Some unmatched company trading name"],
         "registration_numbers": [
           {
             "registration_type": "uk_companies_house_number",

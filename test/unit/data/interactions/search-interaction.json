@@ -13,12 +13,14 @@
     "last_name": "Whitfield",
     "name": "Jackson Whitfield"
   },
-  "contacts": [{
-    "id": "b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306",
-    "first_name": "Jackson",
-    "last_name": "Whitfield",
-    "name": "Jackson Whitfield"
-  }],
+  "contacts": [
+    {
+      "id": "b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306",
+      "first_name": "Jackson",
+      "last_name": "Whitfield",
+      "name": "Jackson Whitfield"
+    }
+  ],
   "dit_participants": [
     {
       "adviser": {
@@ -31,7 +33,8 @@
         "id": 1,
         "name": "The test team"
       }
-    }],
+    }
+  ],
   "communication_channel": {
     "id": "72c226d7-5d95-e211-a939-e4115bead28a",
     "name": "Telephone"

@@ -1,5 +1,4 @@
-SummaryList
-=========
+# SummaryList
 
 ### Description
 
@@ -15,8 +14,7 @@ A styled version of a description list, with terms and descriptions.
 ```
 
 ### Properties
-Prop | Required | Default | Type | Description
-:--- | :------- | :------ | :--- | :----------
- `rows` | false | null | array | Items to display in the list
 
-
+| Prop   | Required | Default | Type  | Description                  |
+| :----- | :------- | :------ | :---- | :--------------------------- |
+| `rows` | false    | null    | array | Items to display in the list |

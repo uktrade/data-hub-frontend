@@ -1,5 +1,5 @@
-@import "../../settings";
-@import "../../tools/mixins/addons";
+@import '../../settings';
+@import '../../tools/mixins/addons';
 
 $search-button-width: 50px;
 
@@ -14,7 +14,7 @@ $search-button-width: 50px;
   right: 0;
   border: 0;
   padding: 0;
-  background: $govuk-blue url("../../../images/_deprecated/search-button.png")
+  background: $govuk-blue url('../../../images/_deprecated/search-button.png')
     no-repeat 8px 50%; // TODO convert to SVG
   border-radius: 0;
 

@@ -16,7 +16,7 @@ If no colour is specified the tag will default to a blue background and white te
 
 ### Properties
 
-| Prop       | Required | Default                                                   | Type | Description |
-| :--------- | :------- | :-------------------------------------------------------- | :--- | :---------- |
-| `children` | true     | 'default'                                                 | node | Text of tag |
-| `colour`   | false    | `` | string | Dictates the `background-color` and `color` |
+| Prop       | Required | Default   | Type   | Description                                 |
+| :--------- | :------- | :-------- | :----- | :------------------------------------------ |
+| `children` | true     | 'default' | node   | Text of tag                                 |
+| `colour`   | false    | ``        | string | Dictates the `background-color` and `color` |

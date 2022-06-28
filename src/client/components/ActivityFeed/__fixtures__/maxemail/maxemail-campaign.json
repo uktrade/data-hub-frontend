@@ -3,10 +3,7 @@
     "dit:emailAddress": "gde.news@example.gov.uk",
     "id": "dit:maxemail:Sender:gde.news@example.gov.uk",
     "name": "Sarah Bow",
-    "type": [
-      "Organization",
-      "dit:maxemail:Sender"
-    ]
+    "type": ["Organization", "dit:maxemail:Sender"]
   },
   "dit:application": "maxemail",
   "id": "dit:maxemail:Campaign:1:Create",

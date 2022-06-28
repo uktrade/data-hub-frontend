@@ -7,10 +7,10 @@
   "job_title": "Epic",
   "company": null,
   "adviser": {
-      "name": "DIT Staff",
-      "first_name": "DIT",
-      "last_name": "Staff",
-      "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
+    "name": "DIT Staff",
+    "first_name": "DIT",
+    "last_name": "Staff",
+    "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
   },
   "primary": false,
   "telephone_countrycode": "",

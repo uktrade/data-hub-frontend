@@ -1,28 +1,25 @@
 # PieChart
 
 ### Description
-A visual representaion of data in the form of a pie chart. This component is built using the [nivo.js](https://nivo.rocks/) library which is a wrapper around d3.
 
+A visual representaion of data in the form of a pie chart. This component is built using the [nivo.js](https://nivo.rocks/) library which is a wrapper around d3.
 
 ### Usage
 
 ```jsx
-<PieChart
-  data={data}
-  height={450}
-/>
+<PieChart data={data} height={450} />
 ```
 
 ### Properties
 
-| Prop         | Required | Default | Type   | Description                                                                     |
-| :----------- | :------- | :------ | :----- | :------------------------------------------------------------------------------ |
-| `data`       | true     | ``````  | string | The data for the pie chart.
-| `height`       | true     | ``````  | number | A height value is need to render the chart.
-| `unit`       | false     | `''`  | string | Unit to display in the centre of the chart.
-
+| Prop     | Required | Default | Type   | Description                                 |
+| :------- | :------- | :------ | :----- | :------------------------------------------ |
+| `data`   | true     | ``````  | string | The data for the pie chart.                 |
+| `height` | true     | ``````  | number | A height value is need to render the chart. |
+| `unit`   | false    | `''`    | string | Unit to display in the centre of the chart. |
 
 ### Data format
+
 ```jsx
 const exampleData = [
   {

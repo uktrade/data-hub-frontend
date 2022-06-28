@@ -1,6 +1,6 @@
-@import "../settings/colours";
-@import "../settings/layout";
-@import "../tools/mixins/typography";
+@import '../settings/colours';
+@import '../settings/layout';
+@import '../tools/mixins/typography';
 
 table {
   border-collapse: collapse;
@@ -31,11 +31,10 @@ table {
     text-align: left;
   }
 
-  [align="right"] {
+  [align='right'] {
     text-align: right;
   }
 }
-
 
 .table__cell--plain {
   border-bottom: 0;
@@ -59,10 +58,9 @@ table {
   padding: 5px 0px;
   &:before {
     content: '\25CF';
-    margin-right: 10px ;
+    margin-right: 10px;
     position: relative;
     font-size: 0.8em;
     top: -2px;
   }
 }
-

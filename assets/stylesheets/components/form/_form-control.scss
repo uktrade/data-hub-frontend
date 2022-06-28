@@ -1,6 +1,6 @@
-@import "../../../../node_modules/govuk_frontend_toolkit/stylesheets/design-patterns/buttons";
-@import "../../settings";
-@import "../../settings/colours";
+@import '../../../../node_modules/govuk_frontend_toolkit/stylesheets/design-patterns/buttons';
+@import '../../settings';
+@import '../../settings/colours';
 
 .c-form-control {
   appearance: none;
@@ -16,14 +16,14 @@
     box-shadow: 0 0 0 3px $focus-colour;
   }
 
-  &[type="text"],
-  &[type="search"],
-  &[type="password"],
-  &[type="date"]{
+  &[type='text'],
+  &[type='search'],
+  &[type='password'],
+  &[type='date'] {
     width: 100%;
   }
 
-  &[type="file"] {
+  &[type='file'] {
     $button-width: 128px;
     border: none;
     margin-left: $button-width;
@@ -36,8 +36,8 @@
     }
 
     &::before {
-      @include button ($grey-3);
-      padding-bottom: .526315em;
+      @include button($grey-3);
+      padding-bottom: 0.526315em;
       content: 'Choose a file';
       display: inline-block;
       position: absolute;
@@ -46,7 +46,7 @@
       -webkit-user-select: none;
       cursor: pointer;
 
-      @include media (mobile) {
+      @include media(mobile) {
         width: 100%;
         text-align: center;
       }
@@ -71,8 +71,9 @@ select.c-form-control {
   width: 100%;
   border-radius: 0;
   appearance: none;
-  background: $white url("../../../images/icon-triangle.svg") no-repeat right 8px top 50%;
-  background-size: .8em;
+  background: $white url('../../../images/icon-triangle.svg') no-repeat right
+    8px top 50%;
+  background-size: 0.8em;
   padding-right: $default-spacing-unit * 2;
 }
 

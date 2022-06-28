@@ -20,10 +20,10 @@ associated with `/bar` and `/baz` [React Router] paths respectively and that
 there is also another [Express] route `/foo/:id/bing` which renders a completely
 independent page. The desired behavior then is that when a user lands on:
 
-* `/foo/123` the tab navigation should be rendered with no tab selected
-* `/foo/123/bar` the _Bar_ tab should be selected
-* `/foo/123/baz` the _Baz_ tab should be selected
-* `/foo/123/bing` the independent page is rendered
+- `/foo/123` the tab navigation should be rendered with no tab selected
+- `/foo/123/bar` the _Bar_ tab should be selected
+- `/foo/123/baz` the _Baz_ tab should be selected
+- `/foo/123/bing` the independent page is rendered
 
 For this to work, we need to have two measures in place:
 
@@ -38,6 +38,7 @@ definition order, e.g.
 
 If the bing path is defined before the SPA route, we can just make the SPA route
 accept any trailing part by adding the asterisk `*` at its end:
+
 ```js
 app.get('/foo/:id/bing', bingHandler)
 app.get('/foo/:id/*', spaHandler)
@@ -46,6 +47,7 @@ app.get('/foo/:id/*', spaHandler)
 If the definition order is reversed and we keep the asterisk, the SPA route
 would capture the _bing_ route and would render the SPA page instead of the
 _bing_ page:
+
 ```js
 app.get('/foo/:id/*', spaHandler)
 // The bingHandler will never be reached
@@ -54,12 +56,14 @@ app.get('/foo/:id/bing', bingHandler)
 
 The SPA route thus needs to ensure that it doesn't capture the _bing_ path,
 either by enumerating all the possible trailing paths:
+
 ```js
 app.get(['/foo/:id/bar', '/foo/:id/baz'], spaHandler)
 app.get('/foo/:id/bing', bingHandler)
 ```
 
 Or by accepting anything except the _bing_ path:
+
 ```js
 app.get(/\/foo\/(?<id>.*)\/(?!bing)/, spaHandler)
 app.get('/foo/:id/bing', bingHandler)
@@ -82,11 +86,7 @@ The middleware should be placed in front of a request handler (controller) and
 should be passed an [Express] route definition denoting the _base path_:
 
 ```js
-app.get(
-  ['/foo/:id/bar', '/foo/:id/baz'],
-  spaBasePath('/foo/:id'),
-  spaHandler,
-)
+app.get(['/foo/:id/bar', '/foo/:id/baz'], spaBasePath('/foo/:id'), spaHandler)
 ```
 
 When a matching path e.g. `/foo/123/bar` reaches the route, the middleware
@@ -101,10 +101,10 @@ In modern browsers the `href` value of the `<base/>` element is accessible as
 `basename` prop.
 
 Should you ever encounter a case where the [spaBasePath] middleware doesn't
-meet your needs, you can always resort to manually assign a value to 
+meet your needs, you can always resort to manually assign a value to
 `res.locals.basePath`.
 
 [express-history-api-fallback]: https://www.npmjs.com/package/express-history-api-fallback
-[React Router]: https://reacttraining.com/react-router/web/guides/quick-start
-[Express]: https://expressjs.com/
-[`spaBasePath`]: ../src/middleware/spa-base-path.js
+[react router]: https://reacttraining.com/react-router/web/guides/quick-start
+[express]: https://expressjs.com/
+[`spabasepath`]: ../src/middleware/spa-base-path.js

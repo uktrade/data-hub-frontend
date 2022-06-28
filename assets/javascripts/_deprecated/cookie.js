@@ -1,8 +1,10 @@
 /* eslint-disable */
-(function () {
+;(function () {
   'use strict'
   var root = this
-  if (typeof root.GOVUK === 'undefined') { root.GOVUK = {} }
+  if (typeof root.GOVUK === 'undefined') {
+    root.GOVUK = {}
+  }
 
   /*
     Cookie methods
@@ -37,7 +39,7 @@
     var cookieString = name + '=' + value + '; path=/'
     if (options.days) {
       var date = new Date()
-      date.setTime(date.getTime() + (options.days * 24 * 60 * 60 * 1000))
+      date.setTime(date.getTime() + options.days * 24 * 60 * 60 * 1000)
       cookieString = cookieString + '; expires=' + date.toGMTString()
     }
     if (document.location.protocol === 'https:') {
@@ -59,23 +61,26 @@
     }
     return null
   }
-}).call(this);
-(function () {
+}.call(this))
+;(function () {
   'use strict'
   var root = this
-  if (typeof root.GOVUK === 'undefined') { root.GOVUK = {} }
+  if (typeof root.GOVUK === 'undefined') {
+    root.GOVUK = {}
+  }
 
   GOVUK.addCookieMessage = function () {
     var message = document.getElementById('global-cookie-message')
-    var hasCookieMessage = (message && GOVUK.cookie('seen_cookie_message') === null)
+    var hasCookieMessage =
+      message && GOVUK.cookie('seen_cookie_message') === null
 
     if (hasCookieMessage) {
       message.style.display = 'block'
       GOVUK.cookie('seen_cookie_message', 'yes', { days: 28 })
     }
   }
-}).call(this);
-(function () {
+}.call(this))
+;(function () {
   'use strict'
 
   // add cookie message
@@ -92,21 +97,29 @@
     for (i = 0, _i = els.length; i < _i; i++) {
       els[i].addEventListener('click', function (e) {
         e.preventDefault()
-        var target = document.getElementById(this.getAttribute('href').substr(1))
+        var target = document.getElementById(
+          this.getAttribute('href').substr(1)
+        )
         var targetClass = target.getAttribute('class') || ''
         var sourceClass = this.getAttribute('class') || ''
 
         if (targetClass.indexOf('js-visible') !== -1) {
-          target.setAttribute('class', targetClass.replace(/(^|\s)js-visible(\s|$)/, ''))
+          target.setAttribute(
+            'class',
+            targetClass.replace(/(^|\s)js-visible(\s|$)/, '')
+          )
         } else {
           target.setAttribute('class', targetClass + ' js-visible')
         }
         if (sourceClass.indexOf('js-hidden') !== -1) {
-          this.setAttribute('class', sourceClass.replace(/(^|\s)js-hidden(\s|$)/, ''))
+          this.setAttribute(
+            'class',
+            sourceClass.replace(/(^|\s)js-hidden(\s|$)/, '')
+          )
         } else {
           this.setAttribute('class', sourceClass + ' js-hidden')
         }
       })
     }
   }
-}).call(this)
+}.call(this))

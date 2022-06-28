@@ -8,29 +8,23 @@
         "name": "Company"
       },
       "companies_house_data": null,
-      "contacts": [
-      ],
+      "contacts": [],
       "employee_range": null,
       "export_experience_category": null,
-      "export_to_countries": [
-      ],
-      "future_interest_countries": [
-      ],
+      "export_to_countries": [],
+      "future_interest_countries": [],
       "global_headquarters": null,
       "headquarter_type": null,
       "sector": {
         "id": "b1959812-6095-e211-a939-e4115bead28a",
         "name": "Energy",
-        "ancestors": [
-        ]
+        "ancestors": []
       },
       "turnover_range": null,
       "uk_based": false,
       "uk_region": null,
       "trading_name": "",
-      "suggest": [
-        "EnquestTest"
-      ],
+      "suggest": ["EnquestTest"],
       "address": {
         "line_1": "Level 6, Avenue K Tower",
         "line_2": "156 Jalan Ampang",
@@ -64,8 +58,7 @@
       "created_on": "2014-07-23T03:31:57+00:00",
       "company_number": null,
       "duns_number": null,
-      "trading_names": [
-      ],
+      "trading_names": [],
       "reference_code": "123",
       "archived_on": null
     },
@@ -76,17 +69,14 @@
         "name": "Company"
       },
       "companies_house_data": null,
-      "contacts": [
-      ],
+      "contacts": [],
       "employee_range": {
         "id": "41afd8d0-5d95-e211-a939-e4115bead28a",
         "name": "500+"
       },
       "export_experience_category": null,
-      "export_to_countries": [
-      ],
-      "future_interest_countries": [
-      ],
+      "export_to_countries": [],
+      "future_interest_countries": [],
       "global_headquarters": null,
       "headquarter_type": null,
       "sector": {
@@ -149,9 +139,7 @@
       "created_on": "2007-11-28T06:36:19+00:00",
       "company_number": null,
       "duns_number": null,
-      "trading_names": [
-        "Saint-Gobain UK"
-      ],
+      "trading_names": ["Saint-Gobain UK"],
       "reference_code": "",
       "archived_on": null
     },
@@ -159,14 +147,11 @@
       "archived_by": null,
       "business_type": null,
       "companies_house_data": null,
-      "contacts": [
-      ],
+      "contacts": [],
       "employee_range": null,
       "export_experience_category": null,
-      "export_to_countries": [
-      ],
-      "future_interest_countries": [
-      ],
+      "export_to_countries": [],
+      "future_interest_countries": [],
       "global_headquarters": {
         "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
         "name": "Venus Ltd"
@@ -175,8 +160,7 @@
       "sector": {
         "id": "b3959812-6095-e211-a939-e4115bead28a",
         "name": "ICT",
-        "ancestors": [
-        ]
+        "ancestors": []
       },
       "turnover_range": null,
       "uk_based": true,
@@ -185,12 +169,7 @@
         "name": "South West"
       },
       "trading_name": "",
-      "suggest": [
-        "GINKGO INTERNATIONAL LTD",
-        "LTD",
-        "INTERNATIONAL",
-        "GINKGO"
-      ],
+      "suggest": ["GINKGO INTERNATIONAL LTD", "LTD", "INTERNATIONAL", "GINKGO"],
       "address": {
         "line_1": "198 CHELTENHAM ROAD",
         "line_2": "",
@@ -224,8 +203,7 @@
       "created_on": "2013-04-25T15:01:27+00:00",
       "company_number": null,
       "duns_number": null,
-      "trading_names": [
-      ],
+      "trading_names": [],
       "reference_code": "",
       "archived_on": null
     },
@@ -236,32 +214,23 @@
         "name": "Company"
       },
       "companies_house_data": null,
-      "contacts": [
-      ],
+      "contacts": [],
       "employee_range": null,
       "export_experience_category": null,
-      "export_to_countries": [
-      ],
-      "future_interest_countries": [
-      ],
+      "export_to_countries": [],
+      "future_interest_countries": [],
       "global_headquarters": null,
       "headquarter_type": null,
       "sector": {
         "id": "9c38cecc-5f95-e211-a939-e4115bead28a",
         "name": "Clothing, Footwear and Fashion",
-        "ancestors": [
-        ]
+        "ancestors": []
       },
       "turnover_range": null,
       "uk_based": false,
       "uk_region": null,
       "trading_name": "",
-      "suggest": [
-        "Spa",
-        "Pineider",
-        "Francesco",
-        "Francesco Pineider Spa"
-      ],
+      "suggest": ["Spa", "Pineider", "Francesco", "Francesco Pineider Spa"],
       "address": {
         "line_1": "Via Industriale 12",
         "line_2": "",
@@ -295,8 +264,7 @@
       "created_on": "2009-06-25T08:25:31+00:00",
       "company_number": null,
       "duns_number": null,
-      "trading_names": [
-      ],
+      "trading_names": [],
       "reference_code": "",
       "archived_on": null
     },
@@ -320,17 +288,14 @@
       ],
       "employee_range": null,
       "export_experience_category": null,
-      "export_to_countries": [
-      ],
-      "future_interest_countries": [
-      ],
+      "export_to_countries": [],
+      "future_interest_countries": [],
       "global_headquarters": null,
       "headquarter_type": null,
       "sector": {
         "id": "ab22c9d2-5f95-e211-a939-e4115bead28a",
         "name": "Software and Computer Services Business to Business (B2B)",
-        "ancestors": [
-        ]
+        "ancestors": []
       },
       "turnover_range": null,
       "uk_based": false,
@@ -384,9 +349,7 @@
       "created_on": "2016-05-02T17:32:03+00:00",
       "company_number": null,
       "duns_number": null,
-      "trading_names": [
-        "Headbook"
-      ],
+      "trading_names": ["Headbook"],
       "reference_code": "",
       "archived_on": null
     },
@@ -394,14 +357,11 @@
       "archived_by": null,
       "business_type": null,
       "companies_house_data": null,
-      "contacts": [
-      ],
+      "contacts": [],
       "employee_range": null,
       "export_experience_category": null,
-      "export_to_countries": [
-      ],
-      "future_interest_countries": [
-      ],
+      "export_to_countries": [],
+      "future_interest_countries": [],
       "global_headquarters": null,
       "headquarter_type": null,
       "sector": {
@@ -420,12 +380,7 @@
         "name": "North West"
       },
       "trading_name": "",
-      "suggest": [
-        "Recycling",
-        "Systems",
-        "Summit Recycling Systems",
-        "Summit"
-      ],
+      "suggest": ["Recycling", "Systems", "Summit Recycling Systems", "Summit"],
       "address": {
         "line_1": "Vanguard, Tame Park, Tamworth, b77 5dy, United Kingdom",
         "line_2": "",
@@ -459,8 +414,7 @@
       "created_on": "2015-10-06T11:24:13+00:00",
       "company_number": null,
       "duns_number": null,
-      "trading_names": [
-      ],
+      "trading_names": [],
       "reference_code": "",
       "archived_on": null
     },
@@ -471,14 +425,11 @@
         "id": "15909177",
         "company_number": "00733055"
       },
-      "contacts": [
-      ],
+      "contacts": [],
       "employee_range": null,
       "export_experience_category": null,
-      "export_to_countries": [
-      ],
-      "future_interest_countries": [
-      ],
+      "export_to_countries": [],
+      "future_interest_countries": [],
       "global_headquarters": null,
       "headquarter_type": null,
       "sector": {
@@ -500,12 +451,7 @@
         "name": "London"
       },
       "trading_name": "",
-      "suggest": [
-        "Blue",
-        "Mountain",
-        "Music",
-        "Blue Mountain Music"
-      ],
+      "suggest": ["Blue", "Mountain", "Music", "Blue Mountain Music"],
       "address": {
         "line_1": "8 Kensington Park Road",
         "line_2": "Notting Hill",
@@ -539,8 +485,7 @@
       "created_on": "2010-04-15T07:38:03+00:00",
       "company_number": "00733055",
       "duns_number": null,
-      "trading_names": [
-      ],
+      "trading_names": [],
       "reference_code": "",
       "archived_on": null
     },
@@ -548,21 +493,17 @@
       "archived_by": null,
       "business_type": null,
       "companies_house_data": null,
-      "contacts": [
-      ],
+      "contacts": [],
       "employee_range": null,
       "export_experience_category": null,
-      "export_to_countries": [
-      ],
-      "future_interest_countries": [
-      ],
+      "export_to_countries": [],
+      "future_interest_countries": [],
       "global_headquarters": null,
       "headquarter_type": null,
       "sector": {
         "id": "355f977b-8ac3-e211-a646-e4115bead28a",
         "name": "Retail",
-        "ancestors": [
-        ]
+        "ancestors": []
       },
       "turnover_range": null,
       "uk_based": true,
@@ -571,11 +512,7 @@
         "name": "North West"
       },
       "trading_name": "",
-      "suggest": [
-        "Style",
-        "Sorelle Style",
-        "Sorelle"
-      ],
+      "suggest": ["Style", "Sorelle Style", "Sorelle"],
       "address": {
         "line_1": "11A  LITTLECOTE GARDENS",
         "line_2": "",
@@ -609,8 +546,7 @@
       "created_on": "2015-03-31T13:10:03+00:00",
       "company_number": null,
       "duns_number": null,
-      "trading_names": [
-      ],
+      "trading_names": [],
       "reference_code": "",
       "archived_on": null
     },
@@ -621,14 +557,11 @@
         "name": "Company"
       },
       "companies_house_data": null,
-      "contacts": [
-      ],
+      "contacts": [],
       "employee_range": null,
       "export_experience_category": null,
-      "export_to_countries": [
-      ],
-      "future_interest_countries": [
-      ],
+      "export_to_countries": [],
+      "future_interest_countries": [],
       "global_headquarters": {
         "id": "00f99d40-27c4-43f0-8979-85ca955f77e2",
         "name": "Jacobi, Kihn and VonRueden|c87bc740-8066-4b77-a0ed-59649e8e4415"
@@ -637,18 +570,13 @@
       "sector": {
         "id": "b1959812-6095-e211-a939-e4115bead28a",
         "name": "Energy",
-        "ancestors": [
-        ]
+        "ancestors": []
       },
       "turnover_range": null,
       "uk_based": false,
       "uk_region": null,
       "trading_name": "",
-      "suggest": [
-        "Informetis Co.,Ltd.",
-        "Co.,Ltd.",
-        "Informetis"
-      ],
+      "suggest": ["Informetis Co.,Ltd.", "Co.,Ltd.", "Informetis"],
       "address": {
         "line_1": "1-5-4",
         "line_2": "Takanawa",
@@ -682,8 +610,7 @@
       "created_on": "2014-03-21T08:25:27+00:00",
       "company_number": null,
       "duns_number": null,
-      "trading_names": [
-      ],
+      "trading_names": [],
       "reference_code": "",
       "archived_on": null
     }

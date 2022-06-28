@@ -9,10 +9,7 @@
         "dit:dunsNumber": null,
         "id": "dit:DataHubCompany:0f5216e0-849f-11e6-ae22-56b6b6499611",
         "name": "Venus Ltd",
-        "type": [
-          "Organization",
-          "dit:Company"
-        ]
+        "type": ["Organization", "dit:Company"]
       },
       {
         "dit:jobTitle": "Some job title",
@@ -20,10 +17,7 @@
         "id": "dit:DataHubContact:952232d2-1d25-4c3a-bcac-2f3a30a94da9",
         "url": "https://www.datahub.dev.uktrade.io/contacts/952232d2-1d25-4c3a-bcac-2f3a30a94da9",
         "name": "Dean Cox",
-        "type": [
-          "Person",
-          "dit:Contact"
-        ]
+        "type": ["Person", "dit:Contact"]
       },
       {
         "dit:jobTitle": "Director",
@@ -31,10 +25,7 @@
         "id": "dit:DataHubContact:952232d2-1d25-4c3a-bcac-2f3a30a94da8",
         "url": "https://www.datahub.dev.uktrade.io/contacts/04cadecd-2de4-4cda-9fda-59db93495dba",
         "name": "John Doe",
-        "type": [
-          "Person",
-          "dit:Contact"
-        ]
+        "type": ["Person", "dit:Contact"]
       },
       {
         "dit:jobTitle": "Chief Executive",
@@ -42,10 +33,7 @@
         "id": "dit:DataHubContact:952232d2-1d25-4c3a-bcac-2f3a30a94da7",
         "url": "https://www.datahub.dev.uktrade.io/contacts/28f75a93-3c27-e611-9bdc-e4115bead28a/details",
         "name": "Mary Marriott",
-        "type": [
-          "Person",
-          "dit:Contact"
-        ]
+        "type": ["Person", "dit:Contact"]
       }
     ],
     "dit:estimatedLandDate": "2020-01-01",
@@ -58,9 +46,7 @@
     "dit:totalInvestment": 1000000,
     "id": "dit:DataHubInvestmentProject:3520b973-0e77-46cf-be75-3585f2f6691e",
     "name": "Wig factory",
-    "type": [
-      "dit:InvestmentProject"
-    ],
+    "type": ["dit:InvestmentProject"],
     "url": "https://www.datahub.dev.uktrade.io/investments/projects/3520b973-0e77-46cf-be75-3585f2f6691e"
   },
   "generator": {

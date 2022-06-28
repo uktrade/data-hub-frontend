@@ -16,9 +16,12 @@ const ExtendedJoi = Joi.extend((joi) => ({
 }))
 
 /* eslint-disable prettier/prettier */
-const OAUTH2_STR = Joi.string()
-  .when('OAUTH2_BYPASS_SSO', { is: false, then: Joi.required() })
-const OAUTH2_URI = Joi.string().uri()
+const OAUTH2_STR = Joi.string().when('OAUTH2_BYPASS_SSO', {
+  is: false,
+  then: Joi.required(),
+})
+const OAUTH2_URI = Joi.string()
+  .uri()
   .when('OAUTH2_BYPASS_SSO', { is: false, then: Joi.required() })
 
 const envSchema = Joi.object({
@@ -63,7 +66,7 @@ const envSchema = Joi.object({
 
   // Url to Data Workspace app
   DATA_WORKSPACE_URL: Joi.string().uri(),
-  
+
   // Url to Find Exporters app
   FIND_EXPORTERS_URL: Joi.string().uri(),
 
@@ -101,10 +104,13 @@ const envSchema = Joi.object({
   MARKET_ACCESS_URL: Joi.string().uri(),
 
   // How long to store dropdown data etc for, in seconds. Defaults to 15 minutes
-  METADATA_TTL: Joi.number().integer().default(15 * 60),
+  METADATA_TTL: Joi.number()
+    .integer()
+    .default(15 * 60),
 
   // Whether to run the app in dev mode. Set to `production` in production, otherwise don't set for dev behaviour
-  NODE_ENV: Joi.string().valid('production', 'development', 'test')
+  NODE_ENV: Joi.string()
+    .valid('production', 'development', 'test')
     .default('production'),
 
   // If a developer wishes to bypass OAuth locally then set this to true
@@ -112,7 +118,10 @@ const envSchema = Joi.object({
   // Token used for working with OAuth locally whilst developing. This token is
   // also used with CircleCi for providing user with different permissions.
   // Used only when OAUTH2_BYPASS_SSO is TRUE
-  OAUTH2_DEV_TOKEN: Joi.string().when('OAUTH2_BYPASS_SSO', { is: true, then: Joi.required() }),
+  OAUTH2_DEV_TOKEN: Joi.string().when('OAUTH2_BYPASS_SSO', {
+    is: true,
+    then: Joi.required(),
+  }),
   // OAuth auth url
   OAUTH2_AUTH_URL: OAUTH2_STR,
   // OAuth client ID
@@ -158,7 +167,9 @@ const envSchema = Joi.object({
   // String to encrypt session data with
   SESSION_SECRET: Joi.string().required(),
   // How long the user session lasts, in millis. Defaults to 2 hours
-  SESSION_TTL: Joi.number().integer().default(2 * 60 * 60 * 1000),
+  SESSION_TTL: Joi.number()
+    .integer()
+    .default(2 * 60 * 60 * 1000),
 
   // Configuration object (JSON) of Cloud Foundry services
   VCAP_SERVICES: ExtendedJoi.json().default({}),
@@ -183,7 +194,7 @@ const envSchema = Joi.object({
   // Elastic APM secret token used to authenticate the service
   ELASTIC_APM_SECRET_TOKEN: Joi.string().required(),
   // Elastic APM server timeout used to timeout if no response is found after 20 secs
-  ELASTIC_APM_SERVER_TIMEOUT: Joi.number().integer().default(20)
+  ELASTIC_APM_SERVER_TIMEOUT: Joi.number().integer().default(20),
 })
 /* eslint-enable prettier/prettier */
 

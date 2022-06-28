@@ -1,4 +1,4 @@
-@import "../settings";
+@import '../settings';
 
 .c-message-list {
   &:focus {
@@ -28,7 +28,7 @@
     margin-top: $default-spacing-unit;
   }
 
-  > *:not(span):not([type="hidden"]) + * {
+  > *:not(span):not([type='hidden']) + * {
     margin-top: $default-spacing-unit;
     margin-bottom: 0;
   }

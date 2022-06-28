@@ -79,7 +79,7 @@
           "type": "dit:aventri:Attendee"
         },
         "sort": [1645702137000]
-    },
+      },
       {
         "_index": "activities__feed_id_datahub-interactions__date_2019-06-20__timestamp_1561034480__batch_id_xputyeio__",
         "_type": "_doc",
@@ -175,7 +175,7 @@
                 "name": "Lambda plc",
                 "type": ["Organization", "dit:Company"]
               },
-    
+
               {
                 "dit:emailAddress": "Tyson.Morar@example.com",
                 "dit:jobTitle": "Product Metrics Associate",

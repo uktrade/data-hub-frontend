@@ -11,9 +11,7 @@
         "name": "One List Corp",
         "id": "375094ac-f79a-43e5-9c88-059a7caa17f0"
       },
-      "incomplete_details_fields": [
-        "investor_description"
-      ],
+      "incomplete_details_fields": ["investor_description"],
       "incomplete_requirements_fields": [
         "deal_ticket_sizes",
         "investment_types",

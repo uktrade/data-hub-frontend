@@ -1,5 +1,5 @@
-@import "../../settings/typography";
-@import "../mixins/conditionals";
+@import '../../settings/typography';
+@import '../mixins/conditionals';
 
 // Typographic scale helpers
 
@@ -22,8 +22,8 @@
 ///   h1 {
 ///     font-size: type-scale(0, "mobile");
 ///   }
-@function type-scale($level, $size: "large") {
-  @return map-get(map-get(map-get($type-settings, $level), $size), "font-size");
+@function type-scale($level, $size: 'large') {
+  @return map-get(map-get(map-get($type-settings, $level), $size), 'font-size');
 }
 
 /// Line height
@@ -45,6 +45,9 @@
 ///   h1 {
 ///     font-size: line-height(0, "mobile");
 ///   }
-@function line-height($level, $size: "large") {
-  @return map-get(map-get(map-get($type-settings, $level), $size), "line-height");
+@function line-height($level, $size: 'large') {
+  @return map-get(
+    map-get(map-get($type-settings, $level), $size),
+    'line-height'
+  );
 }

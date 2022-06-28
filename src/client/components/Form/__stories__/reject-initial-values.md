@@ -1,5 +1,4 @@
-Rejected initial values task
-=========
+# Rejected initial values task
 
 The `Form` can resolve its initial values with the _task_ mechanism.
 This example demonstrates the rejection of the initial values task.
@@ -23,7 +22,7 @@ This example demonstrates the rejection of the initial values task.
           task: 'result',
         })
     ),
-}}>  
+}}>
   <Form
     id="task-form-example-reject-initial-values"
     initialValuesTaskName="Load initial values"

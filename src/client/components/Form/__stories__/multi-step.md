@@ -1,5 +1,4 @@
-Multi-step form example
-=========
+# Multi-step form example
 
 ```jsx
 <DataHubProvider tasks={{

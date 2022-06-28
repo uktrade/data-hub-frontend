@@ -1,4 +1,4 @@
-@import "../tools/mixins";
+@import '../tools/mixins';
 
 .c-local-header {
   padding-bottom: $default-spacing-unit * 2;
@@ -87,7 +87,6 @@
     }
   }
 }
-
 
 .c-local-header--light-banner {
   background-color: $grey-4;

@@ -15,18 +15,20 @@
       "timestamp": "2020-04-29T15:14:07.669722Z",
       "comment": "",
       "changes": {
-        "site_decided": [ false, true ],
-        "address_1": [ "10 Main Road", "20 Main Road" ],
-        "address_2": [ null, "Redford" ],
+        "site_decided": [false, true],
+        "address_1": ["10 Main Road", "20 Main Road"],
+        "address_2": [null, "Redford"],
         "delivery_partners": [
-          [ "New Anglia LEP", "North Eastern LEP" ],
-          [ "North Eastern LEP", "Northern Ireland (disabled)" ]
+          ["New Anglia LEP", "North Eastern LEP"],
+          ["North Eastern LEP", "Northern Ireland (disabled)"]
         ],
-        "strategic_drivers": [ [ "Access to market" ], [ "Cost reduction", "Skills seeking" ] ],
-        "investment_type": [ "FDI", "Non-FDI" ],
-        "actual_land_date": [ "2018-01-01", "2021-03-10" ],
-        "government_assistance": [ true, false ]
-
+        "strategic_drivers": [
+          ["Access to market"],
+          ["Cost reduction", "Skills seeking"]
+        ],
+        "investment_type": ["FDI", "Non-FDI"],
+        "actual_land_date": ["2018-01-01", "2021-03-10"],
+        "government_assistance": [true, false]
       },
       "note": null
     },
@@ -42,8 +44,8 @@
       "timestamp": "2020-04-29T15:13:31.496817Z",
       "comment": "",
       "changes": {
-        "client_considering_other_countries": [ false, true ],
-        "competitor_countries": [ [], [ "Algeria" ] ]
+        "client_considering_other_countries": [false, true],
+        "competitor_countries": [[], ["Algeria"]]
       },
       "note": null
     },
@@ -67,11 +69,11 @@
       "timestamp": "2020-04-29T15:12:08.182171Z",
       "comment": "",
       "changes": {
-        "estimated_land_date": [ null, "2020-08-01" ],
-        "average_salary": [ "Below £25,000", "£35,000 and above" ],
-        "number_safeguarded_jobs": [ 1, 123123 ],
-        "r_and_d_budget": [ false, true ],
-        "non_fdi_r_and_d_budget": [ true, false ]
+        "estimated_land_date": [null, "2020-08-01"],
+        "average_salary": ["Below £25,000", "£35,000 and above"],
+        "number_safeguarded_jobs": [1, 123123],
+        "r_and_d_budget": [false, true],
+        "non_fdi_r_and_d_budget": [true, false]
       },
       "note": null
     }

@@ -6,7 +6,7 @@
 
 nav.sub-navigation {
   border-bottom: 1px solid #c6c8c8;
-  @include govuk-responsive-margin(4, "bottom");
+  @include govuk-responsive-margin(4, 'bottom');
   ol {
     display: flex;
     justify-content: space-around;
@@ -93,7 +93,7 @@ form {
     &.investor-details-edit {
       width: 75%;
     }
-    &.investor-requirements-edit  {
+    &.investor-requirements-edit {
       .deal-ticket-sizes {
         @include flexWrap;
         width: 34.7em;

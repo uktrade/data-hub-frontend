@@ -1,6 +1,6 @@
-@import "../../settings/layout";
-@import "./conditionals";
-@import "./addons";
+@import '../../settings/layout';
+@import './conditionals';
+@import './addons';
 
 /// Grid column
 /// -----------
@@ -40,7 +40,6 @@
   }
 }
 
-
 @mixin grid-row {
   @include clearfix;
   margin: 0 (-($gutter * 0.5));
@@ -63,7 +62,11 @@
     margin: 0 $gutter;
   }
 
-  @include media($min-width: ($site-width + $gutter * 2)) {
+  @include media(
+    $min-width: (
+      $site-width + $gutter * 2,
+    )
+  ) {
     margin: 0 auto;
   }
 }

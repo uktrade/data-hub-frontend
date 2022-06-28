@@ -60,8 +60,8 @@
     "id": "sv1"
   },
   "service_answers": {
-    "q1": {"a1": {}},
-    "q2": {"a2": {}}
+    "q1": { "a1": {} },
+    "q2": { "a2": {} }
   },
   "service_delivery_status": null,
   "subject": "ad",

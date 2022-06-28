@@ -2,7 +2,7 @@
   "id": "72fda78f-bdc3-44dc-9c22-c8ac82f7bda4",
   "reference_code": "ORG-12345678",
   "name": "SAMSUNG BIOEPIS UK LIMITED",
-  "trading_names": [ "Fred" ],
+  "trading_names": ["Fred"],
   "uk_based": true,
   "company_number": null,
   "vat_number": "123412341234",
@@ -38,28 +38,28 @@
   "description": "description",
   "website": "http://www.test.com",
   "business_type": {
-      "name": "Private limited company",
-      "id": "6f75408b-03e7-e611-bca1-e4115bead28a"
+    "name": "Private limited company",
+    "id": "6f75408b-03e7-e611-bca1-e4115bead28a"
   },
   "children": [],
   "one_list_group_tier": null,
   "contacts": [],
   "employee_range": null,
   "export_to_countries": [
-      {
-          "name": "Albania",
-          "id": "945f66a0-5d95-e211-a939-e4115bead28a"
-      },
-      {
-          "name": "Austria",
-          "id": "a05f66a0-5d95-e211-a939-e4115bead28a"
-      }
+    {
+      "name": "Albania",
+      "id": "945f66a0-5d95-e211-a939-e4115bead28a"
+    },
+    {
+      "name": "Austria",
+      "id": "a05f66a0-5d95-e211-a939-e4115bead28a"
+    }
   ],
   "future_interest_countries": [
-      {
-          "name": "Aruba",
-          "id": "9e5f66a0-5d95-e211-a939-e4115bead28a"
-      }
+    {
+      "name": "Aruba",
+      "id": "9e5f66a0-5d95-e211-a939-e4115bead28a"
+    }
   ],
   "headquarter_type": {
     "id": "11322",
@@ -67,13 +67,13 @@
   },
   "one_list_group_global_account_manager": null,
   "sector": {
-      "name": "Aerospace : Manufacturing and Assembly : Space Technology",
-      "id": "b622c9d2-5f95-e211-a939-e4115bead28a"
+    "name": "Aerospace : Manufacturing and Assembly : Space Technology",
+    "id": "b622c9d2-5f95-e211-a939-e4115bead28a"
   },
   "turnover_range": null,
   "uk_region": {
-      "name": "North East",
-      "id": "814cd12a-6095-e211-a939-e4115bead28a"
+    "name": "North East",
+    "id": "814cd12a-6095-e211-a939-e4115bead28a"
   },
   "investment_projects_invested_in": [],
   "investment_projects_invested_in_count": 0,

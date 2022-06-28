@@ -1,7 +1,5 @@
 {
-  "require" : [
-      "test/unit/common.js"
-  ],
+  "require": ["test/unit/common.js"],
   "ui": "bdd",
   "recursive": true,
   "reporter": "dot",

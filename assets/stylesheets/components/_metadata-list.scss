@@ -1,5 +1,5 @@
-@import "../settings/colours";
-@import "../tools/functions/typography";
+@import '../settings/colours';
+@import '../tools/functions/typography';
 
 .metadata-list {
   @include core-font(14);
@@ -10,7 +10,7 @@
   display: inline-block;
 
   &::after {
-    content: ":";
+    content: ':';
   }
 }
 

@@ -1,10 +1,10 @@
-@import "../../settings/colours";
-@import "./conditionals";
+@import '../../settings/colours';
+@import './conditionals';
 
 @mixin clearfix {
   &:after {
     clear: both;
-    content: "";
+    content: '';
     display: table;
   }
 }

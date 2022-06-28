@@ -2,9 +2,7 @@
   "id": "d27bde24-6330-464b-a48c-0394831586fd",
   "reference_code": "",
   "name": "DnB Global Ultimate",
-  "trading_names": [
-      "DnB Global Ultimate"
-  ],
+  "trading_names": ["DnB Global Ultimate"],
   "uk_based": false,
   "company_number": null,
   "vat_number": "",
@@ -61,15 +59,15 @@
   "uk_region": null,
   "export_experience_category": null,
   "address": {
-      "line_1": "1700 Amphitheatre Way",
-      "line_2": "",
-      "town": "Mountain Range",
-      "county": "",
-      "postcode": "95543-1771",
-      "country": {
-          "name": "United States",
-          "id": "81756b9a-5d95-e211-a939-e4115bead28a"
-      }
+    "line_1": "1700 Amphitheatre Way",
+    "line_2": "",
+    "town": "Mountain Range",
+    "county": "",
+    "postcode": "95543-1771",
+    "country": {
+      "name": "United States",
+      "id": "81756b9a-5d95-e211-a939-e4115bead28a"
+    }
   },
   "registered_address": null,
   "pending_dnb_investigation": false,

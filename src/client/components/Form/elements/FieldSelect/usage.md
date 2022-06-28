@@ -7,11 +7,11 @@ A Select dropdown field for use in forms.
 ### Usage
 
 ```jsx
-  <Form
-      id="fieldSelectExample"
-      analyticsFormName="fieldSelectExample"
-      submissionTaskName="Submit Form example"
-    >
+<Form
+  id="fieldSelectExample"
+  analyticsFormName="fieldSelectExample"
+  submissionTaskName="Submit Form example"
+>
   {(state) => (
     <>
       <FieldSelect
@@ -38,15 +38,15 @@ A Select dropdown field for use in forms.
 
 ### Properties
 
-| Prop           | Required | Default                                                                 | Type                           | Description                  |
-| :------------- | :------- | :---------------------------------------------------------------------- | :----------------------------- | :--------------------------- |
-| `name`         | true     | `` | string | Text for name attribute value                             |
-| `label`        | false    | null                                                                    | string                         | Text for the label element   |
-| `legend`       | false    | null                                                                    | node                           | Node for legend element      |
-| `hint`         | false    | null                                                                    | node                           | Node for hint element        |
-| `type`         | true     | `` | string | Text for type attribute value                             |
-| `validate`     | false    | null                                                                    | function or array of functions | Validate functions for input |
-| `required`     | false    | `` | Boolean | Text 'required' sets wether the input is required or not |
-| `initialValue` | false    | `` | Text | Sets initial value of the input                             |
-| `options`      | True     | ``` | Array | Items for the list                                        |
-| `emptyOption`  | False    | ``` | Text | Text to display when no items are selected                 |
+| Prop           | Required | Default | Type                           | Description                                              |
+| :------------- | :------- | :------ | :----------------------------- | :------------------------------------------------------- |
+| `name`         | true     | ``      | string                         | Text for name attribute value                            |
+| `label`        | false    | null    | string                         | Text for the label element                               |
+| `legend`       | false    | null    | node                           | Node for legend element                                  |
+| `hint`         | false    | null    | node                           | Node for hint element                                    |
+| `type`         | true     | ``      | string                         | Text for type attribute value                            |
+| `validate`     | false    | null    | function or array of functions | Validate functions for input                             |
+| `required`     | false    | ``      | Boolean                        | Text 'required' sets wether the input is required or not |
+| `initialValue` | false    | ``      | Text                           | Sets initial value of the input                          |
+| `options`      | True     | ```     | Array                          | Items for the list                                       |
+| `emptyOption`  | False    | ```     | Text                           | Text to display when no items are selected               |

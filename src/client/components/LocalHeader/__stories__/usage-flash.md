@@ -2,7 +2,7 @@
 
 ### Description
 
-Flash messages for users in different colours depending on the message. 
+Flash messages for users in different colours depending on the message.
 
 Note: If the props "flashMessages" are not passed down to the component then flash messages will be taken from session storage, if none exist in session storage then `null` is returned.
 
@@ -34,6 +34,6 @@ Note: If the props "flashMessages" are not passed down to the component then fla
 
 ### Properties
 
-| Prop            | Required | Default                                   | Type | Description |
-| :-------------- | :------- | :---------------------------------------- | :--- | :---------- |
-| `flashMessages` | false    | `` | Object | Contains the flash messages |
+| Prop            | Required | Default | Type   | Description                 |
+| :-------------- | :------- | :------ | :----- | :-------------------------- |
+| `flashMessages` | false    | ``      | Object | Contains the flash messages |

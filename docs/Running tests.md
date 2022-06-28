@@ -19,7 +19,7 @@ Sandbox is as a light replacement for API backend and it's used only by function
 ### Using sandbox within docker (preferred method)
 
 From the project root directory run `make start-mock`.
-   
+
 This will start up the sandbox api in conjunction with the frontend, mock-sso, webpack and redis. You don't need to rebuild the image when you make changes.
 
 ### Using sandbox within docker and with local frontend
@@ -73,14 +73,16 @@ Ensure you have [node](https://nodejs.org/en/download/) v10 installed then insta
 `$ npm install`
 
 ### Setting up E2E tests within docker (preferred method)
-1. In `test/cypress/support/commands.js`, find the `loadFixture` Cypress command and change `${backend_url}` to `http://localhost:8000`. 
+
+1. In `test/cypress/support/commands.js`, find the `loadFixture` Cypress command and change `${backend_url}` to `http://localhost:8000`.
 
 2. In `docker-compose.e2e.frontend.yml`, change the environment variable `OAUTH2_AUTH_URL` to point to `http://localhost:8080/o/authorize`.
 
 3. Run the relevant make command, for example `make start-e2e-dit`.
 
 ### Setting up E2E tests within docker and with local frontend
-1. Add `ALLOW_TEST_FIXTURE_SETUP=True` to `.env` in Data Hub API.  
+
+1. Add `ALLOW_TEST_FIXTURE_SETUP=True` to `.env` in Data Hub API.
 
 ### Running the tests
 
@@ -186,7 +188,7 @@ make visual-component-tests
 
 ### Updating the baseline image
 
-Updating the baseline consists in 2 steps: 
+Updating the baseline consists in 2 steps:
 
 - 1:. Running the visual component tests locally and verifying the failures are valid
 
@@ -195,16 +197,18 @@ Updating the baseline consists in 2 steps:
 There is work to be done to allow update of a given baseline image rather than only have the option to update all of them at once.
 
 ## Accessibility tests
+
 The aim of this suite is to ensure our HTML pages are usable by as many people as possible.
 
-  4 Tabs:
-  
-  1. cd test/sandbox && npm install && npx nodemon .
-  2. redis-server
-  3. npm run develop
-  4. npm run test:a11y
+4 Tabs:
+
+1. cd test/sandbox && npm install && npx nodemon .
+2. redis-server
+3. npm run develop
+4. npm run test:a11y
 
 ## Component unit tests
+
 The aim of this suite is to run tests directly against our React components without having to start the frontend.
 
 To start these tests, run `npm run test:component`. To run these using the Cypress component testing interface, run `npm run test:component:watch`.

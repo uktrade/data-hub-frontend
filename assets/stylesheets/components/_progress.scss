@@ -1,7 +1,7 @@
-@use "sass:math";
+@use 'sass:math';
 
-@import "../settings";
-@import "../tools";
+@import '../settings';
+@import '../tools';
 
 @mixin progress-bar-node {
   background-color: $govuk-blue;
@@ -50,7 +50,7 @@ $_section-width: 25%;
     left: -8px;
     width: 14px;
     height: 14px;
-    content: "";
+    content: '';
     border-radius: 20px;
     background-color: $white;
     border: 2px solid $grey-3;

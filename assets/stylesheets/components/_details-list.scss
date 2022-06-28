@@ -1,6 +1,6 @@
-@import "../settings/colours";
-@import "../settings/layout";
-@import "../tools/mixins";
+@import '../settings/colours';
+@import '../settings/layout';
+@import '../tools/mixins';
 
 .details-list {
   border-top: 1px solid $border-colour;
@@ -35,17 +35,17 @@
 .js-enabled {
   .details-list__item-heading {
     &::before {
-      font-family: "FontAwesome";
+      font-family: 'FontAwesome';
       width: $gutter * 0.5;
       display: inline-block;
-      content: "\f0da";
+      content: '\f0da';
     }
   }
 
   .is-open {
     .details-list__item-heading {
       &::before {
-        content: "\f0d7";
+        content: '\f0d7';
       }
     }
   }

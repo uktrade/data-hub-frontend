@@ -4,39 +4,39 @@
   "status": "quote_awaiting_acceptance",
   "created_on": "2021-02-02T14:10:45.811890Z",
   "created_by": {
-      "name": "Miranda Pottinger",
-      "id": "d5b8be3f-d9da-411e-8acf-f85986e3b4dd"
+    "name": "Miranda Pottinger",
+    "id": "d5b8be3f-d9da-411e-8acf-f85986e3b4dd"
   },
   "modified_on": "2021-02-02T14:13:10.036982Z",
   "modified_by": {
-      "name": "Miranda Pottinger",
-      "id": "d5b8be3f-d9da-411e-8acf-f85986e3b4dd"
+    "name": "Miranda Pottinger",
+    "id": "d5b8be3f-d9da-411e-8acf-f85986e3b4dd"
   },
   "company": {
-      "name": "SAVAGE SOLUTIONS LIMITED",
-      "id": "31854647-1f0e-449c-8adf-ee1faad19210"
+    "name": "SAVAGE SOLUTIONS LIMITED",
+    "id": "31854647-1f0e-449c-8adf-ee1faad19210"
   },
   "contact": {
-      "name": "Edward Savage",
-      "id": "a9753884-c1cc-4f46-a3c3-0d7b1fe33ef5"
+    "name": "Edward Savage",
+    "id": "a9753884-c1cc-4f46-a3c3-0d7b1fe33ef5"
   },
   "primary_market": {
-      "name": "Argentina",
-      "id": "9c5f66a0-5d95-e211-a939-e4115bead28a"
+    "name": "Argentina",
+    "id": "9c5f66a0-5d95-e211-a939-e4115bead28a"
   },
   "sector": {
-      "name": "ICT",
-      "id": "b3959812-6095-e211-a939-e4115bead28a"
+    "name": "ICT",
+    "id": "b3959812-6095-e211-a939-e4115bead28a"
   },
   "uk_region": {
-      "name": "South West",
-      "id": "894cd12a-6095-e211-a939-e4115bead28a"
+    "name": "South West",
+    "id": "894cd12a-6095-e211-a939-e4115bead28a"
   },
   "service_types": [
-      {
-          "name": "Activity relating to a high value campaign",
-          "id": "22fc9edd-41a5-4182-ba4e-baacc681d5f7"
-      }
+    {
+      "name": "Activity relating to a high value campaign",
+      "id": "22fc9edd-41a5-4182-ba4e-baacc681d5f7"
+    }
   ],
   "description": "Moving to Argentina",
   "contacts_not_to_approach": "",
@@ -66,8 +66,8 @@
   "billing_address_county": "",
   "billing_address_postcode": "BH7 7DU",
   "billing_address_country": {
-      "name": "United Kingdom",
-      "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+    "name": "United Kingdom",
+    "id": "80756b9a-5d95-e211-a939-e4115bead28a"
   },
   "archived_documents_url_path": "",
   "paid_on": null,

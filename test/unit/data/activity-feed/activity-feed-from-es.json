@@ -26,10 +26,7 @@
           },
           "object": {
             "id": "dit:DataHubInteraction:a066cc49-b679-4cbe-93c5-3ceba2f067ec",
-            "type": [
-              "dit:Event",
-              "dit:Interaction"
-            ],
+            "type": ["dit:Event", "dit:Interaction"],
             "startTime": "2019-05-02T08:43:40.904649+00:00",
             "dit:status": "complete",
             "dit:archived": false,
@@ -45,35 +42,23 @@
                 "id": "dit:DataHubCompany:a4ead59f-dfc8-e511-a5e6-e4115bead28a",
                 "dit:dunsNumber": "123456789",
                 "dit:companiesHouseNumber": "987654321",
-                "type": [
-                  "Organization",
-                  "dit:Company"
-                ],
+                "type": ["Organization", "dit:Company"],
                 "name": "Marco Test"
               },
               {
                 "id": "dit:DataHubContact:04cadecd-2de4-4cda-9fda-59db93495dba",
-                "type": [
-                  "Person",
-                  "dit:Contact"
-                ],
+                "type": ["Person", "dit:Contact"],
                 "dit:emailAddress": "john@example.com",
                 "name": "John Doe"
               },
               {
                 "id": "dit:DataHubAdviser:2dc3c098-2f51-43c5-8767-752e8e5065b5",
-                "type": [
-                  "Person",
-                  "dit:Adviser"
-                ],
+                "type": ["Person", "dit:Adviser"],
                 "dit:emailAddress": "mariobros@dit.com",
                 "name": "Mario Bros",
                 "dit:team": {
                   "id": "dit:DataHubTeam:3a48318c-9698-e211-a939-e4115bead28a",
-                  "type": [
-                    "Group",
-                    "dit:Team"
-                  ],
+                  "type": ["Group", "dit:Team"],
                   "name": "Digital Data Hub - Live Service"
                 }
               }
@@ -81,9 +66,7 @@
             "url": "https://example.com/companies/a4ead59f-dfc8-e511-a5e6-e4115bead28a/interactions/a066cc49-b679-4cbe-93c5-3ceba2f067ec"
           }
         },
-        "sort": [
-          1565426620904
-        ]
+        "sort": [1565426620904]
       },
       {
         "_index": "activity-feed",
@@ -100,10 +83,7 @@
           },
           "object": {
             "id": "dit:DataHubInteraction:a066cc49-b679-4cbe-93c5-3ceba2f067ec",
-            "type": [
-              "dit:Event",
-              "dit:Interaction"
-            ],
+            "type": ["dit:Event", "dit:Interaction"],
             "startTime": "2019-05-02T08:43:40.904649+00:00",
             "dit:status": "complete",
             "dit:archived": false,
@@ -119,35 +99,23 @@
                 "id": "dit:DataHubCompany:a4ead59f-dfc8-e511-a5e6-e4115bead28a",
                 "dit:dunsNumber": "123456789",
                 "dit:companiesHouseNumber": "987654321",
-                "type": [
-                  "Organization",
-                  "dit:Company"
-                ],
+                "type": ["Organization", "dit:Company"],
                 "name": "Marco Test"
               },
               {
                 "id": "dit:DataHubContact:04cadecd-2de4-4cda-9fda-59db93495dba",
-                "type": [
-                  "Person",
-                  "dit:Contact"
-                ],
+                "type": ["Person", "dit:Contact"],
                 "dit:emailAddress": "john@example.com",
                 "name": "John Doe"
               },
               {
                 "id": "dit:DataHubAdviser:2dc3c098-2f51-43c5-8767-752e8e5065b5",
-                "type": [
-                  "Person",
-                  "dit:Adviser"
-                ],
+                "type": ["Person", "dit:Adviser"],
                 "dit:emailAddress": "mariobros@dit.com",
                 "name": "Mario Bros",
                 "dit:team": {
                   "id": "dit:DataHubTeam:3a48318c-9698-e211-a939-e4115bead28a",
-                  "type": [
-                    "Group",
-                    "dit:Team"
-                  ],
+                  "type": ["Group", "dit:Team"],
                   "name": "Digital Data Hub - Live Service"
                 }
               }
@@ -155,9 +123,7 @@
             "url": "https://example.com/companies/a4ead59f-dfc8-e511-a5e6-e4115bead28a/interactions/a066cc49-b679-4cbe-93c5-3ceba2f067ec"
           }
         },
-        "sort": [
-          1565340220904
-        ]
+        "sort": [1565340220904]
       },
       {
         "_index": "activity-feed",
@@ -174,10 +140,7 @@
           },
           "object": {
             "id": "dit:DataHubInteraction:a066cc49-b679-4cbe-93c5-3ceba2f067ec",
-            "type": [
-              "dit:Event",
-              "dit:Interaction"
-            ],
+            "type": ["dit:Event", "dit:Interaction"],
             "startTime": "2019-05-02T08:43:40.904649+00:00",
             "dit:status": "complete",
             "dit:archived": false,
@@ -193,35 +156,23 @@
                 "id": "dit:DataHubCompany:a4ead59f-dfc8-e511-a5e6-e4115bead28a",
                 "dit:dunsNumber": "123456789",
                 "dit:companiesHouseNumber": "987654321",
-                "type": [
-                  "Organization",
-                  "dit:Company"
-                ],
+                "type": ["Organization", "dit:Company"],
                 "name": "Marco Test"
               },
               {
                 "id": "dit:DataHubContact:04cadecd-2de4-4cda-9fda-59db93495dba",
-                "type": [
-                  "Person",
-                  "dit:Contact"
-                ],
+                "type": ["Person", "dit:Contact"],
                 "dit:emailAddress": "john@example.com",
                 "name": "John Doe"
               },
               {
                 "id": "dit:DataHubAdviser:2dc3c098-2f51-43c5-8767-752e8e5065b5",
-                "type": [
-                  "Person",
-                  "dit:Adviser"
-                ],
+                "type": ["Person", "dit:Adviser"],
                 "dit:emailAddress": "mariobros@dit.com",
                 "name": "Mario Bros",
                 "dit:team": {
                   "id": "dit:DataHubTeam:3a48318c-9698-e211-a939-e4115bead28a",
-                  "type": [
-                    "Group",
-                    "dit:Team"
-                  ],
+                  "type": ["Group", "dit:Team"],
                   "name": "Digital Data Hub - Live Service"
                 }
               }
@@ -229,9 +180,7 @@
             "url": "https://example.com/companies/a4ead59f-dfc8-e511-a5e6-e4115bead28a/interactions/a066cc49-b679-4cbe-93c5-3ceba2f067ec"
           }
         },
-        "sort": [
-          1565253820904
-        ]
+        "sort": [1565253820904]
       },
       {
         "_index": "activity-feed",
@@ -248,10 +197,7 @@
           },
           "object": {
             "id": "dit:DataHubInteraction:a066cc49-b679-4cbe-93c5-3ceba2f067ec",
-            "type": [
-              "dit:Event",
-              "dit:Interaction"
-            ],
+            "type": ["dit:Event", "dit:Interaction"],
             "startTime": "2019-05-02T08:43:40.904649+00:00",
             "dit:status": "complete",
             "dit:archived": false,
@@ -267,35 +213,23 @@
                 "id": "dit:DataHubCompany:a4ead59f-dfc8-e511-a5e6-e4115bead28a",
                 "dit:dunsNumber": "123456789",
                 "dit:companiesHouseNumber": "987654321",
-                "type": [
-                  "Organization",
-                  "dit:Company"
-                ],
+                "type": ["Organization", "dit:Company"],
                 "name": "Marco Test"
               },
               {
                 "id": "dit:DataHubContact:04cadecd-2de4-4cda-9fda-59db93495dba",
-                "type": [
-                  "Person",
-                  "dit:Contact"
-                ],
+                "type": ["Person", "dit:Contact"],
                 "dit:emailAddress": "john@example.com",
                 "name": "John Doe"
               },
               {
                 "id": "dit:DataHubAdviser:2dc3c098-2f51-43c5-8767-752e8e5065b5",
-                "type": [
-                  "Person",
-                  "dit:Adviser"
-                ],
+                "type": ["Person", "dit:Adviser"],
                 "dit:emailAddress": "mariobros@dit.com",
                 "name": "Mario Bros",
                 "dit:team": {
                   "id": "dit:DataHubTeam:3a48318c-9698-e211-a939-e4115bead28a",
-                  "type": [
-                    "Group",
-                    "dit:Team"
-                  ],
+                  "type": ["Group", "dit:Team"],
                   "name": "Digital Data Hub - Live Service"
                 }
               }
@@ -303,9 +237,7 @@
             "url": "https://example.com/companies/a4ead59f-dfc8-e511-a5e6-e4115bead28a/interactions/a066cc49-b679-4cbe-93c5-3ceba2f067ec"
           }
         },
-        "sort": [
-          1565167420904
-        ]
+        "sort": [1565167420904]
       },
       {
         "_index": "activity-feed",
@@ -322,10 +254,7 @@
           },
           "object": {
             "id": "dit:DataHubInteraction:a066cc49-b679-4cbe-93c5-3ceba2f067ec",
-            "type": [
-              "dit:Event",
-              "dit:Interaction"
-            ],
+            "type": ["dit:Event", "dit:Interaction"],
             "startTime": "2019-05-02T08:43:40.904649+00:00",
             "dit:status": "complete",
             "dit:archived": false,
@@ -341,35 +270,23 @@
                 "id": "dit:DataHubCompany:a4ead59f-dfc8-e511-a5e6-e4115bead28a",
                 "dit:dunsNumber": "123456789",
                 "dit:companiesHouseNumber": "987654321",
-                "type": [
-                  "Organization",
-                  "dit:Company"
-                ],
+                "type": ["Organization", "dit:Company"],
                 "name": "Marco Test"
               },
               {
                 "id": "dit:DataHubContact:04cadecd-2de4-4cda-9fda-59db93495dba",
-                "type": [
-                  "Person",
-                  "dit:Contact"
-                ],
+                "type": ["Person", "dit:Contact"],
                 "dit:emailAddress": "john@example.com",
                 "name": "John Doe"
               },
               {
                 "id": "dit:DataHubAdviser:2dc3c098-2f51-43c5-8767-752e8e5065b5",
-                "type": [
-                  "Person",
-                  "dit:Adviser"
-                ],
+                "type": ["Person", "dit:Adviser"],
                 "dit:emailAddress": "mariobros@dit.com",
                 "name": "Mario Bros",
                 "dit:team": {
                   "id": "dit:DataHubTeam:3a48318c-9698-e211-a939-e4115bead28a",
-                  "type": [
-                    "Group",
-                    "dit:Team"
-                  ],
+                  "type": ["Group", "dit:Team"],
                   "name": "Digital Data Hub - Live Service"
                 }
               }
@@ -377,9 +294,7 @@
             "url": "https://example.com/companies/a4ead59f-dfc8-e511-a5e6-e4115bead28a/interactions/a066cc49-b679-4cbe-93c5-3ceba2f067ec"
           }
         },
-        "sort": [
-          1565081020904
-        ]
+        "sort": [1565081020904]
       }
     ]
   }

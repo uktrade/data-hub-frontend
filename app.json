@@ -1,3 +1,3 @@
 {
-  "addons":["heroku-redis"]
+  "addons": ["heroku-redis"]
 }

@@ -1,189 +1,130 @@
 {
-    "count": 11,
-    "next": null,
-    "previous": null,
-    "results": [
-        {
-        "id": 1,
-        "user": {
-            "id": "8b76daf2-0f8a-4887-9b4b-43bbda21c934",
-            "first_name": "Paul",
-            "last_name": "Gain",
-            "name": "Paul Gain",
-            "email": "paul.gain@digital.trade.gov.uk"
-        },
-        "timestamp": "2019-12-10T17:58:59.393078Z",
-        "comment": "",
-        "changes": {
-            "address_1": [
-            "14 Wharf Road",
-            "16 Wharf Road"
-            ],
-            "address_2": [
-            "",
-            "Westminster"
-            ],
-            "address_town": [
-            "Brentwood",
-            "London"
-            ],
-            "address_county": [
-            "Essex",
-            "Greater London"
-            ],
-            "address_postcode": [
-            "CM14 4LQ",
-            "SW1H 9AJ"
-            ]
-        }
+  "count": 11,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 1,
+      "user": {
+        "id": "8b76daf2-0f8a-4887-9b4b-43bbda21c934",
+        "first_name": "Paul",
+        "last_name": "Gain",
+        "name": "Paul Gain",
+        "email": "paul.gain@digital.trade.gov.uk"
       },
-      {
-        "id": 2,
-        "user": {
-          "id": "8b76daf2-0f8a-4887-9b4b-43bbda21c934",
-          "first_name": "Paul",
-          "last_name": "Gain",
-          "name": "Paul Gain",
-          "email": "paul.gain@digital.trade.gov.uk"
-        },
-        "timestamp": "2019-12-10T18:04:54.287410Z",
-        "comment": "",
-        "changes": {
-          "description": [
-            null,
-            "Superior editing services"
-          ],
-          "sector": [
-            "Biotechnology and Pharmaceuticals",
-            "Airports"
-          ],
-          "uk_region": [
-            "South East",
-            "London"
-          ]
-        }
+      "timestamp": "2019-12-10T17:58:59.393078Z",
+      "comment": "",
+      "changes": {
+        "address_1": ["14 Wharf Road", "16 Wharf Road"],
+        "address_2": ["", "Westminster"],
+        "address_town": ["Brentwood", "London"],
+        "address_county": ["Essex", "Greater London"],
+        "address_postcode": ["CM14 4LQ", "SW1H 9AJ"]
+      }
+    },
+    {
+      "id": 2,
+      "user": {
+        "id": "8b76daf2-0f8a-4887-9b4b-43bbda21c934",
+        "first_name": "Paul",
+        "last_name": "Gain",
+        "name": "Paul Gain",
+        "email": "paul.gain@digital.trade.gov.uk"
       },
-      {
-        "id": 3,
-        "user": {
-          "id": "8b76daf2-0f8a-4887-9b4b-43bbda21c934",
-          "first_name": "Paul",
-          "last_name": "Gain",
-          "name": "Paul Gain",
-          "email": "paul.gain@digital.trade.gov.uk"
-        },
-        "timestamp": "2019-12-10T18:00:52.265115Z",
-        "comment": "",
-        "changes": {
-          "trading_names": [
-            [],
-            [
-              "Edit History Enterprises"
-            ]
-          ]
-        }
+      "timestamp": "2019-12-10T18:04:54.287410Z",
+      "comment": "",
+      "changes": {
+        "description": [null, "Superior editing services"],
+        "sector": ["Biotechnology and Pharmaceuticals", "Airports"],
+        "uk_region": ["South East", "London"]
+      }
+    },
+    {
+      "id": 3,
+      "user": {
+        "id": "8b76daf2-0f8a-4887-9b4b-43bbda21c934",
+        "first_name": "Paul",
+        "last_name": "Gain",
+        "name": "Paul Gain",
+        "email": "paul.gain@digital.trade.gov.uk"
       },
-      {
-        "id": 4,
-        "user": {
-          "id": "8b76daf2-0f8a-4887-9b4b-43bbda21c934",
-          "first_name": "",
-          "last_name": "",
-          "name": "",
-          "email": "paul.gain@digital.trade.gov.uk"
-        },
-        "timestamp": "2019-12-10T18:01:52.265115Z",
-        "comment": "",
-        "changes": {}
+      "timestamp": "2019-12-10T18:00:52.265115Z",
+      "comment": "",
+      "changes": {
+        "trading_names": [[], ["Edit History Enterprises"]]
+      }
+    },
+    {
+      "id": 4,
+      "user": {
+        "id": "8b76daf2-0f8a-4887-9b4b-43bbda21c934",
+        "first_name": "",
+        "last_name": "",
+        "name": "",
+        "email": "paul.gain@digital.trade.gov.uk"
       },
-      {
-        "id": 5,
-        "user": null,
-        "timestamp": "2020-01-09T00:00:00.274066Z",
-        "comment": "Updated from D&B [celery:get_company_updates:ddf50721-d4bf-4482-84f1-74f4c78c46aa]",
-        "changes": {
-            "turnover": [
-                2382813,
-                1808091
-            ],
-            "is_turnover_estimated": [
-                true,
-                null
-            ],
-            "is_number_of_employees_estimated": [
-              null,
-              true
-            ],
-            "global_ultimate_duns_number": [
-                "",
-                "561652707"
-            ],
-            "dnb_modified_on": [
-                null,
-                "2020-01-09T00:00:00.274000Z"
-            ]
-        }
+      "timestamp": "2019-12-10T18:01:52.265115Z",
+      "comment": "",
+      "changes": {}
+    },
+    {
+      "id": 5,
+      "user": null,
+      "timestamp": "2020-01-09T00:00:00.274066Z",
+      "comment": "Updated from D&B [celery:get_company_updates:ddf50721-d4bf-4482-84f1-74f4c78c46aa]",
+      "changes": {
+        "turnover": [2382813, 1808091],
+        "is_turnover_estimated": [true, null],
+        "is_number_of_employees_estimated": [null, true],
+        "global_ultimate_duns_number": ["", "561652707"],
+        "dnb_modified_on": [null, "2020-01-09T00:00:00.274000Z"]
+      }
+    },
+    {
+      "id": 6,
+      "user": {
+        "id": "8b76daf2-0f8a-4887-9b4b-43bbda21c934",
+        "first_name": "Paul",
+        "last_name": "Gain",
+        "name": "Paul Gain",
+        "email": "paul.gain@digital.trade.gov.uk"
       },
-      {
-        "id": 6,
-        "user": {
-          "id": "8b76daf2-0f8a-4887-9b4b-43bbda21c934",
-          "first_name": "Paul",
-          "last_name": "Gain",
-          "name": "Paul Gain",
-          "email": "paul.gain@digital.trade.gov.uk"
-        },
-        "timestamp": "2019-12-10T18:03:52.265115Z",
-        "comment": "",
-        "changes": {}
+      "timestamp": "2019-12-10T18:03:52.265115Z",
+      "comment": "",
+      "changes": {}
+    },
+    {
+      "id": 7,
+      "user": {
+        "id": "73d89d55-68b2-4bb9-9c7c-eedbb1548b94",
+        "first_name": "Paul",
+        "last_name": "Gain",
+        "name": "Paul Gain",
+        "email": "paul.gain@digital.trade.gov.uk"
       },
-      {
-        "id": 7,
-        "user": {
-            "id": "73d89d55-68b2-4bb9-9c7c-eedbb1548b94",
-            "first_name": "Paul",
-            "last_name": "Gain",
-            "name": "Paul Gain",
-            "email": "paul.gain@digital.trade.gov.uk"
-        },
-        "timestamp": "2020-01-07T13:07:01.528994Z",
-        "comment": "",
-        "changes": {
-            "number_of_employees": [
-                98771,
-                98772
-            ]
-        }
+      "timestamp": "2020-01-07T13:07:01.528994Z",
+      "comment": "",
+      "changes": {
+        "number_of_employees": [98771, 98772]
+      }
+    },
+    {
+      "id": 8,
+      "user": {
+        "id": "73d89d55-68b2-4bb9-9c7c-eedbb1548b94",
+        "first_name": "Paul",
+        "last_name": "Gain",
+        "name": "Paul Gain",
+        "email": "paul.gain@digital.trade.gov.uk"
       },
-      {
-        "id": 8,
-        "user": {
-            "id": "73d89d55-68b2-4bb9-9c7c-eedbb1548b94",
-            "first_name": "Paul",
-            "last_name": "Gain",
-            "name": "Paul Gain",
-            "email": "paul.gain@digital.trade.gov.uk"
-        },
-        "timestamp": "2020-01-10T07:35:29.602549Z",
-        "comment": "",
-        "changes": {
-            "archived": [
-                true,
-                false
-            ],
-            "archived_on": [
-                "2020-01-07T15:02:59Z",
-                null
-            ],
-            "archived_reason": [
-                "Archived by mistake",
-                ""
-            ],
-            "archived_by": [
-                "Paul Gain",
-                null
-            ]
-        }
+      "timestamp": "2020-01-10T07:35:29.602549Z",
+      "comment": "",
+      "changes": {
+        "archived": [true, false],
+        "archived_on": ["2020-01-07T15:02:59Z", null],
+        "archived_reason": ["Archived by mistake", ""],
+        "archived_by": ["Paul Gain", null]
+      }
     },
     {
       "id": 9,
@@ -197,22 +138,10 @@
       "timestamp": "2020-01-06T14:16:42.923800Z",
       "comment": "",
       "changes": {
-          "archived": [
-              false,
-              true
-          ],
-          "archived_on": [
-              null,
-              "2020-01-06T14:16:42.982000Z"
-          ],
-          "archived_reason": [
-              null,
-              "Company is dissolved"
-          ],
-          "archived_by": [
-              null,
-              "Paul Gain"
-          ]
+        "archived": [false, true],
+        "archived_on": [null, "2020-01-06T14:16:42.982000Z"],
+        "archived_reason": [null, "Company is dissolved"],
+        "archived_by": [null, "Paul Gain"]
       }
     },
     {
@@ -227,22 +156,10 @@
       "timestamp": "2020-11-06T14:16:42.923800Z",
       "comment": "",
       "changes": {
-          "archived": [
-              false,
-              true
-          ],
-          "archived_on": [
-              null,
-              "2020-11-06T14:16:42.982000Z"
-          ],
-          "archived_reason": [
-              null,
-              "Company is dissolved"
-          ],
-          "archived_by": [
-              null,
-              "Pippo Raimondi"
-          ]
+        "archived": [false, true],
+        "archived_on": [null, "2020-11-06T14:16:42.982000Z"],
+        "archived_reason": [null, "Company is dissolved"],
+        "archived_by": [null, "Pippo Raimondi"]
       }
     },
     {
@@ -257,24 +174,11 @@
       "timestamp": "2020-11-07T14:16:42.923800Z",
       "comment": "",
       "changes": {
-          "archived": [
-              false,
-              true
-          ],
-          "archived_on": [
-              null,
-              "2020-11-07T14:16:42.982000Z"
-          ],
-          "archived_reason": [
-              null,
-              "Company is dissolved"
-          ],
-          "archived_by": [
-              null,
-              "Pippo Raimondi"
-          ]
+        "archived": [false, true],
+        "archived_on": [null, "2020-11-07T14:16:42.982000Z"],
+        "archived_reason": [null, "Company is dissolved"],
+        "archived_by": [null, "Pippo Raimondi"]
       }
     }
-    ]
-  }
-  
+  ]
+}

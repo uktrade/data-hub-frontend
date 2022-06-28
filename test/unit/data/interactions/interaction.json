@@ -6,26 +6,28 @@
       "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
     }
   ],
-  "contacts": [{
+  "contacts": [
+    {
       "name": "Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5",
       "id": "7701587b-e88f-4f39-874f-0bd06321f7df"
-  }],
+    }
+  ],
   "created_on": "2018-01-23T10:39:18.220321Z",
   "created_by": {
-      "first_name": "DIT",
-      "last_name": "Staff",
-      "name": "DIT Staff",
-      "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
+    "first_name": "DIT",
+    "last_name": "Staff",
+    "name": "DIT Staff",
+    "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
   },
   "event": null,
   "is_event": null,
   "status": "complete",
   "kind": "interaction",
   "modified_by": {
-      "first_name": "DIT",
-      "last_name": "Staff",
-      "name": "DIT Staff",
-      "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
+    "first_name": "DIT",
+    "last_name": "Staff",
+    "name": "DIT Staff",
+    "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
   },
   "modified_on": "2018-04-24T13:32:35.864294Z",
   "date": "2058-11-25",
@@ -41,34 +43,39 @@
         "id": 1,
         "name": "The test team"
       }
-    }],
+    }
+  ],
   "communication_channel": {
-      "name": "Email/Website",
-      "id": "70c226d7-5d95-e211-a939-e4115bead28a"
+    "name": "Email/Website",
+    "id": "70c226d7-5d95-e211-a939-e4115bead28a"
   },
   "grant_amount_offered": null,
   "investment_project": null,
   "net_company_receipt": null,
   "service": {
-      "name": "Account Management",
-      "id": "sv1"
+    "name": "Account Management",
+    "id": "sv1"
   },
   "service_answers": {
-    "q1": {"a1": {}},
-    "q2": {"a2": {}}
+    "q1": { "a1": {} },
+    "q2": { "a2": {} }
   },
   "service_delivery_status": null,
   "subject": "ad",
   "notes": "Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.",
   "archived_documents_url_path": "",
   "was_policy_feedback_provided": true,
-  "policy_issue_types": [{
-    "name": "EU exit",
-    "id": "c1f1e29b-17ba-402f-ac98-aa23f9dc9bcb"
-  }],
-  "policy_areas": [{
-    "name": "Access to Public Funding (inc. EU funding)",
-    "id": "9feefd50-7f4c-4b73-a33e-779121d40419"
-  }],
+  "policy_issue_types": [
+    {
+      "name": "EU exit",
+      "id": "c1f1e29b-17ba-402f-ac98-aa23f9dc9bcb"
+    }
+  ],
+  "policy_areas": [
+    {
+      "name": "Access to Public Funding (inc. EU funding)",
+      "id": "9feefd50-7f4c-4b73-a33e-779121d40419"
+    }
+  ],
   "policy_feedback_notes": "Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni."
 }

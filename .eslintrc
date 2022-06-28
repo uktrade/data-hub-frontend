@@ -17,13 +17,7 @@
     },
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "react-hooks",
-    "import",
-    "mocha",
-    "jsx-a11y"
-  ],
+  "plugins": ["react", "react-hooks", "import", "mocha", "jsx-a11y"],
   "rules": {
     "no-async-promise-executor": "off",
     "no-case-declarations": "off",
@@ -42,10 +36,7 @@
     "react/prefer-stateless-function": "off",
     "react/no-multi-comp": "off",
     "react/forbid-prop-types": "off",
-    "react/jsx-boolean-value": [
-      "error",
-      "always"
-    ],
+    "react/jsx-boolean-value": ["error", "always"],
     "react/jsx-one-expression-per-line": "off",
     "object-curly-newline": "off",
     "no-else-return": "off",
@@ -66,7 +57,7 @@
       }
     ],
     "no-undef": "error",
-    "no-console": ["error", {"allow": ["assert"]}]
+    "no-console": ["error", { "allow": ["assert"] }]
   },
   "overrides": [
     {
@@ -84,9 +75,7 @@
       "rules": {
         "no-unused-expressions": 0
       },
-      "files": [
-        "**.test.{js,jsx}"
-      ],
+      "files": ["**.test.{js,jsx}"],
       "env": {
         "mocha": true,
         "browser": true

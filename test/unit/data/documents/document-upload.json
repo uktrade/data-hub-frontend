@@ -1,12 +1,12 @@
 {
-  "investment"  : "0e686ea4-b8a2-4337-aec4-114d92ad4588",
-  "proposition" : "67549a8f-053d-4675-952d-045d9367fb5e",
-  "_csrf" :  "G7EVnFYM-dhnh5IctiryycmAr-SD-7xqmGIE",
+  "investment": "0e686ea4-b8a2-4337-aec4-114d92ad4588",
+  "proposition": "67549a8f-053d-4675-952d-045d9367fb5e",
+  "_csrf": "G7EVnFYM-dhnh5IctiryycmAr-SD-7xqmGIE",
 
   "filename": {
     "file": "001BC61C-400-400.jpg",
     "Size": "65.00 KB (66,560 bytes)",
-    "Content-Type":  "image/jpeg",
+    "Content-Type": "image/jpeg",
     "Client Path": "001BC61C-400-400.jpg"
   },
 
@@ -24,4 +24,3 @@
     "Client Path": "81DaYZICYhL._SL1500_.jpg"
   }
 }
-

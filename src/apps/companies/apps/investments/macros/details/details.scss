@@ -13,7 +13,7 @@
   }
 
   .govuk-details__summary {
-    @include govuk-responsive-padding(8, "left");
+    @include govuk-responsive-padding(8, 'left');
     display: flex;
     flex-direction: column;
   }

@@ -1,7 +1,7 @@
-@import "../settings";
+@import '../settings';
 
 @mixin _style-badge($colour: $text-colour, $hover: $colour) {
-  border: 2px solid rgba($text-colour, .15);
+  border: 2px solid rgba($text-colour, 0.15);
   border-radius: 4px;
   color: inherit;
   white-space: nowrap;
@@ -12,15 +12,15 @@
   &:visited {
     color: $colour;
     cursor: pointer;
-    border-color: rgba($colour, .2);
+    border-color: rgba($colour, 0.2);
 
     &:hover {
-      border-color: rgba($hover, .4);
+      border-color: rgba($hover, 0.4);
     }
 
     &:focus {
       outline: 0;
-      border-color: rgba($hover, .7);
+      border-color: rgba($hover, 0.7);
     }
 
     &:active,

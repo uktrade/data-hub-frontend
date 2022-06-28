@@ -1,5 +1,4 @@
-Typeahead
-===========
+# Typeahead
 
 ### Description
 

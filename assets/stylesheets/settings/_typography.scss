@@ -1,4 +1,4 @@
-$dit-font-stack: Arial, "Helvetica Neue", sans-serif;
+$dit-font-stack: Arial, 'Helvetica Neue', sans-serif;
 $print-font-stack: sans-serif;
 
 $is-print: false !default;
@@ -19,51 +19,60 @@ $type-settings-map: (
 
 $type-settings: (
   -2: (
-    large: (
-      font-size: 14px,
-      line-height: $baseline-grid-unit * 5, // 20px
+      large: (
+        font-size: 14px,
+        line-height: $baseline-grid-unit * 5,
+        // 20px
+      ),
+      medium: (
+        font-size: 14px,
+        line-height: $baseline-grid-unit * 5,
+        // 20px
+      ),
+      small: (
+        font-size: 14px,
+        line-height: $baseline-grid-unit * 5,
+        // 20px
+      ),
+      print: (
+        font-size: 10pt,
+      ),
     ),
-    medium: (
-      font-size: 14px,
-      line-height: $baseline-grid-unit * 5, // 20px
-    ),
-    small: (
-      font-size: 14px,
-      line-height: $baseline-grid-unit * 5, // 20px
-    ),
-    print: (
-      font-size: 10pt,
-    ),
-  ),
   -1: (
-    large: (
-      font-size: 16px,
-      line-height: $baseline-grid-unit * 6, // 24px
+      large: (
+        font-size: 16px,
+        line-height: $baseline-grid-unit * 6,
+        // 24px
+      ),
+      medium: (
+        font-size: 16px,
+        line-height: $baseline-grid-unit * 6,
+        // 24px
+      ),
+      small: (
+        font-size: 16px,
+        line-height: $baseline-grid-unit * 6,
+        // 24px
+      ),
+      print: (
+        font-size: 12pt,
+      ),
     ),
-    medium: (
-      font-size: 16px,
-      line-height: $baseline-grid-unit * 6, // 24px
-    ),
-    small: (
-      font-size: 16px,
-      line-height: $baseline-grid-unit * 6, // 24px
-    ),
-    print: (
-      font-size: 12pt,
-    ),
-  ),
   0: (
     large: (
       font-size: 20px,
-      line-height: $baseline-grid-unit * 8, // 32px
+      line-height: $baseline-grid-unit * 8,
+      // 32px
     ),
     medium: (
       font-size: 20px,
-      line-height: $baseline-grid-unit * 8, // 32px
+      line-height: $baseline-grid-unit * 8,
+      // 32px
     ),
     small: (
       font-size: 20px,
-      line-height: $baseline-grid-unit * 8, // 32px
+      line-height: $baseline-grid-unit * 8,
+      // 32px
     ),
     print: (
       font-size: 14pt,
@@ -72,15 +81,18 @@ $type-settings: (
   1: (
     large: (
       font-size: 24px,
-      line-height: $baseline-grid-unit * 8, // 32px
+      line-height: $baseline-grid-unit * 8,
+      // 32px
     ),
     medium: (
       font-size: 24px,
-      line-height: $baseline-grid-unit * 8, // 32px
+      line-height: $baseline-grid-unit * 8,
+      // 32px
     ),
     small: (
       font-size: 24px,
-      line-height: $baseline-grid-unit * 8, // 32px
+      line-height: $baseline-grid-unit * 8,
+      // 32px
     ),
     print: (
       font-size: 16pt,
@@ -89,15 +101,18 @@ $type-settings: (
   2: (
     large: (
       font-size: 36px,
-      line-height: $baseline-grid-unit * 12, // 48px
+      line-height: $baseline-grid-unit * 12,
+      // 48px
     ),
     medium: (
       font-size: 32px,
-      line-height: $baseline-grid-unit * 12, // 48px
+      line-height: $baseline-grid-unit * 12,
+      // 48px
     ),
     small: (
       font-size: 28px,
-      line-height: $baseline-grid-unit * 10, // 40px
+      line-height: $baseline-grid-unit * 10,
+      // 40px
     ),
     print: (
       font-size: 18pt,
@@ -106,18 +121,21 @@ $type-settings: (
   3: (
     large: (
       font-size: 64px,
-      line-height: $baseline-grid-unit * 20, // 80px
+      line-height: $baseline-grid-unit * 20,
+      // 80px
     ),
     medium: (
       font-size: 48px,
-      line-height: $baseline-grid-unit * 16, // 64px
+      line-height: $baseline-grid-unit * 16,
+      // 64px
     ),
     small: (
       font-size: 40px,
-      line-height: $baseline-grid-unit * 12, // 48px
+      line-height: $baseline-grid-unit * 12,
+      // 48px
     ),
     print: (
       font-size: 22pt,
     ),
-  ),
+  )
 );
