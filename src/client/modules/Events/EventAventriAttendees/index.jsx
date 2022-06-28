@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
 import urls from '../../../../lib/urls'
@@ -6,8 +7,11 @@ import { DefaultLayout, LocalNav, LocalNavLink } from '../../../components'
 import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
 import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import { GridCol, GridRow } from 'govuk-react'
+import Task from '../../../components/Task'
+import { ID, state2props, TASK_GET_EVENT_AVENTRI_ATTENDEES } from './state'
+import { EVENTS__AVENTRI_ATTENDEES_LOADED } from '../../../actions'
 
-const EventAventriAttendees = ({ name }) => {
+const EventAventriAttendees = ({ aventriAttendees }) => {
   const { aventriEventId } = useParams()
   const breadcrumbs = [
     {
@@ -19,13 +23,13 @@ const EventAventriAttendees = ({ name }) => {
       text: 'Events',
     },
     {
-      text: name,
+      text: 'Event name',
     },
   ]
 
   return (
     <DefaultLayout
-      heading="Events"
+      heading="Event Name"
       pageTitle="Events Attendees"
       breadcrumbs={breadcrumbs}
       useReactRouter={true}
@@ -33,21 +37,38 @@ const EventAventriAttendees = ({ name }) => {
       <CheckUserFeatureFlag userFeatureFlagName={EVENT_ACTIVITY_FEATURE_FLAG}>
         {(isFeatureFlagEnabled) =>
           isFeatureFlagEnabled && (
-            <GridRow data-test="eventAventriDetails">
-              <GridCol setWidth="one-quarter">
-                <LocalNav data-test="event-aventri-details-nav">
-                  <LocalNavLink
-                    data-test="event-aventri-details-link"
-                    href={urls.events.aventri.details(aventriEventId)}
-                  >
-                    Attendees
-                  </LocalNavLink>
-                </LocalNav>
-              </GridCol>
-              <GridCol setWidth="three-quarters">
-                <h1>Attendees go here!</h1>
-              </GridCol>
-            </GridRow>
+            <Task.Status
+              name={TASK_GET_EVENT_AVENTRI_ATTENDEES}
+              id={ID}
+              progressMessage="Loading Aventri attendees"
+              startOnRender={{
+                payload: aventriEventId,
+                onSuccessDispatch: EVENTS__AVENTRI_ATTENDEES_LOADED,
+              }}
+            >
+              {() => (
+                <GridRow data-test="eventAventriAttendee">
+                  <GridCol setWidth="one-quarter">
+                    <LocalNav data-test="event-aventri-nav">
+                      <LocalNavLink
+                        data-test="event-aventri-attendees-link"
+                        href={urls.events.aventriAttendees.index(
+                          aventriEventId
+                        )}
+                      >
+                        Attendees
+                      </LocalNavLink>
+                    </LocalNav>
+                  </GridCol>
+                  <GridCol setWidth="three-quarters">
+                    {aventriAttendees?.map(
+                      (attendee) =>
+                        `${attendee.object['dit:aventri:firstname']} ${attendee.object['dit:aventri:lastname']}`
+                    )}
+                  </GridCol>
+                </GridRow>
+              )}
+            </Task.Status>
           )
         }
       </CheckUserFeatureFlag>
@@ -55,5 +76,4 @@ const EventAventriAttendees = ({ name }) => {
   )
 }
 
-// export default connect(state2props)(EventAventriDetails)
-export default EventAventriAttendees
+export default connect(state2props)(EventAventriAttendees)
