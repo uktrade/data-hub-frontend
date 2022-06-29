@@ -45,6 +45,13 @@ describe('No Recent Interaction Reminders', () => {
         },
       }
     ).as('remindersApiRequestPage3')
+    cy.intercept(
+      {
+        method: 'DELETE',
+        pathname: `${remindersEndpoint}/${reminders[4].id}`,
+      },
+      { statusCode: 204 }
+    ).as('deleteReminder5ApiRequest')
   }
 
   context('Reminders List', () => {
@@ -195,6 +202,45 @@ describe('No Recent Interaction Reminders', () => {
       cy.wait('@remindersApiRequest').then(({ request }) => {
         expect(request.url).to.contain('sortby=-created_on')
       })
+    })
+  })
+
+  context('Delete', () => {
+    beforeEach(() => {
+      interceptApiCalls()
+      cy.visit(urls.reminders.noRecentInteraction())
+      cy.wait('@remindersApiRequest')
+    })
+
+    it('should delete a reminder when clicked', () => {
+      cy.get('[data-test="reminder-list-header"]').should(
+        'contain',
+        `${totalCount} reminders`
+      )
+      cy.get('[data-test="reminders-list"]').should('be.visible')
+      cy.get('[data-test="reminders-list-item"]').should('have.length', 10)
+      cy.get('[data-test="reminders-list-item"]').eq(4).as('reminder')
+
+      cy.get('@reminder').find('[data-test="delete-button"]').click()
+      cy.wait('@deleteReminder5ApiRequest')
+      cy.get('[data-test="reminder-list-header"]').should(
+        'contain',
+        `${totalCount - 1} reminders`
+      )
+      cy.get('@reminder')
+        .find('[data-test="item-header"]')
+        .should('contain', 'Reminder deleted')
+      cy.get('@reminder')
+        .find('[data-test="item-content"]')
+        .should(
+          'contain',
+          `${reminders[4].event} for ${reminders[4].project.name}`
+        )
+        .find('a')
+        .should('not.exist')
+      cy.get('@reminder')
+        .find('[data-test="item-footer"]')
+        .should('contain', '')
     })
   })
 })

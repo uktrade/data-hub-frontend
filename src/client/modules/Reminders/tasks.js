@@ -83,3 +83,9 @@ export const getNoRecentInteractionReminders = ({
       params: { sortby, limit, offset: getPageOffset({ page, limit }) },
     })
     .then(({ data }) => data)
+
+export const deleteEstimatedLandDateReminder = ({ id } = {}) =>
+  apiProxyAxios.delete(`/v4/reminder/estimated-land-date/${id}`)
+
+export const deleteNoRecentInteractionReminder = ({ id } = {}) =>
+  apiProxyAxios.delete(`/v4/reminder/no-recent-investment-interaction/${id}`)

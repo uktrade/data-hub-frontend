@@ -261,6 +261,8 @@ import {
   TASK_SAVE_NRI_REMINDER_SUBSCRIPTIONS,
   TASK_GET_ESTIMATED_LAND_DATE_REMINDERS,
   TASK_GET_NO_RECENT_INTERACTION_REMINDERS,
+  TASK_DELETE_ESTIMATED_LAND_DATE_REMINDER,
+  TASK_DELETE_NO_RECENT_INTERACTION_REMINDER,
 } from '../client/modules/Reminders/state'
 
 import Footer from '../client/components/Footer'
@@ -434,6 +436,10 @@ function App() {
           reminders.getEstimatedLandDateReminders,
         [TASK_GET_NO_RECENT_INTERACTION_REMINDERS]:
           reminders.getNoRecentInteractionReminders,
+        [TASK_DELETE_ESTIMATED_LAND_DATE_REMINDER]:
+          reminders.deleteEstimatedLandDateReminder,
+        [TASK_DELETE_NO_RECENT_INTERACTION_REMINDER]:
+          reminders.deleteNoRecentInteractionReminder,
         [TASK_GET_CONTACT_ACTIVITIES]: getContactActivities,
         [TASK_ARCHIVE_CONTACT]: archiveContact,
         [TASK_GET_USER_FEATURE_FLAGS]: getUserFeatureFlags,
