@@ -42,12 +42,12 @@ import {
 import Activity from '../../../components/ActivityFeed/Activity'
 
 const EventsList = styled('ol')`
-list-style-type: none;
-margin-top: ${SPACING.SCALE_2};
+  list-style-type: none;
+  margin-top: ${SPACING.SCALE_2};
 
-& > li {
-  margin-bottom: ${SPACING.SCALE_2};
-}
+  & > li {
+    margin-bottom: ${SPACING.SCALE_2};
+  }
 `
 const EventsCollection = ({
   payload,
