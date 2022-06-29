@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import CardUtils from './card/CardUtils'
+import { ACTIVITY_TYPE } from '../constants'
+
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
 
@@ -18,4 +21,8 @@ export default function EventsAventriAttendee({ activity: attendee }) {
 
 EventsAventriAttendee.propTypes = {
   attendee: PropTypes.object.isRequired,
+}
+
+EventsAventriAttendee.canRender = (attendee) => {
+  return CardUtils.canRenderByTypes(attendee, ACTIVITY_TYPE.AventriAttendee)
 }

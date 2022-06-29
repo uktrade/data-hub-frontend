@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
+
+
 import urls from '../../../../lib/urls'
 import { DefaultLayout, LocalNav, LocalNavLink } from '../../../components'
 import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
@@ -11,6 +13,7 @@ import Task from '../../../components/Task'
 import { ID, state2props, TASK_GET_EVENT_AVENTRI_ATTENDEES } from './state'
 import { EVENTS__AVENTRI_ATTENDEES_LOADED } from '../../../actions'
 import EventsAventriAttendee from '../../../components/ActivityFeed/activities/EventsAventriAttendee'
+import Activity from '../../../components/ActivityFeed/Activity'
 
 const EventAventriAttendees = ({ aventriAttendees }) => {
   const { aventriEventId } = useParams()
@@ -62,8 +65,10 @@ const EventAventriAttendees = ({ aventriAttendees }) => {
                     </LocalNav>
                   </GridCol>
                   <GridCol setWidth="three-quarters">
-                    {aventriAttendees?.map((attendee) => (
-                      <EventsAventriAttendee activity={attendee} />
+                    {aventriAttendees?.map((attendee, index) => (
+                      <li key={`aventri-attendee-${index}`}>
+                        <Activity activity={attendee}></Activity>
+                      </li>
                     ))}
                   </GridCol>
                 </GridRow>
@@ -75,5 +80,7 @@ const EventAventriAttendees = ({ aventriAttendees }) => {
     </DefaultLayout>
   )
 }
+
+
 
 export default connect(state2props)(EventAventriAttendees)
