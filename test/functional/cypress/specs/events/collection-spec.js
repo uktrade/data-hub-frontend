@@ -139,41 +139,73 @@ describe('Event Collection List Page - React', () => {
   })
 
   context('when the activity stream flag is on', () => {
-    beforeEach(() => {
+    before(() => {
       cy.setUserFeatures([EVENT_ACTIVITY_FEATURE_FLAG])
-      cy.visit(events.index())
     })
-    it('should not display the data hub API collection list', () => {
-      cy.get('[data-test="collection-list"]').should('not.exist')
+
+    context('when there is not an error', () => {
+      beforeEach(() => {
+        cy.visit(events.index())
+        cy.get('[data-test="data-hub-event"]').as('dataHubEvents')
+        cy.get('@dataHubEvents').eq(0).as('firstDataHubEvent')
+        cy.get('@dataHubEvents').eq(1).as('secondDataHubEvent')
+      })
+
+      it('should not display the data hub API collection list', () => {
+        cy.get('[data-test="collection-list"]').should('not.exist')
+      })
+
+      it('should display an event name', () => {
+        cy.get('@firstDataHubEvent')
+          .find('[data-test="data-hub-event-name"]')
+          .should('exist')
+          .should('contain', 'Holiday to the Seaside')
+      })
+
+      it('should display an event date', () => {
+        cy.get('@firstDataHubEvent')
+          .find('[data-test="event-date-label"]')
+          .should('exist')
+          .should('contain', '30 May to 14 Jun 2022')
+      })
+
+      it('should display the event organiser', () => {
+        cy.get('@firstDataHubEvent')
+          .find('[data-test="organiser-label"]')
+          .should('exist')
+          .should('contain', 'Joe Bloggs')
+      })
+
+      it('should display the service type', () => {
+        cy.get('@firstDataHubEvent')
+          .find('[data-test="service-type-label"]')
+          .should('exist')
+          .should('contain', 'Best service')
+      })
+
+      it('should display the lead team', () => {
+        cy.get('@firstDataHubEvent')
+          .find('[data-test="lead-team-label"]')
+          .should('exist')
+          .should('contain', 'Digital Data Hub - Live Service')
+      })
+
+      context('when optional details are missing', () => {
+        it('should display "Not set"', () => {
+          cy.get('@secondDataHubEvent').find('div').find('div').as('labels')
+          cy.get('@labels')
+            .get('[data-test="lead-team-label"]')
+            .should('contain', 'Not set')
+          cy.get('@labels')
+            .get('[data-test="organiser-label"]')
+            .should('contain', 'Not set')
+          cy.get('@labels')
+            .get('[data-test="service-type-label"]')
+            .should('contain', 'Not set')
+        })
+      })
     })
-    it('should display an event', () => {
-      cy.get('[data-test="data-hub-event"]').should('exist')
-    })
-    it('should display an event name', () => {
-      cy.get('[data-test="data-hub-event-name"]')
-        .should('exist')
-        .should('contain', 'Holiday to the Seaside')
-    })
-    it('should display an event date', () => {
-      cy.get('[data-test="event-date-label"]')
-        .should('exist')
-        .should('contain', '30 May to 14 Jun 2022')
-    })
-    it('should display the event organiser', () => {
-      cy.get('[data-test="organiser-label"]')
-        .should('exist')
-        .should('contain', 'Joe Bloggs')
-    })
-    it('should display the service type', () => {
-      cy.get('[data-test="service-type-label"]')
-        .should('exist')
-        .should('contain', 'Best service')
-    })
-    it('should display the lead team', () => {
-      cy.get('[data-test="lead-team-label"]')
-        .should('exist')
-        .should('contain', 'Digital Data Hub - Live Service')
-    })
+
     context(
       'viewing the events collection page when there is an error loading events',
       () => {
@@ -190,6 +222,7 @@ describe('Event Collection List Page - React', () => {
         })
       }
     )
+
     after(() => {
       cy.resetUser()
     })
