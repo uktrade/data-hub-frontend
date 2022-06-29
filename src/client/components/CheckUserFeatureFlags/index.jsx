@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import qs from 'qs'
 import Resource from '../Resource'
 import { ID, TASK_GET_USER_FEATURE_FLAGS } from './state'
-import { useHistory, useLocation } from 'react-router-dom'
 
 /** 
 This component enables the checking of a particular user feature flag in React.
@@ -20,22 +18,11 @@ export default function CheckUserFeatureFlag({
   children,
   userFeatureFlagName,
 }) {
-  const location = useLocation()
-  const history = useHistory()
-  const existingParams = qs.parse(location.search.slice(1))
-
-  const [isFlagOn, setFlagOn] = useState(false)
-
-  useEffect(() => {
-    if (isFlagOn) {
-      history.replace({
-        search: qs.stringify({
-          ...existingParams,
-          ['featureTesting']: userFeatureFlagName,
-        }),
-      })
-    }
-  }, [isFlagOn])
+  const setSearchParams = () => {
+    const url = new URL(window.location)
+    url.searchParams.set('featureTesting', userFeatureFlagName)
+    window.history.replaceState(null, '', url.toString())
+  }
 
   return (
     <Resource
@@ -44,7 +31,9 @@ export default function CheckUserFeatureFlag({
       payload={userFeatureFlagName}
     >
       {(isFeatureFlagEnabled) => {
-        setFlagOn(isFeatureFlagEnabled)
+        if (isFeatureFlagEnabled) {
+          setSearchParams()
+        }
         return children(isFeatureFlagEnabled)
       }}
     </Resource>
