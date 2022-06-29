@@ -68,8 +68,8 @@ const StyledPaginationLink = styled(Link)`
     :hover {
       background-color: ${GREY_3};
     }
-    ${({ isActive }) =>
-      isActive
+    ${({ $isActive }) =>
+      $isActive
         ? `
         color: ${TEXT_COLOUR};
         background-color: transparent;
@@ -211,7 +211,7 @@ const Pagination = ({
                 return (
                   <StyledPaginationPiece key={index}>
                     <StyledPaginationLink
-                      isActive={isActive}
+                      $isActive={isActive}
                       onClick={(e) => handleOnClick(page, e)}
                       data-page-number={page}
                       data-test={`${isActive && 'page-number-active'}`}

@@ -13,6 +13,7 @@ describe('No Recent Interaction Reminders', () => {
     ...reminderListFaker(9),
   ]
   const totalCount = 25
+  const nextReminder = reminderFaker()
 
   const interceptApiCalls = () => {
     cy.intercept(
@@ -52,6 +53,21 @@ describe('No Recent Interaction Reminders', () => {
       },
       { statusCode: 204 }
     ).as('deleteReminder5ApiRequest')
+    cy.intercept(
+      {
+        method: 'GET',
+        pathname: remindersEndpoint,
+        query: { limit: '1', offset: '9', sortby: '-created_on' },
+      },
+      {
+        body: {
+          count: totalCount - 1,
+          results: [nextReminder],
+          next: null,
+          previous: null,
+        },
+      }
+    ).as('getNextRemindersApiRequest')
   }
 
   context('Reminders List', () => {
@@ -241,6 +257,28 @@ describe('No Recent Interaction Reminders', () => {
       cy.get('@reminder')
         .find('[data-test="item-footer"]')
         .should('contain', '')
+
+      // pulls in the next item and appends to the end of the page
+      cy.wait('@getNextRemindersApiRequest')
+      cy.get('[data-test="reminders-list-item"]').should('have.length', 11)
+      cy.get('[data-test="reminders-list-item"]').eq(10).as('nextReminder')
+
+      cy.get('@nextReminder')
+        .find('[data-test="item-content"]')
+        .should(
+          'contain',
+          `${nextReminder.event} for ${nextReminder.project.name}`
+        )
+        .find('a')
+        .should(
+          'have.attr',
+          'href',
+          urls.investments.projects.details(nextReminder.project.id)
+        )
+        .should('contain', nextReminder.project.name)
+      cy.get('@nextReminder')
+        .find('[data-test="item-footer"]')
+        .should('contain', `Project code ${nextReminder.project.project_code}`)
     })
   })
 })
