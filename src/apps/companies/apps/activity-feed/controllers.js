@@ -295,6 +295,7 @@ async function fetchAventriEvent(req, res, next) {
 async function fetchAventriAttendees(req, res, next) {
   const aventriEventId = req.params.aventriEventId
   try {
+    //get the attendees
     const aventriAttendeeResults = await fetchActivityFeed(
       req,
       aventriAttendeeQuery(aventriEventId)
@@ -304,7 +305,17 @@ async function fetchAventriAttendees(req, res, next) {
       (hit) => hit._source
     )
 
+    //get the event
+    const formattedAventriEventId = `dit:aventri:Event:${aventriEventId}:Create`
+
+    const aventriEventResults = await fetchActivityFeed(
+      req,
+      aventriEventQuery([formattedAventriEventId])
+    )
+    const aventriEventData = aventriEventResults.hits.hits[0]._source
+
     res.json({
+      aventriEventData,
       aventriAttendees,
     })
   } catch (error) {

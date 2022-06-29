@@ -2,8 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
-
-
 import urls from '../../../../lib/urls'
 import { DefaultLayout, LocalNav, LocalNavLink } from '../../../components'
 import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
@@ -15,7 +13,7 @@ import { EVENTS__AVENTRI_ATTENDEES_LOADED } from '../../../actions'
 import EventsAventriAttendee from '../../../components/ActivityFeed/activities/EventsAventriAttendee'
 import Activity from '../../../components/ActivityFeed/Activity'
 
-const EventAventriAttendees = ({ aventriAttendees }) => {
+const EventAventriAttendees = ({ aventriAttendees, aventriEventData }) => {
   const { aventriEventId } = useParams()
   const breadcrumbs = [
     {
@@ -27,13 +25,13 @@ const EventAventriAttendees = ({ aventriAttendees }) => {
       text: 'Events',
     },
     {
-      text: 'Event name',
+      text: aventriEventData?.object.name,
     },
   ]
 
   return (
     <DefaultLayout
-      heading="Event Name"
+      heading={aventriEventData?.object.name}
       pageTitle="Events Attendees"
       breadcrumbs={breadcrumbs}
       useReactRouter={true}
@@ -80,7 +78,5 @@ const EventAventriAttendees = ({ aventriAttendees }) => {
     </DefaultLayout>
   )
 }
-
-
 
 export default connect(state2props)(EventAventriAttendees)
