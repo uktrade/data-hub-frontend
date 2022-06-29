@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import CardUtils from './card/CardUtils'
 
 import { formatStartAndEndDate } from '../../../utils/date'
@@ -44,10 +43,6 @@ export default function DataHubEvent({ activity: event }) {
       />
     </ActivityCardWrapper>
   )
-}
-
-DataHubEvent.propTypes = {
-  event: PropTypes.object.isRequired,
 }
 
 DataHubEvent.canRender = (event) => {

@@ -9,9 +9,11 @@ import Omis from './Omis'
 import Referral from './Referral'
 import AventriAttendee from './AventriAttendee'
 import DataHubEvent from './DataHubEvent'
+import AventriEvent from './AventriEvent'
 
 export default [
   AventriAttendee,
+  AventriEvent,
   CompaniesHouseAccount,
   CompaniesHouseCompany,
   DataHubEvent,

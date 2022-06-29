@@ -20,7 +20,7 @@ const {
   maxemailEmailSentQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
-const dataHubEventsQuery = require('./es-queries/data-hub-events-query')
+const allActivityFeedEventsQuery = require('./es-queries/activity-feed-all-events-query')
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
 const { aventriEventQuery } = require('./es-queries/aventri-event-query')
 
@@ -291,19 +291,19 @@ async function fetchAventriEvent(req, res, next) {
   }
 }
 
-async function fetchDataHubEvents(req, res, next) {
+async function fetchAllActivityFeedEvents(req, res, next) {
   try {
-    const dataHubEventsResults = await fetchActivityFeed(
+    const allActivityFeedEventsResults = await fetchActivityFeed(
       req,
-      dataHubEventsQuery()
+      allActivityFeedEventsQuery()
     )
 
-    const dataHubEvents = dataHubEventsResults.hits.hits.map(
+    const allActivityFeedEvents = allActivityFeedEventsResults.hits.hits.map(
       (hit) => hit._source
     )
 
     res.json({
-      dataHubEvents,
+      allActivityFeedEvents,
     })
   } catch (error) {
     next(error)
@@ -315,5 +315,5 @@ module.exports = {
   fetchActivityFeedHandler,
   fetchActivitiesForContact,
   fetchAventriEvent,
-  fetchDataHubEvents,
+  fetchAllActivityFeedEvents,
 }
