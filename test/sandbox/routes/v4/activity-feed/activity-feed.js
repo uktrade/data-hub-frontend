@@ -116,9 +116,19 @@ exports.activityFeed = function (req, res) {
   }
 
   var isAventriAttendeeQuery =
-    get(req.body, "query.bool.must[0].term['object.type]") ===
+    get(req.body, "query.bool.must[0].term['object.type']") ===
     'dit:aventri:Attendee'
+
   if (isAventriAttendeeQuery) {
+    var aventriId = get(
+      req.body,
+      "query.bool.must[1].term['object.attributedTo.id']"
+    )
+    // network error
+    if (aventriId === 'dit:aventri:Event:500') {
+      return res.status(500).send('something went wrong')
+    }
+    // happy path
     return res.json(aventriAttendees)
   }
 

@@ -6,6 +6,6 @@ export const getEventAventriAttendees = (aventriEventId) => {
     .get(urls.events.aventriAttendees.data(aventriEventId))
     .then(({ data }) => data)
     .catch(() => {
-      return Promise.reject('Unable to load Aventri Attendees')
+      return Promise.reject('Unable to load Aventri Attendees.')
     })
 }
