@@ -158,13 +158,13 @@ const RemindersCollection = ({
   count,
   page,
   onDeleteReminder,
+  disableDelete = false,
 }) => {
   const location = useLocation()
   const title = `Reminders for ${subject}`
   const totalPages = Math.ceil(
     Math.min(count, maxItemsToPaginate) / itemsPerPage
   )
-
   return (
     <DefaultLayout
       pageTitle={title}
@@ -245,12 +245,14 @@ const RemindersCollection = ({
                       </GridCol>
                       {onDeleteReminder && (
                         <RightCol setWidth="one-quarter">
-                          <DeleteButton
-                            data-test="delete-button"
-                            onClick={() => onDeleteReminder(id)}
-                          >
-                            Delete reminder
-                          </DeleteButton>
+                          {!disableDelete && (
+                            <DeleteButton
+                              data-test="delete-button"
+                              onClick={() => onDeleteReminder(id)}
+                            >
+                              Delete reminder
+                            </DeleteButton>
+                          )}
                         </RightCol>
                       )}
                     </>

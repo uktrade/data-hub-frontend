@@ -73,6 +73,21 @@ export const getEstimatedLandDateReminders = ({
     })
     .then(({ data }) => data)
 
+export const getNextEstimatedLandDateReminder = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) =>
+  apiProxyAxios
+    .get('/v4/reminder/estimated-land-date', {
+      params: {
+        sortby,
+        limit: 1,
+        offset: Math.max(getPageOffset({ page: page + 1, limit }) - 1, 1),
+      },
+    })
+    .then(({ data }) => data.results)
+
 export const getNoRecentInteractionReminders = ({
   sortby = '-created_on',
   page = 1,
@@ -83,6 +98,21 @@ export const getNoRecentInteractionReminders = ({
       params: { sortby, limit, offset: getPageOffset({ page, limit }) },
     })
     .then(({ data }) => data)
+
+export const getNextNoRecentInteractionReminder = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) =>
+  apiProxyAxios
+    .get('/v4/reminder/no-recent-investment-interaction', {
+      params: {
+        sortby,
+        limit: 1,
+        offset: Math.max(getPageOffset({ page: page + 1, limit }) - 1, 1),
+      },
+    })
+    .then(({ data }) => data.results)
 
 export const deleteEstimatedLandDateReminder = ({ id } = {}) =>
   apiProxyAxios.delete(`/v4/reminder/estimated-land-date/${id}`)
