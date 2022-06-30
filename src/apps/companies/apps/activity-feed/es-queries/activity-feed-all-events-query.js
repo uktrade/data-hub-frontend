@@ -1,17 +1,15 @@
-const activityFeedEventsQuery = () => {
-  return {
-    query: {
-      bool: {
-        must: [
-          {
-            terms: {
-              'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
-            },
+const activityFeedEventsQuery = () => ({
+  query: {
+    bool: {
+      must: [
+        {
+          terms: {
+            'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
           },
-        ],
-      },
+        },
+      ],
     },
-  }
-}
+  },
+})
 
 module.exports = activityFeedEventsQuery
