@@ -56,7 +56,7 @@ export default function AventriAttendee({ activity: attendee }) {
 }
 
 AventriAttendee.propTypes = {
-  attendee: PropTypes.object,
+  activity: PropTypes.object.isRequired,
 }
 
 AventriAttendee.canRender = (attendee) => {
