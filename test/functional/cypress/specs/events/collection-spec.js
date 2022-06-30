@@ -147,26 +147,42 @@ describe('Event Collection List Page - React', () => {
       beforeEach(() => {
         cy.visit(events.index())
         cy.get('[data-test="data-hub-event"]').as('dataHubEvents')
+        cy.get('[data-test="aventri-event"]').as('aventriEvents')
         cy.get('@dataHubEvents').eq(0).as('firstDataHubEvent')
         cy.get('@dataHubEvents').eq(1).as('secondDataHubEvent')
+        cy.get('@aventriEvents').eq(0).as('firstAventriEvent')
       })
 
       it('should not display the data hub API collection list', () => {
         cy.get('[data-test="collection-list"]').should('not.exist')
       })
 
-      it('should display an event name', () => {
+      it('should display a datahub event name', () => {
         cy.get('@firstDataHubEvent')
           .find('[data-test="data-hub-event-name"]')
           .should('exist')
           .should('contain', 'Holiday to the Seaside')
       })
 
-      it('should display an event date', () => {
+      it('should display an aventri event name', () => {
+        cy.get('@firstAventriEvent')
+          .find('[data-test="aventri-event-name"]')
+          .should('exist')
+          .should('contain', 'Aventri Test Event')
+      })
+
+      it('should display a data hub event date', () => {
         cy.get('@firstDataHubEvent')
           .find('[data-test="event-date-label"]')
           .should('exist')
           .should('contain', '30 May to 14 Jun 2022')
+      })
+
+      it('should display an Aventri event date', () => {
+        cy.get('@firstAventriEvent')
+          .find('[data-test="event-date-label"]')
+          .should('exist')
+          .should('contain', '02 Mar 2021 to 04 May 2022')
       })
 
       it('should display the event organiser', () => {
