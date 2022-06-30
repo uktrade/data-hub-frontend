@@ -20,16 +20,7 @@ import {
   CONTACT_ACTIVITY_SORT_SELECT_OPTIONS,
 } from '../../../../apps/companies/apps/activity-feed/constants'
 import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
-
-const ContactActivityList = styled('ol')`
-  list-style-type: none;
-  padding: 0;
-  margin-top: ${SPACING.SCALE_2};
-
-  & > li {
-    margin-bottom: ${SPACING.SCALE_2};
-  }
-`
+import ActivityList from '../../../components/ActivityFeed/activities/card/ActivityList'
 
 const StyledSectionHeader = styled('div')`
   ${typography.font({ size: 24, weight: 'bold' })};
@@ -80,7 +71,7 @@ const ContactActivity = ({
                   userFeatureFlagName={CONTACT_ACTIVITY_FEATURE_FLAG}
                 >
                   {(isContactActivitiesFeatureOn) => (
-                    <ContactActivityList>
+                    <ActivityList>
                       {activities.map((activity, index) => (
                         <li key={`activity-${index}`}>
                           <Activity
@@ -91,7 +82,7 @@ const ContactActivity = ({
                           />
                         </li>
                       ))}
-                    </ContactActivityList>
+                    </ActivityList>
                   )}
                 </CheckUserFeatureFlag>
                 <RoutedPagination initialPage={page} items={total} />

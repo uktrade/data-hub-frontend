@@ -1,7 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
-import { SPACING } from '@govuk-react/constants'
 import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 
 import {
@@ -40,15 +38,8 @@ import {
 } from './state'
 
 import Activity from '../../../components/ActivityFeed/Activity'
+import ActivityList from '../../../components/ActivityFeed/activities/card/ActivityList'
 
-const EventsList = styled('ol')`
-  list-style-type: none;
-  margin-top: ${SPACING.SCALE_2};
-
-  & > li {
-    margin-bottom: ${SPACING.SCALE_2};
-  }
-`
 const EventsCollection = ({
   payload,
   optionMetadata,
@@ -195,7 +186,7 @@ const EventsCollection = ({
               }}
             >
               {() => (
-                <EventsList>
+                <ActivityList>
                   {allActivityFeedEvents?.map((event, index) => {
                     return (
                       <li key={`event-${index}`}>
@@ -203,7 +194,7 @@ const EventsCollection = ({
                       </li>
                     )
                   })}
-                </EventsList>
+                </ActivityList>
               )}
             </Task.Status>
           )
