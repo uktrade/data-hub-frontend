@@ -197,19 +197,11 @@ describe('Contact activity', () => {
           })
         })
 
-        context('when virtual event attendance is confirmed', () => {
-          it('should display event name and with confirmed virtual event attendance', () => {
+        context('when registration status is confirmed', () => {
+          it('should display "Registered"', () => {
             cy.get('[data-test="aventri-activity"]').contains(
-              'EITA Test Event 2022: Attended'
+              'EITA Test Event 2022: Registered'
             )
-          })
-        })
-
-        context('when virtual event attendance is unconfirmed', () => {
-          it('should display event name with unconfirmed virtual event attendance', () => {
-            cy.get('[data-test="aventri-activity"]')
-              .contains('EITA Test Event 2 2022')
-              .should('not.contain', ': Attended')
           })
         })
       })
