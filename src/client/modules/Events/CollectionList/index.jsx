@@ -5,7 +5,7 @@ import { SPACING } from '@govuk-react/constants'
 import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 
 import {
-  EVENTS__DATA_HUB_LOADED,
+  EVENTS__ALL_ACTIVITY_FEED_EVENTS_LOADED,
   EVENTS__LOADED,
   EVENTS__METADATA_LOADED,
   EVENTS__SELECTED_ORGANISER,
@@ -35,17 +35,25 @@ import {
   TASK_GET_EVENTS_LIST,
   TASK_GET_EVENTS_METADATA,
   TASK_GET_EVENTS_ORGANISER_NAME,
-  TASK_GET_DATA_HUB_EVENTS,
+  TASK_GET_ALL_ACTIVITY_FEED_EVENTS,
   state2props,
 } from './state'
 
 import Activity from '../../../components/ActivityFeed/Activity'
 
+const EventsList = styled('ol')`
+  list-style-type: none;
+  margin-top: ${SPACING.SCALE_2};
+
+  & > li {
+    margin-bottom: ${SPACING.SCALE_2};
+  }
+`
 const EventsCollection = ({
   payload,
   optionMetadata,
   selectedFilters,
-  dataHubEvents,
+  allActivityFeedEvents,
   ...props
 }) => {
   const collectionListTask = {
@@ -84,15 +92,6 @@ const EventsCollection = ({
       onSuccessDispatch: EVENTS__SELECTED_ORGANISER,
     },
   }
-
-  const EventsList = styled('ol')`
-    list-style-type: none;
-    margin-top: ${SPACING.SCALE_2};
-
-    & > li {
-      margin-bottom: ${SPACING.SCALE_2};
-    }
-  `
 
   return (
     <DefaultLayout heading="Events" pageTitle="Events">
@@ -188,20 +187,22 @@ const EventsCollection = ({
             </FilteredCollectionList>
           ) : (
             <Task.Status
-              name={TASK_GET_DATA_HUB_EVENTS}
+              name={TASK_GET_ALL_ACTIVITY_FEED_EVENTS}
               id={ID}
-              progressMessage="Loading Data Hub events"
+              progressMessage="Loading events"
               startOnRender={{
-                onSuccessDispatch: EVENTS__DATA_HUB_LOADED,
+                onSuccessDispatch: EVENTS__ALL_ACTIVITY_FEED_EVENTS_LOADED,
               }}
             >
               {() => (
                 <EventsList>
-                  {dataHubEvents?.map((event, index) => (
-                    <li key={`data-hub-event-${index}`}>
-                      <Activity activity={event} />
-                    </li>
-                  ))}
+                  {allActivityFeedEvents?.map((event, index) => {
+                    return (
+                      <li key={`event-${index}`}>
+                        <Activity activity={event} />
+                      </li>
+                    )
+                  })}
                 </EventsList>
               )}
             </Task.Status>

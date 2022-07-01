@@ -12,11 +12,11 @@ const {
   fetchAventriEvent,
 } = require('../companies/apps/activity-feed/controllers')
 const {
-  fetchDataHubEvents,
+  fetchAllActivityFeedEvents,
 } = require('../companies/apps/activity-feed/controllers')
 
 router.get('/create', renderEventsView)
-router.get(urls.events.activity.data.route, fetchDataHubEvents)
+router.get(urls.events.activity.data.route, fetchAllActivityFeedEvents)
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.get('/aventri/:aventriEventId/details', renderEventsView)
