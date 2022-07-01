@@ -29,6 +29,13 @@ describe('Event Aventri Details', () => {
         })
       })
 
+      it('should display the event name in the header', () => {
+        cy.get('[data-test="heading"]').should(
+          'contain',
+          'EITA Test Event 2022'
+        )
+      })
+
       it('should display event details', () => {
         assertKeyValueTable('eventAventriDetails', {
           'Type of event': 'dit:aventri:Event',
