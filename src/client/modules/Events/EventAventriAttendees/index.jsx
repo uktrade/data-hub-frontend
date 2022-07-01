@@ -54,6 +54,12 @@ const EventAventriAttendees = ({ aventriAttendees, aventriEventData }) => {
                   <GridCol setWidth="one-quarter">
                     <LocalNav data-test="event-aventri-nav">
                       <LocalNavLink
+                        data-test="event-aventri-details-link"
+                        href={urls.events.aventri.details(aventriEventId)}
+                      >
+                        Details
+                      </LocalNavLink>
+                      <LocalNavLink
                         data-test="event-aventri-attendees-link"
                         href={urls.events.aventriAttendees.index(
                           aventriEventId
