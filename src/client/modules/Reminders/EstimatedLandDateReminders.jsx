@@ -55,6 +55,7 @@ const EstimatedLandDateReminders = ({ estimatedLandDateReminders }) => {
         </GridCol>
         <GridCol>
           <CollectionHeader totalItems={count} />
+          <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
           <Task.Status
             name={TASK_GET_ESTIMATED_LAND_DATE_REMINDERS}
             id={ID}
@@ -87,10 +88,6 @@ const EstimatedLandDateReminders = ({ estimatedLandDateReminders }) => {
                               REMINDERS__ESTIMATED_LAND_DATE_REMINDER_GOT_NEXT,
                           })
                         }
-                      />
-                      <CollectionSort
-                        sortOptions={sortOptions}
-                        totalPages={totalPages}
                       />
                       <CollectionList
                         results={results}

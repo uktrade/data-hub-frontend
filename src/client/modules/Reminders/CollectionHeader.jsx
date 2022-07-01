@@ -29,17 +29,17 @@ const SettingsLink = styled(Link)({
   fontSize: FONT_SIZE.SIZE_19,
 })
 
-const CollectionHeader = ({ totalItems }) => {
+const CollectionHeader = ({ totalItems, settings = true }) => {
   const formattedTotal = decimal(totalItems)
   const counterSuffix = pluralize('reminders', totalItems)
-  const actions = (
+  const actions = settings ? (
     <SettingsLink
       data-test="reminders-settings-link"
       href="/reminders/settings"
     >
       Reminders settings
     </SettingsLink>
-  )
+  ) : null
   return (
     <StyledCollectionHeaderRow primary={true} actions={actions}>
       <ListHeader data-test="reminder-list-header">

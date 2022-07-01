@@ -111,7 +111,7 @@ describe('No Recent Interaction Reminders', () => {
         .eq(2)
         .find('a')
         .should('contain', 'Reminders for outstanding propositions')
-        .should('have.attr', 'href', urls.reminders.outstandingProposition())
+        .should('have.attr', 'href', urls.reminders.outstandingPropositions())
     })
 
     it('should render the list heading with the total number of reminders', () => {
