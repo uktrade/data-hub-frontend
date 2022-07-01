@@ -40,10 +40,6 @@ describe('Contact activity', () => {
         cy.visit(urls.contacts.contactActivities(contactId))
       })
 
-      it('should display the Activity Stream activities', () => {
-        cy.get('[data-test=aventri-activity]').should('be.visible')
-      })
-
       it('should display the total number of activites', () => {
         cy.get('#contact-activity').contains('1,233 activities')
       })
@@ -176,33 +172,8 @@ describe('Contact activity', () => {
       })
 
       context('When viewing a Contact with Aventri activities', () => {
-        it('should display event date from Aventri', () => {
-          cy.get('[data-test="aventri-activity"]').contains(
-            'Event date: 02 Mar 2021 to 04 May 2022'
-          )
-        })
-        it('should display the Events label', () => {
-          cy.get('[data-test="aventri-activity"]').within(() => {
-            cy.get('[data-test="activity-service-label"]').contains('event', {
-              matchCase: false,
-            })
-          })
-        })
-        it('should display the Kind label', () => {
-          cy.get('[data-test="aventri-activity"]').within(() => {
-            cy.get('[data-test="activity-kind-label"]').contains(
-              'aventri service delivery',
-              { matchCase: false }
-            )
-          })
-        })
-
-        context('when registration status is confirmed', () => {
-          it('should display "Registered"', () => {
-            cy.get('[data-test="aventri-activity"]').contains(
-              'EITA Test Event 2022: Registered'
-            )
-          })
+        it('should display the aventri activity', () => {
+          cy.get('[data-test="aventri-activity"]').should('exist')
         })
       })
 

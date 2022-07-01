@@ -48,13 +48,6 @@ describe('Aventri event attendees', () => {
       it('should display an attendee', () => {
         cy.get('[data-test="aventri-attendee"]').should('exist')
       })
-
-      it('should display the attendee full name', () => {
-        cy.get('[data-test="aventri-attendee-name"]').should(
-          'contain',
-          'Elle Woods'
-        )
-      })
     })
 
     context('With errors', () => {
