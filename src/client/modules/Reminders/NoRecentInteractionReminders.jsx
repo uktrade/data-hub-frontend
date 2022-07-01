@@ -1,17 +1,16 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
-import qs from 'qs'
 import { connect } from 'react-redux'
+import GridRow from '@govuk-react/grid-row'
+import GridCol from '@govuk-react/grid-col'
+import qs from 'qs'
 
 import {
   REMINDERS__NO_RECENT_INTERACTION_REMINDERS_LOADED,
   REMINDERS__NO_RECENT_INTERACTION_REMINDER_DELETED,
   REMINDERS__NO_RECENT_INTERACTION_REMINDER_GOT_NEXT,
 } from '../../actions'
-import Effect from '../../components/Effect'
-import Task from '../../components/Task'
 
-import RemindersCollection from './RemindersCollection'
 import {
   ID,
   TASK_GET_NO_RECENT_INTERACTION_REMINDERS,
@@ -19,68 +18,104 @@ import {
   TASK_DELETE_NO_RECENT_INTERACTION_REMINDER,
 } from './state'
 
+import { sortOptions, maxItemsToPaginate, itemsPerPage } from './constants'
+import CollectionHeader from './CollectionHeader'
+import Effect from '../../components/Effect'
+import Task from '../../components/Task'
+import RemindersMenu from './RemindersMenu'
+import CollectionList from './CollectionList'
+import urls from '../../../lib/urls'
+import Heading from './Heading'
+import {
+  CollectionSort,
+  DefaultLayout,
+  RoutedPagination,
+} from '../../components'
+
 const NoRecentInteractionReminders = ({ noRecentInteractionReminders }) => {
+  const { results, count, nextPending } = noRecentInteractionReminders
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
   const page = parseInt(qsParams.page, 10) || 1
-  const { results, count, nextPending } = noRecentInteractionReminders
+  const subject = 'projects with no recent interaction'
+  const title = `Reminders for ${subject}`
+  const totalPages = Math.ceil(
+    Math.min(count, maxItemsToPaginate) / itemsPerPage
+  )
 
   return (
-    <Task.Status
-      name={TASK_GET_NO_RECENT_INTERACTION_REMINDERS}
-      id={ID}
-      startOnRender={{
-        payload: { page, sortby: qsParams.sortby },
-        onSuccessDispatch: REMINDERS__NO_RECENT_INTERACTION_REMINDERS_LOADED,
-      }}
+    <DefaultLayout
+      pageTitle={title}
+      heading={<Heading preHeading="Reminders for">{subject}</Heading>}
+      breadcrumbs={[{ link: urls.dashboard(), text: 'Home' }, { text: title }]}
     >
-      {() => (
-        <Task>
-          {(getTask) => {
-            const deleteTask = getTask(
-              TASK_DELETE_NO_RECENT_INTERACTION_REMINDER,
-              ID
-            )
-            const getNextTask = getTask(
-              TASK_GET_NEXT_NO_RECENT_INTERACTION_REMINDER,
-              ID
-            )
-            return (
-              <>
-                <Effect
-                  dependencyList={[nextPending]}
-                  effect={() =>
-                    nextPending &&
-                    getNextTask.start({
-                      payload: {
-                        page,
-                        sortby: qsParams.sortby,
-                      },
-                      onSuccessDispatch:
-                        REMINDERS__NO_RECENT_INTERACTION_REMINDER_GOT_NEXT,
-                    })
-                  }
-                />
-                <RemindersCollection
-                  subject="projects with no recent interaction"
-                  results={results}
-                  count={count}
-                  page={page}
-                  disableDelete={deleteTask.status || nextPending}
-                  onDeleteReminder={(reminderId) => {
-                    deleteTask.start({
-                      payload: { id: reminderId },
-                      onSuccessDispatch:
-                        REMINDERS__NO_RECENT_INTERACTION_REMINDER_DELETED,
-                    })
-                  }}
-                />
-              </>
-            )
-          }}
-        </Task>
-      )}
-    </Task.Status>
+      <GridRow>
+        <GridCol setWidth="one-third">
+          <RemindersMenu />
+        </GridCol>
+        <GridCol>
+          <CollectionHeader totalItems={count} />
+          <Task.Status
+            name={TASK_GET_NO_RECENT_INTERACTION_REMINDERS}
+            id={ID}
+            startOnRender={{
+              payload: { page, sortby: qsParams.sortby },
+              onSuccessDispatch:
+                REMINDERS__NO_RECENT_INTERACTION_REMINDERS_LOADED,
+            }}
+          >
+            {() => (
+              <Task>
+                {(getTask) => {
+                  const deleteTask = getTask(
+                    TASK_DELETE_NO_RECENT_INTERACTION_REMINDER,
+                    ID
+                  )
+                  const getNextTask = getTask(
+                    TASK_GET_NEXT_NO_RECENT_INTERACTION_REMINDER,
+                    ID
+                  )
+                  return (
+                    <>
+                      <Effect
+                        dependencyList={[nextPending]}
+                        effect={() =>
+                          nextPending &&
+                          getNextTask.start({
+                            payload: {
+                              page,
+                              sortby: qsParams.sortby,
+                            },
+                            onSuccessDispatch:
+                              REMINDERS__NO_RECENT_INTERACTION_REMINDER_GOT_NEXT,
+                          })
+                        }
+                      />
+                      <CollectionSort
+                        sortOptions={sortOptions}
+                        totalPages={totalPages}
+                      />
+                      <CollectionList
+                        results={results}
+                        disableDelete={deleteTask.status || nextPending}
+                        onDeleteReminder={(reminderId) => {
+                          deleteTask.start({
+                            payload: { id: reminderId },
+                            onSuccessDispatch:
+                              REMINDERS__NO_RECENT_INTERACTION_REMINDER_DELETED,
+                          })
+                        }}
+                      />
+                      <RoutedPagination initialPage={page} items={count || 0} />
+                    </>
+                  )
+                }}
+              </Task>
+            )}
+          </Task.Status>
+        </GridCol>
+      </GridRow>
+    </DefaultLayout>
   )
 }
 
