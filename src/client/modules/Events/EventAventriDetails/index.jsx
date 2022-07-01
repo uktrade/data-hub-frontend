@@ -46,7 +46,7 @@ const EventAventriDetails = ({
 
   return (
     <DefaultLayout
-      heading="Events"
+      heading={name}
       pageTitle="Events"
       breadcrumbs={breadcrumbs}
       useReactRouter={true}
