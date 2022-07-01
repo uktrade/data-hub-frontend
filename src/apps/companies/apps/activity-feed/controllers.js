@@ -23,6 +23,7 @@ const { contactActivityQuery } = require('./es-queries/contact-activity-query')
 const allActivityFeedEventsQuery = require('./es-queries/activity-feed-all-events-query')
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
 const { aventriEventQuery } = require('./es-queries/aventri-event-query')
+const { aventriAttendeeQuery } = require('./es-queries/aventri-attendee-query')
 
 async function renderActivityFeed(req, res, next) {
   const { company, dnbHierarchyCount, dnbRelatedCompaniesCount } = res.locals
@@ -291,6 +292,37 @@ async function fetchAventriEvent(req, res, next) {
   }
 }
 
+async function fetchAventriAttendees(req, res, next) {
+  const aventriEventId = req.params.aventriEventId
+  try {
+    //get the attendees
+    const aventriAttendeeResults = await fetchActivityFeed(
+      req,
+      aventriAttendeeQuery(aventriEventId)
+    )
+
+    const aventriAttendees = aventriAttendeeResults.hits.hits.map(
+      (hit) => hit._source
+    )
+
+    //get the event
+    const formattedAventriEventId = `dit:aventri:Event:${aventriEventId}:Create`
+
+    const aventriEventResults = await fetchActivityFeed(
+      req,
+      aventriEventQuery([formattedAventriEventId])
+    )
+    const aventriEventData = aventriEventResults.hits.hits[0]._source
+
+    res.json({
+      aventriEventData,
+      aventriAttendees,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 async function fetchAllActivityFeedEvents(req, res, next) {
   try {
     const allActivityFeedEventsResults = await fetchActivityFeed(
@@ -316,4 +348,5 @@ module.exports = {
   fetchActivitiesForContact,
   fetchAventriEvent,
   fetchAllActivityFeedEvents,
+  fetchAventriAttendees,
 }

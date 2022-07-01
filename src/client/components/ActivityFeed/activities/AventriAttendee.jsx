@@ -13,11 +13,12 @@ import ActivityCardLabels from './card/ActivityCardLabels'
 
 const VIRTUAL_EVENT_ATTENDANCE_STATUS = 'Attended'
 
-const transformAventriAttendee = (activity) => ({
-  eventName: activity.eventName,
-  date: formatStartAndEndDate(activity.startDate, activity.endDate),
+const transformAventriAttendee = (attendee) => ({
+  eventName: attendee.eventName,
+  attendeeName: `${attendee.object['dit:aventri:firstname']} ${attendee.object['dit:aventri:lastname']}`,
+  date: formatStartAndEndDate(attendee.startDate, attendee.endDate),
   isVirtualAttendanceConfirmed:
-    activity.object['dit:aventri:virtual_event_attendance'] === 'Yes',
+    attendee.object['dit:aventri:virtual_event_attendance'] === 'Yes',
 })
 
 const StyledSpan = styled('span')`
@@ -26,11 +27,11 @@ const StyledSpan = styled('span')`
   }
 `
 
-export default function AventriAttendee({ activity }) {
-  const { eventName, date, isVirtualAttendanceConfirmed } =
-    transformAventriAttendee(activity)
+export default function AventriAttendee({ activity: attendee }) {
+  const { eventName, attendeeName, date, isVirtualAttendanceConfirmed } =
+    transformAventriAttendee(attendee)
 
-  return (
+  return eventName ? (
     <ActivityCardWrapper dataTest="aventri-activity">
       <ActivityCardLabels service="event" kind="aventri service delivery" />
       <ActivityCardSubject>
@@ -45,6 +46,12 @@ export default function AventriAttendee({ activity }) {
         metadata={[{ label: 'Event date', value: date || 'Unknown' }]}
       />
     </ActivityCardWrapper>
+  ) : (
+    <ActivityCardWrapper dataTest="aventri-attendee">
+      <ActivityCardSubject dataTest="aventri-attendee-name">
+        {attendeeName}
+      </ActivityCardSubject>
+    </ActivityCardWrapper>
   )
 }
 
@@ -52,6 +59,6 @@ AventriAttendee.propTypes = {
   activity: PropTypes.object.isRequired,
 }
 
-AventriAttendee.canRender = (activity) => {
-  return CardUtils.canRenderByTypes(activity, ACTIVITY_TYPE.AventriAttendee)
+AventriAttendee.canRender = (attendee) => {
+  return CardUtils.canRenderByTypes(attendee, ACTIVITY_TYPE.AventriAttendee)
 }
