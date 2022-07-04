@@ -76,7 +76,9 @@ describe('Event Aventri Details', () => {
           })
         })
       })
+    })
 
+    context('with errors', () => {
       context('when the event is not found', () => {
         before(() => {
           cy.visit(urls.events.aventri.details(notFoundEventId))
@@ -93,7 +95,6 @@ describe('Event Aventri Details', () => {
           )
         })
       })
-
       context('when there is a network error', () => {
         before(() => {
           cy.visit(urls.events.aventri.details(errorEventId))
@@ -111,23 +112,21 @@ describe('Event Aventri Details', () => {
         })
       })
     })
+    after(() => {
+      cy.resetUser()
+    })
+  })
 
-    context(
-      'when viewing aventri details with the feature flag is disabled',
-      () => {
-        before(() => {
-          cy.setUserFeatures([])
-        })
+  context('when the feature flag is disabled', () => {
+    before(() => {
+      cy.visit(urls.events.aventri.details(existingEventId))
+    })
 
-        it('should not display aventri event name in breadcrumb', () => {
-          cy.visit(urls.events.aventri.details(existingEventId))
-
-          assertBreadcrumbs({
-            Home: urls.dashboard.route,
-            Events: urls.events.index(),
-          })
-        })
-      }
-    )
+    it('should not display aventri event name in breadcrumb', () => {
+      assertBreadcrumbs({
+        Home: urls.dashboard.route,
+        Events: urls.events.index(),
+      })
+    })
   })
 })
