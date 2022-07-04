@@ -1,6 +1,7 @@
 {
-  "require" : [
-      "test/unit/common.js"
+  "require": [
+    "test/unit/common.js",
+    "@babel/register"
   ],
   "ui": "bdd",
   "recursive": true,
