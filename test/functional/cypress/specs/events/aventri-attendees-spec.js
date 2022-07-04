@@ -16,7 +16,7 @@ describe('Aventri event attendees', () => {
     })
     context('With normal behaviour', () => {
       before(() => {
-        cy.visit(urls.events.aventriAttendees.index(existingEventId))
+        cy.visit(urls.events.aventri.attendees(existingEventId))
       })
 
       it('should display aventri event name in breadcrumb', () => {
@@ -41,7 +41,7 @@ describe('Aventri event attendees', () => {
           .should(
             'have.attr',
             'href',
-            urls.events.aventriAttendees.index(existingEventId)
+            urls.events.aventri.attendees(existingEventId)
           )
       })
 
@@ -59,7 +59,7 @@ describe('Aventri event attendees', () => {
 
     context('With errors', () => {
       before(() => {
-        cy.visit(urls.events.aventriAttendees.index(errorId))
+        cy.visit(urls.events.aventri.attendees(errorId))
       })
 
       it('should render an error message', () => {
@@ -77,7 +77,7 @@ describe('Aventri event attendees', () => {
 
   context('With the feature flag turned off', () => {
     before(() => {
-      cy.visit(urls.events.aventriAttendees.index(existingEventId))
+      cy.visit(urls.events.aventri.attendees(existingEventId))
     })
     it('should not display an aventri attendee', () => {
       cy.get('[data-test="aventri-attendee"]').should('not.exist')

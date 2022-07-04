@@ -254,11 +254,9 @@ module.exports = {
     find: url('/events', '/:eventId/attendees/find-new'),
     aventri: {
       details: url('/events', '/aventri/:aventriEventId/details'),
-      data: url('/events', '/aventri/:aventriEventId/data'),
-    },
-    aventriAttendees: {
-      index: url('/events', '/aventri/:aventriEventId/attendees'),
-      data: url('/events', '/aventri/:aventriEventId/attendees/data'),
+      detailsData: url('/events', '/aventri/:aventriEventId/details/data'),
+      attendees: url('/events', '/aventri/:aventriEventId/attendees'),
+      attendeesData: url('/events', '/aventri/:aventriEventId/attendees/data'),
     },
   },
   search: {

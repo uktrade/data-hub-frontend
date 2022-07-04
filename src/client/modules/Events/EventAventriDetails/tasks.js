@@ -4,6 +4,6 @@ import { transformResponseToEventAventriDetails } from '../transformers'
 
 export const getEventAventriDetails = (aventriEventId) =>
   axios
-    .get(urls.events.aventri.data(aventriEventId))
+    .get(urls.events.aventri.detailsData(aventriEventId))
     .then(({ data }) => transformResponseToEventAventriDetails(data))
     .catch(() => Promise.reject('Unable to load aventri event details.'))

@@ -61,9 +61,7 @@ const EventAventriAttendees = ({ aventriAttendees, aventriEventData }) => {
                       </LocalNavLink>
                       <LocalNavLink
                         dataTest="event-aventri-attendees-link"
-                        href={urls.events.aventriAttendees.index(
-                          aventriEventId
-                        )}
+                        href={urls.events.aventri.attendees(aventriEventId)}
                       >
                         Attendees
                       </LocalNavLink>

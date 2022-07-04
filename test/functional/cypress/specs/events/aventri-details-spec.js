@@ -45,7 +45,7 @@ describe('Event Aventri Details', () => {
           .should(
             'have.attr',
             'href',
-            urls.events.aventriAttendees.index(existingEventId)
+            urls.events.aventri.attendees(existingEventId)
           )
       })
 
