@@ -14,7 +14,7 @@ import ActivityCardMetadata from './card/ActivityCardMetadata'
 // Regex to match UUID4 string from DataHubEvent id format
 // e.g. dit:DataHubEvent:b93d4274-36fe-4008-ac40-fbc197918888:Announce
 const UUID_REGEX =
-  /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/
+  /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/
 
 export default function DataHubEvent({ activity: event }) {
   const eventObject = event.object
