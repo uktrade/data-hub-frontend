@@ -16,13 +16,10 @@ describe('Event Aventri Details', () => {
   context('when the feature flag is on', () => {
     before(() => {
       cy.setUserFeatures([EVENT_ACTIVITY_FEATURE_FLAG])
+      cy.visit(urls.events.aventri.details(existingEventId))
     })
 
     context('when it is a valid event', () => {
-      before(() => {
-        cy.visit(urls.events.aventri.details(existingEventId))
-      })
-
       it('should display aventri event name in breadcrumb', () => {
         assertBreadcrumbs({
           Home: urls.dashboard.route,
@@ -54,62 +51,61 @@ describe('Event Aventri Details', () => {
           'contain',
           'EITA Test Event 2022'
         )
+      })
 
-        it('should display event details', () => {
+      it('should display event details', () => {
+        assertKeyValueTable('eventAventriDetails', {
+          'Type of event': 'dit:aventri:Event',
+          'Event date': '02 Mar 2021 to 04 May 2022',
+          'Event location type': 'Name of Location',
+          Address: '1 street avenueBrockleyLondonABC 123England',
+        })
+      })
+
+      context('when optional details are missing', () => {
+        it('should display "Not set"', () => {
+          cy.visit(urls.events.aventri.details('6666'))
           assertKeyValueTable('eventAventriDetails', {
             'Type of event': 'dit:aventri:Event',
-            'Event date': '02 Mar 2021 to 04 May 2022',
-            'Event location type': 'Name of Location',
-            Address: '1 street avenueBrockleyLondonABC 123England',
-          })
-        })
-
-        context('when optional details are missing', () => {
-          it('should display "Not set"', () => {
-            cy.visit(urls.events.aventri.details('6666'))
-            assertKeyValueTable('eventAventriDetails', {
-              'Type of event': 'dit:aventri:Event',
-              'Event date': '02 Mar 2021',
-              'Event location type': 'Not set',
-              Address: 'Not set',
-            })
+            'Event date': '02 Mar 2021',
+            'Event location type': 'Not set',
+            Address: 'Not set',
           })
         })
       })
     })
 
-    context('with errors', () => {
-      context('when the event is not found', () => {
-        before(() => {
-          cy.visit(urls.events.aventri.details(notFoundEventId))
-        })
-
-        it('should render an error message', () => {
-          assertBreadcrumbs({
-            Home: urls.dashboard.route,
-            Events: urls.events.index(),
-          })
-          assertErrorDialog(
-            'TASK_GET_EVENT_AVENTRI_DETAILS',
-            'Unable to load aventri event details.'
-          )
-        })
+    context('when the event is not found', () => {
+      before(() => {
+        cy.visit(urls.events.aventri.details(notFoundEventId))
       })
-      context('when there is a network error', () => {
-        before(() => {
-          cy.visit(urls.events.aventri.details(errorEventId))
-        })
 
-        it('should render an error message', () => {
-          assertBreadcrumbs({
-            Home: urls.dashboard.route,
-            Events: urls.events.index(),
-          })
-          assertErrorDialog(
-            'TASK_GET_EVENT_AVENTRI_DETAILS',
-            'Unable to load aventri event details.'
-          )
+      it('should render an error message', () => {
+        assertBreadcrumbs({
+          Home: urls.dashboard.route,
+          Events: urls.events.index(),
         })
+        assertErrorDialog(
+          'TASK_GET_EVENT_AVENTRI_DETAILS',
+          'Unable to load aventri event details.'
+        )
+      })
+    })
+
+    context('when there is a network error', () => {
+      before(() => {
+        cy.visit(urls.events.aventri.details(errorEventId))
+      })
+
+      it('should render an error message', () => {
+        assertBreadcrumbs({
+          Home: urls.dashboard.route,
+          Events: urls.events.index(),
+        })
+        assertErrorDialog(
+          'TASK_GET_EVENT_AVENTRI_DETAILS',
+          'Unable to load aventri event details.'
+        )
       })
     })
     after(() => {
@@ -117,16 +113,19 @@ describe('Event Aventri Details', () => {
     })
   })
 
-  context('when the feature flag is disabled', () => {
-    before(() => {
-      cy.visit(urls.events.aventri.details(existingEventId))
-    })
-
-    it('should not display aventri event name in breadcrumb', () => {
-      assertBreadcrumbs({
-        Home: urls.dashboard.route,
-        Events: urls.events.index(),
+  context(
+    'when viewing aventri details with the feature flag is disabled',
+    () => {
+      before(() => {
+        cy.visit(urls.events.aventri.details(existingEventId))
       })
-    })
-  })
+
+      it('should not display aventri event name in breadcrumb', () => {
+        assertBreadcrumbs({
+          Home: urls.dashboard.route,
+          Events: urls.events.index(),
+        })
+      })
+    }
+  )
 })
