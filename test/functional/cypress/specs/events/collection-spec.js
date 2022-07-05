@@ -157,11 +157,13 @@ describe('Event Collection List Page - React', () => {
         cy.get('[data-test="collection-list"]').should('not.exist')
       })
 
-      it('should display a datahub event name', () => {
+      it('should display a datahub event name with link', () => {
         cy.get('@firstDataHubEvent')
           .find('[data-test="data-hub-event-name"]')
           .should('exist')
           .should('contain', 'Holiday to the Seaside')
+          .contains('a')
+          .should('have.attr', 'href', '/events/6666/details')
       })
 
       it('should display an aventri event name', () => {
