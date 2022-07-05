@@ -29,7 +29,7 @@ export default function DataHubEvent({ activity: event }) {
     <ActivityCardWrapper dataTest="data-hub-event">
       <ActivityCardSubject dataTest="data-hub-event-name">
         {!isEmpty(eventId) ? (
-          <Link as={RouterLink} to={`/events/aventri/${eventId}/details`}>
+          <Link as={RouterLink} to={`/events/${eventId}/details`}>
             {eventName}
           </Link>
         ) : (
