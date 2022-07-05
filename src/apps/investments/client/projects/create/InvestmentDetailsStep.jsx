@@ -170,7 +170,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
       />
 
       {Object.keys(values).length &&
-        values?.business_activities.find(
+        values?.business_activities?.find(
           (element) => element.label === 'Other'
         ) && (
           <FieldInput
