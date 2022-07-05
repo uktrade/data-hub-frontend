@@ -247,19 +247,19 @@ describe('Investment Detail Step Form Content', () => {
     })
   })
 
-  it('should display the add another activitiy field', () => {
-    cy.get('[data-test="field-otherBusinessActivity"]').then((element) => {
-      assertFieldRadiosWithLegend({
-        element,
-        legend:
-          'Do you want to add another activity that is not available above?',
-        optionsCount: 2,
-      })
-    })
+  it('should not display the other business activitiy field', () => {
+    cy.get('div[data-test="business-activities"] input').clear()
+
+    cy.get('[data-test="field-other_business_activity"]').should('not.exist')
   })
 
-  it('should display the other business activitiy field', () => {
-    cy.get('[data-test="other-business-activity-yes"]').check()
+  it('should display the other business activitiy field if Other listed in Business activities field', () => {
+    cy.get('div[data-test="business-activities"] input').clear()
+    cy.get('div[data-test="business-activities"] input').type('other')
+    cy.get(
+      'div[data-test="business-activities"] div[data-test="typeahead-menu-option"]'
+    ).click()
+
     cy.get('[data-test="field-other_business_activity"]').then((element) => {
       assertFieldInput({
         element,
