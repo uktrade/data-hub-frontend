@@ -119,3 +119,24 @@ export const deleteEstimatedLandDateReminder = ({ id } = {}) =>
 
 export const deleteNoRecentInteractionReminder = ({ id } = {}) =>
   apiProxyAxios.delete(`/v4/reminder/no-recent-investment-interaction/${id}`)
+
+export const getOutstandingPropositions = ({
+  page = 1,
+  limit = 10,
+  status = 'ongoing',
+  sortby = 'deadline',
+}) =>
+  apiProxyAxios
+    .get('/whoami/')
+    .then(({ data }) =>
+      apiProxyAxios.get('/v4/proposition', {
+        params: {
+          limit,
+          status,
+          sortby,
+          adviser_id: data.id,
+          offset: getPageOffset({ page, limit }),
+        },
+      })
+    )
+    .then(({ data }) => data)

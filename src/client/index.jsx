@@ -266,6 +266,7 @@ import {
   TASK_GET_NEXT_NO_RECENT_INTERACTION_REMINDER,
   TASK_DELETE_ESTIMATED_LAND_DATE_REMINDER,
   TASK_DELETE_NO_RECENT_INTERACTION_REMINDER,
+  TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS,
 } from '../client/modules/Reminders/state'
 
 import Footer from '../client/components/Footer'
@@ -449,6 +450,8 @@ function App() {
           reminders.getNextEstimatedLandDateReminder,
         [TASK_GET_NEXT_NO_RECENT_INTERACTION_REMINDER]:
           reminders.getNextNoRecentInteractionReminder,
+        [TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS]:
+          reminders.getOutstandingPropositions,
         [TASK_GET_CONTACT_ACTIVITIES]: getContactActivities,
         [TASK_ARCHIVE_CONTACT]: archiveContact,
         [TASK_GET_USER_FEATURE_FLAGS]: getUserFeatureFlags,

@@ -5,6 +5,7 @@ import {
   REMINDERS__NO_RECENT_INTERACTION_REMINDERS_LOADED,
   REMINDERS__NO_RECENT_INTERACTION_REMINDER_DELETED,
   REMINDERS__NO_RECENT_INTERACTION_REMINDER_GOT_NEXT,
+  REMINDERS__OUTSTANDING_PROPOSITIONS_LOADED,
 } from '../../actions'
 
 const initialState = {
@@ -17,6 +18,10 @@ const initialState = {
     results: [],
     count: 0,
     nextPending: false,
+  },
+  outstandingPropositionsReminders: {
+    results: [],
+    count: 0,
   },
 }
 
@@ -75,6 +80,11 @@ export default (state = initialState, { type, result, payload }) => {
           results: [...state.noRecentInteractionReminders.results, ...result],
           nextPending: false,
         },
+      }
+    case REMINDERS__OUTSTANDING_PROPOSITIONS_LOADED:
+      return {
+        ...state,
+        outstandingPropositionsReminders: result,
       }
     default:
       return state

@@ -498,7 +498,7 @@ module.exports = {
     index: url('/reminders'),
     estimatedLandDate: url('/reminders/estimated-land-date'),
     noRecentInteraction: url('/reminders/no-recent-interaction'),
-    outstandingProposition: url('/reminders/outstanding-proposition'),
+    outstandingPropositions: url('/reminders/outstanding-propositions'),
     settings: {
       index: url('/reminders/settings'),
       estimatedLandDate: url('/reminders/settings/estimated-land-date'),

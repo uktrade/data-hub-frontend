@@ -13,6 +13,7 @@ import {
   NoRecentInteractionForm,
   EstimatedLandDateReminders,
   NoRecentInteractionReminders,
+  OutstandingPropositionReminders,
 } from './modules/Reminders'
 
 const routes = {
@@ -91,6 +92,11 @@ const routes = {
       path: '/reminders/no-recent-interaction',
       module: 'datahub:companies',
       component: NoRecentInteractionReminders,
+    },
+    {
+      path: '/reminders/outstanding-propositions',
+      module: 'datahub:companies',
+      component: OutstandingPropositionReminders,
     },
     {
       path: '/reminders/settings',

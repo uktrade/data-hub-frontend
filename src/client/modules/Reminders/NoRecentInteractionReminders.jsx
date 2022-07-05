@@ -55,6 +55,7 @@ const NoRecentInteractionReminders = ({ noRecentInteractionReminders }) => {
         </GridCol>
         <GridCol>
           <CollectionHeader totalItems={count} />
+          <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
           <Task.Status
             name={TASK_GET_NO_RECENT_INTERACTION_REMINDERS}
             id={ID}
@@ -90,10 +91,6 @@ const NoRecentInteractionReminders = ({ noRecentInteractionReminders }) => {
                               REMINDERS__NO_RECENT_INTERACTION_REMINDER_GOT_NEXT,
                           })
                         }
-                      />
-                      <CollectionSort
-                        sortOptions={sortOptions}
-                        totalPages={totalPages}
                       />
                       <CollectionList
                         results={results}
