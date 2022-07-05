@@ -151,31 +151,19 @@ describe('Event Collection List Page - React', () => {
         cy.get('@dataHubEvents').eq(0).as('firstDataHubEvent')
         cy.get('@dataHubEvents').eq(1).as('secondDataHubEvent')
         cy.get('@aventriEvents').eq(0).as('firstAventriEvent')
-        cy.get('@dataHubEvents').eq(2).as('thirdDataHubEvent')
       })
 
       it('should not display the data hub API collection list', () => {
         cy.get('[data-test="collection-list"]').should('not.exist')
       })
 
-      it('should display a datahub event name', () => {
+      it('should display a datahub event name with link', () => {
         cy.get('@firstDataHubEvent')
           .find('[data-test="data-hub-event-name"]')
           .should('exist')
           .should('contain', 'Holiday to the Seaside')
-      })
-
-      it('should display a datahub event name with active link', () => {
-        cy.get('@thirdDataHubEvent')
-          .find('[data-test="data-hub-event-name"]')
-          .should('exist')
-          .should('contain', 'Holiday to the Seaside v2')
           .contains('a')
-          .should(
-            'have.attr',
-            'href',
-            '/events/b93d4274-36fe-4008-ac40-fbc197918888/details'
-          )
+          .should('have.attr', 'href', '/events/6666/details')
       })
 
       it('should display an aventri event name', () => {
