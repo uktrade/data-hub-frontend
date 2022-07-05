@@ -21,9 +21,9 @@ router.get(urls.events.activity.data.route, fetchAllActivityFeedEvents)
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.get('/aventri/:aventriEventId/details', renderEventsView)
-router.get(urls.events.aventri.data.route, fetchAventriEvent)
+router.get(urls.events.aventri.detailsData.route, fetchAventriEvent)
 router.get('/aventri/:aventriEventId/attendees', renderEventsView)
-router.get(urls.events.aventriAttendees.data.route, fetchAventriAttendees)
+router.get(urls.events.aventri.attendeesData.route, fetchAventriAttendees)
 
 router.use(
   '/:eventId',
