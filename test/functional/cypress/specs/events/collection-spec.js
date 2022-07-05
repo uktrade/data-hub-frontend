@@ -151,6 +151,7 @@ describe('Event Collection List Page - React', () => {
         cy.get('@dataHubEvents').eq(0).as('firstDataHubEvent')
         cy.get('@dataHubEvents').eq(1).as('secondDataHubEvent')
         cy.get('@aventriEvents').eq(0).as('firstAventriEvent')
+        cy.get('@dataHubEvents').eq(2).as('thirdDataHubEvent')
       })
 
       it('should not display the data hub API collection list', () => {

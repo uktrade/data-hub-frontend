@@ -188,6 +188,69 @@
           "published": "2022-01-23T20:09:14",
           "type": "dit:aventri:Event"
         }
+      },
+      {
+        "_index": "activities__feed_id_datahub-events__date_2022-06-23__timestamp_1655982198__batch_id_iquvq1ib__",
+        "_type": "_doc",
+        "_id": "dit:DataHubEvent:b93d4274-36fe-4008-ac40-fbc197918888:Announce",
+        "_score": 0.036367644,
+        "_source": {
+          "generator": {
+            "name": "dit:dataHub",
+            "type": "Application"
+          },
+          "id": "dit:DataHubEvent:b93d4274-36fe-4008-ac40-fbc197918888:Announce",
+          "object": {
+            "content": "",
+            "dit:address_1": "London",
+            "dit:address_2": "",
+            "dit:address_country": {
+              "name": "United Kingdom"
+            },
+            "dit:address_county": "",
+            "dit:address_postcode": "",
+            "dit:address_town": "London",
+            "dit:archivedDocumentsUrlPath": "",
+            "dit:disabledOn": null,
+            "dit:eventType": {
+              "name": "Account management"
+            },
+            "dit:hasRelatedTradeAgreements": false,
+            "dit:leadTeam": {
+              "name": "Digital Data Hub - Live Service v2"
+            },
+            "dit:locationType": {
+              "name": "HQ"
+            },
+            "dit:organiser": {
+              "name": "Joe Bloggs"
+            },
+            "dit:relatedProgrammes": [],
+            "dit:service": {
+              "name": "Best service v2"
+            },
+            "dit:teams": [
+              {
+                "id": "dit:DataHubTeam:5555",
+                "name": "Digital Data Hub - Live Service v2",
+                "type": [
+                  "Group",
+                  "dit:Team"
+                ]
+              }
+            ],
+            "endTime": "2022-09-15",
+            "id": "dit:DataHubEvent:b93d4274-36fe-4008-ac40-fbc197918888",
+            "name": "Holiday to the Seaside v2",
+            "startTime": "2022-08-30",
+            "type": [
+              "dit:dataHub:Event"
+            ],
+            "url": ""
+          },
+          "published": "2021-08-20T10:39:10.184330Z",
+          "type": "Announce"
+        }
       }
     ]
   }
