@@ -144,7 +144,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
       <FieldTextarea
         type="text"
         name="anonymous_description"
-        label="Anonymous project details"
+        label="Anonymous project details (optional)"
         hint="Do not include company names, financial details or addresses"
         data-test="anonymous-description"
       />
