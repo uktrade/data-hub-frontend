@@ -1,4 +1,4 @@
-import { OPTION_YES, OPTION_NO } from '../../../../constants'
+import { OPTION_NO } from '../../../../constants'
 
 const formatEstimatedLandDate = ({ year, month }) =>
   year && month ? `${year}-${month}-01` : null
@@ -17,7 +17,7 @@ export const transformFormValuesToPayload = (values, csrfToken) => ({
   sector: values.sector.value,
   business_activities: values.business_activities.map(({ value }) => value),
   client_contacts: values.client_contacts.map(({ value }) => value),
-  ...(values.otherBusinessActivity === OPTION_YES
+  ...(values?.other_business_activity
     ? { other_business_activity: values.other_business_activity }
     : {}),
   client_relationship_manager:
