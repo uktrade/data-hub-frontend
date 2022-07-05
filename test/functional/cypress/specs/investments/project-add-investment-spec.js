@@ -392,21 +392,36 @@ describe('Validation error messages', () => {
     'Choose a client contact',
   ]
 
+  const validationErrorMessageOtherBusinessActivities =
+    "Enter an 'Other' business activity"
+
   before(() => {
     cy.visit(urls.investments.projects.index())
     cy.get('[data-test="add-collection-item-button"]').click()
-  })
-
-  it('should display all validation error messages', () => {
     cy.get('input[data-test="company-name"]').clear()
     cy.get('input[data-test="company-name"]').type('alphabet')
     cy.get('form button').click()
     cy.get('form ol li:nth-child(1)').click()
     cy.get('[data-test="investment-type-non-fdi"]').click()
     cy.get('[data-test="continue"]').click()
+  })
+
+  it('should display validation error messages', () => {
     cy.get('[data-test="submit"]').click()
     cy.get('[data-test="summary-form-errors"] ul > li').each(($li, i) => {
       expect($li.text()).to.equal(validationErrorMessages[i])
+      assert.notEqual($li.text(), validationErrorMessageOtherBusinessActivities)
     })
+  })
+
+  it('should display Other Business Activities validation error messages', () => {
+    cy.get('div[data-test="business-activities"] input').type('other')
+    cy.get(
+      'div[data-test="business-activities"] div[data-test="typeahead-menu-option"]'
+    ).click()
+    cy.get('[data-test="submit"]').click()
+    cy.get('a[href="#field-other_business_activity"]').contains(
+      validationErrorMessageOtherBusinessActivities
+    )
   })
 })
