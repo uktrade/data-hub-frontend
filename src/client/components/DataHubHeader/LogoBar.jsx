@@ -12,7 +12,7 @@ import {
 
 // Colours not defined in 'govuk-colours' which we need for consistency
 // with Find Exporters and Market Access.
-import { DARK_BLUE } from '../../utils/colors'
+import { DARK_BLUE_LEGACY } from '../../utils/colors'
 
 const StyledLogoContainer = styled.div({
   maxWidth: 960,
@@ -56,7 +56,7 @@ const StyledTag = styled.strong({
   outline: '2px solid transparent',
   outlineOffset: '-2px',
   color: WHITE,
-  backgroundColor: DARK_BLUE,
+  backgroundColor: DARK_BLUE_LEGACY,
   letterSpacing: 1,
   textDecoration: 'none',
   textTransform: 'uppercase',

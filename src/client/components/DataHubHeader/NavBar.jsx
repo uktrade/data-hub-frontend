@@ -13,7 +13,7 @@ import ProtectedLink from '../ProtectedLink'
 
 // Colours not defined in 'govuk-colours' which we need for consistency
 // with Find Exporters and Market Access.
-import { LIGHT_GREY, DARK_BLUE } from '../../utils/colors'
+import { GREY_3_LEGACY, DARK_BLUE_LEGACY } from '../../utils/colors'
 
 import links from './links'
 
@@ -24,7 +24,7 @@ const StyledNavContainer = styled.div({
 })
 
 const StyledNav = styled.nav({
-  backgroundColor: LIGHT_GREY,
+  backgroundColor: GREY_3_LEGACY,
   fontWeight: FONT_WEIGHTS.bold,
 })
 
@@ -59,7 +59,7 @@ const styledLinkActive = {
   right: 0,
   bottom: 0,
   borderBottom: `${BORDER_WIDTH} solid`,
-  borderColor: DARK_BLUE,
+  borderColor: DARK_BLUE_LEGACY,
 }
 
 const styledLink = {
@@ -73,7 +73,7 @@ const styledLink = {
     lineHeight: '23px',
     color: BLACK,
     '&.active': {
-      color: DARK_BLUE,
+      color: DARK_BLUE_LEGACY,
     },
     [MEDIA_QUERIES.TABLET]: {
       display: 'inline-block',

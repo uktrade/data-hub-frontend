@@ -19,23 +19,27 @@ export const hexToRgb = (colorHex) => {
  */
 export const rgba = (colorHex, alpha) => `rgba(${hexToRgb(colorHex)},${alpha})`
 
-// The following colours are not included in either:
-// - https://github.com/penx/govuk-colours or
-// - https://github.com/govuk-react/govuk-react (which references govuk-colours)
-// Instead, the colours below have been taken from:
-// - https://github.com/alphagov/govuk-frontend (referenced by GOV.UK Design System)
+// Currently we import our colours from here: https://github.com/penx/govuk-colours/blob/master/src/index.js
+// GOV.UK Design System colours are here: https://github.com/alphagov/govuk-frontend/blob/main/src/govuk/settings/_colours-palette.scss
+// Unfortunately, 'govuk-colours' has not been updated for a while and we need the following grey colours from the GDS modern palette
+export const DARK_GREY = '#505a5f'
+export const MID_GREY = '#b1b4b6'
+export const LIGHT_GREY = '#f3f2f1' // This is GREY_3 from 'govuk-colours'
 
-// Taken from the legacy palette, we're unable to choose a colour
-// from the modern palette as it's either too light or too dark
-// for the Data Hub header nav element which sits in between a
-// darker and lighter shade of grey forming a natural gradient.
-export const LIGHT_GREY = '#dee0e2'
+// -----------------------------------
+// Taken from the GDS legacy palette
+// -----------------------------------
+// We're unable to choose a colour from the GDS modern palette as
+// it's either too light or too dark for the Data Hub header nav
+// element which sits in between a darker and lighter shade of grey
+// forming a natural gradient.
+export const GREY_3_LEGACY = '#dee0e2'
 
+// -----------------------------------
+// Taken from the GDS legacy palette
+// -----------------------------------
+// We're unable to choose a colour from the GDS modern palette.
 // We require this specific blue for the navigation hover/selection.
 // This blue has to match the colour of both 'Find Exporters' and 'Market Access'.
 // It is also used for the investment project timeline.
-export const DARK_BLUE = '#005ea5'
-
-export const DARK_GREY = '#505a5f'
-export const MID_GREY = '#b1b4b6'
-export const FOCUS_COLOUR = '#ffdd00'
+export const DARK_BLUE_LEGACY = '#005ea5'

@@ -5,7 +5,7 @@ import { WHITE, GREY_3 } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING, FONT_SIZE } from '@govuk-react/constants'
 import { get } from 'lodash'
 
-import { DARK_BLUE } from '../../utils/colors'
+import { DARK_BLUE_LEGACY } from '../../utils/colors'
 
 const TimelineContainer = styled('div')({
   backgroundColor: ({ theme }) =>
@@ -31,7 +31,7 @@ const StyledOl = styled('ol')({
 })
 
 const StyledLi = styled('li')({
-  borderLeft: `2px solid ${DARK_BLUE}`,
+  borderLeft: `2px solid ${DARK_BLUE_LEGACY}`,
   padding: `0 0 ${SPACING.SCALE_4} 0`,
   position: 'relative',
   '&:last-child': {
@@ -49,14 +49,14 @@ const StyledLi = styled('li')({
     width: ({ theme }) => get(theme, 'li.before.width', SPACING.SCALE_4),
     height: ({ theme }) => get(theme, 'li.before.height', SPACING.SCALE_4),
     backgroundColor: ({ isStageComplete }) =>
-      isStageComplete ? `${DARK_BLUE}` : `${WHITE}`,
+      isStageComplete ? `${DARK_BLUE_LEGACY}` : `${WHITE}`,
     border: ({ theme, isStageComplete }) => {
       const border = get(theme, 'li.before.border')
       return border
         ? isStageComplete
-          ? `2px solid ${DARK_BLUE}`
+          ? `2px solid ${DARK_BLUE_LEGACY}`
           : border
-        : `2px solid ${DARK_BLUE}`
+        : `2px solid ${DARK_BLUE_LEGACY}`
     },
   },
   span: {
@@ -71,9 +71,9 @@ const StyledLi = styled('li')({
     borderTop: ({ theme, isLinkActive }) => {
       const borderTop = get(theme, 'li.mqLargeScreen.borderTop')
       if (borderTop) {
-        return isLinkActive ? `2px solid ${DARK_BLUE}` : borderTop
+        return isLinkActive ? `2px solid ${DARK_BLUE_LEGACY}` : borderTop
       }
-      return `3px solid ${DARK_BLUE}`
+      return `3px solid ${DARK_BLUE_LEGACY}`
     },
     borderLeft: 'none',
     '&:last-child': {

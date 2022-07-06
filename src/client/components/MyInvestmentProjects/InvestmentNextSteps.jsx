@@ -6,7 +6,8 @@ import { UnorderedList, ListItem } from 'govuk-react'
 
 import { investments } from '../../../lib/urls'
 import { INCOMPLETE_FIELDS } from './constants'
-import { rgba, FOCUS_COLOUR } from '../../utils/colors'
+import { rgba } from '../../utils/colors'
+import { FOCUS_COLOUR } from 'govuk-colours'
 
 const StyledDiv = styled('div')`
   height: 100%;
