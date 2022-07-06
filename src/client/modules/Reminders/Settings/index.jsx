@@ -48,24 +48,24 @@ const RemindersSettings = () => {
   const openESL = get(qsParams, 'estimated_land_date', false)
   const openNRI = get(qsParams, 'no_recent_interaction', false)
   return (
-    <Resource
-      name={TASK_GET_ALL_REMINDER_SUBSCRIPTIONS}
-      id={TASK_GET_ALL_REMINDER_SUBSCRIPTIONS}
+    <DefaultLayout
+      heading="Reminders and email notifications settings"
+      pageTitle="Reminders"
+      breadcrumbs={[
+        {
+          link: urls.dashboard(),
+          text: 'Home',
+        },
+        {
+          text: 'Reminders and email notifications settings',
+        },
+      ]}
     >
-      {({ estimatedLandDate, noRecentInteraction }) => (
-        <DefaultLayout
-          heading="Reminders and email notifications settings"
-          pageTitle="Reminders"
-          breadcrumbs={[
-            {
-              link: urls.dashboard(),
-              text: 'Home',
-            },
-            {
-              text: 'Reminders and email notifications settings',
-            },
-          ]}
-        >
+      <Resource
+        name={TASK_GET_ALL_REMINDER_SUBSCRIPTIONS}
+        id={TASK_GET_ALL_REMINDER_SUBSCRIPTIONS}
+      >
+        {({ estimatedLandDate, noRecentInteraction }) => (
           <ToggleSectionContainer>
             <RemindersToggleSection
               label="Approaching estimated land date settings"
@@ -128,9 +128,9 @@ const RemindersSettings = () => {
               Home
             </StyledHomeLink>
           </ToggleSectionContainer>
-        </DefaultLayout>
-      )}
-    </Resource>
+        )}
+      </Resource>
+    </DefaultLayout>
   )
 }
 

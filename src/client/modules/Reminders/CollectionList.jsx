@@ -3,7 +3,7 @@ import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { Link } from 'govuk-react'
 import styled from 'styled-components'
-import { GREY_1, GREY_2 } from 'govuk-colours'
+import { GREY_2 } from 'govuk-colours'
 import { H3 } from '@govuk-react/heading'
 import { FONT_SIZE, HEADING_SIZES, SPACING } from '@govuk-react/constants'
 
@@ -19,7 +19,7 @@ const DeleteButton = styled('button')({
   border: 'none',
   fontSize: FONT_SIZE.SIZE_16,
   fontFamily: 'inherit',
-  color: GREY_1,
+  color: DARK_GREY,
   cursor: 'pointer',
   textDecoration: 'underline',
 })
@@ -49,6 +49,7 @@ const ItemHeader = styled(H3)({
 })
 
 const ItemContent = styled('div')({
+  color: DARK_GREY,
   marginBottom: SPACING.SCALE_3,
 })
 

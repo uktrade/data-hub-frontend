@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { SPACING, FONT_SIZE, HEADING_SIZES } from '@govuk-react/constants'
 import { Link } from 'govuk-react'
-import { GREY_1, GREY_2 } from 'govuk-colours'
+import { GREY_2 } from 'govuk-colours'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import styled from 'styled-components'
@@ -56,10 +56,11 @@ const ListItemFooter = styled('div')({
 
 const PaginationSummary = styled('div')({
   fontSize: FONT_SIZE.SIZE_16,
-  color: GREY_1,
-  paddingTop: 19,
+  color: DARK_GREY,
+  paddingTop: SPACING.SCALE_4,
   paddingBottom: SPACING.SCALE_3,
-  borderBottom: `solid 1px ${GREY_2}`,
+  borderBottom: ({ hasReminders }) =>
+    hasReminders ? `solid 1px ${GREY_2}` : 'none',
 })
 
 const OutstandingPropositionReminders = ({
@@ -87,8 +88,13 @@ const OutstandingPropositionReminders = ({
         </GridCol>
         <GridCol>
           <CollectionHeader settings={false} totalItems={count} />
-          <PaginationSummary data-test="pagination-summary">
-            Page {page || 1} of {totalPages}
+          <PaginationSummary
+            hasReminders={results.length > 0}
+            data-test="pagination-summary"
+          >
+            {results.length === 0
+              ? 'You have no reminders'
+              : `Page ${page || 1} of ${totalPages}`}
           </PaginationSummary>
           <Task.Status
             name={TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS}
@@ -101,7 +107,7 @@ const OutstandingPropositionReminders = ({
             {() => (
               <>
                 <List data-test="reminders-list">
-                  {results.map(({ id, deadline, investment_project }) => (
+                  {results.map(({ id, name, deadline, investment_project }) => (
                     <ListItem key={id} data-test="reminders-list-item">
                       <GridRow>
                         <GridCol>
@@ -114,7 +120,7 @@ const OutstandingPropositionReminders = ({
                                 investment_project.id
                               )}`}
                             >
-                              {investment_project.name}
+                              {name}
                             </Link>
                           </ListItemContent>
                           <ListItemFooter data-test="item-footer">

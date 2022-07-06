@@ -154,6 +154,35 @@ describe('No Recent Interaction Reminders', () => {
     })
   })
 
+  context('No reminders', () => {
+    before(() => {
+      cy.intercept(
+        {
+          method: 'GET',
+          pathname: remindersEndpoint,
+          query: { limit: '10', offset: '0', sortby: '-created_on' },
+        },
+        {
+          body: {
+            count: 0,
+            results: [],
+            next: null,
+            previous: null,
+          },
+        }
+      ).as('remindersApiRequest')
+      cy.visit(urls.reminders.noRecentInteraction())
+      cy.wait('@remindersApiRequest')
+    })
+
+    it('should include a message "You have no reminders"', () => {
+      cy.get('[data-test="no-reminders"]').should(
+        'contain',
+        'You have no reminders'
+      )
+    })
+  })
+
   context('Pagination', () => {
     beforeEach(() => {
       interceptApiCalls()
