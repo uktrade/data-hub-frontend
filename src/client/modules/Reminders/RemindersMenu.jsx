@@ -53,9 +53,9 @@ const RemindersMenu = () => {
       </LinkListItem>
       <LinkListItem data-test="link-list-item">
         <LinkListLink
-          to={urls.reminders.outstandingProposition()}
+          to={urls.reminders.outstandingPropositions()}
           $isActive={
-            location.pathname == urls.reminders.outstandingProposition()
+            location.pathname == urls.reminders.outstandingPropositions()
           }
         >
           Reminders for outstanding propositions

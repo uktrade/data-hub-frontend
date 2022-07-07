@@ -254,11 +254,9 @@ module.exports = {
     find: url('/events', '/:eventId/attendees/find-new'),
     aventri: {
       details: url('/events', '/aventri/:aventriEventId/details'),
-      data: url('/events', '/aventri/:aventriEventId/data'),
-    },
-    aventriAttendees: {
-      index: url('/events', '/aventri/:aventriEventId/attendees'),
-      data: url('/events', '/aventri/:aventriEventId/attendees/data'),
+      detailsData: url('/events', '/aventri/:aventriEventId/details/data'),
+      attendees: url('/events', '/aventri/:aventriEventId/attendees'),
+      attendeesData: url('/events', '/aventri/:aventriEventId/attendees/data'),
     },
   },
   search: {
@@ -498,7 +496,7 @@ module.exports = {
     index: url('/reminders'),
     estimatedLandDate: url('/reminders/estimated-land-date'),
     noRecentInteraction: url('/reminders/no-recent-interaction'),
-    outstandingProposition: url('/reminders/outstanding-proposition'),
+    outstandingPropositions: url('/reminders/outstanding-propositions'),
     settings: {
       index: url('/reminders/settings'),
       estimatedLandDate: url('/reminders/settings/estimated-land-date'),

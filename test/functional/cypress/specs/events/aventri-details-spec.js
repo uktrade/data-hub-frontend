@@ -16,17 +16,34 @@ describe('Event Aventri Details', () => {
   context('when the feature flag is on', () => {
     before(() => {
       cy.setUserFeatures([EVENT_ACTIVITY_FEATURE_FLAG])
+      cy.visit(urls.events.aventri.details(existingEventId))
     })
 
     context('when it is a valid event', () => {
       it('should display aventri event name in breadcrumb', () => {
-        cy.visit(urls.events.aventri.details(existingEventId))
-
         assertBreadcrumbs({
           Home: urls.dashboard.route,
           Events: urls.events.index(),
           'EITA Test Event 2022': null,
         })
+      })
+
+      it('should display the side nav bar', () => {
+        cy.get('[data-test="event-aventri-nav"]').should('exist')
+        cy.get('[data-test="event-aventri-details-link"]')
+          .should('contain', 'Details')
+          .should(
+            'have.attr',
+            'href',
+            urls.events.aventri.details(existingEventId)
+          )
+        cy.get('[data-test="event-aventri-attendees-link"]')
+          .should('contain', 'Attendees')
+          .should(
+            'have.attr',
+            'href',
+            urls.events.aventri.attendees(existingEventId)
+          )
       })
 
       it('should display the event name in the header', () => {
@@ -91,18 +108,19 @@ describe('Event Aventri Details', () => {
         )
       })
     })
+    after(() => {
+      cy.resetUser()
+    })
   })
 
   context(
     'when viewing aventri details with the feature flag is disabled',
     () => {
       before(() => {
-        cy.setUserFeatures([])
+        cy.visit(urls.events.aventri.details(existingEventId))
       })
 
       it('should not display aventri event name in breadcrumb', () => {
-        cy.visit(urls.events.aventri.details(existingEventId))
-
         assertBreadcrumbs({
           Home: urls.dashboard.route,
           Events: urls.events.index(),

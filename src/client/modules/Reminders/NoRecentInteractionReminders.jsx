@@ -1,8 +1,10 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { SPACING, FONT_SIZE } from '@govuk-react/constants'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
+import styled from 'styled-components'
 import qs from 'qs'
 
 import {
@@ -19,6 +21,7 @@ import {
 } from './state'
 
 import { sortOptions, maxItemsToPaginate, itemsPerPage } from './constants'
+import { DARK_GREY } from '../../utils/colors'
 import CollectionHeader from './CollectionHeader'
 import Effect from '../../components/Effect'
 import Task from '../../components/Task'
@@ -31,6 +34,13 @@ import {
   DefaultLayout,
   RoutedPagination,
 } from '../../components'
+
+const StyledDiv = styled('div')({
+  fontSize: FONT_SIZE.SIZE_16,
+  color: DARK_GREY,
+  paddingTop: SPACING.SCALE_4,
+  paddingBottom: SPACING.SCALE_3,
+})
 
 const NoRecentInteractionReminders = ({ noRecentInteractionReminders }) => {
   const { results, count, nextPending } = noRecentInteractionReminders
@@ -55,6 +65,13 @@ const NoRecentInteractionReminders = ({ noRecentInteractionReminders }) => {
         </GridCol>
         <GridCol>
           <CollectionHeader totalItems={count} />
+          {results.length === 0 ? (
+            <StyledDiv data-test="no-reminders">
+              You have no reminders
+            </StyledDiv>
+          ) : (
+            <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
+          )}
           <Task.Status
             name={TASK_GET_NO_RECENT_INTERACTION_REMINDERS}
             id={ID}
@@ -90,10 +107,6 @@ const NoRecentInteractionReminders = ({ noRecentInteractionReminders }) => {
                               REMINDERS__NO_RECENT_INTERACTION_REMINDER_GOT_NEXT,
                           })
                         }
-                      />
-                      <CollectionSort
-                        sortOptions={sortOptions}
-                        totalPages={totalPages}
                       />
                       <CollectionList
                         results={results}

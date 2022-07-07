@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
 import styled from 'styled-components'
 import { GREY_4, WHITE, BLUE, BLACK } from 'govuk-colours'
@@ -30,17 +31,35 @@ const StyledInactiveLink = styled('a')({
   },
 })
 
-export const LocalNav = ({ children }) => <nav>{children}</nav>
+export const LocalNav = ({ children, dataTest = 'local-nav' }) => (
+  <nav data-test={dataTest}>{children}</nav>
+)
 
-export const LocalNavLink = ({ children, href, ...rest }) => (
+export const LocalNavLink = ({
+  children,
+  href,
+  dataTest = 'local-nav-link',
+  ...rest
+}) => (
   <Route>
     {({ location: { pathname } }) => {
       const NavLink = pathname === href ? StyledActiveLink : StyledInactiveLink
       return (
-        <NavLink href={href} {...rest}>
+        <NavLink href={href} data-test={dataTest} {...rest}>
           {children}
         </NavLink>
       )
     }}
   </Route>
 )
+
+LocalNav.propTypes = {
+  dataTest: PropTypes.string,
+  children: PropTypes.node,
+}
+
+LocalNavLink.propTypes = {
+  dataTest: PropTypes.string,
+  href: PropTypes.string,
+  children: PropTypes.node,
+}

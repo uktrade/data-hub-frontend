@@ -15,6 +15,7 @@ const reactRoutes = [
   '/reminders',
   '/reminders/estimated-land-date',
   '/reminders/no-recent-interaction',
+  '/reminders/outstanding-propositions',
   '/reminders/settings',
   '/reminders/settings/estimated-land-date',
   '/reminders/settings/no-recent-interaction',

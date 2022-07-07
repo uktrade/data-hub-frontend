@@ -110,7 +110,7 @@ describe('Estimated Land Date Reminders', () => {
         .eq(2)
         .find('a')
         .should('contain', 'Reminders for outstanding propositions')
-        .should('have.attr', 'href', urls.reminders.outstandingProposition())
+        .should('have.attr', 'href', urls.reminders.outstandingPropositions())
     })
 
     it('should render the list heading with the total number of reminders', () => {
@@ -150,6 +150,35 @@ describe('Estimated Land Date Reminders', () => {
       cy.get('@reminder')
         .find('[data-test="item-footer"]')
         .should('contain', `Project code ${reminders[0].project.project_code}`)
+    })
+  })
+
+  context('No reminders', () => {
+    before(() => {
+      cy.intercept(
+        {
+          method: 'GET',
+          pathname: remindersEndpoint,
+          query: { limit: '10', offset: '0', sortby: '-created_on' },
+        },
+        {
+          body: {
+            count: 0,
+            results: [],
+            next: null,
+            previous: null,
+          },
+        }
+      ).as('remindersApiRequest')
+      cy.visit(urls.reminders.estimatedLandDate())
+      cy.wait('@remindersApiRequest')
+    })
+
+    it('should include a message "You have no reminders"', () => {
+      cy.get('[data-test="no-reminders"]').should(
+        'contain',
+        'You have no reminders'
+      )
     })
   })
 

@@ -16,7 +16,7 @@ import {
   ContactInformation,
 } from '../../../../../client/components'
 import CompanyContactsResource from '../../../../../client/components/Resource/CompanyContacts'
-import { OPTION_YES, OPTION_NO, OPTIONS_YES_NO } from '../../../../constants'
+import { OPTION_NO, OPTIONS_YES_NO } from '../../../../constants'
 import Task from '../../../../../client/components/Task'
 import {
   CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID,
@@ -144,7 +144,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
       <FieldTextarea
         type="text"
         name="anonymous_description"
-        label="Anonymous project details"
+        label="Anonymous project details (optional)"
         hint="Do not include company names, financial details or addresses"
         data-test="anonymous-description"
       />
@@ -169,25 +169,18 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
         data-test="business-activities"
       />
 
-      <FieldRadios
-        name="otherBusinessActivity"
-        legend="Do you want to add another activity that is not available above?"
-        initialValue={OPTION_NO}
-        options={OPTIONS_YES_NO.map((option) => ({
-          ...option,
-          ...(option.value === OPTION_YES && {
-            children: (
-              <FieldInput
-                type="text"
-                name="other_business_activity"
-                label="Other business activity"
-                hint="Tell us more about the other business activity here"
-                required="You must enter a business activity"
-              />
-            ),
-          }),
-        }))}
-      />
+      {Object.keys(values).length &&
+        values?.business_activities?.find(
+          (element) => element.label === 'Other'
+        ) && (
+          <FieldInput
+            type="text"
+            name="other_business_activity"
+            label="Other business activity"
+            hint="Tell us more about the other business activity here"
+            required="Enter an 'Other' business activity"
+          />
+        )}
 
       <Task>
         {(getTask) => {
