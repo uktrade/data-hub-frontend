@@ -150,7 +150,7 @@ describe('Outstanding Proposition Reminders', () => {
         .should('contain', 'Due Tue, 25 Jan 2022')
       cy.get('@reminder')
         .find('[data-test="item-content"]')
-        .should('contain', `${propositions[0].investment_project.name}`)
+        .should('contain', `${propositions[0].name}`)
         .find('a')
         .should(
           'have.attr',
@@ -159,13 +159,53 @@ describe('Outstanding Proposition Reminders', () => {
             propositions[0].investment_project.id
           )
         )
-        .should('contain', propositions[0].investment_project.name)
+        .should('contain', propositions[0].name)
       cy.get('@reminder')
         .find('[data-test="item-footer"]')
         .should(
           'contain',
           `Project code ${propositions[0].investment_project.project_code}`
         )
+    })
+  })
+
+  context('No reminders', () => {
+    before(() => {
+      cy.intercept(
+        { method: 'GET', pathname: whoAmIEndpoint },
+        { body: user }
+      ).as('whoAmIApiRequest')
+      cy.intercept(
+        {
+          method: 'GET',
+          pathname: propositionsEndpoint,
+          query: {
+            adviser_id: user.id,
+            status: 'ongoing',
+            sortby: 'deadline',
+            offset: '0',
+            limit: '10',
+          },
+        },
+        {
+          body: {
+            count: 0,
+            results: [],
+            next: null,
+            previous: null,
+          },
+        }
+      ).as('noPropositionsAPIRequest')
+      cy.visit(urls.reminders.outstandingPropositions())
+      cy.wait('@whoAmIApiRequest')
+      cy.wait('@noPropositionsAPIRequest')
+    })
+
+    it('should include a message "You have no reminders"', () => {
+      cy.get('[data-test="pagination-summary"]').should(
+        'contain',
+        'You have no reminders'
+      )
     })
   })
 
