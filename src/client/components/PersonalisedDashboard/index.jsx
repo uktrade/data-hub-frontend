@@ -7,7 +7,9 @@ import { connect } from 'react-redux'
 import { BLUE } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
+import CheckUserFeatureFlag from '../CheckUserFeatureFlags'
 import { ID as INVESTMENT_REMINDERS_ID } from '../InvestmentReminders/state'
+import { ID as REMINDER_SUMMARY_ID } from '../ReminderSummary/state'
 import {
   TASK_CHECK_FOR_INVESTMENTS,
   ID as CHECK_FOR_INVESTMENTS_ID,
@@ -30,6 +32,7 @@ import blueTheme from './blue-theme'
 import InvestmentProjectSummary from '../MyInvestmentProjects/InvestmentProjectSummary'
 import {
   InvestmentReminders,
+  ReminderSummary,
   Search,
   DashboardTabs,
   CustomContainer,
@@ -53,13 +56,15 @@ const SearchContainer = styled(CustomContainer)`
 `
 
 const state2props = (state) => {
-  const { count } = state[INVESTMENT_REMINDERS_ID]
+  const { count: remindersCount } = state[INVESTMENT_REMINDERS_ID]
+  const { count: reminderSummaryCount } = state[REMINDER_SUMMARY_ID]
   const { hasInvestmentProjects } = state[CHECK_FOR_INVESTMENTS_ID]
   const { dataHubFeed } = state[DATA_HUB_FEED_ID]
   return {
     hasInvestmentProjects,
     dataHubFeed,
-    remindersCount: count,
+    remindersCount,
+    reminderSummaryCount,
   }
 }
 
@@ -68,6 +73,7 @@ const PersonalisedDashboard = ({
   adviser,
   csrfToken,
   remindersCount,
+  reminderSummaryCount,
   hasInvestmentProjects,
   dataHubFeed,
 }) => (
@@ -93,20 +99,43 @@ const PersonalisedDashboard = ({
             {hasInvestmentProjects && (
               <GridCol setWidth="one-third">
                 <Aside>
-                  <DashboardToggleSection
-                    label="Reminders"
-                    id="investment-reminders-section"
-                    badge={
-                      !!remindersCount && (
-                        <NotificationBadge label={`${remindersCount}`} />
+                  <CheckUserFeatureFlag userFeatureFlagName="reminder-summary">
+                    {(isFeatureFlagOn) =>
+                      isFeatureFlagOn ? (
+                        <DashboardToggleSection
+                          label="Reminders"
+                          id="reminder-summary-section"
+                          badge={
+                            !!reminderSummaryCount && (
+                              <NotificationBadge
+                                label={`${reminderSummaryCount}`}
+                              />
+                            )
+                          }
+                          major={true}
+                          isOpen={reminderSummaryCount > 0}
+                          data-test="reminder-summary-section"
+                        >
+                          <ReminderSummary />
+                        </DashboardToggleSection>
+                      ) : (
+                        <DashboardToggleSection
+                          label="Reminders"
+                          id="investment-reminders-section"
+                          badge={
+                            !!remindersCount && (
+                              <NotificationBadge label={`${remindersCount}`} />
+                            )
+                          }
+                          major={true}
+                          isOpen={false}
+                          data-test="investment-reminders-section"
+                        >
+                          <InvestmentReminders adviser={adviser} />
+                        </DashboardToggleSection>
                       )
                     }
-                    major={true}
-                    isOpen={false}
-                    data-test="investment-reminders-section"
-                  >
-                    <InvestmentReminders adviser={adviser} />
-                  </DashboardToggleSection>
+                  </CheckUserFeatureFlag>
 
                   <DashboardToggleSection
                     label="Investment projects summary"
@@ -155,6 +184,7 @@ PersonalisedDashboard.propTypes = {
   adviser: PropTypes.object.isRequired,
   csrfToken: PropTypes.string.isRequired,
   remindersCount: PropTypes.number.isRequired,
+  reminderSummaryCount: PropTypes.number.isRequired,
   hasInvestmentProjects: PropTypes.bool.isRequired,
   dataHubFeed: PropTypes.array.isRequired,
 }

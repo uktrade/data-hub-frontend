@@ -206,6 +206,8 @@ import { TASK_DATA_HUB_FEED } from './components/PersonalisedDashboard/state'
 
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
 import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentReminders/state'
+import { fetchReminderSummary } from './components/ReminderSummary/tasks'
+import { TASK_GET_REMINDER_SUMMARY } from './components/ReminderSummary/state'
 
 import { TASK_GET_TYPEAHEAD_OPTIONS } from './components/Typeahead/state'
 
@@ -406,6 +408,7 @@ function App() {
         [TASK_GET_MY_INVESTMENTS_LIST]:
           myInvestmentProjects.fetchMyInvestmentsList,
         [TASK_GET_OUTSTANDING_PROPOSITIONS]: fetchOutstandingPropositions,
+        [TASK_GET_REMINDER_SUMMARY]: fetchReminderSummary,
         'Large investment profiles filters':
           investmentProfilesTasks.loadFilterOptions,
         [TASK_GET_CONTACTS_LIST]: getContacts,
