@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import CardUtils from './card/CardUtils'
 import { ACTIVITY_TYPE } from '../constants'
-import { formatStartAndEndDate } from '../../../utils/date'
 import { GREY_1 } from 'govuk-colours'
 import styled from 'styled-components'
 
@@ -10,15 +9,23 @@ import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityCardLabels from './card/ActivityCardLabels'
+import { formatStartAndEndDate } from '../../../utils/date'
 
-const VIRTUAL_EVENT_ATTENDANCE_STATUS = 'Attended'
+export const AVENTRI_ATTENDEE_REG_STATUSES = {
+  Attended: 'Attended',
+  Cancelled: 'Cancelled',
+  Confirmed: 'Registered',
+  Incomplete: 'Incomplete',
+}
 
-const transformAventriAttendee = (attendee) => ({
-  eventName: attendee.eventName,
+export const transformAventriAttendee = (attendee) => ({
   attendeeName: `${attendee.object['dit:aventri:firstname']} ${attendee.object['dit:aventri:lastname']}`,
   date: formatStartAndEndDate(attendee.startDate, attendee.endDate),
-  isVirtualAttendanceConfirmed:
-    attendee.object['dit:aventri:virtual_event_attendance'] === 'Yes',
+  eventName: attendee.eventName,
+  registrationStatus:
+    AVENTRI_ATTENDEE_REG_STATUSES[
+      attendee.object['dit:aventri:registrationstatus']
+    ],
 })
 
 const StyledSpan = styled('span')`
@@ -28,7 +35,7 @@ const StyledSpan = styled('span')`
 `
 
 export default function AventriAttendee({ activity: attendee }) {
-  const { eventName, attendeeName, date, isVirtualAttendanceConfirmed } =
+  const { attendeeName, eventName, date, registrationStatus } =
     transformAventriAttendee(attendee)
 
   return eventName ? (
@@ -36,9 +43,9 @@ export default function AventriAttendee({ activity: attendee }) {
       <ActivityCardLabels service="event" kind="aventri service delivery" />
       <ActivityCardSubject>
         {eventName}
-        {isVirtualAttendanceConfirmed && (
+        {registrationStatus && (
           <StyledSpan>
-            : <span>{VIRTUAL_EVENT_ATTENDANCE_STATUS}</span>
+            : <span>{registrationStatus}</span>
           </StyledSpan>
         )}
       </ActivityCardSubject>
