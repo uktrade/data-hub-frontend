@@ -180,6 +180,7 @@ const EventsCollection = ({
           ) : (
             <>
               <CollectionSort
+                //TODO these can be replaces by SORT_OPTIONS when they eventually match
                 sortOptions={[
                   {
                     name: 'Recently updated',
@@ -188,6 +189,10 @@ const EventsCollection = ({
                   {
                     name: 'Least recently updated',
                     value: 'modified_on:asc',
+                  },
+                  {
+                    name: 'Event name A-Z',
+                    value: 'name:asc',
                   },
                 ]}
               />

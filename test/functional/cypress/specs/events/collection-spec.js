@@ -233,6 +233,9 @@ describe('Event Collection List Page - React', () => {
             'GET',
             `${events.activity.data()}?sortBy=modified_on:asc`
           ).as('leastRecentlyUpdatedRequest')
+          cy.intercept('GET', `${events.activity.data()}?sortBy=name:asc`).as(
+            'nameRequest'
+          )
           cy.visit(events.index())
         })
 
@@ -248,9 +251,16 @@ describe('Event Collection List Page - React', () => {
           cy.wait('@leastRecentlyUpdatedRequest').then((request) => {
             expect(request.response.statusCode).to.eql(200)
           })
-          cy.get('[data-test="aventri-event-name"]').contains(
-            'EITA Test Event 2022'
-          )
+          cy.get('@dataHubEvents').should('have.length', 0)
+        })
+
+        it('sorts by "name" when selected', () => {
+          const element = '[data-test="sortby"] select'
+          cy.get(element).select('name:asc')
+          cy.wait('@nameRequest').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+          cy.get('@aventriEvents').should('have.length', 0)
         })
       })
     })

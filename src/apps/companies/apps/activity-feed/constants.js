@@ -40,8 +40,24 @@ const CONTACT_ACTIVITY_SORT_SELECT_OPTIONS = [
 ]
 
 const EVENT_ACTIVITY_SORT_OPTIONS = {
-  'modified_on:asc': 'asc',
-  'modified_on:desc': 'desc',
+  'modified_on:asc': {
+    'object.updated': {
+      order: 'asc',
+      unmapped_type: 'date',
+    },
+  },
+  'modified_on:desc': {
+    'object.updated': {
+      order: 'desc',
+      unmapped_type: 'date',
+    },
+  },
+  'name:asc': {
+    'object.name.raw': {
+      order: 'asc',
+      unmapped_type: 'string',
+    },
+  },
 }
 
 const DATA_HUB_ACTIVITY = [
