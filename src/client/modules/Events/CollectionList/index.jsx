@@ -14,6 +14,7 @@ import {
   Filters,
   FilterToggleSection,
   DefaultLayout,
+  CollectionSort,
 } from '../../../components'
 import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
 
@@ -177,26 +178,41 @@ const EventsCollection = ({
               </CollectionFilters>
             </FilteredCollectionList>
           ) : (
-            <Task.Status
-              name={TASK_GET_ALL_ACTIVITY_FEED_EVENTS}
-              id={ID}
-              progressMessage="Loading events"
-              startOnRender={{
-                onSuccessDispatch: EVENTS__ALL_ACTIVITY_FEED_EVENTS_LOADED,
-              }}
-            >
-              {() => (
-                <ActivityList>
-                  {allActivityFeedEvents?.map((event, index) => {
-                    return (
-                      <li key={`event-${index}`}>
-                        <Activity activity={event} />
-                      </li>
-                    )
-                  })}
-                </ActivityList>
-              )}
-            </Task.Status>
+            <>
+              <CollectionSort
+                sortOptions={[
+                  {
+                    name: 'Recently updated',
+                    value: 'modified_on:desc',
+                  },
+                  {
+                    name: 'Least recently updated',
+                    value: 'modified_on:asc',
+                  },
+                ]}
+              />
+              <Task.Status
+                name={TASK_GET_ALL_ACTIVITY_FEED_EVENTS}
+                id={ID}
+                progressMessage="Loading events"
+                startOnRender={{
+                  payload: payload,
+                  onSuccessDispatch: EVENTS__ALL_ACTIVITY_FEED_EVENTS_LOADED,
+                }}
+              >
+                {() => (
+                  <ActivityList>
+                    {allActivityFeedEvents?.map((event, index) => {
+                      return (
+                        <li key={`event-${index}`}>
+                          <Activity activity={event} />
+                        </li>
+                      )
+                    })}
+                  </ActivityList>
+                )}
+              </Task.Status>
+            </>
           )
         }
       </CheckUserFeatureFlag>

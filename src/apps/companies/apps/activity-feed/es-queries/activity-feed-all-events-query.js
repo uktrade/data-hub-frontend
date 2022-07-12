@@ -1,4 +1,4 @@
-const activityFeedEventsQuery = () => ({
+const activityFeedEventsQuery = ({ order }) => ({
   query: {
     bool: {
       must: [
@@ -8,6 +8,12 @@ const activityFeedEventsQuery = () => ({
           },
         },
       ],
+    },
+  },
+  sort: {
+    'object.updated': {
+      order,
+      unmapped_type: 'date',
     },
   },
 })

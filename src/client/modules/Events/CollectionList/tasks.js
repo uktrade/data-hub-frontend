@@ -49,9 +49,9 @@ const getEventsMetadata = () =>
     }))
     .catch(handleError)
 
-const getAllActivityFeedEvents = () =>
+const getAllActivityFeedEvents = ({ sortby }) =>
   axios
-    .get(urls.events.activity.data())
+    .get(urls.events.activity.data(), { params: { sortBy: sortby } })
     .then(({ data }) => data)
     .catch(() => Promise.reject('Unable to load events.'))
 
