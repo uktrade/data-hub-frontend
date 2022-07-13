@@ -6,7 +6,7 @@ describe('Search', () => {
   before(() => {
     cy.visit(dashboard())
 
-    cy.get(selectors.nav.searchTerm).type('fred').type('{enter}')
+    cy.get('#search-input').type('fred').type('{enter}')
   })
 
   it('should display search navs', () => {
