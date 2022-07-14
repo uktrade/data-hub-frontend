@@ -13,6 +13,7 @@ WORKDIR /usr/src/app
 COPY --chown=$CURRENT_UID:$CURRENT_GID package.json .
 COPY --chown=$CURRENT_UID:$CURRENT_GID yarn.lock .
 COPY --chown=$CURRENT_UID:$CURRENT_GID .npmrc .
+COPY --chown=$CURRENT_UID:$CURRENT_GID .yarnrc.yml .
 
 USER "$CURRENT_UID:$CURRENT_GID"
 CMD yarn config set loglevel info
