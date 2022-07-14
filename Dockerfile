@@ -11,16 +11,16 @@ WORKDIR /usr/src/app
 
 # Install dev packages
 COPY --chown=$CURRENT_UID:$CURRENT_GID package.json .
-COPY --chown=$CURRENT_UID:$CURRENT_GID package-lock.json .
+COPY --chown=$CURRENT_UID:$CURRENT_GID yarn.lock .
 COPY --chown=$CURRENT_UID:$CURRENT_GID .npmrc .
 
 USER "$CURRENT_UID:$CURRENT_GID"
-CMD npm config set loglevel info
+CMD yarn config set loglevel info
 
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 
-RUN npm install
+RUN yarn install
 
 COPY --chown=$CURRENT_UID:$CURRENT_GID . .
 
-CMD npm run develop
+CMD yarn run develop
