@@ -10,6 +10,8 @@ import urls from '../../../lib/urls'
 import SearchButton from '../SearchButton'
 import { BLUE } from 'govuk-colours'
 
+import FlashMessages from '../LocalHeader/FlashMessages'
+
 const GREY_LEGACY_HEADER = '#dee0e2'
 const GREY_LEGACY_PLACEHOLDER_TEXT = '#505a5f'
 
@@ -40,7 +42,7 @@ const StyledHeader = styled('div')`
   padding-top: ${SPACING.SCALE_6};
 `
 
-const SearchLocalHeader = ({ csrfToken }) => (
+const SearchLocalHeader = ({ csrfToken, flashMessages }) => (
   <StyledHeader
     aria-label="local header"
     data-auto-id="localHeader"
@@ -51,6 +53,7 @@ const SearchLocalHeader = ({ csrfToken }) => (
       method="GET"
       action={`${urls.search.type('companies')}?_csrf=${csrfToken}`}
     >
+      <FlashMessages flashMessages={flashMessages} />
       <StyledMain>
         <StyledDiv>
           Search for company, contact, event, investment project or OMIS order

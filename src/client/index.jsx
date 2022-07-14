@@ -657,7 +657,12 @@ function App() {
         {(props) => <CompaniesContactsCollection {...props} />}
       </Mount>
       <Mount selector="#dashboard-local-header">
-        {(props) => <SearchLocalHeader csrfToken={props.csrfToken} />}
+        {(props) => (
+          <SearchLocalHeader
+            csrfToken={props.csrfToken}
+            flashMessage={props.flashMessage}
+          />
+        )}
       </Mount>
       <Mount selector="#company-orders-collection">
         {(props) => <CompanyOrdersCollection {...props} />}
