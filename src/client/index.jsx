@@ -659,7 +659,7 @@ function App() {
       <Mount selector="#dashboard-local-header">
         {(props) => (
           <SearchLocalHeader
-            csrfToken={props.csrfToken}
+            csrfToken={globalProps.csrfToken}
             flashMessage={props.flashMessage}
           />
         )}
