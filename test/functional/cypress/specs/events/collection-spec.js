@@ -166,11 +166,13 @@ describe('Event Collection List Page - React', () => {
           .should('have.attr', 'href', '/events/6666/details')
       })
 
-      it('should display an aventri event name', () => {
+      it('should display an aventri event name with link', () => {
         cy.get('@firstAventriEvent')
           .find('[data-test="aventri-event-name"]')
           .should('exist')
           .should('contain', 'Aventri Test Event')
+          .contains('a')
+          .should('have.attr', 'href', '/events/aventri/1113/details')
       })
 
       it('should display a data hub event date', () => {
