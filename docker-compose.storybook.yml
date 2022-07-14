@@ -13,4 +13,4 @@ services:
     ports:
       - "65200:65200"
     env_file: .env
-    command: npm run storybook -- -p 65200
+    command: yarn run storybook -- -p 65200
