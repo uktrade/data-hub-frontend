@@ -10,7 +10,8 @@
     "nodemon": "^2.0.12"
   },
   "engines": {
-    "node": "16.15.1"
+    "node": "16.15.1",
+    "yarn": "3.2.1"
   },
   "overrides": {
     "ansi-regex": "5.0.1",
