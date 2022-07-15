@@ -1,3 +1,4 @@
+import { connect } from 'react-redux'
 import axios from 'axios'
 import { get } from 'lodash'
 import React, { useState } from 'react'
@@ -8,13 +9,19 @@ import { DeleteCompanyListSection } from '../../../client/components/'
 const notFoundMessage =
   'The list was not found. It may have already been deleted.'
 
-function DeleteCompanyList({ companyList, csrfToken, returnUrl }) {
+function DeleteCompanyList({
+  companyList,
+  csrfToken,
+  returnUrl,
+  writeFlashMessage,
+}) {
   const [errorMessage, setErrorMessage] = useState(null)
   const onDelete = async () => {
     try {
       await axios.post(`/company-lists/${companyList.id}/delete`, null, {
         params: { _csrf: csrfToken },
       })
+      writeFlashMessage('List deleted')
       window.location.assign('/')
     } catch (error) {
       if (get(error, 'response.status') === 404) {
@@ -39,6 +46,16 @@ DeleteCompanyList.propTypes = {
   companyList: PropTypes.object.isRequired,
   csrfToken: PropTypes.string.isRequired,
   returnUrl: PropTypes.string.isRequired,
+  writeFlashMessage: PropTypes.func,
 }
 
-export default DeleteCompanyList
+const dispatchToProps = (dispatch) => ({
+  writeFlashMessage: (message) =>
+    dispatch({
+      type: 'FLASH_MESSAGE__WRITE_TO_SESSION',
+      messageType: 'success',
+      message,
+    }),
+})
+
+export default connect(null, dispatchToProps)(DeleteCompanyList)

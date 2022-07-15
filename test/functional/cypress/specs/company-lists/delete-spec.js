@@ -63,7 +63,7 @@ describe('Delete company list page', () => {
     })
 
     it('displays the "List deleted" flash message', () => {
-      cy.get(selectors.localHeader().flash).should(
+      cy.get(selectors.localHeader().newFlash).should(
         'contain.text',
         'List deleted'
       )

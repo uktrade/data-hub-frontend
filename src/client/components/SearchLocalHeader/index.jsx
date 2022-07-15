@@ -5,15 +5,12 @@ import { SPACING } from '@govuk-react/constants'
 import Input from '@govuk-react/input'
 import styled from 'styled-components'
 import Main from '@govuk-react/main'
-
+import { GREY_3_LEGACY, DARK_GREY } from '../../../client/utils/colors'
 import urls from '../../../lib/urls'
 import SearchButton from '../SearchButton'
 import { BLUE } from 'govuk-colours'
 
 import FlashMessages from '../LocalHeader/FlashMessages'
-
-const GREY_LEGACY_HEADER = '#dee0e2'
-const GREY_LEGACY_PLACEHOLDER_TEXT = '#505a5f'
 
 const StyledSearchContainer = styled('div')`
   position: relative;
@@ -33,12 +30,12 @@ const StyledDiv = styled('div')({
   marginTop: 2 * 20.5,
   marginBottom: 10,
   fontSize: 19,
-  color: GREY_LEGACY_PLACEHOLDER_TEXT,
+  color: DARK_GREY,
 })
 
 const StyledHeader = styled('div')`
   padding-bottom: ${SPACING.SCALE_5};
-  background-color: ${GREY_LEGACY_HEADER};
+  background-color: ${GREY_3_LEGACY};
   padding-top: ${SPACING.SCALE_6};
 `
 
