@@ -10,6 +10,7 @@ const {
 describe('Aventri event attendees', () => {
   const existingEventId = '1111'
   const errorId = '500'
+  const dataHubContactId = '26f61090-df61-446c-b846-60c8bbca522f'
   context('With the feature flag turned on', () => {
     before(() => {
       cy.setUserFeatures([EVENT_ACTIVITY_FEATURE_FLAG])
@@ -47,6 +48,33 @@ describe('Aventri event attendees', () => {
 
       it('should display an attendee', () => {
         cy.get('[data-test="aventri-attendee"]').should('exist')
+      })
+
+      context('when you click on the contact name', () => {
+        beforeEach(() => {
+          cy.visit(urls.events.aventri.attendees(existingEventId))
+        })
+        it("should navigate to the contact's detail page if they exist in Data Hub", () => {
+          cy.get('[data-test="aventri-attendee-name"] > a')
+            .eq(0)
+            .should(
+              'have.attr',
+              'href',
+              urls.contacts.details(dataHubContactId)
+            )
+        })
+
+        it("should not navigate anywhere if the contact doesn't exist in Data Hub", () => {
+          cy.get('[data-test="aventri-attendee-name"]')
+            .eq(1)
+            .should('not.have.attr', 'href')
+        })
+
+        it('should not navigate anywhere if the attendee email address field is an empty string', () => {
+          cy.get('[data-test="aventri-attendee-name"]')
+            .eq(2)
+            .should('not.have.attr', 'href')
+        })
       })
     })
 

@@ -23,11 +23,14 @@ const validateContactForm = function (formData) {
     .map((fieldName) => [fieldName, ['This field may not be null.']])
 }
 
-const matchingAventriDataHubEmail =
-  aventriContact?.hits?.hits[0]?._source.object['dit:emailAddress']
+const AventriEmailWithDataHubMatch =
+  aventriContact.hits?.hits[0]?._source.object['dit:emailAddress']
 
-const notMatchingAventriDataHubEmail =
-  aventriContact?.hits?.hits[1]?._source.object['dit:emailAddress']
+const AventriEmailWithoutDataHubMatch =
+  aventriContact.hits?.hits[1]?._source.object['dit:emailAddress']
+
+const EmptyStringAventriEmail =
+  aventriContact.hits?.hits[2]?._source.object['dit:emailAddress']
 
 exports.contact = function (req, res) {
   // This is here to allow creation of new contacts. The email must contain "new"
@@ -41,10 +44,13 @@ exports.contact = function (req, res) {
     )
     return res.json(contactsForReferral)
   }
-  if (req.query.email === matchingAventriDataHubEmail) {
+  if (req.query.email === AventriEmailWithDataHubMatch) {
     return res.json(ditContactforAventri)
   }
-  if (req.query.email === notMatchingAventriDataHubEmail) {
+  if (
+    req.query.email === AventriEmailWithoutDataHubMatch ||
+    req.query.email === EmptyStringAventriEmail
+  ) {
     return res.json(noContact)
   } else {
     res.json(contact)
