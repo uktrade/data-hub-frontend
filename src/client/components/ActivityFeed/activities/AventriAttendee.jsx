@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link as RouterLink } from 'react-router-dom'
+import Link from '@govuk-react/link'
 import CardUtils from './card/CardUtils'
 import { ACTIVITY_TYPE } from '../constants'
 import { GREY_1 } from 'govuk-colours'
@@ -26,6 +28,7 @@ export const transformAventriAttendee = (attendee) => ({
     AVENTRI_ATTENDEE_REG_STATUSES[
       attendee.object['dit:aventri:registrationstatus']
     ],
+  attendeeContactURL: attendee.attendeeContactURL,
 })
 
 const StyledSpan = styled('span')`
@@ -35,8 +38,13 @@ const StyledSpan = styled('span')`
 `
 
 export default function AventriAttendee({ activity: attendee }) {
-  const { attendeeName, eventName, date, registrationStatus } =
-    transformAventriAttendee(attendee)
+  const {
+    attendeeName,
+    eventName,
+    date,
+    registrationStatus,
+    attendeeContactURL,
+  } = transformAventriAttendee(attendee)
 
   return eventName ? (
     <ActivityCardWrapper dataTest="aventri-activity">
@@ -56,7 +64,13 @@ export default function AventriAttendee({ activity: attendee }) {
   ) : (
     <ActivityCardWrapper dataTest="aventri-attendee">
       <ActivityCardSubject dataTest="aventri-attendee-name">
-        {attendeeName}
+        {attendeeContactURL ? (
+          <Link as={RouterLink} to={attendeeContactURL}>
+            {attendeeName}
+          </Link>
+        ) : (
+          attendeeName
+        )}
       </ActivityCardSubject>
     </ActivityCardWrapper>
   )
