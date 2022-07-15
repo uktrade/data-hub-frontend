@@ -119,7 +119,7 @@ const OutstandingPropositionReminders = ({
             data-test="pagination-summary"
           >
             {results.length === 0
-              ? 'You have no reminders'
+              ? 'You have no reminders.'
               : `Page ${page || 1} of ${totalPages}`}
           </PaginationSummary>
           <Task.Status

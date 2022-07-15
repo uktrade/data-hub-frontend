@@ -86,7 +86,7 @@ const NoRecentInteractionReminders = ({ noRecentInteractionReminders }) => {
           <CollectionHeader totalItems={count} />
           {results.length === 0 ? (
             <StyledDiv data-test="no-reminders">
-              You have no reminders
+              You have no reminders.
             </StyledDiv>
           ) : (
             <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />

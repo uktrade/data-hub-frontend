@@ -178,7 +178,7 @@ describe('No Recent Interaction Reminders', () => {
     it('should include a message "You have no reminders"', () => {
       cy.get('[data-test="no-reminders"]').should(
         'contain',
-        'You have no reminders'
+        'You have no reminders.'
       )
     })
   })
