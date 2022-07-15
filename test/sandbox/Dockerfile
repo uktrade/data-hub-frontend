@@ -1,11 +1,12 @@
 FROM node:16.15.1-buster
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app/test/sandbox
 
 COPY package.json .
-COPY package-lock.json .
-RUN npm install
+COPY yarn.lock .
+RUN yarn set version 3.2.1
+RUN yarn install
 
 COPY . .
 
-CMD npx nodemon .
+CMD yarn run nodemon .
