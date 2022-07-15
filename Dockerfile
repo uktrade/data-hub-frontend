@@ -13,15 +13,15 @@ WORKDIR /usr/src/app
 COPY --chown=$CURRENT_UID:$CURRENT_GID package.json .
 COPY --chown=$CURRENT_UID:$CURRENT_GID yarn.lock .
 COPY --chown=$CURRENT_UID:$CURRENT_GID .npmrc .
-COPY --chown=$CURRENT_UID:$CURRENT_GID .yarnrc.yml .
 
 USER "$CURRENT_UID:$CURRENT_GID"
+RUN yarn set version 3.2.1
 CMD yarn config set loglevel info
 
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 
-RUN yarn install
-
 COPY --chown=$CURRENT_UID:$CURRENT_GID . .
+
+RUN yarn install
 
 CMD yarn run develop
