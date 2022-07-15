@@ -324,7 +324,10 @@ async function fetchAventriAttendees(req, res, next) {
         const attendeeIDValue = aventriIDsResult.count
           ? aventriIDsResult.results[0].id
           : null
-        attendee.dataHubID = attendeeIDValue
+        const attendeeContactURL = attendeeIDValue
+          ? `/contacts/${attendeeIDValue}/details`
+          : attendeeIDValue
+        attendee.attendeeContactURL = attendeeContactURL
         return attendee
       })
     )
