@@ -3,7 +3,7 @@ import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { Link } from 'govuk-react'
 import styled from 'styled-components'
-import { GREY_2 } from 'govuk-colours'
+import { BLACK, GREY_2 } from 'govuk-colours'
 import { H3 } from '@govuk-react/heading'
 import { FONT_SIZE, HEADING_SIZES, SPACING } from '@govuk-react/constants'
 
@@ -49,7 +49,7 @@ const ItemHeader = styled(H3)({
 })
 
 const ItemContent = styled('div')({
-  color: DARK_GREY,
+  color: ({ colour }) => colour,
   marginBottom: SPACING.SCALE_3,
 })
 
@@ -70,7 +70,7 @@ const CollectionList = ({ results, onDeleteReminder, disableDelete }) => {
                 <ItemHeader data-test="item-header">
                   Reminder deleted
                 </ItemHeader>
-                <ItemContent data-test="item-content">
+                <ItemContent colour={DARK_GREY} data-test="item-content">
                   {event} for {project.name}
                 </ItemContent>
                 <ItemFooter data-test="item-footer"></ItemFooter>
@@ -81,7 +81,7 @@ const CollectionList = ({ results, onDeleteReminder, disableDelete }) => {
                   <ItemHeader data-test="item-header">
                     Received {formatMediumDate(created_on)}
                   </ItemHeader>
-                  <ItemContent data-test="item-content">
+                  <ItemContent colour={BLACK} data-test="item-content">
                     {event} for{' '}
                     <Link
                       href={`${urls.investments.projects.details(project.id)}`}
@@ -92,7 +92,15 @@ const CollectionList = ({ results, onDeleteReminder, disableDelete }) => {
                   <ItemFooter data-test="item-footer">
                     Project code {project.project_code}
                   </ItemFooter>
+                  {/* Display only on mobile */}
+                  <DeleteButton
+                    data-test="delete-button"
+                    onClick={() => onDeleteReminder(id)}
+                  >
+                    Delete reminder
+                  </DeleteButton>
                 </GridCol>
+                {/* When only on Desktop */}
                 {onDeleteReminder && (
                   <RightCol setWidth="one-quarter">
                     {!disableDelete && (
