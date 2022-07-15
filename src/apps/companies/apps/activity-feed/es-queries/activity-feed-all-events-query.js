@@ -1,4 +1,4 @@
-const activityFeedEventsQuery = () => ({
+const activityFeedEventsQuery = ({ sort }) => ({
   query: {
     bool: {
       must: [
@@ -10,6 +10,7 @@ const activityFeedEventsQuery = () => ({
       ],
     },
   },
+  sort,
 })
 
 module.exports = activityFeedEventsQuery

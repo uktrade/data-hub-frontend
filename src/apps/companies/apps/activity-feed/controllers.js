@@ -5,6 +5,7 @@ const {
   EXTERNAL_ACTIVITY,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
   CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS,
+  EVENT_ACTIVITY_SORT_OPTIONS,
 } = require('./constants')
 
 const { getGlobalUltimateHierarchy } = require('../../repos')
@@ -325,9 +326,15 @@ async function fetchAventriAttendees(req, res, next) {
 
 async function fetchAllActivityFeedEvents(req, res, next) {
   try {
+    const { sortBy } = req.query
+
     const allActivityFeedEventsResults = await fetchActivityFeed(
       req,
-      allActivityFeedEventsQuery()
+      allActivityFeedEventsQuery({
+        sort:
+          EVENT_ACTIVITY_SORT_OPTIONS[sortBy] ||
+          EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
+      })
     )
 
     const allActivityFeedEvents = allActivityFeedEventsResults.hits.hits.map(

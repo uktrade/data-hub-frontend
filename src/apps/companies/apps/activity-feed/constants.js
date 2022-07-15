@@ -39,6 +39,27 @@ const CONTACT_ACTIVITY_SORT_SELECT_OPTIONS = [
   { name: 'Oldest', value: 'oldest' },
 ]
 
+const EVENT_ACTIVITY_SORT_OPTIONS = {
+  'modified_on:asc': {
+    'object.updated': {
+      order: 'asc',
+      unmapped_type: 'date',
+    },
+  },
+  'modified_on:desc': {
+    'object.updated': {
+      order: 'desc',
+      unmapped_type: 'date',
+    },
+  },
+  'name:asc': {
+    'object.name.raw': {
+      order: 'asc',
+      unmapped_type: 'string',
+    },
+  },
+}
+
 const DATA_HUB_ACTIVITY = [
   'dit:Interaction', // Interaction
   'dit:ServiceDelivery', // Interaction
@@ -61,6 +82,7 @@ const DATA_HUB_AND_EXTERNAL_ACTIVITY = [
 module.exports = {
   CONTACT_ACTIVITY_FEATURE_FLAG,
   EVENT_ACTIVITY_FEATURE_FLAG,
+  EVENT_ACTIVITY_SORT_OPTIONS,
   FILTER_KEYS,
   FILTER_ITEMS,
   DATA_HUB_ACTIVITY,

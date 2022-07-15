@@ -222,13 +222,58 @@ describe('Event Collection List Page - React', () => {
             .should('contain', 'Not set')
         })
       })
+
+      context('when sorting', () => {
+        beforeEach(() => {
+          cy.intercept(
+            'GET',
+            `${events.activity.data()}?sortBy=modified_on:desc`
+          ).as('recentlyUpdatedRequest')
+          cy.intercept(
+            'GET',
+            `${events.activity.data()}?sortBy=modified_on:asc`
+          ).as('leastRecentlyUpdatedRequest')
+          cy.intercept('GET', `${events.activity.data()}?sortBy=name:asc`).as(
+            'nameRequest'
+          )
+          cy.visit(events.index())
+        })
+
+        it('sorts by recently updated by default', () => {
+          cy.wait('@recentlyUpdatedRequest').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+        })
+
+        it('sorts by "least recently updated" when selected', () => {
+          const element = '[data-test="sortby"] select'
+          cy.get(element).select('modified_on:asc')
+          cy.wait('@leastRecentlyUpdatedRequest').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+          cy.get('@dataHubEvents').should('have.length', 0)
+        })
+
+        it('sorts by "name" when selected', () => {
+          const element = '[data-test="sortby"] select'
+          cy.get(element).select('name:asc')
+          cy.wait('@nameRequest').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+          cy.get('@aventriEvents').should('have.length', 0)
+        })
+      })
     })
 
     context(
       'viewing the events collection page when there is an error loading events',
       () => {
         before(() => {
-          cy.intercept('GET', urls.events.activity.data(), { statusCode: 500 })
+          cy.intercept(
+            'GET',
+            `${events.activity.data()}?sortBy=modified_on:desc`,
+            { statusCode: 500 }
+          )
           cy.visit(urls.events.index())
         })
 

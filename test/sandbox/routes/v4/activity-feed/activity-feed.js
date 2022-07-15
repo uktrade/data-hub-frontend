@@ -85,7 +85,21 @@ exports.activityFeed = function (req, res) {
     'dit:aventri:Event'
 
   if (isAllActivityStreamEvents) {
-    return res.json(allActivityFeedEvents)
+    const { sort } = req.body
+    // if the sort by is recently updated (modified_on:desc)
+    if (sort['object.updated']?.order === 'desc') {
+      return res.json(allActivityFeedEvents)
+    }
+
+    //if the story by is LEAST recently updated (modified_on:asc)
+    if (sort['object.updated']?.order === 'asc') {
+      return res.json(aventriEvents)
+    }
+
+    //if sorting by name
+    if (sort['object.name.raw']) {
+      return res.json(dataHubEvents)
+    }
   }
 
   var isAventriEventQuery =
