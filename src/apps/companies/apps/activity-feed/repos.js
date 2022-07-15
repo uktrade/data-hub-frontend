@@ -8,6 +8,15 @@ function fetchActivityFeed(req, body) {
   })
 }
 
+function fetchAventriAttendeeIDs(req, aventriAttendee) {
+  const attendeeEmail = aventriAttendee.object['dit:aventri:email']
+  return authorisedRequest(req, {
+    method: 'GET',
+    url: `${config.apiRoot}/v3/contact?email=${attendeeEmail}`,
+  })
+}
+
 module.exports = {
   fetchActivityFeed,
+  fetchAventriAttendeeIDs,
 }
