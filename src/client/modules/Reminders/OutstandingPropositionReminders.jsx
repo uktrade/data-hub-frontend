@@ -1,7 +1,12 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { SPACING, FONT_SIZE, HEADING_SIZES } from '@govuk-react/constants'
+import {
+  SPACING,
+  FONT_SIZE,
+  HEADING_SIZES,
+  MEDIA_QUERIES,
+} from '@govuk-react/constants'
 import { Link } from 'govuk-react'
 import { GREY_2 } from 'govuk-colours'
 import GridRow from '@govuk-react/grid-row'
@@ -63,6 +68,27 @@ const PaginationSummary = styled('div')({
     hasReminders ? `solid 1px ${GREY_2}` : 'none',
 })
 
+const Container = styled('div')({
+  [MEDIA_QUERIES.DESKTOP]: {
+    display: 'flex',
+  },
+})
+
+const MenuContainer = styled('div')({
+  width: '100%',
+  [MEDIA_QUERIES.DESKTOP]: {
+    width: 'calc(33% - 20px)',
+    padding: 10,
+  },
+})
+
+const ListContainer = styled('div')({
+  width: '100%',
+  [MEDIA_QUERIES.DESKTOP]: {
+    width: '67%',
+  },
+})
+
 const OutstandingPropositionReminders = ({
   outstandingPropositionsReminders,
 }) => {
@@ -82,11 +108,11 @@ const OutstandingPropositionReminders = ({
       heading={<Heading preHeading="Reminders for">{subject}</Heading>}
       breadcrumbs={[{ link: urls.dashboard(), text: 'Home' }, { text: title }]}
     >
-      <GridRow>
-        <GridCol setWidth="one-third">
+      <Container>
+        <MenuContainer>
           <RemindersMenu />
-        </GridCol>
-        <GridCol>
+        </MenuContainer>
+        <ListContainer>
           <CollectionHeader settings={false} totalItems={count} />
           <PaginationSummary
             hasReminders={results.length > 0}
@@ -135,8 +161,8 @@ const OutstandingPropositionReminders = ({
               </>
             )}
           </Task.Status>
-        </GridCol>
-      </GridRow>
+        </ListContainer>
+      </Container>
     </DefaultLayout>
   )
 }

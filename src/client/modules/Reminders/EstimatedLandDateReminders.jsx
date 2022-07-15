@@ -1,9 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { SPACING, FONT_SIZE } from '@govuk-react/constants'
-import GridRow from '@govuk-react/grid-row'
-import GridCol from '@govuk-react/grid-col'
+import { SPACING, FONT_SIZE, MEDIA_QUERIES } from '@govuk-react/constants'
 import styled from 'styled-components'
 import qs from 'qs'
 
@@ -42,6 +40,27 @@ const StyledDiv = styled('div')({
   paddingBottom: SPACING.SCALE_3,
 })
 
+const Container = styled('div')({
+  [MEDIA_QUERIES.DESKTOP]: {
+    display: 'flex',
+  },
+})
+
+const MenuContainer = styled('div')({
+  width: '100%',
+  [MEDIA_QUERIES.DESKTOP]: {
+    width: 'calc(33% - 20px)',
+    padding: 10,
+  },
+})
+
+const ListContainer = styled('div')({
+  width: '100%',
+  [MEDIA_QUERIES.DESKTOP]: {
+    width: '67%',
+  },
+})
+
 const EstimatedLandDateReminders = ({ estimatedLandDateReminders }) => {
   const { results, count, nextPending } = estimatedLandDateReminders
   const location = useLocation()
@@ -59,11 +78,11 @@ const EstimatedLandDateReminders = ({ estimatedLandDateReminders }) => {
       heading={<Heading preHeading="Reminders for">{subject}</Heading>}
       breadcrumbs={[{ link: urls.dashboard(), text: 'Home' }, { text: title }]}
     >
-      <GridRow>
-        <GridCol setWidth="one-third">
+      <Container>
+        <MenuContainer>
           <RemindersMenu />
-        </GridCol>
-        <GridCol>
+        </MenuContainer>
+        <ListContainer>
           <CollectionHeader totalItems={count} />
           {results.length === 0 ? (
             <StyledDiv data-test="no-reminders">
@@ -123,8 +142,8 @@ const EstimatedLandDateReminders = ({ estimatedLandDateReminders }) => {
               </Task>
             )}
           </Task.Status>
-        </GridCol>
-      </GridRow>
+        </ListContainer>
+      </Container>
     </DefaultLayout>
   )
 }
