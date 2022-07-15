@@ -91,7 +91,7 @@ ifdef CI
 	$(docker-base) build frontend
 	$(docker-base) run --rm frontend bash -c '$(wait-for-redis) && npx nyc --reporter=lcov --reporter=json --report-dir=coverage npm run test:unit -- --reporter mocha-junit-reporter'
 else
-	$(docker-base) run --rm frontend bash -c '$(wait-for-redis) && npm run test:unit'
+	$(docker-base) run --rm frontend bash -c '$(wait-for-redis) && yarn run test:unit'
 endif
 
 unit-client-tests:

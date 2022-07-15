@@ -1,6 +1,9 @@
 {
   "name": "data-hub-sandbox",
   "main": "server.js",
+  "scripts": {
+    "nodemon": "yarn set version 3.2.1 && yarn run nodemon ."
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "date-fns": "^2.19.0",
