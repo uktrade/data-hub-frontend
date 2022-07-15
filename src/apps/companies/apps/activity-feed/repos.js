@@ -8,8 +8,9 @@ function fetchActivityFeed(req, body) {
   })
 }
 
-function fetchAventriAttendeeIDs(req, aventriAttendee) {
-  const attendeeEmail = aventriAttendee.object['dit:aventri:email']
+// istanbul ignore next: Covered by functional tests
+function fetchMatchingDataHubContact(req, attendeeEmail) {
+  // istanbul ignore next: Covered by functional tests
   return authorisedRequest(req, {
     method: 'GET',
     url: `${config.apiRoot}/v3/contact?email=${attendeeEmail}`,
@@ -18,5 +19,5 @@ function fetchAventriAttendeeIDs(req, aventriAttendee) {
 
 module.exports = {
   fetchActivityFeed,
-  fetchAventriAttendeeIDs,
+  fetchMatchingDataHubContact,
 }
