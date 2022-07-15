@@ -1,6 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { Link } from 'govuk-react'
 import { SPACING, FONT_SIZE, MEDIA_QUERIES } from '@govuk-react/constants'
 import styled from 'styled-components'
 import qs from 'qs'
@@ -61,6 +62,18 @@ const ListContainer = styled('div')({
   },
 })
 
+const SettingsLink = styled(Link)({
+  display: 'block',
+  marginTop: 30,
+  marginBottom: 15,
+  [MEDIA_QUERIES.TABLET]: {
+    display: 'none',
+  },
+  [MEDIA_QUERIES.DESKTOP]: {
+    display: 'none',
+  },
+})
+
 const EstimatedLandDateReminders = ({ estimatedLandDateReminders }) => {
   const { results, count, nextPending } = estimatedLandDateReminders
   const location = useLocation()
@@ -81,6 +94,12 @@ const EstimatedLandDateReminders = ({ estimatedLandDateReminders }) => {
       <Container>
         <MenuContainer>
           <RemindersMenu />
+          <SettingsLink
+            data-test="reminders-settings-link"
+            href="/reminders/settings"
+          >
+            Reminders settings
+          </SettingsLink>
         </MenuContainer>
         <ListContainer>
           <CollectionHeader totalItems={count} />
