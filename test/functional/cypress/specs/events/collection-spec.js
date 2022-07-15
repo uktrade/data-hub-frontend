@@ -161,8 +161,8 @@ describe('Event Collection List Page - React', () => {
         cy.get('@firstDataHubEvent')
           .find('[data-test="data-hub-event-name"]')
           .should('exist')
-          .should('contain', 'Holiday to the Seaside')
-          .contains('a')
+          .contains('a', 'Holiday to the Seaside')
+          .should('be.visible')
           .should('have.attr', 'href', '/events/6666/details')
       })
 
@@ -170,8 +170,8 @@ describe('Event Collection List Page - React', () => {
         cy.get('@firstAventriEvent')
           .find('[data-test="aventri-event-name"]')
           .should('exist')
-          .should('contain', 'Aventri Test Event')
-          .contains('a')
+          .contains('a', 'Aventri Test Event')
+          .should('be.visible')
           .should('have.attr', 'href', '/events/aventri/1113/details')
       })
 
