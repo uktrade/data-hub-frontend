@@ -10,7 +10,7 @@ const {
 
 const { getGlobalUltimateHierarchy } = require('../../repos')
 const urls = require('../../../../lib/urls')
-const { fetchActivityFeed } = require('./repos')
+const { fetchActivityFeed, fetchAventriAttendeeIDs } = require('./repos')
 const config = require('../../../../config')
 
 const {
@@ -302,7 +302,7 @@ async function fetchAventriAttendees(req, res, next) {
       aventriAttendeeQuery(aventriEventId)
     )
 
-    const aventriAttendees = aventriAttendeeResults.hits.hits.map(
+    let aventriAttendees = aventriAttendeeResults.hits.hits.map(
       (hit) => hit._source
     )
 
@@ -313,7 +313,21 @@ async function fetchAventriAttendees(req, res, next) {
       req,
       aventriEventQuery([formattedAventriEventId])
     )
+
     const aventriEventData = aventriEventResults.hits.hits[0]._source
+
+    // add the datahub ID to aventri attendees
+
+    aventriAttendees = await Promise.all(
+      aventriAttendees.map(async (attendee) => {
+        const aventriIDsResult = await fetchAventriAttendeeIDs(req, attendee)
+        const attendeeIDValue = aventriIDsResult.count
+          ? aventriIDsResult.results[0].id
+          : null
+        attendee.dataHubID = attendeeIDValue
+        return attendee
+      })
+    )
 
     res.json({
       aventriEventData,
