@@ -2,6 +2,7 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Link } from 'govuk-react'
+import { BLACK } from 'govuk-colours'
 import { SPACING, FONT_SIZE, MEDIA_QUERIES } from '@govuk-react/constants'
 import styled from 'styled-components'
 import qs from 'qs'
@@ -20,7 +21,6 @@ import {
 } from './state'
 
 import { sortOptions, maxItemsToPaginate, itemsPerPage } from './constants'
-import { DARK_GREY } from '../../utils/colors'
 import CollectionHeader from './CollectionHeader'
 import Effect from '../../components/Effect'
 import Task from '../../components/Task'
@@ -33,13 +33,6 @@ import {
   DefaultLayout,
   RoutedPagination,
 } from '../../components'
-
-const StyledDiv = styled('div')({
-  fontSize: FONT_SIZE.SIZE_16,
-  color: DARK_GREY,
-  paddingTop: SPACING.SCALE_4,
-  paddingBottom: SPACING.SCALE_3,
-})
 
 const Container = styled('div')({
   [MEDIA_QUERIES.DESKTOP]: {
@@ -74,6 +67,12 @@ const SettingsLink = styled(Link)({
   },
 })
 
+const Summary = styled('p')({
+  color: BLACK,
+  paddingTop: SPACING.SCALE_2,
+  fontSize: FONT_SIZE.SIZE_19,
+})
+
 const NoRecentInteractionReminders = ({ noRecentInteractionReminders }) => {
   const { results, count, nextPending } = noRecentInteractionReminders
   const location = useLocation()
@@ -104,9 +103,7 @@ const NoRecentInteractionReminders = ({ noRecentInteractionReminders }) => {
         <ListContainer>
           <CollectionHeader totalItems={count} />
           {results.length === 0 ? (
-            <StyledDiv data-test="no-reminders">
-              You have no reminders.
-            </StyledDiv>
+            <Summary data-test="no-reminders">You have no reminders.</Summary>
           ) : (
             <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
           )}

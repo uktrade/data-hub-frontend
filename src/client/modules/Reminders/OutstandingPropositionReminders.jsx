@@ -8,7 +8,7 @@ import {
   MEDIA_QUERIES,
 } from '@govuk-react/constants'
 import { Link } from 'govuk-react'
-import { GREY_2 } from 'govuk-colours'
+import { BLACK, GREY_1, GREY_2 } from 'govuk-colours'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import styled from 'styled-components'
@@ -59,13 +59,17 @@ const ListItemFooter = styled('div')({
   marginBottom: SPACING.SCALE_4,
 })
 
-const PaginationSummary = styled('div')({
+const Summary = styled('p')({
+  color: BLACK,
+  paddingTop: SPACING.SCALE_2,
+  fontSize: FONT_SIZE.SIZE_19,
+})
+
+const PaginationSummary = styled(Summary)({
+  color: GREY_1,
   fontSize: FONT_SIZE.SIZE_16,
-  color: DARK_GREY,
-  paddingTop: SPACING.SCALE_4,
   paddingBottom: SPACING.SCALE_3,
-  borderBottom: ({ hasReminders }) =>
-    hasReminders ? `solid 1px ${GREY_2}` : 'none',
+  borderBottom: `solid 1px ${GREY_2}`,
 })
 
 const Container = styled('div')({
@@ -114,14 +118,13 @@ const OutstandingPropositionReminders = ({
         </MenuContainer>
         <ListContainer>
           <CollectionHeader settings={false} totalItems={count} />
-          <PaginationSummary
-            hasReminders={results.length > 0}
-            data-test="pagination-summary"
-          >
-            {results.length === 0
-              ? 'You have no reminders.'
-              : `Page ${page || 1} of ${totalPages}`}
-          </PaginationSummary>
+          {results.length === 0 ? (
+            <Summary data-test="no-reminders">You have no reminders.</Summary>
+          ) : (
+            <PaginationSummary data-test="pagination-summary">
+              {`Page ${page || 1} of ${totalPages}`}
+            </PaginationSummary>
+          )}
           <Task.Status
             name={TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS}
             id={ID}
