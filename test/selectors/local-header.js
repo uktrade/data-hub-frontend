@@ -13,5 +13,6 @@ module.exports = () => {
     viewFullBusinessDetailsLink: (companyId) =>
       `${localHeaderSelector} [href="/companies/${companyId}/business-details"]`,
     flash: '.c-message',
+    newFlash: '[data-test="flash"]',
   }
 }

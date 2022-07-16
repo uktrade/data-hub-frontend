@@ -31,11 +31,11 @@ describe('Layout', () => {
 
   describe('Search', () => {
     it('should display search form', () => {
-      cy.get('input[type="search"]')
+      cy.get('#search-input')
         .should('have.attr', 'placeholder', 'Enter your search term(s)')
         .next()
         .should('match', 'button')
-        .and('have.text', 'Search')
+        .and('have.text', 'Submit Search')
     })
   })
 

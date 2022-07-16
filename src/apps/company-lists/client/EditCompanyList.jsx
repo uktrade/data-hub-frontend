@@ -10,6 +10,7 @@ const EditCompanyList = ({ cancelUrl, listName, csrfToken, id, returnUrl }) => (
     id="edit-company-list"
     analyticsFormName="editCompanyList"
     submissionTaskName="Edit company list"
+    flashMessage={() => 'List updated'}
     initialValues={{ listName }}
     cancelRedirectTo={() => cancelUrl}
     transformPayload={(values) => ({ ...values, id, csrfToken })}

@@ -17,7 +17,7 @@ describe('home page', () => {
   })
 
   it('search bar', () => {
-    cy.get('.govuk-grid-column-full')
+    cy.get('#dashboard-local-header')
       .first()
       .compareSnapshot('homePageSearchBar')
   })

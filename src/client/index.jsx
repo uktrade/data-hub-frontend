@@ -4,6 +4,7 @@ import * as Sentry from '@sentry/browser'
 import { Redirect, Switch } from 'react-router-dom'
 
 import './components'
+import { SearchLocalHeader } from './components'
 import Provider from './provider'
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
 import InteractionDetailsForm from '../apps/interactions/apps/details-form/client/InteractionDetailsForm'
@@ -654,6 +655,14 @@ function App() {
       </Mount>
       <Mount selector="#company-contacts-collection">
         {(props) => <CompaniesContactsCollection {...props} />}
+      </Mount>
+      <Mount selector="#dashboard-local-header">
+        {(props) => (
+          <SearchLocalHeader
+            csrfToken={globalProps.csrfToken}
+            flashMessage={props.flashMessage}
+          />
+        )}
       </Mount>
       <Mount selector="#company-orders-collection">
         {(props) => <CompanyOrdersCollection {...props} />}

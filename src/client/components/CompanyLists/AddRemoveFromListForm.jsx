@@ -28,6 +28,7 @@ const AddRemoveFromListForm = ({
       submissionTaskName="Add or remove from list"
       initialValues={initState}
       transformPayload={(list) => ({ list, token, companyId })}
+      flashMessage={() => 'Lists changes for this company have been saved.'}
       redirectTo={() => cancelLinkUrl}
       cancelRedirectTo={() => cancelLinkUrl}
     >
