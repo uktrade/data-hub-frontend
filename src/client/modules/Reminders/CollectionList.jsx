@@ -5,16 +5,19 @@ import { Link } from 'govuk-react'
 import styled from 'styled-components'
 import { BLACK, GREY_2 } from 'govuk-colours'
 import { H3 } from '@govuk-react/heading'
-import { FONT_SIZE, HEADING_SIZES, SPACING } from '@govuk-react/constants'
+import {
+  SPACING,
+  FONT_SIZE,
+  HEADING_SIZES,
+  MEDIA_QUERIES,
+} from '@govuk-react/constants'
 
 import { formatMediumDate } from '../../utils/date'
 import { DARK_GREY } from '../../utils/colors'
 import urls from '../../../lib/urls'
 
-const DeleteButton = styled('button')({
-  display: 'inline',
+const Button = styled('button')({
   padding: 0,
-  margin: `${SPACING.SCALE_3} 0`,
   background: 'transparent',
   border: 'none',
   fontSize: FONT_SIZE.SIZE_16,
@@ -24,8 +27,28 @@ const DeleteButton = styled('button')({
   textDecoration: 'underline',
 })
 
+const DeleteButton = styled(Button)({
+  display: ({ isMobile }) => (isMobile ? 'inline' : 'none'),
+  marginBottom: SPACING.SCALE_4,
+  [MEDIA_QUERIES.TABLET]: {
+    display: ({ isMobile }) => (isMobile ? 'none' : 'inline'),
+    margin: `${SPACING.SCALE_3} 0`,
+  },
+  [MEDIA_QUERIES.DESKTOP]: {
+    display: ({ isMobile }) => (isMobile ? 'none' : 'inline'),
+    margin: `${SPACING.SCALE_3} 0`,
+  },
+})
+
 const RightCol = styled(GridCol)({
+  display: 'none',
   textAlign: 'right',
+  [MEDIA_QUERIES.TABLET]: {
+    display: 'block',
+  },
+  [MEDIA_QUERIES.DESKTOP]: {
+    display: 'block',
+  },
 })
 
 const List = styled('ol')({
@@ -92,15 +115,18 @@ const CollectionList = ({ results, onDeleteReminder, disableDelete }) => {
                   <ItemFooter data-test="item-footer">
                     Project code {project.project_code}
                   </ItemFooter>
-                  {/* Display only on mobile */}
-                  <DeleteButton
-                    data-test="delete-button"
-                    onClick={() => onDeleteReminder(id)}
-                  >
-                    Delete reminder
-                  </DeleteButton>
+                  {/* Display on mobile only */}
+                  {onDeleteReminder && !disableDelete && (
+                    <DeleteButton
+                      isMobile={true}
+                      data-test="delete-button"
+                      onClick={() => onDeleteReminder(id)}
+                    >
+                      Delete reminder
+                    </DeleteButton>
+                  )}
                 </GridCol>
-                {/* When only on Desktop */}
+                {/* Display on Tablet and Desktop only */}
                 {onDeleteReminder && (
                   <RightCol setWidth="one-quarter">
                     {!disableDelete && (
