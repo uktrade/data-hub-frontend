@@ -93,6 +93,16 @@ const ListContainer = styled('div')({
   },
 })
 
+const HomeLink = styled(Link)({
+  display: 'block',
+  marginTop: SPACING.SCALE_4,
+  marginBottom: SPACING.SCALE_4,
+  [MEDIA_QUERIES.DESKTOP]: {
+    marginLeft: 25,
+    marginBottom: 25,
+  },
+})
+
 const OutstandingPropositionReminders = ({
   outstandingPropositionsReminders,
 }) => {
@@ -166,6 +176,9 @@ const OutstandingPropositionReminders = ({
           </Task.Status>
         </ListContainer>
       </Container>
+      <HomeLink data-test="home-link" href={urls.dashboard()}>
+        Home
+      </HomeLink>
     </DefaultLayout>
   )
 }

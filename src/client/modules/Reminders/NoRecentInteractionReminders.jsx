@@ -73,6 +73,16 @@ const Summary = styled('p')({
   fontSize: FONT_SIZE.SIZE_19,
 })
 
+const HomeLink = styled(Link)({
+  display: 'block',
+  marginTop: SPACING.SCALE_4,
+  marginBottom: SPACING.SCALE_4,
+  [MEDIA_QUERIES.DESKTOP]: {
+    marginLeft: 25,
+    marginBottom: 25,
+  },
+})
+
 const NoRecentInteractionReminders = ({ noRecentInteractionReminders }) => {
   const { results, count, nextPending } = noRecentInteractionReminders
   const location = useLocation()
@@ -163,6 +173,9 @@ const NoRecentInteractionReminders = ({ noRecentInteractionReminders }) => {
           </Task.Status>
         </ListContainer>
       </Container>
+      <HomeLink data-test="home-link" href={urls.dashboard()}>
+        Home
+      </HomeLink>
     </DefaultLayout>
   )
 }

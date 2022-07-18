@@ -74,6 +74,16 @@ const Summary = styled('p')({
   fontSize: FONT_SIZE.SIZE_19,
 })
 
+const HomeLink = styled(Link)({
+  display: 'block',
+  marginTop: SPACING.SCALE_4,
+  marginBottom: SPACING.SCALE_4,
+  [MEDIA_QUERIES.DESKTOP]: {
+    marginLeft: 25,
+    marginBottom: 25,
+  },
+})
+
 const EstimatedLandDateReminders = ({ estimatedLandDateReminders }) => {
   const { results, count, nextPending } = estimatedLandDateReminders
   const location = useLocation()
@@ -161,6 +171,9 @@ const EstimatedLandDateReminders = ({ estimatedLandDateReminders }) => {
           </Task.Status>
         </ListContainer>
       </Container>
+      <HomeLink data-test="home-link" href={urls.dashboard()}>
+        Home
+      </HomeLink>
     </DefaultLayout>
   )
 }
