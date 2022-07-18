@@ -100,82 +100,90 @@ const NoRecentInteractionReminders = ({ noRecentInteractionReminders }) => {
       heading={<Heading preHeading="Reminders for">{subject}</Heading>}
       breadcrumbs={[{ link: urls.dashboard(), text: 'Home' }, { text: title }]}
     >
-      <Container>
-        <MenuContainer>
-          <RemindersMenu />
-          <SettingsLink
-            data-test="reminders-settings-link"
-            href="/reminders/settings"
-          >
-            Reminders settings
-          </SettingsLink>
-        </MenuContainer>
-        <ListContainer>
-          <CollectionHeader totalItems={count} />
-          {results.length === 0 ? (
-            <Summary data-test="no-reminders">You have no reminders.</Summary>
-          ) : (
-            <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
-          )}
-          <Task.Status
-            name={TASK_GET_NO_RECENT_INTERACTION_REMINDERS}
-            id={ID}
-            startOnRender={{
-              payload: { page, sortby: qsParams.sortby },
-              onSuccessDispatch:
-                REMINDERS__NO_RECENT_INTERACTION_REMINDERS_LOADED,
-            }}
-          >
-            {() => (
-              <Task>
-                {(getTask) => {
-                  const deleteTask = getTask(
-                    TASK_DELETE_NO_RECENT_INTERACTION_REMINDER,
-                    ID
-                  )
-                  const getNextTask = getTask(
-                    TASK_GET_NEXT_NO_RECENT_INTERACTION_REMINDER,
-                    ID
-                  )
-                  return (
-                    <>
-                      <Effect
-                        dependencyList={[nextPending]}
-                        effect={() =>
-                          nextPending &&
-                          getNextTask.start({
-                            payload: {
-                              page,
-                              sortby: qsParams.sortby,
-                            },
-                            onSuccessDispatch:
-                              REMINDERS__NO_RECENT_INTERACTION_REMINDER_GOT_NEXT,
-                          })
-                        }
-                      />
-                      <CollectionList
-                        results={results}
-                        disableDelete={deleteTask.status || nextPending}
-                        onDeleteReminder={(reminderId) => {
-                          deleteTask.start({
-                            payload: { id: reminderId },
-                            onSuccessDispatch:
-                              REMINDERS__NO_RECENT_INTERACTION_REMINDER_DELETED,
-                          })
-                        }}
-                      />
-                      <RoutedPagination initialPage={page} items={count || 0} />
-                    </>
-                  )
-                }}
-              </Task>
+      <>
+        <Container>
+          <MenuContainer>
+            <RemindersMenu />
+            <SettingsLink
+              data-test="reminders-settings-link"
+              href="/reminders/settings"
+            >
+              Reminders settings
+            </SettingsLink>
+          </MenuContainer>
+          <ListContainer>
+            <CollectionHeader totalItems={count} />
+            {results.length === 0 ? (
+              <Summary data-test="no-reminders">You have no reminders.</Summary>
+            ) : (
+              <CollectionSort
+                sortOptions={sortOptions}
+                totalPages={totalPages}
+              />
             )}
-          </Task.Status>
-        </ListContainer>
-      </Container>
-      <HomeLink data-test="home-link" href={urls.dashboard()}>
-        Home
-      </HomeLink>
+            <Task.Status
+              name={TASK_GET_NO_RECENT_INTERACTION_REMINDERS}
+              id={ID}
+              startOnRender={{
+                payload: { page, sortby: qsParams.sortby },
+                onSuccessDispatch:
+                  REMINDERS__NO_RECENT_INTERACTION_REMINDERS_LOADED,
+              }}
+            >
+              {() => (
+                <Task>
+                  {(getTask) => {
+                    const deleteTask = getTask(
+                      TASK_DELETE_NO_RECENT_INTERACTION_REMINDER,
+                      ID
+                    )
+                    const getNextTask = getTask(
+                      TASK_GET_NEXT_NO_RECENT_INTERACTION_REMINDER,
+                      ID
+                    )
+                    return (
+                      <>
+                        <Effect
+                          dependencyList={[nextPending]}
+                          effect={() =>
+                            nextPending &&
+                            getNextTask.start({
+                              payload: {
+                                page,
+                                sortby: qsParams.sortby,
+                              },
+                              onSuccessDispatch:
+                                REMINDERS__NO_RECENT_INTERACTION_REMINDER_GOT_NEXT,
+                            })
+                          }
+                        />
+                        <CollectionList
+                          results={results}
+                          disableDelete={deleteTask.status || nextPending}
+                          onDeleteReminder={(reminderId) => {
+                            deleteTask.start({
+                              payload: { id: reminderId },
+                              onSuccessDispatch:
+                                REMINDERS__NO_RECENT_INTERACTION_REMINDER_DELETED,
+                            })
+                          }}
+                        />
+                        <RoutedPagination
+                          initialPage={page}
+                          items={count || 0}
+                        />
+                      </>
+                    )
+                  }}
+                </Task>
+              )}
+            </Task.Status>
+          </ListContainer>
+        </Container>
+        <HomeLink data-test="home-link" href={urls.dashboard()}>
+          Home
+        </HomeLink>
+      </>
     </DefaultLayout>
   )
 }

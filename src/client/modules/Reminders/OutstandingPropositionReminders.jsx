@@ -122,63 +122,67 @@ const OutstandingPropositionReminders = ({
       heading={<Heading preHeading="Reminders for">{subject}</Heading>}
       breadcrumbs={[{ link: urls.dashboard(), text: 'Home' }, { text: title }]}
     >
-      <Container>
-        <MenuContainer>
-          <RemindersMenu />
-        </MenuContainer>
-        <ListContainer>
-          <CollectionHeader settings={false} totalItems={count} />
-          {results.length === 0 ? (
-            <Summary data-test="no-reminders">You have no reminders.</Summary>
-          ) : (
-            <PaginationSummary data-test="pagination-summary">
-              {`Page ${page || 1} of ${totalPages}`}
-            </PaginationSummary>
-          )}
-          <Task.Status
-            name={TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS}
-            id={ID}
-            startOnRender={{
-              payload: { page, sortby: qsParams.sortby },
-              onSuccessDispatch: REMINDERS__OUTSTANDING_PROPOSITIONS_LOADED,
-            }}
-          >
-            {() => (
-              <>
-                <List data-test="reminders-list">
-                  {results.map(({ id, name, deadline, investment_project }) => (
-                    <ListItem key={id} data-test="reminders-list-item">
-                      <GridRow>
-                        <GridCol>
-                          <ListItemHeader data-test="item-header">
-                            Due {format(deadline, DATE_DAY_LONG_FORMAT)}
-                          </ListItemHeader>
-                          <ListItemContent data-test="item-content">
-                            <Link
-                              href={`${urls.investments.projects.propositions(
-                                investment_project.id
-                              )}`}
-                            >
-                              {name}
-                            </Link>
-                          </ListItemContent>
-                          <ListItemFooter data-test="item-footer">
-                            Project code {investment_project.project_code}
-                          </ListItemFooter>
-                        </GridCol>
-                      </GridRow>
-                    </ListItem>
-                  ))}
-                </List>
-                <RoutedPagination initialPage={page} items={count || 0} />
-              </>
+      <>
+        <Container>
+          <MenuContainer>
+            <RemindersMenu />
+          </MenuContainer>
+          <ListContainer>
+            <CollectionHeader settings={false} totalItems={count} />
+            {results.length === 0 ? (
+              <Summary data-test="no-reminders">You have no reminders.</Summary>
+            ) : (
+              <PaginationSummary data-test="pagination-summary">
+                {`Page ${page || 1} of ${totalPages}`}
+              </PaginationSummary>
             )}
-          </Task.Status>
-        </ListContainer>
-      </Container>
-      <HomeLink data-test="home-link" href={urls.dashboard()}>
-        Home
-      </HomeLink>
+            <Task.Status
+              name={TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS}
+              id={ID}
+              startOnRender={{
+                payload: { page, sortby: qsParams.sortby },
+                onSuccessDispatch: REMINDERS__OUTSTANDING_PROPOSITIONS_LOADED,
+              }}
+            >
+              {() => (
+                <>
+                  <List data-test="reminders-list">
+                    {results.map(
+                      ({ id, name, deadline, investment_project }) => (
+                        <ListItem key={id} data-test="reminders-list-item">
+                          <GridRow>
+                            <GridCol>
+                              <ListItemHeader data-test="item-header">
+                                Due {format(deadline, DATE_DAY_LONG_FORMAT)}
+                              </ListItemHeader>
+                              <ListItemContent data-test="item-content">
+                                <Link
+                                  href={`${urls.investments.projects.propositions(
+                                    investment_project.id
+                                  )}`}
+                                >
+                                  {name}
+                                </Link>
+                              </ListItemContent>
+                              <ListItemFooter data-test="item-footer">
+                                Project code {investment_project.project_code}
+                              </ListItemFooter>
+                            </GridCol>
+                          </GridRow>
+                        </ListItem>
+                      )
+                    )}
+                  </List>
+                  <RoutedPagination initialPage={page} items={count || 0} />
+                </>
+              )}
+            </Task.Status>
+          </ListContainer>
+        </Container>
+        <HomeLink data-test="home-link" href={urls.dashboard()}>
+          Home
+        </HomeLink>
+      </>
     </DefaultLayout>
   )
 }
