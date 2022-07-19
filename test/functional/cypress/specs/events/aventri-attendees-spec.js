@@ -68,12 +68,12 @@ describe('Aventri event attendees', () => {
     })
   })
 
-  context('With the feature flag turned off', () => {
-    before(() => {
-      cy.visit(urls.events.aventri.attendees(existingEventId))
-    })
-    it('should not display an aventri attendee', () => {
-      cy.get('[data-test="aventri-attendee"]').should('not.exist')
-    })
-  })
+  // context('With the feature flag turned off', () => {
+  //   before(() => {
+  //     cy.visit(urls.events.aventri.attendees(existingEventId))
+  //   })
+  //   it('should not display an aventri attendee', () => {
+  //     cy.get('[data-test="aventri-attendee"]').should('not.exist')
+  //   })
+  // })
 })
