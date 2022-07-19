@@ -196,6 +196,16 @@ const EventsCollection = ({
                   },
                 ]}
               />
+              <CollectionFilters>
+                <Filters.Input
+                  id="EventsCollection.name"
+                  qsParam="name"
+                  name="name"
+                  label={LABELS.eventName}
+                  placeholder="Search event name"
+                  data-test="event-name-filter"
+                />
+              </CollectionFilters>
               <Task.Status
                 name={TASK_GET_ALL_ACTIVITY_FEED_EVENTS}
                 id={ID}

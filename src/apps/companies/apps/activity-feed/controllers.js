@@ -356,7 +356,7 @@ async function fetchAventriAttendees(req, res, next) {
 
 async function fetchAllActivityFeedEvents(req, res, next) {
   try {
-    const { sortBy } = req.query
+    const { sortBy, name } = req.query
 
     const allActivityFeedEventsResults = await fetchActivityFeed(
       req,
@@ -364,6 +364,7 @@ async function fetchAllActivityFeedEvents(req, res, next) {
         sort:
           EVENT_ACTIVITY_SORT_OPTIONS[sortBy] ||
           EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
+        eventName: name,
       })
     )
 
