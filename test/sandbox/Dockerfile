@@ -1,12 +1,12 @@
 FROM node:16.16.0-buster
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app/test/sandbox
 
 COPY package.json .
 COPY yarn.lock .
 RUN yarn policies set-version 3.2.1
-RUN yarn install
 
 COPY . .
-
+RUN touch yarn.lock
+RUN yarn install
 CMD yarn run nodemon
