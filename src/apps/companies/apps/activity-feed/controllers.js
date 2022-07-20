@@ -386,12 +386,14 @@ async function fetchAllActivityFeedEvents(req, res, next) {
       })
     )
 
+    const total = allActivityFeedEventsResults.hits.total.value
     const allActivityFeedEvents = allActivityFeedEventsResults.hits.hits.map(
       (hit) => hit._source
     )
 
     res.json({
       allActivityFeedEvents,
+      total,
     })
   } catch (error) {
     next(error)

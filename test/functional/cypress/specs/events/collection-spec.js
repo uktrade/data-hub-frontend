@@ -153,6 +153,17 @@ describe('Event Collection List Page - React', () => {
         cy.get('@aventriEvents').eq(0).as('firstAventriEvent')
       })
 
+      it('should display the events result count header', () => {
+        cy.get('[data-test="collection-header"]').should(
+          'have.text',
+          '82 events'
+        )
+      })
+
+      it('should display the expected number of pages', () => {
+        cy.get('[data-test=pagination-summary]').contains('Page 1 of 9')
+      })
+
       it('should not display the data hub API collection list', () => {
         cy.get('[data-test="collection-list"]').should('not.exist')
       })
