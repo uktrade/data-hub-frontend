@@ -45,7 +45,7 @@ const MenuContainer = styled('div')({
   width: '100%',
   [MEDIA_QUERIES.DESKTOP]: {
     width: 'calc(33% - 20px)',
-    padding: 10,
+    padding: SPACING.SCALE_2,
   },
 })
 
@@ -58,8 +58,8 @@ const ListContainer = styled('div')({
 
 const SettingsLink = styled(Link)({
   display: 'block',
-  marginTop: 30,
-  marginBottom: 15,
+  marginTop: SPACING.SCALE_5,
+  marginBottom: SPACING.SCALE_3,
   [MEDIA_QUERIES.TABLET]: {
     display: 'none',
   },

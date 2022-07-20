@@ -82,7 +82,7 @@ const MenuContainer = styled('div')({
   width: '100%',
   [MEDIA_QUERIES.DESKTOP]: {
     width: 'calc(33% - 20px)',
-    padding: 10,
+    padding: SPACING.SCALE_2,
   },
 })
 
