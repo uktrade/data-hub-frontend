@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { GridCol, GridRow } from 'govuk-react'
 import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 
 import {
@@ -196,16 +197,6 @@ const EventsCollection = ({
                   },
                 ]}
               />
-              <CollectionFilters>
-                <Filters.Input
-                  id="EventsCollection.name"
-                  qsParam="name"
-                  name="name"
-                  label={LABELS.eventName}
-                  placeholder="Search event name"
-                  data-test="event-name-filter"
-                />
-              </CollectionFilters>
               <Task.Status
                 name={TASK_GET_ALL_ACTIVITY_FEED_EVENTS}
                 id={ID}
@@ -216,15 +207,29 @@ const EventsCollection = ({
                 }}
               >
                 {() => (
-                  <ActivityList>
-                    {allActivityFeedEvents?.map((event, index) => {
-                      return (
-                        <li key={`event-${index}`}>
-                          <Activity activity={event} />
-                        </li>
-                      )
-                    })}
-                  </ActivityList>
+                  <GridRow>
+                    <CollectionFilters>
+                      <Filters.Input
+                        id="EventsCollection.name"
+                        qsParam="name"
+                        name="name"
+                        label={LABELS.eventName}
+                        placeholder="Search event name"
+                        data-test="event-name-filter"
+                      />
+                    </CollectionFilters>
+                    <GridCol>
+                      <ActivityList>
+                        {allActivityFeedEvents?.map((event, index) => {
+                          return (
+                            <li key={`event-${index}`}>
+                              <Activity activity={event} />
+                            </li>
+                          )
+                        })}
+                      </ActivityList>
+                    </GridCol>
+                  </GridRow>
                 )}
               </Task.Status>
             </>
