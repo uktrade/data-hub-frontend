@@ -15,14 +15,14 @@ COPY --chown=$CURRENT_UID:$CURRENT_GID yarn.lock .
 COPY --chown=$CURRENT_UID:$CURRENT_GID .npmrc .
 
 USER "$CURRENT_UID:$CURRENT_GID"
-CMD yarn policies set-version 3.2.1
 CMD yarn config set loglevel info
 
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 
-CMD touch yarn.lock
-RUN yarn install
-
 COPY --chown=$CURRENT_UID:$CURRENT_GID . .
+
+RUN yarn set version 3.2.1
+RUN touch yarn.lock
+RUN yarn install
 
 CMD yarn run develop
