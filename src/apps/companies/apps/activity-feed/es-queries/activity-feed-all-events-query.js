@@ -1,4 +1,6 @@
-const activityFeedEventsQuery = ({ fullQuery, sort }) => ({
+const activityFeedEventsQuery = ({ fullQuery, page, size, sort }) => ({
+  page,
+  size,
   query: {
     bool: {
       must: fullQuery,

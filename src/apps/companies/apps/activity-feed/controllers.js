@@ -374,12 +374,16 @@ const eventsColListQueryBuilder = (name) => {
 
 async function fetchAllActivityFeedEvents(req, res, next) {
   try {
-    const { sortBy, name } = req.query
+    const { sortBy, page, name } = req.query
+
+    const from = (page - 1) * ACTIVITIES_PER_PAGE
 
     const allActivityFeedEventsResults = await fetchActivityFeed(
       req,
       allActivityFeedEventsQuery({
         fullQuery: eventsColListQueryBuilder(name),
+        from,
+        ACTIVITIES_PER_PAGE,
         sort:
           EVENT_ACTIVITY_SORT_OPTIONS[sortBy] ||
           EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],

@@ -17,6 +17,7 @@ import {
   DefaultLayout,
   CollectionSort,
   CollectionHeader,
+  RoutedPagination,
 } from '../../../components'
 import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
 
@@ -49,6 +50,7 @@ const EventsCollection = ({
   selectedFilters,
   allActivityFeedEvents,
   total,
+  page = 1,
   itemsPerPage = 10,
   maxItemsToPaginate = 10000,
   ...props
@@ -235,6 +237,7 @@ const EventsCollection = ({
           )
         }
       </CheckUserFeatureFlag>
+      <RoutedPagination initialPage={page} items={total} />
     </DefaultLayout>
   )
 }
