@@ -265,6 +265,27 @@ describe('Event Collection List Page - React', () => {
           cy.get('@aventriEvents').should('have.length', 0)
         })
       })
+      context('filtering by event name', () => {
+        const element = '[data-test="event-name-filter"]'
+        const eventName = 'Big Event'
+        const queryParamWithName = 'name=Big+Event'
+        const queryParamEmpty = 'name='
+
+        it('should not add anything to the query param whe the page is first loaded', () => {
+          cy.url().should('not.include', queryParamEmpty)
+        })
+
+        it('should add name from user input to query param', () => {
+          cy.get(element).type(`${eventName}{enter}`)
+          cy.url().should('include', queryParamWithName)
+        })
+
+        it('should not add anything to the query param if the name is backspaced', () => {
+          cy.get(element).type(`${eventName}{enter}`)
+          cy.get(element).type(`{selectAll}{backspace}{enter}`)
+          cy.url().should('not.include', queryParamWithName)
+        })
+      })
     })
 
     context(
