@@ -54,24 +54,10 @@ Please view the dedicated [Docker readme](./docs/Docker.md).
     nvm use 16.16.0
     ```
 
-3.  Install with yarn already installed:
+3.  Install Yarn
 
     ```bash
-    npm uninstall -g yarn
-    brew uninstall yarn
-    rm -rf .yarnrc
-    rm -rf .yarnrc.yml
-    npm install - g yarn
-    # or
-    # brew install yarn
-    yarn set version 1.22.19
-    yarn install
-    ```
-
-    Install with no existing yarn:
-
-    ```bash
-    npm install - g yarn
+    npm install -g yarn
     # or
     # brew install yarn
     yarn set version 1.22.19

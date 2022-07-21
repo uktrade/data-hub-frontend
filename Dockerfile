@@ -21,8 +21,8 @@ ENV NODE_OPTIONS="--max-old-space-size=8192"
 
 COPY --chown=$CURRENT_UID:$CURRENT_GID . .
 
-RUN yarn set version 3.2.1
-RUN touch yarn.lock
+# RUN yarn set version 1.22.19
+# RUN touch yarn.lock
 RUN yarn install
 
 CMD yarn develop
