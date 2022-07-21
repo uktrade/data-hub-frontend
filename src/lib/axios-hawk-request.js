@@ -2,7 +2,7 @@
  * This is the axios version of hawk request - unfortunately this is causing a
  * bug on the postcode api at the moment, but this is left here to fix later.
  */
-const hawk = require('@hapi/hawk')
+const Hawk = require('hawk')
 const config = require('../config')
 const request = require('./request')
 
@@ -15,7 +15,7 @@ function getHawkHeader(credentials, requestOptions) {
 
   // Generate Authorization request header
   // Ensure backend is using same protocol for hash generation
-  return hawk.client.header(url, method, {
+  return Hawk.client.header(url, method, {
     credentials,
     payload: '',
     contentType: 'application/json',
@@ -32,7 +32,7 @@ async function hawkRequest(requestOptions, credentials, clientHeaderArtifacts) {
     let isValid = false
     try {
       // Authenticate the server's response must use raw response body here
-      isValid = hawk.client.authenticate(
+      isValid = Hawk.client.authenticate(
         response,
         credentials,
         clientHeaderArtifacts,

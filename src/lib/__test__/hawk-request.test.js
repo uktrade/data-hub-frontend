@@ -37,7 +37,7 @@ describe('#hawkRequest: check getHawkHeader', () => {
     }
     this.hawkHeaderStub = sinon.stub().returns(this.expectedHawkHeader)
     this.hawkRequest.__set__('config', this.configStub)
-    this.hawkRequest.__set__('hawk.client.header', this.hawkHeaderStub)
+    this.hawkRequest.__set__('Hawk.client.header', this.hawkHeaderStub)
   })
 
   it('gets hawk header', () => {
@@ -108,7 +108,7 @@ describe('#hawkRequest: check createPromiseRequest', () => {
     this.hawkRequest = rewire(modulePath)
     this.hawkRequest.__set__('config', this.configStub)
     this.hawkRequest.__set__(
-      'hawk.client.authenticate',
+      'Hawk.client.authenticate',
       sinon.stub().returns(true)
     )
   })
@@ -153,7 +153,7 @@ describe('#hawkRequest: check createPromiseRequest', () => {
     this.createPromiseRequest = this.hawkRequest.__get__('createPromiseRequest')
 
     const authenticateStub = sinon.stub().returns(true)
-    this.hawkRequest.__set__('hawk.client.authenticate', authenticateStub)
+    this.hawkRequest.__set__('Hawk.client.authenticate', authenticateStub)
 
     await expect(
       this.createPromiseRequest(
@@ -179,7 +179,7 @@ describe('#hawkRequest: check createPromiseRequest', () => {
     this.createPromiseRequest = this.hawkRequest.__get__('createPromiseRequest')
 
     const authenticateStub = sinon.stub().throws(Error)
-    this.hawkRequest.__set__('hawk.client.authenticate', authenticateStub)
+    this.hawkRequest.__set__('Hawk.client.authenticate', authenticateStub)
 
     await expect(
       this.createPromiseRequest(
