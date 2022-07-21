@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { SPACING, FONT_SIZE, HEADING_SIZES } from '@govuk-react/constants'
 import { Link } from 'govuk-react'
-import { GREY_2 } from 'govuk-colours'
+import { BLACK, GREY_1, GREY_2 } from 'govuk-colours'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import styled from 'styled-components'
@@ -17,12 +17,11 @@ import { format } from '../../utils/date'
 import { DATE_DAY_LONG_FORMAT } from '../../../common/constants'
 import { maxItemsToPaginate, itemsPerPage } from './constants'
 
-import { DefaultLayout, RoutedPagination } from '../../components'
+import { RoutedPagination } from '../../components'
 import CollectionHeader from './CollectionHeader'
-import RemindersMenu from './RemindersMenu'
+import RemindersLayout from './RemindersLayout'
 import Task from '../../components/Task'
 import urls from '../../../lib/urls'
-import Heading from './Heading'
 
 const List = styled('ol')({
   listStyleType: 'none',
@@ -54,13 +53,17 @@ const ListItemFooter = styled('div')({
   marginBottom: SPACING.SCALE_4,
 })
 
-const PaginationSummary = styled('div')({
+const Summary = styled('p')({
+  color: BLACK,
+  paddingTop: SPACING.SCALE_2,
+  fontSize: FONT_SIZE.SIZE_19,
+})
+
+const PaginationSummary = styled(Summary)({
+  color: GREY_1,
   fontSize: FONT_SIZE.SIZE_16,
-  color: DARK_GREY,
-  paddingTop: SPACING.SCALE_4,
   paddingBottom: SPACING.SCALE_3,
-  borderBottom: ({ hasReminders }) =>
-    hasReminders ? `solid 1px ${GREY_2}` : 'none',
+  borderBottom: `solid 1px ${GREY_2}`,
 })
 
 const OutstandingPropositionReminders = ({
@@ -77,67 +80,59 @@ const OutstandingPropositionReminders = ({
   )
 
   return (
-    <DefaultLayout
+    <RemindersLayout
       pageTitle={title}
-      heading={<Heading preHeading="Reminders for">{subject}</Heading>}
-      breadcrumbs={[{ link: urls.dashboard(), text: 'Home' }, { text: title }]}
+      subject={subject}
+      hasSettingsLink={false}
     >
-      <GridRow>
-        <GridCol setWidth="one-third">
-          <RemindersMenu />
-        </GridCol>
-        <GridCol>
-          <CollectionHeader settings={false} totalItems={count} />
-          <PaginationSummary
-            hasReminders={results.length > 0}
-            data-test="pagination-summary"
-          >
-            {results.length === 0
-              ? 'You have no reminders'
-              : `Page ${page || 1} of ${totalPages}`}
-          </PaginationSummary>
-          <Task.Status
-            name={TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS}
-            id={ID}
-            startOnRender={{
-              payload: { page, sortby: qsParams.sortby },
-              onSuccessDispatch: REMINDERS__OUTSTANDING_PROPOSITIONS_LOADED,
-            }}
-          >
-            {() => (
-              <>
-                <List data-test="reminders-list">
-                  {results.map(({ id, name, deadline, investment_project }) => (
-                    <ListItem key={id} data-test="reminders-list-item">
-                      <GridRow>
-                        <GridCol>
-                          <ListItemHeader data-test="item-header">
-                            Due {format(deadline, DATE_DAY_LONG_FORMAT)}
-                          </ListItemHeader>
-                          <ListItemContent data-test="item-content">
-                            <Link
-                              href={`${urls.investments.projects.propositions(
-                                investment_project.id
-                              )}`}
-                            >
-                              {name}
-                            </Link>
-                          </ListItemContent>
-                          <ListItemFooter data-test="item-footer">
-                            Project code {investment_project.project_code}
-                          </ListItemFooter>
-                        </GridCol>
-                      </GridRow>
-                    </ListItem>
-                  ))}
-                </List>
-                <RoutedPagination initialPage={page} items={count || 0} />
-              </>
-            )}
-          </Task.Status>
-        </GridCol>
-      </GridRow>
-    </DefaultLayout>
+      <CollectionHeader settings={false} totalItems={count} />
+      {results.length === 0 ? (
+        <Summary data-test="no-reminders">You have no reminders.</Summary>
+      ) : (
+        <PaginationSummary data-test="pagination-summary">
+          {`Page ${page || 1} of ${totalPages}`}
+        </PaginationSummary>
+      )}
+      <Task.Status
+        name={TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS}
+        id={ID}
+        startOnRender={{
+          payload: { page, sortby: qsParams.sortby },
+          onSuccessDispatch: REMINDERS__OUTSTANDING_PROPOSITIONS_LOADED,
+        }}
+      >
+        {() => (
+          <>
+            <List data-test="reminders-list">
+              {results.map(({ id, name, deadline, investment_project }) => (
+                <ListItem key={id} data-test="reminders-list-item">
+                  <GridRow>
+                    <GridCol>
+                      <ListItemHeader data-test="item-header">
+                        Due {format(deadline, DATE_DAY_LONG_FORMAT)}
+                      </ListItemHeader>
+                      <ListItemContent data-test="item-content">
+                        <Link
+                          href={`${urls.investments.projects.propositions(
+                            investment_project.id
+                          )}`}
+                        >
+                          {name}
+                        </Link>
+                      </ListItemContent>
+                      <ListItemFooter data-test="item-footer">
+                        Project code {investment_project.project_code}
+                      </ListItemFooter>
+                    </GridCol>
+                  </GridRow>
+                </ListItem>
+              ))}
+            </List>
+            <RoutedPagination initialPage={page} items={count || 0} />
+          </>
+        )}
+      </Task.Status>
+    </RemindersLayout>
   )
 }
 

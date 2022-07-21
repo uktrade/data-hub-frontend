@@ -177,7 +177,7 @@ describe('Estimated Land Date Reminders', () => {
     it('should include a message "You have no reminders"', () => {
       cy.get('[data-test="no-reminders"]').should(
         'contain',
-        'You have no reminders'
+        'You have no reminders.'
       )
     })
   })
@@ -265,7 +265,7 @@ describe('Estimated Land Date Reminders', () => {
       cy.get('[data-test="reminders-list-item"]').should('have.length', 10)
       cy.get('[data-test="reminders-list-item"]').eq(4).as('reminder')
 
-      cy.get('@reminder').find('[data-test="delete-button"]').click()
+      cy.get('@reminder').find('[data-test="delete-button"]').eq(1).click()
       cy.wait('@deleteReminder5ApiRequest')
       cy.get('[data-test="reminder-list-header"]').should(
         'contain',

@@ -3,18 +3,21 @@ import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { Link } from 'govuk-react'
 import styled from 'styled-components'
-import { GREY_2 } from 'govuk-colours'
+import { BLACK, GREY_2 } from 'govuk-colours'
 import { H3 } from '@govuk-react/heading'
-import { FONT_SIZE, HEADING_SIZES, SPACING } from '@govuk-react/constants'
+import {
+  SPACING,
+  FONT_SIZE,
+  HEADING_SIZES,
+  MEDIA_QUERIES,
+} from '@govuk-react/constants'
 
 import { formatMediumDate } from '../../utils/date'
 import { DARK_GREY } from '../../utils/colors'
 import urls from '../../../lib/urls'
 
-const DeleteButton = styled('button')({
-  display: 'inline',
+const Button = styled('button')({
   padding: 0,
-  margin: `${SPACING.SCALE_3} 0`,
   background: 'transparent',
   border: 'none',
   fontSize: FONT_SIZE.SIZE_16,
@@ -24,8 +27,28 @@ const DeleteButton = styled('button')({
   textDecoration: 'underline',
 })
 
+const DeleteButton = styled(Button)({
+  display: ({ isMobile }) => (isMobile ? 'inline' : 'none'),
+  marginBottom: SPACING.SCALE_4,
+  [MEDIA_QUERIES.TABLET]: {
+    display: ({ isMobile }) => (isMobile ? 'none' : 'inline'),
+    margin: `${SPACING.SCALE_3} 0`,
+  },
+  [MEDIA_QUERIES.DESKTOP]: {
+    display: ({ isMobile }) => (isMobile ? 'none' : 'inline'),
+    margin: `${SPACING.SCALE_3} 0`,
+  },
+})
+
 const RightCol = styled(GridCol)({
+  display: 'none',
   textAlign: 'right',
+  [MEDIA_QUERIES.TABLET]: {
+    display: 'block',
+  },
+  [MEDIA_QUERIES.DESKTOP]: {
+    display: 'block',
+  },
 })
 
 const List = styled('ol')({
@@ -49,7 +72,7 @@ const ItemHeader = styled(H3)({
 })
 
 const ItemContent = styled('div')({
-  color: DARK_GREY,
+  color: ({ colour }) => colour,
   marginBottom: SPACING.SCALE_3,
 })
 
@@ -70,7 +93,7 @@ const CollectionList = ({ results, onDeleteReminder, disableDelete }) => {
                 <ItemHeader data-test="item-header">
                   Reminder deleted
                 </ItemHeader>
-                <ItemContent data-test="item-content">
+                <ItemContent colour={DARK_GREY} data-test="item-content">
                   {event} for {project.name}
                 </ItemContent>
                 <ItemFooter data-test="item-footer"></ItemFooter>
@@ -81,7 +104,7 @@ const CollectionList = ({ results, onDeleteReminder, disableDelete }) => {
                   <ItemHeader data-test="item-header">
                     Received {formatMediumDate(created_on)}
                   </ItemHeader>
-                  <ItemContent data-test="item-content">
+                  <ItemContent colour={BLACK} data-test="item-content">
                     {event} for{' '}
                     <Link
                       href={`${urls.investments.projects.details(project.id)}`}
@@ -92,7 +115,18 @@ const CollectionList = ({ results, onDeleteReminder, disableDelete }) => {
                   <ItemFooter data-test="item-footer">
                     Project code {project.project_code}
                   </ItemFooter>
+                  {/* Display on mobile only */}
+                  {onDeleteReminder && !disableDelete && (
+                    <DeleteButton
+                      isMobile={true}
+                      data-test="delete-button"
+                      onClick={() => onDeleteReminder(id)}
+                    >
+                      Delete reminder
+                    </DeleteButton>
+                  )}
                 </GridCol>
+                {/* Display on Tablet and Desktop only */}
                 {onDeleteReminder && (
                   <RightCol setWidth="one-quarter">
                     {!disableDelete && (

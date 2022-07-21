@@ -3,7 +3,12 @@ import { H2 } from '@govuk-react/heading'
 import { Link } from 'govuk-react'
 import styled from 'styled-components'
 import pluralize from 'pluralize'
-import { FONT_SIZE, FONT_WEIGHTS, HEADING_SIZES } from '@govuk-react/constants'
+import {
+  FONT_SIZE,
+  FONT_WEIGHTS,
+  HEADING_SIZES,
+  MEDIA_QUERIES,
+} from '@govuk-react/constants'
 
 import { CollectionHeaderRow } from '../../components'
 import { decimal } from '../../utils/number-utils'
@@ -26,7 +31,14 @@ const StyledCollectionHeaderRow = styled(CollectionHeaderRow)({
 })
 
 const SettingsLink = styled(Link)({
+  display: 'none',
   fontSize: FONT_SIZE.SIZE_19,
+  [MEDIA_QUERIES.TABLET]: {
+    display: 'block',
+  },
+  [MEDIA_QUERIES.DESKTOP]: {
+    display: 'block',
+  },
 })
 
 const CollectionHeader = ({ totalItems, settings = true }) => {
