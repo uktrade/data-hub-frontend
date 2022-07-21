@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY package.json .
 COPY yarn.lock .
-RUN yarn set version 3.2.1
+RUN yarn set version berry
 
 COPY . .
 RUN yarn install
