@@ -75,6 +75,12 @@ const EVENT_ACTIVITY_SORT_OPTIONS = {
   },
 }
 
+const EVENT_ALL_ACTIVITY = {
+  terms: {
+    'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+  },
+}
+
 const DATA_HUB_ACTIVITY = [
   'dit:Interaction', // Interaction
   'dit:ServiceDelivery', // Interaction
@@ -99,6 +105,7 @@ module.exports = {
   EVENT_ATTENDEES_SORT_OPTIONS,
   EVENT_ACTIVITY_FEATURE_FLAG,
   EVENT_ACTIVITY_SORT_OPTIONS,
+  EVENT_ALL_ACTIVITY,
   FILTER_KEYS,
   FILTER_ITEMS,
   DATA_HUB_ACTIVITY,

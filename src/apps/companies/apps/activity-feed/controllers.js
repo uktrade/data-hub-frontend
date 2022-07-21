@@ -7,6 +7,7 @@ const {
   CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS,
   EVENT_ACTIVITY_SORT_OPTIONS,
   EVENT_ATTENDEES_SORT_OPTIONS,
+  EVENT_ALL_ACTIVITY,
 } = require('./constants')
 
 const { getGlobalUltimateHierarchy } = require('../../repos')
@@ -358,13 +359,34 @@ async function fetchAllActivityFeedEvents(req, res, next) {
   try {
     const { sortBy, name } = req.query
 
+    // return query if name is present, else return null
+    const eventNameFilter = name
+      ? {
+          match: {
+            'object.name': name,
+          },
+        }
+      : null
+
+    const filtersQueryBuilder = () => {
+      const filtersArray = [eventNameFilter]
+
+      // do not pass in filter if its value is null
+      const cleansedFiltersArray = filtersArray
+        .filter((filter) => filter != null)
+        .map((filter) => filter)
+
+      const queryBuilder = [EVENT_ALL_ACTIVITY, ...cleansedFiltersArray]
+      return queryBuilder
+    }
+
     const allActivityFeedEventsResults = await fetchActivityFeed(
       req,
       allActivityFeedEventsQuery({
+        filtersQuery: filtersQueryBuilder(),
         sort:
           EVENT_ACTIVITY_SORT_OPTIONS[sortBy] ||
           EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
-        eventName: name,
       })
     )
 

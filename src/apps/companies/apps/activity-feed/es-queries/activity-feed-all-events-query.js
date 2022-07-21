@@ -1,20 +1,7 @@
-const activityFeedEventsQuery = ({ sort, eventName }) => ({
+const activityFeedEventsQuery = ({ filtersQuery, sort }) => ({
   query: {
     bool: {
-      must: [
-        {
-          terms: {
-            'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
-          },
-        },
-      ],
-      should: [
-        {
-          match: {
-            'object.name': eventName || '*',
-          },
-        },
-      ],
+      must: filtersQuery,
     },
   },
   sort,
