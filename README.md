@@ -45,44 +45,41 @@ Please view the dedicated [Docker readme](./docs/Docker.md).
 
 **Note for Civil Servant developers** When running the project natively for the first time on your DIT-issued device you will need to setup ZSH. Instructions for this are available [here](./docs/ZSH%20setup.md)
 
-1.  Navigate to the project root.
+1. Navigate to the project root.
 
-2.  Install the required version of node:
+2. Install the required version of node:
 
-    ```bash
-    brew install nvm
-    nvm use 16.15.1
-    ```
+   ```bash
+   brew install nvm
+   nvm use 16.15.1
+   ```
 
-3.  Install with yarn already installed:
+3. Install yarn locally with [corepack](https://nodejs.org/api/corepack.html). Anyone with an existing legacy Yarn installation will need to remove this globally as this is well handled with corepack, with great explanations in the link above. If you are new to yarn, simply install and set version
 
-    ```bash
-    npm uninstall -g yarn
-    brew uninstall yarn
-    rm -rf .yarnrc
-    rm -rf .yarnrc.yml
-    npm install - g yarn
-    # or
-    # brew install yarn
-    yarn set version 1.22.19
-    yarn install
-    ```
+   - Install with legacy yarn already installed: 
 
-    Install with no existing yarn:
+     ```bash
+     npm uninstall -g yarn
+     rm .yarnrc.yml
+     rm -rf .yarn
+     corepack prepare yarn@3.2.2 --activate
+     yarn set version 3.2.2
+     yarn install
+     ```
 
-    ```bash
-    npm install - g yarn
-    # or
-    # brew install yarn
-    yarn set version 1.22.19
-    yarn install
-    ```
+   - Install with no existing yarn: (Make sure no existing yarn globally)
 
-4.  Create a copy of the `sample.env` file.
+     ```bash
+     corepack prepare yarn@3.2.2 --activate
+     yarn set version 3.2.2
+     yarn install
+     ```
 
-    ```bash
-    cp sample.env .env
-    ```
+4. Create a copy of the `sample.env` file.
+
+   ```bash
+   cp sample.env .env
+   ```
 
 Steps 5 onwards differ depending on which API you are using. Skip to section 'Running with the local API' or 'Running with other APIs (e.g. staging)' depending on what you want to do. If you have any issues, please consult the [troubleshooting guidance](./docs/Troubleshooting.md).
 

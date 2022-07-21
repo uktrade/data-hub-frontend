@@ -8,7 +8,9 @@ services:
     volumes:
       - ./test/sandbox:/usr/src/app
       # Ensures that the local node_modules dir is not used in the container
-      - /usr/src/app/node_modules
+      - /usr/src/app/
+      # Ensures that the local .yarn dir is not used in the container
+      - /usr/src/app/.yarn
 
   lbweb:
     image: gcr.io/sre-docker-registry/github.com/uktrade/legal-basis-api:latest

@@ -181,8 +181,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install yarn with corepack
+          command: corepack prepare yarn@3.2.2 --activate
+      - run:
           name: Set yarn version
-          command: yarn set version 1.22.19
+          command: yarn set version 3.2.2
       - run: yarn install storybook
       - run:
           name: Release storybook

@@ -21,3 +21,6 @@ services:
       - ./test/sandbox:/usr/src/app
       # Ensures that the local node_modules dir is not used in the container
       - /usr/src/app/node_modules
+      # Ensures that the local .yarn dir is not used in the container
+      - /usr/src/app/.yarn
+

@@ -12,6 +12,8 @@ services:
       - ./:/usr/src/app:delegated
       # Ensures that the local node_modules dir is not used in the container
       - /usr/src/app/node_modules
+      # Ensures that the local .yarn dir is not used in the container
+      - /usr/src/app/.yarn
     ports:
       - ${PORT:-3000}:3000
       - 9229:9229
