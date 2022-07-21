@@ -28,7 +28,7 @@ Engines in `package.json` needs updating:
    - `test/sandbox/Dockerfile`
    - Step two of the native readme
 4. Install the dependencies with `npm ci`
-5. Run the unit tests to check the app `npm run test:unit` and then start the app `npm run develop` and do some quick smoke tests to ensure the app works
+5. Run the unit tests to check the app `yarn test:unit` and then start the app `yarn develop` and do some quick smoke tests to ensure the app works
 6. Commit your changes, push the branch and then create a Draft PR to get the tests running
 7. Create a build in Jenkins to deploy to an environment (UAT or Demo are probably best here) so we can test the buildpack.
 8. Once the tests pass and the deployment works, mark the PR as ready for review

@@ -10,9 +10,10 @@ ENV DOCKERIZE_VERSION v0.2.0
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-WORKDIR /project
-COPY package.json package-lock.json /project/
-RUN npm install
+COPY package.json yarn.lock /project/
+RUN yarn set version 1.22.19
+
+RUN yarn install
 
 COPY . /project
-CMD npm run test:visual
+CMD yarn test:visual

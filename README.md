@@ -41,7 +41,7 @@ Please view the dedicated [Docker readme](./docs/Docker.md).
 
 ### Running the project natively (recommended method)
 
-**Note for all users** If you wish to run the functional tests against your native frontend, you will need to pass a config flag to point cypress to run against port 3000 - `npm run test:functional:watch --config baseUrl=http://localhost:3000`.
+**Note for all users** If you wish to run the functional tests against your native frontend, you will need to pass a config flag to point cypress to run against port 3000 - `yarn test:functional:watch --config baseUrl=http://localhost:3000`.
 
 **Note for Civil Servant developers** When running the project natively for the first time on your DIT-issued device you will need to setup ZSH. Instructions for this are available [here](./docs/ZSH%20setup.md)
 
@@ -54,29 +54,29 @@ Please view the dedicated [Docker readme](./docs/Docker.md).
     nvm use 16.15.1
     ```
 
-3. Install with yarn already installed:
+3.  Install with yarn already installed:
 
-   ```bash
-   npm uninstall -g yarn 
-   brew uninstall yarn
-   rm -rf .yarnrc
-   rm -rf .yarnrc.yml
-   npm install - g yarn
-   # or
-   # brew install yarn
-   yarn set version berry
-   yarn install
-   ```
+    ```bash
+    npm uninstall -g yarn
+    brew uninstall yarn
+    rm -rf .yarnrc
+    rm -rf .yarnrc.yml
+    npm install - g yarn
+    # or
+    # brew install yarn
+    yarn set version 1.22.19
+    yarn install
+    ```
 
-   Install with no existing yarn:
+    Install with no existing yarn:
 
-   ```bash
-   npm install - g yarn
-   # or
-   # brew install yarn
-   yarn set version berry
-   yarn install
-   ```
+    ```bash
+    npm install - g yarn
+    # or
+    # brew install yarn
+    yarn set version 1.22.19
+    yarn install
+    ```
 
 4.  Create a copy of the `sample.env` file.
 
@@ -108,7 +108,7 @@ Use this method if you want to make backend changes or run against an API branch
 
     ```bash
     export NODE_ENV=production
-    npm run build && npm start
+    yarn build && npm start
     ```
 
     This will build static assets beforehand and then run the app.
@@ -116,7 +116,7 @@ Use this method if you want to make backend changes or run against an API branch
     **In development mode:**
 
     ```bash
-    npm run develop
+    yarn develop
     ```
 
     The server will watch for changes and rebuild sass or compile js using webpack as
@@ -164,7 +164,7 @@ This method is recommended if you are only making frontend changes.
 
     ```bash
     export NODE_ENV=production
-    npm run build && npm start
+    yarn build && npm start
     ```
 
     This will build static assets beforehand and then run the app.
@@ -172,7 +172,7 @@ This method is recommended if you are only making frontend changes.
     **In development mode:**
 
     ```bash
-    npm run develop
+    yarn develop
     ```
 
     The server will watch for changes and rebuild sass or compile js using webpack as

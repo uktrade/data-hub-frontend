@@ -20,9 +20,11 @@ Screenshot:
 ```
 
 ## Docker issues
+
 This section should include issues that occur when running the frontend in Docker.
 
 ## Native issues
+
 This section should be used for native issues that occur regardless of what API you are using.
 
 ### Missing environment variable
@@ -65,32 +67,35 @@ This error occurs when the frontend can't connect to your local API instance.
 
 #### Error connecting to Redis
 
-When running against a live environment, this error usually occurs if you run `npm run develop` without a local Redis instance running, or if you have incorrect environment variables.
+When running against a live environment, this error usually occurs if you run `yarn develop` without a local Redis instance running, or if you have incorrect environment variables.
 
 ![redis-error](./Troubleshooting/native-live-redis.png)
 
 **Solution** Close your frontend instance, then start a new native redis instance (follow the [redis setup instructions](https://github.com/uktrade/data-hub-frontend/blob/master/docs/Installing%20redis%20natively.md) if you have not done this before).
 
 Once this is running, you should update the following environment variables:
+
 - `REDIS_HOST` should be set to `localhost`
 - `REDIS_URL` should be set to `redis://localhost:6379`
 - `DATA_HUB_BACKEND_ACCESS_KEY_ID` and `DATA_HUB_BACKEND_SECRET_ACCESS_KEY` should be set to the values from Vault (if working with the investment homepage, you will need to do the same for all variables with the prefix `HELP_CENTRE` or the page will not load).
 
-Once this is done, the app should start after running `npm run develop`.
+Once this is done, the app should start after running `yarn develop`.
 
 #### Invalid authentication details
+
 This error occurs when your `OAUTH2_DEV_TOKEN` is out of date or hasn't been set correctly.
 
 ![redis-error](./Troubleshooting/native-live-invalid-token.png)
 
-**Solution** Bring down your frontend and remove the current value for `OAUTH2_DEV_TOKEN`. Generate a new access token by navigating to the relevant `/add-access-token/` page (for convenience you can set this to last for up to 168 hours), then set the value of `OAUTH2_DEV_TOKEN` to the newly-generated token. The frontend should now work after running `npm run develop`.
+**Solution** Bring down your frontend and remove the current value for `OAUTH2_DEV_TOKEN`. Generate a new access token by navigating to the relevant `/add-access-token/` page (for convenience you can set this to last for up to 168 hours), then set the value of `OAUTH2_DEV_TOKEN` to the newly-generated token. The frontend should now work after running `yarn develop`.
 
 #### 'System down' page appears
+
 This error occurs when your local redis server is brought down whilst the app is still running.
 
 ![system-down](./Troubleshooting/native-live-redis-down.png)
 
-**Solution** Bring down your local frontend, restart your redis instance and run `npm run develop`. The frontend should then work as expected.
+**Solution** Bring down your local frontend, restart your redis instance and run `yarn develop`. The frontend should then work as expected.
 
 #### Unexpected token < in JSON at position 0
 
@@ -98,4 +103,4 @@ This error is caused when you try to connect to a live environment without turni
 
 ![vpn-error](./Troubleshooting/native-live-vpn.png)
 
-**Solution** Bring down your local frontend, enable the VPN and then run `npm run develop` again. The frontend should now work correctly.
+**Solution** Bring down your local frontend, enable the VPN and then run `yarn develop` again. The frontend should now work correctly.

@@ -11,6 +11,6 @@ services:
       # Ensures that the local node_modules dir is not used in the container
       - /usr/src/app/node_modules
     ports:
-      - "65200:65200"
+      - '65200:65200'
     env_file: .env
-    command: yarn run storybook -- -p 65200
+    command: yarn storybook -- -p 65200
