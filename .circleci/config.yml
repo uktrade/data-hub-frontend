@@ -180,10 +180,13 @@ jobs:
       - image: node:16.15.1-buster
     steps:
       - checkout
-      - run: npm install storybook
+      - run:
+          name: Install specific yarn version
+          command:
+      - run: yarn install storybook
       - run:
           name: Release storybook
-          command: npm run storybook:release
+          command:yarn storybook:release
 
   merge-and-publish-coverage:
     docker:
