@@ -63,7 +63,6 @@
     "node": "16.16.0"
   },
   "dependencies": {
-    "-": "^0.0.1",
     "@govuk-react/constants": "^0.10.0",
     "@nivo/core": "^0.79.0",
     "@nivo/pie": "^0.79.0",
@@ -99,7 +98,6 @@
     "express-session": "^1.17.3",
     "express-sslify": "^1.2.0",
     "formidable": "^2.0.1",
-    "g": "^2.0.1",
     "get-form-data": "^3.0.0",
     "govuk-colours": "1.1.0",
     "govuk-elements-sass": "^3.1.3",
