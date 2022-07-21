@@ -25,4 +25,4 @@ RUN yarn set version 3.2.1
 RUN touch yarn.lock
 RUN yarn install
 
-CMD yarn run develop
+CMD yarn develop

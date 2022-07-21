@@ -84,55 +84,55 @@ lint:
 ifdef CI
 	$(docker-base) build frontend
 endif
-	$(docker-base) run --no-deps --rm frontend bash -c 'mkdir -p reports && npm run lint:js -- --format junit --output-file reports/eslint.xml'
+	$(docker-base) run --no-deps --rm frontend bash -c 'mkdir -p reports && yarn lint:js -- --format junit --output-file reports/eslint.xml'
 
 unit-tests:
 ifdef CI
 	$(docker-base) build frontend
-	$(docker-base) run --rm frontend bash -c '$(wait-for-redis) && npx nyc --reporter=lcov --reporter=json --report-dir=coverage npm run test:unit -- --reporter mocha-junit-reporter'
+	$(docker-base) run --rm frontend bash -c '$(wait-for-redis) && npx nyc --reporter=lcov --reporter=json --report-dir=coverage yarn test:unit -- --reporter mocha-junit-reporter'
 else
-	$(docker-base) run --rm frontend bash -c '$(wait-for-redis) && yarn run test:unit'
+	$(docker-base) run --rm frontend bash -c '$(wait-for-redis) && yarn test:unit'
 endif
 
 unit-client-tests:
 ifdef CI
 	$(docker-base) build frontend
 endif
-	$(docker-base) run --no-deps --rm frontend bash -c 'npm run test:unit-client -- --reporter mocha-junit-reporter'
+	$(docker-base) run --no-deps --rm frontend bash -c 'yarn test:unit-client -- --reporter mocha-junit-reporter'
 
 functional-tests:
 	@echo "*** Requires the mock stack, it can be started with 'make start-mock' ***"
-	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && yarn run test:functional $(cypress-args)'
+	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && yarn test:functional $(cypress-args)'
 
 a11y-tests:
 	@echo "*** Requires the mock stack, it can be started with 'make start-mock' ***"
-	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && npm run test:a11y'
+	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && yarn test:a11y'
 
 visual-tests:
 	@echo "*** Requires the mock stack, it can be started with 'make start-mock' ***"
-	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && npm run test:visual'
+	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && yarn test:visual'
 
 visual-component-tests:
 	@echo "*** Requires the storybook stack, it can be started with 'make start-storybook' ***"
-	$(docker-storybook) exec storybook bash -c '$(wait-for-storybook) && CYPRESS_baseUrl=http://localhost:65200 npm run test:visual-component'
+	$(docker-storybook) exec storybook bash -c '$(wait-for-storybook) && CYPRESS_baseUrl=http://localhost:65200 yarn test:visual-component'
 
 e2e-tests-lep:
 	@echo "*** Requires the e2e stack with the LEP role, it can be started with 'make start-e2e-lep' ***"
-	$(docker-e2e) exec frontend bash -c '$(wait-for-frontend) && npm run test:e2e:lep $(cypress-args)'
+	$(docker-e2e) exec frontend bash -c '$(wait-for-frontend) && yarn test:e2e:lep $(cypress-args)'
 
 e2e-tests-da:
 	@echo "*** Requires the e2e stack with the DA role, it can be started with 'make start-e2e-da' ***"
-	$(docker-e2e) exec frontend bash -c '$(wait-for-frontend) && npm run test:e2e:da $(cypress-args)'
+	$(docker-e2e) exec frontend bash -c '$(wait-for-frontend) && yarn test:e2e:da $(cypress-args)'
 
 e2e-tests-dit:
 	@echo "*** Requires the e2e stack with the DIT role, it can be started with 'make start-e2e-dit' ***"
-	$(docker-e2e) exec frontend bash -c '$(wait-for-frontend) && npm run test:e2e:dit $(cypress-args)'
+	$(docker-e2e) exec frontend bash -c '$(wait-for-frontend) && yarn test:e2e:dit $(cypress-args)'
 
 component-tests:
 ifdef CI
 	$(docker-base) build frontend
 endif
-	$(docker-base) run --no-deps --rm frontend bash -c 'npm run test:component'
+	$(docker-base) run --no-deps --rm frontend bash -c 'yarn test:component'
 
 clean:
 	make stop-base

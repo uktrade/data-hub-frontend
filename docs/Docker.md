@@ -60,7 +60,7 @@ Once the containers are up, in a browser go to: `http://localhost:3000` and you'
     make functional-tests   // runs the tests inside the container
     make stop-mock          // stop and remove the containers
 
-Instead of running the tests inside the container you can also run them outside the container `npm run test:functional`.
+Instead of running the tests inside the container you can also run them outside the container `yarn test:functional`.
 
 ## Start the E2E tests (DIT/LEP/DA)
 
