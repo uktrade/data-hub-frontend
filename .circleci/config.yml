@@ -180,10 +180,13 @@ jobs:
       - image: node:16.15.1-buster
     steps:
       - checkout
+      - run:
+          name: Set yarn version
+          command: yarn set version 1.22.19
       - run: yarn install storybook
       - run:
           name: Release storybook
-          command:yarn storybook:release
+          command: yarn storybook:release
 
   merge-and-publish-coverage:
     docker:
