@@ -2,7 +2,7 @@
   "name": "data-hub-sandbox",
   "main": "server.js",
   "scripts": {
-    "nodemon": "yarn set version 3.2.1 && yarn run nodemon ."
+    "nodemon": "yarn set version berry && yarn run nodemon ."
   },
   "dependencies": {
     "body-parser": "^1.19.0",

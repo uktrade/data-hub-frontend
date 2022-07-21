@@ -54,11 +54,29 @@ Please view the dedicated [Docker readme](./docs/Docker.md).
     nvm use 16.15.1
     ```
 
-3.  Install node packages:
+3. Install with yarn already installed:
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm uninstall -g yarn 
+   brew uninstall yarn
+   rm -rf .yarnrc
+   rm -rf .yarnrc.yml
+   npm install - g yarn
+   # or
+   # brew install yarn
+   yarn set version berry
+   yarn install
+   ```
+
+   Install with no existing yarn:
+
+   ```bash
+   npm install - g yarn
+   # or
+   # brew install yarn
+   yarn set version berry
+   yarn install
+   ```
 
 4.  Create a copy of the `sample.env` file.
 
