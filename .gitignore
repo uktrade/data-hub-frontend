@@ -77,6 +77,7 @@ local.log
 .yarnrc
 .yarn/
 .yarn/*
+.yarnrc.yml
 
 # Yalc packages
 .yalc
