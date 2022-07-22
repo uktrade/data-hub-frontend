@@ -80,11 +80,11 @@ const EventAventriAttendees = ({
                     <CollectionSort
                       sortOptions={[
                         {
-                          name: 'First name:A-Z',
+                          name: 'First name: A-Z',
                           value: 'first_name:asc',
                         },
                         {
-                          name: 'First name:Z-A',
+                          name: 'First name: Z-A',
                           value: 'first_name:desc',
                         },
                       ]}

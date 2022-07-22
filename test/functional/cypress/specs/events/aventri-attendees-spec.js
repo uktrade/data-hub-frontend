@@ -76,6 +76,41 @@ describe('Aventri event attendees', () => {
             .should('not.have.attr', 'href')
         })
       })
+
+      context('when sorting', () => {
+        beforeEach(() => {
+          cy.intercept(
+            'GET',
+            `${urls.events.aventri.attendeesData(
+              existingEventId
+            )}?sortBy=first_name:asc`
+          ).as('firstNameA-Z')
+          cy.intercept(
+            'GET',
+            `${urls.events.aventri.attendeesData(
+              existingEventId
+            )}?sortBy=first_name:desc`
+          ).as('firstNameZ-A')
+          cy.visit(urls.events.aventri.attendees(existingEventId))
+        })
+
+        it('should sort by "first name: A-Z" by default', () => {
+          cy.wait('@firstNameA-Z').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+        })
+
+        it('sorts by "first name: Z-A" when selected', () => {
+          const element = '[data-test="sortby"] select'
+          cy.get(element).select('first_name:desc')
+          cy.wait('@firstNameZ-A').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+          cy.get('[data-test="aventri-attendee"]')
+            .eq(0)
+            .should('contain', 'Polly Parton')
+        })
+      })
     })
 
     context('With errors', () => {
