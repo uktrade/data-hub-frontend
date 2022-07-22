@@ -51,7 +51,7 @@ Please view the dedicated [Docker readme](./docs/Docker.md).
 
     ```bash
     brew install nvm
-    nvm use 16.15.1
+    nvm use 16.16.0
     ```
 
 3.  Install node packages:
