@@ -5,13 +5,6 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"-@npm:^0.0.1":
-  version: 0.0.1
-  resolution: "-@npm:0.0.1"
-  checksum: 33786d96a8c404f3ce4db242b50d9a8f6013b3a0673bba52186b92f016429135ec2d9b9f77abf85c2a2b757c85e9b33a1f44d5dbf9740fd6294de87198681fd6
-  languageName: node
-  linkType: hard
-
 "@gar/promisify@npm:^1.1.3":
   version: 1.1.3
   resolution: "@gar/promisify@npm:1.1.3"
@@ -329,15 +322,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "data-hub-sandbox@workspace:."
   dependencies:
-    "-": ^0.0.1
     body-parser: ^1.19.0
     date-fns: ^2.19.0
     express: ^4.17.1
-    g: ^2.0.1
     ini: ^1.3.7
     lodash: ^4.17.21
     nodemon: ^2.0.12
-    yarn: ^1.22.19
   languageName: unknown
   linkType: soft
 
@@ -580,13 +570,6 @@ __metadata:
   version: 1.1.1
   resolution: "function-bind@npm:1.1.1"
   checksum: b32fbaebb3f8ec4969f033073b43f5c8befbb58f1a79e12f1d7490358150359ebd92f49e72ff0144f65f2c48ea2a605bff2d07965f548f6474fd8efd95bf361a
-  languageName: node
-  linkType: hard
-
-"g@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "g@npm:2.0.1"
-  checksum: 358308d56ada729aeb3351c6c1286928db29e6d06d89f61c4ca610b21537211dd4a8232137dec0052bc9af9fdd31a2e97c941a775b7fc195511eec6f7e628d3a
   languageName: node
   linkType: hard
 
@@ -1672,15 +1655,5 @@ __metadata:
   version: 4.0.0
   resolution: "yallist@npm:4.0.0"
   checksum: 343617202af32df2a15a3be36a5a8c0c8545208f3d3dfbc6bb7c3e3b7e8c6f8e7485432e4f3b88da3031a6e20afa7c711eded32ddfb122896ac5d914e75848d5
-  languageName: node
-  linkType: hard
-
-"yarn@npm:^1.22.19":
-  version: 1.22.19
-  resolution: "yarn@npm:1.22.19"
-  bin:
-    yarn: bin/yarn.js
-    yarnpkg: bin/yarn.js
-  checksum: b43d2cc5fee7e933beb12a8aee7dfceca9e9ef2dd17c5d04d15a12ab7bec5f5744ea34a07b86e013da7f291a18c4e1ad8f70e150f5ed2f4666e6723c7f0a8452
   languageName: node
   linkType: hard

@@ -11,8 +11,10 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 COPY package.json yarn.lock /project/
+RUN npm uninstall yarn
+RUN rm -rf "$HOME/.yarn"
+RUN corepack prepare yarn@3.2.2 --activate
 RUN yarn set version 3.2.2
-
 RUN yarn install
 
 COPY . /project
