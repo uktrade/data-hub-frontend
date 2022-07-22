@@ -22,6 +22,7 @@ var dataHubEvents = require('../../../fixtures/v4/activity-feed/data-hub-events.
 var aventriEvents = require('../../../fixtures/v4/activity-feed/aventri-events.json')
 var aventriEventsNoDetails = require('../../../fixtures/v4/activity-feed/aventri-events-no-details.json')
 var aventriAttendees = require('../../../fixtures/v4/activity-feed/aventri-attendees.json')
+var aventriAttendeesNewOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-new-order.json')
 
 //All Activitiy feed events
 var allActivityFeedEvents = require('../../../fixtures/v4/activity-feed/all-activity-feed-events.json')
@@ -141,6 +142,11 @@ exports.activityFeed = function (req, res) {
     // network error
     if (aventriId === 'dit:aventri:Event:500') {
       return res.status(500).send('something went wrong')
+    }
+    //sort by first name desc
+    var firstNameOrder = req.body.sort['object.dit:firstName']?.order
+    if (firstNameOrder === 'desc') {
+      return res.json(aventriAttendeesNewOrder)
     }
     // happy path
     return res.json(aventriAttendees)
