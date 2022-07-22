@@ -32,6 +32,14 @@ const StyledFieldInput = styled(FieldInput)({
   width: 50,
 })
 
+const MAX_DAYS = 32767 // Set on the API endpoint (DB constraint)
+const POSITIVE_INT_REGEX = /^[0-9]+$/
+const EMPTY_ERR_MSG = 'Enter when you want to get reminders for your projects'
+const MIN_ERR_MSG = 'Enter a whole number that’s 1 or higher, like 25'
+const MAX_ERR_MSG = `Enter a whole number that’s less than or equal to ${MAX_DAYS}`
+
+const isPositiveInteger = (value) => POSITIVE_INT_REGEX.test(value)
+
 const NoRecentInteractionForm = () => (
   <DefaultLayout
     heading={
@@ -94,15 +102,24 @@ const NoRecentInteractionForm = () => (
                         >
                           {({ groupIndex }) => (
                             <StyledFieldInput
-                              type="number"
+                              type="text"
                               text="days with no interaction"
                               name={`reminder_days_${groupIndex}`}
                               data-test={`reminder_days_${groupIndex}`}
-                              validate={(value) =>
-                                value
-                                  ? null
-                                  : 'Enter when you want to get reminders for your projects'
-                              }
+                              validate={(value) => {
+                                if (isPositiveInteger(value)) {
+                                  const val = parseInt(value, 10)
+                                  return val === 0
+                                    ? MIN_ERR_MSG
+                                    : val > MAX_DAYS
+                                    ? MAX_ERR_MSG
+                                    : null
+                                } else {
+                                  return isEmpty(value)
+                                    ? EMPTY_ERR_MSG
+                                    : MIN_ERR_MSG
+                                }
+                              }}
                             />
                           )}
                         </FieldAddAnother>
