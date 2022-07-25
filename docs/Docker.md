@@ -7,7 +7,7 @@ _Helpful Docker commands that allow you to bring up containers, run a bunch of t
 **Note for all users:** The docker volumes for the frontend, api and sandbox api are all mounted. This means that you should not need to rebuild the containers when you make changes and you should see your changes reflected immediately. However, there are certain changes that will require you to rebuild. In that case, bring down the containers and run the script again. The scripts will always rebuild you containers if it detects code changes, otherwise they will be quick to come up and will just use the images it has in the docker cache.
 
 Prerequisite:
-    
+
     cp sample.env .env
 
 # Table of Contents
@@ -22,7 +22,7 @@ Prerequisite:
 ## Creating Docker container for CircleCI
 
 ```bash
-export VERSION=1.0.6 # Increment this version each time when you edit Dockerfile.
+export VERSION=2.0.2 # Increment this version each time when you edit Dockerfile.
 
 Ensure you have gcloud sdk and you are logged in following their instructions:
 
@@ -46,7 +46,7 @@ Your image should be now listed at [Google Container Registry](http://gcr.io/sre
 Prerequisite: Ensure `data-hub-api` is sitting in the same directory as `data-hub-frontend`
 
 ### Bring up the Dev environment
-    
+
     make start-dev          // bring up the containers
     make stop-dev           // stop and remove the containers
 
@@ -67,32 +67,38 @@ Instead of running the tests inside the container you can also run them outside 
 ### Bring up both the Frontend and the API for a particular user
 
 #### DIT user
+
     make start-e2e-dit      // bring up the containers
     make e2e-tests-dit      // run the tests inside the container
     make stop-e2e           // stop and remove the containers
 
 #### LEP user
+
     make start-e2e-lep      // bring up the containers
     make e2e-tests-lep      // run the tests inside the container
     make stop-e2e           // stop and remove the containers
 
 #### DA user
+
     make start-e2e-da       // bring up the containers
     make e2e-tests-da       // run the tests inside the container
-    make stop-e2e           // stop and remove the containers   
+    make stop-e2e           // stop and remove the containers
 
 Note: Before running the tests (and the containers are up) in a browser go to: `http://localhost:3000` and you'll be redirected to mock-sso. For now (we're working on it) change the domain from `mock-sso` to `localhost` to view the application.
 
 ## Start the Visual tests
+
     make start-mock         // bring up the containers
     make visual-tests       // runs the tests inside the container
     make stop-mock          // stop and remove the containers
 
 ## Start the Accessibility tests
+
     make start-mock          // bring up the containers
     make a11y-tests          // run the tests inside the container
 
 ## Start the Unit tests
 
 ### Build the Frontend and run the Unit tests
+
      make unit-client-tests
