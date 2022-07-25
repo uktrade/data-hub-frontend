@@ -356,6 +356,61 @@ describe('Edit no recent interaction', () => {
         )
       })
     })
+
+    it('should display an error when the value is negative', () => {
+      cy.get('[data-test="reminders-yes"]').check()
+      cy.get('[data-test="reminder_days_0"]').clear()
+      cy.get('[data-test="reminder_days_0"]').type('-1')
+      cy.get('[data-test="submit-button"]').click()
+      cy.get('[data-test="summary-form-errors"] ul > li').should(
+        'contain',
+        'Enter a whole number that’s 1 or higher, like 25'
+      )
+    })
+
+    it('should display an error on any non-numerical value', () => {
+      cy.get('[data-test="reminders-yes"]').check()
+      cy.get('[data-test="reminder_days_0"]').clear()
+      cy.get('[data-test="reminder_days_0"]').type('t')
+      cy.get('[data-test="submit-button"]').click()
+      cy.get('[data-test="summary-form-errors"] ul > li').should(
+        'contain',
+        'Enter a whole number that’s 1 or higher, like 25'
+      )
+    })
+
+    it('should display an error on a floating point values', () => {
+      cy.get('[data-test="reminders-yes"]').check()
+      cy.get('[data-test="reminder_days_0"]').clear()
+      cy.get('[data-test="reminder_days_0"]').type('1.5')
+      cy.get('[data-test="submit-button"]').click()
+      cy.get('[data-test="summary-form-errors"] ul > li').should(
+        'contain',
+        'Enter a whole number that’s 1 or higher, like 25'
+      )
+    })
+
+    it('should display an error when the value is zero', () => {
+      cy.get('[data-test="reminders-yes"]').check()
+      cy.get('[data-test="reminder_days_0"]').clear()
+      cy.get('[data-test="reminder_days_0"]').type('0')
+      cy.get('[data-test="submit-button"]').click()
+      cy.get('[data-test="summary-form-errors"] ul > li').should(
+        'contain',
+        'Enter a whole number that’s 1 or higher, like 25'
+      )
+    })
+
+    it('should display an error when the value has breached the limit', () => {
+      cy.get('[data-test="reminders-yes"]').check()
+      cy.get('[data-test="reminder_days_0"]').clear()
+      cy.get('[data-test="reminder_days_0"]').type('32768')
+      cy.get('[data-test="submit-button"]').click()
+      cy.get('[data-test="summary-form-errors"] ul > li').should(
+        'contain',
+        'Enter a whole number that’s less than or equal to 32767'
+      )
+    })
   })
 
   context('Form submission', () => {
