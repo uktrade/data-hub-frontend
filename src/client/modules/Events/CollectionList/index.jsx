@@ -50,7 +50,7 @@ const EventsCollection = ({
   selectedFilters,
   allActivityFeedEvents,
   total,
-  page = 1,
+  page,
   itemsPerPage = 10,
   maxItemsToPaginate = 10000,
   ...props

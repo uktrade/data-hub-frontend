@@ -276,6 +276,16 @@ describe('Event Collection List Page - React', () => {
           cy.get('@aventriEvents').should('have.length', 0)
         })
       })
+
+      context('when there are more than 10 events', () => {
+        it('should be possible to page through', () => {
+          cy.get('[data-page-number="2"]').click()
+          cy.get('[data-test=pagination-summary]').contains('Page 2 of 9')
+          cy.get('@firstDataHubEvent')
+            .find('[data-test="data-hub-event-name"]')
+            .should('exist')
+        })
+      })
     })
 
     context(
