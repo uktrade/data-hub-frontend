@@ -10,7 +10,7 @@ const {
 
 const { getGlobalUltimateHierarchy } = require('../../repos')
 const urls = require('../../../../lib/urls')
-const { fetchActivityFeed } = require('./repos')
+const { fetchActivityFeed, fetchMatchingDataHubContact } = require('./repos')
 const config = require('../../../../config')
 
 const {
@@ -301,8 +301,8 @@ async function fetchAventriAttendees(req, res, next) {
       req,
       aventriAttendeeQuery(aventriEventId)
     )
-
-    const aventriAttendees = aventriAttendeeResults.hits.hits.map(
+    // istanbul ignore next: Covered by functional tests
+    let aventriAttendees = aventriAttendeeResults.hits.hits.map(
       (hit) => hit._source
     )
 
@@ -313,7 +313,33 @@ async function fetchAventriAttendees(req, res, next) {
       req,
       aventriEventQuery([formattedAventriEventId])
     )
+
     const aventriEventData = aventriEventResults.hits.hits[0]._source
+
+    // add the datahub ID to aventri attendees object
+    // istanbul ignore next: Covered by functional tests
+    const addDataHubUrlToAttendee = async (attendee) => {
+      const attendeeEmail = attendee.object['dit:aventri:email']
+      let attendeeContactUrl = null
+      if (attendeeEmail) {
+        const dataHubContactResults = await fetchMatchingDataHubContact(
+          req,
+          attendeeEmail
+        )
+        const dataHubContactId = dataHubContactResults?.results[0]?.id
+        attendeeContactUrl = dataHubContactId
+          ? `/contacts/${dataHubContactId}/details`
+          : null
+      }
+      attendee.datahubContactUrl = attendeeContactUrl
+      return attendee
+    }
+    // istanbul ignore next: Covered by functional tests
+    aventriAttendees = await Promise.all(
+      aventriAttendees.map(async (attendee) => {
+        return await addDataHubUrlToAttendee(attendee)
+      })
+    )
 
     res.json({
       aventriEventData,

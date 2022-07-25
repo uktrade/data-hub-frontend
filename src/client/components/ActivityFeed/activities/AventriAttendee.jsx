@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Link from '@govuk-react/link'
 import CardUtils from './card/CardUtils'
 import { ACTIVITY_TYPE } from '../constants'
 import { GREY_1 } from 'govuk-colours'
@@ -26,6 +27,7 @@ export const transformAventriAttendee = (attendee) => ({
     AVENTRI_ATTENDEE_REG_STATUSES[
       attendee.object['dit:aventri:registrationstatus']
     ],
+  contactUrl: attendee.datahubContactUrl,
 })
 
 const StyledSpan = styled('span')`
@@ -35,7 +37,7 @@ const StyledSpan = styled('span')`
 `
 
 export default function AventriAttendee({ activity: attendee }) {
-  const { attendeeName, eventName, date, registrationStatus } =
+  const { attendeeName, eventName, date, registrationStatus, contactUrl } =
     transformAventriAttendee(attendee)
 
   return eventName ? (
@@ -56,7 +58,11 @@ export default function AventriAttendee({ activity: attendee }) {
   ) : (
     <ActivityCardWrapper dataTest="aventri-attendee">
       <ActivityCardSubject dataTest="aventri-attendee-name">
-        {attendeeName}
+        {contactUrl ? (
+          <Link href={contactUrl}>{attendeeName}</Link>
+        ) : (
+          attendeeName
+        )}
       </ActivityCardSubject>
     </ActivityCardWrapper>
   )

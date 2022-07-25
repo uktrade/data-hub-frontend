@@ -8,6 +8,9 @@ const incompleteUKContact = require('../../../fixtures/v3/contact/contact-incomp
 const contactWithCompanyAddress = require('../../../fixtures/v3/contact/contact-with-company-address.json')
 const contactWithUSAddress = require('../../../fixtures/v3/contact/contact-with-us-address.json')
 const archivedContact = require('../../../fixtures/v3/contact/contact-archived.json')
+const aventriContact = require('../../../fixtures/v4/activity-feed/aventri-attendees.json')
+const ditContactforAventri = require('../../../fixtures/v3/contact/contact-aventri.json')
+const noContact = require('../../../fixtures/v3/contact/no-contact.json')
 
 const lambdaPlc = require('../../../fixtures/v4/company/company-lambda-plc.json')
 const contactCreate = require('../../../fixtures/v3/contact/contact-create.json')
@@ -20,6 +23,15 @@ const validateContactForm = function (formData) {
     .map((fieldName) => [fieldName, ['This field may not be null.']])
 }
 
+const AventriEmailWithDataHubMatch =
+  aventriContact.hits?.hits[0]?._source.object['dit:emailAddress']
+
+const AventriEmailWithoutDataHubMatch =
+  aventriContact.hits?.hits[1]?._source.object['dit:emailAddress']
+
+const EmptyStringAventriEmail =
+  aventriContact.hits?.hits[2]?._source.object['dit:emailAddress']
+
 exports.contact = function (req, res) {
   // This is here to allow creation of new contacts. The email must contain "new"
   if (req.query.email?.includes('new')) {
@@ -31,6 +43,15 @@ exports.contact = function (req, res) {
       'BEWARE: Lambda PLC uses contacts-for-referral.json rather than contact.json'
     )
     return res.json(contactsForReferral)
+  }
+  if (req.query.email === AventriEmailWithDataHubMatch) {
+    return res.json(ditContactforAventri)
+  }
+  if (
+    req.query.email === AventriEmailWithoutDataHubMatch ||
+    req.query.email === EmptyStringAventriEmail
+  ) {
+    return res.json(noContact)
   } else {
     res.json(contact)
   }

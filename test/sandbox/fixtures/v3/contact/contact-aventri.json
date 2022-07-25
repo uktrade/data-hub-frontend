@@ -1,0 +1,48 @@
+{
+    "count":1,
+    "next":null,
+    "previous":null,
+    "results":[
+        {
+            "id":"26f61090-df61-446c-b846-60c8bbca522f",
+            "title":null,
+            "first_name":"Elle",
+            "last_name":"Woods",
+            "name":"Elle Woods",
+            "job_title":"Harvard Lawyer",
+            "company":{
+            "name":"West End Corp",
+            "id":"c158c18f-8227-4784-bc7d-8800d4907209"
+            },
+            "adviser":{
+            "name":"DIT Staff",
+            "first_name":"DIT",
+            "last_name":"Staff",
+            "id":"7d19d407-9aec-4d06-b190-d3f404627f21"
+            },
+            "primary":true,
+            "telephone_countrycode":"",
+            "telephone_number":"",
+            "full_telephone_number":"07489563848",
+            "email":"elle.woods@gmail.com",
+            "address_same_as_company":true,
+            "address_1":null,
+            "address_2":null,
+            "address_town":null,
+            "address_county":null,
+            "address_country":null,
+            "address_postcode":null,
+            "telephone_alternative":null,
+            "email_alternative":null,
+            "notes":null,
+            "accepts_dit_email_marketing":false,
+            "archived":false,
+            "archived_documents_url_path":"",
+            "archived_on":null,
+            "archived_reason":null,
+            "archived_by":null,
+            "created_on":"2019-02-04T15:59:14.267412Z",
+            "modified_on":"2019-02-05T13:17:23.112153Z"
+        }
+    ]
+}
