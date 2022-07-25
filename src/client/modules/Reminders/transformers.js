@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash'
+import { isEmpty, pickBy } from 'lodash'
 import { settings } from './constants'
 /**
  * A function that formats an array of numbers (days) and appends a message that is grammatically correct.
@@ -61,3 +61,25 @@ export const transformReminderDaysToAPI = (state) =>
   Object.keys(state)
     .map((key) => (key.startsWith('reminder_days_') ? state[key] : null))
     .filter((value) => value != null)
+
+/**
+ * A function that takes a form state object and transforms it into
+ * an event for Google Tag Manager (GTM)
+ * @param {object} form state
+ * @returns {object} an event for GTM
+ */
+export const transformFormDataToAnalyticsData = (state) => {
+  const reminders = pickBy({
+    reminder0: state.reminder_days_0,
+    reminder1: state.reminder_days_1,
+    reminder2: state.reminder_days_2,
+    reminder3: state.reminder_days_3,
+    reminder4: state.reminder_days_4,
+  })
+  return {
+    ...reminders,
+    remindersCount: Object.keys(reminders).length,
+    wantsReminders: state.reminders,
+    wantsEmailNotifications: state.emailNotifications,
+  }
+}

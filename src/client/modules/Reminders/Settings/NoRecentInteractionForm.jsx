@@ -3,7 +3,10 @@ import { isEmpty } from 'lodash'
 import styled from 'styled-components'
 
 import urls from '../../../../lib/urls'
-import { transformReminderDaysToAPI } from '../transformers'
+import {
+  transformReminderDaysToAPI,
+  transformFormDataToAnalyticsData,
+} from '../transformers'
 
 import {
   Form,
@@ -71,7 +74,8 @@ const NoRecentInteractionForm = () => (
         reminder_days: transformReminderDaysToAPI(state),
         email_reminders_enabled: state.emailNotifications === OPTION_YES,
       })}
-      analyticsFormName="remindersSettingsNoRecentInteraction"
+      analyticsFormName="editNoRecentInteractionReminderSettings"
+      analyticsData={(data) => transformFormDataToAnalyticsData(data)}
       flashMessage={() => 'Settings updated'}
       cancelRedirectTo={() => urls.reminders.settings.index()}
     >
