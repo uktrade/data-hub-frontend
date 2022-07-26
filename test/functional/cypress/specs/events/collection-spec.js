@@ -240,15 +240,16 @@ describe('Event Collection List Page - React', () => {
         beforeEach(() => {
           cy.intercept(
             'GET',
-            `${events.activity.data()}?sortBy=modified_on:desc`
+            `${events.activity.data()}?sortBy=modified_on:desc&page=1`
           ).as('recentlyUpdatedRequest')
           cy.intercept(
             'GET',
-            `${events.activity.data()}?sortBy=modified_on:asc`
+            `${events.activity.data()}?sortBy=modified_on:asc&page=1`
           ).as('leastRecentlyUpdatedRequest')
-          cy.intercept('GET', `${events.activity.data()}?sortBy=name:asc`).as(
-            'nameRequest'
-          )
+          cy.intercept(
+            'GET',
+            `${events.activity.data()}?sortBy=name:asc&page=1`
+          ).as('nameRequest')
           cy.visit(events.index())
         })
 
@@ -294,7 +295,7 @@ describe('Event Collection List Page - React', () => {
         before(() => {
           cy.intercept(
             'GET',
-            `${events.activity.data()}?sortBy=modified_on:desc`,
+            `${events.activity.data()}?sortBy=modified_on:desc&page=1`,
             { statusCode: 500 }
           )
           cy.visit(urls.events.index())
