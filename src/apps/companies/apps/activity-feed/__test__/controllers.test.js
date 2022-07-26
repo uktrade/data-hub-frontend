@@ -5,7 +5,10 @@ const {
   DATA_HUB_ACTIVITY,
   EXTERNAL_ACTIVITY,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
+  EVENT_ACTIVITY_SORT_OPTIONS,
 } = require('../constants')
+const { filtersQueryBuilder } = require('../controllers')
+const activityFeedEventsQuery = require('../es-queries/activity-feed-all-events-query')
 
 describe('Activity feed controllers', () => {
   let fetchActivityFeedStub,
@@ -506,6 +509,42 @@ describe('Activity feed controllers', () => {
         expect(middlewareParameters.resMock.json).to.not.have.been.called
         expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
       })
+    })
+  })
+  describe('#filtersQueryBuilder', () => {
+    context('check dsl query when filtering on event name', () => {
+      const name = 'cool event'
+      const expectedEsQuery = {
+        query: {
+          bool: {
+            must: [
+              {
+                terms: {
+                  'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+                },
+              },
+              {
+                match: {
+                  'object.name': name,
+                },
+              },
+            ],
+          },
+        },
+        sort: {
+          'object.updated': {
+            order: 'desc',
+            unmapped_type: 'date',
+          },
+        },
+      }
+
+      const actualQuery = activityFeedEventsQuery({
+        filtersQuery: filtersQueryBuilder(name),
+        sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
+      })
+
+      expect(expectedEsQuery).to.deep.equal(actualQuery)
     })
   })
 })
