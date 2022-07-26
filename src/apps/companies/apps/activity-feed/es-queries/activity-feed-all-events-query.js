@@ -1,7 +1,7 @@
-const activityFeedEventsQuery = ({ filtersQuery, sort }) => ({
+const activityFeedEventsQuery = ({ fullQuery, sort }) => ({
   query: {
     bool: {
-      must: filtersQuery,
+      must: fullQuery,
     },
   },
   sort,

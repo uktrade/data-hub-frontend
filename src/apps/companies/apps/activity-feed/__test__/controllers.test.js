@@ -7,7 +7,7 @@ const {
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
   EVENT_ACTIVITY_SORT_OPTIONS,
 } = require('../constants')
-const { filtersQueryBuilder } = require('../controllers')
+const { eventsColListQueryBuilder } = require('../controllers')
 const activityFeedEventsQuery = require('../es-queries/activity-feed-all-events-query')
 
 describe('Activity feed controllers', () => {
@@ -540,7 +540,7 @@ describe('Activity feed controllers', () => {
       }
 
       const actualQuery = activityFeedEventsQuery({
-        filtersQuery: filtersQueryBuilder(name),
+        fullQuery: eventsColListQueryBuilder(name),
         sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
       })
 

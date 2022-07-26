@@ -355,7 +355,7 @@ async function fetchAventriAttendees(req, res, next) {
   }
 }
 
-const filtersQueryBuilder = (name) => {
+const eventsColListQueryBuilder = (name) => {
   // return query if name is present, else return null
   const eventNameFilter = name
     ? {
@@ -383,7 +383,7 @@ async function fetchAllActivityFeedEvents(req, res, next) {
     const allActivityFeedEventsResults = await fetchActivityFeed(
       req,
       allActivityFeedEventsQuery({
-        filtersQuery: filtersQueryBuilder(name),
+        fullQuery: eventsColListQueryBuilder(name),
         sort:
           EVENT_ACTIVITY_SORT_OPTIONS[sortBy] ||
           EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
@@ -409,5 +409,5 @@ module.exports = {
   fetchAventriEvent,
   fetchAllActivityFeedEvents,
   fetchAventriAttendees,
-  filtersQueryBuilder,
+  eventsColListQueryBuilder,
 }
