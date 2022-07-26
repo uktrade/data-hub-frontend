@@ -6,6 +6,7 @@ const {
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
   CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS,
   EVENT_ACTIVITY_SORT_OPTIONS,
+  EVENT_ATTENDEES_SORT_OPTIONS,
 } = require('./constants')
 
 const { getGlobalUltimateHierarchy } = require('../../repos')
@@ -294,20 +295,23 @@ async function fetchAventriEvent(req, res, next) {
 }
 
 async function fetchAventriAttendees(req, res, next) {
-  const aventriEventId = req.params.aventriEventId
+  // istanbul ignore next: Covered by functional tests
   try {
+    const eventId = req.params.aventriEventId
+
+    const sort = EVENT_ATTENDEES_SORT_OPTIONS[req.query.sortBy]
+
     //get the attendees
     const aventriAttendeeResults = await fetchActivityFeed(
       req,
-      aventriAttendeeQuery(aventriEventId)
+      aventriAttendeeQuery({ eventId, sort })
     )
     // istanbul ignore next: Covered by functional tests
     let aventriAttendees = aventriAttendeeResults.hits.hits.map(
       (hit) => hit._source
     )
 
-    //get the event
-    const formattedAventriEventId = `dit:aventri:Event:${aventriEventId}:Create`
+    const formattedAventriEventId = `dit:aventri:Event:${eventId}:Create`
 
     const aventriEventResults = await fetchActivityFeed(
       req,

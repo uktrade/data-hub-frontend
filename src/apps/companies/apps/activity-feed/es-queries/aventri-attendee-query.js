@@ -1,4 +1,4 @@
-const aventriAttendeeQuery = (eventId) => ({
+const aventriAttendeeQuery = ({ eventId, sort }) => ({
   query: {
     bool: {
       must: [
@@ -15,6 +15,7 @@ const aventriAttendeeQuery = (eventId) => ({
       ],
     },
   },
+  sort,
 })
 
 module.exports = { aventriAttendeeQuery }

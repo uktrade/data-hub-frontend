@@ -3,7 +3,12 @@ import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
 import urls from '../../../../lib/urls'
-import { DefaultLayout, LocalNav, LocalNavLink } from '../../../components'
+import {
+  CollectionSort,
+  DefaultLayout,
+  LocalNav,
+  LocalNavLink,
+} from '../../../components'
 import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
 import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import { GridCol, GridRow } from 'govuk-react'
@@ -13,7 +18,11 @@ import { EVENTS__AVENTRI_ATTENDEES_LOADED } from '../../../actions'
 import Activity from '../../../components/ActivityFeed/Activity'
 import ActivityList from '../../../components/ActivityFeed/activities/card/ActivityList'
 
-const EventAventriAttendees = ({ aventriAttendees, aventriEventData }) => {
+const EventAventriAttendees = ({
+  aventriAttendees,
+  aventriEventData,
+  selectedSortBy,
+}) => {
   const { aventriEventId } = useParams()
   const eventName = aventriEventData?.object.name
   const breadcrumbs = [
@@ -45,7 +54,7 @@ const EventAventriAttendees = ({ aventriAttendees, aventriEventData }) => {
               id={ID}
               progressMessage="Loading Aventri attendees"
               startOnRender={{
-                payload: aventriEventId,
+                payload: { aventriEventId, selectedSortBy },
                 onSuccessDispatch: EVENTS__AVENTRI_ATTENDEES_LOADED,
               }}
             >
@@ -68,6 +77,18 @@ const EventAventriAttendees = ({ aventriAttendees, aventriEventData }) => {
                     </LocalNav>
                   </GridCol>
                   <GridCol setWidth="three-quarters">
+                    <CollectionSort
+                      sortOptions={[
+                        {
+                          name: 'First name: A-Z',
+                          value: 'first_name:asc',
+                        },
+                        {
+                          name: 'First name: Z-A',
+                          value: 'first_name:desc',
+                        },
+                      ]}
+                    />
                     <ActivityList>
                       {aventriAttendees?.map((attendee, index) => (
                         <li key={`aventri-attendee-${index}`}>
