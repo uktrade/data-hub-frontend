@@ -355,35 +355,35 @@ async function fetchAventriAttendees(req, res, next) {
   }
 }
 
+const filtersQueryBuilder = (name) => {
+  // return query if name is present, else return null
+  const eventNameFilter = name
+    ? {
+        match: {
+          'object.name': name,
+        },
+      }
+    : null
+
+  const filtersArray = [eventNameFilter]
+
+  // do not pass in filter if its value is null
+  const cleansedFiltersArray = filtersArray
+    .filter((filter) => filter != null)
+    .map((filter) => filter)
+
+  const queryBuilder = [EVENT_ALL_ACTIVITY, ...cleansedFiltersArray]
+  return queryBuilder
+}
+
 async function fetchAllActivityFeedEvents(req, res, next) {
   try {
     const { sortBy, name } = req.query
 
-    // return query if name is present, else return null
-    const eventNameFilter = name
-      ? {
-          match: {
-            'object.name': name,
-          },
-        }
-      : null
-
-    const filtersQueryBuilder = () => {
-      const filtersArray = [eventNameFilter]
-
-      // do not pass in filter if its value is null
-      const cleansedFiltersArray = filtersArray
-        .filter((filter) => filter != null)
-        .map((filter) => filter)
-
-      const queryBuilder = [EVENT_ALL_ACTIVITY, ...cleansedFiltersArray]
-      return queryBuilder
-    }
-
     const allActivityFeedEventsResults = await fetchActivityFeed(
       req,
       allActivityFeedEventsQuery({
-        filtersQuery: filtersQueryBuilder(),
+        filtersQuery: filtersQueryBuilder(name),
         sort:
           EVENT_ACTIVITY_SORT_OPTIONS[sortBy] ||
           EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
@@ -409,4 +409,5 @@ module.exports = {
   fetchAventriEvent,
   fetchAllActivityFeedEvents,
   fetchAventriAttendees,
+  filtersQueryBuilder,
 }
