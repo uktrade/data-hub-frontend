@@ -26,9 +26,6 @@ var aventriAttendeesNewOrder = require('../../../fixtures/v4/activity-feed/avent
 
 //All Activitiy feed events
 var allActivityFeedEvents = require('../../../fixtures/v4/activity-feed/all-activity-feed-events.json')
-const {
-  ACTIVITIES_PER_PAGE,
-} = require('../../../../../src/apps/contacts/constants')
 
 const DATA_HUB_ACTIVITY = [
   'dit:Interaction',
@@ -46,6 +43,8 @@ const DATA_HUB_AND_EXTERNAL_ACTIVITY = [
 ]
 
 const ALL_ACTIVITY_STREAM_EVENTS = ['dit:aventri:Event', 'dit:dataHub:Event']
+
+const ALL_ACTIVITIES_PER_PAGE = 10
 
 const VENUS_LTD = 'dit:DataHubCompany:0f5216e0-849f-11e6-ae22-56b6b6499611'
 
@@ -100,7 +99,7 @@ exports.activityFeed = function (req, res) {
     const { sort, from } = req.body
 
     //if page 2
-    if (from == ACTIVITIES_PER_PAGE) {
+    if (from == ALL_ACTIVITIES_PER_PAGE) {
       return res.json(allActivityFeedEvents)
     }
 
