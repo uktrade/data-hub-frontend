@@ -26,6 +26,9 @@ var aventriAttendeesNewOrder = require('../../../fixtures/v4/activity-feed/avent
 
 //All Activitiy feed events
 var allActivityFeedEvents = require('../../../fixtures/v4/activity-feed/all-activity-feed-events.json')
+const {
+  ACTIVITIES_PER_PAGE,
+} = require('../../../../../src/apps/contacts/constants')
 
 const DATA_HUB_ACTIVITY = [
   'dit:Interaction',
@@ -41,6 +44,8 @@ const DATA_HUB_AND_EXTERNAL_ACTIVITY = [
   ...DATA_HUB_ACTIVITY,
   ...EXTERNAL_ACTIVITY,
 ]
+
+const ALL_ACTIVITY_STREAM_EVENTS = ['dit:aventri:Event', 'dit:dataHub:Event']
 
 const VENUS_LTD = 'dit:DataHubCompany:0f5216e0-849f-11e6-ae22-56b6b6499611'
 
@@ -81,12 +86,24 @@ exports.activityFeed = function (req, res) {
     }
   }
 
-  var isAllActivityStreamEvents =
-    get(req.body, "query.bool.must[0].terms['object.type'][0]") ===
-    'dit:aventri:Event'
+  var allActivityStreamEventTypes = get(
+    req.body,
+    "query.bool.must[0].terms['object.type']"
+  )
+
+  var isAllActivityStreamEvents = isEqual(
+    allActivityStreamEventTypes,
+    ALL_ACTIVITY_STREAM_EVENTS
+  )
 
   if (isAllActivityStreamEvents) {
-    const { sort } = req.body
+    const { sort, from } = req.body
+
+    //if page 2
+    if (from == ACTIVITIES_PER_PAGE) {
+      return res.json(allActivityFeedEvents)
+    }
+
     // if the sort by is recently updated (modified_on:desc)
     if (sort['object.updated']?.order === 'desc') {
       return res.json(allActivityFeedEvents)
