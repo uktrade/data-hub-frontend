@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import urls from '../../../../lib/urls'
 import {
   CollectionSort,
+  CollectionHeader,
   DefaultLayout,
   LocalNav,
   LocalNavLink,
@@ -22,6 +23,7 @@ const EventAventriAttendees = ({
   aventriAttendees,
   aventriEventData,
   selectedSortBy,
+  totalAttendees,
 }) => {
   const { aventriEventId } = useParams()
   const eventName = aventriEventData?.object.name
@@ -77,6 +79,11 @@ const EventAventriAttendees = ({
                     </LocalNav>
                   </GridCol>
                   <GridCol setWidth="three-quarters">
+                    <CollectionHeader
+                      totalItems={totalAttendees}
+                      collectionName="attendee"
+                      data-test="attendee-collection-header"
+                    />
                     <CollectionSort
                       sortOptions={[
                         {

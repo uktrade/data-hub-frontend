@@ -307,6 +307,9 @@ async function fetchAventriAttendees(req, res, next) {
       req,
       aventriAttendeeQuery({ eventId, sort })
     )
+
+    const totalAttendees = aventriAttendeeResults.hits.total.value
+
     // istanbul ignore next: Covered by functional tests
     let aventriAttendees = aventriAttendeeResults.hits.hits.map(
       (hit) => hit._source
@@ -347,6 +350,7 @@ async function fetchAventriAttendees(req, res, next) {
     )
 
     res.json({
+      totalAttendees,
       aventriEventData,
       aventriAttendees,
     })
