@@ -356,7 +356,6 @@ async function fetchAventriAttendees(req, res, next) {
 }
 
 const eventsColListQueryBuilder = (name) => {
-  // return query if name is present, else return null
   const eventNameFilter = name
     ? {
         match: {
@@ -367,10 +366,7 @@ const eventsColListQueryBuilder = (name) => {
 
   const filtersArray = [eventNameFilter]
 
-  // do not pass in filter if its value is null
-  const cleansedFiltersArray = filtersArray
-    .filter((filter) => filter != null)
-    .map((filter) => filter)
+  const cleansedFiltersArray = filtersArray.filter((filter) => filter != null)
 
   const queryBuilder = [EVENT_ALL_ACTIVITY, ...cleansedFiltersArray]
   return queryBuilder
