@@ -3,6 +3,8 @@ import qs from 'qs'
 
 import { randomChoice } from '../../fakers/utils'
 import { eventTypeFaker, eventTypeListFaker } from '../../fakers/event-types'
+import { events } from '../../../../../src/lib/urls'
+import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../../src/apps/companies/apps/activity-feed/constants'
 
 import {
   clickCheckboxGroupOption,
@@ -454,10 +456,28 @@ describe('events Collections Filter', () => {
   context('with the events activity stream feature flag enabled', () => {
     before(() => {
       cy.setUserFeatures([EVENT_ACTIVITY_FEATURE_FLAG])
+      cy.visit(events.index())
     })
     context('Event name', () => {
-      it('should filter from the url', () => {})
-      it('should filter from user input', () => {})
+      const element = '[data-test="event-name-filter"]'
+      const eventName = 'Big Event'
+      const queryParamWithName = 'name=Big+Event'
+      const queryParamEmpty = 'name='
+
+      it('should not add anything to the query param when the page is first loaded', () => {
+        cy.url().should('not.include', queryParamEmpty)
+      })
+
+      it('should add name from user input to query param', () => {
+        cy.get(element).type(`${eventName}{enter}`)
+        cy.url().should('include', queryParamWithName)
+      })
+
+      it('should not add anything to the query param if the name is backspaced', () => {
+        cy.get(element).type(`${eventName}{enter}`)
+        cy.get(element).type(`{selectAll}{backspace}{enter}`)
+        cy.url().should('not.include', queryParamWithName)
+      })
     })
     after(() => {
       cy.resetUser()
