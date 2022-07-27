@@ -24,6 +24,8 @@ const EventAventriAttendees = ({
   aventriEventData,
   selectedSortBy,
   totalAttendees,
+  itemsPerPage = 10,
+  maxItemsToPaginate = 10000,
 }) => {
   const { aventriEventId } = useParams()
   const eventName = aventriEventData?.object.name
@@ -40,6 +42,9 @@ const EventAventriAttendees = ({
       text: eventName,
     },
   ]
+  const totalPages = Math.ceil(
+    Math.min(totalAttendees, maxItemsToPaginate) / itemsPerPage
+  )
 
   return (
     <DefaultLayout
@@ -95,6 +100,7 @@ const EventAventriAttendees = ({
                           value: 'first_name:desc',
                         },
                       ]}
+                      totalPages={totalPages}
                     />
                     <ActivityList>
                       {aventriAttendees?.map((attendee, index) => (
