@@ -513,38 +513,70 @@ describe('Activity feed controllers', () => {
   })
   describe('#filtersQueryBuilder', () => {
     context('check dsl query when filtering on event name', () => {
-      const name = 'cool event'
-      const expectedEsQuery = {
-        query: {
-          bool: {
-            must: [
-              {
-                terms: {
-                  'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+      it('builds the right query when being filtered by event name', () => {
+        const name = 'cool event'
+        const expectedEsQuery = {
+          query: {
+            bool: {
+              must: [
+                {
+                  terms: {
+                    'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+                  },
                 },
-              },
-              {
-                match: {
-                  'object.name': name,
+                {
+                  match: {
+                    'object.name': name,
+                  },
                 },
-              },
-            ],
+              ],
+            },
           },
-        },
-        sort: {
-          'object.updated': {
-            order: 'desc',
-            unmapped_type: 'date',
+          sort: {
+            'object.updated': {
+              order: 'desc',
+              unmapped_type: 'date',
+            },
           },
-        },
-      }
+        }
 
-      const actualQuery = activityFeedEventsQuery({
-        fullQuery: eventsColListQueryBuilder(name),
-        sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
+        const actualQuery = activityFeedEventsQuery({
+          fullQuery: eventsColListQueryBuilder(name),
+          sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
+        })
+
+        expect(expectedEsQuery).to.deep.equal(actualQuery)
       })
 
-      expect(expectedEsQuery).to.deep.equal(actualQuery)
+      it('builds the right query when there is nothing entered into the event name filter', () => {
+        const name = undefined
+        const expectedEsQuery = {
+          query: {
+            bool: {
+              must: [
+                {
+                  terms: {
+                    'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+                  },
+                },
+              ],
+            },
+          },
+          sort: {
+            'object.updated': {
+              order: 'desc',
+              unmapped_type: 'date',
+            },
+          },
+        }
+
+        const actualQuery = activityFeedEventsQuery({
+          fullQuery: eventsColListQueryBuilder(name),
+          sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
+        })
+
+        expect(expectedEsQuery).to.deep.equal(actualQuery)
+      })
     })
   })
 })
