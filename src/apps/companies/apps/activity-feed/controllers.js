@@ -7,6 +7,7 @@ const {
   CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS,
   EVENT_ACTIVITY_SORT_OPTIONS,
   EVENT_ATTENDEES_SORT_OPTIONS,
+  EVENT_ALL_ACTIVITY,
 } = require('./constants')
 
 const { getGlobalUltimateHierarchy } = require('../../repos')
@@ -354,13 +355,31 @@ async function fetchAventriAttendees(req, res, next) {
   }
 }
 
+const eventsColListQueryBuilder = (name) => {
+  const eventNameFilter = name
+    ? {
+        match: {
+          'object.name': name,
+        },
+      }
+    : null
+
+  const filtersArray = [eventNameFilter]
+
+  const cleansedFiltersArray = filtersArray.filter((filter) => filter != null)
+
+  const queryBuilder = [EVENT_ALL_ACTIVITY, ...cleansedFiltersArray]
+  return queryBuilder
+}
+
 async function fetchAllActivityFeedEvents(req, res, next) {
   try {
-    const { sortBy } = req.query
+    const { sortBy, name } = req.query
 
     const allActivityFeedEventsResults = await fetchActivityFeed(
       req,
       allActivityFeedEventsQuery({
+        fullQuery: eventsColListQueryBuilder(name),
         sort:
           EVENT_ACTIVITY_SORT_OPTIONS[sortBy] ||
           EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
@@ -386,4 +405,5 @@ module.exports = {
   fetchAventriEvent,
   fetchAllActivityFeedEvents,
   fetchAventriAttendees,
+  eventsColListQueryBuilder,
 }

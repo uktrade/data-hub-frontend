@@ -1,13 +1,7 @@
-const activityFeedEventsQuery = ({ sort }) => ({
+const activityFeedEventsQuery = ({ fullQuery, sort }) => ({
   query: {
     bool: {
-      must: [
-        {
-          terms: {
-            'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
-          },
-        },
-      ],
+      must: fullQuery,
     },
   },
   sort,
