@@ -9,6 +9,7 @@ import {
   DefaultLayout,
   LocalNav,
   LocalNavLink,
+  RoutedPagination,
 } from '../../../components'
 import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
 import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
@@ -23,6 +24,8 @@ const EventAventriAttendees = ({
   aventriAttendees,
   aventriEventData,
   selectedSortBy,
+  selectedPage,
+  page,
   totalAttendees,
   itemsPerPage = 10,
   maxItemsToPaginate = 10000,
@@ -61,7 +64,7 @@ const EventAventriAttendees = ({
               id={ID}
               progressMessage="Loading Aventri attendees"
               startOnRender={{
-                payload: { aventriEventId, selectedSortBy },
+                payload: { aventriEventId, selectedSortBy, selectedPage },
                 onSuccessDispatch: EVENTS__AVENTRI_ATTENDEES_LOADED,
               }}
             >
@@ -83,39 +86,45 @@ const EventAventriAttendees = ({
                       </LocalNavLink>
                     </LocalNav>
                   </GridCol>
-                  <GridCol setWidth="three-quarters">
-                    <CollectionHeader
-                      totalItems={totalAttendees}
-                      collectionName="attendee"
-                      data-test="attendee-collection-header"
-                    />
-                    <CollectionSort
-                      sortOptions={[
-                        {
-                          name: 'First name: A-Z',
-                          value: 'first_name:asc',
-                        },
-                        {
-                          name: 'First name: Z-A',
-                          value: 'first_name:desc',
-                        },
-                      ]}
-                      totalPages={totalPages}
-                    />
-                    <ActivityList>
-                      {aventriAttendees?.map((attendee, index) => (
-                        <li key={`aventri-attendee-${index}`}>
-                          <Activity activity={attendee}></Activity>
-                        </li>
-                      ))}
-                    </ActivityList>
-                  </GridCol>
+                  {aventriAttendees && (
+                    <GridCol setWidth="three-quarters">
+                      <CollectionHeader
+                        totalItems={totalAttendees}
+                        collectionName="attendee"
+                        data-test="attendee-collection-header"
+                      />
+                      <CollectionSort
+                        sortOptions={[
+                          {
+                            name: 'First name: A-Z',
+                            value: 'first_name:asc',
+                          },
+                          {
+                            name: 'First name: Z-A',
+                            value: 'first_name:desc',
+                          },
+                        ]}
+                        totalPages={totalPages}
+                      />
+                      <ActivityList>
+                        {aventriAttendees?.map((attendee, index) => (
+                          <li key={`aventri-attendee-${index}`}>
+                            <Activity activity={attendee}></Activity>
+                          </li>
+                        ))}
+                      </ActivityList>
+                    </GridCol>
+                  )}
                 </GridRow>
               )}
             </Task.Status>
           )
         }
       </CheckUserFeatureFlag>
+      <RoutedPagination
+        initialPage={page}
+        items={totalAttendees}
+      ></RoutedPagination>
     </DefaultLayout>
   )
 }

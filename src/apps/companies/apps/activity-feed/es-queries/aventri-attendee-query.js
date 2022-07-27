@@ -1,4 +1,5 @@
-const aventriAttendeeQuery = ({ eventId, sort }) => ({
+const aventriAttendeeQuery = ({ eventId, sort, from }) => ({
+  from,
   query: {
     bool: {
       must: [

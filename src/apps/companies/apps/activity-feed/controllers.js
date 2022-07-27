@@ -299,13 +299,15 @@ async function fetchAventriAttendees(req, res, next) {
   // istanbul ignore next: Covered by functional tests
   try {
     const eventId = req.params.aventriEventId
+    const { page } = req.query
 
     const sort = EVENT_ATTENDEES_SORT_OPTIONS[req.query.sortBy]
+    const from = (page - 1) * ACTIVITIES_PER_PAGE
 
     //get the attendees
     const aventriAttendeeResults = await fetchActivityFeed(
       req,
-      aventriAttendeeQuery({ eventId, sort })
+      aventriAttendeeQuery({ eventId, sort, from })
     )
 
     const totalAttendees = aventriAttendeeResults.hits.total.value
