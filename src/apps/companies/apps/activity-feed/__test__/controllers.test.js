@@ -590,5 +590,148 @@ describe('Activity feed controllers', () => {
         expect(expectedEsQuery).to.deep.equal(actualQuery)
       })
     })
+
+    context(
+      'check dsl query when filtering on event start and end date',
+      () => {
+        const expectedEsQuery = (startDate, endDate) => ({
+          query: {
+            bool: {
+              must: [
+                {
+                  terms: {
+                    'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+                  },
+                },
+                {
+                  bool: {
+                    should: [
+                      {
+                        range: {
+                          'object.startTime': {
+                            gte: startDate,
+                            lte: endDate,
+                          },
+                        },
+                      },
+                      {
+                        range: {
+                          'object.endTime': {
+                            gte: startDate,
+                            lte: endDate,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          sort: {
+            'object.updated': {
+              order: 'desc',
+              unmapped_type: 'date',
+            },
+          },
+        })
+
+        it('builds the right query when start date selected', () => {
+          const startDate = '2022-11-01T08:39:06'
+          const endDate = undefined
+
+          const actualQuery = activityFeedEventsQuery({
+            fullQuery: eventsColListQueryBuilder(startDate, endDate),
+            sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
+          })
+
+          expect(expectedEsQuery(startDate, endDate)).to.deep.equal(actualQuery)
+        })
+
+        it('builds the right query when the end date is selected', () => {
+          const startDate = undefined
+          const endDate = '2022-12-12T08:39:06'
+
+          const actualQuery = activityFeedEventsQuery({
+            fullQuery: eventsColListQueryBuilder(startDate, endDate),
+            sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
+          })
+
+          expect(expectedEsQuery).to.deep.equal(actualQuery)
+        })
+
+        it('builds the right query when the start and end date is selected', () => {
+          const startDate = '2022-11-01T08:39:06'
+          const endDate = '2022-12-12T08:39:06'
+
+          const actualQuery = activityFeedEventsQuery({
+            fullQuery: eventsColListQueryBuilder(startDate, endDate),
+            sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
+          })
+
+          expect(expectedEsQuery(startDate, endDate)).to.deep.equal(actualQuery)
+        })
+      }
+    )
+
+    context('check dsl query when all filters are active', () => {
+      const name = 'Big Event'
+      const startDate = '2022-11-01T08:39:06'
+      const endDate = '2022-12-12T08:39:06'
+
+      const expectedEsQuery = {
+        query: {
+          bool: {
+            must: [
+              {
+                terms: {
+                  'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+                },
+              },
+              {
+                match: {
+                  'object.name': name,
+                },
+              },
+              {
+                bool: {
+                  should: [
+                    {
+                      range: {
+                        'object.startTime': {
+                          gte: startDate,
+                          lte: endDate,
+                        },
+                      },
+                    },
+                    {
+                      range: {
+                        'object.endTime': {
+                          gte: startDate,
+                          lte: endDate,
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+        sort: {
+          'object.updated': {
+            order: 'desc',
+            unmapped_type: 'date',
+          },
+        },
+      }
+
+      const actualQuery = activityFeedEventsQuery({
+        fullQuery: eventsColListQueryBuilder(name, startDate, endDate),
+        sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
+      })
+
+      expect(expectedEsQuery).to.deep.equal(actualQuery)
+    })
   })
 })
