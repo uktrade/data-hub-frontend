@@ -23,9 +23,8 @@ import ActivityList from '../../../components/ActivityFeed/activities/card/Activ
 const EventAventriAttendees = ({
   aventriAttendees,
   aventriEventData,
-  selectedSortBy,
-  selectedPage,
-  page,
+  payload,
+  page = parseInt(page || 1, 10),
   totalAttendees,
   itemsPerPage = 10,
   maxItemsToPaginate = 10000,
@@ -64,7 +63,7 @@ const EventAventriAttendees = ({
               id={ID}
               progressMessage="Loading Aventri attendees"
               startOnRender={{
-                payload: { aventriEventId, selectedSortBy, selectedPage },
+                payload: { aventriEventId, ...payload },
                 onSuccessDispatch: EVENTS__AVENTRI_ATTENDEES_LOADED,
               }}
             >
@@ -121,10 +120,7 @@ const EventAventriAttendees = ({
           )
         }
       </CheckUserFeatureFlag>
-      <RoutedPagination
-        initialPage={page}
-        items={totalAttendees}
-      ></RoutedPagination>
+      <RoutedPagination initialPage={page} items={totalAttendees} />
     </DefaultLayout>
   )
 }

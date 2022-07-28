@@ -4,11 +4,11 @@ const urls = require('../../../../lib/urls')
 export const getEventAventriAttendees = ({
   aventriEventId,
   selectedSortBy,
-  selectedPage,
+  page,
 }) => {
   return axios
     .get(urls.events.aventri.attendeesData(aventriEventId), {
-      params: { sortBy: selectedSortBy, page: selectedPage },
+      params: { sortBy: selectedSortBy, page },
     })
     .then(({ data }) => data)
     .catch(() => {
