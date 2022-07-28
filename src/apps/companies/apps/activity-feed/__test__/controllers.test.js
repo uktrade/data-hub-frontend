@@ -545,7 +545,7 @@ describe('Activity feed controllers', () => {
         }
 
         const actualQuery = activityFeedEventsQuery({
-          fullQuery: eventsColListQueryBuilder(name),
+          fullQuery: eventsColListQueryBuilder({ name: name }),
           from,
           size,
           sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
@@ -583,7 +583,7 @@ describe('Activity feed controllers', () => {
         const actualQuery = activityFeedEventsQuery({
           from,
           size,
-          fullQuery: eventsColListQueryBuilder(name),
+          fullQuery: eventsColListQueryBuilder({ name: name }),
           sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
         })
 
@@ -641,7 +641,10 @@ describe('Activity feed controllers', () => {
           const endDate = undefined
 
           const actualQuery = activityFeedEventsQuery({
-            fullQuery: eventsColListQueryBuilder(startDate, endDate),
+            fullQuery: eventsColListQueryBuilder({
+              startDate: startDate,
+              endDate: endDate,
+            }),
             sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
           })
 
@@ -653,11 +656,14 @@ describe('Activity feed controllers', () => {
           const endDate = '2022-12-12T08:39:06'
 
           const actualQuery = activityFeedEventsQuery({
-            fullQuery: eventsColListQueryBuilder(startDate, endDate),
+            fullQuery: eventsColListQueryBuilder({
+              startDate: startDate,
+              endDate: endDate,
+            }),
             sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
           })
 
-          expect(expectedEsQuery).to.deep.equal(actualQuery)
+          expect(expectedEsQuery(startDate, endDate)).to.deep.equal(actualQuery)
         })
 
         it('builds the right query when the start and end date is selected', () => {
@@ -665,7 +671,10 @@ describe('Activity feed controllers', () => {
           const endDate = '2022-12-12T08:39:06'
 
           const actualQuery = activityFeedEventsQuery({
-            fullQuery: eventsColListQueryBuilder(startDate, endDate),
+            fullQuery: eventsColListQueryBuilder({
+              startDate: startDate,
+              endDate: endDate,
+            }),
             sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
           })
 
@@ -727,7 +736,11 @@ describe('Activity feed controllers', () => {
       }
 
       const actualQuery = activityFeedEventsQuery({
-        fullQuery: eventsColListQueryBuilder(name, startDate, endDate),
+        fullQuery: eventsColListQueryBuilder({
+          name: name,
+          startDate: startDate,
+          endDate: endDate,
+        }),
         sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
       })
 
