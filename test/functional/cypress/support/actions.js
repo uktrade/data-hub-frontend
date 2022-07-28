@@ -23,6 +23,10 @@ export const selectFirstAdvisersTypeaheadOption = ({
     ).as('adviserResults')
     cy.get('input').clear().type(input)
     cy.wait('@adviserResults')
+    cy.get('[data-test="typeahead-menu-option"]').contains(input, {
+      matchCase: false,
+      timeout: 120000,
+    })
     cy.get('input').type('{downarrow}{enter}{esc}')
   })
 
