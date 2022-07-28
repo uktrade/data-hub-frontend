@@ -11,9 +11,10 @@ This is the process we have identified for dealing with Dependabot PRs that save
 7. Build and run Storybook (`npm run storybook`) to ensure it works correctly (sometimes it breaks silently due to Dependabot changes).
 8. Bring up your local frontend and carry out some basic smoke tests to ensure that nothing unexpected has happened.
 9. Rebase the dependency branch against `master` to remove all the merge commits, then push the changes and open a PR.
-10. If you are satisfied that everything is in order and all the tests have passed, request reviews as normal.
-11. After merging the PR, ensure that the `release-storybook` job has passed and that Storybook is running as expected.
-12. Deploy to production as soon as possible.
+10. Deploy your branch to the UAT environment to ensure that there are no issues with Jenkins/Cloudfoundry. If the deployment fails, don't proceed any further with the PR and notify the TechEx team.
+11. If you are satisfied that everything is in order and all the tests have passed, request reviews as normal.
+12. After merging the PR, ensure that the `release-storybook` job has passed and that Storybook is running as expected.
+13. Ensure that the dev/staging deployments have succeeded. If they haven't, notify the TechEx team.
 
 ## Additional actions
 
