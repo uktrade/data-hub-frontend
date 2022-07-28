@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import Link from '@govuk-react/link'
+import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
 import multiInstance from '../../utils/multiinstance'
 import { CONTACT_FORM__SUBMIT } from '../../actions'
@@ -31,6 +32,9 @@ import useAdministrativeAreaLookup from '../AdministrativeAreaSearch/useAdminist
 import useAdministrativeAreaSearch from '../AdministrativeAreaSearch/useAdministrativeAreaSearch'
 import urls from '../../../lib/urls'
 
+import styled from 'styled-components'
+import Label from '@govuk-react/label'
+
 const YES = 'Yes'
 const NO = 'No'
 
@@ -42,6 +46,11 @@ const stripHost = (u) => {
   const url = new URL(u)
   return url.pathname + url.search
 }
+
+const StyledLabel = styled(Label)`
+  padding-bottom: ${SPACING.SCALE_5};
+  font-weight: ${FONT_WEIGHTS.bold};
+`
 
 const _ContactForm = ({
   update,
@@ -247,14 +256,12 @@ const _ContactForm = ({
                           type="text"
                           required="Enter a job title"
                         />
-                        <FieldRadios
-                          legend="Is this person a primary contact?"
-                          name="primary"
-                          required="Select yes if this person is a primary contact"
-                          options={[
-                            { value: YES, label: YES },
-                            { value: NO, label: NO },
-                          ]}
+                        <FieldInput
+                          label="Email address"
+                          name="email"
+                          type="email"
+                          required="Enter an email"
+                          validate={validators.email}
                         />
                         <FieldInput
                           label="Telephone number (optional)"
@@ -265,12 +272,39 @@ const _ContactForm = ({
                             'Telephone number should consist of numbers'
                           }
                         />
-                        <FieldInput
-                          label="Email address"
-                          name="email"
-                          type="email"
-                          required="Enter an email"
-                          validate={validators.email}
+                        <FieldRadios
+                          legend="Is this contact’s work address the same as the company address?"
+                          name="addressSameAsCompany"
+                          required="Select yes if the contact's address is the same as the company address"
+                          options={[
+                            { value: YES, label: YES },
+                            {
+                              value: NO,
+                              label: NO,
+                              children: (
+                                <fieldset>
+                                  <StyledLabel>
+                                    What is the contact's work address?
+                                  </StyledLabel>
+                                  <FieldAddress
+                                    name="" // Required, but has no effect
+                                    apiEndpoint="/api/postcodelookup"
+                                    isCountrySelectable={true}
+                                    fontWeights={FONT_WEIGHTS.regular}
+                                  />
+                                </fieldset>
+                              ),
+                            },
+                          ]}
+                        />
+                        <FieldRadios
+                          legend="Is this person a primary contact?"
+                          name="primary"
+                          required="Select yes if this person is a primary contact"
+                          options={[
+                            { value: YES, label: YES },
+                            { value: NO, label: NO },
+                          ]}
                         />
                         <FieldCheckboxes
                           name="acceptsDitEmailMarketing"
@@ -284,28 +318,6 @@ const _ContactForm = ({
                                   YES
                                 ) &&
                                 'By checking this box, you confirm that the contact has opted in to email marketing.',
-                            },
-                          ]}
-                        />
-                        <FieldRadios
-                          legend="Is this contact’s work address the same as the company address?"
-                          name="addressSameAsCompany"
-                          required="Select yes if the contact's address is the same as the company address"
-                          options={[
-                            { value: YES, label: YES },
-                            {
-                              value: NO,
-                              label: NO,
-                              children: (
-                                <fieldset>
-                                  <legend>Contact address</legend>
-                                  <FieldAddress
-                                    name="" // Required, but has no effect
-                                    apiEndpoint="/api/postcodelookup"
-                                    isCountrySelectable={true}
-                                  />
-                                </fieldset>
-                              ),
                             },
                           ]}
                         />
