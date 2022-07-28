@@ -30,3 +30,18 @@ export const SORT_OPTIONS = [
     value: 'start_date:desc',
   },
 ]
+
+export const COLLECTION_LIST_SORT_SELECT_OPTIONS = [
+  {
+    name: 'Recently updated',
+    value: 'modified_on:desc',
+  },
+  {
+    name: 'Least recently updated',
+    value: 'modified_on:asc',
+  },
+  {
+    name: 'Event name A-Z',
+    value: 'name:asc',
+  },
+]

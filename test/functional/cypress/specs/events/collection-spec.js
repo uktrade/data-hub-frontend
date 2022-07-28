@@ -153,6 +153,17 @@ describe('Event Collection List Page - React', () => {
         cy.get('@aventriEvents').eq(0).as('firstAventriEvent')
       })
 
+      it('should display the events result count header', () => {
+        cy.get('[data-test="collection-header"]').should(
+          'have.text',
+          '82 events'
+        )
+      })
+
+      it('should display the expected number of pages', () => {
+        cy.get('[data-test=pagination-summary]').contains('Page 1 of 9')
+      })
+
       it('should not display the data hub API collection list', () => {
         cy.get('[data-test="collection-list"]').should('not.exist')
       })
@@ -229,15 +240,16 @@ describe('Event Collection List Page - React', () => {
         beforeEach(() => {
           cy.intercept(
             'GET',
-            `${events.activity.data()}?sortBy=modified_on:desc`
+            `${events.activity.data()}?sortBy=modified_on:desc&page=1`
           ).as('recentlyUpdatedRequest')
           cy.intercept(
             'GET',
-            `${events.activity.data()}?sortBy=modified_on:asc`
+            `${events.activity.data()}?sortBy=modified_on:asc&page=1`
           ).as('leastRecentlyUpdatedRequest')
-          cy.intercept('GET', `${events.activity.data()}?sortBy=name:asc`).as(
-            'nameRequest'
-          )
+          cy.intercept(
+            'GET',
+            `${events.activity.data()}?sortBy=name:asc&page=1`
+          ).as('nameRequest')
           cy.visit(events.index())
         })
 
@@ -265,6 +277,16 @@ describe('Event Collection List Page - React', () => {
           cy.get('@aventriEvents').should('have.length', 0)
         })
       })
+
+      context('when there are more than 10 events', () => {
+        it('should be possible to page through', () => {
+          cy.get('[data-page-number="2"]').click()
+          cy.get('[data-test=pagination-summary]').contains('Page 2 of 9')
+          cy.get('@firstDataHubEvent')
+            .find('[data-test="data-hub-event-name"]')
+            .should('exist')
+        })
+      })
     })
 
     context(
@@ -273,7 +295,7 @@ describe('Event Collection List Page - React', () => {
         before(() => {
           cy.intercept(
             'GET',
-            `${events.activity.data()}?sortBy=modified_on:desc`,
+            `${events.activity.data()}?sortBy=modified_on:desc&page=1`,
             { statusCode: 500 }
           )
           cy.visit(urls.events.index())

@@ -16,6 +16,8 @@ import {
   FilterToggleSection,
   DefaultLayout,
   CollectionSort,
+  CollectionHeader,
+  RoutedPagination,
 } from '../../../components'
 import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
 
@@ -26,7 +28,7 @@ import {
   ToggleHeadingPlaceholder,
 } from '../../../components/SkeletonPlaceholder'
 
-import { LABELS } from './constants'
+import { LABELS, COLLECTION_LIST_SORT_SELECT_OPTIONS } from './constants'
 
 import Task from '../../../components/Task'
 
@@ -47,8 +49,15 @@ const EventsCollection = ({
   optionMetadata,
   selectedFilters,
   allActivityFeedEvents,
+  total,
+  page,
+  itemsPerPage = 10,
+  maxItemsToPaginate = 10000,
   ...props
 }) => {
+  const totalPages = Math.ceil(
+    Math.min(total, maxItemsToPaginate) / itemsPerPage
+  )
   const collectionListTask = {
     name: TASK_GET_EVENTS_LIST,
     id: ID,
@@ -180,22 +189,14 @@ const EventsCollection = ({
             </FilteredCollectionList>
           ) : (
             <>
+              <CollectionHeader
+                totalItems={total}
+                collectionName="events"
+                data-test="collection-header"
+              />
               <CollectionSort
-                //TODO these can be replaces by SORT_OPTIONS when they eventually match
-                sortOptions={[
-                  {
-                    name: 'Recently updated',
-                    value: 'modified_on:desc',
-                  },
-                  {
-                    name: 'Least recently updated',
-                    value: 'modified_on:asc',
-                  },
-                  {
-                    name: 'Event name A-Z',
-                    value: 'name:asc',
-                  },
-                ]}
+                sortOptions={COLLECTION_LIST_SORT_SELECT_OPTIONS}
+                totalPages={totalPages}
               />
               <Task.Status
                 name={TASK_GET_ALL_ACTIVITY_FEED_EVENTS}
@@ -236,6 +237,7 @@ const EventsCollection = ({
           )
         }
       </CheckUserFeatureFlag>
+      <RoutedPagination initialPage={page} items={total} />
     </DefaultLayout>
   )
 }

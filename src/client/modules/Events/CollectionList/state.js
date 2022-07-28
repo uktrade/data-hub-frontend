@@ -38,6 +38,7 @@ export const state2props = ({ router, ...state }) => {
   return {
     ...state[ID],
     payload: { ...queryParams },
+    page: queryParams.page,
     optionMetadata: {
       sortOptions: SORT_OPTIONS,
       ...metadata,
