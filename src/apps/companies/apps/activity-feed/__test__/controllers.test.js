@@ -594,7 +594,7 @@ describe('Activity feed controllers', () => {
     context(
       'check dsl query when filtering on event start and end date',
       () => {
-        const expectedEsQuery = (startDate, endDate) => ({
+        const expectedEsQuery = (earliestStartDate, latestStartDate) => ({
           query: {
             bool: {
               must: [
@@ -604,25 +604,11 @@ describe('Activity feed controllers', () => {
                   },
                 },
                 {
-                  bool: {
-                    should: [
-                      {
-                        range: {
-                          'object.startTime': {
-                            gte: startDate,
-                            lte: endDate,
-                          },
-                        },
-                      },
-                      {
-                        range: {
-                          'object.endTime': {
-                            gte: startDate,
-                            lte: endDate,
-                          },
-                        },
-                      },
-                    ],
+                  range: {
+                    'object.startTime': {
+                      gte: earliestStartDate,
+                      lte: latestStartDate,
+                    },
                   },
                 },
               ],
@@ -637,56 +623,62 @@ describe('Activity feed controllers', () => {
         })
 
         it('builds the right query when start date selected', () => {
-          const startDate = '2022-11-01T08:39:06'
-          const endDate = undefined
+          const earliestStartDate = '2022-11-01T08:39:06'
+          const latestStartDate = undefined
 
           const actualQuery = activityFeedEventsQuery({
             fullQuery: eventsColListQueryBuilder({
-              startDate: startDate,
-              endDate: endDate,
+              earliestStartDate: earliestStartDate,
+              latestStartDate: latestStartDate,
             }),
             sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
           })
 
-          expect(expectedEsQuery(startDate, endDate)).to.deep.equal(actualQuery)
+          expect(
+            expectedEsQuery(earliestStartDate, latestStartDate)
+          ).to.deep.equal(actualQuery)
         })
 
         it('builds the right query when the end date is selected', () => {
-          const startDate = undefined
-          const endDate = '2022-12-12T08:39:06'
+          const earliestStartDate = undefined
+          const latestStartDate = '2022-12-12T08:39:06'
 
           const actualQuery = activityFeedEventsQuery({
             fullQuery: eventsColListQueryBuilder({
-              startDate: startDate,
-              endDate: endDate,
+              earliestStartDate: earliestStartDate,
+              latestStartDate: latestStartDate,
             }),
             sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
           })
 
-          expect(expectedEsQuery(startDate, endDate)).to.deep.equal(actualQuery)
+          expect(
+            expectedEsQuery(earliestStartDate, latestStartDate)
+          ).to.deep.equal(actualQuery)
         })
 
         it('builds the right query when the start and end date is selected', () => {
-          const startDate = '2022-11-01T08:39:06'
-          const endDate = '2022-12-12T08:39:06'
+          const earliestStartDate = '2022-11-01'
+          const latestStartDate = '2022-12-12T08:39:06'
 
           const actualQuery = activityFeedEventsQuery({
             fullQuery: eventsColListQueryBuilder({
-              startDate: startDate,
-              endDate: endDate,
+              earliestStartDate: earliestStartDate,
+              latestStartDate: latestStartDate,
             }),
             sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
           })
 
-          expect(expectedEsQuery(startDate, endDate)).to.deep.equal(actualQuery)
+          expect(
+            expectedEsQuery(earliestStartDate, latestStartDate)
+          ).to.deep.equal(actualQuery)
         })
       }
     )
 
     context('check dsl query when all filters are active', () => {
       const name = 'Big Event'
-      const startDate = '2022-11-01T08:39:06'
-      const endDate = '2022-12-12T08:39:06'
+      const earliestStartDate = '2022-11-01T08:39:06'
+      const latestStartDate = '2022-12-12T08:39:06'
 
       const expectedEsQuery = {
         query: {
@@ -703,25 +695,11 @@ describe('Activity feed controllers', () => {
                 },
               },
               {
-                bool: {
-                  should: [
-                    {
-                      range: {
-                        'object.startTime': {
-                          gte: startDate,
-                          lte: endDate,
-                        },
-                      },
-                    },
-                    {
-                      range: {
-                        'object.endTime': {
-                          gte: startDate,
-                          lte: endDate,
-                        },
-                      },
-                    },
-                  ],
+                range: {
+                  'object.startTime': {
+                    gte: earliestStartDate,
+                    lte: latestStartDate,
+                  },
                 },
               },
             ],
@@ -738,8 +716,8 @@ describe('Activity feed controllers', () => {
       const actualQuery = activityFeedEventsQuery({
         fullQuery: eventsColListQueryBuilder({
           name: name,
-          startDate: startDate,
-          endDate: endDate,
+          earliestStartDate: earliestStartDate,
+          latestStartDate: latestStartDate,
         }),
         sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
       })
