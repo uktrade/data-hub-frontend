@@ -361,7 +361,7 @@ async function fetchAventriAttendees(req, res, next) {
   }
 }
 
-const eventsColListQueryBuilder = (name) => {
+const eventsColListQueryBuilder = ({ name }) => {
   const eventNameFilter = name
     ? {
         match: {
@@ -387,7 +387,9 @@ async function fetchAllActivityFeedEvents(req, res, next) {
     const allActivityFeedEventsResults = await fetchActivityFeed(
       req,
       allActivityFeedEventsQuery({
-        fullQuery: eventsColListQueryBuilder(name),
+        fullQuery: eventsColListQueryBuilder({
+          name: name,
+        }),
         from,
         ACTIVITIES_PER_PAGE,
         sort:
