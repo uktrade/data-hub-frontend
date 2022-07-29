@@ -1,16 +1,32 @@
+const adviserResult = require('../../../sandbox/fixtures/autocomplete-adviser-list.json')
+
 /**
  * Enter `input` into an advisers typeahead `element` and select the first result
  *
  * This waits for the adviser api request to complete before selecting the
- * first option.
+ * first option, but has a mocked intercepted adviser response to circumvent
+ * network latency.
  */
-export const selectFirstAdvisersTypeaheadOption = ({ element, input }) =>
+export const selectFirstAdvisersTypeaheadOption = ({
+  element,
+  input,
+  mockAdviserResponse = true,
+}) =>
   cy.get(element).within(() => {
-    cy.intercept(`/api-proxy/adviser/?*${input.replace(' ', '+')}*`).as(
-      'adviserResults'
-    )
+    cy.intercept(
+      `/api-proxy/adviser/?*${input.replace(' ', '+')}*`,
+      mockAdviserResponse
+        ? {
+            body: adviserResult,
+          }
+        : undefined
+    ).as('adviserResults')
     cy.get('input').clear().type(input)
     cy.wait('@adviserResults')
+    cy.get('[data-test="typeahead-menu-option"]').contains(input, {
+      matchCase: false,
+      timeout: 120000,
+    })
     cy.get('input').type('{downarrow}{enter}{esc}')
   })
 

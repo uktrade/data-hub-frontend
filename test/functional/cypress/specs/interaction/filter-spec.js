@@ -195,6 +195,7 @@ describe('Interactions Collections Filter', () => {
       selectFirstAdvisersTypeaheadOption({
         element: advisersFilter,
         input: adviser.name,
+        mockAdviserResponse: false,
       })
       cy.wait('@adviserListApiRequest')
       cy.wait('@adviserApiRequest')
