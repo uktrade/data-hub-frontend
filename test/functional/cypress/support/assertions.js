@@ -357,9 +357,9 @@ const assertFieldAddress = ({ element, hint = null, value = {} }) => {
       assert: ({ element }) => cy.wrap(element).should('have.text', hint),
     },
     {
-      label: postcodeLabel(),
-      value: value.postcode,
-      assert: assertFieldInput,
+      label: 'Country',
+      value: value.country.name,
+      assert: assertFieldUneditable,
     },
     isUKBased && {
       assert: ({ element }) =>
@@ -389,26 +389,18 @@ const assertFieldAddress = ({ element, hint = null, value = {} }) => {
         value: value.county,
         assert: assertFieldInput,
       },
-  ]
-
-  if (hasStateField) {
-    addressElements = [
-      ...addressElements,
-      {
-        label: isCanadianBased ? 'Province' : 'State',
-        value: value.area.name,
-        assert: assertFieldSelect,
-      },
-    ]
-  }
-  addressElements = [
-    ...addressElements,
+    hasStateField && {
+      label: isCanadianBased ? 'Province' : 'State',
+      value: value.area.name,
+      assert: assertFieldSelect,
+    },
     {
-      label: 'Country',
-      value: value.country.name,
-      assert: assertFieldUneditable,
+      label: postcodeLabel(),
+      value: value.postcode,
+      assert: assertFieldInput,
     },
   ].filter(isObject)
+
   cy.wrap(element)
     .as('field')
     .get('fieldset')

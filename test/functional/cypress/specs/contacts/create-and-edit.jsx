@@ -86,11 +86,11 @@ describe('Create contact form', () => {
       'First name': 'Enter a first name',
       'Last name': 'Enter a last name',
       'Job title': 'Enter a job title',
-      'Is this person a primary contact?':
-        'Select yes if this person is a primary contact',
       'Email address': 'Enter an email',
       'Is this contact’s work address the same as the company address?':
         "Select yes if the contact's address is the same as the company address",
+      'Is this person a primary contact?':
+        'Select yes if this person is a primary contact',
     })
   })
 
@@ -106,9 +106,9 @@ describe('Create contact form', () => {
       'First name': 'Enter a first name',
       'Last name': 'Enter a last name',
       'Job title': 'Enter a job title',
+      'Email address': 'Enter an email',
       'Is this person a primary contact?':
         'Select yes if this person is a primary contact',
-      'Email address': 'Enter an email',
       'Address line 1': 'Enter an address line 1',
       'Town or city': 'Enter a town or city',
     })
