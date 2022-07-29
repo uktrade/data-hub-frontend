@@ -355,7 +355,11 @@ async function fetchAventriAttendees(req, res, next) {
   }
 }
 
-const eventsColListQueryBuilder = ({ name }) => {
+const eventsColListQueryBuilder = ({
+  name,
+  earliestStartDate,
+  latestStartDate,
+}) => {
   const eventNameFilter = name
     ? {
         match: {
@@ -364,9 +368,21 @@ const eventsColListQueryBuilder = ({ name }) => {
       }
     : null
 
-  const filtersArray = [eventNameFilter]
+  const dateFilter =
+    earliestStartDate || latestStartDate
+      ? {
+          range: {
+            'object.startTime': {
+              gte: earliestStartDate,
+              lte: latestStartDate,
+            },
+          },
+        }
+      : null
 
-  const cleansedFiltersArray = filtersArray.filter((filter) => filter != null)
+  const filtersArray = [eventNameFilter, dateFilter]
+
+  const cleansedFiltersArray = filtersArray.filter((filter) => filter)
 
   const queryBuilder = [EVENT_ALL_ACTIVITY, ...cleansedFiltersArray]
   return queryBuilder
@@ -374,7 +390,7 @@ const eventsColListQueryBuilder = ({ name }) => {
 
 async function fetchAllActivityFeedEvents(req, res, next) {
   try {
-    const { sortBy, page, name } = req.query
+    const { sortBy, name, earliestStartDate, latestStartDate, page } = req.query
 
     const from = (page - 1) * ACTIVITIES_PER_PAGE
 
@@ -383,6 +399,8 @@ async function fetchAllActivityFeedEvents(req, res, next) {
       allActivityFeedEventsQuery({
         fullQuery: eventsColListQueryBuilder({
           name: name,
+          earliestStartDate: earliestStartDate,
+          latestStartDate: latestStartDate,
         }),
         from,
         ACTIVITIES_PER_PAGE,
