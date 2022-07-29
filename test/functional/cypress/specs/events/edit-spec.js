@@ -17,6 +17,7 @@ import urls from '../../../../../src/lib/urls'
 describe('Event edit', () => {
   beforeEach(() => {
     cy.intercept('PATCH', '/api-proxy/v4/event/*').as('eventHttpRequest')
+    cy.intercept('GET', '/api-proxy/v4/event/*').as('getEventHttpRequest')
     cy.visit('/events/8253a4d2-0a61-4928-80cb-ebd70cce9971/edit')
   })
 
@@ -34,6 +35,7 @@ describe('Event edit', () => {
 
   context('when loading in a valid event form', () => {
     it('should render expected form fields with original values ', () => {
+      cy.wait('@getEventHttpRequest')
       assertEventFormFields({
         hasRelatedTradeAgreement: 'No',
         eventName: 'One-day exhibition',
