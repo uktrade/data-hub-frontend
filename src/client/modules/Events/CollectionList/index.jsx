@@ -218,6 +218,18 @@ const EventsCollection = ({
                         placeholder="Search event name"
                         data-test="event-name-filter"
                       />
+                      <Filters.Date
+                        label="Earliest start date"
+                        name="earliest_start_date"
+                        qsParamName="earliest_start_date"
+                        data-test="earliest-start-date-filter"
+                      />
+                      <Filters.Date
+                        label="Latest start date"
+                        name="latest_start_date"
+                        qsParamName="latest_start_date"
+                        data-test="latest-start-date-filter"
+                      />
                     </CollectionFilters>
                     <GridCol>
                       <ActivityList>
