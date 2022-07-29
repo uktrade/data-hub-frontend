@@ -8,6 +8,7 @@ import Button from '@govuk-react/button'
 import { MEDIA_QUERIES } from '@govuk-react/constants'
 import FormGroup from '@govuk-react/form-group'
 import styled from 'styled-components'
+import { SPACING } from '@govuk-react/constants'
 
 import { useFormContext } from '../../hooks'
 import useAddressSearch from '../../../AddressSearch/useAddressSearch'
@@ -33,6 +34,10 @@ const StyledFieldPostcode = styled(FieldInput)`
   ${MEDIA_QUERIES.TABLET} {
     max-width: 200px;
   }
+`
+
+const SyledDiv = styled('div')`
+  padding-bottom: ${SPACING.SCALE_5};
 `
 
 const FieldAddress = ({
@@ -207,14 +212,15 @@ const FieldAddress = ({
 
   return (
     <FieldWrapper {...{ label, legend, hint, name }} showBorder={true}>
-      <StyledFieldPostcode
-        type={isUK ? 'search' : 'text'}
-        name="postcode"
-        label={postcodeLabel()}
-        required={postcodeErrorMessage()}
-        maxLength={isUK ? 10 : null}
-        validate={postcodeValidator}
-      />
+      {isCountrySelectable ? (
+        <SyledDiv>
+          <FieldCountrySelect name="country" required="Select a country" />
+        </SyledDiv>
+      ) : (
+        <FieldUneditable name="country" label="Country">
+          {country.name}
+        </FieldUneditable>
+      )}
       {isUK && (
         <>
           <Button
@@ -275,13 +281,14 @@ const FieldAddress = ({
           </StatusMessage>
         )}
       </>
-      {isCountrySelectable ? (
-        <FieldCountrySelect name="country" required="Select a country" />
-      ) : (
-        <FieldUneditable name="country" label="Country">
-          {country.name}
-        </FieldUneditable>
-      )}
+      <StyledFieldPostcode
+        type={isUK ? 'search' : 'text'}
+        name="postcode"
+        label={postcodeLabel()}
+        required={postcodeErrorMessage()}
+        maxLength={isUK ? 10 : null}
+        validate={postcodeValidator}
+      />
     </FieldWrapper>
   )
 }
