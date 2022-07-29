@@ -159,7 +159,9 @@ Cypress.Commands.add(
   'removeAllTypeaheadValues',
   { prevSubject: 'element' },
   (subject) => {
-    cy.wrap(subject).find('[data-test="typeahead-chip"]').each((el) => cy.wrap(el).click())
+    cy.wrap(subject)
+      .find('[data-test="typeahead-chip"]')
+      .each((el) => cy.wrap(el).click())
     return cy.wrap(subject)
   }
 )
