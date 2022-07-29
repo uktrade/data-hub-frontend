@@ -188,8 +188,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "git-directory-deploy": "^1.5.1",
     "html": "^1.0.0",
-    "istanbul": "^0.4.5",
-    "istanbul-lib-coverage": "^3.2.0",
     "js-beautify": "^1.14.4",
     "jsdom": "^20.0.0",
     "jsdom-global": "^3.0.2",
