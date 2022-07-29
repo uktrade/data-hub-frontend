@@ -3,7 +3,7 @@
  * but seems more stable.
  */
 const request = require('request')
-const hawk = require('@hapi/hawk')
+const Hawk = require('hawk')
 const config = require('../config')
 
 function getHawkHeader(credentials, requestOptions) {
@@ -15,7 +15,7 @@ function getHawkHeader(credentials, requestOptions) {
 
   // Generate Authorization request header
   // Ensure backend is using same protocol for hash generation
-  return hawk.client.header(uri, method, {
+  return Hawk.client.header(uri, method, {
     credentials,
     payload: '',
     contentType: '',
@@ -36,7 +36,7 @@ function createPromiseRequest(
         let isValid = false
         try {
           // Authenticate the server's response must use raw response body here
-          isValid = hawk.client.authenticate(
+          isValid = Hawk.client.authenticate(
             response,
             credentials,
             clientHeaderArtifacts,
