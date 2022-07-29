@@ -181,6 +181,7 @@ describe('Investments Collections Filter', () => {
       selectFirstAdvisersTypeaheadOption({
         element: advisersFilter,
         input: myAdviser.name,
+        mockAdviserResponse: false,
       })
       cy.wait('@adviserListApiRequest')
       cy.wait('@adviserApiRequest')
