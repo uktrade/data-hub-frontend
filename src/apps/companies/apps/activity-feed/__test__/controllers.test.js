@@ -514,11 +514,11 @@ describe('Activity feed controllers', () => {
   describe('#filtersQueryBuilder', () => {
     context('check dsl query when filtering on event name', () => {
       it('builds the right query when being filtered by event name', () => {
-        const page = 1
+        const from = 1
         const size = 10
         const name = 'cool event'
         const expectedEsQuery = {
-          page,
+          from,
           size,
           query: {
             bool: {
@@ -546,7 +546,7 @@ describe('Activity feed controllers', () => {
 
         const actualQuery = activityFeedEventsQuery({
           fullQuery: eventsColListQueryBuilder(name),
-          page,
+          from,
           size,
           sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
         })
@@ -555,11 +555,11 @@ describe('Activity feed controllers', () => {
       })
 
       it('builds the right query when there is nothing entered into the event name filter', () => {
-        const page = 1
+        const from = 1
         const size = 10
         const name = undefined
         const expectedEsQuery = {
-          page,
+          from,
           size,
           query: {
             bool: {
@@ -581,7 +581,7 @@ describe('Activity feed controllers', () => {
         }
 
         const actualQuery = activityFeedEventsQuery({
-          page,
+          from,
           size,
           fullQuery: eventsColListQueryBuilder(name),
           sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
