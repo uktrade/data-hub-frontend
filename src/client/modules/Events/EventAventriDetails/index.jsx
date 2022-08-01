@@ -10,6 +10,7 @@ import {
   DefaultLayout,
   LocalNav,
   LocalNavLink,
+  NewWindowLink,
   SummaryTable,
 } from '../../../components'
 import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
@@ -22,13 +23,7 @@ const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
 })
 
-const EventAventriDetails = ({
-  name,
-  type,
-  eventDate,
-  location,
-  fullAddress,
-}) => {
+const EventAventriDetails = ({ name, eventDate, location, fullAddress }) => {
   const { aventriEventId } = useParams()
   const breadcrumbs = [
     {
@@ -43,6 +38,10 @@ const EventAventriDetails = ({
       text: name,
     },
   ]
+
+  const aventriEventLink =
+    'https://eu-admin.eventscloud.com/loggedin/eVent/index.php?eventid=' +
+    aventriEventId
 
   return (
     <DefaultLayout
@@ -86,10 +85,6 @@ const EventAventriDetails = ({
                       <GridCol setWidth="three-quarters">
                         <StyledSummaryTable>
                           <SummaryTable.Row
-                            heading="Type of event"
-                            children={type}
-                          />
-                          <SummaryTable.Row
                             heading="Event date"
                             children={eventDate}
                           />
@@ -101,6 +96,23 @@ const EventAventriDetails = ({
                             heading="Address"
                             children={
                               isEmpty(fullAddress) ? 'Not set' : fullAddress
+                            }
+                          />
+                          <SummaryTable.Row
+                            heading="Aventri reference number"
+                            children={
+                              isEmpty(aventriEventId) ? (
+                                'No event reference'
+                              ) : (
+                                <>
+                                  <span>
+                                    {aventriEventId}&nbsp;
+                                    <NewWindowLink href={aventriEventLink}>
+                                      View in Aventri
+                                    </NewWindowLink>
+                                  </span>
+                                </>
+                              )
                             }
                           />
                         </StyledSummaryTable>
