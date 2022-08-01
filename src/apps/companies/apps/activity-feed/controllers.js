@@ -409,7 +409,7 @@ async function fetchAllActivityFeedEvents(req, res, next) {
           latestStartDate: latestStartDate,
         }),
         from,
-        ACTIVITIES_PER_PAGE,
+        size: ACTIVITIES_PER_PAGE,
         sort:
           EVENT_ACTIVITY_SORT_OPTIONS[sortBy] ||
           EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
