@@ -31,6 +31,7 @@ const DateField = ({
         key={name}
         name={name}
         value={value}
+        max="9999-12-31"
         aria-label={label}
         type={type}
         onChange={(e) => {
