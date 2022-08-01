@@ -1,4 +1,4 @@
-const activityFeedEventsQuery = ({ fullQuery, from, size, sort }) => ({
+const activityFeedEventsQuery = ({ fullQuery, from = 0, size = 10, sort }) => ({
   from,
   size,
   query: {
