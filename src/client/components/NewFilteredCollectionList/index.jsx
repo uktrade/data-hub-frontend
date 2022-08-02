@@ -43,7 +43,7 @@ const NewFilteredCollectionList = ({
           })
         }
         return (
-          <GridRow data-test="collection-list">
+          <GridRow data-test="new-collection-list">
             {children}
             <GridCol>
               <article>
@@ -51,7 +51,7 @@ const NewFilteredCollectionList = ({
                   <CollectionHeader
                     totalItems={total}
                     collectionName="events"
-                    data-test="collection-header"
+                    data-test="new-collection-header"
                   />
                 }
                 {sortOptions && (
