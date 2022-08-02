@@ -2,8 +2,6 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 
 import ErrorSummary from 'ErrorSummary'
-import exampleReadme from '../example.md'
-import usageReadme from '../usage.md'
 
 export const errors = [
   {
@@ -17,13 +15,7 @@ export const errors = [
 ]
 
 storiesOf('ErrorSummary', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: exampleReadme,
-      sidebar: usageReadme,
-    },
-  })
+  .addParameters({ component: ErrorSummary })
   .add('Default', () => (
     <ErrorSummary
       heading="Message to alert the user to a problem goes here"
