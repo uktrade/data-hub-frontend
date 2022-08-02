@@ -54,7 +54,7 @@ const getAllActivityFeedEvents = ({
   name,
   earliest_start_date,
   latest_start_date,
-  page
+  page,
 }) =>
   axios
     .get(urls.events.activity.data(), {
@@ -63,7 +63,7 @@ const getAllActivityFeedEvents = ({
         name: name,
         earliestStartDate: earliest_start_date,
         latestStartDate: latest_start_date,
-        page: page
+        page: page,
       },
     })
     .then(({ data }) => data)
