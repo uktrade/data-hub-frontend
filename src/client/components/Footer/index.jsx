@@ -77,6 +77,9 @@ const Container = styled(InnerContainer)`
   flex-wrap: wrap;
 `
 
+/**
+ * The Footer displayed in all pages across the Data Hub site.
+ */
 export default function Footer() {
   return (
     <StyledFooter>
