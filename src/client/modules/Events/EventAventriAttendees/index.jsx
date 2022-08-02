@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { Route, useParams } from 'react-router-dom'
+import { isEmpty } from 'lodash'
+import qs from 'qs'
 
 import urls from '../../../../lib/urls'
 import {
@@ -23,6 +25,10 @@ import ActivityList from '../../../components/ActivityFeed/activities/card/Activ
 const EventAventriAttendees = ({
   aventriAttendees,
   aventriEventData,
+  defaultQueryParams = {
+    page: 1,
+    sortby: 'first_name:asc',
+  },
   payload,
   page = parseInt(page || 1, 10),
   totalAttendees,
@@ -49,79 +55,100 @@ const EventAventriAttendees = ({
   )
 
   return (
-    <DefaultLayout
-      heading={eventName}
-      pageTitle="Events Attendees"
-      breadcrumbs={breadcrumbs}
-      useReactRouter={true}
-    >
-      <CheckUserFeatureFlag userFeatureFlagName={EVENT_ACTIVITY_FEATURE_FLAG}>
-        {(isFeatureFlagEnabled) =>
-          isFeatureFlagEnabled && (
-            <Task.Status
-              name={TASK_GET_EVENT_AVENTRI_ATTENDEES}
-              id={ID}
-              progressMessage="Loading Aventri attendees"
-              startOnRender={{
-                payload: { aventriEventId, ...payload },
-                onSuccessDispatch: EVENTS__AVENTRI_ATTENDEES_LOADED,
-              }}
-            >
-              {() => (
-                <GridRow data-test="event-aventri-attendee">
-                  <GridCol setWidth="one-quarter">
-                    <LocalNav dataTest="event-aventri-nav">
-                      <LocalNavLink
-                        dataTest="event-aventri-details-link"
-                        href={urls.events.aventri.details(aventriEventId)}
-                      >
-                        Details
-                      </LocalNavLink>
-                      <LocalNavLink
-                        dataTest="event-aventri-attendees-link"
-                        href={urls.events.aventri.attendees(aventriEventId)}
-                      >
-                        Attendees
-                      </LocalNavLink>
-                    </LocalNav>
-                  </GridCol>
-                  {aventriAttendees && (
-                    <GridCol setWidth="three-quarters">
-                      <CollectionHeader
-                        totalItems={totalAttendees}
-                        collectionName="attendee"
-                        data-test="attendee-collection-header"
-                      />
-                      <CollectionSort
-                        sortOptions={[
-                          {
-                            name: 'First name: A-Z',
-                            value: 'first_name:asc',
-                          },
-                          {
-                            name: 'First name: Z-A',
-                            value: 'first_name:desc',
-                          },
-                        ]}
-                        totalPages={totalPages}
-                      />
-                      <ActivityList>
-                        {aventriAttendees?.map((attendee, index) => (
-                          <li key={`aventri-attendee-${index}`}>
-                            <Activity activity={attendee}></Activity>
-                          </li>
-                        ))}
-                      </ActivityList>
-                    </GridCol>
-                  )}
-                </GridRow>
-              )}
-            </Task.Status>
-          )
+    <Route>
+      {({ history, location }) => {
+        const qsParams = qs.parse(location.search.slice(1))
+
+        const page = parseInt(qsParams.page, 10)
+        if (isEmpty(qsParams)) {
+          history.push({
+            search: qs.stringify({
+              ...defaultQueryParams,
+            }),
+          })
         }
-      </CheckUserFeatureFlag>
-      <RoutedPagination initialPage={page} items={totalAttendees} />
-    </DefaultLayout>
+
+        return (
+          <DefaultLayout
+            heading={eventName}
+            pageTitle="Events Attendees"
+            breadcrumbs={breadcrumbs}
+            useReactRouter={true}
+          >
+            <CheckUserFeatureFlag
+              userFeatureFlagName={EVENT_ACTIVITY_FEATURE_FLAG}
+            >
+              {(isFeatureFlagEnabled) =>
+                isFeatureFlagEnabled && (
+                  <Task.Status
+                    name={TASK_GET_EVENT_AVENTRI_ATTENDEES}
+                    id={ID}
+                    progressMessage="Loading Aventri attendees"
+                    startOnRender={{
+                      payload: { aventriEventId, ...payload },
+                      onSuccessDispatch: EVENTS__AVENTRI_ATTENDEES_LOADED,
+                    }}
+                  >
+                    {() => (
+                      <GridRow data-test="event-aventri-attendee">
+                        <GridCol setWidth="one-quarter">
+                          <LocalNav dataTest="event-aventri-nav">
+                            <LocalNavLink
+                              dataTest="event-aventri-details-link"
+                              href={urls.events.aventri.details(aventriEventId)}
+                            >
+                              Details
+                            </LocalNavLink>
+                            <LocalNavLink
+                              dataTest="event-aventri-attendees-link"
+                              href={urls.events.aventri.attendees(
+                                aventriEventId
+                              )}
+                            >
+                              Attendees
+                            </LocalNavLink>
+                          </LocalNav>
+                        </GridCol>
+                        {aventriAttendees && (
+                          <GridCol setWidth="three-quarters">
+                            <CollectionHeader
+                              totalItems={totalAttendees}
+                              collectionName="attendee"
+                              data-test="attendee-collection-header"
+                            />
+                            <CollectionSort
+                              sortOptions={[
+                                {
+                                  name: 'First name: A-Z',
+                                  value: 'first_name:asc',
+                                },
+                                {
+                                  name: 'First name: Z-A',
+                                  value: 'first_name:desc',
+                                },
+                              ]}
+                              totalPages={totalPages}
+                            />
+                            <ActivityList>
+                              {aventriAttendees?.map((attendee, index) => (
+                                <li key={`aventri-attendee-${index}`}>
+                                  <Activity activity={attendee}></Activity>
+                                </li>
+                              ))}
+                            </ActivityList>
+                          </GridCol>
+                        )}
+                      </GridRow>
+                    )}
+                  </Task.Status>
+                )
+              }
+            </CheckUserFeatureFlag>
+            <RoutedPagination initialPage={page} items={totalAttendees} />
+          </DefaultLayout>
+        )
+      }}
+    </Route>
   )
 }
 
