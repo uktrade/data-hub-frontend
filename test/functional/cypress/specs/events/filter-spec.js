@@ -458,25 +458,75 @@ describe('events Collections Filter', () => {
       cy.setUserFeatures([EVENT_ACTIVITY_FEATURE_FLAG])
       cy.visit(events.index())
     })
+
     context('Event name', () => {
       const element = '[data-test="event-name-filter"]'
       const eventName = 'Big Event'
       const queryParamWithName = 'name=Big+Event'
-      const queryParamEmpty = 'name='
 
-      it('should not add anything to the query param when the page is first loaded', () => {
-        cy.url().should('not.include', queryParamEmpty)
+      context('should filter from user input', () => {
+        it('should add name from user input to query param', () => {
+          cy.get(element).type(`${eventName}{enter}`)
+          cy.url().should('include', queryParamWithName)
+        })
+
+        it('should not add anything to the query param if the name is backspaced', () => {
+          cy.get(element).type(`{selectAll}{backspace}{enter}`)
+          cy.url().should('not.include', queryParamWithName)
+        })
       })
 
-      it('should add name from user input to query param', () => {
-        cy.get(element).type(`${eventName}{enter}`)
-        cy.url().should('include', queryParamWithName)
+      context('should filter from url', () => {
+        it('should add name from url to filter', () => {
+          cy.visit(
+            `/events?page=1&sortby=modified_on%3Adesc&featureTesting=user-event-activities&${queryParamWithName}`
+          )
+          cy.get(element).should('have.value', eventName)
+        })
+      })
+    })
+
+    context('Start date', () => {
+      const earliestStartElement = '#field-earliest_start_date-1'
+      const latestStartElement = '#field-latest_start_date-1'
+      const earliestStartDate = '2020-11-01'
+      const latestStartDate = '2020-11-10'
+      const queryParamWithEarliestStartDate = 'earliest_start_date=2020-11-01'
+      const queryParamWithLatestStartDate = 'latest_start_date=2020-11-10'
+
+      context('should filter from user input', () => {
+        it('should add earliest start date to query param', () => {
+          cy.get(earliestStartElement).type(earliestStartDate)
+          cy.url().should('include', queryParamWithEarliestStartDate)
+        })
+
+        it('should add earliest start and latest start date to query param', () => {
+          cy.get(latestStartElement).type(latestStartDate)
+          cy.url().should('include', queryParamWithEarliestStartDate)
+          cy.url().should('include', queryParamWithLatestStartDate)
+        })
+
+        it('should add latest start date to query param', () => {
+          cy.get(earliestStartElement).clear()
+          cy.url().should('not.include', queryParamWithEarliestStartDate)
+          cy.url().should('include', queryParamWithLatestStartDate)
+        })
+
+        it('should remove query params if date is cleared', () => {
+          cy.get(latestStartElement).clear()
+          cy.url().should('not.include', queryParamWithEarliestStartDate)
+          cy.url().should('not.include', queryParamWithLatestStartDate)
+        })
       })
 
-      it('should not add anything to the query param if the name is backspaced', () => {
-        cy.get(element).type(`${eventName}{enter}`)
-        cy.get(element).type(`{selectAll}{backspace}{enter}`)
-        cy.url().should('not.include', queryParamWithName)
+      context('should filter from url', () => {
+        it('should add the earliest and latest start date to the url', () => {
+          cy.visit(
+            `/events?page=1&sortby=modified_on%3Adesc&featureTesting=user-event-activities&${queryParamWithEarliestStartDate}&${queryParamWithLatestStartDate}`
+          )
+          cy.get(earliestStartElement).should('have.value', earliestStartDate)
+          cy.get(latestStartElement).should('have.value', latestStartDate)
+        })
       })
     })
     after(() => {
