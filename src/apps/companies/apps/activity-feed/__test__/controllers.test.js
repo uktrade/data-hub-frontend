@@ -11,6 +11,7 @@ const {
 const { eventsColListQueryBuilder } = require('../controllers')
 const activityFeedEventsQuery = require('../es-queries/activity-feed-all-events-query')
 const allActivityFeedEvents = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/all-activity-feed-events.json')
+const aventriEvents = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/aventri-events.json')
 const { ACTIVITIES_PER_PAGE } = require('../../../../contacts/constants')
 
 describe('Activity feed controllers', () => {
@@ -517,7 +518,7 @@ describe('Activity feed controllers', () => {
     })
   })
 
-  describe.only('#fetchAllActivityFeedEvents', () => {
+  describe('#fetchAllActivityFeedEvents', () => {
     let allActivityFeedEventsQueryStub
     const esQueryStub = { query: {} }
 
@@ -610,6 +611,60 @@ describe('Activity feed controllers', () => {
         expect(middlewareParameters.nextSpy).to.have.been.calledWith(
           notFoundError
         )
+      })
+    })
+  })
+
+  describe('#fetchAventriEvent', () => {
+    let aventriEventQueryStub
+    const esQueryStub = { query: {} }
+
+    before(() => {
+      aventriEventQueryStub = sinon.stub().returns(esQueryStub)
+
+      fetchActivityFeedStub = sinon.stub()
+      controllers = proxyquire(
+        '../../src/apps/companies/apps/activity-feed/controllers',
+        {
+          './repos': {
+            fetchActivityFeed: fetchActivityFeedStub,
+          },
+          './es-queries/aventri-event-query': {
+            aventriEventQuery: aventriEventQueryStub,
+          },
+        }
+      )
+    })
+    context('when the request is successful', () => {
+      const requestParams = {
+        aventriEventId: 'abc123',
+      }
+
+      beforeEach(async () => {
+        fetchActivityFeedStub.resolves(aventriEvents)
+
+        middlewareParameters = buildMiddlewareParameters({
+          requestParams,
+        })
+
+        await controllers.fetchAventriEvent(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy
+        )
+      })
+      it('returns the request results', () => {
+        expect(fetchActivityFeedStub).to.be.calledWith(
+          middlewareParameters.reqMock,
+          esQueryStub
+        )
+        expect(aventriEventQueryStub).to.be.calledWith([
+          `dit:aventri:Event:${requestParams.aventriEventId}:Create`,
+        ])
+
+        sinon.assert.calledWith(middlewareParameters.resMock.json, {
+          ...aventriEvents.hits.hits[0]._source,
+        })
       })
     })
   })
