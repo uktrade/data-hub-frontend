@@ -4,8 +4,6 @@ import { storiesOf } from '@storybook/react'
 import { SPACING } from '@govuk-react/constants'
 
 import Tag from 'Tag'
-import defaultReadme from './default.md'
-import usageReadme from './usage.md'
 
 const List = styled('div')`
   display: flex;
@@ -18,13 +16,7 @@ const List = styled('div')`
 `
 
 storiesOf('Tag', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: defaultReadme,
-      sidebar: usageReadme,
-    },
-  })
+  .addParameters({ component: Tag })
   .add('Default', () => (
     <List>
       <Tag>BETA</Tag>
