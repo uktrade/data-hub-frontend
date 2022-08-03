@@ -4,9 +4,6 @@ import { storiesOf } from '@storybook/react'
 import Form from '../../../Form'
 import FieldTypeahead from '../FieldTypeahead'
 
-import exampleReadme from '../FieldTypeahead/example.md'
-import usageReadme from '../FieldTypeahead/usage.md'
-
 const options = [
   {
     value: '379f390a-e083-4a2c-9cea-e3b9a08606a7',
@@ -26,13 +23,7 @@ const getOptions = () =>
   new Promise((resolve) => setTimeout(resolve, 1000, options))
 
 storiesOf('Form/Form Elements/Typeahead', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: exampleReadme,
-      sidebar: usageReadme,
-    },
-  })
+  .addParameters({ component: FieldTypeahead })
   .add('Default', () => (
     <Form
       id="fieldTypeaheadExample"

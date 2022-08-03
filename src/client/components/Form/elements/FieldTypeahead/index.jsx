@@ -25,6 +25,11 @@ const StyledWrapper = styled('div')`
   }
 `
 
+/**
+ * A Typeahead for use in forms.
+ *
+ * This is a wrapper around the `react-select` by Jed Watson, for indepth documention refer to [Github](https://github.com/JedWatson/react-select) or the [api docs](https://react-select.com/home)
+ */
 const FieldTypeahead = ({
   name,
   validate,
@@ -68,15 +73,36 @@ const FieldTypeahead = ({
 
 FieldTypeahead.propTypes = {
   ...Typeahead.propTypes,
+  /**
+   * Text for name attribute value
+   */
   name: PropTypes.string.isRequired,
+  /**
+   * Validate functions for input
+   */
   validate: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.arrayOf(PropTypes.func),
   ]),
+  /**
+   * Text 'required' sets wether the input is required or not
+   */
   required: PropTypes.string,
+  /**
+   * Text for the label element
+   */
   label: PropTypes.node,
+  /**
+   * Node for legend element
+   */
   legend: PropTypes.node,
+  /**
+   * Node for hint element
+   */
   hint: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  /**
+   * Sets initial value of the input
+   */
   initialValue: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.arrayOf(PropTypes.object),
