@@ -8,6 +8,8 @@ import interactionItem from '../__fixtures__/interactionItem.json'
 
 const collectionStories = storiesOf('Collection', module)
 
+collectionStories.addParameters({ component: CollectionItem })
+
 collectionStories.add('Capital Profile item', () => (
   <CollectionItem {...capitalProfileItem} />
 ))

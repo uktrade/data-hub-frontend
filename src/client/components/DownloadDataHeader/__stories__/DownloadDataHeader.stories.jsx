@@ -23,6 +23,7 @@ const LimitedDownloadDataHeader = () => {
 }
 
 downloadDataHeaderStories
+  .addParameters({ component: DownloadDataHeader })
   .add('Basic', () => <BasicDownloadDataHeader />)
   .add('One Item', () => <SingularDownloadDataHeader />)
   .add('Limited ', () => <LimitedDownloadDataHeader />)

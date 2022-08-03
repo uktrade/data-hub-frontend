@@ -4,9 +4,7 @@ import { storiesOf } from '@storybook/react'
 import FieldHelp from '../FieldHelp'
 
 storiesOf('Form/Form Elements/Help', module)
-  .addParameters({
-    options: { theme: undefined },
-  })
+  .addParameters({ component: FieldHelp })
   .add('FieldHelp - with footer URL', () => (
     <>
       <FieldHelp

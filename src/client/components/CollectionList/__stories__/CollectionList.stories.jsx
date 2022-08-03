@@ -38,6 +38,8 @@ const CollectionWithState = () => {
   )
 }
 
+collectionStories.addParameters({ component: CollectionList })
+
 collectionStories.add('Collection List', () => <CollectionWithState />)
 
 collectionStories.add('Collection List with 0 items', () => (
