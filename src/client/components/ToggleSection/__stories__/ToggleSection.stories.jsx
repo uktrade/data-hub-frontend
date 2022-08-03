@@ -1,8 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
-import usageReadme from '../usage.md'
-import exampleReadme from '../example.md'
+import usageReadme from './usage.md'
 
 import FieldInput from '../../Form/elements/FieldInput'
 import Form from '../../Form'
@@ -16,32 +15,39 @@ import {
 } from 'ToggleSection'
 
 storiesOf('ToggleSection', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: exampleReadme,
-      sidebar: usageReadme,
-    },
-  })
-  .add('Default - Single', () => (
-    <ToggleSection label="Toggle me" id="toggle.four" isOpen={true}>
-      <Form
-        id="toggleSectionExample"
-        analyticsFormName="toggleSectionExample"
-        submissionTaskName="Submit Form example"
-      >
-        {() => (
-          <FieldInput
-            label="Text"
-            hint="Some hint"
-            name="testField"
-            required="Enter text"
-            type="text"
-          />
-        )}
-      </Form>
-    </ToggleSection>
+  .add('Docs placeholder', () => (
+    <p>
+      This is a workaround to get the DocsPage to work with multiInstance
+      components.
+    </p>
   ))
+  .add(
+    'Default - Single',
+    () => (
+      <ToggleSection label="Toggle me" id="toggle.four" isOpen={true}>
+        <Form
+          id="toggleSectionExample"
+          analyticsFormName="toggleSectionExample"
+          submissionTaskName="Submit Form example"
+        >
+          {() => (
+            <FieldInput
+              label="Text"
+              hint="Some hint"
+              name="testField"
+              required="Enter text"
+              type="text"
+            />
+          )}
+        </Form>
+      </ToggleSection>
+    ),
+    {
+      docs: {
+        storyDescription: usageReadme,
+      },
+    }
+  )
   .add('Default - Multiple', () => (
     <>
       <ToggleSection label="Toggle me" id="toggle.five" isOpen={true}>
