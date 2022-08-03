@@ -16,7 +16,7 @@ import CollectionHeader from '../CollectionList/CollectionHeader'
 import ActivityList from '../ActivityFeed/activities/card/ActivityList'
 import Activity from '../ActivityFeed/Activity'
 
-const NewFilteredCollectionList = ({
+const EventsFilteredCollectionList = ({
   itemsPerPage = 10,
   sortOptions = null,
   taskProps,
@@ -83,7 +83,7 @@ const NewFilteredCollectionList = ({
   )
 }
 
-NewFilteredCollectionList.propTypes = {
+EventsFilteredCollectionList.propTypes = {
   taskProps: PropTypes.shape({
     name: PropTypes.string,
     id: PropTypes.string,
@@ -111,4 +111,4 @@ NewFilteredCollectionList.propTypes = {
   ),
 }
 
-export default NewFilteredCollectionList
+export default EventsFilteredCollectionList
