@@ -52,6 +52,18 @@ const EVENT_ATTENDEES_SORT_OPTIONS = {
       unmapped_type: 'string',
     },
   },
+  'last_name:asc': {
+    'object.dit:lastName': {
+      order: 'asc',
+      unmapped_type: 'string',
+    },
+  },
+  'last_name:desc': {
+    'object.dit:lastName': {
+      order: 'desc',
+      unmapped_type: 'string',
+    },
+  },
 }
 
 const EVENT_ACTIVITY_SORT_OPTIONS = {
