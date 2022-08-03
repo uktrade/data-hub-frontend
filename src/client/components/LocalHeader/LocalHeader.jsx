@@ -40,6 +40,9 @@ const StyledLink = styled('a')({
   marginBottom: 8,
 })
 
+/**
+ * The generic local header component.
+ */
 const LocalHeader = ({
   breadcrumbs,
   flashMessages,
@@ -93,12 +96,18 @@ const LocalHeader = ({
 )
 
 LocalHeader.propTypes = {
+  /**
+   * Contains the breadcrumbs
+   */
   breadcrumbs: PropTypes.arrayOf(
     PropTypes.shape({
       link: PropTypes.string,
       text: PropTypes.string.isRequired,
     })
   ),
+  /**
+   * Contains the flash messages
+   */
   flashMessages: PropTypes.shape({
     type: PropTypes.oneOfType([
       PropTypes.arrayOf(
@@ -111,12 +120,24 @@ LocalHeader.propTypes = {
       PropTypes.arrayOf(PropTypes.string).isRequired,
     ]),
   }),
+  /**
+   * Contains the text to be displayed
+   */
   heading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  /**
+   * Contains a link that appears above the heading
+   */
   headingLink: PropTypes.shape({
     url: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
   }),
+  /**
+   * Contains an item that renders above the heading (in the same position as the headingLink)
+   */
   superheading: PropTypes.node,
+  /**
+   * Contains an item that renders below the heading
+   */
   children: PropTypes.node,
 }
 
