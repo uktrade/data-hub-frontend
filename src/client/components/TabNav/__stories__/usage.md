@@ -1,39 +1,6 @@
-# TabNav
-
-### Description
-
-Accessible, optionally routed tab navigation.
-
-### Usage
-
-```jsx
-<TabNav
-  id="tab-nav"
-  label="Tab navigation"
-  selectedIndex={1}
-  tabs={[
-    { label: 'Foo', content: <h1>Foo</h1> },
-    { label: 'Bar', content: <h2>Bar</h2> },
-    { label: 'Baz', content: <h3>Baz</h3> },
-  ]}
-/>
-
-<TabNav
-  id="routed-tab-nav"
-  label="Routed tab navigation"
-  routed
-  selectedIndex="bar"
-  tabs={{
-    foo: { label: 'Foo', content: <h1>Foo</h1> },
-    bar: { label: 'Bar', content: <h2>Bar</h2> },
-    baz: { label: 'Baz', content: <h3>Baz</h3> },
-  }}
-/>
-```
+Accessible, optionally routed tab navigation. Based on https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/Tab_Role
 
 ### Properties
-
-#### Label
 
 | Prop            | Required | Default                                   | Type | Description |
 | :-------------- | :------- | :---------------------------------------- | :--- | :---------- |
