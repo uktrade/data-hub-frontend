@@ -17,6 +17,9 @@ const StyledHeaderListLabel = styled('label')`
   color: ${GREY_1};
 `
 
+/**
+ * A component to be used within the `LocalHeader` component to add more information to a header.
+ */
 const LocalHeaderDetails = ({ items }) => (
   <StyledHeaderDetails
     aria-label="local header details"
@@ -33,6 +36,10 @@ const LocalHeaderDetails = ({ items }) => (
 )
 
 LocalHeaderDetails.propTypes = {
+  /**
+   * Contains the details items to display in a LocalHeader.
+   * Takes an array of objects with labels and values, displayed as pairs horizontally in the header.
+   */
   items: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
