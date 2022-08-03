@@ -16,6 +16,7 @@ const { fetchActivityFeed, fetchMatchingDataHubContact } = require('./repos')
 const config = require('../../../../config')
 
 const {
+  activityFeedEventsQuery,
   myActivityQuery,
   dataHubActivityQuery,
   externalActivityQuery,
@@ -23,7 +24,6 @@ const {
   maxemailEmailSentQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
-const allActivityFeedEventsQuery = require('./es-queries/activity-feed-all-events-query')
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
 const { aventriEventQuery } = require('./es-queries/aventri-event-query')
 const { aventriAttendeeQuery } = require('./es-queries/aventri-attendee-query')
@@ -396,7 +396,7 @@ async function fetchAllActivityFeedEvents(req, res, next) {
 
     const allActivityFeedEventsResults = await fetchActivityFeed(
       req,
-      allActivityFeedEventsQuery({
+      activityFeedEventsQuery({
         fullQuery: eventsColListQueryBuilder({
           name: name,
           earliestStartDate: earliestStartDate,

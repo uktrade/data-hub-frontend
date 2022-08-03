@@ -6,15 +6,22 @@ const {
   EXTERNAL_ACTIVITY,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
   EVENT_ACTIVITY_SORT_OPTIONS,
+  EVENT_ALL_ACTIVITY,
 } = require('../constants')
 const { eventsColListQueryBuilder } = require('../controllers')
 const activityFeedEventsQuery = require('../es-queries/activity-feed-all-events-query')
+const allActivityFeedEvents = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/all-activity-feed-events.json')
+const { ACTIVITIES_PER_PAGE } = require('../../../../contacts/constants')
 
 describe('Activity feed controllers', () => {
   let fetchActivityFeedStub,
     getGlobalUltimateHierarchyStub,
     controllers,
     middlewareParameters
+
+  const notFoundError = {
+    status: 404,
+  }
   describe('#fetchActivityFeedHandler', () => {
     before(() => {
       fetchActivityFeedStub = sinon.stub().resolves(activityFeedEsFixtures)
@@ -485,12 +492,8 @@ describe('Activity feed controllers', () => {
     })
 
     context('when the endpoint returns error', () => {
-      const error = {
-        status: 404,
-      }
-
       before(async () => {
-        fetchActivityFeedStub.rejects(error)
+        fetchActivityFeedStub.rejects(notFoundError)
         middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           user: {
@@ -507,10 +510,110 @@ describe('Activity feed controllers', () => {
 
       it('should call next with an error', async () => {
         expect(middlewareParameters.resMock.json).to.not.have.been.called
-        expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
+        expect(middlewareParameters.nextSpy).to.have.been.calledWith(
+          notFoundError
+        )
       })
     })
   })
+
+  describe.only('#fetchAllActivityFeedEvents', () => {
+    let allActivityFeedEventsQueryStub
+    const esQueryStub = { query: {} }
+
+    before(() => {
+      allActivityFeedEventsQueryStub = sinon.stub().returns(esQueryStub)
+
+      fetchActivityFeedStub = sinon.stub()
+      controllers = proxyquire(
+        '../../src/apps/companies/apps/activity-feed/controllers',
+        {
+          './repos': {
+            fetchActivityFeed: fetchActivityFeedStub,
+          },
+          './es-queries': {
+            activityFeedEventsQuery: allActivityFeedEventsQueryStub,
+          },
+        }
+      )
+    })
+
+    context('when the request is succesful', () => {
+      beforeEach(async () => {
+        fetchActivityFeedStub.resolves(allActivityFeedEvents)
+
+        const requestQuery = {
+          sortBy: 'modified_on:desc',
+          name: 'Big+Event',
+          earliestStartDate: '2020-11-01',
+          latestStartDate: '2020-11-01',
+          page: 1,
+        }
+
+        middlewareParameters = buildMiddlewareParameters({
+          requestQuery,
+        })
+
+        await controllers.fetchAllActivityFeedEvents(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy
+        )
+      })
+
+      it('returns the query results', () => {
+        expect(allActivityFeedEventsQueryStub).to.be.calledWith({
+          fullQuery: [
+            EVENT_ALL_ACTIVITY,
+            { match: { 'object.name': 'Big+Event' } },
+            {
+              range: {
+                'object.startTime': { gte: '2020-11-01', lte: '2020-11-01' },
+              },
+            },
+          ],
+          from: 0,
+          size: ACTIVITIES_PER_PAGE,
+          sort: EVENT_ACTIVITY_SORT_OPTIONS[
+            middlewareParameters.reqMock.query.sortBy
+          ],
+        })
+        sinon.assert.calledOnce(fetchActivityFeedStub)
+
+        expect(fetchActivityFeedStub).to.be.calledWith(
+          middlewareParameters.reqMock,
+          esQueryStub
+        )
+
+        sinon.assert.calledWith(middlewareParameters.resMock.json, {
+          allActivityFeedEvents: sinon.match.array,
+          total: 82,
+        })
+      })
+    })
+
+    context('the call to Activity Feed fails', () => {
+      beforeEach(async () => {
+        fetchActivityFeedStub.rejects(notFoundError)
+        middlewareParameters = buildMiddlewareParameters({
+          requestQuery: { from: 0 },
+        })
+
+        await controllers.fetchAllActivityFeedEvents(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy
+        )
+      })
+      it('calls next with error', () => {
+        expect(middlewareParameters.resMock.json).to.not.have.been.called
+        expect(middlewareParameters.nextSpy).to.have.been.calledWith(
+          notFoundError
+        )
+      })
+    })
+  })
+
   describe('#filtersQueryBuilder', () => {
     context('check dsl query when filtering on event name', () => {
       it('builds the right query when being filtered by event name', () => {
