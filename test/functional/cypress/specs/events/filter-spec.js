@@ -464,7 +464,13 @@ describe('events Collections Filter', () => {
       const eventName = 'Big Event'
       const queryParamWithName = 'name=Big+Event'
 
-      context('should filter from user input', () => {
+      context.only('should filter from user input', () => {
+        beforeEach(() => {
+          cy.intercept(
+            'GET',
+            `${urls.events.activity.data()}?sortBy=modified_on:desc&name=Big+Event&page=1`
+          ).as('nameRequest')
+        })
         it('should add name from user input to query param', () => {
           cy.get(element).type(`${eventName}{enter}`)
           cy.url().should('include', queryParamWithName)
@@ -473,6 +479,13 @@ describe('events Collections Filter', () => {
         it('should not add anything to the query param if the name is backspaced', () => {
           cy.get(element).type(`{selectAll}{backspace}{enter}`)
           cy.url().should('not.include', queryParamWithName)
+        })
+
+        it('should pass the name to the controller', () => {
+          cy.get(element).type(`${eventName}{enter}`)
+          cy.wait('@nameRequest').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
         })
       })
 
