@@ -2,17 +2,9 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 
 import FlashMessages from '../FlashMessages'
-import exampleReadme from './example-flash.md'
-import usageReadme from './usage-flash.md'
 
 storiesOf('Flash Messages', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: exampleReadme,
-      sidebar: usageReadme,
-    },
-  })
+  .addParameters({ component: FlashMessages })
   .add('Default', () => (
     <FlashMessages
       flashMessages={{
