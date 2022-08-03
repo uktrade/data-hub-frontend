@@ -7,7 +7,6 @@ import FieldInput from '../FieldInput'
 import Form from '../../../Form'
 import { transformArrayToObject } from '../FieldAddAnother/utils'
 
-import exampleReadme from '../FieldAddAnother/example.md'
 import usageReadme from '../FieldAddAnother/usage.md'
 
 const options = [
@@ -51,61 +50,72 @@ const transformObjectBackToArray = (valueAsObject) => {
 }
 
 storiesOf('Form/Form Elements/FieldAddAnother', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: exampleReadme,
-      sidebar: usageReadme,
-    },
-  })
-  .add('Edit', () => (
-    <Form
-      id="fieldAddAnotherExample"
-      analyticsFormName="fieldAddAnotherExample"
-      submissionTaskName="Submit Form example"
-      initialValues={transformArrayToObject(initialValues)}
-    >
-      {(state) => (
-        <>
-          <FieldAddAnother
-            name="teams_edit-example"
-            legend="Team members with roles"
-            dataTestPrefix="teams-field-"
-            itemName="team member"
-            initialChildGroupCount={initialValues.length}
-            limitChildGroupCount={4}
-          >
-            {({ groupIndex }) => (
-              <>
-                <FieldTypeahead
-                  name={`adviser_${groupIndex}`}
-                  inputId={`adviser_${groupIndex}`}
-                  label="Team Member"
-                  options={options}
-                  placeholder="Search advisers"
-                  required="Select at least one Adviser"
-                  aria-label="Select an adviser"
-                />
-                <FieldInput
-                  name={`role_${groupIndex}`}
-                  type="text"
-                  label="Role"
-                />
-              </>
-            )}
-          </FieldAddAnother>
-          <pre>
-            Using the data with the form setting and getting values{' '}
-            {JSON.stringify(state.values, null, 2)}
-          </pre>
-          <pre>
-            When sending data back to the database
-            {JSON.stringify(transformObjectBackToArray(state.values), null, 2)}
-          </pre>
-        </>
-      )}
-    </Form>
+  .add('Docs placeholder', () => (
+    <p>
+      This is a workaround to get the DocsPage to work with multiInstance
+      components.
+    </p>
   ))
+  .add(
+    'Edit',
+    () => (
+      <Form
+        id="fieldAddAnotherExample"
+        analyticsFormName="fieldAddAnotherExample"
+        submissionTaskName="Submit Form example"
+        initialValues={transformArrayToObject(initialValues)}
+      >
+        {(state) => (
+          <>
+            <FieldAddAnother
+              name="teams_edit-example"
+              legend="Team members with roles"
+              dataTestPrefix="teams-field-"
+              itemName="team member"
+              initialChildGroupCount={initialValues.length}
+              limitChildGroupCount={4}
+            >
+              {({ groupIndex }) => (
+                <>
+                  <FieldTypeahead
+                    name={`adviser_${groupIndex}`}
+                    inputId={`adviser_${groupIndex}`}
+                    label="Team Member"
+                    options={options}
+                    placeholder="Search advisers"
+                    required="Select at least one Adviser"
+                    aria-label="Select an adviser"
+                  />
+                  <FieldInput
+                    name={`role_${groupIndex}`}
+                    type="text"
+                    label="Role"
+                  />
+                </>
+              )}
+            </FieldAddAnother>
+            <pre>
+              Using the data with the form setting and getting values{' '}
+              {JSON.stringify(state.values, null, 2)}
+            </pre>
+            <pre>
+              When sending data back to the database
+              {JSON.stringify(
+                transformObjectBackToArray(state.values),
+                null,
+                2
+              )}
+            </pre>
+          </>
+        )}
+      </Form>
+    ),
+    {
+      docs: {
+        storyDescription: usageReadme,
+      },
+    }
+  )
   .add('New', () => (
     <Form
       id="fieldAddAnotherExample"
