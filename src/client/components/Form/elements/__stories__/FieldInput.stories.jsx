@@ -4,17 +4,8 @@ import { storiesOf } from '@storybook/react'
 import FieldInput from '../FieldInput'
 import Form from '../../../Form'
 
-import exampleReadme from '../FieldInput/example.md'
-import usageReadme from '../FieldInput/usage.md'
-
 storiesOf('Form/Form Elements/Input', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: exampleReadme,
-      sidebar: usageReadme,
-    },
-  })
+  .addParameters({ component: FieldInput })
   .add('Text', () => (
     <Form
       id="fieldInputExample"
