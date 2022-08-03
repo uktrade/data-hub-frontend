@@ -1,8 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
-import usageReadme from '../usage.md'
-import exampleReadme from '../example.md'
+import usageReadme from './usage.md'
 import Typeahead from '../'
 
 const asyncOptions = [
@@ -51,22 +50,29 @@ const options = [
 ]
 
 storiesOf('Typeahead', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: exampleReadme,
-      sidebar: usageReadme,
-    },
-  })
-  .add('Single - standard options', () => (
-    <Typeahead
-      name="singleselect"
-      isMulti={false}
-      initialOptions={options}
-      placeholder="Search..."
-      label="Pick a fruit"
-    />
+  .add('Docs placeholder', () => (
+    <p>
+      This is a workaround to get the DocsPage to work with multiInstance
+      components.
+    </p>
   ))
+  .add(
+    'Single - standard options',
+    () => (
+      <Typeahead
+        name="singleselect"
+        isMulti={false}
+        initialOptions={options}
+        placeholder="Search..."
+        label="Pick a fruit"
+      />
+    ),
+    {
+      docs: {
+        storyDescription: usageReadme,
+      },
+    }
+  )
   .add('Single - pre-selected option', () => (
     <Typeahead
       name="singleselect-pre-select"
