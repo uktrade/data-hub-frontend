@@ -4,9 +4,6 @@ import { storiesOf } from '@storybook/react'
 import FieldDate from '../FieldDate'
 import Form from '../../../Form'
 
-import exampleReadme from '../FieldDate/example.md'
-import usageReadme from '../FieldDate/usage.md'
-
 const ERRORS = {
   DAY: 'Enter a valid Epoch day',
   MONTH: 'Enter a valid Epoch month',
@@ -14,13 +11,7 @@ const ERRORS = {
 }
 
 storiesOf('Form/Form Elements/Date', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: exampleReadme,
-      sidebar: usageReadme,
-    },
-  })
+  .addParameters({ component: FieldDate })
   .add('FieldDate - default validation', () => (
     <Form
       id="fieldDateExample"

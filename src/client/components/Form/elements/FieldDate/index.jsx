@@ -79,6 +79,9 @@ const getDefaultInitialValue = (format) => {
     : { month: '', year: '' }
 }
 
+/**
+ * Date field for use in forms and filters.
+ */
 const FieldDate = ({
   name,
   label,
@@ -183,17 +186,41 @@ const FieldDate = ({
 }
 
 FieldDate.propTypes = {
+  /**
+   * Text for name attribute value
+   */
   name: PropTypes.string.isRequired,
+  /**
+   * Text for the label element
+   */
   label: PropTypes.node,
+  /**
+   * Node for legend element
+   */
   legend: PropTypes.node,
+  /**
+   * Node for hint element
+   */
   hint: PropTypes.string,
+  /**
+   * Text 'required' sets wether the input is required or not
+   */
   required: PropTypes.string,
+  /**
+   * Text 'invalid' sets a custom error message for invalid dates
+   */
   invalid: PropTypes.string,
   format: PropTypes.string,
+  /**
+   * Validate functions for input
+   */
   validate: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.arrayOf(PropTypes.func),
   ]),
+  /**
+   * Sets initial value of the input
+   */
   initialValue: PropTypes.shape({
     day: PropTypes.string,
     month: PropTypes.string,
@@ -204,6 +231,9 @@ FieldDate.propTypes = {
     month: PropTypes.string,
     year: PropTypes.string,
   }),
+  /**
+   * Toggles wether the element is a filter or not
+   */
   reduced: PropTypes.bool,
 }
 
