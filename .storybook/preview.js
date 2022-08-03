@@ -14,7 +14,6 @@ import taskStoriesTasks from '../src/client/components/Task/__stories__/tasks.js
 import typeaheadTasks from '../src/client/components/Typeahead/tasks.js'
 import contactTasks from '../src/client/components/Resource/__stories__/tasks.js'
 import formTasks from '../src/client/components/Form/__stories__/tasks'
-import eventFormAndMetadataTasks from '../src/client/modules/Events/EventForm/__stories__/tasks'
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -44,7 +43,6 @@ addDecorator((s) => (
         ...contactTasks,
         ...typeaheadTasks,
         ...formTasks,
-        ...eventFormAndMetadataTasks,
       }}
     >
       {s()}
