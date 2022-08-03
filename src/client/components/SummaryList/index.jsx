@@ -29,6 +29,9 @@ const StyledDD = styled('dd')`
   width: 70%;
 `
 
+/**
+ * A styled version of a description list, with terms and descriptions.
+ */
 const SummaryList = ({ rows, ...rest }) =>
   rows ? (
     <StyledDL {...rest}>
@@ -46,6 +49,9 @@ const SummaryList = ({ rows, ...rest }) =>
   ) : null
 
 SummaryList.propTypes = {
+  /**
+   * Items to display in the list
+   */
   rows: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.node,
