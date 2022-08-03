@@ -5,9 +5,6 @@ import { H1 } from '@govuk-react/heading'
 import FieldCheckboxes from '../FieldCheckboxes'
 import Form from '../../../Form'
 
-import exampleReadme from '../FieldCheckboxes/example.md'
-import usageReadme from '../FieldCheckboxes/usage.md'
-
 const options = [
   {
     label: 'Italy',
@@ -29,13 +26,7 @@ const options = [
 ]
 
 storiesOf('Form/Form Elements/Checkboxes', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: exampleReadme,
-      sidebar: usageReadme,
-    },
-  })
+  .addParameters({ component: FieldCheckboxes })
   .add('Default', () => (
     <Form
       id="fieldCheckboxExample"

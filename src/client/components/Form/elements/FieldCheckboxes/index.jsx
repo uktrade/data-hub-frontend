@@ -15,6 +15,9 @@ const StyledOr = styled('div')({
   marginBottom: SPACING.SCALE_2,
 })
 
+/**
+ * Checkboxes for use in forms and filters.
+ */
 const FieldCheckboxes = ({
   name,
   validate,
@@ -118,17 +121,44 @@ const FieldCheckboxes = ({
 }
 
 FieldCheckboxes.propTypes = {
+  /**
+   * Text for name attribute value
+   */
   name: PropTypes.string.isRequired,
+  /**
+   * Validate functions for input
+   */
   validate: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.arrayOf(PropTypes.func),
   ]),
+  /**
+   * Text 'required' sets whether the input is required or not
+   */
   required: PropTypes.string,
+  /**
+   * Text for the label element
+   */
   label: PropTypes.node,
+  /**
+   * Node for legend element
+   */
   legend: PropTypes.node,
+  /**
+   * Node for hint element
+   */
   hint: PropTypes.node,
+  /**
+   * Splits the last checkbox from the others where the choice is exclusive between them
+   */
   exclusive: PropTypes.bool,
+  /**
+   * Sets initial value of the input
+   */
   initialValue: PropTypes.array,
+  /**
+   * Defines the checkbox labels and values
+   */
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
