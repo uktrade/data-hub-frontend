@@ -51,6 +51,11 @@ const messageColours = {
   muted: BLACK,
 }
 
+/**
+ * Flash messages for users in different colours depending on the message.
+ *
+ * Note: If the props "flashMessages" are not passed down to the component then flash messages will be taken from session storage, if none exist in session storage then `null` is returned.
+ */
 const FlashMessages = ({
   // Can be passed in as prop or from redux store
   flashMessages,
@@ -92,6 +97,9 @@ const FlashMessages = ({
 }
 
 const flashMessagePropTypes = {
+  /**
+   * Contains the flash messages
+   */
   flashMessages: PropTypes.shape({
     type: PropTypes.oneOfType([
       PropTypes.arrayOf(
