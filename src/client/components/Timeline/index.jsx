@@ -97,6 +97,9 @@ const StyledLi = styled('li')({
   },
 })
 
+/**
+ * The timeline displays a list of events/stages in chronological order and indicates the current progress of a particular event/stage.
+ */
 const Timeline = ({ stages, currentStage = '', ...props }) => {
   const stageIndex = stages.indexOf(currentStage)
   return (
@@ -124,7 +127,18 @@ const Timeline = ({ stages, currentStage = '', ...props }) => {
 }
 
 Timeline.propTypes = {
+  /**
+   * Text for the stages
+   */
   stages: PropTypes.arrayOf(PropTypes.string).isRequired,
+  /**
+   * Marks the current stage
+   */
+  currentStage: PropTypes.string,
+}
+
+Timeline.defaultProps = {
+  currentStage: false,
 }
 
 export default Timeline
