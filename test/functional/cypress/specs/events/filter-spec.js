@@ -465,6 +465,20 @@ describe('events Collections Filter', () => {
       const queryParamWithName = 'name=Big+Event'
 
       context('should filter from user input', () => {
+        before(() => {
+          cy.intercept(
+            'GET',
+            `${urls.events.activity.data()}?sortBy=modified_on:desc&name=Big+Event&page=1`
+          ).as('nameRequest')
+        })
+
+        it('should pass the name to the controller', () => {
+          cy.get(element).type(`${eventName}{enter}`)
+          cy.wait('@nameRequest').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+        })
+
         it('should add name from user input to query param', () => {
           cy.get(element).type(`${eventName}{enter}`)
           cy.url().should('include', queryParamWithName)
@@ -484,6 +498,10 @@ describe('events Collections Filter', () => {
           cy.get(element).should('have.value', eventName)
         })
       })
+
+      after(() => {
+        cy.get(element).clear()
+      })
     })
 
     context('Start date', () => {
@@ -495,25 +513,45 @@ describe('events Collections Filter', () => {
       const queryParamWithLatestStartDate = 'latest_start_date=2020-11-10'
 
       context('should filter from user input', () => {
+        before(() => {
+          cy.intercept(
+            'GET',
+            `${urls.events.activity.data()}?sortBy=modified_on:desc&earliestStartDate=2020-11-01&latestStartDate=2020-11-10&page=1`
+          ).as('dateRequest')
+        })
+        beforeEach(() => {
+          cy.get(earliestStartElement).clear()
+          cy.get(latestStartElement).clear()
+        })
+
+        it('should pass the date to the controller', () => {
+          cy.get(earliestStartElement).type(earliestStartDate)
+          cy.get(latestStartElement).type(latestStartDate)
+          cy.wait('@dateRequest').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+        })
+
         it('should add earliest start date to query param', () => {
           cy.get(earliestStartElement).type(earliestStartDate)
           cy.url().should('include', queryParamWithEarliestStartDate)
+          cy.url().should('not.include', queryParamWithLatestStartDate)
         })
 
-        it('should add earliest start and latest start date to query param', () => {
+        it('should add latest start date to query param', () => {
+          cy.get(latestStartElement).type(latestStartDate)
+          cy.url().should('not.include', queryParamWithEarliestStartDate)
+          cy.url().should('include', queryParamWithLatestStartDate)
+        })
+
+        it('should add earliest start date and latest start date to query param', () => {
+          cy.get(earliestStartElement).type(earliestStartDate)
           cy.get(latestStartElement).type(latestStartDate)
           cy.url().should('include', queryParamWithEarliestStartDate)
           cy.url().should('include', queryParamWithLatestStartDate)
         })
 
-        it('should add latest start date to query param', () => {
-          cy.get(earliestStartElement).clear()
-          cy.url().should('not.include', queryParamWithEarliestStartDate)
-          cy.url().should('include', queryParamWithLatestStartDate)
-        })
-
         it('should remove query params if date is cleared', () => {
-          cy.get(latestStartElement).clear()
           cy.url().should('not.include', queryParamWithEarliestStartDate)
           cy.url().should('not.include', queryParamWithLatestStartDate)
         })
@@ -527,6 +565,10 @@ describe('events Collections Filter', () => {
           cy.get(earliestStartElement).should('have.value', earliestStartDate)
           cy.get(latestStartElement).should('have.value', latestStartDate)
         })
+      })
+      after(() => {
+        cy.get(earliestStartElement).clear()
+        cy.get(latestStartElement).clear()
       })
     })
     after(() => {
