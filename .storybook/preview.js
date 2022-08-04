@@ -1,6 +1,5 @@
 import React from 'react'
 import { addDecorator, configure, addParameters } from '@storybook/react'
-import { addReadme } from 'storybook-readme'
 import { FONT_SIZE, FONT_STACK, MEDIA_QUERIES } from '@govuk-react/constants'
 import { createGlobalStyle } from 'styled-components'
 
@@ -23,7 +22,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-addDecorator(addReadme)
 addDecorator((s) => (
   <>
     <GlobalStyle />
