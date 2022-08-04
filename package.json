@@ -206,7 +206,6 @@
     "rewire": "^6.0.0",
     "sinon": "^14.0.0",
     "sinon-chai": "^3.7.0",
-    "storybook-readme": "^5.0.9",
     "supertest": "^6.2.4",
     "webpack": "^5.72.1",
     "webpack-assets-manifest": "^5.1.0",
