@@ -62,7 +62,7 @@ Joi.assert(process.env, envSchema, {
 
 app.disable('x-powered-by')
 
-// Raven request handler must be the first middleware
+// Sentry request handler must be the first middleware
 reporter.setup(app)
 
 if (!config.ci) {
@@ -147,7 +147,7 @@ app.use(reactGlobalProps())
 app.use(fixSlashes())
 app.use(routers)
 
-// Raven error handler must come before other error middleware
+// Sentry error handler must come before other error middleware
 reporter.handleErrors(app)
 
 app.use(errors.notFound)
