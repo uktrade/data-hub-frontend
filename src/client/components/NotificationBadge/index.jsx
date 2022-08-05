@@ -19,6 +19,10 @@ const StyledNotificationSpan = styled('span')`
   text-decoration: none;
 `
 
+/**
+ * Show an indicator of how many notifications there are.
+ * Based on the [MOJ Notification Badge](https://moj-design-system.herokuapp.com/components/notification-badge).
+ */
 const NotificationBadge = ({ label = '' }) => (
   <StyledNotificationSpan aria-label={label} data-test="notification-badge">
     {label}
@@ -26,6 +30,9 @@ const NotificationBadge = ({ label = '' }) => (
 )
 
 NotificationBadge.propTypes = {
+  /**
+   * Text for badge
+   */
   label: PropTypes.string,
 }
 

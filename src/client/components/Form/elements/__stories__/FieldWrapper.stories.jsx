@@ -6,21 +6,12 @@ import Form from '../../../Form'
 import FieldWrapper from '../FieldWrapper'
 import FieldInput from '../FieldInput'
 
-import exampleReadme from '../FieldWrapper/example.md'
-import useageReadme from '../FieldWrapper/usage.md'
-
 const testInput = (
   <FieldInput name="testField" type="text" required="Some error" />
 )
 
 storiesOf('Form/Form Elements/FieldWrapper', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: exampleReadme,
-      sidebar: useageReadme,
-    },
-  })
+  .addParameters({ component: FieldWrapper })
   .add('FieldWrapper - Label', () => (
     <Form
       id="fieldWrapperExample"

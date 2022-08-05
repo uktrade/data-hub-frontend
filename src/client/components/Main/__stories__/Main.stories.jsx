@@ -2,17 +2,9 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 
 import Main from 'Main'
-import exampleReadme from '../example.md'
-import usageReadme from '../usage.md'
 
-storiesOf('layout/Main', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: exampleReadme,
-      sidebar: usageReadme,
-    },
-  })
+storiesOf('Main', module)
+  .addParameters({ component: Main })
   .add('Default', () => (
     <Main>
       <p>

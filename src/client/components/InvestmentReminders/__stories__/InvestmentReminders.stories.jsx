@@ -1,7 +1,5 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import exampleReadme from '../example.md'
-import usageReadme from '../usage.md'
 
 import InvestmentReminders from 'InvestmentReminders'
 
@@ -41,13 +39,7 @@ const outstandingPropositions = {
 }
 
 storiesOf('InvestmentReminders', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: exampleReadme,
-      sidebar: usageReadme,
-    },
-  })
+  .addParameters({ component: InvestmentReminders })
   .add('Default', () => (
     <InvestmentReminders
       adviser={adviser}

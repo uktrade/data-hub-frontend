@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { MEDIA_QUERIES, SPACING, FONT_SIZE } from '@govuk-react/constants'
 import styled, { ThemeProvider } from 'styled-components'
 import { upperFirst } from 'lodash'
@@ -47,6 +48,15 @@ const MetaListItem = ({ text, children }) => (
   </StyledListItem>
 )
 
+/**
+ * The **InvestmentProjectLocalHeader** contains the following:
+ *
+ * - A row of breadcrumbs (secondary navigation) that reveals the user's location in Data Hub
+ *
+ * - Investment metadata such as: Status (Ongoing, Delayed, Abandoned, Lost and Dormant), Project code, Valuation and a Created on date
+ *
+ * - A list of five stages (Prospect', 'Assign PM', 'Active', 'Verify win' and 'Won') in chronological order where the current stage is clear to see
+ */
 const InvestmentProjectLocalHeader = ({ investment, breadcrumbs }) => (
   <LocalHeader
     headingLink={{
@@ -76,5 +86,16 @@ const InvestmentProjectLocalHeader = ({ investment, breadcrumbs }) => (
     </ThemeProvider>
   </LocalHeader>
 )
+
+InvestmentProjectLocalHeader.propTypes = {
+  /**
+   * An investment project
+   */
+  investment: PropTypes.object.isRequired,
+  /**
+   * An array of objects containing two fields (link and text)
+   */
+  breadcrumbs: PropTypes.array.isRequired,
+}
 
 export default InvestmentProjectLocalHeader
