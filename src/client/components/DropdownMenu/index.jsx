@@ -68,6 +68,26 @@ const KEY_ESC = 27
 const KEY_HOME = 36
 const KEY_END = 35
 
+/**
+ * DropdownMenu displays contextual overlays for menus.
+ *
+ * In Desktop view the menu will "float" over the content in mobile view the menu is in flow and will push the content down.
+ *
+ * DropdownButton extends styles of Button for usage please visit the button docs [here](https://govuk-react.github.io/govuk-react/?path=/story/form-buttons--component-default).
+ *
+ * ### Usage
+ *
+ * ```jsx
+ * <DropdownMenu label="View options" closedLabel="Hide options" {...props}>
+ *  <DropdownButton buttonColour={GREY_3} buttonTextColour={BLACK}>
+ *    Add to or remove from list
+ *  </DropdownButton>
+ *  <DropdownButton buttonColour={GREY_3} buttonTextColour={BLACK}>
+ *    Add to pipeline
+ *  </DropdownButton>
+ * </DropdownMenu>
+ * ```
+ */
 const DropdownMenu = ({
   label,
   children,
@@ -165,10 +185,25 @@ DropdownMenu.propTypes = {
   onUpdateIndex: PropTypes.func.isRequired,
   closeMenu: PropTypes.func.isRequired,
   activeIndex: PropTypes.number,
+  /**
+   * Text for the button
+   */
   label: PropTypes.string.isRequired,
+  /**
+   * Close text for button
+   */
   closedLabel: PropTypes.string,
+  /**
+   * Buttons for dropdown group
+   */
   children: PropTypes.node,
+  /**
+   * Signature: function(nextOpenState: boolean) => void
+   */
   onClick: PropTypes.func.isRequired,
+  /**
+   * Set the open and close state of the dropdown
+   */
   open: PropTypes.bool,
 }
 

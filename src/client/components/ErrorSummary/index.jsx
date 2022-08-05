@@ -65,6 +65,11 @@ const StyledErrorSummary = styled('div')(
   spacing.withWhiteSpace({ marginBottom: 6 })
 )
 
+/**
+ * When a user makes an error, you must show both an error summary and an error message next to each answer that contains an error. More information can be found on the [GDS Design system](https://design-system.service.gov.uk/components/error-summary/)
+ *
+ * Use this component at the top of a page to summarise any errors a user has made.
+ */
 const ErrorSummary = React.forwardRef(
   (
     { heading = 'There is a problem', description = null, errors, ...props },
@@ -89,8 +94,17 @@ const ErrorSummary = React.forwardRef(
 )
 
 ErrorSummary.propTypes = {
+  /**
+   * Text for the heading
+   */
   heading: PropTypes.string,
+  /**
+   * Text for description
+   */
   description: PropTypes.string,
+  /**
+   * The list of error descriptions and their target id's
+   */
   errors: PropTypes.arrayOf(
     PropTypes.shape({
       targetName: PropTypes.string.isRequired,

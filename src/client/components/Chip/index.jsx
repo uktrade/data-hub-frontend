@@ -25,6 +25,10 @@ const StyledButton = styled('button')`
   }
 `
 
+/**
+ * Chips are compact elements that represent an input, attribute, or action.
+ * A Chip could be used to display a list of selected filters in a collection list.
+ */
 const Chip = ({ children, value, onClick = null }) => (
   <StyledButton onClick={onClick} data-value={value}>
     {onClick && <span>✕</span>}
