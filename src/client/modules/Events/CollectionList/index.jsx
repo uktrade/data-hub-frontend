@@ -35,7 +35,7 @@ import {
   state2props,
 } from './state'
 
-import EventsFilteredCollectionList from '../../../components/NewFilteredCollectionList'
+import ActivityFeedFilteredCollectionList from '../../../components/ActivityFeedFilteredCollectionList'
 
 const EventsCollection = ({
   payload,
@@ -186,7 +186,7 @@ const EventsCollection = ({
               </CollectionFilters>
             </FilteredCollectionList>
           ) : (
-            <EventsFilteredCollectionList
+            <ActivityFeedFilteredCollectionList
               {...props}
               collectionName="event"
               sortOptions={COLLECTION_LIST_SORT_SELECT_OPTIONS}
@@ -216,7 +216,7 @@ const EventsCollection = ({
                   data-test="latest-start-date-filter"
                 />
               </CollectionFilters>
-            </EventsFilteredCollectionList>
+            </ActivityFeedFilteredCollectionList>
           )
         }
       </CheckUserFeatureFlag>

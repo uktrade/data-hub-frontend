@@ -16,7 +16,7 @@ import CollectionHeader from '../CollectionList/CollectionHeader'
 import ActivityList from '../ActivityFeed/activities/card/ActivityList'
 import Activity from '../ActivityFeed/Activity'
 
-const EventsFilteredCollectionList = ({
+const ActivityFeedFilteredCollectionList = ({
   itemsPerPage = 10,
   sortOptions = null,
   taskProps,
@@ -43,7 +43,7 @@ const EventsFilteredCollectionList = ({
           })
         }
         return (
-          <GridRow data-test="new-collection-list">
+          <GridRow data-test="activity-feed-collection-list">
             {children}
             <GridCol>
               <article>
@@ -51,7 +51,7 @@ const EventsFilteredCollectionList = ({
                   <CollectionHeader
                     totalItems={total}
                     collectionName="events"
-                    data-test="new-collection-header"
+                    data-test="activity-feed-collection-header"
                   />
                 }
                 {sortOptions && (
@@ -83,7 +83,7 @@ const EventsFilteredCollectionList = ({
   )
 }
 
-EventsFilteredCollectionList.propTypes = {
+ActivityFeedFilteredCollectionList.propTypes = {
   taskProps: PropTypes.shape({
     name: PropTypes.string,
     id: PropTypes.string,
@@ -109,6 +109,7 @@ EventsFilteredCollectionList.propTypes = {
       value: PropTypes.string,
     })
   ),
+  allActivityFeedEvents: PropTypes.array,
 }
 
-export default EventsFilteredCollectionList
+export default ActivityFeedFilteredCollectionList
