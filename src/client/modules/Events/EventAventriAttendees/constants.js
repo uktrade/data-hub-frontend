@@ -15,4 +15,12 @@ export const ATTENDEES_SORT_OPTIONS = [
     name: 'Last name: Z-A',
     value: 'last_name:desc',
   },
+  {
+    name: 'Company name: A-Z',
+    value: 'company_name:asc',
+  },
+  {
+    name: 'Company name: Z-A',
+    value: 'company_name:desc',
+  },
 ]
