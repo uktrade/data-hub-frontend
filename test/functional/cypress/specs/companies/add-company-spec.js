@@ -466,7 +466,7 @@ describe('Add company form', () => {
       cy.get('#field-telephone_number').contains(
         'Enter a website or phone number'
       )
-      cy.get(selectors.companyAdd.form).contains('Enter an address line 1')
+      cy.get(selectors.companyAdd.form).contains('Enter an address')
       cy.get(selectors.companyAdd.form).contains('Enter a town or city')
     })
 
@@ -768,7 +768,7 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.form).contains(
         'Enter a website or phone number'
       )
-      cy.get(selectors.companyAdd.form).contains('Enter an address line 1')
+      cy.get(selectors.companyAdd.form).contains('Enter an address')
       cy.get(selectors.companyAdd.form).contains('Enter a town or city')
       cy.get(selectors.companyAdd.form).contains('Select a state')
       cy.get(selectors.companyAdd.form).contains('Enter a ZIP code')
@@ -824,7 +824,7 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.form).contains(
         'Enter a website or phone number'
       )
-      cy.get(selectors.companyAdd.form).contains('Enter an address line 1')
+      cy.get(selectors.companyAdd.form).contains('Enter an address')
       cy.get(selectors.companyAdd.form).contains('Enter a town or city')
       cy.get(selectors.companyAdd.form).contains('Select a province')
       cy.get(selectors.companyAdd.form).contains('Enter a postal code')

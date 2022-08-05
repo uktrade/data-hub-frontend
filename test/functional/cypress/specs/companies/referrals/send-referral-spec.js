@@ -359,11 +359,10 @@ describe('Contact loop', () => {
         urls.companies.referrals.send(fixtures.company.withContacts.id)
       )
 
-      cy.contains('div', 'First name').find('input').type('John')
-      cy.contains('div', 'Last name').find('input').type('Doe')
+      cy.contains('div', 'Full name').find('input').type('John Doe')
       cy.contains('div', 'Job title').find('input').type('Full-stack dev')
       cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
-      cy.contains('div', 'Telephone number').find('input').type('123 567 789')
+      cy.contains('div', 'Phone number').find('input').type('123 567 789')
       cy.contains('div', 'Email').find('input').type('john@new.com')
       cy.checkRadioGroup(
         'Is this contact’s work address the same as the company address?',

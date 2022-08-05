@@ -47,7 +47,7 @@ describe('Contacts', () => {
     cy.typeIntoInputs({
       'Full name': 'Andy Pipkin',
       'Job title': 'On dole',
-      'Telephone number': '56789',
+      'Phone number': '56789',
       Email: EMAIL_1,
     })
 
@@ -64,7 +64,7 @@ describe('Contacts', () => {
     cy.typeIntoInputs({
       'Full name': 'Lou Todd',
       'Job title': 'Carer',
-      'Telephone number': '987654321',
+      'Phone number': '987654321',
       Email: EMAIL_1,
     })
 
