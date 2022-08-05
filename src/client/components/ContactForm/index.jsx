@@ -238,7 +238,7 @@ const _ContactForm = ({
                           label="Full name"
                           name="fullName"
                           type="text"
-                          required="Enter your full name"
+                          required="Enter a full name"
                           data-test="group-field-full_name"
                         />
                         <FieldInput
@@ -267,7 +267,7 @@ const _ContactForm = ({
                         <FieldRadios
                           legend="Is this contact’s work address the same as the company address?"
                           name="addressSameAsCompany"
-                          required="Select yes if the contact's address is the same as the company address"
+                          required="Select yes if the contact's work address is the same as the company address"
                           options={[
                             { value: YES, label: YES },
                             {
@@ -292,7 +292,7 @@ const _ContactForm = ({
                         <FieldRadios
                           legend="Is this person a primary contact?"
                           name="primary"
-                          required="Select yes if this person is a primary contact"
+                          required="Select yes if this person is the company's primary contact"
                           options={[
                             { value: YES, label: YES },
                             { value: NO, label: NO },

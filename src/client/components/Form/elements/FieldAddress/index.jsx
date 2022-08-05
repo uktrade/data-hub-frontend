@@ -256,7 +256,7 @@ const FieldAddress = ({
         type="text"
         name="address1"
         label="Address line 1"
-        required="Enter an address line 1"
+        required="Enter an address"
       />
       <FieldInput
         type="text"

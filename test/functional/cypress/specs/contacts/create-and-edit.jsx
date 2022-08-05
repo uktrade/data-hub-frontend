@@ -82,13 +82,13 @@ describe('Create contact form', () => {
     cy.clickSubmitButton('Add contact')
 
     assertErrors({
-      'Full name': 'Enter your full name',
+      'Full name': 'Enter a full name',
       'Job title': 'Enter a job title',
       'Email address': 'Enter an email',
       'Is this contact’s work address the same as the company address?':
         "Select yes if the contact's address is the same as the company address",
       'Is this person a primary contact?':
-        'Select yes if this person is a primary contact',
+        "Select yes if this person is the company's primary contact",
     })
   })
 
@@ -101,12 +101,12 @@ describe('Create contact form', () => {
     cy.clickSubmitButton('Add contact')
 
     assertErrors({
-      'Full name': 'Enter your full name',
+      'Full name': 'Enter a full name',
       'Last name': 'Enter a last name',
       'Job title': 'Enter a job title',
       'Email address': 'Enter an email',
       'Is this person a primary contact?':
-        'Select yes if this person is a primary contact',
+        "Select yes if this person is the company's primary contact",
       'Address line 1': 'Enter an address line 1',
       'Town or city': 'Enter a town or city',
     })
