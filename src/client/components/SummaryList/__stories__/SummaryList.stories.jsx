@@ -2,8 +2,6 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 
 import SummaryList from 'SummaryList'
-import exampleReadme from '../example.md'
-import usageReadme from '../usage.md'
 
 const rows = [
   { label: 'Registered company name', value: 'Example Ltd' },
@@ -20,11 +18,5 @@ const rows = [
 ]
 
 storiesOf('SummaryList', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: exampleReadme,
-      sidebar: usageReadme,
-    },
-  })
+  .addParameters({ component: SummaryList })
   .add('Default', () => <SummaryList rows={rows} />)

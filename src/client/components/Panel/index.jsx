@@ -34,6 +34,9 @@ const StyledBody = styled('div')`
   font-size: ${typography.font({ size: 16 })};
 `
 
+/**
+ * Making it easier for users to notice and find help content / DH updates
+ */
 const Panel = ({ title, children, ...rest }) => (
   <StyledPanel {...rest}>
     <StyledTitle>{title}</StyledTitle>
@@ -42,7 +45,13 @@ const Panel = ({ title, children, ...rest }) => (
 )
 
 Panel.propTypes = {
+  /**
+   * Text for title
+   */
   title: PropTypes.string.isRequired,
+  /**
+   * Text for panel
+   */
   children: PropTypes.element,
 }
 
