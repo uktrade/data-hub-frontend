@@ -9,7 +9,7 @@
   },
   "hits": {
     "total": {
-      "value": 2,
+      "value": 32,
       "relation": "eq"
     },
     "max_score": 3.6005385,
@@ -44,7 +44,9 @@
             "dit:lastName": "Woods",
             "id": "dit:aventri:Attendee:1234",
             "published": "1970-01-01T00:00:00",
-            "type": ["dit:aventri:Attendee"]
+            "type": [
+              "dit:aventri:Attendee"
+            ]
           },
           "published": "2022-02-24T11:28:57",
           "type": "dit:aventri:Attendee",
@@ -81,7 +83,9 @@
             "dit:lastName": "Ella",
             "id": "dit:aventri:Attendee:2222",
             "published": "1970-01-01T00:00:00",
-            "type": ["dit:aventri:Attendee"]
+            "type": [
+              "dit:aventri:Attendee"
+            ]
           },
           "published": "2022-02-24T11:28:57",
           "type": "dit:aventri:Attendee"
@@ -117,7 +121,313 @@
             "dit:lastName": "Shrek",
             "id": "dit:aventri:Attendee:2222",
             "published": "1970-01-01T00:00:00",
-            "type": ["dit:aventri:Attendee"]
+            "type": [
+              "dit:aventri:Attendee"
+            ]
+          },
+          "published": "2022-02-24T11:28:57",
+          "type": "dit:aventri:Attendee"
+        }
+      },
+      {
+        "_index": "activities__feed_id_dummy-data-feed__date_2022-06-28__timestamp_1656410763__batch_id_ltepro51__",
+        "_type": "_doc",
+        "_id": "dit:aventri:Event:1111:Attendee:2222:Create",
+        "_score": 3.6005385,
+        "_source": {
+          "dit:application": "aventri",
+          "id": "dit:aventri:Event:1111:Attendee:2222:Create",
+          "object": {
+            "attributedTo": {
+              "id": "dit:aventri:Event:1111",
+              "type": "dit:aventri:Event"
+            },
+            "dit:aventri:approvalstatus": "",
+            "dit:aventri:category": null,
+            "dit:aventri:companyname": "Ever Far Away",
+            "dit:aventri:createdby": "attendee",
+            "dit:aventri:email": "",
+            "dit:aventri:firstname": "Ariel",
+            "dit:aventri:language": "eng",
+            "dit:aventri:lastmodified": "2022-01-24T11:12:13",
+            "dit:aventri:lastname": "Ocean",
+            "dit:aventri:modifiedby": "attendee",
+            "dit:aventri:registrationstatus": "Confirmed",
+            "dit:aventri:virtual_event_attendance": "Yes",
+            "dit:emailAddress": "",
+            "dit:firstName": "Ariel",
+            "dit:lastName": "Ocean",
+            "id": "dit:aventri:Attendee:2222",
+            "published": "1970-01-01T00:00:00",
+            "type": [
+              "dit:aventri:Attendee"
+            ]
+          },
+          "published": "2022-02-24T11:28:57",
+          "type": "dit:aventri:Attendee"
+        }
+      },
+      {
+        "_index": "activities__feed_id_dummy-data-feed__date_2022-06-28__timestamp_1656410763__batch_id_ltepro51__",
+        "_type": "_doc",
+        "_id": "dit:aventri:Event:1111:Attendee:2222:Create",
+        "_score": 3.6005385,
+        "_source": {
+          "dit:application": "aventri",
+          "id": "dit:aventri:Event:1111:Attendee:2222:Create",
+          "object": {
+            "attributedTo": {
+              "id": "dit:aventri:Event:1111",
+              "type": "dit:aventri:Event"
+            },
+            "dit:aventri:approvalstatus": "",
+            "dit:aventri:category": null,
+            "dit:aventri:companyname": "Ever Far Away",
+            "dit:aventri:createdby": "attendee",
+            "dit:aventri:email": "",
+            "dit:aventri:firstname": "Tiana",
+            "dit:aventri:language": "eng",
+            "dit:aventri:lastmodified": "2022-01-24T11:12:13",
+            "dit:aventri:lastname": "Green",
+            "dit:aventri:modifiedby": "attendee",
+            "dit:aventri:registrationstatus": "Confirmed",
+            "dit:aventri:virtual_event_attendance": "Yes",
+            "dit:emailAddress": "",
+            "dit:firstName": "Tiana",
+            "dit:lastName": "Green",
+            "id": "dit:aventri:Attendee:2222",
+            "published": "1970-01-01T00:00:00",
+            "type": [
+              "dit:aventri:Attendee"
+            ]
+          },
+          "published": "2022-02-24T11:28:57",
+          "type": "dit:aventri:Attendee"
+        }
+      },
+      {
+        "_index": "activities__feed_id_dummy-data-feed__date_2022-06-28__timestamp_1656410763__batch_id_ltepro51__",
+        "_type": "_doc",
+        "_id": "dit:aventri:Event:1111:Attendee:2222:Create",
+        "_score": 3.6005385,
+        "_source": {
+          "dit:application": "aventri",
+          "id": "dit:aventri:Event:1111:Attendee:2222:Create",
+          "object": {
+            "attributedTo": {
+              "id": "dit:aventri:Event:1111",
+              "type": "dit:aventri:Event"
+            },
+            "dit:aventri:approvalstatus": "",
+            "dit:aventri:category": null,
+            "dit:aventri:companyname": "Ever Far Away",
+            "dit:aventri:createdby": "attendee",
+            "dit:aventri:email": "",
+            "dit:aventri:firstname": "Belle",
+            "dit:aventri:language": "eng",
+            "dit:aventri:lastmodified": "2022-01-24T11:12:13",
+            "dit:aventri:lastname": "Beastly",
+            "dit:aventri:modifiedby": "attendee",
+            "dit:aventri:registrationstatus": "Confirmed",
+            "dit:aventri:virtual_event_attendance": "Yes",
+            "dit:emailAddress": "",
+            "dit:firstName": "Belle",
+            "dit:lastName": "Beastly",
+            "id": "dit:aventri:Attendee:2222",
+            "published": "1970-01-01T00:00:00",
+            "type": [
+              "dit:aventri:Attendee"
+            ]
+          },
+          "published": "2022-02-24T11:28:57",
+          "type": "dit:aventri:Attendee"
+        }
+      },
+      {
+        "_index": "activities__feed_id_dummy-data-feed__date_2022-06-28__timestamp_1656410763__batch_id_ltepro51__",
+        "_type": "_doc",
+        "_id": "dit:aventri:Event:1111:Attendee:2222:Create",
+        "_score": 3.6005385,
+        "_source": {
+          "dit:application": "aventri",
+          "id": "dit:aventri:Event:1111:Attendee:2222:Create",
+          "object": {
+            "attributedTo": {
+              "id": "dit:aventri:Event:1111",
+              "type": "dit:aventri:Event"
+            },
+            "dit:aventri:approvalstatus": "",
+            "dit:aventri:category": null,
+            "dit:aventri:companyname": "Ever Far Away",
+            "dit:aventri:createdby": "attendee",
+            "dit:aventri:email": "",
+            "dit:aventri:firstname": "Snow",
+            "dit:aventri:language": "eng",
+            "dit:aventri:lastmodified": "2022-01-24T11:12:13",
+            "dit:aventri:lastname": "White",
+            "dit:aventri:modifiedby": "attendee",
+            "dit:aventri:registrationstatus": "Confirmed",
+            "dit:aventri:virtual_event_attendance": "Yes",
+            "dit:emailAddress": "",
+            "dit:firstName": "Snow",
+            "dit:lastName": "White",
+            "id": "dit:aventri:Attendee:2222",
+            "published": "1970-01-01T00:00:00",
+            "type": [
+              "dit:aventri:Attendee"
+            ]
+          },
+          "published": "2022-02-24T11:28:57",
+          "type": "dit:aventri:Attendee"
+        }
+      },
+      {
+        "_index": "activities__feed_id_dummy-data-feed__date_2022-06-28__timestamp_1656410763__batch_id_ltepro51__",
+        "_type": "_doc",
+        "_id": "dit:aventri:Event:1111:Attendee:2222:Create",
+        "_score": 3.6005385,
+        "_source": {
+          "dit:application": "aventri",
+          "id": "dit:aventri:Event:1111:Attendee:2222:Create",
+          "object": {
+            "attributedTo": {
+              "id": "dit:aventri:Event:1111",
+              "type": "dit:aventri:Event"
+            },
+            "dit:aventri:approvalstatus": "",
+            "dit:aventri:category": null,
+            "dit:aventri:companyname": "Ever Far Away",
+            "dit:aventri:createdby": "attendee",
+            "dit:aventri:email": "",
+            "dit:aventri:firstname": "Rapunzel",
+            "dit:aventri:language": "eng",
+            "dit:aventri:lastmodified": "2022-01-24T11:12:13",
+            "dit:aventri:lastname": "Hair",
+            "dit:aventri:modifiedby": "attendee",
+            "dit:aventri:registrationstatus": "Confirmed",
+            "dit:aventri:virtual_event_attendance": "Yes",
+            "dit:emailAddress": "",
+            "dit:firstName": "Rapunzel",
+            "dit:lastName": "Hair",
+            "id": "dit:aventri:Attendee:2222",
+            "published": "1970-01-01T00:00:00",
+            "type": [
+              "dit:aventri:Attendee"
+            ]
+          },
+          "published": "2022-02-24T11:28:57",
+          "type": "dit:aventri:Attendee"
+        }
+      },
+      {
+        "_index": "activities__feed_id_dummy-data-feed__date_2022-06-28__timestamp_1656410763__batch_id_ltepro51__",
+        "_type": "_doc",
+        "_id": "dit:aventri:Event:1111:Attendee:2222:Create",
+        "_score": 3.6005385,
+        "_source": {
+          "dit:application": "aventri",
+          "id": "dit:aventri:Event:1111:Attendee:2222:Create",
+          "object": {
+            "attributedTo": {
+              "id": "dit:aventri:Event:1111",
+              "type": "dit:aventri:Event"
+            },
+            "dit:aventri:approvalstatus": "",
+            "dit:aventri:category": null,
+            "dit:aventri:companyname": "Ever Far Away",
+            "dit:aventri:createdby": "attendee",
+            "dit:aventri:email": "",
+            "dit:aventri:firstname": "Elsa",
+            "dit:aventri:language": "eng",
+            "dit:aventri:lastmodified": "2022-01-24T11:12:13",
+            "dit:aventri:lastname": "Ice",
+            "dit:aventri:modifiedby": "attendee",
+            "dit:aventri:registrationstatus": "Confirmed",
+            "dit:aventri:virtual_event_attendance": "Yes",
+            "dit:emailAddress": "",
+            "dit:firstName": "Elsa",
+            "dit:lastName": "Ice",
+            "id": "dit:aventri:Attendee:2222",
+            "published": "1970-01-01T00:00:00",
+            "type": [
+              "dit:aventri:Attendee"
+            ]
+          },
+          "published": "2022-02-24T11:28:57",
+          "type": "dit:aventri:Attendee"
+        }
+      },
+      {
+        "_index": "activities__feed_id_dummy-data-feed__date_2022-06-28__timestamp_1656410763__batch_id_ltepro51__",
+        "_type": "_doc",
+        "_id": "dit:aventri:Event:1111:Attendee:2222:Create",
+        "_score": 3.6005385,
+        "_source": {
+          "dit:application": "aventri",
+          "id": "dit:aventri:Event:1111:Attendee:2222:Create",
+          "object": {
+            "attributedTo": {
+              "id": "dit:aventri:Event:1111",
+              "type": "dit:aventri:Event"
+            },
+            "dit:aventri:approvalstatus": "",
+            "dit:aventri:category": null,
+            "dit:aventri:companyname": "Ever Far Away",
+            "dit:aventri:createdby": "attendee",
+            "dit:aventri:email": "",
+            "dit:aventri:firstname": "Jasmine",
+            "dit:aventri:language": "eng",
+            "dit:aventri:lastmodified": "2022-01-24T11:12:13",
+            "dit:aventri:lastname": "Tiger",
+            "dit:aventri:modifiedby": "attendee",
+            "dit:aventri:registrationstatus": "Confirmed",
+            "dit:aventri:virtual_event_attendance": "Yes",
+            "dit:emailAddress": "",
+            "dit:firstName": "Jasmine",
+            "dit:lastName": "Tiger",
+            "id": "dit:aventri:Attendee:2222",
+            "published": "1970-01-01T00:00:00",
+            "type": [
+              "dit:aventri:Attendee"
+            ]
+          },
+          "published": "2022-02-24T11:28:57",
+          "type": "dit:aventri:Attendee"
+        }
+      },
+      {
+        "_index": "activities__feed_id_dummy-data-feed__date_2022-06-28__timestamp_1656410763__batch_id_ltepro51__",
+        "_type": "_doc",
+        "_id": "dit:aventri:Event:1111:Attendee:2222:Create",
+        "_score": 3.6005385,
+        "_source": {
+          "dit:application": "aventri",
+          "id": "dit:aventri:Event:1111:Attendee:2222:Create",
+          "object": {
+            "attributedTo": {
+              "id": "dit:aventri:Event:1111",
+              "type": "dit:aventri:Event"
+            },
+            "dit:aventri:approvalstatus": "",
+            "dit:aventri:category": null,
+            "dit:aventri:companyname": "Ever Far Away",
+            "dit:aventri:createdby": "attendee",
+            "dit:aventri:email": "",
+            "dit:aventri:firstname": "Fiona",
+            "dit:aventri:language": "eng",
+            "dit:aventri:lastmodified": "2022-01-24T11:12:13",
+            "dit:aventri:lastname": "Shrek",
+            "dit:aventri:modifiedby": "attendee",
+            "dit:aventri:registrationstatus": "Confirmed",
+            "dit:aventri:virtual_event_attendance": "Yes",
+            "dit:emailAddress": "",
+            "dit:firstName": "Fiona",
+            "dit:lastName": "Shrek",
+            "id": "dit:aventri:Attendee:2222",
+            "published": "1970-01-01T00:00:00",
+            "type": [
+              "dit:aventri:Attendee"
+            ]
           },
           "published": "2022-02-24T11:28:57",
           "type": "dit:aventri:Attendee"
