@@ -10,7 +10,6 @@ const ALLOWLIST = [
   '/v3/investment',
   '/v3/investment/:id',
   '/v3/investment/:id/update-stage',
-  '/v3/investment/:id/notification',
   '/whoami/',
   '/v4/adviser/:id/investment-summary',
   '/v4/company-list',

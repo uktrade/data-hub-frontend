@@ -366,10 +366,6 @@ app.put(
   '/v3/investment/:id/team-member',
   v3Investment.postInvestmentProjectEditTeams
 )
-app.get(
-  '/v3/investment/:id/notification',
-  v3Investment.getInvestmentNotificationSettings
-)
 
 // V3 Omis
 app.get('/v3/omis/order/:id', v3OMIS.getOrderById)

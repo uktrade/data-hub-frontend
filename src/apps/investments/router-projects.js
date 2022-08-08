@@ -30,7 +30,6 @@ const {
   documents,
   edit,
   evaluation,
-  notificationSettings,
   team,
 } = require('./controllers')
 
@@ -81,11 +80,10 @@ const {
 
 const interactionsRouter = require('../interactions/router.sub-app')
 const propositionsRouter = require('../propositions/router.sub-app')
-const userFeatures = require('../../middleware/user-features')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
-router.use('/:investmentId', userFeatures('notifications'), setLocalNavigation)
+router.use('/:investmentId', setLocalNavigation)
 router.param('investmentId', shared.getInvestmentDetails)
 router.param('companyId', shared.getCompanyDetails)
 
@@ -114,16 +112,6 @@ router.get(
 router.get(
   urls.investments.editHistory.data.route,
   editHistory.fetchProjectsHistoryHandler
-)
-
-router.get(
-  urls.investments.notificationSettings.index.route,
-  notificationSettings.renderNotificationSettingsView
-)
-
-router.get(
-  urls.investments.notificationSettings.estimatedLandDate.route,
-  notificationSettings.renderNotificationsEstimatedLandDateView
 )
 
 // Add investment from Companies
