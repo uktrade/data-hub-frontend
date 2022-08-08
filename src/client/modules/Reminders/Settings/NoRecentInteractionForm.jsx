@@ -35,11 +35,11 @@ const StyledFieldInput = styled(FieldInput)({
   width: 50,
 })
 
-const MAX_DAYS = 32767 // Set on the API endpoint (DB constraint)
+const MAX_DAYS = 365
 const POSITIVE_INT_REGEX = /^[0-9]+$/
-const EMPTY_ERR_MSG = 'Enter when you want to get reminders for your projects'
-const MIN_ERR_MSG = 'Enter a whole number that’s 1 or higher, like 25'
-const MAX_ERR_MSG = `Enter a whole number that’s less than or equal to ${MAX_DAYS}`
+const ERROR_MESSAGE = 'Enter a whole number that’s between 1 and 365, like 25'
+const EMPTY_ERROR_MESSAGE =
+  'Enter when you want to get reminders for your projects'
 
 const isPositiveInteger = (value) => POSITIVE_INT_REGEX.test(value)
 
@@ -111,17 +111,15 @@ const NoRecentInteractionForm = () => (
                               name={`reminder_days_${groupIndex}`}
                               data-test={`reminder_days_${groupIndex}`}
                               validate={(value) => {
-                                if (isPositiveInteger(value)) {
+                                if (isEmpty(value)) {
+                                  return EMPTY_ERROR_MESSAGE
+                                } else if (isPositiveInteger(value)) {
                                   const val = parseInt(value, 10)
-                                  return val === 0
-                                    ? MIN_ERR_MSG
-                                    : val > MAX_DAYS
-                                    ? MAX_ERR_MSG
-                                    : null
+                                  return val > 0 && val <= MAX_DAYS
+                                    ? null
+                                    : ERROR_MESSAGE
                                 } else {
-                                  return isEmpty(value)
-                                    ? EMPTY_ERR_MSG
-                                    : MIN_ERR_MSG
+                                  return ERROR_MESSAGE
                                 }
                               }}
                             />
