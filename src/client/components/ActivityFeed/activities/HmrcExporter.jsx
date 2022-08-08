@@ -50,7 +50,7 @@ export default class HmrcExporter extends React.PureComponent {
         <CardHeader
           company={showDnbHierarchy ? company : null}
           blockText="HMRC"
-          subHeading="Exporters records"
+          subHeading="Exporters record"
           heading={summary}
           sourceType={SOURCE_TYPES.external}
           startTime={startTime}

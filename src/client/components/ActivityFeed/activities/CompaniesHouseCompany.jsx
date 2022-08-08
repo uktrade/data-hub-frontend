@@ -76,7 +76,7 @@ export default class CompaniesHouseCompany extends React.PureComponent {
           heading={summary}
           blockText="Companies House"
           sourceType={SOURCE_TYPES.external}
-          subHeading="Company records"
+          subHeading="Company record"
           startTime={startTime}
         />
 
