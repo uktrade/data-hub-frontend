@@ -133,6 +133,11 @@ const FieldInner = ({
     children
   )
 
+/**
+ * A simple wrapper for use in the field components, which applies supporting elements and stylings. The FieldWrapper component caters for the child element within, by providing it with the wrapping elements it needs. In particular, this wrapper looks for passed props such as legends, labels, and hints, and provides the required layout or additional elements.
+ *
+ * In some design cases, there are pages that contain forms with a single radio or checkbox question. These pages have a requirement for a bigger, 'page-title like' legend. The `bigLegend` prop is a boolean which provides alternative styling to the legend, to make it match the bigger legend requirement.
+ */
 const FieldWrapper = ({
   name,
   label,
@@ -192,12 +197,37 @@ FieldInner.defaultProps = {
 }
 
 FieldWrapper.propTypes = {
+  /**
+   * Text for name attribute value
+   */
   name: PropTypes.string.isRequired,
+  /**
+   * Text for the label element
+   */
   label: PropTypes.node,
+  /**
+   * Node for legend element
+   */
   legend: PropTypes.node,
+  /**
+   * Boolean for showing a big legend
+   */
+  bigLegend: PropTypes.bool,
+  /**
+   * Node for hint element
+   */
   hint: PropTypes.node,
+  /**
+   * Text for error
+   */
   error: PropTypes.string,
+  /**
+   * Boolean for showing borders
+   */
   showBorder: PropTypes.bool,
+  /**
+   * Node for children elements
+   */
   children: PropTypes.node,
 }
 

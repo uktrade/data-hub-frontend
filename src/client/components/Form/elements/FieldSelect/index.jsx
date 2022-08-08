@@ -5,6 +5,9 @@ import Select from '@govuk-react/select'
 import { useField } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
 
+/**
+ * A Select dropdown field for use in forms.
+ */
 const FieldSelect = ({
   name,
   label,
@@ -54,22 +57,49 @@ const FieldSelect = ({
 }
 
 FieldSelect.propTypes = {
+  /**
+   * Text for name attribute value
+   */
   name: PropTypes.string.isRequired,
+  /**
+   * Text for the label element
+   */
   label: PropTypes.node,
+  /**
+   * Node for legend element
+   */
   legend: PropTypes.node,
+  /**
+   * Node for hint element
+   */
   hint: PropTypes.node,
+  /**
+   * Validate functions for input
+   */
   validate: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.arrayOf(PropTypes.func),
   ]),
+  /**
+   * Text 'required' sets wether the input is required or not
+   */
   required: PropTypes.string,
+  /**
+   * Sets initial value of the input
+   */
   initialValue: PropTypes.string,
+  /**
+   * Items for the list
+   */
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
     })
   ),
+  /**
+   * Text to display when no items are selected
+   */
   emptyOption: PropTypes.string,
 }
 

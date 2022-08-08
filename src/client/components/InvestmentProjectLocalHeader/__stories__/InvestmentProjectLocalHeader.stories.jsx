@@ -2,8 +2,6 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 
 import InvestmentProjectLocalHeader from 'InvestmentProjectLocalHeader'
-import exampleReadme from '../example.md'
-import usageReadme from '../usage.md'
 import urls from '../../../../lib/urls'
 
 const investment = {
@@ -38,13 +36,7 @@ const breadcrumbs = [
 ]
 
 storiesOf('InvestmentProjectLocalHeader', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: exampleReadme,
-      sidebar: usageReadme,
-    },
-  })
+  .addParameters({ component: InvestmentProjectLocalHeader })
   .add('Status: Ongoing', () => (
     <InvestmentProjectLocalHeader
       investment={{

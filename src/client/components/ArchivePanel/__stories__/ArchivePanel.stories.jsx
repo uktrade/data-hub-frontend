@@ -2,8 +2,6 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 
 import ArchivePanel from 'ArchivePanel'
-import exampleReadme from './example.md'
-import usageReadme from './usage.md'
 
 const archivist = {
   first_name: 'Example',
@@ -11,13 +9,7 @@ const archivist = {
 }
 
 storiesOf('ArchivePanel', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: exampleReadme,
-      sidebar: usageReadme,
-    },
-  })
+  .addParameters({ component: ArchivePanel })
   .add('Archived item', () => (
     <ArchivePanel
       isArchived={true}

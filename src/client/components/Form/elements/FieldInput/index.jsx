@@ -28,6 +28,9 @@ const StyledText = styled('span')({
   paddingLeft: SPACING.SCALE_2,
 })
 
+/**
+ * A basic input field for numbers and text.
+ */
 const FieldInput = ({
   name,
   type,
@@ -70,17 +73,44 @@ const FieldInput = ({
 }
 
 FieldInput.propTypes = {
+  /**
+   * Text for name attribute value
+   */
   name: PropTypes.string.isRequired,
+  /**
+   * Text for type attribute value
+   */
   type: PropTypes.string.isRequired,
+  /**
+   * Validate functions for input
+   */
   validate: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.arrayOf(PropTypes.func),
   ]),
+  /**
+   * Text 'required' sets wether the input is required or not
+   */
   required: PropTypes.string,
+  /**
+   * Text for the label element
+   */
   label: PropTypes.node,
+  /**
+   * Node for legend element
+   */
   legend: PropTypes.node,
+  /**
+   * Node for hint element
+   */
   hint: PropTypes.node,
+  /**
+   * Sets initial value of the input
+   */
   initialValue: PropTypes.string,
+  /**
+   * Toggles wether the element is a filter or not
+   */
   reduced: PropTypes.bool,
 }
 

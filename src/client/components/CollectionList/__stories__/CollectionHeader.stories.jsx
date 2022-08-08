@@ -4,6 +4,8 @@ import CollectionHeader from '../CollectionHeader'
 
 const collectionStories = storiesOf('Collection', module)
 
+collectionStories.addParameters({ component: CollectionHeader })
+
 collectionStories.add('Collection Header', () => (
   <CollectionHeader
     totalItems={1}

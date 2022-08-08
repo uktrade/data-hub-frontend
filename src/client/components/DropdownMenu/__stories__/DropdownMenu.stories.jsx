@@ -3,9 +3,7 @@ import { action } from '@storybook/addon-actions'
 import { GREY_3, BLACK } from 'govuk-colours'
 import styled from 'styled-components'
 import DropdownMenu, { DropdownButton } from 'DropdownMenu'
-import defaultReadme from './default.md'
 import noCloseLabelReadme from './noCloseLabel.md'
-import usageReadme from './usage.md'
 
 const StyledDiv = styled.div`
   width: 30%;
@@ -14,11 +12,6 @@ const StyledDiv = styled.div`
 export default {
   component: DropdownMenu,
   title: 'DropdownMenu',
-  parameters: {
-    readme: {
-      sidebar: usageReadme,
-    },
-  },
 }
 
 const withState = (Component) => () => {
@@ -54,14 +47,6 @@ const DefaultComponent = (props) => (
 
 export const Default = withState(DefaultComponent)
 
-Default.story = {
-  parameters: {
-    readme: {
-      content: defaultReadme,
-    },
-  },
-}
-
 const NoClosedLabelComponent = (props) => (
   <DropdownMenu label="View options" {...props}>
     <DropdownButton buttonColour={GREY_3} buttonTextColour={BLACK}>
@@ -77,8 +62,8 @@ export const NoClosedLabel = withState(NoClosedLabelComponent)
 
 NoClosedLabel.story = {
   parameters: {
-    readme: {
-      content: noCloseLabelReadme,
+    docs: {
+      storyDescription: noCloseLabelReadme,
     },
   },
 }
