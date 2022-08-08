@@ -5,6 +5,7 @@ import { ERROR_COLOUR } from 'govuk-colours'
 import DismissableStatusMessage from '../Dismissable'
 
 storiesOf('DismissableStatusMessage', module)
+  .addParameters({ component: DismissableStatusMessage })
   .add('Default', () => {
     return <DismissableStatusMessage>An info message</DismissableStatusMessage>
   })

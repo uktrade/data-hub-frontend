@@ -10,11 +10,8 @@ import FieldCheckboxes from '../elements/FieldCheckboxes'
 import FieldTypeahead from '../elements/FieldTypeahead'
 import Step from '../elements/Step'
 
-import rejectInitialValuesReadme from './reject-initial-values.md'
 import basicExampleReadme from './basic-example.md'
-import initialValuesAsPropExampleReadme from './initial-values-as-prop.md'
 import softRedirectExampleReadme from './soft-redirect.md'
-import multiStepExampleReadme from './multi-step.md'
 import ResourceOptionsField from '../elements/ResourceOptionsField'
 
 import Resource from '../../Resource'
@@ -22,6 +19,84 @@ import Resource from '../../Resource'
 const DummyResource = (props) => <Resource {...props} name="Load options" />
 
 storiesOf('Form', module)
+  .add('Docs placeholder', () => (
+    <p>
+      This is a workaround to get the DocsPage to work with multiInstance
+      components. The form props are fully documented{' '}
+      <a href="https://github.com/uktrade/data-hub-frontend/blob/master/src/client/components/Form/index.jsx#L467">
+        in the component's docstring.
+      </a>
+    </p>
+  ))
+  .add(
+    'Basics',
+    () => (
+      <Form
+        id="task-form-example-resolve-initial-values"
+        submissionTaskName="Submit Form example"
+        initialValuesTaskName="Load initial values"
+        initialValuesPayload="resolve"
+        transformInitialValues={(initialValues) => ({
+          ...initialValues,
+          reject: 'yes',
+        })}
+        analyticsFormName="formExample"
+        redirectTo={(submissionTaskResult, formValues) =>
+          '#' + JSON.stringify({ submissionTaskResult, formValues })
+        }
+        // eslint-disable-next-line no-unused-vars
+        flashMessage={(submissionTaskResult, formValues) =>
+          'Form was submitted successfully'
+        }
+      >
+        <FieldInput
+          name="foo"
+          type="text"
+          label="Foo"
+          hint='Initial value should be "Blah Blah"'
+          required="Foo is required"
+        />
+        <FieldSelect
+          name="bar"
+          label="Bar"
+          hint='Initial value should be "B".'
+          required="Bar is required"
+          options={[
+            { label: 'A', value: 'a' },
+            { label: 'B', value: 'b' },
+            { label: 'C', value: 'c' },
+          ]}
+        />
+        <FieldRadios
+          name="reject"
+          label="Reject"
+          hint="Should the submission task reject?"
+          options={[
+            { label: 'Yes', value: 'yes' },
+            { label: 'No', value: 'no' },
+          ]}
+        />
+        <p>
+          This example redirects to the same path with the result of the
+          submission task together with the submitted form values JSON
+          serialized in the URL fragment.
+        </p>
+        <p>
+          Note that the expected result of a resolved submission is a hard
+          redirection, which can only be seen in Storybook when the canvas is
+          open in it's own tab.
+        </p>
+        <p>
+          The form stays in the progress state until the next page is loaded
+        </p>
+      </Form>
+    ),
+    {
+      docs: {
+        storyDescription: basicExampleReadme,
+      },
+    }
+  )
   .add('Resource options fields', () => (
     <Form
       id="lazy-field-example"
@@ -105,75 +180,6 @@ storiesOf('Form', module)
     </Form>
   ))
   .add(
-    'Basics',
-    () => (
-      <Form
-        id="task-form-example-resolve-initial-values"
-        submissionTaskName="Submit Form example"
-        initialValuesTaskName="Load initial values"
-        initialValuesPayload="resolve"
-        transformInitialValues={(initialValues) => ({
-          ...initialValues,
-          reject: 'yes',
-        })}
-        analyticsFormName="formExample"
-        redirectTo={(submissionTaskResult, formValues) =>
-          '#' + JSON.stringify({ submissionTaskResult, formValues })
-        }
-        // eslint-disable-next-line no-unused-vars
-        flashMessage={(submissionTaskResult, formValues) =>
-          'Form was submitted successfully'
-        }
-      >
-        <FieldInput
-          name="foo"
-          type="text"
-          label="Foo"
-          hint='Initial value should be "Blah Blah"'
-          required="Foo is required"
-        />
-        <FieldSelect
-          name="bar"
-          label="Bar"
-          hint='Initial value should be "B".'
-          required="Bar is required"
-          options={[
-            { label: 'A', value: 'a' },
-            { label: 'B', value: 'b' },
-            { label: 'C', value: 'c' },
-          ]}
-        />
-        <FieldRadios
-          name="reject"
-          label="Reject"
-          hint="Should the submission task reject?"
-          options={[
-            { label: 'Yes', value: 'yes' },
-            { label: 'No', value: 'no' },
-          ]}
-        />
-        <p>
-          This example redirects to the same path with the result of the
-          submission task together with the submitted form values JSON
-          serialized in the URL fragment.
-        </p>
-        <p>
-          Note that the expected result of a resolved submission is a hard
-          redirection, which can only be seen in Storybook when the canvas is
-          open in it's own tab.
-        </p>
-        <p>
-          The form stays in the progress state until the next page is loaded
-        </p>
-      </Form>
-    ),
-    {
-      readme: {
-        sidebar: basicExampleReadme,
-      },
-    }
-  )
-  .add(
     'Rejected initial values',
     () => (
       <Form
@@ -203,8 +209,9 @@ storiesOf('Form', module)
       </Form>
     ),
     {
-      readme: {
-        sidebar: rejectInitialValuesReadme,
+      docs: {
+        storyDescription:
+          'The `Form` can resolve its initial values with the _task_ mechanism. This example demonstrates the rejection of the initial values task.',
       },
     }
   )
@@ -251,76 +258,69 @@ storiesOf('Form', module)
       </Form>
     ),
     {
-      readme: {
-        sidebar: initialValuesAsPropExampleReadme,
+      docs: {
+        storyDescription:
+          'The initial values of `Form` can also be set with the `initialValues` prop.',
       },
     }
   )
-  .add(
-    'Multi step',
-    () => (
-      <Form
-        id="task-form-example-multi-step"
-        submissionTaskName="Submit Form example"
-        initialValuesTaskName="Load initial values"
-        initialValuesPayload="resolve"
-        transformInitialValues={(initialValues) => ({
-          ...initialValues,
-          reject: 'yes',
-        })}
-        analyticsFormName="formExample"
-        redirectTo={(submissionTaskResult, formValues) =>
-          '#' + JSON.stringify({ submissionTaskResult, formValues })
-        }
-        // eslint-disable-next-line no-unused-vars
-        flashMessage={(submissionTaskResult, formValues) =>
-          'Form was submitted successfully'
-        }
-        onSuccess={(result, values) =>
-          alert(JSON.stringify({ result, values }, null, 2))
-        }
-      >
-        <Step name="step-1">
-          <FieldInput
-            name="foo"
-            type="text"
-            label="Foo"
-            hint='Initial value should be "Blah Blah"'
-            required="Foo is required"
-          />
-        </Step>
-        <Step name="step-2">
-          <FieldSelect
-            name="bar"
-            label="Bar"
-            hint='Initial value should be "B".'
-            required="Bar is required"
-            options={[
-              { label: 'A', value: 'a' },
-              { label: 'B', value: 'b' },
-              { label: 'C', value: 'c' },
-            ]}
-          />
-        </Step>
-        <Step name="step-3">
-          <FieldRadios
-            name="reject"
-            label="Reject"
-            hint="Should the submission task reject?"
-            options={[
-              { label: 'Yes', value: 'yes' },
-              { label: 'No', value: 'no' },
-            ]}
-          />
-        </Step>
-      </Form>
-    ),
-    {
-      readme: {
-        sidebar: multiStepExampleReadme,
-      },
-    }
-  )
+  .add('Multi step', () => (
+    <Form
+      id="task-form-example-multi-step"
+      submissionTaskName="Submit Form example"
+      initialValuesTaskName="Load initial values"
+      initialValuesPayload="resolve"
+      transformInitialValues={(initialValues) => ({
+        ...initialValues,
+        reject: 'yes',
+      })}
+      analyticsFormName="formExample"
+      redirectTo={(submissionTaskResult, formValues) =>
+        '#' + JSON.stringify({ submissionTaskResult, formValues })
+      }
+      // eslint-disable-next-line no-unused-vars
+      flashMessage={(submissionTaskResult, formValues) =>
+        'Form was submitted successfully'
+      }
+      onSuccess={(result, values) =>
+        alert(JSON.stringify({ result, values }, null, 2))
+      }
+    >
+      <Step name="step-1">
+        <FieldInput
+          name="foo"
+          type="text"
+          label="Foo"
+          hint='Initial value should be "Blah Blah"'
+          required="Foo is required"
+        />
+      </Step>
+      <Step name="step-2">
+        <FieldSelect
+          name="bar"
+          label="Bar"
+          hint='Initial value should be "B".'
+          required="Bar is required"
+          options={[
+            { label: 'A', value: 'a' },
+            { label: 'B', value: 'b' },
+            { label: 'C', value: 'c' },
+          ]}
+        />
+      </Step>
+      <Step name="step-3">
+        <FieldRadios
+          name="reject"
+          label="Reject"
+          hint="Should the submission task reject?"
+          options={[
+            { label: 'Yes', value: 'yes' },
+            { label: 'No', value: 'no' },
+          ]}
+        />
+      </Step>
+    </Form>
+  ))
   .add(
     'Soft (React-Router) redirect',
     () => (
@@ -381,8 +381,8 @@ storiesOf('Form', module)
       </Switch>
     ),
     {
-      readme: {
-        sidebar: softRedirectExampleReadme,
+      docs: {
+        storyDescription: softRedirectExampleReadme,
       },
     }
   )

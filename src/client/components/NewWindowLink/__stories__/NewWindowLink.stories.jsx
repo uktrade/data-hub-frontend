@@ -5,6 +5,7 @@ import NewWindowLink from 'NewWindowLink'
 const stories = storiesOf('NewWindowLink')
 
 stories
+  .addParameters({ component: NewWindowLink })
   .add('Default', () => (
     <NewWindowLink href="https://example.com">This is a link</NewWindowLink>
   ))

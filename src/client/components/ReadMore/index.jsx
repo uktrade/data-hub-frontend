@@ -18,6 +18,9 @@ const StyledButtonLink = styled(ButtonLink)`
   }
 `
 
+/**
+ * For truncating content with a link to read more.
+ */
 const ReadMore = ({ text, count = 255 }) => {
   const [showingAll, setIsShowingAll] = useState(false)
   if (!text) {
@@ -39,7 +42,13 @@ const ReadMore = ({ text, count = 255 }) => {
 }
 
 ReadMore.propTypes = {
+  /**
+   * The content to truncate
+   */
   text: PropTypes.string.isRequired,
+  /**
+   * Specifies a custom character count to truncate content
+   */
   count: PropTypes.number,
 }
 

@@ -4,8 +4,6 @@ import Link from '@govuk-react/link'
 
 import Metadata from 'Metadata'
 
-const stories = storiesOf('Metadata', module)
-
 const metadata = [
   { label: 'Updated on', value: '5 September 2019' },
   { label: 'Sector', value: 'Environment' },
@@ -15,4 +13,6 @@ const metadata = [
   },
 ]
 
-stories.add('Default', () => <Metadata rows={metadata} />)
+storiesOf('Metadata', module)
+  .addParameters({ component: Metadata })
+  .add('Default', () => <Metadata rows={metadata} />)

@@ -8,6 +8,9 @@ import { OUTSTANDING_PROPOSITIONS__LOADED } from '../../actions'
 import OutstandingPropositions from './OutstandingPropositions'
 import Task from '../Task'
 
+/**
+ * Shows reminders of upcoming propositions for an adviser to deal with.
+ */
 const InvestmentReminders = ({ adviser, results, count }) => (
   <div data-test="investment-reminders">
     <Task.Status
@@ -25,6 +28,9 @@ const InvestmentReminders = ({ adviser, results, count }) => (
 )
 
 InvestmentReminders.propTypes = {
+  /**
+   * The adviser to display investment reminders for.
+   */
   adviser: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired,

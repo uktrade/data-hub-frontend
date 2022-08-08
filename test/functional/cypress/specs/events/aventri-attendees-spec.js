@@ -28,6 +28,17 @@ describe('Aventri event attendees', () => {
         })
       })
 
+      it('should display the attendees result count header', () => {
+        cy.get('[data-test="attendee-collection-header"]').should(
+          'have.text',
+          '32 attendees'
+        )
+      })
+
+      it('should display the expected number of pages', () => {
+        cy.get('[data-test=pagination-summary]').contains('Page 1 of 4')
+      })
+
       it('should display the side nav bar', () => {
         cy.get('[data-test="event-aventri-nav"]').should('exist')
         cy.get('[data-test="event-aventri-details-link"]')
@@ -83,13 +94,13 @@ describe('Aventri event attendees', () => {
             'GET',
             `${urls.events.aventri.attendeesData(
               existingEventId
-            )}?sortBy=first_name:asc`
+            )}?sortBy=first_name:asc&page=1`
           ).as('firstNameA-Z')
           cy.intercept(
             'GET',
             `${urls.events.aventri.attendeesData(
               existingEventId
-            )}?sortBy=first_name:desc`
+            )}?sortBy=first_name:desc&page=1`
           ).as('firstNameZ-A')
           cy.visit(urls.events.aventri.attendees(existingEventId))
         })
@@ -109,6 +120,29 @@ describe('Aventri event attendees', () => {
           cy.get('[data-test="aventri-attendee"]')
             .eq(0)
             .should('contain', 'Polly Parton')
+        })
+      })
+
+      context('when there are more than 10 attendees', () => {
+        beforeEach(() => {
+          cy.intercept(
+            'GET',
+            `${urls.events.aventri.attendeesData(
+              existingEventId
+            )}?sortBy=first_name:asc&page=1`
+          ).as('firstNameA-Z')
+          cy.intercept(
+            'GET',
+            `${urls.events.aventri.attendeesData(
+              existingEventId
+            )}?sortBy=first_name:desc&page=1`
+          ).as('firstNameZ-A')
+          cy.visit(urls.events.aventri.attendees(existingEventId))
+        })
+        it('should be possible to page through', () => {
+          cy.get('[data-page-number="2"]').click()
+          cy.get('[data-test=pagination-summary]').contains('Page 2 of 4')
+          cy.get('[data-test="aventri-attendee"]').should('exist')
         })
       })
     })

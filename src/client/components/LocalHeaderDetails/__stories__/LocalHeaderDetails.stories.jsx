@@ -1,8 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
-import exampleReadme from './example.md'
-import usageReadme from './usage.md'
 import LocalHeaderDetails from '../index'
 import LocalHeader from '../../LocalHeader/LocalHeader'
 
@@ -13,14 +11,8 @@ const items = [
   { label: 'Job', value: 'A job' },
 ]
 
-storiesOf('Local Header Details', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: exampleReadme,
-      sidebar: usageReadme,
-    },
-  })
+storiesOf('LocalHeader/LocalHeaderDetails', module)
+  .addParameters({ component: LocalHeaderDetails })
   .add('Default', () => (
     <LocalHeader
       breadcrumbs={[{ link: '/', text: 'Home' }, { text: 'Example' }]}

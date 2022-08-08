@@ -58,8 +58,6 @@ const RoutedPaginationWithState = () => {
 }
 
 storiesOf('Pagination', module)
-  .addParameters({
-    options: { theme: undefined },
-  })
+  .addParameters({ component: Pagination })
   .add('Default', () => <PaginationWithState />)
   .add('Routed', () => <RoutedPaginationWithState />)

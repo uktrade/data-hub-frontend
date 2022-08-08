@@ -5,17 +5,8 @@ import FieldSelect from '../FieldSelect'
 import FieldInput from '../FieldInput'
 import Form from '../../../Form'
 
-import exampleReadme from '../FieldSelect/example.md'
-import usageReadme from '../FieldSelect/usage.md'
-
 storiesOf('Form/Form Elements/Select', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: exampleReadme,
-      sidebar: usageReadme,
-    },
-  })
+  .addParameters({ component: FieldSelect })
   .add('Default', () => (
     <Form
       id="fieldSelectExample"

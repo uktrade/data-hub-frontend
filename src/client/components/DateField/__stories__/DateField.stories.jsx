@@ -28,5 +28,6 @@ const AlertChangeDateField = () => {
 }
 
 dateFieldStories
+  .addParameters({ component: DateField })
   .add('Basic', () => <BasicDateField />)
   .add('Callback on Change', () => <AlertChangeDateField />)

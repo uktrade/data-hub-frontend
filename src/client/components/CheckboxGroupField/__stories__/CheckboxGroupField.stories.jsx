@@ -2,9 +2,6 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import CheckboxGroupField from '..'
 
-import exampleReadme from '../example.md'
-import usageReadme from '../usage.md'
-
 const options = [
   {
     label: 'Italy',
@@ -26,13 +23,7 @@ const options = [
 ]
 
 storiesOf('Filters/Checkbox', module)
-  .addParameters({
-    options: { theme: undefined },
-    readme: {
-      content: exampleReadme,
-      sidebar: usageReadme,
-    },
-  })
+  .addParameters({ component: CheckboxGroupField })
   .add('Default', () => (
     <CheckboxGroupField
       name="countries"

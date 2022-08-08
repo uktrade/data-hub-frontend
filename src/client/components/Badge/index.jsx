@@ -15,7 +15,16 @@ const StyledBadge = styled('span')`
   color: ${(props) => (props.textColour ? props.textColour : TEXT_COLOUR)};
 `
 
-const Badge = ({ label, borderColour, textColour, fontSize, children }) => (
+/**
+ * A component to display the type of an element.
+ */
+const Badge = ({
+  label,
+  borderColour = GREY_2,
+  textColour = TEXT_COLOUR,
+  fontSize = FONT_SIZE.SIZE_14,
+  children,
+}) => (
   <StyledBadge
     data-test="badge"
     borderColour={borderColour}
@@ -29,15 +38,22 @@ const Badge = ({ label, borderColour, textColour, fontSize, children }) => (
 
 Badge.propTypes = {
   label: PropTypes.string,
+  /**
+   * A custom colour for the border.
+   */
   borderColour: PropTypes.string,
+  /**
+   * A custom colour for the badge text.
+   */
   textColour: PropTypes.string,
+  /**
+   * A custom size for the text of the badge.
+   */
   fontSize: PropTypes.string,
+  /**
+   * The text that will be displayed on the badge.
+   */
   children: PropTypes.node.isRequired,
-}
-
-Badge.defaultProps = {
-  label: null,
-  borderColour: GREY_2,
 }
 
 export default Badge

@@ -114,14 +114,12 @@ const StyledCheckbox = styled(Checkbox)`
 /**
  * Check box group field - shows a number of options as checkboxes
  *
- * @param {string} legend - legend label to display
- * @param {string} name - field name for the group
- * @param {string} hint - hint to display
- * @param {Array} options - the available options as objects with label and value
- * @param {Func} loadOptions - function to load options
- * @param {Array} selectedOptions - the options that have been selected
- * @param {Func} onChange - callback function that passes on the selected options
- * @param {number} maxScrollHeight - sets the visible area for the checkboxes before the overflow is set
+ * Let users select one or more options by using the checkboxes component.
+ * If you have a lot of options to display consider using the `visibleHeight`
+ * property to create a scrollable area. Selected option count will only show
+ * when you use the `visibleHeight` property.
+ *
+ * If when a screenreader reads the label of the checkboxes in isolation it is not clear what they refer to, use the `groupId` prop to ensure the legend of the checkbox group is read after each checkbox label.
  */
 
 const CheckboxGroupField = ({
@@ -217,24 +215,48 @@ const CheckboxGroupField = ({
 }
 
 CheckboxGroupField.propTypes = {
+  /**
+   * The legend label to display
+   */
   legend: PropTypes.string,
+  /**
+   * The field name for the group
+   */
   name: PropTypes.string,
+  /**
+   * The hint to display
+   */
   hint: PropTypes.string,
+  /**
+   * The available options as objects with label and value
+   */
   options: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,
       label: PropTypes.string,
     })
   ).isRequired,
+  /**
+   * Function to load options
+   */
   loadOptions: PropTypes.func,
+  /**
+   * The options that have been selected
+   */
   selectedOptions: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,
       label: PropTypes.string,
     })
   ).isRequired,
+  /**
+   * Callback function that passes on the selected options
+   */
   onChange: PropTypes.func,
   id: PropTypes.string,
+  /**
+   * Sets the visible area for the checkboxes before the overflow is set
+   */
   maxScrollHeight: PropTypes.number,
   groupId: PropTypes.string,
 }
