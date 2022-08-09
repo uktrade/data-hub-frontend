@@ -275,10 +275,6 @@ module.exports = {
       index: url('/investments', '/projects'),
       export: url('/investments', '/projects', '/export'),
       details: url('/investments', '/projects/:investmentId/details'),
-      notifications: url(
-        '/investments',
-        '/projects/:investmentId/notifications'
-      ),
       editDetails: url('/investments', '/projects/:investmentId/edit-details'),
       editRequirements: url(
         '/investments',
@@ -334,13 +330,6 @@ module.exports = {
     editHistory: {
       index: url('/investments/projects', '/:investmentId/edit-history'),
       data: url('/investments/projects', '/:investmentId/edit-history/data'),
-    },
-    notificationSettings: {
-      index: url('/investments/projects', '/:investmentId/notifications'),
-      estimatedLandDate: url(
-        '/investments/projects',
-        '/:investmentId/notifications/estimated-land-date'
-      ),
     },
   },
   metadata: {
