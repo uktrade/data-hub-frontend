@@ -1,21 +1,14 @@
 const config = require('../config')
-const raven = require('raven')
+const Sentry = require('@sentry/node')
 const logger = require('../config/logger')
 
 const useSentry = !!config.sentryDsn
 
 if (useSentry) {
-  logger.info('Sentry DSN detected. Raven will be enabled.')
-  // See https://docs.sentry.io/clients/node/config/
-  // and https://docs.sentry.io/clients/node/usage/
-  // for info on Raven config options
-  raven
-    .config(config.sentryDsn, {
-      release: config.version,
-      autoBreadcrumbs: true,
-      captureUnhandledRejections: true,
-    })
-    .install()
+  logger.info('Sentry DSN detected. Sentry will be enabled.')
+  Sentry.init({
+    dsn: config.sentryDsn,
+  })
 }
 
 module.exports = {
@@ -29,19 +22,19 @@ module.exports = {
 
   setup: function (app) {
     if (useSentry) {
-      app.use(raven.requestHandler())
+      app.use(Sentry.Handlers.requestHandler())
     }
   },
 
   handleErrors: function (app) {
     if (useSentry) {
-      app.use(raven.errorHandler())
+      app.use(Sentry.Handlers.errorHandler())
     }
   },
 
   message: function (level, msg, extra) {
     if (useSentry) {
-      raven.captureMessage(msg, {
+      Sentry.captureMessage(msg, {
         level,
         extra,
       })
@@ -55,7 +48,7 @@ module.exports = {
 
   captureException: function (err, extra) {
     if (useSentry) {
-      raven.captureException(err, { extra })
+      Sentry.captureException(err, { extra })
     } else {
       logger.error(err.stack)
       if (extra) {
