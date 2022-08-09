@@ -13,6 +13,11 @@ describe('Event Aventri Details', () => {
   const notFoundEventId = '404'
   const errorEventId = '500'
 
+  const aventriLink =
+    'https://eu-admin.eventscloud.com/loggedin/eVent/index.php?eventid='
+  const aventriLinkText = 'View in Aventri'
+  const newTabText = 'opens in a new window or tab'
+
   context('when the feature flag is on', () => {
     before(() => {
       cy.setUserFeatures([EVENT_ACTIVITY_FEATURE_FLAG])
@@ -55,21 +60,55 @@ describe('Event Aventri Details', () => {
 
       it('should display event details', () => {
         assertKeyValueTable('eventAventriDetails', {
-          'Type of event': 'dit:aventri:Event',
           'Event date': '02 Mar 2021 to 04 May 2022',
           'Event location type': 'Name of Location',
           Address: '1 street avenueBrockleyLondonABC 123England',
+        })
+        cy.get('[data-test="eventAventriDetails"]').within(() => {
+          cy.get('[data-test="newWindowLink"]')
+            .should('have.attr', 'aria-label', 'Opens in a new window or tab')
+            .should('have.attr', 'href', aventriLink + existingEventId)
+            .should('have.text', aventriLinkText)
+        })
+      })
+
+      it('should render the aventri status message and link', () => {
+        const aventriStatusHeader =
+          'This event has been automatically synced from Aventri.'
+        const aventriStatusContent =
+          'Event details, registrants and attendees can only be edited in Aventri. Changes can take up to 24 hours to sync.'
+
+        cy.get('[data-test="status-message"]').within(() => {
+          cy.get('[class="statusHeader"]').should(
+            'contain.text',
+            aventriStatusHeader
+          )
+          cy.get('[class="statusContent"]').should(
+            'contain.text',
+            aventriStatusContent
+          )
+          cy.get('[data-test="newWindowLink"]')
+            .should('have.attr', 'aria-label', 'Opens in a new window or tab')
+            .should('have.attr', 'href', aventriLink + existingEventId)
+            .should('have.text', aventriLinkText)
+          cy.contains(newTabText).should('be.visible')
         })
       })
 
       context('when optional details are missing', () => {
         it('should display "Not set"', () => {
-          cy.visit(urls.events.aventri.details('6666'))
+          const eventId = '6666'
+          cy.visit(urls.events.aventri.details(eventId))
           assertKeyValueTable('eventAventriDetails', {
-            'Type of event': 'dit:aventri:Event',
             'Event date': '02 Mar 2021',
             'Event location type': 'Not set',
             Address: 'Not set',
+          })
+          cy.get('[data-test="eventAventriDetails"]').within(() => {
+            cy.get('[data-test="newWindowLink"]')
+              .should('have.attr', 'aria-label', 'Opens in a new window or tab')
+              .should('have.attr', 'href', aventriLink + eventId)
+              .should('have.text', aventriLinkText)
           })
         })
       })

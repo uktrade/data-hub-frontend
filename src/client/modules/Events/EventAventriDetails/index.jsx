@@ -10,6 +10,8 @@ import {
   DefaultLayout,
   LocalNav,
   LocalNavLink,
+  NewWindowLink,
+  StatusMessage,
   SummaryTable,
 } from '../../../components'
 import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
@@ -18,17 +20,23 @@ import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
 import { isEmpty } from 'lodash'
 
+const StyledStatusMessage = styled(StatusMessage)`
+  div.statusHeader {
+    font-size: x-large;
+  }
+  div.statusContent {
+    font-size: medium;
+  }
+  div.statusLink {
+    font-size: 80%;
+  }
+`
+
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
 })
 
-const EventAventriDetails = ({
-  name,
-  type,
-  eventDate,
-  location,
-  fullAddress,
-}) => {
+const EventAventriDetails = ({ name, eventDate, location, fullAddress }) => {
   const { aventriEventId } = useParams()
   const breadcrumbs = [
     {
@@ -43,6 +51,10 @@ const EventAventriDetails = ({
       text: name,
     },
   ]
+
+  const aventriEventLink =
+    'https://eu-admin.eventscloud.com/loggedin/eVent/index.php?eventid=' +
+    aventriEventId
 
   return (
     <DefaultLayout
@@ -66,46 +78,79 @@ const EventAventriDetails = ({
               {() => {
                 return (
                   name && (
-                    <GridRow data-test="eventAventriDetails">
-                      <GridCol setWidth="one-quarter">
-                        <LocalNav dataTest="event-aventri-nav">
-                          <LocalNavLink
-                            dataTest="event-aventri-details-link"
-                            href={urls.events.aventri.details(aventriEventId)}
-                          >
-                            Details
-                          </LocalNavLink>
-                          <LocalNavLink
-                            dataTest="event-aventri-attendees-link"
-                            href={urls.events.aventri.attendees(aventriEventId)}
-                          >
-                            Attendees
-                          </LocalNavLink>
-                        </LocalNav>
-                      </GridCol>
-                      <GridCol setWidth="three-quarters">
-                        <StyledSummaryTable>
-                          <SummaryTable.Row
-                            heading="Type of event"
-                            children={type}
-                          />
-                          <SummaryTable.Row
-                            heading="Event date"
-                            children={eventDate}
-                          />
-                          <SummaryTable.Row
-                            heading="Event location type"
-                            children={isEmpty(location) ? 'Not set' : location}
-                          />
-                          <SummaryTable.Row
-                            heading="Address"
-                            children={
-                              isEmpty(fullAddress) ? 'Not set' : fullAddress
-                            }
-                          />
-                        </StyledSummaryTable>
-                      </GridCol>
-                    </GridRow>
+                    <>
+                      <StyledStatusMessage>
+                        <div class="statusHeader">
+                          {' '}
+                          This event has been automatically synced from Aventri.
+                        </div>
+
+                        <div class="statusContent">
+                          Event details, registrants and attendees can only be
+                          edited in Aventri. Changes can take up to 24 hours to
+                          sync.
+                        </div>
+
+                        <div class="statusLink">
+                          <NewWindowLink href={aventriEventLink}>
+                            View in Aventri
+                          </NewWindowLink>
+                        </div>
+                      </StyledStatusMessage>
+                      <GridRow data-test="eventAventriDetails">
+                        <GridCol setWidth="one-quarter">
+                          <LocalNav dataTest="event-aventri-nav">
+                            <LocalNavLink
+                              dataTest="event-aventri-details-link"
+                              href={urls.events.aventri.details(aventriEventId)}
+                            >
+                              Details
+                            </LocalNavLink>
+                            <LocalNavLink
+                              dataTest="event-aventri-attendees-link"
+                              href={urls.events.aventri.attendees(
+                                aventriEventId
+                              )}
+                            >
+                              Attendees
+                            </LocalNavLink>
+                          </LocalNav>
+                        </GridCol>
+                        <GridCol setWidth="three-quarters">
+                          <StyledSummaryTable>
+                            <SummaryTable.Row
+                              heading="Event date"
+                              children={eventDate}
+                            />
+                            <SummaryTable.Row
+                              heading="Event location type"
+                              children={
+                                isEmpty(location) ? 'Not set' : location
+                              }
+                            />
+                            <SummaryTable.Row
+                              heading="Address"
+                              children={
+                                isEmpty(fullAddress) ? 'Not set' : fullAddress
+                              }
+                            />
+                            <SummaryTable.Row
+                              heading="Aventri reference number"
+                              children={
+                                <>
+                                  <span>
+                                    {aventriEventId}&nbsp;
+                                    <NewWindowLink href={aventriEventLink}>
+                                      View in Aventri
+                                    </NewWindowLink>
+                                  </span>
+                                </>
+                              }
+                            />
+                          </StyledSummaryTable>
+                        </GridCol>
+                      </GridRow>
+                    </>
                   )
                 )
               }}
