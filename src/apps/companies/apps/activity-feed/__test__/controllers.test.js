@@ -530,7 +530,7 @@ describe('Activity feed controllers', () => {
           },
         ]
         const actualQuery = eventsColListQueryBuilder({
-          name: name,
+          name,
         })
 
         expect(expectedQuery).to.deep.equal(actualQuery)
@@ -546,7 +546,7 @@ describe('Activity feed controllers', () => {
           },
         ]
         const actualQuery = eventsColListQueryBuilder({
-          name: name,
+          name,
         })
 
         expect(expectedQuery).to.deep.equal(actualQuery)
@@ -576,8 +576,8 @@ describe('Activity feed controllers', () => {
           const earliestStartDate = '2022-11-01T08:39:06'
           const latestStartDate = undefined
           const actualQuery = eventsColListQueryBuilder({
-            earliestStartDate: earliestStartDate,
-            latestStartDate: latestStartDate,
+            earliestStartDate,
+            latestStartDate,
           })
 
           expect(
@@ -589,8 +589,8 @@ describe('Activity feed controllers', () => {
           const earliestStartDate = undefined
           const latestStartDate = '2022-12-12T08:39:06'
           const actualQuery = eventsColListQueryBuilder({
-            earliestStartDate: earliestStartDate,
-            latestStartDate: latestStartDate,
+            earliestStartDate,
+            latestStartDate,
           })
 
           expect(
@@ -602,8 +602,8 @@ describe('Activity feed controllers', () => {
           const earliestStartDate = '2022-11-01'
           const latestStartDate = '2022-12-12T08:39:06'
           const actualQuery = eventsColListQueryBuilder({
-            earliestStartDate: earliestStartDate,
-            latestStartDate: latestStartDate,
+            earliestStartDate,
+            latestStartDate,
           })
 
           expect(

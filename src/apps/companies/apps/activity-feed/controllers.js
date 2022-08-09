@@ -404,9 +404,9 @@ async function fetchAllActivityFeedEvents(req, res, next) {
       req,
       allActivityFeedEventsQuery({
         fullQuery: eventsColListQueryBuilder({
-          name: name,
-          earliestStartDate: earliestStartDate,
-          latestStartDate: latestStartDate,
+          name,
+          earliestStartDate,
+          latestStartDate,
         }),
         from,
         size: ACTIVITIES_PER_PAGE,
