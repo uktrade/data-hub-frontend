@@ -111,13 +111,13 @@ const NoRecentInteractionForm = () => (
                               name={`reminder_days_${groupIndex}`}
                               data-test={`reminder_days_${groupIndex}`}
                               validate={(value) => {
-                                if (isEmpty(value)) {
-                                  return EMPTY_ERROR_MESSAGE
-                                } else if (isPositiveInteger(value)) {
+                                if (isPositiveInteger(value)) {
                                   const val = parseInt(value, 10)
                                   return val > 0 && val <= MAX_DAYS
                                     ? null
                                     : ERROR_MESSAGE
+                                } else if (isEmpty(value)) {
+                                  return EMPTY_ERROR_MESSAGE
                                 } else {
                                   return ERROR_MESSAGE
                                 }
