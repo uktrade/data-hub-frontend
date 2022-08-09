@@ -20,6 +20,18 @@ import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
 import { isEmpty } from 'lodash'
 
+const StyledStatusMessage = styled(StatusMessage)`
+  div.statusHeader {
+    font-size: x-large;
+  }
+  div.statusContent {
+    font-size: medium;
+  }
+  div.statusLink {
+    font-size: 80%;
+  }
+`
+
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
 })
@@ -67,17 +79,24 @@ const EventAventriDetails = ({ name, eventDate, location, fullAddress }) => {
                 return (
                   name && (
                     <>
-                      <StatusMessage>
-                        This event has been automatically synced from Aventri.
-                        <br />
-                        Event details, registrants and attendees can only be
-                        edited in Aventri. Changes can take up to 24 hours to
-                        sync.
-                        <br />
-                        <NewWindowLink href={aventriEventLink}>
-                          View in Aventri
-                        </NewWindowLink>
-                      </StatusMessage>
+                      <StyledStatusMessage>
+                        <div class="statusHeader">
+                          {' '}
+                          This event has been automatically synced from Aventri.
+                        </div>
+
+                        <div class="statusContent">
+                          Event details, registrants and attendees can only be
+                          edited in Aventri. Changes can take up to 24 hours to
+                          sync.
+                        </div>
+
+                        <div class="statusLink">
+                          <NewWindowLink href={aventriEventLink}>
+                            View in Aventri
+                          </NewWindowLink>
+                        </div>
+                      </StyledStatusMessage>
                       <GridRow data-test="eventAventriDetails">
                         <GridCol setWidth="one-quarter">
                           <LocalNav dataTest="event-aventri-nav">
