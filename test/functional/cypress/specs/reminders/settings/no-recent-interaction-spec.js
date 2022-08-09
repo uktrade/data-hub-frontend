@@ -311,6 +311,17 @@ describe('Edit no recent interaction', () => {
     })
   })
 
+  const assertErrorMessage = (value) => {
+    cy.get('[data-test="reminders-yes"]').check()
+    cy.get('[data-test="reminder_days_0"]').clear()
+    cy.get('[data-test="reminder_days_0"]').type(value)
+    cy.get('[data-test="submit-button"]').click()
+    cy.get('[data-test="summary-form-errors"] ul > li').should(
+      'contain',
+      'Enter a whole number that’s between 1 and 365, like 25'
+    )
+  }
+
   context('Form validation', () => {
     const indices = [0, 1, 2, 3, 4]
     before(() => {
@@ -358,58 +369,23 @@ describe('Edit no recent interaction', () => {
     })
 
     it('should display an error when the value is negative', () => {
-      cy.get('[data-test="reminders-yes"]').check()
-      cy.get('[data-test="reminder_days_0"]').clear()
-      cy.get('[data-test="reminder_days_0"]').type('-1')
-      cy.get('[data-test="submit-button"]').click()
-      cy.get('[data-test="summary-form-errors"] ul > li').should(
-        'contain',
-        'Enter a whole number that’s 1 or higher, like 25'
-      )
+      assertErrorMessage('-1')
     })
 
     it('should display an error on any non-numerical value', () => {
-      cy.get('[data-test="reminders-yes"]').check()
-      cy.get('[data-test="reminder_days_0"]').clear()
-      cy.get('[data-test="reminder_days_0"]').type('t')
-      cy.get('[data-test="submit-button"]').click()
-      cy.get('[data-test="summary-form-errors"] ul > li').should(
-        'contain',
-        'Enter a whole number that’s 1 or higher, like 25'
-      )
+      assertErrorMessage('t')
     })
 
-    it('should display an error on a floating point values', () => {
-      cy.get('[data-test="reminders-yes"]').check()
-      cy.get('[data-test="reminder_days_0"]').clear()
-      cy.get('[data-test="reminder_days_0"]').type('1.5')
-      cy.get('[data-test="submit-button"]').click()
-      cy.get('[data-test="summary-form-errors"] ul > li').should(
-        'contain',
-        'Enter a whole number that’s 1 or higher, like 25'
-      )
+    it('should display an error on a floating point value', () => {
+      assertErrorMessage('1.5')
     })
 
     it('should display an error when the value is zero', () => {
-      cy.get('[data-test="reminders-yes"]').check()
-      cy.get('[data-test="reminder_days_0"]').clear()
-      cy.get('[data-test="reminder_days_0"]').type('0')
-      cy.get('[data-test="submit-button"]').click()
-      cy.get('[data-test="summary-form-errors"] ul > li').should(
-        'contain',
-        'Enter a whole number that’s 1 or higher, like 25'
-      )
+      assertErrorMessage('0')
     })
 
     it('should display an error when the value has breached the limit', () => {
-      cy.get('[data-test="reminders-yes"]').check()
-      cy.get('[data-test="reminder_days_0"]').clear()
-      cy.get('[data-test="reminder_days_0"]').type('32768')
-      cy.get('[data-test="submit-button"]').click()
-      cy.get('[data-test="summary-form-errors"] ul > li').should(
-        'contain',
-        'Enter a whole number that’s less than or equal to 32767'
-      )
+      assertErrorMessage('366')
     })
   })
 
@@ -428,7 +404,7 @@ describe('Edit no recent interaction', () => {
 
     it('should render a "Settings updated" banner', () => {
       cy.get('[data-test="reminders-yes"]').check()
-      cy.get(`[data-test="reminder_days_0"]`).type(5)
+      cy.get(`[data-test="reminder_days_0"]`).type(1)
       cy.get('[data-test="add-another"]').click()
       cy.get(`[data-test="reminder_days_1"]`).type(10)
       cy.get('[data-test="add-another"]').click()
@@ -436,10 +412,10 @@ describe('Edit no recent interaction', () => {
       cy.get('[data-test="add-another"]').click()
       cy.get(`[data-test="reminder_days_3"]`).type(20)
       cy.get('[data-test="add-another"]').click()
-      cy.get(`[data-test="reminder_days_4"]`).type(25)
+      cy.get(`[data-test="reminder_days_4"]`).type(365)
       cy.get(`[data-test="submit-button"]`).click()
       assertPayload('@saveNri', {
-        reminder_days: ['5', '10', '15', '20', '25'],
+        reminder_days: ['1', '10', '15', '20', '365'],
         email_reminders_enabled: true,
       })
       cy.get('[data-test="flash"]').should('have.text', 'Settings updated')
