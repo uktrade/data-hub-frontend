@@ -64,7 +64,11 @@ const EventForm = () => {
           id ? urls.events.details(id) : urls.events.index()
         } //this originally used the react to: instead of a hard redirect, so it might break after being switched, watch out
       >
-        {({ values }) => <EventFormFields values={values} />}
+        {({ values }) => {
+          if (Object.keys(values).length !== 0) {
+            return <EventFormFields values={values} />
+          }
+        }}
       </Form>
     </DefaultLayout>
   )
