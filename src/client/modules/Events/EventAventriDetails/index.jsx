@@ -137,18 +137,14 @@ const EventAventriDetails = ({ name, eventDate, location, fullAddress }) => {
                             <SummaryTable.Row
                               heading="Aventri reference number"
                               children={
-                                isEmpty(aventriEventId) ? (
-                                  'No event reference'
-                                ) : (
-                                  <>
-                                    <span>
-                                      {aventriEventId}&nbsp;
-                                      <NewWindowLink href={aventriEventLink}>
-                                        View in Aventri
-                                      </NewWindowLink>
-                                    </span>
-                                  </>
-                                )
+                                <>
+                                  <span>
+                                    {aventriEventId}&nbsp;
+                                    <NewWindowLink href={aventriEventLink}>
+                                      View in Aventri
+                                    </NewWindowLink>
+                                  </span>
+                                </>
                               }
                             />
                           </StyledSummaryTable>
