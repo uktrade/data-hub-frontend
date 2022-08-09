@@ -9,7 +9,6 @@
  # @param {string} [props.id] - entity id, used to create a link to the entity if provided
  # @param {string} [props.url] - entity URL, defaults to props.urlPrefix + props.id
  # @param {string} [props.urlPrefix] - base URL for linking to an entity, by default it will pluralise props.type
- # @param {string} [props.urlSuffix] - will allow any url details to be added on the end of the url
  # @param {string|object} [props.subTitle] - sub-title below the main link/title
  # @param {array}  [props.metaBadges{}] - an array of metadata item objects
  # @param {array}  [props.metaItems{}] - an array of metadata item objects
@@ -21,8 +20,7 @@
 {% macro Entity (props) %}
   {% if props.name and props.type %}
     {% set urlPrefix = props.urlPrefix or props.type | pluralise + '/' %}
-    {% set urlSuffix = props.urlSuffix %}
-    {% set url = props.url | default('/' + urlPrefix + props.id + urlSuffix) %}
+    {% set url = props.url | default('/' + urlPrefix + props.id) %}
     {% set metaBadges = props.meta | filter(['type', 'badge']) %}
     {% set metaItems = props.meta | reject(['type', 'badge']) %}
     {% set highlightedName = props.name | highlight(props.highlightTerm) %}
