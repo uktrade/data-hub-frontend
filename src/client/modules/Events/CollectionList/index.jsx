@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { GridCol, GridRow } from 'govuk-react'
 import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 
 import {
@@ -15,9 +14,6 @@ import {
   Filters,
   FilterToggleSection,
   DefaultLayout,
-  CollectionSort,
-  CollectionHeader,
-  RoutedPagination,
 } from '../../../components'
 import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
 
@@ -30,8 +26,6 @@ import {
 
 import { LABELS, COLLECTION_LIST_SORT_SELECT_OPTIONS } from './constants'
 
-import Task from '../../../components/Task'
-
 import {
   ID,
   TASK_GET_EVENTS_LIST,
@@ -41,8 +35,7 @@ import {
   state2props,
 } from './state'
 
-import Activity from '../../../components/ActivityFeed/Activity'
-import ActivityList from '../../../components/ActivityFeed/activities/card/ActivityList'
+import ActivityFeedFilteredCollectionList from '../../../components/ActivityFeedFilteredCollectionList'
 
 const EventsCollection = ({
   payload,
@@ -51,13 +44,8 @@ const EventsCollection = ({
   allActivityFeedEvents,
   total,
   page,
-  itemsPerPage = 10,
-  maxItemsToPaginate = 10000,
   ...props
 }) => {
-  const totalPages = Math.ceil(
-    Math.min(total, maxItemsToPaginate) / itemsPerPage
-  )
   const collectionListTask = {
     name: TASK_GET_EVENTS_LIST,
     id: ID,
@@ -92,6 +80,16 @@ const EventsCollection = ({
     startOnRender: {
       payload: payload.organiser,
       onSuccessDispatch: EVENTS__SELECTED_ORGANISER,
+    },
+  }
+
+  const activityFeedEventTask = {
+    name: TASK_GET_ALL_ACTIVITY_FEED_EVENTS,
+    id: ID,
+    progressMessage: 'Loading events',
+    startOnRender: {
+      payload: payload,
+      onSuccessDispatch: EVENTS__ALL_ACTIVITY_FEED_EVENTS_LOADED,
     },
   }
 
@@ -188,56 +186,40 @@ const EventsCollection = ({
               </CollectionFilters>
             </FilteredCollectionList>
           ) : (
-            <>
-              <CollectionHeader
-                totalItems={total}
-                collectionName="events"
-                data-test="collection-header"
-              />
-              <CollectionSort
-                sortOptions={COLLECTION_LIST_SORT_SELECT_OPTIONS}
-                totalPages={totalPages}
-              />
-              <Task.Status
-                name={TASK_GET_ALL_ACTIVITY_FEED_EVENTS}
-                id={ID}
-                progressMessage="Loading events"
-                startOnRender={{
-                  payload: payload,
-                  onSuccessDispatch: EVENTS__ALL_ACTIVITY_FEED_EVENTS_LOADED,
-                }}
-              >
-                {() => (
-                  <GridRow>
-                    <CollectionFilters>
-                      <Filters.Input
-                        id="EventsCollection.name"
-                        qsParam="name"
-                        name="name"
-                        label={LABELS.eventName}
-                        placeholder="Search event name"
-                        data-test="event-name-filter"
-                      />
-                    </CollectionFilters>
-                    <GridCol>
-                      <ActivityList>
-                        {allActivityFeedEvents?.map((event, index) => {
-                          return (
-                            <li key={`event-${index}`}>
-                              <Activity activity={event} />
-                            </li>
-                          )
-                        })}
-                      </ActivityList>
-                    </GridCol>
-                  </GridRow>
-                )}
-              </Task.Status>
-            </>
+            <ActivityFeedFilteredCollectionList
+              {...props}
+              collectionName="event"
+              sortOptions={COLLECTION_LIST_SORT_SELECT_OPTIONS}
+              taskProps={activityFeedEventTask}
+              allActivityFeedEvents={allActivityFeedEvents}
+              total={total}
+            >
+              <CollectionFilters>
+                <Filters.Input
+                  id="EventsCollection.name"
+                  qsParam="name"
+                  name="name"
+                  label={LABELS.eventName}
+                  placeholder="Search event name"
+                  data-test="event-name-filter"
+                />
+                <Filters.Date
+                  label="Earliest start date"
+                  name="earliest_start_date"
+                  qsParamName="earliest_start_date"
+                  data-test="earliest-start-date-filter"
+                />
+                <Filters.Date
+                  label="Latest start date"
+                  name="latest_start_date"
+                  qsParamName="latest_start_date"
+                  data-test="latest-start-date-filter"
+                />
+              </CollectionFilters>
+            </ActivityFeedFilteredCollectionList>
           )
         }
       </CheckUserFeatureFlag>
-      <RoutedPagination initialPage={page} items={total} />
     </DefaultLayout>
   )
 }

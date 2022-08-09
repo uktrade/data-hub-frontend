@@ -154,7 +154,7 @@ describe('Event Collection List Page - React', () => {
       })
 
       it('should display the events result count header', () => {
-        cy.get('[data-test="collection-header"]').should(
+        cy.get('[data-test="activity-feed-collection-header"]').should(
           'have.text',
           '82 events'
         )

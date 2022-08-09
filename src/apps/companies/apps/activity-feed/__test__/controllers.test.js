@@ -1,20 +1,21 @@
 const activityFeedEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-from-es.json')
+const allActivityFeedEvents = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/all-activity-feed-events.json')
 const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/middleware-parameters-builder')
 const companyMock = require('../../../../../../test/unit/data/company.json')
 const {
   DATA_HUB_ACTIVITY,
   EXTERNAL_ACTIVITY,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
-  EVENT_ACTIVITY_SORT_OPTIONS,
 } = require('../constants')
 const { eventsColListQueryBuilder } = require('../controllers')
-const activityFeedEventsQuery = require('../es-queries/activity-feed-all-events-query')
 
 describe('Activity feed controllers', () => {
   let fetchActivityFeedStub,
+    fetchAllActivityFeedEventsStub,
     getGlobalUltimateHierarchyStub,
     controllers,
     middlewareParameters
+
   describe('#fetchActivityFeedHandler', () => {
     before(() => {
       fetchActivityFeedStub = sinon.stub().resolves(activityFeedEsFixtures)
@@ -511,12 +512,149 @@ describe('Activity feed controllers', () => {
       })
     })
   })
-  describe('#filtersQueryBuilder', () => {
-    context('check dsl query when filtering on event name', () => {
+
+  describe('#eventsColListQueryBuilder', () => {
+    context('check query builder when filtering on event name', () => {
       it('builds the right query when being filtered by event name', () => {
-        const from = 1
-        const size = 10
         const name = 'cool event'
+        const expectedQuery = [
+          {
+            terms: {
+              'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+            },
+          },
+          {
+            match: {
+              'object.name': name,
+            },
+          },
+        ]
+        const actualQuery = eventsColListQueryBuilder({
+          name,
+        })
+
+        expect(expectedQuery).to.deep.equal(actualQuery)
+      })
+
+      it('builds the right query when there is nothing entered into the event name filter', () => {
+        const name = undefined
+        const expectedQuery = [
+          {
+            terms: {
+              'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+            },
+          },
+        ]
+        const actualQuery = eventsColListQueryBuilder({
+          name,
+        })
+
+        expect(expectedQuery).to.deep.equal(actualQuery)
+      })
+    })
+
+    context(
+      'check query builder when filtering on event start and end date',
+      () => {
+        const expectedQuery = (earliestStartDate, latestStartDate) => [
+          {
+            terms: {
+              'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+            },
+          },
+          {
+            range: {
+              'object.startTime': {
+                gte: earliestStartDate,
+                lte: latestStartDate,
+              },
+            },
+          },
+        ]
+
+        it('builds the right query when start date selected', () => {
+          const earliestStartDate = '2022-11-01T08:39:06'
+          const latestStartDate = undefined
+          const actualQuery = eventsColListQueryBuilder({
+            earliestStartDate,
+            latestStartDate,
+          })
+
+          expect(
+            expectedQuery(earliestStartDate, latestStartDate)
+          ).to.deep.equal(actualQuery)
+        })
+
+        it('builds the right query when the end date is selected', () => {
+          const earliestStartDate = undefined
+          const latestStartDate = '2022-12-12T08:39:06'
+          const actualQuery = eventsColListQueryBuilder({
+            earliestStartDate,
+            latestStartDate,
+          })
+
+          expect(
+            expectedQuery(earliestStartDate, latestStartDate)
+          ).to.deep.equal(actualQuery)
+        })
+
+        it('builds the right query when the start and end date is selected', () => {
+          const earliestStartDate = '2022-11-01'
+          const latestStartDate = '2022-12-12T08:39:06'
+          const actualQuery = eventsColListQueryBuilder({
+            earliestStartDate,
+            latestStartDate,
+          })
+
+          expect(
+            expectedQuery(earliestStartDate, latestStartDate)
+          ).to.deep.equal(actualQuery)
+        })
+      }
+    )
+  })
+
+  describe('#fetchAllActivityFeedEvents', () => {
+    before(() => {
+      fetchAllActivityFeedEventsStub = sinon
+        .stub()
+        .resolves(allActivityFeedEvents)
+      controllers = proxyquire(
+        '../../src/apps/companies/apps/activity-feed/controllers',
+        {
+          './repos': {
+            fetchActivityFeed: fetchAllActivityFeedEventsStub,
+          },
+        }
+      )
+    })
+
+    context('when filtering for the events collection page', () => {
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters({
+          requestQuery: {
+            sortBy: 'modified_on:desc',
+            name: 'project zeus',
+            earliestStartDate: '2020-11-01',
+            latestStartDate: '2020-11-10',
+            page: 1,
+          },
+        })
+
+        await controllers.fetchAllActivityFeedEvents(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy
+        )
+      })
+
+      it('should call fetchAllActivityFeedEvents with the right params', async () => {
+        const name = 'project zeus'
+        const from = 0
+        const size = 10
+        const earliestStartDate = '2020-11-01'
+        const latestStartDate = '2020-11-10'
+
         const expectedEsQuery = {
           from,
           size,
@@ -533,40 +671,12 @@ describe('Activity feed controllers', () => {
                     'object.name': name,
                   },
                 },
-              ],
-            },
-          },
-          sort: {
-            'object.updated': {
-              order: 'desc',
-              unmapped_type: 'date',
-            },
-          },
-        }
-
-        const actualQuery = activityFeedEventsQuery({
-          fullQuery: eventsColListQueryBuilder(name),
-          from,
-          size,
-          sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
-        })
-
-        expect(expectedEsQuery).to.deep.equal(actualQuery)
-      })
-
-      it('builds the right query when there is nothing entered into the event name filter', () => {
-        const from = 1
-        const size = 10
-        const name = undefined
-        const expectedEsQuery = {
-          from,
-          size,
-          query: {
-            bool: {
-              must: [
                 {
-                  terms: {
-                    'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+                  range: {
+                    'object.startTime': {
+                      gte: earliestStartDate,
+                      lte: latestStartDate,
+                    },
                   },
                 },
               ],
@@ -580,14 +690,34 @@ describe('Activity feed controllers', () => {
           },
         }
 
-        const actualQuery = activityFeedEventsQuery({
-          from,
-          size,
-          fullQuery: eventsColListQueryBuilder(name),
-          sort: EVENT_ACTIVITY_SORT_OPTIONS['modified_on:desc'],
+        expect(fetchAllActivityFeedEventsStub).to.be.calledWith(
+          middlewareParameters.reqMock,
+          expectedEsQuery
+        )
+      })
+    })
+
+    context('when the endpoint returns error', () => {
+      const error = {
+        status: 500,
+      }
+
+      before(async () => {
+        fetchAllActivityFeedEventsStub.rejects(error)
+        middlewareParameters = buildMiddlewareParameters({
+          requestQuery: {},
         })
 
-        expect(expectedEsQuery).to.deep.equal(actualQuery)
+        await controllers.fetchAllActivityFeedEvents(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy
+        )
+      })
+
+      it('should call next with an error', async () => {
+        expect(middlewareParameters.resMock.json).to.not.have.been.called
+        expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
       })
     })
   })
