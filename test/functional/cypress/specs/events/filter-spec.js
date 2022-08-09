@@ -505,8 +505,9 @@ describe('events Collections Filter', () => {
     })
 
     context('Start date', () => {
-      const earliestStartElement = '#field-earliest_start_date-1'
-      const latestStartElement = '#field-latest_start_date-1'
+      const earliestStartElement = '[data-test="field-earliest_start_date"]'
+      const latestStartElement = '[data-test="field-latest_start_date"]'
+
       const earliestStartDate = '2020-11-01'
       const latestStartDate = '2020-11-10'
       const queryParamWithEarliestStartDate = 'earliest_start_date=2020-11-01'

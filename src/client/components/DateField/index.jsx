@@ -28,6 +28,7 @@ const DateField = ({
     <FieldWrapper {...{ name, label, legend, hint }} {...props}>
       <Input
         id={`field-${name}-1`}
+        data-test={`field-${name}`}
         key={name}
         name={name}
         value={value}
