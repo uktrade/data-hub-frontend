@@ -24,6 +24,7 @@ function transformEventToListItem({
   const item = {
     id,
     type: 'event',
+    urlSuffix: '/details',
     name,
     subTitle: {
       type: 'datetime',
