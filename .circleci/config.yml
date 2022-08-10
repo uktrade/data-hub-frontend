@@ -13,6 +13,10 @@ jobs:
       docker_layer_caching: false
     steps:
       - checkout
+      - run:
+          name: Disable build toolkit
+          command: |
+            export DOCKER_BUILDKIT=0
       - run_make:
           label: Run linter
           target: lint
@@ -27,6 +31,10 @@ jobs:
       docker_layer_caching: false
     steps:
       - checkout
+      - run:
+          name: Disable build toolkit
+          command: |
+            export DOCKER_BUILDKIT=0
       - run_make:
           label: Run unit tests
           target: unit-tests
@@ -54,6 +62,10 @@ jobs:
       docker_layer_caching: false
     steps:
       - checkout
+      - run:
+          name: Disable build toolkit
+          command: |
+            export DOCKER_BUILDKIT=0
       - run_make:
           label: Run unit tests
           target: unit-client-tests
@@ -74,6 +86,10 @@ jobs:
     resource_class: 2xlarge
     steps:
       - checkout
+      - run:
+          name: Disable build toolkit
+          command: |
+            export DOCKER_BUILDKIT=0
       - run_make:
           label: Run functional tests
           target: start-mock functional-tests
@@ -96,6 +112,10 @@ jobs:
     resource_class: xlarge
     steps:
       - checkout
+      - run:
+          name: Disable build toolkit
+          command: |
+            export DOCKER_BUILDKIT=0
       - run_make:
           label: Run a11y tests
           target: start-mock a11y-tests
@@ -109,6 +129,10 @@ jobs:
     resource_class: xlarge
     steps:
       - checkout
+      - run:
+          name: Disable build toolkit
+          command: |
+            export DOCKER_BUILDKIT=0
       - run_make:
           label: Run visual tests
           target: start-mock visual-tests
@@ -124,6 +148,10 @@ jobs:
     resource_class: xlarge
     steps:
       - checkout
+      - run:
+          name: Disable build toolkit
+          command: |
+            export DOCKER_BUILDKIT=0
       - run_make:
           label: Run visual tests
           target: start-storybook visual-component-tests
@@ -143,6 +171,10 @@ jobs:
         type: string
     steps:
       - checkout
+      - run:
+          name: Disable build toolkit
+          command: |
+            export DOCKER_BUILDKIT=0
       - run_make:
           label: Run e2e tests
           target: start-e2e-<< parameters.staff >> e2e-tests-<< parameters.staff >>
@@ -159,6 +191,10 @@ jobs:
         type: string
     steps:
       - checkout
+      - run:
+          name: Disable build toolkit
+          command: |
+            export DOCKER_BUILDKIT=0
       - run_make:
           label: Run e2e tests
           target: start-e2e-<< parameters.staff >> e2e-tests-<< parameters.staff >>
@@ -170,6 +206,10 @@ jobs:
       docker_layer_caching: false
     steps:
       - checkout
+      - run:
+          name: Disable build toolkit
+          command: |
+            export DOCKER_BUILDKIT=0
       - run_make:
           label: Run component tests
           target: component-tests
@@ -180,6 +220,10 @@ jobs:
       - image: node:16.16.0-buster
     steps:
       - checkout
+      - run:
+          name: Disable build toolkit
+          command: |
+            export DOCKER_BUILDKIT=0
       - run: npm install storybook
       - run:
           name: Release storybook
@@ -190,6 +234,10 @@ jobs:
       - image: node
     steps:
       - checkout
+      - run:
+          name: Disable build toolkit
+          command: |
+            export DOCKER_BUILDKIT=0
       - attach_workspace:
           at: ~/
       - run: npm i -g add nyc
