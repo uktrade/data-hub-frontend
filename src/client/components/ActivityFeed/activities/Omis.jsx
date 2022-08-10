@@ -51,7 +51,6 @@ export default class Omis extends React.PureComponent {
         <CardDetails
           summary="View key details and people for this order"
           summaryVisuallyHidden={` reference ${reference}`}
-          link={{ url, text: 'Go to the order detail page' }}
           showDetails={showDetails}
           analyticsAccordionType={ANALYTICS_ACCORDION_TYPE.DATA_HUB_ACTIVITY}
         >
