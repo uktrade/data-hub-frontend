@@ -44,4 +44,12 @@ export const COLLECTION_LIST_SORT_SELECT_OPTIONS = [
     name: 'Event name A-Z',
     value: 'name:asc',
   },
+  {
+    name: 'Earliest start date',
+    value: 'start_date:asc',
+  },
+  {
+    name: 'Latest start date',
+    value: 'start_date:desc',
+  },
 ]
