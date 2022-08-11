@@ -40,10 +40,6 @@ describe('Referrals', () => {
     })
   })
   context('when viewing a referral', () => {
-    it('should display in the companies activity feed', () => {
-      // TODO - currently we cannot view the activity feed, once this is fixed we should add this test
-    })
-
     it('should display the new referral on the homepage', () => {
       cy.get(companyLocalHeader.flashMessageList).find('a').eq(0).click()
       cy.get(selectors.tabbedNav().item(2)).click()
