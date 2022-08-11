@@ -22,6 +22,7 @@ describe('Referrals', () => {
       selectFirstAdvisersTypeaheadOption({
         element: selectors.sendReferral.adviserField,
         input: 'dennis',
+        mockAdviserResponse: false,
       })
       cy.get(selectors.sendReferral.subjectField)
         .click()
@@ -48,7 +49,7 @@ describe('Referrals', () => {
       cy.get(selectors.tabbedNav().item(2)).click()
       cy.selectDhTablistTab('Dashboard', 'My referrals').within(() => {
         cy.get('select').select('Sent referrals')
-        cy.contains('h1', 'sent referral')
+        cy.contains('h3', '1 sent referral')
           .parent()
           .parent()
           .find('ol li')

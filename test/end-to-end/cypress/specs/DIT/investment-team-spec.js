@@ -65,6 +65,7 @@ describe('Investment team', () => {
         selectFirstAdvisersTypeaheadOption({
           element: '[data-test="field-adviser_0"]',
           input: 'Jenny',
+          mockAdviserResponse: false,
         })
         cy.get('[data-test="field-role_0"]').find('input').type('Test role')
       },
