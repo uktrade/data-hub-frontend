@@ -169,7 +169,7 @@ describe('#hawkRequest: check hawkRequestPromise', () => {
       { status: 401, data: {} },
       testDataHubCredentials,
       testClientHeaderArtifacts,
-      { payload: '{}' }
+      '{}'
     )
   })
 
@@ -192,7 +192,7 @@ describe('#hawkRequest: check hawkRequestPromise', () => {
       { status: 200 },
       testDataHubCredentials,
       testClientHeaderArtifacts,
-      { payload: '{}' }
+      '{}'
     )
   })
 })
