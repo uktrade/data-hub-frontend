@@ -22,8 +22,11 @@ var dataHubEvents = require('../../../fixtures/v4/activity-feed/data-hub-events.
 var aventriEvents = require('../../../fixtures/v4/activity-feed/aventri-events.json')
 var aventriEventsNoDetails = require('../../../fixtures/v4/activity-feed/aventri-events-no-details.json')
 var aventriAttendees = require('../../../fixtures/v4/activity-feed/aventri-attendees.json')
-var aventriAttendeesNewOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-new-order.json')
+////This order is correct when sorted by: First Name A-Z, Last name A-Z and Company name A-Z
+var aventriAttendeesAToZOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-a-z.json')
 
+////This order is correct when sorted by: First Name Z-A, Last name Z-A and Company name Z-A
+var aventriAttendeesZToAOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-z-a.json')
 //All Activitiy feed events
 var allActivityFeedEvents = require('../../../fixtures/v4/activity-feed/all-activity-feed-events.json')
 
@@ -161,8 +164,19 @@ exports.activityFeed = function (req, res) {
     }
     //sort by first name desc
     var firstNameOrder = req.body.sort['object.dit:firstName']?.order
-    if (firstNameOrder === 'desc') {
-      return res.json(aventriAttendeesNewOrder)
+    var lastNameOrder = req.body.sort['object.dit:lastName']?.order
+    var companyNameOrder = req.body.sort['object.dit:companyName']?.order
+
+    if (lastNameOrder === 'asc' || companyNameOrder === 'asc') {
+      return res.json(aventriAttendeesAToZOrder)
+    }
+
+    if (
+      firstNameOrder === 'desc' ||
+      lastNameOrder === 'desc' ||
+      companyNameOrder === 'desc'
+    ) {
+      return res.json(aventriAttendeesZToAOrder)
     }
     // happy path
     return res.json(aventriAttendees)

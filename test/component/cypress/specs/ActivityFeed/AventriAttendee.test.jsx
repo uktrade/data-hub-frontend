@@ -8,8 +8,8 @@ describe('AventriAttendee', () => {
     id: 'dit:aventri:Event:1111:Attendee:1111:Create',
     object: {
       'dit:aventri:email': 'johndoe@outlook.com',
-      'dit:aventri:firstname': 'Firstname1',
-      'dit:aventri:lastname': 'Lastname1',
+      'dit:firstName': 'Firstname1',
+      'dit:lastName': 'Lastname1',
       'dit:aventri:registrationstatus': 'Confirmed',
       'dit:emailAddress': 'johndoe@outlook.com',
       id: 'dit:aventri:Attendee:1111',
