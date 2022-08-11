@@ -236,48 +236,6 @@ describe('Event Collection List Page - React', () => {
         })
       })
 
-      context('when sorting', () => {
-        beforeEach(() => {
-          cy.intercept(
-            'GET',
-            `${events.activity.data()}?sortBy=modified_on:desc&page=1`
-          ).as('recentlyUpdatedRequest')
-          cy.intercept(
-            'GET',
-            `${events.activity.data()}?sortBy=modified_on:asc&page=1`
-          ).as('leastRecentlyUpdatedRequest')
-          cy.intercept(
-            'GET',
-            `${events.activity.data()}?sortBy=name:asc&page=1`
-          ).as('nameRequest')
-          cy.visit(events.index())
-        })
-
-        it('sorts by recently updated by default', () => {
-          cy.wait('@recentlyUpdatedRequest').then((request) => {
-            expect(request.response.statusCode).to.eql(200)
-          })
-        })
-
-        it('sorts by "least recently updated" when selected', () => {
-          const element = '[data-test="sortby"] select'
-          cy.get(element).select('modified_on:asc')
-          cy.wait('@leastRecentlyUpdatedRequest').then((request) => {
-            expect(request.response.statusCode).to.eql(200)
-          })
-          cy.get('@dataHubEvents').should('have.length', 0)
-        })
-
-        it('sorts by "name" when selected', () => {
-          const element = '[data-test="sortby"] select'
-          cy.get(element).select('name:asc')
-          cy.wait('@nameRequest').then((request) => {
-            expect(request.response.statusCode).to.eql(200)
-          })
-          cy.get('@aventriEvents').should('have.length', 0)
-        })
-      })
-
       context('when there are more than 10 events', () => {
         it('should be possible to page through', () => {
           cy.get('[data-page-number="2"]').click()
