@@ -1,7 +1,3 @@
-/**
- * This is the axios version of hawk request - unfortunately this is causing a
- * bug on the postcode api at the moment, but this is left here to fix later.
- */
 const Hawk = require('hawk')
 const config = require('../config')
 const request = require('./request')

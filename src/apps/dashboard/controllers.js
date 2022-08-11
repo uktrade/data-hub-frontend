@@ -4,7 +4,7 @@ const GLOBAL_NAV_ITEMS = require('../global-nav-items')
 
 const { isPermittedRoute } = require('../middleware')
 const config = require('../../config')
-const hawkRequest = require('../../lib/axios-hawk-request')
+const hawkRequest = require('../../lib/hawk-request')
 const { formatHelpCentreAnnouncements } = require('./transformers')
 
 const getarticles = (req) => {
