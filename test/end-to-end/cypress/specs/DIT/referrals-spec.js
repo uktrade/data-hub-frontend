@@ -8,7 +8,7 @@ const {
 const formSelectors = selectors.interactionForm
 const companyLocalHeader = selectors.companyLocalHeader()
 
-xdescribe('Referrals', () => {
+describe('Referrals', () => {
   const company = fixtures.company.create.lambda()
   const contact = fixtures.contact.create(company.pk)
 
