@@ -75,7 +75,6 @@ export default class InvestmentProject extends React.PureComponent {
         <CardDetails
           summary="Key details and people for this project"
           summaryVisuallyHidden={` ${name}`}
-          link={{ url, text: 'Go to the investment project detail page' }}
           showDetails={showDetails}
           analyticsAccordionType={ANALYTICS_ACCORDION_TYPE.DATA_HUB_ACTIVITY}
         >

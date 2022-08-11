@@ -56,14 +56,14 @@ export default class CompaniesHouseAccount extends React.PureComponent {
           heading={summary}
           blockText="Companies House"
           sourceType={SOURCE_TYPES.external}
-          subHeading="Accounts records"
+          subHeading="Accounts record"
           startTime={startTime}
         />
 
         <CardDetails
           summary="View key details for this account"
           summaryVisuallyHidden={`${summary} in Companies House`}
-          link={{ taxonomy, text: 'Go to the Companies House accounts page' }}
+          link={{ taxonomy, text: 'Companies House accounts' }}
           showDetails={showDetails}
           analyticsAccordionType={ANALYTICS_ACCORDION_TYPE.COMPANIES_HOUSE}
         >
