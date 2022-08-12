@@ -214,10 +214,6 @@
     "webpack-node-externals": "^3.0.0"
   },
   "overrides": {
-    "set-value": "^4.0.1",
-    "trim": "^0.0.3",
-    "semver-regex": "^3.1.4",
-    "ansi-regex": "^5.0.1",
-    "glob-parent": "^5.1.2"
+    "semver-regex": "^3.1.4"
   }
 }
