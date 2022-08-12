@@ -15,5 +15,8 @@ export const GENERIC_PHONE_NUMBER_REGEX = /^$|([0-9]|#|\+|\s|\(|\))+$/
 export const NON_ASCII_REGEX = /[^$|\x00-\x7F]/
 
 // Prevents CSV formula injection attacks
+// 1st Case: anything beginning with =,@,+,tab or carriage return
+// 2nd Case: if there is a comma with one of those symbols after it (see owasp suggestions)
 // https://owasp.org/www-community/attacks/CSV_Injection
-export const CSV_FORMULA_INJECTION_REGEX = /^[=+-@]/
+export const CSV_FORMULA_INJECTION_REGEX =
+  /(^[=@+\t\r-])|((?<=[,;'"])[\s\S]*[=@+-])/

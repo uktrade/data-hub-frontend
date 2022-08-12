@@ -15,8 +15,8 @@ import {
   WEBSITE_REGEX,
   NON_ASCII_REGEX,
   GENERIC_PHONE_NUMBER_REGEX,
-  CSV_FORMULA_INJECTION_REGEX,
 } from './constants'
+import nameValidator from './nameValidator'
 
 const websiteValidator = (
   value,
@@ -48,13 +48,6 @@ const telephoneValidator = (
   return null
 }
 
-const nameValidator = (value) => {
-  return !value
-    ? 'Enter name'
-    : CSV_FORMULA_INJECTION_REGEX.test(value)
-    ? 'Enter a valid name'
-    : null
-}
 function CompanyNotFoundStep({ organisationTypes, country, features }) {
   return (
     <Step name="unhappy">
