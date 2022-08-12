@@ -27,7 +27,7 @@ You can use the [GitHub comparison tool](https://github.com/uktrade/data-hub-fro
 
 The release title should be `v<VERSION_NUMBER>` and release notes can be created by clicking the `Auto-generate release notes` button. 
 
-Check that the release notes generated look correct.
+Check that the release notes generated contain what you expect to be deployed to production.
 
 6. Go to Jenkins and click on `Build with Parameters`.
 
