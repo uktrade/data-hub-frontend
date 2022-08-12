@@ -41,7 +41,7 @@ Check that the release notes generated contain what you expect to be deployed to
 
 11. Change the GH pre-release to an actual release.
 
-11. Post the following message on the #data-hub slack channel, making sure to put the actual version number and link the release notes:
+12. Post the following message on the #data-hub slack channel, making sure to put the actual version number and link the release notes:
 
 ```
 @here Data Hub Frontend v<VERSION_NUMBER> is now live!
