@@ -210,7 +210,7 @@
     "webpack": "^5.74.0",
     "webpack-assets-manifest": "^5.1.0",
     "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.9.3",
+    "webpack-dev-server": "^4.10.0",
     "webpack-node-externals": "^3.0.0"
   },
   "overrides": {
