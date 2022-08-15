@@ -78,24 +78,20 @@ const inputFilterTestCases = ({ filterName, selector, cases }) =>
   )
 
 describe('Investor profiles filters', () => {
+  it('returns 10 cases when no options selected', () => {
+    cy.visit(urls.investments.profiles.index())
+
+    cy.contains('10 profiles')
+    cy.get('h3').should('have.length', 10)
+  })
+
   typeaheadFilterTestCases({
     filterName: 'Country of company origin',
     selector: 'country-filter',
     cases: [
       {
-        expectedNumberOfResults: 10,
-      },
-      {
         options: ['Afghanistan'],
         expectedNumberOfResults: 3,
-      },
-      {
-        options: ['Zimbabwe'],
-        expectedNumberOfResults: 2,
-      },
-      {
-        options: ['Slovakia'],
-        expectedNumberOfResults: 0,
       },
     ],
   })
@@ -105,15 +101,8 @@ describe('Investor profiles filters', () => {
     selector: 'asset-class-filter',
     cases: [
       {
-        expectedNumberOfResults: 10,
-      },
-      {
         options: ['Biofuel'],
         expectedNumberOfResults: 2,
-      },
-      {
-        options: ['Nuclear'],
-        expectedNumberOfResults: 3,
       },
       {
         options: ['Biofuel', 'Nuclear'],
@@ -127,14 +116,7 @@ describe('Investor profiles filters', () => {
     selector: 'investor-type-filter',
     cases: [
       {
-        expectedNumberOfResults: 10,
-      },
-      {
         options: ['Fund of funds'],
-        expectedNumberOfResults: 1,
-      },
-      {
-        options: ['Family office'],
         expectedNumberOfResults: 1,
       },
       {
@@ -149,15 +131,8 @@ describe('Investor profiles filters', () => {
     selector: 'required-checks-conducted-filter',
     cases: [
       {
-        expectedNumberOfResults: 10,
-      },
-      {
         options: ['Cleared'],
         expectedNumberOfResults: 1,
-      },
-      {
-        options: ['Issues identified'],
-        expectedNumberOfResults: 2,
       },
       {
         options: ['Cleared', 'Issues identified'],
@@ -174,14 +149,6 @@ describe('Investor profiles filters', () => {
         text: 'foo',
         expectedNumberOfResults: 2,
       },
-      {
-        text: 'bar',
-        expectedNumberOfResults: 1,
-      },
-      {
-        text: 'bing',
-        expectedNumberOfResults: 0,
-      },
     ],
   })
 
@@ -192,18 +159,6 @@ describe('Investor profiles filters', () => {
       {
         text: '1000',
         expectedNumberOfResults: 3,
-      },
-      {
-        text: '1001',
-        expectedNumberOfResults: 2,
-      },
-      {
-        text: '2001',
-        expectedNumberOfResults: 1,
-      },
-      {
-        text: '3001',
-        expectedNumberOfResults: 0,
       },
     ],
   })
@@ -216,18 +171,6 @@ describe('Investor profiles filters', () => {
         text: '999',
         expectedNumberOfResults: 0,
       },
-      {
-        text: '1000',
-        expectedNumberOfResults: 1,
-      },
-      {
-        text: '2000',
-        expectedNumberOfResults: 2,
-      },
-      {
-        text: '3000',
-        expectedNumberOfResults: 3,
-      },
     ],
   })
 
@@ -238,18 +181,6 @@ describe('Investor profiles filters', () => {
       {
         text: '1000',
         expectedNumberOfResults: 3,
-      },
-      {
-        text: '1001',
-        expectedNumberOfResults: 2,
-      },
-      {
-        text: '2001',
-        expectedNumberOfResults: 1,
-      },
-      {
-        text: '3001',
-        expectedNumberOfResults: 0,
       },
     ],
   })
@@ -262,18 +193,6 @@ describe('Investor profiles filters', () => {
         text: '999',
         expectedNumberOfResults: 0,
       },
-      {
-        text: '1000',
-        expectedNumberOfResults: 1,
-      },
-      {
-        text: '2000',
-        expectedNumberOfResults: 2,
-      },
-      {
-        text: '3000',
-        expectedNumberOfResults: 3,
-      },
     ],
   })
 
@@ -282,15 +201,8 @@ describe('Investor profiles filters', () => {
     selector: 'deal-ticket-size-filter',
     cases: [
       {
-        expectedNumberOfResults: 10,
-      },
-      {
         options: ['Up to £49 million'],
         expectedNumberOfResults: 2,
-      },
-      {
-        options: ['£50-99 million'],
-        expectedNumberOfResults: 4,
       },
       {
         options: ['Up to £49 million', '£50-99 million'],
@@ -304,14 +216,7 @@ describe('Investor profiles filters', () => {
     selector: 'types-of-investment-filter',
     cases: [
       {
-        expectedNumberOfResults: 10,
-      },
-      {
         options: ['Direct Investment in Project Equity'],
-        expectedNumberOfResults: 2,
-      },
-      {
-        options: ['Venture capital funds'],
         expectedNumberOfResults: 2,
       },
       {
@@ -329,14 +234,7 @@ describe('Investor profiles filters', () => {
     selector: 'minimum-return-rate-filter',
     cases: [
       {
-        expectedNumberOfResults: 10,
-      },
-      {
         options: ['5-10%'],
-        expectedNumberOfResults: 2,
-      },
-      {
-        options: ['10-15%'],
         expectedNumberOfResults: 2,
       },
       {
@@ -351,14 +249,7 @@ describe('Investor profiles filters', () => {
     selector: 'time-horizon-tenor-filter',
     cases: [
       {
-        expectedNumberOfResults: 10,
-      },
-      {
         options: ['Up to 5 years'],
-        expectedNumberOfResults: 2,
-      },
-      {
-        options: ['15 years +'],
         expectedNumberOfResults: 2,
       },
       {
@@ -373,14 +264,7 @@ describe('Investor profiles filters', () => {
     selector: 'restrictions-conditions-filter',
     cases: [
       {
-        expectedNumberOfResults: 10,
-      },
-      {
         options: ['Require board seat'],
-        expectedNumberOfResults: 2,
-      },
-      {
-        options: ['Inflation adjustment'],
         expectedNumberOfResults: 2,
       },
       {
@@ -395,14 +279,7 @@ describe('Investor profiles filters', () => {
     selector: 'construction-risk-filter',
     cases: [
       {
-        expectedNumberOfResults: 10,
-      },
-      {
         options: ['Greenfield (construction risk)'],
-        expectedNumberOfResults: 2,
-      },
-      {
-        options: ['Brownfield (some construction risk)'],
         expectedNumberOfResults: 2,
       },
       {
@@ -420,14 +297,7 @@ describe('Investor profiles filters', () => {
     selector: 'minimum-equity-percentage-filter',
     cases: [
       {
-        expectedNumberOfResults: 10,
-      },
-      {
         options: ['1-19%'],
-        expectedNumberOfResults: 2,
-      },
-      {
-        options: ['50% +'],
         expectedNumberOfResults: 2,
       },
       {
@@ -442,14 +312,7 @@ describe('Investor profiles filters', () => {
     selector: 'desired-deal-role-filter',
     cases: [
       {
-        expectedNumberOfResults: 10,
-      },
-      {
         options: ['Lead manager / deal structure'],
-        expectedNumberOfResults: 2,
-      },
-      {
-        options: ['Co-lead manager'],
         expectedNumberOfResults: 2,
       },
       {
@@ -464,19 +327,12 @@ describe('Investor profiles filters', () => {
     selector: 'uk-regions-of-interest',
     cases: [
       {
-        expectedNumberOfResults: 10,
-      },
-      {
         options: ['Benzonia'],
         expectedNumberOfResults: 2,
       },
       {
         options: ['Benzonia', 'Jersey'],
         expectedNumberOfResults: 3,
-      },
-      {
-        options: ['Jersey'],
-        expectedNumberOfResults: 2,
       },
     ],
   })
