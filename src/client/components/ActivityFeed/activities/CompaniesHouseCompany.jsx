@@ -18,6 +18,10 @@ import {
   ANALYTICS_ACCORDION_TYPE,
   SOURCE_TYPES,
 } from '../constants'
+import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
+import { COMPANY_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
+import ActivityCardWrapper from './card/ActivityCardWrapper'
+import ActivityCardLabels from './card/ActivityCardLabels'
 
 const { format } = require('../../../utils/date')
 
@@ -70,59 +74,74 @@ export default class CompaniesHouseCompany extends React.PureComponent {
     })
 
     return (
-      <Card>
-        <CardHeader
-          company={showDnbHierarchy ? company : null}
-          heading={summary}
-          blockText="Companies House"
-          sourceType={SOURCE_TYPES.external}
-          subHeading="Company record"
-          startTime={startTime}
-        />
-
-        <CardDetails
-          summary="View key details for this company"
-          summaryVisuallyHidden={`${summary} from Companies House`}
-          showDetails={showDetails}
-          analyticsAccordionType={ANALYTICS_ACCORDION_TYPE.COMPANIES_HOUSE}
-        >
-          <CardTable
-            rows={[
-              { header: 'Company name', content: reference },
-              { header: 'Address', content: address },
-              { header: 'Postcode', content: postcode },
-              {
-                header: 'Confirmation Statement last made up date',
-                content: confStmtLastMadeUpDate,
-              },
-              {
-                header: 'Confirmation Statement next due date',
-                content: confStmtNextDueDate,
-              },
-              { header: 'Incorporation date', content: incorporationDate },
-              { header: 'Next due date', content: nextDueDate },
-              {
-                header: 'Returns last made up date',
-                content: returnsLastMadeUpDate,
-              },
-              {
-                header: 'Returns next due date',
-                content: returnsNextDueDate,
-              },
-              {
-                header: 'SIC code(s)',
-                content: (
-                  <CardDetailsList
-                    itemPropName="value"
-                    itemRenderer={DefaultItemRenderer}
-                    items={sicCodesCollection}
-                  />
-                ),
-              },
-            ]}
-          />
-        </CardDetails>
-      </Card>
+      <CheckUserFeatureFlag userFeatureFlagName={COMPANY_ACTIVITY_FEATURE_FLAG}>
+        {(isFeatureFlagEnabled) =>
+          !isFeatureFlagEnabled ? (
+            <Card>
+              <CardHeader
+                company={showDnbHierarchy ? company : null}
+                heading={summary}
+                blockText="Companies House"
+                sourceType={SOURCE_TYPES.external}
+                subHeading="Company record"
+                startTime={startTime}
+              />
+              <CardDetails
+                summary="View key details for this company"
+                summaryVisuallyHidden={`${summary} from Companies House`}
+                showDetails={showDetails}
+                analyticsAccordionType={
+                  ANALYTICS_ACCORDION_TYPE.COMPANIES_HOUSE
+                }
+              >
+                <CardTable
+                  rows={[
+                    { header: 'Company name', content: reference },
+                    { header: 'Address', content: address },
+                    { header: 'Postcode', content: postcode },
+                    {
+                      header: 'Confirmation Statement last made up date',
+                      content: confStmtLastMadeUpDate,
+                    },
+                    {
+                      header: 'Confirmation Statement next due date',
+                      content: confStmtNextDueDate,
+                    },
+                    {
+                      header: 'Incorporation date',
+                      content: incorporationDate,
+                    },
+                    { header: 'Next due date', content: nextDueDate },
+                    {
+                      header: 'Returns last made up date',
+                      content: returnsLastMadeUpDate,
+                    },
+                    {
+                      header: 'Returns next due date',
+                      content: returnsNextDueDate,
+                    },
+                    {
+                      header: 'SIC code(s)',
+                      content: (
+                        <CardDetailsList
+                          itemPropName="value"
+                          itemRenderer={DefaultItemRenderer}
+                          items={sicCodesCollection}
+                        />
+                      ),
+                    },
+                  ]}
+                />
+              </CardDetails>
+            </Card>
+          ) : (
+            <ActivityCardWrapper dataTest="companies-house-company-activity">
+              <ActivityCardLabels kind="Companies House Update"></ActivityCardLabels>
+              <h3>Companies House Company</h3>
+            </ActivityCardWrapper>
+          )
+        }
+      </CheckUserFeatureFlag>
     )
   }
 }
