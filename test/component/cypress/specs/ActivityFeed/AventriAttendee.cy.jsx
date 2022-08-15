@@ -4,6 +4,7 @@ import AventriAttendee from '../../../../../src/client/components/ActivityFeed/a
 
 describe('AventriAttendee', () => {
   const Component = (props) => <AventriAttendee {...props} />
+
   const activity = {
     id: 'dit:aventri:Event:1111:Attendee:1111:Create',
     object: {

@@ -2,14 +2,14 @@
 require('dotenv').config()
 
 module.exports = (on, config) => {
-  if (config.testingType === 'component') {
-    require('@cypress/react/plugins/load-webpack')(on, config, { webpackFilename: './webpack.config.js' })
+  // if (config.testingType === 'component') {
+  //   require('@cypress/react/plugins/load-webpack')(on, config, { webpackFilename: './webpack.config.js' })
 
-    return config
-  }
+  //   return config
+  // }
   require('@cypress/code-coverage/task')(on, config)
   on('file:preprocessor', require('@cypress/code-coverage/use-babelrc'))
-  on("task", {
+  on('task', {
     log(message) {
       console.log(message)
       return null
