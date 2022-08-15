@@ -44,7 +44,7 @@ describe('Contact', () => {
     cy.visit(urls.contacts.edit(contactObj.pk))
 
     cy.contains('Job title').type('Freerider')
-    cy.contains('Phone number').next().find('input').clear().type('1234')
+    cy.contains('Phone number').next().next().find('input').clear().type('1234')
   })
 
   it('should display name of the person who made contact record changes', () => {
