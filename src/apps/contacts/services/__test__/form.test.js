@@ -11,6 +11,7 @@ describe('contact form service', () => {
   describe('convert API contact into form format', () => {
     const contactData = {
       id: '50680966-f5e1-e311-8a2b-e4115bead28a',
+      name: 'Zac Baman',
       address_1: '99 N Shore Road',
       address_2: 'Suite 20',
       address_town: 'Town view',
@@ -25,7 +26,8 @@ describe('contact form service', () => {
       archived: false,
       archived_on: null,
       archived_reason: '',
-      full_name: 'Zac Baman',
+      first_name: 'Zac',
+      last_name: 'Baman',
       job_title: 'Co-founder and CEO',
       primary: true,
       full_telephone_number: '+1 652423467167',
@@ -52,7 +54,8 @@ describe('contact form service', () => {
         id: '50680966-f5e1-e311-8a2b-e4115bead28a',
         company: '44ea1e01-f5e1-e311-8a2b-e4115bead28a',
         title: '0167b456-0ddd-49bd-8184-e3227a0b6396',
-        full_name: 'Zac Baman',
+        first_name: 'Zac',
+        last_name: 'Baman',
         job_title: 'Co-founder and CEO',
         primary: 'yes',
         full_telephone_number: '+1 652423467167',
@@ -75,6 +78,7 @@ describe('contact form service', () => {
 
     it('should handle blank and null fields', () => {
       const contact = assign({}, contactData, {
+        last_name: null,
         job_title: null,
         address_same_as_company: true,
         address_1: '',
@@ -89,7 +93,8 @@ describe('contact form service', () => {
         id: '50680966-f5e1-e311-8a2b-e4115bead28a',
         company: '44ea1e01-f5e1-e311-8a2b-e4115bead28a',
         title: '0167b456-0ddd-49bd-8184-e3227a0b6396',
-        full_name: 'Zac Baman',
+        first_name: 'Zac',
+        last_name: null,
         job_title: null,
         primary: 'yes',
         full_telephone_number: '+1 652423467167',

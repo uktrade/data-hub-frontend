@@ -27,7 +27,8 @@ describe('Contact transformers', () => {
     context('when the contact object parameter does not contain an ID', () => {
       beforeEach(() => {
         this.transformedContact = transformContactToListItem({
-          ull_name: 'Fred Smith',
+          first_name: 'Fred',
+          last_name: 'Smith',
         })
       })
 
@@ -52,7 +53,8 @@ describe('Contact transformers', () => {
         beforeEach(() => {
           this.transformedContact = transformContactToListItem({
             id: '1234',
-            full_name: 'Fred Smith',
+            first_name: 'Fred',
+            last_name: 'Smith',
           })
         })
 

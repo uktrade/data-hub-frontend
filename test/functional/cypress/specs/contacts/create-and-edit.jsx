@@ -62,7 +62,8 @@ describe('Create contact form', () => {
     )
 
     assertInputValuesByLabels({
-      'Full name': '',
+      'First name': '',
+      'Last name': '',
       'Job title': '',
       'Phone number': '',
       'Email address': '',
@@ -73,7 +74,8 @@ describe('Create contact form', () => {
     cy.clickSubmitButton('Add contact')
 
     assertErrors({
-      'Full name': 'Enter a full name',
+      'First name': 'Enter a first name',
+      'Last name': 'Enter a last name',
       'Job title': 'Enter a job title',
       'Email address': 'Enter an email',
       'Is this contact’s work address the same as the company address?':
@@ -92,7 +94,8 @@ describe('Create contact form', () => {
     cy.clickSubmitButton('Add contact')
 
     assertErrors({
-      'Full name': 'Enter a full name',
+      'First name': 'Enter a first name',
+      'Last name': 'Enter a last name',
       'Job title': 'Enter a job title',
       'Email address': 'Enter an email',
       'Is this person a primary contact?':
@@ -136,7 +139,8 @@ describe('Create contact form', () => {
     cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
 
     cy.typeIntoInputs({
-      'Full name': 'Andy Pipkin',
+      'First name': 'Andy',
+      'Last name': 'Pipkin',
       'Job title': 'On dole',
       'Phone number': '12345',
       'Email address': 'foo',
@@ -158,7 +162,8 @@ describe('Create contact form', () => {
     )
 
     cy.typeIntoInputs({
-      'Full name': 'Andy Pipkin',
+      'First name': 'Andy',
+      'Last name': 'Pipkin',
       'Job title': 'On dole',
       'Phone number': '456789',
       'Email address': 'andy@new.email',
@@ -275,7 +280,8 @@ describe('Edit contact', () => {
     )
 
     assertInputValuesByLabels({
-      'Full name': 'Joseph Woof',
+      'First name': 'Joseph',
+      'Last name': 'Woof',
       'Job title': 'Dog master',
       'Phone number': '222 3453454',
       'Email address': 'contact@bob.com',

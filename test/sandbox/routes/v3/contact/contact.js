@@ -16,7 +16,7 @@ const lambdaPlc = require('../../../fixtures/v4/company/company-lambda-plc.json'
 const contactCreate = require('../../../fixtures/v3/contact/contact-create.json')
 
 const validateContactForm = function (formData) {
-  const requiredFields = ['full_name', 'job_title', 'email']
+  const requiredFields = ['first_name', 'last_name', 'job_title', 'email']
 
   return requiredFields
     .filter((fieldName) => !formData[fieldName])

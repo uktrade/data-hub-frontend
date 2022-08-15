@@ -1,5 +1,6 @@
 const fillOut = (data) => {
-  cy.contains('Full name').type(data.fullName)
+  cy.contains('First name').type(data.name)
+  cy.contains('Last name').type(data.lastName)
   cy.contains('Job title').type(data.jobTitle)
   cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
   cy.contains('Telephone number').type(data.phone)

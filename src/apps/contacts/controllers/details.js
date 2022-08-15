@@ -19,7 +19,10 @@ async function getCommon(req, res, next) {
     res.locals.companies = [res.locals.company]
     res.locals.id = req.params.contactId
 
-    res.breadcrumb(contact.full_name, `/contacts/${contact.id}`)
+    res.breadcrumb(
+      `${contact.first_name} ${contact.last_name}`,
+      `/contacts/${contact.id}`
+    )
 
     next()
   } catch (error) {

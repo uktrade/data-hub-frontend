@@ -7,7 +7,8 @@ describe('Contacts', () => {
   const CONTACT_EMAIL = `${Math.random().toString(36).substring(2, 15)}@dit.com`
 
   const data = {
-    fullName: 'NewAddress Contact',
+    name: 'NewAddress',
+    lastName: 'Contact',
     jobTitle: 'Coffee machine operator',
     phone: '(44) 0778877778800',
     email: CONTACT_EMAIL,
@@ -45,7 +46,8 @@ describe('Contacts', () => {
     )
     cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
     cy.typeIntoInputs({
-      'Full name': 'Andy Pipkin',
+      'First name': 'Andy',
+      'Last name': 'Pipkin',
       'Job title': 'On dole',
       'Phone number': '56789',
       Email: EMAIL_1,
@@ -62,7 +64,8 @@ describe('Contacts', () => {
     )
     cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
     cy.typeIntoInputs({
-      'Full name': 'Lou Todd',
+      'First name': 'Lou',
+      'Last name': 'Todd',
       'Job title': 'Carer',
       'Phone number': '987654321',
       Email: EMAIL_1,

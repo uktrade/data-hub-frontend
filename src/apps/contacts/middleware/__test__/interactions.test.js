@@ -23,7 +23,8 @@ describe('Contacts interactions middleware', () => {
     res = {
       locals: {
         contact: {
-          full_name: 'first last',
+          first_name: 'first',
+          last_name: 'last',
         },
       },
     }

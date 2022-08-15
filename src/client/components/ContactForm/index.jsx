@@ -235,11 +235,18 @@ const _ContactForm = ({
                     {() => (
                       <>
                         <FieldInput
-                          label="Full name"
-                          name="fullName"
+                          label="First name"
+                          name="firstName"
                           type="text"
-                          required="Enter a full name"
-                          data-test="group-field-full_name"
+                          required="Enter a first name"
+                          data-test="group-field-first_name"
+                        />
+                        <FieldInput
+                          label="Last name"
+                          name="lastName"
+                          type="text"
+                          required="Enter a last name"
+                          data-test="group-field-last_name"
                         />
                         <FieldInput
                           label="Job title"
@@ -341,7 +348,8 @@ const requiredProps = {
 ContactForm.propTypes = {
   ...requiredProps,
   contactId: PropTypes.string,
-  fullName: PropTypes.string,
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
   jobTitle: PropTypes.string,
   primary: PropTypes.bool,
   fullTelephoneNumber: PropTypes.string,

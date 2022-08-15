@@ -10,7 +10,8 @@ const { contactMetaItemLabels } = require('./labels')
 // those areas have been rewritten in react.
 function transformContactToListItem({
   id,
-  full_name,
+  first_name,
+  last_name,
   job_title,
   address_country,
   company_uk_region,
@@ -23,7 +24,7 @@ function transformContactToListItem({
   full_telephone_number,
   email,
 } = {}) {
-  if (!id || !full_name) {
+  if (!id || (!first_name && !last_name)) {
     return
   }
 
@@ -61,7 +62,7 @@ function transformContactToListItem({
       label: 'Updated on',
     },
     type: 'contact',
-    name: full_name,
+    name: `${first_name} ${last_name}`.trim(),
     isArchived: archived,
     meta: compact(metaItems),
   }
