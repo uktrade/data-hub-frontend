@@ -368,6 +368,160 @@ describe('Company activity feed', () => {
             })
         )
       })
+      })
+    })
+  })
+
+  context('When the activity feed feature flag is turned on', () => {
+    before(() => {
+      cy.setUserFeatures([COMPANY_ACTIVITY_FEATURE_FLAG])
+      cy.visit(
+        urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
+      )
+      cy.get('[data-test="activity-feed"] select').select(
+        'dataHubAndExternalActivity'
+      )
+    })
+
+  context('When the activity feed feature flag is turned on', () => {
+    before(() => {
+      cy.setUserFeatures([COMPANY_ACTIVITY_FEATURE_FLAG])
+    })
+
+    context('Companies House Company', () => {
+      it('displays the correct activity type label', () => {
+        cy.get('[data-test="companies-house-company-activity"]').within(() =>
+          cy
+            .get('[data-test="activity-kind-label"]')
+            .contains('Companies House Update', {
+              matchCase: false,
+            })
+        )
+      })
+    })
+
+    context('Companies House Account', () => {
+      it('displays the correct activity type label', () => {
+        cy.get('[data-test="companies-house-account-activity"]').within(() =>
+          cy
+            .get('[data-test="activity-kind-label"]')
+            .contains('Companies House Update', {
+              matchCase: false,
+            })
+        )
+      })
+    })
+
+    context('HMRC Exporter', () => {
+      it('displays the correct activity type label', () => {
+        cy.get('[data-test="hmrc-exporter-activity"]').within(() =>
+          cy.get('[data-test="activity-kind-label"]').contains('HMRC Update', {
+            matchCase: false,
+          })
+        )
+      })
+    })
+
+    context('Orders (OMIS)', () => {
+      it('displays the correct activity type label', () => {
+        cy.get('[data-test="order-activity"]').within(() =>
+          cy.get('[data-test="activity-kind-label"]').contains('New Order', {
+            matchCase: false,
+          })
+        )
+      })
+
+      it('displays the correct topic label', () => {
+        cy.get('[data-test="order-activity"]').within(() =>
+          cy
+            .get('[data-test="activity-theme-label"]')
+            .contains('Orders (OMIS)', {
+              matchCase: false,
+            })
+        )
+      })
+
+      it('displays the correct sub-topic label', () => {
+        cy.get('[data-test="order-activity"]').within(() =>
+          cy.get('[data-test="activity-service-label"]').contains('Event', {
+            matchCase: false,
+          })
+        )
+      })
+    })
+
+    context('Investment project', () => {
+      it('displays the correct activity type label', () => {
+        cy.get('[data-test="investment-activity"]').within(() =>
+          cy
+            .get('[data-test="activity-kind-label"]')
+            .contains('New Investment Project', {
+              matchCase: false,
+            })
+        )
+      })
+
+      it('displays the correct sub-topic label', () => {
+        cy.get('[data-test="order-activity"]').within(() =>
+          cy.get('[data-test="activity-service-label"]').contains('Event', {
+            matchCase: false,
+          })
+        )
+      })
+    })
+
+    context('Investment project', () => {
+      it('displays the correct activity type label', () => {
+        cy.get('[data-test="investment-activity"]').within(() =>
+          cy
+            .get('[data-test="activity-kind-label"]')
+            .contains('New Investment Project', {
+              matchCase: false,
+            })
+        )
+      })
+
+      it('displays the correct topic label', () => {
+        cy.get('[data-test="investment-activity"]').within(() =>
+          cy.get('[data-test="activity-theme-label"]').contains('Investment', {
+            matchCase: false,
+          })
+        )
+      })
+
+      it('displays the correct sub-topic label', () => {
+        cy.get('[data-test="investment-activity"]').within(() =>
+          cy
+            .get('[data-test="activity-service-label"]')
+            .contains('Project - FDI', {
+              matchCase: false,
+            })
+        )
+      })
+    })
+
+    context('Email Campaign (Maxemail)', () => {
+      before(() => {
+        const companyId = fixtures.company.externalActivitiesLtd.id
+        const url = urls.companies.activity.index(companyId)
+        cy.visit(url)
+          .get('[data-test="activity-feed"] select')
+          .select('externalActivity')
+      })
+
+      it('displays the correct activity type label', () => {
+        cy.get('[data-test="maxemail-campaign-activity"]').within(() =>
+          cy
+            .get('[data-test="activity-kind-label"]')
+            .contains('Email Campaign', {
+              matchCase: false,
+            })
+        )
+      })
+    })
+
+    after(() => {
+      cy.resetUser()
     })
 
     context('Companies House Account', () => {
