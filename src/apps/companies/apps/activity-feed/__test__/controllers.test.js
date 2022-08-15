@@ -633,7 +633,7 @@ describe('Activity feed controllers', () => {
       before(async () => {
         middlewareParameters = buildMiddlewareParameters({
           requestQuery: {
-            sortBy: 'modified_on:desc',
+            sortBy: 'name:asc',
             name: 'project zeus',
             earliestStartDate: '2020-11-01',
             latestStartDate: '2020-11-10',
@@ -683,9 +683,9 @@ describe('Activity feed controllers', () => {
             },
           },
           sort: {
-            'object.updated': {
-              order: 'desc',
-              unmapped_type: 'date',
+            'object.name.raw': {
+              order: 'asc',
+              unmapped_type: 'string',
             },
           },
         }

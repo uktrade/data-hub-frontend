@@ -73,6 +73,18 @@ const EVENT_ACTIVITY_SORT_OPTIONS = {
       unmapped_type: 'string',
     },
   },
+  'start_date:asc': {
+    'object.startTime': {
+      order: 'asc',
+      unmapped_type: 'date',
+    },
+  },
+  'start_date:desc': {
+    'object.startTime': {
+      order: 'desc',
+      unmapped_type: 'date',
+    },
+  },
 }
 
 const EVENT_ALL_ACTIVITY = {
