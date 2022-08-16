@@ -9,7 +9,7 @@ var maxemailEmailSentActivities = require('../../../fixtures/v4/activity-feed/ex
 
 // Data Hub and external activities
 var dataHubAndExternalActivities = require('../../../fixtures/v4/activity-feed/data-hub-and-external-activities.json')
-var allActivity = require('../../../fixtures/v4/activity-feed/all-activity-feed-activity.json')
+var companyActivities = require('../../../fixtures/v4/activity-feed/company-activity-feed-activities.json')
 
 // My activities
 var myActivities = require('../../../fixtures/v4/activity-feed/my-activities.json')
@@ -227,7 +227,9 @@ exports.activityFeed = function (req, res) {
       "query.bool.filter.bool.should[0].bool.must[1].terms['object.attributedTo.id'][0]"
     )
     return res.json(
-      company === BEST_EVER_COMPANY ? allActivity : dataHubAndExternalActivities
+      company === BEST_EVER_COMPANY
+        ? companyActivities
+        : dataHubAndExternalActivities
     )
   }
 

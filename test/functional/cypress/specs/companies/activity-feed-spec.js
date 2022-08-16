@@ -1,7 +1,9 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
-const COMPANY_ACTIVITY_FEATURE_FLAG = require('../../../../../src/apps/companies/apps/activity-feed/constants')
+const {
+  COMPANY_ACTIVITY_FEATURE_FLAG,
+} = require('../../../../../src/apps/companies/apps/activity-feed/constants')
 
 const companyLocalHeader = selectors.companyLocalHeader()
 
@@ -344,10 +346,18 @@ describe('Company activity feed', () => {
       })
     })
   })
+
   context('When the activity feed feature flag is turned on', () => {
     before(() => {
       cy.setUserFeatures([COMPANY_ACTIVITY_FEATURE_FLAG])
+      cy.visit(
+        urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
+      )
+      cy.get('[data-test="activity-feed"] select').select(
+        'dataHubAndExternalActivity'
+      )
     })
+
     context('Companies House Company', () => {
       it('displays the correct activity type label', () => {
         cy.get('[data-test="companies-house-company-activity"]').within(() =>
@@ -420,6 +430,7 @@ describe('Company activity feed', () => {
             })
         )
       })
+
       it('displays the correct topic label', () => {
         cy.get('[data-test="investment-activity"]').within(() =>
           cy.get('[data-test="activity-theme-label"]').contains('Investment', {
@@ -427,6 +438,7 @@ describe('Company activity feed', () => {
           })
         )
       })
+
       it('displays the correct sub-topic label', () => {
         cy.get('[data-test="investment-activity"]').within(() =>
           cy
@@ -439,6 +451,14 @@ describe('Company activity feed', () => {
     })
 
     context('Email Campaign (Maxemail)', () => {
+      before(() => {
+        const companyId = fixtures.company.externalActivitiesLtd.id
+        const url = urls.companies.activity.index(companyId)
+        cy.visit(url)
+          .get('[data-test="activity-feed"] select')
+          .select('externalActivity')
+      })
+
       it('displays the correct activity type label', () => {
         cy.get('[data-test="maxemail-campaign-activity"]').within(() =>
           cy
