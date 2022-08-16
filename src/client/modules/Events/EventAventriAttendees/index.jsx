@@ -21,6 +21,7 @@ import { ID, state2props, TASK_GET_EVENT_AVENTRI_ATTENDEES } from './state'
 import { EVENTS__AVENTRI_ATTENDEES_LOADED } from '../../../actions'
 import Activity from '../../../components/ActivityFeed/Activity'
 import ActivityList from '../../../components/ActivityFeed/activities/card/ActivityList'
+import { ATTENDEES_SORT_OPTIONS } from './constants'
 
 const EventAventriAttendees = ({
   aventriAttendees,
@@ -117,16 +118,7 @@ const EventAventriAttendees = ({
                               data-test="attendee-collection-header"
                             />
                             <CollectionSort
-                              sortOptions={[
-                                {
-                                  name: 'First name: A-Z',
-                                  value: 'first_name:asc',
-                                },
-                                {
-                                  name: 'First name: Z-A',
-                                  value: 'first_name:desc',
-                                },
-                              ]}
+                              sortOptions={ATTENDEES_SORT_OPTIONS}
                               totalPages={totalPages}
                             />
                             <ActivityList>

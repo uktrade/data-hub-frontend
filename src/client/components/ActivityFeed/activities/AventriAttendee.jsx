@@ -20,7 +20,7 @@ export const AVENTRI_ATTENDEE_REG_STATUSES = {
 }
 
 export const transformAventriAttendee = (attendee) => ({
-  attendeeName: `${attendee.object['dit:aventri:firstname']} ${attendee.object['dit:aventri:lastname']}`,
+  attendeeName: `${attendee.object['dit:firstName']} ${attendee.object['dit:lastName']}`,
   date: formatStartAndEndDate(attendee.startDate, attendee.endDate),
   eventName: attendee.eventName,
   registrationStatus:

@@ -102,6 +102,31 @@ describe('Aventri event attendees', () => {
               existingEventId
             )}?sortBy=first_name:desc&page=1`
           ).as('firstNameZ-A')
+          cy.intercept(
+            'GET',
+            `${urls.events.aventri.attendeesData(
+              existingEventId
+            )}?sortBy=last_name:asc&page=1`
+          ).as('lastNameA-Z')
+          cy.intercept(
+            'GET',
+            `${urls.events.aventri.attendeesData(
+              existingEventId
+            )}?sortBy=last_name:desc&page=1`
+          ).as('lastNameZ-A')
+          cy.intercept(
+            'GET',
+            `${urls.events.aventri.attendeesData(
+              existingEventId
+            )}?sortBy=company_name:asc&page=1`
+          ).as('companyNameA-Z')
+          cy.intercept(
+            'GET',
+            `${urls.events.aventri.attendeesData(
+              existingEventId
+            )}?sortBy=company_name:desc&page=1`
+          ).as('companyNameZ-A')
+
           cy.visit(urls.events.aventri.attendees(existingEventId))
         })
 
@@ -119,7 +144,51 @@ describe('Aventri event attendees', () => {
           })
           cy.get('[data-test="aventri-attendee"]')
             .eq(0)
-            .should('contain', 'Polly Parton')
+            .should('contain', 'Diana Durrell')
+        })
+
+        it('sorts by "last name: A-Z" when selected', () => {
+          const element = '[data-test="sortby"] select'
+          cy.get(element).select('last_name:asc')
+          cy.wait('@lastNameA-Z').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+          cy.get('[data-test="aventri-attendee"]')
+            .eq(0)
+            .should('contain', 'Alex Alderman')
+        })
+
+        it('sorts by "last name: Z-A" when selected', () => {
+          const element = '[data-test="sortby"] select'
+          cy.get(element).select('last_name:desc')
+          cy.wait('@lastNameZ-A').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+          cy.get('[data-test="aventri-attendee"]')
+            .eq(0)
+            .should('contain', 'Diana Durrell')
+        })
+
+        it('sorts by "company name: A-Z" when selected', () => {
+          const element = '[data-test="sortby"] select'
+          cy.get(element).select('company_name:asc')
+          cy.wait('@companyNameA-Z').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+          cy.get('[data-test="aventri-attendee"]')
+            .eq(0)
+            .should('contain', 'Alex Alderman')
+        })
+
+        it('sorts by "company name: Z-A" when selected', () => {
+          const element = '[data-test="sortby"] select'
+          cy.get(element).select('company_name:desc')
+          cy.wait('@companyNameZ-A').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+          cy.get('[data-test="aventri-attendee"]')
+            .eq(0)
+            .should('contain', 'Diana Durrell')
         })
       })
 
