@@ -9,14 +9,7 @@ import multiInstance from '../../utils/multiinstance'
 import { CONTACT_FORM__SUBMIT } from '../../actions'
 
 import Form from '../Form'
-import {
-  FieldInput,
-  FieldRadios,
-  FieldTextarea,
-  FieldCheckboxes,
-  FieldAddress,
-  Main,
-} from '..'
+import { FieldInput, FieldRadios, FieldTextarea, FieldAddress, Main } from '..'
 import LocalHeader from '../LocalHeader/LocalHeader'
 import ContactResource from '../Resource/Contact'
 import CompanyResource from '../Resource/Company'
@@ -37,6 +30,10 @@ import Label from '@govuk-react/label'
 
 const YES = 'Yes'
 const NO = 'No'
+const moreDetailsHint = `
+Add anything you think is important about the contact, for example, an alternative
+phone number or email address.
+`
 
 const boolToYesNo = (x) => (x === true ? YES : x === false ? NO : null)
 
@@ -235,7 +232,7 @@ const _ContactForm = ({
                       ].filter(Boolean),
                     }}
                   >
-                    {({ values }) => (
+                    {() => (
                       <>
                         <FieldInput
                           label="First name"
@@ -249,6 +246,7 @@ const _ContactForm = ({
                           name="lastName"
                           type="text"
                           required="Enter a last name"
+                          data-test="group-field-last_name"
                         />
                         <FieldInput
                           label="Job title"
@@ -264,18 +262,19 @@ const _ContactForm = ({
                           validate={validators.email}
                         />
                         <FieldInput
-                          label="Telephone number (optional)"
+                          label="Phone number (optional)"
+                          hint="For international numbers include the country code"
                           name="fullTelephoneNumber"
                           type="text"
                           validate={(x) =>
                             !x?.match(GENERIC_PHONE_NUMBER_REGEX) &&
-                            'Telephone number should consist of numbers'
+                            'Phone number should consist of numbers'
                           }
                         />
                         <FieldRadios
                           legend="Is this contact’s work address the same as the company address?"
                           name="addressSameAsCompany"
-                          required="Select yes if the contact's address is the same as the company address"
+                          required="Select yes if the contact's work address is the same as the company address"
                           options={[
                             { value: YES, label: YES },
                             {
@@ -300,30 +299,16 @@ const _ContactForm = ({
                         <FieldRadios
                           legend="Is this person a primary contact?"
                           name="primary"
-                          required="Select yes if this person is a primary contact"
+                          required="Select yes if this person is the company's primary contact"
                           options={[
                             { value: YES, label: YES },
                             { value: NO, label: NO },
                           ]}
                         />
-                        <FieldCheckboxes
-                          name="acceptsDitEmailMarketing"
-                          options={[
-                            {
-                              value: YES,
-                              label:
-                                'The company contact does accept email marketing',
-                              hint:
-                                values?.acceptsDitEmailMarketing?.includes(
-                                  YES
-                                ) &&
-                                'By checking this box, you confirm that the contact has opted in to email marketing.',
-                            },
-                          ]}
-                        />
                         <FieldTextarea
                           label="More details (optional)"
                           name="moreDetails"
+                          hint={moreDetailsHint}
                         />
                       </>
                     )}

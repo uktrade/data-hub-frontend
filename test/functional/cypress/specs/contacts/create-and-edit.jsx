@@ -44,13 +44,6 @@ const assertRadioGroup = (label, option) =>
 const assertRadioGroupNoOptionChecked = (label) =>
   cy.contains(label).parent().find('input').should('not.be.checked')
 
-const assertNoMarketingConsent = () =>
-  cy
-    .contains('The company contact does accept email marketing')
-    .parent()
-    .find('input')
-    .should('not.be.checked')
-
 describe('Create contact form', () => {
   const NEW_CONTACT_ID = '14890695-ce54-4419-88d3-9224754ecbc0'
 
@@ -63,8 +56,6 @@ describe('Create contact form', () => {
       'Add contact at Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978': null,
     })
 
-    assertNoMarketingConsent()
-
     assertRadioGroupNoOptionChecked('Is this person a primary contact?')
     assertRadioGroupNoOptionChecked(
       'Is this contact’s work address the same as the company address?'
@@ -74,7 +65,7 @@ describe('Create contact form', () => {
       'First name': '',
       'Last name': '',
       'Job title': '',
-      'Telephone number': '',
+      'Phone number': '',
       'Email address': '',
     })
   })
@@ -88,9 +79,9 @@ describe('Create contact form', () => {
       'Job title': 'Enter a job title',
       'Email address': 'Enter an email',
       'Is this contact’s work address the same as the company address?':
-        "Select yes if the contact's address is the same as the company address",
+        "Select yes if the contact's work address is the same as the company address",
       'Is this person a primary contact?':
-        'Select yes if this person is a primary contact',
+        "Select yes if this person is the company's primary contact",
     })
   })
 
@@ -108,8 +99,8 @@ describe('Create contact form', () => {
       'Job title': 'Enter a job title',
       'Email address': 'Enter an email',
       'Is this person a primary contact?':
-        'Select yes if this person is a primary contact',
-      'Address line 1': 'Enter an address line 1',
+        "Select yes if this person is the company's primary contact",
+      'Address line 1': 'Enter an address',
       'Town or city': 'Enter a town or city',
     })
   })
@@ -151,14 +142,15 @@ describe('Create contact form', () => {
       'First name': 'Andy',
       'Last name': 'Pipkin',
       'Job title': 'On dole',
-      'Telephone number': '12345',
+      'Phone number': '12345',
       'Email address': 'foo',
     })
 
     cy.clickSubmitButton('Add contact')
 
     assertErrors({
-      'Email address': 'Enter a valid email address',
+      'Email address':
+        'Enter an email address in the correct format, like name@example.com',
     })
   })
 
@@ -173,7 +165,7 @@ describe('Create contact form', () => {
       'First name': 'Andy',
       'Last name': 'Pipkin',
       'Job title': 'On dole',
-      'Telephone number': '456789',
+      'Phone number': '456789',
       'Email address': 'andy@new.email',
     })
 
@@ -281,8 +273,6 @@ describe('Edit contact', () => {
       `/companies/${ZBONCAK_COMPANY_ID}`
     )
 
-    assertNoMarketingConsent()
-
     assertRadioGroup('Is this person a primary contact?', 'Yes')
     assertRadioGroup(
       'Is this contact’s work address the same as the company address?',
@@ -293,7 +283,7 @@ describe('Edit contact', () => {
       'First name': 'Joseph',
       'Last name': 'Woof',
       'Job title': 'Dog master',
-      'Telephone number': '222 3453454',
+      'Phone number': '222 3453454',
       'Email address': 'contact@bob.com',
     })
   })
