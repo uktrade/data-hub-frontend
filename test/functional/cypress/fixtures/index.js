@@ -24,6 +24,7 @@ module.exports = {
     ukCompany: require('../../../../test/sandbox/fixtures/v4/company/company-uk.json'),
     usCompany: require('../../../../test/sandbox/fixtures/v4/company/company-us-state.json'),
     canadianCompany: require('../../../../test/sandbox/fixtures/v4/company/company-canada-province.json'),
+    allActivitiesCompany: require('../../../../test/sandbox/fixtures/v4/company/company-with-all-activities.json'),
   },
   contact: {
     deanCox: require('./contact/dean-cox'),
