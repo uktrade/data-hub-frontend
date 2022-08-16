@@ -43,6 +43,7 @@
             "dit:firstName": "Diana",
             "dit:lastName": "Durrell",
             "dit:companyName": "Durrell Corp",
+            "dit:registrationStatus": "Confirmed",
             "id": "dit:aventri:Attendee:1234",
             "published": "1970-01-01T00:00:00",
             "type": [
@@ -82,6 +83,7 @@
             "dit:firstName": "Carrie",
             "dit:lastName": "Carson",
             "dit:companyName": "Carson Corp",
+            "dit:registrationStatus": "Confirmed",
             "id": "dit:aventri:Attendee:1234",
             "published": "1970-01-01T00:00:00",
             "type": [
@@ -121,6 +123,7 @@
             "dit:firstName": "Barry",
             "dit:lastName": "Bennett",
             "dit:companyName": "Bennett Corp",
+            "dit:registrationStatus": "Confirmed",
             "id": "dit:aventri:Attendee:1234",
             "published": "1970-01-01T00:00:00",
             "type": [
@@ -160,6 +163,7 @@
             "dit:firstName": "Alex",
             "dit:lastName": "Alderman",
             "dit:companyName": "Alderman Corp",
+            "dit:registrationStatus": "Confirmed",
             "id": "dit:aventri:Attendee:1234",
             "published": "1970-01-01T00:00:00",
             "type": [
