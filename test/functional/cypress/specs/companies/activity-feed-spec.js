@@ -386,6 +386,12 @@ describe('Company activity feed', () => {
   context('When the activity feed feature flag is turned on', () => {
     before(() => {
       cy.setUserFeatures([COMPANY_ACTIVITY_FEATURE_FLAG])
+      cy.visit(
+        urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
+      )
+      cy.get('[data-test="activity-feed"] select').select(
+        'dataHubAndExternalActivity'
+      )
     })
 
     context('Companies House Company', () => {
