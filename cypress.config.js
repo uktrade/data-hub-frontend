@@ -1,4 +1,5 @@
 const { defineConfig } = require('cypress')
+const webpackConfig = require('./webpack.config.js')()
 
 module.exports = defineConfig({
   video: true,
@@ -32,7 +33,9 @@ module.exports = defineConfig({
     devServer: {
       framework: 'react',
       bundler: 'webpack',
+      webpackConfig,
     },
     specPattern: 'test/component/cypress/specs/**/*.cy.{js,jsx,ts,tsx}',
+    supportFile: false,
   },
 })
