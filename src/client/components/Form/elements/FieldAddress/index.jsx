@@ -40,6 +40,18 @@ const SyledDiv = styled('div')`
   padding-bottom: ${SPACING.SCALE_5};
 `
 
+const StyledButtonWrapper = styled('div')`
+  margin-bottom: -22px;
+  margin-left: 10px;
+`
+
+const SyledRowDiv = styled('div')`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+`
+
 const FieldAddress = ({
   label,
   legend,
@@ -145,7 +157,7 @@ const FieldAddress = ({
           label="State"
           options={usStates}
           required="Select a state"
-          emptyOption="-- Select state --"
+          emptyOption="Select"
         />
       )
     }
@@ -160,15 +172,15 @@ const FieldAddress = ({
           label="Province"
           options={canadaProvinces}
           required="Select a province"
-          emptyOption="-- Select province --"
+          emptyOption="Select"
         />
       )
     }
   }
 
   const postcodeLabel = () => {
-    if (isUS) return 'ZIP Code'
-    if (isCanada) return 'Postal Code'
+    if (isUS) return 'ZIP Code (optional)'
+    if (isCanada) return 'Postal Code (optional)'
     if (isUK) return 'Postcode'
     return 'Postcode (optional)'
   }
@@ -205,8 +217,6 @@ const FieldAddress = ({
   }
 
   const postcodeErrorMessage = () => {
-    if (isUS) return 'Enter a ZIP code'
-    if (isCanada) return 'Enter a postal code'
     if (isUK) return 'Enter a postcode'
   }
 
@@ -214,81 +224,105 @@ const FieldAddress = ({
     <FieldWrapper {...{ label, legend, hint, name }} showBorder={true}>
       {isCountrySelectable ? (
         <SyledDiv>
-          <FieldCountrySelect name="country" required="Select a country" />
+          <FieldCountrySelect
+            name="country"
+            required="Select a country"
+            onChange={() => {
+              setFieldValue('country_form_value', country_form_value)
+            }}
+          />
         </SyledDiv>
       ) : (
         <FieldUneditable name="country" label="Country">
           {country.name}
         </FieldUneditable>
       )}
-      {isUK && (
+      {country_form_value && (
         <>
-          <Button
-            onClick={onSearchClick}
-            buttonColour={GREY_3}
-            buttonTextColour={BLACK}
-            icon={<Search />}
-            id="postcode-search"
-          >
-            Find UK address
-          </Button>
-          {error && (
-            <StatusMessage>
-              Error occurred while searching for an address. Enter the address
-              manually.
-            </StatusMessage>
+          {isUK && (
+            <>
+              <SyledRowDiv>
+                <StyledFieldPostcode
+                  type={'search'}
+                  name="postcode"
+                  label={postcodeLabel()}
+                  required={postcodeErrorMessage()}
+                  maxLength={10}
+                  validate={postcodeValidator}
+                />
+                <StyledButtonWrapper>
+                  <Button
+                    onClick={onSearchClick}
+                    buttonColour={GREY_3}
+                    buttonTextColour={BLACK}
+                    icon={<Search />}
+                    id="postcode-search"
+                  >
+                    Find UK address
+                  </Button>
+                </StyledButtonWrapper>
+              </SyledRowDiv>
+              {error && (
+                <StatusMessage>
+                  Error occurred while searching for an address. Enter the
+                  address manually.
+                </StatusMessage>
+              )}
+              {addressList && addressList.length > 0 && (
+                <FormGroup>
+                  <Select label="Select an address" onChange={onAddressSelect}>
+                    {addressList.map(({ address1 }, index) => (
+                      // eslint-disable-next-line react/no-array-index-key
+                      <option key={index} value={index}>
+                        {address1}
+                      </option>
+                    ))}
+                  </Select>
+                </FormGroup>
+              )}
+            </>
           )}
-          {addressList && addressList.length > 0 && (
-            <FormGroup>
-              <Select label="Select an address" onChange={onAddressSelect}>
-                {addressList.map(({ address1 }, index) => (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <option key={index} value={index}>
-                    {address1}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
+          <FieldInput
+            type="text"
+            name="address1"
+            label="Address line 1"
+            required="Enter an address"
+          />
+          <FieldInput
+            type="text"
+            name="address2"
+            label="Address line 2 (optional)"
+          />
+          <FieldInput
+            type="text"
+            name="city"
+            label="Town or city"
+            required="Enter a town or city"
+          />
+          {!(isUS || isCanada) && (
+            <FieldInput type="text" name="county" label="County (optional)" />
+          )}
+          <>
+            {renderUsStateField()}
+            {renderCanadaProvinceField()}
+            {administrativeAreaSearchError && (
+              <StatusMessage>
+                Error occurred while retrieving Administrative Areas.
+              </StatusMessage>
+            )}
+          </>
+          {!isUK && (
+            <StyledFieldPostcode
+              type={'text'}
+              name="postcode"
+              label={postcodeLabel()}
+              required={postcodeErrorMessage()}
+              maxLength={null}
+              validate={postcodeValidator}
+            />
           )}
         </>
       )}
-      <FieldInput
-        type="text"
-        name="address1"
-        label="Address line 1"
-        required="Enter an address"
-      />
-      <FieldInput
-        type="text"
-        name="address2"
-        label="Address line 2 (optional)"
-      />
-      <FieldInput
-        type="text"
-        name="city"
-        label="Town or city"
-        required="Enter a town or city"
-      />
-      {!(isUS || isCanada) && (
-        <FieldInput type="text" name="county" label="County (optional)" />
-      )}
-      <>
-        {renderUsStateField()}
-        {renderCanadaProvinceField()}
-        {administrativeAreaSearchError && (
-          <StatusMessage>
-            Error occurred while retrieving Administrative Areas.
-          </StatusMessage>
-        )}
-      </>
-      <StyledFieldPostcode
-        type={isUK ? 'search' : 'text'}
-        name="postcode"
-        label={postcodeLabel()}
-        required={postcodeErrorMessage()}
-        maxLength={isUK ? 10 : null}
-        validate={postcodeValidator}
-      />
     </FieldWrapper>
   )
 }
