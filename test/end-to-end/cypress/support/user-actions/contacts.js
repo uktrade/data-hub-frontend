@@ -22,10 +22,10 @@ const createWithNewAddress = (data) => {
     'Is this contact’s work address the same as the company address?',
     'No'
   )
+  cy.contains('Country').parent().find('select').select(data.country)
   cy.contains('Address line 1').type(data.address1)
   cy.contains('Address line 2').type(data.address2)
   cy.contains('Town or city').type(data.city)
-  cy.contains('Country').parent().find('select').select(data.country)
   cy.getSubmitButtonByLabel('Add contact').click()
 }
 

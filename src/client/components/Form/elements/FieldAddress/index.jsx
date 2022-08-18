@@ -237,7 +237,7 @@ const FieldAddress = ({
           {country.name}
         </FieldUneditable>
       )}
-      {country_form_value && (
+      {(country_form_value || !isCountrySelectable) && (
         <>
           {isUK && (
             <>

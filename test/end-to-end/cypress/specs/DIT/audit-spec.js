@@ -48,6 +48,7 @@ describe('Contact', () => {
   })
 
   it('should display name of the person who made contact record changes', () => {
+    cy.get('#postcode').type('NE28 5JB')
     cy.getSubmitButtonByLabel('Save and return').click()
     cy.contains('Contact record updated')
 

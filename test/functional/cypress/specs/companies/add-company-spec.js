@@ -651,11 +651,11 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.continueButton).click()
       cy.get(selectors.companyAdd.form).should(
         'not.contain',
-        'Enter a valid Postal Code'
+        'Enter a valid Postal code'
       )
       cy.get(selectors.companyAdd.form).should(
         'not.contain',
-        'Enter a valid ZIP Code'
+        'Enter a valid ZIP code'
       )
     })
 
@@ -779,7 +779,7 @@ describe('Add company form', () => {
         'A1A 1A1'
       )
       cy.get(selectors.companyAdd.continueButton).click()
-      cy.get(selectors.companyAdd.form).contains('Enter a valid ZIP Code')
+      cy.get(selectors.companyAdd.form).contains('Enter a valid ZIP code')
     })
 
     it('should not show an invalid ZIP code error when completed correctly', () => {
@@ -790,7 +790,7 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.continueButton).click()
       cy.get(selectors.companyAdd.form).should(
         'not.contain',
-        'Enter a valid ZIP Code'
+        'Enter a valid ZIP code'
       )
     })
   })
@@ -827,7 +827,7 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.form).contains('Enter an address')
       cy.get(selectors.companyAdd.form).contains('Enter a town or city')
       cy.get(selectors.companyAdd.form).contains('Select a province')
-      cy.get(selectors.companyAdd.form).contains('Enter a postal code')
+      cy.get(selectors.companyAdd.form).contains('Enter a Postal code')
     })
 
     it('should show an invalid postal code error', () => {
@@ -835,7 +835,7 @@ describe('Add company form', () => {
         '12345'
       )
       cy.get(selectors.companyAdd.continueButton).click()
-      cy.get(selectors.companyAdd.form).contains('Enter a valid Postal Code')
+      cy.get(selectors.companyAdd.form).contains('Enter a valid Postal code')
     })
 
     it('should not show an invalid postal code error when completed correctly', () => {
@@ -846,7 +846,7 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.continueButton).click()
       cy.get(selectors.companyAdd.form).should(
         'not.contain',
-        'Enter a valid Postal Code'
+        'Enter a valid Postal code'
       )
     })
   })
