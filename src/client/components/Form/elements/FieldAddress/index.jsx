@@ -220,6 +220,32 @@ const FieldAddress = ({
     if (isUK) return 'Enter a postcode'
   }
 
+  let renderPostcode
+
+  const renderUKPostcode = (
+    <StyledFieldPostcode
+      type="search"
+      name="postcode"
+      label={postcodeLabel()}
+      required={postcodeErrorMessage()}
+      maxLength={10}
+      validate={postcodeValidator}
+    />
+  )
+
+  if (country_form_value !== UNITED_KINGDOM_ID) {
+    renderPostcode = (
+      <StyledFieldPostcode
+        type="text"
+        name="postcode"
+        label={postcodeLabel()}
+        required={postcodeErrorMessage()}
+        maxLength={null}
+        validate={postcodeValidator}
+      />
+    )
+  }
+
   return (
     <FieldWrapper {...{ label, legend, hint, name }} showBorder={true}>
       {isCountrySelectable ? (
@@ -242,14 +268,7 @@ const FieldAddress = ({
           {isUK && (
             <>
               <SyledRowDiv>
-                <StyledFieldPostcode
-                  type={'search'}
-                  name="postcode"
-                  label={postcodeLabel()}
-                  required={postcodeErrorMessage()}
-                  maxLength={10}
-                  validate={postcodeValidator}
-                />
+                {renderUKPostcode}
                 <StyledButtonWrapper>
                   <Button
                     onClick={onSearchClick}
@@ -311,16 +330,7 @@ const FieldAddress = ({
               </StatusMessage>
             )}
           </>
-          {!isUK && (
-            <StyledFieldPostcode
-              type={'text'}
-              name="postcode"
-              label={postcodeLabel()}
-              required={postcodeErrorMessage()}
-              maxLength={null}
-              validate={postcodeValidator}
-            />
-          )}
+          {!isUK && renderPostcode}
         </>
       )}
     </FieldWrapper>
