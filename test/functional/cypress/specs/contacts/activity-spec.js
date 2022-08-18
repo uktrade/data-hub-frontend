@@ -5,6 +5,7 @@ const errorContact = require('../../../../sandbox/fixtures/v3/contact/contact-by
 const { assertErrorDialog } = require('../../support/assertions')
 const {
   CONTACT_ACTIVITY_FEATURE_FLAG,
+  COMPANY_ACTIVITY_FEATURE_FLAG,
 } = require('../../../../../src/apps/companies/apps/activity-feed/constants')
 
 describe('Contact activity', () => {
@@ -54,6 +55,13 @@ describe('Contact activity', () => {
       })
 
       context('when using the sort by selector', () => {
+        before(() => {
+          cy.setUserFeatures([
+            CONTACT_ACTIVITY_FEATURE_FLAG,
+            COMPANY_ACTIVITY_FEATURE_FLAG,
+          ])
+        })
+
         beforeEach(() => {
           cy.intercept(
             'GET',
@@ -71,6 +79,8 @@ describe('Contact activity', () => {
         })
 
         after(() => {
+          cy.resetUser()
+          cy.setUserFeatures([CONTACT_ACTIVITY_FEATURE_FLAG])
           cy.visit(urls.contacts.contactActivities(contactId))
         })
 
