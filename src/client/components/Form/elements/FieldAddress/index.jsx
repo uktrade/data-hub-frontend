@@ -179,8 +179,8 @@ const FieldAddress = ({
   }
 
   const postcodeLabel = () => {
-    if (isUS) return 'ZIP Code (optional)'
-    if (isCanada) return 'Postal Code (optional)'
+    if (isUS) return 'ZIP code (optional)'
+    if (isCanada) return 'Postal code (optional)'
     if (isUK) return 'Postcode'
     return 'Postcode (optional)'
   }
@@ -192,17 +192,17 @@ const FieldAddress = ({
 
   const usZipCodeValidator = (value) => {
     if (!value) {
-      return 'Enter a ZIP Code'
+      return 'Enter a ZIP code'
     } else if (value && !usZipCodeRegex.test(value)) {
-      return 'Enter a valid ZIP Code'
+      return 'Enter a valid ZIP code'
     }
   }
 
   const canadaPostalCodeValidator = (value) => {
     if (!value) {
-      return 'Enter a Postal Code'
+      return 'Enter a Postal code'
     } else if (value && !canadaPostalCodeRegex.test(value)) {
-      return 'Enter a valid Postal Code'
+      return 'Enter a valid Postal code'
     }
   }
 
