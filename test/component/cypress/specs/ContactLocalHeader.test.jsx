@@ -46,8 +46,11 @@ describe('ContactLocalHeader', () => {
       cy.get('[data-test=archive-panel]').should('not.exist')
     })
 
-    it('should not render the Add Interaction button', () => {
-      cy.get('[data-test=add-interaction-button]').should('not.exist')
+    it('should render the Add Interaction button', () => {
+      cy.get('[data-test=add-interaction-button]')
+        .should('exist')
+        .should('have.text', 'Add interaction')
+        .should('have.attr', 'href', addInteractionUrl)
     })
   })
 
@@ -74,8 +77,11 @@ describe('ContactLocalHeader', () => {
         .should('not.contain', 'Primary')
     })
 
-    it('should not render the Add Interaction button', () => {
-      cy.get('[data-test=add-interaction-button]').should('not.exist')
+    it('should render the Add Interaction button', () => {
+      cy.get('[data-test=add-interaction-button]')
+        .should('exist')
+        .should('have.text', 'Add interaction')
+        .should('have.attr', 'href', addInteractionUrl)
     })
 
     it('should not render the archive panel', () => {
