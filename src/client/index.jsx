@@ -286,6 +286,7 @@ import { archiveContact } from '../client/modules/Contacts/ContactDetails/tasks'
 import { TASK_GET_USER_FEATURE_FLAGS } from './components/CheckUserFeatureFlags/state'
 import { getUserFeatureFlags } from './components/CheckUserFeatureFlags/tasks'
 import { getEventAventriAttendees } from './modules/Events/EventAventriAttendees/tasks'
+import ErrorBoundary from './components/ErrorBoundary'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -313,387 +314,402 @@ if (globalProps.sentryDsn) {
 
 function App() {
   return (
-    <Provider
-      tasks={{
-        'Create list': createList,
-        'Edit company': editCompany,
-        'Create company': createCompany,
-        'Edit company list': companyListTasks.editCompanyList,
-        'Match confirmation': matchCompanyTasks.onMatchSubmit,
-        'Cannot find match': matchCompanyTasks.cannotFindMatchSubmit,
-        'Submit merge request': matchCompanyTasks.submitMergeRequest,
-        'Company lists': companyListsTasks.fetchCompanyLists,
-        'Company list': companyListsTasks.fetchCompanyList,
-        'Add or remove from list': companyListsTasks.addOrRemoveFromList,
-        'Exports history': exportsHistoryTasks.fetchExportsHistory,
-        'Referral details': referralTasks.fetchReferralDetails,
-        Referrals: referralListTask,
-        'Export wins': exportWinsTasks.fetchExportWins,
-        'Update Lead ITA': manageAdviser.updateAdviser,
-        'Get send referral initial values':
-          referralsSendTasks.getInitialFormValues,
-        'Save contact': saveContact,
-        [TASK_OPEN_REFERRALS_CONTACT_FORM]: referralsSendTasks.openContactForm,
-        [TASK_SAVE_REFERRAL]: referralsSendTasks.saveReferral,
-        [TASK_SAVE_ONE_LIST_DETAILS]: editOneListTasks.saveOneListDetails,
-        [EXPORT_COUNTRIES_EDIT_NAME]:
-          exportCountriesEditTasks.saveExportCountries,
-        [TASK_GET_PIPELINE_BY_COMPANY]: pipelineTasks.getPipelineByCompany,
-        [TASK_ADD_COMPANY_TO_PIPELINE]: pipelineTasks.addCompanyToPipeline,
-        [TASK_GET_PIPELINE_LIST]: pipelineListTasks.getPipelineList,
-        [TASK_GET_PIPELINE_ITEM]: pipelineTasks.getPipelineItem,
-        [TASK_EDIT_PIPELINE_ITEM]: pipelineTasks.editPipelineItem,
-        [TASK_ARCHIVE_PIPELINE_ITEM]: pipelineTasks.archivePipelineItem,
-        [TASK_UNARCHIVE_PIPELINE_ITEM]: pipelineTasks.unarchivePipelineItem,
-        [TASK_DELETE_PIPELINE_ITEM]: pipelineTasks.deletePipelineItem,
-        [TASK_GET_PIPELINE_COMPANY_CONTACTS]: pipelineTasks.getCompanyContacts,
-        [TASK_POSTCODE_TO_REGION]: addCompanyPostcodeToRegionTask,
-        [TASK_GET_ACTIVE_EVENTS]: addInteractionFormTasks.fetchActiveEvents,
-        [TASK_SAVE_INTERACTION]: addInteractionFormTasks.saveInteraction,
-        [TASK_GET_INTERACTION_INITIAL_VALUES]:
-          addInteractionFormTasks.getInitialFormValues,
-        [TASK_OPEN_CONTACT_FORM]: addInteractionFormTasks.openContactForm,
-        [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
-        [TASK_SAVE_OPPORTUNITY_DETAILS]:
-          investmentOpportunitiesDetailsTasks.saveOpportunityDetails,
-        [TASK_SAVE_OPPORTUNITY_STATUS]:
-          investmentOpportunitiesDetailsTasks.saveOpportunityStatus,
-        [TASK_SAVE_OPPORTUNITY_REQUIREMENTS]:
-          investmentOpportunitiesDetailsTasks.saveOpportunityRequirements,
-        [TASK_GET_OPPORTUNITY_DETAILS]:
-          investmentOpportunitiesDetailsTasks.getOpportunityDetails,
-        [TASK_GET_OPPORTUNITIES_LIST]:
-          investmentOpportunitiesListTasks.getOpportunities,
-        [TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA]:
-          investmentOpportunitiesDetailsTasks.getRequirementsMetadata,
-        [TASK_CREATE_INVESTMENT_OPPORTUNITY]:
-          investmentOpportunitiesDetailsTasks.createOpportunity,
-        [DNB__CHECK_PENDING_REQUEST]: businessDetails.checkIfPendingRequest,
-        [TASK_GET_PROFILES_LIST]:
-          investmentProfilesTasks.getLargeCapitalProfiles,
-        [TASK_GET_PROJECTS_LIST]: investmentProjectTasks.getProjects,
-        [TASK_CREATE_INVESTMENT_PROJECT]:
-          createInvestmentProjectTasks.createInvestmentProject,
-        [TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS]:
-          updateLargeCapitalInvestorDetails.updateInvestorDetails,
-        [TASK_GET_INVESTMENT_PROJECT_INITIAL_VALUES]:
-          createInvestmentProjectTasks.getInitialFormValues,
-        [TASK_SEARCH_COMPANY]: createInvestmentProjectTasks.searchCompany,
-        [TASK_GET_COMPANY_INVESTMENT_COUNT]:
-          createInvestmentProjectTasks.getCompanyInvestmentsCount,
-        [TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM]:
-          createInvestmentProjectTasks.openContactForm,
-        [TASK_GET_COMPANIES_LIST]: getCompanies,
-        [TASK_GET_COMPANIES_METADATA]: getCompaniesMetadata,
-        [TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME]: getAdviserNames,
-        [TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME]:
-          getAdviserNames,
-        [TASK_GET_INVESTMENTS_PROJECTS_METADATA]:
-          investmentProjectTasks.getMetadata,
-        [TASK_EDIT_PROJECT_TEAM_MEMBERS]:
-          editInvestmentProjectTeamTasks.updateTeamMembers,
-        [TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER]:
-          editInvestmentProjectTeamTasks.saveClientRelationshipManager,
-        [TASK_SAVE_INVESTMENT_PROJECT_MANAGERS]:
-          editInvestmentProjectTeamTasks.saveProjectManagementStaff,
-        [TASK_CHECK_FOR_INVESTMENTS]: personalisedDashboard.checkForInvestments,
-        [TASK_DATA_HUB_FEED]: personalisedDashboard.checkDataHubFeed,
-        [TASK_GET_MY_INVESTMENTS_LIST]:
-          myInvestmentProjects.fetchMyInvestmentsList,
-        [TASK_GET_OUTSTANDING_PROPOSITIONS]: fetchOutstandingPropositions,
-        [TASK_GET_REMINDER_SUMMARY]: fetchReminderSummary,
-        'Large investment profiles filters':
-          investmentProfilesTasks.loadFilterOptions,
-        [TASK_GET_CONTACTS_LIST]: getContacts,
-        [TASK_GET_CONTACTS_METADATA]: getContactsMetadata,
-        [TASK_GET_INTERACTIONS_LIST]: getInteractions,
-        [TASK_GET_INTERACTIONS_ADVISER_NAME]: getAdviserNames,
-        [TASK_GET_INTERACTIONS_METADATA]: getInteractionsMetadata,
-        [TASK_GET_EVENTS_LIST]: getEvents,
-        [TASK_GET_EVENTS_METADATA]: getEventsMetadata,
-        [TASK_GET_ALL_ACTIVITY_FEED_EVENTS]: getAllActivityFeedEvents,
-        [TASK_GET_EVENTS_ORGANISER_NAME]: getAdviserNames,
-        [TASK_GET_EVENT_DETAILS]: getEventDetails,
-        [TASK_GET_EVENT_AVENTRI_DETAILS]: getEventAventriDetails,
-        [TASK_GET_EVENT_AVENTRI_ATTENDEES]: getEventAventriAttendees,
-        [TASK_GET_EVENTS_FORM_AND_METADATA]: getEventFormAndMetadata,
-        [TASK_SAVE_EVENT]: saveEvent,
-        [TASK_GET_ORDERS_METADATA]: getOrdersMetadata,
-        [TASK_GET_ORDERS_LIST]: getOrders,
-        [TASK_GET_INTERACTIONS_TEAM_NAME]: getTeamNames,
-        [TASK_ARCHIVE_COMPANY]: businessDetails.archiveSubmitCallback,
-        'Exports Edit': exportsEdit.saveWinCategory,
-        [TASK_GET_TYPEAHEAD_OPTIONS]: getTypeaheadOptions,
-        [TASK_SAVE_ORDER_ASSIGNEES]: editOMISTasks.saveOrderAssignees,
-        [TASK_SAVE_ORDER_SUBSCRIBERS]: editOMISTasks.saveOrderSubscribers,
-        [TASK_GET_ALL_REMINDER_SUBSCRIPTIONS]: reminders.getAllSubscriptions,
-        [TASK_GET_ELD_REMINDER_SUBSCRIPTIONS]: reminders.getEldSubscriptions,
-        [TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS]: reminders.saveEldSubscriptions,
-        [TASK_GET_NRI_REMINDER_SUBSCRIPTIONS]: reminders.getNriSubscriptions,
-        [TASK_SAVE_NRI_REMINDER_SUBSCRIPTIONS]: reminders.saveNriSubscriptions,
-        [TASK_GET_ESTIMATED_LAND_DATE_REMINDERS]:
-          reminders.getEstimatedLandDateReminders,
-        [TASK_GET_NO_RECENT_INTERACTION_REMINDERS]:
-          reminders.getNoRecentInteractionReminders,
-        [TASK_DELETE_ESTIMATED_LAND_DATE_REMINDER]:
-          reminders.deleteEstimatedLandDateReminder,
-        [TASK_DELETE_NO_RECENT_INTERACTION_REMINDER]:
-          reminders.deleteNoRecentInteractionReminder,
-        [TASK_GET_NEXT_ESTIMATED_LAND_DATE_REMINDER]:
-          reminders.getNextEstimatedLandDateReminder,
-        [TASK_GET_NEXT_NO_RECENT_INTERACTION_REMINDER]:
-          reminders.getNextNoRecentInteractionReminder,
-        [TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS]:
-          reminders.getOutstandingPropositions,
-        [TASK_GET_CONTACT_ACTIVITIES]: getContactActivities,
-        [TASK_ARCHIVE_CONTACT]: archiveContact,
-        [TASK_GET_USER_FEATURE_FLAGS]: getUserFeatureFlags,
-        ...resourceTasks,
-      }}
-    >
-      <Mount selector="#add-company-form">
-        {(props) => (
-          <AddCompanyForm csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#interaction-details-form">
-        {(props) => (
-          <InteractionDetailsForm
-            csrfToken={globalProps.csrfToken}
-            {...props}
-          />
-        )}
-      </Mount>
-      <Mount selector="#edit-company-form">
-        {(props) => (
-          <EditCompanyForm csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#company-edit-history">
-        {(props) => (
-          <CompanyEditHistory csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#investment-edit-history">
-        {(props) => (
-          <InvestmentEditHistory csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#match-confirmation">
-        {(props) => (
-          <MatchConfirmation csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#cannot-find-match">
-        {(props) => (
-          <CannotFindMatch csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#find-company">
-        {(props) => (
-          <FindCompany csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#activity-feed-app">
-        {(props) => <CompanyActivityFeed {...props} />}
-      </Mount>
-      <Mount selector="#company-lists">
-        <Dashboard id="homepage" />
-      </Mount>
-      <Mount selector="#dashboard">
-        {(props) => (
-          <PersonalisedDashboard
-            csrfToken={globalProps.csrfToken}
-            id="dashboard"
-            {...props}
-          />
-        )}
-      </Mount>
-      <Mount selector="#delete-company-list">
-        {(props) => (
-          <DeleteCompanyList csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#edit-company-list">
-        {(props) => (
-          <EditCompanyList csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#create-company-list-form">
-        {(props) => (
-          <CreateListForm csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#add-remove-list-form">
-        {(props) => <AddRemoveFromListForm {...props} />}
-      </Mount>
-      <Mount selector="#lead-advisers">
-        {(props) => <LeadAdvisers {...props} />}
-      </Mount>
-      <Mount selector="#dnb-hierarchy">
-        {(props) => <DnbHierarchy {...props} />}
-      </Mount>
-      <Mount selector="#company-business-details">
-        {(props) => <CompanyBusinessDetails {...props} />}
-      </Mount>
-      <Mount selector="#company-edit-one-list">
-        {(props) => (
-          <EditOneListForm {...props} csrfToken={globalProps.csrfToken} />
-        )}
-      </Mount>
-      <Mount selector="#large-capital-profile-collection">
-        {(props) => <LargeCapitalProfileCollection {...props} />}
-      </Mount>
-      <Mount selector="#edit-large-capital-investor-details">
-        {(props) => <EditLargeCapitalInvestorDetails {...props} />}
-      </Mount>
-      <Mount selector="#unfiltered-large-capital-opportunity-collection">
-        {(props) => <UnfilteredLargeCapitalOpportunityCollection {...props} />}
-      </Mount>
-      <Mount selector="#opportunity">
-        {(props) => <Opportunity {...props} />}
-      </Mount>
-      <Mount selector="#opportunity-status">
-        {(props) => <OpportunityChangeStatusForm {...props} />}
-      </Mount>
-      <Mount selector="#create-uk-investment-opportunity">
-        {() => (
-          <CreateUKInvestmentOpportunity id="create-uk-investment-opportunity" />
-        )}
-      </Mount>
-      <Mount selector="#manage-adviser">
-        {(props) => (
-          <ManageAdviser {...props} csrfToken={globalProps.csrfToken} />
-        )}
-      </Mount>
-      <Mount selector="#company-export-index-page">
-        {(props) => <ExportsIndex {...props} />}
-      </Mount>
-      <Mount selector="#send-referral-form">
-        {(props) => (
-          <SendReferralForm {...props} csrfToken={globalProps.csrfToken} />
-        )}
-      </Mount>
-      <Mount selector="#company-export-full-history">
-        {(props) => <ExportsHistory {...props} />}
-      </Mount>
-      <Mount selector="#referral-details">
-        {(props) => <ReferralDetails {...props} />}
-      </Mount>
-      <Mount selector="#referral-help">
-        {(props) => <ReferralHelp {...props} />}
-      </Mount>
-      <Mount selector="#company-export-exports-edit">
-        {(props) => <ExportsEdit {...props} />}
-      </Mount>
-      <Mount selector="#interaction-referral-details">
-        {(props) => <InteractionReferralDetails {...props} />}
-      </Mount>
-      <Mount selector="#company-export-countries-edit">
-        {(props) => <ExportCountriesEdit {...props} />}
-      </Mount>
-      <Mount selector="#pipeline-form">
-        {(props) => <PipelineForm {...props} />}
-      </Mount>
-      <Mount selector="#company-local-header">
-        {(props) => <CompanyLocalHeader {...props} />}
-      </Mount>
-      <Mount selector="#investment-project-admin">
-        {(props) => <InvestmentProjectAdmin {...props} />}
-      </Mount>
-      <Mount selector="#flash-messages">
-        {(props) => <FlashMessages {...props} />}
-      </Mount>
-      <Mount selector="#archive-pipeline-item-form">
-        {(props) => <ArchivePipelineItemForm {...props} />}
-      </Mount>
-      <Mount selector="#unarchive-pipeline-item-form">
-        {(props) => <UnarchivePipelineItemForm {...props} />}
-      </Mount>
-      <Mount selector="#delete-pipeline-item-form">
-        {(props) => <DeletePipelineItemForm {...props} />}
-      </Mount>
-      <Mount selector="#footer">{() => <Footer />}</Mount>
-      <Mount selector="#investment-projects-collection">
-        {(props) => <InvestmentProjectsCollection {...props} />}
-      </Mount>
-      <Mount selector="#investment-project-form">
-        {(props) => (
-          <InvestmentProjectForm csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
-      <Mount selector="#contact-form">
-        {(props) => <ContactForm {...props} id="contact-form" />}
-      </Mount>
-      <Mount selector="#company-projects-collection">
-        {(props) => <CompanyProjectsCollection {...props} />}
-      </Mount>
-      <Mount selector="#company-contacts-collection">
-        {(props) => <CompaniesContactsCollection {...props} />}
-      </Mount>
-      <Mount selector="#dashboard-local-header">
-        {(props) => (
-          <SearchLocalHeader
-            csrfToken={globalProps.csrfToken}
-            flashMessage={props.flashMessage}
-          />
-        )}
-      </Mount>
-      <Mount selector="#company-orders-collection">
-        {(props) => <CompanyOrdersCollection {...props} />}
-      </Mount>
-      <Mount selector="#edit-assignees">
-        {(props) => <EditAssignees {...props} />}
-      </Mount>
-      <Mount selector="#edit-subscribers">
-        {(props) => <EditSubscribers {...props} />}
-      </Mount>
-      <Mount selector="#edit-team-members">
-        {(props) => <EditTeamMembers {...props} />}
-      </Mount>
-      <Mount selector="#edit-client-relationship-management">
-        {(props) => <EditClientRelationshipManagement {...props} />}
-      </Mount>
-      <Mount selector="#edit-project-management">
-        {(props) => <EditProjectManagement {...props} />}
-      </Mount>
-      <Mount selector="#contact-activity">
-        {(props) => <ContactActivity {...props} />}
-      </Mount>
-      <Mount selector="#contact-local-header">
-        {(props) => <ContactLocalHeader {...props} />}
-      </Mount>
-      <Mount selector="#contact-details">
-        {(props) => <ContactDetails {...props} />}
-      </Mount>
-      <Mount selector="#contact-documents">
-        {(props) => <ContactDocuments {...props} />}
-      </Mount>
-      <Mount selector="#investment-documents">
-        {(props) => <InvestmentDocuments {...props} />}
-      </Mount>
+    <ErrorBoundary>
+      <Provider
+        tasks={{
+          'Create list': createList,
+          'Edit company': editCompany,
+          'Create company': createCompany,
+          'Edit company list': companyListTasks.editCompanyList,
+          'Match confirmation': matchCompanyTasks.onMatchSubmit,
+          'Cannot find match': matchCompanyTasks.cannotFindMatchSubmit,
+          'Submit merge request': matchCompanyTasks.submitMergeRequest,
+          'Company lists': companyListsTasks.fetchCompanyLists,
+          'Company list': companyListsTasks.fetchCompanyList,
+          'Add or remove from list': companyListsTasks.addOrRemoveFromList,
+          'Exports history': exportsHistoryTasks.fetchExportsHistory,
+          'Referral details': referralTasks.fetchReferralDetails,
+          Referrals: referralListTask,
+          'Export wins': exportWinsTasks.fetchExportWins,
+          'Update Lead ITA': manageAdviser.updateAdviser,
+          'Get send referral initial values':
+            referralsSendTasks.getInitialFormValues,
+          'Save contact': saveContact,
+          [TASK_OPEN_REFERRALS_CONTACT_FORM]:
+            referralsSendTasks.openContactForm,
+          [TASK_SAVE_REFERRAL]: referralsSendTasks.saveReferral,
+          [TASK_SAVE_ONE_LIST_DETAILS]: editOneListTasks.saveOneListDetails,
+          [EXPORT_COUNTRIES_EDIT_NAME]:
+            exportCountriesEditTasks.saveExportCountries,
+          [TASK_GET_PIPELINE_BY_COMPANY]: pipelineTasks.getPipelineByCompany,
+          [TASK_ADD_COMPANY_TO_PIPELINE]: pipelineTasks.addCompanyToPipeline,
+          [TASK_GET_PIPELINE_LIST]: pipelineListTasks.getPipelineList,
+          [TASK_GET_PIPELINE_ITEM]: pipelineTasks.getPipelineItem,
+          [TASK_EDIT_PIPELINE_ITEM]: pipelineTasks.editPipelineItem,
+          [TASK_ARCHIVE_PIPELINE_ITEM]: pipelineTasks.archivePipelineItem,
+          [TASK_UNARCHIVE_PIPELINE_ITEM]: pipelineTasks.unarchivePipelineItem,
+          [TASK_DELETE_PIPELINE_ITEM]: pipelineTasks.deletePipelineItem,
+          [TASK_GET_PIPELINE_COMPANY_CONTACTS]:
+            pipelineTasks.getCompanyContacts,
+          [TASK_POSTCODE_TO_REGION]: addCompanyPostcodeToRegionTask,
+          [TASK_GET_ACTIVE_EVENTS]: addInteractionFormTasks.fetchActiveEvents,
+          [TASK_SAVE_INTERACTION]: addInteractionFormTasks.saveInteraction,
+          [TASK_GET_INTERACTION_INITIAL_VALUES]:
+            addInteractionFormTasks.getInitialFormValues,
+          [TASK_OPEN_CONTACT_FORM]: addInteractionFormTasks.openContactForm,
+          [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
+          [TASK_SAVE_OPPORTUNITY_DETAILS]:
+            investmentOpportunitiesDetailsTasks.saveOpportunityDetails,
+          [TASK_SAVE_OPPORTUNITY_STATUS]:
+            investmentOpportunitiesDetailsTasks.saveOpportunityStatus,
+          [TASK_SAVE_OPPORTUNITY_REQUIREMENTS]:
+            investmentOpportunitiesDetailsTasks.saveOpportunityRequirements,
+          [TASK_GET_OPPORTUNITY_DETAILS]:
+            investmentOpportunitiesDetailsTasks.getOpportunityDetails,
+          [TASK_GET_OPPORTUNITIES_LIST]:
+            investmentOpportunitiesListTasks.getOpportunities,
+          [TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA]:
+            investmentOpportunitiesDetailsTasks.getRequirementsMetadata,
+          [TASK_CREATE_INVESTMENT_OPPORTUNITY]:
+            investmentOpportunitiesDetailsTasks.createOpportunity,
+          [DNB__CHECK_PENDING_REQUEST]: businessDetails.checkIfPendingRequest,
+          [TASK_GET_PROFILES_LIST]:
+            investmentProfilesTasks.getLargeCapitalProfiles,
+          [TASK_GET_PROJECTS_LIST]: investmentProjectTasks.getProjects,
+          [TASK_CREATE_INVESTMENT_PROJECT]:
+            createInvestmentProjectTasks.createInvestmentProject,
+          [TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS]:
+            updateLargeCapitalInvestorDetails.updateInvestorDetails,
+          [TASK_GET_INVESTMENT_PROJECT_INITIAL_VALUES]:
+            createInvestmentProjectTasks.getInitialFormValues,
+          [TASK_SEARCH_COMPANY]: createInvestmentProjectTasks.searchCompany,
+          [TASK_GET_COMPANY_INVESTMENT_COUNT]:
+            createInvestmentProjectTasks.getCompanyInvestmentsCount,
+          [TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM]:
+            createInvestmentProjectTasks.openContactForm,
+          [TASK_GET_COMPANIES_LIST]: getCompanies,
+          [TASK_GET_COMPANIES_METADATA]: getCompaniesMetadata,
+          [TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME]: getAdviserNames,
+          [TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME]:
+            getAdviserNames,
+          [TASK_GET_INVESTMENTS_PROJECTS_METADATA]:
+            investmentProjectTasks.getMetadata,
+          [TASK_EDIT_PROJECT_TEAM_MEMBERS]:
+            editInvestmentProjectTeamTasks.updateTeamMembers,
+          [TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER]:
+            editInvestmentProjectTeamTasks.saveClientRelationshipManager,
+          [TASK_SAVE_INVESTMENT_PROJECT_MANAGERS]:
+            editInvestmentProjectTeamTasks.saveProjectManagementStaff,
+          [TASK_CHECK_FOR_INVESTMENTS]:
+            personalisedDashboard.checkForInvestments,
+          [TASK_DATA_HUB_FEED]: personalisedDashboard.checkDataHubFeed,
+          [TASK_GET_MY_INVESTMENTS_LIST]:
+            myInvestmentProjects.fetchMyInvestmentsList,
+          [TASK_GET_OUTSTANDING_PROPOSITIONS]: fetchOutstandingPropositions,
+          [TASK_GET_REMINDER_SUMMARY]: fetchReminderSummary,
+          'Large investment profiles filters':
+            investmentProfilesTasks.loadFilterOptions,
+          [TASK_GET_CONTACTS_LIST]: getContacts,
+          [TASK_GET_CONTACTS_METADATA]: getContactsMetadata,
+          [TASK_GET_INTERACTIONS_LIST]: getInteractions,
+          [TASK_GET_INTERACTIONS_ADVISER_NAME]: getAdviserNames,
+          [TASK_GET_INTERACTIONS_METADATA]: getInteractionsMetadata,
+          [TASK_GET_EVENTS_LIST]: getEvents,
+          [TASK_GET_EVENTS_METADATA]: getEventsMetadata,
+          [TASK_GET_ALL_ACTIVITY_FEED_EVENTS]: getAllActivityFeedEvents,
+          [TASK_GET_EVENTS_ORGANISER_NAME]: getAdviserNames,
+          [TASK_GET_EVENT_DETAILS]: getEventDetails,
+          [TASK_GET_EVENT_AVENTRI_DETAILS]: getEventAventriDetails,
+          [TASK_GET_EVENT_AVENTRI_ATTENDEES]: getEventAventriAttendees,
+          [TASK_GET_EVENTS_FORM_AND_METADATA]: getEventFormAndMetadata,
+          [TASK_SAVE_EVENT]: saveEvent,
+          [TASK_GET_ORDERS_METADATA]: getOrdersMetadata,
+          [TASK_GET_ORDERS_LIST]: getOrders,
+          [TASK_GET_INTERACTIONS_TEAM_NAME]: getTeamNames,
+          [TASK_ARCHIVE_COMPANY]: businessDetails.archiveSubmitCallback,
+          'Exports Edit': exportsEdit.saveWinCategory,
+          [TASK_GET_TYPEAHEAD_OPTIONS]: getTypeaheadOptions,
+          [TASK_SAVE_ORDER_ASSIGNEES]: editOMISTasks.saveOrderAssignees,
+          [TASK_SAVE_ORDER_SUBSCRIBERS]: editOMISTasks.saveOrderSubscribers,
+          [TASK_GET_ALL_REMINDER_SUBSCRIPTIONS]: reminders.getAllSubscriptions,
+          [TASK_GET_ELD_REMINDER_SUBSCRIPTIONS]: reminders.getEldSubscriptions,
+          [TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS]:
+            reminders.saveEldSubscriptions,
+          [TASK_GET_NRI_REMINDER_SUBSCRIPTIONS]: reminders.getNriSubscriptions,
+          [TASK_SAVE_NRI_REMINDER_SUBSCRIPTIONS]:
+            reminders.saveNriSubscriptions,
+          [TASK_GET_ESTIMATED_LAND_DATE_REMINDERS]:
+            reminders.getEstimatedLandDateReminders,
+          [TASK_GET_NO_RECENT_INTERACTION_REMINDERS]:
+            reminders.getNoRecentInteractionReminders,
+          [TASK_DELETE_ESTIMATED_LAND_DATE_REMINDER]:
+            reminders.deleteEstimatedLandDateReminder,
+          [TASK_DELETE_NO_RECENT_INTERACTION_REMINDER]:
+            reminders.deleteNoRecentInteractionReminder,
+          [TASK_GET_NEXT_ESTIMATED_LAND_DATE_REMINDER]:
+            reminders.getNextEstimatedLandDateReminder,
+          [TASK_GET_NEXT_NO_RECENT_INTERACTION_REMINDER]:
+            reminders.getNextNoRecentInteractionReminder,
+          [TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS]:
+            reminders.getOutstandingPropositions,
+          [TASK_GET_CONTACT_ACTIVITIES]: getContactActivities,
+          [TASK_ARCHIVE_CONTACT]: archiveContact,
+          [TASK_GET_USER_FEATURE_FLAGS]: getUserFeatureFlags,
+          ...resourceTasks,
+        }}
+      >
+        <Mount selector="#add-company-form">
+          {(props) => (
+            <AddCompanyForm csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#interaction-details-form">
+          {(props) => (
+            <InteractionDetailsForm
+              csrfToken={globalProps.csrfToken}
+              {...props}
+            />
+          )}
+        </Mount>
+        <Mount selector="#edit-company-form">
+          {(props) => (
+            <EditCompanyForm csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#company-edit-history">
+          {(props) => (
+            <CompanyEditHistory csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#investment-edit-history">
+          {(props) => (
+            <InvestmentEditHistory
+              csrfToken={globalProps.csrfToken}
+              {...props}
+            />
+          )}
+        </Mount>
+        <Mount selector="#match-confirmation">
+          {(props) => (
+            <MatchConfirmation csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#cannot-find-match">
+          {(props) => (
+            <CannotFindMatch csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#find-company">
+          {(props) => (
+            <FindCompany csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#activity-feed-app">
+          {(props) => <CompanyActivityFeed {...props} />}
+        </Mount>
+        <Mount selector="#company-lists">
+          <Dashboard id="homepage" />
+        </Mount>
+        <Mount selector="#dashboard">
+          {(props) => (
+            <PersonalisedDashboard
+              csrfToken={globalProps.csrfToken}
+              id="dashboard"
+              {...props}
+            />
+          )}
+        </Mount>
+        <Mount selector="#delete-company-list">
+          {(props) => (
+            <DeleteCompanyList csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#edit-company-list">
+          {(props) => (
+            <EditCompanyList csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#create-company-list-form">
+          {(props) => (
+            <CreateListForm csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#add-remove-list-form">
+          {(props) => <AddRemoveFromListForm {...props} />}
+        </Mount>
+        <Mount selector="#lead-advisers">
+          {(props) => <LeadAdvisers {...props} />}
+        </Mount>
+        <Mount selector="#dnb-hierarchy">
+          {(props) => <DnbHierarchy {...props} />}
+        </Mount>
+        <Mount selector="#company-business-details">
+          {(props) => <CompanyBusinessDetails {...props} />}
+        </Mount>
+        <Mount selector="#company-edit-one-list">
+          {(props) => (
+            <EditOneListForm {...props} csrfToken={globalProps.csrfToken} />
+          )}
+        </Mount>
+        <Mount selector="#large-capital-profile-collection">
+          {(props) => <LargeCapitalProfileCollection {...props} />}
+        </Mount>
+        <Mount selector="#edit-large-capital-investor-details">
+          {(props) => <EditLargeCapitalInvestorDetails {...props} />}
+        </Mount>
+        <Mount selector="#unfiltered-large-capital-opportunity-collection">
+          {(props) => (
+            <UnfilteredLargeCapitalOpportunityCollection {...props} />
+          )}
+        </Mount>
+        <Mount selector="#opportunity">
+          {(props) => <Opportunity {...props} />}
+        </Mount>
+        <Mount selector="#opportunity-status">
+          {(props) => <OpportunityChangeStatusForm {...props} />}
+        </Mount>
+        <Mount selector="#create-uk-investment-opportunity">
+          {() => (
+            <CreateUKInvestmentOpportunity id="create-uk-investment-opportunity" />
+          )}
+        </Mount>
+        <Mount selector="#manage-adviser">
+          {(props) => (
+            <ManageAdviser {...props} csrfToken={globalProps.csrfToken} />
+          )}
+        </Mount>
+        <Mount selector="#company-export-index-page">
+          {(props) => <ExportsIndex {...props} />}
+        </Mount>
+        <Mount selector="#send-referral-form">
+          {(props) => (
+            <SendReferralForm {...props} csrfToken={globalProps.csrfToken} />
+          )}
+        </Mount>
+        <Mount selector="#company-export-full-history">
+          {(props) => <ExportsHistory {...props} />}
+        </Mount>
+        <Mount selector="#referral-details">
+          {(props) => <ReferralDetails {...props} />}
+        </Mount>
+        <Mount selector="#referral-help">
+          {(props) => <ReferralHelp {...props} />}
+        </Mount>
+        <Mount selector="#company-export-exports-edit">
+          {(props) => <ExportsEdit {...props} />}
+        </Mount>
+        <Mount selector="#interaction-referral-details">
+          {(props) => <InteractionReferralDetails {...props} />}
+        </Mount>
+        <Mount selector="#company-export-countries-edit">
+          {(props) => <ExportCountriesEdit {...props} />}
+        </Mount>
+        <Mount selector="#pipeline-form">
+          {(props) => <PipelineForm {...props} />}
+        </Mount>
+        <Mount selector="#company-local-header">
+          {(props) => <CompanyLocalHeader {...props} />}
+        </Mount>
+        <Mount selector="#investment-project-admin">
+          {(props) => <InvestmentProjectAdmin {...props} />}
+        </Mount>
+        <Mount selector="#flash-messages">
+          {(props) => <FlashMessages {...props} />}
+        </Mount>
+        <Mount selector="#archive-pipeline-item-form">
+          {(props) => <ArchivePipelineItemForm {...props} />}
+        </Mount>
+        <Mount selector="#unarchive-pipeline-item-form">
+          {(props) => <UnarchivePipelineItemForm {...props} />}
+        </Mount>
+        <Mount selector="#delete-pipeline-item-form">
+          {(props) => <DeletePipelineItemForm {...props} />}
+        </Mount>
+        <Mount selector="#footer">{() => <Footer />}</Mount>
+        <Mount selector="#investment-projects-collection">
+          {(props) => <InvestmentProjectsCollection {...props} />}
+        </Mount>
+        <Mount selector="#investment-project-form">
+          {(props) => (
+            <InvestmentProjectForm
+              csrfToken={globalProps.csrfToken}
+              {...props}
+            />
+          )}
+        </Mount>
+        <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
+        <Mount selector="#contact-form">
+          {(props) => <ContactForm {...props} id="contact-form" />}
+        </Mount>
+        <Mount selector="#company-projects-collection">
+          {(props) => <CompanyProjectsCollection {...props} />}
+        </Mount>
+        <Mount selector="#company-contacts-collection">
+          {(props) => <CompaniesContactsCollection {...props} />}
+        </Mount>
+        <Mount selector="#dashboard-local-header">
+          {(props) => (
+            <SearchLocalHeader
+              csrfToken={globalProps.csrfToken}
+              flashMessage={props.flashMessage}
+            />
+          )}
+        </Mount>
+        <Mount selector="#company-orders-collection">
+          {(props) => <CompanyOrdersCollection {...props} />}
+        </Mount>
+        <Mount selector="#edit-assignees">
+          {(props) => <EditAssignees {...props} />}
+        </Mount>
+        <Mount selector="#edit-subscribers">
+          {(props) => <EditSubscribers {...props} />}
+        </Mount>
+        <Mount selector="#edit-team-members">
+          {(props) => <EditTeamMembers {...props} />}
+        </Mount>
+        <Mount selector="#edit-client-relationship-management">
+          {(props) => <EditClientRelationshipManagement {...props} />}
+        </Mount>
+        <Mount selector="#edit-project-management">
+          {(props) => <EditProjectManagement {...props} />}
+        </Mount>
+        <Mount selector="#contact-activity">
+          {(props) => <ContactActivity {...props} />}
+        </Mount>
+        <Mount selector="#contact-local-header">
+          {(props) => <ContactLocalHeader {...props} />}
+        </Mount>
+        <Mount selector="#contact-details">
+          {(props) => <ContactDetails {...props} />}
+        </Mount>
+        <Mount selector="#contact-documents">
+          {(props) => <ContactDocuments {...props} />}
+        </Mount>
+        <Mount selector="#investment-documents">
+          {(props) => <InvestmentDocuments {...props} />}
+        </Mount>
 
-      <Mount selector="#react-app">
-        {() => (
-          <Switch>
-            {Object.keys(routes).map((module) =>
-              routes[module].map((route) =>
-                route.redirect ? (
-                  <Redirect
-                    exact={true}
-                    from={route.path}
-                    to={route.redirect}
-                  />
-                ) : (
-                  <ProtectedRoute exact={true} {...route} />
+        <Mount selector="#react-app">
+          {() => (
+            <Switch>
+              {Object.keys(routes).map((module) =>
+                routes[module].map((route) =>
+                  route.redirect ? (
+                    <Redirect
+                      exact={true}
+                      from={route.path}
+                      to={route.redirect}
+                    />
+                  ) : (
+                    <ProtectedRoute exact={true} {...route} />
+                  )
                 )
-              )
-            )}
-          </Switch>
-        )}
-      </Mount>
-    </Provider>
+              )}
+            </Switch>
+          )}
+        </Mount>
+      </Provider>
+    </ErrorBoundary>
   )
 }
 

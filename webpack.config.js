@@ -2,6 +2,7 @@ const path = require('path')
 const { spawn } = require('child_process')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
+const webpack = require('webpack')
 
 const config = require('./src/config')
 
@@ -52,6 +53,12 @@ module.exports = (env) => ({
   },
   optimization: { sideEffects: false },
   plugins: [
+    new webpack.ProvidePlugin({
+      process: 'process/browser.js',
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+    }),
     new MiniCssExtractPlugin({
       filename: config.isProd
         ? 'css/[name].[contenthash:8].css'
