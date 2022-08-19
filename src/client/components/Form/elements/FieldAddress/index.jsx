@@ -45,7 +45,7 @@ const StyledButtonWrapper = styled('div')`
   margin-left: 10px;
 `
 
-const SyledRowDiv = styled('div')`
+const StyledRowDiv = styled('div')`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -220,32 +220,6 @@ const FieldAddress = ({
     if (isUK) return 'Enter a postcode'
   }
 
-  let renderPostcode
-
-  const renderUKPostcode = (
-    <StyledFieldPostcode
-      type="search"
-      name="postcode"
-      label={postcodeLabel()}
-      required={postcodeErrorMessage()}
-      maxLength={10}
-      validate={postcodeValidator}
-    />
-  )
-
-  if (country_form_value !== UNITED_KINGDOM_ID) {
-    renderPostcode = (
-      <StyledFieldPostcode
-        type="text"
-        name="postcode"
-        label={postcodeLabel()}
-        required={postcodeErrorMessage()}
-        maxLength={null}
-        validate={postcodeValidator}
-      />
-    )
-  }
-
   return (
     <FieldWrapper {...{ label, legend, hint, name }} showBorder={true}>
       {isCountrySelectable ? (
@@ -267,8 +241,15 @@ const FieldAddress = ({
         <>
           {isUK && (
             <>
-              <SyledRowDiv>
-                {renderUKPostcode}
+              <StyledRowDiv>
+                <StyledFieldPostcode
+                  type="search"
+                  name="postcode"
+                  label={postcodeLabel()}
+                  required={postcodeErrorMessage()}
+                  maxLength={10}
+                  validate={postcodeValidator}
+                />
                 <StyledButtonWrapper>
                   <Button
                     onClick={onSearchClick}
@@ -280,7 +261,7 @@ const FieldAddress = ({
                     Find UK address
                   </Button>
                 </StyledButtonWrapper>
-              </SyledRowDiv>
+              </StyledRowDiv>
               {error && (
                 <StatusMessage>
                   Error occurred while searching for an address. Enter the
@@ -330,7 +311,16 @@ const FieldAddress = ({
               </StatusMessage>
             )}
           </>
-          {!isUK && renderPostcode}
+          {!isUK && country_form_value !== UNITED_KINGDOM_ID && (
+            <StyledFieldPostcode
+              type="text"
+              name="postcode"
+              label={postcodeLabel()}
+              required={postcodeErrorMessage()}
+              maxLength={null}
+              validate={postcodeValidator}
+            />
+          )}
         </>
       )}
     </FieldWrapper>
