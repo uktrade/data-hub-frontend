@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import * as sentry from '@sentry/browser'
 import { TEXT_COLOUR, ERROR_COLOUR } from 'govuk-colours'
 import { H2 } from '@govuk-react/heading'
 import {
@@ -49,7 +50,6 @@ class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.hasError) {
-      debugger
       const { isProd } = config
       return (
         <StyledRoot data-test="error-message">
