@@ -22,6 +22,10 @@ import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
 import { COMPANY_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
+import ActivityCardSubject from './card/ActivityCardSubject'
+import ActivityCardMetadata from './card/ActivityCardMetadata'
+
+const { format } = require('../../../utils/date')
 
 export default class HmrcExporter extends React.PureComponent {
   static propTypes = {
@@ -48,6 +52,18 @@ export default class HmrcExporter extends React.PureComponent {
         id: value,
       }
     })
+
+    const exportItemCodesList = exportItemCodes.map((value) => (
+      <span key={value}>
+        {value}
+        <br />
+      </span>
+    ))
+
+    const metadata = [
+      { label: 'Date', value: format(startTime) },
+      { label: 'Export item code(s)', value: exportItemCodesList },
+    ]
 
     return (
       <CheckUserFeatureFlag userFeatureFlagName={COMPANY_ACTIVITY_FEATURE_FLAG}>
@@ -88,8 +104,14 @@ export default class HmrcExporter extends React.PureComponent {
             </Card>
           ) : (
             <ActivityCardWrapper dataTest="hmrc-exporter-activity">
-              <ActivityCardLabels kind="HMRC Update" />
-              <h3>HMRC Exporters</h3>
+              <ActivityCardLabels
+                isExternalActivity={true}
+                theme="HMRC"
+                service="Exporters Record"
+                kind="HMRC Update"
+              />
+              <ActivityCardSubject>{summary}</ActivityCardSubject>
+              <ActivityCardMetadata metadata={metadata} />
             </ActivityCardWrapper>
           )
         }
