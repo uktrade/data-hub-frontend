@@ -120,7 +120,6 @@
     "pluralize": "^8.0.0",
     "postcss-cli": "^10.0.0",
     "postcss-loader": "^7.0.1",
-    "process": "^0.11.10",
     "prop-types": "^15.8.1",
     "pure-uuid": "^1.6.2",
     "qs": "^6.11.0",

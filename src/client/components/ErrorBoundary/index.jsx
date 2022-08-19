@@ -8,9 +8,11 @@ import {
   MEDIA_QUERIES,
   RESPONSIVE_4,
 } from '@govuk-react/constants'
+import config from '../../config'
 
 const StyledRoot = styled.div({
-  width: '60%',
+  textAlign: 'center',
+  width: '98%',
   marginLeft: 'auto',
   marginRight: 'auto',
   marginTop: RESPONSIVE_4.mobile,
@@ -25,27 +27,48 @@ const StyledRoot = styled.div({
   },
 })
 
+const ImageText = styled.div({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+})
+
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { hasError: false }
+    this.state = { hasError: false, error: undefined }
   }
 
   static getDerivedStateFromError(error) {
     return { hasError: true, error }
   }
 
+  componentDidCatch(error) {
+    sentry.captureException(error)
+  }
+
   render() {
     if (this.state.hasError) {
-      const isDev = process.env.NODE_ENV === 'development'
+      debugger
+      const { isProd } = config
       return (
         <StyledRoot data-test="error-message">
-          <H2 size="MEDIUM">Oops Something went wrong.</H2>
+          <H2 size="MEDIUM">
+            <ImageText>
+              <span>
+                <img
+                  src="/images/error-100x100.png"
+                  alt="Unhandled Error occured"
+                />
+              </span>
+              <span>Oops, something went wrong.</span>
+            </ImageText>
+          </H2>
           <p>
             Error:{' '}
-            {isDev
-              ? this.state.error.message
-              : 'We are working on getting this fixed as soon as we can.'}
+            {isProd || !this.state?.error?.message
+              ? 'We’re working on it!'
+              : this.state?.error?.message}
           </p>
         </StyledRoot>
       )
@@ -53,6 +76,21 @@ class ErrorBoundary extends React.Component {
 
     return this.props.children
   }
+}
+
+export const withErrorBoundary = (Component) => {
+  const Wrapped = (props) => (
+    <ErrorBoundary>
+      <Component {...props} />
+    </ErrorBoundary>
+  )
+
+  const name = Component.displayName || Component.name
+  Wrapped.displayName = name
+    ? `WithErrorBoundary(${name})`
+    : 'WithErrorBoundary'
+
+  return Wrapped
 }
 
 export default ErrorBoundary
