@@ -14,7 +14,7 @@ const formSelectors = selectors.pipelineForm
 const [firstItem, secondItem] = pipelineItemLambdaPlc.results
 
 describe('Pipeline edit form', () => {
-  context('When pipeline id is incorrect', () => {
+  xcontext('When pipeline id is incorrect', () => {
     before(() => {
       cy.visit(urls.pipeline.edit('INCORRECT_PIPELINE'))
     })
