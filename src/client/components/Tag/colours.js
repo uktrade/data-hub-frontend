@@ -14,6 +14,10 @@ export const TAG_COLOURS = {
     colour: '#005a30',
     background: '#cce2d8',
   },
+  darkGreen: {
+    colour: WHITE,
+    background: '#10403c',
+  },
   turquoise: {
     colour: '#10403c',
     background: '#bfe3e0',
