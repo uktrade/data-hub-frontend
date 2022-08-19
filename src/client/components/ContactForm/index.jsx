@@ -258,7 +258,7 @@ const _ContactForm = ({
                           label="Email address"
                           name="email"
                           type="email"
-                          required="Enter an email"
+                          required="Enter an email address"
                           validate={validators.email}
                         />
                         <FieldInput

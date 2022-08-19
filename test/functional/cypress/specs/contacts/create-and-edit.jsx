@@ -77,7 +77,7 @@ describe('Create contact form', () => {
       'First name': 'Enter a first name',
       'Last name': 'Enter a last name',
       'Job title': 'Enter a job title',
-      'Email address': 'Enter an email',
+      'Email address': 'Enter an email address',
       'Is this contact’s work address the same as the company address?':
         "Select yes if the contact's work address is the same as the company address",
       'Is this person a primary contact?':
@@ -97,7 +97,19 @@ describe('Create contact form', () => {
       'First name': 'Enter a first name',
       'Last name': 'Enter a last name',
       'Job title': 'Enter a job title',
-      'Email address': 'Enter an email',
+      'Email address': 'Enter an email address',
+      'Is this person a primary contact?':
+        "Select yes if this person is the company's primary contact",
+    })
+
+    cy.contains('Country').parent().find('select').select('Brazil')
+    cy.clickSubmitButton('Add contact')
+
+    assertErrors({
+      'First name': 'Enter a first name',
+      'Last name': 'Enter a last name',
+      'Job title': 'Enter a job title',
+      'Email address': 'Enter an email address',
       'Is this person a primary contact?':
         "Select yes if this person is the company's primary contact",
       'Address line 1': 'Enter an address',
