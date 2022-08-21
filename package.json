@@ -62,7 +62,7 @@
     "node": "16.16.0"
   },
   "dependencies": {
-    "@govuk-react/constants": "^0.10.0",
+    "@govuk-react/constants": "^0.10.3",
     "@nivo/core": "^0.79.0",
     "@nivo/pie": "^0.79.0",
     "@nivo/tooltip": "^0.79.0",
