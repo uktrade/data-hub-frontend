@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import * as sentry from '@sentry/browser'
+import * as sentry from '@sentry/react'
 import { TEXT_COLOUR, ERROR_COLOUR } from 'govuk-colours'
 import { H2 } from '@govuk-react/heading'
 import {

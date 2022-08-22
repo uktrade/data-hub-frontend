@@ -70,6 +70,7 @@
     "@reduxjs/toolkit": "^1.8.3",
     "@sentry/browser": "^7.11.0",
     "@sentry/node": "^7.11.0",
+    "@sentry/react": "^7.11.1",
     "autoprefixer": "^10.4.4",
     "axios": "^0.27.2",
     "basic-auth": "^2.0.1",

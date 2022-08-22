@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import * as Sentry from '@sentry/browser'
+import * as ReactSentry from '@sentry/react'
+
 import { Redirect, Switch } from 'react-router-dom'
 
 import './components'
@@ -309,6 +311,11 @@ if (globalProps.sentryDsn) {
   Sentry.init({
     dsn: globalProps.sentryDsn,
     environment: globalProps.sentryEnvironment,
+  })
+  ReactSentry.init({
+    dsn: globalProps.sentryDsn,
+    environment: globalProps.sentryEnvironment,
+    autoSessionTracking: false,
   })
 }
 
