@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import * as Sentry from '@sentry/browser'
 import * as ReactSentry from '@sentry/react'
+import { BrowserTracing } from '@sentry/tracing'
 
 import { Redirect, Switch } from 'react-router-dom'
 
@@ -311,11 +312,36 @@ if (globalProps.sentryDsn) {
   Sentry.init({
     dsn: globalProps.sentryDsn,
     environment: globalProps.sentryEnvironment,
+    autoSessionTracking: false,
+    integrations: [
+      new BrowserTracing({
+        tracingOrigins: [
+          'localhost',
+          'www.datahub.uktrade.io',
+          'www.datahub.dev.uktrade.io',
+          'www.datahub.staging.uktrade.io',
+          'www.datahub.uat.uktrade.io',
+        ],
+      }),
+    ],
+    tracesSampleRate: 1.0,
   })
   ReactSentry.init({
     dsn: globalProps.sentryDsn,
     environment: globalProps.sentryEnvironment,
     autoSessionTracking: false,
+    integrations: [
+      new BrowserTracing({
+        tracingOrigins: [
+          'localhost',
+          'www.datahub.uktrade.io',
+          'www.datahub.dev.uktrade.io',
+          'www.datahub.staging.uktrade.io',
+          'www.datahub.uat.uktrade.io',
+        ],
+      }),
+    ],
+    tracesSampleRate: 1.0,
   })
 }
 
