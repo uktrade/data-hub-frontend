@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import * as Sentry from '@sentry/browser'
 import * as ReactSentry from '@sentry/react'
 import { BrowserTracing } from '@sentry/tracing'
+import { ErrorBoundary } from 'react-error-boundary'
 
 import { Redirect, Switch } from 'react-router-dom'
 
@@ -289,7 +290,7 @@ import { archiveContact } from '../client/modules/Contacts/ContactDetails/tasks'
 import { TASK_GET_USER_FEATURE_FLAGS } from './components/CheckUserFeatureFlags/state'
 import { getUserFeatureFlags } from './components/CheckUserFeatureFlags/tasks'
 import { getEventAventriAttendees } from './modules/Events/EventAventriAttendees/tasks'
-import ErrorBoundary from './components/ErrorBoundary'
+import ErrorFallback from './components/ErrorFallback'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -347,7 +348,10 @@ if (globalProps.sentryDsn) {
 
 function App() {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary
+      FallbackComponent={ErrorFallback}
+      onError={(error) => ReactSentry.captureException(error)}
+    >
       <Provider
         tasks={{
           'Create list': createList,

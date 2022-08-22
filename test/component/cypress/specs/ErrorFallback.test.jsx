@@ -1,7 +1,8 @@
 import React from 'react'
 import { mount } from '@cypress/react'
-import { withErrorBoundary } from '../../../../src/client/components/ErrorBoundary'
+import { ErrorBoundary } from 'react-error-boundary'
 import config from '../../../../src/client/config'
+import ErrorFallback from '../../../../src/client/components/ErrorFallback'
 
 const sinon = require('sinon')
 
@@ -9,14 +10,21 @@ const SpannerInTheWorks = () => {
   throw Error('Spanner in the works!')
 }
 
-const COMPONENT = withErrorBoundary(SpannerInTheWorks)
+const COMPONENT = () => (
+  <ErrorBoundary FallbackComponent={ErrorFallback}>
+    <SpannerInTheWorks />
+  </ErrorBoundary>
+)
 
-describe('ErrorBoundary', () => {
+describe('ErrorFallback', () => {
   let sandbox = sinon.createSandbox()
 
   context('when an error occurs in production', () => {
     beforeEach(() => {
       sandbox.stub(config, 'isProd').value(true)
+      cy.on('uncaught:exception', () => {
+        return false
+      })
     })
 
     after(() => {
@@ -28,10 +36,6 @@ describe('ErrorBoundary', () => {
     })
 
     it('should show a general error message', () => {
-      cy.on('uncaught:exception', () => {
-        return false
-      })
-
       mount(<COMPONENT />)
 
       cy.get('[data-test="error-message"] h2').should(
@@ -43,11 +47,20 @@ describe('ErrorBoundary', () => {
         'Error: We’re working on it!'
       )
     })
+
+    it('should show a retry button', () => {
+      mount(<COMPONENT />)
+
+      cy.get('[data-test="error-message"] button').should('contain', 'Retry')
+    })
   })
 
   context('when an error occurs in development', () => {
     beforeEach(() => {
       sandbox.stub(config, 'isProd').value(false)
+      cy.on('uncaught:exception', () => {
+        return false
+      })
     })
 
     after(() => {
@@ -59,10 +72,6 @@ describe('ErrorBoundary', () => {
     })
 
     it('should show a specific error message', () => {
-      cy.on('uncaught:exception', () => {
-        return false
-      })
-
       mount(<COMPONENT />)
 
       cy.get('[data-test="error-message"] h2').should(
@@ -73,6 +82,12 @@ describe('ErrorBoundary', () => {
         'contain',
         'Error: Spanner in the works!'
       )
+    })
+
+    it('should show a retry button', () => {
+      mount(<COMPONENT />)
+
+      cy.get('[data-test="error-message"] button').should('contain', 'Retry')
     })
   })
 })
