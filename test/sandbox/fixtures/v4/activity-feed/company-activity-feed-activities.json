@@ -1,0 +1,256 @@
+{
+  "took": 958,
+  "timed_out": false,
+  "_shards": {
+    "total": 274,
+    "successful": 274,
+    "skipped": 151,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 5,
+      "relation": "eq"
+    },
+    "max_score": null,
+    "hits": [
+      {
+        "_index": "activities__feed_id_datascience-lab-external-sources-1",
+        "_type": "_doc",
+        "_id": "dit:DataScienceExport:397780733:Announce",
+        "_score": 1.9410965,
+        "_source": {
+          "dit:dataSource": {
+            "id": "hmrc.exporters",
+            "name": "HMRC (Exporters)"
+          },
+          "generator": {
+            "name": "dit:dataScienceLab",
+            "type": "Application"
+          },
+          "id": "dit:DataScienceExport:11111111:Announce",
+          "object": {
+            "attributedTo": [
+              {
+                "dit:companiesHouseNumber": null,
+                "id": "dit:DataScienceCompany:11111111",
+                "location": {
+                  "dit:address": "14 Kings Road london",
+                  "dit:postcode": "E11234"
+                },
+                "name": "Best Ever Company",
+                "type": ["Organization", "dit:Company"]
+              },
+              {
+                "id": "dit:DataHubCompany:c79ba298-106e-4629-aa12-61ec6e2e47ce"
+              }
+            ],
+            "dit:datetime": "2019-10-01T00:00:00",
+            "dit:exportItemCodes": ["222222"],
+            "id": "dit:externalSources:hmrc.exporters:11111111",
+            "startTime": "2019-10-01T00:00:00",
+            "type": ["Event", "dit:Export"]
+          },
+          "published": "2019-10-01T00:00:00",
+          "summary": "Export of goods outside the EU",
+          "type": "Announce"
+        }
+      },
+      {
+        "_index": "activities__feed_id_datascience-lab-external-sources-2",
+        "_type": "_doc",
+        "_id": "dit:DataScienceExport:377183321:Announce",
+        "_score": 0.48180965,
+        "_source": {
+          "dit:dataSource": {
+            "id": "companies_house.companies",
+            "name": "Companies House (Companies)"
+          },
+          "generator": {
+            "name": "dit:dataScienceLab",
+            "type": "Application"
+          },
+          "id": "dit:DataScienceExport:2222222:Announce",
+          "object": {
+            "attributedTo": [
+              {
+                "dit:companiesHouseNumber": "00012",
+                "id": "dit:DataScienceCompany:2222222",
+                "location": {
+                  "dit:address": "Testing business centere",
+                  "dit:postcode": "MG101GE"
+                },
+                "name": "Best Ever Company",
+                "type": ["Organization", "dit:Company"]
+              },
+              {
+                "id": "dit:DataHubCompany:c79ba298-106e-4629-aa12-61ec6e2e47ce"
+              }
+            ],
+            "dit:accountRefDay": 31,
+            "dit:accountRefMonth": 3,
+            "dit:companiesHouseId": "1812",
+            "dit:confStmtLastMadeUpDate": "2020-05-10T00:00:00+00:00",
+            "dit:confStmtNextDueDate": "2021-05-24T00:00:00+00:00",
+            "dit:incorporationDate": "1865-01-11T00:00:00+00:00",
+            "dit:lastMadeUpDate": "2020-03-31T00:00:00+00:00",
+            "dit:nextDueDate": "2021-12-31T00:00:00+00:00",
+            "dit:returnsLastMadeUpDate": "2016-05-10T00:00:00+00:00",
+            "dit:returnsNextDueDate": "2017-06-07T00:00:00+00:00",
+            "dit:sicCodes": ["14181 - Manufacture of other men's outerwear"],
+            "id": "dit:externalSources:companies_house.companies:2222222",
+            "startTime": "1865-01-11T00:00:00",
+            "type": ["Organization", "dit:Company"]
+          },
+          "published": "1865-01-11T00:00:00",
+          "summary": "Company officially incorporated in Companies House",
+          "type": "Announce"
+        }
+      },
+      {
+        "_index": "activities__feed_id_datascience-lab-external-sources-3",
+        "_type": "_doc",
+        "_id": "dit:DataScienceExport:397780729:Announce",
+        "_score": 1.9410965,
+        "_source": {
+          "dit:dataSource": {
+            "id": "companies_house.accounts",
+            "name": "Companies House (Accounts)"
+          },
+          "generator": {
+            "name": "dit:dataScienceLab",
+            "type": "Application"
+          },
+          "id": "dit:DataScienceExport:333333:Announce",
+          "object": {
+            "attributedTo": [
+              {
+                "dit:companiesHouseNumber": "33333",
+                "id": "dit:DataScienceCompany:333333",
+                "name": "Best Ever Company",
+                "type": ["Organization", "dit:Company"]
+              },
+              {
+                "id": "dit:DataHubCompany:c79ba298-106e-4629-aa12-61ec6e2e47ce"
+              }
+            ],
+            "dit:balanceSheetDate": "2011-06-30",
+            "dit:calledUpShareCapital": 100.0,
+            "dit:companiesHouseRegisteredNumber": "110053",
+            "dit:companyStatus": false,
+            "dit:currentAssets": 3065.0,
+            "dit:debtors": 773.0,
+            "dit:entityCurrentLegalName": "One list corp",
+            "dit:netAssetsLiabilitiesIncludingPensionAssetLiability": 160.0,
+            "dit:netCurrentAssetsLiabilities": 3065.0,
+            "dit:periodEnd": "2011-06-30",
+            "dit:periodStart": "2011-06-30",
+            "dit:profitLossAccountReserve": 8060.0,
+            "dit:shareholderFunds": 80160.0,
+            "dit:tangibleFixedAssets": 41995.0,
+            "dit:taxonomy": "http://www.test.org/uk/",
+            "dit:totalAssetsLessCurrentLiabilities": 38065.0,
+            "id": "dit:externalSources:companies_house.accounts:390700043233",
+            "startTime": "2011-06-30T00:00:00",
+            "type": ["Event", "dit:Accounts"]
+          },
+          "published": "2011-06-30T00:00:00",
+          "summary": "Company accounts made up",
+          "type": "Announce"
+        }
+      },
+      {
+        "_index": "activities__feed_id_datahub-omis-order-added",
+        "_type": "_doc",
+        "_id": "dit:DataHubOMISOrder:1111:Add",
+        "_score": 4.7990397e-5,
+        "_source": {
+          "actor": {
+            "dit:emailAddress": "angelica.schulyer@ham.com",
+            "id": "dit:DataHubAdviser:2222",
+            "name": "Angelica Schuyler",
+            "type": ["Person", "dit:Adviser"]
+          },
+          "generator": {
+            "name": "dit:dataHub",
+            "type": "Application"
+          },
+          "id": "dit:DataHubOMISOrder:1111:Add",
+          "object": {
+            "attributedTo": [
+              {
+                "dit:companiesHouseNumber": "123456",
+                "dit:dunsNumber": "123456789",
+                "id": "dit:DataHubCompany:c79ba298-106e-4629-aa12-61ec6e2e47ce",
+                "name": "Best Ever Company",
+                "type": ["Organization", "dit:Company"]
+              },
+              {
+                "dit:emailAddress": "eliza@gov.uk",
+                "dit:jobTitle": "Director",
+                "id": "dit:DataHubContact:3333",
+                "name": "Eliza Schuyler",
+                "type": ["Person", "dit:Contact"],
+                "url": "https://www.my-website.com"
+              }
+            ],
+            "dit:country": {
+              "name": "United States"
+            },
+            "dit:ukRegion": {
+              "name": "Scotland"
+            },
+            "id": "dit:DataHubOMISOrder:1111",
+            "name": "HAM100",
+            "startTime": "2013-03-25T00:00:00Z",
+            "type": ["dit:OMISOrder"],
+            "url": "https://www.my-website.com"
+          },
+          "published": "2013-03-25T00:00:00Z",
+          "type": "Add"
+        }
+      },
+      {
+        "_index": "activities__feed_id_datahub",
+        "_type": "_doc",
+        "_id": "dit:DataHubInvestmentProject:d9e25847-6199-e211-a939-e4115bead28a:Add",
+        "_score": null,
+        "_source": {
+          "actor": {
+            "dit:emailAddress": "CDMS\\CDMSInstall",
+            "id": "dit:DataHubAdviser:419fe8a8-3e95-e211-a939-e4115bead28a",
+            "name": "CDMSInstall Last name",
+            "type": ["Person", "dit:Adviser"]
+          },
+          "generator": {
+            "name": "dit:dataHub",
+            "type": "Application"
+          },
+          "id": "dit:DataHubInvestmentProject:d9e25847-6199-e211-a939-e4115bead28a:Add",
+          "object": {
+            "attributedTo": [
+              {
+                "dit:companiesHouseNumber": null,
+                "dit:dunsNumber": "656147733",
+                "id": "dit:DataHubCompany:c79ba298-106e-4629-aa12-61ec6e2e47ce",
+                "name": "Best Ever Company",
+                "type": ["Organization", "dit:Company"]
+              }
+            ],
+            "dit:investmentType": {
+              "name": "FDI"
+            },
+            "dit:numberNewJobs": 20,
+            "id": "dit:DataHubInvestmentProject:d9e25847-6199-e211-a939-e4115bead28a",
+            "name": "Marshmellow UK Takeover",
+            "startTime": "2011-11-23T00:00:00Z",
+            "type": ["dit:InvestmentProject"],
+            "url": "https://www.datahub.trade.gov.uk/investments/projects/d9e25847-6199-e211-a939-e4115bead28a"
+          },
+          "published": "2011-11-23T00:00:00Z",
+          "type": "Add"
+        }
+      }
+    ]
+  }
+}

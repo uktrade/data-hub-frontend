@@ -9,6 +9,7 @@ var maxemailEmailSentActivities = require('../../../fixtures/v4/activity-feed/ex
 
 // Data Hub and external activities
 var dataHubAndExternalActivities = require('../../../fixtures/v4/activity-feed/data-hub-and-external-activities.json')
+var companyActivities = require('../../../fixtures/v4/activity-feed/company-activity-feed-activities.json')
 
 // My activities
 var myActivities = require('../../../fixtures/v4/activity-feed/my-activities.json')
@@ -50,6 +51,8 @@ const ALL_ACTIVITY_STREAM_EVENTS = ['dit:aventri:Event', 'dit:dataHub:Event']
 const ALL_ACTIVITIES_PER_PAGE = 10
 
 const VENUS_LTD = 'dit:DataHubCompany:0f5216e0-849f-11e6-ae22-56b6b6499611'
+const BEST_EVER_COMPANY =
+  'dit:DataHubCompany:c79ba298-106e-4629-aa12-61ec6e2e47ce'
 
 exports.activityFeed = function (req, res) {
   // Activities by contact
@@ -219,7 +222,15 @@ exports.activityFeed = function (req, res) {
 
   // Data Hub and external activity
   if (isEqual(externalActivityTypes, DATA_HUB_AND_EXTERNAL_ACTIVITY)) {
-    return res.json(dataHubAndExternalActivities)
+    var company = get(
+      req.body,
+      "query.bool.filter.bool.should[0].bool.must[1].terms['object.attributedTo.id'][0]"
+    )
+    return res.json(
+      company === BEST_EVER_COMPANY
+        ? companyActivities
+        : dataHubAndExternalActivities
+    )
   }
 
   // Maxemail campaigns
