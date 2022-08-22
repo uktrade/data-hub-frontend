@@ -2,7 +2,7 @@
 
 In Data Hub we use [Redux](https://redux.js.org/) for state management and [Saga](https://redux-saga.js.org/) for handling side effects (e.g. fetching data from the API).
 
-Wrapping our saga tasks we have a custom [`Task`](https://github.com/uktrade/data-hub-frontend/blob/master/src/client/components/Task/index.jsx#L47-L101) component and some other custom implementations with Redux. This can mean that just reading the Redux and Saga docs might not be enough to smoothly get started with writing new Data Hub code. So this high level guide goes over the flow of how to add a new Saga task and its accompanying Redux actions/reducers. From personal experience, it can get quite messy navigating all the different files you need to touch in order to simply load some data from the API and render it to a React component.
+Wrapping our saga tasks we have a custom [`Task`](https://github.com/uktrade/data-hub-frontend/blob/main/src/client/components/Task/index.jsx#L47-L101) component and some other custom implementations with Redux. This can mean that just reading the Redux and Saga docs might not be enough to smoothly get started with writing new Data Hub code. So this high level guide goes over the flow of how to add a new Saga task and its accompanying Redux actions/reducers. From personal experience, it can get quite messy navigating all the different files you need to touch in order to simply load some data from the API and render it to a React component.
 
 ## Flow
 
