@@ -40,7 +40,14 @@ export default function AventriAttendee({ activity: attendee }) {
 
   return eventName ? (
     <ActivityCardWrapper dataTest="aventri-activity">
-      <ActivityCardLabels service="event" kind="aventri service delivery" />
+      <ActivityCardLabels
+        service="event"
+        kind={
+          registrationStatus === 'Attended'
+            ? 'aventri service delivery'
+            : 'interaction'
+        }
+      />
       <ActivityCardSubject>
         {eventName}
         {registrationStatus && (
