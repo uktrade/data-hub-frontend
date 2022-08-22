@@ -20,6 +20,8 @@ import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
 import { COMPANY_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
+import ActivityCardSubject from './card/ActivityCardSubject'
+import ActivityCardMetadata from './card/ActivityCardMetadata'
 
 const { format } = require('../../../utils/date')
 
@@ -66,6 +68,41 @@ export default class InvestmentProject extends React.PureComponent {
     const numberNewJobs = decimal(get(activity, 'object.dit:numberNewJobs'))
 
     const published = get(activity, 'published')
+
+    const metadata = [
+      { label: 'Date', value: format(published) },
+      { label: 'Investment Type', value: investmentType },
+      {
+        label: 'Added by',
+        value: adviser
+          ? [adviser].map((adviser, index) => (
+              <span key={adviser.id}>
+                {AdviserItemRenderer(adviser, index)}
+              </span>
+            ))
+          : null,
+      },
+      {
+        label: 'Estimated land date',
+        value: estimatedLandDate,
+      },
+      {
+        label: 'Company contact',
+        value: contacts.map((contact, index) => (
+          <span key={contact.id}>{ContactItemRenderer(contact, index)}</span>
+        )),
+      },
+      { label: 'Total investment', value: totalInvestment },
+      {
+        label: 'Capital expenditure value',
+        value: foreignEquityInvestment,
+      },
+      {
+        label: 'Gross value added (GVA)',
+        value: grossValueAdded,
+      },
+      { label: 'Number of jobs', value: numberNewJobs },
+    ]
 
     return (
       <CheckUserFeatureFlag userFeatureFlagName={COMPANY_ACTIVITY_FEATURE_FLAG}>
@@ -133,7 +170,8 @@ export default class InvestmentProject extends React.PureComponent {
                 service="Project - FDI"
                 kind="New Investment Project"
               />
-              <h3>Investment Project</h3>
+              <ActivityCardSubject>{name}</ActivityCardSubject>
+              <ActivityCardMetadata metadata={metadata} />
             </ActivityCardWrapper>
           )
         }
