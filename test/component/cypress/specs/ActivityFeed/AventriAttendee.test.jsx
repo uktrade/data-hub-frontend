@@ -10,7 +10,7 @@ describe('AventriAttendee', () => {
       'dit:aventri:email': 'johndoe@outlook.com',
       'dit:firstName': 'Firstname1',
       'dit:lastName': 'Lastname1',
-      'dit:aventri:registrationstatus': 'Confirmed',
+      'dit:registrationStatus': 'Confirmed',
       'dit:emailAddress': 'johndoe@outlook.com',
       id: 'dit:aventri:Attendee:1111',
     },
@@ -68,7 +68,7 @@ describe('AventriAttendee', () => {
 
     context('when there is no registration status', () => {
       beforeEach(() => {
-        activity.object['dit:aventri:registrationstatus'] = undefined
+        activity.object['dit:registrationStatus'] = undefined
         mount(<Component activity={activity} />)
       })
 
