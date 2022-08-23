@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { get } from 'lodash'
-import styled from 'styled-components'
-import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
 import { Card, CardDetails, CardHeader, CardTable } from './card'
 import { ACTIVITY_TYPE, SOURCE_TYPES } from '../constants'
@@ -12,6 +10,7 @@ import { COMPANY_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/a
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardSubject from './card/ActivityCardSubject'
+import ActivityCardNotes from './card/ActivityCardNotes'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 
 import { format } from '../../../utils/date'
@@ -37,14 +36,6 @@ export default class DirectoryFormsApi extends React.PureComponent {
       'object.dit:directoryFormsApi:Submission:Data'
     )
     const formUrl = get(activity, 'object.url')
-
-    const Notes = styled('div')`
-      font-size: ${FONT_SIZE.SIZE_16};
-      font-weight: ${FONT_WEIGHTS.regular};
-      line-height: ${FONT_SIZE.SIZE_24};
-      margin-bottom: ${SPACING.SCALE_1};
-    `
-    const MAX_NOTE_LENGTH = 255
 
     const metadata = [
       { label: 'Date', value: format(sentDate) },
@@ -100,15 +91,7 @@ export default class DirectoryFormsApi extends React.PureComponent {
                 kind="great.gov.uk Enquiry"
               />
               <ActivityCardSubject>Enquiry</ActivityCardSubject>
-              <Notes data-test="interaction-notes">
-                {formData.comment.length < MAX_NOTE_LENGTH
-                  ? formData.comment
-                  : formData.comment
-                      .slice(0, MAX_NOTE_LENGTH)
-                      .split(' ')
-                      .slice(0, -1)
-                      .join(' ') + ' ...'}{' '}
-              </Notes>
+              <ActivityCardNotes notes={formData.comment} />
               <ActivityCardMetadata metadata={metadata} />
             </ActivityCardWrapper>
           )

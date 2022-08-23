@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
-import styled from 'styled-components'
 
 import {
   Card,
@@ -20,20 +19,13 @@ import { ACTIVITY_TYPE, ANALYTICS_ACCORDION_TYPE } from '../constants'
 
 import CardUtils from './card/CardUtils'
 import InteractionUtils from './InteractionUtils'
-import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import { formatMediumDate } from '../../../utils/date'
 
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityCardLabels from './card/ActivityCardLabels'
-
-const Notes = styled('div')`
-  font-size: ${FONT_SIZE.SIZE_16};
-  font-weight: ${FONT_WEIGHTS.regular};
-  line-height: ${FONT_SIZE.SIZE_24};
-  margin-bottom: ${SPACING.SCALE_1};
-`
+import ActivityCardNotes from './card/ActivityCardNotes'
 
 export default class Interaction extends React.PureComponent {
   static propTypes = {
@@ -73,7 +65,6 @@ export default class Interaction extends React.PureComponent {
 
     const serviceName = activityObject['dit:service']?.name
     const serviceNotes = activityObject.content
-    const MAX_NOTE_LENGTH = 255
 
     const formattedAdvisers = () => {
       return (
@@ -104,17 +95,7 @@ export default class Interaction extends React.PureComponent {
             {transformed.subject}
           </Link>
         </ActivityCardSubject>
-        {serviceNotes && (
-          <Notes data-test="interaction-notes">
-            {serviceNotes.length < MAX_NOTE_LENGTH
-              ? serviceNotes
-              : serviceNotes
-                  .slice(0, MAX_NOTE_LENGTH)
-                  .split(' ')
-                  .slice(0, -1)
-                  .join(' ') + ' ...'}{' '}
-          </Notes>
-        )}
+        {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
         <ActivityCardMetadata metadata={metadata} />
       </ActivityCardWrapper>
     )
