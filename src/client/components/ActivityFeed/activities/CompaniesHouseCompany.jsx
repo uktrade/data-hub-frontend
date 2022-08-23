@@ -19,7 +19,7 @@ import {
   SOURCE_TYPES,
 } from '../constants'
 import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
-import { COMPANY_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
+import { ACTIVITY_CARD_STYLING_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
@@ -115,7 +115,9 @@ export default class CompaniesHouseCompany extends React.PureComponent {
     ]
 
     return (
-      <CheckUserFeatureFlag userFeatureFlagName={COMPANY_ACTIVITY_FEATURE_FLAG}>
+      <CheckUserFeatureFlag
+        userFeatureFlagName={ACTIVITY_CARD_STYLING_FEATURE_FLAG}
+      >
         {(isFeatureFlagEnabled) =>
           !isFeatureFlagEnabled ? (
             <Card>

@@ -5,7 +5,7 @@ const errorContact = require('../../../../sandbox/fixtures/v3/contact/contact-by
 const { assertErrorDialog } = require('../../support/assertions')
 const {
   CONTACT_ACTIVITY_FEATURE_FLAG,
-  COMPANY_ACTIVITY_FEATURE_FLAG,
+  ACTIVITY_CARD_STYLING_FEATURE_FLAG,
 } = require('../../../../../src/apps/companies/apps/activity-feed/constants')
 
 describe('Contact activity', () => {
@@ -58,7 +58,7 @@ describe('Contact activity', () => {
         before(() => {
           cy.setUserFeatures([
             CONTACT_ACTIVITY_FEATURE_FLAG,
-            COMPANY_ACTIVITY_FEATURE_FLAG,
+            ACTIVITY_CARD_STYLING_FEATURE_FLAG,
           ])
         })
 

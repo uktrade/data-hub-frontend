@@ -2,7 +2,7 @@ const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
 const {
-  COMPANY_ACTIVITY_FEATURE_FLAG,
+  ACTIVITY_CARD_STYLING_FEATURE_FLAG,
 } = require('../../../../../src/apps/companies/apps/activity-feed/constants')
 
 const companyLocalHeader = selectors.companyLocalHeader()
@@ -349,7 +349,7 @@ describe('Company activity feed', () => {
 
   context('When the activity feed feature flag is turned on', () => {
     before(() => {
-      cy.setUserFeatures([COMPANY_ACTIVITY_FEATURE_FLAG])
+      cy.setUserFeatures([ACTIVITY_CARD_STYLING_FEATURE_FLAG])
       cy.visit(
         urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
       )
@@ -368,24 +368,24 @@ describe('Company activity feed', () => {
             })
         )
       })
-      })
     })
+  })
+})
+
+context('When the activity feed feature flag is turned on', () => {
+  before(() => {
+    cy.setUserFeatures([ACTIVITY_CARD_STYLING_FEATURE_FLAG])
+    cy.visit(
+      urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
+    )
+    cy.get('[data-test="activity-feed"] select').select(
+      'dataHubAndExternalActivity'
+    )
   })
 
   context('When the activity feed feature flag is turned on', () => {
     before(() => {
-      cy.setUserFeatures([COMPANY_ACTIVITY_FEATURE_FLAG])
-      cy.visit(
-        urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
-      )
-      cy.get('[data-test="activity-feed"] select').select(
-        'dataHubAndExternalActivity'
-      )
-    })
-
-  context('When the activity feed feature flag is turned on', () => {
-    before(() => {
-      cy.setUserFeatures([COMPANY_ACTIVITY_FEATURE_FLAG])
+      cy.setUserFeatures([ACTIVITY_CARD_STYLING_FEATURE_FLAG])
       cy.visit(
         urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
       )
