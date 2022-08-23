@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
+import styled from 'styled-components'
+
 import { Card, CardHeader, CardTable } from './card'
 import { ACTIVITY_TYPE } from '../constants'
 import CardUtils from './card/CardUtils'
@@ -64,6 +66,18 @@ export default class Referral extends React.PureComponent {
       },
     ]
 
+    const Row = styled('div')`
+      display: flex;
+    `
+
+    const LeftCol = styled('div')`
+      flex: 75%;
+    `
+
+    const RightCol = styled('div')`
+      flex: 25%;
+    `
+
     return (
       <CheckUserFeatureFlag
         userFeatureFlagName={ACTIVITY_CARD_STYLING_FEATURE_FLAG}
@@ -97,9 +111,15 @@ export default class Referral extends React.PureComponent {
             </Card>
           ) : (
             <ActivityCardWrapper>
-              <ActivityCardLabels kind={badge.text} />
-              <ActivityCardSubject>{subject}</ActivityCardSubject>
-              <ActivityCardMetadata metadata={metadata} />
+              <Row>
+                <LeftCol>
+                  <ActivityCardSubject>{subject}</ActivityCardSubject>
+                  <ActivityCardMetadata metadata={metadata} />
+                </LeftCol>
+                <RightCol>
+                  <ActivityCardLabels kind={badge.text} />
+                </RightCol>
+              </Row>
             </ActivityCardWrapper>
           )
         }

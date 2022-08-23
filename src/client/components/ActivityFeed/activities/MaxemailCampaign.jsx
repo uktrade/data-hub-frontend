@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
+import styled from 'styled-components'
 import { get } from 'lodash'
 
 import {
@@ -60,6 +61,18 @@ export default class MaxemailCampaign extends React.PureComponent {
       },
     ]
 
+    const Row = styled('div')`
+      display: flex;
+    `
+
+    const LeftCol = styled('div')`
+      flex: 75%;
+    `
+
+    const RightCol = styled('div')`
+      flex: 25%;
+    `
+
     return (
       <CheckUserFeatureFlag
         userFeatureFlagName={ACTIVITY_CARD_STYLING_FEATURE_FLAG}
@@ -100,9 +113,15 @@ export default class MaxemailCampaign extends React.PureComponent {
             </Card>
           ) : (
             <ActivityCardWrapper dataTest="maxemail-campaign-activity">
-              <ActivityCardLabels kind="Email Campaign" />
-              <ActivityCardSubject>{emailSubject}</ActivityCardSubject>
-              <ActivityCardMetadata metadata={metadata} />
+              <Row>
+                <LeftCol>
+                  <ActivityCardSubject>{emailSubject}</ActivityCardSubject>
+                  <ActivityCardMetadata metadata={metadata} />
+                </LeftCol>
+                <RightCol>
+                  <ActivityCardLabels kind="Email Campaign" />
+                </RightCol>
+              </Row>
             </ActivityCardWrapper>
           )
         }
