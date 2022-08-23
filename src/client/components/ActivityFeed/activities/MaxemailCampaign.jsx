@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Link from '@govuk-react/link'
 import { get } from 'lodash'
 
 import {
@@ -17,6 +18,10 @@ import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
 import { COMPANY_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
+import ActivityCardSubject from './card/ActivityCardSubject'
+import ActivityCardMetadata from './card/ActivityCardMetadata'
+
+const { format } = require('../../../utils/date')
 
 export default class MaxemailCampaign extends React.PureComponent {
   static propTypes = {
@@ -38,6 +43,22 @@ export default class MaxemailCampaign extends React.PureComponent {
     const emailSubject = get(activity, 'object.dit:emailSubject')
     const contacts = get(activity, 'object.contacts')
     const content = get(activity, 'object.content')
+
+    const metadata = [
+      { label: 'Date', value: format(published) },
+      { label: 'Senders name', value: name },
+      { label: 'Senders email', value: from },
+      { label: 'Content', value: content },
+      {
+        label: 'Recipients',
+        value: contacts.map((contact, index) => (
+          <>
+            {index ? ', ' : ''}
+            <Link href={contact.url}>{contact.name}</Link>
+          </>
+        )),
+      },
+    ]
 
     return (
       <CheckUserFeatureFlag userFeatureFlagName={COMPANY_ACTIVITY_FEATURE_FLAG}>
@@ -78,7 +99,8 @@ export default class MaxemailCampaign extends React.PureComponent {
           ) : (
             <ActivityCardWrapper dataTest="maxemail-campaign-activity">
               <ActivityCardLabels kind="Email Campaign" />
-              <h3>Email Campaign</h3>
+              <ActivityCardSubject>{emailSubject}</ActivityCardSubject>
+              <ActivityCardMetadata metadata={metadata} />
             </ActivityCardWrapper>
           )
         }
