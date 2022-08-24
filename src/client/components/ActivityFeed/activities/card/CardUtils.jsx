@@ -55,6 +55,20 @@ const canRenderByTypes = (activity, types) => {
   return some(types, (type) => includes(activityTypes, type))
 }
 
+const hasMaxemailContent = (activity) => {
+  const activityType = get(activity, 'object.type')
+  if (activityType === 'dit:maxemail:Campaign') {
+    return get(activity, 'object.contacts')?.length
+  }
+  if (
+    activityType?.includes('dit:maxemail:Email') ||
+    activityType?.includes('dit:maxemail:Email:Sent')
+  ) {
+    return get(activity, 'dit:emailAddress')?.length
+  }
+  return false
+}
+
 const getAdviser = (activity) => {
   const adviser = {
     id: get(activity, 'actor.id'),
@@ -79,4 +93,5 @@ export default {
   getCompany,
   getAdviser,
   transform,
+  hasMaxemailContent,
 }

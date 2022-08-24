@@ -26,22 +26,8 @@ export default class MaxemailCampaign extends React.PureComponent {
   static canRender(activity) {
     return (
       CardUtils.canRenderByTypes(activity, ACTIVITY_TYPE.MaxemailCampaign) &&
-      this.checkActivityHasContent(activity)
+      CardUtils.hasMaxemailContent(activity)
     )
-  }
-
-  static checkActivityHasContent = (activity) => {
-    const activityType = get(activity, 'object.type')
-    if (activityType == 'dit:maxemail:Campaign') {
-      return get(activity, 'object.contacts')?.length
-    }
-    if (
-      activityType.includes('dit:maxemail:Email') ||
-      activityType.includes('dit:maxemail:Email:Sent')
-    ) {
-      return get(activity, 'object.dit:emailAddress')?.length
-    }
-    return false
   }
 
   render() {
