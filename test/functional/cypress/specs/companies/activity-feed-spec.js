@@ -2,7 +2,7 @@ const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
 const {
-  ACTIVITY_CARD_STYLING_FEATURE_FLAG,
+  CONTACT_ACTIVITY_FEATURE_FLAG,
 } = require('../../../../../src/apps/companies/apps/activity-feed/constants')
 
 const companyLocalHeader = selectors.companyLocalHeader()
@@ -349,7 +349,7 @@ describe('Company activity feed', () => {
 
   context('When the activity feed feature flag is turned on', () => {
     before(() => {
-      cy.setUserFeatures([ACTIVITY_CARD_STYLING_FEATURE_FLAG])
+      cy.setUserFeatures([CONTACT_ACTIVITY_FEATURE_FLAG])
       cy.visit(
         urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
       )
@@ -374,7 +374,7 @@ describe('Company activity feed', () => {
 
 context('When the activity feed feature flag is turned on', () => {
   before(() => {
-    cy.setUserFeatures([ACTIVITY_CARD_STYLING_FEATURE_FLAG])
+    cy.setUserFeatures([CONTACT_ACTIVITY_FEATURE_FLAG])
     cy.visit(
       urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
     )
@@ -385,7 +385,7 @@ context('When the activity feed feature flag is turned on', () => {
 
   context('When the activity feed feature flag is turned on', () => {
     before(() => {
-      cy.setUserFeatures([ACTIVITY_CARD_STYLING_FEATURE_FLAG])
+      cy.setUserFeatures([CONTACT_ACTIVITY_FEATURE_FLAG])
       cy.visit(
         urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
       )

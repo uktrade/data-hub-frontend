@@ -16,7 +16,7 @@ import CardUtils from './card/CardUtils'
 
 import { ContactItemRenderer } from './card/item-renderers'
 import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
-import { ACTIVITY_CARD_STYLING_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
+import { CONTACT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardSubject from './card/ActivityCardSubject'
@@ -74,9 +74,7 @@ export default class MaxemailCampaign extends React.PureComponent {
     `
 
     return (
-      <CheckUserFeatureFlag
-        userFeatureFlagName={ACTIVITY_CARD_STYLING_FEATURE_FLAG}
-      >
+      <CheckUserFeatureFlag userFeatureFlagName={CONTACT_ACTIVITY_FEATURE_FLAG}>
         {(isFeatureFlagEnabled) =>
           !isFeatureFlagEnabled ? (
             <Card>

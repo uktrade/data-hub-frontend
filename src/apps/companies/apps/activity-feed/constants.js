@@ -1,6 +1,6 @@
 const CONTACT_ACTIVITY_FEATURE_FLAG = 'user-contact-activities'
 const EVENT_ACTIVITY_FEATURE_FLAG = 'user-event-activities'
-const ACTIVITY_CARD_STYLING_FEATURE_FLAG = 'user-activity-card-styling'
+// const CONTACT_ACTIVITY_FEATURE_FLAG = 'user-activity-feed'
 
 const FILTER_KEYS = {
   dataHubAndExternalActivity: 'dataHubAndExternalActivity',
@@ -150,5 +150,5 @@ module.exports = {
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
   CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS,
   CONTACT_ACTIVITY_SORT_SELECT_OPTIONS,
-  ACTIVITY_CARD_STYLING_FEATURE_FLAG,
+  CONTACT_ACTIVITY_FEATURE_FLAG,
 }
