@@ -20,7 +20,7 @@ const ActivityCardNotes = ({ notes, maxLength }) => (
 )
 
 ActivityCardNotes.propTypes = {
-  notes: PropTypes.string.required,
+  notes: PropTypes.string.isRequired,
   maxLength: PropTypes.number,
 }
 
