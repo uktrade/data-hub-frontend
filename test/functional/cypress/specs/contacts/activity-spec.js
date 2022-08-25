@@ -54,13 +54,6 @@ describe('Contact activity', () => {
       })
 
       context('when using the sort by selector', () => {
-        before(() => {
-          cy.setUserFeatures([
-            CONTACT_ACTIVITY_FEATURE_FLAG,
-            CONTACT_ACTIVITY_FEATURE_FLAG,
-          ])
-        })
-
         beforeEach(() => {
           cy.intercept(
             'GET',
@@ -78,8 +71,6 @@ describe('Contact activity', () => {
         })
 
         after(() => {
-          cy.resetUser()
-          cy.setUserFeatures([CONTACT_ACTIVITY_FEATURE_FLAG])
           cy.visit(urls.contacts.contactActivities(contactId))
         })
 
