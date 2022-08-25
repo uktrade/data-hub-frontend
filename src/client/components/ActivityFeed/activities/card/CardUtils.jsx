@@ -58,13 +58,13 @@ const canRenderByTypes = (activity, types) => {
 const hasMaxemailContent = (activity) => {
   const activityType = get(activity, 'object.type')
   if (activityType === 'dit:maxemail:Campaign') {
-    return get(activity, 'object.contacts')?.length
+    return get(activity, 'object.contacts')?.length > 0
   }
   if (
     activityType?.includes('dit:maxemail:Email') ||
     activityType?.includes('dit:maxemail:Email:Sent')
   ) {
-    return get(activity, 'dit:emailAddress')?.length
+    return get(activity, 'dit:emailAddress')?.length > 0
   }
   return false
 }
