@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import VisuallyHidden from '@govuk-react/visually-hidden'
 import styled from 'styled-components'
 import { BLACK, WHITE, YELLOW } from 'govuk-colours'
+import qs from 'qs'
 import {
   SPACING,
   FONT_SIZE,
@@ -13,6 +14,15 @@ import {
 // Colours not defined in 'govuk-colours' which we need for consistency
 // with Find Exporters and Market Access.
 import { DARK_BLUE_LEGACY } from '../../utils/colors'
+
+const SWITCH_TO_DATA_WORKSPACE = 'Switch to Data Workspace'
+
+const googleAnalyticsUTM = qs.stringify({
+  utm_source: 'Data Hub',
+  utm_medium: 'referral',
+  utm_campaign: 'dataflow',
+  utm_content: SWITCH_TO_DATA_WORKSPACE,
+})
 
 const StyledLogoContainer = styled.div({
   maxWidth: 960,
@@ -114,8 +124,10 @@ const LogoBar = ({ showVerticalNav }) => (
       aria-label="Header links"
     >
       <NavigationListItem>
-        <NavigationLink href="https://data.trade.gov.uk">
-          Switch to Data Workspace
+        <NavigationLink
+          href={`https://data.trade.gov.uk?${googleAnalyticsUTM}`}
+        >
+          {SWITCH_TO_DATA_WORKSPACE}
         </NavigationLink>
       </NavigationListItem>
     </NavigationList>
