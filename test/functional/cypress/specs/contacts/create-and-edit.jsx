@@ -4,6 +4,7 @@ const { assertBreadcrumbs } = require('../../support/assertions')
 const urls = require('../../../../../src/lib/urls')
 
 const ZBONCAK_COMPANY_ID = '4cd4128b-1bad-4f1e-9146-5d4678c6a018'
+const MANY_CONTACTS_ID = '57c41268-26be-4335-a873-557e8b0deb29'
 const assertErrorSummary = (...errors) =>
   cy
     .contains('There is a problem')
@@ -193,6 +194,35 @@ describe('Create contact form', () => {
     cy.clickSubmitButton('Add contact')
 
     cy.location('pathname').should('eq', `/contacts/${NEW_CONTACT_ID}/details`)
+  })
+
+  describe('When a company has many contacts', () => {
+    const LARGE_COMPANY_NEW_CONTACT = '9d9dcf7b-77b5-4326-b3df-ed1409adeb6f'
+    beforeEach(() => {
+      cy.visit(`/contacts/create?company=${MANY_CONTACTS_ID}`)
+    })
+    it('should be possible to add another contact', () => {
+      cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
+      cy.checkRadioGroup(
+        'Is this contact’s work address the same as the company address?',
+        'Yes'
+      )
+
+      cy.typeIntoInputs({
+        'First name': 'Andy',
+        'Last name': 'Pipkin',
+        'Job title': 'On dole',
+        'Phone number': '456789',
+        'Email address': 'andy@new.email',
+      })
+
+      cy.clickSubmitButton('Add contact')
+
+      cy.location('pathname').should(
+        'eq',
+        `/contacts/${LARGE_COMPANY_NEW_CONTACT}/details`
+      )
+    })
   })
 })
 
