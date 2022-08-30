@@ -87,52 +87,54 @@ export default class Interaction extends React.PureComponent {
       <CheckUserFeatureFlag userFeatureFlagName={CONTACT_ACTIVITY_FEATURE_FLAG}>
         {(isFeatureFlagEnabled) =>
           !isFeatureFlagEnabled ? (
-            <Card isUpcoming={transformed.isUpcoming}>
-              <CardHeader
-                company={showDnbHierarchy ? company : null}
-                heading={
-                  <Link href={transformed.url}>{transformed.subject}</Link>
-                }
-                startTime={transformed.startTime}
-                badge={transformed.badge}
-              />
-              <CardDetails
-                summary={`View ${transformed.typeText} details`}
-                summaryVisuallyHidden={` for ${transformed.subject}`}
-                link={{
-                  url: transformed.url,
-                  text: `You can view more on the ${transformed.typeText} detail page`,
-                }}
-                showDetails={showDetails}
-                analyticsAccordionType={
-                  ANALYTICS_ACCORDION_TYPE.DATA_HUB_ACTIVITY
-                }
-              >
-                <CardTable
-                  rows={[
-                    {
-                      header: 'Company contact(s)',
-                      content: (
-                        <CardDetailsList
-                          itemRenderer={ContactItemRenderer}
-                          items={contacts}
-                        />
-                      ),
-                    },
-                    {
-                      header: 'Adviser(s)',
-                      content: (
-                        <CardDetailsList
-                          itemRenderer={AdviserItemRenderer}
-                          items={advisers}
-                        />
-                      ),
-                    },
-                    { header: 'Services', content: transformed.service },
-                  ]}
+            <div data-test="interaction-activity">
+              <Card isUpcoming={transformed.isUpcoming}>
+                <CardHeader
+                  company={showDnbHierarchy ? company : null}
+                  heading={
+                    <Link href={transformed.url}>{transformed.subject}</Link>
+                  }
+                  startTime={transformed.startTime}
+                  badge={transformed.badge}
                 />
-              </CardDetails>
-            </Card>
+                <CardDetails
+                  summary={`View ${transformed.typeText} details`}
+                  summaryVisuallyHidden={` for ${transformed.subject}`}
+                  link={{
+                    url: transformed.url,
+                    text: `You can view more on the ${transformed.typeText} detail page`,
+                  }}
+                  showDetails={showDetails}
+                  analyticsAccordionType={
+                    ANALYTICS_ACCORDION_TYPE.DATA_HUB_ACTIVITY
+                  }
+                >
+                  <CardTable
+                    rows={[
+                      {
+                        header: 'Company contact(s)',
+                        content: (
+                          <CardDetailsList
+                            itemRenderer={ContactItemRenderer}
+                            items={contacts}
+                          />
+                        ),
+                      },
+                      {
+                        header: 'Adviser(s)',
+                        content: (
+                          <CardDetailsList
+                            itemRenderer={AdviserItemRenderer}
+                            items={advisers}
+                          />
+                        ),
+                      },
+                      { header: 'Services', content: transformed.service },
+                    ]}
+                  />
+                </CardDetails>
+              </Card>
+            </div>
           ) : (
             <ActivityCardWrapper dataTest="interaction-activity">
               <ActivityCardLabels theme={theme} service={service} kind={kind} />
