@@ -1,15 +1,16 @@
 # Deployments
 
-Commits to `master` are automatically deployed to dev and staging environments.
+Commits to `main` are automatically deployed to dev and staging environments.
 
 Opening a pull request creates a temporary instance on Heroku called [review app](https://devcenter.heroku.com/articles/github-integration-review-apps) which is pointing to the staging API.
 
 Deployments to production are done manually through Jenkins where a Git tag can be used.
 
 ## Deploying to production
+
 1. Post a message into the #data-hub-core-dev channel saying that you want to do a Data Hub frontend release and ask if there are any objections. If no objections, proceed with the following steps.
 
-2. Create a GIT tag `git tag v<MAJOR>.<MINOR>.<PATCH>`, e.g. `v5.1.2` pointing to the latest `master`.
+2. Create a GIT tag `git tag v<MAJOR>.<MINOR>.<PATCH>`, e.g. `v5.1.2` pointing to the latest `main`.
 
    | Release type      | When to increase                                                                         |
    | ----------------- | ---------------------------------------------------------------------------------------- |
@@ -21,11 +22,11 @@ You can use the [GitHub comparison tool](https://github.com/uktrade/data-hub-fro
 
 3. Push the tag to the remote - `git push origin v<VERSION_NUMBER>`.
 
-4. Check that the tag worked by using the [GitHub comparison tool](https://github.com/uktrade/data-hub-frontend/compare) again to compare master to the new tag. If done correctly, it should say "master and `v<VERSION_NUMBER>` are identical". 
+4. Check that the tag worked by using the [GitHub comparison tool](https://github.com/uktrade/data-hub-frontend/compare) again to compare main to the new tag. If done correctly, it should say "main and `v<VERSION_NUMBER>` are identical".
 
 5. Create a GH pre-release by clicking `Draft a new release` on the [releases page](https://github.com/uktrade/data-hub-frontend/releases).
 
-The release title should be `v<VERSION_NUMBER>` and release notes can be created by clicking the `Auto-generate release notes` button. 
+The release title should be `v<VERSION_NUMBER>` and release notes can be created by clicking the `Auto-generate release notes` button.
 
 Check that the release notes generated contain what you expect to be deployed to production.
 

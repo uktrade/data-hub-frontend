@@ -13,6 +13,10 @@ import { ACTIVITY_TYPE, SOURCE_TYPES } from '../constants'
 import CardUtils from './card/CardUtils'
 
 import { ContactItemRenderer } from './card/item-renderers'
+import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
+import { COMPANY_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
+import ActivityCardWrapper from './card/ActivityCardWrapper'
+import ActivityCardLabels from './card/ActivityCardLabels'
 
 export default class MaxemailCampaign extends React.PureComponent {
   static propTypes = {
@@ -36,38 +40,49 @@ export default class MaxemailCampaign extends React.PureComponent {
     const content = get(activity, 'object.content')
 
     return (
-      <Card>
-        <CardHeader
-          heading={emailSubject}
-          blockText="Email Campaign"
-          startTime={published}
-          sourceType={SOURCE_TYPES.external}
-        />
+      <CheckUserFeatureFlag userFeatureFlagName={COMPANY_ACTIVITY_FEATURE_FLAG}>
+        {(isFeatureFlagEnabled) =>
+          !isFeatureFlagEnabled ? (
+            <Card>
+              <CardHeader
+                heading={emailSubject}
+                blockText="Email Campaign"
+                startTime={published}
+                sourceType={SOURCE_TYPES.external}
+              />
 
-        <CardDetails
-          summary="View details of this campaign"
-          summaryVisuallyHidden={` ${emailSubject}`}
-          showDetails={showDetails}
-        >
-          <CardTable
-            rows={[
-              { header: 'Senders name', content: name },
-              { header: 'Senders email', content: from },
-              { header: 'Content', content },
-              {
-                header: 'Recipients',
-                content: (
-                  <CardDetailsList
-                    itemPropName="email"
-                    itemRenderer={ContactItemRenderer}
-                    items={contacts}
-                  />
-                ),
-              },
-            ]}
-          />
-        </CardDetails>
-      </Card>
+              <CardDetails
+                summary="View details of this campaign"
+                summaryVisuallyHidden={` ${emailSubject}`}
+                showDetails={showDetails}
+              >
+                <CardTable
+                  rows={[
+                    { header: 'Senders name', content: name },
+                    { header: 'Senders email', content: from },
+                    { header: 'Content', content },
+                    {
+                      header: 'Recipients',
+                      content: (
+                        <CardDetailsList
+                          itemPropName="email"
+                          itemRenderer={ContactItemRenderer}
+                          items={contacts}
+                        />
+                      ),
+                    },
+                  ]}
+                />
+              </CardDetails>
+            </Card>
+          ) : (
+            <ActivityCardWrapper dataTest="maxemail-campaign-activity">
+              <ActivityCardLabels kind="Email Campaign" />
+              <h3>Email Campaign</h3>
+            </ActivityCardWrapper>
+          )
+        }
+      </CheckUserFeatureFlag>
     )
   }
 }

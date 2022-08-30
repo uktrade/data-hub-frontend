@@ -10,7 +10,7 @@ describe('AventriAttendee', () => {
       'dit:aventri:email': 'johndoe@outlook.com',
       'dit:firstName': 'Firstname1',
       'dit:lastName': 'Lastname1',
-      'dit:aventri:registrationstatus': 'Confirmed',
+      'dit:registrationStatus': 'Confirmed',
       'dit:emailAddress': 'johndoe@outlook.com',
       id: 'dit:aventri:Attendee:1111',
     },
@@ -51,12 +51,11 @@ describe('AventriAttendee', () => {
       })
     })
 
-    it('should display the Kind label', () => {
+    it('should display the Interaction Kind label when registration status is not Attended', () => {
       cy.get('[data-test="aventri-activity"]').within(() => {
-        cy.get('[data-test="activity-kind-label"]').contains(
-          'aventri service delivery',
-          { matchCase: false }
-        )
+        cy.get('[data-test="activity-kind-label"]').contains('interaction', {
+          matchCase: false,
+        })
       })
     })
 
@@ -66,9 +65,27 @@ describe('AventriAttendee', () => {
       )
     })
 
+    context('when the registration status is Attended', () => {
+      beforeEach(() => {
+        activity.object['dit:registrationStatus'] = 'Attended'
+        mount(<Component activity={activity} />)
+      })
+
+      it('should display the Aventri Service Delivery label when registration status is Attended', () => {
+        cy.get('[data-test="aventri-activity"]').within(() => {
+          cy.get('[data-test="activity-kind-label"]').contains(
+            'aventri service delivery',
+            {
+              matchCase: false,
+            }
+          )
+        })
+      })
+    })
+
     context('when there is no registration status', () => {
       beforeEach(() => {
-        activity.object['dit:aventri:registrationstatus'] = undefined
+        activity.object['dit:registrationStatus'] = undefined
         mount(<Component activity={activity} />)
       })
 

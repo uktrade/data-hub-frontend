@@ -42,6 +42,7 @@
             "dit:emailAddress": "elle.woods@example.com",
             "dit:firstName": "Elle",
             "dit:lastName": "Woods",
+            "dit:registrationStatus": "Confirmed",
             "id": "dit:aventri:Attendee:1234",
             "published": "1970-01-01T00:00:00",
             "type": [
@@ -81,6 +82,7 @@
             "dit:emailAddress": "cinders@gmail.com",
             "dit:firstName": "Cindy",
             "dit:lastName": "Ella",
+            "dit:registrationStatus": "Confirmed",
             "id": "dit:aventri:Attendee:2222",
             "published": "1970-01-01T00:00:00",
             "type": [
@@ -119,6 +121,7 @@
             "dit:emailAddress": "",
             "dit:firstName": "Fiona",
             "dit:lastName": "Shrek",
+            "dit:registrationStatus": "Confirmed",
             "id": "dit:aventri:Attendee:2222",
             "published": "1970-01-01T00:00:00",
             "type": [
@@ -157,6 +160,7 @@
             "dit:emailAddress": "",
             "dit:firstName": "Ariel",
             "dit:lastName": "Ocean",
+            "dit:registrationStatus": "Confirmed",
             "id": "dit:aventri:Attendee:2222",
             "published": "1970-01-01T00:00:00",
             "type": [
@@ -195,6 +199,7 @@
             "dit:emailAddress": "",
             "dit:firstName": "Tiana",
             "dit:lastName": "Green",
+            "dit:registrationStatus": "Confirmed",
             "id": "dit:aventri:Attendee:2222",
             "published": "1970-01-01T00:00:00",
             "type": [
@@ -233,6 +238,7 @@
             "dit:emailAddress": "",
             "dit:firstName": "Belle",
             "dit:lastName": "Beastly",
+            "dit:registrationStatus": "Confirmed",
             "id": "dit:aventri:Attendee:2222",
             "published": "1970-01-01T00:00:00",
             "type": [
@@ -271,6 +277,7 @@
             "dit:emailAddress": "",
             "dit:firstName": "Snow",
             "dit:lastName": "White",
+            "dit:registrationStatus": "Confirmed",
             "id": "dit:aventri:Attendee:2222",
             "published": "1970-01-01T00:00:00",
             "type": [
@@ -309,6 +316,7 @@
             "dit:emailAddress": "",
             "dit:firstName": "Rapunzel",
             "dit:lastName": "Hair",
+            "dit:registrationStatus": "Confirmed",
             "id": "dit:aventri:Attendee:2222",
             "published": "1970-01-01T00:00:00",
             "type": [
@@ -347,6 +355,7 @@
             "dit:emailAddress": "",
             "dit:firstName": "Elsa",
             "dit:lastName": "Ice",
+            "dit:registrationStatus": "Confirmed",
             "id": "dit:aventri:Attendee:2222",
             "published": "1970-01-01T00:00:00",
             "type": [
@@ -385,6 +394,7 @@
             "dit:emailAddress": "",
             "dit:firstName": "Jasmine",
             "dit:lastName": "Tiger",
+            "dit:registrationStatus": "Confirmed",
             "id": "dit:aventri:Attendee:2222",
             "published": "1970-01-01T00:00:00",
             "type": [
@@ -423,6 +433,7 @@
             "dit:emailAddress": "",
             "dit:firstName": "Fiona",
             "dit:lastName": "Shrek",
+            "dit:registrationStatus": "Confirmed",
             "id": "dit:aventri:Attendee:2222",
             "published": "1970-01-01T00:00:00",
             "type": [

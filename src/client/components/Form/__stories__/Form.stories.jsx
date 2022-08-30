@@ -23,7 +23,7 @@ storiesOf('Form', module)
     <p>
       This is a workaround to get the DocsPage to work with multiInstance
       components. The form props are fully documented{' '}
-      <a href="https://github.com/uktrade/data-hub-frontend/blob/master/src/client/components/Form/index.jsx#L467">
+      <a href="https://github.com/uktrade/data-hub-frontend/blob/main/src/client/components/Form/index.jsx#L467">
         in the component's docstring.
       </a>
     </p>

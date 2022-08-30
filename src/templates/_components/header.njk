@@ -7,6 +7,7 @@
 	{%- set marketAcessDomain = ( params.domains.marketAccess or 'https://market-access.trade.gov.uk/' ) %}
 	{%- set dataWorkspaceDomain = (params.domains.dataWorkspaceDomain or 'https://data.trade.gov.uk' ) %}
 
+  {%- set googleAnalyticsUTMParams = '?utm_source=Data%20Hub&utm_medium=referral&utm_campaign=dataflow&utm_content=Switch%20to%20Data%20Workspace' %}
 	{%- set datahubCrmKey = 'datahub-crm' %}
 	{%- set hasCrmPermission = false %}
 	{%- for permitted in permittedApps %}
@@ -81,7 +82,7 @@
 	{%- set headerLinks = [
 	{
 		text: 'Switch to Data Workspace',
-		href: dataWorkspaceDomain
+		href: ( dataWorkspaceDomain + googleAnalyticsUTMParams )
 	}
 ] -%}
 

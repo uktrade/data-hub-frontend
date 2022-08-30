@@ -29,6 +29,7 @@ var exportWinsPage1 = require('../../../fixtures/v4/company-export-wins/export-w
 var exportWinsPage2 = require('../../../fixtures/v4/company-export-wins/export-wins-page-2.json')
 var companyCreateInvestigation = require('../../../fixtures/v4/dnb/company-create-investigation.json')
 var companyWithNoGlobalAccountManager = require('../../../fixtures/v4/company/company-with-no-global-account-manager.json')
+var companyWithAllActivities = require('../../../fixtures/v4/company/company-with-all-activities.json')
 
 var largeCapitalProfileEmpty = require('../../../fixtures/v4/company/large-capital-profile-empty.json')
 var largeCapitalProfileNew = require('../../../fixtures/v4/company/large-capital-profile-new.json')
@@ -125,6 +126,7 @@ exports.company = function (req, res) {
     '6df487c5-7c75-4672-8907-f74b49e6c635': companyWithExternalActivities,
     'b2c34b41-1d5a-4b4b-9249-7c53ff2868ab': companyUsState,
     'b319d019-444a-4d2f-9e76-c70f84bb22f6': companyCanadianProvince,
+    'c79ba298-106e-4629-aa12-61ec6e2e47ce': companyWithAllActivities,
     'not-managed': _.assign({}, company, {
       name: 'Not Managed Company',
       id: 'not-managed',

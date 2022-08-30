@@ -265,7 +265,7 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
       - merge-and-publish-coverage:
           <<: *ignore_ghpages
           requires:
