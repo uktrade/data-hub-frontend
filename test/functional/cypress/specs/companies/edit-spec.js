@@ -250,7 +250,7 @@ describe('Company edit', () => {
     })
 
     it('renders state selection errors correctly', () => {
-      cy.get(selectors.companyEdit.address.areaUS).select('-- Select state --')
+      cy.get(selectors.companyEdit.address.areaUS).select('Select')
       cy.contains('Submit').click()
       cy.get(selectors.companyEdit.form).contains('Select a state')
     })
@@ -259,7 +259,7 @@ describe('Company edit', () => {
       cy.get(selectors.companyEdit.address.postcode).clear()
       cy.get(selectors.companyEdit.address.postcode).type('ABC 123')
       cy.contains('Submit').click()
-      cy.get(selectors.companyEdit.form).contains('Enter a valid ZIP Code')
+      cy.get(selectors.companyEdit.form).contains('Enter a valid ZIP code')
     })
 
     it('does not render ZIP code errors if ZIP code is valid', () => {
@@ -268,7 +268,7 @@ describe('Company edit', () => {
       cy.contains('Submit').click()
       cy.get(selectors.companyEdit.form).should(
         'not.contain',
-        'Enter a valid ZIP Code'
+        'Enter a valid ZIP code'
       )
     })
   })
@@ -351,9 +351,7 @@ describe('Company edit', () => {
     })
 
     it('renders province selection errors correctly', () => {
-      cy.get(selectors.companyEdit.address.areaCanada).select(
-        '-- Select province --'
-      )
+      cy.get(selectors.companyEdit.address.areaCanada).select('Select')
       cy.contains('Submit').click()
       cy.get(selectors.companyEdit.form).contains('Select a province')
     })
@@ -362,7 +360,7 @@ describe('Company edit', () => {
       cy.get(selectors.companyEdit.address.postcode).clear()
       cy.get(selectors.companyEdit.address.postcode).type('ABC 123')
       cy.contains('Submit').click()
-      cy.get(selectors.companyEdit.form).contains('Enter a valid Postal Code')
+      cy.get(selectors.companyEdit.form).contains('Enter a valid Postal code')
     })
 
     it('does not render postal code errors if postal code is valid', () => {
@@ -371,7 +369,7 @@ describe('Company edit', () => {
       cy.contains('Submit').click()
       cy.get(selectors.companyEdit.form).should(
         'not.contain',
-        'Enter a valid Postal Code'
+        'Enter a valid Postal code'
       )
     })
   })

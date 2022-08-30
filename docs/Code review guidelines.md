@@ -22,13 +22,13 @@ _Discussed and agreed by all Data Hub developers. If anything changes, please ke
 
 - Follow branch naming conventions by prefixing your branch name with _feature/_, _bugfix/_, _removal/_, _test/_, _hotfix/_ or _release/_
 - Make sure commits are logical and atomic - each commit should include tests
-- Keep each commit small and deployable - each commit should ideally leave the master branch in a releasable state
+- Keep each commit small and deployable - each commit should ideally leave the main branch in a releasable state
 - Use [imperative mood](https://git.kernel.org/pub/scm/git/git.git/tree/Documentation/SubmittingPatches?id=HEAD#n133) in commit message but it's okay to use past tense in the description
 
 #### PR Hygiene
 
 - Make sure your PR is atomic and doesn't solve multiple problems at the same time
-- Keep your PR small and deployable - each PR **must** leave the master branch in a releasable state
+- Keep your PR small and deployable - each PR **must** leave the main branch in a releasable state
 - PRs shouldn't normally add or change more than [400 lines of code](https://smartbear.com/learn/code-review/best-practices-for-peer-code-review/) at the time
 - Use feature flags if your PR cannot be deployed to production at any time after being merged
 - Alternatively hide a new piece of functionality behind an express.js route being careful not to expose the URL
@@ -133,5 +133,5 @@ So for these reasons you ought to observe the following rules when reviewing a P
 
 ## <a name="step-3"></a>Step 3: PR approved
 
-- `rebase master` before merging to keep the history clean
+- `rebase main` before merging to keep the history clean
 - Squash the fixup commits into their related ones

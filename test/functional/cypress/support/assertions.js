@@ -344,10 +344,13 @@ const assertFieldAddress = ({ element, hint = null, value = {} }) => {
   const isCanadianBased = value.country.name === 'Canada'
   const hasStateField = isUSBased || isCanadianBased
   const postcodeLabel = () => {
-    if (isUSBased) return 'ZIP Code'
-    if (isCanadianBased) return 'Postal Code'
+    if (isUSBased) return 'ZIP code (optional)'
+    if (isCanadianBased) return 'Postal code (optional)'
     if (isUKBased) return 'Postcode'
     return 'Postcode (optional)'
+  }
+  if (isUKBased) {
+    cy.contains('Find UK address').should('be.visible').and('match', 'button')
   }
   let addressElements = [
     {
@@ -362,11 +365,9 @@ const assertFieldAddress = ({ element, hint = null, value = {} }) => {
       assert: assertFieldUneditable,
     },
     isUKBased && {
-      assert: ({ element }) =>
-        cy
-          .wrap(element)
-          .should('contain', 'Find UK address')
-          .and('match', 'button'),
+      label: postcodeLabel(),
+      value: value.postcode,
+      assert: assertFieldInput,
     },
     {
       label: 'Address line 1',
@@ -394,7 +395,7 @@ const assertFieldAddress = ({ element, hint = null, value = {} }) => {
       value: value.area.name,
       assert: assertFieldSelect,
     },
-    {
+    !isUKBased && {
       label: postcodeLabel(),
       value: value.postcode,
       assert: assertFieldInput,

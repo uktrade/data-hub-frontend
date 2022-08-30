@@ -16,6 +16,10 @@ import { ACTIVITY_TYPE, ANALYTICS_ACCORDION_TYPE } from '../constants'
 
 import CardUtils from './card/CardUtils'
 import { currencyGBP, decimal } from '../../../utils/number-utils'
+import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
+import { COMPANY_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
+import ActivityCardWrapper from './card/ActivityCardWrapper'
+import ActivityCardLabels from './card/ActivityCardLabels'
 
 const { format } = require('../../../utils/date')
 
@@ -64,53 +68,76 @@ export default class InvestmentProject extends React.PureComponent {
     const published = get(activity, 'published')
 
     return (
-      <Card>
-        <CardHeader
-          company={showDnbHierarchy ? company : null}
-          heading={<Link href={url}>{name}</Link>}
-          startTime={published}
-          blockText={`${title} - ${investmentType}`}
-        />
+      <CheckUserFeatureFlag userFeatureFlagName={COMPANY_ACTIVITY_FEATURE_FLAG}>
+        {(isFeatureFlagEnabled) =>
+          !isFeatureFlagEnabled ? (
+            <Card>
+              <CardHeader
+                company={showDnbHierarchy ? company : null}
+                heading={<Link href={url}>{name}</Link>}
+                startTime={published}
+                blockText={`${title} - ${investmentType}`}
+              />
 
-        <CardDetails
-          summary="Key details and people for this project"
-          summaryVisuallyHidden={` ${name}`}
-          showDetails={showDetails}
-          analyticsAccordionType={ANALYTICS_ACCORDION_TYPE.DATA_HUB_ACTIVITY}
-        >
-          <CardTable
-            rows={[
-              { header: 'Investment Type', content: investmentType },
-              {
-                header: 'Added by',
-                content: adviser ? (
-                  <CardDetailsList
-                    itemRenderer={AdviserItemRenderer}
-                    items={[adviser]}
-                  />
-                ) : null,
-              },
-              { header: 'Estimated land date', content: estimatedLandDate },
-              {
-                header: 'Company contact(s)',
-                content: (
-                  <CardDetailsList
-                    itemRenderer={ContactItemRenderer}
-                    items={contacts}
-                  />
-                ),
-              },
-              { header: 'Total Investment', content: totalInvestment },
-              {
-                header: 'Capital expenditure value',
-                content: foreignEquityInvestment,
-              },
-              { header: 'Gross value added (GVA)', content: grossValueAdded },
-              { header: 'Number of new jobs', content: numberNewJobs },
-            ]}
-          />
-        </CardDetails>
-      </Card>
+              <CardDetails
+                summary="Key details and people for this project"
+                summaryVisuallyHidden={` ${name}`}
+                showDetails={showDetails}
+                analyticsAccordionType={
+                  ANALYTICS_ACCORDION_TYPE.DATA_HUB_ACTIVITY
+                }
+              >
+                <CardTable
+                  rows={[
+                    { header: 'Investment Type', content: investmentType },
+                    {
+                      header: 'Added by',
+                      content: adviser ? (
+                        <CardDetailsList
+                          itemRenderer={AdviserItemRenderer}
+                          items={[adviser]}
+                        />
+                      ) : null,
+                    },
+                    {
+                      header: 'Estimated land date',
+                      content: estimatedLandDate,
+                    },
+                    {
+                      header: 'Company contact(s)',
+                      content: (
+                        <CardDetailsList
+                          itemRenderer={ContactItemRenderer}
+                          items={contacts}
+                        />
+                      ),
+                    },
+                    { header: 'Total Investment', content: totalInvestment },
+                    {
+                      header: 'Capital expenditure value',
+                      content: foreignEquityInvestment,
+                    },
+                    {
+                      header: 'Gross value added (GVA)',
+                      content: grossValueAdded,
+                    },
+                    { header: 'Number of new jobs', content: numberNewJobs },
+                  ]}
+                />
+              </CardDetails>
+            </Card>
+          ) : (
+            <ActivityCardWrapper dataTest="investment-activity">
+              <ActivityCardLabels
+                theme="Investment"
+                service="Project - FDI"
+                kind="New Investment Project"
+              />
+              <h3>Investment Project</h3>
+            </ActivityCardWrapper>
+          )
+        }
+      </CheckUserFeatureFlag>
     )
   }
 }

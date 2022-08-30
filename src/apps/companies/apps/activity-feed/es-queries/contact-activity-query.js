@@ -52,6 +52,16 @@ const contactActivityQuery = (
                           },
                         },
                       },
+                      {
+                        terms: {
+                          'object.dit:registrationStatus': [
+                            'Attended',
+                            'Confirmed',
+                            'Cancelled',
+                            'Registered',
+                          ],
+                        },
+                      },
                     ],
                   },
                 },

@@ -31,7 +31,7 @@
   "address_area": {
     "id": "fed8f33a-724e-423a-ae4a-af24446ed455"
   },
-  "address_postcode":null,
+  "address_postcode":"12345",
   "telephone_alternative":null,
   "email_alternative":null,
   "notes":null,

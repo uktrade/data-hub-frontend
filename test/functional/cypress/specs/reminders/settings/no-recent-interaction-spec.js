@@ -313,7 +313,6 @@ describe('Edit no recent interaction', () => {
 
   const assertErrorMessage = (value) => {
     cy.get('[data-test="reminders-yes"]').check()
-    cy.get('[data-test="reminder_days_0"]').clear()
     cy.get('[data-test="reminder_days_0"]').type(value)
     cy.get('[data-test="submit-button"]').click()
     cy.get('[data-test="summary-form-errors"] ul > li').should(
@@ -324,7 +323,7 @@ describe('Edit no recent interaction', () => {
 
   context('Form validation', () => {
     const indices = [0, 1, 2, 3, 4]
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', endpoint, {
         body: {
           reminder_days: [],
@@ -387,6 +386,46 @@ describe('Edit no recent interaction', () => {
     it('should display an error when the value has breached the limit', () => {
       assertErrorMessage('366')
     })
+
+    it('should display an error when there are duplicate reminder days', () => {
+      cy.get('[data-test="reminders-yes"]').check()
+      cy.get('[data-test="reminder_days_0"]').type(10)
+      cy.get('[data-test="add-another"]').click()
+      cy.get('[data-test="reminder_days_1"]').type(10)
+      cy.get('[data-test="submit-button"]').click()
+      cy.get('[data-test="summary-form-errors"] ul > li').should(
+        'contain',
+        'Enter a different number of days for each reminder'
+      )
+    })
+
+    it('should display an error when there are multiple duplicate reminder days', () => {
+      const indices = [0, 1, 2, 3]
+      cy.get('[data-test="reminders-yes"]').check()
+      cy.get('[data-test="reminder_days_0"]').type(20)
+      cy.get('[data-test="add-another"]').click()
+      cy.get('[data-test="reminder_days_1"]').type(30)
+      cy.get('[data-test="add-another"]').click()
+      cy.get('[data-test="reminder_days_2"]').type(20)
+      cy.get('[data-test="add-another"]').click()
+      cy.get('[data-test="reminder_days_3"]').type(30)
+      cy.get('[data-test="submit-button"]').click()
+      cy.get('[data-test="summary-form-errors"] ul > li').should(
+        'have.length',
+        4
+      )
+      cy.get('[data-test="summary-form-errors"] ul > li').each(($li) => {
+        expect($li.text()).to.equal(
+          'Enter a different number of days for each reminder'
+        )
+      })
+      indices.forEach((index) => {
+        cy.get(`[data-test="field-reminder_days_${index}"]`).should(
+          'contain',
+          'Enter a different number of days for each reminder'
+        )
+      })
+    })
   })
 
   context('Form submission', () => {
@@ -415,7 +454,7 @@ describe('Edit no recent interaction', () => {
       cy.get(`[data-test="reminder_days_4"]`).type(365)
       cy.get(`[data-test="submit-button"]`).click()
       assertPayload('@saveNri', {
-        reminder_days: ['1', '10', '15', '20', '365'],
+        reminder_days: [1, 10, 15, 20, 365],
         email_reminders_enabled: true,
       })
       cy.get('[data-test="flash"]').should('have.text', 'Settings updated')

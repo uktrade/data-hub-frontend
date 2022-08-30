@@ -9,7 +9,14 @@ import multiInstance from '../../utils/multiinstance'
 import { CONTACT_FORM__SUBMIT } from '../../actions'
 
 import Form from '../Form'
-import { FieldInput, FieldRadios, FieldTextarea, FieldAddress, Main } from '..'
+import {
+  FieldInput,
+  FieldRadios,
+  FieldTextarea,
+  FieldCheckboxes,
+  FieldAddress,
+  Main,
+} from '..'
 import LocalHeader from '../LocalHeader/LocalHeader'
 import ContactResource from '../Resource/Contact'
 import CompanyResource from '../Resource/Company'
@@ -232,7 +239,7 @@ const _ContactForm = ({
                       ].filter(Boolean),
                     }}
                   >
-                    {() => (
+                    {({ values }) => (
                       <>
                         <FieldInput
                           label="First name"
@@ -258,7 +265,7 @@ const _ContactForm = ({
                           label="Email address"
                           name="email"
                           type="email"
-                          required="Enter an email"
+                          required="Enter an email address"
                           validate={validators.email}
                         />
                         <FieldInput
@@ -303,6 +310,21 @@ const _ContactForm = ({
                           options={[
                             { value: YES, label: YES },
                             { value: NO, label: NO },
+                          ]}
+                        />
+                        <FieldCheckboxes
+                          name="acceptsDitEmailMarketing"
+                          options={[
+                            {
+                              value: YES,
+                              label:
+                                'The company contact does accept email marketing',
+                              hint:
+                                values?.acceptsDitEmailMarketing?.includes(
+                                  YES
+                                ) &&
+                                'By checking this box, you confirm that the contact has opted in to email marketing.',
+                            },
                           ]}
                         />
                         <FieldTextarea

@@ -1,9 +1,9 @@
 # Feature flags
 
 There are two types of feature flags.
-1. Environment flags. Set as one value across an environment. 
-1. User flags. These can be set on a user-by-user basis. Useful if you want to turn a feature on only for certain users to see it in different environments. 
 
+1. Environment flags. Set as one value across an environment.
+1. User flags. These can be set on a user-by-user basis. Useful if you want to turn a feature on only for certain users to see it in different environments.
 
 ## Environment feature flags
 
@@ -14,7 +14,7 @@ To create a feature flag you just need to add one in Django and it will be added
 3. Your feature flag will now be available as a property called 'features' within `res.locals`.
 4. As this gets exposed to the view you can now toggle components on/off using conditions in your `.njk` files.
 5. Once you are happy with your feature flag, ask for this flag to be added to environments such as staging and production.
-6. Clean up afterwards :-)  
+6. Clean up afterwards :-)
 
 ## User feature flags
 
@@ -24,6 +24,7 @@ To create a feature flag you just need to add one in Django and it will be added
 2. Add to user in Django admin - `{api}/admin/company/advisor/` select user, and scroll down to the bottom under the 'other' heading. You should be able to see your flag on the left hand column and add it to the user.
 
 ### Using Express middleware
+
 1. Call the `userFeatures` middleware function with the name of your key (e.g. `userFeatures('user-contact-activities')`) directly before your controller function gets called in the router, e.g.:
 
 ```
@@ -50,12 +51,12 @@ router.get(
 ```
 
 <CheckUserFeatureFlag userFeatureFlagName="my-user-feature">
-{(isFeatureFlagEnabled) 
-  => {isFeatureFlagEnabled && <MyNewComponent />}} 
+{(isFeatureFlagEnabled)
+  => {isFeatureFlagEnabled && <MyNewComponent />}}
 </CheckUserFeature />
 
 ```
 
 ## Adding feature flags in Sandbox
 
-To add a feature flag in Sandbox for functional testing you just need to add your feature flag name to this JSON file https://github.com/uktrade/data-hub-frontend/blob/master/test/sandbox/fixtures/v3/feature-flag/feature-flag.json
+To add a feature flag in Sandbox for functional testing you just need to add your feature flag name to this JSON file https://github.com/uktrade/data-hub-frontend/blob/main/test/sandbox/fixtures/v3/feature-flag/feature-flag.json

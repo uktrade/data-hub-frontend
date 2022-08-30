@@ -63,11 +63,7 @@ const buildBreadcrumbs = (currentTab, id, name) => {
   return initalBreadcrumbs.concat(dynamicBreadcrumbs)
 }
 
-const ContactLocalHeader = ({
-  contact,
-  isContactActivitiesFeatureOn,
-  writeFlashMessage,
-}) => {
+const ContactLocalHeader = ({ contact, writeFlashMessage }) => {
   return (
     <>
       <LocalHeader
@@ -95,7 +91,7 @@ const ContactLocalHeader = ({
               )}
             </StyledLocalHeaderHeading>
           </GridCol>
-          {isContactActivitiesFeatureOn && !contact.archived && (
+          {!contact.archived && (
             <GridCol setWidth="one-quarter">
               <Button
                 data-test="add-interaction-button"
@@ -125,7 +121,6 @@ const ContactLocalHeader = ({
 
 ContactLocalHeader.propTypes = {
   contactId: PropTypes.string.isRequired,
-  isContactActivitiesFeatureOn: PropTypes.bool.isRequired,
   writeFlashMessage: PropTypes.func,
 }
 

@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import urls from '../../../../lib/urls'
 import {
   transformReminderDaysToAPI,
+  getReminderDaysFromFormValues,
   transformFormDataToAnalyticsData,
 } from '../transformers'
 
@@ -43,6 +44,21 @@ const EMPTY_ERROR_MESSAGE =
 
 const isPositiveInteger = (value) => POSITIVE_INT_REGEX.test(value)
 
+const hasReminderDayDuplicates = (formValue, field, formValues) => {
+  const reminderDays = getReminderDaysFromFormValues(formValues)
+  // Filter out the current field that's being validated for duplicity
+  const filteredReminderDays = Object.keys(reminderDays).reduce(
+    (object, key) => {
+      return {
+        ...object,
+        ...(key === field.name ? {} : { [key]: reminderDays[key] }),
+      }
+    },
+    {}
+  )
+  return Object.values(filteredReminderDays).includes(formValue)
+}
+
 const NoRecentInteractionForm = () => (
   <DefaultLayout
     heading={
@@ -70,12 +86,14 @@ const NoRecentInteractionForm = () => (
       initialValuesTaskName={TASK_GET_NRI_REMINDER_SUBSCRIPTIONS}
       submissionTaskName={TASK_SAVE_NRI_REMINDER_SUBSCRIPTIONS}
       redirectTo={() => urls.reminders.settings.index()}
-      transformPayload={(state) => ({
-        reminder_days: transformReminderDaysToAPI(state),
-        email_reminders_enabled: state.emailNotifications === OPTION_YES,
+      transformPayload={(formValues) => ({
+        reminder_days: transformReminderDaysToAPI(formValues),
+        email_reminders_enabled: formValues.emailNotifications === OPTION_YES,
       })}
       analyticsFormName="editNoRecentInteractionReminderSettings"
-      analyticsData={(data) => transformFormDataToAnalyticsData(data)}
+      analyticsData={(formValues) =>
+        transformFormDataToAnalyticsData(formValues)
+      }
       flashMessage={() => 'Settings updated'}
       cancelRedirectTo={() => urls.reminders.settings.index()}
     >
@@ -110,10 +128,19 @@ const NoRecentInteractionForm = () => (
                               text="days with no interaction"
                               name={`reminder_days_${groupIndex}`}
                               data-test={`reminder_days_${groupIndex}`}
-                              validate={(value) => {
+                              validate={(value, field, state) => {
                                 if (isPositiveInteger(value)) {
-                                  const val = parseInt(value, 10)
-                                  return val > 0 && val <= MAX_DAYS
+                                  const formValue = parseInt(value, 10)
+                                  if (
+                                    hasReminderDayDuplicates(
+                                      formValue,
+                                      field,
+                                      state.values
+                                    )
+                                  ) {
+                                    return 'Enter a different number of days for each reminder'
+                                  }
+                                  return formValue > 0 && formValue <= MAX_DAYS
                                     ? null
                                     : ERROR_MESSAGE
                                 } else if (isEmpty(value)) {

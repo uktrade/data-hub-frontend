@@ -10,7 +10,7 @@ describe('transformAventriAttendee', () => {
     endDate: '2023-02-14T20:09:14',
     startDate: '2022-02-14T20:09:14',
     object: {
-      'dit:aventri:registrationstatus': registrationStatus,
+      'dit:registrationStatus': registrationStatus,
     },
   })
 

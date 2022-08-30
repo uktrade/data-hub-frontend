@@ -24,9 +24,7 @@ export const transformAventriAttendee = (attendee) => ({
   date: formatStartAndEndDate(attendee.startDate, attendee.endDate),
   eventName: attendee.eventName,
   registrationStatus:
-    AVENTRI_ATTENDEE_REG_STATUSES[
-      attendee.object['dit:aventri:registrationstatus']
-    ],
+    AVENTRI_ATTENDEE_REG_STATUSES[attendee.object['dit:registrationStatus']],
   contactUrl: attendee.datahubContactUrl,
 })
 
@@ -42,7 +40,14 @@ export default function AventriAttendee({ activity: attendee }) {
 
   return eventName ? (
     <ActivityCardWrapper dataTest="aventri-activity">
-      <ActivityCardLabels service="event" kind="aventri service delivery" />
+      <ActivityCardLabels
+        service="event"
+        kind={
+          registrationStatus === 'Attended'
+            ? 'aventri service delivery'
+            : 'interaction'
+        }
+      />
       <ActivityCardSubject>
         {eventName}
         {registrationStatus && (

@@ -13,6 +13,16 @@ const aventriAttendeeQuery = ({ eventId, sort, from }) => ({
             'object.attributedTo.id': `dit:aventri:Event:${eventId}`,
           },
         },
+        {
+          terms: {
+            'object.dit:registrationStatus': [
+              'Attended',
+              'Confirmed',
+              'Cancelled',
+              'Registered',
+            ],
+          },
+        },
       ],
     },
   },

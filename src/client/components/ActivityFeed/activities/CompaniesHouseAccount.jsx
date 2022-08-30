@@ -11,6 +11,10 @@ import {
   ANALYTICS_ACCORDION_TYPE,
   SOURCE_TYPES,
 } from '../constants'
+import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
+import { COMPANY_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
+import ActivityCardWrapper from './card/ActivityCardWrapper'
+import ActivityCardLabels from './card/ActivityCardLabels'
 
 const { format } = require('../../../utils/date')
 
@@ -50,38 +54,51 @@ export default class CompaniesHouseAccount extends React.PureComponent {
     )
 
     return (
-      <Card>
-        <CardHeader
-          company={showDnbHierarchy ? company : null}
-          heading={summary}
-          blockText="Companies House"
-          sourceType={SOURCE_TYPES.external}
-          subHeading="Accounts record"
-          startTime={startTime}
-        />
+      <CheckUserFeatureFlag userFeatureFlagName={COMPANY_ACTIVITY_FEATURE_FLAG}>
+        {(isFeatureFlagEnabled) =>
+          !isFeatureFlagEnabled ? (
+            <Card>
+              <CardHeader
+                company={showDnbHierarchy ? company : null}
+                heading={summary}
+                blockText="Companies House"
+                sourceType={SOURCE_TYPES.external}
+                subHeading="Accounts record"
+                startTime={startTime}
+              />
 
-        <CardDetails
-          summary="View key details for this account"
-          summaryVisuallyHidden={`${summary} in Companies House`}
-          link={{ taxonomy, text: 'Companies House accounts' }}
-          showDetails={showDetails}
-          analyticsAccordionType={ANALYTICS_ACCORDION_TYPE.COMPANIES_HOUSE}
-        >
-          <CardTable
-            rows={[
-              { header: 'Balance sheet date', content: balanceSheetDate },
-              {
-                header:
-                  'Net assets liabilities including pension asset liability',
-                content: netAssetsLiabilities,
-              },
-              { header: 'Period start', content: periodStart },
-              { header: 'Period end', content: periodEnd },
-              { header: 'Shareholder funds', content: shareholderFunds },
-            ]}
-          />
-        </CardDetails>
-      </Card>
+              <CardDetails
+                summary="View key details for this account"
+                summaryVisuallyHidden={`${summary} in Companies House`}
+                link={{ taxonomy, text: 'Companies House accounts' }}
+                showDetails={showDetails}
+                analyticsAccordionType={
+                  ANALYTICS_ACCORDION_TYPE.COMPANIES_HOUSE
+                }
+              >
+                <CardTable
+                  rows={[
+                    { header: 'Balance sheet date', content: balanceSheetDate },
+                    {
+                      header:
+                        'Net assets liabilities including pension asset liability',
+                      content: netAssetsLiabilities,
+                    },
+                    { header: 'Period start', content: periodStart },
+                    { header: 'Period end', content: periodEnd },
+                    { header: 'Shareholder funds', content: shareholderFunds },
+                  ]}
+                />
+              </CardDetails>
+            </Card>
+          ) : (
+            <ActivityCardWrapper dataTest="companies-house-account-activity">
+              <ActivityCardLabels kind="Companies House Update"></ActivityCardLabels>
+              <h3>Companies House Account</h3>
+            </ActivityCardWrapper>
+          )
+        }
+      </CheckUserFeatureFlag>
     )
   }
 }

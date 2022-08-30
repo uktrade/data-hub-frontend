@@ -44,6 +44,13 @@ const assertRadioGroup = (label, option) =>
 const assertRadioGroupNoOptionChecked = (label) =>
   cy.contains(label).parent().find('input').should('not.be.checked')
 
+const assertNoMarketingConsent = () =>
+  cy
+    .contains('The company contact does accept email marketing')
+    .parent()
+    .find('input')
+    .should('not.be.checked')
+
 describe('Create contact form', () => {
   const NEW_CONTACT_ID = '14890695-ce54-4419-88d3-9224754ecbc0'
 
@@ -55,6 +62,8 @@ describe('Create contact form', () => {
       Contacts: '/contacts/',
       'Add contact at Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978': null,
     })
+
+    assertNoMarketingConsent()
 
     assertRadioGroupNoOptionChecked('Is this person a primary contact?')
     assertRadioGroupNoOptionChecked(
@@ -77,7 +86,7 @@ describe('Create contact form', () => {
       'First name': 'Enter a first name',
       'Last name': 'Enter a last name',
       'Job title': 'Enter a job title',
-      'Email address': 'Enter an email',
+      'Email address': 'Enter an email address',
       'Is this contact’s work address the same as the company address?':
         "Select yes if the contact's work address is the same as the company address",
       'Is this person a primary contact?':
@@ -97,7 +106,19 @@ describe('Create contact form', () => {
       'First name': 'Enter a first name',
       'Last name': 'Enter a last name',
       'Job title': 'Enter a job title',
-      'Email address': 'Enter an email',
+      'Email address': 'Enter an email address',
+      'Is this person a primary contact?':
+        "Select yes if this person is the company's primary contact",
+    })
+
+    cy.contains('Country').parent().find('select').select('Brazil')
+    cy.clickSubmitButton('Add contact')
+
+    assertErrors({
+      'First name': 'Enter a first name',
+      'Last name': 'Enter a last name',
+      'Job title': 'Enter a job title',
+      'Email address': 'Enter an email address',
       'Is this person a primary contact?':
         "Select yes if this person is the company's primary contact",
       'Address line 1': 'Enter an address',
@@ -272,6 +293,8 @@ describe('Edit contact', () => {
       'href',
       `/companies/${ZBONCAK_COMPANY_ID}`
     )
+
+    assertNoMarketingConsent()
 
     assertRadioGroup('Is this person a primary contact?', 'Yes')
     assertRadioGroup(

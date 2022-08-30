@@ -13,10 +13,10 @@
 - Pull requests deploy a heroku [review app](https://devcenter.heroku.com/articles/github-integration-review-apps)
   with those changes. Details of the review app will be reported in the pull request.
 - You _may_ rebase your branch after feedback if it's to include relevant
-  updates from the master branch. We prefer a rebase here to a merge commit
-  as we prefer a clean and straight history on master with discrete merge
+  updates from the main branch. We prefer a rebase here to a merge commit
+  as we prefer a clean and straight history on main with discrete merge
   commits for features
-- Features are merged onto the `master` branch
+- Features are merged onto the `main` branch
 
 ## Code
 
@@ -30,4 +30,4 @@ Write tests.
 ## Versioning
 
 We use [Semantic Versioning](http://semver.org/), and bump the version on
-master only. Please don't submit your own proposed version numbers.
+main only. Please don't submit your own proposed version numbers.

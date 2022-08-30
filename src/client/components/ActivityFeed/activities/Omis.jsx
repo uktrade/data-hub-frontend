@@ -15,6 +15,10 @@ import { AdviserItemRenderer, ContactItemRenderer } from './card/item-renderers'
 import { ACTIVITY_TYPE, ANALYTICS_ACCORDION_TYPE } from '../constants'
 
 import CardUtils from './card/CardUtils'
+import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
+import { COMPANY_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
+import ActivityCardLabels from './card/ActivityCardLabels'
+import ActivityCardWrapper from './card/ActivityCardWrapper'
 
 export default class Omis extends React.PureComponent {
   static propTypes = {
@@ -40,46 +44,63 @@ export default class Omis extends React.PureComponent {
     const contacts = CardUtils.getContacts(activity)
 
     return (
-      <Card>
-        <CardHeader
-          company={showDnbHierarchy ? company : null}
-          heading={<Link href={url}>{reference}</Link>}
-          startTime={published}
-          blockText="New Order (OMIS) added"
-        />
+      <CheckUserFeatureFlag userFeatureFlagName={COMPANY_ACTIVITY_FEATURE_FLAG}>
+        {(isFeatureFlagEnabled) =>
+          !isFeatureFlagEnabled ? (
+            <Card>
+              <CardHeader
+                company={showDnbHierarchy ? company : null}
+                heading={<Link href={url}>{reference}</Link>}
+                startTime={published}
+                blockText="New Order (OMIS) added"
+              />
 
-        <CardDetails
-          summary="View key details and people for this order"
-          summaryVisuallyHidden={` reference ${reference}`}
-          showDetails={showDetails}
-          analyticsAccordionType={ANALYTICS_ACCORDION_TYPE.DATA_HUB_ACTIVITY}
-        >
-          <CardTable
-            rows={[
-              { header: 'Country', content: country },
-              { header: 'UK region', content: ukRegion },
-              {
-                header: 'Added by',
-                content: adviser ? (
-                  <CardDetailsList
-                    itemRenderer={AdviserItemRenderer}
-                    items={[adviser]}
-                  />
-                ) : null,
-              },
-              {
-                header: 'Company contact(s)',
-                content: (
-                  <CardDetailsList
-                    itemRenderer={ContactItemRenderer}
-                    items={contacts}
-                  />
-                ),
-              },
-            ]}
-          />
-        </CardDetails>
-      </Card>
+              <CardDetails
+                summary="View key details and people for this order"
+                summaryVisuallyHidden={` reference ${reference}`}
+                showDetails={showDetails}
+                analyticsAccordionType={
+                  ANALYTICS_ACCORDION_TYPE.DATA_HUB_ACTIVITY
+                }
+              >
+                <CardTable
+                  rows={[
+                    { header: 'Country', content: country },
+                    { header: 'UK region', content: ukRegion },
+                    {
+                      header: 'Added by',
+                      content: adviser ? (
+                        <CardDetailsList
+                          itemRenderer={AdviserItemRenderer}
+                          items={[adviser]}
+                        />
+                      ) : null,
+                    },
+                    {
+                      header: 'Company contact(s)',
+                      content: (
+                        <CardDetailsList
+                          itemRenderer={ContactItemRenderer}
+                          items={contacts}
+                        />
+                      ),
+                    },
+                  ]}
+                />
+              </CardDetails>
+            </Card>
+          ) : (
+            <ActivityCardWrapper dataTest="order-activity">
+              <ActivityCardLabels
+                theme="Orders (OMIS)"
+                service="Event"
+                kind="New Order"
+              />
+              <h3>Order (OMIS)</h3>
+            </ActivityCardWrapper>
+          )
+        }
+      </CheckUserFeatureFlag>
     )
   }
 }
