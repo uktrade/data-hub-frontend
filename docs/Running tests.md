@@ -6,6 +6,15 @@ Prettier and Sass linter will run as part of the build, assure you run the comma
 
 `$ npm run test:lint`
 
+## Unit Tests
+
+To run the whole suite:
+
+`npm run test:unit`
+
+To run one file:
+
+`npm run test:unit:files relative_path_to_test/example.test.js`
 ## Functional Tests
 
 The aim of this test suite is perform functional tests of frontend components in isolation.
