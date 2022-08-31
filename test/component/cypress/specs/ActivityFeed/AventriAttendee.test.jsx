@@ -13,6 +13,9 @@ describe('AventriAttendee', () => {
       'dit:registrationStatus': 'Confirmed',
       'dit:emailAddress': 'johndoe@outlook.com',
       id: 'dit:aventri:Attendee:1111',
+      attributedTo: {
+        id: 'dit:aventri:Attendee:1111',
+      },
     },
     startDate: '2022-02-24T11:28:57',
     endDate: '2023-01-01T11:28:57',
