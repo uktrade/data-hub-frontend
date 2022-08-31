@@ -21,12 +21,11 @@ Prerequisite:
 
 ## Creating Docker container for CircleCI
 
+Ensure you have [gcloud CLI installed](https://cloud.google.com/sdk/docs/install-sdk) and you are logged in following their instructions (you will need to ask SRE for access). You will need to setup authentication using the [gcloud credential helper](https://cloud.google.com/container-registry/docs/advanced-authentication#gcloud-helper) before you can push the new container.
+
+
 ```bash
-export VERSION=2.0.2 # Increment this version each time when you edit Dockerfile.
-
-Ensure you have gcloud sdk and you are logged in following their instructions:
-
-https://cloud.google.com/sdk/docs
+export VERSION=2.0.3 # Increment this version each time when you edit Dockerfile.
 
 docker build -f Dockerfile.dependencies -t data-hub-frontend-dependencies .
 
@@ -39,7 +38,7 @@ docker push gcr.io/sre-docker-registry/data-hub-frontend-dependencies:${VERSION}
 docker push gcr.io/sre-docker-registry/data-hub-frontend-dependencies:latest
 ```
 
-Your image should be now listed at [Google Container Registry](http://gcr.io/sre-docker-registry/github.com/uktrade).
+Your image should be now listed at [Google Container Registry](https://console.cloud.google.com/gcr/images/sre-docker-registry/global/data-hub-frontend-dependencies).
 
 ## Start Dev
 
