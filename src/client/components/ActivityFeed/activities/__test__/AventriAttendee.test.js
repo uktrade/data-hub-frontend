@@ -61,4 +61,10 @@ describe('transformAventriAttendee', () => {
       dateStub.calledWith(activity().startDate, activity().endDate)
     })
   })
+
+  describe('aventri id', () => {
+    it('should extract and return the id number', () => {
+      expect(transformAventriAttendee(activity()).eventId).to.eq('1111')
+    })
+  })
 })
