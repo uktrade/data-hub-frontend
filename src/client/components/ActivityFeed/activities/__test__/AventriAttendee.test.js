@@ -11,6 +11,9 @@ describe('transformAventriAttendee', () => {
     startDate: '2022-02-14T20:09:14',
     object: {
       'dit:registrationStatus': registrationStatus,
+      attributedTo: {
+        id: 'dit:aventri:Attendee:1111',
+      },
     },
   })
 
@@ -56,6 +59,12 @@ describe('transformAventriAttendee', () => {
     it('calls "formatStartAndEndDate"', () => {
       transformAventriAttendee(activity())
       dateStub.calledWith(activity().startDate, activity().endDate)
+    })
+  })
+
+  describe('aventri id', () => {
+    it('should extract and return the id number', () => {
+      expect(transformAventriAttendee(activity()).eventId).to.eq('1111')
     })
   })
 })
