@@ -1,5 +1,5 @@
 # E2E docker image used to run tests locally
-FROM node:16.16.0-buster
+FROM node:18.7.0-buster
 
 # Install visual test dependencies
 RUN apt-get update
