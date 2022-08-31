@@ -28,14 +28,12 @@ Activity.propTypes = {
   showDetails: PropTypes.bool,
   showDnbHierarchy: PropTypes.bool,
   filter: PropTypes.array,
-  isContactActivitiesFeatureOn: PropTypes.bool,
 }
 
 Activity.defaultProps = {
   showDetails: false,
   showDnbHierarchy: false,
   filter: [],
-  isContactActivitiesFeatureOn: false,
 }
 
 export default Activity
