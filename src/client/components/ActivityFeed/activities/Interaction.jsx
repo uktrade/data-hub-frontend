@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
-import styled from 'styled-components'
 
 import {
   Card,
@@ -20,27 +19,21 @@ import { ACTIVITY_TYPE, ANALYTICS_ACCORDION_TYPE } from '../constants'
 
 import CardUtils from './card/CardUtils'
 import InteractionUtils from './InteractionUtils'
-import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import { formatMediumDate } from '../../../utils/date'
 
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityCardLabels from './card/ActivityCardLabels'
-
-const Notes = styled('div')`
-  font-size: ${FONT_SIZE.SIZE_16};
-  font-weight: ${FONT_WEIGHTS.regular};
-  line-height: ${FONT_SIZE.SIZE_24};
-  margin-bottom: ${SPACING.SCALE_1};
-`
+import ActivityCardNotes from './card/ActivityCardNotes'
+import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
+import { CONTACT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 
 export default class Interaction extends React.PureComponent {
   static propTypes = {
     activity: PropTypes.object.isRequired,
     showDetails: PropTypes.bool.isRequired,
     showDnbHierarchy: PropTypes.bool.isRequired,
-    isContactActivitiesFeatureOn: PropTypes.bool.isRequired,
   }
 
   static canRender(activity) {
@@ -48,12 +41,7 @@ export default class Interaction extends React.PureComponent {
   }
 
   render() {
-    const {
-      activity,
-      showDetails,
-      showDnbHierarchy,
-      isContactActivitiesFeatureOn,
-    } = this.props
+    const { activity, showDetails, showDnbHierarchy } = this.props
     const transformed = {
       ...CardUtils.transform(activity),
       ...InteractionUtils.transform(activity),
@@ -73,7 +61,6 @@ export default class Interaction extends React.PureComponent {
 
     const serviceName = activityObject['dit:service']?.name
     const serviceNotes = activityObject.content
-    const MAX_NOTE_LENGTH = 255
 
     const formattedAdvisers = () => {
       return (
@@ -96,74 +83,72 @@ export default class Interaction extends React.PureComponent {
       },
     ]
 
-    const InteractionActivity = () => (
-      <ActivityCardWrapper dataTest="interaction-activity">
-        <ActivityCardLabels theme={theme} service={service} kind={kind} />
-        <ActivityCardSubject>
-          <Link data-test="interaction-subject" href={transformed.url}>
-            {transformed.subject}
-          </Link>
-        </ActivityCardSubject>
-        {serviceNotes && (
-          <Notes data-test="interaction-notes">
-            {serviceNotes.length < MAX_NOTE_LENGTH
-              ? serviceNotes
-              : serviceNotes
-                  .slice(0, MAX_NOTE_LENGTH)
-                  .split(' ')
-                  .slice(0, -1)
-                  .join(' ') + ' ...'}{' '}
-          </Notes>
-        )}
-        <ActivityCardMetadata metadata={metadata} />
-      </ActivityCardWrapper>
-    )
-
-    return isContactActivitiesFeatureOn ? (
-      <InteractionActivity />
-    ) : (
-      <Card isUpcoming={transformed.isUpcoming}>
-        <CardHeader
-          company={showDnbHierarchy ? company : null}
-          heading={<Link href={transformed.url}>{transformed.subject}</Link>}
-          startTime={transformed.startTime}
-          badge={transformed.badge}
-        />
-        <CardDetails
-          summary={`View ${transformed.typeText} details`}
-          summaryVisuallyHidden={` for ${transformed.subject}`}
-          link={{
-            url: transformed.url,
-            text: `You can view more on the ${transformed.typeText} detail page`,
-          }}
-          showDetails={showDetails}
-          analyticsAccordionType={ANALYTICS_ACCORDION_TYPE.DATA_HUB_ACTIVITY}
-        >
-          <CardTable
-            rows={[
-              {
-                header: 'Company contact(s)',
-                content: (
-                  <CardDetailsList
-                    itemRenderer={ContactItemRenderer}
-                    items={contacts}
+    return (
+      <CheckUserFeatureFlag userFeatureFlagName={CONTACT_ACTIVITY_FEATURE_FLAG}>
+        {(isFeatureFlagEnabled) =>
+          !isFeatureFlagEnabled ? (
+            <div data-test="interaction-activity">
+              <Card isUpcoming={transformed.isUpcoming}>
+                <CardHeader
+                  company={showDnbHierarchy ? company : null}
+                  heading={
+                    <Link href={transformed.url}>{transformed.subject}</Link>
+                  }
+                  startTime={transformed.startTime}
+                  badge={transformed.badge}
+                />
+                <CardDetails
+                  summary={`View ${transformed.typeText} details`}
+                  summaryVisuallyHidden={` for ${transformed.subject}`}
+                  link={{
+                    url: transformed.url,
+                    text: `You can view more on the ${transformed.typeText} detail page`,
+                  }}
+                  showDetails={showDetails}
+                  analyticsAccordionType={
+                    ANALYTICS_ACCORDION_TYPE.DATA_HUB_ACTIVITY
+                  }
+                >
+                  <CardTable
+                    rows={[
+                      {
+                        header: 'Company contact(s)',
+                        content: (
+                          <CardDetailsList
+                            itemRenderer={ContactItemRenderer}
+                            items={contacts}
+                          />
+                        ),
+                      },
+                      {
+                        header: 'Adviser(s)',
+                        content: (
+                          <CardDetailsList
+                            itemRenderer={AdviserItemRenderer}
+                            items={advisers}
+                          />
+                        ),
+                      },
+                      { header: 'Services', content: transformed.service },
+                    ]}
                   />
-                ),
-              },
-              {
-                header: 'Adviser(s)',
-                content: (
-                  <CardDetailsList
-                    itemRenderer={AdviserItemRenderer}
-                    items={advisers}
-                  />
-                ),
-              },
-              { header: 'Services', content: transformed.service },
-            ]}
-          />
-        </CardDetails>
-      </Card>
+                </CardDetails>
+              </Card>
+            </div>
+          ) : (
+            <ActivityCardWrapper dataTest="interaction-activity">
+              <ActivityCardLabels theme={theme} service={service} kind={kind} />
+              <ActivityCardSubject>
+                <Link data-test="interaction-subject" href={transformed.url}>
+                  {transformed.subject}
+                </Link>
+              </ActivityCardSubject>
+              {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
+              <ActivityCardMetadata metadata={metadata} />
+            </ActivityCardWrapper>
+          )
+        }
+      </CheckUserFeatureFlag>
     )
   }
 }
