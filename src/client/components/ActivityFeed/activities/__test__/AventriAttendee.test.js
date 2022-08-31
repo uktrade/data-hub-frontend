@@ -11,6 +11,9 @@ describe('transformAventriAttendee', () => {
     startDate: '2022-02-14T20:09:14',
     object: {
       'dit:registrationStatus': registrationStatus,
+      attributedTo: {
+        id: 'dit:aventri:Attendee:1111',
+      },
     },
   })
 
