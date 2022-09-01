@@ -122,7 +122,9 @@ export default class Omis extends React.PureComponent {
                 service="Event"
                 kind="New Order"
               />
-              <ActivityCardSubject>{reference}</ActivityCardSubject>
+              <ActivityCardSubject>
+                <Link href={`${url}/work-order`}>{reference}</Link>
+              </ActivityCardSubject>
               <ActivityCardMetadata metadata={metadata} />
             </ActivityCardWrapper>
           )

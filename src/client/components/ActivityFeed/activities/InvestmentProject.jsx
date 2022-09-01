@@ -170,7 +170,9 @@ export default class InvestmentProject extends React.PureComponent {
                 service="Project - FDI"
                 kind="New Investment Project"
               />
-              <ActivityCardSubject>{name}</ActivityCardSubject>
+              <ActivityCardSubject>
+                <Link href={`${url}/details`}>{name}</Link>
+              </ActivityCardSubject>
               <ActivityCardMetadata metadata={metadata} />
             </ActivityCardWrapper>
           )

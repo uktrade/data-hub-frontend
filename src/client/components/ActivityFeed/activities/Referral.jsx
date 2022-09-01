@@ -111,7 +111,9 @@ export default class Referral extends React.PureComponent {
             <ActivityCardWrapper>
               <Row>
                 <LeftCol>
-                  <ActivityCardSubject>{subject}</ActivityCardSubject>
+                  <ActivityCardSubject>
+                    <Link href={url}>{subject}</Link>
+                  </ActivityCardSubject>
                   <ActivityCardMetadata metadata={metadata} />
                 </LeftCol>
                 <RightCol>
