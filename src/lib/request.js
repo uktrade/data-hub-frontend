@@ -18,7 +18,7 @@ const stripScripts = (key, value) => {
 }
 
 const stripScript = (text) => {
-  const SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi
+  const SCRIPT_REGEX = /<script\b[^>]*>[\s\S]*?<\/script\b[^>]*>/gi
   while (SCRIPT_REGEX.test(text)) {
     logger.warn('Found script tag in response')
     text = text.replace(SCRIPT_REGEX, '')
