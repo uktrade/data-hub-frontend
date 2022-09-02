@@ -32,6 +32,8 @@ import {
   state2props,
 } from './state'
 
+import { sanitizeFilter } from '../../../../client/filters'
+
 const CompaniesCollection = ({
   payload,
   currentAdviserId,
@@ -91,6 +93,15 @@ const CompaniesCollection = ({
         entityName="company"
         entityNamePlural="companies"
         addItemUrl="/companies/create"
+        sanitizeFiltersForAnalytics={({
+          name,
+          ukPostcode,
+          leadItaOrGlobalAccountManagers,
+        }) => ({
+          ...sanitizeFilter(name),
+          ...sanitizeFilter(ukPostcode),
+          ...sanitizeFilter(leadItaOrGlobalAccountManagers),
+        })}
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
           <FilterToggleSection

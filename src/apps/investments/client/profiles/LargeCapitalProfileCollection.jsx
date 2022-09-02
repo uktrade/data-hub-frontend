@@ -12,6 +12,7 @@ import {
 import { listSkeletonPlaceholder } from '../../../../client/components/SkeletonPlaceholder'
 import { TASK_GET_PROFILES_LIST, ID } from './state'
 import { INVESTMENTS__PROFILES_LOADED } from '../../../../client/actions'
+import { sanitizeFilter } from '../../../../client/filters'
 
 const QS_PARAMS = {
   countryOfOrigin: 'country_of_origin',
@@ -124,6 +125,25 @@ const LargeCapitalProfileCollection = ({
           results={results}
           isComplete={isComplete}
           collectionName="profile"
+          sanitizeFiltersForAnalytics={({
+            investorCompanyName,
+            investableCapitalMin,
+            investableCapitalMax,
+            globalAssetsUnderManagementMin,
+            globalAssetsUnderManagementMax,
+          }) => ({
+            ...sanitizeFilter(investorCompanyName, 'Company name'),
+            ...sanitizeFilter(investableCapitalMin, 'Investable capital min'),
+            ...sanitizeFilter(investableCapitalMax, 'Investable capital max'),
+            ...sanitizeFilter(
+              globalAssetsUnderManagementMin,
+              'Global assets under management min'
+            ),
+            ...sanitizeFilter(
+              globalAssetsUnderManagementMax,
+              'Global assets under management max'
+            ),
+          })}
           taskProps={{
             name: TASK_GET_PROFILES_LIST,
             id: ID,

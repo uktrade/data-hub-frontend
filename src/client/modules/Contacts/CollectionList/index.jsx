@@ -26,6 +26,8 @@ import {
   TASK_GET_CONTACTS_METADATA,
 } from './state'
 
+import { sanitizeFilter } from '../../../../client/filters'
+
 const ContactsCollection = ({
   payload,
   optionMetadata,
@@ -70,6 +72,10 @@ const ContactsCollection = ({
         selectedFilters={selectedFilters}
         baseDownloadLink="/contacts/export"
         entityName="contact"
+        sanitizeFiltersForAnalytics={({ name, companyName }) => ({
+          ...sanitizeFilter(name),
+          ...sanitizeFilter(companyName),
+        })}
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
           <FilterToggleSection
