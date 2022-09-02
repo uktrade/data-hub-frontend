@@ -418,6 +418,21 @@ describe('Company activity feed', () => {
           })
         )
       })
+
+      it('displays the order reference with link', () => {
+        cy.get('[data-test="order-activity"]').within(() =>
+          cy
+            .get('[data-test="order-activity-card-subject"]')
+            .should('exist')
+            .should('have.text', 'HAM100')
+            .get('a')
+            .should(
+              'have.attr',
+              'href',
+              'https://www.my-website.com/work-order'
+            )
+        )
+      })
     })
 
     context('Investment project', () => {
@@ -468,6 +483,21 @@ describe('Company activity feed', () => {
             })
         )
       })
+
+      it('displays the investment project name with link', () => {
+        cy.get('[data-test="investment-activity"]').within(() =>
+          cy
+            .get('[data-test="investment-activity-card-subject"]')
+            .should('exist')
+            .should('have.text', 'Marshmellow UK Takeover')
+            .get('a')
+            .should(
+              'have.attr',
+              'href',
+              'https://www.datahub.trade.gov.uk/investments/projects/d9e25847-6199-e211-a939-e4115bead28a/details'
+            )
+        )
+      })
     })
 
     context('Email Campaign (Maxemail)', () => {
@@ -488,6 +518,10 @@ describe('Company activity feed', () => {
             })
         )
       })
+    })
+
+    context('Referrals', () => {
+      // TO DO: Implements referral activity test coverage
     })
 
     after(() => {
