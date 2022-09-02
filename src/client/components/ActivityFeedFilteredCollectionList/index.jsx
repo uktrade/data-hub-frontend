@@ -25,6 +25,7 @@ const ActivityFeedFilteredCollectionList = ({
   maxItemsToPaginate = 10000,
   defaultQueryParams,
   allActivityFeedEvents,
+  addItemURL,
 }) => {
   const totalPages = Math.ceil(
     Math.min(total, maxItemsToPaginate) / itemsPerPage
@@ -50,8 +51,9 @@ const ActivityFeedFilteredCollectionList = ({
                 {
                   <CollectionHeader
                     totalItems={total}
-                    collectionName="events"
+                    collectionName="event"
                     data-test="activity-feed-collection-header"
+                    addItemUrl={addItemURL}
                   />
                 }
                 {sortOptions && (

@@ -154,10 +154,16 @@ describe('Event Collection List Page - React', () => {
       })
 
       it('should display the events result count header', () => {
-        cy.get('[data-test="activity-feed-collection-header"]').should(
-          'have.text',
+        cy.get('[data-test="activity-feed-collection-header"]').contains(
           '82 events'
         )
+      })
+
+      it('should have a link to add event', () => {
+        cy.get('[data-test="add-collection-item-button"]')
+          .should('exist')
+          .should('contain', 'Add event')
+          .should('have.attr', 'href', '/events/create')
       })
 
       it('should display the expected number of pages', () => {
