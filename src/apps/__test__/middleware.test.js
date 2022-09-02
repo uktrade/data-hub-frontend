@@ -286,7 +286,7 @@ describe('Apps middleware', () => {
 
       expect(this.nextSpy).to.not.have.been.called
       expect(this.resMock.redirect).to.be.calledWith(
-        '/sub-app?filter=apple&sortby=sweetness'
+        '?filter=apple&sortby=sweetness'
       )
     })
 
