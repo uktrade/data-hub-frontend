@@ -7,12 +7,18 @@ const { createZenDeskMessage, postToZenDesk } = require('./services')
 async function postFeedback(req, res, next) {
   const { title, feedback_type, email } = req.body
 
+  const validateEmail = () => {
+    if (email.length > 345 || !email.match(/.*@.*\..*/)) {
+      return 'A valid email address is required'
+    }
+  }
+
   const messages = pickBy({
     title: !title && 'Your feedback needs a title',
     feedback_type:
       !feedback_type &&
       'You need to choose between raising a problem and leaving feedback',
-    email: !email.match(/.*@.*\..*/) && 'A valid email address is required',
+    email: validateEmail(),
   })
 
   res.locals.formErrors = Object.assign({}, res.locals.formErrors, {
