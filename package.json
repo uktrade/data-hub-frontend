@@ -137,7 +137,7 @@
     "react-use": "^17.4.0",
     "redis": "3.1.2",
     "redux": "^4.1.2",
-    "redux-saga": "^1.2.0",
+    "redux-saga": "^1.2.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "resolve-url-loader": "^5.0.0",
