@@ -500,6 +500,33 @@ describe('Company activity feed', () => {
       })
     })
 
+    context('Referrals project', () => {
+      it('displays the correct referral type label', () => {
+        cy.get('[data-test="referral-activity"]').within(() =>
+          cy
+            .get('[data-test="activity-kind-label"]')
+            .contains('Outstanding Referral', {
+              matchCase: false,
+            })
+        )
+      })
+
+      it('displays the referral name with link', () => {
+        cy.get('[data-test="referral-activity"]').within(() =>
+          cy
+            .get('[data-test="referral-activity-card-subject"]')
+            .should('exist')
+            .should('have.text', 'Support needs in the Planet')
+            .get('a')
+            .should(
+              'have.attr',
+              'href',
+              '/companies/01e3366a-aa2b-40c0-aaf9-9013f714a671/referrals/fd6a151f-90db-41e3-841f-1ca0dd63b674'
+            )
+        )
+      })
+    })
+
     context('Email Campaign (Maxemail)', () => {
       before(() => {
         const companyId = fixtures.company.externalActivitiesLtd.id
@@ -518,10 +545,6 @@ describe('Company activity feed', () => {
             })
         )
       })
-    })
-
-    context('Referrals', () => {
-      // TO DO: Implements referral activity test coverage
     })
 
     after(() => {
