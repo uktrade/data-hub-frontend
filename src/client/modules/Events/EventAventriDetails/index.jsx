@@ -106,14 +106,6 @@ const EventAventriDetails = ({ name, eventDate, location, fullAddress }) => {
                             >
                               Details
                             </LocalNavLink>
-                            <LocalNavLink
-                              dataTest="event-aventri-attendees-link"
-                              href={urls.events.aventri.attendees(
-                                aventriEventId
-                              )}
-                            >
-                              Attendees
-                            </LocalNavLink>
                           </LocalNav>
                         </GridCol>
                         <GridCol setWidth="three-quarters">
