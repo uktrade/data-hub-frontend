@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  jira: circleci/jira@1.0.5
+
 ignore_ghpages: &ignore_ghpages
   filters:
     branches:
@@ -271,3 +274,5 @@ workflows:
           requires:
             - functional_tests
             - unit_tests
+          post-steps:
+            - jira/notify
