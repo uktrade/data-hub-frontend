@@ -69,7 +69,7 @@
     "@redux-devtools/extension": "^3.2.3",
     "@reduxjs/toolkit": "^1.8.3",
     "@sentry/browser": "^7.11.1",
-    "@sentry/node": "^7.11.1",
+    "@sentry/node": "^7.12.1",
     "@sentry/react": "^7.11.1",
     "@sentry/tracing": "^7.11.1",
     "autoprefixer": "^10.4.4",
@@ -141,7 +141,7 @@
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "resolve-url-loader": "^5.0.0",
-    "sass": "^1.54.4",
+    "sass": "^1.54.8",
     "sass-loader": "^13.0.2",
     "serve-favicon": "^2.5.0",
     "sniffr": "^1.2.0",
@@ -151,7 +151,7 @@
     "winston": "^3.8.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.10",
+    "@babel/core": "^7.18.13",
     "@babel/eslint-parser": "^7.18.9",
     "@babel/helper-call-delegate": "^7.12.13",
     "@babel/plugin-proposal-class-properties": "7.18.6",
