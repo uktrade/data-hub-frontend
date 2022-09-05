@@ -2,6 +2,8 @@ import { mount } from '@cypress/react'
 import React from 'react'
 import AventriAttendee from '../../../../../src/client/components/ActivityFeed/activities/AventriAttendee'
 
+const urls = require('../../../../../src/lib/urls')
+
 describe('AventriAttendee', () => {
   const Component = (props) => <AventriAttendee {...props} />
   const activity = {
@@ -13,6 +15,9 @@ describe('AventriAttendee', () => {
       'dit:registrationStatus': 'Confirmed',
       'dit:emailAddress': 'johndoe@outlook.com',
       id: 'dit:aventri:Attendee:1111',
+      attributedTo: {
+        id: 'dit:aventri:Attendee:1111',
+      },
     },
     startDate: '2022-02-24T11:28:57',
     endDate: '2023-01-01T11:28:57',
@@ -37,9 +42,12 @@ describe('AventriAttendee', () => {
       mount(<Component activity={activity} />)
     })
 
-    it('should display event date from Aventri', () => {
-      cy.get('[data-test="aventri-activity"]').contains(
-        'Event date: 24 Feb 2022 to 01 Jan 2023'
+    it('should have a link to the event page', () => {
+      const eventId = '1111'
+      cy.get('[data-test="activity-card-subject"] > a').should(
+        'have.attr',
+        'href',
+        urls.events.aventri.details(eventId)
       )
     })
 

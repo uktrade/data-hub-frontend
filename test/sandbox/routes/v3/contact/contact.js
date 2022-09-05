@@ -14,6 +14,7 @@ const noContact = require('../../../fixtures/v3/contact/no-contact.json')
 
 const lambdaPlc = require('../../../fixtures/v4/company/company-lambda-plc.json')
 const contactCreate = require('../../../fixtures/v3/contact/contact-create.json')
+const contactManyContactsCompany = require('../../../fixtures/v3/contact/contact-company-with-many-contacts.json')
 
 const validateContactForm = function (formData) {
   const requiredFields = ['first_name', 'last_name', 'job_title', 'email']
@@ -66,7 +67,11 @@ exports.contactCreate = function (req, res) {
   if (fieldErrors.length) {
     return res.status(400).json(Object.fromEntries(fieldErrors))
   }
-  res.json(contactCreate)
+  if (req.body.company.id === '57c41268-26be-4335-a873-557e8b0deb29') {
+    res.json(contactManyContactsCompany)
+  } else {
+    res.json(contactCreate)
+  }
 }
 
 exports.contactById = function (req, res) {

@@ -19,9 +19,11 @@ import {
   SOURCE_TYPES,
 } from '../constants'
 import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
-import { COMPANY_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
+import { CONTACT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
+import ActivityCardMetadata from './card/ActivityCardMetadata'
+import ActivityCardSubject from './card/ActivityCardSubject'
 
 const { format } = require('../../../utils/date')
 
@@ -73,8 +75,47 @@ export default class CompaniesHouseCompany extends React.PureComponent {
       }
     })
 
+    const sicCodesList = sicCodes.map((value) => (
+      <span key={value}>
+        {value}
+        <br />
+      </span>
+    ))
+
+    const metadata = [
+      { label: 'Date', value: format(startTime) },
+      { label: 'Company name', value: reference },
+      { label: 'Address', value: address },
+      { label: 'Postcode', value: postcode },
+      {
+        label: 'Confirmation Statement last made up date',
+        value: confStmtLastMadeUpDate,
+      },
+      {
+        label: 'Confirmation Statement next due date',
+        value: confStmtNextDueDate,
+      },
+      {
+        label: 'Incorporation date',
+        value: incorporationDate,
+      },
+      { label: 'Next due date', value: nextDueDate },
+      {
+        label: 'Returns last made up date',
+        value: returnsLastMadeUpDate,
+      },
+      {
+        label: 'Returns next due date',
+        value: returnsNextDueDate,
+      },
+      {
+        label: 'SIC code(s)',
+        value: sicCodesList,
+      },
+    ]
+
     return (
-      <CheckUserFeatureFlag userFeatureFlagName={COMPANY_ACTIVITY_FEATURE_FLAG}>
+      <CheckUserFeatureFlag userFeatureFlagName={CONTACT_ACTIVITY_FEATURE_FLAG}>
         {(isFeatureFlagEnabled) =>
           !isFeatureFlagEnabled ? (
             <Card>
@@ -136,8 +177,14 @@ export default class CompaniesHouseCompany extends React.PureComponent {
             </Card>
           ) : (
             <ActivityCardWrapper dataTest="companies-house-company-activity">
-              <ActivityCardLabels kind="Companies House Update"></ActivityCardLabels>
-              <h3>Companies House Company</h3>
+              <ActivityCardLabels
+                isExternalActivity={true}
+                theme="Companies House"
+                service="Company Record"
+                kind="Companies House Update"
+              ></ActivityCardLabels>
+              <ActivityCardSubject>{summary}</ActivityCardSubject>
+              <ActivityCardMetadata metadata={metadata} />
             </ActivityCardWrapper>
           )
         }
