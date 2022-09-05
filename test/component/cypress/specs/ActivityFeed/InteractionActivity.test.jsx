@@ -1,5 +1,9 @@
 import React from 'react'
 import { mount } from '@cypress/react'
+import DataHubProvider from '../provider'
+import { CONTACT_ACTIVITY_FEATURE_FLAG } from '../../../../../src/apps/companies/apps/activity-feed/constants'
+import { TASK_GET_USER_FEATURE_FLAGS } from '../../../../../src/client/components/CheckUserFeatureFlags/state'
+import { getUserFeatureFlags } from '../../../../../src/client/components/CheckUserFeatureFlags/tasks'
 
 import Interaction from '../../../../../src/client/components/ActivityFeed/activities/Interaction'
 import urls from '../../../../../src/lib/urls'
@@ -145,13 +149,16 @@ const buildAndMountActivity = (
   }
 
   return mount(
-    <Interaction
-      activity={activity}
-      isContactActivitiesFeatureOn={true}
-      showDetails={false}
-      showDnbHierarchy={false}
-      filter={[]}
-    />
+    <DataHubProvider
+      tasks={{ [TASK_GET_USER_FEATURE_FLAGS]: getUserFeatureFlags }}
+    >
+      <Interaction
+        activity={activity}
+        showDetails={false}
+        showDnbHierarchy={false}
+        filter={[]}
+      />
+    </DataHubProvider>
   )
 }
 
@@ -178,140 +185,17 @@ const buildAndMountWithCustomService = (service) => {
 }
 
 describe('Interaction activity card', () => {
-  context('When the card is rendered with a complete interaction', () => {
+  context('When the feature flag is on', () => {
     beforeEach(() => {
-      buildAndMountActivity(
-        interactionServices.specificDITService,
-        interactionThemes[0],
-        'Email/Fax',
-        typeInteraction,
-        shortNotes,
-        date
-      )
-      cy.get('[data-test=interaction-activity]').should('exist')
+      cy.intercept('GET', '**/whoami', {
+        active_features: CONTACT_ACTIVITY_FEATURE_FLAG,
+      })
     })
 
-    it('should render the theme label', () => {
-      assertThemeLabel()
-    })
-
-    it('should render the service label', () => {
-      assertServiceLabel()
-    })
-
-    it('should render the kind label', () => {
-      assertKindLabel()
-    })
-
-    it('should render the interaction subject', () => {
-      assertInteractionSubject()
-    })
-
-    it('should render the interaction notes', () => {
-      assertNotes()
-    })
-
-    it('should render the date label', () => {
-      assertText('[data-test=date-label]', 'Date: 25 Nov 2058')
-    })
-
-    it('should render the communication channel label', () => {
-      assertCommunicationChannelLabel()
-    })
-
-    it('should render the advisers label', () => {
-      assertText('[data-test=adviser-s-label]', oneAdviserText)
-    })
-
-    it('should render the full service label', () => {
-      assertBottomServiceLabel()
-    })
-
-    context('When the interaction has lengthy notes', () => {
+    context('When the card is rendered with a complete interaction', () => {
       beforeEach(() => {
         buildAndMountActivity(
           interactionServices.specificDITService,
-          interactionThemes[0],
-          'Email/Fax',
-          typeInteraction,
-          longNotes,
-          date
-        )
-      })
-
-      it('should render the truncated interaction notes', () => {
-        assertNotes(truncatedNotes)
-      })
-    })
-
-    context('When there are multiple advisers', () => {
-      beforeEach(() => {
-        buildAndMountActivity(
-          interactionServices.specificDITService,
-          interactionThemes[0],
-          'Email/Fax',
-          typeInteraction,
-          shortNotes,
-          date,
-          2
-        )
-      })
-
-      it('should render both advisers', () => {
-        assertText('[data-test=adviser-s-label]', twoAdvisersText)
-      })
-    })
-
-    context('When the kind is set to service delivery', () => {
-      beforeEach(() => {
-        buildAndMountActivity(
-          interactionServices.specificDITService,
-          interactionThemes[0],
-          'Email/Fax',
-          typeServiceDelivery,
-          shortNotes,
-          date
-        )
-        cy.get('[data-test=interaction-activity]').should('exist')
-      })
-
-      it('should display the correct kind', () => {
-        assertKindLabel('service delivery')
-      })
-    })
-  })
-
-  context('When the card is rendered with an incomplete interaction', () => {
-    context('When the theme is missing', () => {
-      beforeEach(() => {
-        buildAndMountActivity(
-          interactionServices.specificDITService,
-          null,
-          'Email/Fax',
-          typeInteraction,
-          shortNotes,
-          date
-        )
-        cy.get('[data-test=interaction-activity]').should('exist')
-      })
-
-      it('should not render the theme label', () => {
-        cy.get('[data-test=activity-theme-label]').should('not.exist')
-      })
-
-      it('should render the service label', () => {
-        assertServiceLabel()
-      })
-
-      it('should render the kind label', () => {
-        assertKindLabel()
-      })
-    })
-
-    context('When the service is missing', () => {
-      beforeEach(() => {
-        buildAndMountActivity(
-          null,
           interactionThemes[0],
           'Email/Fax',
           typeInteraction,
@@ -325,30 +209,24 @@ describe('Interaction activity card', () => {
         assertThemeLabel()
       })
 
-      it('should not render the service label', () => {
-        cy.get('[data-test=activity-service-label]').should('not.exist')
+      it('should render the service label', () => {
+        assertServiceLabel()
       })
 
       it('should render the kind label', () => {
         assertKindLabel()
       })
-    })
 
-    context('When the date is missing', () => {
-      beforeEach(() => {
-        buildAndMountActivity(
-          interactionServices.specificDITService,
-          interactionThemes[0],
-          'Email/Fax',
-          typeInteraction,
-          shortNotes,
-          null
-        )
-        cy.get('[data-test=interaction-activity]').should('exist')
+      it('should render the interaction subject', () => {
+        assertInteractionSubject()
       })
 
-      it('should not render the date label', () => {
-        cy.get('[data-test=date-label]').should('not.exist')
+      it('should render the interaction notes', () => {
+        assertNotes()
+      })
+
+      it('should render the date label', () => {
+        assertText('[data-test=date-label]', 'Date: 25 Nov 2058')
       })
 
       it('should render the communication channel label', () => {
@@ -362,240 +240,404 @@ describe('Interaction activity card', () => {
       it('should render the full service label', () => {
         assertBottomServiceLabel()
       })
+
+      context('When the interaction has lengthy notes', () => {
+        beforeEach(() => {
+          buildAndMountActivity(
+            interactionServices.specificDITService,
+            interactionThemes[0],
+            'Email/Fax',
+            typeInteraction,
+            longNotes,
+            date
+          )
+        })
+
+        it('should render the truncated interaction notes', () => {
+          assertNotes(truncatedNotes)
+        })
+      })
+
+      context('When there are multiple advisers', () => {
+        beforeEach(() => {
+          buildAndMountActivity(
+            interactionServices.specificDITService,
+            interactionThemes[0],
+            'Email/Fax',
+            typeInteraction,
+            shortNotes,
+            date,
+            2
+          )
+        })
+
+        it('should render both advisers', () => {
+          assertText('[data-test=adviser-s-label]', twoAdvisersText)
+        })
+      })
+
+      context('When the kind is set to service delivery', () => {
+        beforeEach(() => {
+          buildAndMountActivity(
+            interactionServices.specificDITService,
+            interactionThemes[0],
+            'Email/Fax',
+            typeServiceDelivery,
+            shortNotes,
+            date
+          )
+          cy.get('[data-test=interaction-activity]').should('exist')
+        })
+
+        it('should display the correct kind', () => {
+          assertKindLabel('service delivery')
+        })
+      })
     })
 
-    context('When the advisers are missing', () => {
-      beforeEach(() => {
-        buildAndMountActivity(
-          interactionServices.specificDITService,
-          interactionThemes[0],
-          'Email/Fax',
-          typeInteraction,
-          shortNotes,
-          date,
-          0
-        )
-        cy.get('[data-test=interaction-activity]').should('exist')
+    context('When the card is rendered with an incomplete interaction', () => {
+      context('When the theme is missing', () => {
+        beforeEach(() => {
+          buildAndMountActivity(
+            interactionServices.specificDITService,
+            null,
+            'Email/Fax',
+            typeInteraction,
+            shortNotes,
+            date
+          )
+          cy.get('[data-test=interaction-activity]').should('exist')
+        })
+
+        it('should not render the theme label', () => {
+          cy.get('[data-test=activity-theme-label]').should('not.exist')
+        })
+
+        it('should render the service label', () => {
+          assertServiceLabel()
+        })
+
+        it('should render the kind label', () => {
+          assertKindLabel()
+        })
       })
 
-      it('should render the date label', () => {
-        assertText('[data-test=date-label]', 'Date: 25 Nov 2058')
+      context('When the service is missing', () => {
+        beforeEach(() => {
+          buildAndMountActivity(
+            null,
+            interactionThemes[0],
+            'Email/Fax',
+            typeInteraction,
+            shortNotes,
+            date
+          )
+          cy.get('[data-test=interaction-activity]').should('exist')
+        })
+
+        it('should render the theme label', () => {
+          assertThemeLabel()
+        })
+
+        it('should not render the service label', () => {
+          cy.get('[data-test=activity-service-label]').should('not.exist')
+        })
+
+        it('should render the kind label', () => {
+          assertKindLabel()
+        })
       })
 
-      it('should render the communication channel label', () => {
-        assertCommunicationChannelLabel()
+      context('When the date is missing', () => {
+        beforeEach(() => {
+          buildAndMountActivity(
+            interactionServices.specificDITService,
+            interactionThemes[0],
+            'Email/Fax',
+            typeInteraction,
+            shortNotes,
+            null
+          )
+          cy.get('[data-test=interaction-activity]').should('exist')
+        })
+
+        it('should not render the date label', () => {
+          cy.get('[data-test=date-label]').should('not.exist')
+        })
+
+        it('should render the communication channel label', () => {
+          assertCommunicationChannelLabel()
+        })
+
+        it('should render the advisers label', () => {
+          assertText('[data-test=adviser-s-label]', oneAdviserText)
+        })
+
+        it('should render the full service label', () => {
+          assertBottomServiceLabel()
+        })
       })
 
-      it('should not render the advisers label', () => {
-        cy.get('[data-test=adviser-s-label]').should('not.exist')
+      context('When the advisers are missing', () => {
+        beforeEach(() => {
+          buildAndMountActivity(
+            interactionServices.specificDITService,
+            interactionThemes[0],
+            'Email/Fax',
+            typeInteraction,
+            shortNotes,
+            date,
+            0
+          )
+          cy.get('[data-test=interaction-activity]').should('exist')
+        })
+
+        it('should render the date label', () => {
+          assertText('[data-test=date-label]', 'Date: 25 Nov 2058')
+        })
+
+        it('should render the communication channel label', () => {
+          assertCommunicationChannelLabel()
+        })
+
+        it('should not render the advisers label', () => {
+          cy.get('[data-test=adviser-s-label]').should('not.exist')
+        })
+
+        it('should render the full service label', () => {
+          assertBottomServiceLabel()
+        })
       })
 
-      it('should render the full service label', () => {
-        assertBottomServiceLabel()
+      context('When the communication channel is missing', () => {
+        beforeEach(() => {
+          buildAndMountActivity(
+            interactionServices.specificDITService,
+            interactionThemes[0],
+            null,
+            typeInteraction,
+            shortNotes,
+            date
+          )
+          cy.get('[data-test=interaction-activity]').should('exist')
+        })
+
+        it('should render the date label', () => {
+          assertText('[data-test=date-label]', 'Date: 25 Nov 2058')
+        })
+
+        it('should not render the communication channel label', () => {
+          cy.get('[data-test=communication-channel-label]').should('not.exist')
+        })
+
+        it('should render the advisers label', () => {
+          assertText('[data-test=adviser-s-label]', oneAdviserText)
+        })
+
+        it('should render the full service label', () => {
+          assertBottomServiceLabel()
+        })
       })
     })
 
-    context('When the communication channel is missing', () => {
-      beforeEach(() => {
-        buildAndMountActivity(
-          interactionServices.specificDITService,
-          interactionThemes[0],
-          null,
-          typeInteraction,
-          shortNotes,
-          date
-        )
-        cy.get('[data-test=interaction-activity]').should('exist')
+    context('When the interaction has a different theme', () => {
+      context('When the theme is Investment', () => {
+        beforeEach(() => {
+          buildAndMountWithCustomTheme(interactionThemes[1])
+          cy.get('[data-test=interaction-activity]').should('exist')
+        })
+
+        it('should display the correct theme', () => {
+          assertThemeLabel(interactionThemes[1])
+        })
       })
 
-      it('should render the date label', () => {
-        assertText('[data-test=date-label]', 'Date: 25 Nov 2058')
+      context('When the theme is Trade Agreement', () => {
+        beforeEach(() => {
+          buildAndMountWithCustomTheme(interactionThemes[2])
+          cy.get('[data-test=interaction-activity]').should('exist')
+        })
+
+        it('should display the correct theme', () => {
+          assertThemeLabel('trade agreement')
+        })
       })
 
-      it('should not render the communication channel label', () => {
-        cy.get('[data-test=communication-channel-label]').should('not.exist')
+      context('When the theme is Other', () => {
+        beforeEach(() => {
+          buildAndMountWithCustomTheme(interactionThemes[3])
+          cy.get('[data-test=interaction-activity]').should('exist')
+        })
+
+        it('should display the correct theme', () => {
+          assertThemeLabel(interactionThemes[3])
+        })
+      })
+    })
+
+    context('When the interaction has a different service', () => {
+      context('When the service is A Specific Service', () => {
+        assertService(interactionServices.specificService)
       })
 
-      it('should render the advisers label', () => {
-        assertText('[data-test=adviser-s-label]', oneAdviserText)
+      context('When the service is Account Management', () => {
+        assertService(interactionServices.accountManagement)
       })
 
-      it('should render the full service label', () => {
-        assertBottomServiceLabel()
+      context('When the service is COP26', () => {
+        assertService(interactionServices.cop26)
+      })
+
+      context('When the service is a recieved enquiry', () => {
+        assertService(interactionServices.enquiry)
+      })
+
+      context('When the service is an Enquiry/Referral', () => {
+        assertService(interactionServices.enquiryOrReferral)
+      })
+
+      context('When the service is an Event', () => {
+        assertService(interactionServices.event)
+      })
+
+      context('When the service is an Export Win', () => {
+        assertService(interactionServices.exportWin)
+      })
+
+      context('When the service is Global Investment Summit (2021)', () => {
+        assertService(interactionServices.gis2021)
+      })
+
+      context('When the service is IST Aftercare', () => {
+        assertService(interactionServices.istAftercare)
+      })
+
+      context('When the service is an Investment Service', () => {
+        assertService(interactionServices.investmentServices)
+      })
+
+      context('When the service is an Investment Enquiry', () => {
+        assertService(interactionServices.investmentEnquiry)
+      })
+
+      context('When the service is an IST Specific Service', () => {
+        assertService(interactionServices.istSpecificService)
+      })
+
+      context('When the service is Proposition Development', () => {
+        assertService(interactionServices.propDevelopment)
+      })
+
+      context(
+        'When the service is a Trade Agreement Implementation Activity',
+        () => {
+          assertService(interactionServices.tradeAgreementImplementation)
+        }
+      )
+
+      context('When the service is Making Introductions', () => {
+        context('When the service is Making Export Introductions', () => {
+          assertService(interactionServices.exportIntros)
+        })
+
+        context('When the service is Making Investment Introductions', () => {
+          assertService(interactionServices.investmentIntros)
+        })
+      })
+
+      context('When the service is Providing Information', () => {
+        context('When the service is Providing Export Information', () => {
+          assertService(interactionServices.exportAI)
+        })
+
+        context('When the service is Providing Investment Information', () => {
+          assertService(interactionServices.investmentAI)
+        })
       })
     })
   })
-
-  context('When the interaction has a different theme', () => {
-    context('When the theme is Investment', () => {
-      beforeEach(() => {
-        buildAndMountWithCustomTheme(interactionThemes[1])
-        cy.get('[data-test=interaction-activity]').should('exist')
-      })
-
-      it('should display the correct theme', () => {
-        assertThemeLabel(interactionThemes[1])
+  context('When the feature flag is off', () => {
+    beforeEach(() => {
+      cy.intercept('GET', '**/whoami', {
+        active_features: 'i-am-a-fake-feature-flag',
       })
     })
-
-    context('When the theme is Trade Agreement', () => {
-      beforeEach(() => {
-        buildAndMountWithCustomTheme(interactionThemes[2])
-        cy.get('[data-test=interaction-activity]').should('exist')
-      })
-
-      it('should display the correct theme', () => {
-        assertThemeLabel('trade agreement')
-      })
-    })
-
-    context('When the theme is Other', () => {
-      beforeEach(() => {
-        buildAndMountWithCustomTheme(interactionThemes[3])
-        cy.get('[data-test=interaction-activity]').should('exist')
-      })
-
-      it('should display the correct theme', () => {
-        assertThemeLabel(interactionThemes[3])
-      })
-    })
-  })
-
-  context('When the interaction has a different service', () => {
-    context('When the service is A Specific Service', () => {
-      assertService(interactionServices.specificService)
-    })
-
-    context('When the service is Account Management', () => {
-      assertService(interactionServices.accountManagement)
-    })
-
-    context('When the service is COP26', () => {
-      assertService(interactionServices.cop26)
-    })
-
-    context('When the service is a recieved enquiry', () => {
-      assertService(interactionServices.enquiry)
-    })
-
-    context('When the service is an Enquiry/Referral', () => {
-      assertService(interactionServices.enquiryOrReferral)
-    })
-
-    context('When the service is an Event', () => {
-      assertService(interactionServices.event)
-    })
-
-    context('When the service is an Export Win', () => {
-      assertService(interactionServices.exportWin)
-    })
-
-    context('When the service is Global Investment Summit (2021)', () => {
-      assertService(interactionServices.gis2021)
-    })
-
-    context('When the service is IST Aftercare', () => {
-      assertService(interactionServices.istAftercare)
-    })
-
-    context('When the service is an Investment Service', () => {
-      assertService(interactionServices.investmentServices)
-    })
-
-    context('When the service is an Investment Enquiry', () => {
-      assertService(interactionServices.investmentEnquiry)
-    })
-
-    context('When the service is an IST Specific Service', () => {
-      assertService(interactionServices.istSpecificService)
-    })
-
-    context('When the service is Proposition Development', () => {
-      assertService(interactionServices.propDevelopment)
-    })
-
     context(
-      'When the service is a Trade Agreement Implementation Activity',
+      'When the card is rendered with a complete interaction and flag is off',
       () => {
-        assertService(interactionServices.tradeAgreementImplementation)
+        beforeEach(() => {
+          buildAndMountActivity(
+            interactionServices.specificDITService,
+            interactionThemes[0],
+            'Email/Fax',
+            typeInteraction,
+            shortNotes,
+            date
+          )
+          cy.get('[data-test=interaction-activity]').should('exist')
+        })
+
+        it('should render the badge', () => {
+          assertText('[data-test=badge]', 'Interaction')
+        })
       }
     )
-
-    context('When the service is Making Introductions', () => {
-      context('When the service is Making Export Introductions', () => {
-        assertService(interactionServices.exportIntros)
-      })
-
-      context('When the service is Making Investment Introductions', () => {
-        assertService(interactionServices.investmentIntros)
-      })
-    })
-
-    context('When the service is Providing Information', () => {
-      context('When the service is Providing Export Information', () => {
-        assertService(interactionServices.exportAI)
-      })
-
-      context('When the service is Providing Investment Information', () => {
-        assertService(interactionServices.investmentAI)
-      })
-    })
   })
+
+  const assertText = (label, expectedText) => {
+    cy.get(label).should('exist').should('have.text', expectedText)
+  }
+
+  const assertThemeLabel = (expectedText = interactionThemes[0]) => {
+    assertText('[data-test=activity-theme-label]', expectedText)
+  }
+
+  const assertKindLabel = (expectedText = 'interaction') => {
+    assertText('[data-test=activity-kind-label]', expectedText)
+  }
+
+  const assertServiceLabel = (
+    service = interactionServices.specificDITService
+  ) => {
+    assertText('[data-test=activity-service-label]', getServiceText(service))
+  }
+
+  const assertNotes = (notes = shortNotes) => {
+    assertText('[data-test=activity-card-notes]', buildActualNotes(notes))
+  }
+
+  const assertCommunicationChannelLabel = () => {
+    assertText(
+      '[data-test=communication-channel-label]',
+      'Communication channel: Email/Fax'
+    )
+  }
+
+  const assertBottomServiceLabel = (
+    service = interactionServices.specificDITService
+  ) => {
+    assertText('[data-test=service-label]', buildServiceLabel(service))
+  }
+
+  const assertInteractionSubject = () => {
+    cy.get('[data-test=interaction-subject]')
+      .should('exist')
+      .should('have.text', subject)
+      .should('have.attr', 'href', interactionUrl)
+  }
+
+  function assertService(service) {
+    beforeEach(() => {
+      buildAndMountWithCustomService(service)
+      cy.get('[data-test=interaction-activity]').should('exist')
+    })
+
+    it('should display the correct service', () => {
+      assertServiceLabel(service)
+    })
+
+    it('should render the full service label', () => {
+      assertBottomServiceLabel(service)
+    })
+  }
 })
-
-const assertText = (label, expectedText) => {
-  cy.get(label).should('exist').should('have.text', expectedText)
-}
-
-const assertThemeLabel = (expectedText = interactionThemes[0]) => {
-  assertText('[data-test=activity-theme-label]', expectedText)
-}
-
-const assertKindLabel = (expectedText = 'interaction') => {
-  assertText('[data-test=activity-kind-label]', expectedText)
-}
-
-const assertServiceLabel = (
-  service = interactionServices.specificDITService
-) => {
-  assertText('[data-test=activity-service-label]', getServiceText(service))
-}
-
-const assertNotes = (notes = shortNotes) => {
-  assertText('[data-test=interaction-notes]', buildActualNotes(notes))
-}
-
-const assertCommunicationChannelLabel = () => {
-  assertText(
-    '[data-test=communication-channel-label]',
-    'Communication channel: Email/Fax'
-  )
-}
-
-const assertBottomServiceLabel = (
-  service = interactionServices.specificDITService
-) => {
-  assertText('[data-test=service-label]', buildServiceLabel(service))
-}
-
-const assertInteractionSubject = () => {
-  cy.get('[data-test=interaction-subject]')
-    .should('exist')
-    .should('have.text', subject)
-    .should('have.attr', 'href', interactionUrl)
-}
-
-function assertService(service) {
-  beforeEach(() => {
-    buildAndMountWithCustomService(service)
-    cy.get('[data-test=interaction-activity]').should('exist')
-  })
-
-  it('should display the correct service', () => {
-    assertServiceLabel(service)
-  })
-
-  it('should render the full service label', () => {
-    assertBottomServiceLabel(service)
-  })
-}

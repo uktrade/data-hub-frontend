@@ -2,7 +2,7 @@ const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
 const {
-  COMPANY_ACTIVITY_FEATURE_FLAG,
+  CONTACT_ACTIVITY_FEATURE_FLAG,
 } = require('../../../../../src/apps/companies/apps/activity-feed/constants')
 
 const companyLocalHeader = selectors.companyLocalHeader()
@@ -349,7 +349,7 @@ describe('Company activity feed', () => {
 
   context('When the activity feed feature flag is turned on', () => {
     before(() => {
-      cy.setUserFeatures([COMPANY_ACTIVITY_FEATURE_FLAG])
+      cy.setUserFeatures([CONTACT_ACTIVITY_FEATURE_FLAG])
       cy.visit(
         urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
       )
@@ -406,6 +406,26 @@ describe('Company activity feed', () => {
           cy
             .get('[data-test="activity-theme-label"]')
             .contains('Orders (OMIS)', {
+              matchCase: false,
+            })
+        )
+      })
+
+      it('displays the correct sub-topic label', () => {
+        cy.get('[data-test="order-activity"]').within(() =>
+          cy.get('[data-test="activity-service-label"]').contains('Event', {
+            matchCase: false,
+          })
+        )
+      })
+    })
+
+    context('Investment project', () => {
+      it('displays the correct activity type label', () => {
+        cy.get('[data-test="investment-activity"]').within(() =>
+          cy
+            .get('[data-test="activity-kind-label"]')
+            .contains('New Investment Project', {
               matchCase: false,
             })
         )

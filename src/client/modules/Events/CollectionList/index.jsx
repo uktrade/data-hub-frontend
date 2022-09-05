@@ -193,6 +193,7 @@ const EventsCollection = ({
               taskProps={activityFeedEventTask}
               allActivityFeedEvents={allActivityFeedEvents}
               total={total}
+              addItemURL={'/events/create'}
             >
               <CollectionFilters>
                 <Filters.Input

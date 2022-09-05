@@ -41,6 +41,7 @@ function CollectionHeader({
       href={addItemUrl}
       buttonColour={GREY_3}
       buttonTextColour={BLACK}
+      data-test="add-collection-item-button"
     >
       Add {collectionName}
     </Button>

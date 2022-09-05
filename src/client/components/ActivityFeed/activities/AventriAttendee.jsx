@@ -19,10 +19,19 @@ export const AVENTRI_ATTENDEE_REG_STATUSES = {
   Incomplete: 'Incomplete',
 }
 
+export const extractAventriId = (attendee) => {
+  // Event index to extract id from Aventri Event string feed by activity-stream
+  // e.g. dit:aventri:Event:1113:Create
+  const EVENT_ID_INDEX = 3
+  const aventriEventId =
+    attendee.object.attributedTo.id.split(':')[EVENT_ID_INDEX]
+  return aventriEventId
+}
 export const transformAventriAttendee = (attendee) => ({
   attendeeName: `${attendee.object['dit:firstName']} ${attendee.object['dit:lastName']}`,
   date: formatStartAndEndDate(attendee.startDate, attendee.endDate),
   eventName: attendee.eventName,
+  eventId: extractAventriId(attendee),
   registrationStatus:
     AVENTRI_ATTENDEE_REG_STATUSES[attendee.object['dit:registrationStatus']],
   contactUrl: attendee.datahubContactUrl,
@@ -35,8 +44,14 @@ const StyledSpan = styled('span')`
 `
 
 export default function AventriAttendee({ activity: attendee }) {
-  const { attendeeName, eventName, date, registrationStatus, contactUrl } =
-    transformAventriAttendee(attendee)
+  const {
+    attendeeName,
+    eventName,
+    eventId,
+    date,
+    registrationStatus,
+    contactUrl,
+  } = transformAventriAttendee(attendee)
 
   return eventName ? (
     <ActivityCardWrapper dataTest="aventri-activity">
@@ -49,7 +64,8 @@ export default function AventriAttendee({ activity: attendee }) {
         }
       />
       <ActivityCardSubject>
-        {eventName}
+        <Link href={`/events/aventri/${eventId}/details`}>{eventName}</Link>
+
         {registrationStatus && (
           <StyledSpan>
             : <span>{registrationStatus}</span>

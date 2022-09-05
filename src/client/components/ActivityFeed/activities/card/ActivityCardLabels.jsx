@@ -20,16 +20,22 @@ const StyledThemeTag = styled(Tag)`
   margin-right: ${SPACING.SCALE_1};
 `
 
-const ActivityCardLabels = ({ theme, service, kind }) => (
+const ActivityCardLabels = ({ isExternalActivity, theme, service, kind }) => (
   <TagRow>
     <TagColumn>
       {theme && (
-        <StyledThemeTag data-test="activity-theme-label" colour="default">
+        <StyledThemeTag
+          data-test="activity-theme-label"
+          colour={isExternalActivity ? 'darkGreen' : 'default'}
+        >
           {theme}
         </StyledThemeTag>
       )}
       {service && (
-        <Tag data-test="activity-service-label" colour="blue">
+        <Tag
+          data-test="activity-service-label"
+          colour={isExternalActivity ? 'turquoise' : 'blue'}
+        >
           {service}
         </Tag>
       )}
@@ -46,6 +52,10 @@ ActivityCardLabels.propTypes = {
   theme: PropTypes.string,
   service: PropTypes.string,
   kind: PropTypes.string.isRequired,
+  isExternalActivity: PropTypes.bool,
 }
 
+ActivityCardLabels.defaultProps = {
+  isExternalActivity: false,
+}
 export default ActivityCardLabels

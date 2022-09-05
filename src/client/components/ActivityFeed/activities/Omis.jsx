@@ -16,9 +16,13 @@ import { ACTIVITY_TYPE, ANALYTICS_ACCORDION_TYPE } from '../constants'
 
 import CardUtils from './card/CardUtils'
 import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
-import { COMPANY_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
+import { CONTACT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
+import ActivityCardSubject from './card/ActivityCardSubject'
+import ActivityCardMetadata from './card/ActivityCardMetadata'
+
+const { format } = require('../../../utils/date')
 
 export default class Omis extends React.PureComponent {
   static propTypes = {
@@ -43,8 +47,30 @@ export default class Omis extends React.PureComponent {
     const adviser = CardUtils.getAdviser(activity)
     const contacts = CardUtils.getContacts(activity)
 
+    const metadata = [
+      { label: 'Date', value: format(published) },
+      { label: 'Country', value: country },
+      { label: 'UK region', value: ukRegion },
+      {
+        label: 'Added by',
+        value: adviser
+          ? [adviser].map((adviser, index) => (
+              <span key={adviser.id}>
+                {AdviserItemRenderer(adviser, index)}
+              </span>
+            ))
+          : null,
+      },
+      {
+        label: 'Company contact',
+        value: contacts.map((contact, index) => (
+          <span key={contact.id}>{ContactItemRenderer(contact, index)}</span>
+        )),
+      },
+    ]
+
     return (
-      <CheckUserFeatureFlag userFeatureFlagName={COMPANY_ACTIVITY_FEATURE_FLAG}>
+      <CheckUserFeatureFlag userFeatureFlagName={CONTACT_ACTIVITY_FEATURE_FLAG}>
         {(isFeatureFlagEnabled) =>
           !isFeatureFlagEnabled ? (
             <Card>
@@ -96,7 +122,8 @@ export default class Omis extends React.PureComponent {
                 service="Event"
                 kind="New Order"
               />
-              <h3>Order (OMIS)</h3>
+              <ActivityCardSubject>{reference}</ActivityCardSubject>
+              <ActivityCardMetadata metadata={metadata} />
             </ActivityCardWrapper>
           )
         }

@@ -59,7 +59,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": "16.16.0"
+    "node": "18.7.0"
   },
   "dependencies": {
     "@govuk-react/constants": "^0.10.3",

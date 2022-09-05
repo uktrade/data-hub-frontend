@@ -10,65 +10,140 @@ const colours = {
   },
   grey: { colour: 'rgb(69, 74, 77)', backgroundColour: 'rgb(239, 240, 241)' },
   blue: { colour: 'rgb(20, 78, 129)', backgroundColour: 'rgb(210, 226, 241)' },
+  darkGreen: {
+    colour: 'rgb(255, 255, 255)',
+    backgroundColour: 'rgb(16, 64, 60)',
+  },
+  turquoise: {
+    colour: 'rgb(16, 64, 60)',
+    backgroundColour: 'rgb(191, 227, 224)',
+  },
 }
 
 describe('ActivityCardLabels', () => {
   const Component = (props) => <ActivityCardLabels {...props} />
-  context('When there is an activity/kind label', () => {
-    beforeEach(() => {
-      mount(<Component kind="Activity Type" />)
+
+  context('When it is an internal activity', () => {
+    context('When there is an activity/kind label', () => {
+      beforeEach(() => {
+        mount(<Component kind="Activity Type" />)
+      })
+
+      it('should render the right text', () => {
+        cy.get('[data-test="activity-kind-label"]')
+          .should('exist')
+          .should('have.text', 'Activity Type')
+      })
+
+      it('should have a grey label', () => {
+        cy.get('[data-test="activity-kind-label"]')
+          .should('have.css', 'color', colours.grey.colour)
+          .should('have.css', 'background-color', colours.grey.backgroundColour)
+      })
     })
 
-    it('should render the right text', () => {
-      cy.get('[data-test="activity-kind-label"]')
-        .should('exist')
-        .should('have.text', 'Activity Type')
+    context('When there is an topic/theme label', () => {
+      beforeEach(() => {
+        mount(<Component theme="Topic Label" />)
+      })
+
+      it('should render the right text', () => {
+        cy.get('[data-test="activity-theme-label"]')
+          .should('exist')
+          .should('have.text', 'Topic Label')
+      })
+
+      it('should have the default colour label', () => {
+        cy.get('[data-test="activity-theme-label"]')
+          .should('have.css', 'color', colours.default.colour)
+          .should(
+            'have.css',
+            'background-color',
+            colours.default.backgroundColour
+          )
+      })
     })
 
-    it('should have a grey label', () => {
-      cy.get('[data-test="activity-kind-label"]')
-        .should('have.css', 'color', colours.grey.colour)
-        .should('have.css', 'background-color', colours.grey.backgroundColour)
+    context('When there is a sub-topic/service label', () => {
+      beforeEach(() => {
+        mount(<Component service="Sub-topic Label" />)
+      })
+
+      it('should render the right text', () => {
+        cy.get('[data-test="activity-service-label"]')
+          .should('exist')
+          .should('have.text', 'Sub-topic Label')
+      })
+
+      it('should have a blue colour label', () => {
+        cy.get('[data-test="activity-service-label"]')
+          .should('have.css', 'color', colours.blue.colour)
+          .should('have.css', 'background-color', colours.blue.backgroundColour)
+      })
     })
   })
 
-  context('When there is an topic/theme label', () => {
-    beforeEach(() => {
-      mount(<Component theme="Topic Label" />)
+  context('When it is an external activity', () => {
+    context('When there is an activity/kind label', () => {
+      beforeEach(() => {
+        mount(<Component isExternalActivity={true} kind="Activity Type" />)
+      })
+
+      it('should render the right text', () => {
+        cy.get('[data-test="activity-kind-label"]')
+          .should('exist')
+          .should('have.text', 'Activity Type')
+      })
+
+      it('should have a grey label', () => {
+        cy.get('[data-test="activity-kind-label"]')
+          .should('have.css', 'color', colours.grey.colour)
+          .should('have.css', 'background-color', colours.grey.backgroundColour)
+      })
     })
 
-    it('should render the right text', () => {
-      cy.get('[data-test="activity-theme-label"]')
-        .should('exist')
-        .should('have.text', 'Topic Label')
+    context('When there is an topic/theme label', () => {
+      beforeEach(() => {
+        mount(<Component isExternalActivity={true} theme="Topic Label" />)
+      })
+
+      it('should render the right text', () => {
+        cy.get('[data-test="activity-theme-label"]')
+          .should('exist')
+          .should('have.text', 'Topic Label')
+      })
+
+      it('should have the dark green colour label', () => {
+        cy.get('[data-test="activity-theme-label"]')
+          .should('have.css', 'color', colours.darkGreen.colour)
+          .should(
+            'have.css',
+            'background-color',
+            colours.darkGreen.backgroundColour
+          )
+      })
     })
 
-    it('should have the default colour label', () => {
-      cy.get('[data-test="activity-theme-label"]')
-        .should('have.css', 'color', colours.default.colour)
-        .should(
-          'have.css',
-          'background-color',
-          colours.default.backgroundColour
-        )
-    })
-  })
+    context('When there is a sub-topic/service label', () => {
+      beforeEach(() => {
+        mount(<Component isExternalActivity={true} service="Sub-topic Label" />)
+      })
 
-  context('When there is a sub-topic/service label', () => {
-    beforeEach(() => {
-      mount(<Component service="Sub-topic Label" />)
-    })
+      it('should render the right text', () => {
+        cy.get('[data-test="activity-service-label"]')
+          .should('exist')
+          .should('have.text', 'Sub-topic Label')
+      })
 
-    it('should render the right text', () => {
-      cy.get('[data-test="activity-service-label"]')
-        .should('exist')
-        .should('have.text', 'Sub-topic Label')
-    })
-
-    it('should have a blue colour label', () => {
-      cy.get('[data-test="activity-service-label"]')
-        .should('have.css', 'color', colours.blue.colour)
-        .should('have.css', 'background-color', colours.blue.backgroundColour)
+      it('should have a turquoise colour label', () => {
+        cy.get('[data-test="activity-service-label"]')
+          .should('have.css', 'color', colours.turquoise.colour)
+          .should(
+            'have.css',
+            'background-color',
+            colours.turquoise.backgroundColour
+          )
+      })
     })
   })
 })
