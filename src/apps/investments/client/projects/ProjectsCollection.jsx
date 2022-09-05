@@ -28,6 +28,8 @@ import {
   INVESTMENTS__SET_PROJECTS_METADATA,
 } from '../../../../client/actions'
 
+import { sanitizeFilter } from '../../../../client/filters'
+
 const ProjectsCollection = ({
   payload,
   currentAdviserId,
@@ -92,6 +94,10 @@ const ProjectsCollection = ({
       baseDownloadLink="/investments/projects/export"
       entityName="project"
       addItemUrl="/investments/projects/create"
+      sanitizeFiltersForAnalytics={({ advisers, countries }) => ({
+        ...sanitizeFilter(advisers),
+        ...sanitizeFilter(countries),
+      })}
       defaultQueryParams={{
         page: 1,
         sortby: 'created_on:desc',

@@ -37,3 +37,12 @@ export const buildDatesFilter = ({
         },
       ]
     : []
+
+export const sanitizeFilter = (filter, categoryLabel) =>
+  filter
+    ? {
+        [filter.queryParam]: filter.options.map(
+          (option) => option.categoryLabel || categoryLabel
+        ),
+      }
+    : {}
