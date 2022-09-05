@@ -16,9 +16,6 @@ updates:
   - dependency-name: cypress-image-diff-js # TET-164
     versions:
     - "> 1.16.4"
-  - dependency-name: govuk-frontend # TET-219
-    versions:
-    - ">= 0"
   - dependency-name: react-redux # TET-154
     versions:
     - "> 7.2.8"
