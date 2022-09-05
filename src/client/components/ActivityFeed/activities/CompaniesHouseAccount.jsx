@@ -12,9 +12,11 @@ import {
   SOURCE_TYPES,
 } from '../constants'
 import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
-import { COMPANY_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
+import { CONTACT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
+import ActivityCardMetadata from './card/ActivityCardMetadata'
+import ActivityCardSubject from './card/ActivityCardSubject'
 
 const { format } = require('../../../utils/date')
 
@@ -52,9 +54,20 @@ export default class CompaniesHouseAccount extends React.PureComponent {
     const shareholderFunds = currencyGBP(
       get(activity, 'object.dit:shareholderFunds')
     )
+    const metadata = [
+      { label: 'Date', value: format(startTime) },
+      { label: 'Balance sheet date', value: balanceSheetDate },
+      {
+        label: 'Net assets liabilities including pension asset liability',
+        value: netAssetsLiabilities,
+      },
+      { label: 'Period start', value: periodStart },
+      { label: 'Period end', value: periodEnd },
+      { label: 'Shareholder funds', value: shareholderFunds },
+    ]
 
     return (
-      <CheckUserFeatureFlag userFeatureFlagName={COMPANY_ACTIVITY_FEATURE_FLAG}>
+      <CheckUserFeatureFlag userFeatureFlagName={CONTACT_ACTIVITY_FEATURE_FLAG}>
         {(isFeatureFlagEnabled) =>
           !isFeatureFlagEnabled ? (
             <Card>
@@ -93,8 +106,14 @@ export default class CompaniesHouseAccount extends React.PureComponent {
             </Card>
           ) : (
             <ActivityCardWrapper dataTest="companies-house-account-activity">
-              <ActivityCardLabels kind="Companies House Update"></ActivityCardLabels>
-              <h3>Companies House Account</h3>
+              <ActivityCardLabels
+                isExternalActivity={true}
+                theme="Companies House"
+                service="Accounts Record"
+                kind="Companies House Update"
+              ></ActivityCardLabels>
+              <ActivityCardSubject>{summary}</ActivityCardSubject>
+              <ActivityCardMetadata metadata={metadata} />
             </ActivityCardWrapper>
           )
         }

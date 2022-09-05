@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Link from '@govuk-react/link'
+import styled from 'styled-components'
 import { get } from 'lodash'
 
 import {
@@ -14,9 +16,13 @@ import CardUtils from './card/CardUtils'
 
 import { ContactItemRenderer } from './card/item-renderers'
 import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
-import { COMPANY_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
+import { CONTACT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
+import ActivityCardSubject from './card/ActivityCardSubject'
+import ActivityCardMetadata from './card/ActivityCardMetadata'
+
+const { format } = require('../../../utils/date')
 
 export default class MaxemailCampaign extends React.PureComponent {
   static propTypes = {
@@ -39,8 +45,36 @@ export default class MaxemailCampaign extends React.PureComponent {
     const contacts = get(activity, 'object.contacts')
     const content = get(activity, 'object.content')
 
+    const metadata = [
+      { label: 'Date', value: format(published) },
+      { label: 'Senders name', value: name },
+      { label: 'Senders email', value: from },
+      { label: 'Content', value: content },
+      {
+        label: 'Recipients',
+        value: contacts.map((contact, index) => (
+          <>
+            {index ? ', ' : ''}
+            <Link href={contact.url}>{contact.name}</Link>
+          </>
+        )),
+      },
+    ]
+
+    const Row = styled('div')`
+      display: flex;
+    `
+
+    const LeftCol = styled('div')`
+      flex: 75%;
+    `
+
+    const RightCol = styled('div')`
+      flex: 25%;
+    `
+
     return (
-      <CheckUserFeatureFlag userFeatureFlagName={COMPANY_ACTIVITY_FEATURE_FLAG}>
+      <CheckUserFeatureFlag userFeatureFlagName={CONTACT_ACTIVITY_FEATURE_FLAG}>
         {(isFeatureFlagEnabled) =>
           !isFeatureFlagEnabled ? (
             <Card>
@@ -77,8 +111,15 @@ export default class MaxemailCampaign extends React.PureComponent {
             </Card>
           ) : (
             <ActivityCardWrapper dataTest="maxemail-campaign-activity">
-              <ActivityCardLabels kind="Email Campaign" />
-              <h3>Email Campaign</h3>
+              <Row>
+                <LeftCol>
+                  <ActivityCardSubject>{emailSubject}</ActivityCardSubject>
+                  <ActivityCardMetadata metadata={metadata} />
+                </LeftCol>
+                <RightCol>
+                  <ActivityCardLabels kind="Email Campaign" />
+                </RightCol>
+              </Row>
             </ActivityCardWrapper>
           )
         }
