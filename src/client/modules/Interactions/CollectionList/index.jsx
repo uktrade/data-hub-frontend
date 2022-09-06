@@ -36,8 +36,6 @@ import {
   TASK_GET_INTERACTIONS_TEAM_NAME,
 } from './state'
 
-import { sanitizeFilter } from '../../../../client/filters'
-
 const StyledCheckboxGroup = styled(Filters.CheckboxGroup)`
   /* This just tightens up the gap for when a single checkbox option group
   (with no label) is beneath a multiple checkbox option group */
@@ -118,10 +116,6 @@ const InteractionCollection = ({
         selectedFilters={selectedFilters}
         baseDownloadLink="/interactions/export"
         entityName="interaction"
-        sanitizeFiltersForAnalytics={({ advisers, teams }) => ({
-          ...sanitizeFilter(advisers),
-          ...sanitizeFilter(teams),
-        })}
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
           <Filters.CheckboxGroup

@@ -108,12 +108,10 @@ export default class Referral extends React.PureComponent {
               />
             </Card>
           ) : (
-            <ActivityCardWrapper dataTest="referral-activity">
+            <ActivityCardWrapper>
               <Row>
                 <LeftCol>
-                  <ActivityCardSubject dataTest="referral-activity-card-subject">
-                    <Link href={url}>{subject}</Link>
-                  </ActivityCardSubject>
+                  <ActivityCardSubject>{subject}</ActivityCardSubject>
                   <ActivityCardMetadata metadata={metadata} />
                 </LeftCol>
                 <RightCol>

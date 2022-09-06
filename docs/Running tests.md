@@ -6,15 +6,6 @@ Prettier and Sass linter will run as part of the build, assure you run the comma
 
 `$ npm run test:lint`
 
-## Unit Tests
-
-To run the whole suite:
-
-`npm run test:unit`
-
-To run one file:
-
-`npm run test:unit:files relative_path_to_test/example.test.js`
 ## Functional Tests
 
 The aim of this test suite is perform functional tests of frontend components in isolation.
@@ -23,35 +14,15 @@ The aim of this test suite is perform functional tests of frontend components in
 
 You will need to run the sandbox api to run functional tests.
 
-#### Sandbox
-
 Sandbox is as a light replacement for API backend and it's used only by functional tests.
 
-It allows us to run a mock of the API locally and lives in the `test/sandbox` folder. Any API requests made in the app when running tests on Cypress will hit the Sandbox environment instead. The folder structure reflects the API endpoints (e.g. `/v4/activity-feed`) and the [server is set up here](https://github.com/uktrade/data-hub-frontend/blob/main/test/sandbox/server.js)
-
-If you have any logic you want to test based on what's returned by the API you can add it to the endpoints, e.g. conditionals like if a page number param is included then it returns a different fixture. 
-
-##### Running sandbox locally
-
-In your .env file:
-Set `API_ROOT=http://localhost:8000`
-Set `REDIS_HOST=localhost`
-(you might want to create a `.sandbox.env` file to copy to .env when you need it)
-
-If you want to run the frontend and sandbox locally, one way is to have 4 terminal tabs open and run the following commands:
-
-1. `redis-server`
-1. `cd test/sandbox && npm install && npx nodemon .`
-1. `npm run develop`
-1. `npm run test:functional:watch`
-
-##### Using sandbox within docker 
+### Using sandbox within docker (preferred method)
 
 From the project root directory run `make start-mock`.
    
 This will start up the sandbox api in conjunction with the frontend, mock-sso, webpack and redis. You don't need to rebuild the image when you make changes.
 
-##### Using sandbox within docker and with local frontend
+### Using sandbox within docker and with local frontend
 
 1. Build Sandbox image `docker build -t data-hub-sandbox ./test/sandbox`
 
@@ -59,8 +30,15 @@ This will start up the sandbox api in conjunction with the frontend, mock-sso, w
 
 3. Change your `API_ROOT` in your env file to point to `http://localhost:8000` and then run the frontend locally with `npm run develop`.
 
+### Starting sandbox on host machine
 
-#### Running the tests
+```bash
+cd test/sandbox
+npm install
+npx nodemon .
+```
+
+### Running the tests
 
 Notice that before running the tests the application should be up and running.
 
@@ -74,11 +52,11 @@ Execute all the tests on `specs` in chrome browser:
 
 `$ npm run test:functional -- --browser chrome`
 
-##### Running the tests manually in cypress interface
+### Running the tests manually in cypress interface
 
 `$ npm run test:functional:watch`
 
-##### Running a specific spec
+### Running a specific spec
 
 `$ npm run test:functional -- --spec test/functional/cypress/specs/nav-spec.js`
 
