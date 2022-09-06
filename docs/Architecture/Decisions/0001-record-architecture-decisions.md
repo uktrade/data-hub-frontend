@@ -12,7 +12,8 @@ We need to record the architectural decisions made on this project.
 
 ## Decision
 
-We will use Architecture Decision Records, as [described by Michael Nygard](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions).
+ - We will use Architecture Decision Records, as [described by Michael Nygard](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions).
+ - We agreed that any new ADRs should first be raised in a dev huddle before they are put up for general review. This is to ensure that everyone has input on the proposed decision and to ensure that everyone is aware of it.
 
 ## Consequences
 
