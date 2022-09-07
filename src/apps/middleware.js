@@ -79,7 +79,7 @@ function setLocalNav(items = [], appendBaseUrl = true) {
 function setDefaultQuery(query = {}) {
   return function handleDefaultRedirect(req, res, next) {
     if (isEmpty(req.query)) {
-      return res.redirect(`${req.originalUrl}?${queryString.stringify(query)}`)
+      return res.redirect(`?${queryString.stringify(query)}`)
     }
     next()
   }

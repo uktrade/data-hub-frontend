@@ -33,11 +33,7 @@ module.exports = (feature) => async (req, res, next) => {
     !req.query.featureTesting &&
     req.method == HTTP_GET
   ) {
-    res.redirect(
-      `${req.originalUrl}${
-        isEmpty(req.query) ? '?' : '&'
-      }featureTesting=${feature}`
-    )
+    res.redirect(`${isEmpty(req.query) ? '?' : '&'}featureTesting=${feature}`)
   } else {
     next()
   }
