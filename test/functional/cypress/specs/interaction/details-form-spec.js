@@ -1010,10 +1010,9 @@ describe('Adding an interaction from a contact', () => {
 describe('Editing an interaction from a contact', () => {
   it('should be able to edit an interaction from a contact', () => {
     cy.visit(urls.contacts.interactions.index(fixtures.contact.deanCox.id))
-
-    cy.contains('a', 'totam|f19f5014-8bb1-4645-a224-27a4c8db5336').click()
+    cy.contains('a', 'Meeting between Brendan Smith and Tyson Morar').click()
     cy.contains('a', 'Edit interaction').click()
-    cy.contains('h1', 'Edit interaction for Zboncak Group')
+    cy.contains('h1', 'Edit interaction for Venus Ltd')
     cy.contains('button', 'Save interaction').click()
     cy.get('[data-test="status-message"]').should(
       'have.text',
