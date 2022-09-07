@@ -4,19 +4,9 @@ import Link from '@govuk-react/link'
 import styled from 'styled-components'
 import { get } from 'lodash'
 
-import {
-  Card,
-  CardDetails,
-  CardDetailsList,
-  CardHeader,
-  CardTable,
-} from './card'
-import { ACTIVITY_TYPE, SOURCE_TYPES } from '../constants'
+import { ACTIVITY_TYPE } from '../constants'
 import CardUtils from './card/CardUtils'
 
-import { ContactItemRenderer } from './card/item-renderers'
-import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
-import { CONTACT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardSubject from './card/ActivityCardSubject'
@@ -37,7 +27,7 @@ export default class MaxemailCampaign extends React.PureComponent {
   }
 
   render() {
-    const { activity, showDetails } = this.props
+    const { activity } = this.props
     const published = get(activity, 'published')
     const name = get(activity, 'actor.name')
     const from = get(activity, 'actor.dit:emailAddress')
@@ -74,56 +64,17 @@ export default class MaxemailCampaign extends React.PureComponent {
     `
 
     return (
-      <CheckUserFeatureFlag userFeatureFlagName={CONTACT_ACTIVITY_FEATURE_FLAG}>
-        {(isFeatureFlagEnabled) =>
-          !isFeatureFlagEnabled ? (
-            <Card>
-              <CardHeader
-                heading={emailSubject}
-                blockText="Email Campaign"
-                startTime={published}
-                sourceType={SOURCE_TYPES.external}
-              />
-
-              <CardDetails
-                summary="View details of this campaign"
-                summaryVisuallyHidden={` ${emailSubject}`}
-                showDetails={showDetails}
-              >
-                <CardTable
-                  rows={[
-                    { header: 'Senders name', content: name },
-                    { header: 'Senders email', content: from },
-                    { header: 'Content', content },
-                    {
-                      header: 'Recipients',
-                      content: (
-                        <CardDetailsList
-                          itemPropName="email"
-                          itemRenderer={ContactItemRenderer}
-                          items={contacts}
-                        />
-                      ),
-                    },
-                  ]}
-                />
-              </CardDetails>
-            </Card>
-          ) : (
-            <ActivityCardWrapper dataTest="maxemail-campaign-activity">
-              <Row>
-                <LeftCol>
-                  <ActivityCardSubject>{emailSubject}</ActivityCardSubject>
-                  <ActivityCardMetadata metadata={metadata} />
-                </LeftCol>
-                <RightCol>
-                  <ActivityCardLabels kind="Email Campaign" />
-                </RightCol>
-              </Row>
-            </ActivityCardWrapper>
-          )
-        }
-      </CheckUserFeatureFlag>
+      <ActivityCardWrapper dataTest="maxemail-campaign-activity">
+        <Row>
+          <LeftCol>
+            <ActivityCardSubject>{emailSubject}</ActivityCardSubject>
+            <ActivityCardMetadata metadata={metadata} />
+          </LeftCol>
+          <RightCol>
+            <ActivityCardLabels kind="Email Campaign" />
+          </RightCol>
+        </Row>
+      </ActivityCardWrapper>
     )
   }
 }
