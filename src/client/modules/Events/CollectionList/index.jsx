@@ -221,6 +221,7 @@ const EventsCollection = ({
                   qsParamName="latest_start_date"
                   data-test="latest-start-date-filter"
                 />
+                {/* Add new Aventri Id filter here */}
               </CollectionFilters>
             </ActivityFeedFilteredCollectionList>
           )
