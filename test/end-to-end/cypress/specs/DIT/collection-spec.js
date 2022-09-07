@@ -4,11 +4,7 @@ const {
   assertReactCollection,
 } = require('../../support/assertions')
 
-const {
-  companies,
-  contacts,
-  investments,
-} = require('../../../../../src/lib/urls')
+const { companies, investments } = require('../../../../../src/lib/urls')
 
 describe('Collection', () => {
   describe('contact', () => {
@@ -21,21 +17,6 @@ describe('Collection', () => {
 
     it('should return the results summary for orders collection', () => {
       assertReactCollection()
-    })
-  })
-
-  describe('contact interaction', () => {
-    const company = fixtures.company.create.lambda()
-    const contact = fixtures.contact.create(company.pk)
-
-    before(() => {
-      cy.loadFixture([company])
-      cy.loadFixture([contact])
-      cy.visit(contacts.contactActivities(contact.pk))
-    })
-
-    it('should return the results summary for contact interaction collection', () => {
-      assertCollection()
     })
   })
 
