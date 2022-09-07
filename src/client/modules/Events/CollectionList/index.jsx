@@ -36,6 +36,7 @@ import {
 } from './state'
 
 import ActivityFeedFilteredCollectionList from '../../../components/ActivityFeedFilteredCollectionList'
+import { sanitizeFilter } from '../../../../client/filters'
 
 const EventsCollection = ({
   payload,
@@ -108,6 +109,10 @@ const EventsCollection = ({
               entityNamePlural="events"
               addItemUrl="/events/create"
               useReactRouter={true}
+              sanitizeFiltersForAnalytics={({ name, organisers }) => ({
+                ...sanitizeFilter(name),
+                ...sanitizeFilter(organisers),
+              })}
             >
               <CollectionFilters taskProps={collectionListMetadataTask}>
                 <FilterToggleSection

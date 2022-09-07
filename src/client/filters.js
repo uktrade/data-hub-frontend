@@ -30,10 +30,19 @@ export const buildDatesFilter = ({
 }) =>
   value
     ? [
-        {
-          label: shortDate ? getShortDateLabel(value) : getDateLabel(value),
-          value,
-          categoryLabel,
-        },
-      ]
+      {
+        label: shortDate ? getShortDateLabel(value) : getDateLabel(value),
+        value,
+        categoryLabel,
+      },
+    ]
     : []
+
+export const sanitizeFilter = (filter, categoryLabel) =>
+  filter
+    ? {
+      [filter.queryParam]: filter.options.map(
+        (option) => option.categoryLabel || categoryLabel
+      ),
+    }
+    : {}

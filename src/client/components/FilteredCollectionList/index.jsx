@@ -30,6 +30,13 @@ const filtersToAnalytics = (filters) =>
       ])
   )
 
+const getSelectedFilters = (filters) =>
+  Object.fromEntries(
+    Object.entries(filters).filter(
+      ([, value]) => value && value.options && value.options.length
+    )
+  )
+
 const FilteredCollectionList = ({
   results = [],
   summary = null,
@@ -49,6 +56,7 @@ const FilteredCollectionList = ({
   addItemUrl,
   defaultQueryParams,
   titleRenderer = null,
+  sanitizeFiltersForAnalytics = null,
   useReactRouter = false,
 }) => {
   const totalPages = Math.ceil(
@@ -113,7 +121,13 @@ const FilteredCollectionList = ({
                                 onClick={() => {
                                   pushAnalytics({
                                     event: 'filterResultClick',
-                                    extra: filtersToAnalytics(selectedFilters),
+                                    extra: {
+                                      ...filtersToAnalytics(selectedFilters),
+                                      ...(sanitizeFiltersForAnalytics &&
+                                        sanitizeFiltersForAnalytics(
+                                          getSelectedFilters(selectedFilters)
+                                        )),
+                                    },
                                   })
                                 }}
                               />
@@ -167,6 +181,7 @@ FilteredCollectionList.propTypes = {
   summary: PropTypes.object,
   defaultQueryParams: PropTypes.object,
   titleRenderer: PropTypes.func,
+  sanitizeFiltersForAnalytics: PropTypes.func,
   width: PropTypes.string,
 }
 
