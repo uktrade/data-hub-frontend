@@ -404,7 +404,7 @@ const eventsColListQueryBuilder = ({
   name,
   earliestStartDate,
   latestStartDate,
-  aventri_id,
+  aventriId,
 }) => {
   const eventNameFilter = name
     ? {
@@ -426,11 +426,10 @@ const eventsColListQueryBuilder = ({
         }
       : null
 
-  const aventriIdFilter = aventri_id
-    ? // console.log(aventri_id)
-      {
-        match: {
-          'object.id': `dit:aventri:Event:${aventri_id}`,
+  const aventriIdFilter = aventriId
+    ? {
+        term: {
+          id: `dit:aventri:Event:${aventriId}:Create`,
         },
       }
     : null
@@ -450,7 +449,7 @@ async function fetchAllActivityFeedEvents(req, res, next) {
       name,
       earliestStartDate,
       latestStartDate,
-      aventri_id,
+      aventriId,
       page,
     } = req.query
 
@@ -463,7 +462,7 @@ async function fetchAllActivityFeedEvents(req, res, next) {
           name,
           earliestStartDate,
           latestStartDate,
-          aventri_id,
+          aventriId,
         }),
         from,
         size: ACTIVITIES_PER_PAGE,
