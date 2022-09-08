@@ -54,6 +54,7 @@ const getAllActivityFeedEvents = ({
   name,
   earliest_start_date,
   latest_start_date,
+  aventri_id,
   page,
 }) =>
   axios
@@ -63,6 +64,7 @@ const getAllActivityFeedEvents = ({
         name: name,
         earliestStartDate: earliest_start_date,
         latestStartDate: latest_start_date,
+        aventriId: aventri_id,
         page: page,
       },
     })
