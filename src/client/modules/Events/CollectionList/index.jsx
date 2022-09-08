@@ -221,7 +221,14 @@ const EventsCollection = ({
                   qsParamName="latest_start_date"
                   data-test="latest-start-date-filter"
                 />
-                {/* Add new Aventri Id filter here */}
+                <Filters.Input
+                  id="EventsCollection.aventriId"
+                  label="Aventri ID"
+                  name="aventri_id"
+                  qsParam="aventri_id"
+                  hint="For example, 100100100"
+                  data-test="aventri-id-filter"
+                />
               </CollectionFilters>
             </ActivityFeedFilteredCollectionList>
           )
