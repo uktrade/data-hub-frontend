@@ -221,7 +221,7 @@ const EventsCollection = ({
                   qsParamName="latest_start_date"
                   data-test="latest-start-date-filter"
                 />
-                <Filters.Input
+                <Filters.AventriId
                   id="EventsCollection.aventriId"
                   label="Aventri ID"
                   name="aventri_id"
