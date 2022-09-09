@@ -7,8 +7,14 @@ export async function updateAdviser({ dit_participants, companyId }) {
   )
   const { data } = await apiProxyAxios.get(`/v4/company/${companyId}`)
   const leadIta = data.one_list_group_global_account_manager
-  return {
-    ...leadIta,
-    email: leadIta.contact_email,
+  if (leadIta) {
+    return {
+      ...leadIta,
+      email: leadIta.contact_email,
+    }
+  } else {
+    return Promise.reject(
+      "No global Lead ITAs were found for this company. Please note: it is not possible to add Lead ITAs to a subsidiary that are not attached to the company's Global Headquarters"
+    )
   }
 }
