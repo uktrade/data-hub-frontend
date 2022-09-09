@@ -18,16 +18,17 @@ const StyledHintText = styled(HintText)({
   marginBottom: SPACING.SCALE_2,
 })
 
-const RoutedAventriIdFieldFilter = ({ label, hint, ...props }) => (
+const RoutedAventriIdFieldFilter = ({ label, hintText, ...props }) => (
   <StyledFilterLabel>
     {label}
-    <StyledHintText>{hint}</StyledHintText>
+    <StyledHintText>{hintText}</StyledHintText>
     <RoutedFilterInput {...props} />
   </StyledFilterLabel>
 )
 
 RoutedAventriIdFieldFilter.propTypes = {
   label: PropTypes.node.isRequired,
+  hintText: PropTypes.string,
 }
 
 export default RoutedAventriIdFieldFilter

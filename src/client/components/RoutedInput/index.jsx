@@ -22,6 +22,9 @@ const RoutedInput = ({
   dispatch,
   staticContext,
   id,
+  min,
+  max,
+  type,
   ...props
 }) => {
   // This is the only way we can reset the value when the query string param is
@@ -48,6 +51,9 @@ const RoutedInput = ({
           <input
             {...props}
             value={value}
+            type={type}
+            min={min}
+            max={max}
             onChange={(e) => onChange(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {

@@ -226,7 +226,10 @@ const EventsCollection = ({
                   label="Aventri ID"
                   name="aventri_id"
                   qsParam="aventri_id"
-                  hint="For example, 100100100"
+                  hintText="For example, 100100100"
+                  min="100000000"
+                  max="999999999"
+                  type="number"
                   data-test="aventri-id-filter"
                 />
               </CollectionFilters>
