@@ -22,8 +22,6 @@ const RoutedInput = ({
   dispatch,
   staticContext,
   id,
-  min,
-  max,
   type,
   ...props
 }) => {
@@ -52,8 +50,6 @@ const RoutedInput = ({
             {...props}
             value={value}
             type={type}
-            min={min}
-            max={max}
             onChange={(e) => onChange(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
