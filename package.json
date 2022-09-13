@@ -44,7 +44,10 @@
     "coverage": "npx nyc --reporter=html --reporter=json --reporter=text --reporter=lcov --report-dir=coverage npm run test:unit",
     "prune-dev-dependencies": "NPM_CONFIG_PRODUCTION=true npm prune --production",
     "heroku-postbuild": "npm cache verify && npm rebuild && npm run build && npm run prune-dev-dependencies",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "adr-list": "adr list",
+    "adr-graph": "adr generate graph",
+    "adr-toc": "adr generate toc"
   },
   "nyc": {
     "report-dir": "cypress-coverage",
@@ -167,7 +170,7 @@
     "@faker-js/faker": "^7.4.0",
     "@storybook/addon-a11y": "^6.5.10",
     "@storybook/addon-essentials": "^6.5.10",
-    "@storybook/addons": "^6.5.10",
+    "@storybook/addons": "^6.5.11",
     "@storybook/builder-webpack5": "^6.5.10",
     "@storybook/manager-webpack5": "^6.5.10",
     "@storybook/react": "^6.5.10",
