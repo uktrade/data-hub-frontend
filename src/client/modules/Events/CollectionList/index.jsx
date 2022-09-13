@@ -228,6 +228,8 @@ const EventsCollection = ({
                   qsParam="aventri_id"
                   hintText="For example, 100100100"
                   type="number"
+                  maxLength={9}
+                  isAventriIdfilter={true}
                   data-test="aventri-id-filter"
                 />
               </CollectionFilters>

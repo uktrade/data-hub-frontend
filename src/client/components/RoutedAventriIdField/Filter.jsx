@@ -16,8 +16,6 @@ const StyledHintText = styled(HintText)({
   fontSize: FONT_SIZE.SIZE_16,
   color: GREY_1,
   marginBottom: SPACING.SCALE_2,
-  // webkitAppearance: none,
-  // margin: 0,
 })
 
 const RoutedAventriIdFieldFilter = ({ label, hintText, ...props }) => (
