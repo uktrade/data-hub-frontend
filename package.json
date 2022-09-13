@@ -44,7 +44,10 @@
     "coverage": "npx nyc --reporter=html --reporter=json --reporter=text --reporter=lcov --report-dir=coverage npm run test:unit",
     "prune-dev-dependencies": "NPM_CONFIG_PRODUCTION=true npm prune --production",
     "heroku-postbuild": "npm cache verify && npm rebuild && npm run build && npm run prune-dev-dependencies",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "adr-list": "adr list",
+    "adr-graph": "adr generate graph",
+    "adr-toc": "adr generate toc"
   },
   "nyc": {
     "report-dir": "cypress-coverage",
@@ -72,7 +75,7 @@
     "@sentry/node": "^7.12.1",
     "@sentry/react": "^7.12.1",
     "@sentry/tracing": "^7.12.1",
-    "autoprefixer": "^10.4.4",
+    "autoprefixer": "^10.4.10",
     "axios": "^0.27.2",
     "basic-auth": "^2.0.1",
     "body-parser": "^1.19.2",
