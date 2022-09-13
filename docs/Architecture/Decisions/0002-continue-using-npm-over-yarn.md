@@ -10,7 +10,7 @@ Accepted
 
 The reason we were considering using Yarn was because NPM initially had a bug with [overrides](https://github.com/npm/cli/issues/4232), that took a long time to resolve within *NPM*, and then *Dependabot* and *Jenkins* internal build packs. 
 
-Afterwards inflating problems with custom versions of the NPM CLI where needed, and the Cloud Foundry issues makeing NPM seem to be the cause for several underlying issues, which in the end tunrned out to be a false positive.
+Afterwards inflating problems with custom versions of the NPM CLI where needed, and the Cloud Foundry issues making NPM seem to be the cause for several underlying issues, which in the end tunrned out to be a false positive.
 
 ## Decision
 
