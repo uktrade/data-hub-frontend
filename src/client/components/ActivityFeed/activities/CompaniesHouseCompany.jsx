@@ -2,8 +2,24 @@ import React from 'react'
 import { get } from 'lodash'
 import PropTypes from 'prop-types'
 
+import {
+  Card,
+  CardDetails,
+  CardDetailsList,
+  CardHeader,
+  CardTable,
+} from './card'
+
+import { DefaultItemRenderer } from './card/item-renderers'
+
 import CardUtils from './card/CardUtils'
-import { ACTIVITY_TYPE } from '../constants'
+import {
+  ACTIVITY_TYPE,
+  ANALYTICS_ACCORDION_TYPE,
+  SOURCE_TYPES,
+} from '../constants'
+import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
+import { CONTACT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
@@ -26,8 +42,9 @@ export default class CompaniesHouseCompany extends React.PureComponent {
   }
 
   render() {
-    const { activity } = this.props
+    const { activity, showDetails, showDnbHierarchy } = this.props
 
+    const company = CardUtils.getCompany(activity)
     const startTime = get(activity, 'object.startTime')
     const reference = get(activity, 'object.name')
 
@@ -51,6 +68,12 @@ export default class CompaniesHouseCompany extends React.PureComponent {
       get(activity, 'object.dit:returnsNextDueDate')
     )
     const sicCodes = get(activity, 'object.dit:sicCodes')
+    const sicCodesCollection = sicCodes.map((value) => {
+      return {
+        value,
+        id: value,
+      }
+    })
 
     const sicCodesList = sicCodes.map((value) => (
       <span key={value}>
@@ -92,16 +115,80 @@ export default class CompaniesHouseCompany extends React.PureComponent {
     ]
 
     return (
-      <ActivityCardWrapper dataTest="companies-house-company-activity">
-        <ActivityCardLabels
-          isExternalActivity={true}
-          theme="Companies House"
-          service="Company Record"
-          kind="Companies House Update"
-        ></ActivityCardLabels>
-        <ActivityCardSubject>{summary}</ActivityCardSubject>
-        <ActivityCardMetadata metadata={metadata} />
-      </ActivityCardWrapper>
+      <CheckUserFeatureFlag userFeatureFlagName={CONTACT_ACTIVITY_FEATURE_FLAG}>
+        {(isFeatureFlagEnabled) =>
+          !isFeatureFlagEnabled ? (
+            <Card>
+              <CardHeader
+                company={showDnbHierarchy ? company : null}
+                heading={summary}
+                blockText="Companies House"
+                sourceType={SOURCE_TYPES.external}
+                subHeading="Company record"
+                startTime={startTime}
+              />
+              <CardDetails
+                summary="View key details for this company"
+                summaryVisuallyHidden={`${summary} from Companies House`}
+                showDetails={showDetails}
+                analyticsAccordionType={
+                  ANALYTICS_ACCORDION_TYPE.COMPANIES_HOUSE
+                }
+              >
+                <CardTable
+                  rows={[
+                    { header: 'Company name', content: reference },
+                    { header: 'Address', content: address },
+                    { header: 'Postcode', content: postcode },
+                    {
+                      header: 'Confirmation Statement last made up date',
+                      content: confStmtLastMadeUpDate,
+                    },
+                    {
+                      header: 'Confirmation Statement next due date',
+                      content: confStmtNextDueDate,
+                    },
+                    {
+                      header: 'Incorporation date',
+                      content: incorporationDate,
+                    },
+                    { header: 'Next due date', content: nextDueDate },
+                    {
+                      header: 'Returns last made up date',
+                      content: returnsLastMadeUpDate,
+                    },
+                    {
+                      header: 'Returns next due date',
+                      content: returnsNextDueDate,
+                    },
+                    {
+                      header: 'SIC code(s)',
+                      content: (
+                        <CardDetailsList
+                          itemPropName="value"
+                          itemRenderer={DefaultItemRenderer}
+                          items={sicCodesCollection}
+                        />
+                      ),
+                    },
+                  ]}
+                />
+              </CardDetails>
+            </Card>
+          ) : (
+            <ActivityCardWrapper dataTest="companies-house-company-activity">
+              <ActivityCardLabels
+                isExternalActivity={true}
+                theme="Companies House"
+                service="Company Record"
+                kind="Companies House Update"
+              ></ActivityCardLabels>
+              <ActivityCardSubject>{summary}</ActivityCardSubject>
+              <ActivityCardMetadata metadata={metadata} />
+            </ActivityCardWrapper>
+          )
+        }
+      </CheckUserFeatureFlag>
     )
   }
 }

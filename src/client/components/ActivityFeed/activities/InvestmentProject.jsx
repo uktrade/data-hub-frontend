@@ -3,17 +3,31 @@ import { get } from 'lodash'
 import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
 
+import {
+  Card,
+  CardDetails,
+  CardDetailsList,
+  CardHeader,
+  CardTable,
+} from './card'
+
 import { AdviserItemRenderer, ContactItemRenderer } from './card/item-renderers'
-import { ACTIVITY_TYPE } from '../constants'
+import { ACTIVITY_TYPE, ANALYTICS_ACCORDION_TYPE } from '../constants'
 
 import CardUtils from './card/CardUtils'
 import { currencyGBP, decimal } from '../../../utils/number-utils'
+import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
+import { CONTACT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 
 const { format } = require('../../../utils/date')
+
+const TITLES = {
+  add: 'New investment project added',
+}
 
 export default class InvestmentProject extends React.PureComponent {
   static propTypes = {
@@ -27,7 +41,11 @@ export default class InvestmentProject extends React.PureComponent {
   }
 
   render() {
-    const { activity } = this.props
+    const { activity, showDetails, showDnbHierarchy } = this.props
+
+    const company = CardUtils.getCompany(activity)
+    const type = get(activity, 'type')
+    const title = TITLES[type.toLowerCase()]
     const url = get(activity, 'object.url')
     const name = get(activity, 'object.name')
     const investmentType = get(activity, 'object.dit:investmentType.name')
@@ -87,17 +105,79 @@ export default class InvestmentProject extends React.PureComponent {
     ]
 
     return (
-      <ActivityCardWrapper dataTest="investment-activity">
-        <ActivityCardLabels
-          theme="Investment"
-          service="Project - FDI"
-          kind="New Investment Project"
-        />
-        <ActivityCardSubject dataTest="investment-activity-card-subject">
-          <Link href={`${url}/details`}>{name}</Link>
-        </ActivityCardSubject>
-        <ActivityCardMetadata metadata={metadata} />
-      </ActivityCardWrapper>
+      <CheckUserFeatureFlag userFeatureFlagName={CONTACT_ACTIVITY_FEATURE_FLAG}>
+        {(isFeatureFlagEnabled) =>
+          !isFeatureFlagEnabled ? (
+            <Card>
+              <CardHeader
+                company={showDnbHierarchy ? company : null}
+                heading={<Link href={url}>{name}</Link>}
+                startTime={published}
+                blockText={`${title} - ${investmentType}`}
+              />
+
+              <CardDetails
+                summary="Key details and people for this project"
+                summaryVisuallyHidden={` ${name}`}
+                showDetails={showDetails}
+                analyticsAccordionType={
+                  ANALYTICS_ACCORDION_TYPE.DATA_HUB_ACTIVITY
+                }
+              >
+                <CardTable
+                  rows={[
+                    { header: 'Investment Type', content: investmentType },
+                    {
+                      header: 'Added by',
+                      content: adviser ? (
+                        <CardDetailsList
+                          itemRenderer={AdviserItemRenderer}
+                          items={[adviser]}
+                        />
+                      ) : null,
+                    },
+                    {
+                      header: 'Estimated land date',
+                      content: estimatedLandDate,
+                    },
+                    {
+                      header: 'Company contact(s)',
+                      content: (
+                        <CardDetailsList
+                          itemRenderer={ContactItemRenderer}
+                          items={contacts}
+                        />
+                      ),
+                    },
+                    { header: 'Total Investment', content: totalInvestment },
+                    {
+                      header: 'Capital expenditure value',
+                      content: foreignEquityInvestment,
+                    },
+                    {
+                      header: 'Gross value added (GVA)',
+                      content: grossValueAdded,
+                    },
+                    { header: 'Number of new jobs', content: numberNewJobs },
+                  ]}
+                />
+              </CardDetails>
+            </Card>
+          ) : (
+            <ActivityCardWrapper dataTest="investment-activity">
+              <ActivityCardLabels
+                theme="Investment"
+                service="Project - FDI"
+                kind="New Investment Project"
+              />
+              <ActivityCardSubject dataTest="investment-activity-card-subject">
+                <Link href={`${url}/details`}>{name}</Link>
+              </ActivityCardSubject>
+              <ActivityCardMetadata metadata={metadata} />
+            </ActivityCardWrapper>
+          )
+        }
+      </CheckUserFeatureFlag>
     )
   }
 }

@@ -3,10 +3,20 @@ import { get } from 'lodash'
 import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
 
+import {
+  Card,
+  CardDetails,
+  CardHeader,
+  CardTable,
+  CardDetailsList,
+} from './card'
+
 import { AdviserItemRenderer, ContactItemRenderer } from './card/item-renderers'
-import { ACTIVITY_TYPE } from '../constants'
+import { ACTIVITY_TYPE, ANALYTICS_ACCORDION_TYPE } from '../constants'
 
 import CardUtils from './card/CardUtils'
+import CheckUserFeatureFlag from '../../CheckUserFeatureFlags'
+import { CONTACT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
@@ -26,8 +36,9 @@ export default class Omis extends React.PureComponent {
   }
 
   render() {
-    const { activity } = this.props
+    const { activity, showDetails, showDnbHierarchy } = this.props
 
+    const company = CardUtils.getCompany(activity)
     const published = get(activity, 'published')
     const reference = get(activity, 'object.name')
     const country = get(activity, 'object.dit:country.name')
@@ -59,17 +70,66 @@ export default class Omis extends React.PureComponent {
     ]
 
     return (
-      <ActivityCardWrapper dataTest="order-activity">
-        <ActivityCardLabels
-          theme="Orders (OMIS)"
-          service="Event"
-          kind="New Order"
-        />
-        <ActivityCardSubject dataTest="order-activity-card-subject">
-          <Link href={`${url}/work-order`}>{reference}</Link>
-        </ActivityCardSubject>
-        <ActivityCardMetadata metadata={metadata} />
-      </ActivityCardWrapper>
+      <CheckUserFeatureFlag userFeatureFlagName={CONTACT_ACTIVITY_FEATURE_FLAG}>
+        {(isFeatureFlagEnabled) =>
+          !isFeatureFlagEnabled ? (
+            <Card>
+              <CardHeader
+                company={showDnbHierarchy ? company : null}
+                heading={<Link href={url}>{reference}</Link>}
+                startTime={published}
+                blockText="New Order (OMIS) added"
+              />
+
+              <CardDetails
+                summary="View key details and people for this order"
+                summaryVisuallyHidden={` reference ${reference}`}
+                showDetails={showDetails}
+                analyticsAccordionType={
+                  ANALYTICS_ACCORDION_TYPE.DATA_HUB_ACTIVITY
+                }
+              >
+                <CardTable
+                  rows={[
+                    { header: 'Country', content: country },
+                    { header: 'UK region', content: ukRegion },
+                    {
+                      header: 'Added by',
+                      content: adviser ? (
+                        <CardDetailsList
+                          itemRenderer={AdviserItemRenderer}
+                          items={[adviser]}
+                        />
+                      ) : null,
+                    },
+                    {
+                      header: 'Company contact(s)',
+                      content: (
+                        <CardDetailsList
+                          itemRenderer={ContactItemRenderer}
+                          items={contacts}
+                        />
+                      ),
+                    },
+                  ]}
+                />
+              </CardDetails>
+            </Card>
+          ) : (
+            <ActivityCardWrapper dataTest="order-activity">
+              <ActivityCardLabels
+                theme="Orders (OMIS)"
+                service="Event"
+                kind="New Order"
+              />
+              <ActivityCardSubject dataTest="order-activity-card-subject">
+                <Link href={`${url}/work-order`}>{reference}</Link>
+              </ActivityCardSubject>
+              <ActivityCardMetadata metadata={metadata} />
+            </ActivityCardWrapper>
+          )
+        }
+      </CheckUserFeatureFlag>
     )
   }
 }

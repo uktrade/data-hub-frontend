@@ -41,6 +41,10 @@ describe('Local header for company under dnb investigation', () => {
         assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}`)
       })
 
+      it('should display a badge', () => {
+        cy.get(companyLocalHeader.badge).should('exist')
+      })
+
       it('should not display "What does this mean?" details', () => {
         cy.get(companyLocalHeader.metaList).should('not.exist')
       })

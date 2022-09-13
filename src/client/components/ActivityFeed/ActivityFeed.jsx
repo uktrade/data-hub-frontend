@@ -6,6 +6,7 @@ import { SPACING } from '@govuk-react/constants'
 import Activity from './Activity'
 import ActivityFeedHeader from './ActivityFeedHeader'
 import ActivityFeedFilters from './ActivityFeedFilters'
+import ActivityFeedShowAll from './ActivityFeedShowAll'
 import ActivityFeedPagination from './ActivityFeedPagination'
 
 const ActivityFeedContainer = styled('div')`
@@ -65,6 +66,7 @@ export default class ActivityFeed extends React.Component {
     this.state = {
       activityTypeFilter: dataHubActivity ? dataHubActivity.value : '',
       showDnbHierarchy: false,
+      showDetails: false,
       activityTypeFilters: [
         dataHubAndExternalActivity,
         myActivity,
@@ -74,6 +76,7 @@ export default class ActivityFeed extends React.Component {
     }
 
     this.onActivityTypeFilterChange = this.onActivityTypeFilterChange.bind(this)
+    this.onShowDetailsClick = this.onShowDetailsClick.bind(this)
     this.showActivitiesFromAllCompanies =
       this.showActivitiesFromAllCompanies.bind(this)
   }
@@ -108,6 +111,12 @@ export default class ActivityFeed extends React.Component {
     })
   }
 
+  onShowDetailsClick(e) {
+    this.setState({
+      showDetails: e.target.checked,
+    })
+  }
+
   render() {
     const {
       activities,
@@ -122,8 +131,12 @@ export default class ActivityFeed extends React.Component {
       companyIsArchived,
     } = this.props
 
-    const { activityTypeFilters, activityTypeFilter, showDnbHierarchy } =
-      this.state
+    const {
+      activityTypeFilters,
+      activityTypeFilter,
+      showDetails,
+      showDnbHierarchy,
+    } = this.state
     return (
       <ActivityFeedContainer data-test="activity-feed">
         <ActivityFeedHeader
@@ -141,11 +154,21 @@ export default class ActivityFeed extends React.Component {
           />
         )}
 
+        {activities.length > 0 && (
+          <ActivityFeedShowAll
+            onChange={this.onShowDetailsClick}
+            checked={showDetails}
+          >
+            Show details for all activities
+          </ActivityFeedShowAll>
+        )}
+
         <ActivityFeedCardList>
           {activities.map((activity) => (
             <li key={activity.id}>
               <Activity
                 activity={activity}
+                showDetails={showDetails}
                 showDnbHierarchy={showDnbHierarchy}
               />
             </li>
