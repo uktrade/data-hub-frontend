@@ -6,6 +6,7 @@ const user = {
   id: 'a47e6441-d414-75e6-9dc9-d80b41e872e0',
   name: 'Joe Bloggs',
   email: 'joe.bloggs@trade.gov.uk',
+  userId: 'd3dda5d2-b98f-41a6-9313-1e2c2d8db080',
 }
 
 describe('user middleware', () => {
@@ -68,6 +69,9 @@ describe('user middleware', () => {
       this.reqMock = {
         session: {
           token,
+          userProfile: {
+            user_id: 'd3dda5d2-b98f-41a6-9313-1e2c2d8db080',
+          },
         },
       }
       this.resMock = {
