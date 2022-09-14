@@ -42,20 +42,28 @@ const StyledHomeLink = styled(Link)({
   display: 'block',
 })
 
+const openSettings = (previousUrlType, queryParamType, qsParams) => {
+  const previousURL = document.referrer
+  const previousUrlExpand = previousURL && previousURL.includes(previousUrlType)
+  const emailSettingsExpand = get(qsParams, queryParamType, false)
+
+  return previousUrlExpand || !!emailSettingsExpand
+}
+
 const RemindersSettings = () => {
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
-  const previousURL = document.referrer
-  const estimatedLandDateExpand =
-    previousURL && previousURL.includes('estimated-land-date')
-  const noRecentInteractionExpand =
-    previousURL && previousURL.includes('no-recent-interaction')
-  const openESL = get(qsParams, 'estimated_land_date', estimatedLandDateExpand)
-  const openNRI = get(
-    qsParams,
-    'no_recent_interaction',
-    noRecentInteractionExpand
+  const openESL = openSettings(
+    'estimated-land-date',
+    'estimated_land_date',
+    qsParams
   )
+  const openNRI = openSettings(
+    'no-recent-interaction',
+    'no_recent_interaction',
+    qsParams
+  )
+
   return (
     <DefaultLayout
       heading="Reminders and email notifications settings"
