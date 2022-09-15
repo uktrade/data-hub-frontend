@@ -41,13 +41,17 @@ const SettingsLink = styled(Link)({
   },
 })
 
-const CollectionHeader = ({ totalItems, settings = true }) => {
+const CollectionHeader = ({ totalItems, pageOrigin, settings = true }) => {
   const formattedTotal = decimal(totalItems)
   const counterSuffix = pluralize('reminders', totalItems)
   const actions = settings ? (
     <SettingsLink
       data-test="reminders-settings-link"
-      href="/reminders/settings"
+      href={
+        pageOrigin
+          ? `/reminders/settings?${pageOrigin}=true`
+          : '/reminders/settings'
+      }
     >
       Reminders settings
     </SettingsLink>

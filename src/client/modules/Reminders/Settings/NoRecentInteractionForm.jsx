@@ -59,6 +59,8 @@ const hasReminderDayDuplicates = (formValue, field, formValues) => {
   return Object.values(filteredReminderDays).includes(formValue)
 }
 
+const redirectUrl = `${urls.reminders.settings.index()}?no_recent_interaction=true`
+
 const NoRecentInteractionForm = () => (
   <DefaultLayout
     heading={
@@ -73,7 +75,7 @@ const NoRecentInteractionForm = () => (
         text: 'Home',
       },
       {
-        link: urls.reminders.settings.index(),
+        link: redirectUrl,
         text: 'Reminders and email notifications settings',
       },
       {
@@ -85,7 +87,7 @@ const NoRecentInteractionForm = () => (
       id="reminders-settings-no-recent-interaction"
       initialValuesTaskName={TASK_GET_NRI_REMINDER_SUBSCRIPTIONS}
       submissionTaskName={TASK_SAVE_NRI_REMINDER_SUBSCRIPTIONS}
-      redirectTo={() => urls.reminders.settings.index()}
+      redirectTo={() => redirectUrl}
       transformPayload={(formValues) => ({
         reminder_days: transformReminderDaysToAPI(formValues),
         email_reminders_enabled: formValues.emailNotifications === OPTION_YES,
@@ -95,7 +97,7 @@ const NoRecentInteractionForm = () => (
         transformFormDataToAnalyticsData(formValues)
       }
       flashMessage={() => 'Settings updated'}
-      cancelRedirectTo={() => urls.reminders.settings.index()}
+      cancelRedirectTo={() => redirectUrl}
     >
       {({ values: { reminder_days, email_reminders_enabled, reminders } }) => (
         <>

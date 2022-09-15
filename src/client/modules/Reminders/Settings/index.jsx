@@ -42,27 +42,17 @@ const StyledHomeLink = styled(Link)({
   display: 'block',
 })
 
-const openSettings = (previousUrlType, queryParamType, qsParams) => {
-  const previousURL = document.referrer
-  const previousUrlExpand = previousURL && previousURL.includes(previousUrlType)
-  const emailSettingsExpand = get(qsParams, queryParamType, false)
+const openSettings = (queryParamType, qsParams) => {
+  const settingsExpand = get(qsParams, queryParamType, false)
 
-  return previousUrlExpand || !!emailSettingsExpand
+  return !!settingsExpand
 }
 
 const RemindersSettings = () => {
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
-  const openESL = openSettings(
-    'estimated-land-date',
-    'estimated_land_date',
-    qsParams
-  )
-  const openNRI = openSettings(
-    'no-recent-interaction',
-    'no_recent_interaction',
-    qsParams
-  )
+  const openESL = openSettings('estimated_land_date', qsParams)
+  const openNRI = openSettings('no_recent_interaction', qsParams)
 
   return (
     <DefaultLayout
