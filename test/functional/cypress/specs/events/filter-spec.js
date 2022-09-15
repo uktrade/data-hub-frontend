@@ -465,8 +465,21 @@ describe('events Collections Filter', () => {
       const queryParamWithName = 'name=Big+Event'
 
       context('should filter from user input', () => {
-        it('should add name from user input to query param', () => {
+        before(() => {
+          cy.intercept(
+            'GET',
+            `${urls.events.activity.data()}?sortBy=modified_on:desc&name=Big+Event&page=1`
+          ).as('nameRequest')
+        })
+
+        it('should pass the name to the controller', () => {
           cy.get(element).type(`${eventName}{enter}`)
+          cy.wait('@nameRequest').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+        })
+
+        it('should add name from user input to query param', () => {
           cy.url().should('include', queryParamWithName)
         })
 
@@ -566,6 +579,22 @@ describe('events Collections Filter', () => {
       const invalidAventriIdNumbers = '200300400500600'
       const queryParamWithAventriId = 'aventri_id=200300400'
       const queryParamWithInvalidAventriId = 'aventri_id=Testing %'
+
+      context('should filter from user input', () => {
+        before(() => {
+          cy.intercept(
+            'GET',
+            `${urls.events.activity.data()}?sortBy=modified_on:desc&aventriId=200300400&page=1`
+          ).as('aventriIdRequest')
+        })
+
+        it('should pass the aventri Id to the controller', () => {
+          cy.get(element).type(`${aventriId}{enter}`)
+          cy.wait('@aventriIdRequest').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+        })
+      })
 
       context('should filter from user input', () => {
         it('should add an aventri ID from user input to query param', () => {
