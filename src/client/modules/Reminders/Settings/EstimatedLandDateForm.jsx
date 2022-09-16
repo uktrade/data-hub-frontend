@@ -25,6 +25,7 @@ import {
 import urls from '../../../../lib/urls'
 
 const OPTIONS_NO_YES = [...OPTIONS_YES_NO].reverse()
+const redirectUrl = `${urls.reminders.settings.index()}?estimated_land_date=true`
 
 const EstimatedLandDateForm = () => (
   <DefaultLayout
@@ -40,7 +41,7 @@ const EstimatedLandDateForm = () => (
         text: 'Home',
       },
       {
-        link: urls.reminders.settings.index(),
+        link: redirectUrl,
         text: 'Reminders and email notifications settings',
       },
       {
@@ -52,14 +53,14 @@ const EstimatedLandDateForm = () => (
       id="reminders-settings-estimated-land-date"
       initialValuesTaskName={TASK_GET_ELD_REMINDER_SUBSCRIPTIONS}
       submissionTaskName={TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS}
-      redirectTo={() => urls.reminders.settings.index()}
+      redirectTo={() => redirectUrl}
       transformPayload={({ emailRemindersEnabled, reminderDays }) => ({
         email_reminders_enabled: emailRemindersEnabled === OPTION_YES,
         reminder_days: reminderDays ? reminderDays : [],
       })}
       analyticsFormName="remindersSettingsEstimatedLandDate"
       flashMessage={() => 'Settings updated'}
-      cancelRedirectTo={() => urls.reminders.settings.index()}
+      cancelRedirectTo={() => redirectUrl}
     >
       {({ values: { estimatedLandDate, reminders } }) => (
         <>

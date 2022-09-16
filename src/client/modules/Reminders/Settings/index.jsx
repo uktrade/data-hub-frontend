@@ -42,11 +42,18 @@ const StyledHomeLink = styled(Link)({
   display: 'block',
 })
 
+const openSettings = (queryParamType, qsParams) => {
+  const settingsExpand = get(qsParams, queryParamType, false)
+
+  return !!settingsExpand
+}
+
 const RemindersSettings = () => {
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
-  const openESL = get(qsParams, 'estimated_land_date', false)
-  const openNRI = get(qsParams, 'no_recent_interaction', false)
+  const openESL = openSettings('estimated_land_date', qsParams)
+  const openNRI = openSettings('no_recent_interaction', qsParams)
+
   return (
     <DefaultLayout
       heading="Reminders and email notifications settings"

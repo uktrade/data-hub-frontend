@@ -41,8 +41,7 @@ describe('Edit no recent interaction', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        'Reminders and email notifications settings':
-          urls.reminders.settings.index(),
+        'Reminders and email notifications settings': `${urls.reminders.settings.index()}?no_recent_interaction=true`,
         'Settings for projects with no recent interaction': null,
       })
     })
