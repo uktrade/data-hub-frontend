@@ -1,5 +1,7 @@
 import { isEmpty } from 'lodash'
 import { settings } from './constants'
+import { OPTION_NO, OPTION_YES } from '../../../common/constants'
+
 /**
  * A function that formats an array of numbers (days) and appends a message that is grammatically correct.
  * @param {array} days - an array of numbers representing days
@@ -77,12 +79,23 @@ export const transformReminderDaysToAPI = (formValues) =>
   Object.values(getReminderDaysFromFormValues(formValues))
 
 /**
- * A function that takes a form values object and transforms it into
- * an event for Google Tag Manager (GTM)
+ * A function that takes a no recent interaction form values object and
+ * transforms it so it can be written to the data layer of Google Tag Manager (GTM)
  * @param {object} the form values object
- * @returns {object} an event for GTM
+ * @returns {object} an object to be written to the data layer of GTM
+ * @example
+ * {
+ *   reminderDays0: 30,
+ *   reminderDays1: 60,
+ *   reminderDays2: 90,
+ *   reminderDays3: 120,
+ *   reminderDays4: 150,
+ *   remindersCount: 5,
+ *   wantsReminders: 'yes',
+ *   wantsEmailNotifications: 'yes',
+ * }
  */
-export const transformFormDataToAnalyticsData = (formValues) => {
+export const transformNRIFormValuesToAnalyticsData = (formValues) => {
   const reminderDays = getReminderDaysFromFormValues(formValues)
   // We need to reindex the keys incase the user has
   // deleted some days and then added a bunch more
@@ -100,5 +113,44 @@ export const transformFormDataToAnalyticsData = (formValues) => {
     remindersCount: Object.keys(reIndexReminderDays).length,
     wantsReminders: formValues.reminders,
     wantsEmailNotifications: formValues.emailNotifications,
+  }
+}
+
+/**
+ * A function that takes an estimated land date form values object and
+ * transforms it so it can be written to the data layer for Google Tag Manager (GTM)
+ * @param {object} the form values object
+ * @returns {object} an object to be written to the data layer of GTM
+ * @example
+ * {
+ *   reminderDays0: 60,
+ *   reminderDays1: 30,
+ *   wantsReminders: 'yes',
+ *   wantsEmailNotifications: 'yes',
+ * }
+ */
+export const transformELDFormValuesToAnalyticsData = (formValues) => {
+  if (formValues.reminders === OPTION_NO) {
+    return {
+      wantsReminders: OPTION_NO,
+      // As the user has selected 'no' to reminders, they don't
+      // have an option for email notifications
+      wantsEmailNotifications: OPTION_NO,
+    }
+  }
+
+  const reminderDays = formValues.reminderDays.reduce((object, key, index) => {
+    return {
+      ...object,
+      [`reminder${index}`]: formValues.reminderDays[index],
+    }
+  }, {})
+
+  return {
+    ...reminderDays,
+    wantsReminders: OPTION_YES,
+    // As the user has selected 'yes' to reminders, they now
+    // have an option for email notifications
+    wantsEmailNotifications: formValues.emailRemindersEnabled,
   }
 }

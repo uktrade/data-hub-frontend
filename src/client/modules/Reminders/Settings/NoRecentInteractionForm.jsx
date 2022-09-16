@@ -6,7 +6,7 @@ import urls from '../../../../lib/urls'
 import {
   transformReminderDaysToAPI,
   getReminderDaysFromFormValues,
-  transformFormDataToAnalyticsData,
+  transformNRIFormValuesToAnalyticsData,
 } from '../transformers'
 
 import {
@@ -93,9 +93,7 @@ const NoRecentInteractionForm = () => (
         email_reminders_enabled: formValues.emailNotifications === OPTION_YES,
       })}
       analyticsFormName="editNoRecentInteractionReminderSettings"
-      analyticsData={(formValues) =>
-        transformFormDataToAnalyticsData(formValues)
-      }
+      analyticsData={transformNRIFormValuesToAnalyticsData}
       flashMessage={() => 'Settings updated'}
       cancelRedirectTo={() => redirectUrl}
     >
