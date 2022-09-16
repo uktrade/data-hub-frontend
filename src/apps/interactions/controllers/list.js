@@ -108,11 +108,10 @@ function renderInteractionsForEntity(req, res, next) {
 
     const contact = res.locals.contact
 
-    const isActivitySteamFeatureFlagEnabled = res.locals.userFeatures?.includes(
-      ACTIVITY_STREAM_FEATURE_FLAG
-    )
+    const isActivityStreamFeatureFlagEnabled =
+      res.locals.userFeatures?.includes(ACTIVITY_STREAM_FEATURE_FLAG)
 
-    const breadcrumbTitle = isActivitySteamFeatureFlagEnabled
+    const breadcrumbTitle = isActivityStreamFeatureFlagEnabled
       ? 'Activity'
       : 'Interactions'
 
@@ -135,7 +134,7 @@ function renderInteractionsForEntity(req, res, next) {
         contactId: contactId,
         contact: contact,
       },
-      isActivitySteamFeatureFlagEnabled,
+      isActivityStreamFeatureFlagEnabled,
     })
   } catch (error) {
     next(error)

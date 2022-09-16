@@ -14,7 +14,7 @@ async function getAudit(req, res, next) {
     const contact = res.locals?.contact
     const page = req.query.page || 1
 
-    const isActivitySteamFeatureFlagEnabled =
+    const isActivityStreamFeatureFlagEnabled =
       res.locals?.userFeatures?.includes(ACTIVITY_STREAM_FEATURE_FLAG)
 
     const auditLog = await getContactAuditLog(req, contactId, page).then(
@@ -28,10 +28,10 @@ async function getAudit(req, res, next) {
       props: {
         contactId: contactId,
         contact: contact,
-        isActivitySteamFeatureFlagEnabled,
+        isActivityStreamFeatureFlagEnabled,
       },
       auditLog,
-      isActivitySteamFeatureFlagEnabled,
+      isActivityStreamFeatureFlagEnabled,
     })
   } catch (error) {
     next(error)

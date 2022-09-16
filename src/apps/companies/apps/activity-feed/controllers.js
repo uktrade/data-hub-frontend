@@ -179,12 +179,12 @@ async function fetchActivitiesForContact(req, res, next) {
     )
 
     // istanbul ignore next: Covered by functional tests
-    let isActivitySteamFeatureFlagEnabled = res.locals?.userFeatures?.includes(
+    let isActivityStreamFeatureFlagEnabled = res.locals?.userFeatures?.includes(
       ACTIVITY_STREAM_FEATURE_FLAG
     )
 
     // istanbul ignore next: Covered by functional tests
-    let results = isActivitySteamFeatureFlagEnabled
+    let results = isActivityStreamFeatureFlagEnabled
       ? await fetchActivityFeed(
           req,
           contactActivityQuery(

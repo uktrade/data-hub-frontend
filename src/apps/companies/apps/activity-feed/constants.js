@@ -1,4 +1,4 @@
-const ACTIVITY_STREAM_FEATURE_FLAG = 'user-activity-steam-aventri'
+const ACTIVITY_STREAM_FEATURE_FLAG = 'user-activity-stream-aventri'
 
 const FILTER_KEYS = {
   dataHubAndExternalActivity: 'dataHubAndExternalActivity',

@@ -35,18 +35,17 @@ function getDetails(req, res, next) {
     const contactId = req.params.contactId
     const contact = res.locals.contact
     const companyAddress = res.locals.company.address
-    const isActivitySteamFeatureFlagEnabled = res.locals.userFeatures?.includes(
-      ACTIVITY_STREAM_FEATURE_FLAG
-    )
+    const isActivityStreamFeatureFlagEnabled =
+      res.locals.userFeatures?.includes(ACTIVITY_STREAM_FEATURE_FLAG)
 
     res.render('contacts/views/details', {
       props: {
         contactId: contactId,
         contact: contact,
-        isActivitySteamFeatureFlagEnabled,
+        isActivityStreamFeatureFlagEnabled,
         companyAddress: companyAddress,
       },
-      isActivitySteamFeatureFlagEnabled,
+      isActivityStreamFeatureFlagEnabled,
     })
   } catch (error) {
     next(error)
