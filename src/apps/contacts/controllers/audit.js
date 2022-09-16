@@ -5,7 +5,7 @@ const {
 const { transformAuditLogToListItem } = require('../../audit/transformers')
 const { contactAuditLabels } = require('../labels')
 const {
-  CONTACT_ACTIVITY_FEATURE_FLAG,
+  ACTIVITY_STREAM_FEATURE_FLAG,
 } = require('../../companies/apps/activity-feed/constants')
 
 async function getAudit(req, res, next) {
@@ -14,9 +14,8 @@ async function getAudit(req, res, next) {
     const contact = res.locals?.contact
     const page = req.query.page || 1
 
-    const isContactActivitiesFeatureOn = res.locals?.userFeatures?.includes(
-      CONTACT_ACTIVITY_FEATURE_FLAG
-    )
+    const isActivitySteamFeatureFlagEnabled =
+      res.locals?.userFeatures?.includes(ACTIVITY_STREAM_FEATURE_FLAG)
 
     const auditLog = await getContactAuditLog(req, contactId, page).then(
       transformApiResponseToCollection(
@@ -29,10 +28,10 @@ async function getAudit(req, res, next) {
       props: {
         contactId: contactId,
         contact: contact,
-        isContactActivitiesFeatureOn,
+        isActivitySteamFeatureFlagEnabled,
       },
       auditLog,
-      isContactActivitiesFeatureOn,
+      isActivitySteamFeatureFlagEnabled,
     })
   } catch (error) {
     next(error)

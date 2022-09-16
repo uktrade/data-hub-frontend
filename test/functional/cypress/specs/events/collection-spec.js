@@ -1,7 +1,7 @@
 import { assertBreadcrumbs, assertErrorDialog } from '../../support/assertions'
 import { events } from '../../../../../src/lib/urls'
 import { eventFaker, eventListFaker } from '../../fakers/events'
-import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../../src/apps/companies/apps/activity-feed/constants'
+import { ACTIVITY_STREAM_FEATURE_FLAG } from '../../../../../src/apps/companies/apps/activity-feed/constants'
 
 const urls = require('../../../../../src/lib/urls')
 
@@ -140,7 +140,7 @@ describe('Event Collection List Page - React', () => {
 
   context('when the activity stream flag is on', () => {
     before(() => {
-      cy.setUserFeatures([EVENT_ACTIVITY_FEATURE_FLAG])
+      cy.setUserFeatures([ACTIVITY_STREAM_FEATURE_FLAG])
     })
 
     context('when there is not an error', () => {

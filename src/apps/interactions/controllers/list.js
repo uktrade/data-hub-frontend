@@ -8,7 +8,7 @@ const { saveSession } = require('../../../lib/session-helper')
 
 const FILTER_CONSTANTS = require('../../../lib/filter-constants')
 const {
-  CONTACT_ACTIVITY_FEATURE_FLAG,
+  ACTIVITY_STREAM_FEATURE_FLAG,
 } = require('../../companies/apps/activity-feed/constants')
 
 const QUERY_STRING = FILTER_CONSTANTS.INTERACTIONS.SECTOR.PRIMARY.QUERY_STRING
@@ -108,11 +108,11 @@ function renderInteractionsForEntity(req, res, next) {
 
     const contact = res.locals.contact
 
-    const isContactActivitiesFeatureOn = res.locals.userFeatures?.includes(
-      CONTACT_ACTIVITY_FEATURE_FLAG
+    const isActivitySteamFeatureFlagEnabled = res.locals.userFeatures?.includes(
+      ACTIVITY_STREAM_FEATURE_FLAG
     )
 
-    const breadcrumbTitle = isContactActivitiesFeatureOn
+    const breadcrumbTitle = isActivitySteamFeatureFlagEnabled
       ? 'Activity'
       : 'Interactions'
 
@@ -135,7 +135,7 @@ function renderInteractionsForEntity(req, res, next) {
         contactId: contactId,
         contact: contact,
       },
-      isContactActivitiesFeatureOn,
+      isActivitySteamFeatureFlagEnabled,
     })
   } catch (error) {
     next(error)

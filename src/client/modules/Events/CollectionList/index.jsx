@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
+import { ACTIVITY_STREAM_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 
 import {
   EVENTS__ALL_ACTIVITY_FEED_EVENTS_LOADED,
@@ -96,7 +96,7 @@ const EventsCollection = ({
 
   return (
     <DefaultLayout heading="Events" pageTitle="Events">
-      <CheckUserFeatureFlag userFeatureFlagName={EVENT_ACTIVITY_FEATURE_FLAG}>
+      <CheckUserFeatureFlag userFeatureFlagName={ACTIVITY_STREAM_FEATURE_FLAG}>
         {(isFeatureFlagOn) =>
           !isFeatureFlagOn ? (
             <FilteredCollectionList
