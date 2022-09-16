@@ -10,9 +10,7 @@ const attendeesRouter = require('./attendees/router')
 
 const {
   fetchAventriEvent,
-  fetchAventriAttendees,
-} = require('../companies/apps/activity-feed/controllers')
-const {
+  fetchAventriEventAttended,
   fetchAllActivityFeedEvents,
 } = require('../companies/apps/activity-feed/controllers')
 
@@ -23,7 +21,7 @@ router.use(handleRoutePermissions(APP_PERMISSIONS))
 router.get('/aventri/:aventriEventId/details', renderEventsView)
 router.get(urls.events.aventri.detailsData.route, fetchAventriEvent)
 router.get('/aventri/:aventriEventId/attendees', renderEventsView)
-router.get(urls.events.aventri.attendeesData.route, fetchAventriAttendees)
+router.get(urls.events.aventri.attendedData.route, fetchAventriEventAttended)
 
 router.use(
   '/:eventId',

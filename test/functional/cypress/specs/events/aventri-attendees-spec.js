@@ -17,7 +17,7 @@ describe('Aventri event attendees', () => {
     })
     context('With normal behaviour', () => {
       before(() => {
-        cy.visit(urls.events.aventri.attendees(existingEventId))
+        cy.visit(urls.events.aventri.attended(existingEventId))
       })
 
       it('should display aventri event name in breadcrumb', () => {
@@ -48,25 +48,25 @@ describe('Aventri event attendees', () => {
             'href',
             urls.events.aventri.details(existingEventId)
           )
-        cy.get('[data-test="event-aventri-attendees-link"]')
+        cy.get('[data-test="event-aventri-attended-link"]')
           .should('contain', 'Attendees')
           .should(
             'have.attr',
             'href',
-            urls.events.aventri.attendees(existingEventId)
+            urls.events.aventri.attended(existingEventId)
           )
       })
 
       it('should display an attendee', () => {
-        cy.get('[data-test="aventri-attendee"]').should('exist')
+        cy.get('[data-test="aventri-attended"]').should('exist')
       })
 
       context('when you click on the contact name', () => {
         beforeEach(() => {
-          cy.visit(urls.events.aventri.attendees(existingEventId))
+          cy.visit(urls.events.aventri.attended(existingEventId))
         })
         it("should navigate to the contact's detail page if they exist in Data Hub", () => {
-          cy.get('[data-test="aventri-attendee-name"] > a')
+          cy.get('[data-test="aventri-attended-name"] > a')
             .eq(0)
             .should(
               'have.attr',
@@ -76,13 +76,13 @@ describe('Aventri event attendees', () => {
         })
 
         it("should not navigate anywhere if the contact doesn't exist in Data Hub", () => {
-          cy.get('[data-test="aventri-attendee-name"]')
+          cy.get('[data-test="aventri-attended-name"]')
             .eq(1)
             .should('not.have.attr', 'href')
         })
 
         it('should not navigate anywhere if the attendee email address field is an empty string', () => {
-          cy.get('[data-test="aventri-attendee-name"]')
+          cy.get('[data-test="aventri-attended-name"]')
             .eq(2)
             .should('not.have.attr', 'href')
         })
@@ -92,42 +92,42 @@ describe('Aventri event attendees', () => {
         beforeEach(() => {
           cy.intercept(
             'GET',
-            `${urls.events.aventri.attendeesData(
+            `${urls.events.aventri.attendedData(
               existingEventId
             )}?sortBy=first_name:asc&page=1`
           ).as('firstNameA-Z')
           cy.intercept(
             'GET',
-            `${urls.events.aventri.attendeesData(
+            `${urls.events.aventri.attendedData(
               existingEventId
             )}?sortBy=first_name:desc&page=1`
           ).as('firstNameZ-A')
           cy.intercept(
             'GET',
-            `${urls.events.aventri.attendeesData(
+            `${urls.events.aventri.attendedData(
               existingEventId
             )}?sortBy=last_name:asc&page=1`
           ).as('lastNameA-Z')
           cy.intercept(
             'GET',
-            `${urls.events.aventri.attendeesData(
+            `${urls.events.aventri.attendedData(
               existingEventId
             )}?sortBy=last_name:desc&page=1`
           ).as('lastNameZ-A')
           cy.intercept(
             'GET',
-            `${urls.events.aventri.attendeesData(
+            `${urls.events.aventri.attendedData(
               existingEventId
             )}?sortBy=company_name:asc&page=1`
           ).as('companyNameA-Z')
           cy.intercept(
             'GET',
-            `${urls.events.aventri.attendeesData(
+            `${urls.events.aventri.attendedData(
               existingEventId
             )}?sortBy=company_name:desc&page=1`
           ).as('companyNameZ-A')
 
-          cy.visit(urls.events.aventri.attendees(existingEventId))
+          cy.visit(urls.events.aventri.attended(existingEventId))
         })
 
         it('should sort by "first name: A-Z" by default', () => {
@@ -142,7 +142,7 @@ describe('Aventri event attendees', () => {
           cy.wait('@firstNameZ-A').then((request) => {
             expect(request.response.statusCode).to.eql(200)
           })
-          cy.get('[data-test="aventri-attendee"]')
+          cy.get('[data-test="aventri-attended"]')
             .eq(0)
             .should('contain', 'Diana Durrell')
         })
@@ -153,7 +153,7 @@ describe('Aventri event attendees', () => {
           cy.wait('@lastNameA-Z').then((request) => {
             expect(request.response.statusCode).to.eql(200)
           })
-          cy.get('[data-test="aventri-attendee"]')
+          cy.get('[data-test="aventri-attended"]')
             .eq(0)
             .should('contain', 'Alex Alderman')
         })
@@ -164,7 +164,7 @@ describe('Aventri event attendees', () => {
           cy.wait('@lastNameZ-A').then((request) => {
             expect(request.response.statusCode).to.eql(200)
           })
-          cy.get('[data-test="aventri-attendee"]')
+          cy.get('[data-test="aventri-attended"]')
             .eq(0)
             .should('contain', 'Diana Durrell')
         })
@@ -175,7 +175,7 @@ describe('Aventri event attendees', () => {
           cy.wait('@companyNameA-Z').then((request) => {
             expect(request.response.statusCode).to.eql(200)
           })
-          cy.get('[data-test="aventri-attendee"]')
+          cy.get('[data-test="aventri-attended"]')
             .eq(0)
             .should('contain', 'Alex Alderman')
         })
@@ -186,7 +186,7 @@ describe('Aventri event attendees', () => {
           cy.wait('@companyNameZ-A').then((request) => {
             expect(request.response.statusCode).to.eql(200)
           })
-          cy.get('[data-test="aventri-attendee"]')
+          cy.get('[data-test="aventri-attended"]')
             .eq(0)
             .should('contain', 'Diana Durrell')
         })
@@ -196,35 +196,35 @@ describe('Aventri event attendees', () => {
         beforeEach(() => {
           cy.intercept(
             'GET',
-            `${urls.events.aventri.attendeesData(
+            `${urls.events.aventri.attendedData(
               existingEventId
             )}?sortBy=first_name:asc&page=1`
           ).as('firstNameA-Z')
           cy.intercept(
             'GET',
-            `${urls.events.aventri.attendeesData(
+            `${urls.events.aventri.attendedData(
               existingEventId
             )}?sortBy=first_name:desc&page=1`
           ).as('firstNameZ-A')
-          cy.visit(urls.events.aventri.attendees(existingEventId))
+          cy.visit(urls.events.aventri.attended(existingEventId))
         })
         it('should be possible to page through', () => {
           cy.get('[data-page-number="2"]').click()
           cy.get('[data-test=pagination-summary]').contains('Page 2 of 4')
-          cy.get('[data-test="aventri-attendee"]').should('exist')
+          cy.get('[data-test="aventri-attended"]').should('exist')
         })
       })
     })
 
     context('With errors', () => {
       before(() => {
-        cy.visit(urls.events.aventri.attendees(errorId))
+        cy.visit(urls.events.aventri.attended(errorId))
       })
 
       it('should render an error message', () => {
         assertErrorDialog(
-          'TASK_GET_EVENT_AVENTRI_ATTENDEES',
-          'Unable to load Aventri Attendees.'
+          'TASK_GET_EVENT_AVENTRI_ATTENDED',
+          'Unable to load Aventri Attended.'
         )
       })
     })
@@ -236,10 +236,10 @@ describe('Aventri event attendees', () => {
 
   context('With the feature flag turned off', () => {
     before(() => {
-      cy.visit(urls.events.aventri.attendees(existingEventId))
+      cy.visit(urls.events.aventri.attended(existingEventId))
     })
     it('should not display an aventri attendee', () => {
-      cy.get('[data-test="aventri-attendee"]').should('not.exist')
+      cy.get('[data-test="aventri-attended"]').should('not.exist')
     })
   })
 })

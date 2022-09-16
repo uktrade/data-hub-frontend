@@ -1,10 +1,9 @@
 import { omitBy, isEmpty } from 'lodash'
 import qs from 'qs'
 
-export const TASK_GET_EVENT_AVENTRI_ATTENDEES =
-  'TASK_GET_EVENT_AVENTRI_ATTENDEES'
+export const TASK_GET_EVENT_AVENTRI_ATTENDED = 'TASK_GET_EVENT_AVENTRI_ATTENDED'
 
-export const ID = 'eventAventriAttendees'
+export const ID = 'eventAventriAttended'
 
 const parseQueryString = (queryString) => {
   const queryParams = omitBy({ ...qs.parse(queryString) }, isEmpty)

@@ -11,6 +11,8 @@ const {
   ACTIVITY_STREAM_FEATURE_FLAG,
 } = require('./constants')
 
+const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
+
 const { getGlobalUltimateHierarchy } = require('../../repos')
 const urls = require('../../../../lib/urls')
 const {
@@ -32,7 +34,7 @@ const {
   contactActivityQueryNoAventri,
 } = require('./es-queries/contact-activity-query-no-aventri')
 const allActivityFeedEventsQuery = require('./es-queries/activity-feed-all-events-query')
-const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
+
 const { aventriEventQuery } = require('./es-queries/aventri-event-query')
 const { aventriAttendeeQuery } = require('./es-queries/aventri-attendee-query')
 
@@ -334,19 +336,25 @@ async function fetchAventriEvent(req, res, next) {
   }
 }
 
-async function fetchAventriAttendees(req, res, next) {
+async function fetchAventriEventAttended(req, res, next) {
   // istanbul ignore next: Covered by functional tests
   try {
     const eventId = req.params.aventriEventId
-    const { page } = req.query
+    const { page, registrationStatus } = req.query
 
     const sort = EVENT_ATTENDEES_SORT_OPTIONS[req.query.sortBy]
     const from = (page - 1) * ACTIVITIES_PER_PAGE
 
     //get the attendees
+    let registrationStatuses = [registrationStatus]
     const aventriAttendeeResults = await fetchActivityFeed(
       req,
-      aventriAttendeeQuery({ eventId, sort, from })
+      aventriAttendeeQuery({
+        eventId,
+        sort,
+        from,
+        registrationStatuses,
+      })
     )
 
     const totalAttendees = aventriAttendeeResults.hits.total.value
@@ -355,15 +363,6 @@ async function fetchAventriAttendees(req, res, next) {
     let aventriAttendees = aventriAttendeeResults.hits.hits.map(
       (hit) => hit._source
     )
-
-    const formattedAventriEventId = `dit:aventri:Event:${eventId}:Create`
-
-    const aventriEventResults = await fetchActivityFeed(
-      req,
-      aventriEventQuery([formattedAventriEventId])
-    )
-
-    const aventriEventData = aventriEventResults.hits.hits[0]._source
 
     // add the datahub ID to aventri attendees object
     // istanbul ignore next: Covered by functional tests
@@ -392,7 +391,6 @@ async function fetchAventriAttendees(req, res, next) {
 
     res.json({
       totalAttendees,
-      aventriEventData,
       aventriAttendees,
     })
   } catch (error) {
@@ -491,7 +489,7 @@ module.exports = {
   fetchActivityFeedHandler,
   fetchActivitiesForContact,
   fetchAventriEvent,
+  fetchAventriEventAttended,
   fetchAllActivityFeedEvents,
-  fetchAventriAttendees,
   eventsColListQueryBuilder,
 }

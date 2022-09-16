@@ -1,8 +1,8 @@
-import { EVENTS__AVENTRI_ATTENDEES_LOADED } from '../../../actions'
+import { EVENTS__AVENTRI_ATTENDED_LOADED } from '../../../actions'
 
 export default (state = {}, { type, result }) => {
   switch (type) {
-    case EVENTS__AVENTRI_ATTENDEES_LOADED:
+    case EVENTS__AVENTRI_ATTENDED_LOADED:
       return {
         ...state,
         ...result,

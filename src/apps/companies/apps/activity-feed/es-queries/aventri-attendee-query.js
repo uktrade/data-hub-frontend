@@ -1,4 +1,9 @@
-const aventriAttendeeQuery = ({ eventId, sort, from }) => ({
+const aventriAttendeeQuery = ({
+  eventId,
+  sort,
+  from,
+  registrationStatuses,
+}) => ({
   from,
   query: {
     bool: {
@@ -15,12 +20,7 @@ const aventriAttendeeQuery = ({ eventId, sort, from }) => ({
         },
         {
           terms: {
-            'object.dit:registrationStatus': [
-              'Attended',
-              'Confirmed',
-              'Cancelled',
-              'Registered',
-            ],
+            'object.dit:registrationStatus': registrationStatuses,
           },
         },
       ],
