@@ -4,7 +4,6 @@ async function createCompanyList(req, res, next) {
   const { id, name } = req.body
   try {
     await createUserCompanyList(req, id, name)
-    req.flash('success', 'Company list created')
     res.send()
   } catch (error) {
     req.flash('error', 'Could not create list')
