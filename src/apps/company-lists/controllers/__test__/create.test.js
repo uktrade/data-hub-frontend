@@ -24,12 +24,6 @@ describe('Creating company lists', () => {
         )
       })
 
-      it('should send a success message', () => {
-        expect(
-          global.middlewareParameters.reqMock.flash
-        ).to.have.been.calledWith('success', 'Company list created')
-      })
-
       it('should then send the response', () => {
         expect(global.middlewareParameters.resMock.send).to.have.been.called
       })
