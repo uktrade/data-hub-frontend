@@ -34,7 +34,7 @@ export default class Interaction extends React.PureComponent {
     }
 
     const advisers = CardUtils.getAdvisers(activity)
-
+    const contacts = CardUtils.getContacts(activity)
     const activityObject = activity.object
     const date = formatMediumDate(activityObject.startTime)
     const communicationChannel = transformed.communicationChannel
@@ -57,8 +57,24 @@ export default class Interaction extends React.PureComponent {
       )
     }
 
+    const formattedContactUrl = (contact) => {
+      return `/${contact.url.split('/').slice(3).join('/')}/details`
+    }
+
+    const formattedContacts = () => {
+      return (
+        !!contacts &&
+        contacts.map((contact) => (
+          <span key={contact.name}>
+            <Link href={formattedContactUrl(contact)}>{contact.name}</Link>
+          </span>
+        ))
+      )
+    }
+
     const metadata = [
       { label: 'Date', value: date },
+      { label: 'Contact(s)', value: formattedContacts() },
       { label: 'Communication channel', value: communicationChannel },
       { label: 'Adviser(s)', value: formattedAdvisers() },
       {
