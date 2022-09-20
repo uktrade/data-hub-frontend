@@ -612,6 +612,29 @@ describe('Activity feed controllers', () => {
         })
       }
     )
+
+    context('check query builder when filtering on aventri id', () => {
+      const expectedQuery = (aventriId) => [
+        {
+          terms: {
+            'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+          },
+        },
+        {
+          term: {
+            id: aventriId,
+          },
+        },
+      ]
+
+      it('builds the right query when an aventri id inputted into the filter box', () => {
+        const aventriId = 123456789
+        const transformedAventriId = 'dit:aventri:Event:123456789:Create'
+        const actualQuery = eventsColListQueryBuilder({ aventriId })
+
+        expect(expectedQuery(transformedAventriId)).to.deep.equal(actualQuery)
+      })
+    })
   })
 
   describe('#fetchAllActivityFeedEvents', () => {
@@ -638,6 +661,7 @@ describe('Activity feed controllers', () => {
             earliestStartDate: '2020-11-01',
             latestStartDate: '2020-11-10',
             page: 1,
+            aventriId: 123456789,
           },
         })
 
@@ -654,6 +678,7 @@ describe('Activity feed controllers', () => {
         const size = 10
         const earliestStartDate = '2020-11-01'
         const latestStartDate = '2020-11-10'
+        const transformedAventriId = 'dit:aventri:Event:123456789:Create'
 
         const expectedEsQuery = {
           from,
@@ -677,6 +702,11 @@ describe('Activity feed controllers', () => {
                       gte: earliestStartDate,
                       lte: latestStartDate,
                     },
+                  },
+                },
+                {
+                  term: {
+                    id: transformedAventriId,
                   },
                 },
               ],

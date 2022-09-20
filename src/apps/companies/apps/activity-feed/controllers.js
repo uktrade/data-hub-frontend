@@ -404,6 +404,7 @@ const eventsColListQueryBuilder = ({
   name,
   earliestStartDate,
   latestStartDate,
+  aventriId,
 }) => {
   const eventNameFilter = name
     ? {
@@ -425,7 +426,15 @@ const eventsColListQueryBuilder = ({
         }
       : null
 
-  const filtersArray = [eventNameFilter, dateFilter]
+  const aventriIdFilter = aventriId
+    ? {
+        term: {
+          id: `dit:aventri:Event:${aventriId}:Create`,
+        },
+      }
+    : null
+
+  const filtersArray = [eventNameFilter, dateFilter, aventriIdFilter]
 
   const cleansedFiltersArray = filtersArray.filter((filter) => filter)
 
@@ -435,7 +444,14 @@ const eventsColListQueryBuilder = ({
 
 async function fetchAllActivityFeedEvents(req, res, next) {
   try {
-    const { sortBy, name, earliestStartDate, latestStartDate, page } = req.query
+    const {
+      sortBy,
+      name,
+      earliestStartDate,
+      latestStartDate,
+      aventriId,
+      page,
+    } = req.query
 
     const from = (page - 1) * ACTIVITIES_PER_PAGE
 
@@ -446,6 +462,7 @@ async function fetchAllActivityFeedEvents(req, res, next) {
           name,
           earliestStartDate,
           latestStartDate,
+          aventriId,
         }),
         from,
         size: ACTIVITIES_PER_PAGE,

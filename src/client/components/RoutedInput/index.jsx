@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import Input from '@govuk-react/input'
 import PropTypes from 'prop-types'
 import qs from 'qs'
 import { Route } from 'react-router-dom'
@@ -22,6 +23,9 @@ const RoutedInput = ({
   dispatch,
   staticContext,
   id,
+  type,
+  maxLength,
+  isAventriIdfilter,
   ...props
 }) => {
   // This is the only way we can reset the value when the query string param is
@@ -31,6 +35,12 @@ const RoutedInput = ({
       reset()
     }
   }, [selectedValue, qsValue])
+
+  const maxLengthAventriIdValidation = (e) => {
+    if (e.target.value.length > maxLength) {
+      e.target.value = e.target.value.slice(0, maxLength)
+    }
+  }
 
   return (
     <Route>
@@ -45,9 +55,11 @@ const RoutedInput = ({
           })
 
         return (
-          <input
+          <Input
             {...props}
             value={value}
+            type={type}
+            onInput={isAventriIdfilter ? maxLengthAventriIdValidation : null}
             onChange={(e) => onChange(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
@@ -65,6 +77,13 @@ const RoutedInput = ({
 
 RoutedInput.propTypes = {
   qsParam: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  maxLength: PropTypes.number,
+  isAventriIdfilter: PropTypes.bool,
+}
+
+RoutedInput.defaultProps = {
+  isAventriIdfilter: false,
 }
 
 export default multiInstance({

@@ -5,6 +5,7 @@ import { default as Input } from './RoutedInputField/Filter'
 import { default as NumericRange } from './RoutedNumericRangeField/Filter'
 import { default as Typeahead } from './RoutedTypeahead/Filter'
 import { default as TeamsTypeahead } from './RoutedTeamsTypeahead/Filter'
+import { default as AventriId } from './RoutedAventriIdField/Filter'
 
 export default {
   AdvisersTypeahead,
@@ -14,4 +15,5 @@ export default {
   NumericRange,
   Typeahead,
   TeamsTypeahead,
+  AventriId,
 }
