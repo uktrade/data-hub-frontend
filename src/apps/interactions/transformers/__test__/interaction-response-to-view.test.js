@@ -561,7 +561,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           url: 'http://base/documents/123',
         },
         Event: {
-          url: '/events/4444',
+          url: '/events/4444/details',
           name: 'Event title',
         },
       })

@@ -137,6 +137,7 @@ function transformInteractionResponseToViewRecord(
     event: transformEntityLink({
       entity: event,
       entityPath: 'events',
+      urlSuffix: '/details',
       noLinkText: defaultEventText,
     }),
 
