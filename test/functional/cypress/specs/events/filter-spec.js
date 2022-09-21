@@ -4,7 +4,7 @@ import qs from 'qs'
 import { randomChoice } from '../../fakers/utils'
 import { eventTypeFaker, eventTypeListFaker } from '../../fakers/event-types'
 import { events } from '../../../../../src/lib/urls'
-import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../../src/apps/companies/apps/activity-feed/constants'
+import { ACTIVITY_STREAM_FEATURE_FLAG } from '../../../../../src/apps/companies/apps/activity-feed/constants'
 
 import {
   clickCheckboxGroupOption,
@@ -455,7 +455,7 @@ describe('events Collections Filter', () => {
   })
   context('with the events activity stream feature flag enabled', () => {
     before(() => {
-      cy.setUserFeatures([EVENT_ACTIVITY_FEATURE_FLAG])
+      cy.setUserFeatures([ACTIVITY_STREAM_FEATURE_FLAG])
       cy.visit(events.index())
     })
 
@@ -492,7 +492,7 @@ describe('events Collections Filter', () => {
       context('should filter from url', () => {
         it('should add name from url to filter', () => {
           cy.visit(
-            `/events?page=1&sortby=modified_on%3Adesc&featureTesting=user-event-activities&${queryParamWithName}`
+            `/events?page=1&sortby=modified_on%3Adesc&featureTesting=user-activity-stream-aventri&${queryParamWithName}`
           )
           cy.get(element).should('have.value', eventName)
         })
@@ -560,7 +560,7 @@ describe('events Collections Filter', () => {
       context('should filter from url', () => {
         it('should add the earliest and latest start date to the url', () => {
           cy.visit(
-            `/events?page=1&sortby=modified_on%3Adesc&featureTesting=user-event-activities&${queryParamWithEarliestStartDate}&${queryParamWithLatestStartDate}`
+            `/events?page=1&sortby=modified_on%3Adesc&featureTesting=user-activity-stream-aventri&${queryParamWithEarliestStartDate}&${queryParamWithLatestStartDate}`
           )
           cy.get(earliestStartElement).should('have.value', earliestStartDate)
           cy.get(latestStartElement).should('have.value', latestStartDate)

@@ -28,7 +28,7 @@ const {
 } = require('../companies/apps/activity-feed/controllers')
 const userFeatures = require('../../middleware/user-features')
 const {
-  CONTACT_ACTIVITY_FEATURE_FLAG,
+  ACTIVITY_STREAM_FEATURE_FLAG,
 } = require('../companies/apps/activity-feed/constants')
 
 router.get(urls.contacts.index(), renderContactsView)
@@ -46,7 +46,7 @@ router.use(
 router.get('/:contactId', redirectToFirstNavItem)
 router.get(
   '/:contactId/details',
-  userFeatures(CONTACT_ACTIVITY_FEATURE_FLAG),
+  userFeatures(ACTIVITY_STREAM_FEATURE_FLAG),
   getDetails
 )
 
@@ -54,13 +54,13 @@ router.get('/:id/unarchive', unarchiveContact)
 
 router.get(
   '/:contactId/audit',
-  userFeatures(CONTACT_ACTIVITY_FEATURE_FLAG),
+  userFeatures(ACTIVITY_STREAM_FEATURE_FLAG),
   getAudit
 )
 
 router.get(
   '/:contactId/documents',
-  userFeatures(CONTACT_ACTIVITY_FEATURE_FLAG),
+  userFeatures(ACTIVITY_STREAM_FEATURE_FLAG),
   renderDocuments
 )
 

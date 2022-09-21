@@ -5,7 +5,7 @@ const {
   assertKeyValueTable,
 } = require('../../support/assertions')
 const {
-  EVENT_ACTIVITY_FEATURE_FLAG,
+  ACTIVITY_STREAM_FEATURE_FLAG,
 } = require('../../../../../src/apps/companies/apps/activity-feed/constants')
 
 describe('Event Aventri Details', () => {
@@ -20,7 +20,7 @@ describe('Event Aventri Details', () => {
 
   context('when the feature flag is on', () => {
     before(() => {
-      cy.setUserFeatures([EVENT_ACTIVITY_FEATURE_FLAG])
+      cy.setUserFeatures([ACTIVITY_STREAM_FEATURE_FLAG])
       cy.visit(urls.events.aventri.details(existingEventId))
     })
 

@@ -8,7 +8,7 @@ const {
   EVENT_ACTIVITY_SORT_OPTIONS,
   EVENT_ATTENDEES_SORT_OPTIONS,
   EVENT_ALL_ACTIVITY,
-  CONTACT_ACTIVITY_FEATURE_FLAG,
+  ACTIVITY_STREAM_FEATURE_FLAG,
 } = require('./constants')
 
 const { getGlobalUltimateHierarchy } = require('../../repos')
@@ -179,12 +179,12 @@ async function fetchActivitiesForContact(req, res, next) {
     )
 
     // istanbul ignore next: Covered by functional tests
-    let isContactFeatureFlagEnabled = res.locals?.userFeatures?.includes(
-      CONTACT_ACTIVITY_FEATURE_FLAG
+    let isActivityStreamFeatureFlagEnabled = res.locals?.userFeatures?.includes(
+      ACTIVITY_STREAM_FEATURE_FLAG
     )
 
     // istanbul ignore next: Covered by functional tests
-    let results = isContactFeatureFlagEnabled
+    let results = isActivityStreamFeatureFlagEnabled
       ? await fetchActivityFeed(
           req,
           contactActivityQuery(

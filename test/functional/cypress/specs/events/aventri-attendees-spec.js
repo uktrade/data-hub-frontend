@@ -1,5 +1,5 @@
 const {
-  EVENT_ACTIVITY_FEATURE_FLAG,
+  ACTIVITY_STREAM_FEATURE_FLAG,
 } = require('../../../../../src/apps/companies/apps/activity-feed/constants')
 const urls = require('../../../../../src/lib/urls')
 const {
@@ -13,7 +13,7 @@ describe('Aventri event attendees', () => {
   const dataHubContactId = '26f61090-df61-446c-b846-60c8bbca522f'
   context('With the feature flag turned on', () => {
     before(() => {
-      cy.setUserFeatures([EVENT_ACTIVITY_FEATURE_FLAG])
+      cy.setUserFeatures([ACTIVITY_STREAM_FEATURE_FLAG])
     })
     context('With normal behaviour', () => {
       before(() => {

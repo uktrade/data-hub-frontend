@@ -1,5 +1,5 @@
 import { events } from '../../../../../src/lib/urls'
-import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../../src/apps/companies/apps/activity-feed/constants'
+import { ACTIVITY_STREAM_FEATURE_FLAG } from '../../../../../src/apps/companies/apps/activity-feed/constants'
 
 const searchEndpoint = '/api-proxy/v3/search/event'
 
@@ -81,7 +81,7 @@ describe('Event Collections Sort', () => {
 
   context('When the activity stream feature flag is on', () => {
     before(() => {
-      cy.setUserFeatures([EVENT_ACTIVITY_FEATURE_FLAG])
+      cy.setUserFeatures([ACTIVITY_STREAM_FEATURE_FLAG])
     })
 
     beforeEach(() => {

@@ -1,12 +1,12 @@
 const {
-  CONTACT_ACTIVITY_FEATURE_FLAG,
+  ACTIVITY_STREAM_FEATURE_FLAG,
 } = require('../../companies/apps/activity-feed/constants')
 
 function renderDocuments(req, res) {
   const contactId = req.params.contactId
   const contact = res.locals.contact
-  const isContactActivitiesFeatureOn = res.locals.userFeatures?.includes(
-    CONTACT_ACTIVITY_FEATURE_FLAG
+  const isActivityStreamFeatureFlagEnabled = res.locals.userFeatures?.includes(
+    ACTIVITY_STREAM_FEATURE_FLAG
   )
   const { ARCHIVED_DOCUMENT_BASE_URL } = res.locals
 
@@ -14,10 +14,10 @@ function renderDocuments(req, res) {
     props: {
       contactId: contactId,
       contact: contact,
-      isContactActivitiesFeatureOn,
+      isActivityStreamFeatureFlagEnabled,
       archivedDocumentPath: ARCHIVED_DOCUMENT_BASE_URL,
     },
-    isContactActivitiesFeatureOn,
+    isActivityStreamFeatureFlagEnabled,
   })
 }
 
