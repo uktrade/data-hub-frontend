@@ -50,6 +50,14 @@ const adviser2 = {
   type: ['Person', 'dit:Adviser'],
 }
 
+const contact = {
+  id: 'dit:DataHubContact:115b4d96-d2ea-40ff-a01d-812507093a98',
+  url: 'https://www.datahub.dev.uktrade.io/contacts/115b4d96-d2ea-40ff-a01d-812507093a98',
+  name: 'Alexander Hamilton',
+  jobTitle: 'Chief Fun Officer',
+  type: 'Contact',
+}
+
 const interactionThemes = ['export', 'investment', 'trade_agreement', 'other']
 
 const interactionServices = {
@@ -101,14 +109,14 @@ const buildAttributedTo = (numberOfAdvisers) => {
   const oneAdviser = noAdvisers.concat(adviser1)
 
   if (numberOfAdvisers === 1) {
-    return oneAdviser
+    return oneAdviser.concat(contact)
   }
 
   if (numberOfAdvisers === 2) {
-    return oneAdviser.concat(adviser2)
+    return oneAdviser.concat(adviser2).concat(contact)
   }
 
-  return noAdvisers
+  return noAdvisers.concat(contact)
 }
 
 const buildAndMountActivity = (
@@ -226,6 +234,13 @@ describe('Interaction activity card', () => {
 
     it('should render the date label', () => {
       assertText('[data-test=date-label]', 'Date: 25 Nov 2058')
+    })
+
+    it('should render the contact label', () => {
+      assertText(
+        '[data-test=contact-s-label]',
+        'Contact(s): Alexander Hamilton'
+      )
     })
 
     it('should render the communication channel label', () => {
