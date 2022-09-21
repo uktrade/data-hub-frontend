@@ -8,8 +8,6 @@ const GLOBAL_NAV_ITEMS = require('../apps/global-nav-items')
 function getActiveHeaderKey(requestPath, permittedNavItems) {
   if (requestPath.startsWith('/support')) {
     return 'datahub-support'
-  } else if (requestPath === '/profile') {
-    return 'datahub-profile'
   } else {
     for (const { path, headerKey } of permittedNavItems) {
       if (requestPath.startsWith(path)) {
