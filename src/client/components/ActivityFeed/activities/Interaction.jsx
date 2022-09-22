@@ -63,9 +63,10 @@ export default class Interaction extends React.PureComponent {
 
     const formattedContacts = () => {
       return (
-        !!contacts &&
-        contacts.map((contact) => (
+        !!contacts.length &&
+        contacts.map((contact, index) => (
           <span key={contact.name}>
+            {index ? ', ' : ''}
             <Link href={formattedContactUrl(contact)}>{contact.name}</Link>
           </span>
         ))
