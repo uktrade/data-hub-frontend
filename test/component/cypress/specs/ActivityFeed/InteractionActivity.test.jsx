@@ -253,10 +253,10 @@ describe('Interaction activity card', () => {
     })
 
     it('should have the correct link for a contact', () => {
-      cy.get('[data-test=contact-s-label] > a').should(
+      cy.get('[data-test=contact-link-0]').should(
         'have.attr',
         'href',
-        '/contacts/115b4d96-d2ea-40ff-a01d-812507093a98'
+        '/contacts/115b4d96-d2ea-40ff-a01d-812507093a98/details'
       )
     })
 
