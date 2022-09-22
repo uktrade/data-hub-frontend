@@ -51,11 +51,12 @@ const adviser2 = {
 }
 
 const contact = {
+  'dit:emailAddress': 'alex.ham@gov.uk',
+  'dit:jobTitle': 'Chief Fun Officer',
   id: 'dit:DataHubContact:115b4d96-d2ea-40ff-a01d-812507093a98',
-  url: 'https://www.datahub.dev.uktrade.io/contacts/115b4d96-d2ea-40ff-a01d-812507093a98',
   name: 'Alexander Hamilton',
-  jobTitle: 'Chief Fun Officer',
-  type: 'Contact',
+  type: ['Person', 'dit:Contact'],
+  url: 'https://www.datahub.dev.uktrade.io/contacts/115b4d96-d2ea-40ff-a01d-812507093a98',
 }
 
 const interactionThemes = ['export', 'investment', 'trade_agreement', 'other']
