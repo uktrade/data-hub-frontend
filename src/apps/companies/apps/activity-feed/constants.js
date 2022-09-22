@@ -77,12 +77,12 @@ const EVENT_ATTENDEES_SORT_OPTIONS = {
   },
 }
 
-const EVENT_AVENTRI_ATTENDED_REGISTRATION_STATUSES = [
-  'Attended',
-  'Confirmed',
-  'Cancelled',
-  'Registered',
-]
+const EVENT_AVENTRI_DETAILS_REGISTRATION_STATUSES = {
+  attended: 'Attended',
+  confirmed: 'Confirmed',
+  cancelled: 'Cancelled',
+  registered: 'Registered',
+}
 
 const EVENT_ACTIVITY_SORT_OPTIONS = {
   'modified_on:asc': {
@@ -145,7 +145,7 @@ const DATA_HUB_AND_EXTERNAL_ACTIVITY = [
 module.exports = {
   EVENT_ATTENDEES_SORT_OPTIONS,
   EVENT_ACTIVITY_SORT_OPTIONS,
-  EVENT_AVENTRI_ATTENDED_REGISTRATION_STATUSES,
+  EVENT_AVENTRI_DETAILS_REGISTRATION_STATUSES,
   EVENT_ALL_ACTIVITY,
   FILTER_KEYS,
   FILTER_ITEMS,
