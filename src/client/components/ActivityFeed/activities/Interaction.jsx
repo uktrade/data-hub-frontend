@@ -46,32 +46,26 @@ export default class Interaction extends React.PureComponent {
     const serviceName = activityObject['dit:service']?.name
     const serviceNotes = activityObject.content
 
-    const formattedAdvisers = () => {
-      return (
-        !!advisers.length &&
-        advisers.map((adviser) => (
-          <span key={adviser.name}>
-            <AdviserActivityRenderer adviser={adviser} />
-          </span>
-        ))
-      )
-    }
+    const formattedAdvisers = () =>
+      !!advisers.length &&
+      advisers.map((adviser) => (
+        <span key={adviser.name}>
+          <AdviserActivityRenderer adviser={adviser} />
+        </span>
+      ))
 
     const formattedContactUrl = (contact) => {
       return `/${contact.url.split('/').slice(3).join('/')}/details`
     }
 
-    const formattedContacts = () => {
-      return (
-        !!contacts.length &&
-        contacts.map((contact, index) => (
-          <span key={contact.name}>
-            {index ? ', ' : ''}
-            <Link href={formattedContactUrl(contact)}>{contact.name}</Link>
-          </span>
-        ))
-      )
-    }
+    const formattedContacts = () =>
+      !!contacts.length &&
+      contacts.map((contact, index) => (
+        <span key={contact.name}>
+          {index ? ', ' : ''}
+          <Link href={formattedContactUrl(contact)}>{contact.name}</Link>
+        </span>
+      ))
 
     const metadata = [
       { label: 'Date', value: date },
