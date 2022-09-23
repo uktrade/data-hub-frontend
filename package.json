@@ -169,7 +169,7 @@
     "@cypress/webpack-dev-server": "^1.8.3",
     "@faker-js/faker": "^7.4.0",
     "@storybook/addon-a11y": "^6.5.10",
-    "@storybook/addon-essentials": "^6.5.10",
+    "@storybook/addon-essentials": "^6.5.12",
     "@storybook/addons": "^6.5.12",
     "@storybook/builder-webpack5": "^6.5.10",
     "@storybook/manager-webpack5": "^6.5.10",
