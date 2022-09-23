@@ -4,7 +4,7 @@ import qs from 'qs'
 import { randomChoice } from '../../fakers/utils'
 import { eventTypeFaker, eventTypeListFaker } from '../../fakers/event-types'
 import { events } from '../../../../../src/lib/urls'
-import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../../src/apps/companies/apps/activity-feed/constants'
+import { ACTIVITY_STREAM_FEATURE_FLAG } from '../../../../../src/apps/companies/apps/activity-feed/constants'
 
 import {
   clickCheckboxGroupOption,
@@ -455,7 +455,7 @@ describe('events Collections Filter', () => {
   })
   context('with the events activity stream feature flag enabled', () => {
     before(() => {
-      cy.setUserFeatures([EVENT_ACTIVITY_FEATURE_FLAG])
+      cy.setUserFeatures([ACTIVITY_STREAM_FEATURE_FLAG])
       cy.visit(events.index())
     })
 
@@ -465,8 +465,21 @@ describe('events Collections Filter', () => {
       const queryParamWithName = 'name=Big+Event'
 
       context('should filter from user input', () => {
-        it('should add name from user input to query param', () => {
+        before(() => {
+          cy.intercept(
+            'GET',
+            `${urls.events.activity.data()}?sortBy=modified_on:desc&name=Big+Event&page=1`
+          ).as('nameRequest')
+        })
+
+        it('should pass the name to the controller', () => {
           cy.get(element).type(`${eventName}{enter}`)
+          cy.wait('@nameRequest').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+        })
+
+        it('should add name from user input to query param', () => {
           cy.url().should('include', queryParamWithName)
         })
 
@@ -479,7 +492,7 @@ describe('events Collections Filter', () => {
       context('should filter from url', () => {
         it('should add name from url to filter', () => {
           cy.visit(
-            `/events?page=1&sortby=modified_on%3Adesc&featureTesting=user-event-activities&${queryParamWithName}`
+            `/events?page=1&sortby=modified_on%3Adesc&featureTesting=user-activity-stream-aventri&${queryParamWithName}`
           )
           cy.get(element).should('have.value', eventName)
         })
@@ -547,7 +560,7 @@ describe('events Collections Filter', () => {
       context('should filter from url', () => {
         it('should add the earliest and latest start date to the url', () => {
           cy.visit(
-            `/events?page=1&sortby=modified_on%3Adesc&featureTesting=user-event-activities&${queryParamWithEarliestStartDate}&${queryParamWithLatestStartDate}`
+            `/events?page=1&sortby=modified_on%3Adesc&featureTesting=user-activity-stream-aventri&${queryParamWithEarliestStartDate}&${queryParamWithLatestStartDate}`
           )
           cy.get(earliestStartElement).should('have.value', earliestStartDate)
           cy.get(latestStartElement).should('have.value', latestStartDate)
@@ -558,6 +571,64 @@ describe('events Collections Filter', () => {
         cy.get(latestStartElement).clear()
       })
     })
+
+    context('Aventri ID', () => {
+      const element = '[data-test="aventri-id-filter"]'
+      const aventriId = '200300400'
+      const invalidAventriId = 'Testing %'
+      const invalidAventriIdNumbers = '200300400500600'
+      const queryParamWithAventriId = 'aventri_id=200300400'
+      const queryParamWithInvalidAventriId = 'aventri_id=Testing %'
+
+      context('should filter from user input', () => {
+        before(() => {
+          cy.intercept(
+            'GET',
+            `${urls.events.activity.data()}?sortBy=modified_on:desc&aventriId=200300400&page=1`
+          ).as('aventriIdRequest')
+        })
+
+        it('should pass the aventri Id to the controller', () => {
+          cy.get(element).type(`${aventriId}{enter}`)
+          cy.wait('@aventriIdRequest').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+        })
+      })
+
+      context('should filter from user input', () => {
+        it('should add an aventri ID from user input to query param', () => {
+          cy.get(element).type(`${aventriId}{enter}`)
+          cy.url().should('include', queryParamWithAventriId)
+        })
+
+        it('should not add anything to the query param if the name is backspaced', () => {
+          cy.get(element).type(`{selectAll}{backspace}{enter}`)
+          cy.url().should('not.include', queryParamWithAventriId)
+        })
+
+        it('should not allow non numerical characters', () => {
+          cy.get(element).type(`${invalidAventriId}{enter}`).should('be.empty')
+          cy.url().should('not.include', queryParamWithInvalidAventriId)
+        })
+
+        it('should truncate any long numbers to 9 digits', () => {
+          cy.get(element)
+            .type(`${invalidAventriIdNumbers}{enter}`)
+            .should('have.value', 200300400)
+        })
+      })
+
+      context('should filter from url', () => {
+        it('should add aventri id from url to filter', () => {
+          cy.visit(
+            `events?page=1&sortby=modified_on%3Adesc&featureTesting=user-event-activities&${queryParamWithAventriId}`
+          )
+          cy.get(element).should('have.value', aventriId)
+        })
+      })
+    })
+
     after(() => {
       cy.resetUser()
     })

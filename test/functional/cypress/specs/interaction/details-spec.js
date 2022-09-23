@@ -258,7 +258,7 @@ describe('Interaction details', () => {
         'Date of service delivery': '5 September 2017',
         'Adviser(s)': '',
         Event: {
-          href: '/events/bda12a57-433c-4a0c-a7ce-5ebd080e09e8',
+          href: '/events/bda12a57-433c-4a0c-a7ce-5ebd080e09e8/details',
           name: 'Grand exhibition',
         },
         Documents: 'View files and documents (will open another website)',

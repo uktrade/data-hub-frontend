@@ -15,7 +15,7 @@ import {
   SummaryTable,
 } from '../../../components'
 import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
-import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
+import { ACTIVITY_STREAM_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
 import { isEmpty } from 'lodash'
@@ -63,7 +63,7 @@ const EventAventriDetails = ({ name, eventDate, location, fullAddress }) => {
       breadcrumbs={breadcrumbs}
       useReactRouter={true}
     >
-      <CheckUserFeatureFlag userFeatureFlagName={EVENT_ACTIVITY_FEATURE_FLAG}>
+      <CheckUserFeatureFlag userFeatureFlagName={ACTIVITY_STREAM_FEATURE_FLAG}>
         {(isFeatureFlagEnabled) =>
           isFeatureFlagEnabled && (
             <Task.Status

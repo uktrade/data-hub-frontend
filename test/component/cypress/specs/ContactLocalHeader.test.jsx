@@ -25,7 +25,7 @@ describe('ContactLocalHeader', () => {
         <DataHubProvider>
           <Component
             contact={primaryContact}
-            isContactActivitiesFeatureOn={false}
+            isActivityStreamFeatureFlagEnabled={false}
           />
         </DataHubProvider>
       )
@@ -60,7 +60,7 @@ describe('ContactLocalHeader', () => {
         <DataHubProvider>
           <Component
             contact={notPrimaryContact}
-            isContactActivitiesFeatureOn={false}
+            isActivityStreamFeatureFlagEnabled={false}
           />
         </DataHubProvider>
       )
@@ -95,7 +95,7 @@ describe('ContactLocalHeader', () => {
         <DataHubProvider>
           <Component
             contact={archivedContact}
-            isContactActivitiesFeatureOn={false}
+            isActivityStreamFeatureFlagEnabled={false}
           />
         </DataHubProvider>
       )
@@ -128,7 +128,7 @@ describe('ContactLocalHeader', () => {
           <DataHubProvider>
             <Component
               contact={primaryContact}
-              isContactActivitiesFeatureOn={true}
+              isActivityStreamFeatureFlagEnabled={true}
             />
           </DataHubProvider>
         )
@@ -148,7 +148,7 @@ describe('ContactLocalHeader', () => {
           <DataHubProvider>
             <Component
               contact={archivedContact}
-              isContactActivitiesFeatureOn={true}
+              isActivityStreamFeatureFlagEnabled={true}
             />
           </DataHubProvider>
         )

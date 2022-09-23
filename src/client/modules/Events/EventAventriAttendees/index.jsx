@@ -14,7 +14,7 @@ import {
   RoutedPagination,
 } from '../../../components'
 import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
-import { EVENT_ACTIVITY_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
+import { ACTIVITY_STREAM_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import { GridCol, GridRow } from 'govuk-react'
 import Task from '../../../components/Task'
 import { ID, state2props, TASK_GET_EVENT_AVENTRI_ATTENDEES } from './state'
@@ -77,7 +77,7 @@ const EventAventriAttendees = ({
             useReactRouter={true}
           >
             <CheckUserFeatureFlag
-              userFeatureFlagName={EVENT_ACTIVITY_FEATURE_FLAG}
+              userFeatureFlagName={ACTIVITY_STREAM_FEATURE_FLAG}
             >
               {(isFeatureFlagEnabled) =>
                 isFeatureFlagEnabled && (
