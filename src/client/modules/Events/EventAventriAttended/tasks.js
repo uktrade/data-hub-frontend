@@ -1,7 +1,7 @@
 const { default: axios } = require('axios')
 const urls = require('../../../../lib/urls')
 
-import { EVENT_AVENTRI_DETAILS_REGISTRATION_STATUSES } from '../../../../apps/companies/apps/activity-feed/constants'
+import { EVENT_AVENTRI_ATTENDEES_STATUS } from '../../../../apps/companies/apps/activity-feed/constants'
 
 export const getEventAventriAttended = ({
   aventriEventId,
@@ -14,8 +14,7 @@ export const getEventAventriAttended = ({
       params: {
         sortBy: selectedSortBy,
         page,
-        registrationStatus:
-          EVENT_AVENTRI_DETAILS_REGISTRATION_STATUSES.attended,
+        registrationStatus: EVENT_AVENTRI_ATTENDEES_STATUS.attended,
       },
     }),
   ])

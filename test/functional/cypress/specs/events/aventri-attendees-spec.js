@@ -49,7 +49,7 @@ describe('Aventri event attendees', () => {
             urls.events.aventri.details(existingEventId)
           )
         cy.get('[data-test="event-aventri-attended-link"]')
-          .should('contain', 'Attendees')
+          .should('contain', 'Attended(32)')
           .should(
             'have.attr',
             'href',
@@ -58,7 +58,7 @@ describe('Aventri event attendees', () => {
       })
 
       it('should display an attendee', () => {
-        cy.get('[data-test="aventri-attended"]').should('exist')
+        cy.get('[data-test="aventri-attendee"]').should('exist')
       })
 
       context('when you click on the contact name', () => {
@@ -66,7 +66,7 @@ describe('Aventri event attendees', () => {
           cy.visit(urls.events.aventri.attended(existingEventId))
         })
         it("should navigate to the contact's detail page if they exist in Data Hub", () => {
-          cy.get('[data-test="aventri-attended-name"] > a')
+          cy.get('[data-test="aventri-attendee-name"] > a')
             .eq(0)
             .should(
               'have.attr',
@@ -76,55 +76,55 @@ describe('Aventri event attendees', () => {
         })
 
         it("should not navigate anywhere if the contact doesn't exist in Data Hub", () => {
-          cy.get('[data-test="aventri-attended-name"]')
+          cy.get('[data-test="aventri-attendee-name"]')
             .eq(1)
             .should('not.have.attr', 'href')
         })
 
         it('should not navigate anywhere if the attendee email address field is an empty string', () => {
-          cy.get('[data-test="aventri-attended-name"]')
+          cy.get('[data-test="aventri-attendee-name"]')
             .eq(2)
             .should('not.have.attr', 'href')
         })
       })
 
-      context('when sorting', () => {
+      context('when sorting for attendees', () => {
         beforeEach(() => {
           cy.intercept(
             'GET',
             `${urls.events.aventri.attendedData(
               existingEventId
-            )}?sortBy=first_name:asc&page=1`
+            )}?sortBy=first_name:asc&page=1&registrationStatus=Attended`
           ).as('firstNameA-Z')
           cy.intercept(
             'GET',
             `${urls.events.aventri.attendedData(
               existingEventId
-            )}?sortBy=first_name:desc&page=1`
+            )}?sortBy=first_name:desc&page=1&registrationStatus=Attended`
           ).as('firstNameZ-A')
           cy.intercept(
             'GET',
             `${urls.events.aventri.attendedData(
               existingEventId
-            )}?sortBy=last_name:asc&page=1`
+            )}?sortBy=last_name:asc&page=1&registrationStatus=Attended`
           ).as('lastNameA-Z')
           cy.intercept(
             'GET',
             `${urls.events.aventri.attendedData(
               existingEventId
-            )}?sortBy=last_name:desc&page=1`
+            )}?sortBy=last_name:desc&page=1&registrationStatus=Attended`
           ).as('lastNameZ-A')
           cy.intercept(
             'GET',
             `${urls.events.aventri.attendedData(
               existingEventId
-            )}?sortBy=company_name:asc&page=1`
+            )}?sortBy=company_name:asc&page=1&registrationStatus=Attended`
           ).as('companyNameA-Z')
           cy.intercept(
             'GET',
             `${urls.events.aventri.attendedData(
               existingEventId
-            )}?sortBy=company_name:desc&page=1`
+            )}?sortBy=company_name:desc&page=1&registrationStatus=Attended`
           ).as('companyNameZ-A')
 
           cy.visit(urls.events.aventri.attended(existingEventId))
@@ -142,7 +142,7 @@ describe('Aventri event attendees', () => {
           cy.wait('@firstNameZ-A').then((request) => {
             expect(request.response.statusCode).to.eql(200)
           })
-          cy.get('[data-test="aventri-attended"]')
+          cy.get('[data-test="aventri-attendee"]')
             .eq(0)
             .should('contain', 'Diana Durrell')
         })
@@ -153,7 +153,7 @@ describe('Aventri event attendees', () => {
           cy.wait('@lastNameA-Z').then((request) => {
             expect(request.response.statusCode).to.eql(200)
           })
-          cy.get('[data-test="aventri-attended"]')
+          cy.get('[data-test="aventri-attendee"]')
             .eq(0)
             .should('contain', 'Alex Alderman')
         })
@@ -164,7 +164,7 @@ describe('Aventri event attendees', () => {
           cy.wait('@lastNameZ-A').then((request) => {
             expect(request.response.statusCode).to.eql(200)
           })
-          cy.get('[data-test="aventri-attended"]')
+          cy.get('[data-test="aventri-attendee"]')
             .eq(0)
             .should('contain', 'Diana Durrell')
         })
@@ -175,7 +175,7 @@ describe('Aventri event attendees', () => {
           cy.wait('@companyNameA-Z').then((request) => {
             expect(request.response.statusCode).to.eql(200)
           })
-          cy.get('[data-test="aventri-attended"]')
+          cy.get('[data-test="aventri-attendee"]')
             .eq(0)
             .should('contain', 'Alex Alderman')
         })
@@ -186,7 +186,7 @@ describe('Aventri event attendees', () => {
           cy.wait('@companyNameZ-A').then((request) => {
             expect(request.response.statusCode).to.eql(200)
           })
-          cy.get('[data-test="aventri-attended"]')
+          cy.get('[data-test="aventri-attendee"]')
             .eq(0)
             .should('contain', 'Diana Durrell')
         })
@@ -211,7 +211,7 @@ describe('Aventri event attendees', () => {
         it('should be possible to page through', () => {
           cy.get('[data-page-number="2"]').click()
           cy.get('[data-test=pagination-summary]').contains('Page 2 of 4')
-          cy.get('[data-test="aventri-attended"]').should('exist')
+          cy.get('[data-test="aventri-attendee"]').should('exist')
         })
       })
     })

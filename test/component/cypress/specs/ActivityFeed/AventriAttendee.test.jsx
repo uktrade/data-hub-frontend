@@ -30,7 +30,7 @@ describe('AventriAttendee', () => {
     })
 
     it('renders the contact name', () => {
-      cy.get('[data-test=aventri-attended-name]').contains(
+      cy.get('[data-test=aventri-attendee-name]').contains(
         'Firstname1 Lastname1'
       )
     })
