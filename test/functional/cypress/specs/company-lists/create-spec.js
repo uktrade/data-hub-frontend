@@ -90,7 +90,7 @@ describe('Create a company list', () => {
     it('should display a success message', () => {
       cy.get(selectors.companyList.create.input).type('New list name')
       cy.get(selectors.companyList.create.submit).click()
-      cy.get(selectors.localHeader().flash).should(
+      cy.get('[data-test="status-message"]').should(
         'contain.text',
         'Company list created'
       )
