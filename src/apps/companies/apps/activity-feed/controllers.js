@@ -408,7 +408,7 @@ const eventsColListQueryBuilder = ({
 }) => {
   const eventNameFilter = name
     ? {
-        match: {
+        match_phrase_prefix: {
           'object.name': name,
         },
       }
