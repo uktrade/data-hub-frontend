@@ -24,6 +24,8 @@ const oneAdviserText =
   'Adviser(s): Bernard Harris-Patel  bernardharrispatel@test.com, Test Team  '
 const twoAdvisersText =
   'Adviser(s): Bernard Harris-Patel  bernardharrispatel@test.com, Test Team  Puck Head  puckhead@test.com, Test Team  '
+const oneContactText = 'Contact(s): Alexander Hamilton'
+const twoContactsText = 'Contact(s): Alexander Hamilton, Oliver Twist'
 const date = '2058-11-25T00:00:00Z'
 
 const adviser1 = {
@@ -48,6 +50,24 @@ const adviser2 = {
   id: 'dit:DataHubAdviser:09091b75-31ec-479f-9088-67de8745c9uf',
   name: 'Puck Head',
   type: ['Person', 'dit:Adviser'],
+}
+
+const contact1 = {
+  'dit:emailAddress': 'alex.ham@test.com',
+  'dit:jobTitle': 'Chief Fun Officer',
+  id: 'dit:DataHubContact:115b4d96-d2ea-40ff-a01d-812507093a98',
+  name: 'Alexander Hamilton',
+  type: ['Person', 'dit:Contact'],
+  url: 'https://www.datahub.dev.uktrade.io/contacts/115b4d96-d2ea-40ff-a01d-812507093a98',
+}
+
+const contact2 = {
+  'dit:emailAddress': 'oliver@test.com',
+  'dit:jobTitle': 'Chief Fangin',
+  id: 'dit:DataHubContact:56cd5cd0-bb6f-440c-adae-0253f6d48d3b',
+  name: 'Oliver Twist',
+  type: ['Person', 'dit:Contact'],
+  url: 'https://www.datahub.dev.uktrade.io/contacts/56cd5cd0-bb6f-440c-adae-0253f6d48d3b',
 }
 
 const interactionThemes = ['export', 'investment', 'trade_agreement', 'other']
@@ -101,11 +121,11 @@ const buildAttributedTo = (numberOfAdvisers) => {
   const oneAdviser = noAdvisers.concat(adviser1)
 
   if (numberOfAdvisers === 1) {
-    return oneAdviser
+    return oneAdviser.concat(contact1)
   }
 
   if (numberOfAdvisers === 2) {
-    return oneAdviser.concat(adviser2)
+    return oneAdviser.concat(adviser2).concat(contact1, contact2)
   }
 
   return noAdvisers
@@ -228,6 +248,18 @@ describe('Interaction activity card', () => {
       assertText('[data-test=date-label]', 'Date: 25 Nov 2058')
     })
 
+    it('should render the contact label', () => {
+      assertText('[data-test=contact-s-label]', oneContactText)
+    })
+
+    it('should have the correct link for a contact', () => {
+      cy.get('[data-test=contact-link-0]').should(
+        'have.attr',
+        'href',
+        '/contacts/115b4d96-d2ea-40ff-a01d-812507093a98/details'
+      )
+    })
+
     it('should render the communication channel label', () => {
       assertCommunicationChannelLabel()
     })
@@ -257,7 +289,7 @@ describe('Interaction activity card', () => {
       })
     })
 
-    context('When there are multiple advisers', () => {
+    context('When there are multiple contacts and advisers', () => {
       beforeEach(() => {
         buildAndMountActivity(
           interactionServices.specificDITService,
@@ -272,6 +304,10 @@ describe('Interaction activity card', () => {
 
       it('should render both advisers', () => {
         assertText('[data-test=adviser-s-label]', twoAdvisersText)
+      })
+
+      it('should render both contacts', () => {
+        assertText('[data-test=contact-s-label]', twoContactsText)
       })
     })
 

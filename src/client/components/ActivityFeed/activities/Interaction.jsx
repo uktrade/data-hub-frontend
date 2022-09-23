@@ -34,7 +34,7 @@ export default class Interaction extends React.PureComponent {
     }
 
     const advisers = CardUtils.getAdvisers(activity)
-
+    const contacts = CardUtils.getContacts(activity)
     const activityObject = activity.object
     const date = formatMediumDate(activityObject.startTime)
     const communicationChannel = transformed.communicationChannel
@@ -46,19 +46,35 @@ export default class Interaction extends React.PureComponent {
     const serviceName = activityObject['dit:service']?.name
     const serviceNotes = activityObject.content
 
-    const formattedAdvisers = () => {
-      return (
-        !!advisers.length &&
-        advisers.map((adviser) => (
-          <span key={adviser.name}>
-            <AdviserActivityRenderer adviser={adviser} />
-          </span>
-        ))
-      )
+    const formattedAdvisers = () =>
+      !!advisers.length &&
+      advisers.map((adviser) => (
+        <span key={adviser.name}>
+          <AdviserActivityRenderer adviser={adviser} />
+        </span>
+      ))
+
+    const formattedContactUrl = (contact) => {
+      return `/${contact.url.split('/').slice(3).join('/')}/details`
     }
+
+    const formattedContacts = () =>
+      !!contacts.length &&
+      contacts.map((contact, index) => (
+        <span key={contact.name}>
+          {index ? ', ' : ''}
+          <Link
+            data-test={`contact-link-${index}`}
+            href={formattedContactUrl(contact)}
+          >
+            {contact.name}
+          </Link>
+        </span>
+      ))
 
     const metadata = [
       { label: 'Date', value: date },
+      { label: 'Contact(s)', value: formattedContacts() },
       { label: 'Communication channel', value: communicationChannel },
       { label: 'Adviser(s)', value: formattedAdvisers() },
       {
