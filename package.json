@@ -10,7 +10,6 @@
     "storybook": "start-storybook",
     "storybook:build": "rimraf storybook-static && build-storybook --quiet",
     "storybook:release": "npm run storybook:build && cp -R ./.circleci ./storybook-static/.circleci && git-directory-deploy --directory storybook-static --branch gh-pages",
-    "storybook:update-dependencies": "npm install --save-dev @storybook/addon-a11y@latest @storybook/addon-essentials@latest @storybook/addons@latest @storybook/builder-webpack5@latest @storybook/manager-webpack5@latest @storybook/react@latest",
     "clean": "del .build cypress-coverage",
     "start": "node --use-strict src/server.js",
     "start:coverage": "nyc --silent npm run start",
@@ -47,7 +46,9 @@
     "lint-staged": "lint-staged",
     "adr-list": "adr list",
     "adr-graph": "adr generate graph",
-    "adr-toc": "adr generate toc"
+    "adr-toc": "adr generate toc",
+    "dependabot:update-storybook": "npm install --save-dev @storybook/addon-a11y@latest @storybook/addon-essentials@latest @storybook/addons@latest @storybook/builder-webpack5@latest @storybook/manager-webpack5@latest @storybook/react@latest",
+    "dependabot:update-sentry": "npm install @sentry/browser@latest @sentry/node@latest @sentry/react@latest @sentry/tracing@latest"
   },
   "nyc": {
     "report-dir": "cypress-coverage",
@@ -72,9 +73,9 @@
     "@redux-devtools/extension": "^3.2.3",
     "@reduxjs/toolkit": "^1.8.3",
     "@sentry/browser": "^7.13.0",
-    "@sentry/node": "^7.12.1",
-    "@sentry/react": "^7.12.1",
-    "@sentry/tracing": "^7.12.1",
+    "@sentry/node": "^7.13.0",
+    "@sentry/react": "^7.13.0",
+    "@sentry/tracing": "^7.13.0",
     "autoprefixer": "^10.4.12",
     "axios": "^0.27.2",
     "basic-auth": "^2.0.1",
