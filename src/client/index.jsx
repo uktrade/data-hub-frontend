@@ -321,7 +321,6 @@ if (globalProps.sentryDsn) {
     integrations: [
       new BrowserTracing({
         tracingOrigins: [
-          'localhost',
           'www.datahub.uktrade.io',
           'www.datahub.dev.uktrade.io',
           'www.datahub.staging.uktrade.io',
