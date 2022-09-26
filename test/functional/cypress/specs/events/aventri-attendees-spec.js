@@ -49,7 +49,7 @@ describe('Aventri event attendees', () => {
             urls.events.aventri.details(existingEventId)
           )
         cy.get('[data-test="event-aventri-attended-link"]')
-          .should('contain', 'Attended(32)')
+          .should('contain', 'Attended (32)')
           .should(
             'have.attr',
             'href',
@@ -94,37 +94,37 @@ describe('Aventri event attendees', () => {
             'GET',
             `${urls.events.aventri.attendedData(
               existingEventId
-            )}?sortBy=first_name:asc&page=1&registrationStatus=Attended`
+            )}?sortBy=first_name:asc&page=1&size=10&registrationStatus=Attended`
           ).as('firstNameA-Z')
           cy.intercept(
             'GET',
             `${urls.events.aventri.attendedData(
               existingEventId
-            )}?sortBy=first_name:desc&page=1&registrationStatus=Attended`
+            )}?sortBy=first_name:desc&page=1&size=10&registrationStatus=Attended`
           ).as('firstNameZ-A')
           cy.intercept(
             'GET',
             `${urls.events.aventri.attendedData(
               existingEventId
-            )}?sortBy=last_name:asc&page=1&registrationStatus=Attended`
+            )}?sortBy=last_name:asc&page=1&size=10&registrationStatus=Attended`
           ).as('lastNameA-Z')
           cy.intercept(
             'GET',
             `${urls.events.aventri.attendedData(
               existingEventId
-            )}?sortBy=last_name:desc&page=1&registrationStatus=Attended`
+            )}?sortBy=last_name:desc&page=1&size=10&registrationStatus=Attended`
           ).as('lastNameZ-A')
           cy.intercept(
             'GET',
             `${urls.events.aventri.attendedData(
               existingEventId
-            )}?sortBy=company_name:asc&page=1&registrationStatus=Attended`
+            )}?sortBy=company_name:asc&page=1&size=10&registrationStatus=Attended`
           ).as('companyNameA-Z')
           cy.intercept(
             'GET',
             `${urls.events.aventri.attendedData(
               existingEventId
-            )}?sortBy=company_name:desc&page=1&registrationStatus=Attended`
+            )}?sortBy=company_name:desc&page=1&size=10&registrationStatus=Attended`
           ).as('companyNameZ-A')
 
           cy.visit(urls.events.aventri.attended(existingEventId))

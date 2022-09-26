@@ -107,7 +107,7 @@ const EventAventriAttended = ({
                                 aventriEventId
                               )}
                             >
-                              Attended({totalAttendees})
+                              Attended ({totalAttendees})
                             </LocalNavLink>
                           </LocalNav>
                         </GridCol>

@@ -119,7 +119,7 @@ const EventAventriDetails = ({
                                   aventriEventId
                                 )}
                               >
-                                Attended({attended.total})
+                                Attended ({attended.total})
                               </LocalNavLink>
                             )}
                           </LocalNav>

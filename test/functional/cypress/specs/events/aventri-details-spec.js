@@ -42,6 +42,13 @@ describe('Event Aventri Details', () => {
             'href',
             urls.events.aventri.details(existingEventId)
           )
+        cy.get('[data-test="event-aventri-attended-link"]')
+          .should('contain', 'Attended (32)')
+          .should(
+            'have.attr',
+            'href',
+            urls.events.aventri.attended(existingEventId)
+          )
       })
 
       it('should display the event name in the header', () => {
