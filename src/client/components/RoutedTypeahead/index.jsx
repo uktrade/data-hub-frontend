@@ -20,6 +20,10 @@ const getParamIds = (qsParam, pickedOptions) => ({
   [qsParam]: pickedOptions ? pickedOptions.map(({ value }) => value) : [],
 })
 
+const getParamLabels = (qsParam, pickedOptions) => ({
+  [qsParam]: pickedOptions ? pickedOptions.map(({ label }) => label) : [],
+})
+
 const RoutedTypeahead = ({
   name,
   qsParam,
@@ -32,6 +36,7 @@ const RoutedTypeahead = ({
   loadOptions,
   noOptionsMessage,
   options,
+  isDataHubAndAventriFilter,
   ...props
 }) => (
   <Route>
@@ -56,7 +61,9 @@ const RoutedTypeahead = ({
               history.push({
                 search: qs.stringify({
                   ...qsParams,
-                  ...getParamIds(qsParam, pickedOptions),
+                  ...(!isDataHubAndAventriFilter
+                    ? getParamIds(qsParam, pickedOptions)
+                    : getParamLabels(qsParam, pickedOptions)),
                   page: 1,
                 }),
               })
@@ -71,6 +78,10 @@ const RoutedTypeahead = ({
 RoutedTypeahead.propTypes = {
   name: PropTypes.string.isRequired,
   qsParam: PropTypes.string.isRequired,
+  isDataHubAndAventriFilter: PropTypes.bool,
 }
 
+RoutedTypeahead.defaultProps = {
+  isDataHubAndAventriFilter: false,
+}
 export default RoutedTypeahead

@@ -241,6 +241,7 @@ const EventsCollection = ({
                   options={optionMetadata.countryOptions}
                   selectedOptions={selectedFilters.countries.options}
                   data-test="country-filter"
+                  isDataHubAndAventriFilter={true}
                 />
                 <Filters.Typeahead
                   isMulti={true}
