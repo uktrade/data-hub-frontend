@@ -6,15 +6,22 @@ import {
 } from '../transformers'
 import { EVENT_AVENTRI_ATTENDEES_STATUS } from '../../../../apps/companies/apps/activity-feed/constants'
 
-const paramsAventriEventAttendee = (status) => ({
-  params: { sortBy: 'first_name:asc', page: 1, registrationStatus: status },
+export const paramsGetAventriEventAttendeeStatus = (status) => ({
+  params: {
+    sortBy: 'first_name:asc',
+    page: 1,
+    size: 0,
+    registrationStatus: status,
+  },
 })
 
 export const getEventAventriDetails = (aventriEventId) =>
   Promise.all([
     axios.get(urls.events.aventri.detailsData(aventriEventId)),
     axios.get(urls.events.aventri.attendedData(aventriEventId), {
-      ...paramsAventriEventAttendee(EVENT_AVENTRI_ATTENDEES_STATUS.attended),
+      ...paramsGetAventriEventAttendeeStatus(
+        EVENT_AVENTRI_ATTENDEES_STATUS.attended
+      ),
     }),
   ])
     .then(([{ data }, { data: attendees }]) => ({

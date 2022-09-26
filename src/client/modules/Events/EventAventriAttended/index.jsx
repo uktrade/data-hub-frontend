@@ -28,6 +28,7 @@ const EventAventriAttended = ({
   aventriEventData,
   defaultQueryParams = {
     page: 1,
+    size: 10,
     sortby: 'first_name:asc',
   },
   payload,

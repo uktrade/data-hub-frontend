@@ -340,7 +340,7 @@ async function fetchAventriEventAttended(req, res, next) {
   // istanbul ignore next: Covered by functional tests
   try {
     const eventId = req.params.aventriEventId
-    const { page, registrationStatus } = req.query
+    const { page, size, registrationStatus } = req.query
 
     const sort = EVENT_ATTENDEES_SORT_OPTIONS[req.query.sortBy]
     const from = (page - 1) * ACTIVITIES_PER_PAGE
@@ -353,6 +353,7 @@ async function fetchAventriEventAttended(req, res, next) {
         eventId,
         sort,
         from,
+        size,
         registrationStatuses,
       })
     )

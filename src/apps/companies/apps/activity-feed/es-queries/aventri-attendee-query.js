@@ -2,9 +2,11 @@ const aventriAttendeeQuery = ({
   eventId,
   sort,
   from,
+  size,
   registrationStatuses,
 }) => ({
   from,
+  size,
   query: {
     bool: {
       must: [

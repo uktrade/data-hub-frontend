@@ -2,20 +2,15 @@ const { default: axios } = require('axios')
 const urls = require('../../../../lib/urls')
 
 import { EVENT_AVENTRI_ATTENDEES_STATUS } from '../../../../apps/companies/apps/activity-feed/constants'
+import { paramsGetAventriEventAttendeeStatus } from '../EventAventriDetails/tasks'
 
-export const getEventAventriAttended = ({
-  aventriEventId,
-  selectedSortBy,
-  page,
-}) =>
+export const getEventAventriAttended = ({ aventriEventId }) =>
   Promise.all([
     axios.get(urls.events.aventri.detailsData(aventriEventId)),
     axios.get(urls.events.aventri.attendedData(aventriEventId), {
-      params: {
-        sortBy: selectedSortBy,
-        page,
-        registrationStatus: EVENT_AVENTRI_ATTENDEES_STATUS.attended,
-      },
+      ...paramsGetAventriEventAttendeeStatus(
+        EVENT_AVENTRI_ATTENDEES_STATUS.attended
+      ),
     }),
   ])
     .then(([{ data: aventriEventData }, { data: attendeesData }]) => ({
