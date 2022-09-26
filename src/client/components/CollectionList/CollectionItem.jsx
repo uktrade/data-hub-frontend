@@ -7,6 +7,7 @@ import { H3 } from '@govuk-react/heading'
 import Link from '@govuk-react/link'
 import { HEADING_SIZES, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import { GREY_2 } from 'govuk-colours'
+import { DARK_GREY } from '../../utils/colors'
 import Badge from '../Badge/'
 import Metadata from '../../components/Metadata/'
 
@@ -46,7 +47,7 @@ const StyledLinkHeader = styled(StyledHeader)`
 const StyledSubheading = styled('h4')`
   font-size: 14px;
   line-height: 20px;
-  color: #6f777b;
+  color: ${DARK_GREY};
   font-weight: normal;
   margin: -${SPACING.SCALE_3} 0 ${SPACING.SCALE_2} 0;
 `
