@@ -120,6 +120,10 @@ async function getInvestmentDetails(req, res, next) {
           label: 'Created on',
           value: formatMediumDateTime(investment.created_on),
         },
+        {
+          label: 'Created by',
+          value: investment.created_by.dit_team.name,
+        },
       ],
       company: {
         name: investment.investor_company.name,

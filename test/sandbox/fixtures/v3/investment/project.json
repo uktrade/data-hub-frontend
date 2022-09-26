@@ -101,6 +101,13 @@
   "archived_on": null,
   "archived_reason": null,
   "archived_by": null,
+  "created_by": {
+    "name": "Andy Pipkin",
+    "contact_email": "andy.pipkin@gov.uk",
+    "dit_team": {
+      "name": "Little Britain"
+    }
+  },
   "created_on": "2017-06-07T10:00:00Z",
   "modified_on": "2017-06-07T10:00:00Z",
   "comments": "",

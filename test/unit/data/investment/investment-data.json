@@ -108,6 +108,13 @@
   "archived_on": null,
   "archived_reason": null,
   "archived_by": null,
+  "created_by": {
+    "name": "Andy Pipkin",
+    "contact_email": "andy.pipkin@gov.uk",
+    "dit_team": {
+      "name": "Little Britain"
+    }
+  },
   "created_on": "2017-06-14T14:52:46.618779",
   "modified_on": "2017-06-14T14:52:46.618779",
   "total_investment": "100000",
