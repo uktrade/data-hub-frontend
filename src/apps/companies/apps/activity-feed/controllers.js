@@ -404,6 +404,7 @@ const eventsColListQueryBuilder = ({
   earliestStartDate,
   latestStartDate,
   aventriId,
+  addressCountry,
 }) => {
   const eventNameFilter = name
     ? {
@@ -425,6 +426,25 @@ const eventsColListQueryBuilder = ({
         }
       : null
 
+  const countryFilter = addressCountry
+    ? {
+        bool: {
+          should: [
+            {
+              terms: {
+                'object.dit:address_country.name': addressCountry,
+              },
+            },
+            {
+              terms: {
+                'object.dit:aventri:location_country': addressCountry,
+              },
+            },
+          ],
+        },
+      }
+    : null
+
   const aventriIdFilter = aventriId
     ? {
         term: {
@@ -433,7 +453,12 @@ const eventsColListQueryBuilder = ({
       }
     : null
 
-  const filtersArray = [eventNameFilter, dateFilter, aventriIdFilter]
+  const filtersArray = [
+    eventNameFilter,
+    dateFilter,
+    aventriIdFilter,
+    countryFilter,
+  ]
 
   const cleansedFiltersArray = filtersArray.filter((filter) => filter)
 
@@ -450,6 +475,7 @@ async function fetchAllActivityFeedEvents(req, res, next) {
       latestStartDate,
       aventriId,
       page,
+      addressCountry,
     } = req.query
 
     const from = (page - 1) * ACTIVITIES_PER_PAGE
@@ -462,6 +488,7 @@ async function fetchAllActivityFeedEvents(req, res, next) {
           earliestStartDate,
           latestStartDate,
           aventriId,
+          addressCountry,
         }),
         from,
         size: ACTIVITIES_PER_PAGE,
