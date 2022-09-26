@@ -229,7 +229,7 @@ const EventsCollection = ({
                   hintText="For example, 100100100"
                   type="number"
                   maxLength={9}
-                  isAventriIdfilter={true}
+                  isAventriIdFilter={true}
                   data-test="aventri-id-filter"
                 />
                 <Filters.Typeahead

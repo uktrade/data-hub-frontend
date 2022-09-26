@@ -25,7 +25,7 @@ const RoutedInput = ({
   id,
   type,
   maxLength,
-  isAventriIdfilter,
+  isAventriIdFilter,
   ...props
 }) => {
   // This is the only way we can reset the value when the query string param is
@@ -59,7 +59,7 @@ const RoutedInput = ({
             {...props}
             value={value}
             type={type}
-            onInput={isAventriIdfilter ? maxLengthAventriIdValidation : null}
+            onInput={isAventriIdFilter ? maxLengthAventriIdValidation : null}
             onChange={(e) => onChange(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
@@ -79,11 +79,11 @@ RoutedInput.propTypes = {
   qsParam: PropTypes.string.isRequired,
   type: PropTypes.string,
   maxLength: PropTypes.number,
-  isAventriIdfilter: PropTypes.bool,
+  isAventriIdFilter: PropTypes.bool,
 }
 
 RoutedInput.defaultProps = {
-  isAventriIdfilter: false,
+  isAventriIdFilter: false,
 }
 
 export default multiInstance({
