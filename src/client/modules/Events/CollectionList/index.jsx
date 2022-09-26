@@ -200,7 +200,7 @@ const EventsCollection = ({
               total={total}
               addItemURL={'/events/create'}
             >
-              <CollectionFilters>
+              <CollectionFilters taskProps={collectionListMetadataTask}>
                 <Filters.Input
                   id="EventsCollection.name"
                   qsParam="name"
@@ -232,6 +232,47 @@ const EventsCollection = ({
                   isAventriIdfilter={true}
                   data-test="aventri-id-filter"
                 />
+                <Filters.Typeahead
+                  isMulti={true}
+                  label={LABELS.country}
+                  name="address_country"
+                  qsParam="address_country"
+                  placeholder="Search country"
+                  options={optionMetadata.countryOptions}
+                  selectedOptions={selectedFilters.countries.options}
+                  data-test="country-filter"
+                />
+                {/* <Filters.Typeahead
+                  isMulti={true}
+                  label={LABELS.ukRegion}
+                  name="uk_region"
+                  qsParam="uk_region"
+                  placeholder="Search UK region"
+                  options={optionMetadata.ukRegionOptions}
+                  selectedOptions={selectedFilters.ukRegions.options}
+                  data-test="uk-region-filter"
+                />
+                <Filters.CheckboxGroup
+                  maxScrollHeight={345}
+                  legend={LABELS.eventType}
+                  name="event_type"
+                  qsParam="event_type"
+                  options={optionMetadata.eventTypeOptions}
+                  selectedOptions={selectedFilters.eventTypes.options}
+                  data-test="event-type-filter"
+                  groupId="event-type-filter"
+                />
+                <Filters.AdvisersTypeahead
+                  isMulti={true}
+                  taskProps={organisersTask}
+                  label={LABELS.organiser}
+                  name="organiser"
+                  qsParam="organiser"
+                  placeholder="Search organiser"
+                  noOptionsMessage="No organisers found"
+                  selectedOptions={selectedFilters.organisers.options}
+                  data-test="organiser-filter"
+                /> */}
               </CollectionFilters>
             </ActivityFeedFilteredCollectionList>
           )
