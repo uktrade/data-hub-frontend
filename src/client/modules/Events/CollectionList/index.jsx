@@ -242,7 +242,7 @@ const EventsCollection = ({
                   selectedOptions={selectedFilters.countries.options}
                   data-test="country-filter"
                 />
-                {/* <Filters.Typeahead
+                <Filters.Typeahead
                   isMulti={true}
                   label={LABELS.ukRegion}
                   name="uk_region"
@@ -272,7 +272,7 @@ const EventsCollection = ({
                   noOptionsMessage="No organisers found"
                   selectedOptions={selectedFilters.organisers.options}
                   data-test="organiser-filter"
-                /> */}
+                />
               </CollectionFilters>
             </ActivityFeedFilteredCollectionList>
           )
