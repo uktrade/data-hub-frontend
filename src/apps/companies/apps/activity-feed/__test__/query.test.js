@@ -45,7 +45,7 @@ describe('#activityFeedEventsQuery', () => {
       )
     })
 
-    it('should return the right query when "recently updated" filter is selected', () => {
+    it('should return the right query when "Recently updated" sort by is selected', () => {
       const sortBy = 'modified_on:asc'
       expect(expectedEsQuery('asc')).to.deep.equal(
         activityFeedEventsQuery({
@@ -57,7 +57,7 @@ describe('#activityFeedEventsQuery', () => {
       )
     })
 
-    it('should return the right query when "least recently updated" filter is selected', () => {
+    it('should return the right query when "Least recently updated" sort by is selected', () => {
       const sortBy = 'modified_on:desc'
       expect(expectedEsQuery('desc')).to.deep.equal(
         activityFeedEventsQuery({
@@ -93,7 +93,7 @@ describe('#activityFeedEventsQuery', () => {
       },
     })
 
-    it('should return the right query when "name" ', () => {
+    it('should return the right query when "Event name A-Z" sort by is selected ', () => {
       const sortBy = 'name:asc'
       expect(expectedEsQuery('asc')).to.deep.equal(
         activityFeedEventsQuery({
@@ -129,7 +129,7 @@ describe('#activityFeedEventsQuery', () => {
       },
     })
 
-    it('should return the right query when "earliest start date" filter is selected', () => {
+    it('should return the right query when "Earliest start date" sort by is selected', () => {
       const sortBy = 'start_date:asc'
       expect(expectedEsQuery('asc')).to.deep.equal(
         activityFeedEventsQuery({
@@ -141,7 +141,7 @@ describe('#activityFeedEventsQuery', () => {
       )
     })
 
-    it('should return the right query when "latest start date" filter is selected', () => {
+    it('should return the right query when "Latest start date" sort by is selected', () => {
       const sortBy = 'start_date:desc'
       expect(expectedEsQuery('desc')).to.deep.equal(
         activityFeedEventsQuery({

@@ -524,7 +524,7 @@ describe('Activity feed controllers', () => {
             },
           },
           {
-            match: {
+            match_phrase_prefix: {
               'object.name': name,
             },
           },
@@ -692,7 +692,7 @@ describe('Activity feed controllers', () => {
                   },
                 },
                 {
-                  match: {
+                  match_phrase_prefix: {
                     'object.name': name,
                   },
                 },
