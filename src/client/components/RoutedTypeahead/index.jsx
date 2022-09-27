@@ -36,7 +36,7 @@ const RoutedTypeahead = ({
   loadOptions,
   noOptionsMessage,
   options,
-  isDataHubAndAventriFilter,
+  labelAsQueryParam,
   ...props
 }) => (
   <Route>
@@ -61,7 +61,7 @@ const RoutedTypeahead = ({
               history.push({
                 search: qs.stringify({
                   ...qsParams,
-                  ...(!isDataHubAndAventriFilter
+                  ...(!labelAsQueryParam
                     ? getParamIds(qsParam, pickedOptions)
                     : getParamLabels(qsParam, pickedOptions)),
                   page: 1,
@@ -78,10 +78,10 @@ const RoutedTypeahead = ({
 RoutedTypeahead.propTypes = {
   name: PropTypes.string.isRequired,
   qsParam: PropTypes.string.isRequired,
-  isDataHubAndAventriFilter: PropTypes.bool,
+  labelAsQueryParam: PropTypes.bool,
 }
 
 RoutedTypeahead.defaultProps = {
-  isDataHubAndAventriFilter: false,
+  labelAsQueryParam: false,
 }
 export default RoutedTypeahead

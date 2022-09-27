@@ -210,20 +210,20 @@ const EventsCollection = ({
                   data-test="event-name-filter"
                 />
                 <Filters.Date
-                  label="Earliest start date"
+                  label={LABELS.earliestStartDate}
                   name="earliest_start_date"
                   qsParamName="earliest_start_date"
                   data-test="earliest-start-date-filter"
                 />
                 <Filters.Date
-                  label="Latest start date"
+                  label={LABELS.latestStartDate}
                   name="latest_start_date"
                   qsParamName="latest_start_date"
                   data-test="latest-start-date-filter"
                 />
                 <Filters.AventriId
                   id="EventsCollection.aventriId"
-                  label="Aventri ID"
+                  label={LABELS.aventriId}
                   name="aventri_id"
                   qsParam="aventri_id"
                   hintText="For example, 100100100"
@@ -241,38 +241,7 @@ const EventsCollection = ({
                   options={optionMetadata.countryOptions}
                   selectedOptions={selectedFilters.countries.options}
                   data-test="country-filter"
-                  isDataHubAndAventriFilter={true}
-                />
-                <Filters.Typeahead
-                  isMulti={true}
-                  label={LABELS.ukRegion}
-                  name="uk_region"
-                  qsParam="uk_region"
-                  placeholder="Search UK region"
-                  options={optionMetadata.ukRegionOptions}
-                  selectedOptions={selectedFilters.ukRegions.options}
-                  data-test="uk-region-filter"
-                />
-                <Filters.CheckboxGroup
-                  maxScrollHeight={345}
-                  legend={LABELS.eventType}
-                  name="event_type"
-                  qsParam="event_type"
-                  options={optionMetadata.eventTypeOptions}
-                  selectedOptions={selectedFilters.eventTypes.options}
-                  data-test="event-type-filter"
-                  groupId="event-type-filter"
-                />
-                <Filters.AdvisersTypeahead
-                  isMulti={true}
-                  taskProps={organisersTask}
-                  label={LABELS.organiser}
-                  name="organiser"
-                  qsParam="organiser"
-                  placeholder="Search organiser"
-                  noOptionsMessage="No organisers found"
-                  selectedOptions={selectedFilters.organisers.options}
-                  data-test="organiser-filter"
+                  labelAsQueryParam={true}
                 />
               </CollectionFilters>
             </ActivityFeedFilteredCollectionList>
