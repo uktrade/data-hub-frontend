@@ -635,6 +635,39 @@ describe('Activity feed controllers', () => {
         expect(expectedQuery(transformedAventriId)).to.deep.equal(actualQuery)
       })
     })
+
+    context('check query builder when filtering on country', () => {
+      const expectedQuery = (addressCountry) => [
+        {
+          terms: {
+            'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+          },
+        },
+        {
+          bool: {
+            should: [
+              {
+                terms: {
+                  'object.dit:address_country.name': addressCountry,
+                },
+              },
+              {
+                terms: {
+                  'object.dit:aventri:location_country': addressCountry,
+                },
+              },
+            ],
+          },
+        },
+      ]
+
+      it('builds the right query when a country is selected', () => {
+        const addressCountry = ['Canada']
+        const actualQuery = eventsColListQueryBuilder({ addressCountry })
+
+        expect(expectedQuery(addressCountry)).to.deep.equal(actualQuery)
+      })
+    })
   })
 
   describe('#fetchAllActivityFeedEvents', () => {
@@ -662,6 +695,7 @@ describe('Activity feed controllers', () => {
             latestStartDate: '2020-11-10',
             page: 1,
             aventriId: 123456789,
+            addressCountry: ['Canada', 'United Kingdom'],
           },
         })
 
@@ -679,6 +713,7 @@ describe('Activity feed controllers', () => {
         const earliestStartDate = '2020-11-01'
         const latestStartDate = '2020-11-10'
         const transformedAventriId = 'dit:aventri:Event:123456789:Create'
+        const addressCountry = ['Canada', 'United Kingdom']
 
         const expectedEsQuery = {
           from,
@@ -707,6 +742,22 @@ describe('Activity feed controllers', () => {
                 {
                   term: {
                     id: transformedAventriId,
+                  },
+                },
+                {
+                  bool: {
+                    should: [
+                      {
+                        terms: {
+                          'object.dit:address_country.name': addressCountry,
+                        },
+                      },
+                      {
+                        terms: {
+                          'object.dit:aventri:location_country': addressCountry,
+                        },
+                      },
+                    ],
                   },
                 },
               ],
