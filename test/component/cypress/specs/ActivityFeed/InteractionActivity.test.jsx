@@ -383,6 +383,64 @@ describe('Interaction activity card', () => {
       })
     })
 
+    context('When the theme and service are missing', () => {
+      beforeEach(() => {
+        buildAndMountActivity(
+          null,
+          null,
+          'Email/Fax',
+          typeInteraction,
+          shortNotes,
+          date
+        )
+        cy.get('[data-test=interaction-activity]').should('exist')
+      })
+
+      it('should not render the theme label', () => {
+        cy.get('[data-test=activity-theme-label]').should('not.exist')
+      })
+
+      it('should not render the service label', () => {
+        cy.get('[data-test=activity-service-label]').should('not.exist')
+      })
+
+      it('should render the kind label', () => {
+        assertKindLabel()
+      })
+
+      it('should render the interaction subject', () => {
+        assertInteractionSubject()
+      })
+
+      it('should render the interaction notes', () => {
+        assertNotes()
+      })
+
+      it('should render the date label', () => {
+        assertText('[data-test=date-label]', 'Date: 25 Nov 2058')
+      })
+
+      it('should render the contact label', () => {
+        assertText('[data-test=contact-s-label]', oneContactText)
+      })
+
+      it('should have the correct link for a contact', () => {
+        cy.get('[data-test=contact-link-0]').should(
+          'have.attr',
+          'href',
+          '/contacts/115b4d96-d2ea-40ff-a01d-812507093a98/details'
+        )
+      })
+
+      it('should render the communication channel label', () => {
+        assertCommunicationChannelLabel()
+      })
+
+      it('should render the advisers label', () => {
+        assertText('[data-test=adviser-s-label]', oneAdviserText)
+      })
+    })
+
     context('When the date is missing', () => {
       beforeEach(() => {
         buildAndMountActivity(
