@@ -8,14 +8,9 @@ describe('Dashboard - feature flag', () => {
       cy.resetUser()
       cy.visit('/')
     })
+
     it('should show the default dashboard layout', () => {
       cy.get('[data-test="dashboard"]').should('not.exist')
-    })
-    it('should NOT append a query param for GA tracking', () => {
-      cy.url('[data-test="dashboard"]').should(
-        'not.contain',
-        '?featureTesting=personalised-dashboard'
-      )
     })
   })
 
@@ -24,14 +19,21 @@ describe('Dashboard - feature flag', () => {
       cy.setUserFeatures(['personalised-dashboard'])
       cy.visit('/')
     })
+
     it('should show an alternative layout', () => {
       cy.get('[data-test="dashboard"]').should('be.visible')
     })
-    it('should append a query param for GA tracking', () => {
-      cy.url('[data-test="dashboard"]').should(
-        'contain',
-        '?featureTesting=personalised-dashboard'
-      )
+
+    it('should write to the GTM data layer', () => {
+      cy.window().then((win) => {
+        const data = win.dataLayer.find(
+          ({ name }) => name === 'personalised-dashboard'
+        )
+        expect(data).to.deep.equal({
+          name: 'personalised-dashboard',
+          event: 'featureFlag',
+        })
+      })
     })
   })
 
@@ -46,13 +48,6 @@ describe('Dashboard - feature flag', () => {
 
     it('should show an alternative layout', () => {
       cy.get('[data-test="dashboard"]').should('be.visible')
-    })
-
-    it('should maintain the query param for GA tracking', () => {
-      cy.url('[data-test="dashboard"]').should(
-        'contain',
-        'company-lists?featureTesting=personalised-dashboard'
-      )
     })
   })
 })

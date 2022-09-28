@@ -19,23 +19,25 @@ describe('user-features middleware', () => {
     next = sinon.spy()
   })
 
-  describe('when the flag is actives for the user', () => {
-    it('redirects to url with featuretesting param', () => {
+  describe('when the flag is active for the user', () => {
+    it('sets isFeatureTesting to true', () => {
       res.locals.userFeatures = [featureFlagName]
       userFeatures(featureFlagName)(req, res, next)
-      expect(res.redirect).to.have.been.calledWith(
-        `?featureTesting=${featureFlagName}`
-      )
+      expect(res.locals.userFeatureGTMEvent).to.deep.equal({
+        name: featureFlagName,
+        event: 'featureFlag',
+      })
       expect(res.locals.isFeatureTesting).to.be.true
+      expect(next).to.have.been.called
     })
   })
 
   describe('when the flag is not active for the user', () => {
-    it('redirects to url with featuretesting param', () => {
+    it('sets isFeatureTesting to false', () => {
       userFeatures(featureFlagName)(req, res, next)
-      expect(res.redirect).to.not.have.been.called
-      expect(next).to.have.been.called
+      expect(res.locals.userFeatureGTMEvent).to.be.undefined
       expect(res.locals.isFeatureTesting).to.be.false
+      expect(next).to.have.been.called
     })
   })
 })
