@@ -1,5 +1,12 @@
-const aventriAttendeeQuery = ({ eventId, sort, from }) => ({
+const aventriAttendeeQuery = ({
+  eventId,
+  sort,
   from,
+  size,
+  registrationStatuses,
+}) => ({
+  from,
+  size,
   query: {
     bool: {
       must: [
@@ -15,12 +22,7 @@ const aventriAttendeeQuery = ({ eventId, sort, from }) => ({
         },
         {
           terms: {
-            'object.dit:registrationStatus': [
-              'Attended',
-              'Confirmed',
-              'Cancelled',
-              'Registered',
-            ],
+            'object.dit:registrationStatus': registrationStatuses,
           },
         },
       ],

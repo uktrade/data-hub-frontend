@@ -36,7 +36,13 @@ const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
 })
 
-const EventAventriDetails = ({ name, eventDate, location, fullAddress }) => {
+const EventAventriDetails = ({
+  name,
+  eventDate,
+  location,
+  fullAddress,
+  attended,
+}) => {
   const { aventriEventId } = useParams()
   const breadcrumbs = [
     {
@@ -106,6 +112,16 @@ const EventAventriDetails = ({ name, eventDate, location, fullAddress }) => {
                             >
                               Details
                             </LocalNavLink>
+                            {attended.status && (
+                              <LocalNavLink
+                                dataTest="event-aventri-attended-link"
+                                href={urls.events.aventri.attended(
+                                  aventriEventId
+                                )}
+                              >
+                                Attended ({attended.total})
+                              </LocalNavLink>
+                            )}
                           </LocalNav>
                         </GridCol>
                         <GridCol setWidth="three-quarters">

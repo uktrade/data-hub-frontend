@@ -17,17 +17,18 @@ import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
 import { ACTIVITY_STREAM_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import { GridCol, GridRow } from 'govuk-react'
 import Task from '../../../components/Task'
-import { ID, state2props, TASK_GET_EVENT_AVENTRI_ATTENDEES } from './state'
-import { EVENTS__AVENTRI_ATTENDEES_LOADED } from '../../../actions'
+import { ID, state2props, TASK_GET_EVENT_AVENTRI_ATTENDED } from './state'
+import { EVENTS__AVENTRI_ATTENDED_LOADED } from '../../../actions'
 import Activity from '../../../components/ActivityFeed/Activity'
 import ActivityList from '../../../components/ActivityFeed/activities/card/ActivityList'
 import { ATTENDEES_SORT_OPTIONS } from './constants'
 
-const EventAventriAttendees = ({
+const EventAventriAttended = ({
   aventriAttendees,
   aventriEventData,
   defaultQueryParams = {
     page: 1,
+    size: 10,
     sortby: 'first_name:asc',
   },
   payload,
@@ -72,7 +73,7 @@ const EventAventriAttendees = ({
         return (
           <DefaultLayout
             heading={eventName}
-            pageTitle="Events Attendees"
+            pageTitle="Events Attended"
             breadcrumbs={breadcrumbs}
             useReactRouter={true}
           >
@@ -82,16 +83,16 @@ const EventAventriAttendees = ({
               {(isFeatureFlagEnabled) =>
                 isFeatureFlagEnabled && (
                   <Task.Status
-                    name={TASK_GET_EVENT_AVENTRI_ATTENDEES}
+                    name={TASK_GET_EVENT_AVENTRI_ATTENDED}
                     id={ID}
-                    progressMessage="Loading Aventri attendees"
+                    progressMessage="Loading Aventri attended"
                     startOnRender={{
                       payload: { aventriEventId, ...payload },
-                      onSuccessDispatch: EVENTS__AVENTRI_ATTENDEES_LOADED,
+                      onSuccessDispatch: EVENTS__AVENTRI_ATTENDED_LOADED,
                     }}
                   >
                     {() => (
-                      <GridRow data-test="event-aventri-attendee">
+                      <GridRow data-test="event-aventri-attended">
                         <GridCol setWidth="one-quarter">
                           <LocalNav dataTest="event-aventri-nav">
                             <LocalNavLink
@@ -101,12 +102,12 @@ const EventAventriAttendees = ({
                               Details
                             </LocalNavLink>
                             <LocalNavLink
-                              dataTest="event-aventri-attendees-link"
-                              href={urls.events.aventri.attendees(
+                              dataTest="event-aventri-attended-link"
+                              href={urls.events.aventri.attended(
                                 aventriEventId
                               )}
                             >
-                              Attendees
+                              Attended ({totalAttendees})
                             </LocalNavLink>
                           </LocalNav>
                         </GridCol>
@@ -123,7 +124,7 @@ const EventAventriAttendees = ({
                             />
                             <ActivityList>
                               {aventriAttendees?.map((attendee, index) => (
-                                <li key={`aventri-attendee-${index}`}>
+                                <li key={`aventri-attended-${index}`}>
                                   <Activity activity={attendee}></Activity>
                                 </li>
                               ))}
@@ -144,4 +145,4 @@ const EventAventriAttendees = ({
   )
 }
 
-export default connect(state2props)(EventAventriAttendees)
+export default connect(state2props)(EventAventriAttended)

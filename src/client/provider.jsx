@@ -106,8 +106,8 @@ import eventDetailsReducer from './modules/Events/EventDetails/reducer'
 import { ID as EVENTS_AVENTRI_DETAILS_ID } from './modules/Events/EventAventriDetails/state'
 import eventAventriDetailsReducer from './modules/Events/EventAventriDetails/reducer'
 
-import { ID as EVENTS_AVENTRI_ATTENDEES_ID } from './modules/Events/EventAventriAttendees/state'
-import eventAventriAttendeesReducer from './modules/Events/EventAventriAttendees/reducer'
+import { ID as EVENTS_AVENTRI_ATTENDED_ID } from './modules/Events/EventAventriAttended/state'
+import eventAventriAttendedReducer from './modules/Events/EventAventriAttended/reducer'
 
 import { ID as EVENTS_ID } from './modules/Events/CollectionList/state'
 import eventsReducer from './modules/Events/CollectionList/reducer'
@@ -203,7 +203,7 @@ const reducer = {
   [EVENTS_ID]: eventsReducer,
   [EVENTS_DETAILS_ID]: eventDetailsReducer,
   [EVENTS_AVENTRI_DETAILS_ID]: eventAventriDetailsReducer,
-  [EVENTS_AVENTRI_ATTENDEES_ID]: eventAventriAttendeesReducer,
+  [EVENTS_AVENTRI_ATTENDED_ID]: eventAventriAttendedReducer,
   [ORDERS_LIST_ID]: ordersReducer,
   [COMPANY_ORDERS_LIST_ID]: ordersReducer,
   [REMINDERS_ID]: remindersReducer,
