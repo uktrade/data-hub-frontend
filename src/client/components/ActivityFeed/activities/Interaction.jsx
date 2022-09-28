@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
+import styled from 'styled-components'
 
 import { AdviserActivityRenderer } from './card/item-renderers'
 import { ACTIVITY_TYPE } from '../constants'
@@ -83,7 +84,19 @@ export default class Interaction extends React.PureComponent {
       },
     ]
 
-    return (
+    const Row = styled('div')`
+      display: flex;
+    `
+
+    const LeftCol = styled('div')`
+      flex: 75%;
+    `
+
+    const RightCol = styled('div')`
+      flex: 25%;
+    `
+
+    return theme || service ? (
       <ActivityCardWrapper dataTest="interaction-activity">
         <ActivityCardLabels theme={theme} service={service} kind={kind} />
         <ActivityCardSubject>
@@ -93,6 +106,23 @@ export default class Interaction extends React.PureComponent {
         </ActivityCardSubject>
         {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
         <ActivityCardMetadata metadata={metadata} />
+      </ActivityCardWrapper>
+    ) : (
+      <ActivityCardWrapper dataTest="interaction-activity">
+        <Row>
+          <LeftCol>
+            <ActivityCardSubject>
+              <Link data-test="interaction-subject" href={transformed.url}>
+                {transformed.subject}
+              </Link>
+            </ActivityCardSubject>
+            {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
+            <ActivityCardMetadata metadata={metadata} />
+          </LeftCol>
+          <RightCol>
+            <ActivityCardLabels kind={kind} />
+          </RightCol>
+        </Row>
       </ActivityCardWrapper>
     )
   }
