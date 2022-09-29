@@ -4,13 +4,12 @@ import { Route } from 'react-router-dom'
 import qs from 'qs'
 
 import styled from 'styled-components'
-import { GREY_1 } from 'govuk-colours'
-
+import { DARK_GREY } from '../../utils/colors'
 import CollectionHeaderRow from './CollectionHeaderRow'
 import RoutedSelect from '../RoutedSelect'
 
 const StyledSpan = styled('span')`
-  color: ${GREY_1};
+  color: ${DARK_GREY};
 `
 
 const CollectionSort = ({ sortOptions, totalPages }) => {

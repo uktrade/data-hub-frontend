@@ -1,14 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { BLACK, GREY_1 } from 'govuk-colours'
+import { BLACK } from 'govuk-colours'
+import { DARK_GREY } from '../../utils/colors'
 
 const StyledMetaWrapper = styled('div')`
   color: ${BLACK};
 `
 
 const StyledItemLabel = styled('span')`
-  color: ${GREY_1};
+  color: ${DARK_GREY};
 `
 
 function MetadataItem({ label, children }) {
