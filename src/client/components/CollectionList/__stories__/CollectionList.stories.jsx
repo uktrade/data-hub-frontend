@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react'
 import CollectionList from 'CollectionList'
 
 import profilesFixture from '../__fixtures__/capitalProfiles.json'
+import { SORT_OPTIONS } from '../../../../apps/investments/client/projects/constants'
 
 const collectionStories = storiesOf('Collection', module)
 
@@ -27,13 +28,7 @@ const CollectionWithState = () => {
       itemName="profile"
       addItemUrl="http://example.com"
       downloadUrl="http://example.com"
-      sortOptions={
-        <>
-          <option value="-created_on">Most recently created</option>
-          <option value="-modified_on">Most recently updated</option>
-          <option value="name">Project Name A-Z</option>
-        </>
-      }
+      sortOptions={SORT_OPTIONS}
     />
   )
 }
@@ -43,5 +38,10 @@ collectionStories.addParameters({ component: CollectionList })
 collectionStories.add('Collection List', () => <CollectionWithState />)
 
 collectionStories.add('Collection List with 0 items', () => (
-  <CollectionList totalItems={0} itemName="results" />
+  <CollectionList
+    totalItems={0}
+    items={[]}
+    itemName="results"
+    sortOptions={SORT_OPTIONS}
+  />
 ))
