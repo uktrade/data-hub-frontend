@@ -2,7 +2,7 @@ import axios from 'axios'
 import urls from '../../../../lib/urls'
 import {
   transformResponseToEventAventriDetails,
-  transformAventriEventAttendeesRegistionStatusToBolean,
+  transformAventriEventAttendeesRegistionStatusToBoolean,
 } from '../transformers'
 import { EVENT_AVENTRI_ATTENDEES_STATUS } from '../../../../apps/companies/apps/activity-feed/constants'
 
@@ -27,6 +27,6 @@ export const getEventAventriDetails = (aventriEventId) =>
     .then(([{ data }, { data: attendees }]) => ({
       ...transformResponseToEventAventriDetails(data),
       attended:
-        transformAventriEventAttendeesRegistionStatusToBolean(attendees),
+        transformAventriEventAttendeesRegistionStatusToBoolean(attendees),
     }))
     .catch(() => Promise.reject('Unable to load aventri event details.'))

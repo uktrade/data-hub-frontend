@@ -148,7 +148,7 @@ const transformResponseToEventAventriDetails = ({ id, object, type }) => ({
   ]),
 })
 
-const transformAventriEventAttendeesRegistionStatusToBolean = ({
+const transformAventriEventAttendeesRegistionStatusToBoolean = ({
   totalAttendees,
 }) => ({ status: totalAttendees >= 1 ? true : false, total: totalAttendees })
 
@@ -156,5 +156,5 @@ export {
   transformResponseToEventCollection,
   transformResponseToEventDetails,
   transformResponseToEventAventriDetails,
-  transformAventriEventAttendeesRegistionStatusToBolean,
+  transformAventriEventAttendeesRegistionStatusToBoolean,
 }
