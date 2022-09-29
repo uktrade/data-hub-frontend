@@ -80,9 +80,11 @@ const InvestmentProjectLocalHeader = ({ investment, breadcrumbs }) => (
       <MetaListItem text="Created on">
         {formatMediumDateTime(investment.created_on)}
       </MetaListItem>
-      <MetaListItem text="Created by">
-        {formatMediumDateTime(investment.created_by.dit_team.name)}
-      </MetaListItem>
+      {investment.created_by?.dit_team?.name && (
+        <MetaListItem text="Created by">
+          {investment.created_by.dit_team.name}
+        </MetaListItem>
+      )}
     </MetaList>
     <ThemeProvider theme={timelineTheme}>
       <Timeline stages={STAGES} currentStage={investment.stage.name} />
