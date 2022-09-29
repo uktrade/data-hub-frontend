@@ -1,6 +1,8 @@
 {% extends "./template.njk" %}
 
 {% block main_grid_right_column %}
-  <h2 class="govuk-heading-m">Audit history</h2>
-  {{ CollectionContent(auditLog) }}
+  {% component 'react-slot', {
+    id: 'contact-audit-history',
+    props: props
+  } %}
 {% endblock %}

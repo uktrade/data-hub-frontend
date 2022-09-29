@@ -57,6 +57,7 @@ const ALLOWLIST = [
   '/v3/investment/:id/team-member',
   '/v3/contact/:id/archive',
   '/v4/reminder/summary',
+  '/v3/contact/:id/audit',
 ]
 
 module.exports = (app) => {
