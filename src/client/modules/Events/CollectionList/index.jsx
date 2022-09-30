@@ -24,7 +24,11 @@ import {
   ToggleHeadingPlaceholder,
 } from '../../../components/SkeletonPlaceholder'
 
-import { LABELS, COLLECTION_LIST_SORT_SELECT_OPTIONS } from './constants'
+import {
+  LABELS,
+  COLLECTION_LIST_SORT_SELECT_OPTIONS,
+  AVENTRI_ID_MAX_LENGTH,
+} from './constants'
 
 import {
   ID,
@@ -92,6 +96,12 @@ const EventsCollection = ({
       payload: payload,
       onSuccessDispatch: EVENTS__ALL_ACTIVITY_FEED_EVENTS_LOADED,
     },
+  }
+
+  const maxLengthAventriIdValidation = (e) => {
+    if (e.target.value.length > AVENTRI_ID_MAX_LENGTH) {
+      e.target.value = e.target.value.slice(0, AVENTRI_ID_MAX_LENGTH)
+    }
   }
 
   return (
@@ -228,8 +238,7 @@ const EventsCollection = ({
                   qsParam="aventri_id"
                   hintText="For example, 100100100"
                   type="number"
-                  maxLength={9}
-                  isAventriIdFilter={true}
+                  onInput={maxLengthAventriIdValidation}
                   data-test="aventri-id-filter"
                 />
                 <Filters.Typeahead
