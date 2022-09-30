@@ -12,6 +12,10 @@ const aventriContact = require('../../../fixtures/v4/activity-feed/aventri-atten
 const ditContactforAventri = require('../../../fixtures/v3/contact/contact-aventri.json')
 const noContact = require('../../../fixtures/v3/contact/no-contact.json')
 
+const auditHistory = require('../../../fixtures/v3/contact/contact-audit-history.json')
+const shortAuditHistory = require('../../../fixtures/v3/contact/contact-audit-history-short.json')
+const emptyAuditHistory = require('../../../fixtures/v3/contact/contact-audit-history-empty.json')
+
 const lambdaPlc = require('../../../fixtures/v4/company/company-lambda-plc.json')
 const contactCreate = require('../../../fixtures/v3/contact/contact-create.json')
 const contactManyContactsCompany = require('../../../fixtures/v3/contact/contact-company-with-many-contacts.json')
@@ -107,4 +111,12 @@ exports.updateContactById = function (req, res) {
 
 exports.archiveContact = function (req, res) {
   res.sendStatus(200)
+}
+
+exports.auditHistory = function (req, res) {
+  const auditHistories = {
+    '64f85710-eabd-4479-829c-1fd47e3595d0': auditHistory,
+    'e74f0a25-aeee-48bd-a483-ac29c47e81a4': shortAuditHistory,
+  }
+  res.json(auditHistories[req.params.contactId] || emptyAuditHistory)
 }

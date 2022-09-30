@@ -328,6 +328,7 @@ app.post('/v3/contact', v3Contact.contactCreate)
 app.get('/v3/contact/:contactId', v3Contact.contactById)
 app.patch('/v3/contact/:contactId', v3Contact.updateContactById)
 app.post('/v3/contact/:contactId/archive', v3Contact.archiveContact)
+app.get('/v3/contact/:contactId/audit', v3Contact.auditHistory)
 
 // V3 Event
 app.get('/v3/event/:eventId', v3Event.eventById)
