@@ -20,6 +20,50 @@ const adviserData = {
   },
 }
 
+const investmentStatus = {
+  company: {
+    name: 'Investor Company ltd.',
+    url: '/companies/6c388e5b-a098-e211-a939-e4115bead28a',
+  },
+  currentStage: {
+    incompleteFields: [],
+    isComplete: false,
+    messages: [],
+    name: 'Prospect',
+  },
+  id: 'f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7',
+  meta: [
+    {
+      label: 'Status',
+      url: '/investments/projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7/status',
+      urlLabel: 'change',
+      value: '',
+    },
+    {
+      label: 'Project code',
+      value: 'DHP-00000003',
+    },
+    {
+      label: 'Valuation',
+      value: 'Not yet valued',
+    },
+    {
+      label: 'Created on',
+      value: '14 Jun 2017, 2:52pm',
+    },
+    {
+      label: 'Created by',
+      value: 'Little Britain',
+    },
+  ],
+  nextStage: {
+    name: 'Assign PM',
+    disabled_on: null,
+    exclude_from_investment_flow: false,
+    id: 'c9864359-fb1a-4646-a4c1-97d10189fc03',
+  },
+}
+
 const getInvestmentData = (ukCompanyId, clientRelationshipManagerId) => {
   return merge({}, investmentData, {
     uk_company: {
@@ -130,49 +174,7 @@ describe('Investment shared middleware', () => {
         ])
       })
       it('should set investment status on locals', () => {
-        const expectedInvestmentStatus = {
-          company: {
-            name: 'Investor Company ltd.',
-            url: '/companies/6c388e5b-a098-e211-a939-e4115bead28a',
-          },
-          currentStage: {
-            incompleteFields: [],
-            isComplete: false,
-            messages: [],
-            name: 'Prospect',
-          },
-          id: 'f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7',
-          meta: [
-            {
-              label: 'Status',
-              url: '/investments/projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7/status',
-              urlLabel: 'change',
-              value: '',
-            },
-            {
-              label: 'Project code',
-              value: 'DHP-00000003',
-            },
-            {
-              label: 'Valuation',
-              value: 'Not yet valued',
-            },
-            {
-              label: 'Created on',
-              value: '14 Jun 2017, 2:52pm',
-            },
-          ],
-          nextStage: {
-            name: 'Assign PM',
-            disabled_on: null,
-            exclude_from_investment_flow: false,
-            id: 'c9864359-fb1a-4646-a4c1-97d10189fc03',
-          },
-        }
-
-        expect(resMock.locals.investmentStatus).to.deep.equal(
-          expectedInvestmentStatus
-        )
+        expect(resMock.locals.investmentStatus).to.deep.equal(investmentStatus)
       })
       it('should set the breadcrumb', () => {
         expect(resMock.breadcrumb).to.be.calledWithExactly(
@@ -183,6 +185,36 @@ describe('Investment shared middleware', () => {
       })
       it('should call next once', () => {
         expect(nextSpy).to.have.been.calledOnce
+      })
+      it('should call next without errors', () => {
+        expect(nextSpy.firstCall.args.length).to.equal(0)
+      })
+    })
+
+    context('when DIT team is not provided', () => {
+      before(async () => {
+        const middleware = createMiddleware(
+          {
+            ...getInvestmentData(null, 3),
+            created_by: {
+              name: 'Andy Pipkin',
+            },
+          },
+          adviserData,
+          companyData
+        )
+
+        await middleware.getInvestmentDetails(reqMock, resMock, nextSpy)
+      })
+
+      it('should set investment status on locals', () => {
+        expect(resMock.locals.investmentStatus).to.deep.equal({
+          ...investmentStatus,
+          meta: investmentStatus.meta.slice(0, -1),
+        })
+      })
+      it('should call next', () => {
+        expect(nextSpy).to.have.been.called
       })
       it('should call next without errors', () => {
         expect(nextSpy.firstCall.args.length).to.equal(0)

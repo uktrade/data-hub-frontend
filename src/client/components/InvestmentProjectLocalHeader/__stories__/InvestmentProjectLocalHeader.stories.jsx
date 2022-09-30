@@ -13,6 +13,12 @@ const investment = {
   project_code: 'DHP-00000356',
   value_complete: false,
   created_on: '2022-02-25T15:37:23.331204Z',
+  created_by: {
+    name: 'Andy Pipkin',
+    dit_team: {
+      name: 'Little Britain',
+    },
+  },
   stage: {
     name: 'Prospect',
   },
@@ -143,6 +149,15 @@ storiesOf('InvestmentProjectLocalHeader', module)
       investment={{
         ...investment,
         value_complete: true,
+      }}
+      breadcrumbs={breadcrumbs}
+    />
+  ))
+  .add('Created by: no DIT team', () => (
+    <InvestmentProjectLocalHeader
+      investment={{
+        ...investment,
+        created_by: {},
       }}
       breadcrumbs={breadcrumbs}
     />
