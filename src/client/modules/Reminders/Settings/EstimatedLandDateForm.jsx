@@ -9,6 +9,8 @@ import {
   FieldCheckboxes,
 } from '../../../components'
 
+import { transformELDFormValuesToAnalyticsData } from '../transformers'
+
 import Heading from '../Heading'
 
 import {
@@ -59,6 +61,7 @@ const EstimatedLandDateForm = () => (
         reminder_days: reminderDays ? reminderDays : [],
       })}
       analyticsFormName="remindersSettingsEstimatedLandDate"
+      analyticsData={transformELDFormValuesToAnalyticsData}
       flashMessage={() => 'Settings updated'}
       cancelRedirectTo={() => redirectUrl}
     >
