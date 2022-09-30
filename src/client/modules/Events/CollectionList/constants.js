@@ -11,6 +11,8 @@ export const LABELS = {
   aventriId: 'Aventri ID',
 }
 
+export const AVENTRI_ID_MAX_LENGTH = 9
+
 export const SORT_OPTIONS = [
   {
     name: 'Event name A-Z',

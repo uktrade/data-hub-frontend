@@ -24,8 +24,6 @@ const RoutedInput = ({
   staticContext,
   id,
   type,
-  maxLength,
-  isAventriIdFilter,
   ...props
 }) => {
   // This is the only way we can reset the value when the query string param is
@@ -35,12 +33,6 @@ const RoutedInput = ({
       reset()
     }
   }, [selectedValue, qsValue])
-
-  const maxLengthAventriIdValidation = (e) => {
-    if (e.target.value.length > maxLength) {
-      e.target.value = e.target.value.slice(0, maxLength)
-    }
-  }
 
   return (
     <Route>
@@ -59,7 +51,6 @@ const RoutedInput = ({
             {...props}
             value={value}
             type={type}
-            onInput={isAventriIdFilter ? maxLengthAventriIdValidation : null}
             onChange={(e) => onChange(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
@@ -78,12 +69,6 @@ const RoutedInput = ({
 RoutedInput.propTypes = {
   qsParam: PropTypes.string.isRequired,
   type: PropTypes.string,
-  maxLength: PropTypes.number,
-  isAventriIdFilter: PropTypes.bool,
-}
-
-RoutedInput.defaultProps = {
-  isAventriIdFilter: false,
 }
 
 export default multiInstance({
