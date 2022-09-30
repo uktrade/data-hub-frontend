@@ -24,18 +24,8 @@ async function getContactsForCompany(req, companyId) {
   return sortBy(response.results, [(name) => name.first_name])
 }
 
-function getContactAuditLog(req, contactId, page = 1) {
-  const limit = 10
-  const offset = limit * (page - 1)
-  return authorisedRequest(
-    req,
-    `${config.apiRoot}/v3/contact/${contactId}/audit?limit=${limit}&offset=${offset}`
-  )
-}
-
 module.exports = {
   getContact,
   unarchiveContact,
   getContactsForCompany,
-  getContactAuditLog,
 }
