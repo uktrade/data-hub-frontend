@@ -164,6 +164,10 @@ async function getMaxemailCampaigns(req, next, contacts) {
   }
 }
 
+async function getAventriEventsForCompany(req, next, contacts) {
+  
+}
+
 async function fetchActivitiesForContact(req, res, next) {
   try {
     const { contact } = res.locals
@@ -293,6 +297,7 @@ async function fetchActivityFeedHandler(req, res, next) {
       size,
       companyIds: [company.id, ...dnbHierarchyIds],
       contacts: company.contacts,
+      //aventriIds,
       user,
     })
 
@@ -305,9 +310,14 @@ async function fetchActivityFeedHandler(req, res, next) {
     let total = results.hits.total.value
 
     if (isExternalFilter(activityTypeFilter)) {
+      const aventriEvents = await getAventriEventsForCompany(
+        req,
+        next,
+        company.contacts
+      )
       const campaigns = await getMaxemailCampaigns(req, next, company.contacts)
-      activities = [...activities, ...campaigns]
-      total += campaigns.length
+      activities = [...activities, ...campaigns, ...aventriEvents]
+      total = total + campaigns.length + aventriEvents.length
     }
 
     res.json({
