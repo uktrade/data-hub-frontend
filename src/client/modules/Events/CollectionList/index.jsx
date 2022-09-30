@@ -200,7 +200,7 @@ const EventsCollection = ({
               total={total}
               addItemURL={'/events/create'}
             >
-              <CollectionFilters>
+              <CollectionFilters taskProps={collectionListMetadataTask}>
                 <Filters.Input
                   id="EventsCollection.name"
                   qsParam="name"
@@ -210,27 +210,38 @@ const EventsCollection = ({
                   data-test="event-name-filter"
                 />
                 <Filters.Date
-                  label="Earliest start date"
+                  label={LABELS.earliestStartDate}
                   name="earliest_start_date"
                   qsParamName="earliest_start_date"
                   data-test="earliest-start-date-filter"
                 />
                 <Filters.Date
-                  label="Latest start date"
+                  label={LABELS.latestStartDate}
                   name="latest_start_date"
                   qsParamName="latest_start_date"
                   data-test="latest-start-date-filter"
                 />
                 <Filters.AventriId
                   id="EventsCollection.aventriId"
-                  label="Aventri ID"
+                  label={LABELS.aventriId}
                   name="aventri_id"
                   qsParam="aventri_id"
                   hintText="For example, 100100100"
                   type="number"
                   maxLength={9}
-                  isAventriIdfilter={true}
+                  isAventriIdFilter={true}
                   data-test="aventri-id-filter"
+                />
+                <Filters.Typeahead
+                  isMulti={true}
+                  label={LABELS.country}
+                  name="address_country"
+                  qsParam="address_country"
+                  placeholder="Search country"
+                  options={optionMetadata.countryOptions}
+                  selectedOptions={selectedFilters.countries.options}
+                  data-test="country-filter"
+                  labelAsQueryParam={true}
                 />
               </CollectionFilters>
             </ActivityFeedFilteredCollectionList>

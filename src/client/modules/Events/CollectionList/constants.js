@@ -6,6 +6,9 @@ export const LABELS = {
   country: 'Country',
   ukRegion: 'UK region',
   eventType: 'Type of event',
+  earliestStartDate: 'Earliest start date',
+  latestStartDate: 'Latest start date',
+  aventriId: 'Aventri ID',
 }
 
 export const SORT_OPTIONS = [

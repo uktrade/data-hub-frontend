@@ -594,14 +594,14 @@ describe('events Collections Filter', () => {
             expect(request.response.statusCode).to.eql(200)
           })
         })
-      })
 
-      context('should filter from user input', () => {
         it('should add an aventri ID from user input to query param', () => {
           cy.get(element).type(`${aventriId}{enter}`)
           cy.url().should('include', queryParamWithAventriId)
         })
+      })
 
+      context('should apply validation', () => {
         it('should not add anything to the query param if the name is backspaced', () => {
           cy.get(element).type(`{selectAll}{backspace}{enter}`)
           cy.url().should('not.include', queryParamWithAventriId)
@@ -625,6 +625,57 @@ describe('events Collections Filter', () => {
             `events?page=1&sortby=modified_on%3Adesc&featureTesting=user-event-activities&${queryParamWithAventriId}`
           )
           cy.get(element).should('have.value', aventriId)
+        })
+      })
+
+      after(() => {
+        cy.get(element).clear()
+      })
+    })
+
+    context('Country', () => {
+      const element = '[data-test="country-filter"]'
+      const queryParamWithCountry = 'address_country%5B0%5D=Brazil'
+      const countryName = 'Brazil'
+
+      context('should filter from user input and apply filter chips', () => {
+        before(() => {
+          cy.intercept(
+            'GET',
+            `${urls.events.activity.data()}?sortBy=modified_on:desc&page=1&addressCountry[]=${countryName}`
+          ).as('countryRequest')
+        })
+
+        it('should pass the country to the controller', () => {
+          testTypeahead({
+            element,
+            label: 'Country',
+            input: 'braz',
+            placeholder: 'Search country',
+            expectedOption: 'Brazil',
+          })
+
+          cy.wait('@countryRequest').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+        })
+
+        it('should pass the country from user input to query param', () => {
+          cy.url().should('include', queryParamWithCountry)
+        })
+
+        it('should show filter chips', () => {
+          cy.get('[data-test="typeahead-chip"]').should('contain', countryName)
+        })
+      })
+
+      context('should remove country selection', () => {
+        it('should remove filter chips', () => {
+          cy.get('[data-test="typeahead-chip"] > button').click()
+        })
+
+        it('should remove the country from the url', () => {
+          cy.url().should('not.include', queryParamWithCountry)
         })
       })
     })
