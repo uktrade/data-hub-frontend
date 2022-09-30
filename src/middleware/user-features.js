@@ -1,4 +1,4 @@
-const { get, isEmpty } = require('lodash')
+const { get } = require('lodash')
 
 const config = require('../config')
 const { authorisedRequest } = require('../lib/authorised-request')
@@ -10,8 +10,8 @@ const { authorisedRequest } = require('../lib/authorised-request')
  * called "isFeatureTesting" on res.locals, this variable can then be used to
  * toggle features in any njk file.
  *
- * The feature name is also added to the query string in the format
- * `?featureTesting={feature}` for tracking via google analytics.
+ * The feature name is also pushed to the Google Tag Manager data layer
+ * for tracking via Google Analytics.
  *
  * Flags can be enabled on a per-user basis through Django.
  *
@@ -28,13 +28,12 @@ module.exports = (feature) => async (req, res, next) => {
 
   res.locals.isFeatureTesting = res.locals.userFeatures.includes(feature)
 
-  if (
-    res.locals.isFeatureTesting &&
-    !req.query.featureTesting &&
-    req.method == HTTP_GET
-  ) {
-    res.redirect(`${isEmpty(req.query) ? '?' : '&'}featureTesting=${feature}`)
-  } else {
-    next()
+  if (res.locals.isFeatureTesting && req.method == HTTP_GET) {
+    res.locals.userFeatureGTMEvent = {
+      name: feature,
+      event: 'featureFlag',
+    }
   }
+
+  next()
 }

@@ -462,13 +462,13 @@ describe('events Collections Filter', () => {
     context('Event name', () => {
       const element = '[data-test="event-name-filter"]'
       const eventName = 'Big Event'
-      const queryParamWithName = 'name=Big+Event'
+      const queryParamWithName = qs.stringify({ name: 'Big Event' })
 
       context('should filter from user input', () => {
         before(() => {
           cy.intercept(
             'GET',
-            `${urls.events.activity.data()}?sortBy=modified_on:desc&name=Big+Event&page=1`
+            `${urls.events.activity.data()}?sortBy=modified_on:desc&page=1`
           ).as('nameRequest')
         })
 
@@ -492,7 +492,7 @@ describe('events Collections Filter', () => {
       context('should filter from url', () => {
         it('should add name from url to filter', () => {
           cy.visit(
-            `/events?page=1&sortby=modified_on%3Adesc&featureTesting=user-activity-stream-aventri&${queryParamWithName}`
+            `/events?page=1&sortby=modified_on%3Adesc&${queryParamWithName}`
           )
           cy.get(element).should('have.value', eventName)
         })
@@ -560,7 +560,7 @@ describe('events Collections Filter', () => {
       context('should filter from url', () => {
         it('should add the earliest and latest start date to the url', () => {
           cy.visit(
-            `/events?page=1&sortby=modified_on%3Adesc&featureTesting=user-activity-stream-aventri&${queryParamWithEarliestStartDate}&${queryParamWithLatestStartDate}`
+            `/events?page=1&sortby=modified_on%3Adesc&${queryParamWithEarliestStartDate}&${queryParamWithLatestStartDate}`
           )
           cy.get(earliestStartElement).should('have.value', earliestStartDate)
           cy.get(latestStartElement).should('have.value', latestStartDate)
@@ -622,7 +622,7 @@ describe('events Collections Filter', () => {
       context('should filter from url', () => {
         it('should add aventri id from url to filter', () => {
           cy.visit(
-            `events?page=1&sortby=modified_on%3Adesc&featureTesting=user-event-activities&${queryParamWithAventriId}`
+            `events?page=1&sortby=modified_on%3Adesc&${queryParamWithAventriId}`
           )
           cy.get(element).should('have.value', aventriId)
         })

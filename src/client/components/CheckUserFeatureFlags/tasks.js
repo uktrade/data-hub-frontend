@@ -1,6 +1,6 @@
 import { apiProxyAxios } from '../Task/utils'
 
-const handleError = () => Promise.reject()
+const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
 export const getUserFeatureFlags = async (userFeatureFlagName) =>
   apiProxyAxios

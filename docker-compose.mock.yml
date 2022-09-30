@@ -13,6 +13,7 @@ services:
       ZEN_TICKETS_URL: http://mock-api:8000/zendesk/tickets
       # Our functional tests still make a real postcode lookup call
       POSTCODE_KEY: ${POSTCODE_KEY}
+      GOOGLE_TAG_MANAGER_KEY: GTM-MOCK
       ACCOUNT_PLAN_URLS: '{"000000001": "/some-test-account-plan-url", "123456789": "/some-other-test-account-plan-url"}'
 
   mock-api:

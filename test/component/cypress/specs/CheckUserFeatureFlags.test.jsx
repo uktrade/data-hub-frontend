@@ -4,10 +4,6 @@ import DataHubProvider from './provider'
 import CheckUserFeatureFlag from '../../../../src/client/components/CheckUserFeatureFlags'
 import { TASK_GET_USER_FEATURE_FLAGS } from '../../../../src/client/components/CheckUserFeatureFlags/state'
 import { getUserFeatureFlags } from '../../../../src/client/components/CheckUserFeatureFlags/tasks'
-import {
-  assertNotQueryParams,
-  assertQueryParams,
-} from '../../../functional/cypress/support/assertions'
 
 describe('CheckUserFeatureFlags', () => {
   const Component = ({ userFeatureFlagName }) => (
@@ -43,10 +39,6 @@ describe('CheckUserFeatureFlags', () => {
     it('should pass false to its children', () => {
       cy.contains('feature flag is not enabled')
     })
-
-    it('should not set the flag in the url', () => {
-      assertNotQueryParams('featureTesting', disabledFlag)
-    })
   })
 
   context('when the feature flag is enabled', () => {
@@ -56,10 +48,6 @@ describe('CheckUserFeatureFlags', () => {
 
     it('should pass true to the children', () => {
       cy.contains('feature flag is enabled')
-    })
-
-    it('should set the flag in the url', () => {
-      assertQueryParams('featureTesting', enabledFlag)
     })
   })
 })
