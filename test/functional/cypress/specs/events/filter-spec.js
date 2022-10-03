@@ -453,7 +453,7 @@ describe('events Collections Filter', () => {
       })
     })
   })
-  context('with the events activity stream feature flag enabled', () => {
+  context.only('with the events activity stream feature flag enabled', () => {
     before(() => {
       cy.setUserFeatures([ACTIVITY_STREAM_FEATURE_FLAG])
       cy.visit(events.index())
@@ -468,7 +468,7 @@ describe('events Collections Filter', () => {
         before(() => {
           cy.intercept(
             'GET',
-            `${urls.events.activity.data()}?sortBy=modified_on:desc&page=1`
+            `${urls.events.activity.data()}?sortBy=modified_on:desc&name=Big+Event&page=1`
           ).as('nameRequest')
         })
 
