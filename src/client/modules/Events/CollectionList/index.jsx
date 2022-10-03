@@ -252,6 +252,17 @@ const EventsCollection = ({
                   data-test="country-filter"
                   labelAsQueryParam={true}
                 />
+                <Filters.Typeahead
+                  isMulti={true}
+                  label={LABELS.ukRegion}
+                  name="uk_region"
+                  qsParam="uk_region"
+                  placeholder="Search UK region"
+                  options={optionMetadata.ukRegionOptions}
+                  selectedOptions={selectedFilters.ukRegions.options}
+                  data-test="uk-region-filter"
+                  labelAsQueryParam={true}
+                />
               </CollectionFilters>
             </ActivityFeedFilteredCollectionList>
           )
