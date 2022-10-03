@@ -453,7 +453,7 @@ describe('events Collections Filter', () => {
       })
     })
   })
-  context.only('with the events activity stream feature flag enabled', () => {
+  context('with the events activity stream feature flag enabled', () => {
     before(() => {
       cy.setUserFeatures([ACTIVITY_STREAM_FEATURE_FLAG])
       cy.visit(events.index())
