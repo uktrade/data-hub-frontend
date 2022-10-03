@@ -468,7 +468,7 @@ describe('events Collections Filter', () => {
         before(() => {
           cy.intercept(
             'GET',
-            `${urls.events.activity.data()}?sortBy=modified_on:desc&page=1`
+            `${urls.events.activity.data()}?sortBy=modified_on:desc&name=Big+Event&page=1`
           ).as('nameRequest')
         })
 
