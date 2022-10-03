@@ -1,4 +1,11 @@
-const externalActivityQuery = ({ from, size, types, companyIds, contacts }) => {
+const externalActivityQuery = ({
+  from,
+  size,
+  types,
+  companyIds,
+  contacts,
+  aventriEventIds,
+}) => {
   const dsl = {
     from,
     size,
@@ -60,6 +67,22 @@ const externalActivityQuery = ({ from, size, types, companyIds, contacts }) => {
                         'actor.dit:emailAddress': [
                           ...contacts.map((contact) => contact.email),
                         ],
+                      },
+                    },
+                  ],
+                },
+              },
+              {
+                bool: {
+                  must: [
+                    {
+                      term: {
+                        'object.type': 'dit:aventri:Event',
+                      },
+                    },
+                    {
+                      terms: {
+                        id: aventriEventIds,
                       },
                     },
                   ],

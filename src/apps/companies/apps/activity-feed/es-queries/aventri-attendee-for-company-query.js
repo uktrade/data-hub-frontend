@@ -1,4 +1,4 @@
-const aventriForCompanyQuery = (contacts) => ({
+const aventriAttendeeForCompanyQuery = (contacts) => ({
   size: 20,
   query: {
     bool: {
@@ -26,4 +26,4 @@ const aventriForCompanyQuery = (contacts) => ({
   },
 })
 
-module.exports = aventriForCompanyQuery
+module.exports = aventriAttendeeForCompanyQuery

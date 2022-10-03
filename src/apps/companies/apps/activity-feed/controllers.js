@@ -28,7 +28,7 @@ const {
   externalActivityQuery,
   maxemailCampaignQuery,
   maxemailEmailSentQuery,
-  aventriForCompanyQuery,
+  aventriAttendeeForCompanyQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
 const {
@@ -165,30 +165,19 @@ async function getMaxemailCampaigns(req, next, contacts) {
   }
 }
 
-async function getAventriEventsForCompany(req, next, contacts) {
+async function getAventriEventIds(req, next, contacts) {
   try {
     // Fetch aventri attendee info for company contacts
-    const aventriQuery = aventriForCompanyQuery(contacts)
+    const aventriQuery = aventriAttendeeForCompanyQuery(contacts)
     const aventriResults = await fetchActivityFeed(req, aventriQuery)
     const aventriAttendees = aventriResults.hits.hits.map((hit) => hit._source)
 
-    // Fetch aventri event info for aventri attendees
+    // Fetch aventri event ids for aventri attendees
     const aventriEventIds = aventriAttendees
       .map((attendee) => attendee.object.attributedTo.id)
       .map((id) => `${id}:Create`)
 
-    const uniqueAventriEventIds = aventriEventIds.filter(
-      (id, pos) => aventriEventIds.indexOf(id) == pos
-    )
-
-    const aventriEventsResults = await fetchActivityFeed(
-      req,
-      aventriEventQuery(uniqueAventriEventIds)
-    )
-    const aventriEvents = aventriEventsResults.hits.hits.map(
-      (hit) => hit._source
-    )
-    return aventriEvents
+    return aventriEventIds
   } catch (error) {
     next(error)
   }
@@ -318,12 +307,19 @@ async function fetchActivityFeedHandler(req, res, next) {
         .map((company) => company.id)
     }
 
+    const aventriEventIds = await getAventriEventIds(
+      req,
+      next,
+      company.contacts
+    )
+
     const queries = getQueries({
       from,
       size,
       companyIds: [company.id, ...dnbHierarchyIds],
       contacts: company.contacts,
       user,
+      aventriEventIds,
     })
 
     const results = await fetchActivityFeed(
@@ -335,14 +331,9 @@ async function fetchActivityFeedHandler(req, res, next) {
     let total = results.hits.total.value
 
     if (isExternalFilter(activityTypeFilter)) {
-      const aventriEvents = await getAventriEventsForCompany(
-        req,
-        next,
-        company.contacts
-      )
       const campaigns = await getMaxemailCampaigns(req, next, company.contacts)
-      activities = [...activities, ...campaigns, ...aventriEvents]
-      total = total + campaigns.length + aventriEvents.length
+      activities = [...activities, ...campaigns]
+      total += campaigns.length
     }
 
     res.json({

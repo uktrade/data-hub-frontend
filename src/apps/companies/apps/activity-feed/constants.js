@@ -135,6 +135,7 @@ const EXTERNAL_ACTIVITY = [
   'dit:Accounts', // Companies House Accounts
   'dit:Company', // Companies House Company
   'dit:Export', // HMRC Exporter
+  'dit:aventri:Event', // Aventri
 ]
 
 const DATA_HUB_AND_EXTERNAL_ACTIVITY = [
