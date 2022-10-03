@@ -28,6 +28,7 @@ const {
   externalActivityQuery,
   maxemailCampaignQuery,
   maxemailEmailSentQuery,
+  aventriForCompanyQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
 const {
@@ -165,7 +166,32 @@ async function getMaxemailCampaigns(req, next, contacts) {
 }
 
 async function getAventriEventsForCompany(req, next, contacts) {
-  
+  try {
+    // Fetch aventri attendee info for company contacts
+    const aventriQuery = aventriForCompanyQuery(contacts)
+    const aventriResults = await fetchActivityFeed(req, aventriQuery)
+    const aventriAttendees = aventriResults.hits.hits.map((hit) => hit._source)
+
+    // Fetch aventri event info for aventri attendees
+    const aventriEventIds = aventriAttendees
+      .map((attendee) => attendee.object.attributedTo.id)
+      .map((id) => `${id}:Create`)
+
+    const uniqueAventriEventIds = aventriEventIds.filter(
+      (id, pos) => aventriEventIds.indexOf(id) == pos
+    )
+
+    const aventriEventsResults = await fetchActivityFeed(
+      req,
+      aventriEventQuery(uniqueAventriEventIds)
+    )
+    const aventriEvents = aventriEventsResults.hits.hits.map(
+      (hit) => hit._source
+    )
+    return aventriEvents
+  } catch (error) {
+    next(error)
+  }
 }
 
 async function fetchActivitiesForContact(req, res, next) {
@@ -297,7 +323,6 @@ async function fetchActivityFeedHandler(req, res, next) {
       size,
       companyIds: [company.id, ...dnbHierarchyIds],
       contacts: company.contacts,
-      //aventriIds,
       user,
     })
 
