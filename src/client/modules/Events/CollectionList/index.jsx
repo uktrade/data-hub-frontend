@@ -261,7 +261,6 @@ const EventsCollection = ({
                   options={optionMetadata.ukRegionOptions}
                   selectedOptions={selectedFilters.ukRegions.options}
                   data-test="uk-region-filter"
-                  labelAsQueryParam={true}
                 />
               </CollectionFilters>
             </ActivityFeedFilteredCollectionList>
