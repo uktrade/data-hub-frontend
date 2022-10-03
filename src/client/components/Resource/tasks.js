@@ -15,6 +15,7 @@ import PipelineItem from './PipelineItem'
 import OrderAssignees from './OrderAssignees'
 import OrderSubscribers from './OrderSubscribers'
 import Investment from './Investment'
+import ContactAuditHistory from './ContactAuditHistory'
 
 export default {
   ...Advisers.tasks,
@@ -34,4 +35,5 @@ export default {
   ...OrderAssignees.tasks,
   ...OrderSubscribers.tasks,
   ...Investment.tasks,
+  ...ContactAuditHistory.tasks,
 }

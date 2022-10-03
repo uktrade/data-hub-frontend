@@ -13,7 +13,7 @@ const StyledSpan = styled('span')`
 `
 
 const CollectionSort = ({ sortOptions, totalPages }) => {
-  const actions = (
+  const actions = sortOptions ? (
     <RoutedSelect
       data-test="sortby"
       name="sortBy"
@@ -28,7 +28,7 @@ const CollectionSort = ({ sortOptions, totalPages }) => {
         )
       })}
     </RoutedSelect>
-  )
+  ) : null
 
   return (
     <CollectionHeaderRow actions={actions}>
@@ -52,7 +52,7 @@ CollectionSort.propTypes = {
       name: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
     })
-  ).isRequired,
+  ),
   totalPages: PropTypes.number.isRequired,
 }
 

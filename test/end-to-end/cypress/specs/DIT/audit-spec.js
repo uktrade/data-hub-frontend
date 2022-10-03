@@ -53,11 +53,11 @@ describe('Contact', () => {
 
     cy.visit(urls.contacts.audit(contactObj.pk))
 
-    cy.get(selectors.collection.items)
+    cy.get('[data-test=collection-item]')
       .should('contain', 'DIT Staff')
       .and('contain', '2 changes')
       .and('contain', todaysDate)
-    cy.get(selectors.collection.header).should('contain', '1 result')
+    cy.get('[data-test=audit-results]').should('contain', '1 result')
   })
 })
 
