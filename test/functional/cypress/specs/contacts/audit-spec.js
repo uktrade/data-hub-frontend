@@ -26,7 +26,7 @@ describe('Contact audit history', () => {
     })
 
     it('should render the subheading', () => {
-      cy.get('[data-test=audit-heading]')
+      cy.get('[data-test=audit-header]')
         .should('exist')
         .should('have.text', 'Audit history')
     })
@@ -111,7 +111,7 @@ describe('Contact audit history', () => {
     })
 
     it('should render the subheading', () => {
-      cy.get('[data-test=audit-heading]')
+      cy.get('[data-test=audit-header]')
         .should('exist')
         .should('have.text', 'Audit history')
     })
@@ -173,7 +173,7 @@ describe('Contact audit history', () => {
     })
 
     it('should render the subheading', () => {
-      cy.get('[data-test=audit-heading]')
+      cy.get('[data-test=audit-header]')
         .should('exist')
         .should('have.text', 'Audit history')
     })

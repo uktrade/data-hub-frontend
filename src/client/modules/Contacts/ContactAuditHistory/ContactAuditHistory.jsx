@@ -1,9 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
-import { SPACING } from '@govuk-react/constants'
-import { typography } from '@govuk-react/lib'
 
 import ContactAuditHistoryResource from '../../../components/Resource/ContactAuditHistory'
 import { transformResponseToCollection } from './transformers'
@@ -12,13 +9,9 @@ import {
   CollectionList,
   CollectionSort,
   RoutedPagination,
+  SectionHeader,
 } from '../../../components'
 import { state2props } from './state'
-
-const StyledSectionHeader = styled('div')`
-  ${typography.font({ size: 24, weight: 'bold' })};
-  margin-bottom: ${SPACING.SCALE_4};
-`
 
 function getTotalPages(totalItems, pageSize) {
   return Math.ceil(totalItems / pageSize)
@@ -35,9 +28,7 @@ const ContactAuditHistory = ({ contactId, page = 1, pageSize = 10 }) => (
   >
     {(contactAuditHistory) => (
       <>
-        <StyledSectionHeader data-test="audit-heading">
-          Audit history
-        </StyledSectionHeader>
+        <SectionHeader type="audit">Audit history</SectionHeader>
         <CollectionHeader
           totalItems={contactAuditHistory.count}
           collectionName="result"

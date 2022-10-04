@@ -25,7 +25,7 @@ describe('Investment Project Documents', () => {
     })
 
     it('should display appropriate message when there is a link to a document', () => {
-      cy.get('[data-test=document-heading]').should('contain', 'Document')
+      cy.get('[data-test=document-header]').should('contain', 'Document')
       cy.get('[data-test=document-link]').should(
         'contain',
         'View files and documents'
@@ -55,7 +55,7 @@ describe('Investment Project Documents', () => {
     })
 
     it('should display appropriate message when there is not a link to a document', () => {
-      cy.get('[data-test=document-heading]').should('contain', 'Document')
+      cy.get('[data-test=document-header]').should('contain', 'Document')
       cy.get('[data-test=document-link]').should('not.exist')
       cy.get('[data-test=no-documents-message]').should(
         'contain',

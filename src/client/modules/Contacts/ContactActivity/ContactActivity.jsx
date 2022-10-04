@@ -1,9 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
-import { SPACING } from '@govuk-react/constants'
 import { GridRow, GridCol } from 'govuk-react'
-import { typography } from '@govuk-react/lib'
 
 import { TASK_GET_CONTACT_ACTIVITIES, ID, state2props } from './state'
 import { CONTACTS__ACTIVITIES_LOADED } from '../../../actions'
@@ -13,15 +10,11 @@ import {
   CollectionHeader,
   CollectionSort,
   RoutedPagination,
+  SectionHeader,
 } from '../../../components'
 import { ACTIVITIES_PER_PAGE } from '../../../../apps/contacts/constants'
 import { CONTACT_ACTIVITY_SORT_SELECT_OPTIONS } from '../../../../apps/companies/apps/activity-feed/constants'
 import ActivityList from '../../../components/ActivityFeed/activities/card/ActivityList'
-
-const StyledSectionHeader = styled('div')`
-  ${typography.font({ size: 24, weight: 'bold' })};
-  margin-bottom: ${SPACING.SCALE_4};
-`
 
 const ContactActivity = ({
   contactId,
@@ -35,7 +28,7 @@ const ContactActivity = ({
   return (
     <GridRow>
       <GridCol setWidth="full">
-        <StyledSectionHeader>Contact activity</StyledSectionHeader>
+        <SectionHeader type="contact-activity">Contact activity</SectionHeader>
 
         <p>
           An activity could include a meeting, call, email, event or other

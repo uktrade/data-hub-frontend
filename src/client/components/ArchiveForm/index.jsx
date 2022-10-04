@@ -1,20 +1,13 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
 import { BLACK, GREY_3 } from 'govuk-colours'
 import Button from '@govuk-react/button'
-import { typography } from '@govuk-react/lib'
-import { SPACING } from '@govuk-react/constants'
 import { kebabCase } from 'lodash'
 
-import { FieldRadios, FieldInput } from '..'
+import { FieldRadios, FieldInput, SectionHeader } from '..'
 
 import Form from '../Form'
 
-const StyledSectionHeader = styled('div')`
-  ${typography.font({ size: 24, weight: 'bold' })};
-  margin-bottom: ${SPACING.SCALE_4};
-`
 const buttonText = 'Archive'
 
 const buildOptions = (type, options) => {
@@ -58,9 +51,7 @@ const ArchiveForm = ({
 
   return (
     <div data-test={kebabCase(`archive-${type}-container`)}>
-      <StyledSectionHeader data-test="archive-heading">
-        Archive {type}
-      </StyledSectionHeader>
+      <SectionHeader type="archive">Archive {type}</SectionHeader>
 
       <p data-test="archive-hint">
         Archive this {type} if it is no longer required or active.
