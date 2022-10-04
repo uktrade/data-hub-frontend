@@ -87,3 +87,4 @@ export { default as InvestmentProjectLocalHeader } from './InvestmentProjectLoca
 export { default as Filters } from './Filters'
 export { default as ContactLocalHeader } from './ContactLocalHeader'
 export { default as SearchLocalHeader } from './SearchLocalHeader'
+export { default as SectionHeader } from './SectionHeader'
