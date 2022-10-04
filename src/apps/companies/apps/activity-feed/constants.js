@@ -78,12 +78,10 @@ const EVENT_ATTENDEES_SORT_OPTIONS = {
 }
 
 const EVENT_AVENTRI_ATTENDEES_STATUS = {
-  activated: 'Activated',
   attended: 'Attended',
   confirmed: 'Confirmed',
   cancelled: 'Cancelled',
-  noShow: 'No Show',
-  waitlist: 'Waitlist',
+  registered: 'Registered',
 }
 
 const EVENT_ACTIVITY_SORT_OPTIONS = {
