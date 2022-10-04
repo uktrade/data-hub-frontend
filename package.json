@@ -155,7 +155,7 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.0",
+    "@babel/core": "^7.19.3",
     "@babel/eslint-parser": "^7.19.1",
     "@babel/helper-call-delegate": "^7.12.13",
     "@babel/plugin-proposal-class-properties": "7.18.6",
