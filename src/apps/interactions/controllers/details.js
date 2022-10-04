@@ -6,6 +6,7 @@ const { INTERACTION_STATUS } = require('../constants')
 function renderDetailsPage(req, res, next) {
   try {
     const { interaction } = res.locals
+    const { ARCHIVED_DOCUMENT_BASE_URL } = res.locals
     const breadcrumb = capitalize(lowerCase(interaction.kind))
     const isComplete = interaction.status === INTERACTION_STATUS.COMPLETE
     const interactionViewRecord = transformInteractionResponseToViewRecord(
@@ -21,11 +22,14 @@ function renderDetailsPage(req, res, next) {
       interaction.status === INTERACTION_STATUS.DRAFT &&
       new Date(interaction.date) < new Date() &&
       !interaction.archived
-
     return res
       .breadcrumb(breadcrumb)
       .title(interaction.subject)
       .render('interactions/views/details', {
+        props: {
+          interactionId: interaction.id,
+          archivedDocumentPath: ARCHIVED_DOCUMENT_BASE_URL,
+        },
         interactionViewRecord,
         canComplete,
         canEdit: isComplete,

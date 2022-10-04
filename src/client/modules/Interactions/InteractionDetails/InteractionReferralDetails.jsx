@@ -1,0 +1,39 @@
+import React from 'react'
+import { SPACING_POINTS } from '@govuk-react/constants'
+import { Link } from 'govuk-react'
+import styled from 'styled-components'
+
+import { SummaryTable } from '../../../components'
+import urls from '../../../../lib/urls'
+
+const { format } = require('../../../utils/date')
+
+const StyledSummaryTable = styled(SummaryTable)({
+  'margin-top': SPACING_POINTS[8],
+})
+
+const InteractionReferralDetails = ({ referral, companyId }) => {
+  return (
+    <StyledSummaryTable
+      caption="This interaction is linked to a referral"
+      data-test="interaction-referral-table"
+    >
+      <SummaryTable.Row heading="Subject">
+        <Link href={urls.companies.referrals.details(companyId, referral.id)}>
+          {referral.subject}
+        </Link>
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Sent on">
+        {format(referral.createdOn)}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="By">
+        {referral.createdBy.name}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="To">
+        {referral.recipient.name}
+      </SummaryTable.Row>
+    </StyledSummaryTable>
+  )
+}
+
+export default InteractionReferralDetails
