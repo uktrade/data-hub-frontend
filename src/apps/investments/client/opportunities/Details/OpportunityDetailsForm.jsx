@@ -99,10 +99,8 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
                 (searchString) =>
                   apiProxyAxios
                     .post('/v4/search/company', {
-                      params: {
-                        autocomplete: searchString,
-                        archived: false,
-                      },
+                      name: searchString,
+                      archived: false,
                     })
                     .then(({ data: { results } }) =>
                       idNamesToValueLabels(results)
