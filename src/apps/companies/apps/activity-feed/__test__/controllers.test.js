@@ -668,138 +668,161 @@ describe('Activity feed controllers', () => {
         expect(expectedQuery(addressCountry)).to.deep.equal(actualQuery)
       })
     })
+
+    context('check query builder when filtering on uk region', () => {
+      const expectedQuery = (ukRegion) => [
+        {
+          terms: {
+            'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+          },
+        },
+        {
+          terms: {
+            'object.dit:ukRegion.id': ukRegion,
+          },
+        },
+      ]
+
+      it('builds the right query when a uk region is selected', () => {
+        const ukRegion = ['1718e330-6095-e211-a939-e4115bead28a']
+        const actualQuery = eventsColListQueryBuilder({ ukRegion })
+
+        expect(expectedQuery(ukRegion)).to.deep.equal(actualQuery)
+      })
+    })
+  })
+})
+
+describe('#fetchAllActivityFeedEvents', () => {
+  before(() => {
+    fetchAllActivityFeedEventsStub = sinon
+      .stub()
+      .resolves(allActivityFeedEvents)
+    controllers = proxyquire(
+      '../../src/apps/companies/apps/activity-feed/controllers',
+      {
+        './repos': {
+          fetchActivityFeed: fetchAllActivityFeedEventsStub,
+        },
+      }
+    )
   })
 
-  describe('#fetchAllActivityFeedEvents', () => {
-    before(() => {
-      fetchAllActivityFeedEventsStub = sinon
-        .stub()
-        .resolves(allActivityFeedEvents)
-      controllers = proxyquire(
-        '../../src/apps/companies/apps/activity-feed/controllers',
-        {
-          './repos': {
-            fetchActivityFeed: fetchAllActivityFeedEventsStub,
-          },
-        }
+  context('when filtering for the events collection page', () => {
+    before(async () => {
+      middlewareParameters = buildMiddlewareParameters({
+        requestQuery: {
+          sortBy: 'name:asc',
+          name: 'project zeus',
+          earliestStartDate: '2020-11-01',
+          latestStartDate: '2020-11-10',
+          page: 1,
+          aventriId: 123456789,
+          addressCountry: ['Canada', 'United Kingdom'],
+        },
+      })
+
+      await controllers.fetchAllActivityFeedEvents(
+        middlewareParameters.reqMock,
+        middlewareParameters.resMock,
+        middlewareParameters.nextSpy
       )
     })
 
-    context('when filtering for the events collection page', () => {
-      before(async () => {
-        middlewareParameters = buildMiddlewareParameters({
-          requestQuery: {
-            sortBy: 'name:asc',
-            name: 'project zeus',
-            earliestStartDate: '2020-11-01',
-            latestStartDate: '2020-11-10',
-            page: 1,
-            aventriId: 123456789,
-            addressCountry: ['Canada', 'United Kingdom'],
-          },
-        })
+    it('should call fetchAllActivityFeedEvents with the right params', async () => {
+      const name = 'project zeus'
+      const from = 0
+      const size = 10
+      const earliestStartDate = '2020-11-01'
+      const latestStartDate = '2020-11-10'
+      const transformedAventriId = 'dit:aventri:Event:123456789:Create'
+      const addressCountry = ['Canada', 'United Kingdom']
+      const ukRegion = ['1718e330-6095-e211-a939-e4115bead28a']
 
-        await controllers.fetchAllActivityFeedEvents(
-          middlewareParameters.reqMock,
-          middlewareParameters.resMock,
-          middlewareParameters.nextSpy
-        )
-      })
-
-      it('should call fetchAllActivityFeedEvents with the right params', async () => {
-        const name = 'project zeus'
-        const from = 0
-        const size = 10
-        const earliestStartDate = '2020-11-01'
-        const latestStartDate = '2020-11-10'
-        const transformedAventriId = 'dit:aventri:Event:123456789:Create'
-        const addressCountry = ['Canada', 'United Kingdom']
-
-        const expectedEsQuery = {
-          from,
-          size,
-          query: {
-            bool: {
-              must: [
-                {
-                  terms: {
-                    'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+      const expectedEsQuery = {
+        from,
+        size,
+        query: {
+          bool: {
+            must: [
+              {
+                terms: {
+                  'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+                },
+              },
+              {
+                match_phrase_prefix: {
+                  'object.name': name,
+                },
+              },
+              {
+                range: {
+                  'object.startTime': {
+                    gte: earliestStartDate,
+                    lte: latestStartDate,
                   },
                 },
-                {
-                  match_phrase_prefix: {
-                    'object.name': name,
-                  },
+              },
+              {
+                term: {
+                  id: transformedAventriId,
                 },
-                {
-                  range: {
-                    'object.startTime': {
-                      gte: earliestStartDate,
-                      lte: latestStartDate,
+              },
+              {
+                bool: {
+                  should: [
+                    {
+                      terms: {
+                        'object.dit:address_country.name': addressCountry,
+                      },
                     },
-                  },
-                },
-                {
-                  term: {
-                    id: transformedAventriId,
-                  },
-                },
-                {
-                  bool: {
-                    should: [
-                      {
-                        terms: {
-                          'object.dit:address_country.name': addressCountry,
-                        },
+                    {
+                      terms: {
+                        'object.dit:aventri:location_country': addressCountry,
                       },
-                      {
-                        terms: {
-                          'object.dit:aventri:location_country': addressCountry,
-                        },
-                      },
-                    ],
-                  },
+                    },
+                  ],
                 },
-              ],
-            },
+              },
+            ],
           },
-          sort: {
-            'object.name.raw': {
-              order: 'asc',
-              unmapped_type: 'string',
-            },
+        },
+        sort: {
+          'object.name.raw': {
+            order: 'asc',
+            unmapped_type: 'string',
           },
-        }
-
-        expect(fetchAllActivityFeedEventsStub).to.be.calledWith(
-          middlewareParameters.reqMock,
-          expectedEsQuery
-        )
-      })
-    })
-
-    context('when the endpoint returns error', () => {
-      const error = {
-        status: 500,
+        },
       }
 
-      before(async () => {
-        fetchAllActivityFeedEventsStub.rejects(error)
-        middlewareParameters = buildMiddlewareParameters({
-          requestQuery: {},
-        })
+      expect(fetchAllActivityFeedEventsStub).to.be.calledWith(
+        middlewareParameters.reqMock,
+        expectedEsQuery
+      )
+    })
+  })
 
-        await controllers.fetchAllActivityFeedEvents(
-          middlewareParameters.reqMock,
-          middlewareParameters.resMock,
-          middlewareParameters.nextSpy
-        )
+  context('when the endpoint returns error', () => {
+    const error = {
+      status: 500,
+    }
+
+    before(async () => {
+      fetchAllActivityFeedEventsStub.rejects(error)
+      middlewareParameters = buildMiddlewareParameters({
+        requestQuery: {},
       })
 
-      it('should call next with an error', async () => {
-        expect(middlewareParameters.resMock.json).to.not.have.been.called
-        expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
-      })
+      await controllers.fetchAllActivityFeedEvents(
+        middlewareParameters.reqMock,
+        middlewareParameters.resMock,
+        middlewareParameters.nextSpy
+      )
+    })
+
+    it('should call next with an error', async () => {
+      expect(middlewareParameters.resMock.json).to.not.have.been.called
+      expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
     })
   })
 })
