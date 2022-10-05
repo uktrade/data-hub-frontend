@@ -61,7 +61,7 @@ describe('View contact details', () => {
 
     it('should render the archive container', () => {
       cy.get('[data-test=archive-contact-container]').should('exist')
-      cy.get('[data-test=archive-heading]')
+      cy.get('[data-test=archive-header]')
         .should('exist')
         .should('have.text', 'Archive contact')
       cy.get('[data-test=archive-hint]')

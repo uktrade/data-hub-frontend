@@ -1,22 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import { SPACING } from '@govuk-react/constants'
-import { typography } from '@govuk-react/lib'
 
-import NewWindowLink from '../NewWindowLink'
-
-const StyledSectionHeader = styled('div')`
-  ${typography.font({ size: 24, weight: 'bold' })};
-  margin-bottom: ${SPACING.SCALE_4};
-`
+import { NewWindowLink, SectionHeader } from '../../components'
 
 const DocumentsSection = ({ fileBrowserRoot, documentPath }) => {
   return (
     <>
-      <StyledSectionHeader data-test="document-heading">
-        Documents
-      </StyledSectionHeader>
+      <SectionHeader type="document">Documents</SectionHeader>
       {documentPath ? (
         <NewWindowLink
           href={fileBrowserRoot + documentPath}
