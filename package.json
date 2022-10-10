@@ -92,7 +92,7 @@
     "core-js": "^3.25.4",
     "css-loader": "^6.7.1",
     "csurf": "^1.11.0",
-    "cypress-axe": "^0.14.0",
+    "cypress-axe": "^1.0.0",
     "date-fns": "^2.29.3",
     "del-cli": "^5.0.0",
     "details-element-polyfill": "^2.4.0",
