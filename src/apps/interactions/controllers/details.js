@@ -1,27 +1,9 @@
 const { lowerCase, capitalize } = require('lodash')
 
-const { transformInteractionResponseToViewRecord } = require('../transformers')
-const { INTERACTION_STATUS } = require('../constants')
-
 function renderDetailsPage(req, res, next) {
   try {
-    const { interaction } = res.locals
-    const { ARCHIVED_DOCUMENT_BASE_URL } = res.locals
+    const { interaction, ARCHIVED_DOCUMENT_BASE_URL } = res.locals
     const breadcrumb = capitalize(lowerCase(interaction.kind))
-    const isComplete = interaction.status === INTERACTION_STATUS.COMPLETE
-    const interactionViewRecord = transformInteractionResponseToViewRecord(
-      interaction,
-      isComplete
-    )
-    const referral = interaction.company_referral
-    const hasCompany = interaction.companies && interaction.companies.length
-    if (referral && hasCompany) {
-      referral.companyId = interaction.companies[0].id
-    }
-    const canComplete =
-      interaction.status === INTERACTION_STATUS.DRAFT &&
-      new Date(interaction.date) < new Date() &&
-      !interaction.archived
     return res
       .breadcrumb(breadcrumb)
       .title(interaction.subject)
@@ -30,10 +12,6 @@ function renderDetailsPage(req, res, next) {
           interactionId: interaction.id,
           archivedDocumentPath: ARCHIVED_DOCUMENT_BASE_URL,
         },
-        interactionViewRecord,
-        canComplete,
-        canEdit: isComplete,
-        referral,
       })
   } catch (error) {
     next(error)
