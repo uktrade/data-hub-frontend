@@ -1,0 +1,329 @@
+{
+    "id": "c58d8d92-5340-436f-a7f0-5ca08d91b078",
+    "company": {
+      "name": "Venus Ltd",
+      "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+    },
+    "companies": [
+        {
+          "name": "Venus Ltd",
+          "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+        }
+      ],
+    "contacts": [
+        {
+          "name": "Theodore Schaden|6e4b048d-5bb5-4868-9455-aa712f4ceffd",
+          "first_name": "Theodore",
+          "last_name": "Schaden|6e4b048d-5bb5-4868-9455-aa712f4ceffd",
+          "job_title": "Internal Assurance Officer",
+          "id": "71906039-858e-47ba-8016-f3c80da69ace"
+        }
+    ],
+    "created_on": "2022-10-07T11:32:19.336297Z",
+    "created_by": null,
+    "event": null,
+    "is_event": null,
+    "status": "complete",
+    "kind": "interaction",
+    "modified_by": null,
+    "modifiedOn": "2022-10-07T13:24:41.613400Z",
+    "date": "2022-10-07",
+    "dit_participants": [
+        {
+          "adviser": {
+            "name": "Brendan Smith",
+            "first_name": "Brendan",
+            "last_name": "Smith",
+            "id": "8891ec72-b4ec-4977-9656-839346bc6011"
+          },
+          "team": {
+            "name": "Aberdeen City Council",
+            "id": "cff02898-9698-e211-a939-e4115bead28a"
+          }
+        }
+      ],
+    "communicationChannel": {
+      "name": "Letter/Fax",
+      "id": "74c226d7-5d95-e211-a939-e4115bead28a"
+    },
+    "grantAmountOffered": null,
+    "investmentProject": null,
+    "largeCapitalOpportunity": null,
+    "netCompanyReceipt": null,
+    "service": {
+      "name": "Export Win",
+      "id": "350bba2b-3499-e211-a939-e4115bead28a"
+    },
+    "serviceAnswers": {},
+    "serviceDeliveryStatus": null,
+    "subject": "Meeting where many countries were discussed",
+    "theme": "export",
+    "notes": "",
+    "archivedDocumentsUrlPath": "",
+    "policyAreas": [],
+    "policyFeedbackNotes": "",
+    "policyIssueTypes": [],
+    "wasPolicyFeedbackProvided": false,
+    "wereCountriesDiscussed": true,
+    "exportCountries": [
+      {
+        "country": {
+          "name": "Afghanistan",
+          "id": "87756b9a-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "currently_exporting"
+      },
+      {
+        "country": {
+          "name": "Albania",
+          "id": "945f66a0-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "currently_exporting"
+      },
+      {
+        "country": {
+          "name": "Belgium",
+          "id": "a75f66a0-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "currently_exporting"
+      },
+      {
+        "country": {
+          "name": "Belize",
+          "id": "a85f66a0-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "currently_exporting"
+      },
+      {
+        "country": {
+          "name": "Benin",
+          "id": "a95f66a0-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "currently_exporting"
+      },
+      {
+        "country": {
+          "name": "Bermuda",
+          "id": "aa5f66a0-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "currently_exporting"
+      },
+      {
+        "country": {
+          "name": "Bhutan",
+          "id": "ab5f66a0-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "currently_exporting"
+      },
+      {
+        "country": {
+          "name": "Taiwan",
+          "id": "a56ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "future_interest"
+      },
+      {
+        "country": {
+          "name": "Tajikistan",
+          "id": "a66ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "future_interest"
+      },
+      {
+        "country": {
+          "name": "Tanzania",
+          "id": "a76ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "future_interest"
+      },
+      {
+        "country": {
+          "name": "Thailand",
+          "id": "a86ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "future_interest"
+      },
+      {
+        "country": {
+          "name": "The Bahamas",
+          "id": "a25f66a0-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "future_interest"
+      },
+      {
+        "country": {
+          "name": "The Gambia",
+          "id": "dff682ac-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "future_interest"
+      },
+      {
+        "country": {
+          "name": "Togo",
+          "id": "a96ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "future_interest"
+      },
+      {
+        "country": {
+          "name": "Tonga",
+          "id": "ab6ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "future_interest"
+      },
+      {
+        "country": {
+          "name": "Trinidad and Tobago",
+          "id": "ac6ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "future_interest"
+      },
+      {
+        "country": {
+          "name": "Tunisia",
+          "id": "ad6ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "future_interest"
+      },
+      {
+        "country": {
+          "name": "Turkey",
+          "id": "ae6ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "future_interest"
+      },
+      {
+        "country": {
+          "name": "Turkmenistan",
+          "id": "af6ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "future_interest"
+      },
+      {
+        "country": {
+          "name": "Turks and Caicos Islands",
+          "id": "b06ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "future_interest"
+      },
+      {
+        "country": {
+          "name": "Tuvalu",
+          "id": "b16ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "future_interest"
+      },
+      {
+        "country": {
+          "name": "Uganda",
+          "id": "b26ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "future_interest"
+      },
+      {
+        "country": {
+          "name": "Ukraine",
+          "id": "b36ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "future_interest"
+      },
+      {
+        "country": {
+          "name": "United Arab Emirates",
+          "id": "b46ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "future_interest"
+      },
+      {
+        "country": {
+          "name": "United Kingdom",
+          "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "future_interest"
+      },
+      {
+        "country": {
+          "name": "United States",
+          "id": "81756b9a-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "not_interested"
+      },
+      {
+        "country": {
+          "name": "United States Virgin Islands",
+          "id": "bb6ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "not_interested"
+      },
+      {
+        "country": {
+          "name": "Uruguay",
+          "id": "b66ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "not_interested"
+      },
+      {
+        "country": {
+          "name": "Uzbekistan",
+          "id": "b76ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "not_interested"
+      },
+      {
+        "country": {
+          "name": "Vanuatu",
+          "id": "b86ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "not_interested"
+      },
+      {
+        "country": {
+          "name": "Vatican City",
+          "id": "eef682ac-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "not_interested"
+      },
+      {
+        "country": {
+          "name": "Venezuela",
+          "id": "b96ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "not_interested"
+      },
+      {
+        "country": {
+          "name": "Vietnam",
+          "id": "ba6ee1ca-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "not_interested"
+      },
+      {
+        "country": {
+          "name": "Yemen",
+          "id": "37afd8d0-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "not_interested"
+      },
+      {
+        "country": {
+          "name": "Zambia",
+          "id": "38afd8d0-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "not_interested"
+      },
+      {
+        "country": {
+          "name": "Zimbabwe",
+          "id": "39afd8d0-5d95-e211-a939-e4115bead28a"
+        },
+        "status": "not_interested"
+      }
+    ],
+    "archived": false,
+    "archivedBy": null,
+    "archivedOn": null,
+    "archivedReason": "",
+    "companyReferral": null,
+    "hasRelatedTradeAgreements": false,
+    "relatedTradeAgreements": []
+  }
