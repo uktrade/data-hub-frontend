@@ -17,11 +17,7 @@ describe('Complete interaction', () => {
         `/companies/${params.companyId}/interactions/${params.interactionId}`
       )
 
-      cy.get(
-        selectors.interaction.details.interaction.actions.completeInteraction(
-          params
-        )
-      ).click()
+      cy.get('[data-test=complete-interaction-button]').click()
     })
 
     it('should render breadcrumbs', () => {
@@ -124,11 +120,7 @@ describe('Complete interaction', () => {
           `/companies/${params.companyId}/interactions/${params.interactionId}`
         )
 
-        cy.get(
-          selectors.interaction.details.interaction.actions.completeInteraction(
-            params
-          )
-        ).click()
+        cy.get('[data-test=complete-interaction-button]').click()
 
         cy.get(selectors.interaction.complete.actions.continue).click()
       })
@@ -163,11 +155,7 @@ describe('Complete interaction', () => {
             `/companies/${params.companyId}/interactions/${params.interactionId}`
           )
 
-          cy.get(
-            selectors.interaction.details.interaction.actions.completeInteraction(
-              params
-            )
-          ).click()
+          cy.get('[data-test=complete-interaction-button]').click()
 
           cy.get(selectors.interaction.complete.meetingHappen.no).click()
           cy.get(selectors.interaction.complete.actions.continue).click()
@@ -202,11 +190,7 @@ describe('Complete interaction', () => {
             `/companies/${params.companyId}/interactions/${params.interactionId}`
           )
 
-          cy.get(
-            selectors.interaction.details.interaction.actions.completeInteraction(
-              params
-            )
-          ).click()
+          cy.get('[data-test=complete-interaction-button]').click()
 
           cy.get(selectors.interaction.complete.meetingHappen.no).click()
           cy.get(
@@ -242,11 +226,7 @@ describe('Complete interaction', () => {
             `/companies/${params.companyId}/interactions/${params.interactionId}`
           )
 
-          cy.get(
-            selectors.interaction.details.interaction.actions.completeInteraction(
-              params
-            )
-          ).click()
+          cy.get('[data-test=complete-interaction-button]').click()
 
           cy.get(selectors.interaction.complete.meetingHappen.no).click()
           cy.get(
@@ -283,11 +263,7 @@ describe('Complete interaction', () => {
               `/companies/${params.companyId}/interactions/${params.interactionId}`
             )
 
-            cy.get(
-              selectors.interaction.details.interaction.actions.completeInteraction(
-                params
-              )
-            ).click()
+            cy.get('[data-test=complete-interaction-button]').click()
 
             cy.get(selectors.interaction.complete.meetingHappen.no).click()
             cy.get(
@@ -325,11 +301,7 @@ describe('Complete interaction', () => {
               `/companies/${params.companyId}/interactions/${params.interactionId}`
             )
 
-            cy.get(
-              selectors.interaction.details.interaction.actions.completeInteraction(
-                params
-              )
-            ).click()
+            cy.get('[data-test=complete-interaction-button]').click()
 
             cy.get(selectors.interaction.complete.meetingHappen.no).click()
             cy.get(
@@ -370,11 +342,7 @@ describe('Complete interaction', () => {
           `/companies/${params.companyId}/interactions/${params.interactionId}`
         )
 
-        cy.get(
-          selectors.interaction.details.interaction.actions.completeInteraction(
-            params
-          )
-        ).click()
+        cy.get('[data-test=complete-interaction-button]').click()
 
         cy.get(selectors.interaction.complete.meetingHappen.yes).click()
         cy.get(selectors.interaction.complete.actions.continue).click()

@@ -3,6 +3,9 @@ const selectors = require('../../../../selectors')
 const { formatWithoutParsing } = require('../../../../../src/client/utils/date')
 const { companies, interactions } = require('../../../../../src/lib/urls')
 const { DATE_LONG_FORMAT_1 } = require('../../../../../src/common/constants')
+const {
+  assertSummaryTable,
+} = require('../../../../functional/cypress/support/assertions')
 
 const today = formatWithoutParsing(new Date(), DATE_LONG_FORMAT_1)
 
@@ -84,10 +87,24 @@ describe('Interaction', () => {
 
         cy.get(selectors.interactionForm.add).click()
 
-        cy.get('.table--key-value')
-          .should('contain', 'Countries currently exporting toFrance')
-          .and('contain', 'Future countries of interestGermany')
-          .and('contain', 'Countries not interested inSpain')
+        assertSummaryTable({
+          dataTest: 'interaction-details-table',
+          heading: null,
+          showEditLink: false,
+          content: {
+            Company: 'interaction testing',
+            'Contact(s)': 'Johnny Cakeman',
+            Service: 'Export Win',
+            Notes: 'Conversation with potential client about countries',
+            'Date of interaction': today,
+            'Adviser(s)':
+              'DIT Staff, UKTI Team East Midlands - International Trade Team',
+            'Communication channel': 'Email/Website',
+            'Countries currently exporting to': 'France',
+            'Future countries of interest': 'Germany',
+            'Countries not interested in': 'Spain',
+          },
+        })
 
         cy.visit(companies.exports.index(company.pk))
 
