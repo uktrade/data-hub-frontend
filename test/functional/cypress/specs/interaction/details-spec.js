@@ -2,18 +2,30 @@ const fixtures = require('../../fixtures')
 const largeCapitalOpportunity = require('../../../../sandbox/fixtures/v4/investment/large-capital-opportunity-complete.json')
 const selectors = require('../../../../selectors')
 const {
-  assertKeyValueTable,
+  assertSummaryTable,
   assertBreadcrumbs,
 } = require('../../support/assertions')
 const {
   interactions,
   companies,
   investments,
+  contacts,
+  events,
 } = require('../../../../../src/lib/urls')
 
 const {
   interaction: { withReferral: interactionWithReferral },
 } = fixtures
+
+const companyObject = {
+  href: companies.details(fixtures.company.venusLtd.id),
+  name: fixtures.company.venusLtd.name,
+}
+
+const contactObjectTheodore = {
+  href: contacts.details('71906039-858e-47ba-8016-f3c80da69ace'),
+  name: 'Theodore Schaden|6e4b048d-5bb5-4868-9455-aa712f4ceffd',
+}
 
 describe('Interaction details', () => {
   context('Past draft interaction', () => {
@@ -28,62 +40,31 @@ describe('Interaction details', () => {
       )
     })
 
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: '/',
-        Companies: companies.index(),
-        Interaction: null,
-      })
-    })
-
-    it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should(
-        'have.text',
-        fixtures.interaction.draftPastMeeting.subject
-      )
-    })
+    assertInteractionBreadcrumbs()
+    assertHeader(fixtures.interaction.draftPastMeeting.subject)
 
     it('should render the details', () => {
-      assertKeyValueTable('interactionDetails', {
-        Company: {
-          href: `/companies/${fixtures.company.venusLtd.id}`,
-          name: fixtures.company.venusLtd.name,
+      assertSummaryTable({
+        dataTest: 'interaction-details-table',
+        heading: null,
+        showEditLink: false,
+        content: {
+          Company: companyObject,
+          'Contact(s)': contactObjectTheodore,
+          'Date of interaction': '20 May 2019',
+          'Adviser(s)': 'Brendan Smith, Aberdeen City Council',
         },
-        'Contact(s)': {
-          href: '/contacts/71906039-858e-47ba-8016-f3c80da69ace',
-          name: 'Theodore Schaden|6e4b048d-5bb5-4868-9455-aa712f4ceffd',
-        },
-        'Date of interaction': '20 May 2019',
-        'Adviser(s)': 'Brendan Smith, Aberdeen City Council',
       })
     })
 
     it('should render the "Complete interaction" button', () => {
-      cy.get(
-        selectors.interaction.details.interaction.actions.completeInteraction(
-          params
-        )
-      ).should('be.visible')
-      cy.get(
-        selectors.interaction.details.interaction.actions.completeInteraction(
-          params
-        )
-      ).should('have.text', 'Complete interaction')
+      cy.get('[data-test=complete-interaction-button]')
+        .should('be.visible')
+        .should('have.text', 'Complete interaction')
     })
 
-    it('should not render the "Edit interaction" button', () => {
-      cy.get(
-        selectors.interaction.details.interaction.actions.editInteraction(
-          params
-        )
-      ).should('not.exist')
-    })
-
-    it('should not render the "Why can I not complete this interaction?" details summary', () => {
-      cy.get(
-        selectors.interaction.details.interaction.whyCanINotComplete
-      ).should('not.exist')
-    })
+    assertEditButtonNotVisible()
+    assertCannotCompleteTextNotVisible()
   })
 
   context('Future draft interaction', () => {
@@ -98,56 +79,28 @@ describe('Interaction details', () => {
       )
     })
 
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: '/',
-        Companies: companies.index(),
-        Interaction: null,
-      })
-    })
-
-    it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should(
-        'have.text',
-        fixtures.interaction.draftFutureMeeting.subject
-      )
-    })
+    assertInteractionBreadcrumbs()
+    assertHeader(fixtures.interaction.draftFutureMeeting.subject)
 
     it('should render the details', () => {
-      assertKeyValueTable('interactionDetails', {
-        Company: {
-          href: `/companies/${fixtures.company.venusLtd.id}`,
-          name: fixtures.company.venusLtd.name,
+      assertSummaryTable({
+        dataTest: 'interaction-details-table',
+        heading: null,
+        showEditLink: false,
+        content: {
+          Company: companyObject,
+          'Contact(s)': contactObjectTheodore,
+          'Date of interaction': '20 May 2030',
+          'Adviser(s)': 'Brendan Smith, Aberdeen City Council',
         },
-        'Contact(s)': {
-          href: '/contacts/71906039-858e-47ba-8016-f3c80da69ace',
-          name: 'Theodore Schaden|6e4b048d-5bb5-4868-9455-aa712f4ceffd',
-        },
-        'Date of interaction': '20 May 2030',
-        'Adviser(s)': 'Brendan Smith, Aberdeen City Council',
       })
     })
 
-    it('should not render the "Complete interaction" button', () => {
-      cy.get(
-        selectors.interaction.details.interaction.actions.completeInteraction(
-          params
-        )
-      ).should('not.exist')
-    })
-
-    it('should not render the "Edit interaction" button', () => {
-      cy.get(
-        selectors.interaction.details.interaction.actions.editInteraction(
-          params
-        )
-      ).should('not.exist')
-    })
+    assertCompleteButtonNotVisible()
+    assertEditButtonNotVisible()
 
     it('should render the "Why can I not complete this interaction?" details summary', () => {
-      cy.get(
-        selectors.interaction.details.interaction.whyCanINotComplete
-      ).should('be.visible')
+      cy.get('[data-test=cannot-complete-interaction]').should('be.visible')
     })
   })
 
@@ -163,57 +116,29 @@ describe('Interaction details', () => {
       )
     })
 
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: '/',
-        Companies: companies.index(),
-        Interaction: null,
-      })
-    })
-
-    it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should(
-        'have.text',
-        fixtures.interaction.cancelledMeeting.subject
-      )
-    })
+    assertInteractionBreadcrumbs()
+    assertHeader(fixtures.interaction.cancelledMeeting.subject)
 
     it('should render the details', () => {
-      assertKeyValueTable('interactionDetails', {
-        Company: {
-          href: `/companies/${fixtures.company.venusLtd.id}`,
-          name: fixtures.company.venusLtd.name,
+      assertSummaryTable({
+        dataTest: 'interaction-details-table',
+        heading: null,
+        showEditLink: false,
+        content: {
+          Company: companyObject,
+          'Contact(s)': {
+            href: contacts.details('e2eee6cd-acf6-454a-a4a8-f6c8fa604fde'),
+            name: 'Tyson Morar',
+          },
+          'Date of interaction': '11 June 2019',
+          'Adviser(s)': 'Brendan Smith, Digital Data Hub - Live Service',
         },
-        'Contact(s)': {
-          href: '/contacts/e2eee6cd-acf6-454a-a4a8-f6c8fa604fde',
-          name: 'Tyson Morar',
-        },
-        'Date of interaction': '11 June 2019',
-        'Adviser(s)': 'Brendan Smith, Digital Data Hub - Live Service',
       })
     })
 
-    it('should not render the "Complete interaction" button', () => {
-      cy.get(
-        selectors.interaction.details.interaction.actions.completeInteraction(
-          params
-        )
-      ).should('not.exist')
-    })
-
-    it('should not render the "Edit interaction" button', () => {
-      cy.get(
-        selectors.interaction.details.interaction.actions.editInteraction(
-          params
-        )
-      ).should('not.exist')
-    })
-
-    it('should not render the "Why can I not complete this interaction?" details summary', () => {
-      cy.get(
-        selectors.interaction.details.interaction.whyCanINotComplete
-      ).should('not.exist')
-    })
+    assertCompleteButtonNotVisible()
+    assertEditButtonNotVisible()
+    assertCannotCompleteTextNotVisible()
   })
 
   context('Complete service delivery with documents', () => {
@@ -228,65 +153,42 @@ describe('Interaction details', () => {
       )
     })
 
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: '/',
-        Companies: companies.index(),
-        'Service delivery': null,
-      })
-    })
+    assertInteractionBreadcrumbs('Service delivery')
 
-    it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should(
-        'have.text',
-        fixtures.interaction.withLink.subject
-      )
-    })
+    assertHeader(fixtures.interaction.withLink.subject)
 
     it('should render the details', () => {
-      assertKeyValueTable('interactionDetails', {
-        Company: {
-          href: `/companies/${fixtures.company.venusLtd.id}`,
-          name: fixtures.company.venusLtd.name,
+      assertSummaryTable({
+        dataTest: 'interaction-details-table',
+        heading: null,
+        showEditLink: false,
+        content: {
+          Company: companyObject,
+          'Contact(s)': {
+            href: contacts.details('9b1138ab-ec7b-497f-b8c3-27fed21694ef'),
+            name: 'Johnny Cakeman',
+          },
+          Service: 'Events - UK Based',
+          Notes: 'This is a dummy service delivery for testing',
+          'Date of service delivery': '5 September 2017',
+          Event: {
+            href: events.details('bda12a57-433c-4a0c-a7ce-5ebd080e09e8'),
+            name: 'Grand exhibition',
+          },
+          Documents: 'View files and documents (opens in a new window or tab)',
         },
-        'Contact(s)': {
-          href: '/contacts/9b1138ab-ec7b-497f-b8c3-27fed21694ef',
-          name: 'Johnny Cakeman',
-        },
-        Service: 'Events - UK Based',
-        Notes: 'This is a dummy service delivery for testing',
-        'Date of service delivery': '5 September 2017',
-        'Adviser(s)': '',
-        Event: {
-          href: '/events/bda12a57-433c-4a0c-a7ce-5ebd080e09e8/details',
-          name: 'Grand exhibition',
-        },
-        Documents: 'View files and documents (will open another website)',
       })
     })
 
-    it('should not render the "Complete interaction" button', () => {
-      const completeInteraction =
-        selectors.interaction.details.interaction.actions.completeInteraction(
-          params
-        )
-      cy.get(completeInteraction).should('not.exist')
-    })
+    assertCompleteButtonNotVisible()
 
     it('should render the "Edit interaction" button', () => {
-      const editInteraction =
-        selectors.interaction.details.interaction.actions.editInteraction(
-          params
-        )
-      cy.get(editInteraction).should('be.visible')
-      cy.get(editInteraction).should('have.text', 'Edit service delivery')
+      cy.get('[data-test=edit-interaction-button]')
+        .should('be.visible')
+        .should('have.text', 'Edit service delivery')
     })
 
-    it('should not render the "Why can I not complete this interaction?" details summary', () => {
-      cy.get(
-        selectors.interaction.details.interaction.whyCanINotComplete
-      ).should('not.exist')
-    })
+    assertCannotCompleteTextNotVisible()
   })
 
   context('Complete investment project interaction without documents', () => {
@@ -301,87 +203,62 @@ describe('Interaction details', () => {
       )
     })
 
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: '/',
-        Companies: companies.index(),
-        Interaction: null,
-      })
-    })
-
-    it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should(
-        'have.text',
-        fixtures.interaction.withNoLink.subject
-      )
-    })
+    assertInteractionBreadcrumbs()
+    assertHeader(fixtures.interaction.withNoLink.subject)
 
     it('should render the details', () => {
-      assertKeyValueTable('interactionDetails', {
-        Company: {
-          href: `/companies/${fixtures.company.venusLtd.id}`,
-          name: fixtures.company.venusLtd.name,
+      assertSummaryTable({
+        dataTest: 'interaction-details-table',
+        heading: null,
+        showEditLink: false,
+        content: {
+          Company: companyObject,
+          'Contact(s)': {
+            href: contacts.details(fixtures.contact.deanCox.id),
+            name: fixtures.contact.deanCox.name,
+          },
+          Service: 'UKEF - EFA Advice',
+          Notes: 'This is a dummy interaction for testing',
+          'Date of interaction': '5 June 2017',
+          'Investment project': {
+            href: investments.projects.details(
+              fixtures.investment.newHotelFdi.id
+            ),
+            name: fixtures.investment.newHotelFdi.name,
+          },
+          'Communication channel': 'Email/Website',
         },
-        'Contact(s)': {
-          href: `/contacts/${fixtures.contact.deanCox.id}`,
-          name: fixtures.contact.deanCox.name,
-        },
-        Service: 'UKEF - EFA Advice',
-        Notes: 'This is a dummy interaction for testing',
-        'Date of interaction': '5 June 2017',
-        'Adviser(s)': '',
-        'Investment project': {
-          href: `/investments/projects/${fixtures.investment.newHotelFdi.id}`,
-          name: fixtures.investment.newHotelFdi.name,
-        },
-        'Communication channel': 'Email/Website',
       })
     })
 
-    it('should not render the "Complete interaction" button', () => {
-      const completeInteraction =
-        selectors.interaction.details.interaction.actions.completeInteraction(
-          params
-        )
-      cy.get(completeInteraction).should('not.exist')
-    })
+    assertCompleteButtonNotVisible()
 
     it('should render the "Edit interaction" button', () => {
-      const editInteraction =
-        selectors.interaction.details.interaction.actions.editInteraction(
-          params
-        )
-      cy.get(editInteraction).should('be.visible')
-      cy.get(editInteraction).should('have.text', 'Edit interaction')
+      cy.get('[data-test=edit-interaction-button]')
+        .should('be.visible')
+        .should('have.text', 'Edit interaction')
     })
 
-    it('should not render the "Why can I not complete this interaction?" details summary', () => {
-      cy.get(
-        selectors.interaction.details.interaction.whyCanINotComplete
-      ).should('not.exist')
-    })
+    assertCannotCompleteTextNotVisible()
   })
 
   context('When an interaction is created from a referral', () => {
     it('should display the linked referral on the interaction detail page', () => {
       cy.visit(interactions.detail(interactionWithReferral.id))
-      cy.contains('This interaction is linked to a referral').should(
-        'be.visible'
-      )
-      cy.get('table')
-        .eq(1)
-        .should('contain', 'Subject')
-        .and('contain', interactionWithReferral.company_referral.subject)
-        .and('contain', 'Sent on')
-        .and('contain', '14 Feb 2020')
-        .and('contain', 'By')
-        .and(
-          'contain',
-          interactionWithReferral.company_referral.created_by.name
-        )
-        .and('contain', 'To')
-        .and('contain', interactionWithReferral.company_referral.recipient.name)
+
+      assertSummaryTable({
+        dataTest: 'interaction-referral-table',
+        heading: 'This interaction is linked to a referral',
+        showEditLink: false,
+        content: {
+          Subject: interactionWithReferral.company_referral.subject,
+          'Sent on': '14 Feb 2020',
+          By: interactionWithReferral.company_referral.created_by.name,
+          To: interactionWithReferral.company_referral.recipient.name,
+        },
+      })
     })
+
     it('should take you to the referral details page when you click on the subject', () => {
       cy.contains(interactionWithReferral.company_referral.subject).click()
       cy.url().should(
@@ -402,26 +279,124 @@ describe('Interaction details', () => {
         )
       })
       it('should render the details', () => {
-        assertKeyValueTable('interactionDetails', {
-          Company: {
-            href: `/companies/${fixtures.company.venusLtd.id}`,
-            name: fixtures.company.venusLtd.name,
-          },
-          'Contact(s)': {
-            href: '/contacts/952232d2-1d25-4c3a-bcac-2f3a30a94da9',
-            name: 'Dean Cox',
-          },
-          Service: 'Providing Investment Advice & Information',
-          Notes: 'This is a dummy interaction for testing',
-          'Date of interaction': '5 June 2017',
-          'Adviser(s)': 'DIT Staff, Digital Data Hub - Live Service',
-          'Communication channel': 'Email/Website',
-          'Related large capital opportunity': {
-            href: investments.opportunities.details(largeCapitalOpportunity.id),
-            name: largeCapitalOpportunity.name,
+        assertSummaryTable({
+          dataTest: 'interaction-details-table',
+          heading: null,
+          showEditLink: false,
+          content: {
+            Company: companyObject,
+            'Contact(s)': {
+              href: contacts.details('952232d2-1d25-4c3a-bcac-2f3a30a94da9'),
+              name: 'Dean Cox',
+            },
+            Service: 'Providing Investment Advice & Information',
+            Notes: 'This is a dummy interaction for testing',
+            'Date of interaction': '5 June 2017',
+            'Adviser(s)': 'DIT Staff, Digital Data Hub - Live Service',
+            'Communication channel': 'Email/Website',
+            'Related large capital opportunity': {
+              href: investments.opportunities.details(
+                largeCapitalOpportunity.id
+              ),
+              name: largeCapitalOpportunity.name,
+            },
           },
         })
       })
     }
   )
+  context('Interaction with export countries', () => {
+    before(() => {
+      cy.visit(interactions.detail(fixtures.interaction.withExportCountries.id))
+    })
+
+    it('should render the details', () => {
+      assertSummaryTable({
+        dataTest: 'interaction-details-table',
+        heading: null,
+        showEditLink: false,
+        content: {
+          Company: companyObject,
+          'Contact(s)': contactObjectTheodore,
+          Service: 'Export Win',
+          'Date of interaction': '7 October 2022',
+          'Adviser(s)': 'Brendan Smith, Aberdeen City Council',
+          'Communication channel': 'Letter/Fax',
+          'Countries currently exporting to':
+            'Afghanistan, Albania, Belgium, Belize, Benin, Bermuda, Bhutan',
+          'Future countries of interest':
+            'Taiwan, Tajikistan, Tanzania, Thailand, The Bahamas, The Gambia, Togo, Tonga, Trinidad and Tobago, Tunisia, Turkey, Turkmenistan, Turks and Caicos Islands, Tuvalu, Uganda, Ukraine, United Arab Emirates, United Kingdom',
+          'Countries not interested in':
+            'United States, United States Virgin Islands, Uruguay, Uzbekistan, Vanuatu, Vatican City, Venezuela, Vietnam, Yemen, Zambia, Zimbabwe',
+        },
+      })
+    })
+  })
+
+  context('Interaction with business intelligence and TAP fields', () => {
+    before(() => {
+      cy.visit(interactions.detail(fixtures.interaction.withBusIntel.id))
+    })
+
+    it('should render the details', () => {
+      assertSummaryTable({
+        dataTest: 'interaction-details-table',
+        heading: null,
+        showEditLink: false,
+        content: {
+          Company: companyObject,
+          'Contact(s)': contactObjectTheodore,
+          Service: 'Tradeshow Access Programme (TAP)',
+          'Service status': 'Completed',
+          'Grant offered': '£1',
+          'Net receipt': '£2',
+          'Date of service delivery': '22 April 2022',
+          'Adviser(s)': 'Brendan Smith, Aberdeen City Council',
+          Event: 'No',
+          'Policy issue types':
+            'Domestic, EU exit, Non-EU trade priority, Economic opportunity, Economic risk, International Climate',
+          'Policy areas':
+            'Access to Finance, Access to Public Funding (inc. EU funding), Agriculture (Regulation/Support), Announcement Feedback, Government Communications, Health and Social Care (NHS), Imports, Inclusive Economy, Standards, State Aid, Supply Chains and Raw Materials, Tariffs and Trade Policy, COP26 Energy Transitions, including RE100 and EP100, COP26 Finance, including TCFD, COP26 Nature, including supply chains',
+          'Business intelligence':
+            'Any comments the company made to you on areas such as issues impacting them or feedback on government policy. This information will be visible to other Data Hub users, the Business Intelligence Unit and may also be shared within DIT.',
+          'Named trade agreement(s)':
+            'EU-UK Trade Co-operation Agreement, Free Trade Agreements: Gulf Cooperation Council (GCC), Test agreement, UK-Iceland, Liechtenstein and Norway Free Trade Agreement, UK-Singapore Digital Economy Agreement',
+        },
+      })
+    })
+  })
 })
+
+function assertInteractionBreadcrumbs(kind = 'Interaction') {
+  it('should render breadcrumbs', () => {
+    assertBreadcrumbs({
+      Home: '/',
+      Companies: companies.index(),
+      [kind]: null,
+    })
+  })
+}
+
+function assertHeader(heading) {
+  it('should render the heading', () => {
+    cy.get(selectors.localHeader().heading).should('have.text', heading)
+  })
+}
+
+function assertCompleteButtonNotVisible() {
+  it('should not render the "Complete interaction" button', () => {
+    cy.get('[data-test=complete-interaction-button]').should('not.exist')
+  })
+}
+
+function assertEditButtonNotVisible() {
+  it('should not render the "Edit interaction" button', () => {
+    cy.get('[data-test=edit-interaction-button]').should('not.exist')
+  })
+}
+
+function assertCannotCompleteTextNotVisible() {
+  it('should not render the "Why can I not complete this interaction?" details summary', () => {
+    cy.get('[data-test=cannot-complete-interaction]').should('not.exist')
+  })
+}
