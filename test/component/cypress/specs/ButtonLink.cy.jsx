@@ -1,5 +1,4 @@
 import React from 'react'
-import { mount } from '@cypress/react'
 import ButtonLink from '../../../../src/client/components/ButtonLink'
 
 describe('ButtonLink', () => {
@@ -9,7 +8,7 @@ describe('ButtonLink', () => {
 
   context('When the inline prop is not set', () => {
     beforeEach(() => {
-      mount(
+      cy.mount(
         <div>
           <Component>{linkText}</Component>
         </div>
@@ -35,7 +34,7 @@ describe('ButtonLink', () => {
 
   context('When the inline prop is set', () => {
     beforeEach(() => {
-      mount(
+      cy.mount(
         <div data-test="button-link-container">
           Some text <Component inline={true}>{linkText}</Component>
         </div>

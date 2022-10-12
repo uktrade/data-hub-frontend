@@ -1,5 +1,4 @@
 import React from 'react'
-import { mount } from '@cypress/react'
 import Tag from '../../../../src/client/components/Tag'
 
 const Component = (props) => <Tag {...props} data-test="tag" />
@@ -7,7 +6,7 @@ const Component = (props) => <Tag {...props} data-test="tag" />
 describe('Tag', () => {
   context('When the colour prop is not set', () => {
     beforeEach(() => {
-      mount(<Component>Test</Component>)
+      cy.mount(<Component>Test</Component>)
     })
 
     it('should render the text', () => {
@@ -41,7 +40,7 @@ function assertTagColours(
 ) {
   context(`When the colour is set to ${colour}`, () => {
     beforeEach(() => {
-      mount(<Component colour={colour}>Test</Component>)
+      cy.mount(<Component colour={colour}>Test</Component>)
     })
 
     it('should render the text', () => {

@@ -1,5 +1,4 @@
 import React from 'react'
-import { mount } from '@cypress/react'
 import { FONT_SIZE } from '@govuk-react/constants'
 import Badge from '../../../../src/client/components/Badge'
 
@@ -10,7 +9,7 @@ describe('Badge', () => {
 
   context('When no props are passed', () => {
     beforeEach(() => {
-      mount(<Component>{badgeText}</Component>)
+      cy.mount(<Component>{badgeText}</Component>)
     })
 
     it('should set the content with children', () => {
@@ -40,7 +39,7 @@ describe('Badge', () => {
 
   context('When the label is set', () => {
     beforeEach(() => {
-      mount(<Component label="testLabel">{badgeText}</Component>)
+      cy.mount(<Component label="testLabel">{badgeText}</Component>)
     })
 
     it('should set the content with children', () => {
@@ -54,7 +53,7 @@ describe('Badge', () => {
 
   context('When the border colour is set', () => {
     beforeEach(() => {
-      mount(<Component borderColour="red">{badgeText}</Component>)
+      cy.mount(<Component borderColour="red">{badgeText}</Component>)
     })
 
     it('should set the content with children', () => {
@@ -72,7 +71,7 @@ describe('Badge', () => {
 
   context('When the text colour is set', () => {
     beforeEach(() => {
-      mount(<Component textColour="red">{badgeText}</Component>)
+      cy.mount(<Component textColour="red">{badgeText}</Component>)
     })
 
     it('should set the content with children', () => {
@@ -90,7 +89,7 @@ describe('Badge', () => {
 
   context('When the font size is set', () => {
     beforeEach(() => {
-      mount(<Component fontSize={FONT_SIZE.SIZE_27}>{badgeText}</Component>)
+      cy.mount(<Component fontSize={FONT_SIZE.SIZE_27}>{badgeText}</Component>)
     })
 
     it('should set the content with children', () => {

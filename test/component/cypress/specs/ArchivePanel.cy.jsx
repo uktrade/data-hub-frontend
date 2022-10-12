@@ -1,5 +1,4 @@
 import React from 'react'
-import { mount } from '@cypress/react'
 import ArchivePanel from '../../../../src/client/components/ArchivePanel'
 
 const archiveDate = '2019-12-10T18:07:27.864590Z'
@@ -26,7 +25,7 @@ describe('ArchivePanel', () => {
 
   context('When the record is not archived', () => {
     beforeEach(() => {
-      mount(
+      cy.mount(
         <Component isArchived={false} type="company" archivedBy={archivist} />
       )
     })
@@ -38,7 +37,7 @@ describe('ArchivePanel', () => {
 
   context('When the record has been archived normally', () => {
     beforeEach(() => {
-      mount(<Component type="company" archivedBy={archivist} />)
+      cy.mount(<Component type="company" archivedBy={archivist} />)
     })
 
     it('should render the panel with the archivist name visible', () => {
@@ -58,7 +57,7 @@ describe('ArchivePanel', () => {
 
   context('When the record has been archived automatically', () => {
     beforeEach(() => {
-      mount(<Component type="contact" />)
+      cy.mount(<Component type="contact" />)
     })
 
     it('should render the panel with the automatically archived text', () => {

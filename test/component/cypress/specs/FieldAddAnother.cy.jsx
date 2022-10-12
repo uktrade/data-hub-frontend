@@ -1,5 +1,4 @@
 import React from 'react'
-import { mount } from '@cypress/react'
 
 import FieldAddAnother from '../../../../src/client/components/Form/elements/FieldAddAnother'
 import DataHubProvider, { store } from './provider'
@@ -11,7 +10,7 @@ const RESET_ACTION = {
 describe('FieldAddAnother', () => {
   beforeEach(() => {
     store.dispatch(RESET_ACTION)
-    mount(
+    cy.mount(
       <DataHubProvider>
         <FieldAddAnother
           id="div-items"

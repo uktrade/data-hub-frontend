@@ -1,4 +1,3 @@
-import { mount } from '@cypress/react'
 import React from 'react'
 import Link from '@govuk-react/link'
 
@@ -10,7 +9,7 @@ describe('ActivityCardSubject', () => {
 
   context('When the subject does not link anywhere', () => {
     it('should show the subject with default colour', () => {
-      mount(<Component>{subject}</Component>)
+      cy.mount(<Component>{subject}</Component>)
       cy.get('[data-test="activity-card-subject"]')
         .should('have.text', 'My Awesome Subject')
         .should('have.css', 'color', 'rgb(0, 0, 0)')
@@ -19,7 +18,7 @@ describe('ActivityCardSubject', () => {
 
   context('When the subject contains a link', () => {
     beforeEach(() => {
-      mount(
+      cy.mount(
         <Component>
           <Link href="www.cool-website.com">{subject}</Link>
         </Component>

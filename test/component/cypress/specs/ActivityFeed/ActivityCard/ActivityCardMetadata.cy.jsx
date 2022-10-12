@@ -1,4 +1,3 @@
-import { mount } from '@cypress/react'
 import React from 'react'
 import ActivityCardMetadata from '../../../../../../src/client/components/ActivityFeed/activities/card/ActivityCardMetadata'
 
@@ -11,7 +10,7 @@ describe('ActivityCardMetadata', () => {
   ]
   context('Displays correct styling of metadata', () => {
     beforeEach(() => {
-      mount(<Component metadata={metadata}></Component>)
+      cy.mount(<Component metadata={metadata}></Component>)
     })
     it('should show the name label and value', () => {
       cy.get('[data-test="name-label"]')

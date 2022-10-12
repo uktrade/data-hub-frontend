@@ -1,5 +1,4 @@
 import React from 'react'
-import { mount } from '@cypress/react'
 import InvestmentEstimatedLandDate from '../../../../src/client/components/MyInvestmentProjects/InvestmentEstimatedLandDate'
 import { DATE_DAY_LONG_FORMAT } from '../../../../src/common/constants'
 import { BUTTON_COLOUR, GREY_2, RED, YELLOW } from 'govuk-colours'
@@ -23,7 +22,7 @@ describe('InvestmentEstimatedLandDate', () => {
 
   context('When the date is in the future', () => {
     beforeEach(() => {
-      mount(<Component estimatedLandDate={futureDate} />)
+      cy.mount(<Component estimatedLandDate={futureDate} />)
     })
 
     it('should format and display the date correctly', () => {
@@ -51,7 +50,7 @@ describe('InvestmentEstimatedLandDate', () => {
 
   context('When the date is today', () => {
     beforeEach(() => {
-      mount(<Component estimatedLandDate={today} />)
+      cy.mount(<Component estimatedLandDate={today} />)
     })
 
     it('should format and display the date correctly', () => {
@@ -79,7 +78,7 @@ describe('InvestmentEstimatedLandDate', () => {
 
   context('When the date is tomorrow', () => {
     beforeEach(() => {
-      mount(<Component estimatedLandDate={tomorrow} />)
+      cy.mount(<Component estimatedLandDate={tomorrow} />)
     })
 
     it('should format and display the date correctly', () => {
@@ -107,7 +106,7 @@ describe('InvestmentEstimatedLandDate', () => {
 
   context('When the date is two months in the future', () => {
     beforeEach(() => {
-      mount(<Component estimatedLandDate={twoMonthsAhead} />)
+      cy.mount(<Component estimatedLandDate={twoMonthsAhead} />)
     })
 
     it('should format and display the date correctly', () => {
@@ -135,7 +134,7 @@ describe('InvestmentEstimatedLandDate', () => {
 
   context('When the date is in the past', () => {
     beforeEach(() => {
-      mount(<Component estimatedLandDate={pastDate} />)
+      cy.mount(<Component estimatedLandDate={pastDate} />)
     })
 
     it('should format and display the date correctly', () => {
@@ -163,7 +162,7 @@ describe('InvestmentEstimatedLandDate', () => {
 
   context('When the date is yesterday', () => {
     beforeEach(() => {
-      mount(<Component estimatedLandDate={yesterday} />)
+      cy.mount(<Component estimatedLandDate={yesterday} />)
     })
 
     it('should format and display the date correctly', () => {

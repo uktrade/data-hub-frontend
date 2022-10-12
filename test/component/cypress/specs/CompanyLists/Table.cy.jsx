@@ -1,5 +1,4 @@
 import React from 'react'
-import { mount } from '@cypress/react'
 import Table from '../../../../../src/client/components/CompanyLists/Table'
 
 const allOptionalData = {
@@ -145,7 +144,7 @@ describe('CompanyLists Table', () => {
       singleAdviser,
       singleAdviserWithNoData,
     ]
-    mount(<Component companies={rows} />)
+    cy.mount(<Component companies={rows} />)
     cy.get('table tbody tr').as('tableRows')
     cy.get('@tableRows').should('have.length', rows.length)
 

@@ -1,4 +1,3 @@
-import { mount } from '@cypress/react'
 import React from 'react'
 import ActivityCardNotes from '../../../../../../src/client/components/ActivityFeed/activities/card/ActivityCardNotes'
 
@@ -14,7 +13,7 @@ describe('ActivityCardNotes', () => {
   context('default max length', () => {
     context('When the notes length is less than max length', () => {
       it('should show the whole note', () => {
-        mount(<Component notes={mediumNotes} />)
+        cy.mount(<Component notes={mediumNotes} />)
         cy.get('[data-test="activity-card-notes"]').should(
           'have.text',
           mediumNotes + ' '
@@ -24,7 +23,7 @@ describe('ActivityCardNotes', () => {
 
     context('When the notes length is greater than the max length', () => {
       it('should show the note cropped at max length', () => {
-        mount(<Component notes={longNotes} />)
+        cy.mount(<Component notes={longNotes} />)
         cy.get('[data-test="activity-card-notes"]').should(
           'have.text',
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras fringilla faucibus commodo. Proin auctor tellus elementum diam dapibus aliquet sed eu orci. Ut sodales urna lectus, ac iaculis urna eleifend eget. In fermentum ligula eu erat imperdiet rutrum. ... '
@@ -35,7 +34,7 @@ describe('ActivityCardNotes', () => {
   context('custom max length', () => {
     context('When the notes length is less than max length', () => {
       it('should show the whole note', () => {
-        mount(<Component maxLength={100} notes={shortNotes} />)
+        cy.mount(<Component maxLength={100} notes={shortNotes} />)
         cy.get('[data-test="activity-card-notes"]').should(
           'have.text',
           shortNotes + ' '
@@ -45,7 +44,7 @@ describe('ActivityCardNotes', () => {
 
     context('When the notes length is greater than the max length', () => {
       it('should show the note cropped at max length', () => {
-        mount(<Component maxLength={100} notes={mediumNotes} />)
+        cy.mount(<Component maxLength={100} notes={mediumNotes} />)
         cy.get('[data-test="activity-card-notes"]').should(
           'have.text',
           'Nam auctor massa nec nunc efficitur, et egestas arcu volutpat. Aliquam commodo at justo ut gravida. ... '

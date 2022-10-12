@@ -1,6 +1,5 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import { mount } from '@cypress/react'
 import RoutedPagination from '../../../../src/client/components/Pagination/RoutedPagination'
 import { isString } from 'lodash'
 
@@ -43,7 +42,7 @@ const Component = (props) => (
 describe('Pagination', () => {
   context('when on MOBILE and you are on the first page', () => {
     beforeEach(() => {
-      mount(<Component items={150} />)
+      cy.mount(<Component items={150} />)
     })
     it('should render a page link', () => {
       assertVisiblePageLinks(['Next'])
@@ -51,7 +50,7 @@ describe('Pagination', () => {
   })
   context('when on MOBILE and you click next', () => {
     beforeEach(() => {
-      mount(<Component items={150} />)
+      cy.mount(<Component items={150} />)
       cy.scrollTo(0, 500)
       cy.get('[data-test="pagination"] ul li a').last().click()
     })
@@ -70,7 +69,7 @@ describe('Pagination', () => {
   })
   context('when on MOBILE and you cycle 2 pages and click prev', () => {
     beforeEach(() => {
-      mount(<Component items={150} />)
+      cy.mount(<Component items={150} />)
       cy.scrollTo(0, 500)
       cy.get('[data-test="pagination"] ul li a').last().click()
       cy.get('[data-test="pagination"] ul li a').last().click()
@@ -91,7 +90,7 @@ describe('Pagination', () => {
   })
   context('when on MOBILE and you on the last page', () => {
     beforeEach(() => {
-      mount(<Component items={150} initialPage={15} />)
+      cy.mount(<Component items={150} initialPage={15} />)
     })
     it('should render one page link', () => {
       assertVisiblePageLinks(['Previous'])
@@ -99,7 +98,7 @@ describe('Pagination', () => {
   })
   context('when on MOBILE and you only have one page', () => {
     beforeEach(() => {
-      mount(<Component items={1} />)
+      cy.mount(<Component items={1} />)
     })
     it('should not render page links', () => {
       cy.get('[data-test="pagination"]').should('not.exist')
@@ -108,7 +107,7 @@ describe('Pagination', () => {
   context('when you have more than 10 pages', () => {
     beforeEach(() => {
       cy.viewport(1000, 1000)
-      mount(<Component items={1000} />)
+      cy.mount(<Component items={1000} />)
     })
     it('should render page links', () => {
       assertPageLinks([
@@ -132,7 +131,7 @@ describe('Pagination', () => {
   context('when you have less than 10 pages', () => {
     beforeEach(() => {
       cy.viewport(1000, 1000)
-      mount(<Component items={15} />)
+      cy.mount(<Component items={15} />)
     })
     it('should render page links', () => {
       assertPageLinks(['1', '2', 'Next'])
@@ -144,7 +143,7 @@ describe('Pagination', () => {
   context('when you navigate to page 2 by clicking the second link', () => {
     beforeEach(() => {
       cy.viewport(1000, 1000)
-      mount(<Component items={1000} />)
+      cy.mount(<Component items={1000} />)
       cy.get('[data-page-number="2"]').click()
     })
     it('should render page links', () => {
@@ -176,7 +175,7 @@ describe('Pagination', () => {
   context('when you navigate to page 2 by clicking the Next link', () => {
     beforeEach(() => {
       cy.viewport(1000, 1000)
-      mount(<Component items={1000} />)
+      cy.mount(<Component items={1000} />)
       cy.get('[data-test="pagination"] ul li a').last().click()
     })
     it('should render page links', () => {
@@ -210,7 +209,7 @@ describe('Pagination', () => {
     () => {
       beforeEach(() => {
         cy.viewport(1000, 1000)
-        mount(<Component items={1000} />)
+        cy.mount(<Component items={1000} />)
         cy.get('[data-page-number="2"]').click()
         cy.get('[data-test="pagination"] ul li a').first().click()
       })
@@ -243,7 +242,7 @@ describe('Pagination', () => {
   context('when you navigate past page 6', () => {
     beforeEach(() => {
       cy.viewport(1000, 1000)
-      mount(<Component items={1000} />)
+      cy.mount(<Component items={1000} />)
       cy.get('[data-page-number="7"]').click()
     })
     it('should display the next 10 page links', () => {
@@ -266,7 +265,7 @@ describe('Pagination', () => {
   context('when you have initial page state', () => {
     beforeEach(() => {
       cy.viewport(1000, 1000)
-      mount(<Component items={1000} initialPage={2} />)
+      cy.mount(<Component items={1000} initialPage={2} />)
     })
     it('should render page links', () => {
       assertPageLinks([
@@ -291,7 +290,7 @@ describe('Pagination', () => {
   context('when you click on the last page', () => {
     beforeEach(() => {
       cy.viewport(1000, 1000)
-      mount(<Component items={100} />)
+      cy.mount(<Component items={100} />)
       cy.get('[data-page-number="10"]').click()
     })
     it('should render page links', () => {
@@ -313,7 +312,7 @@ describe('Pagination', () => {
   context('when you only have one page to display', () => {
     beforeEach(() => {
       cy.viewport(1000, 1000)
-      mount(<Component items={1} />)
+      cy.mount(<Component items={1} />)
     })
     it('should not render page links', () => {
       cy.get('[data-test="pagination"]').should('not.exist')

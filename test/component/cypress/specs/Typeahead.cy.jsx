@@ -1,5 +1,4 @@
 import React from 'react'
-import { mount } from '@cypress/react'
 import Typeahead from '../../../../src/client/components/Typeahead/Typeahead'
 import typeaheadTasks from '../../../../src/client/components/Typeahead/tasks'
 
@@ -56,7 +55,7 @@ describe('Typeahead2', () => {
   context('static single-select', () => {
     beforeEach(() => {
       store.dispatch(RESET_ACTION)
-      mount(
+      cy.mount(
         <DataHubProvider tasks={typeaheadTasks}>
           <Typeahead
             id="typeahead-single"
@@ -132,7 +131,7 @@ describe('Typeahead2', () => {
   context('static multi-select', () => {
     beforeEach(() => {
       store.dispatch(RESET_ACTION)
-      mount(
+      cy.mount(
         <DataHubProvider tasks={typeaheadTasks}>
           <Typeahead
             id="typeahead-multi"
@@ -251,7 +250,7 @@ describe('Typeahead2', () => {
   context('async single-select', () => {
     beforeEach(() => {
       store.dispatch(RESET_ACTION)
-      mount(
+      cy.mount(
         <DataHubProvider tasks={typeaheadTasks}>
           <Typeahead
             id="typeahead-async-single"
@@ -328,7 +327,7 @@ describe('Typeahead2', () => {
   context('async multi-select', () => {
     beforeEach(() => {
       store.dispatch(RESET_ACTION)
-      mount(
+      cy.mount(
         <DataHubProvider tasks={typeaheadTasks}>
           <Typeahead
             id="typeahead-async-multi-1"

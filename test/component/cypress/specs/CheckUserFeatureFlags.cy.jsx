@@ -1,5 +1,4 @@
 import React from 'react'
-import { mount } from '@cypress/react'
 import DataHubProvider from './provider'
 import CheckUserFeatureFlag from '../../../../src/client/components/CheckUserFeatureFlags'
 import { TASK_GET_USER_FEATURE_FLAGS } from '../../../../src/client/components/CheckUserFeatureFlags/state'
@@ -33,7 +32,7 @@ describe('CheckUserFeatureFlags', () => {
 
   context('when the feature flag is not enabled', () => {
     beforeEach(() => {
-      mount(<Component userFeatureFlagName={disabledFlag} />)
+      cy.mount(<Component userFeatureFlagName={disabledFlag} />)
     })
 
     it('should pass false to its children', () => {
@@ -43,7 +42,7 @@ describe('CheckUserFeatureFlags', () => {
 
   context('when the feature flag is enabled', () => {
     beforeEach(() => {
-      mount(<Component userFeatureFlagName={enabledFlag} />)
+      cy.mount(<Component userFeatureFlagName={enabledFlag} />)
     })
 
     it('should pass true to the children', () => {

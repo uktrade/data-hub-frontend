@@ -1,4 +1,4 @@
-const { defineConfig } = require('cypress')
+const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
   video: true,
@@ -6,22 +6,27 @@ module.exports = defineConfig({
   screenshotOnRunFailure: false,
   defaultCommandTimeout: 5000,
   requestTimeout: 5000,
-  projectId: 'w97se2',
+  projectId: "w97se2",
+
   env: {
     codeCoverage: {
-      url: 'http://localhost:3000/__coverage__',
+      url: "http://localhost:3000/__coverage__",
     },
   },
   e2e: {
     setupNodeEvents(on, config) {
-      return require('./test/cypress/plugins/index.js')(on, config)
+      return require("./test/cypress/plugins/index.js")(on, config);
     },
-    specPattern: 'test/functional/cypress/specs/**/*.{js,jsx,ts,tsx}',
-    baseUrl: 'http://localhost:3000',
-    supportFile: 'test/cypress/support/index.js',
+    specPattern: "test/functional/cypress/specs/**/*.{js,jsx}",
+    baseUrl: "http://localhost:3000",
+    supportFile: "test/cypress/support/index.js",
   },
+
   component: {
-    setupNodeEvents() {},
-    specPattern: 'test/component/cypress/specs/**/*.cy.{js,jsx,ts,tsx}',
+    devServer: {
+      framework: "react",
+      bundler: "webpack",
+    },
+    supportFile: "test/cypress/support/index.js",
   },
-})
+});

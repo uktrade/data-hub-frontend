@@ -15,6 +15,10 @@
  * @returns undefined
  */
 
+import { mount } from 'cypress/react'
+
+Cypress.Commands.add('mount', mount)
+
 const addLoggedCommand = ({
   name,
   logName,

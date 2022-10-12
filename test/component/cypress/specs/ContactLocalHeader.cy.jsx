@@ -1,5 +1,4 @@
 import React from 'react'
-import { mount } from '@cypress/react'
 import ContactLocalHeader from '../../../../src/client/components/ContactLocalHeader'
 
 import DataHubProvider from './provider'
@@ -21,7 +20,7 @@ describe('ContactLocalHeader', () => {
 
   context('When a primary contact is passed in', () => {
     beforeEach(() => {
-      mount(
+      cy.mount(
         <DataHubProvider>
           <Component
             contact={primaryContact}
@@ -56,7 +55,7 @@ describe('ContactLocalHeader', () => {
 
   context('When a contact that is not primary is passed in', () => {
     beforeEach(() => {
-      mount(
+      cy.mount(
         <DataHubProvider>
           <Component
             contact={notPrimaryContact}
@@ -91,7 +90,7 @@ describe('ContactLocalHeader', () => {
 
   context('When an archived contact is passed in', () => {
     beforeEach(() => {
-      mount(
+      cy.mount(
         <DataHubProvider>
           <Component
             contact={archivedContact}
@@ -124,7 +123,7 @@ describe('ContactLocalHeader', () => {
   context('When the Aventri feature flag is set', () => {
     context('When a contact is passed in', () => {
       beforeEach(() => {
-        mount(
+        cy.mount(
           <DataHubProvider>
             <Component
               contact={primaryContact}
@@ -144,7 +143,7 @@ describe('ContactLocalHeader', () => {
 
     context('When an archived contact is passed in', () => {
       beforeEach(() => {
-        mount(
+        cy.mount(
           <DataHubProvider>
             <Component
               contact={archivedContact}

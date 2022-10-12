@@ -1,5 +1,4 @@
 import React from 'react'
-import { mount } from '@cypress/react'
 import NewWindowLink from '../../../../src/client/components/NewWindowLink'
 
 describe('NewWindowLink', () => {
@@ -11,7 +10,7 @@ describe('NewWindowLink', () => {
 
   context('when the "href" prop is passed', () => {
     before(() => {
-      mount(<Component href={link}>{linkText}</Component>)
+      cy.mount(<Component href={link}>{linkText}</Component>)
     })
 
     it('should render the link', () => {

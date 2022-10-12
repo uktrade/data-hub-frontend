@@ -1,4 +1,3 @@
-import { mount } from '@cypress/react'
 import React from 'react'
 import AventriAttendee from '../../../../../src/client/components/ActivityFeed/activities/AventriAttendee'
 
@@ -26,7 +25,7 @@ describe('AventriAttendee', () => {
   context('when there is no event name', () => {
     beforeEach(() => {
       delete activity.eventName
-      mount(<Component activity={activity} />)
+      cy.mount(<Component activity={activity} />)
     })
 
     it('renders the contact name', () => {
@@ -39,7 +38,7 @@ describe('AventriAttendee', () => {
   context('when event name exists', () => {
     beforeEach(() => {
       activity.eventName = 'test event name'
-      mount(<Component activity={activity} />)
+      cy.mount(<Component activity={activity} />)
     })
 
     it('should have a link to the event page', () => {
@@ -76,7 +75,7 @@ describe('AventriAttendee', () => {
     context('when the registration status is Attended', () => {
       beforeEach(() => {
         activity.object['dit:registrationStatus'] = 'Attended'
-        mount(<Component activity={activity} />)
+        cy.mount(<Component activity={activity} />)
       })
 
       it('should display the Aventri Service Delivery label when registration status is Attended', () => {
@@ -94,7 +93,7 @@ describe('AventriAttendee', () => {
     context('when there is no registration status', () => {
       beforeEach(() => {
         activity.object['dit:registrationStatus'] = undefined
-        mount(<Component activity={activity} />)
+        cy.mount(<Component activity={activity} />)
       })
 
       it('does not display the registration info', () => {

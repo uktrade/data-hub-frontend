@@ -1,5 +1,4 @@
 import React from 'react'
-import { mount } from '@cypress/react'
 import { ErrorBoundary } from 'react-error-boundary'
 import config from '../../../../src/client/config'
 import ErrorFallback from '../../../../src/client/components/ErrorFallback'
@@ -36,7 +35,7 @@ describe('ErrorFallback', () => {
     })
 
     it('should show a general error message', () => {
-      mount(<COMPONENT />)
+      cy.mount(<COMPONENT />)
 
       cy.get('[data-test="error-message"] h2').should(
         'contain',
@@ -49,7 +48,7 @@ describe('ErrorFallback', () => {
     })
 
     it('should show a retry button', () => {
-      mount(<COMPONENT />)
+      cy.mount(<COMPONENT />)
 
       cy.get('[data-test="error-message"] button').should('contain', 'Retry')
     })
@@ -72,7 +71,7 @@ describe('ErrorFallback', () => {
     })
 
     it('should show a specific error message', () => {
-      mount(<COMPONENT />)
+      cy.mount(<COMPONENT />)
 
       cy.get('[data-test="error-message"] h2').should(
         'contain',
@@ -85,7 +84,7 @@ describe('ErrorFallback', () => {
     })
 
     it('should show a retry button', () => {
-      mount(<COMPONENT />)
+      cy.mount(<COMPONENT />)
 
       cy.get('[data-test="error-message"] button').should('contain', 'Retry')
     })

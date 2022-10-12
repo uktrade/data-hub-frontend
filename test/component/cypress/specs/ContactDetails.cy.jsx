@@ -1,11 +1,10 @@
 import React from 'react'
-import { mount } from '@cypress/react'
 import ContactInformation from '../../../../src/client/components/ContactInformation'
 
 describe('ContactInformation', () => {
   context('Default component use', () => {
     beforeEach(() => {
-      mount(<ContactInformation />)
+      cy.mount(<ContactInformation />)
     })
 
     it('should show the add a new contact link', () => {

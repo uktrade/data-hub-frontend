@@ -1,5 +1,4 @@
 import React from 'react'
-import { mount } from '@cypress/react'
 import StatusMessage from '../../../../src/client/components/StatusMessage'
 
 const Component = (props) => <StatusMessage {...props} />
@@ -16,7 +15,7 @@ describe('StatusMessage', () => {
 
 function assertStatusMessage(colour) {
   beforeEach(() => {
-    mount(<Component colour={colour}>Status Message</Component>)
+    cy.mount(<Component colour={colour}>Status Message</Component>)
   })
 
   it('should render the text', () => {

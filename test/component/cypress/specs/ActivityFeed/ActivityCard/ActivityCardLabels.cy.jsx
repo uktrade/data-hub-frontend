@@ -1,4 +1,3 @@
-import { mount } from '@cypress/react'
 import React from 'react'
 import ActivityCardLabels from '../../../../../../src/client/components/ActivityFeed/activities/card/ActivityCardLabels'
 
@@ -26,7 +25,7 @@ describe('ActivityCardLabels', () => {
   context('When it is an internal activity', () => {
     context('When there is an activity/kind label', () => {
       beforeEach(() => {
-        mount(<Component kind="Activity Type" />)
+        cy.mount(<Component kind="Activity Type" />)
       })
 
       it('should render the right text', () => {
@@ -44,7 +43,7 @@ describe('ActivityCardLabels', () => {
 
     context('When there is an topic/theme label', () => {
       beforeEach(() => {
-        mount(<Component theme="Topic Label" />)
+        cy.mount(<Component theme="Topic Label" />)
       })
 
       it('should render the right text', () => {
@@ -66,7 +65,7 @@ describe('ActivityCardLabels', () => {
 
     context('When there is a sub-topic/service label', () => {
       beforeEach(() => {
-        mount(<Component service="Sub-topic Label" />)
+        cy.mount(<Component service="Sub-topic Label" />)
       })
 
       it('should render the right text', () => {
@@ -86,7 +85,7 @@ describe('ActivityCardLabels', () => {
   context('When it is an external activity', () => {
     context('When there is an activity/kind label', () => {
       beforeEach(() => {
-        mount(<Component isExternalActivity={true} kind="Activity Type" />)
+        cy.mount(<Component isExternalActivity={true} kind="Activity Type" />)
       })
 
       it('should render the right text', () => {
@@ -104,7 +103,7 @@ describe('ActivityCardLabels', () => {
 
     context('When there is an topic/theme label', () => {
       beforeEach(() => {
-        mount(<Component isExternalActivity={true} theme="Topic Label" />)
+        cy.mount(<Component isExternalActivity={true} theme="Topic Label" />)
       })
 
       it('should render the right text', () => {
@@ -126,7 +125,9 @@ describe('ActivityCardLabels', () => {
 
     context('When there is a sub-topic/service label', () => {
       beforeEach(() => {
-        mount(<Component isExternalActivity={true} service="Sub-topic Label" />)
+        cy.mount(
+          <Component isExternalActivity={true} service="Sub-topic Label" />
+        )
       })
 
       it('should render the right text', () => {
