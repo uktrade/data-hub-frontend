@@ -23,10 +23,54 @@ export const getEventAventriDetails = (aventriEventId) =>
         EVENT_AVENTRI_ATTENDEES_STATUS.attended
       ),
     }),
+    axios.get(urls.events.aventri.attendedData(aventriEventId), {
+      ...paramsGetAventriEventAttendeeStatus(
+        EVENT_AVENTRI_ATTENDEES_STATUS.activated
+      ),
+    }),
+    axios.get(urls.events.aventri.attendedData(aventriEventId), {
+      ...paramsGetAventriEventAttendeeStatus(
+        EVENT_AVENTRI_ATTENDEES_STATUS.confirmed
+      ),
+    }),
+    axios.get(urls.events.aventri.attendedData(aventriEventId), {
+      ...paramsGetAventriEventAttendeeStatus(
+        EVENT_AVENTRI_ATTENDEES_STATUS.noShow
+      ),
+    }),
+    axios.get(urls.events.aventri.attendedData(aventriEventId), {
+      ...paramsGetAventriEventAttendeeStatus(
+        EVENT_AVENTRI_ATTENDEES_STATUS.cancelled
+      ),
+    }),
+    axios.get(urls.events.aventri.attendedData(aventriEventId), {
+      ...paramsGetAventriEventAttendeeStatus(
+        EVENT_AVENTRI_ATTENDEES_STATUS.waitlist
+      ),
+    }),
   ])
-    .then(([{ data }, { data: attendees }]) => ({
-      ...transformResponseToEventAventriDetails(data),
-      attended:
-        transformAventriEventAttendeesRegistionStatusToBoolean(attendees),
-    }))
+    .then(
+      ([
+        { data },
+        { data: attendees },
+        { data: activated },
+        { data: confirmed },
+        { data: noShow },
+        { data: cancelled },
+        { data: waitlist },
+      ]) => ({
+        ...transformResponseToEventAventriDetails(data),
+        attended:
+          transformAventriEventAttendeesRegistionStatusToBoolean(attendees),
+        activated:
+          transformAventriEventAttendeesRegistionStatusToBoolean(activated),
+        confirmed:
+          transformAventriEventAttendeesRegistionStatusToBoolean(confirmed),
+        noShow: transformAventriEventAttendeesRegistionStatusToBoolean(noShow),
+        cancelled:
+          transformAventriEventAttendeesRegistionStatusToBoolean(cancelled),
+        waitlist:
+          transformAventriEventAttendeesRegistionStatusToBoolean(waitlist),
+      })
+    )
     .catch(() => Promise.reject('Unable to load aventri event details.'))

@@ -42,6 +42,11 @@ const EventAventriDetails = ({
   location,
   fullAddress,
   attended,
+  activated,
+  confirmed,
+  noShow,
+  cancelled,
+  waitlist,
 }) => {
   const { aventriEventId } = useParams()
   const breadcrumbs = [
@@ -120,6 +125,40 @@ const EventAventriDetails = ({
                                 )}
                               >
                                 Attended ({attended.total})
+                              </LocalNavLink>
+                            )}
+                            {activated.status ||
+                              (confirmed.status && (
+                                <LocalNavLink
+                                  dataTest="event-aventri-registered-link"
+                                  // TO DO: href={}
+                                >
+                                  Registered (
+                                  {activated.total + confirmed.total})
+                                </LocalNavLink>
+                              ))}
+                            {!noShow.status && (
+                              <LocalNavLink
+                                dataTest="event-aventri-did-not-attended-link"
+                                // TO DO: href={}
+                              >
+                                Did not attend ({noShow.total})
+                              </LocalNavLink>
+                            )}
+                            {!cancelled.status && (
+                              <LocalNavLink
+                                dataTest="event-aventri-cancelled-link"
+                                // TO DO: href={}
+                              >
+                                Cancelled ({cancelled.total})
+                              </LocalNavLink>
+                            )}
+                            {!waitlist.status && (
+                              <LocalNavLink
+                                dataTest="event-aventri-waiting-list-link"
+                                // TO DO: href={}
+                              >
+                                Waiting list ({waitlist.total})
                               </LocalNavLink>
                             )}
                           </LocalNav>
