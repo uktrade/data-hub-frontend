@@ -2,7 +2,7 @@ const urls = require('../../../../src/lib/urls')
 
 describe('company page', () => {
   before(() => {
-    cy.viewport(1980, 1440)
+    cy.viewport(1024, 768)
     cy.intercept('POST', '/api-proxy/v4/search/company').as('apiRequest')
     cy.visit(urls.companies.index())
     cy.wait('@apiRequest')

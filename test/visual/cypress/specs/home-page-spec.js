@@ -6,17 +6,19 @@ describe('home page', () => {
   })
 
   it('content', () => {
-    cy.viewport(1980, 1440)
+    cy.viewport(1024, 768)
     cy.get('.dashboard-section__info-feed-date').hideElement()
     cy.get('[for="company-name"]').should('be.visible')
     cy.get('#main-content').compareSnapshot('homePageContent')
   })
 
   it('header', () => {
+    cy.viewport('ipad-mini')
     cy.get('.datahub-header').compareSnapshot('homePageHeader')
   })
 
   it('search bar', () => {
+    cy.viewport('ipad-mini')
     cy.get('#dashboard-local-header')
       .first()
       .compareSnapshot('homePageSearchBar')
