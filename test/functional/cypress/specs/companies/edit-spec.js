@@ -472,9 +472,9 @@ describe('Company edit', () => {
     const company = fixtures.company.dnbLtd
 
     before(() => {
-      cy.intercept('POST', urls.companies.edit(company.id) + '*').as(
-        'editCompanyResponse'
-      )
+      cy.intercept('POST', urls.companies.edit(company.id) + '*', {
+        body: { company: company },
+      }).as('editCompanyResponse')
       cy.visit(urls.companies.edit(company.id))
     })
 
@@ -514,6 +514,43 @@ describe('Company edit', () => {
     })
 
     it('displays the "Change requested. Thanks for keeping Data Hub running smoothly" flash message and the ID used in GA', () => {
+      cy.contains(
+        'Change requested.Thanks for keeping Data Hub running smoothly.'
+      ).should('have.attr', 'data-test', 'status-message')
+    })
+  })
+
+  context('when form is submitted with dnb change request', () => {
+    const company = fixtures.company.dnbLtd
+
+    before(() => {
+      cy.intercept('POST', urls.companies.edit(company.id) + '*', {
+        body: { dnbChangeRequest: { duns_number: company.duns_number } },
+      }).as('editCompanyResponse')
+      cy.visit(urls.companies.edit(company.id))
+    })
+
+    it('should display the "Change requested. Thanks for keeping Data Hub running smoothly"', () => {
+      cy.contains('Company name')
+        .next()
+        .find('input')
+        .clear()
+        .type('Test company name')
+
+      cy.contains('Trading name')
+        .next()
+        .find('input')
+        .clear()
+        .type('Test company trading name')
+
+      cy.contains('Website (optional)')
+        .next()
+        .find('input')
+        .clear()
+        .type('example.com')
+
+      cy.contains('Submit').click()
+
       cy.contains(
         'Change requested.Thanks for keeping Data Hub running smoothly.'
       ).should('have.attr', 'data-test', 'status-message')
