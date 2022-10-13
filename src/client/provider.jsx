@@ -1,15 +1,12 @@
-import _ from 'lodash'
-import queryString from 'qs'
 import React from 'react'
-import { createBrowserHistory } from 'history'
-import {
-  connectRouter,
-  routerMiddleware,
-  ConnectedRouter,
-} from 'connected-react-router'
-import { Provider } from 'react-redux'
+import { createReduxHistoryContext } from 'redux-first-history'
 import { configureStore } from '@reduxjs/toolkit'
+import { createBrowserHistory } from 'history'
 import createSagaMiddleware from 'redux-saga'
+import { Router } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import queryString from 'qs'
+import _ from 'lodash'
 
 import DropdownMenu from './components/DropdownMenu/ConnectedDropdownMenu'
 import tasks from './components/Task/reducer'
@@ -134,13 +131,17 @@ import contactActivitiesReducer from '../client/modules/Contacts/ContactActivity
 import { ID as REMINDERS_ID } from './modules/Reminders/state'
 import remindersReducer from './modules/Reminders/reducer'
 
-const sagaMiddleware = createSagaMiddleware()
-const history = createBrowserHistory({
+const browserHistory = createBrowserHistory({
   // The baseURI is set to the <base/> tag by the spaFallbackSpread
   // middleware, which should be applied to each Express route where
   // react-router is expected to be used.
   basename: queryString.stringify(new URL(document.baseURI).pathname),
 })
+
+const { createReduxHistory, routerMiddleware, routerReducer } =
+  createReduxHistoryContext({ history: browserHistory })
+
+const sagaMiddleware = createSagaMiddleware()
 
 const parseProps = (domNode) => {
   if (!domNode) {
@@ -159,7 +160,7 @@ const { modulePermissions, currentAdviserId } = parseProps(appWrapper)
 const reducer = {
   currentAdviserId: () => currentAdviserId,
   modulePermissions: () => modulePermissions,
-  router: connectRouter(history),
+  router: routerReducer,
   tasks,
   [FLASH_MESSAGE_ID]: flashMessageReducer,
   [COMPANY_LISTS_STATE_ID]: companyListsReducer,
@@ -215,10 +216,12 @@ const preloadedState = {
 
 const store = configureStore({
   devTools: process.env.NODE_ENV === 'development',
-  middleware: [sagaMiddleware, routerMiddleware(history)],
+  middleware: [sagaMiddleware, routerMiddleware],
   preloadedState,
   reducer,
 })
+
+export const history = createReduxHistory(store)
 
 const runMiddlewareOnce = _.once((tasks) => sagaMiddleware.run(rootSaga(tasks)))
 
@@ -247,9 +250,7 @@ export default class DataHubProvider extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <ConnectedRouter history={history}>
-          {this.props.children}
-        </ConnectedRouter>
+        <Router history={history}>{this.props.children}</Router>
       </Provider>
     )
   }
