@@ -43,7 +43,7 @@ function EditCompanyForm({
       flashMessage={(result) => {
         if (
           result.company?.duns_number ||
-          result.dnbChangeRequest?.company.duns_number
+          result.dnbChangeRequest?.duns_number
         ) {
           return [
             'Change requested.',
