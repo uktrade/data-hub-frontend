@@ -53,12 +53,11 @@ const ContactDetails = ({ contactId, companyAddress }) => {
             data-test="contact-details-table"
           >
             <SummaryTable.Row heading="Job title" children={contact.jobTitle} />
-            {contact.fullTelephoneNumber && (
-              <SummaryTable.Row
-                heading="Phone number"
-                children={contact.fullTelephoneNumber}
-              />
-            )}
+            <SummaryTable.Row
+              hideWhenEmpty={true}
+              heading="Phone number"
+              children={contact.fullTelephoneNumber}
+            />
             <SummaryTable.Row
               heading="Address"
               children={getAddress(contact, companyAddress)}

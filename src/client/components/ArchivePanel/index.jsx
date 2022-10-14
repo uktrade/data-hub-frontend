@@ -29,7 +29,6 @@ const StyledReason = styled(StyledMessage)`
  * An extension of `StatusMessage` that is used to denote whether a record has been archived.
  */
 const ArchivePanel = ({
-  isArchived,
   archivedBy = null,
   archivedOn,
   archiveReason,
@@ -37,9 +36,6 @@ const ArchivePanel = ({
   onClick = null,
   type,
 }) => {
-  if (!isArchived) {
-    return null
-  }
   return (
     <StyledMain data-test="archive-panel">
       <StatusMessage>
@@ -62,10 +58,6 @@ const ArchivePanel = ({
 }
 
 ArchivePanel.propTypes = {
-  /**
-   * The archive status of the record. If set to `false`, the component will return `null` and will not render.
-   */
-  isArchived: PropTypes.bool.isRequired,
   /**
    * An object containg the first and last name of the person who archived the contact. If this is not defined, the automatic archive text will appear.
    */
