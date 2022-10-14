@@ -5,4 +5,4 @@ applications:
     health-check-type: http
     health-check-http-endpoint: /healthcheck
     memory: 5G
-    disk_quota: 5G
+    disk_quota: 8G
