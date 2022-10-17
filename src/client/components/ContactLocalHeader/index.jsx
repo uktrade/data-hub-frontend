@@ -103,17 +103,18 @@ const ContactLocalHeader = ({ contact, writeFlashMessage }) => {
             </GridCol>
           )}
         </GridRow>
-        <ArchivePanel
-          isArchived={contact.archived}
-          archivedBy={contact.archived_by}
-          archivedOn={contact.archived_on}
-          archiveReason={contact.archived_reason}
-          unarchiveUrl={urls.contacts.unarchive(contact.id)}
-          onClick={() => {
-            writeFlashMessage('Contact record updated')
-          }}
-          type="contact"
-        />
+        {contact.archived && (
+          <ArchivePanel
+            archivedBy={contact.archived_by}
+            archivedOn={contact.archived_on}
+            archiveReason={contact.archived_reason}
+            unarchiveUrl={urls.contacts.unarchive(contact.id)}
+            onClick={() => {
+              writeFlashMessage('Contact record updated')
+            }}
+            type="contact"
+          />
+        )}
       </LocalHeader>
     </>
   )

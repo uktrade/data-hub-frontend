@@ -51,7 +51,7 @@ const ArchiveForm = ({
 
   return (
     <div data-test={kebabCase(`archive-${type}-container`)}>
-      <SectionHeader type="archive">Archive {type}</SectionHeader>
+      <SectionHeader type="archive">{`Archive ${type}`}</SectionHeader>
 
       <p data-test="archive-hint">
         Archive this {type} if it is no longer required or active.
