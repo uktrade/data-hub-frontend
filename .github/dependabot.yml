@@ -10,15 +10,6 @@ updates:
   open-pull-requests-limit: 10
   ignore:
 # When updating this list please ensure that a ticket for unblocking the update has been added to the TechEx backlog.
-  - dependency-name: cypress # TET-286
-    versions:
-    - "> 9.7.0"
-  - dependency-name: "@cypress/webpack-dev-server" # TET-286
-    versions:
-    - "> 1.8.4"
-  - dependency-name: "@cypress/react" # TET-286
-    versions:
-    - "> 5.12.5"
   - dependency-name: cypress-image-diff-js # TET-164
     versions:
     - "> 1.16.4"
@@ -34,6 +25,9 @@ updates:
   - dependency-name: redis # TET-131
     versions:
     - "> 3.1.2"
+  - dependency-name: axios # TET-354
+    versions:
+    - "> 0.27.2"
 
   # These are part of dependency groups and should be updated via the relevant script.
   - dependency-name: "@storybook/addon-a11y"
