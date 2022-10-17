@@ -26,17 +26,6 @@ function assertForm() {
 }
 
 describe('Delete pipeline item form', () => {
-  context('When the pipeline item id is incorrect', () => {
-    before(() => {
-      cy.visit(urls.pipeline.delete('INCORRECT-PIPELINE-ID'))
-    })
-
-    it('should render a 404 error message', () => {
-      cy.contains('Could not load PipelineItem')
-      cy.contains('Error: Not Found')
-    })
-  })
-
   context('With a valid id', () => {
     before(() => {
       cy.visit(urls.pipeline.delete('ARCHIVED'))

@@ -29,18 +29,7 @@ function assertForm() {
 }
 
 describe('Unarchive pipeline item form', () => {
-  context('When the pipeline item id is incorrect', () => {
-    before(() => {
-      cy.visit(urls.pipeline.unarchive('INCORRECT-PIPELINE-ID'))
-    })
-
-    it('should render a 404 error message', () => {
-      cy.contains('Could not load PipelineItem')
-      cy.contains('Error: Not Found')
-    })
-  })
-
-  context('With a valid id', () => {
+  context('When the form is loaded', () => {
     before(() => {
       cy.visit(urls.pipeline.unarchive('ARCHIVED'))
     })

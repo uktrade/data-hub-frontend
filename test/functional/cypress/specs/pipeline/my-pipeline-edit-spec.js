@@ -14,17 +14,6 @@ const formSelectors = selectors.pipelineForm
 const [firstItem, secondItem] = pipelineItemLambdaPlc.results
 
 describe('Pipeline edit form', () => {
-  xcontext('When pipeline id is incorrect', () => {
-    before(() => {
-      cy.visit(urls.pipeline.edit('INCORRECT_PIPELINE'))
-    })
-
-    it('should render 404 error message', () => {
-      cy.contains('Could not load PipelineItem')
-      cy.contains('Error: Not Found')
-    })
-  })
-
   context('When editing a pipeline item', () => {
     context('With values for only the mandatory fields', () => {
       before(() => {
