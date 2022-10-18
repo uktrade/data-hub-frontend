@@ -8,6 +8,7 @@ const {
   assertExportCountryHistoryBreadcrumbs,
   assertButtons,
   assertViewFullBusinessDetails,
+  assertArchivePanelNotVisible,
 } = require('../../../support/company-local-header-assertions')
 
 const companyLocalHeader = selectors.companyLocalHeader()
@@ -28,6 +29,10 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       assertBreadcrumbs(company.name, detailsUrl, 'Activity Feed')
+
+      it('should not display the archive panel', () => {
+        assertArchivePanelNotVisible()
+      })
 
       it('should display the company name', () => {
         assertCompanyName(company.name)
@@ -66,6 +71,10 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       assertBreadcrumbs(company.name, detailsUrl, 'Contacts')
+
+      it('should not display the archive panel', () => {
+        assertArchivePanelNotVisible()
+      })
 
       it('should display the company name', () => {
         assertCompanyName(company.name)
@@ -111,6 +120,10 @@ describe('Local header for company under dnb investigation', () => {
 
       assertBreadcrumbs(company.name, detailsUrl, 'Lead adviser')
 
+      it('should not display the archive panel', () => {
+        assertArchivePanelNotVisible()
+      })
+
       it('should display the company name', () => {
         assertCompanyName(company.name)
       })
@@ -155,6 +168,10 @@ describe('Local header for company under dnb investigation', () => {
 
       assertBreadcrumbs(company.name, detailsUrl, 'Investment')
 
+      it('should not display the archive panel', () => {
+        assertArchivePanelNotVisible()
+      })
+
       it('should display the company name', () => {
         assertCompanyName(company.name)
       })
@@ -194,6 +211,10 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       assertBreadcrumbs(company.name, detailsUrl, 'Investment')
+
+      it('should not display the archive panel', () => {
+        assertArchivePanelNotVisible()
+      })
 
       it('should display the company name', () => {
         assertCompanyName(company.name)
@@ -237,6 +258,10 @@ describe('Local header for company under dnb investigation', () => {
 
     assertBreadcrumbs(company.name, detailsUrl, 'Exports')
 
+    it('should not display the archive panel', () => {
+      assertArchivePanelNotVisible()
+    })
+
     it('should display the company name', () => {
       assertCompanyName(company.name)
     })
@@ -277,6 +302,10 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       assertExportCountryHistoryBreadcrumbs(company, detailsUrl)
+
+      it('should not display the archive panel', () => {
+        assertArchivePanelNotVisible()
+      })
 
       it('should display the company name', () => {
         assertCompanyName(company.name)
@@ -319,6 +348,10 @@ describe('Local header for company under dnb investigation', () => {
     })
 
     assertBreadcrumbs(company.name, detailsUrl, 'Orders (OMIS)')
+
+    it('should not display the archive panel', () => {
+      assertArchivePanelNotVisible()
+    })
 
     it('should display the company name', () => {
       assertCompanyName(company.name)

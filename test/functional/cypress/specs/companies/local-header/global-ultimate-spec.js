@@ -11,6 +11,7 @@ const {
   assertViewFullBusinessDetails,
   assertOneListTierA,
   assertCoreTeam,
+  assertArchivePanelNotVisible,
 } = require('../../../support/company-local-header-assertions')
 
 const companyLocalHeader = selectors.companyLocalHeader()
@@ -32,6 +33,10 @@ describe('Local header for global ultimate company', () => {
     })
 
     assertBreadcrumbs(company.name, detailsUrl, 'Activity Feed')
+
+    it('should not display the archive panel', () => {
+      assertArchivePanelNotVisible()
+    })
 
     it('should display the company name', () => {
       assertCompanyName(company.name)
@@ -103,6 +108,10 @@ describe('Local header for global ultimate company', () => {
 
     assertBreadcrumbs(company.name, detailsUrl, 'Core Team')
 
+    it('should not display the archive panel', () => {
+      assertArchivePanelNotVisible()
+    })
+
     it('should display the company name', () => {
       assertCompanyName(company.name)
     })
@@ -139,6 +148,10 @@ describe('Local header for global ultimate company', () => {
       })
 
       assertBreadcrumbs(company.name, detailsUrl, 'Investment')
+
+      it('should not display the archive panel', () => {
+        assertArchivePanelNotVisible()
+      })
 
       it('should display the company name', () => {
         assertCompanyName(company.name)
@@ -180,6 +193,10 @@ describe('Local header for global ultimate company', () => {
 
       assertBreadcrumbs(company.name, detailsUrl, 'Investment')
 
+      it('should not display the archive panel', () => {
+        assertArchivePanelNotVisible()
+      })
+
       it('should display the company name', () => {
         assertCompanyName(company.name)
       })
@@ -218,6 +235,10 @@ describe('Local header for global ultimate company', () => {
 
     assertBreadcrumbs(company.name, detailsUrl, 'Exports')
 
+    it('should not display the archive panel', () => {
+      assertArchivePanelNotVisible()
+    })
+
     it('should display the company name', () => {
       assertCompanyName(company.name)
     })
@@ -252,6 +273,10 @@ describe('Local header for global ultimate company', () => {
     })
 
     assertExportCountryHistoryBreadcrumbs(company, detailsUrl)
+
+    it('should not display the archive panel', () => {
+      assertArchivePanelNotVisible()
+    })
 
     it('should display the company name', () => {
       assertCompanyName(company.name)
@@ -289,6 +314,10 @@ describe('Local header for global ultimate company', () => {
     })
 
     assertBreadcrumbs(company.name, detailsUrl, 'Orders (OMIS)')
+
+    it('should not display the archive panel', () => {
+      assertArchivePanelNotVisible()
+    })
 
     it('should display the company name', () => {
       assertCompanyName(company.name)
