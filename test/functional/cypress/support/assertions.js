@@ -52,7 +52,9 @@ const assertValueTable = (dataTest, expected) => {
 const assertSummaryTable = ({ dataTest, heading, showEditLink, content }) => {
   const summaryTableSelector = `[data-test="${dataTest}"]`
 
-  cy.get(summaryTableSelector).find('caption').should('contain', heading)
+  if (heading) {
+    cy.get(summaryTableSelector).find('caption').should('contain', heading)
+  }
   cy.get(summaryTableSelector)
     .contains('Edit')
     .should(showEditLink ? 'be.visible' : 'not.exist')

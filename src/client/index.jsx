@@ -37,7 +37,7 @@ import ExportCountriesEdit from '../apps/companies/apps/exports/client/ExportCou
 import ReferralDetails from '../apps/companies/apps/referrals/details/client/ReferralDetails'
 import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralHelp'
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
-import InteractionReferralDetails from '../apps/companies/apps/referrals/details/client/InteractionReferralDetails.jsx'
+import InteractionReferralDetails from './modules/Interactions/InteractionDetails/InteractionReferralDetails.jsx'
 import PipelineForm from '../apps/my-pipeline/client'
 import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
 import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
@@ -66,6 +66,7 @@ import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
 import ContactDocuments from './modules/Contacts/ContactDocuments/ContactDocuments'
 import InvestmentDocuments from '../apps/investments/client/projects/ProjectDocuments'
 import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactAuditHistory'
+import InteractionDetails from './modules/Interactions/InteractionDetails'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -715,6 +716,9 @@ function App() {
         </Mount>
         <Mount selector="#contact-audit-history">
           {(props) => <ContactAuditHistory {...props} />}
+        </Mount>
+        <Mount selector="#interaction-details">
+          {(props) => <InteractionDetails {...props} />}
         </Mount>
 
         <Mount selector="#react-app">
