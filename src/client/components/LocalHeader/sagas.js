@@ -5,11 +5,14 @@ import {
   clearMessages,
 } from '../../utils/flash-messages'
 import { take, put } from 'redux-saga/effects'
-
+import { getFromLocalStorage, saveToLocalStorage } from './utils'
 import {
   FLASH_MESSAGE__WRITE_TO_SESSION,
   FLASH_MESSAGE__GET_FROM_SESSION,
   FLASH_MESSAGE__ADD_TO_STATE,
+  IS_BANNER_DISMISSED__SAVE_TO_LOCALSTORAGE,
+  IS_BANNER_DISMISSED__GET_FROM_LOCALSTORAGE,
+  IS_BANNER_DISMISSED__ADD_TO_STATE,
 } from '../../actions'
 
 /* Saga to write flashmessages to the session storage.
@@ -41,5 +44,27 @@ export function* readFlashMesages() {
       yield put({ type: FLASH_MESSAGE__ADD_TO_STATE, flashMessages })
       clearMessages()
     }
+  }
+}
+
+/* Saga to write to localstorage. */
+export function* writeIsBannerDismissedToLocalStorage() {
+  while (true) {
+    const { isBannerDismissed } = yield take(
+      IS_BANNER_DISMISSED__SAVE_TO_LOCALSTORAGE
+    )
+    saveToLocalStorage(isBannerDismissed)
+  }
+}
+
+/* Saga to read localstorage state and add to redux state. */
+export function* readIsBannerDismissedFromLocalStorage() {
+  while (true) {
+    yield take(IS_BANNER_DISMISSED__GET_FROM_LOCALSTORAGE)
+    const isBannerDismissedState = getFromLocalStorage()
+    yield put({
+      type: IS_BANNER_DISMISSED__ADD_TO_STATE,
+      isBannerDismissedState,
+    })
   }
 }
