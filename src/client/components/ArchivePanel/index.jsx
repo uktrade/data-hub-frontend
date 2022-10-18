@@ -59,7 +59,7 @@ const ArchivePanel = ({
 
 ArchivePanel.propTypes = {
   /**
-   * An object containg the first and last name of the person who archived the contact. If this is not defined, the automatic archive text will appear.
+   * An object containg the first and last name of the person who archived the record. If this is not defined, the automatic archive text will appear.
    */
   archivedBy: PropTypes.object,
   /**

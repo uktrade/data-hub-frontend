@@ -43,6 +43,147 @@ const assertAddress = ({ address, registeredAddress }) => {
   }
 }
 
+const assertBusinessDetailsBreadcrumbs = (company) => {
+  it('should render breadcrumbs', () => {
+    assertBreadcrumbs({
+      Home: urls.dashboard(),
+      Companies: urls.companies.index(),
+      [company.name]: urls.companies.detail(company.id),
+      'Business details': null,
+    })
+  })
+}
+
+const assertBusinessDetailsHeading = () => {
+  it('should display the "Business details" heading', () => {
+    cy.get(selectors.localHeader().heading).should(
+      'have.text',
+      'Business details'
+    )
+  })
+}
+
+const assertLastUpdatedParagraph = (date) => {
+  const paragraphText = 'Last updated on: ' + date
+  it('should display the "Last updated" paragraph', () => {
+    cy.contains(paragraphText).should('be.visible')
+  })
+}
+
+const assertAreDetailsRight = () => {
+  it('should display the "Are these business details right?" details summary', () => {
+    cy.get(selectors.companyBusinessDetails().whereDoesInformation).should(
+      'be.visible'
+    )
+  })
+}
+
+const assertAreDetailsRightNotVisible = () => {
+  it('should not display the "Are these business details right?" details summary', () => {
+    cy.get(selectors.companyBusinessDetails().whereDoesInformation).should(
+      'not.exist'
+    )
+  })
+}
+
+const assertUnarchiveLinkNotVisible = () => {
+  it('should not display the "Unarchive" link', () => {
+    cy.get(selectors.companyBusinessDetails().unarchiveLink).should('not.exist')
+  })
+}
+
+const assertAddressContainer = (showEdit) => {
+  it('should display the "Addresses" details container', () => {
+    assertSummaryTable({
+      dataTest: 'addressesDetailsContainer',
+      heading: 'Addresses',
+      showEditLink: showEdit,
+    })
+  })
+}
+
+const assertRegionContainerNotVisible = () => {
+  it('should not display the "DIT region" details container', () => {
+    cy.get(
+      selectors.detailsContainer('regionDetailsContainer').container
+    ).should('not.exist')
+  })
+}
+
+const assertSectorContainer = (showLink, content = ['Retail']) => {
+  it('should display the "DIT sector" details container', () => {
+    assertSummaryTable({
+      dataTest: 'sectorDetailsContainer',
+      heading: 'DIT sector',
+      showEditLink: showLink,
+      content: content,
+    })
+  })
+}
+
+const assertAccountManagerContainer = (showLink) => {
+  it('should display the "Global Account Manager - One List" details container', () => {
+    assertSummaryTable({
+      dataTest: 'oneListDetailsContainer',
+      heading: 'Global Account Manager – One List',
+      showEditLink: showLink,
+      content: {
+        'One List tier': 'Tier A - Strategic Account',
+        'Global Account Manager':
+          'Travis GreeneIST - Sector Advisory ServicesLondon',
+      },
+    })
+  })
+}
+
+const assertCDMSContainerNotVisible = () => {
+  it('should not display the "Documents from CDMS" details container', () => {
+    cy.get(
+      selectors.detailsContainer('documentsDetailsContainer').container
+    ).should('not.exist')
+  })
+}
+
+const assertArchiveContainerNotVisible = () => {
+  it('should not display the "Archive company" details container', () => {
+    cy.get('[data-test=archive-company-container]').should('not.exist')
+  })
+}
+
+const assertRegionContainer = (region) => {
+  it('should display the "DIT region" details container', () => {
+    assertSummaryTable({
+      dataTest: 'regionDetailsContainer',
+      heading: 'DIT region',
+      showEditLink: true,
+      content: region,
+    })
+  })
+}
+
+const assertHierarchyContainer = (showLink, content) => {
+  it('should display the "Business hierarchy" details container', () => {
+    assertSummaryTable({
+      dataTest: 'businessHierarchyDetailsContainer',
+      heading: 'Business hierarchy',
+      showEditLink: showLink,
+      content: content,
+    })
+  })
+}
+
+const assertArchiveContainerVisible = () => {
+  it('should display the "Archive company" details container', () => {
+    cy.get('[data-test=archive-company-container]').should('be.visible')
+  })
+}
+
+const assertArchivePanelNotVisible = () => {
+  it('should not render the archive panel', () => {
+    cy.get('[data-test=archive-panel]').should('not.exist')
+  })
+}
+
 describe('Companies business details', () => {
   context(
     'when viewing business details for a Dun & Bradstreet GHQ company on the One List not in the UK',
@@ -56,27 +197,10 @@ describe('Companies business details', () => {
         })
       })
 
-      it('should render breadcrumbs', () => {
-        assertBreadcrumbs({
-          Home: urls.dashboard(),
-          Companies: urls.companies.index(),
-          [fixtures.company.oneListCorp.name]: urls.companies.detail(
-            fixtures.company.oneListCorp.id
-          ),
-          'Business details': null,
-        })
-      })
-
-      it('should display the "Business details" heading', () => {
-        cy.get(selectors.localHeader().heading).should(
-          'have.text',
-          'Business details'
-        )
-      })
-
-      it('should display the "Last updated" paragraph', () => {
-        cy.contains('Last updated on: 26 Nov 2017').should('be.visible')
-      })
+      assertBusinessDetailsBreadcrumbs(fixtures.company.oneListCorp)
+      assertArchivePanelNotVisible()
+      assertBusinessDetailsHeading()
+      assertLastUpdatedParagraph('26 Nov 2017')
 
       it('should not display the "Pending Change Request" box', () => {
         cy.contains(
@@ -84,17 +208,8 @@ describe('Companies business details', () => {
         ).should('not.exist')
       })
 
-      it('should display the "Are these business details right?" details summary', () => {
-        cy.get(selectors.companyBusinessDetails().whereDoesInformation).should(
-          'be.visible'
-        )
-      })
-
-      it('should not display the "Unarchive" link', () => {
-        cy.get(selectors.companyBusinessDetails().unarchiveLink).should(
-          'not.exist'
-        )
-      })
+      assertAreDetailsRight()
+      assertUnarchiveLinkNotVisible()
 
       it('should display the "About" details container', () => {
         assertSummaryTable({
@@ -114,13 +229,7 @@ describe('Companies business details', () => {
         })
       })
 
-      it('should display the "Addresses" details container', () => {
-        assertSummaryTable({
-          dataTest: 'addressesDetailsContainer',
-          heading: 'Addresses',
-          showEditLink: false,
-        })
-      })
+      assertAddressContainer(false)
 
       it('should display the address', () => {
         assertAddress({
@@ -134,33 +243,9 @@ describe('Companies business details', () => {
         })
       })
 
-      it('should not display the "DIT region" details container', () => {
-        cy.get(
-          selectors.detailsContainer('regionDetailsContainer').container
-        ).should('not.exist')
-      })
-
-      it('should display the "DIT sector" details container', () => {
-        assertSummaryTable({
-          dataTest: 'sectorDetailsContainer',
-          heading: 'DIT sector',
-          showEditLink: true,
-          content: ['Retail'],
-        })
-      })
-
-      it('should display the "Global Account Manager - One List" details container', () => {
-        assertSummaryTable({
-          dataTest: 'oneListDetailsContainer',
-          heading: 'Global Account Manager – One List',
-          showEditLink: false,
-          content: {
-            'One List tier': 'Tier A - Strategic Account',
-            'Global Account Manager':
-              'Travis GreeneIST - Sector Advisory ServicesLondon',
-          },
-        })
-      })
+      assertRegionContainerNotVisible()
+      assertSectorContainer(true)
+      assertAccountManagerContainer(false)
 
       it('should display the "Business hierarchy" details container heading', () => {
         assertSummaryTable({
@@ -177,15 +262,8 @@ describe('Companies business details', () => {
         })
       })
 
-      it('should not display the "Documents from CDMS" details container', () => {
-        cy.get(
-          selectors.detailsContainer('documentsDetailsContainer').container
-        ).should('not.exist')
-      })
-
-      it('should not display the "Archive company" details container', () => {
-        cy.get('[data-test=archive-company-container]').should('not.exist')
-      })
+      assertCDMSContainerNotVisible()
+      assertArchiveContainerNotVisible()
     }
   )
 
@@ -258,39 +336,12 @@ describe('Companies business details', () => {
         cy.contains('Checking for pending change requests').should('not.exist')
       })
 
-      it('should render breadcrumbs', () => {
-        assertBreadcrumbs({
-          Home: urls.dashboard(),
-          Companies: urls.companies.index(),
-          [fixtures.company.venusLtd.name]: urls.companies.detail(
-            fixtures.company.venusLtd.id
-          ),
-          'Business details': null,
-        })
-      })
-
-      it('should display the "Business details" heading', () => {
-        cy.get(selectors.localHeader().heading).should(
-          'have.text',
-          'Business details'
-        )
-      })
-
-      it('should display the "Last updated" paragraph', () => {
-        cy.contains('Last updated on: 15 Jul 2016').should('be.visible')
-      })
-
-      it('should not display the "Are these business details right?" details summary', () => {
-        cy.get(selectors.companyBusinessDetails().whereDoesInformation).should(
-          'not.exist'
-        )
-      })
-
-      it('should not display the "Unarchive" link', () => {
-        cy.get(selectors.companyBusinessDetails().unarchiveLink).should(
-          'not.exist'
-        )
-      })
+      assertBusinessDetailsBreadcrumbs(fixtures.company.venusLtd)
+      assertArchivePanelNotVisible()
+      assertBusinessDetailsHeading()
+      assertLastUpdatedParagraph('15 Jul 2016')
+      assertAreDetailsRightNotVisible()
+      assertUnarchiveLinkNotVisible()
 
       it('should display the "About" details container', () => {
         assertSummaryTable({
@@ -311,13 +362,7 @@ describe('Companies business details', () => {
         })
       })
 
-      it('should display the "Addresses" details container', () => {
-        assertSummaryTable({
-          dataTest: 'addressesDetailsContainer',
-          heading: 'Addresses',
-          showEditLink: true,
-        })
-      })
+      assertAddressContainer(true)
 
       it('should display the address', () => {
         assertAddress({
@@ -331,52 +376,14 @@ describe('Companies business details', () => {
         })
       })
 
-      it('should display the "DIT region" details container', () => {
-        assertSummaryTable({
-          dataTest: 'regionDetailsContainer',
-          heading: 'DIT region',
-          showEditLink: true,
-          content: ['North West'],
-        })
+      assertRegionContainer(['North West'])
+      assertSectorContainer(true)
+      assertAccountManagerContainer(true)
+      assertHierarchyContainer(true, {
+        [HIERARCHY_STRINGS.manualHierarchyDescription]: null,
+        'Global HQ': 'Archived LtdRemove link',
       })
-
-      it('should display the "DIT sector" details container', () => {
-        assertSummaryTable({
-          dataTest: 'sectorDetailsContainer',
-          heading: 'DIT sector',
-          showEditLink: true,
-          content: ['Retail'],
-        })
-      })
-
-      it('should display the "Global Account Manager - One List" details container', () => {
-        assertSummaryTable({
-          dataTest: 'oneListDetailsContainer',
-          heading: 'Global Account Manager – One List',
-          showEditLink: true,
-          content: {
-            'One List tier': 'Tier A - Strategic Account',
-            'Global Account Manager':
-              'Travis GreeneIST - Sector Advisory ServicesLondon',
-          },
-        })
-      })
-
-      it('should display the "Business hierarchy" details container', () => {
-        assertSummaryTable({
-          dataTest: 'businessHierarchyDetailsContainer',
-          heading: 'Business hierarchy',
-          showEditLink: true,
-          content: {
-            [HIERARCHY_STRINGS.manualHierarchyDescription]: null,
-            'Global HQ': 'Archived LtdRemove link',
-          },
-        })
-      })
-
-      it('should display the "Last updated" paragraph', () => {
-        cy.contains('Last updated on: 15 Jul 2016').should('be.visible')
-      })
+      assertLastUpdatedParagraph('15 Jul 2016')
 
       it('should display the "Documents from CDMS" details container', () => {
         assertSummaryTable({
@@ -387,9 +394,7 @@ describe('Companies business details', () => {
         })
       })
 
-      it('should display the "Archive company" details container', () => {
-        cy.get('[data-test=archive-company-container]').should('be.visible')
-      })
+      assertArchiveContainerVisible()
     }
   )
 
@@ -403,39 +408,12 @@ describe('Companies business details', () => {
         })
       })
 
-      it('should render breadcrumbs', () => {
-        assertBreadcrumbs({
-          Home: urls.dashboard(),
-          Companies: urls.companies.index(),
-          [fixtures.company.dnbCorp.name]: urls.companies.detail(
-            fixtures.company.dnbCorp.id
-          ),
-          'Business details': null,
-        })
-      })
-
-      it('should display the "Business details" heading', () => {
-        cy.get(selectors.localHeader().heading).should(
-          'have.text',
-          'Business details'
-        )
-      })
-
-      it('should display the "Last updated" paragraph', () => {
-        cy.contains('Last updated on: 26 Oct 2018').should('be.visible')
-      })
-
-      it('should display the "Are these business details right?" details summary', () => {
-        cy.get(selectors.companyBusinessDetails().whereDoesInformation).should(
-          'be.visible'
-        )
-      })
-
-      it('should not display the "Unarchive" link', () => {
-        cy.get(selectors.companyBusinessDetails().unarchiveLink).should(
-          'not.exist'
-        )
-      })
+      assertBusinessDetailsBreadcrumbs(fixtures.company.dnbCorp)
+      assertArchivePanelNotVisible()
+      assertBusinessDetailsHeading()
+      assertLastUpdatedParagraph('26 Oct 2018')
+      assertAreDetailsRight()
+      assertUnarchiveLinkNotVisible()
 
       it('should display the "About" details container', () => {
         assertSummaryTable({
@@ -457,13 +435,7 @@ describe('Companies business details', () => {
         })
       })
 
-      it('should display the "Addresses" details container', () => {
-        assertSummaryTable({
-          dataTest: 'addressesDetailsContainer',
-          heading: 'Addresses',
-          showEditLink: false,
-        })
-      })
+      assertAddressContainer(false)
 
       it('should display the address', () => {
         assertAddress({
@@ -472,20 +444,8 @@ describe('Companies business details', () => {
         })
       })
 
-      it('should not display the "DIT region" details container', () => {
-        cy.get(
-          selectors.detailsContainer('regionDetailsContainer').container
-        ).should('not.exist')
-      })
-
-      it('should display the "DIT sector" details container', () => {
-        assertSummaryTable({
-          dataTest: 'sectorDetailsContainer',
-          heading: 'DIT sector',
-          showEditLink: true,
-          content: ['Retail'],
-        })
-      })
+      assertRegionContainerNotVisible()
+      assertSectorContainer(true)
 
       it('should not display the "Global Account Manager - One List" details container', () => {
         cy.get(
@@ -493,27 +453,13 @@ describe('Companies business details', () => {
         ).should('not.exist')
       })
 
-      it('should display the "Business hierarchy" details container', () => {
-        assertSummaryTable({
-          dataTest: 'businessHierarchyDetailsContainer',
-          heading: 'Business hierarchy',
-          showEditLink: false,
-          content: [
-            HIERARCHY_STRINGS.dnbDescription,
-            HIERARCHY_STRINGS.dnbEmpty,
-          ],
-        })
-      })
+      assertHierarchyContainer(false, [
+        HIERARCHY_STRINGS.dnbDescription,
+        HIERARCHY_STRINGS.dnbEmpty,
+      ])
 
-      it('should not display the "Documents from CDMS" details container', () => {
-        cy.get(
-          selectors.detailsContainer('documentsDetailsContainer').container
-        ).should('not.exist')
-      })
-
-      it('should not display the "Archive company" details container', () => {
-        cy.get('[data-test=archive-company-container]').should('not.exist')
-      })
+      assertCDMSContainerNotVisible()
+      assertArchiveContainerNotVisible()
     }
   )
 
@@ -549,33 +495,10 @@ describe('Companies business details', () => {
         )
       })
 
-      it('should render breadcrumbs', () => {
-        assertBreadcrumbs({
-          Home: urls.dashboard(),
-          Companies: urls.companies.index(),
-          [fixtures.company.archivedLtd.name]: urls.companies.detail(
-            fixtures.company.archivedLtd.id
-          ),
-          'Business details': null,
-        })
-      })
-
-      it('should display the "Business details" heading', () => {
-        cy.get(selectors.localHeader().heading).should(
-          'have.text',
-          'Business details'
-        )
-      })
-
-      it('should display the "Last updated" paragraph', () => {
-        cy.contains('Last updated on: 16 Jul 2017').should('be.visible')
-      })
-
-      it('should not display the "Are these business details right?" details summary', () => {
-        cy.get(selectors.companyBusinessDetails().whereDoesInformation).should(
-          'not.exist'
-        )
-      })
+      assertBusinessDetailsBreadcrumbs(fixtures.company.archivedLtd)
+      assertBusinessDetailsHeading()
+      assertLastUpdatedParagraph('16 Jul 2017')
+      assertAreDetailsRightNotVisible()
 
       it('should display the date the company was archived and by whom', () => {
         cy.contains(
@@ -610,13 +533,7 @@ describe('Companies business details', () => {
         })
       })
 
-      it('should display the "Addresses" details container', () => {
-        assertSummaryTable({
-          dataTest: 'addressesDetailsContainer',
-          heading: 'Addresses',
-          showEditLink: false,
-        })
-      })
+      assertAddressContainer(false)
 
       it('should display the address', () => {
         assertAddress({
@@ -625,56 +542,16 @@ describe('Companies business details', () => {
         })
       })
 
-      it('should not display the "DIT region" details container', () => {
-        cy.get(
-          selectors.detailsContainer('regionDetailsContainer').container
-        ).should('not.exist')
+      assertRegionContainerNotVisible()
+      assertSectorContainer(false)
+      assertAccountManagerContainer(false)
+      assertHierarchyContainer(false, {
+        [HIERARCHY_STRINGS.manualHierarchyDescription]: null,
+        'Headquarter type': 'Global HQ',
+        Subsidiaries: '2 subsidiaries',
       })
-
-      it('should display the "DIT sector" details container', () => {
-        assertSummaryTable({
-          dataTest: 'sectorDetailsContainer',
-          heading: 'DIT sector',
-          showEditLink: false,
-          content: ['Retail'],
-        })
-      })
-
-      it('should display the "Global Account Manager - One List" details container', () => {
-        assertSummaryTable({
-          dataTest: 'oneListDetailsContainer',
-          heading: 'Global Account Manager – One List',
-          showEditLink: false,
-          content: {
-            'One List tier': 'Tier A - Strategic Account',
-            'Global Account Manager':
-              'Travis GreeneIST - Sector Advisory ServicesLondon',
-          },
-        })
-      })
-
-      it('should display the "Business hierarchy" details container', () => {
-        assertSummaryTable({
-          dataTest: 'businessHierarchyDetailsContainer',
-          heading: 'Business hierarchy',
-          showEditLink: false,
-          content: {
-            [HIERARCHY_STRINGS.manualHierarchyDescription]: null,
-            'Headquarter type': 'Global HQ',
-            Subsidiaries: '2 subsidiaries',
-          },
-        })
-      })
-
-      it('should not display the "Documents from CDMS" details container', () => {
-        cy.get(
-          selectors.detailsContainer('documentsDetailsContainer').container
-        ).should('not.exist')
-      })
-
-      it('should not display the "Archive company" details container', () => {
-        cy.get('[data-test=archive-company-container]').should('not.exist')
-      })
+      assertCDMSContainerNotVisible()
+      assertArchiveContainerNotVisible()
     }
   )
 
@@ -689,39 +566,12 @@ describe('Companies business details', () => {
         )
       })
 
-      it('should render breadcrumbs', () => {
-        assertBreadcrumbs({
-          Home: urls.dashboard(),
-          Companies: urls.companies.index(),
-          [fixtures.company.minimallyMinimalLtd.name]: urls.companies.detail(
-            fixtures.company.minimallyMinimalLtd.id
-          ),
-          'Business details': null,
-        })
-      })
-
-      it('should display the "Business details" heading', () => {
-        cy.get(selectors.localHeader().heading).should(
-          'have.text',
-          'Business details'
-        )
-      })
-
-      it('should display the "Last updated" paragraph', () => {
-        cy.contains('Last updated on: 11 Dec 2015').should('be.visible')
-      })
-
-      it('should not display the "Are these business details right?" details summary', () => {
-        cy.get(selectors.companyBusinessDetails().whereDoesInformation).should(
-          'not.exist'
-        )
-      })
-
-      it('should not display the "Unarchive" link', () => {
-        cy.get(selectors.companyBusinessDetails().unarchiveLink).should(
-          'not.exist'
-        )
-      })
+      assertBusinessDetailsBreadcrumbs(fixtures.company.minimallyMinimalLtd)
+      assertArchivePanelNotVisible()
+      assertBusinessDetailsHeading()
+      assertLastUpdatedParagraph('11 Dec 2015')
+      assertAreDetailsRightNotVisible()
+      assertUnarchiveLinkNotVisible()
 
       it('should display the "About" details container', () => {
         assertSummaryTable({
@@ -740,13 +590,7 @@ describe('Companies business details', () => {
         })
       })
 
-      it('should display the "Addresses" details container', () => {
-        assertSummaryTable({
-          dataTest: 'addressesDetailsContainer',
-          heading: 'Addresses',
-          showEditLink: true,
-        })
-      })
+      assertAddressContainer(true)
 
       it('should display the address', () => {
         assertAddress({
@@ -755,23 +599,8 @@ describe('Companies business details', () => {
         })
       })
 
-      it('should display the "DIT region" details container', () => {
-        assertSummaryTable({
-          dataTest: 'regionDetailsContainer',
-          heading: 'DIT region',
-          showEditLink: true,
-          content: ['Not set'],
-        })
-      })
-
-      it('should display the "DIT sector" details container', () => {
-        assertSummaryTable({
-          dataTest: 'sectorDetailsContainer',
-          heading: 'DIT sector',
-          showEditLink: true,
-          content: ['Advanced Engineering'],
-        })
-      })
+      assertRegionContainer(['Not set'])
+      assertSectorContainer(true, ['Advanced Engineering'])
 
       it('should not display the "Global Account Manager - One List" details container heading', () => {
         cy.get(
@@ -779,27 +608,12 @@ describe('Companies business details', () => {
         ).should('not.exist')
       })
 
-      it('should display the "Business hierarchy" details container', () => {
-        assertSummaryTable({
-          dataTest: 'businessHierarchyDetailsContainer',
-          heading: 'Business hierarchy',
-          showEditLink: true,
-          content: {
-            [HIERARCHY_STRINGS.manualHierarchyDescription]: null,
-            'Global HQ': 'NoneLink to the Global HQ',
-          },
-        })
+      assertHierarchyContainer(true, {
+        [HIERARCHY_STRINGS.manualHierarchyDescription]: null,
+        'Global HQ': 'NoneLink to the Global HQ',
       })
-
-      it('should not display the "Documents from CDMS" details container', () => {
-        cy.get(
-          selectors.detailsContainer('documentsDetailsContainer').container
-        ).should('not.exist')
-      })
-
-      it('should display the "Archive company" details container', () => {
-        cy.get('[data-test=archive-company-container]').should('be.visible')
-      })
+      assertCDMSContainerNotVisible()
+      assertArchiveContainerVisible()
     }
   )
 })

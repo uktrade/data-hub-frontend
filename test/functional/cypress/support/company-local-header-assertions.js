@@ -84,6 +84,10 @@ const assertCoreTeam = (paragraphNumber, advisersUrl) => {
     .should('have.attr', 'href', advisersUrl)
 }
 
+const assertArchivePanelNotVisible = () => {
+  cy.get('[data-test-archive-panel]').should('not.exist')
+}
+
 module.exports = {
   assertCompanyName,
   assertCompanyAddress,
@@ -94,4 +98,5 @@ module.exports = {
   assertViewFullBusinessDetails,
   assertOneListTierA,
   assertCoreTeam,
+  assertArchivePanelNotVisible,
 }

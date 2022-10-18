@@ -71,14 +71,15 @@ const CompanyBusinessDetails = ({
         <Link href={urls.companyEditHistory}>Edit history page</Link>.
       </div>
       {lastUpdated && <div>Last updated on: {format(lastUpdated)}</div>}
-      <ArchivePanel
-        isArchived={isArchived}
-        archivedBy={businessDetails.archived_by}
-        archivedOn={businessDetails.archived_on}
-        archiveReason={businessDetails.archived_reason}
-        unarchiveUrl={urls.companyUnarchive}
-        type="company"
-      />
+      {isArchived && (
+        <ArchivePanel
+          archivedBy={businessDetails.archived_by}
+          archivedOn={businessDetails.archived_on}
+          archiveReason={businessDetails.archived_reason}
+          unarchiveUrl={urls.companyUnarchive}
+          type="company"
+        />
+      )}
       <Task.Status
         name={DNB__CHECK_PENDING_REQUEST}
         id={CHECK_PENDING_REQUEST_ID}

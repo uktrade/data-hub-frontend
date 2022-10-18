@@ -200,14 +200,15 @@ const CompanyLocalHeader = ({
         </p>
       </LocalHeader>
 
-      <ArchivePanel
-        isArchived={company.archived}
-        archivedBy={company.archived_by}
-        archivedOn={company.archived_on}
-        archiveReason={company.archived_reason}
-        unarchiveUrl={urls.companies.unarchive(company.id)}
-        type="company"
-      />
+      {company.archived && (
+        <ArchivePanel
+          archivedBy={company.archived_by}
+          archivedOn={company.archived_on}
+          archiveReason={company.archived_reason}
+          unarchiveUrl={urls.companies.unarchive(company.id)}
+          type="company"
+        />
+      )}
 
       {company.pending_dnb_investigation && (
         <StyledMain data-test="investigationMessage">
