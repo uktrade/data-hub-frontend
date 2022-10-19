@@ -2,8 +2,6 @@
 
 import React from 'react'
 import { Details } from 'govuk-react'
-import GridRow from '@govuk-react/grid-row'
-import GridCol from '@govuk-react/grid-col'
 import PropTypes from 'prop-types'
 
 import {
@@ -11,6 +9,7 @@ import {
   FieldInput,
   FieldRadios,
   FieldAddress,
+  FormLayout,
 } from '../../../../../client/components'
 
 import {
@@ -52,56 +51,54 @@ const telephoneValidator = (
 
 function CompanyNotFoundStep({ organisationTypes, country, features }) {
   return (
-    <GridRow>
-      <GridCol setWidth="three-quarters">
-        <Step name="unhappy">
-          <Details summary="Why am I seeing this?">
-            The company you want to add to Data Hub cannot be found in the
-            external databases Data Hub checks. You will need to provide
-            information about the company, so the company can be added to Data
-            Hub while the Data Hub support team checks with the company the
-            information you have provided.
-          </Details>
+    <FormLayout setWidth="three-quarters">
+      <Step name="unhappy">
+        <Details summary="Why am I seeing this?">
+          The company you want to add to Data Hub cannot be found in the
+          external databases Data Hub checks. You will need to provide
+          information about the company, so the company can be added to Data Hub
+          while the Data Hub support team checks with the company the
+          information you have provided.
+        </Details>
 
-          <FieldRadios
-            name="business_type"
-            label="Organisation type"
-            required="Select organisation type"
-            options={organisationTypes}
-          />
+        <FieldRadios
+          name="business_type"
+          label="Organisation type"
+          required="Select organisation type"
+          options={organisationTypes}
+        />
 
-          <FieldInput
-            label="Name of company"
-            name="name"
-            type="text"
-            validate={nameValidator}
-          />
+        <FieldInput
+          label="Name of company"
+          name="name"
+          type="text"
+          validate={nameValidator}
+        />
 
-          <FieldInput
-            label="Company's website"
-            name="website"
-            type="url"
-            validate={websiteValidator}
-          />
+        <FieldInput
+          label="Company's website"
+          name="website"
+          type="url"
+          validate={websiteValidator}
+        />
 
-          <FieldInput
-            label="Company's telephone number"
-            name="telephone_number"
-            type="tel"
-            validate={telephoneValidator}
-          />
+        <FieldInput
+          label="Company's telephone number"
+          name="telephone_number"
+          type="tel"
+          validate={telephoneValidator}
+        />
 
-          <FieldAddress
-            country={{
-              id: country.key,
-              name: country.label,
-            }}
-            apiEndpoint="/api/postcodelookup"
-            features={features}
-          />
-        </Step>
-      </GridCol>
-    </GridRow>
+        <FieldAddress
+          country={{
+            id: country.key,
+            name: country.label,
+          }}
+          apiEndpoint="/api/postcodelookup"
+          features={features}
+        />
+      </Step>
+    </FormLayout>
   )
 }
 
