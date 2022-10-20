@@ -22,6 +22,7 @@ import useEntitySearch from '../../../EntityList/useEntitySearch'
 import useDnbSearch from '../../../EntityList/useDnbSearch'
 import FormActions from '../FormActions'
 import EntityList from '../../../EntityList'
+import FormLayout from '../../../Layout/FormLayout'
 
 const COMPANY_NAME_MIN_LENGTH = 2
 const COMPANY_NAME_MAX_LENGTH = 30
@@ -80,91 +81,98 @@ const FieldDnbCompany = ({
   useEffect(() => setIsLoading(searching), [searching])
 
   return (
-    <FieldWrapper {...{ name, label, legend, hint }}>
-      {country && (
-        <FieldUneditable
-          legend="Country"
-          name="dnbCountry"
-          onChangeClick={goBack}
-        >
-          {country}
-        </FieldUneditable>
-      )}
+    <FormLayout setWidth="three-quarters">
+      <FieldWrapper {...{ name, label, legend, hint }}>
+        {country && (
+          <FieldUneditable
+            legend="Country"
+            name="dnbCountry"
+            onChangeClick={goBack}
+          >
+            {country}
+          </FieldUneditable>
+        )}
 
-      <FieldInput
-        label="Company name"
-        name="dnbCompanyName"
-        type="search"
-        required="Enter company name"
-        validate={[
-          validateMinLength(COMPANY_NAME_MIN_LENGTH),
-          validateMaxLength(COMPANY_NAME_MAX_LENGTH),
-        ]}
-      />
+        <FieldInput
+          label="Company name"
+          name="dnbCompanyName"
+          type="search"
+          required="Enter company name"
+          validate={[
+            validateMinLength(COMPANY_NAME_MIN_LENGTH),
+            validateMaxLength(COMPANY_NAME_MAX_LENGTH),
+          ]}
+        />
 
-      <FieldInput
-        label="Company postcode (optional)"
-        name="dnbPostalCode"
-        style={{ width: WIDTHS['one-third'] }}
-        type="search"
-      />
+        <FieldInput
+          label="Company postcode (optional)"
+          name="dnbPostalCode"
+          style={{ width: WIDTHS['one-third'] }}
+          type="search"
+        />
 
-      <FormActions>
-        <Button icon={<Search />} onClick={onSearchClick}>
-          Find company
-        </Button>
-      </FormActions>
+        <FormActions>
+          <Button icon={<Search />} onClick={onSearchClick}>
+            Find company
+          </Button>
+        </FormActions>
 
-      {searched && (
-        <>
-          {entities.length > 0 && (
-            <>
-              {searchResultsMessage && (
-                <StatusMessage>{searchResultsMessage}</StatusMessage>
-              )}
+        {searched && (
+          <>
+            {entities.length > 0 && (
+              <>
+                {searchResultsMessage && (
+                  <StatusMessage>{searchResultsMessage}</StatusMessage>
+                )}
 
-              <EntityList entities={entities} entityRenderer={entityRenderer} />
-            </>
-          )}
-
-          {!error && entities.length === 0 && (
-            <StatusMessage>
-              No match found. Try one of the options below.
-            </StatusMessage>
-          )}
-
-          {error && (
-            <StatusMessage>
-              Error occurred while searching for company.
-            </StatusMessage>
-          )}
-
-          <Details summary="I can't find what I'm looking for">
-            <Paragraph>Try:</Paragraph>
-
-            <StyledUnorderedList>
-              <ListItem>checking or removing the postcode</ListItem>
-              <ListItem>
-                removing &quot;limited&quot; or &quot;ltd&quot;
-              </ListItem>
-              <ListItem>checking for spelling errors</ListItem>
-              {country && (
-                <ListItem>checking if the right country was selected</ListItem>
-              )}
-              <ListItem>
-                check you&apos;re using the company&apos;s registered name
-              </ListItem>
-            </StyledUnorderedList>
-
-            {onCannotFind && (
-              <ButtonLink onClick={onCannotFind}>
-                I still can&apos;t find what I&apos;m looking for
-              </ButtonLink>
+                <EntityList
+                  entities={entities}
+                  entityRenderer={entityRenderer}
+                />
+              </>
             )}
-          </Details>
-        </>
-      )}
-    </FieldWrapper>
+
+            {!error && entities.length === 0 && (
+              <StatusMessage>
+                No match found. Try one of the options below.
+              </StatusMessage>
+            )}
+
+            {error && (
+              <StatusMessage>
+                Error occurred while searching for company.
+              </StatusMessage>
+            )}
+
+            <Details summary="I can't find what I'm looking for">
+              <Paragraph>Try:</Paragraph>
+
+              <StyledUnorderedList>
+                <ListItem>checking or removing the postcode</ListItem>
+                <ListItem>
+                  removing &quot;limited&quot; or &quot;ltd&quot;
+                </ListItem>
+                <ListItem>checking for spelling errors</ListItem>
+                {country && (
+                  <ListItem>
+                    checking if the right country was selected
+                  </ListItem>
+                )}
+                <ListItem>
+                  check you&apos;re using the company&apos;s registered name
+                </ListItem>
+              </StyledUnorderedList>
+
+              {onCannotFind && (
+                <ButtonLink onClick={onCannotFind}>
+                  I still can&apos;t find what I&apos;m looking for
+                </ButtonLink>
+              )}
+            </Details>
+          </>
+        )}
+      </FieldWrapper>
+    </FormLayout>
   )
 }
 

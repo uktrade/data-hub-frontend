@@ -139,20 +139,13 @@ describe('Match a company', () => {
     it('should render both search input fields and a button', () => {
       cy.contains('Search third party supplier for business details')
         .and('match', 'h2')
-        .next()
-        .children()
         .first()
-        .should('have.text', 'Company name')
-        .find('input')
-        .should('have.attr', 'type', 'search')
-        .parent()
-        .parent()
-        .next()
+      cy.get('[data-test="field-dnbCompanyName"]').should(
+        'have.text',
+        'Company name'
+      )
+      cy.get('[data-test="field-dnbPostalCode"]')
         .should('have.text', 'Company postcode (optional)')
-        .find('input')
-        .should('have.attr', 'type', 'search')
-        .parent()
-        .parent()
         .next()
         .contains('Find company')
         .and('match', 'button')
