@@ -10,9 +10,9 @@ import {
   FLASH_MESSAGE__WRITE_TO_SESSION,
   FLASH_MESSAGE__GET_FROM_SESSION,
   FLASH_MESSAGE__ADD_TO_STATE,
-  IS_BANNER_DISMISSED__SAVE_TO_LOCALSTORAGE,
-  IS_BANNER_DISMISSED__GET_FROM_LOCALSTORAGE,
-  IS_BANNER_DISMISSED__ADD_TO_STATE,
+  BANNER_DISMISSED__WRITE_TO_LOCALSTORAGE,
+  BANNER_DISMISSED__READ_FROM_LOCALSTORAGE,
+  BANNER_DISMISSED__UPDATE_STATE,
 } from '../../actions'
 
 /* Saga to write flashmessages to the session storage.
@@ -51,7 +51,7 @@ export function* readFlashMesages() {
 export function* writeIsBannerDismissedToLocalStorage() {
   while (true) {
     const { isBannerDismissed } = yield take(
-      IS_BANNER_DISMISSED__SAVE_TO_LOCALSTORAGE
+      BANNER_DISMISSED__WRITE_TO_LOCALSTORAGE
     )
     saveToLocalStorage(isBannerDismissed)
   }
@@ -60,11 +60,11 @@ export function* writeIsBannerDismissedToLocalStorage() {
 /* Saga to read localstorage state and add to redux state. */
 export function* readIsBannerDismissedFromLocalStorage() {
   while (true) {
-    yield take(IS_BANNER_DISMISSED__GET_FROM_LOCALSTORAGE)
-    const isBannerDismissedState = getFromLocalStorage()
+    yield take(BANNER_DISMISSED__READ_FROM_LOCALSTORAGE)
+    const isBannerDismissed = getFromLocalStorage()
     yield put({
-      type: IS_BANNER_DISMISSED__ADD_TO_STATE,
-      isBannerDismissedState,
+      type: BANNER_DISMISSED__UPDATE_STATE,
+      isBannerDismissed,
     })
   }
 }
