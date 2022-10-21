@@ -61,10 +61,7 @@ export const searchCompany = ({ searchTerm }) =>
       results: data.results.map(transformCompanyToListItem),
     }))
 
-const getAdviser = () =>
-  apiProxyAxios
-    .get('/whoami/')
-    .then(({ data }) => data)
+const getAdviser = () => apiProxyAxios.get('/whoami/').then(({ data }) => data)
 
 export const getInitialFormValues = ({ fetchFromStorage, contact, company }) =>
   fetchFromStorage
@@ -101,33 +98,32 @@ const fetchValuesFromAPI = () =>
     getMetadataOptions(urls.metadata.investmentInvolvement()),
     getMetadataOptions(urls.metadata.investmentSpecificProgramme()),
     getMetadataOptions(urls.metadata.investmentBusinessActivity()),
-  ])
-    .then(
-      ([
-        adviser,
-        advisers,
-        sectors,
-        fdiTypes,
-        investmentTypes,
-        referralSourceActivity,
-        referralSourceMarketing,
-        referralSourceWebsite,
-        investmentInvestorType,
-        investmentInvolvement,
-        investmentSpecificProgramme,
-        investmentBusinessActivity,
-      ]) => ({
-        adviser,
-        advisers,
-        sectors,
-        fdiTypes,
-        investmentTypes: orderInvestmentTypes(investmentTypes),
-        referralSourceActivity,
-        referralSourceMarketing,
-        referralSourceWebsite,
-        investmentInvestorType,
-        investmentInvolvement,
-        investmentSpecificProgramme,
-        investmentBusinessActivity,
-      })
-    )
+  ]).then(
+    ([
+      adviser,
+      advisers,
+      sectors,
+      fdiTypes,
+      investmentTypes,
+      referralSourceActivity,
+      referralSourceMarketing,
+      referralSourceWebsite,
+      investmentInvestorType,
+      investmentInvolvement,
+      investmentSpecificProgramme,
+      investmentBusinessActivity,
+    ]) => ({
+      adviser,
+      advisers,
+      sectors,
+      fdiTypes,
+      investmentTypes: orderInvestmentTypes(investmentTypes),
+      referralSourceActivity,
+      referralSourceMarketing,
+      referralSourceWebsite,
+      investmentInvestorType,
+      investmentInvolvement,
+      investmentSpecificProgramme,
+      investmentBusinessActivity,
+    })
+  )
