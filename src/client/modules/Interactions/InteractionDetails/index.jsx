@@ -4,6 +4,7 @@ import { Button, Details, Link } from 'govuk-react'
 import { BLACK, GREEN, GREY_3, WHITE } from 'govuk-colours'
 
 import InteractionResource from '../../../components/Resource/Interaction'
+import ArchivePanel from '../../../components/ArchivePanel'
 import { NewWindowLink, SummaryTable } from '../../../components'
 import urls from '../../../../lib/urls'
 import { currencyGBP } from '../../../utils/number-utils'
@@ -31,6 +32,15 @@ const InteractionDetails = ({ interactionId, archivedDocumentPath }) => {
     <InteractionResource id={interactionId}>
       {(interaction) => (
         <>
+          {interaction.archived && (
+            <ArchivePanel
+              archivedBy={interaction.archivedBy}
+              archivedOn={interaction.archivedOn}
+              archiveReason={interaction.archivedReason}
+              type={transformKind(interaction.kind)}
+              archiveMessage={'cancelled'}
+            />
+          )}
           <SummaryTable data-test="interaction-details-table">
             {transformCompany(interaction.company, interaction.companies)}
             <SummaryTable.Row
