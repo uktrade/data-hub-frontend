@@ -78,6 +78,6 @@ const getInteractions = ({
       company_one_list_group_tier,
       dit_participants__team,
     })
-    .then(({ data }) => transformResponseToCollection(data), handleError)
+    .then(({ data }) => transformResponseToCollection(data))
 
 export { getInteractions, getInteractionsMetadata }

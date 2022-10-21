@@ -21,13 +21,10 @@ export const getProjects = ({ limit = 10, page, companyId, ...rest }) => {
       }),
       ...transformedRest,
     })
-    .then(
-      ({ data }) => ({
-        count: data.count,
-        results: data.results.map(transformInvestmentProjectToListItem),
-      }),
-      handleError
-    )
+    .then(({ data }) => ({
+      count: data.count,
+      results: data.results.map(transformInvestmentProjectToListItem),
+    }))
 }
 
 /**
