@@ -34,7 +34,6 @@ const getEvents = ({
       event_type,
     })
     .then(({ data }) => transformResponseToEventCollection(data))
-    .catch(handleError)
 
 const getEventsMetadata = () =>
   Promise.all([

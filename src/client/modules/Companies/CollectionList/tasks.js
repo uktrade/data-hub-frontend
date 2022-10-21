@@ -53,7 +53,6 @@ const getCompanies = ({
       sortby,
     })
     .then(({ data }) => transformResponseToCompanyCollection(data))
-    .catch(handleError)
 }
 
 /**

@@ -31,8 +31,7 @@ export const getContacts = ({
       offset: limit * (page - 1),
     })
     .then(
-      ({ data }) => transformResponseToCollection(companyId, data),
-      handleError
+      ({ data }) => transformResponseToCollection(companyId, data)
     )
 
 export const getContactsMetadata = () =>

@@ -41,7 +41,7 @@ export const getOrders = ({
       delivery_date_after,
       delivery_date_before,
     })
-    .then(({ data }) => transformResponseToCollection(data), handleError)
+    .then(({ data }) => transformResponseToCollection(data))
 
 export const getOrdersMetadata = () =>
   Promise.all([

@@ -5,7 +5,6 @@ import urls from '../../../../../lib/urls'
 import { CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID } from './state'
 import { apiProxyAxios } from '../../../../../client/components/Task/utils'
 
-const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 const orderInvestmentTypes = ([first, ...rest]) => [...rest, first]
 
 export const openContactForm = ({ values, url }) => {
@@ -17,7 +16,7 @@ export const openContactForm = ({ values, url }) => {
 }
 
 export const createInvestmentProject = (formValues) =>
-  apiProxyAxios.post('/v3/investment', formValues).catch(handleError)
+  apiProxyAxios.post('/v3/investment', formValues)
 
 export const getCompanyInvestmentsCount = (companyId) =>
   apiProxyAxios
@@ -29,7 +28,6 @@ export const getCompanyInvestmentsCount = (companyId) =>
     .then(({ data }) => ({
       count: data.count,
     }))
-    .catch(handleError)
 
 const getAdvisers = () =>
   apiProxyAxios
@@ -48,7 +46,6 @@ const getAdvisers = () =>
           value: id,
         }))
     )
-    .catch(handleError)
 
 export const searchCompany = ({ searchTerm }) =>
   apiProxyAxios
@@ -63,13 +60,11 @@ export const searchCompany = ({ searchTerm }) =>
       count: data.count,
       results: data.results.map(transformCompanyToListItem),
     }))
-    .catch(handleError)
 
 const getAdviser = () =>
   apiProxyAxios
     .get('/whoami/')
     .then(({ data }) => data)
-    .catch(handleError)
 
 export const getInitialFormValues = ({ fetchFromStorage, contact, company }) =>
   fetchFromStorage
@@ -136,4 +131,3 @@ const fetchValuesFromAPI = () =>
         investmentBusinessActivity,
       })
     )
-    .catch(handleError)
