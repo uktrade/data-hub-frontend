@@ -35,23 +35,30 @@ const ArchivePanel = ({
   unarchiveUrl,
   onClick = null,
   type,
+  archiveMessage = 'archived',
 }) => {
   return (
     <StyledMain data-test="archive-panel">
       <StatusMessage>
         <StyledMessage data-test="archive-message">
           {archivedBy
-            ? `This ${type} was archived on ${format(archivedOn)} by ${
-                archivedBy.first_name
-              } ${archivedBy.last_name}.`
+            ? `This ${type} was ${archiveMessage} on ${format(archivedOn)} by ${
+                archivedBy.first_name || archivedBy.firstName
+              } ${archivedBy.last_name || archivedBy.lastName}.`
             : `This ${type} was automatically archived on ${format(
                 archivedOn
               )}.`}
         </StyledMessage>
         <StyledReason data-test="archive-reason">{`Reason: ${archiveReason}`}</StyledReason>
-        <Link data-test="unarchive-link" onClick={onClick} href={unarchiveUrl}>
-          Unarchive
-        </Link>
+        {unarchiveUrl && (
+          <Link
+            data-test="unarchive-link"
+            onClick={onClick}
+            href={unarchiveUrl}
+          >
+            Unarchive
+          </Link>
+        )}
       </StatusMessage>
     </StyledMain>
   )
@@ -73,7 +80,7 @@ ArchivePanel.propTypes = {
   /**
    * The URL to unarchive the record.
    */
-  unarchiveUrl: PropTypes.string.isRequired,
+  unarchiveUrl: PropTypes.string,
   /**
    * This is used when the unarchive link needs to contain an `onClick` event (such as displaying a flash message).
    */
