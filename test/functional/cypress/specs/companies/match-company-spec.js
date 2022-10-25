@@ -144,8 +144,19 @@ describe('Match a company', () => {
         'have.text',
         'Company name'
       )
-      cy.get('[data-test="field-dnbPostalCode"]')
-        .should('have.text', 'Company postcode (optional)')
+      cy.get('[data-test="dnb-company-name-input"]').should(
+        'have.attr',
+        'type',
+        'search'
+      )
+      cy.get('[data-test="field-dnbPostalCode"]').should(
+        'have.text',
+        'Company postcode (optional)'
+      )
+      cy.get('[data-test="dnb-postal-code-input"]')
+        .should('have.attr', 'type', 'search')
+        .parent()
+        .parent()
         .next()
         .contains('Find company')
         .and('match', 'button')
