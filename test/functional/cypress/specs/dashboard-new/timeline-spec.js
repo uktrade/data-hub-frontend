@@ -15,8 +15,11 @@ describe('Dashboard timeline', () => {
     }).as('apiRequest')
     cy.visit('/')
     cy.wait('@apiRequest')
-    cy.get('[data-test="tablist"] span:first-child button').click()
-    cy.visit('/')
+
+    // If the user is an ITA (as in these tests) the UI redirects
+    // the user from / to /my-pipeline. Therefore, we have to select the
+    // "Investment projects" tab before testing
+    cy.get('[data-test="tablist"]').contains('Investment projects').click()
   })
 
   after(() => {
