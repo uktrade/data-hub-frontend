@@ -37,47 +37,47 @@ function EditCompanyForm({
 
   // TODO: Support nested form values to avoid transformation
   return (
-    <FormLayout setWidth="three-quarters">
-      <Form
-        id="edit-company-form"
-        submissionTaskName="Edit company"
-        analyticsFormName="edit-company-form"
-        redirectTo={() => urls.companies.businessDetails(company.id)}
-        flashMessage={(result) => {
-          if (
-            result.company?.duns_number ||
-            result.dnbChangeRequest?.duns_number
-          ) {
-            return [
-              'Change requested.',
-              'Thanks for keeping Data Hub running smoothly.',
-            ]
-          } else {
-            return 'Company record updated'
-          }
-        }}
-        submitButtonLabel="Submit"
-        cancelButtonLabel="Return without saving"
-        cancelRedirectTo={() => urls.companies.businessDetails(company.id)}
-        transformPayload={(values) => ({
-          company,
-          csrfToken,
-          values,
-        })}
-        initialValues={{
-          ...formInitialValues,
+    <Form
+      id="edit-company-form"
+      submissionTaskName="Edit company"
+      analyticsFormName="edit-company-form"
+      redirectTo={() => urls.companies.businessDetails(company.id)}
+      flashMessage={(result) => {
+        if (
+          result.company?.duns_number ||
+          result.dnbChangeRequest?.duns_number
+        ) {
+          return [
+            'Change requested.',
+            'Thanks for keeping Data Hub running smoothly.',
+          ]
+        } else {
+          return 'Company record updated'
+        }
+      }}
+      submitButtonLabel="Submit"
+      cancelButtonLabel="Return without saving"
+      cancelRedirectTo={() => urls.companies.businessDetails(company.id)}
+      transformPayload={(values) => ({
+        company,
+        csrfToken,
+        values,
+      })}
+      initialValues={{
+        ...formInitialValues,
+        areaUS: areaUS(formInitialValues?.address?.area),
+        areaCanada: areaCanada(formInitialValues?.address?.area),
+        address: {
+          ...formInitialValues.address,
           areaUS: areaUS(formInitialValues?.address?.area),
           areaCanada: areaCanada(formInitialValues?.address?.area),
-          address: {
-            ...formInitialValues.address,
-            areaUS: areaUS(formInitialValues?.address?.area),
-            areaCanada: areaCanada(formInitialValues?.address?.area),
-          },
-        }}
-      >
-        {() => {
-          return (
-            <>
+        },
+      }}
+    >
+      {() => {
+        return (
+          <>
+            <FormLayout setWidth="three-quarters">
               {company.duns_number ? (
                 <CompanyMatched
                   company={company}
@@ -101,11 +101,11 @@ function EditCompanyForm({
                   features={features}
                 />
               )}
-            </>
-          )
-        }}
-      </Form>
-    </FormLayout>
+            </FormLayout>
+          </>
+        )
+      }}
+    </Form>
   )
 }
 
