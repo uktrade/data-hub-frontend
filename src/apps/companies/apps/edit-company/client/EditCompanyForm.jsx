@@ -5,6 +5,8 @@ import CompanyUnmatched from './CompanyUnmatched'
 import Form from '../../../../../client/components/Form'
 import { UNITED_STATES_ID, CANADA_ID } from '../../../../../common/constants'
 import urls from '../../../../../lib/urls'
+import { FormLayout } from '../../../../../client/components'
+import { FormLayout } from '../../../../../client/components'
 
 function EditCompanyForm({
   csrfToken,
@@ -35,73 +37,75 @@ function EditCompanyForm({
 
   // TODO: Support nested form values to avoid transformation
   return (
-    <Form
-      id="edit-company-form"
-      submissionTaskName="Edit company"
-      analyticsFormName="edit-company-form"
-      redirectTo={() => urls.companies.businessDetails(company.id)}
-      flashMessage={(result) => {
-        if (
-          result.company?.duns_number ||
-          result.dnbChangeRequest?.duns_number
-        ) {
-          return [
-            'Change requested.',
-            'Thanks for keeping Data Hub running smoothly.',
-          ]
-        } else {
-          return 'Company record updated'
-        }
-      }}
-      submitButtonLabel="Submit"
-      cancelButtonLabel="Return without saving"
-      cancelRedirectTo={() => urls.companies.businessDetails(company.id)}
-      transformPayload={(values) => ({
-        company,
-        csrfToken,
-        values,
-      })}
-      initialValues={{
-        ...formInitialValues,
-        areaUS: areaUS(formInitialValues?.address?.area),
-        areaCanada: areaCanada(formInitialValues?.address?.area),
-        address: {
-          ...formInitialValues.address,
+    <FormLayout setWidth="three-quarters">
+      <Form
+        id="edit-company-form"
+        submissionTaskName="Edit company"
+        analyticsFormName="edit-company-form"
+        redirectTo={() => urls.companies.businessDetails(company.id)}
+        flashMessage={(result) => {
+          if (
+            result.company?.duns_number ||
+            result.dnbChangeRequest?.duns_number
+          ) {
+            return [
+              'Change requested.',
+              'Thanks for keeping Data Hub running smoothly.',
+            ]
+          } else {
+            return 'Company record updated'
+          }
+        }}
+        submitButtonLabel="Submit"
+        cancelButtonLabel="Return without saving"
+        cancelRedirectTo={() => urls.companies.businessDetails(company.id)}
+        transformPayload={(values) => ({
+          company,
+          csrfToken,
+          values,
+        })}
+        initialValues={{
+          ...formInitialValues,
           areaUS: areaUS(formInitialValues?.address?.area),
           areaCanada: areaCanada(formInitialValues?.address?.area),
-        },
-      }}
-    >
-      {() => {
-        return (
-          <>
-            {company.duns_number ? (
-              <CompanyMatched
-                company={company}
-                isOnOneList={isOnOneList}
-                regions={regions}
-                headquarterTypes={headquarterTypes}
-                oneListEmail={oneListEmail}
-                sectors={sectors}
-                features={features}
-              />
-            ) : (
-              <CompanyUnmatched
-                company={company}
-                isOnOneList={isOnOneList}
-                regions={regions}
-                employeeRanges={employeeRanges}
-                headquarterTypes={headquarterTypes}
-                oneListEmail={oneListEmail}
-                sectors={sectors}
-                turnoverRanges={turnoverRanges}
-                features={features}
-              />
-            )}
-          </>
-        )
-      }}
-    </Form>
+          address: {
+            ...formInitialValues.address,
+            areaUS: areaUS(formInitialValues?.address?.area),
+            areaCanada: areaCanada(formInitialValues?.address?.area),
+          },
+        }}
+      >
+        {() => {
+          return (
+            <>
+              {company.duns_number ? (
+                <CompanyMatched
+                  company={company}
+                  isOnOneList={isOnOneList}
+                  regions={regions}
+                  headquarterTypes={headquarterTypes}
+                  oneListEmail={oneListEmail}
+                  sectors={sectors}
+                  features={features}
+                />
+              ) : (
+                <CompanyUnmatched
+                  company={company}
+                  isOnOneList={isOnOneList}
+                  regions={regions}
+                  employeeRanges={employeeRanges}
+                  headquarterTypes={headquarterTypes}
+                  oneListEmail={oneListEmail}
+                  sectors={sectors}
+                  turnoverRanges={turnoverRanges}
+                  features={features}
+                />
+              )}
+            </>
+          )
+        }}
+      </Form>
+    </FormLayout>
   )
 }
 
