@@ -566,6 +566,7 @@ app.post('/whoami', user.resetWhoami)
 
 // Help centre endpoint
 app.get('/help-centre/announcement', helpCentre.announcement)
+app.get('/help-centre/feed', helpCentre.feed)
 
 // Zendesk tickets endpoint
 app.post('/zendesk/tickets', zendesk.tickets)
