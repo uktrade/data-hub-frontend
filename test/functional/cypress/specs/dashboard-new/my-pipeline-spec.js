@@ -13,6 +13,7 @@ describe('Dashboard', () => {
       cy.get('[data-test="dashboard-tabs"]')
         .should('exist')
         .find('[data-test="tablist"]')
+        .eq(0)
         .should('exist')
         .children()
         .should('have.length', 3)

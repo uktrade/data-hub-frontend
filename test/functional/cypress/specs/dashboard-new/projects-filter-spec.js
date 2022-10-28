@@ -58,6 +58,11 @@ describe('Dashboard - my projects list filters', () => {
       }).as('apiRequest')
       cy.visit('/')
       cy.wait('@apiRequest')
+
+      // If the user is an ITA (as in these tests) the UI redirects
+      // the user from / to /my-pipeline. Therefore, we have to select the
+      // "Investment projects" tab before testing
+      cy.get('[data-test="tablist"]').contains('Investment projects').click()
     })
 
     it('should display "No investment projects"', () => {
@@ -70,7 +75,6 @@ describe('Dashboard - my projects list filters', () => {
       )
     })
   })
-
   context('Dashboard filter options', () => {
     it('should render the stage options', () => {
       cy.get('[data-test="stage-select"] option').then((stageOptions) => {
@@ -87,7 +91,6 @@ describe('Dashboard - my projects list filters', () => {
         ])
       })
     })
-
     it('should render the status options', () => {
       cy.get('[data-test="status-select"] option').then((statusOptions) => {
         expect(transformOptions(statusOptions)).to.deep.eq([
@@ -100,7 +103,6 @@ describe('Dashboard - my projects list filters', () => {
         ])
       })
     })
-
     it('should render the land date options', () => {
       const financialYearStart = getFinancialYearStart(new Date())
       cy.get('[data-test="land-date-select"] option').then(
@@ -129,7 +131,6 @@ describe('Dashboard - my projects list filters', () => {
         }
       )
     })
-
     it('should render the sort options', () => {
       cy.get('[data-test="sort-select"] option').then((sortOptions) => {
         expect(transformOptions(sortOptions)).to.deep.eq([
@@ -151,8 +152,12 @@ describe('Dashboard - my projects list filters', () => {
       )
       cy.visit('/')
       cy.wait('@apiRequest')
-    })
 
+      // If the user is an ITA (as in these tests) the UI redirects
+      // the user from / to /my-pipeline. Therefore, we have to select the
+      // "Investment projects" tab before testing
+      cy.get('[data-test="tablist"]').contains('Investment projects').click()
+    })
     it('should filter by stage', () => {
       cy.get('[data-test="stage-select"] select').select('Prospect')
       cy.wait('@apiRequest')
@@ -161,7 +166,6 @@ describe('Dashboard - my projects list filters', () => {
         stage: prospectStageId,
       })
     })
-
     it('should filter by status', () => {
       cy.get('[data-test="status-select"] select').select('Ongoing')
       cy.wait('@apiRequest')
@@ -170,7 +174,6 @@ describe('Dashboard - my projects list filters', () => {
         status: ongoingStatusId,
       })
     })
-
     it('should filter by land date', () => {
       cy.wait('@apiRequest')
       const financialYearStart = getFinancialYearStart(new Date()).toString()
@@ -189,6 +192,11 @@ describe('Dashboard - my projects list filters', () => {
       )
       cy.visit('/')
       cy.wait('@apiRequest')
+
+      // If the user is an ITA (as in these tests) the UI redirects
+      // the user from / to /my-pipeline. Therefore, we have to select the
+      // "Investment projects" tab before testing
+      cy.get('[data-test="tablist"]').contains('Investment projects').click()
     })
 
     it('should persist filter by stage', () => {
@@ -196,6 +204,12 @@ describe('Dashboard - my projects list filters', () => {
       cy.wait('@apiRequest')
       cy.visit('/companies')
       cy.visit('/')
+
+      // If the user is an ITA (as in these tests) the UI redirects
+      // the user from / to /my-pipeline. Therefore, we have to select the
+      // "Investment projects" tab before testing
+      cy.get('[data-test="tablist"]').contains('Investment projects').click()
+
       cy.get('[data-test="stage-select"] select')
         .find(':selected')
         .contains('Prospect')
@@ -206,6 +220,12 @@ describe('Dashboard - my projects list filters', () => {
       cy.wait('@apiRequest')
       cy.visit('/companies')
       cy.visit('/')
+
+      // If the user is an ITA (as in these tests) the UI redirects
+      // the user from / to /my-pipeline. Therefore, we have to select the
+      // "Investment projects" tab before testing
+      cy.get('[data-test="tablist"]').contains('Investment projects').click()
+
       cy.get('[data-test="status-select"] select')
         .find(':selected')
         .contains('Ongoing')
@@ -217,6 +237,12 @@ describe('Dashboard - my projects list filters', () => {
       cy.wait('@apiRequest')
       cy.visit('/companies')
       cy.visit('/')
+
+      // If the user is an ITA (as in these tests) the UI redirects
+      // the user from / to /my-pipeline. Therefore, we have to select the
+      // "Investment projects" tab before testing
+      cy.get('[data-test="tablist"]').contains('Investment projects').click()
+
       cy.get('[data-test="land-date-select"] select')
         .find(':selected')
         .contains(financialYearStart)
@@ -227,6 +253,12 @@ describe('Dashboard - my projects list filters', () => {
       cy.wait('@apiRequest')
       cy.visit('/companies')
       cy.visit('/')
+
+      // If the user is an ITA (as in these tests) the UI redirects
+      // the user from / to /my-pipeline. Therefore, we have to select the
+      // "Investment projects" tab before testing
+      cy.get('[data-test="tablist"]').contains('Investment projects').click()
+
       cy.get('[data-test="sort-select"] select')
         .find(':selected')
         .contains('Latest land date')
