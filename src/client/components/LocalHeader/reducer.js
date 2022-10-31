@@ -4,7 +4,7 @@ import {
   BANNER_DISMISSED__UPDATE_STATE,
 } from '../../actions'
 
-export default (state = {}, { type, flashMessages, isBannerDismissed }) => {
+export default (state = {}, { type, flashMessages, bannerHeading }) => {
   switch (type) {
     case FLASH_MESSAGE__ADD_TO_STATE:
       return {
@@ -19,7 +19,7 @@ export default (state = {}, { type, flashMessages, isBannerDismissed }) => {
     case BANNER_DISMISSED__UPDATE_STATE:
       return {
         ...state,
-        isBannerDismissed,
+        bannerHeading,
       }
     default:
       return state

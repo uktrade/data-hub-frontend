@@ -50,10 +50,10 @@ export function* readFlashMesages() {
 /* Saga to write to localstorage. */
 export function* writeIsBannerDismissedToLocalStorage() {
   while (true) {
-    const { isBannerDismissed } = yield take(
+    const { bannerHeading } = yield take(
       BANNER_DISMISSED__WRITE_TO_LOCALSTORAGE
     )
-    saveToLocalStorage(isBannerDismissed)
+    saveToLocalStorage(bannerHeading)
   }
 }
 
@@ -61,10 +61,10 @@ export function* writeIsBannerDismissedToLocalStorage() {
 export function* readIsBannerDismissedFromLocalStorage() {
   while (true) {
     yield take(BANNER_DISMISSED__READ_FROM_LOCALSTORAGE)
-    const isBannerDismissed = getFromLocalStorage()
+    const bannerHeading = getFromLocalStorage()
     yield put({
       type: BANNER_DISMISSED__UPDATE_STATE,
-      isBannerDismissed,
+      bannerHeading,
     })
   }
 }

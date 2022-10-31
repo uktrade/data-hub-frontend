@@ -6,6 +6,8 @@ import hardRedirectSaga from './components/HardRedirect/saga'
 import {
   writeFlashMessages,
   readFlashMesages,
+  writeIsBannerDismissedToLocalStorage,
+  readIsBannerDismissedFromLocalStorage,
 } from './components/LocalHeader/sagas'
 import {
   writeMyInvestmentsToSession,
@@ -19,6 +21,8 @@ export default (tasks) => {
     yield fork(hardRedirectSaga)
     yield fork(readFlashMesages)
     yield fork(writeFlashMessages)
+    yield fork(writeIsBannerDismissedToLocalStorage)
+    yield fork(readIsBannerDismissedFromLocalStorage)
     yield fork(readMyInvestmentsFromSession)
     yield fork(writeMyInvestmentsToSession)
   }

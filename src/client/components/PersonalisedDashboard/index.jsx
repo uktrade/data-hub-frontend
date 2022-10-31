@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { BLUE } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
-import { Banner } from '../LocalHeader/Banner'
+import Banner from '../LocalHeader/Banner'
 import CheckUserFeatureFlag from '../CheckUserFeatureFlags'
 import { ID as INVESTMENT_REMINDERS_ID } from '../InvestmentReminders/state'
 import { ID as REMINDER_SUMMARY_ID } from '../ReminderSummary/state'
@@ -79,7 +79,7 @@ const PersonalisedDashboard = ({
   dataHubFeed,
 }) => (
   <ThemeProvider theme={blueTheme}>
-    <Banner />
+    <Banner items={dataHubFeed} />
     <SearchBackground data-test="search-data-hub">
       <SearchContainer width="960">
         <Search csrfToken={csrfToken} />
