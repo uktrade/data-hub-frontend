@@ -9,6 +9,7 @@ import urls from '../../../../../../lib/urls'
 import {
   StatusMessage,
   FieldTypeahead,
+  FormLayout,
 } from '../../../../../../client/components/'
 
 const StyledH2 = styled.h2`
@@ -71,16 +72,18 @@ export default ({ companyId, countryOptions, fields }) => {
               return acc
             }, {})}
         >
-          {fields.map(({ label, name }) => (
-            <FieldTypeahead
-              key={name}
-              isMulti={true}
-              label={label}
-              name={name}
-              options={countryOptions}
-              placeholder="Search countries..."
-            />
-          ))}
+          <FormLayout setWidth="three-quarters">
+            {fields.map(({ label, name }) => (
+              <FieldTypeahead
+                key={name}
+                isMulti={true}
+                label={label}
+                name={name}
+                options={countryOptions}
+                placeholder="Search countries..."
+              />
+            ))}
+          </FormLayout>
         </Form>
       )}
     </Task.Status>
