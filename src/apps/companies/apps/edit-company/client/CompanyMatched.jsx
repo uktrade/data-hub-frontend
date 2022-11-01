@@ -26,12 +26,14 @@ const CompanyMatched = ({
       hint="Amount in GBP"
       name="turnover"
       type="number"
+      data-test="company-matched-annual-turnover"
     />
 
     <FieldInput
       label="Number of employees (optional)"
       name="number_of_employees"
       type="number"
+      data-test="company-matched-number-of-employees"
     />
 
     {isOnOneList ? (

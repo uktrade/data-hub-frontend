@@ -27,12 +27,14 @@ const CompanyUnmatched = ({
       label="Annual turnover (optional)"
       name="turnover_range"
       options={turnoverRanges}
+      data-test="company-unmatched-annual-turnover"
     />
 
     <FieldRadios
       label="Number of employees (optional)"
       name="employee_range"
       options={employeeRanges}
+      data-test="company-unmatched-number-of-employees"
     />
 
     {isOnOneList ? (

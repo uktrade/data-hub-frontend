@@ -45,9 +45,8 @@ const describeCompanyEditForm = ({ company, elements }) => {
     const spec = [
       ...elements,
       {
-        assert: ({ element }) =>
-          cy
-            .wrap(element)
+        assert: ({ element }) => {
+          cy.wrap(element)
             .find('button')
             .should('have.text', 'Submit')
             .next()
@@ -56,7 +55,8 @@ const describeCompanyEditForm = ({ company, elements }) => {
               'have.attr',
               'href',
               urls.companies.businessDetails(company.id)
-            ),
+            )
+        },
       },
     ]
 
@@ -78,6 +78,34 @@ describe('Company edit', () => {
     before(() => {
       cy.visit(urls.companies.edit(company.id))
     })
+
+    // it('should verify Trading name is correct', () => {
+    //   cy.get('[data-test="field-trading_names"]').should(
+    //     'have.text',
+    //     'Trading name (optional)'
+    //   )
+    // })
+
+    // it('should verify VAT number is correct', () => {
+    //   cy.get('[data-test="field-vat_number"]').should(
+    //     'have.text',
+    //     'VAT number (optional)'
+    //   )
+    // })
+
+    // it('should verify Website  is correct', () => {
+    //   cy.get('[data-test="field-website"]').should(
+    //     'have.text',
+    //     'Website (optional)'
+    //   )
+    // })
+
+    // it('should verify Business description is correct', () => {
+    //   cy.get('[data-test="field-description"]').should(
+    //     'have.text',
+    //     'Business description (optional)'
+    //   )
+    // })
 
     describeCompanyEditForm({
       company,
