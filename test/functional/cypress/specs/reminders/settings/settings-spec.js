@@ -152,7 +152,7 @@ describe('Reminders Settings', () => {
       it('should hide the no recent interaction settings table on toggle', () => {
         cy.get(nriToggle)
           .find('button')
-          .contains('No recent interaction settings')
+          .contains('Projects with no recent interaction settings')
           .click()
           .get(eslTable)
           .should('not.be.visible')
