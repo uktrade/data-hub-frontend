@@ -17,13 +17,13 @@ const MEDIUMBLUE = '#003399'
 const StyledBody = styled('div')`
   background-color: ${MEDIUMBLUE};
   color: ${WHITE};
-  height: 20%;
+  height: 40px;
 `
 
 const StyledDiv = styled('div')`
   margin-left: 20%;
   position: relative;
-  padding-top: 0.2%;
+  padding-top: 0.9%;
 `
 
 const StyledTextLink = styled('a')`
@@ -59,13 +59,15 @@ const Banner = ({
     readFromLocalStorage()
   }, [])
   const [showDismissButton, setShowDismissButton] = useState(true)
+  const latestAnnouncementLink = items[0].link
+  const latestAnnouncementHeading = items[0].heading
 
   const updateLocalStorage = () => {
     setShowDismissButton(false)
-    writeToLocalStorage(items[0].heading)
+    writeToLocalStorage(latestAnnouncementLink)
   }
 
-  if (items.length > 0 && bannerHeading == items[0].heading) {
+  if (items.length > 0 && bannerHeading == latestAnnouncementLink) {
     return null
   }
 
@@ -73,7 +75,9 @@ const Banner = ({
     <StyledBody>
       <StyledDiv>
         Update:
-        <StyledTextLink href={items[0].link}>{items[0].heading}</StyledTextLink>
+        <StyledTextLink href={latestAnnouncementLink}>
+          {latestAnnouncementHeading}
+        </StyledTextLink>
         <StyledDismissTextLink onClick={updateLocalStorage}>
           Dismiss
         </StyledDismissTextLink>
