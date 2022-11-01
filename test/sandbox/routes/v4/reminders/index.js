@@ -26,6 +26,30 @@ exports.saveNoRecentInteractionsSubscriptions = function (req, res) {
   })
 }
 
+exports.getExportNoRecentInteractionsSubscriptions = function (req, res) {
+  res.json({
+    reminder_days: [60, 90],
+    email_reminders_enabled: true,
+  })
+}
+
+exports.getReminderSubscriptionsSummary = function (req, res) {
+  res.json({
+    estimated_land_date: {
+      email_reminders_enabled: true,
+      reminder_days: [10, 20, 40],
+    },
+    no_recent_investment_interaction: {
+      email_reminders_enabled: true,
+      reminder_days: [10, 20, 40],
+    },
+    no_recent_export_interaction: {
+      email_reminders_enabled: true,
+      reminder_days: [10, 20, 40],
+    },
+  })
+}
+
 exports.getEstimatedLandDateReminders = function (req, res) {
   res.json({
     count: 14,

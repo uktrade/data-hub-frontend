@@ -506,6 +506,16 @@ app.patch(
 )
 
 app.get(
+  '/v4/reminder/subscription/no-recent-export-interaction',
+  v4Reminders.getExportNoRecentInteractionsSubscriptions
+)
+
+app.get(
+  '/v4/reminder/subscription/summary',
+  v4Reminders.getReminderSubscriptionsSummary
+)
+
+app.get(
   '/v4/reminder/estimated-land-date',
   v4Reminders.getEstimatedLandDateReminders
 )
