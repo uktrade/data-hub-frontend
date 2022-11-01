@@ -505,6 +505,11 @@ module.exports = {
           '/reminders/settings/investments-no-recent-interaction'
         ),
       },
+      exports: {
+        noRecentInteraction: url(
+          '/reminders/settings/exports-no-recent-interactions'
+        ),
+      },
     },
   },
 }
