@@ -59,8 +59,13 @@ const Banner = ({
     readFromLocalStorage()
   }, [])
   const [showDismissButton, setShowDismissButton] = useState(true)
-  const latestAnnouncementLink = items[0].link
-  const latestAnnouncementHeading = items[0].heading
+  let latestAnnouncementLink
+  let latestAnnouncementHeading
+
+  if (items.length > 0) {
+    latestAnnouncementLink = items[0].link
+    latestAnnouncementHeading = items[0].heading
+  }
 
   const updateLocalStorage = () => {
     setShowDismissButton(false)
