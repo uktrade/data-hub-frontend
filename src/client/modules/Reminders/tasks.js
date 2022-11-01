@@ -3,7 +3,7 @@ import { apiProxyAxios } from '../../components/Task/utils'
 import { formatDays, transformReminderDaysToForm } from './transformers'
 import { settings } from './constants'
 
-const transformAllSubscriptions = ([eld, nri]) => ({
+const transformAllSubscriptions = ([eld, nri, enri]) => ({
   estimatedLandDate: {
     formattedReminderDays: formatDays(
       eld.data.reminder_days.sort((a, b) => a - b).reverse(),
@@ -23,9 +23,14 @@ const transformAllSubscriptions = ([eld, nri]) => ({
       : settings.OFF,
   },
   exportNoRecentInteractions: {
-    formattedReminderDays: 10,
-    emailRemindersOnOff: settings.OFF,
-  }
+    formattedReminderDays: formatDays(
+      enri.data.reminder_days.sort((a, b) => a - b),
+      'days after the last interaction'
+    ),
+    emailRemindersOnOff: enri.data.email_reminders_enabled
+      ? settings.ON
+      : settings.OFF,
+  },
 })
 
 export const getAllSubscriptions = () =>
@@ -34,6 +39,7 @@ export const getAllSubscriptions = () =>
     apiProxyAxios.get(
       '/v4/reminder/subscription/no-recent-investment-interaction'
     ),
+    apiProxyAxios.get('/v4/reminder/subscription/no-recent-export-interaction'),
   ]).then(transformAllSubscriptions)
 
 export const getEldSubscriptions = () =>

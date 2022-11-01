@@ -26,6 +26,8 @@ const ALLOWLIST = [
   '/v4/company/:id/assign-one-list-tier-and-global-account-manager',
   '/v4/reminder/subscription/estimated-land-date',
   '/v4/reminder/subscription/no-recent-investment-interaction',
+  // TODO: Confirm endpoint with BE devs
+  '/v4/reminder/subscription/no-recent-export-interaction',
   '/v4/reminder/estimated-land-date',
   '/v4/reminder/no-recent-investment-interaction',
   '/v4/company/:id/remove-from-one-list',
