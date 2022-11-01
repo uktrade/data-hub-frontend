@@ -22,6 +22,10 @@ const transformAllSubscriptions = ([eld, nri]) => ({
       ? settings.ON
       : settings.OFF,
   },
+  exportNoRecentInteractions: {
+    formattedReminderDays: 10,
+    emailRemindersOnOff: settings.OFF,
+  }
 })
 
 export const getAllSubscriptions = () =>
