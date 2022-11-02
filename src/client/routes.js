@@ -81,20 +81,20 @@ const routes = {
     {
       path: '/reminders',
       module: 'datahub:companies',
-      redirect: '/reminders/estimated-land-date',
+      redirect: '/reminders/investments-estimated-land-date',
     },
     {
-      path: '/reminders/estimated-land-date',
+      path: '/reminders/investments-estimated-land-date',
       module: 'datahub:companies',
       component: EstimatedLandDateReminders,
     },
     {
-      path: '/reminders/no-recent-interaction',
+      path: '/reminders/investments-no-recent-interaction',
       module: 'datahub:companies',
       component: NoRecentInteractionReminders,
     },
     {
-      path: '/reminders/outstanding-propositions',
+      path: '/reminders/investments-outstanding-propositions',
       module: 'datahub:companies',
       component: OutstandingPropositionReminders,
     },
@@ -104,12 +104,12 @@ const routes = {
       component: RemindersSettings,
     },
     {
-      path: '/reminders/settings/estimated-land-date',
+      path: '/reminders/settings/investments-estimated-land-date',
       module: 'datahub:companies',
       component: EstimatedLandDateForm,
     },
     {
-      path: '/reminders/settings/no-recent-interaction',
+      path: '/reminders/settings/investments-no-recent-interaction',
       module: 'datahub:companies',
       component: NoRecentInteractionForm,
     },
