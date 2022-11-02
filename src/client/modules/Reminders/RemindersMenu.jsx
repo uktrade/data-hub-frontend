@@ -48,19 +48,19 @@ const RemindersMenu = () => {
   return (
     <Menu>
       <MenuItem
-        to={urls.reminders.estimatedLandDate()}
+        to={urls.reminders.investments.estimatedLandDate()}
         pathname={location.pathname}
       >
         Reminders for approaching estimated land dates
       </MenuItem>
       <MenuItem
-        to={urls.reminders.noRecentInteraction()}
+        to={urls.reminders.investments.noRecentInteraction()}
         pathname={location.pathname}
       >
         Reminders for projects with no recent interaction
       </MenuItem>
       <MenuItem
-        to={urls.reminders.outstandingPropositions()}
+        to={urls.reminders.investments.outstandingPropositions()}
         pathname={location.pathname}
       >
         Reminders for outstanding propositions
