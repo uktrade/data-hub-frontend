@@ -27,7 +27,7 @@ import {
 import urls from '../../../../lib/urls'
 
 const OPTIONS_NO_YES = [...OPTIONS_YES_NO].reverse()
-const redirectUrl = `${urls.reminders.settings.index()}?estimated_land_date=true`
+const redirectUrl = `${urls.reminders.settings.index()}?investments_estimated_land_date=true`
 
 const EstimatedLandDateForm = () => (
   <DefaultLayout
