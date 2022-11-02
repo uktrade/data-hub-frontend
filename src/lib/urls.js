@@ -490,13 +490,23 @@ module.exports = {
   },
   reminders: {
     index: url('/reminders'),
-    estimatedLandDate: url('/reminders/estimated-land-date'),
-    noRecentInteraction: url('/reminders/no-recent-interaction'),
-    outstandingPropositions: url('/reminders/outstanding-propositions'),
+    investments: {
+      estimatedLandDate: url('/reminders/investments-estimated-land-date'),
+      noRecentInteraction: url('/reminders/investments-no-recent-interaction'),
+      outstandingPropositions: url(
+        '/reminders/investments-outstanding-propositions'
+      ),
+    },
     settings: {
       index: url('/reminders/settings'),
-      estimatedLandDate: url('/reminders/settings/estimated-land-date'),
-      noRecentInteraction: url('/reminders/settings/no-recent-interaction'),
+      investments: {
+        estimatedLandDate: url(
+          '/reminders/settings/investments-estimated-land-date'
+        ),
+        noRecentInteraction: url(
+          '/reminders/settings/investments-no-recent-interaction'
+        ),
+      },
     },
   },
 }
