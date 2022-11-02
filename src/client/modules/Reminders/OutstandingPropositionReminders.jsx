@@ -87,7 +87,9 @@ const OutstandingPropositionReminders = ({
     >
       <CollectionHeader settings={false} totalItems={count} />
       {results.length === 0 ? (
-        <Summary data-test="no-reminders">You have no reminders.</Summary>
+        <Summary data-test="investments-no-reminders">
+          You have no reminders.
+        </Summary>
       ) : (
         <PaginationSummary data-test="pagination-summary">
           {`Page ${page || 1} of ${totalPages}`}

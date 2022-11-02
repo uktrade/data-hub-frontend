@@ -51,8 +51,8 @@ const openSettings = (queryParamType, qsParams) => {
 const RemindersSettings = () => {
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
-  const openESL = openSettings('estimated_land_date', qsParams)
-  const openNRI = openSettings('no_recent_interaction', qsParams)
+  const openESL = openSettings('investments_estimated_land_date', qsParams)
+  const openNRI = openSettings('investments_no_recent_interaction', qsParams)
 
   return (
     <DefaultLayout
@@ -96,7 +96,7 @@ const RemindersSettings = () => {
               </StyledTable>
               <StyledRouterLink
                 data-test="estimated-land-date-link"
-                to={urls.reminders.settings.estimatedLandDate()}
+                to={urls.reminders.settings.investments.estimatedLandDate()}
                 aria-label="edit"
               >
                 Edit
@@ -125,7 +125,7 @@ const RemindersSettings = () => {
               </StyledTable>
               <StyledRouterLink
                 data-test="no-recent-interaction-link"
-                to={urls.reminders.settings.noRecentInteraction()}
+                to={urls.reminders.settings.investments.noRecentInteraction()}
                 aria-label="edit"
               >
                 Edit

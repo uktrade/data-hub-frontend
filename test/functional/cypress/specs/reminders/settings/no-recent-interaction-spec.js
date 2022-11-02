@@ -35,13 +35,13 @@ const assertInputFields = (days) => {
 describe('Edit no recent interaction', () => {
   context('Page breadcrumbs and title', () => {
     before(() => {
-      cy.visit(urls.reminders.settings.noRecentInteraction())
+      cy.visit(urls.reminders.settings.investments.noRecentInteraction())
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        'Reminders and email notifications settings': `${urls.reminders.settings.index()}?no_recent_interaction=true`,
+        'Reminders and email notifications settings': `${urls.reminders.settings.index()}?investments_no_recent_interaction=true`,
         'Settings for projects with no recent interaction': null,
       })
     })
@@ -62,7 +62,7 @@ describe('Edit no recent interaction', () => {
           email_reminders_enabled: false,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.noRecentInteraction())
+      cy.visit(urls.reminders.settings.investments.noRecentInteraction())
       cy.wait('@apiRequest')
     })
 
@@ -104,7 +104,7 @@ describe('Edit no recent interaction', () => {
           email_reminders_enabled: false,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.noRecentInteraction())
+      cy.visit(urls.reminders.settings.investments.noRecentInteraction())
       cy.wait('@apiRequest')
     })
 
@@ -134,7 +134,7 @@ describe('Edit no recent interaction', () => {
           email_reminders_enabled: false,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.noRecentInteraction())
+      cy.visit(urls.reminders.settings.investments.noRecentInteraction())
       cy.wait('@apiRequest')
     })
 
@@ -168,7 +168,7 @@ describe('Edit no recent interaction', () => {
           email_reminders_enabled: false,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.noRecentInteraction())
+      cy.visit(urls.reminders.settings.investments.noRecentInteraction())
       cy.wait('@apiRequest')
     })
 
@@ -188,7 +188,7 @@ describe('Edit no recent interaction', () => {
           email_reminders_enabled: false,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.noRecentInteraction())
+      cy.visit(urls.reminders.settings.investments.noRecentInteraction())
       cy.wait('@apiRequest')
     })
 
@@ -208,7 +208,7 @@ describe('Edit no recent interaction', () => {
           email_reminders_enabled: false,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.noRecentInteraction())
+      cy.visit(urls.reminders.settings.investments.noRecentInteraction())
       cy.wait('@apiRequest')
     })
 
@@ -228,7 +228,7 @@ describe('Edit no recent interaction', () => {
           email_reminders_enabled: false,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.noRecentInteraction())
+      cy.visit(urls.reminders.settings.investments.noRecentInteraction())
       cy.wait('@apiRequest')
     })
 
@@ -241,7 +241,7 @@ describe('Edit no recent interaction', () => {
 
   context('Email notifications - the basics', () => {
     before(() => {
-      cy.visit(urls.reminders.settings.noRecentInteraction())
+      cy.visit(urls.reminders.settings.investments.noRecentInteraction())
       cy.get('[data-test="reminders-yes"]').click()
     })
 
@@ -276,7 +276,7 @@ describe('Edit no recent interaction', () => {
           email_reminders_enabled: false,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.noRecentInteraction())
+      cy.visit(urls.reminders.settings.investments.noRecentInteraction())
       cy.wait('@apiRequest')
     })
 
@@ -297,7 +297,7 @@ describe('Edit no recent interaction', () => {
           email_reminders_enabled: true,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.noRecentInteraction())
+      cy.visit(urls.reminders.settings.investments.noRecentInteraction())
       cy.wait('@apiRequest')
     })
 
@@ -329,7 +329,7 @@ describe('Edit no recent interaction', () => {
           email_reminders_enabled: false,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.noRecentInteraction())
+      cy.visit(urls.reminders.settings.investments.noRecentInteraction())
       cy.wait('@apiRequest')
     })
 
@@ -436,7 +436,7 @@ describe('Edit no recent interaction', () => {
         },
       }).as('getNri')
       cy.intercept('PATCH', endpoint).as('saveNri')
-      cy.visit(urls.reminders.settings.noRecentInteraction())
+      cy.visit(urls.reminders.settings.investments.noRecentInteraction())
       cy.wait('@getNri')
     })
 
