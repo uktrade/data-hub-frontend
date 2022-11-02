@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-// TODO: find out if I need this as RouterLink for clarity, as there's no 'Link'
 
 import styled from 'styled-components'
 import { SPACING, MEDIA_QUERIES, FONT_WEIGHTS } from '@govuk-react/constants'

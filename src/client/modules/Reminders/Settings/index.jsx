@@ -8,6 +8,7 @@ import { get } from 'lodash'
 import qs from 'qs'
 
 import { DefaultLayout, RemindersToggleSection } from '../../../components'
+import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
 import Resource from '../../../components/Resource'
 import urls from '../../../../lib/urls'
 
@@ -61,9 +62,6 @@ const RemindersSettings = () => {
           exportNoRecentInteractions,
         }) => (
           <>
-            {/* TODO: Confirm H2 size */}
-            {/* TODO: check the spacing around the home link */}
-            {/* TODO: are we updating no-recent-interaction in this or a future ticket? */}
             <H2 size={LEVEL_SIZE[3]}>Investment</H2>
             <ToggleSectionContainer>
               <RemindersToggleSection
@@ -86,19 +84,27 @@ const RemindersSettings = () => {
                 to={urls.reminders.settings.investments.noRecentInteraction()}
               />
             </ToggleSectionContainer>
-            <H2 size={LEVEL_SIZE[3]}>Export</H2>
-            <ToggleSectionContainer>
-              <RemindersToggleSection
-                label="Companies with no recent interaction settings"
-                id="export-no-recent-interactions-toggle"
-                data-test="export-no-recent-interactions-toggle"
-                isOpen={openENRI}
-                borderBottom={true}
-                dataName={'export-no-recent-interactions'}
-                data={exportNoRecentInteractions}
-                to={urls.reminders.settings.exports.noRecentInteraction()}
-              />
-            </ToggleSectionContainer>
+            <CheckUserFeatureFlag userFeatureFlagName="export-email-reminders">
+              {(isFeatureFlagEnabled) =>
+                isFeatureFlagEnabled && (
+                  <>
+                    <H2 size={LEVEL_SIZE[3]}>Export</H2>
+                    <ToggleSectionContainer>
+                      <RemindersToggleSection
+                        label="Companies with no recent interaction settings"
+                        id="export-no-recent-interactions-toggle"
+                        data-test="export-no-recent-interactions-toggle"
+                        isOpen={openENRI}
+                        borderBottom={true}
+                        dataName={'export-no-recent-interactions'}
+                        data={exportNoRecentInteractions}
+                        to={urls.reminders.settings.exports.noRecentInteraction()}
+                      />
+                    </ToggleSectionContainer>
+                  </>
+                )
+              }
+            </CheckUserFeatureFlag>
             <StyledHomeLink href={urls.dashboard()} aria-label="Home">
               Home
             </StyledHomeLink>
