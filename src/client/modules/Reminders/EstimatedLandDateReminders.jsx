@@ -48,9 +48,14 @@ const EstimatedLandDateReminders = ({ estimatedLandDateReminders }) => {
 
   return (
     <RemindersLayout pageTitle={title} subject={subject}>
-      <CollectionHeader totalItems={count} pageOrigin="estimated_land_date" />
+      <CollectionHeader
+        totalItems={count}
+        pageOrigin="investments_estimated_land_date"
+      />
       {results.length === 0 ? (
-        <Summary data-test="no-reminders">You have no reminders.</Summary>
+        <Summary data-test="investments-no-reminders">
+          You have no reminders.
+        </Summary>
       ) : (
         <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
       )}

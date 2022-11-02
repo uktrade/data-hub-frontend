@@ -37,25 +37,31 @@ const RemindersMenu = () => {
     <LinkList data-test="link-list">
       <LinkListItem data-test="link-list-item">
         <LinkListLink
-          to={urls.reminders.estimatedLandDate()}
-          $isActive={location.pathname == urls.reminders.estimatedLandDate()}
+          to={urls.reminders.investments.estimatedLandDate()}
+          $isActive={
+            location.pathname == urls.reminders.investments.estimatedLandDate()
+          }
         >
           Reminders for approaching estimated land dates
         </LinkListLink>
       </LinkListItem>
       <LinkListItem data-test="link-list-item">
         <LinkListLink
-          to={urls.reminders.noRecentInteraction()}
-          $isActive={location.pathname == urls.reminders.noRecentInteraction()}
+          to={urls.reminders.investments.noRecentInteraction()}
+          $isActive={
+            location.pathname ==
+            urls.reminders.investments.noRecentInteraction()
+          }
         >
           Reminders for projects with no recent interaction
         </LinkListLink>
       </LinkListItem>
       <LinkListItem data-test="link-list-item">
         <LinkListLink
-          to={urls.reminders.outstandingPropositions()}
+          to={urls.reminders.investments.outstandingPropositions()}
           $isActive={
-            location.pathname == urls.reminders.outstandingPropositions()
+            location.pathname ==
+            urls.reminders.investments.outstandingPropositions()
           }
         >
           Reminders for outstanding propositions
