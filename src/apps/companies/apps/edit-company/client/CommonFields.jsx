@@ -62,6 +62,7 @@ const CommonFields = ({ company, regions, features }) => (
       country={company?.address?.country ?? {}}
       apiEndpoint="/api/postcodelookup"
       features={features}
+      data-test="common-fields-address"
     />
 
     {company.registered_address && (
@@ -69,6 +70,7 @@ const CommonFields = ({ company, regions, features }) => (
         name="registered_address"
         legend="Registered address"
         showBorder={true}
+        data-test="common-fields-registered-address"
       >
         <Paragraph>
           {company.uk_based
@@ -112,6 +114,7 @@ const CommonFields = ({ company, regions, features }) => (
         emptyOption="-- Select DIT region --"
         options={regions}
         required="Select DIT region"
+        data-test="common-fields-dit-region"
       />
     )}
   </>
