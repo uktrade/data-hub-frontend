@@ -3,6 +3,16 @@ import { apiProxyAxios } from '../../components/Task/utils'
 import { formatDays, transformReminderDaysToForm } from './transformers'
 import { settings } from './constants'
 
+const transformNoRecentInteractionsSubscriptionSummary = (data) => ({
+  formattedReminderDays: formatDays(
+    data.reminder_days.sort((a, b) => a - b),
+    'days after the last interaction'
+  ),
+  emailRemindersOnOff: data.email_reminders_enabled
+    ? settings.ON
+    : settings.OFF,
+})
+
 const transformAllSubscriptions = ([eld, nri, enri]) => ({
   estimatedLandDate: {
     formattedReminderDays: formatDays(
@@ -13,24 +23,12 @@ const transformAllSubscriptions = ([eld, nri, enri]) => ({
       ? settings.ON
       : settings.OFF,
   },
-  noRecentInteraction: {
-    formattedReminderDays: formatDays(
-      nri.data.reminder_days.sort((a, b) => a - b),
-      'days after the last interaction'
-    ),
-    emailRemindersOnOff: nri.data.email_reminders_enabled
-      ? settings.ON
-      : settings.OFF,
-  },
-  exportNoRecentInteractions: {
-    formattedReminderDays: formatDays(
-      enri.data.reminder_days.sort((a, b) => a - b),
-      'days after the last interaction'
-    ),
-    emailRemindersOnOff: enri.data.email_reminders_enabled
-      ? settings.ON
-      : settings.OFF,
-  },
+  noRecentInteraction: transformNoRecentInteractionsSubscriptionSummary(
+    nri.data
+  ),
+  exportNoRecentInteractions: transformNoRecentInteractionsSubscriptionSummary(
+    enri.data
+  ),
 })
 
 export const getAllSubscriptions = () =>
