@@ -40,13 +40,13 @@ const assertTwoCheckboxes = (
 describe('Edit approaching estimated land dates', () => {
   context('Page breadcrumbs and title', () => {
     before(() => {
-      cy.visit(urls.reminders.settings.estimatedLandDate())
+      cy.visit(urls.reminders.settings.investments.estimatedLandDate())
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        'Reminders and email notifications settings': `${urls.reminders.settings.index()}?estimated_land_date=true`,
+        'Reminders and email notifications settings': `${urls.reminders.settings.index()}?investments_estimated_land_date=true`,
         'Settings for approaching estimated land dates': null,
       })
     })
@@ -67,7 +67,7 @@ describe('Edit approaching estimated land dates', () => {
           email_reminders_enabled: false,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.estimatedLandDate())
+      cy.visit(urls.reminders.settings.investments.estimatedLandDate())
       cy.wait('@apiRequest')
     })
 
@@ -110,7 +110,7 @@ describe('Edit approaching estimated land dates', () => {
           email_reminders_enabled: false,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.estimatedLandDate())
+      cy.visit(urls.reminders.settings.investments.estimatedLandDate())
       cy.wait('@apiRequest')
     })
 
@@ -139,7 +139,7 @@ describe('Edit approaching estimated land dates', () => {
           email_reminders_enabled: false,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.estimatedLandDate())
+      cy.visit(urls.reminders.settings.investments.estimatedLandDate())
       cy.wait('@apiRequest')
     })
 
@@ -171,7 +171,7 @@ describe('Edit approaching estimated land dates', () => {
           email_reminders_enabled: false,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.estimatedLandDate())
+      cy.visit(urls.reminders.settings.investments.estimatedLandDate())
       cy.wait('@apiRequest')
     })
 
@@ -197,7 +197,7 @@ describe('Edit approaching estimated land dates', () => {
           email_reminders_enabled: false,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.estimatedLandDate())
+      cy.visit(urls.reminders.settings.investments.estimatedLandDate())
       cy.wait('@apiRequest')
     })
 
@@ -217,7 +217,7 @@ describe('Edit approaching estimated land dates', () => {
 
   context('Email notifications - the basics', () => {
     before(() => {
-      cy.visit(urls.reminders.settings.estimatedLandDate())
+      cy.visit(urls.reminders.settings.investments.estimatedLandDate())
     })
 
     it('should render an "Email notifications" legend', () => {
@@ -251,7 +251,7 @@ describe('Edit approaching estimated land dates', () => {
           email_reminders_enabled: false,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.estimatedLandDate())
+      cy.visit(urls.reminders.settings.investments.estimatedLandDate())
       cy.wait('@apiRequest')
     })
 
@@ -274,7 +274,7 @@ describe('Edit approaching estimated land dates', () => {
           email_reminders_enabled: true,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.estimatedLandDate())
+      cy.visit(urls.reminders.settings.investments.estimatedLandDate())
       cy.wait('@apiRequest')
     })
 
@@ -297,7 +297,7 @@ describe('Edit approaching estimated land dates', () => {
           email_reminders_enabled: false,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.estimatedLandDate())
+      cy.visit(urls.reminders.settings.investments.estimatedLandDate())
       cy.wait('@apiRequest')
     })
 
@@ -327,7 +327,7 @@ describe('Edit approaching estimated land dates', () => {
           email_reminders_enabled: true,
         },
       }).as('apiRequest')
-      cy.visit(urls.reminders.settings.estimatedLandDate())
+      cy.visit(urls.reminders.settings.investments.estimatedLandDate())
       cy.wait('@apiRequest')
     })
 

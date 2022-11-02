@@ -47,9 +47,14 @@ const NoRecentInteractionReminders = ({ noRecentInteractionReminders }) => {
 
   return (
     <RemindersLayout pageTitle={title} subject={subject}>
-      <CollectionHeader totalItems={count} pageOrigin="no_recent_interaction" />
+      <CollectionHeader
+        totalItems={count}
+        pageOrigin="investments_no_recent_interaction"
+      />
       {results.length === 0 ? (
-        <Summary data-test="no-reminders">You have no reminders.</Summary>
+        <Summary data-test="investments-no-reminders">
+          You have no reminders.
+        </Summary>
       ) : (
         <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
       )}
