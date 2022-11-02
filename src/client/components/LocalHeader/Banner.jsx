@@ -78,7 +78,7 @@ const Banner = ({
 
   return items.length > 0 && showDismissButton ? (
     <StyledBody>
-      <StyledDiv>
+      <StyledDiv data-testid="feed-banner">
         Update:
         <StyledTextLink href={latestAnnouncementLink}>
           {latestAnnouncementHeading}
