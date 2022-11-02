@@ -59,7 +59,7 @@ const hasReminderDayDuplicates = (formValue, field, formValues) => {
   return Object.values(filteredReminderDays).includes(formValue)
 }
 
-const redirectUrl = `${urls.reminders.settings.index()}?no_recent_interaction=true`
+const redirectUrl = `${urls.reminders.settings.index()}?investments_no_recent_interaction=true`
 
 const NoRecentInteractionForm = () => (
   <DefaultLayout

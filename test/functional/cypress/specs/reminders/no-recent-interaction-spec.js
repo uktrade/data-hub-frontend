@@ -73,7 +73,7 @@ describe('No Recent Interaction Reminders', () => {
   context('Reminders List', () => {
     before(() => {
       interceptApiCalls()
-      cy.visit(urls.reminders.noRecentInteraction())
+      cy.visit(urls.reminders.investments.noRecentInteraction())
       cy.wait('@remindersApiRequest')
     })
 
@@ -99,19 +99,31 @@ describe('No Recent Interaction Reminders', () => {
         .eq(0)
         .find('a')
         .should('contain', 'Reminders for approaching estimated land dates')
-        .should('have.attr', 'href', urls.reminders.estimatedLandDate())
+        .should(
+          'have.attr',
+          'href',
+          urls.reminders.investments.estimatedLandDate()
+        )
 
       cy.get('@listItems')
         .eq(1)
         .find('a')
         .should('contain', 'Reminders for projects with no recent interaction')
-        .should('have.attr', 'href', urls.reminders.noRecentInteraction())
+        .should(
+          'have.attr',
+          'href',
+          urls.reminders.investments.noRecentInteraction()
+        )
 
       cy.get('@listItems')
         .eq(2)
         .find('a')
         .should('contain', 'Reminders for outstanding propositions')
-        .should('have.attr', 'href', urls.reminders.outstandingPropositions())
+        .should(
+          'have.attr',
+          'href',
+          urls.reminders.investments.outstandingPropositions()
+        )
     })
 
     it('should render the list heading with the total number of reminders', () => {
@@ -171,12 +183,12 @@ describe('No Recent Interaction Reminders', () => {
           },
         }
       ).as('remindersApiRequest')
-      cy.visit(urls.reminders.noRecentInteraction())
+      cy.visit(urls.reminders.investments.noRecentInteraction())
       cy.wait('@remindersApiRequest')
     })
 
     it('should include a message "You have no reminders"', () => {
-      cy.get('[data-test="no-reminders"]').should(
+      cy.get('[data-test="investments-no-reminders"]').should(
         'contain',
         'You have no reminders.'
       )
@@ -186,7 +198,7 @@ describe('No Recent Interaction Reminders', () => {
   context('Pagination', () => {
     beforeEach(() => {
       interceptApiCalls()
-      cy.visit(urls.reminders.noRecentInteraction())
+      cy.visit(urls.reminders.investments.noRecentInteraction())
       cy.wait('@remindersApiRequest')
     })
 
@@ -217,7 +229,7 @@ describe('No Recent Interaction Reminders', () => {
   context('Sort', () => {
     beforeEach(() => {
       cy.intercept('GET', `${remindersEndpoint}*`).as('remindersApiRequest')
-      cy.visit(urls.reminders.noRecentInteraction())
+      cy.visit(urls.reminders.investments.noRecentInteraction())
     })
 
     it('should apply the default sort', () => {
@@ -253,7 +265,7 @@ describe('No Recent Interaction Reminders', () => {
   context('Delete', () => {
     beforeEach(() => {
       interceptApiCalls()
-      cy.visit(urls.reminders.noRecentInteraction())
+      cy.visit(urls.reminders.investments.noRecentInteraction())
       cy.wait('@remindersApiRequest')
     })
 
