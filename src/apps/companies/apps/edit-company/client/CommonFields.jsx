@@ -20,7 +20,6 @@ const CommonFields = ({ company, regions, features }) => (
       label="Trading name (optional)"
       name="trading_names"
       type="text"
-      data-test="common-fields-trading-name"
     />
 
     {company.uk_based && (
@@ -32,14 +31,12 @@ const CommonFields = ({ company, regions, features }) => (
       name="website"
       type="url"
       validate={websiteValidator}
-      data-test="common-fields-website"
     />
 
     <FieldInput
       label="Business description (optional)"
       name="description"
       type="text"
-      data-test="common-fields-business-description"
     />
 
     <FieldSelect
@@ -47,7 +44,6 @@ const CommonFields = ({ company, regions, features }) => (
       label="Export Segment (optional)"
       emptyOption="No export segment or not known"
       options={export_segments}
-      data-test="common-fields-exports-segment"
     />
 
     <FieldSelect
@@ -55,7 +51,6 @@ const CommonFields = ({ company, regions, features }) => (
       label="Export Sub-segment (optional)"
       emptyOption="No sub export segment or not known"
       options={export_sub_segments}
-      data-test="common-fields-exports-sub-segment"
     />
 
     <FieldAddress
