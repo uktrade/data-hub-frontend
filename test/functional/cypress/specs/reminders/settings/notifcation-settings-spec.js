@@ -14,7 +14,7 @@ const selectors = {
 describe('Notification settings', () => {
   context('when in estimated land date page', () => {
     before(() => {
-      cy.visit(urls.reminders.estimatedLandDate())
+      cy.visit(urls.reminders.investments.estimatedLandDate())
       cy.get(selectors.collectionItem).should('be.visible')
       cy.get(selectors.reminderSettings).eq(1).should('be.visible').click()
     })
@@ -38,7 +38,7 @@ describe('Notification settings', () => {
 
   context('when in no recent interaction page', () => {
     beforeEach(() => {
-      cy.visit(urls.reminders.noRecentInteraction())
+      cy.visit(urls.reminders.investments.noRecentInteraction())
       cy.contains('days since last interaction').should('be.visible')
       cy.get(selectors.reminderSettings).eq(1).should('be.visible').click()
     })

@@ -81,7 +81,7 @@ describe('Outstanding Proposition Reminders', () => {
   context('Reminders List', () => {
     before(() => {
       interceptApiCalls()
-      cy.visit(urls.reminders.outstandingPropositions())
+      cy.visit(urls.reminders.investments.outstandingPropositions())
       waitForAPICalls()
     })
 
@@ -107,19 +107,31 @@ describe('Outstanding Proposition Reminders', () => {
         .eq(0)
         .find('a')
         .should('contain', 'Reminders for approaching estimated land dates')
-        .should('have.attr', 'href', urls.reminders.estimatedLandDate())
+        .should(
+          'have.attr',
+          'href',
+          urls.reminders.investments.estimatedLandDate()
+        )
 
       cy.get('@listItems')
         .eq(1)
         .find('a')
         .should('contain', 'Reminders for projects with no recent interaction')
-        .should('have.attr', 'href', urls.reminders.noRecentInteraction())
+        .should(
+          'have.attr',
+          'href',
+          urls.reminders.investments.noRecentInteraction()
+        )
 
       cy.get('@listItems')
         .eq(2)
         .find('a')
         .should('contain', 'Reminders for outstanding propositions')
-        .should('have.attr', 'href', urls.reminders.outstandingPropositions())
+        .should(
+          'have.attr',
+          'href',
+          urls.reminders.investments.outstandingPropositions()
+        )
     })
 
     it('should render the list heading with the total number of reminders', () => {
@@ -196,13 +208,13 @@ describe('Outstanding Proposition Reminders', () => {
           },
         }
       ).as('noPropositionsAPIRequest')
-      cy.visit(urls.reminders.outstandingPropositions())
+      cy.visit(urls.reminders.investments.outstandingPropositions())
       cy.wait('@whoAmIApiRequest')
       cy.wait('@noPropositionsAPIRequest')
     })
 
     it('should include a message "You have no reminders"', () => {
-      cy.get('[data-test="no-reminders"]').should(
+      cy.get('[data-test="investments-no-reminders"]').should(
         'contain',
         'You have no reminders.'
       )
@@ -212,7 +224,7 @@ describe('Outstanding Proposition Reminders', () => {
   context('Pagination', () => {
     beforeEach(() => {
       interceptApiCalls()
-      cy.visit(urls.reminders.outstandingPropositions())
+      cy.visit(urls.reminders.investments.outstandingPropositions())
       waitForAPICalls()
     })
 
