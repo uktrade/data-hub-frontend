@@ -4,6 +4,7 @@ import {
 } from '../../../support/assertions'
 import urls from '../../../../../../src/lib/urls'
 
+const userEndpoint = '/api-proxy/whoami'
 const eslEndpoint = '/api-proxy/v4/reminder/subscription/estimated-land-date'
 const nriEndpoint =
   '/api-proxy/v4/reminder/subscription/no-recent-investment-interaction'
@@ -26,6 +27,9 @@ const interceptAPICalls = ({
   enri_reminder_days = [10, 40, 30],
   enri_email_reminders_enabled = true,
 } = {}) => {
+  cy.intercept('GET', userEndpoint, {
+    active_features: 'export-email-reminders',
+  })
   cy.intercept('GET', eslEndpoint, {
     body: {
       reminder_days: esl_reminder_days,
