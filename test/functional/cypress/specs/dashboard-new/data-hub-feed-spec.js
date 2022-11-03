@@ -88,7 +88,7 @@ describe('Dashboard - Data Hub feed', () => {
     })
   })
 
-  context('Has updates with banner cookie', () => {
+  context('Has updates with localstorage banner present', () => {
     beforeEach(() => {
       localStorage.setItem('isBannerDismissed', 'https://test-url')
       cy.intercept('GET', '/api-proxy/help-centre/feed', {
@@ -109,7 +109,7 @@ describe('Dashboard - Data Hub feed', () => {
       cy.wait('@apiRequest')
     })
 
-    it('should not display feed banner if cookie is set', () => {
+    it('should not display feed banner if localstorage is set', () => {
       cy.get('[data-testid="feed-banner"]').should('not.exist')
     })
   })

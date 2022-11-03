@@ -1,22 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { state2props } from './state'
-
 import PropTypes from 'prop-types'
 
-import { MEDIA_QUERIES } from '@govuk-react/constants'
+import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { WHITE } from 'govuk-colours'
 
+import { state2props } from './state'
 import {
   BANNER_DISMISSED__WRITE_TO_LOCALSTORAGE,
   BANNER_DISMISSED__READ_FROM_LOCALSTORAGE,
 } from '../../actions'
-
-const MEDIUMBLUE = '#003399'
+import { MID_BLUE } from '../../../client/utils/colors'
 
 const StyledBody = styled('div')`
-  background-color: ${MEDIUMBLUE};
+  background-color: ${MID_BLUE};
   color: ${WHITE};
   ${MEDIA_QUERIES.TABLET} {
     height: 40px;
@@ -40,7 +38,7 @@ const StyledDiv = styled('div')`
 const StyledTextLink = styled('a')`
   position: relative;
   color: ${WHITE};
-  margin-left: 5px;
+  margin-left: ${SPACING.SCALE_1};
   &:visited,
   &:hover,
   &:active {
@@ -51,7 +49,7 @@ const StyledTextLink = styled('a')`
 const StyledDismissTextLink = styled('button')`
   position: relative;
   color: ${WHITE};
-  margin-left: 3%;
+  margin-left: ${SPACING.SCALE_1};
   background: none;
   border: none;
   padding: 0;
@@ -65,11 +63,11 @@ const Banner = ({
   writeToLocalStorage,
   readFromLocalStorage,
   bannerHeading,
+  isBannerDismissed,
 }) => {
   useEffect(() => {
     readFromLocalStorage()
   }, [])
-  const [showDismissButton, setShowDismissButton] = useState(true)
   let latestAnnouncementLink
   let latestAnnouncementHeading
 
@@ -79,7 +77,6 @@ const Banner = ({
   }
 
   const updateLocalStorage = () => {
-    setShowDismissButton(false)
     writeToLocalStorage(latestAnnouncementLink)
   }
 
@@ -87,7 +84,7 @@ const Banner = ({
     return null
   }
 
-  return items.length > 0 && showDismissButton ? (
+  return items.length > 0 && !isBannerDismissed ? (
     <StyledBody>
       <StyledDiv data-testid="feed-banner">
         Update:

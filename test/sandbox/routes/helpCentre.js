@@ -9,7 +9,3 @@ exports.announcement = function (req, res) {
     return res.json(announcementArticles.announcement)
   }
 }
-
-exports.feed = function (req, res) {
-  return res.json(announcementArticles.feed)
-}

@@ -13,6 +13,7 @@ import {
   BANNER_DISMISSED__WRITE_TO_LOCALSTORAGE,
   BANNER_DISMISSED__READ_FROM_LOCALSTORAGE,
   BANNER_DISMISSED__UPDATE_STATE,
+  BANNER_DISMISSED__FLAG_ADD_STATE,
 } from '../../actions'
 
 /* Saga to write flashmessages to the session storage.
@@ -53,7 +54,12 @@ export function* writeIsBannerDismissedToLocalStorage() {
     const { bannerHeading } = yield take(
       BANNER_DISMISSED__WRITE_TO_LOCALSTORAGE
     )
+    const isBannerDismissed = true
     saveToLocalStorage(bannerHeading)
+    yield put({
+      type: BANNER_DISMISSED__FLAG_ADD_STATE,
+      isBannerDismissed,
+    })
   }
 }
 
