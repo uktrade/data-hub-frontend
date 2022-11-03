@@ -8,7 +8,7 @@ import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
 import { GREY_3, PURPLE, BLACK } from 'govuk-colours'
 import Details from '@govuk-react/details'
 import Main from '@govuk-react/main'
-import { Button } from 'govuk-react'
+import { Button, Link } from 'govuk-react'
 
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 import LocalHeaderHeading from '../../../client/components/LocalHeader/LocalHeaderHeading'
@@ -20,6 +20,7 @@ import ConnectedDropdownMenu from '../DropdownMenu/ConnectedDropdownMenu'
 import { DropdownButton } from '../DropdownMenu'
 import NewWindowLink from '../NewWindowLink'
 import ArchivePanel from '../ArchivePanel'
+import SummaryTable from '../SummaryTable'
 
 import CheckUserFeatureFlag from '../CheckUserFeatureFlags'
 import { companies } from '../../../lib/urls'
@@ -364,6 +365,49 @@ const CompanyLocalHeader = ({
                 )}
               </StyledDescription>
             )}
+            <GridRow>
+              <GridCol setWidth="one-half">
+                <SummaryTable
+                  caption="Business details"
+                  actions={
+                    <Link href="https://example.com">
+                      View all business details
+                    </Link>
+                  }
+                >
+                  <SummaryTable.Row heading="Companies House">
+                    <Link href="https://beta.companieshouse.gov.uk/company/123">
+                      Example company house number
+                    </Link>
+                  </SummaryTable.Row>
+                  <SummaryTable.Row heading="Trading address">
+                    34 Pretty Street, London, UK
+                  </SummaryTable.Row>
+                  <SummaryTable.Row heading="Website">
+                    <Link href={company.website}>{company.website}</Link>
+                  </SummaryTable.Row>
+                </SummaryTable>
+              </GridCol>
+              <GridCol setWidth="one-half">
+                <SummaryTable
+                  caption="Account Management"
+                  actions={<Link href="https://example.com">Edit</Link>}
+                >
+                  <SummaryTable.Row heading="DIT Region">
+                    South East
+                  </SummaryTable.Row>
+                  <SummaryTable.Row heading="Lead ITA">
+                    <Link href="www.contact.com">Lucy Tumble</Link>
+                  </SummaryTable.Row>
+                  <SummaryTable.Row heading="Account">
+                    One List Tier D - International Trade Adviser Accounts
+                  </SummaryTable.Row>
+                  <SummaryTable.Row heading="Primary contact(s)">
+                    <Link href="https://www.website.com">Bert Ernest</Link>
+                  </SummaryTable.Row>
+                </SummaryTable>
+              </GridCol>
+            </GridRow>
           </LocalHeader>
         )
       }
