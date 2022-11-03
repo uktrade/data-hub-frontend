@@ -1,9 +1,10 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link as RouterLink } from 'react-router-dom'
 import Link from '@govuk-react/link'
 import styled from 'styled-components'
+import Table from '@govuk-react/table'
 import { H2 } from '@govuk-react/heading'
-import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
+import { SPACING, MEDIA_QUERIES, LEVEL_SIZE } from '@govuk-react/constants'
 import { get } from 'lodash'
 import qs from 'qs'
 
@@ -19,11 +20,55 @@ const ToggleSectionContainer = styled('div')({
   marginBottom: '40px',
 })
 
+const StyledTable = styled(Table)({
+  marginTop: 0,
+  marginLeft: SPACING.SCALE_1,
+})
+
+const StyledCellHeader = styled(Table.CellHeader)({
+  [MEDIA_QUERIES.TABLET]: {
+    width: '33%',
+  },
+  [MEDIA_QUERIES.DESKTOP]: {
+    width: '33%',
+  },
+})
+
+const StyledRouterLink = styled(RouterLink)({
+  marginBottom: SPACING.SCALE_5,
+  display: 'block',
+})
+
 const StyledHomeLink = styled(Link)({
   marginTop: SPACING.SCALE_5,
   marginBottom: SPACING.SCALE_5,
   display: 'block',
 })
+
+// TODO: move this to RemindersToggleSelection.jsx
+const ReminderTable = ({ dataName, data, to }) => {
+  return (
+    <>
+      <StyledTable data-test={`${dataName}-table`}>
+        <Table.Row>
+          <StyledCellHeader>Reminders</StyledCellHeader>
+          <Table.Cell>{data.formattedReminderDays}</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <StyledCellHeader>Email notifications</StyledCellHeader>
+          <Table.Cell>{data.emailRemindersOnOff}</Table.Cell>
+        </Table.Row>
+      </StyledTable>
+      <StyledRouterLink
+        data-test={`${dataName}-link`}
+        to={to}
+        aria-label="edit"
+      >
+        Edit
+      </StyledRouterLink>
+    </>
+  )
+}
 
 const openSettings = (queryParamType, qsParams) => {
   const settingsExpand = get(qsParams, queryParamType, false)
@@ -69,20 +114,26 @@ const RemindersSettings = () => {
                 id="estimated-land-date-toggle"
                 data-test="estimated-land-date-toggle"
                 isOpen={openESL}
-                dataName={'estimated-land-date'}
-                data={estimatedLandDate}
-                to={urls.reminders.settings.investments.estimatedLandDate()}
-              />
+              >
+                <ReminderTable
+                  dataName={'estimated-land-date'}
+                  data={estimatedLandDate}
+                  to={urls.reminders.settings.investments.estimatedLandDate()}
+                />
+              </RemindersToggleSection>
               <RemindersToggleSection
                 label="Projects with no recent interaction settings"
                 id="no-recent-interaction-toggle"
                 data-test="no-recent-interaction-toggle"
                 isOpen={openNRI}
                 borderBottom={true}
-                dataName={'no-recent-interaction'}
-                data={noRecentInteraction}
-                to={urls.reminders.settings.investments.noRecentInteraction()}
-              />
+              >
+                <ReminderTable
+                  dataName={'no-recent-interaction'}
+                  data={noRecentInteraction}
+                  to={urls.reminders.settings.investments.noRecentInteraction()}
+                />
+              </RemindersToggleSection>
             </ToggleSectionContainer>
             <CheckUserFeatureFlag userFeatureFlagName="export-email-reminders">
               {(isFeatureFlagEnabled) =>
@@ -96,10 +147,13 @@ const RemindersSettings = () => {
                         data-test="export-no-recent-interactions-toggle"
                         isOpen={openENRI}
                         borderBottom={true}
-                        dataName={'export-no-recent-interactions'}
-                        data={exportNoRecentInteractions}
-                        to={urls.reminders.settings.exports.noRecentInteraction()}
-                      />
+                      >
+                        <ReminderTable
+                          dataName={'export-no-recent-interactions'}
+                          data={exportNoRecentInteractions}
+                          to={urls.reminders.settings.exports.noRecentInteraction()}
+                        />
+                      </RemindersToggleSection>
                     </ToggleSectionContainer>
                   </>
                 )
