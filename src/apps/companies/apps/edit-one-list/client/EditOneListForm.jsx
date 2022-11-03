@@ -8,6 +8,7 @@ import {
   FieldRadios,
   Step,
   FieldAdvisersTypeahead,
+  FormLayout,
 } from '../../../../../client/components'
 import Form from '../../../../../client/components/Form'
 import { TASK_SAVE_ONE_LIST_DETAILS } from './state'
@@ -61,18 +62,20 @@ function EditOneListForm({
             </Step>
 
             {values.one_list_tier !== NONE && (
-              <Step name="oneListAdvisers">
-                <FieldAdvisersTypeahead
-                  name={ACCOUNT_MANAGER_FIELD_NAME}
-                  label="Global Account Manager"
-                  required="Select at least one adviser"
-                />
-                <FieldAdvisersTypeahead
-                  name={ONE_LIST_TEAM_FIELD_NAME}
-                  label="Advisers on the core team (optional)"
-                  isMulti={true}
-                />
-              </Step>
+              <FormLayout setWidth="three-quarters">
+                <Step name="oneListAdvisers">
+                  <FieldAdvisersTypeahead
+                    name={ACCOUNT_MANAGER_FIELD_NAME}
+                    label="Global Account Manager"
+                    required="Select at least one adviser"
+                  />
+                  <FieldAdvisersTypeahead
+                    name={ONE_LIST_TEAM_FIELD_NAME}
+                    label="Advisers on the core team (optional)"
+                    isMulti={true}
+                  />
+                </Step>
+              </FormLayout>
             )}
           </Main>
         </>
