@@ -26,6 +26,7 @@ const GLOBAL_NAV_ITEM = {
 }
 
 const LOCAL_NAV = [
+  { path: 'overview', label: 'Overview' },
   {
     path: 'activity',
     label: 'Activity',
