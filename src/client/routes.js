@@ -11,6 +11,7 @@ import {
   RemindersSettings,
   EstimatedLandDateForm,
   NoRecentInteractionForm,
+  ExportNoRecentInteractionForm,
   EstimatedLandDateReminders,
   NoRecentInteractionReminders,
   OutstandingPropositionReminders,
@@ -112,6 +113,11 @@ const routes = {
       path: '/reminders/settings/investments-no-recent-interaction',
       module: 'datahub:companies',
       component: NoRecentInteractionForm,
+    },
+    {
+      path: '/reminders/settings/exports-no-recent-interactions',
+      module: 'datahub:companies',
+      component: ExportNoRecentInteractionForm,
     },
   ],
 }
