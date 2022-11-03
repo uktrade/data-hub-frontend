@@ -37,7 +37,7 @@ const RemindersSettings = () => {
   const qsParams = qs.parse(location.search.slice(1))
   const openESL = openSettings('investments_estimated_land_date', qsParams)
   const openNRI = openSettings('investments_no_recent_interaction', qsParams)
-  const openENRI = openSettings('exports_no_recent_interactions', qsParams)
+  const openENRI = openSettings('exports_no_recent_interaction', qsParams)
 
   return (
     <DefaultLayout
