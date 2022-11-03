@@ -26,13 +26,6 @@ exports.saveNoRecentInteractionsSubscriptions = function (req, res) {
   })
 }
 
-exports.getExportNoRecentInteractionsSubscriptions = function (req, res) {
-  res.json({
-    reminder_days: [60, 90],
-    email_reminders_enabled: true,
-  })
-}
-
 exports.getReminderSubscriptionsSummary = function (req, res) {
   res.json({
     estimated_land_date: {
@@ -47,6 +40,20 @@ exports.getReminderSubscriptionsSummary = function (req, res) {
       email_reminders_enabled: true,
       reminder_days: [10, 20, 40],
     },
+  })
+}
+
+exports.getNoRecentExportInteractionsSubscriptions = function (req, res) {
+  res.json({
+    reminder_days: [20],
+    email_reminders_enabled: false,
+  })
+}
+
+exports.saveNoRecentExportInteractionsSubscriptions = function (req, res) {
+  res.json({
+    reminder_days: [20, 40],
+    email_reminders_enabled: true,
   })
 }
 
