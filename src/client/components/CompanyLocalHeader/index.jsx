@@ -8,6 +8,7 @@ import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
 import { GREY_3, PURPLE, BLACK } from 'govuk-colours'
 import Details from '@govuk-react/details'
 import Main from '@govuk-react/main'
+import { Button } from 'govuk-react'
 
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 import LocalHeaderHeading from '../../../client/components/LocalHeader/LocalHeaderHeading'
@@ -21,6 +22,7 @@ import NewWindowLink from '../NewWindowLink'
 import ArchivePanel from '../ArchivePanel'
 
 import CheckUserFeatureFlag from '../CheckUserFeatureFlags'
+import { companies } from '../../../lib/urls'
 
 const COMPANY_SUMMARY_PAGE_FEATURE_FLAG = 'company-summary-page-feature-flag'
 
@@ -288,7 +290,81 @@ const CompanyLocalHeader = ({
             )}
           </>
         ) : (
-          <h1>New company local header to be here!</h1>
+          <LocalHeader breadcrumbs={breadcrumbs} flashMessages={flashMessages}>
+            <GridRow>
+              <GridCol setWidth="two-thirds">
+                <LocalHeaderHeading data-test="heading">
+                  {company.name}
+                </LocalHeaderHeading>
+              </GridCol>
+              <GridCol setWith="one-third">
+                <Button href={companies.interactions.create(company.id)}>
+                  Add interaction
+                </Button>
+                <Button
+                  buttonColour="#dee0e2"
+                  buttonTextColour="#000"
+                  href={companies.referrals.send(company.id)}
+                >
+                  Refer this company
+                </Button>
+              </GridCol>
+            </GridRow>
+            {(company.isUltimate || company.isGlobalHQ) && (
+              <TypeWrapper>
+                <BadgeWrapper>
+                  <Badge>
+                    <BadgeText data-test="badge">
+                      {company.isUltimate ? 'Ultimate HQ' : 'Global HQ'}
+                    </BadgeText>
+                  </Badge>
+                </BadgeWrapper>
+                {company.isUltimate && (
+                  <StyledDetails
+                    summary="What does Ultimate HQ mean?"
+                    data-test="metaList"
+                  >
+                    This HQ is in control of all related company records for{' '}
+                    {company.name}.
+                  </StyledDetails>
+                )}
+              </TypeWrapper>
+            )}
+            {(dnbRelatedCompaniesCount > 0 ||
+              company.hasManagedAccountDetails) && (
+              <StyledDescription data-test="description">
+                {dnbRelatedCompaniesCount > 0 && (
+                  <p>
+                    Data Hub contains{' '}
+                    <a href={urls.companies.dnbHierarchy.index(company.id)}>
+                      {dnbRelatedCompaniesCount} other company{' '}
+                      {pluralize('record', dnbRelatedCompaniesCount)}
+                    </a>{' '}
+                    related to this company
+                  </p>
+                )}
+                {company.hasManagedAccountDetails && (
+                  <>
+                    <p>
+                      This is an account managed company (One List{' '}
+                      {company.one_list_group_tier.name})
+                    </p>
+                    <p>
+                      {company.isItaTierDAccount
+                        ? 'Lead ITA'
+                        : 'Global Account Manager'}
+                      : {company.one_list_group_global_account_manager.name}{' '}
+                      <a href={urls.companies.advisers.index(company.id)}>
+                        {company.isItaTierDAccount
+                          ? 'View Lead adviser'
+                          : 'View core team'}
+                      </a>
+                    </p>
+                  </>
+                )}
+              </StyledDescription>
+            )}
+          </LocalHeader>
         )
       }
     </CheckUserFeatureFlag>
