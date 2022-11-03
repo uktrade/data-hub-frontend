@@ -8,28 +8,28 @@ import { OPTION_YES } from '../../../../common/constants'
 import urls from '../../../../lib/urls'
 
 import {
-  TASK_GET_NRI_REMINDER_SUBSCRIPTIONS,
-  TASK_SAVE_NRI_REMINDER_SUBSCRIPTIONS,
+  TASK_GET_EXPORT_NRI_REMINDER_SUBSCRIPTIONS,
+  TASK_SAVE_EXPORT_NRI_REMINDER_SUBSCRIPTIONS,
 } from '../state'
 import {
   transformReminderDaysToAPI,
   transformNRIFormValuesToAnalyticsData,
 } from '../transformers'
 
-const redirectUrl = `${urls.reminders.settings.index()}?investments_no_recent_interaction=true`
+const redirectUrl = `${urls.reminders.settings.index()}?exports_no_recent_interaction=true`
 
-const NoRecentInteractionForm = () => (
-  <SettingsLayout entity="projects" reminderSettingsURL={redirectUrl}>
+const ExportNoRecentInteractionForm = () => (
+  <SettingsLayout entity="exports" reminderSettingsURL={redirectUrl}>
     <Form
-      id="reminders-settings-no-recent-interaction"
-      initialValuesTaskName={TASK_GET_NRI_REMINDER_SUBSCRIPTIONS}
-      submissionTaskName={TASK_SAVE_NRI_REMINDER_SUBSCRIPTIONS}
+      id="reminders-settings-export-no-recent-interaction"
+      initialValuesTaskName={TASK_GET_EXPORT_NRI_REMINDER_SUBSCRIPTIONS}
+      submissionTaskName={TASK_SAVE_EXPORT_NRI_REMINDER_SUBSCRIPTIONS}
       redirectTo={() => redirectUrl}
       transformPayload={(formValues) => ({
         reminder_days: transformReminderDaysToAPI(formValues),
         email_reminders_enabled: formValues.emailNotifications === OPTION_YES,
       })}
-      analyticsFormName="editNoRecentInteractionReminderSettings"
+      analyticsFormName="editExportNoRecentInteractionReminderSettings"
       analyticsData={transformNRIFormValuesToAnalyticsData}
       flashMessage={() => 'Settings updated'}
       cancelRedirectTo={() => redirectUrl}
@@ -38,7 +38,7 @@ const NoRecentInteractionForm = () => (
         <>
           {reminder_days && (
             <CommonNoInteractionFields
-              entity="projects"
+              entity="exports"
               reminder_days={reminder_days}
               email_reminders_enabled={email_reminders_enabled}
               reminders={reminders}
@@ -50,4 +50,4 @@ const NoRecentInteractionForm = () => (
   </SettingsLayout>
 )
 
-export default NoRecentInteractionForm
+export default ExportNoRecentInteractionForm

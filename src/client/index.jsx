@@ -256,11 +256,13 @@ import {
 
 import * as reminders from '../client/modules/Reminders/tasks'
 import {
-  TASK_GET_ALL_REMINDER_SUBSCRIPTIONS,
+  TASK_GET_SUBSCRIPTION_SUMMARY,
   TASK_GET_ELD_REMINDER_SUBSCRIPTIONS,
   TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS,
   TASK_GET_NRI_REMINDER_SUBSCRIPTIONS,
   TASK_SAVE_NRI_REMINDER_SUBSCRIPTIONS,
+  TASK_GET_EXPORT_NRI_REMINDER_SUBSCRIPTIONS,
+  TASK_SAVE_EXPORT_NRI_REMINDER_SUBSCRIPTIONS,
   TASK_GET_ESTIMATED_LAND_DATE_REMINDERS,
   TASK_GET_NO_RECENT_INTERACTION_REMINDERS,
   TASK_GET_NEXT_ESTIMATED_LAND_DATE_REMINDER,
@@ -460,13 +462,17 @@ function App() {
           [TASK_GET_TYPEAHEAD_OPTIONS]: getTypeaheadOptions,
           [TASK_SAVE_ORDER_ASSIGNEES]: editOMISTasks.saveOrderAssignees,
           [TASK_SAVE_ORDER_SUBSCRIBERS]: editOMISTasks.saveOrderSubscribers,
-          [TASK_GET_ALL_REMINDER_SUBSCRIPTIONS]: reminders.getAllSubscriptions,
+          [TASK_GET_SUBSCRIPTION_SUMMARY]: reminders.getSubscriptionSummary,
           [TASK_GET_ELD_REMINDER_SUBSCRIPTIONS]: reminders.getEldSubscriptions,
           [TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS]:
             reminders.saveEldSubscriptions,
           [TASK_GET_NRI_REMINDER_SUBSCRIPTIONS]: reminders.getNriSubscriptions,
           [TASK_SAVE_NRI_REMINDER_SUBSCRIPTIONS]:
             reminders.saveNriSubscriptions,
+          [TASK_GET_EXPORT_NRI_REMINDER_SUBSCRIPTIONS]:
+            reminders.getNriExportSubscriptions,
+          [TASK_SAVE_EXPORT_NRI_REMINDER_SUBSCRIPTIONS]:
+            reminders.saveNriExportSubscriptions,
           [TASK_GET_ESTIMATED_LAND_DATE_REMINDERS]:
             reminders.getEstimatedLandDateReminders,
           [TASK_GET_NO_RECENT_INTERACTION_REMINDERS]:
