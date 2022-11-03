@@ -70,6 +70,23 @@ export const saveNriSubscriptions = (payload) =>
     payload
   )
 
+export const getNriExportSubscriptions = () =>
+  apiProxyAxios
+    .get('/v4/reminder/subscription/no-recent-export-interaction')
+    .then(({ data }) => ({
+      ...transformReminderDaysToForm(
+        [...data.reminder_days].sort((a, b) => a - b)
+      ),
+      reminder_days: data.reminder_days,
+      email_reminders_enabled: data.email_reminders_enabled,
+    }))
+
+export const saveNriExportSubscriptions = (payload) =>
+  apiProxyAxios.patch(
+    '/v4/reminder/subscription/no-recent-export-interaction',
+    payload
+  )
+
 export const getEstimatedLandDateReminders = ({
   sortby = '-created_on',
   page = 1,
