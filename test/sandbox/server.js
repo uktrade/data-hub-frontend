@@ -485,6 +485,14 @@ app.delete(
 )
 
 // V4 Reminders
+
+// Summary
+app.get(
+  '/v4/reminder/subscription/summary',
+  v4Reminders.getReminderSubscriptionsSummary
+)
+
+// Subscriptions for Investments
 app.get(
   '/v4/reminder/subscription/estimated-land-date',
   v4Reminders.getEstimatedLandDateSubscriptions
@@ -505,15 +513,18 @@ app.patch(
   v4Reminders.saveNoRecentInteractionsSubscriptions
 )
 
+// Subscriptions for Exports
 app.get(
   '/v4/reminder/subscription/no-recent-export-interaction',
-  v4Reminders.getExportNoRecentInteractionsSubscriptions
+  v4Reminders.getNoRecentExportInteractionsSubscriptions
 )
 
-app.get(
-  '/v4/reminder/subscription/summary',
-  v4Reminders.getReminderSubscriptionsSummary
+app.patch(
+  '/v4/reminder/subscription/no-recent-export-interaction',
+  v4Reminders.saveNoRecentExportInteractionsSubscriptions
 )
+
+// Reminders lists
 
 app.get(
   '/v4/reminder/estimated-land-date',
