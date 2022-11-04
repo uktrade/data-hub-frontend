@@ -31,37 +31,41 @@ const LinkListLink = styled(Link)(({ $isActive }) => ({
     : {}),
 }))
 
+const Menu = ({ children }) => (
+  <LinkList data-test="link-list">{children}</LinkList>
+)
+
+const MenuItem = ({ to, pathname, children }) => (
+  <LinkListItem data-test="link-list-item">
+    <LinkListLink to={to} $isActive={to === pathname}>
+      {children}
+    </LinkListLink>
+  </LinkListItem>
+)
+
 const RemindersMenu = () => {
   const location = useLocation()
   return (
-    <LinkList data-test="link-list">
-      <LinkListItem data-test="link-list-item">
-        <LinkListLink
-          to={urls.reminders.estimatedLandDate()}
-          $isActive={location.pathname == urls.reminders.estimatedLandDate()}
-        >
-          Reminders for approaching estimated land dates
-        </LinkListLink>
-      </LinkListItem>
-      <LinkListItem data-test="link-list-item">
-        <LinkListLink
-          to={urls.reminders.noRecentInteraction()}
-          $isActive={location.pathname == urls.reminders.noRecentInteraction()}
-        >
-          Reminders for projects with no recent interaction
-        </LinkListLink>
-      </LinkListItem>
-      <LinkListItem data-test="link-list-item">
-        <LinkListLink
-          to={urls.reminders.outstandingPropositions()}
-          $isActive={
-            location.pathname == urls.reminders.outstandingPropositions()
-          }
-        >
-          Reminders for outstanding propositions
-        </LinkListLink>
-      </LinkListItem>
-    </LinkList>
+    <Menu>
+      <MenuItem
+        to={urls.reminders.estimatedLandDate()}
+        pathname={location.pathname}
+      >
+        Reminders for approaching estimated land dates
+      </MenuItem>
+      <MenuItem
+        to={urls.reminders.noRecentInteraction()}
+        pathname={location.pathname}
+      >
+        Reminders for projects with no recent interaction
+      </MenuItem>
+      <MenuItem
+        to={urls.reminders.outstandingPropositions()}
+        pathname={location.pathname}
+      >
+        Reminders for outstanding propositions
+      </MenuItem>
+    </Menu>
   )
 }
 
