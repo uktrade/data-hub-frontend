@@ -66,7 +66,7 @@ const RemindersSettings = () => {
             <H2 size={LEVEL_SIZE[3]}>Investment</H2>
             <ToggleSectionContainer>
               <RemindersToggleSection
-                label="Approaching estimated land date settings"
+                label="Approaching estimated land date"
                 id="estimated-land-date-toggle"
                 data-test="estimated-land-date-toggle"
                 isOpen={openESL}
@@ -78,7 +78,7 @@ const RemindersSettings = () => {
                 />
               </RemindersToggleSection>
               <RemindersToggleSection
-                label="Projects with no recent interaction settings"
+                label="Projects with no recent interaction"
                 id="no-recent-interaction-toggle"
                 data-test="no-recent-interaction-toggle"
                 isOpen={openNRI}
@@ -98,7 +98,7 @@ const RemindersSettings = () => {
                     <H2 size={LEVEL_SIZE[3]}>Export</H2>
                     <ToggleSectionContainer>
                       <RemindersToggleSection
-                        label="Companies with no recent interaction settings"
+                        label="Companies with no recent interaction"
                         id="export-no-recent-interactions-toggle"
                         data-test="export-no-recent-interactions-toggle"
                         isOpen={openENRI}
