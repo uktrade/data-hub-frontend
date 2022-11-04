@@ -1,12 +1,12 @@
-const BANNER_DISMISSED = 'isBannerDismissed'
+const ANNOUNCEMENT_LINK = 'announcement-link'
 
-export const saveToLocalStorage = (isBannerDismissed = '') => {
-  window.localStorage.setItem(BANNER_DISMISSED, isBannerDismissed)
+export const writeToLocalStorage = (announcementLink) => {
+  window.localStorage.setItem(ANNOUNCEMENT_LINK, announcementLink)
 }
 
-export const getFromLocalStorage = () => {
+export const readFromLocalStorage = () => {
   try {
-    return window.localStorage.getItem(BANNER_DISMISSED)
+    return window.localStorage.getItem(ANNOUNCEMENT_LINK)
   } catch {
     return {}
   }

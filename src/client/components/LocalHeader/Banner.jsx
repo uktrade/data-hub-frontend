@@ -8,8 +8,8 @@ import { WHITE } from 'govuk-colours'
 
 import { state2props } from './state'
 import {
-  BANNER_DISMISSED__WRITE_TO_LOCALSTORAGE,
-  BANNER_DISMISSED__READ_FROM_LOCALSTORAGE,
+  LATEST_ANNOUNCEMENT__WRITE_TO_LOCALSTORAGE,
+  LATEST_ANNOUNCEMENT__READ_FROM_LOCALSTORAGE,
 } from '../../actions'
 import { MID_BLUE } from '../../../client/utils/colors'
 
@@ -62,34 +62,26 @@ const Banner = ({
   items,
   writeToLocalStorage,
   readFromLocalStorage,
-  bannerHeading,
-  isBannerDismissed,
+  announcementLink,
 }) => {
   useEffect(() => {
     readFromLocalStorage()
   }, [])
-  let latestAnnouncementLink
-  let latestAnnouncementHeading
-
-  if (items.length > 0) {
-    latestAnnouncementLink = items[0].link
-    latestAnnouncementHeading = items[0].heading
-  }
-
-  const updateLocalStorage = () => {
-    writeToLocalStorage(latestAnnouncementLink)
-  }
-
-  if (items.length > 0 && bannerHeading == latestAnnouncementLink) {
+  const [latestAnnouncement] = items
+  if (!latestAnnouncement) {
     return null
   }
 
-  return items.length > 0 && !isBannerDismissed ? (
+  const updateLocalStorage = () => {
+    writeToLocalStorage(latestAnnouncement.link)
+  }
+
+  return announcementLink !== latestAnnouncement.link ? (
     <StyledBody>
       <StyledDiv data-testid="feed-banner">
         Update:
-        <StyledTextLink href={latestAnnouncementLink}>
-          {latestAnnouncementHeading}
+        <StyledTextLink href={latestAnnouncement.link}>
+          {latestAnnouncement.heading}
         </StyledTextLink>
         <StyledDismissTextLink onClick={updateLocalStorage}>
           Dismiss
@@ -100,21 +92,21 @@ const Banner = ({
 }
 
 Banner.propTypes = {
-  bannerHeading: PropTypes.string,
+  announcementLink: PropTypes.string,
   writeToLocalStorage: PropTypes.func,
   readFromLocalStorage: PropTypes.func,
 }
 
 export default connect(state2props, (dispatch) => ({
-  writeToLocalStorage: (bannerHeading) => {
+  writeToLocalStorage: (announcementLink) => {
     dispatch({
-      type: BANNER_DISMISSED__WRITE_TO_LOCALSTORAGE,
-      bannerHeading,
+      type: LATEST_ANNOUNCEMENT__WRITE_TO_LOCALSTORAGE,
+      announcementLink,
     })
   },
   readFromLocalStorage: () => {
     dispatch({
-      type: BANNER_DISMISSED__READ_FROM_LOCALSTORAGE,
+      type: LATEST_ANNOUNCEMENT__READ_FROM_LOCALSTORAGE,
     })
   },
 }))(Banner)

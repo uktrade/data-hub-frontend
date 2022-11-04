@@ -80,7 +80,7 @@ describe('Dashboard - Data Hub feed', () => {
       cy.get('@feedBanner')
         .should('not.exist')
         .then(() => {
-          cy.wrap(localStorage.getItem('isBannerDismissed')).should(
+          cy.wrap(localStorage.getItem('announcement-link')).should(
             'contain',
             'https://test-url'
           )
@@ -90,7 +90,7 @@ describe('Dashboard - Data Hub feed', () => {
 
   context('Has updates with localstorage banner present', () => {
     beforeEach(() => {
-      localStorage.setItem('isBannerDismissed', 'https://test-url')
+      localStorage.setItem('announcement-link', 'https://test-url')
       cy.intercept('GET', '/api-proxy/help-centre/feed', {
         body: [
           {
