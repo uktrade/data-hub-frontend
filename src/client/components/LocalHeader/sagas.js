@@ -5,14 +5,14 @@ import {
   clearMessages,
 } from '../../utils/flash-messages'
 import { take, put } from 'redux-saga/effects'
-import { getFromLocalStorage, saveToLocalStorage } from './utils'
+import { readFromLocalStorage, writeToLocalStorage } from './utils'
 import {
   FLASH_MESSAGE__WRITE_TO_SESSION,
   FLASH_MESSAGE__GET_FROM_SESSION,
   FLASH_MESSAGE__ADD_TO_STATE,
-  BANNER_DISMISSED__WRITE_TO_LOCALSTORAGE,
-  BANNER_DISMISSED__READ_FROM_LOCALSTORAGE,
-  BANNER_DISMISSED__UPDATE_STATE,
+  LATEST_ANNOUNCEMENT__WRITE_TO_LOCALSTORAGE,
+  LATEST_ANNOUNCEMENT__READ_FROM_LOCALSTORAGE,
+  LATEST_ANNOUNCEMENT__UPDATE_STATE,
 } from '../../actions'
 
 /* Saga to write flashmessages to the session storage.
@@ -47,24 +47,32 @@ export function* readFlashMesages() {
   }
 }
 
-/* Saga to write to localstorage. */
-export function* writeIsBannerDismissedToLocalStorage() {
+/* Saga to write to local storage. */
+export function* writeAnnouncementLinkToLocalStorage() {
   while (true) {
-    const { isBannerDismissed } = yield take(
-      BANNER_DISMISSED__WRITE_TO_LOCALSTORAGE
+    const { announcementLink } = yield take(
+      LATEST_ANNOUNCEMENT__WRITE_TO_LOCALSTORAGE
     )
-    saveToLocalStorage(isBannerDismissed)
+    if (announcementLink) {
+      writeToLocalStorage(announcementLink)
+      yield put({
+        type: LATEST_ANNOUNCEMENT__UPDATE_STATE,
+        announcementLink,
+      })
+    }
   }
 }
 
-/* Saga to read localstorage state and add to redux state. */
-export function* readIsBannerDismissedFromLocalStorage() {
+/* Saga to read local storage state and add to redux state. */
+export function* readAnnouncementLinkFromLocalStorage() {
   while (true) {
-    yield take(BANNER_DISMISSED__READ_FROM_LOCALSTORAGE)
-    const isBannerDismissed = getFromLocalStorage()
-    yield put({
-      type: BANNER_DISMISSED__UPDATE_STATE,
-      isBannerDismissed,
-    })
+    yield take(LATEST_ANNOUNCEMENT__READ_FROM_LOCALSTORAGE)
+    const announcementLink = readFromLocalStorage()
+    if (announcementLink) {
+      yield put({
+        type: LATEST_ANNOUNCEMENT__UPDATE_STATE,
+        announcementLink,
+      })
+    }
   }
 }

@@ -46,6 +46,7 @@ describe('Dashboard - Data Hub feed', () => {
       cy.visit('/')
       cy.wait('@apiRequest')
       cy.get('[data-test="data-hub-feed"]').as('dataHubFeed')
+      cy.get('[data-testid="feed-banner"]').as('feedBanner')
     })
 
     it('should display only one feed item', () => {
@@ -67,6 +68,49 @@ describe('Dashboard - Data Hub feed', () => {
       cy.get('@dataHubFeed')
         .find('[data-test="data-hub-feed-link-1"]')
         .should('not.exist')
+    })
+
+    it('should display feed banner', () => {
+      cy.get('@feedBanner')
+        .find('a')
+        .should('contain', 'Using Sectors in the Find Exporters Tool')
+        .and('have.attr', 'href', 'https://test-url')
+
+      cy.get('@feedBanner').find('button').click()
+      cy.get('@feedBanner')
+        .should('not.exist')
+        .then(() => {
+          cy.wrap(localStorage.getItem('announcement-link')).should(
+            'contain',
+            'https://test-url'
+          )
+        })
+    })
+  })
+
+  context('Has updates with localstorage banner present', () => {
+    beforeEach(() => {
+      localStorage.setItem('announcement-link', 'https://test-url')
+      cy.intercept('GET', '/api-proxy/help-centre/feed', {
+        body: [
+          {
+            heading: 'Using Sectors in the Find Exporters Tool',
+            link: 'https://test-url',
+            date: 'a day ago',
+          },
+          {
+            heading: 'Adding more activity to company pages',
+            link: 'https://test-url2',
+            date: '2 hours ago',
+          },
+        ],
+      }).as('apiRequest')
+      cy.visit('/')
+      cy.wait('@apiRequest')
+    })
+
+    it('should not display feed banner if localstorage is set', () => {
+      cy.get('[data-testid="feed-banner"]').should('not.exist')
     })
   })
 })
