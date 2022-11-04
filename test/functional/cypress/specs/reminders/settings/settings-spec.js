@@ -147,7 +147,7 @@ describe('Reminders Settings', () => {
         title: 'ELD',
         dataTest: eslDataTest,
         reminderText: '60 and 30 days before the estimated land date',
-        buttonText: 'Approaching estimated land date settings',
+        buttonText: 'Approaching estimated land date',
       })
     }
   )
@@ -170,7 +170,7 @@ describe('Reminders Settings', () => {
         title: 'NRI',
         dataTest: nriDataTest,
         reminderText: '30, 50 and 70 days after the last interaction',
-        buttonText: 'Projects with no recent interaction settings',
+        buttonText: 'Projects with no recent interaction',
       })
     }
   )
@@ -191,7 +191,7 @@ describe('Reminders Settings', () => {
       title: 'ENRI',
       dataTest: enriDataTest,
       reminderText: '10, 30 and 40 days after the last interaction',
-      buttonText: 'Companies with no recent interaction settings',
+      buttonText: 'Companies with no recent interaction',
     })
   })
 
