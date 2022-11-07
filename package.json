@@ -166,7 +166,7 @@
     "@babel/preset-env": "7.19.4",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "7.18.6",
-    "@babel/runtime": "^7.20.0",
+    "@babel/runtime": "^7.20.1",
     "@cypress/code-coverage": "^3.10.0",
     "@faker-js/faker": "^7.6.0",
     "@storybook/addon-a11y": "^6.5.13",
