@@ -273,6 +273,7 @@ const StepInteractionDetails = ({
           />
         )}
       </StyledRelatedTradeAgreementsWrapper>
+
       <H3 as="h2">Participants</H3>
 
       <FieldTypeahead

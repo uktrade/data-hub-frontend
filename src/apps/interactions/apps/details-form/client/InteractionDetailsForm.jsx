@@ -16,7 +16,6 @@ import {
   TASK_GET_INTERACTION_INITIAL_VALUES,
 } from './state'
 import urls from '../../../../../lib/urls'
-import { FormLayout } from '../../../../../client/components'
 
 const getReturnLink = (
   companyId,
@@ -80,93 +79,89 @@ const InteractionDetailsForm = ({
               const contactCreated =
                 location.search.includes('new-contact-name')
               return (
-                <FormLayout setWidth="three-quarters">
-                  <Form
-                    id={STATE_ID}
-                    submissionTaskName={TASK_SAVE_INTERACTION}
-                    analyticsFormName={
-                      interactionId ? 'editInteraction' : 'createInteraction'
-                    }
-                    analyticsData={(values) =>
-                      _.pick(
-                        values,
-                        'was_policy_feedback_provided',
-                        'were_countries_discussed'
-                      )
-                    }
-                    initialValuesPayload={{
+                <Form
+                  id={STATE_ID}
+                  submissionTaskName={TASK_SAVE_INTERACTION}
+                  analyticsFormName={
+                    interactionId ? 'editInteraction' : 'createInteraction'
+                  }
+                  analyticsData={(values) =>
+                    _.pick(
+                      values,
+                      'was_policy_feedback_provided',
+                      'were_countries_discussed'
+                    )
+                  }
+                  initialValuesPayload={{
+                    companyId,
+                    referral,
+                    investmentId,
+                    contactId,
+                    user,
+                    interactionId,
+                  }}
+                  initialValuesTaskName={TASK_GET_INTERACTION_INITIAL_VALUES}
+                  transformPayload={(values) => ({
+                    values,
+                    companyIds,
+                    referralId: referral?.id,
+                  })}
+                  initialStepIndex={contactCreated && !interactionId ? 1 : 0}
+                  redirectTo={({ data }) =>
+                    getReturnLink(
                       companyId,
-                      referral,
+                      referral?.id,
                       investmentId,
                       contactId,
-                      user,
+                      data.id
+                    )
+                  }
+                  flashMessage={({ data }) =>
+                    getFlashMessage(
                       interactionId,
-                    }}
-                    initialValuesTaskName={TASK_GET_INTERACTION_INITIAL_VALUES}
-                    transformPayload={(values) => ({
-                      values,
-                      companyIds,
-                      referralId: referral?.id,
-                    })}
-                    initialStepIndex={contactCreated && !interactionId ? 1 : 0}
-                    redirectTo={({ data }) =>
-                      getReturnLink(
-                        companyId,
-                        referral?.id,
-                        investmentId,
-                        contactId,
-                        data.id
-                      )
-                    }
-                    flashMessage={({ data }) =>
-                      getFlashMessage(
-                        interactionId,
-                        data.was_policy_feedback_provided
-                      )
-                    }
-                    scrollToTopOnStep={true}
-                    showStepInUrl={true}
-                  >
-                    {({ values, currentStep }) => (
-                      <>
-                        {/* Step registered if creating the interaction
+                      data.was_policy_feedback_provided
+                    )
+                  }
+                  scrollToTopOnStep={true}
+                  showStepInUrl={true}
+                >
+                  {({ values, currentStep }) => (
+                    <>
+                      {/* Step registered if creating the interaction
                   and haven't come from an investment project */}
-                        {!interactionId && !investmentId && (
-                          <Step name="interaction_type">
-                            {() => <StepInteractionType />}
-                          </Step>
-                        )}
-
-                        <Step
-                          name="interaction_details"
-                          forwardButton={
-                            interactionId
-                              ? 'Save interaction'
-                              : 'Add interaction'
-                          }
-                        >
-                          {() => (
-                            <StepInteractionDetails
-                              companyId={companyId}
-                              onOpenContactForm={(e) => {
-                                e.preventDefault()
-                                openContactFormTask.start({
-                                  payload: {
-                                    values,
-                                    currentStep,
-                                    companyId,
-                                    url: e.target.href,
-                                  },
-                                })
-                              }}
-                              {...props}
-                            />
-                          )}
+                      {!interactionId && !investmentId && (
+                        <Step name="interaction_type">
+                          {() => <StepInteractionType />}
                         </Step>
-                      </>
-                    )}
-                  </Form>
-                </FormLayout>
+                      )}
+
+                      <Step
+                        name="interaction_details"
+                        forwardButton={
+                          interactionId ? 'Save interaction' : 'Add interaction'
+                        }
+                      >
+                        {() => (
+                          <StepInteractionDetails
+                            companyId={companyId}
+                            onOpenContactForm={(e) => {
+                              e.preventDefault()
+                              openContactFormTask.start({
+                                payload: {
+                                  values,
+                                  currentStep,
+                                  companyId,
+                                  url: e.target.href,
+                                },
+                              })
+                            }}
+                            {...props}
+                          />
+                        )}
+                      </Step>
+                    </>
+                  )}
+                </Form>
               )
             }}
           </Route>
