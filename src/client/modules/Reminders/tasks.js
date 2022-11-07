@@ -3,45 +3,42 @@ import { apiProxyAxios } from '../../components/Task/utils'
 import { formatDays, transformReminderDaysToForm } from './transformers'
 import { settings } from './constants'
 
-// TODO: unpick this transformer once the API has been updated to a single request
-const transformAllSubscriptions = ([eld, nri, enri]) => ({
+const transformAllSubscriptions = ({ data }) => ({
   estimatedLandDate: {
     formattedReminderDays: formatDays(
-      eld.data.reminder_days.sort((a, b) => a - b).reverse(),
+      data.estimated_land_date.reminder_days.sort((a, b) => a - b).reverse(),
       'days before the estimated land date'
     ),
-    emailRemindersOnOff: eld.data.email_reminders_enabled
+    emailRemindersOnOff: data.estimated_land_date.email_reminders_enabled
       ? settings.ON
       : settings.OFF,
   },
   noRecentInteraction: {
     formattedReminderDays: formatDays(
-      nri.data.reminder_days.sort((a, b) => a - b),
+      data.no_recent_investment_interaction.reminder_days.sort((a, b) => a - b),
       'days after the last interaction'
     ),
-    emailRemindersOnOff: nri.data.email_reminders_enabled
+    emailRemindersOnOff: data.no_recent_investment_interaction
+      .email_reminders_enabled
       ? settings.ON
       : settings.OFF,
   },
   exportNoRecentInteractions: {
     formattedReminderDays: formatDays(
-      enri.data.reminder_days.sort((a, b) => a - b),
+      data.no_recent_export_interaction.reminder_days.sort((a, b) => a - b),
       'days after the last interaction'
     ),
-    emailRemindersOnOff: enri.data.email_reminders_enabled
+    emailRemindersOnOff: data.no_recent_export_interaction
+      .email_reminders_enabled
       ? settings.ON
       : settings.OFF,
   },
 })
 
 export const getAllSubscriptions = () =>
-  Promise.all([
-    apiProxyAxios.get('/v4/reminder/subscription/estimated-land-date'),
-    apiProxyAxios.get(
-      '/v4/reminder/subscription/no-recent-investment-interaction'
-    ),
-    apiProxyAxios.get('/v4/reminder/subscription/no-recent-export-interaction'),
-  ]).then(transformAllSubscriptions)
+  apiProxyAxios
+    .get('/v4/reminder/subscription/summary')
+    .then(transformAllSubscriptions)
 
 export const getEldSubscriptions = () =>
   apiProxyAxios
