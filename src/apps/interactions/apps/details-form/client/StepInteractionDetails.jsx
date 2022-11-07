@@ -25,7 +25,6 @@ import {
   FieldTextarea,
   FieldTypeahead,
   ContactInformation,
-  FormLayout,
 } from '../../../../../client/components'
 import Resource from '../../../../../client/components/Resource'
 
@@ -193,331 +192,328 @@ const StepInteractionDetails = ({
     })
 
   return (
-    <FormLayout setWidth="three-quarters">
-      <>
-        <H3 as="h2">Service</H3>
+    <>
+      <H3 as="h2">Service</H3>
 
-        <InsetText>
-          If your contact provided business intelligence (eg issues impacting
-          the company or feedback on government policy), complete the business
-          intelligence section.
-          <br />
-          <br />
-          Read more{' '}
-          <NewWindowLink href={helpUrl(1)}>
-            information and guidance
-          </NewWindowLink>{' '}
-          on this section.
-        </InsetText>
+      <InsetText>
+        If your contact provided business intelligence (eg issues impacting the
+        company or feedback on government policy), complete the business
+        intelligence section.
+        <br />
+        <br />
+        Read more{' '}
+        <NewWindowLink href={helpUrl(1)}>
+          information and guidance
+        </NewWindowLink>{' '}
+        on this section.
+      </InsetText>
 
-        <FieldSelect
-          name="service"
-          emptyOption="-- Select service --"
-          options={servicesHierarchy}
-          required="Select a service"
-          aria-label="service"
+      <FieldSelect
+        name="service"
+        emptyOption="-- Select service --"
+        options={servicesHierarchy}
+        required="Select a service"
+        aria-label="service"
+      />
+
+      {selectedService?.interaction_questions?.map((question) => (
+        <FieldRadios
+          name={`service_answers.${question.id}`}
+          legend={question.name}
+          required={`Give answer to "${question.name}"`}
+          options={question.answer_options.map(({ id, name }) => ({
+            label: name,
+            value: id,
+          }))}
+        />
+      ))}
+
+      {isServiceDelivery && isTapService(selectedService) && (
+        <>
+          <FieldSelect
+            label="Service status (optional)"
+            name="service_delivery_status"
+            emptyOption="-- Select service status --"
+            options={serviceDeliveryStatuses}
+          />
+          <FieldInput
+            type="number"
+            label="Grant offered (optional)"
+            name="grant_amount_offered"
+          />
+          {values.service_delivery_status ===
+            SERVICE_DELIVERY_STATUS_COMPLETED && (
+            <FieldInput
+              type="text"
+              label="Net receipt (optional)"
+              name="net_company_receipt"
+            />
+          )}
+        </>
+      )}
+
+      <StyledRelatedTradeAgreementsWrapper>
+        <FieldRadios
+          inline={true}
+          name="has_related_trade_agreements"
+          legend="Does this interaction relate to a named trade agreement?"
+          required="Answer if this interaction relates to a named trade agreement"
+          options={OPTIONS_YES_NO}
         />
 
-        {selectedService?.interaction_questions?.map((question) => (
-          <FieldRadios
-            name={`service_answers.${question.id}`}
-            legend={question.name}
-            required={`Give answer to "${question.name}"`}
-            options={question.answer_options.map(({ id, name }) => ({
-              label: name,
-              value: id,
-            }))}
+        {values.has_related_trade_agreements === OPTION_YES && (
+          <FieldTypeahead
+            name="related_trade_agreements"
+            label="Related named trade agreement(s)"
+            placeholder="-- Search trade agreements --"
+            required="Select at least one Trade Agreement"
+            options={relatedTradeAgreements}
+            aria-label="Select a trade agreement"
+            isMulti={true}
           />
-        ))}
-
-        {isServiceDelivery && isTapService(selectedService) && (
-          <>
-            <FieldSelect
-              label="Service status (optional)"
-              name="service_delivery_status"
-              emptyOption="-- Select service status --"
-              options={serviceDeliveryStatuses}
-            />
-            <FieldInput
-              type="number"
-              label="Grant offered (optional)"
-              name="grant_amount_offered"
-            />
-            {values.service_delivery_status ===
-              SERVICE_DELIVERY_STATUS_COMPLETED && (
-              <FieldInput
-                type="text"
-                label="Net receipt (optional)"
-                name="net_company_receipt"
-              />
-            )}
-          </>
         )}
+      </StyledRelatedTradeAgreementsWrapper>
+      <H3 as="h2">Participants</H3>
 
-        <StyledRelatedTradeAgreementsWrapper>
+      <FieldTypeahead
+        name="contacts"
+        label="Contacts"
+        placeholder="Select contact"
+        required="Select at least one contact"
+        options={contacts}
+        isMulti={true}
+      />
+      <ContactInformation
+        onOpenContactForm={onOpenContactForm}
+        companyId={companyId}
+      />
+
+      <FieldAdvisersTypeahead
+        name="dit_participants"
+        label="Adviser(s)"
+        required="Select at least one adviser"
+        isMulti={true}
+      />
+
+      <H3 as="h2">Details</H3>
+
+      <FieldDate
+        name="date"
+        label="Date of interaction"
+        required="Enter a valid date"
+      />
+
+      {!isServiceDelivery && (
+        <FieldTypeahead
+          name="communication_channel"
+          label="Communication channel"
+          options={communicationChannels}
+          placeholder="-- Select communication channel --"
+          required="Select a communication channel"
+        />
+      )}
+
+      {isServiceDelivery && (
+        <>
           <FieldRadios
             inline={true}
-            name="has_related_trade_agreements"
-            legend="Does this interaction relate to a named trade agreement?"
-            required="Answer if this interaction relates to a named trade agreement"
+            name="is_event"
+            legend="Is this an event?"
+            options={OPTIONS_YES_NO}
+            required="Answer if this was an event"
+          />
+          {values.is_event === OPTION_YES && (
+            <Resource name={TASK_GET_ACTIVE_EVENTS} id={ID}>
+              {(events) => (
+                <FieldTypeahead
+                  label="Event"
+                  name="event"
+                  placeholder="-- Select event --"
+                  required="Select a specific event"
+                  options={events}
+                />
+              )}
+            </Resource>
+          )}
+        </>
+      )}
+
+      <H3 as="h2">Notes</H3>
+
+      <FieldInput
+        type="text"
+        name="subject"
+        label="Subject"
+        required="Enter a subject"
+      />
+
+      <FieldTextarea
+        type="text"
+        name="notes"
+        label="Notes (optional)"
+        hint="Use this text box to record any details of the logistics of the interaction eg how meeting(s) came about and where or when they happened. These are for your records. Do not include comments about issues impacting the company or feedback on government policy. Include that information in the business intelligence section."
+      />
+
+      <FieldRadios
+        inline={true}
+        name="was_policy_feedback_provided"
+        legend="Did the contact provide business intelligence?"
+        options={OPTIONS_YES_NO}
+        required="Answer if the contact provided business intelligence"
+      />
+
+      {values.was_policy_feedback_provided === OPTION_YES && (
+        <>
+          <FieldCheckboxes
+            name="policy_issue_types"
+            legend="Policy issue types"
+            options={policyIssueTypes}
+            required="Select at least one policy issue type"
+          />
+
+          <FieldHelp
+            helpSummary="Help with policy issue types"
+            helpText="A policy type is the broad category/categories that the information fits into."
+            footerUrl={helpUrl(2)}
+            footerUrlDescription="See more guidance"
+          />
+
+          <FieldTypeahead
+            isMulti={true}
+            name="policy_areas"
+            label="Policy areas"
+            placeholder="-- Select policy area --"
+            options={policyAreas}
+            required="Select at least one policy area"
+          />
+
+          <FieldHelp
+            helpSummary="Help with Policy areas"
+            helpText="A policy area is the specific area that the information fits into. Completing this enables the correct team(s) to find the information and input into their reports to support businesses and ministers effectively."
+            footerUrl={helpUrl(3)}
+            footerUrlDescription="See more guidance"
+          />
+
+          <FieldTextarea
+            name="policy_feedback_notes"
+            label="Business intelligence"
+            required="Enter business intelligence"
+            hint="Enter any comments the company made to you on areas such as issues impacting them or feedback on government policy. This information will be visible to other Data Hub users, the Business Intelligence Unit and may also be shared within DIT."
+          />
+
+          <FieldHelp
+            helpSummary="Help with business intelligence"
+            helpText={
+              <>
+                Consider these questions when filling out this text box:
+                <p>What business intelligence did the company provide?</p>
+                <p>
+                  Why has the company raised this/these issue(s) and what are
+                  the impacts on the company, sector and wider economy?
+                </p>
+                <p>
+                  Did the company make any wider requests of DIT/HMG, including
+                  ministerial engagement or policy changes? If so, provide
+                  details.
+                </p>
+                Will the company be taking any further actions (eg investment
+                decisions or job creation/losses)? If so, provide details.
+              </>
+            }
+            footerUrl={helpUrl(4)}
+            footerUrlDescription="See more guidance"
+          />
+        </>
+      )}
+
+      {!values.id && values.theme !== THEMES.INVESTMENT && (
+        <>
+          <FieldRadios
+            inline={true}
+            name="were_countries_discussed"
+            legend="Were any countries discussed?"
+            required="Answer if any countries were discussed"
+            options={OPTIONS_YES_NO}
+          />
+          {values.were_countries_discussed === OPTION_YES && (
+            <>
+              <FieldTypeahead
+                name={EXPORT_INTEREST_STATUS.EXPORTING_TO}
+                label="Countries currently exporting to"
+                hint="Add all that you discussed"
+                placeholder="-- Search countries --"
+                options={countries}
+                validate={[
+                  validateRequiredCountries,
+                  validatedDuplicatedCountries,
+                ]}
+                isMulti={true}
+              />
+              <FieldTypeahead
+                name={EXPORT_INTEREST_STATUS.FUTURE_INTEREST}
+                label="Future countries of interest"
+                hint="Add all that you discussed"
+                placeholder="-- Search countries --"
+                options={countries}
+                validate={[
+                  validateRequiredCountries,
+                  validatedDuplicatedCountries,
+                ]}
+                isMulti={true}
+              />
+              <FieldTypeahead
+                name={EXPORT_INTEREST_STATUS.NOT_INTERESTED}
+                label="Countries not interested in"
+                hint="Add all that you discussed"
+                placeholder="-- Search countries --"
+                options={countries}
+                validate={[
+                  validateRequiredCountries,
+                  validatedDuplicatedCountries,
+                ]}
+                isMulti={true}
+              />
+            </>
+          )}
+        </>
+      )}
+      {values.theme == THEMES.INVESTMENT && (
+        <>
+          <FieldRadios
+            inline={true}
+            name="has_related_opportunity"
+            legend="Does this interaction relate to a large capital opportunity?"
+            required="Answer if this interaction relates to a large capital opportunity"
             options={OPTIONS_YES_NO}
           />
 
-          {values.has_related_trade_agreements === OPTION_YES && (
+          {values.has_related_opportunity === OPTION_YES && (
             <FieldTypeahead
-              name="related_trade_agreements"
-              label="Related named trade agreement(s)"
-              placeholder="-- Search trade agreements --"
-              required="Select at least one Trade Agreement"
-              options={relatedTradeAgreements}
-              aria-label="Select a trade agreement"
-              isMulti={true}
+              isMulti={false}
+              label="Related large capital opportunity"
+              name="large_capital_opportunity"
+              placeholder="-- Search opportunities --"
+              aria-label="Select an opportunity"
+              required="Select a related large capital opportunity"
+              loadOptions={throttle(
+                (searchString) =>
+                  axios
+                    .get('/api-proxy/v4/large-capital-opportunity', {
+                      params: {
+                        autocomplete: searchString,
+                        archived: false,
+                      },
+                    })
+                    .then(({ data: { results } }) =>
+                      idNamesToValueLabels(results)
+                    ),
+                500
+              )}
             />
           )}
-        </StyledRelatedTradeAgreementsWrapper>
-
-        <H3 as="h2">Participants</H3>
-
-        <FieldTypeahead
-          name="contacts"
-          label="Contacts"
-          placeholder="Select contact"
-          required="Select at least one contact"
-          options={contacts}
-          isMulti={true}
-        />
-        <ContactInformation
-          onOpenContactForm={onOpenContactForm}
-          companyId={companyId}
-        />
-
-        <FieldAdvisersTypeahead
-          name="dit_participants"
-          label="Adviser(s)"
-          required="Select at least one adviser"
-          isMulti={true}
-        />
-
-        <H3 as="h2">Details</H3>
-
-        <FieldDate
-          name="date"
-          label="Date of interaction"
-          required="Enter a valid date"
-        />
-
-        {!isServiceDelivery && (
-          <FieldTypeahead
-            name="communication_channel"
-            label="Communication channel"
-            options={communicationChannels}
-            placeholder="-- Select communication channel --"
-            required="Select a communication channel"
-          />
-        )}
-
-        {isServiceDelivery && (
-          <>
-            <FieldRadios
-              inline={true}
-              name="is_event"
-              legend="Is this an event?"
-              options={OPTIONS_YES_NO}
-              required="Answer if this was an event"
-            />
-            {values.is_event === OPTION_YES && (
-              <Resource name={TASK_GET_ACTIVE_EVENTS} id={ID}>
-                {(events) => (
-                  <FieldTypeahead
-                    label="Event"
-                    name="event"
-                    placeholder="-- Select event --"
-                    required="Select a specific event"
-                    options={events}
-                  />
-                )}
-              </Resource>
-            )}
-          </>
-        )}
-
-        <H3 as="h2">Notes</H3>
-
-        <FieldInput
-          type="text"
-          name="subject"
-          label="Subject"
-          required="Enter a subject"
-        />
-
-        <FieldTextarea
-          type="text"
-          name="notes"
-          label="Notes (optional)"
-          hint="Use this text box to record any details of the logistics of the interaction eg how meeting(s) came about and where or when they happened. These are for your records. Do not include comments about issues impacting the company or feedback on government policy. Include that information in the business intelligence section."
-        />
-
-        <FieldRadios
-          inline={true}
-          name="was_policy_feedback_provided"
-          legend="Did the contact provide business intelligence?"
-          options={OPTIONS_YES_NO}
-          required="Answer if the contact provided business intelligence"
-        />
-
-        {values.was_policy_feedback_provided === OPTION_YES && (
-          <>
-            <FieldCheckboxes
-              name="policy_issue_types"
-              legend="Policy issue types"
-              options={policyIssueTypes}
-              required="Select at least one policy issue type"
-            />
-
-            <FieldHelp
-              helpSummary="Help with policy issue types"
-              helpText="A policy type is the broad category/categories that the information fits into."
-              footerUrl={helpUrl(2)}
-              footerUrlDescription="See more guidance"
-            />
-
-            <FieldTypeahead
-              isMulti={true}
-              name="policy_areas"
-              label="Policy areas"
-              placeholder="-- Select policy area --"
-              options={policyAreas}
-              required="Select at least one policy area"
-            />
-
-            <FieldHelp
-              helpSummary="Help with Policy areas"
-              helpText="A policy area is the specific area that the information fits into. Completing this enables the correct team(s) to find the information and input into their reports to support businesses and ministers effectively."
-              footerUrl={helpUrl(3)}
-              footerUrlDescription="See more guidance"
-            />
-
-            <FieldTextarea
-              name="policy_feedback_notes"
-              label="Business intelligence"
-              required="Enter business intelligence"
-              hint="Enter any comments the company made to you on areas such as issues impacting them or feedback on government policy. This information will be visible to other Data Hub users, the Business Intelligence Unit and may also be shared within DIT."
-            />
-
-            <FieldHelp
-              helpSummary="Help with business intelligence"
-              helpText={
-                <>
-                  Consider these questions when filling out this text box:
-                  <p>What business intelligence did the company provide?</p>
-                  <p>
-                    Why has the company raised this/these issue(s) and what are
-                    the impacts on the company, sector and wider economy?
-                  </p>
-                  <p>
-                    Did the company make any wider requests of DIT/HMG,
-                    including ministerial engagement or policy changes? If so,
-                    provide details.
-                  </p>
-                  Will the company be taking any further actions (eg investment
-                  decisions or job creation/losses)? If so, provide details.
-                </>
-              }
-              footerUrl={helpUrl(4)}
-              footerUrlDescription="See more guidance"
-            />
-          </>
-        )}
-
-        {!values.id && values.theme !== THEMES.INVESTMENT && (
-          <>
-            <FieldRadios
-              inline={true}
-              name="were_countries_discussed"
-              legend="Were any countries discussed?"
-              required="Answer if any countries were discussed"
-              options={OPTIONS_YES_NO}
-            />
-            {values.were_countries_discussed === OPTION_YES && (
-              <>
-                <FieldTypeahead
-                  name={EXPORT_INTEREST_STATUS.EXPORTING_TO}
-                  label="Countries currently exporting to"
-                  hint="Add all that you discussed"
-                  placeholder="-- Search countries --"
-                  options={countries}
-                  validate={[
-                    validateRequiredCountries,
-                    validatedDuplicatedCountries,
-                  ]}
-                  isMulti={true}
-                />
-                <FieldTypeahead
-                  name={EXPORT_INTEREST_STATUS.FUTURE_INTEREST}
-                  label="Future countries of interest"
-                  hint="Add all that you discussed"
-                  placeholder="-- Search countries --"
-                  options={countries}
-                  validate={[
-                    validateRequiredCountries,
-                    validatedDuplicatedCountries,
-                  ]}
-                  isMulti={true}
-                />
-                <FieldTypeahead
-                  name={EXPORT_INTEREST_STATUS.NOT_INTERESTED}
-                  label="Countries not interested in"
-                  hint="Add all that you discussed"
-                  placeholder="-- Search countries --"
-                  options={countries}
-                  validate={[
-                    validateRequiredCountries,
-                    validatedDuplicatedCountries,
-                  ]}
-                  isMulti={true}
-                />
-              </>
-            )}
-          </>
-        )}
-        {values.theme == THEMES.INVESTMENT && (
-          <>
-            <FieldRadios
-              inline={true}
-              name="has_related_opportunity"
-              legend="Does this interaction relate to a large capital opportunity?"
-              required="Answer if this interaction relates to a large capital opportunity"
-              options={OPTIONS_YES_NO}
-            />
-
-            {values.has_related_opportunity === OPTION_YES && (
-              <FieldTypeahead
-                isMulti={false}
-                label="Related large capital opportunity"
-                name="large_capital_opportunity"
-                placeholder="-- Search opportunities --"
-                aria-label="Select an opportunity"
-                required="Select a related large capital opportunity"
-                loadOptions={throttle(
-                  (searchString) =>
-                    axios
-                      .get('/api-proxy/v4/large-capital-opportunity', {
-                        params: {
-                          autocomplete: searchString,
-                          archived: false,
-                        },
-                      })
-                      .then(({ data: { results } }) =>
-                        idNamesToValueLabels(results)
-                      ),
-                  500
-                )}
-              />
-            )}
-          </>
-        )}
-      </>
-    </FormLayout>
+        </>
+      )}
+    </>
   )
 }
 
