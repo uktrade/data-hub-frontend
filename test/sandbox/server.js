@@ -511,6 +511,11 @@ app.get(
 )
 
 app.get(
+  '/v4/reminder/subscription/summary',
+  v4Reminders.getReminderSubscriptionsSummary
+)
+
+app.get(
   '/v4/reminder/estimated-land-date',
   v4Reminders.getEstimatedLandDateReminders
 )

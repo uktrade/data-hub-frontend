@@ -5,11 +5,7 @@ import {
 import urls from '../../../../../../src/lib/urls'
 
 const userEndpoint = '/api-proxy/whoami'
-const eslEndpoint = '/api-proxy/v4/reminder/subscription/estimated-land-date'
-const nriEndpoint =
-  '/api-proxy/v4/reminder/subscription/no-recent-investment-interaction'
-const enriEndpoint =
-  '/api-proxy/v4/reminder/subscription/no-recent-export-interaction'
+const summaryEndpoint = '/api-proxy/v4/reminder/subscription/summary'
 
 const eslDataTest = 'estimated-land-date'
 const nriDataTest = 'no-recent-interaction'
@@ -29,31 +25,28 @@ const interceptAPICalls = ({
 } = {}) => {
   cy.intercept('GET', userEndpoint, {
     active_features: 'export-email-reminders',
-  })
-  cy.intercept('GET', eslEndpoint, {
+  }).as('userRequest')
+  cy.intercept('GET', summaryEndpoint, {
     body: {
-      reminder_days: esl_reminder_days,
-      email_reminders_enabled: esl_email_reminders_enabled,
+      estimated_land_date: {
+        email_reminders_enabled: esl_email_reminders_enabled,
+        reminder_days: esl_reminder_days,
+      },
+      no_recent_investment_interaction: {
+        email_reminders_enabled: nri_email_reminders_enabled,
+        reminder_days: nri_reminder_days,
+      },
+      no_recent_export_interaction: {
+        email_reminders_enabled: enri_email_reminders_enabled,
+        reminder_days: enri_reminder_days,
+      },
     },
-  }).as('eslApiRequest')
-  cy.intercept('GET', nriEndpoint, {
-    body: {
-      reminder_days: nri_reminder_days,
-      email_reminders_enabled: nri_email_reminders_enabled,
-    },
-  }).as('nriApiRequest')
-  cy.intercept('GET', enriEndpoint, {
-    body: {
-      reminder_days: enri_reminder_days,
-      email_reminders_enabled: enri_email_reminders_enabled,
-    },
-  }).as('enriApiRequest')
+  }).as('summaryRequest')
 }
 
 const waitForAPICalls = () => {
-  cy.wait('@eslApiRequest')
-  cy.wait('@nriApiRequest')
-  cy.wait('@enriApiRequest')
+  cy.wait('@userRequest')
+  cy.wait('@summaryRequest')
 }
 
 const assertSettingsTableVisible = (title, dataTest) => {
