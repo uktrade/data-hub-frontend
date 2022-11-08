@@ -8,7 +8,17 @@ import { FieldRadios, FieldInput, SectionHeader } from '..'
 
 import Form from '../Form'
 
-const buttonText = 'Archive'
+const CANCELLATION_LABEL = 'Cancellation reason'
+const ARCHIVE_LABEL = 'Archive'
+const SUBMIT_LABEL = 'Submit'
+
+const defaultHint = (type) =>
+  `Archive this ${type} if it is no longer required or active.`
+const interactionHint = (type) =>
+  `Cancel this ${type} if the meeting did not happen`
+
+const isInteraction = (type) =>
+  type === 'interaction' || type === 'service delivery'
 
 const buildOptions = (type, options) => {
   const isContact = type === 'contact' ? true : false
@@ -27,8 +37,20 @@ const buildOptions = (type, options) => {
     },
   ]
 
-  return options.concat(otherOption)
+  return isInteraction(type) ? options : options.concat(otherOption)
 }
+
+const getTopHint = (type) =>
+  isInteraction(type) ? interactionHint(type) : defaultHint(type)
+
+const getRadioButtonLabel = (type) =>
+  isInteraction(type) ? CANCELLATION_LABEL : ARCHIVE_LABEL + ' reason'
+
+const showCancelLink = (type, redirectUrl) =>
+  isInteraction(type) ? null : () => redirectUrl
+
+const getSubmitLabel = (type) =>
+  isInteraction(type) ? SUBMIT_LABEL : ARCHIVE_LABEL
 
 const ArchiveForm = ({
   id,
@@ -42,6 +64,7 @@ const ArchiveForm = ({
   archiveReasons,
   radioHint,
   flashMessage = null,
+  buttonText = ARCHIVE_LABEL,
 }) => {
   const [formIsOpen, setFormIsOpen] = useState(false)
 
@@ -51,25 +74,23 @@ const ArchiveForm = ({
 
   return (
     <div data-test={kebabCase(`archive-${type}-container`)}>
-      <SectionHeader type="archive">{`Archive ${type}`}</SectionHeader>
+      <SectionHeader type="archive">{`${buttonText} ${type}`}</SectionHeader>
 
-      <p data-test="archive-hint">
-        Archive this {type} if it is no longer required or active.
-      </p>
+      <p data-test="archive-hint">{getTopHint(type)}</p>
 
       {formIsOpen && (
         <Form
           id={id}
           submissionTaskName={submissionTaskName}
           transformPayload={transformPayload}
-          submitButtonLabel={buttonText}
+          submitButtonLabel={getSubmitLabel(type)}
           redirectTo={() => redirectUrl}
           analyticsFormName={analyticsFormName}
-          cancelRedirectTo={() => redirectUrl}
+          cancelRedirectTo={showCancelLink(type, redirectUrl)}
           flashMessage={flashMessage}
         >
           <FieldRadios
-            label="Archive reason"
+            label={getRadioButtonLabel(type)}
             name="archived_reason"
             required="You must select a reason"
             hint={radioHint}
