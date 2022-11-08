@@ -24,6 +24,9 @@ function renderCompletePage(req, res) {
     .breadcrumb('Interaction')
     .title('Did the meeting take place?')
     .render('interactions/views/complete', {
+      props: {
+        interactionId: interaction.id,
+      },
       meetingHappenForm: buildFormWithStateAndErrors(form, req.body, errors),
     })
 }
