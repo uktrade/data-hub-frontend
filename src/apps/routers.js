@@ -13,6 +13,7 @@ const reactRoutes = [
   '/events',
   '/interactions',
   '/reminders',
+  '/reminders/exports-no-recent-interactions',
   '/reminders/investments-estimated-land-date',
   '/reminders/investments-no-recent-interaction',
   '/reminders/investments-outstanding-propositions',
