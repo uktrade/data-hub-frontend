@@ -101,7 +101,7 @@ describe('Outstanding Proposition Reminders', () => {
 
     it('should include a list of links to other reminders', () => {
       cy.get('[data-test="link-list-item"]')
-        .should('have.length', 3)
+        .should('have.length', 4)
         .as('listItems')
       cy.get('@listItems')
         .eq(0)
@@ -131,6 +131,16 @@ describe('Outstanding Proposition Reminders', () => {
           'have.attr',
           'href',
           urls.reminders.investments.outstandingPropositions()
+        )
+
+      cy.get('@listItems')
+        .eq(3)
+        .find('a')
+        .should('contain', 'Reminders for companies with no recent interaction')
+        .should(
+          'have.attr',
+          'href',
+          urls.reminders.exports.noRecentInteractions()
         )
     })
 
