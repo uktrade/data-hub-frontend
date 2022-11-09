@@ -11,6 +11,25 @@ export const nestedProjectFaker = (overrides = {}) => ({
   ...overrides,
 })
 
+export const nestedCompanyFaker = (overrides = {}) => ({
+  id: faker.datatype.uuid(),
+  name: faker.company.name(),
+  ...overrides,
+})
+
+export const nestedInteractionFaker = (overrides = {}) => ({
+  created_by: {
+    name: faker.name.fullName(),
+    dit_team: {
+      name: `${faker.address.country()} Team`,
+    },
+  },
+  date: relativeDateFaker({ minDays: -365, maxDays: 0 }),
+  kind: faker.helpers.arrayElement(['interaction', 'service_delivery']),
+  subject: faker.datatype.string(),
+  ...overrides,
+})
+
 export const reminderFaker = (overrides = {}) => ({
   id: faker.datatype.uuid(),
   created_on: relativeDateFaker({ minDays: -365, maxDays: 0 }),
@@ -19,7 +38,19 @@ export const reminderFaker = (overrides = {}) => ({
   ...overrides,
 })
 
-export const reminderListFaker = (length = 1, overrides) =>
-  listFaker({ fakerFunction: reminderFaker, length, overrides })
+export const reminderListFaker = (
+  length = 1,
+  reminderFakerFunction = reminderFaker,
+  overrides
+) => listFaker({ fakerFunction: reminderFakerFunction, length, overrides })
+
+export const exportReminderFaker = (overrides = {}) => ({
+  id: faker.datatype.uuid(),
+  created_on: relativeDateFaker({ minDays: -365, maxDays: 0 }),
+  event: faker.lorem.words(),
+  company: nestedCompanyFaker(),
+  interaction: nestedInteractionFaker(),
+  ...overrides,
+})
 
 export default reminderListFaker

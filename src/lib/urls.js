@@ -495,6 +495,9 @@ module.exports = {
         '/reminders/investments-outstanding-propositions'
       ),
     },
+    exports: {
+      noRecentInteractions: url('/reminders/exports-no-recent-interactions'),
+    },
     settings: {
       index: url('/reminders/settings'),
       investments: {

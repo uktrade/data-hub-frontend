@@ -14,6 +14,7 @@ import {
   EstimatedLandDateReminders,
   NoRecentInteractionReminders,
   OutstandingPropositionReminders,
+  ExportsNoRecentInteractionReminders,
 } from './modules/Reminders'
 import EventAventriRegistrationStatus from './modules/Events/EventAventriRegistrationStatus'
 
@@ -98,6 +99,11 @@ const routes = {
       path: '/reminders/investments-outstanding-propositions',
       module: 'datahub:companies',
       component: OutstandingPropositionReminders,
+    },
+    {
+      path: '/reminders/exports-no-recent-interactions',
+      module: 'datahub:companies',
+      component: ExportsNoRecentInteractionReminders,
     },
     {
       path: '/reminders/settings',
