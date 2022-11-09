@@ -264,10 +264,13 @@ import {
   TASK_GET_EXPORT_NRI_REMINDER_SUBSCRIPTIONS,
   TASK_SAVE_EXPORT_NRI_REMINDER_SUBSCRIPTIONS,
   TASK_GET_ESTIMATED_LAND_DATE_REMINDERS,
+  TASK_GET_EXPORTS_NO_RECENT_INTERACTION_REMINDERS,
   TASK_GET_NO_RECENT_INTERACTION_REMINDERS,
   TASK_GET_NEXT_ESTIMATED_LAND_DATE_REMINDER,
+  TASK_GET_NEXT_EXPORTS_NO_RECENT_INTERACTION_REMINDERS,
   TASK_GET_NEXT_NO_RECENT_INTERACTION_REMINDER,
   TASK_DELETE_ESTIMATED_LAND_DATE_REMINDER,
+  TASK_DELETE_EXPORTS_NO_RECENT_INTERACTION_REMINDER,
   TASK_DELETE_NO_RECENT_INTERACTION_REMINDER,
   TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS,
 } from '../client/modules/Reminders/state'
@@ -477,14 +480,20 @@ function App() {
             reminders.getEstimatedLandDateReminders,
           [TASK_GET_NO_RECENT_INTERACTION_REMINDERS]:
             reminders.getNoRecentInteractionReminders,
+          [TASK_GET_EXPORTS_NO_RECENT_INTERACTION_REMINDERS]:
+            reminders.getExportsNoRecentInteractionReminders,
           [TASK_DELETE_ESTIMATED_LAND_DATE_REMINDER]:
             reminders.deleteEstimatedLandDateReminder,
           [TASK_DELETE_NO_RECENT_INTERACTION_REMINDER]:
             reminders.deleteNoRecentInteractionReminder,
+          [TASK_DELETE_EXPORTS_NO_RECENT_INTERACTION_REMINDER]:
+            reminders.deleteExportNoRecentInteractionReminder,
           [TASK_GET_NEXT_ESTIMATED_LAND_DATE_REMINDER]:
             reminders.getNextEstimatedLandDateReminder,
           [TASK_GET_NEXT_NO_RECENT_INTERACTION_REMINDER]:
             reminders.getNextNoRecentInteractionReminder,
+          [TASK_GET_NEXT_EXPORTS_NO_RECENT_INTERACTION_REMINDERS]:
+            reminders.getNextExportNoRecentInteractionReminder,
           [TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS]:
             reminders.getOutstandingPropositions,
           [TASK_GET_CONTACT_ACTIVITIES]: getContactActivities,

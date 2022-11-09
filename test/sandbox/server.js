@@ -531,6 +531,10 @@ app.get(
   v4Reminders.getEstimatedLandDateReminders
 )
 app.get(
+  '/v4/reminder/no-recent-export-interaction',
+  v4Reminders.getNoRecentExportInteractionReminders
+)
+app.get(
   '/v4/reminder/no-recent-investment-interaction',
   v4Reminders.getNoRecentInvestmentInteractionReminders
 )

@@ -1,19 +1,20 @@
 import { assertBreadcrumbs } from '../../support/assertions'
 import urls from '../../../../../src/lib/urls'
-import { reminderFaker, reminderListFaker } from '../../fakers/reminders'
+import { exportReminderFaker, reminderListFaker } from '../../fakers/reminders'
+import { formatLongDate } from '../../../../../src/client/utils/date'
 
-const remindersEndpoint =
-  '/api-proxy/v4/reminder/no-recent-investment-interaction'
+const remindersEndpoint = '/api-proxy/v4/reminder/no-recent-export-interaction'
 
-describe('No Recent Interaction Reminders', () => {
+describe('Exports no recent Interaction Reminders', () => {
   const reminders = [
-    reminderFaker({
+    exportReminderFaker({
       created_on: '2022-01-01T10:00:00.000000Z',
     }),
-    ...reminderListFaker(9),
+    ...reminderListFaker(9, exportReminderFaker),
   ]
+
   const totalCount = 25
-  const nextReminder = reminderFaker()
+  const nextReminder = exportReminderFaker()
 
   const interceptApiCalls = () => {
     cy.intercept(
@@ -27,7 +28,6 @@ describe('No Recent Interaction Reminders', () => {
           count: totalCount,
           results: reminders,
           next: null,
-          previous: null,
         },
       }
     ).as('remindersApiRequest')
@@ -40,7 +40,7 @@ describe('No Recent Interaction Reminders', () => {
       {
         body: {
           count: totalCount,
-          results: reminderListFaker(5),
+          results: reminderListFaker(5, exportReminderFaker),
           next: null,
           previous: null,
         },
@@ -73,21 +73,21 @@ describe('No Recent Interaction Reminders', () => {
   context('Reminders List', () => {
     before(() => {
       interceptApiCalls()
-      cy.visit(urls.reminders.investments.noRecentInteraction())
+      cy.visit(urls.reminders.exports.noRecentInteractions())
       cy.wait('@remindersApiRequest')
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        'Reminders for projects with no recent interaction': null,
+        'Reminders for companies with no recent interactions': null,
       })
     })
 
     it('should render the heading', () => {
       cy.get('[data-test="heading"]').should(
         'have.text',
-        'Reminders for projects with no recent interaction'
+        'Reminders for companies with no recent interactions'
       )
     })
 
@@ -137,7 +137,7 @@ describe('No Recent Interaction Reminders', () => {
     })
 
     it('should render the list heading with the total number of reminders', () => {
-      cy.get('[data-test="reminder-list-header"]').should(
+      cy.get('[data-test="reminder-list-header"').should(
         'contain',
         `${totalCount} reminders`
       )
@@ -156,23 +156,15 @@ describe('No Recent Interaction Reminders', () => {
       cy.get('[data-test="reminders-list-item"]').eq(0).as('reminder')
       cy.get('@reminder')
         .find('[data-test="item-header"]')
-        .should('contain', 'Received 1 Jan 2022')
-      cy.get('@reminder')
-        .find('[data-test="item-content"]')
-        .should(
-          'contain',
-          `${reminders[0].event} for ${reminders[0].project.name}`
-        )
         .find('a')
         .should(
           'have.attr',
           'href',
-          urls.investments.projects.details(reminders[0].project.id)
+          urls.companies.detail(reminders[0].company.id)
         )
-        .should('contain', reminders[0].project.name)
       cy.get('@reminder')
-        .find('[data-test="item-footer"]')
-        .should('contain', `Project code ${reminders[0].project.project_code}`)
+        .find('[data-test="item-content"]')
+        .should('contain', `${reminders[0].interaction.subject}`)
     })
   })
 
@@ -193,7 +185,7 @@ describe('No Recent Interaction Reminders', () => {
           },
         }
       ).as('remindersApiRequest')
-      cy.visit(urls.reminders.investments.noRecentInteraction())
+      cy.visit(urls.reminders.exports.noRecentInteractions())
       cy.wait('@remindersApiRequest')
     })
 
@@ -208,7 +200,7 @@ describe('No Recent Interaction Reminders', () => {
   context('Pagination', () => {
     beforeEach(() => {
       interceptApiCalls()
-      cy.visit(urls.reminders.investments.noRecentInteraction())
+      cy.visit(urls.reminders.exports.noRecentInteractions())
       cy.wait('@remindersApiRequest')
     })
 
@@ -239,7 +231,7 @@ describe('No Recent Interaction Reminders', () => {
   context('Sort', () => {
     beforeEach(() => {
       cy.intercept('GET', `${remindersEndpoint}*`).as('remindersApiRequest')
-      cy.visit(urls.reminders.investments.noRecentInteraction())
+      cy.visit(urls.reminders.exports.noRecentInteractions())
     })
 
     it('should apply the default sort', () => {
@@ -275,9 +267,12 @@ describe('No Recent Interaction Reminders', () => {
   context('Delete', () => {
     beforeEach(() => {
       interceptApiCalls()
-      cy.visit(urls.reminders.investments.noRecentInteraction())
+      cy.visit(urls.reminders.exports.noRecentInteractions())
       cy.wait('@remindersApiRequest')
     })
+
+    // needed as Cypress appears to cast the JSON date response into a non-ISO format
+    const deleted_reminder_date = new Date(reminders[4].created_on)
 
     it('should delete a reminder when clicked', () => {
       cy.get('[data-test="reminder-list-header"]').should(
@@ -301,13 +296,12 @@ describe('No Recent Interaction Reminders', () => {
         .find('[data-test="item-content"]')
         .should(
           'contain',
-          `${reminders[4].event} for ${reminders[4].project.name}`
+          `Reminder received ${formatLongDate(
+            deleted_reminder_date.toISOString()
+          )} for ${reminders[4].company.name}`
         )
         .find('a')
         .should('not.exist')
-      cy.get('@reminder')
-        .find('[data-test="item-footer"]')
-        .should('contain', '')
 
       // pulls in the next item and appends to the end of the page
       cy.wait('@getNextRemindersApiRequest')
@@ -316,20 +310,7 @@ describe('No Recent Interaction Reminders', () => {
 
       cy.get('@nextReminder')
         .find('[data-test="item-content"]')
-        .should(
-          'contain',
-          `${nextReminder.event} for ${nextReminder.project.name}`
-        )
-        .find('a')
-        .should(
-          'have.attr',
-          'href',
-          urls.investments.projects.details(nextReminder.project.id)
-        )
-        .should('contain', nextReminder.project.name)
-      cy.get('@nextReminder')
-        .find('[data-test="item-footer"]')
-        .should('contain', `Project code ${nextReminder.project.project_code}`)
+        .should('contain', nextReminder.interaction.subject)
     })
   })
 })
