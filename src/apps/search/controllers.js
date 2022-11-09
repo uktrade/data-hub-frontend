@@ -17,6 +17,7 @@ const {
 } = require('../interactions/transformers')
 
 async function renderSearchResults(req, res) {
+  console.log('inside renderSearchResults')
   const entity = find(ENTITIES, ['path', req.params.searchPath])
 
   if (!entity) {
@@ -50,6 +51,7 @@ async function renderSearchResults(req, res) {
   }
 
   if (searchEntity === 'company') {
+    console.log('inside searchEntity > company')
     itemTransformers.push(transformCompanyToListItem)
     actionButtons.push({
       label: 'Add company',
@@ -60,6 +62,8 @@ async function renderSearchResults(req, res) {
   if (searchEntity === 'interaction') {
     itemTransformers.push(transformInteractionToListItem())
   }
+
+  console.log('REQ.QUERY', req.query)
 
   const results = await search({
     searchTerm,
@@ -78,6 +82,8 @@ async function renderSearchResults(req, res) {
       ...itemTransformers
     )
   )
+
+  console.log('RESPONSE', results.items[0].meta)
 
   res.breadcrumb(entity.text).render('search/view', {
     actionButtons,

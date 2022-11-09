@@ -17,11 +17,13 @@ module.exports = function transformCompanyToListItem({
   global_headquarters,
   latest_interaction_date,
   registered_address,
+  ...props
 } = {}) {
   if (!id) {
     return
   }
 
+  console.log('PROPS', props)
   const meta = []
 
   if (trading_names && trading_names.length) {
