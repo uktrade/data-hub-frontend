@@ -2,15 +2,17 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link, useLocation } from 'react-router-dom'
 
-import { BLUE } from 'govuk-colours'
+import { BLUE, BORDER_COLOUR } from 'govuk-colours'
+import { H3 } from 'govuk-react'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
 import urls from '../../../lib/urls'
 
 const LinkList = styled('ul')({
   listStyleType: 'none',
-  padding: 0,
-  margin: 0,
+  padding: `0 0 ${SPACING.SCALE_4}`,
+  margin: `0 0 ${SPACING.SCALE_4}`,
+  borderBottom: `1px solid ${BORDER_COLOUR}`,
 })
 
 const LinkListItem = styled('li')({
@@ -46,26 +48,38 @@ const MenuItem = ({ to, pathname, children }) => (
 const RemindersMenu = () => {
   const location = useLocation()
   return (
-    <Menu>
-      <MenuItem
-        to={urls.reminders.investments.estimatedLandDate()}
-        pathname={location.pathname}
-      >
-        Reminders for approaching estimated land dates
-      </MenuItem>
-      <MenuItem
-        to={urls.reminders.investments.noRecentInteraction()}
-        pathname={location.pathname}
-      >
-        Reminders for projects with no recent interaction
-      </MenuItem>
-      <MenuItem
-        to={urls.reminders.investments.outstandingPropositions()}
-        pathname={location.pathname}
-      >
-        Reminders for outstanding propositions
-      </MenuItem>
-    </Menu>
+    <>
+      <Menu>
+        <H3 as="h2">Investment</H3>
+        <MenuItem
+          to={urls.reminders.investments.estimatedLandDate()}
+          pathname={location.pathname}
+        >
+          Reminders for approaching estimated land dates
+        </MenuItem>
+        <MenuItem
+          to={urls.reminders.investments.noRecentInteraction()}
+          pathname={location.pathname}
+        >
+          Reminders for projects with no recent interaction
+        </MenuItem>
+        <MenuItem
+          to={urls.reminders.investments.outstandingPropositions()}
+          pathname={location.pathname}
+        >
+          Reminders for outstanding propositions
+        </MenuItem>
+      </Menu>
+      <Menu>
+        <H3 as="h2">Export</H3>
+        <MenuItem
+          to={urls.reminders.exports.noRecentInteractions()}
+          pathname={location.pathname}
+        >
+          Reminders for companies with no recent interactions
+        </MenuItem>
+      </Menu>
+    </>
   )
 }
 

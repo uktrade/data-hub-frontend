@@ -5,6 +5,7 @@ import ExportNoRecentInteractionForm from './Settings/ExportNoRecentInteractionF
 import EstimatedLandDateReminders from './EstimatedLandDateReminders'
 import NoRecentInteractionReminders from './NoRecentInteractionReminders'
 import OutstandingPropositionReminders from './OutstandingPropositionReminders'
+import ExportsNoRecentInteractionReminders from './ExportsNoRecentInteractionReminders'
 
 export {
   RemindersSettings,
@@ -14,4 +15,5 @@ export {
   EstimatedLandDateReminders,
   NoRecentInteractionReminders,
   OutstandingPropositionReminders,
+  ExportsNoRecentInteractionReminders,
 }
