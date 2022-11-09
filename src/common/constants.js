@@ -29,6 +29,9 @@ const OPTIONS_YES_NO = [
   { label: 'No', value: OPTION_NO },
 ]
 
+const METHOD_PATCH = 'PATCH'
+const METHOD_POST = 'POST'
+
 module.exports = {
   DATE_DAY_LONG_FORMAT,
   DATE_DAY_MONTH,
@@ -48,4 +51,6 @@ module.exports = {
   OPTIONS_YES_NO,
   OPTION_YES,
   OPTION_NO,
+  METHOD_PATCH,
+  METHOD_POST,
 }
