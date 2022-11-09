@@ -59,6 +59,7 @@ const ALLOWLIST = [
   '/v4/reminder/summary',
   '/v3/contact/:id/audit',
   '/v4/interaction/:id',
+  '/v4/interaction/:id/archive',
 ]
 
 module.exports = (app) => {

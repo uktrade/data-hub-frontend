@@ -2,7 +2,6 @@ const router = require('express').Router()
 
 const urls = require('../../lib/urls')
 const { renderDetailsPage } = require('./controllers/details')
-const { renderCompletePage, postComplete } = require('./controllers/complete')
 const { renderInteractionsForEntity } = require('./controllers/list')
 const { getInteractionDetails } = require('./middleware/details')
 const {
@@ -31,10 +30,5 @@ router.get(
 router.use(detailsFormRouter)
 
 router.get(urls.interactions.detail.route, renderDetailsPage)
-
-router
-  .route(urls.interactions.complete.route)
-  .post(postComplete, renderCompletePage)
-  .get(renderCompletePage)
 
 module.exports = router

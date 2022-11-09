@@ -8,6 +8,11 @@ const archivist = {
   last_name: 'Archivist',
 }
 
+const archivistWithAlternateKey = {
+  firstName: 'Inter',
+  lastName: 'Action',
+}
+
 const unarchiveUrl = 'https://www.example.com'
 const archiveReason = 'No longer needed'
 const prefixedArchiveReason = 'Reason: ' + archiveReason
@@ -72,6 +77,30 @@ describe('ArchivePanel', () => {
 
     it('should render the unarchive link', () => {
       assertUnarchiveLink()
+    })
+  })
+
+  context('When the record is an interaction', () => {
+    beforeEach(() => {
+      cy.mount(
+        <Component
+          type="interaction"
+          archivedBy={archivistWithAlternateKey}
+          unarchiveUrl={null}
+          archiveReason={'DIT cancelled'}
+          archiveMessage={'cancelled'}
+        />
+      )
+    })
+
+    it('should render the panel with the archivist name visible', () => {
+      assertArchiveMessage(
+        'This interaction was cancelled on 10 Dec 2019 by Inter Action.'
+      )
+    })
+
+    it('should not render the unarchive link', () => {
+      cy.get('[data-test=unarchive-link]').should('not.exist')
     })
   })
 })

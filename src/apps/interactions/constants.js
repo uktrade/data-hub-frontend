@@ -43,10 +43,6 @@ const INTERACTION_STATUS = {
   COMPLETE: 'complete',
 }
 
-const ARCHIVED_REASON = {
-  RESCHEDULED: 'Rescheduled',
-}
-
 const THEMES = {
   EXPORT: 'export',
   INVESTMENT: 'investment',
@@ -80,7 +76,6 @@ module.exports = {
   INTERACTION_NAMES,
   SERVICE_DELIVERY_STATUS_COMPLETED,
   INTERACTION_STATUS,
-  ARCHIVED_REASON,
   THEMES,
   KINDS,
   SERVICE_CONTEXTS,
