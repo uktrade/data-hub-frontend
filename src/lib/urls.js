@@ -516,6 +516,7 @@ module.exports = {
         noRecentInteraction: url(
           '/reminders/settings/companies-no-recent-interactions'
         ),
+        newInteraction: url('/reminders/settings/companies-new-interactions'),
       },
     },
   },

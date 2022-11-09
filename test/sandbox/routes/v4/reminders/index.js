@@ -40,6 +40,10 @@ exports.getReminderSubscriptionsSummary = function (req, res) {
       email_reminders_enabled: true,
       reminder_days: [10, 20, 40],
     },
+    new_export_interaction: {
+      email_reminders_enabled: true,
+      reminder_days: [2, 4, 7],
+    },
   })
 }
 
@@ -53,6 +57,20 @@ exports.getNoRecentExportInteractionsSubscriptions = function (req, res) {
 exports.saveNoRecentExportInteractionsSubscriptions = function (req, res) {
   res.json({
     reminder_days: [20, 40],
+    email_reminders_enabled: true,
+  })
+}
+
+exports.getNewExportInteractionsSubscriptions = function (req, res) {
+  res.json({
+    reminder_days: [2],
+    email_reminders_enabled: false,
+  })
+}
+
+exports.saveNewExportInteractionsSubscriptions = function (req, res) {
+  res.json({
+    reminder_days: [2, 4],
     email_reminders_enabled: true,
   })
 }

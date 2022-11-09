@@ -6,6 +6,7 @@ import RemindersForms from './Settings/RemindersForms'
 import InvestmentsEstimatedLandDatesForm from './Settings/InvestmentsEstimatedLandDatesForm'
 import InvestmentsNoRecentInteractionsForm from './Settings/InvestmentsNoRecentInteractionsForm'
 import ExportsNoRecentInteractionsForm from './Settings/ExportsNoRecentInteractionsForm'
+import ExportsNewInteractionsForm from './Settings/ExportsNewInteractionsForm'
 
 // Lists
 import RemindersLists from './RemindersLists'
@@ -20,6 +21,7 @@ export {
   InvestmentsEstimatedLandDatesForm,
   InvestmentsNoRecentInteractionsForm,
   ExportsNoRecentInteractionsForm,
+  ExportsNewInteractionsForm,
   RemindersLists,
   InvestmentsEstimatedLandDatesList,
   InvestmentsNoRecentInteractionsList,
