@@ -24,7 +24,6 @@ import {
 } from '../../support/assertions'
 import { testTypeahead, testTypeaheadOptionsLength } from '../../support/tests'
 import { ukRegionFaker, ukRegionListFaker } from '../../fakers/regions'
-import { userFaker } from '../../fakers/users'
 
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
@@ -43,7 +42,6 @@ const minimumPayload = {
 const searchEndpoint = '/api-proxy/v3/search/event'
 const eventTypeEndpoint = '/api-proxy/v4/metadata/event-type'
 const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
-const whoAmIEndpoint = '/api-proxy/whoami/'
 
 describe('events Collections Filter', () => {
   context('with the events activity stream feature flag disabled', () => {
@@ -691,16 +689,6 @@ describe('events Collections Filter', () => {
 
       context('should filter from user input and apply filter chips', () => {
         before(() => {
-          cy.intercept(
-            {
-              method: 'GET',
-              pathname: whoAmIEndpoint,
-            },
-            {
-              body: userFaker(),
-            }
-          ).as('whoAmIApiRequest')
-
           cy.intercept(
             'GET',
             `${urls.events.activity.data()}?sortBy=modified_on:desc&ukRegion[]=${ukRegion}&page=1`
