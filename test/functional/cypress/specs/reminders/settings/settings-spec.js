@@ -85,7 +85,7 @@ describe('Reminders Settings', () => {
   context(
     'When estimated land settings are visible and no recent interaction settings are hidden',
     () => {
-      const queryParams = 'estimated_land_date=true'
+      const queryParams = 'investments_estimated_land_date=true'
       before(() => {
         interceptAPICalls()
         cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)
@@ -125,7 +125,7 @@ describe('Reminders Settings', () => {
   context(
     'When estimated land settings are hidden and no recent interaction settings are visible',
     () => {
-      const queryParams = 'no_recent_interaction=true'
+      const queryParams = 'investments_no_recent_interaction=true'
       before(() => {
         interceptAPICalls()
         cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)
@@ -165,7 +165,8 @@ describe('Reminders Settings', () => {
   context(
     'When both estimated land settings and no recent interaction settings are visible',
     () => {
-      const queryParams = 'estimated_land_date=true&no_recent_interaction=true'
+      const queryParams =
+        'investments_estimated_land_date=true&investments_no_recent_interaction=true'
       before(() => {
         interceptAPICalls()
         cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)

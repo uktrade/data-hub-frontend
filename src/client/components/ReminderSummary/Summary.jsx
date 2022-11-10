@@ -30,9 +30,11 @@ const typeToReminderName = {
 }
 
 const typeToURL = {
-  estimated_land_date: urls.reminders.estimatedLandDate(),
-  no_recent_investment_interaction: urls.reminders.noRecentInteraction(),
-  outstanding_propositions: urls.reminders.outstandingPropositions(),
+  estimated_land_date: urls.reminders.investments.estimatedLandDate(),
+  no_recent_investment_interaction:
+    urls.reminders.investments.noRecentInteraction(),
+  outstanding_propositions:
+    urls.reminders.investments.outstandingPropositions(),
 }
 
 const Summary = ({ summary }) => {
