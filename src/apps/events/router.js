@@ -16,7 +16,6 @@ const {
 
 router.get('/create', renderEventsView)
 router.get(urls.events.activity.data.route, fetchAllActivityFeedEvents)
-console.log('>>>route', urls.events.activity.data.route)
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.get('/aventri/:aventriEventId/details', renderEventsView)
