@@ -59,4 +59,16 @@ router.get(
 
 ## Adding feature flags in Sandbox
 
-To add a feature flag in Sandbox for functional testing you just need to add your feature flag name to this JSON file https://github.com/uktrade/data-hub-frontend/blob/main/test/sandbox/fixtures/v3/feature-flag/feature-flag.json
+### Nunjucks feature flags
+To add a feature flag in Sandbox for functional testing you just need to add your feature flag name to this JSON file: https://github.com/uktrade/data-hub-frontend/blob/main/test/sandbox/fixtures/v3/feature-flag/feature-flag.json . 
+
+### React feature flags
+To add a React-built feature flag to Sandbox for testing, add it to the `active_features` array at the end of this JSON file: https://github.com/uktrade/data-hub-frontend/blob/main/test/sandbox/fixtures/whoami.json .
+
+Alternatively, in Cypress, you can intercept and update the feature flag request, for example: 
+
+```
+cy.intercept('GET', '/api-proxy/whoami', {
+    active_features: ['your-flag-name'],
+  })
+```
