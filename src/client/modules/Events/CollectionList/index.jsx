@@ -273,6 +273,16 @@ const EventsCollection = ({
                   selectedOptions={selectedFilters.ukRegions.options}
                   data-test="uk-region-filter"
                 />
+                <Filters.CheckboxGroup
+                  maxScrollHeight={200}
+                  legend={LABELS.eventType}
+                  name="event_type"
+                  qsParam="event_type"
+                  options={optionMetadata.eventTypeOptions}
+                  selectedOptions={selectedFilters.eventTypes.options}
+                  data-test="event-type-filter"
+                  groupId="event-type-filter"
+                />
               </CollectionFilters>
             </ActivityFeedFilteredCollectionList>
           )
