@@ -216,7 +216,6 @@ const EventsCollection = ({
                   qsParam="name"
                   name="name"
                   label={LABELS.eventName}
-                  placeholder="Search event name"
                   data-test="event-name-filter"
                 />
                 <Filters.Date
@@ -224,12 +223,14 @@ const EventsCollection = ({
                   name="earliest_start_date"
                   qsParamName="earliest_start_date"
                   data-test="earliest-start-date-filter"
+                  hint="For example, 21/11/2019"
                 />
                 <Filters.Date
                   label={LABELS.latestStartDate}
                   name="latest_start_date"
                   qsParamName="latest_start_date"
                   data-test="latest-start-date-filter"
+                  hint="For example, 21/11/2019"
                 />
                 <Filters.AdvisersTypeahead
                   isMulti={true}
@@ -247,7 +248,7 @@ const EventsCollection = ({
                   label={LABELS.aventriId}
                   name="aventri_id"
                   qsParam="aventri_id"
-                  hintText="For example, 100100100"
+                  hint="For example, 100100100"
                   type="number"
                   onInput={maxLengthAventriIdValidation}
                   data-test="aventri-id-filter"
@@ -257,7 +258,7 @@ const EventsCollection = ({
                   label={LABELS.country}
                   name="address_country"
                   qsParam="address_country"
-                  placeholder="Search country"
+                  placeholder=""
                   options={optionMetadata.countryOptions}
                   selectedOptions={selectedFilters.countries.options}
                   data-test="country-filter"
