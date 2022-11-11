@@ -13,7 +13,7 @@ import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
 import Resource from '../../../components/Resource'
 import urls from '../../../../lib/urls'
 
-import { TASK_GET_ALL_REMINDER_SUBSCRIPTIONS } from '../state'
+import { TASK_GET_SUBSCRIPTION_SUMMARY } from '../state'
 
 const ToggleSectionContainer = styled('div')({
   marginTop: SPACING.SCALE_3,
@@ -54,8 +54,8 @@ const RemindersSettings = () => {
       ]}
     >
       <Resource
-        name={TASK_GET_ALL_REMINDER_SUBSCRIPTIONS}
-        id={TASK_GET_ALL_REMINDER_SUBSCRIPTIONS}
+        name={TASK_GET_SUBSCRIPTION_SUMMARY}
+        id={TASK_GET_SUBSCRIPTION_SUMMARY}
       >
         {({
           estimatedLandDate,
@@ -99,13 +99,13 @@ const RemindersSettings = () => {
                     <ToggleSectionContainer>
                       <RemindersToggleSection
                         label="Companies with no recent interaction"
-                        id="export-no-recent-interactions-toggle"
-                        data-test="export-no-recent-interactions-toggle"
+                        id="exports-no-recent-interaction-toggle"
+                        data-test="exports-no-recent-interaction-toggle"
                         isOpen={openENRI}
                         borderBottom={true}
                       >
                         <RemindersSettingsTable
-                          dataName={'export-no-recent-interactions'}
+                          dataName={'exports-no-recent-interaction'}
                           data={exportNoRecentInteractions}
                           to={urls.reminders.settings.exports.noRecentInteraction()}
                         />
