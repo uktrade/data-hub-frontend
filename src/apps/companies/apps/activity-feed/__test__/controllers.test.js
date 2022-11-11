@@ -669,6 +669,28 @@ describe('Activity feed controllers', () => {
       })
     })
 
+    context('check query builder when filtering on event type', () => {
+      const expectedQuery = (eventType) => [
+        {
+          terms: {
+            'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+          },
+        },
+        {
+          terms: {
+            'object.dit:eventType.id': eventType,
+          },
+        },
+      ]
+
+      it('builds the right query when a event type is selected', () => {
+        const eventType = ['an-event-type-id']
+        const actualQuery = eventsColListQueryBuilder({ eventType })
+
+        expect(expectedQuery(eventType)).to.deep.equal(actualQuery)
+      })
+    })
+
     context('check query builder when filtering on uk region', () => {
       const expectedQuery = (ukRegion) => [
         {

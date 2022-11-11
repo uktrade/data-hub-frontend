@@ -22,7 +22,11 @@ import {
   assertPayload,
   assertQueryParams,
 } from '../../support/assertions'
-import { testTypeahead, testTypeaheadOptionsLength } from '../../support/tests'
+import {
+  testTypeahead,
+  testTypeaheadOptionsLength,
+  testCheckBoxGroup,
+} from '../../support/tests'
 import { ukRegionFaker, ukRegionListFaker } from '../../fakers/regions'
 
 const buildQueryString = (queryParams = {}) =>
@@ -43,6 +47,8 @@ const searchEndpoint = '/api-proxy/v3/search/event'
 const eventTypeEndpoint = '/api-proxy/v4/metadata/event-type'
 const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
 
+const disabledEventType = eventTypeFaker({ disabled_on: '2020-01-01' })
+const eventTypes = [disabledEventType, ...eventTypeListFaker(2)]
 describe('events Collections Filter', () => {
   context('with the events activity stream feature flag disabled', () => {
     const disabledEventType = eventTypeFaker({ disabled_on: '2020-01-01' })
@@ -776,6 +782,48 @@ describe('events Collections Filter', () => {
 
         it('should remove the organiser from the url', () => {
           cy.url().should('not.include', queryParamWithAdvisor)
+        })
+      })
+    })
+
+    context('Event type', () => {
+      const element = '[data-test="event-type-filter"] fieldset'
+      const selectedCountElement = `${element} span`
+      const eventType = randomChoice(eventTypes)
+      const queryParamWithEventType = `event_type%5B0%5D=${eventType.id}`
+
+      context('should filter from user input and apply filter chips', () => {
+        before(() => {
+          cy.intercept('GET', eventTypeEndpoint, eventTypes).as(
+            'eventTypeApiRequest'
+          )
+          cy.intercept(
+            'GET',
+            `${urls.events.activity.data()}?sortBy=modified_on:desc&page=1&eventType[]=${
+              eventType.id
+            }`
+          ).as('eventTypeRequest')
+        })
+
+        it('should pass the event type to the controller', () => {
+          cy.visit(events.index())
+          testCheckBoxGroup({ element, value: eventType.id })
+
+          cy.wait('@eventTypeRequest').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+        })
+
+        it('should pass the event type from user input to query param', () => {
+          cy.url().should('include', queryParamWithEventType)
+        })
+
+        it('should show correct number of selected items', () => {
+          expect(cy.get(selectedCountElement).should('contain', '1'))
+        })
+
+        it('should remove the selected event type', () => {
+          testCheckBoxGroup({ element, value: eventType.id, checked: false })
         })
       })
     })
