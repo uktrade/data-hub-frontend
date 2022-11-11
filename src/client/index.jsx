@@ -256,7 +256,7 @@ import {
 
 import * as reminders from '../client/modules/Reminders/tasks'
 import {
-  TASK_GET_ALL_REMINDER_SUBSCRIPTIONS,
+  TASK_GET_SUBSCRIPTION_SUMMARY,
   TASK_GET_ELD_REMINDER_SUBSCRIPTIONS,
   TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS,
   TASK_GET_NRI_REMINDER_SUBSCRIPTIONS,
@@ -462,7 +462,7 @@ function App() {
           [TASK_GET_TYPEAHEAD_OPTIONS]: getTypeaheadOptions,
           [TASK_SAVE_ORDER_ASSIGNEES]: editOMISTasks.saveOrderAssignees,
           [TASK_SAVE_ORDER_SUBSCRIBERS]: editOMISTasks.saveOrderSubscribers,
-          [TASK_GET_ALL_REMINDER_SUBSCRIPTIONS]: reminders.getAllSubscriptions,
+          [TASK_GET_SUBSCRIPTION_SUMMARY]: reminders.getSubscriptionSummary,
           [TASK_GET_ELD_REMINDER_SUBSCRIPTIONS]: reminders.getEldSubscriptions,
           [TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS]:
             reminders.saveEldSubscriptions,
