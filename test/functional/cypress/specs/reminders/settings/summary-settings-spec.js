@@ -9,7 +9,7 @@ const summaryEndpoint = '/api-proxy/v4/reminder/subscription/summary'
 
 const eslDataTest = 'estimated-land-date'
 const nriDataTest = 'no-recent-interaction'
-const enriDataTest = 'export-no-recent-interactions'
+const enriDataTest = 'exports-no-recent-interaction'
 
 const getToggle = (dataTest) => `[data-test="${dataTest}-toggle"]`
 const getTable = (dataTest) => `[data-test="${dataTest}-table"]`
@@ -169,7 +169,7 @@ describe('Reminders Settings', () => {
   )
 
   context('When only no recent export interaction settings are visible', () => {
-    const queryParams = 'exports_no_recent_interactions=true'
+    const queryParams = 'exports_no_recent_interaction=true'
     before(() => {
       interceptAPICalls()
       cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)
@@ -190,7 +190,7 @@ describe('Reminders Settings', () => {
 
   context('When all settings are visible', () => {
     const queryParams =
-      'investments_estimated_land_date=true&investments_no_recent_interaction=true&exports_no_recent_interactions=true'
+      'investments_estimated_land_date=true&investments_no_recent_interaction=true&exports_no_recent_interaction=true'
     before(() => {
       interceptAPICalls()
       cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)
@@ -231,7 +231,7 @@ describe('Reminders Settings', () => {
     })
 
     it('should render the ENRI settings table with Off', () => {
-      assertKeyValueTable('export-no-recent-interactions-table', {
+      assertKeyValueTable('exports-no-recent-interaction-table', {
         Reminders: 'Off',
         'Email notifications': 'Off',
       })
