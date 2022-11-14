@@ -75,12 +75,12 @@ const InteractionDetailsForm = ({
         const openContactFormTask = getTask(TASK_OPEN_CONTACT_FORM, STATE_ID)
         const companyIds = [companyId]
         return (
-          <Route>
-            {({ location }) => {
-              const contactCreated =
-                location.search.includes('new-contact-name')
-              return (
-                <FormLayout setWidth="three-quarters">
+          <FormLayout setWidth="three-quarters">
+            <Route>
+              {({ location }) => {
+                const contactCreated =
+                  location.search.includes('new-contact-name')
+                return (
                   <Form
                     id={STATE_ID}
                     submissionTaskName={TASK_SAVE_INTERACTION}
@@ -166,10 +166,10 @@ const InteractionDetailsForm = ({
                       </>
                     )}
                   </Form>
-                </FormLayout>
-              )
-            }}
-          </Route>
+                )
+              }}
+            </Route>
+          </FormLayout>
         )
       }}
     </Task>
