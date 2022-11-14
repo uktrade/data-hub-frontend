@@ -243,16 +243,6 @@ const EventsCollection = ({
                   selectedOptions={selectedFilters.organisers.options}
                   data-test="organiser-filter"
                 />
-                <Filters.AventriId
-                  id="EventsCollection.aventriId"
-                  label={LABELS.aventriId}
-                  name="aventri_id"
-                  qsParam="aventri_id"
-                  hint="For example, 100100100"
-                  type="number"
-                  onInput={maxLengthAventriIdValidation}
-                  data-test="aventri-id-filter"
-                />
                 <Filters.Typeahead
                   isMulti={true}
                   label={LABELS.country}
@@ -283,6 +273,16 @@ const EventsCollection = ({
                   selectedOptions={selectedFilters.eventTypes.options}
                   data-test="event-type-filter"
                   groupId="event-type-filter"
+                />
+                <Filters.AventriId
+                  id="EventsCollection.aventriId"
+                  label={LABELS.aventriId}
+                  name="aventri_id"
+                  qsParam="aventri_id"
+                  hint="For example, 100100100"
+                  type="number"
+                  onInput={maxLengthAventriIdValidation}
+                  data-test="aventri-id-filter"
                 />
               </CollectionFilters>
             </ActivityFeedFilteredCollectionList>
