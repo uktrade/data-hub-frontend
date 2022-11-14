@@ -91,7 +91,7 @@
     "constate": "^3.3.0",
     "cookie-parser": "^1.4.6",
     "core-js": "^3.26.0",
-    "css-loader": "^6.7.1",
+    "css-loader": "^6.7.2",
     "csurf": "^1.11.0",
     "cypress-axe": "^1.0.0",
     "date-fns": "^2.29.3",
