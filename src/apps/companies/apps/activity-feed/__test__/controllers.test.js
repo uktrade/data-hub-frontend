@@ -668,6 +668,28 @@ describe('Activity feed controllers', () => {
         expect(expectedQuery(addressCountry)).to.deep.equal(actualQuery)
       })
     })
+
+    context('check query builder when filtering on uk region', () => {
+      const expectedQuery = (ukRegion) => [
+        {
+          terms: {
+            'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+          },
+        },
+        {
+          terms: {
+            'object.dit:ukRegion.id': ukRegion,
+          },
+        },
+      ]
+
+      it('builds the right query when a uk region is selected', () => {
+        const ukRegion = ['1718e330-6095-e211-a939-e4115bead28a']
+        const actualQuery = eventsColListQueryBuilder({ ukRegion })
+
+        expect(expectedQuery(ukRegion)).to.deep.equal(actualQuery)
+      })
+    })
   })
 
   describe('#fetchAllActivityFeedEvents', () => {
@@ -686,17 +708,20 @@ describe('Activity feed controllers', () => {
     })
 
     context('when filtering for the events collection page', () => {
+      const requestQuery = {
+        sortBy: 'name:asc',
+        name: 'project zeus',
+        earliestStartDate: '2020-11-01',
+        latestStartDate: '2020-11-10',
+        page: 1,
+        aventriId: 123456789,
+        addressCountry: ['Canada', 'United Kingdom'],
+        ukRegion: ['1718e330-6095-e211-a939-e4115bead28a'],
+      }
+
       before(async () => {
         middlewareParameters = buildMiddlewareParameters({
-          requestQuery: {
-            sortBy: 'name:asc',
-            name: 'project zeus',
-            earliestStartDate: '2020-11-01',
-            latestStartDate: '2020-11-10',
-            page: 1,
-            aventriId: 123456789,
-            addressCountry: ['Canada', 'United Kingdom'],
-          },
+          requestQuery,
         })
 
         await controllers.fetchAllActivityFeedEvents(
@@ -707,13 +732,9 @@ describe('Activity feed controllers', () => {
       })
 
       it('should call fetchAllActivityFeedEvents with the right params', async () => {
-        const name = 'project zeus'
         const from = 0
         const size = 10
-        const earliestStartDate = '2020-11-01'
-        const latestStartDate = '2020-11-10'
-        const transformedAventriId = 'dit:aventri:Event:123456789:Create'
-        const addressCountry = ['Canada', 'United Kingdom']
+        const transformedAventriId = `dit:aventri:Event:${requestQuery.aventriId}:Create`
 
         const expectedEsQuery = {
           from,
@@ -728,14 +749,14 @@ describe('Activity feed controllers', () => {
                 },
                 {
                   match_phrase_prefix: {
-                    'object.name': name,
+                    'object.name': requestQuery.name,
                   },
                 },
                 {
                   range: {
                     'object.startTime': {
-                      gte: earliestStartDate,
-                      lte: latestStartDate,
+                      gte: requestQuery.earliestStartDate,
+                      lte: requestQuery.latestStartDate,
                     },
                   },
                 },
@@ -749,15 +770,22 @@ describe('Activity feed controllers', () => {
                     should: [
                       {
                         terms: {
-                          'object.dit:address_country.name': addressCountry,
+                          'object.dit:address_country.name':
+                            requestQuery.addressCountry,
                         },
                       },
                       {
                         terms: {
-                          'object.dit:aventri:location_country': addressCountry,
+                          'object.dit:aventri:location_country':
+                            requestQuery.addressCountry,
                         },
                       },
                     ],
+                  },
+                },
+                {
+                  terms: {
+                    'object.dit:ukRegion.id': requestQuery.ukRegion,
                   },
                 },
               ],

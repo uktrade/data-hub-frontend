@@ -680,8 +680,59 @@ describe('events Collections Filter', () => {
       })
     })
 
-    after(() => {
-      cy.resetUser()
+    context('UkRegion', () => {
+      const element = '[data-test="uk-region-filter"]'
+      const queryParamWithUkRegion =
+        'uk_region%5B0%5D=1718e330-6095-e211-a939-e4115bead28a'
+      const ukRegion = '1718e330-6095-e211-a939-e4115bead28a'
+      const ukRegionLabel = 'All'
+
+      context('should filter from user input and apply filter chips', () => {
+        before(() => {
+          cy.intercept(
+            'GET',
+            `${urls.events.activity.data()}?sortBy=modified_on:desc&ukRegion[]=${ukRegion}&page=1`
+          ).as('ukRegionRequest')
+        })
+
+        it('should pass the uk Region to the controller', () => {
+          testTypeahead({
+            element,
+            label: 'UK region',
+            input: 'all',
+            placeholder: 'Search UK region',
+            expectedOption: ukRegionLabel,
+          })
+          cy.wait('@ukRegionRequest').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+        })
+
+        it('should pass the Uk region from user input to query param', () => {
+          cy.url().should('include', queryParamWithUkRegion)
+        })
+
+        it('should show filter chips', () => {
+          cy.get('[data-test="typeahead-chip"]').should(
+            'contain',
+            ukRegionLabel
+          )
+        })
+
+        context('should remove Uk Region selection', () => {
+          it('should remove filter chips', () => {
+            cy.get('[data-test="typeahead-chip"] > button').click()
+          })
+
+          it('should remove the Uk Region from the url', () => {
+            cy.url().should('not.include', queryParamWithUkRegion)
+          })
+        })
+      })
     })
+  })
+
+  after(() => {
+    cy.resetUser()
   })
 })
