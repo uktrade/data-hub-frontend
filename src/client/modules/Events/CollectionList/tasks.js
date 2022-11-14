@@ -56,6 +56,7 @@ const getAllActivityFeedEvents = ({
   aventri_id,
   address_country,
   uk_region,
+  organiser,
   page,
 }) =>
   axios
@@ -67,6 +68,7 @@ const getAllActivityFeedEvents = ({
         latestStartDate: latest_start_date,
         aventriId: aventri_id,
         ukRegion: uk_region,
+        organiser: organiser,
         page: page,
         addressCountry: address_country,
       },
