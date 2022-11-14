@@ -175,7 +175,7 @@
     "@storybook/builder-webpack5": "^6.5.13",
     "@storybook/manager-webpack5": "^6.5.13",
     "@storybook/react": "^6.5.13",
-    "babel-loader": "^9.0.0",
+    "babel-loader": "^9.1.0",
     "babel-plugin-istanbul": "6.1.1",
     "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
