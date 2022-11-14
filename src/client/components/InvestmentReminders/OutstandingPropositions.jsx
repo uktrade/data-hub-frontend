@@ -32,52 +32,77 @@ const StyledDivItem = styled('div')`
   margin-bottom: ${SPACING.SCALE_1};
 `
 
-const investmentRemindersListItems = [
-  {
-    href: urls.reminders.investments.estimatedLandDate(),
-    text: 'Approaching estimated land dates',
-  },
-  {
-    href: urls.reminders.investments.noRecentInteraction(),
-    text: 'Projects with no recent interactions',
-  },
-  {
-    href: urls.reminders.investments.outstandingPropositions(),
-    text: 'Outstanding propositions',
-  },
-]
+const checkRemindersLoaded = (reminders) => {
+  return reminders || { count: 0 }
+}
 
-const exportRemindersListItems = [
-  {
-    href: urls.reminders.investments.noRecentInteraction(),
-    text: 'Companies with no recent interactions',
-  },
-  {
-    href: urls.reminders.investments.estimatedLandDate(),
-    text: 'Companies with new interactions',
-  },
-]
+const investmentRemindersListItems = (
+  investmentELD,
+  investmentNRI,
+  investmentOP
+) => {
+  return [
+    {
+      href: urls.reminders.investments.estimatedLandDate(),
+      text: 'Approaching estimated land dates',
+      count: checkRemindersLoaded(investmentELD).count,
+    },
+    {
+      href: urls.reminders.investments.noRecentInteraction(),
+      text: 'Projects with no recent interactions',
+      count: checkRemindersLoaded(investmentNRI).count,
+    },
+    {
+      href: urls.reminders.investments.outstandingPropositions(),
+      text: 'Outstanding propositions',
+      count: checkRemindersLoaded(investmentOP).count,
+    },
+  ]
+}
 
-const OutstandingPropositions = () => (
+const exportRemindersListItems = (investmentELD) => {
+  return [
+    {
+      href: urls.reminders.investments.noRecentInteraction(),
+      text: 'Companies with no recent interactions',
+      count: checkRemindersLoaded(investmentELD).count,
+    },
+    {
+      href: urls.reminders.investments.estimatedLandDate(),
+      text: 'Companies with new interactions',
+      count: checkRemindersLoaded(investmentELD).count,
+    },
+  ]
+}
+
+const OutstandingPropositions = ({
+  investmentELD,
+  investmentNRI,
+  investmentOP,
+}) => (
   <>
     <div data-test="outstanding-propositions">
       <StyledSubHeading data-test="investment-heading">
         Investment
       </StyledSubHeading>
       <StyledDivListItems>
-        {investmentRemindersListItems.map((item) => (
+        {investmentRemindersListItems(
+          investmentELD,
+          investmentNRI,
+          investmentOP
+        ).map((item) => (
           <StyledDivItem>
-            <StyledTextLink href={item.href}>{item.text}</StyledTextLink>
-            (0)
+            <StyledTextLink href={item.href}>{item.text}</StyledTextLink>(
+            {item.count})
           </StyledDivItem>
         ))}
       </StyledDivListItems>
       <StyledSubHeading data-test="export-heading">Export</StyledSubHeading>
       <StyledDivListItems>
-        {exportRemindersListItems.map((item) => (
+        {exportRemindersListItems(investmentELD).map((item) => (
           <StyledDivItem>
-            <StyledTextLink href={item.href}>{item.text}</StyledTextLink>
-            (0)
+            <StyledTextLink href={item.href}>{item.text}</StyledTextLink>(
+            {item.count})
           </StyledDivItem>
         ))}
       </StyledDivListItems>
@@ -89,7 +114,9 @@ const OutstandingPropositions = () => (
 )
 
 OutstandingPropositions.propTypes = {
-  count: PropTypes.number.isRequired,
+  investmentELD: PropTypes.object.isRequired,
+  investmentNRI: PropTypes.object.isRequired,
+  investmentOP: PropTypes.object.isRequired,
 }
 
 export default OutstandingPropositions

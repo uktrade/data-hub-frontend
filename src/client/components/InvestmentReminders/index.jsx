@@ -11,7 +11,7 @@ import Task from '../Task'
 /**
  * Shows reminders of upcoming propositions for an adviser to deal with.
  */
-const InvestmentReminders = ({ adviser, results, count }) => (
+const Reminders = ({ adviser, investmentELD, investmentNRI, investmentOP }) => (
   <div data-test="investment-reminders">
     <Task.Status
       name={TASK_GET_OUTSTANDING_PROPOSITIONS}
@@ -22,37 +22,27 @@ const InvestmentReminders = ({ adviser, results, count }) => (
         onSuccessDispatch: OUTSTANDING_PROPOSITIONS__LOADED,
       }}
     >
-      {() => <OutstandingPropositions results={results} count={count} />}
+      {() => (
+        <OutstandingPropositions
+          investmentELD={investmentELD}
+          investmentNRI={investmentNRI}
+          investmentOP={investmentOP}
+        />
+      )}
     </Task.Status>
   </div>
 )
 
-InvestmentReminders.propTypes = {
+Reminders.propTypes = {
   /**
    * The adviser to display investment reminders for.
    */
   adviser: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired,
-  count: PropTypes.number.isRequired,
-  results: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      investment_project: PropTypes.shape({
-        id: PropTypes.string.is_required,
-        name: PropTypes.string.isRequired,
-        project_code: PropTypes.string.isRequired,
-      }),
-      deadline: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      adviser: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        first_name: PropTypes.string.isRequired,
-        last_name: PropTypes.string.isRequired,
-      }),
-    })
-  ).isRequired,
+  investmentELD: PropTypes.object.isRequired,
+  investmentNRI: PropTypes.object.isRequired,
+  investmentOP: PropTypes.object.isRequired,
 }
 
-export default connect(state2props)(InvestmentReminders)
+export default connect(state2props)(Reminders)
