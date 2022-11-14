@@ -231,6 +231,17 @@ const EventsCollection = ({
                   qsParamName="latest_start_date"
                   data-test="latest-start-date-filter"
                 />
+                <Filters.AdvisersTypeahead
+                  isMulti={true}
+                  taskProps={organisersTask}
+                  label={LABELS.organiser}
+                  name="organiser"
+                  qsParam="organiser"
+                  placeholder=""
+                  noOptionsMessage="No organisers found"
+                  selectedOptions={selectedFilters.organisers.options}
+                  data-test="organiser-filter"
+                />
                 <Filters.AventriId
                   id="EventsCollection.aventriId"
                   label={LABELS.aventriId}

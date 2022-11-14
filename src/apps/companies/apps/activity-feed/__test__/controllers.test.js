@@ -690,6 +690,28 @@ describe('Activity feed controllers', () => {
         expect(expectedQuery(ukRegion)).to.deep.equal(actualQuery)
       })
     })
+
+    context('check query builder when filtering on organiser', () => {
+      const expectedQuery = (organiser) => [
+        {
+          terms: {
+            'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+          },
+        },
+        {
+          terms: {
+            'object.dit:organiser.id': organiser,
+          },
+        },
+      ]
+
+      it('builds the right query when an organiser is selected', () => {
+        const organiser = ['org-id-guid']
+        const actualQuery = eventsColListQueryBuilder({ organiser })
+
+        expect(expectedQuery(organiser)).to.deep.equal(actualQuery)
+      })
+    })
   })
 
   describe('#fetchAllActivityFeedEvents', () => {

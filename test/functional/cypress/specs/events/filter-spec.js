@@ -730,6 +730,55 @@ describe('events Collections Filter', () => {
         })
       })
     })
+
+    context('Organiser', () => {
+      const element = '[data-test="organiser-filter"]'
+      const adviserId = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
+      const queryParamWithAdvisor = `organiser%5B0%5D=${adviserId}`
+      const adviserName = 'Puck Head'
+
+      context('should filter from user input and apply filter chips', () => {
+        before(() => {
+          cy.intercept('POST', searchEndpoint).as('apiRequest')
+          cy.intercept(
+            'GET',
+            `${urls.events.activity.data()}?sortBy=modified_on:desc&organiser[]=${adviserId}&page=1`
+          ).as('organiserRequest')
+        })
+
+        it('should pass the organiser to the controller', () => {
+          testTypeahead({
+            element,
+            label: 'Organiser',
+            input: 'puc',
+            placeholder: '',
+            expectedOption: adviserName,
+          })
+
+          cy.wait('@organiserRequest').then((request) => {
+            expect(request.response.statusCode).to.eql(200)
+          })
+        })
+
+        it('should pass the organiser from user input to query param', () => {
+          cy.url().should('include', queryParamWithAdvisor)
+        })
+
+        it('should show filter chips', () => {
+          cy.get('[data-test="typeahead-chip"]').should('contain', adviserName)
+        })
+      })
+
+      context('should remove organiser selection', () => {
+        it('should remove filter chips', () => {
+          cy.get('[data-test="typeahead-chip"] > button').click()
+        })
+
+        it('should remove the organiser from the url', () => {
+          cy.url().should('not.include', queryParamWithAdvisor)
+        })
+      })
+    })
   })
 
   after(() => {
