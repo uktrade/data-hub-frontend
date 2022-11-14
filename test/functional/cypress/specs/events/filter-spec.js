@@ -799,6 +799,10 @@ describe('events Collections Filter', () => {
           )
           cy.intercept(
             'GET',
+            `${urls.events.activity.data()}?sortBy=modified_on:desc&page=1`
+          ).as('eventTypeRequestNoFilter')
+          cy.intercept(
+            'GET',
             `${urls.events.activity.data()}?sortBy=modified_on:desc&page=1&eventType[]=${
               eventType.id
             }`
