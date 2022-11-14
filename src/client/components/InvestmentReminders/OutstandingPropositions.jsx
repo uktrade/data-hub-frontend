@@ -46,16 +46,19 @@ const investmentRemindersListItems = (
       href: urls.reminders.investments.estimatedLandDate(),
       text: 'Approaching estimated land dates',
       count: checkRemindersLoaded(investmentELD).count,
+      dataTestId: 'investment-eld',
     },
     {
       href: urls.reminders.investments.noRecentInteraction(),
       text: 'Projects with no recent interactions',
       count: checkRemindersLoaded(investmentNRI).count,
+      dataTestId: 'investment-nri',
     },
     {
       href: urls.reminders.investments.outstandingPropositions(),
       text: 'Outstanding propositions',
       count: checkRemindersLoaded(investmentOP).count,
+      dataTestId: 'investment-op',
     },
   ]
 }
@@ -66,11 +69,13 @@ const exportRemindersListItems = (investmentELD) => {
       href: urls.reminders.investments.noRecentInteraction(),
       text: 'Companies with no recent interactions',
       count: checkRemindersLoaded(investmentELD).count,
+      dataTestId: 'export-nri',
     },
     {
       href: urls.reminders.investments.estimatedLandDate(),
       text: 'Companies with new interactions',
       count: checkRemindersLoaded(investmentELD).count,
+      dataTestId: 'export-ni',
     },
   ]
 }
@@ -93,7 +98,7 @@ const OutstandingPropositions = ({
         ).map((item) => (
           <StyledDivItem>
             <StyledTextLink href={item.href}>{item.text}</StyledTextLink>(
-            {item.count})
+            <span data-testid={item.dataTestId}>{item.count}</span>)
           </StyledDivItem>
         ))}
       </StyledDivListItems>
@@ -102,7 +107,7 @@ const OutstandingPropositions = ({
         {exportRemindersListItems(investmentELD).map((item) => (
           <StyledDivItem>
             <StyledTextLink href={item.href}>{item.text}</StyledTextLink>(
-            {item.count})
+            <span data-testid={item.dataTestId}>{item.count}</span>)
           </StyledDivItem>
         ))}
       </StyledDivListItems>

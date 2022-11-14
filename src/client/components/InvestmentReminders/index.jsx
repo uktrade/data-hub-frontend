@@ -11,7 +11,7 @@ import Task from '../Task'
 /**
  * Shows reminders of upcoming propositions for an adviser to deal with.
  */
-const Reminders = ({ adviser, investmentELD, investmentNRI, investmentOP }) => (
+const InvestmentReminders = ({ adviser, investmentELD, investmentNRI, investmentOP }) => (
   <div data-test="investment-reminders">
     <Task.Status
       name={TASK_GET_OUTSTANDING_PROPOSITIONS}
@@ -33,7 +33,7 @@ const Reminders = ({ adviser, investmentELD, investmentNRI, investmentOP }) => (
   </div>
 )
 
-Reminders.propTypes = {
+InvestmentReminders.propTypes = {
   /**
    * The adviser to display investment reminders for.
    */
@@ -45,4 +45,4 @@ Reminders.propTypes = {
   investmentOP: PropTypes.object.isRequired,
 }
 
-export default connect(state2props)(Reminders)
+export default connect(state2props)(InvestmentReminders)

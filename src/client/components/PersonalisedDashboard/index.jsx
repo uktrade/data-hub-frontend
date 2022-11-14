@@ -32,7 +32,7 @@ import blueTheme from './blue-theme'
 
 import InvestmentProjectSummary from '../MyInvestmentProjects/InvestmentProjectSummary'
 import {
-  Reminders,
+  InvestmentReminders,
   ReminderSummary,
   Search,
   DashboardTabs,
@@ -133,7 +133,7 @@ const PersonalisedDashboard = ({
                           isOpen={false}
                           data-test="investment-reminders-section"
                         >
-                          <Reminders adviser={adviser} />
+                          <InvestmentReminders adviser={adviser} />
                         </DashboardToggleSection>
                       )
                     }

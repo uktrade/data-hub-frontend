@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
-import Reminders from 'InvestmentReminders'
+import InvestmentReminders from 'InvestmentReminders'
 
 const adviser = {
   name: 'Paula Churing',
@@ -97,7 +97,7 @@ const investmentOP = {
 storiesOf('InvestmentReminders', module)
   .addParameters({ component: Reminders })
   .add('Default', () => (
-    <Reminders
+    <InvestmentReminders
       adviser={adviser}
       investmentELD={investmentELD}
       investmentNRI={investmentNRI}
