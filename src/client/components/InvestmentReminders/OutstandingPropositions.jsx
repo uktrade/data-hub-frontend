@@ -2,139 +2,126 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { H3 } from '@govuk-react/heading'
-import { LINK_COLOUR, RED, TEXT_COLOUR } from 'govuk-colours'
+import { H5 } from '@govuk-react/heading'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
-import { DATE_DAY_LONG_FORMAT } from '../../../common/constants'
 import urls from '../../../lib/urls'
-import { DARK_GREY } from '../../utils/colors'
 
-const {
-  formatWithoutParsing,
-  getDifferenceInDaysLabel,
-} = require('../../utils/date')
-
-const StyledSubHeading = styled(H3)`
-  color: ${RED};
-  font-size: ${FONT_SIZE.SIZE_19};
-  font-weight: ${FONT_WEIGHTS.regular};
+const StyledSubHeading = styled(H5)`
+  font-size: ${FONT_SIZE.SIZE_10};
+  font-weight: ${FONT_WEIGHTS.bold};
   margin-top: ${SPACING.SCALE_2};
   margin-bottom: ${SPACING.SCALE_2};
 `
 
-const StyledSubHeadingEmpty = styled(StyledSubHeading)`
-  color: ${DARK_GREY};
-  margin: 0;
+const StyledDivListItems = styled('div')`
+  padding-left: ${SPACING.SCALE_2};
+  margin-bottom: ${SPACING.SCALE_5};
 `
 
-const StyledProjectLink = styled('a')`
-  display: block;
-  font-size: ${FONT_SIZE.SIZE_19};
-  color: ${LINK_COLOUR};
+const StyledTextLink = styled('a')`
+  position: relative;
+  margin-left: ${SPACING.SCALE_1};
+  margin-right: ${SPACING.SCALE_1};
 `
 
-const StyledProjectCode = styled('div')`
-  margin: ${SPACING.SCALE_1} 0;
-  font-size: ${FONT_SIZE.SIZE_16};
-  color: ${DARK_GREY};
-`
-
-const StyledDueDate = styled('span')`
-  font-size: ${FONT_SIZE.SIZE_16};
-  color: ${TEXT_COLOUR};
-`
-
-const StyledDueCountdown = styled('span')`
+const StyledDivItem = styled('div')`
+  display: list-item;
+  list-style-type: disc;
   margin-top: ${SPACING.SCALE_1};
-  text-align: right;
-  white-space: nowrap;
-  font-size: ${FONT_SIZE.SIZE_16};
-  color: ${TEXT_COLOUR};
+  margin-bottom: ${SPACING.SCALE_1};
 `
 
-const StyledList = styled('ul')`
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-`
+const checkRemindersLoaded = (reminders) => {
+  return reminders || { count: 0 }
+}
 
-const StyledListItem = styled('li')`
-  margin-bottom: ${SPACING.SCALE_4};
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-end;
-`
+const investmentRemindersListItems = (
+  investmentELD,
+  investmentNRI,
+  investmentOP
+) => {
+  return [
+    {
+      href: urls.reminders.investments.estimatedLandDate(),
+      text: 'Approaching estimated land dates',
+      count: checkRemindersLoaded(investmentELD).count,
+      dataTestId: 'investment-eld',
+    },
+    {
+      href: urls.reminders.investments.noRecentInteraction(),
+      text: 'Projects with no recent interactions',
+      count: checkRemindersLoaded(investmentNRI).count,
+      dataTestId: 'investment-nri',
+    },
+    {
+      href: urls.reminders.investments.outstandingPropositions(),
+      text: 'Outstanding propositions',
+      count: checkRemindersLoaded(investmentOP).count,
+      dataTestId: 'investment-op',
+    },
+  ]
+}
 
-const StyledDetails = styled('div')`
-  padding-right: ${SPACING.SCALE_3};
-`
+const exportRemindersListItems = (investmentELD) => {
+  return [
+    {
+      href: urls.reminders.investments.noRecentInteraction(),
+      text: 'Companies with no recent interactions',
+      count: checkRemindersLoaded(investmentELD).count,
+      dataTestId: 'export-nri',
+    },
+    {
+      href: urls.reminders.investments.estimatedLandDate(),
+      text: 'Companies with new interactions',
+      count: checkRemindersLoaded(investmentELD).count,
+      dataTestId: 'export-ni',
+    },
+  ]
+}
 
-const OutstandingPropositions = ({ results, count }) => (
+const OutstandingPropositions = ({
+  investmentELD,
+  investmentNRI,
+  investmentOP,
+}) => (
   <>
-    {!!results.length ? (
-      <div data-test="outstanding-propositions">
-        <StyledSubHeading data-test="outstanding-propositions-heading">
-          Outstanding propositions ({count})
-        </StyledSubHeading>
-        <StyledList data-test="outstanding-propositions-list">
-          {results.map(({ id, investment_project, name, deadline }) => (
-            <StyledListItem key={id}>
-              <StyledDetails>
-                <StyledProjectLink
-                  href={urls.investments.projects.propositions(
-                    investment_project.id
-                  )}
-                >
-                  {name}
-                </StyledProjectLink>
-                <StyledProjectCode data-test="outstanding-proposition-project-code">
-                  {investment_project.project_code}
-                </StyledProjectCode>
-                <StyledDueDate data-test="outstanding-proposition-deadline">
-                  Due{' '}
-                  {formatWithoutParsing(
-                    new Date(deadline),
-                    DATE_DAY_LONG_FORMAT
-                  )}
-                </StyledDueDate>
-              </StyledDetails>
-              <StyledDueCountdown data-test="outstanding-proposition-countdown">
-                {getDifferenceInDaysLabel(deadline)}
-              </StyledDueCountdown>
-            </StyledListItem>
-          ))}
-        </StyledList>
-      </div>
-    ) : (
-      <StyledSubHeadingEmpty data-test="outstanding-propositions-empty">
-        Projects with propositions due will be displayed here.
-      </StyledSubHeadingEmpty>
-    )}
+    <div data-test="outstanding-propositions">
+      <StyledSubHeading data-test="investment-heading">
+        Investment
+      </StyledSubHeading>
+      <StyledDivListItems>
+        {investmentRemindersListItems(
+          investmentELD,
+          investmentNRI,
+          investmentOP
+        ).map((item) => (
+          <StyledDivItem>
+            <StyledTextLink href={item.href}>{item.text}</StyledTextLink>(
+            <span data-testid={item.dataTestId}>{item.count}</span>)
+          </StyledDivItem>
+        ))}
+      </StyledDivListItems>
+      <StyledSubHeading data-test="export-heading">Export</StyledSubHeading>
+      <StyledDivListItems>
+        {exportRemindersListItems(investmentELD).map((item) => (
+          <StyledDivItem>
+            <StyledTextLink href={item.href}>{item.text}</StyledTextLink>(
+            <span data-testid={item.dataTestId}>{item.count}</span>)
+          </StyledDivItem>
+        ))}
+      </StyledDivListItems>
+      <StyledTextLink href={urls.reminders.settings.index()}>
+        Reminders and email notification section
+      </StyledTextLink>
+    </div>
   </>
 )
 
 OutstandingPropositions.propTypes = {
-  count: PropTypes.number.isRequired,
-  results: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      investment_project: PropTypes.shape({
-        id: PropTypes.string.is_required,
-        name: PropTypes.string.isRequired,
-        project_code: PropTypes.string.isRequired,
-      }),
-      deadline: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      adviser: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        first_name: PropTypes.string.isRequired,
-        last_name: PropTypes.string.isRequired,
-      }),
-    })
-  ).isRequired,
+  investmentELD: PropTypes.object.isRequired,
+  investmentNRI: PropTypes.object.isRequired,
+  investmentOP: PropTypes.object.isRequired,
 }
 
 export default OutstandingPropositions

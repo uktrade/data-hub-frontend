@@ -10,7 +10,63 @@ const adviser = {
   id: 'adviser-1',
 }
 
-const outstandingPropositions = {
+const investmentELD = {
+  count: 2,
+  results: [
+    {
+      id: '123',
+      investment_project: {
+        name: 'New restaurant',
+        project_code: 'DHP-00000004',
+        id: 'project-a',
+      },
+      adviser,
+      deadline: '2021-04-01',
+      name: 'Restaurant proposition',
+    },
+    {
+      id: '456',
+      investment_project: {
+        name: 'Univeristy',
+        project_code: 'DHP-00000005',
+        id: 'project-b',
+      },
+      adviser,
+      deadline: '2021-04-01',
+      name: 'Univeristy proposition',
+    },
+  ],
+}
+
+const investmentNRI = {
+  count: 2,
+  results: [
+    {
+      id: '123',
+      investment_project: {
+        name: 'New restaurant',
+        project_code: 'DHP-00000004',
+        id: 'project-a',
+      },
+      adviser,
+      deadline: '2021-04-01',
+      name: 'Restaurant proposition',
+    },
+    {
+      id: '456',
+      investment_project: {
+        name: 'Univeristy',
+        project_code: 'DHP-00000005',
+        id: 'project-b',
+      },
+      adviser,
+      deadline: '2021-04-01',
+      name: 'Univeristy proposition',
+    },
+  ],
+}
+
+const investmentOP = {
   count: 2,
   results: [
     {
@@ -43,6 +99,8 @@ storiesOf('InvestmentReminders', module)
   .add('Default', () => (
     <InvestmentReminders
       adviser={adviser}
-      outstandingPropositions={outstandingPropositions}
+      investmentELD={investmentELD}
+      investmentNRI={investmentNRI}
+      investmentOP={investmentOP}
     />
   ))

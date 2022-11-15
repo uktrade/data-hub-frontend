@@ -8,10 +8,12 @@ const initialState = {
 export default (state = initialState, { type, result }) => {
   switch (type) {
     case OUTSTANDING_PROPOSITIONS__LOADED:
-      const { results, count } = result
+      const { count, investmentELD, investmentNRI, investmentOP } = result
       return {
-        results,
         count,
+        investmentELD,
+        investmentNRI,
+        investmentOP,
       }
     default:
       return state
