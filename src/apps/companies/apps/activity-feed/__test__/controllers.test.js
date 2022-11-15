@@ -1,4 +1,6 @@
 const activityFeedEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-from-es.json')
+const activityFeedAventriAtendeeEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-aventri-attendee-from-es.json')
+
 const allActivityFeedEvents = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/all-activity-feed-events.json')
 const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/middleware-parameters-builder')
 const companyMock = require('../../../../../../test/unit/data/company.json')
@@ -18,7 +20,11 @@ describe('Activity feed controllers', () => {
 
   describe('#fetchActivityFeedHandler', () => {
     before(() => {
-      fetchActivityFeedStub = sinon.stub().resolves(activityFeedEsFixtures)
+      fetchActivityFeedStub = sinon.stub()
+      fetchActivityFeedStub
+        .onFirstCall()
+        .resolves(activityFeedAventriAtendeeEsFixtures)
+      fetchActivityFeedStub.resolves(activityFeedEsFixtures)
       getGlobalUltimateHierarchyStub = sinon
         .stub()
         .resolves({ results: [{ id: '123' }, { id: '456' }] })
@@ -40,6 +46,8 @@ describe('Activity feed controllers', () => {
       'when filtering on "Data Hub & External activity" for a company',
       () => {
         before(async () => {
+          fetchActivityFeedStub.resetHistory()
+
           middlewareParameters = buildMiddlewareParameters({
             company: companyMock,
             requestQuery: {
@@ -55,6 +63,44 @@ describe('Activity feed controllers', () => {
             middlewareParameters.reqMock,
             middlewareParameters.resMock,
             middlewareParameters.nextSpy
+          )
+        })
+
+        it('should call fetchActivityFeed with correct params when retrieving aventri attendees', async () => {
+          const expectedEsQuery = {
+            size: 20,
+            query: {
+              bool: {
+                must: [
+                  {
+                    term: {
+                      'object.type': 'dit:aventri:Attendee',
+                    },
+                  },
+                  {
+                    terms: {
+                      'object.dit:emailAddress': [
+                        'fred@acme.org',
+                        'fred@acme.org',
+                        'fred@acme.org',
+                        'byvanuwenu@yahoo.com',
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+            sort: {
+              'object.updated': {
+                order: 'desc',
+                unmapped_type: 'date',
+              },
+            },
+          }
+
+          expect(fetchActivityFeedStub).to.be.calledWith(
+            middlewareParameters.reqMock,
+            expectedEsQuery
           )
         })
 
@@ -119,6 +165,25 @@ describe('Activity feed controllers', () => {
                                   'fred@acme.org',
                                   'fred@acme.org',
                                   'byvanuwenu@yahoo.com',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        bool: {
+                          must: [
+                            {
+                              term: {
+                                'object.type': 'dit:aventri:Event',
+                              },
+                            },
+                            {
+                              terms: {
+                                id: [
+                                  'dit:aventri:Event:1:Create',
+                                  'dit:aventri:Event:2:Create',
                                 ],
                               },
                             },
@@ -263,6 +328,8 @@ describe('Activity feed controllers', () => {
 
     context('when filtering on "External activity"', () => {
       before(async () => {
+        fetchActivityFeedStub.resetHistory()
+
         middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           requestQuery: {
@@ -341,6 +408,25 @@ describe('Activity feed controllers', () => {
                                 'fred@acme.org',
                                 'fred@acme.org',
                                 'byvanuwenu@yahoo.com',
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            term: {
+                              'object.type': 'dit:aventri:Event',
+                            },
+                          },
+                          {
+                            terms: {
+                              id: [
+                                'dit:aventri:Event:1:Create',
+                                'dit:aventri:Event:2:Create',
                               ],
                             },
                           },
