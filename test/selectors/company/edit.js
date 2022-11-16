@@ -13,7 +13,7 @@ module.exports = {
     town: 'input[name="city"]',
     county: 'input[name="county"]',
     postcode: 'input[name="postcode"]',
-    areaUS: 'select#areaUS',
+    areaUS: 'select#area',
     areaCanada: 'select#areaCanada',
   },
   registeredAddressLegend: 'fieldset legend:contains("Registered address")',
