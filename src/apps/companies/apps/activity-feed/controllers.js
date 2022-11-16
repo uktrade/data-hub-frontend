@@ -407,6 +407,7 @@ const eventsColListQueryBuilder = ({
   addressCountry,
   ukRegion,
   organiser,
+  eventType,
 }) => {
   const eventNameFilter = name
     ? {
@@ -462,10 +463,19 @@ const eventsColListQueryBuilder = ({
         },
       }
     : null
+
   const organiserFilter = organiser
     ? {
         terms: {
           'object.dit:organiser.id': organiser,
+        },
+      }
+    : null
+
+  const eventTypeFilter = eventType
+    ? {
+        terms: {
+          'object.dit:eventType.id': eventType,
         },
       }
     : null
@@ -477,6 +487,7 @@ const eventsColListQueryBuilder = ({
     countryFilter,
     ukRegionFilter,
     organiserFilter,
+    eventTypeFilter,
   ]
 
   const cleansedFiltersArray = filtersArray.filter((filter) => filter)
@@ -497,6 +508,7 @@ async function fetchAllActivityFeedEvents(req, res, next) {
       organiser,
       page,
       addressCountry,
+      eventType,
     } = req.query
 
     const from = (page - 1) * ACTIVITIES_PER_PAGE
@@ -512,6 +524,7 @@ async function fetchAllActivityFeedEvents(req, res, next) {
           addressCountry,
           ukRegion,
           organiser,
+          eventType,
         }),
         from,
         size: ACTIVITIES_PER_PAGE,
