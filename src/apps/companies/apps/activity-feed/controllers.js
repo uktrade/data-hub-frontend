@@ -175,7 +175,6 @@ async function getAventriEventIds(req, next, contacts) {
     const aventriEventIds = aventriAttendees
       .map((attendee) => attendee.object.attributedTo.id)
       .map((id) => `${id}:Create`)
-
     return aventriEventIds
   } catch (error) {
     next(error)
@@ -306,11 +305,15 @@ async function fetchActivityFeedHandler(req, res, next) {
         .map((company) => company.id)
     }
 
-    const aventriEventIds = await getAventriEventIds(
-      req,
-      next,
-      company.contacts
-    )
+    let aventriEventIds = []
+    if (
+      [
+        FILTER_KEYS.dataHubAndExternalActivity,
+        FILTER_KEYS.externalActivity,
+      ].includes(activityTypeFilter)
+    ) {
+      aventriEventIds = await getAventriEventIds(req, next, company.contacts)
+    }
 
     const queries = getQueries({
       from,

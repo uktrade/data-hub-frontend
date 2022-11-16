@@ -25,6 +25,7 @@ var aventriEventsNoDetails = require('../../../fixtures/v4/activity-feed/aventri
 var aventriAttendees = require('../../../fixtures/v4/activity-feed/aventri-attendees.json')
 ////This order is correct when sorted by: First Name A-Z, Last name A-Z and Company name A-Z
 var aventriAttendeesAToZOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-a-z.json')
+var aventriAttendeeForCompany = require('../../../fixtures/v4/activity-feed/aventri-attendee-for-company.json')
 
 ////This order is correct when sorted by: First Name Z-A, Last name Z-A and Company name Z-A
 var aventriAttendeesZToAOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-z-a.json')
@@ -39,7 +40,12 @@ const DATA_HUB_ACTIVITY = [
   'dit:CompanyReferral',
 ]
 
-const EXTERNAL_ACTIVITY = ['dit:Accounts', 'dit:Company', 'dit:Export']
+const EXTERNAL_ACTIVITY = [
+  'dit:Accounts',
+  'dit:Company',
+  'dit:Export',
+  'dit:aventri:Event',
+]
 
 const DATA_HUB_AND_EXTERNAL_ACTIVITY = [
   ...DATA_HUB_ACTIVITY,
@@ -155,8 +161,16 @@ exports.activityFeed = function (req, res) {
   var isAventriAttendeeQuery =
     get(req.body, "query.bool.must[0].term['object.type']") ===
     'dit:aventri:Attendee'
-
   if (isAventriAttendeeQuery) {
+    var isCompanyQuery = get(
+      req.body,
+      "query.bool.must[1].terms['object.dit:emailAddress']"
+    )
+
+    if (isCompanyQuery) {
+      return res.json(aventriAttendeeForCompany)
+    }
+
     var aventriId = get(
       req.body,
       "query.bool.must[1].term['object.attributedTo.id']"
