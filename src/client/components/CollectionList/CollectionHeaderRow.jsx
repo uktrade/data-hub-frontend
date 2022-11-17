@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { BLACK, GREY_2 } from 'govuk-colours'
 import { FONT_SIZE, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+import { Console } from 'winston/lib/winston/transports'
 
 const StyledRowWrapper = styled('div')`
   display: flex;
@@ -29,11 +30,11 @@ const StyledActions = styled('div')`
 `
 
 const CollectionHeaderRow = ({ primary, actions, children, ...rest }) => {
+  console.log(`*********************** ${actions}`)
   return (
     <StyledRowWrapper primary={primary} {...rest}>
       {children}
-
-      {actions && <StyledActions>{actions}</StyledActions>}
+      {actions <StyledActions>{actions}</StyledActions>}
     </StyledRowWrapper>
   )
 }

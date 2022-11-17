@@ -67,6 +67,7 @@ import ContactDocuments from './modules/Contacts/ContactDocuments/ContactDocumen
 import InvestmentDocuments from '../apps/investments/client/projects/ProjectDocuments'
 import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactAuditHistory'
 import InteractionDetails from './modules/Interactions/InteractionDetails'
+import GlobalSearchHeader from './components/GlobalSearchHeader'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -719,6 +720,9 @@ function App() {
         </Mount>
         <Mount selector="#interaction-details">
           {(props) => <InteractionDetails {...props} />}
+        </Mount>
+        <Mount selector="#global-search-header">
+          {(props) => <GlobalSearchHeader {...props} />}
         </Mount>
 
         <Mount selector="#react-app">

@@ -24,15 +24,24 @@ async function renderSearchResults(req, res) {
   }
 
   const actionButtons = []
+  const actionLinks = []
   const searchTerm = get(req, 'query.term', '').trim()
   const searchEntity = entity.entity
   const itemTransformers = []
 
   if (searchEntity === 'investment_project') {
     itemTransformers.push(transformInvestmentProjectToListItem)
+    actionLinks.push({
+      label: 'Filter contracts',
+      url: `/investments/projects`,
+    })
   }
   if (searchEntity === 'contact') {
     itemTransformers.push(transformContactToListItem)
+    actionLinks.push({
+      label: 'Filter contacts',
+      url: `/contacts?&archived=false`,
+    })
   }
   if (searchEntity === 'event') {
     itemTransformers.push(transformEventToListItem)
@@ -40,12 +49,20 @@ async function renderSearchResults(req, res) {
       label: 'Add event',
       url: '/events/create',
     })
+    actionLinks.push({
+      label: 'Filter events',
+      url: `/events`,
+    })
   }
   if (searchEntity === 'order') {
     itemTransformers.push(transformOrderToListItem)
     actionButtons.push({
       label: 'Add order',
       url: '/omis/create',
+    })
+    actionLinks.push({
+      label: 'Filter orders',
+      url: `/omis`,
     })
   }
 
@@ -55,10 +72,18 @@ async function renderSearchResults(req, res) {
       label: 'Add company',
       url: '/companies/create',
     })
+    actionLinks.push({
+      label: 'Filter companies',
+      url: `/companies?name=${searchTerm}&archived=false`,
+    })
   }
 
   if (searchEntity === 'interaction') {
     itemTransformers.push(transformInteractionToListItem())
+    actionLinks.push({
+      label: 'Filter interactions',
+      url: `/interactions`,
+    })
   }
 
   const results = await search({
@@ -81,6 +106,8 @@ async function renderSearchResults(req, res) {
 
   res.breadcrumb(entity.text).render('search/view', {
     actionButtons,
+    actionLinks,
+    results,
     searchEntity,
     searchTerm,
     results,
