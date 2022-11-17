@@ -4,9 +4,17 @@ import styled from 'styled-components'
 import { kebabCase } from 'lodash'
 
 import { LINK_COLOUR } from 'govuk-colours'
-import { FONT_SIZE, SPACING } from '@govuk-react/constants'
+import { H5 } from '@govuk-react/heading'
+import { FONT_SIZE, SPACING, FONT_WEIGHTS } from '@govuk-react/constants'
 
 import urls from '../../../lib/urls'
+
+const StyledSubHeading = styled(H5)`
+  font-size: ${FONT_SIZE.SIZE_10};
+  font-weight: ${FONT_WEIGHTS.bold};
+  margin-top: ${SPACING.SCALE_2};
+  margin-bottom: ${SPACING.SCALE_2};
+`
 
 const StyledReminderLink = styled('a')`
   display: inline;
@@ -26,12 +34,30 @@ const StyledListItem = styled('li')(() => ({
 
 const Summary = ({ summary }) => (
   <>
+    <StyledSubHeading data-test="investment-heading">
+      Investment
+    </StyledSubHeading>
     <StyledList>
       {summary &&
         summary.investment.map((reminder) => (
           <StyledListItem
             key={reminder.name}
             data-test={`investment-${kebabCase(reminder.name)}`}
+          >
+            <StyledReminderLink href={reminder.url}>
+              {reminder.name}
+            </StyledReminderLink>
+            &nbsp;({reminder.count})
+          </StyledListItem>
+        ))}
+    </StyledList>
+    <StyledSubHeading data-test="export-heading">Export</StyledSubHeading>
+    <StyledList>
+      {summary &&
+        summary.export.map((reminder) => (
+          <StyledListItem
+            key={reminder.name}
+            data-test={`export-${kebabCase(reminder.name)}`}
           >
             <StyledReminderLink href={reminder.url}>
               {reminder.name}
@@ -57,6 +83,7 @@ const reminderType = PropTypes.arrayOf(
 Summary.propTypes = {
   count: PropTypes.number,
   investment: reminderType,
+  export: reminderType,
 }
 
 export default Summary
