@@ -7,12 +7,10 @@ import Button from '@govuk-react/button'
 import styled from 'styled-components'
 import pluralize from 'pluralize'
 import { kebabCase } from 'lodash'
-import { Link } from 'react-router-dom'
 
 import {
-  CollectionHeaderRow,
+  SearchHeaderRow,
   //   RoutedFilterChips,
-  FilterReset,
 } from '../../components'
 
 import { decimal } from '../../utils/number-utils'
@@ -36,7 +34,7 @@ const StyledResultCount = styled('span')`
   line-height: 1;
 `
 
-const CollectionHeaderRowContainer = styled('div')`
+const SearchHeaderRowContainer = styled('div')`
   > div {
     border: none;
   }
@@ -97,8 +95,8 @@ function GlobalSearchHeader({
       )
   )
   return (
-    <CollectionHeaderRowContainer>
-      <CollectionHeaderRow actions={actions}>
+    <SearchHeaderRowContainer>
+      <SearchHeaderRow actions={actions}>
         <StyledDiv>
           <StyledHeaderText>
             <StyledResultCount data-test="collectionCount">
@@ -109,8 +107,8 @@ function GlobalSearchHeader({
           </StyledHeaderText>
         </StyledDiv>
         {links}
-      </CollectionHeaderRow>
-    </CollectionHeaderRowContainer>
+      </SearchHeaderRow>
+    </SearchHeaderRowContainer>
   )
 }
 

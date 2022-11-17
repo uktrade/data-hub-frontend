@@ -28,24 +28,24 @@ const StyledActions = styled('div')`
   }
 `
 
-const CollectionHeaderRow = ({ primary, actions, children, ...rest }) => {
+const SearchHeaderRow = ({ primary, actions, children, ...rest }) => {
   return (
     <StyledRowWrapper primary={primary} {...rest}>
       {children}
-      {actions && <StyledActions>{actions}</StyledActions>}
+      {actions[0] && <StyledActions>{actions}</StyledActions>}
     </StyledRowWrapper>
   )
 }
 
-CollectionHeaderRow.propTypes = {
+SearchHeaderRow.propTypes = {
   primary: PropTypes.bool,
   actions: PropTypes.node,
   children: PropTypes.node.isRequired,
 }
 
-CollectionHeaderRow.defaultProps = {
+SearchHeaderRow.defaultProps = {
   primary: false,
   actions: null,
 }
 
-export default CollectionHeaderRow
+export default SearchHeaderRow
