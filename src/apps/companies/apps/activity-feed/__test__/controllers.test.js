@@ -577,24 +577,56 @@ describe('Activity feed controllers', () => {
       }
 
       before(async () => {
+        fetchActivityFeedStub.reset()
         fetchActivityFeedStub.rejects(error)
-        middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
-          user: {
-            id: 123,
-          },
-        })
-
-        await controllers.fetchActivityFeedHandler(
-          middlewareParameters.reqMock,
-          middlewareParameters.resMock,
-          middlewareParameters.nextSpy
-        )
       })
 
-      it('should call next with an error', async () => {
-        expect(middlewareParameters.resMock.json).to.not.have.been.called
-        expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
+      context('when the get aventri details endpoint returns error', () => {
+        before(async () => {
+          middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+            user: {
+              id: 123,
+            },
+          })
+
+          await controllers.fetchActivityFeedHandler(
+            middlewareParameters.reqMock,
+            middlewareParameters.resMock,
+            middlewareParameters.nextSpy
+          )
+        })
+
+        it('should call next with an error', async () => {
+          expect(middlewareParameters.resMock.json).to.not.have.been.called
+          expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
+        })
+      })
+
+      context('when the get aventri details endpoint returns error', () => {
+        before(async () => {
+          middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+            requestQuery: {
+              activityTypeFilter: 'dataHubAndExternalActivity',
+              showDnbHierarchy: false,
+            },
+            user: {
+              id: 123,
+            },
+          })
+
+          await controllers.fetchActivityFeedHandler(
+            middlewareParameters.reqMock,
+            middlewareParameters.resMock,
+            middlewareParameters.nextSpy
+          )
+        })
+
+        it('should call next with an error', async () => {
+          expect(middlewareParameters.resMock.json).to.not.have.been.called
+          expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
+        })
       })
     })
   })
