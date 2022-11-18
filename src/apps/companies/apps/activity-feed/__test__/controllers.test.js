@@ -506,38 +506,6 @@ describe('Activity feed controllers', () => {
         })
 
         it('should call fetchActivityFeed with the right params', async () => {
-          // const expectedEsQuery = {
-          //   from: 0,
-          //   size: 20,
-          //   sort: [
-          //     {
-          //       'object.startTime': {
-          //         order: 'desc',
-          //       },
-          //     },
-          //   ],
-          //   query: {
-          //     bool: {
-          //       must: [
-          //         {
-          //           terms: {
-          //             'object.type': DATA_HUB_AND_AVENTRI_ACTIVITY,
-          //           },
-          //         },
-          //         {
-          //           terms: {
-          //             'object.attributedTo.id': [
-          //               'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-          //               'dit:DataHubCompany:123',
-          //               'dit:DataHubCompany:456',
-          //             ],
-          //           },
-          //         },
-          //       ],
-          //     },
-          //   },
-          // }
-
           const expectedEsQuery = {
             from: 0,
             size: 20,
