@@ -9,6 +9,7 @@ import { ACTIVITY_TYPE } from '../constants'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
+import ActivityCardLabels from './card/ActivityCardLabels'
 
 // Event index to extract id from Aventri Event string feed by activity-stream
 // e.g. dit:aventri:Event:1113:Create
@@ -18,9 +19,11 @@ export default function AventriEvent({ activity: event }) {
   const name = eventObject.name
   const aventriEventId = eventObject.id.split(':')[EVENT_ID_INDEX]
   const date = formatStartAndEndDate(eventObject.startTime, eventObject.endTime)
+  const country = eventObject['dit:aventri:country'] || 'Not set'
 
   return (
     <ActivityCardWrapper dataTest="aventri-event">
+      <ActivityCardLabels service="Event" />
       <ActivityCardSubject dataTest="aventri-event-name">
         <Link as={RouterLink} to={`/events/aventri/${aventriEventId}/details`}>
           {name}
@@ -31,6 +34,10 @@ export default function AventriEvent({ activity: event }) {
           {
             label: 'Event date',
             value: date,
+          },
+          {
+            label: 'Country',
+            value: country,
           },
         ]}
       />
