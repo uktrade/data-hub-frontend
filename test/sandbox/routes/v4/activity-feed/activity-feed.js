@@ -38,14 +38,10 @@ const DATA_HUB_ACTIVITY = [
   'dit:InvestmentProject',
   'dit:OMISOrder',
   'dit:CompanyReferral',
-]
-
-const EXTERNAL_ACTIVITY = [
-  'dit:Accounts',
-  'dit:Company',
-  'dit:Export',
   'dit:aventri:Event',
 ]
+
+const EXTERNAL_ACTIVITY = ['dit:Accounts', 'dit:Company', 'dit:Export']
 
 const DATA_HUB_AND_EXTERNAL_ACTIVITY = [
   ...DATA_HUB_ACTIVITY,
