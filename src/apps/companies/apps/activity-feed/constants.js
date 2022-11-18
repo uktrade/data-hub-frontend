@@ -131,15 +131,19 @@ const DATA_HUB_ACTIVITY = [
   'dit:CompanyReferral',
 ]
 
+const DATA_HUB_AND_AVENTRI_ACTIVITY = [
+  ...DATA_HUB_ACTIVITY,
+  'dit:aventri:Event',
+]
+
 const EXTERNAL_ACTIVITY = [
   'dit:Accounts', // Companies House Accounts
   'dit:Company', // Companies House Company
   'dit:Export', // HMRC Exporter
-  'dit:aventri:Event', // Aventri
 ]
 
 const DATA_HUB_AND_EXTERNAL_ACTIVITY = [
-  ...DATA_HUB_ACTIVITY,
+  ...DATA_HUB_AND_AVENTRI_ACTIVITY,
   ...EXTERNAL_ACTIVITY,
 ]
 
@@ -156,4 +160,5 @@ module.exports = {
   CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS,
   CONTACT_ACTIVITY_SORT_SELECT_OPTIONS,
   ACTIVITY_STREAM_FEATURE_FLAG,
+  DATA_HUB_AND_AVENTRI_ACTIVITY,
 }

@@ -2,6 +2,7 @@ const { EVENT_ACTIVITY_SORT_OPTIONS } = require('../constants')
 const activityFeedEventsQuery = require('../es-queries/activity-feed-all-events-query')
 const aventriAttendeeForCompanyQuery = require('../es-queries/aventri-attendee-for-company-query')
 const externalActivityQuery = require('../es-queries/external-activity-query')
+const dataHubAndAventriActivityQuery = require('../es-queries/data-hub-and-aventri-activity-query')
 
 const { faker } = require('@faker-js/faker')
 
@@ -198,6 +199,39 @@ describe('#activityFeedEventsQuery', () => {
           })
         )
       )
+    })
+
+    context('should return the filtered datahub and aventri data', () => {
+      it('should include the aventri event id filters when provided', () => {
+        const queryResult = dataHubAndAventriActivityQuery({
+          from: 0,
+          size: 1,
+          types: ['a', 'b'],
+          companyIds: [1, 2, 3],
+          contacts: [{ email: faker.internet.email() }],
+          aventriEventIds: [4, 5, 6],
+        })
+        expect(
+          get(
+            get(
+              queryResult,
+              'query.bool.filter.bool.should[1].bool.must[0].term'
+            ),
+            ['object.type']
+          )
+        ).to.eq('dit:aventri:Event')
+      })
+
+      it('should exclude the aventri event id filters when they are missing', () => {
+        const queryResult = dataHubAndAventriActivityQuery({
+          from: 0,
+          size: 1,
+          types: ['a', 'b'],
+          companyIds: [1, 2, 3],
+          contacts: [{ email: faker.internet.email() }],
+        })
+        expect(has(queryResult, 'query.bool.filter.bool.should[1]')).to.be.false
+      })
     })
 
     context('should return the filtered external data', () => {

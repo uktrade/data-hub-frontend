@@ -9,6 +9,7 @@ const {
   EVENT_ATTENDEES_SORT_OPTIONS,
   EVENT_ALL_ACTIVITY,
   ACTIVITY_STREAM_FEATURE_FLAG,
+  DATA_HUB_AND_AVENTRI_ACTIVITY,
 } = require('./constants')
 
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
@@ -24,11 +25,11 @@ const config = require('../../../../config')
 
 const {
   myActivityQuery,
-  dataHubActivityQuery,
   externalActivityQuery,
   maxemailCampaignQuery,
   maxemailEmailSentQuery,
   aventriAttendeeForCompanyQuery,
+  dataHubAndAventriActivityQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
 const {
@@ -91,9 +92,9 @@ function getQueries(options) {
       ...options,
       types: DATA_HUB_ACTIVITY,
     }),
-    [FILTER_KEYS.dataHubActivity]: dataHubActivityQuery({
+    [FILTER_KEYS.dataHubActivity]: dataHubAndAventriActivityQuery({
       ...options,
-      types: DATA_HUB_ACTIVITY,
+      types: DATA_HUB_AND_AVENTRI_ACTIVITY,
     }),
     [FILTER_KEYS.externalActivity]: externalActivityQuery({
       ...options,
@@ -305,15 +306,11 @@ async function fetchActivityFeedHandler(req, res, next) {
         .map((company) => company.id)
     }
 
-    let aventriEventIds = []
-    if (
-      [
-        FILTER_KEYS.dataHubAndExternalActivity,
-        FILTER_KEYS.externalActivity,
-      ].includes(activityTypeFilter)
-    ) {
-      aventriEventIds = await getAventriEventIds(req, next, company.contacts)
-    }
+    const aventriEventIds = await getAventriEventIds(
+      req,
+      next,
+      company.contacts
+    )
 
     const queries = getQueries({
       from,
