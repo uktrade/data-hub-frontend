@@ -19,7 +19,6 @@ export default function AventriEvent({ activity: event }) {
   const name = eventObject.name
   const aventriEventId = eventObject.id.split(':')[EVENT_ID_INDEX]
   const date = formatStartAndEndDate(eventObject.startTime, eventObject.endTime)
-  const country = eventObject['dit:aventri:country'] || 'Not set'
 
   return (
     <ActivityCardWrapper dataTest="aventri-event">
@@ -36,8 +35,8 @@ export default function AventriEvent({ activity: event }) {
             value: date,
           },
           {
-            label: 'Country',
-            value: country,
+            label: 'Aventri ID',
+            value: aventriEventId,
           },
         ]}
       />
