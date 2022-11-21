@@ -2,6 +2,7 @@ const { get } = require('lodash')
 const config = require('../config')
 const reporter = require('../lib/reporter')
 const { filterNonPermittedItem } = require('../modules/permissions/filters')
+const { getNotificationCount } = require('../apps/repos')
 
 const GLOBAL_NAV_ITEMS = require('../apps/global-nav-items')
 
@@ -26,7 +27,7 @@ function convertValueToJson(value) {
   }
 }
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   const userPermissions = get(res, 'locals.user.permissions')
   const userProfile = config.oauth.bypassSSO
     ? null
@@ -34,6 +35,10 @@ module.exports = (req, res, next) => {
   const permittedApplications = get(userProfile, 'permitted_applications', [])
   const permittedNavItems = GLOBAL_NAV_ITEMS.filter(
     filterNonPermittedItem(userPermissions)
+  )
+  const notificationCount = await getNotificationCount(req)
+  const notificationTotal = Object.values(notificationCount).reduce(
+    (a, b) => a + b
   )
 
   Object.assign(res.locals, {
@@ -45,6 +50,8 @@ module.exports = (req, res, next) => {
       return apps
     }, []),
     ACTIVE_KEY: getActiveHeaderKey(req.path, permittedNavItems),
+
+    notificationTotal,
 
     getMessages() {
       const items = req.flash()

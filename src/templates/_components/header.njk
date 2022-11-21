@@ -6,6 +6,8 @@
 	{%- set findExportersDomain = ( params.domains.findExporters or 'https://data.trade.gov.uk/datasets/a70a3967-2352-4230-b556-61bf875dc28c' ) %}
 	{%- set marketAcessDomain = ( params.domains.marketAccess or 'https://market-access.trade.gov.uk/' ) %}
 	{%- set dataWorkspaceDomain = (params.domains.dataWorkspaceDomain or 'https://data.trade.gov.uk' ) %}
+	{%- set getAssetPath = ( params.getAssetPath ) %}
+	{%- set notificationTotal = ( params.notificationTotal ) %}
 
   {%- set googleAnalyticsUTMParams = '?utm_source=Data%20Hub&utm_medium=referral&utm_campaign=dataflow&utm_content=Switch%20to%20Data%20Workspace' %}
 	{%- set datahubCrmKey = 'datahub-crm' %}
@@ -142,6 +144,9 @@
 						<a class="datahub-header__navigation__item__link{{ ' datahub-header__navigation__item__link--active' if supportApp.active }}" href="{{ supportApp.href }}">
 							{{- supportApp.name -}}
 						</a>
+					</li>
+					<li class="datahub-header__navigation__item datahub-header__navigation__item__notifications">
+						<a href="/reminders"><img src="{{ getAssetPath('images/bell-icon.svg') }}" type="image/svg" /> <strong>{{ notificationTotal }}</strong></a>
 					</li>
 				</ul>
 			</nav>

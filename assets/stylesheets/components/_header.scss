@@ -282,6 +282,24 @@ $tablet: 40.0625em;
 				padding-right: 0;
 			}
 
+			&__notifications {
+				float: right;
+				margin: 8px 0;
+
+				a {
+					text-decoration: none;
+				}
+				
+				a:visited,
+				a:link {
+					color: $govuk-black;
+				}
+
+				img {
+					vertical-align: middle;
+				}
+			}
+
 			&__link {
 				display: block;
 				padding: 5px 0;
