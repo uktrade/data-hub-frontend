@@ -14,7 +14,7 @@ describe('home page', () => {
 
   it('header', () => {
     cy.viewport('ipad-mini')
-    cy.get('.datahub-header').compareSnapshot('homePageHeader')
+    cy.get('#datahub-header').compareSnapshot('homePageHeader')
   })
 
   it('search bar', () => {
