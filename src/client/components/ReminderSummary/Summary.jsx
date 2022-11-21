@@ -83,6 +83,7 @@ const reminderType = PropTypes.arrayOf(
 Summary.propTypes = {
   count: PropTypes.number,
   investment: reminderType,
+  export: reminderType,
 }
 
 export default Summary

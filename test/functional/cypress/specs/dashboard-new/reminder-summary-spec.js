@@ -70,7 +70,7 @@ describe('Dashboard reminder summary', () => {
       )
 
       cy.get(
-        '[data-test="summary-item-export_no_recent_investment_interaction"]'
+        '[data-test="export-companies-with-no-recent-interactions"]'
       ).contains('Companies with no recent interactions (4)')
     })
 
@@ -108,19 +108,19 @@ describe('Dashboard reminder summary', () => {
     })
 
     it('should contain summary entries', () => {
-      cy.get('[data-test="summary-item-estimated_land_date"]').contains(
-        'Approaching estimated land dates (0)'
-      )
       cy.get(
-        '[data-test="summary-item-no_recent_investment_interaction"]'
+        '[data-test="investment-approaching-estimated-land-dates"]'
+      ).contains('Approaching estimated land dates (0)')
+      cy.get(
+        '[data-test="investment-projects-with-no-recent-interaction"]'
       ).contains('Projects with no recent interaction (0)')
 
-      cy.get('[data-test="summary-item-outstanding_propositions"]').contains(
+      cy.get('[data-test="investment-outstanding-propositions"]').contains(
         'Outstanding propositions (0)'
       )
 
       cy.get(
-        '[data-test="summary-item-export_no_recent_investment_interaction"]'
+        '[data-test="export-companies-with-no-recent-interactions"]'
       ).contains('Companies with no recent interactions (0)')
     })
 
