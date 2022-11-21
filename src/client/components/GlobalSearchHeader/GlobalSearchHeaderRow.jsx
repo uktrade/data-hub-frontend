@@ -28,7 +28,7 @@ const StyledActions = styled('div')`
   }
 `
 
-const SearchHeaderRow = ({ primary, actions, children, ...rest }) => {
+const GlobalSearchHeaderRow = ({ primary, actions, children, ...rest }) => {
   return (
     <StyledRowWrapper primary={primary} {...rest}>
       {children}
@@ -37,15 +37,15 @@ const SearchHeaderRow = ({ primary, actions, children, ...rest }) => {
   )
 }
 
-SearchHeaderRow.propTypes = {
+GlobalSearchHeaderRow.propTypes = {
   primary: PropTypes.bool,
   actions: PropTypes.node,
   children: PropTypes.node.isRequired,
 }
 
-SearchHeaderRow.defaultProps = {
+GlobalSearchHeaderRow.defaultProps = {
   primary: false,
   actions: null,
 }
 
-export default SearchHeaderRow
+export default GlobalSearchHeaderRow

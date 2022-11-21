@@ -9,7 +9,7 @@ import pluralize from 'pluralize'
 import { kebabCase } from 'lodash'
 
 import {
-  SearchHeaderRow,
+  GlobalSearchHeaderRow,
   //   RoutedFilterChips,
 } from '../../components'
 
@@ -34,7 +34,7 @@ const StyledResultCount = styled('span')`
   line-height: 1;
 `
 
-const SearchHeaderRowContainer = styled('div')`
+const GlobalSearchHeaderRowContainer = styled('div')`
   > div {
     border: none;
   }
@@ -95,8 +95,8 @@ function GlobalSearchHeader({
       )
   )
   return (
-    <SearchHeaderRowContainer>
-      <SearchHeaderRow actions={actions}>
+    <GlobalSearchHeaderRowContainer>
+      <GlobalSearchHeaderRow actions={actions}>
         <StyledDiv>
           <StyledHeaderText>
             <StyledResultCount data-test="collectionCount">
@@ -107,8 +107,8 @@ function GlobalSearchHeader({
           </StyledHeaderText>
         </StyledDiv>
         {links}
-      </SearchHeaderRow>
-    </SearchHeaderRowContainer>
+      </GlobalSearchHeaderRow>
+    </GlobalSearchHeaderRowContainer>
   )
 }
 
