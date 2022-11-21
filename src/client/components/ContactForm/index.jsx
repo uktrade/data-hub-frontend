@@ -16,6 +16,7 @@ import {
   FieldCheckboxes,
   FieldAddress,
   Main,
+  FormLayout,
 } from '..'
 import LocalHeader from '../LocalHeader/LocalHeader'
 import ContactResource from '../Resource/Contact'
