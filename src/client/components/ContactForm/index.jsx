@@ -16,6 +16,7 @@ import {
   FieldCheckboxes,
   FieldAddress,
   Main,
+  FormLayout,
 } from '..'
 import LocalHeader from '../LocalHeader/LocalHeader'
 import ContactResource from '../Resource/Contact'
@@ -150,191 +151,193 @@ const _ContactForm = ({
                     : urls.contacts.details(id)
                 }
                 return (
-                  <Form
-                    id="add-contact-form"
-                    analyticsFormName={update ? 'editContact' : 'addContact'}
-                    submissionTaskName="Save contact"
-                    transformPayload={({
-                      address1,
-                      address2,
-                      city,
-                      county,
-                      postcode,
-                      acceptsDitEmailMarketing,
-                      addressSameAsCompany,
-                      primary,
-                      email,
-                      moreDetails,
-                      ...values
-                    }) => ({
-                      contactId,
-                      values: {
-                        ...keysToSnakeCase(values),
-                        email,
-                        notes: moreDetails,
-                        accepts_dit_email_marketing:
-                          acceptsDitEmailMarketing.includes(YES),
+                  <FormLayout setWidth="three-quarters">
+                    <Form
+                      id="add-contact-form"
+                      analyticsFormName={update ? 'editContact' : 'addContact'}
+                      submissionTaskName="Save contact"
+                      transformPayload={({
+                        address1,
+                        address2,
+                        city,
+                        county,
+                        postcode,
+                        acceptsDitEmailMarketing,
+                        addressSameAsCompany,
                         primary,
-                        company,
-                        address_same_as_company:
-                          addressSameAsCompany.includes(YES),
-                        // The API is complaining if we send the address fields when address_same_as_company is true
-                        // If answer changes from yes to no, need to clear address fields on object
-                        ...(addressSameAsCompany == YES
-                          ? {
-                              address_1: null,
-                              address_2: null,
-                              address_town: null,
-                              address_county: null,
-                              address_postcode: null,
-                              address_area: null,
-                              address_country: null,
+                        email,
+                        moreDetails,
+                        ...values
+                      }) => ({
+                        contactId,
+                        values: {
+                          ...keysToSnakeCase(values),
+                          email,
+                          notes: moreDetails,
+                          accepts_dit_email_marketing:
+                            acceptsDitEmailMarketing.includes(YES),
+                          primary,
+                          company,
+                          address_same_as_company:
+                            addressSameAsCompany.includes(YES),
+                          // The API is complaining if we send the address fields when address_same_as_company is true
+                          // If answer changes from yes to no, need to clear address fields on object
+                          ...(addressSameAsCompany == YES
+                            ? {
+                                address_1: null,
+                                address_2: null,
+                                address_town: null,
+                                address_county: null,
+                                address_postcode: null,
+                                address_area: null,
+                                address_country: null,
+                              }
+                            : {
+                                address_1: address1 || ' ',
+                                address_2: address2,
+                                address_town: city || ' ',
+                                address_county: county,
+                                address_postcode: postcode,
+                                address_area: getAreaValue(values),
+                                address_country: values.country,
+                              }),
+                        },
+                      })}
+                      onSuccess={(
+                        result,
+                        values,
+                        { hardRedirect, flashMessage }
+                      ) => {
+                        flashMessage(
+                          update
+                            ? 'Contact record updated'
+                            : `You have successfully added a new contact ${result.name}`
+                        )
+                        hardRedirect(redirectTo(result))
+                      }}
+                      submitButtonLabel={
+                        update ? 'Save and return' : 'Add contact'
+                      }
+                      cancelRedirectTo={() =>
+                        referrerUrl ? stripHost(referrerUrl) : '/'
+                      }
+                      cancelButtonLabel={
+                        update ? 'Return without saving' : 'Cancel'
+                      }
+                      initialValues={{
+                        ...props,
+                        moreDetails,
+                        postcode,
+                        county,
+                        city,
+                        area: addressArea?.id,
+                        areaUS: areaUS(addressArea),
+                        areaCanada: areaCanada(addressArea),
+                        country: addressCountry?.id,
+                        primary: boolToYesNo(primary),
+                        addressSameAsCompany: boolToYesNo(addressSameAsCompany),
+                        acceptsDitEmailMarketing: [
+                          boolToYesNo(acceptsDitEmailMarketing),
+                        ].filter(Boolean),
+                      }}
+                    >
+                      {({ values }) => (
+                        <>
+                          <FieldInput
+                            label="First name"
+                            name="firstName"
+                            type="text"
+                            required="Enter a first name"
+                            data-test="group-field-first_name"
+                          />
+                          <FieldInput
+                            label="Last name"
+                            name="lastName"
+                            type="text"
+                            required="Enter a last name"
+                            data-test="group-field-last_name"
+                          />
+                          <FieldInput
+                            label="Job title"
+                            name="jobTitle"
+                            type="text"
+                            required="Enter a job title"
+                          />
+                          <FieldInput
+                            label="Email address"
+                            name="email"
+                            type="email"
+                            required="Enter an email address"
+                            validate={validators.email}
+                          />
+                          <FieldInput
+                            label="Phone number (optional)"
+                            hint="For international numbers include the country code"
+                            name="fullTelephoneNumber"
+                            type="text"
+                            validate={(x) =>
+                              !x?.match(GENERIC_PHONE_NUMBER_REGEX) &&
+                              'Phone number should consist of numbers'
                             }
-                          : {
-                              address_1: address1 || ' ',
-                              address_2: address2,
-                              address_town: city || ' ',
-                              address_county: county,
-                              address_postcode: postcode,
-                              address_area: getAreaValue(values),
-                              address_country: values.country,
-                            }),
-                      },
-                    })}
-                    onSuccess={(
-                      result,
-                      values,
-                      { hardRedirect, flashMessage }
-                    ) => {
-                      flashMessage(
-                        update
-                          ? 'Contact record updated'
-                          : `You have successfully added a new contact ${result.name}`
-                      )
-                      hardRedirect(redirectTo(result))
-                    }}
-                    submitButtonLabel={
-                      update ? 'Save and return' : 'Add contact'
-                    }
-                    cancelRedirectTo={() =>
-                      referrerUrl ? stripHost(referrerUrl) : '/'
-                    }
-                    cancelButtonLabel={
-                      update ? 'Return without saving' : 'Cancel'
-                    }
-                    initialValues={{
-                      ...props,
-                      moreDetails,
-                      postcode,
-                      county,
-                      city,
-                      area: addressArea?.id,
-                      areaUS: areaUS(addressArea),
-                      areaCanada: areaCanada(addressArea),
-                      country: addressCountry?.id,
-                      primary: boolToYesNo(primary),
-                      addressSameAsCompany: boolToYesNo(addressSameAsCompany),
-                      acceptsDitEmailMarketing: [
-                        boolToYesNo(acceptsDitEmailMarketing),
-                      ].filter(Boolean),
-                    }}
-                  >
-                    {({ values }) => (
-                      <>
-                        <FieldInput
-                          label="First name"
-                          name="firstName"
-                          type="text"
-                          required="Enter a first name"
-                          data-test="group-field-first_name"
-                        />
-                        <FieldInput
-                          label="Last name"
-                          name="lastName"
-                          type="text"
-                          required="Enter a last name"
-                          data-test="group-field-last_name"
-                        />
-                        <FieldInput
-                          label="Job title"
-                          name="jobTitle"
-                          type="text"
-                          required="Enter a job title"
-                        />
-                        <FieldInput
-                          label="Email address"
-                          name="email"
-                          type="email"
-                          required="Enter an email address"
-                          validate={validators.email}
-                        />
-                        <FieldInput
-                          label="Phone number (optional)"
-                          hint="For international numbers include the country code"
-                          name="fullTelephoneNumber"
-                          type="text"
-                          validate={(x) =>
-                            !x?.match(GENERIC_PHONE_NUMBER_REGEX) &&
-                            'Phone number should consist of numbers'
-                          }
-                        />
-                        <FieldRadios
-                          legend="Is this contact’s work address the same as the company address?"
-                          name="addressSameAsCompany"
-                          required="Select yes if the contact's work address is the same as the company address"
-                          options={[
-                            { value: YES, label: YES },
-                            {
-                              value: NO,
-                              label: NO,
-                              children: (
-                                <fieldset>
-                                  <StyledLabel>
-                                    What is the contact's work address?
-                                  </StyledLabel>
-                                  <FieldAddress
-                                    name="" // Required, but has no effect
-                                    apiEndpoint="/api/postcodelookup"
-                                    isCountrySelectable={true}
-                                    fontWeights={FONT_WEIGHTS.regular}
-                                  />
-                                </fieldset>
-                              ),
-                            },
-                          ]}
-                        />
-                        <FieldRadios
-                          legend="Is this person a primary contact?"
-                          name="primary"
-                          required="Select yes if this person is the company's primary contact"
-                          options={[
-                            { value: YES, label: YES },
-                            { value: NO, label: NO },
-                          ]}
-                        />
-                        <FieldCheckboxes
-                          name="acceptsDitEmailMarketing"
-                          options={[
-                            {
-                              value: YES,
-                              label:
-                                'The company contact does accept email marketing',
-                              hint:
-                                values?.acceptsDitEmailMarketing?.includes(
-                                  YES
-                                ) &&
-                                'By checking this box, you confirm that the contact has opted in to email marketing.',
-                            },
-                          ]}
-                        />
-                        <FieldTextarea
-                          label="More details (optional)"
-                          name="moreDetails"
-                          hint={moreDetailsHint}
-                        />
-                      </>
-                    )}
-                  </Form>
+                          />
+                          <FieldRadios
+                            legend="Is this contact’s work address the same as the company address?"
+                            name="addressSameAsCompany"
+                            required="Select yes if the contact's work address is the same as the company address"
+                            options={[
+                              { value: YES, label: YES },
+                              {
+                                value: NO,
+                                label: NO,
+                                children: (
+                                  <fieldset>
+                                    <StyledLabel>
+                                      What is the contact's work address?
+                                    </StyledLabel>
+                                    <FieldAddress
+                                      name="" // Required, but has no effect
+                                      apiEndpoint="/api/postcodelookup"
+                                      isCountrySelectable={true}
+                                      fontWeights={FONT_WEIGHTS.regular}
+                                    />
+                                  </fieldset>
+                                ),
+                              },
+                            ]}
+                          />
+                          <FieldRadios
+                            legend="Is this person a primary contact?"
+                            name="primary"
+                            required="Select yes if this person is the company's primary contact"
+                            options={[
+                              { value: YES, label: YES },
+                              { value: NO, label: NO },
+                            ]}
+                          />
+                          <FieldCheckboxes
+                            name="acceptsDitEmailMarketing"
+                            options={[
+                              {
+                                value: YES,
+                                label:
+                                  'The company contact does accept email marketing',
+                                hint:
+                                  values?.acceptsDitEmailMarketing?.includes(
+                                    YES
+                                  ) &&
+                                  'By checking this box, you confirm that the contact has opted in to email marketing.',
+                              },
+                            ]}
+                          />
+                          <FieldTextarea
+                            label="More details (optional)"
+                            name="moreDetails"
+                            hint={moreDetailsHint}
+                          />
+                        </>
+                      )}
+                    </Form>
+                  </FormLayout>
                 )
               }}
             </State>
