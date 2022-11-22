@@ -22,7 +22,7 @@ export default function AventriEvent({ activity: event }) {
 
   return (
     <ActivityCardWrapper dataTest="aventri-event">
-      <ActivityCardLabels service="Event" />
+      <ActivityCardLabels service="Event" kind="Aventri Service Delivery" />
       <ActivityCardSubject dataTest="aventri-event-name">
         <Link as={RouterLink} to={`/events/aventri/${aventriEventId}/details`}>
           {name}
