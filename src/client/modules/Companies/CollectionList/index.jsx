@@ -33,6 +33,7 @@ import {
 } from './state'
 
 import { sanitizeFilter } from '../../../../client/filters'
+import { export_sub_segments } from '../../../../apps/companies/apps/edit-company/client/constants'
 
 const CompaniesCollection = ({
   payload,
@@ -251,6 +252,16 @@ const CompaniesCollection = ({
               selectedOptions={
                 selectedFilters.futureCountriesOfInterest.options
               }
+              data-test="future-countries-of-interest-filter"
+            />
+            <Filters.Typeahead
+              isMulti={true}
+              label={LABELS.exportsSubsegment}
+              name="export_sub_segment"
+              qsParam="export_sub_segment"
+              placeholder="Search sub-segment"
+              options={export_sub_segments}
+              selectedOptions={selectedFilters.ukRegions.options}
               data-test="future-countries-of-interest-filter"
             />
           </FilterToggleSection>
