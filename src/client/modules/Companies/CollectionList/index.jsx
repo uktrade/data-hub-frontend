@@ -256,13 +256,13 @@ const CompaniesCollection = ({
             />
             <Filters.Typeahead
               isMulti={true}
-              label={LABELS.exportsSubsegment}
+              label={LABELS.exportSubsegment}
               name="export_sub_segment"
               qsParam="export_sub_segment"
-              placeholder="Search sub-segment"
+              placeholder="Search export subsegment"
               options={export_sub_segments}
               selectedOptions={selectedFilters.ukRegions.options}
-              data-test="future-countries-of-interest-filter"
+              data-test="export-sub_segment-filter"
             />
           </FilterToggleSection>
         </CollectionFilters>
