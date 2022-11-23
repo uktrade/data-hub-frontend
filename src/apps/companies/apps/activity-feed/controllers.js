@@ -9,6 +9,7 @@ const {
   EVENT_ATTENDEES_SORT_OPTIONS,
   EVENT_ALL_ACTIVITY,
   ACTIVITY_STREAM_FEATURE_FLAG,
+  DATA_HUB_AND_AVENTRI_ACTIVITY,
 } = require('./constants')
 
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
@@ -24,10 +25,11 @@ const config = require('../../../../config')
 
 const {
   myActivityQuery,
-  dataHubActivityQuery,
   externalActivityQuery,
   maxemailCampaignQuery,
   maxemailEmailSentQuery,
+  aventriAttendeeForCompanyQuery,
+  dataHubAndAventriActivityQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
 const {
@@ -90,9 +92,9 @@ function getQueries(options) {
       ...options,
       types: DATA_HUB_ACTIVITY,
     }),
-    [FILTER_KEYS.dataHubActivity]: dataHubActivityQuery({
+    [FILTER_KEYS.dataHubActivity]: dataHubAndAventriActivityQuery({
       ...options,
-      types: DATA_HUB_ACTIVITY,
+      types: DATA_HUB_AND_AVENTRI_ACTIVITY,
     }),
     [FILTER_KEYS.externalActivity]: externalActivityQuery({
       ...options,
@@ -159,6 +161,22 @@ async function getMaxemailCampaigns(req, next, contacts) {
     return campaignActivities.filter(
       (campaign) => campaign.object.contacts.length
     )
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function getAventriEventIds(req, next, contacts) {
+  try {
+    // Fetch aventri attendee info for company contacts
+    const aventriQuery = aventriAttendeeForCompanyQuery(contacts)
+    const aventriResults = await fetchActivityFeed(req, aventriQuery)
+    const aventriAttendees = aventriResults.hits.hits.map((hit) => hit._source)
+    // Fetch aventri event ids for aventri attendees
+    const aventriEventIds = aventriAttendees
+      .map((attendee) => attendee.object.attributedTo.id)
+      .map((id) => `${id}:Create`)
+    return aventriEventIds
   } catch (error) {
     next(error)
   }
@@ -288,12 +306,19 @@ async function fetchActivityFeedHandler(req, res, next) {
         .map((company) => company.id)
     }
 
+    const aventriEventIds = await getAventriEventIds(
+      req,
+      next,
+      company.contacts
+    )
+
     const queries = getQueries({
       from,
       size,
       companyIds: [company.id, ...dnbHierarchyIds],
       contacts: company.contacts,
       user,
+      aventriEventIds,
     })
 
     const results = await fetchActivityFeed(

@@ -1,4 +1,6 @@
 const activityFeedEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-from-es.json')
+const activityFeedAventriAtendeeEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-aventri-attendee-from-es.json')
+
 const allActivityFeedEvents = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/all-activity-feed-events.json')
 const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/middleware-parameters-builder')
 const companyMock = require('../../../../../../test/unit/data/company.json')
@@ -6,8 +8,10 @@ const {
   DATA_HUB_ACTIVITY,
   EXTERNAL_ACTIVITY,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
+  DATA_HUB_AND_AVENTRI_ACTIVITY,
 } = require('../constants')
 const { eventsColListQueryBuilder } = require('../controllers')
+const { has } = require('lodash')
 
 describe('Activity feed controllers', () => {
   let fetchActivityFeedStub,
@@ -18,7 +22,17 @@ describe('Activity feed controllers', () => {
 
   describe('#fetchActivityFeedHandler', () => {
     before(() => {
-      fetchActivityFeedStub = sinon.stub().resolves(activityFeedEsFixtures)
+      const mockActivityFeedApiFunction = (req, body) => {
+        //is this a query for aventriAttendeeForCompanyQuery
+        if (has(body, 'query.bool.must[0].term')) {
+          return activityFeedAventriAtendeeEsFixtures
+        }
+
+        return activityFeedEsFixtures
+      }
+      fetchActivityFeedStub = sinon
+        .stub()
+        .callsFake(mockActivityFeedApiFunction)
       getGlobalUltimateHierarchyStub = sinon
         .stub()
         .resolves({ results: [{ id: '123' }, { id: '456' }] })
@@ -55,6 +69,44 @@ describe('Activity feed controllers', () => {
             middlewareParameters.reqMock,
             middlewareParameters.resMock,
             middlewareParameters.nextSpy
+          )
+        })
+
+        it('should call fetchActivityFeed with correct params when retrieving aventri attendees', async () => {
+          const expectedEsQuery = {
+            size: 20,
+            query: {
+              bool: {
+                must: [
+                  {
+                    term: {
+                      'object.type': 'dit:aventri:Attendee',
+                    },
+                  },
+                  {
+                    terms: {
+                      'object.dit:emailAddress': [
+                        'fred@acme.org',
+                        'fred@acme.org',
+                        'fred@acme.org',
+                        'byvanuwenu@yahoo.com',
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+            sort: {
+              'object.updated': {
+                order: 'desc',
+                unmapped_type: 'date',
+              },
+            },
+          }
+
+          expect(fetchActivityFeedStub).to.be.calledWith(
+            middlewareParameters.reqMock,
+            expectedEsQuery
           )
         })
 
@@ -119,6 +171,25 @@ describe('Activity feed controllers', () => {
                                   'fred@acme.org',
                                   'fred@acme.org',
                                   'byvanuwenu@yahoo.com',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        bool: {
+                          must: [
+                            {
+                              term: {
+                                'object.type': 'dit:aventri:Event',
+                              },
+                            },
+                            {
+                              terms: {
+                                id: [
+                                  'dit:aventri:Event:1:Create',
+                                  'dit:aventri:Event:2:Create',
                                 ],
                               },
                             },
@@ -236,20 +307,49 @@ describe('Activity feed controllers', () => {
           ],
           query: {
             bool: {
-              must: [
-                {
-                  terms: {
-                    'object.type': DATA_HUB_ACTIVITY,
-                  },
+              filter: {
+                bool: {
+                  should: [
+                    {
+                      bool: {
+                        must: [
+                          {
+                            terms: {
+                              'object.type': DATA_HUB_AND_AVENTRI_ACTIVITY,
+                            },
+                          },
+                          {
+                            terms: {
+                              'object.attributedTo.id': [
+                                'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            term: {
+                              'object.type': 'dit:aventri:Event',
+                            },
+                          },
+                          {
+                            terms: {
+                              id: [
+                                'dit:aventri:Event:1:Create',
+                                'dit:aventri:Event:2:Create',
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
                 },
-                {
-                  terms: {
-                    'object.attributedTo.id': [
-                      'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-                    ],
-                  },
-                },
-              ],
+              },
             },
           },
         }
@@ -347,6 +447,25 @@ describe('Activity feed controllers', () => {
                         ],
                       },
                     },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            term: {
+                              'object.type': 'dit:aventri:Event',
+                            },
+                          },
+                          {
+                            terms: {
+                              id: [
+                                'dit:aventri:Event:1:Create',
+                                'dit:aventri:Event:2:Create',
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
                   ],
                 },
               },
@@ -399,22 +518,51 @@ describe('Activity feed controllers', () => {
             ],
             query: {
               bool: {
-                must: [
-                  {
-                    terms: {
-                      'object.type': DATA_HUB_ACTIVITY,
-                    },
+                filter: {
+                  bool: {
+                    should: [
+                      {
+                        bool: {
+                          must: [
+                            {
+                              terms: {
+                                'object.type': DATA_HUB_AND_AVENTRI_ACTIVITY,
+                              },
+                            },
+                            {
+                              terms: {
+                                'object.attributedTo.id': [
+                                  'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                                  'dit:DataHubCompany:123',
+                                  'dit:DataHubCompany:456',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        bool: {
+                          must: [
+                            {
+                              term: {
+                                'object.type': 'dit:aventri:Event',
+                              },
+                            },
+                            {
+                              terms: {
+                                id: [
+                                  'dit:aventri:Event:1:Create',
+                                  'dit:aventri:Event:2:Create',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
                   },
-                  {
-                    terms: {
-                      'object.attributedTo.id': [
-                        'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-                        'dit:DataHubCompany:123',
-                        'dit:DataHubCompany:456',
-                      ],
-                    },
-                  },
-                ],
+                },
               },
             },
           }
@@ -460,20 +608,49 @@ describe('Activity feed controllers', () => {
           ],
           query: {
             bool: {
-              must: [
-                {
-                  terms: {
-                    'object.type': DATA_HUB_ACTIVITY,
-                  },
+              filter: {
+                bool: {
+                  should: [
+                    {
+                      bool: {
+                        must: [
+                          {
+                            terms: {
+                              'object.type': DATA_HUB_AND_AVENTRI_ACTIVITY,
+                            },
+                          },
+                          {
+                            terms: {
+                              'object.attributedTo.id': [
+                                'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            term: {
+                              'object.type': 'dit:aventri:Event',
+                            },
+                          },
+                          {
+                            terms: {
+                              id: [
+                                'dit:aventri:Event:1:Create',
+                                'dit:aventri:Event:2:Create',
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
                 },
-                {
-                  terms: {
-                    'object.attributedTo.id': [
-                      'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-                    ],
-                  },
-                },
-              ],
+              },
             },
           },
         }
@@ -491,24 +668,56 @@ describe('Activity feed controllers', () => {
       }
 
       before(async () => {
+        fetchActivityFeedStub.reset()
         fetchActivityFeedStub.rejects(error)
-        middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
-          user: {
-            id: 123,
-          },
-        })
-
-        await controllers.fetchActivityFeedHandler(
-          middlewareParameters.reqMock,
-          middlewareParameters.resMock,
-          middlewareParameters.nextSpy
-        )
       })
 
-      it('should call next with an error', async () => {
-        expect(middlewareParameters.resMock.json).to.not.have.been.called
-        expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
+      context('when the get aventri details endpoint returns error', () => {
+        before(async () => {
+          middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+            user: {
+              id: 123,
+            },
+          })
+
+          await controllers.fetchActivityFeedHandler(
+            middlewareParameters.reqMock,
+            middlewareParameters.resMock,
+            middlewareParameters.nextSpy
+          )
+        })
+
+        it('should call next with an error', async () => {
+          expect(middlewareParameters.resMock.json).to.not.have.been.called
+          expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
+        })
+      })
+
+      context('when the get aventri details endpoint returns error', () => {
+        before(async () => {
+          middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+            requestQuery: {
+              activityTypeFilter: 'dataHubAndExternalActivity',
+              showDnbHierarchy: false,
+            },
+            user: {
+              id: 123,
+            },
+          })
+
+          await controllers.fetchActivityFeedHandler(
+            middlewareParameters.reqMock,
+            middlewareParameters.resMock,
+            middlewareParameters.nextSpy
+          )
+        })
+
+        it('should call next with an error', async () => {
+          expect(middlewareParameters.resMock.json).to.not.have.been.called
+          expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
+        })
       })
     })
   })
