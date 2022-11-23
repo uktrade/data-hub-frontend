@@ -1,6 +1,5 @@
 import React from 'react'
 import CardUtils from './card/CardUtils'
-import { Link as RouterLink } from 'react-router-dom'
 import Link from '@govuk-react/link'
 
 import { formatStartAndEndDate } from '../../../utils/date'
@@ -24,9 +23,7 @@ export default function AventriEvent({ activity: event }) {
     <ActivityCardWrapper dataTest="aventri-event">
       <ActivityCardLabels service="Event" kind="Aventri Service Delivery" />
       <ActivityCardSubject dataTest="aventri-event-name">
-        <Link as={RouterLink} to={`/events/aventri/${aventriEventId}/details`}>
-          {name}
-        </Link>
+        <Link href={`/events/aventri/${aventriEventId}/details`}>{name}</Link>
       </ActivityCardSubject>
       <ActivityCardMetadata
         metadata={[
