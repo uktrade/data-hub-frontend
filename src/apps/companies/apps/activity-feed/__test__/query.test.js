@@ -166,7 +166,6 @@ describe('#activityFeedEventsQuery', () => {
   context('query applies correct filtering', () => {
     context('should return the filtered aventri attendee data', () => {
       const expectedEsQuery = (emails) => ({
-        size: 20,
         query: {
           bool: {
             must: [
