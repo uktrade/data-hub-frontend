@@ -173,9 +173,9 @@ async function getAventriEventIds(req, next, contacts) {
     const aventriResults = await fetchActivityFeed(req, aventriQuery)
     const aventriAttendees = aventriResults.hits.hits.map((hit) => hit._source)
     // Fetch aventri event ids for aventri attendees
-    const aventriEventIds = aventriAttendees
-      .map((attendee) => attendee.object.attributedTo.id)
-      .map((id) => `${id}:Create`)
+    const aventriEventIds = aventriAttendees.map(
+      (attendee) => `${attendee.object.attributedTo.id}:Create`
+    )
     return aventriEventIds
   } catch (error) {
     next(error)
