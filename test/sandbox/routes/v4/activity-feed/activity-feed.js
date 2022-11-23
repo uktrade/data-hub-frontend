@@ -10,6 +10,7 @@ var maxemailEmailSentActivities = require('../../../fixtures/v4/activity-feed/ex
 // Data Hub and external activities
 var dataHubAndExternalActivities = require('../../../fixtures/v4/activity-feed/data-hub-and-external-activities.json')
 var companyActivities = require('../../../fixtures/v4/activity-feed/company-activity-feed-activities.json')
+var contactDataHubAndExternalActivities = require('../../../fixtures/v4/activity-feed/contact-data-hub-and-external-activities.json')
 
 // My activities
 var myActivities = require('../../../fixtures/v4/activity-feed/my-activities.json')
@@ -85,7 +86,7 @@ exports.activityFeed = function (req, res) {
 
     //if the sort by is newest
     if (req.body.sort[0].published.order === 'desc') {
-      return res.json(dataHubAndExternalActivities)
+      return res.json(contactDataHubAndExternalActivities)
     }
     //if the story by is oldest
     if (req.body.sort[0].published.order === 'asc') {
