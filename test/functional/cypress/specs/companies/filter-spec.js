@@ -631,6 +631,108 @@ describe('Companies Collections Filter', () => {
       assertFieldEmpty(element)
     })
   })
+  context('Export segment', () => {
+    const element = '[data-test="export-segment-filter"]'
+    const segmentValue = 'hep'
+    const expectedPayload = {
+      offset: 0,
+      limit: 10,
+      archived: false,
+      sortby: 'modified_on:desc',
+      export_segment: [segmentValue],
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        export_segment: [segmentValue],
+      })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`/companies?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      cy.get(element).should('contain', 'High export potential')
+      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'High export potential', position: 2 })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`/companies?${queryString}`)
+      cy.wait('@apiRequest')
+
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Company activity details')
+        .click()
+      testTypeahead({
+        element,
+        label: 'Export Segment',
+        placeholder: 'Search export segment',
+        input: 'high',
+        expectedOption: 'High export potential',
+      })
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('export_segment', [segmentValue])
+      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'High export potential', position: 2 })
+      removeChip(segmentValue)
+      cy.wait('@apiRequest')
+      removeChip(activeStatusFlag)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+  context('Export subsegment', () => {
+    const element = '[data-test="export-sub-segment-filter"]'
+    const subSegmentValue = 'sustain_nurture_and_grow'
+    const expectedPayload = {
+      offset: 0,
+      limit: 10,
+      archived: false,
+      sortby: 'modified_on:desc',
+      export_sub_segment: [subSegmentValue],
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        export_sub_segment: [subSegmentValue],
+      })
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`/companies?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      cy.get(element).should('contain', 'Sustain: nurture & grow')
+      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Sustain: nurture & grow', position: 2 })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', searchEndpoint).as('apiRequest')
+      cy.visit(`/companies?${queryString}`)
+      cy.wait('@apiRequest')
+
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Company activity details')
+        .click()
+      testTypeahead({
+        element,
+        label: 'Export Subsegment',
+        placeholder: 'Search export subsegment',
+        input: 'sust',
+        expectedOption: 'Sustain: nurture & grow',
+      })
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('export_sub_segment', [subSegmentValue])
+      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Sustain: nurture & grow', position: 2 })
+      removeChip(subSegmentValue)
+      cy.wait('@apiRequest')
+      removeChip(activeStatusFlag)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
 
   context('Last interaction dates', () => {
     const fromElement = '[data-test="last-interaction-after-filter"]'
