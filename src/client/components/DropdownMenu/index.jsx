@@ -167,15 +167,12 @@ const DropdownMenu = ({
           icon={<Icon src={trianglePng} active={open} alt="" />}
           aria-haspopup={true}
           aria-expanded={open}
-          aria-controls="dropDownOptionsMenu"
         >
           {(open ? closedLabel : label) || label}
         </DropdownToggleButton>
       </DropdownButtonContainer>
       {open && (
-        <DropdownMenuGroup id="dropDownOptionsMenu" ref={childrenGroupRef}>
-          {children}
-        </DropdownMenuGroup>
+        <DropdownMenuGroup ref={childrenGroupRef}>{children}</DropdownMenuGroup>
       )}
     </DropdownMenuContainer>
   )
