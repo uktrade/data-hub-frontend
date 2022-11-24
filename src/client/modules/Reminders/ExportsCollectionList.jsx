@@ -129,8 +129,8 @@ const ExportsCollectionList = ({
                       </li>
                       <li>
                         <ItemHint>Name/Team</ItemHint>{' '}
-                        {interaction.created_by.name}
-                        {interaction.created_by.dit_team
+                        {interaction.created_by?.name || 'Name unknown'}
+                        {interaction.created_by?.dit_team
                           ? `/${interaction.created_by.dit_team.name}`
                           : ' - Team unknown'}
                       </li>
