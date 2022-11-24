@@ -23,7 +23,7 @@ const transformSummaryData = ({ data }) => ({
   export: [
     {
       name: 'Companies with no recent interactions',
-      url: urls.reminders.investments.noRecentInteraction(),
+      url: urls.reminders.exports.noRecentInteractions(),
       count: data.export.no_recent_interaction,
     },
   ],

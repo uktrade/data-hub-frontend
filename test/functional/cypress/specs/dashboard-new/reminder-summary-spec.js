@@ -58,20 +58,41 @@ describe('Dashboard reminder summary', () => {
     })
 
     it('should contain summary entries', () => {
-      cy.get(
-        '[data-test="investment-approaching-estimated-land-dates"]'
-      ).contains('Approaching estimated land dates (1)')
-      cy.get(
-        '[data-test="investment-projects-with-no-recent-interaction"]'
-      ).contains('Projects with no recent interaction (2)')
+      cy.get('[data-test="investment-approaching-estimated-land-dates"]')
+        .contains('Approaching estimated land dates (1)')
+        .find('a')
+        .should(
+          'have.attr',
+          'href',
+          '/reminders/investments-estimated-land-date'
+        )
 
-      cy.get('[data-test="investment-outstanding-propositions"]').contains(
-        'Outstanding propositions (5)'
-      )
+      cy.get('[data-test="investment-projects-with-no-recent-interaction"]')
+        .contains('Projects with no recent interaction (2)')
+        .find('a')
+        .should(
+          'have.attr',
+          'href',
+          '/reminders/investments-no-recent-interaction'
+        )
 
-      cy.get(
-        '[data-test="export-companies-with-no-recent-interactions"]'
-      ).contains('Companies with no recent interactions (4)')
+      cy.get('[data-test="investment-outstanding-propositions"]')
+        .contains('Outstanding propositions (5)')
+        .find('a')
+        .should(
+          'have.attr',
+          'href',
+          '/reminders/investments-outstanding-propositions'
+        )
+
+      cy.get('[data-test="export-companies-with-no-recent-interactions"]')
+        .contains('Companies with no recent interactions (4)')
+        .find('a')
+        .should(
+          'have.attr',
+          'href',
+          '/reminders/exports-no-recent-interactions'
+        )
     })
 
     it('should be in a togglable section that starts open', () => {
