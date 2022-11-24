@@ -215,6 +215,9 @@ import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentRemind
 import { fetchReminderSummary } from './components/ReminderSummary/tasks'
 import { TASK_GET_REMINDER_SUMMARY } from './components/ReminderSummary/state'
 
+import { fetchNotificationAlertCount } from './components/NotificationAlert/tasks'
+import { TASK_GET_NOTIFICATION_ALERT_COUNT } from './components/NotificationAlert/state'
+
 import { TASK_GET_TYPEAHEAD_OPTIONS } from './components/Typeahead/state'
 
 import * as exportsEdit from '../apps/companies/apps/exports/client/tasks'
@@ -437,6 +440,7 @@ function App() {
             myInvestmentProjects.fetchMyInvestmentsList,
           [TASK_GET_OUTSTANDING_PROPOSITIONS]: fetchOutstandingPropositions,
           [TASK_GET_REMINDER_SUMMARY]: fetchReminderSummary,
+          [TASK_GET_NOTIFICATION_ALERT_COUNT]: fetchNotificationAlertCount,
           'Large investment profiles filters':
             investmentProfilesTasks.loadFilterOptions,
           [TASK_GET_CONTACTS_LIST]: getContacts,
