@@ -63,7 +63,7 @@ export default [
     },
   },
   {
-    label: 'Market Access',
+    label: 'Market access',
     module: 'market-access',
     useRouter: false,
     to: {
