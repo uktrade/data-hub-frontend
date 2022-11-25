@@ -100,7 +100,7 @@ const envSchema = Joi.object({
     .valid('error', 'warn', 'info', 'http', 'verbose', 'debug', 'silly')
     .default('error'),
 
-  // Url to Market Access app
+  // Url to Market access app
   MARKET_ACCESS_URL: Joi.string().uri(),
 
   // How long to store dropdown data etc for, in seconds. Defaults to 15 minutes
