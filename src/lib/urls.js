@@ -161,10 +161,6 @@ module.exports = {
       index: url('/companies', '/:companyId/advisers'),
       assign: url('/companies', '/:companyId/advisers/assign'),
       remove: url('/companies', '/:companyId/advisers/remove'),
-      level: {
-        down: url('/companies', '/:companyId/advisers'),
-        bing: url('/companies', '/:companyId/advisers'),
-      },
     },
     editHistory: {
       index: url('/companies', '/:companyId/edit-history'),
