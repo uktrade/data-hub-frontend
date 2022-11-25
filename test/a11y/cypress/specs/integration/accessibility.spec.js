@@ -1,19 +1,30 @@
 import urls from '../../../../../src/lib/urls'
+import { testIdentityNumbers } from './testIdentityNumbers'
 
-const { advisers } = urls.companies
+const { companies } = urls
 const collectionName = 'companies'
-const companyId = 'cc7e2f19-7251-4a41-a27a-f98437720531'
 const arrayOfItems = []
 
-for (const item in advisers) {
-  if (advisers[item].route) {
-    arrayOfItems.push({ item: advisers[item].route })
+for (const item in companies) {
+  if (companies[item].route) {
+    arrayOfItems.push({ item: companies[item].route })
   } else {
-    const lowerItems = Object.keys(advisers[item])
+    const lowerItems = Object.keys(companies[item])
     lowerItems.forEach((key) => {
-      arrayOfItems.push({
-        item: advisers[item][key].route,
-      })
+      if (companies[item][key].route) {
+        arrayOfItems.push({
+          item: companies[item][key].route,
+        })
+      } else {
+        const evenLowerItems = Object.keys(companies[item][key])
+        evenLowerItems.forEach((element) => {
+          if (companies[item][key][element].route) {
+            arrayOfItems.push({
+              item: companies[item][key][element].route,
+            })
+          }
+        })
+      }
     })
   }
 }
@@ -22,7 +33,7 @@ arrayOfItems.map((path) => {
   let adviserRoute = path.item.split('/')
   const currentAdvisorRoute = adviserRoute.map((route) => {
     if (route.startsWith(':')) {
-      return (route = companyId)
+      return (route = testIdentityNumbers[route])
     }
     return route
   })
