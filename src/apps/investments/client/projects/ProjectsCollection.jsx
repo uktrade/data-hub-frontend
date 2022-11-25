@@ -1,4 +1,5 @@
 import React from 'react'
+import { Details, Paragraph } from 'govuk-react'
 import { connect } from 'react-redux'
 import urls from '../../../../lib/urls'
 import {
@@ -172,6 +173,12 @@ const ProjectsCollection = ({
             selectedOptions={selectedFilters.financialYears.options}
             data-test="financial-year-filter"
           />
+          <Details summary="What do these options mean?">
+            <Paragraph>
+              Options show financial year. They filter by land date if
+              available, then by estimated land date.
+            </Paragraph>
+          </Details>
         </FilterToggleSection>
 
         <FilterToggleSection
