@@ -1,10 +1,25 @@
 import urls from '../../../../../src/lib/urls'
 
 const { advisers } = urls.companies
+const collectionName = 'companies'
 const companyId = 'cc7e2f19-7251-4a41-a27a-f98437720531'
+const arrayOfItems = []
 
-for (const adviserPath in advisers) {
-  let adviserRoute = advisers[adviserPath].route.split('/')
+for (const item in advisers) {
+  if (advisers[item].route) {
+    arrayOfItems.push({ item: advisers[item].route })
+  } else {
+    const lowerItems = Object.keys(advisers[item])
+    lowerItems.forEach((key) => {
+      arrayOfItems.push({
+        item: advisers[item][key].route,
+      })
+    })
+  }
+}
+
+arrayOfItems.map((path) => {
+  let adviserRoute = path.item.split('/')
   const currentAdvisorRoute = adviserRoute.map((route) => {
     if (route.startsWith(':')) {
       return (route = companyId)
@@ -14,7 +29,7 @@ for (const adviserPath in advisers) {
   adviserRoute = currentAdvisorRoute.join('/')
   describe('Data Hub accessibility tests', () => {
     before(() => {
-      cy.visit('/companies' + adviserRoute)
+      cy.visit('/' + collectionName + adviserRoute)
       // Wait until page has loaded first
       cy.initA11y()
     })
@@ -23,4 +38,4 @@ for (const adviserPath in advisers) {
       cy.runA11y()
     })
   })
-}
+})
