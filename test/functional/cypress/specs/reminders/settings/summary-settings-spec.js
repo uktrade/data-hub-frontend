@@ -169,7 +169,7 @@ describe('Reminders Settings', () => {
   )
 
   context('When only no recent export interaction settings are visible', () => {
-    const queryParams = 'exports_no_recent_interaction=true'
+    const queryParams = 'exports_no_recent_interactions=true'
     before(() => {
       interceptAPICalls()
       cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)
@@ -190,7 +190,7 @@ describe('Reminders Settings', () => {
 
   context('When all settings are visible', () => {
     const queryParams =
-      'investments_estimated_land_date=true&investments_no_recent_interaction=true&exports_no_recent_interaction=true'
+      'investments_estimated_land_date=true&investments_no_recent_interaction=true&exports_no_recent_interactions=true'
     before(() => {
       interceptAPICalls()
       cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)

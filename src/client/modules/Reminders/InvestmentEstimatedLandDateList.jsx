@@ -21,11 +21,10 @@ import {
 
 import { sortOptions, maxItemsToPaginate, itemsPerPage } from './constants'
 
-import RemindersLayout from './RemindersLayout'
 import CollectionHeader from './CollectionHeader'
 import Effect from '../../components/Effect'
 import Task from '../../components/Task'
-import CollectionList from './CollectionList'
+import InvestmentCollectionList from './InvestmentCollectionList'
 
 import { CollectionSort, RoutedPagination } from '../../components'
 
@@ -35,19 +34,17 @@ const Summary = styled('p')({
   fontSize: FONT_SIZE.SIZE_19,
 })
 
-const EstimatedLandDateReminders = ({ estimatedLandDateReminders }) => {
+const InvestmentEstimatedLandDateList = ({ estimatedLandDateReminders }) => {
   const { results, count, nextPending } = estimatedLandDateReminders
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
   const page = parseInt(qsParams.page, 10) || 1
-  const subject = 'approaching estimated land dates'
-  const title = `Reminders for ${subject}`
   const totalPages = Math.ceil(
     Math.min(count, maxItemsToPaginate) / itemsPerPage
   )
 
   return (
-    <RemindersLayout pageTitle={title} subject={subject}>
+    <>
       <CollectionHeader
         totalItems={count}
         pageOrigin="investments_estimated_land_date"
@@ -91,7 +88,7 @@ const EstimatedLandDateReminders = ({ estimatedLandDateReminders }) => {
                       })
                     }
                   />
-                  <CollectionList
+                  <InvestmentCollectionList
                     results={results}
                     disableDelete={nextPending}
                     onDeleteReminder={(reminderId) => {
@@ -109,10 +106,10 @@ const EstimatedLandDateReminders = ({ estimatedLandDateReminders }) => {
           </Task>
         )}
       </Task.Status>
-    </RemindersLayout>
+    </>
   )
 }
 
 export const state2props = (state) => state[ID]
 
-export default connect(state2props)(EstimatedLandDateReminders)
+export default connect(state2props)(InvestmentEstimatedLandDateList)
