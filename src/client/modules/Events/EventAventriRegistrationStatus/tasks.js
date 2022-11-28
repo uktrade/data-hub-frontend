@@ -7,8 +7,8 @@ export const getEventAventriRegistrationStatusAttendees = ({
   selectedSortBy,
   page,
   size,
-}) => {
-  return Promise.all([
+}) =>
+  Promise.all([
     axios.get(urls.events.aventri.detailsData(aventriEventId)),
     axios.get(urls.events.aventri.registrationStatusData(aventriEventId), {
       params: {
@@ -24,4 +24,3 @@ export const getEventAventriRegistrationStatusAttendees = ({
       ...attendeesData,
     }))
     .catch(() => Promise.reject('Unable to load Aventri Registration Status.'))
-}
