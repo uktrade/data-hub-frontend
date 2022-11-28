@@ -82,7 +82,11 @@ const ItemFooter = styled('div')({
   marginBottom: SPACING.SCALE_4,
 })
 
-const CollectionList = ({ results, onDeleteReminder, disableDelete }) => {
+const InvestmentCollectionList = ({
+  results,
+  onDeleteReminder,
+  disableDelete,
+}) => {
   return (
     <List data-test="reminders-list">
       {results.map(({ id, created_on, event, project, deleted }) => (
@@ -148,4 +152,4 @@ const CollectionList = ({ results, onDeleteReminder, disableDelete }) => {
   )
 }
 
-export default CollectionList
+export default InvestmentCollectionList
