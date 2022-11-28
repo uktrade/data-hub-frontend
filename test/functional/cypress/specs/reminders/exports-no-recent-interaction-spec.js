@@ -1,6 +1,11 @@
 import { assertBreadcrumbs } from '../../support/assertions'
 import urls from '../../../../../src/lib/urls'
-import { exportReminderFaker, reminderListFaker } from '../../fakers/reminders'
+import {
+  exportReminderFaker,
+  nestedAdviserFaker,
+  nestedInteractionFaker,
+  reminderListFaker,
+} from '../../fakers/reminders'
 import { formatLongDate } from '../../../../../src/client/utils/date'
 
 const remindersEndpoint = '/api-proxy/v4/reminder/no-recent-export-interaction'
@@ -9,6 +14,7 @@ describe('Exports no recent Interaction Reminders', () => {
   const reminders = [
     exportReminderFaker({
       created_on: '2022-01-01T10:00:00.000000Z',
+      last_interaction_date: '2022-11-01T10:00:00.000000Z',
     }),
     ...reminderListFaker(9, exportReminderFaker),
   ]
@@ -164,7 +170,82 @@ describe('Exports no recent Interaction Reminders', () => {
         )
       cy.get('@reminder')
         .find('[data-test="item-content"]')
-        .should('contain', `${reminders[0].interaction.subject}`)
+        .should(
+          'contain',
+          `${formatLongDate(reminders[0].last_interaction_date)}`
+        )
+    })
+  })
+
+  context('Reminders without a team', () => {
+    before(() => {
+      cy.intercept(
+        {
+          method: 'GET',
+          pathname: remindersEndpoint,
+          query: { limit: '10', offset: '0', sortby: '-created_on' },
+        },
+        {
+          body: {
+            count: 1,
+            results: [
+              exportReminderFaker({
+                created_on: '2022-01-01T10:00:00.000000Z',
+                last_interaction_date: '2022-11-01T10:00:00.000000Z',
+                interaction: nestedInteractionFaker({
+                  created_by: nestedAdviserFaker({ dit_team: null }),
+                }),
+              }),
+            ],
+            next: null,
+            previous: null,
+          },
+        }
+      ).as('remindersApiRequest')
+      cy.visit(urls.reminders.exports.noRecentInteractions())
+      cy.wait('@remindersApiRequest')
+    })
+
+    it('should state the team is unknown', () => {
+      cy.get('[data-test="reminders-list-item"]').eq(0).as('reminder')
+      cy.get('@reminder')
+        .find('[data-test="item-content"]')
+        .should('contain', 'Team unknown')
+    })
+  })
+
+  context('Reminders without a previous interaction', () => {
+    before(() => {
+      cy.intercept(
+        {
+          method: 'GET',
+          pathname: remindersEndpoint,
+          query: { limit: '10', offset: '0', sortby: '-created_on' },
+        },
+        {
+          body: {
+            count: 1,
+            results: [
+              exportReminderFaker({
+                created_on: '2022-01-01T10:00:00.000000Z',
+                last_interaction_date: '2022-11-01T10:00:00.000000Z',
+                interaction: null,
+              }),
+            ],
+            next: null,
+            previous: null,
+          },
+        }
+      ).as('remindersApiRequest')
+      cy.visit(urls.reminders.exports.noRecentInteractions())
+      cy.wait('@remindersApiRequest')
+    })
+
+    it('should have missing interaction copy', () => {
+      cy.get('[data-test="reminders-list-item"]').eq(0).as('reminder')
+      cy.get('@reminder')
+        .find('[data-test="item-content"]')
+        .should('contain', ' N/A')
     })
   })
 
