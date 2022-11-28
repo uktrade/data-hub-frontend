@@ -53,3 +53,13 @@ describe('Layout', () => {
     })
   })
 })
+
+describe('When reminders feature flag notification is on', () => {
+  beforeEach(() => {
+    cy.visit('/reminders')
+  })
+
+  it('should display notification alert badge', () => {
+    cy.get('[data-test="notification-alert-badge"]').should('contain', '289')
+  })
+})

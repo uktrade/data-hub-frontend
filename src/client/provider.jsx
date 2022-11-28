@@ -90,7 +90,8 @@ import { ID as INVESTMENT_REMINDERS_ID } from './components/InvestmentReminders/
 import investmentRemindersReducer from './components/InvestmentReminders/reducer'
 import { ID as REMINDER_SUMMARY_ID } from './components/ReminderSummary/state'
 import reminderSummaryReducer from './components/ReminderSummary/reducer'
-
+import { ID as NOTIFICATION_ALERT_ID } from './components/NotificationAlert/state'
+import notificationAlertReducer from './components/NotificationAlert/reducer'
 import {
   CONTACTS_LIST_ID,
   COMPANY_CONTACTS_LIST_ID,
@@ -199,6 +200,7 @@ const reducer = {
   [DATA_HUB_FEED_ID]: personalDashboardReducer,
   [INVESTMENT_REMINDERS_ID]: investmentRemindersReducer,
   [REMINDER_SUMMARY_ID]: reminderSummaryReducer,
+  [NOTIFICATION_ALERT_ID]: notificationAlertReducer,
   [CONTACTS_LIST_ID]: contactsReducer,
   [CONTACT_ACTIVITIES_ID]: contactActivitiesReducer,
   [COMPANY_CONTACTS_LIST_ID]: contactsReducer,
