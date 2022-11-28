@@ -41,7 +41,7 @@ const EventAventriDetails = ({
   eventDate,
   location,
   fullAddress,
-  attended,
+  registrationStatuses
 }) => {
   const { aventriEventId } = useParams()
   const breadcrumbs = [
@@ -112,7 +112,19 @@ const EventAventriDetails = ({
                             >
                               Details
                             </LocalNavLink>
-                            {attended.status && (
+                            {registrationStatuses?.map((status, index) => (
+                              <LocalNavLink
+                                key={`reg-status-${index}`}
+                                dataTest="event-aventri-status-link"
+                                href={urls.events.aventri.registrationStatus(
+                                  aventriEventId,
+                                  status.urlSlug
+                                )}
+                              >
+                                {status.status} ({status.count})
+                              </LocalNavLink>
+                              ))}
+                            {/* {attended.status && (
                               <LocalNavLink
                                 dataTest="event-aventri-attended-link"
                                 href={urls.events.aventri.attended(
@@ -121,7 +133,7 @@ const EventAventriDetails = ({
                               >
                                 Attended ({attended.total})
                               </LocalNavLink>
-                            )}
+                            )} */}
                           </LocalNav>
                         </GridCol>
                         <GridCol setWidth="three-quarters">

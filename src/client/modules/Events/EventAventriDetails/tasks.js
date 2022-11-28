@@ -18,15 +18,15 @@ export const paramsGetAventriEventAttendeeStatus = (status) => ({
 export const getEventAventriDetails = (aventriEventId) =>
   Promise.all([
     axios.get(urls.events.aventri.detailsData(aventriEventId)),
-    axios.get(urls.events.aventri.attendedData(aventriEventId), {
-      ...paramsGetAventriEventAttendeeStatus(
-        EVENT_AVENTRI_ATTENDEES_STATUS.attended
-      ),
-    }),
+    // axios.get(urls.events.aventri.attendedData(aventriEventId), {
+    //   ...paramsGetAventriEventAttendeeStatus(
+    //     EVENT_AVENTRI_ATTENDEES_STATUS.attended
+    //   ),
+    // }),
   ])
-    .then(([{ data }, { data: attendees }]) => ({
+    .then(([{ data }]) => ({
       ...transformResponseToEventAventriDetails(data),
-      attended:
-        transformAventriEventAttendeesRegistionStatusToBolean(attendees),
+      // attended:
+      //   transformAventriEventAttendeesRegistionStatusToBolean(attendees),
     }))
     .catch(() => Promise.reject('Unable to load aventri event details.'))

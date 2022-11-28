@@ -4,6 +4,7 @@ import EventsCollectionList from './modules/Events/CollectionList'
 import EventDetails from './modules/Events/EventDetails'
 import EventAventriDetails from './modules/Events/EventAventriDetails'
 import EventAventriAttended from './modules/Events/EventAventriAttended'
+import EventAventriRegistrationStatus from './modules/Events/EventAventriRegistrationStatus'
 import EventForm from './modules/Events/EventForm'
 import InteractionsCollectionList from './modules/Interactions/CollectionList'
 import OmisCollectionList from './modules/Omis/CollectionList'
@@ -61,6 +62,11 @@ const routes = {
       path: '/events/aventri/:aventriEventId/attended',
       module: 'datahub:events',
       component: EventAventriAttended,
+    },
+    {
+      path: '/events/aventri/:aventriEventId/registration/:status',
+      module: 'datahub:events',
+      component: EventAventriRegistrationStatus,
     },
   ],
   interactions: [

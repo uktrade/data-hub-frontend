@@ -5,6 +5,7 @@ const dataHubActivityQuery = require('./data-hub-activity-query')
 const myActivityQuery = require('./my-activity-query')
 const aventriAttendeeForCompanyQuery = require('./aventri-attendee-for-company-query')
 const dataHubAndAventriActivityQuery = require('./data-hub-and-aventri-activity-query')
+const aventriAttendeeRegistrationStatusQuery = require('./aventri-attendee-registration-status-query')
 
 module.exports = {
   myActivityQuery,
@@ -14,4 +15,5 @@ module.exports = {
   maxemailEmailSentQuery,
   aventriAttendeeForCompanyQuery,
   dataHubAndAventriActivityQuery,
+  aventriAttendeeRegistrationStatusQuery,
 }

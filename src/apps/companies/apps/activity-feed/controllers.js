@@ -10,6 +10,8 @@ const {
   EVENT_ALL_ACTIVITY,
   ACTIVITY_STREAM_FEATURE_FLAG,
   DATA_HUB_AND_AVENTRI_ACTIVITY,
+  EVENT_AVENTRI_ATTENDEES_STATUSES,
+  EVENT_AVENTRI_ATTENDEES_MAPPING,
 } = require('./constants')
 
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
@@ -39,6 +41,9 @@ const allActivityFeedEventsQuery = require('./es-queries/activity-feed-all-event
 
 const { aventriEventQuery } = require('./es-queries/aventri-event-query')
 const { aventriAttendeeQuery } = require('./es-queries/aventri-attendee-query')
+const {
+  aventriAttendeeRegistrationStatusQuery,
+} = require('./es-queries/aventri-attendee-registration-status-query')
 
 async function renderActivityFeed(req, res, next) {
   const { company, dnbHierarchyCount, dnbRelatedCompaniesCount } = res.locals
@@ -353,25 +358,113 @@ async function fetchAventriEvent(req, res, next) {
       req,
       aventriEventQuery([formattedAventriEventId])
     )
-    const aventriEventData = aventriEventResults.hits.hits[0]._source
 
-    return res.json({ ...aventriEventData })
+    const aventriEventData = aventriEventResults.hits.hits[0]._source
+    // console.log(aventriEventData)
+    // console.log(EVENT_AVENTRI_ATTENDEES_STATUSES)
+    //TODO query counts of each status here
+    const registrationStatusResults = await fetchActivityFeed(
+      req,
+      aventriAttendeeRegistrationStatusQuery({
+        eventId: id,
+        registrationStatuses: EVENT_AVENTRI_ATTENDEES_STATUSES,
+      })
+    )
+    // console.log(registrationStatusResults)
+    const statusCounts =
+      registrationStatusResults.aggregations.countfield.buckets
+        .map((result) => {
+          return { status: result.key, count: result.doc_count }
+        })
+        .filter((status) => status.count > 0)
+    // console.log(statusCounts)
+
+    return res.json({
+      ...aventriEventData,
+      registrationStatuses: statusCounts,
+    })
   } catch (error) {
     next(error)
   }
 }
 
-async function fetchAventriEventAttended(req, res, next) {
+async function fetchAventriEventRegistrationStatus(req, res, next) {
   // istanbul ignore next: Covered by functional tests
   try {
     const eventId = req.params.aventriEventId
-    const { page, size, registrationStatus } = req.query
+    const { page, size } = req.query
 
     const sort = EVENT_ATTENDEES_SORT_OPTIONS[req.query.sortBy]
     const from = (page - 1) * ACTIVITIES_PER_PAGE
 
     //get the attendees
-    let registrationStatuses = [registrationStatus]
+    const aventriAttendeeResults = await fetchActivityFeed(
+      req,
+      aventriAttendeeQuery({
+        eventId,
+        sort,
+        from,
+        size,
+      })
+    )
+
+    const totalAttendees = aventriAttendeeResults.hits.total.value
+
+    // istanbul ignore next: Covered by functional tests
+    let aventriAttendees = aventriAttendeeResults.hits.hits.map(
+      (hit) => hit._source
+    )
+
+    // add the datahub ID to aventri attendees object
+    // istanbul ignore next: Covered by functional tests
+    const addDataHubUrlToAttendee = async (attendee) => {
+      const attendeeEmail = attendee.object['dit:aventri:email']
+      let attendeeContactUrl = null
+      if (attendeeEmail) {
+        const dataHubContactResults = await fetchMatchingDataHubContact(
+          req,
+          attendeeEmail
+        )
+        const dataHubContactId = dataHubContactResults?.results[0]?.id
+        attendeeContactUrl = dataHubContactId
+          ? `/contacts/${dataHubContactId}/details`
+          : null
+      }
+      attendee.datahubContactUrl = attendeeContactUrl
+      return attendee
+    }
+    // istanbul ignore next: Covered by functional tests
+    aventriAttendees = await Promise.all(
+      aventriAttendees.map(async (attendee) => {
+        return await addDataHubUrlToAttendee(attendee)
+      })
+    )
+
+    res.json({
+      totalAttendees,
+      aventriAttendees,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function fetchAventriEventRegistrationStatusAttendees(req, res, next) {
+  // istanbul ignore next: Covered by functional tests
+  try {
+    console.log('****************')
+    const eventId = req.params.aventriEventId
+    const { page, size, registrationStatuses } = req.query
+
+    console.log(`registrationStatuses: ${registrationStatuses}`)
+
+    //TODO verify the registrationStatuses are real status, return 400 error
+
+    const sort = EVENT_ATTENDEES_SORT_OPTIONS[req.query.sortBy]
+    const from = (page - 1) * ACTIVITIES_PER_PAGE
+
+    //get the attendees
+    // let registrationStatuses = [registrationStatus]
     const aventriAttendeeResults = await fetchActivityFeed(
       req,
       aventriAttendeeQuery({
@@ -578,7 +671,8 @@ module.exports = {
   fetchActivityFeedHandler,
   fetchActivitiesForContact,
   fetchAventriEvent,
-  fetchAventriEventAttended,
+  fetchAventriEventRegistrationStatus,
+  fetchAventriEventRegistrationStatusAttendees,
   fetchAllActivityFeedEvents,
   eventsColListQueryBuilder,
 }

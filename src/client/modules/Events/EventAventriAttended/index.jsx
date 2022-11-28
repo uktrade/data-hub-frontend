@@ -37,6 +37,7 @@ const EventAventriAttended = ({
   itemsPerPage = 10,
   maxItemsToPaginate = 10000,
 }) => {
+  console.log(payload)
   const { aventriEventId } = useParams()
   const eventName = aventriEventData?.object.name
   const breadcrumbs = [

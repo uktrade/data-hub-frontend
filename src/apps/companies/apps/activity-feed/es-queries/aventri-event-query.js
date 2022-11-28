@@ -1,4 +1,4 @@
-const aventriEventQuery = (eventIds) => ({
+const aventriEventQuery = (eventId) => ({
   query: {
     bool: {
       must: [
@@ -9,7 +9,7 @@ const aventriEventQuery = (eventIds) => ({
         },
         {
           terms: {
-            id: eventIds,
+            id: eventId,
           },
         },
       ],
