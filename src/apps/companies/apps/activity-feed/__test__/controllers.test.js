@@ -3,6 +3,7 @@ const activityFeedEsFixtures = require('../../../../../../test/unit/data/activit
 const activityFeedAventriAtendeeEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-aventri-attendee-from-es.json')
 
 const allActivityFeedEvents = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/all-activity-feed-events.json')
+const allAttendees = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/aventri-attendees.json')
 const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/middleware-parameters-builder')
 const companyMock = require('../../../../../../test/unit/data/company.json')
 const {
@@ -11,6 +12,8 @@ const {
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
   DATA_HUB_AND_AVENTRI_ACTIVITY,
   ACTIVITY_STREAM_FEATURE_FLAG,
+  EVENT_AVENTRI_ATTENDEES_STATUS,
+  EVENT_ATTENDEES_SORT_OPTIONS,
 } = require('../constants')
 const { eventsColListQueryBuilder } = require('../controllers')
 const { has } = require('lodash')
@@ -20,7 +23,8 @@ describe('Activity feed controllers', () => {
     fetchAllActivityFeedEventsStub,
     getGlobalUltimateHierarchyStub,
     controllers,
-    middlewareParameters
+    middlewareParameters,
+    fetchMatchingDataHubContactStub
 
   describe('#fetchActivityFeedHandler', () => {
     before(() => {
@@ -1448,6 +1452,123 @@ describe('Activity feed controllers', () => {
       Object.values(events).forEach((e, index) => {
         expect(e.length).to.be.equal(3)
         expect(e[0]['dit:emailAddress']).to.be.equal(emails[index])
+      })
+    })
+  })
+
+  describe('#fetchAventriEventRegistrationStatusAttendees', () => {
+    before(() => {
+      fetchAllActivityFeedEventsStub = sinon.stub().resolves(allAttendees)
+      fetchMatchingDataHubContactStub = sinon
+        .stub()
+        .resolves({ results: [{ id: 1 }] })
+
+      controllers = proxyquire(
+        '../../src/apps/companies/apps/activity-feed/controllers',
+        {
+          './repos': {
+            fetchActivityFeed: fetchAllActivityFeedEventsStub,
+            fetchMatchingDataHubContact: fetchMatchingDataHubContactStub,
+          },
+        }
+      )
+    })
+
+    context('when requesting an invalid status an error is thrown', () => {
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters({
+          requestQuery: {
+            registrationStatuses: [
+              'FAKE',
+              EVENT_AVENTRI_ATTENDEES_STATUS.activated,
+              EVENT_AVENTRI_ATTENDEES_STATUS.noShow,
+            ],
+          },
+        })
+
+        await controllers.fetchAventriEventRegistrationStatusAttendees(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy
+        )
+      })
+
+      it('should call next with an error', async () => {
+        const error = 'Error: Invalid status'
+        expect(
+          middlewareParameters.nextSpy.getCalls()[0].firstArg.toString()
+        ).to.equal(error)
+      })
+    })
+
+    context('when requesting attendees matching statuses', () => {
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters({
+          requestQuery: {
+            registrationStatuses: [EVENT_AVENTRI_ATTENDEES_STATUS.activated],
+            page: 1,
+            size: 25,
+            sortBy: 'first_name:asc',
+          },
+          requestParams: { aventriEventId: 12 },
+        })
+
+        await controllers.fetchAventriEventRegistrationStatusAttendees(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy
+        )
+      })
+
+      it('should call fetchActivityFeed with the correct params', async () => {
+        const expectedESQuery = {
+          from: 0,
+          size: 25,
+          query: {
+            bool: {
+              must: [
+                {
+                  term: {
+                    'object.type': 'dit:aventri:Attendee',
+                  },
+                },
+                {
+                  term: {
+                    'object.attributedTo.id': `dit:aventri:Event:${12}`,
+                  },
+                },
+                {
+                  terms: {
+                    'object.dit:registrationStatus': [
+                      EVENT_AVENTRI_ATTENDEES_STATUS.activated,
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          sort: EVENT_ATTENDEES_SORT_OPTIONS['first_name:asc'],
+        }
+
+        expect(fetchAllActivityFeedEventsStub).to.be.calledWith(
+          middlewareParameters.reqMock,
+          expectedESQuery
+        )
+      })
+
+      it('should call fetchMatchingDataHubContacts with the correct ids', async () => {
+        const attendeeEmails = allAttendees.hits.hits
+          .map((hit) => {
+            return hit._source.object['dit:aventri:email']
+          })
+          .filter((f) => f)
+
+        attendeeEmails.forEach((email) =>
+          expect(fetchMatchingDataHubContactStub).to.be.calledWith(
+            middlewareParameters.reqMock,
+            email
+          )
+        )
       })
     })
   })
