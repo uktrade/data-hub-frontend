@@ -15,6 +15,7 @@ import {
   NoRecentInteractionReminders,
   OutstandingPropositionReminders,
 } from './modules/Reminders'
+import EventAventriRegistrationStatus from './modules/Events/EventAventriRegistrationStatus'
 
 const routes = {
   companies: [
@@ -61,6 +62,11 @@ const routes = {
       path: '/events/aventri/:aventriEventId/attended',
       module: 'datahub:events',
       component: EventAventriAttended,
+    },
+    {
+      path: '/events/aventri/:aventriEventId/registration/:status',
+      module: 'datahub:events',
+      component: EventAventriRegistrationStatus,
     },
   ],
   interactions: [
