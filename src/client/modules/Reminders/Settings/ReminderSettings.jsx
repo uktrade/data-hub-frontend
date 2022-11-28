@@ -32,12 +32,12 @@ const openSettings = (queryParamType, qsParams) => {
   return !!settingsExpand
 }
 
-const RemindersSettings = () => {
+const ReminderSettings = () => {
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
   const openESL = openSettings('investments_estimated_land_date', qsParams)
   const openNRI = openSettings('investments_no_recent_interaction', qsParams)
-  const openENRI = openSettings('exports_no_recent_interaction', qsParams)
+  const openENRI = openSettings('exports_no_recent_interactions', qsParams)
 
   return (
     <DefaultLayout
@@ -125,4 +125,4 @@ const RemindersSettings = () => {
   )
 }
 
-export default RemindersSettings
+export default ReminderSettings
