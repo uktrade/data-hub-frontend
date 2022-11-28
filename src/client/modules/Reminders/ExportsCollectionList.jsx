@@ -93,86 +93,114 @@ const ExportsCollectionList = ({
 }) => {
   return (
     <List data-test="reminders-list">
-      {results.map(({ id, created_on, company, interaction, deleted }) => (
-        <ListItem key={id} data-test="reminders-list-item">
-          <GridRow>
-            {deleted ? (
-              <GridCol>
-                <ItemHeader data-test="item-header">
-                  Reminder deleted
-                </ItemHeader>
-                <ItemContent colour={DARK_GREY} data-test="item-content">
-                  Reminder received {formatLongDate(created_on)} for{' '}
-                  {company.name}
-                </ItemContent>
-              </GridCol>
-            ) : (
-              <>
+      {results.map(
+        ({
+          id,
+          created_on,
+          last_interaction_date,
+          company,
+          interaction,
+          deleted,
+        }) => (
+          <ListItem key={id} data-test="reminders-list-item">
+            <GridRow>
+              {deleted ? (
                 <GridCol>
                   <ItemHeader data-test="item-header">
-                    <ul>
-                      <li>Reminder received {formatLongDate(created_on)}</li>
-                      <li>
-                        <ItemHeaderLink
-                          href={`${urls.companies.detail(company.id)}`}
-                        >
-                          No interaction recorded for {company.name}
-                        </ItemHeaderLink>
-                      </li>
-                    </ul>
+                    Reminder deleted
                   </ItemHeader>
-                  <ItemContent colour={BLACK} data-test="item-content">
-                    <ul>
-                      <li>
-                        <ItemHint>Date of last interaction</ItemHint>{' '}
-                        {formatLongDate(interaction.date)}
-                      </li>
-                      <li>
-                        <ItemHint>Name/Team</ItemHint>{' '}
-                        {interaction.created_by?.name || 'Name unknown'}
-                        {interaction.created_by?.dit_team
-                          ? `/${interaction.created_by.dit_team.name}`
-                          : ' - Team unknown'}
-                      </li>
-                      <li>
-                        <ItemHint>Type of interaction</ItemHint>{' '}
-                        {INTERACTION_NAMES[interaction.kind]}
-                      </li>
-                      <li>
-                        <ItemHint>Interaction title</ItemHint>{' '}
-                        {interaction.subject}
-                      </li>
-                    </ul>
+                  <ItemContent colour={DARK_GREY} data-test="item-content">
+                    Reminder received {formatLongDate(created_on)} for{' '}
+                    {company.name}
                   </ItemContent>
-                  {/* Display on mobile only */}
-                  {onDeleteReminder && !disableDelete && (
-                    <DeleteButton
-                      isMobile={true}
-                      data-test="delete-button"
-                      onClick={() => onDeleteReminder(id)}
-                    >
-                      Delete reminder
-                    </DeleteButton>
-                  )}
                 </GridCol>
-                {/* Display on Tablet and Desktop only */}
-                {onDeleteReminder && (
-                  <RightCol setWidth="one-quarter">
-                    {!disableDelete && (
+              ) : (
+                <>
+                  <GridCol>
+                    <ItemHeader data-test="item-header">
+                      <ul>
+                        <li>Reminder received {formatLongDate(created_on)}</li>
+                        <li>
+                          <ItemHeaderLink
+                            href={`${urls.companies.detail(company.id)}`}
+                          >
+                            No interaction recorded for {company.name}
+                          </ItemHeaderLink>
+                        </li>
+                      </ul>
+                    </ItemHeader>
+                    <ItemContent colour={BLACK} data-test="item-content">
+                      <ul>
+                        <li>
+                          <ItemHint>Date of last interaction</ItemHint>{' '}
+                          {formatLongDate(last_interaction_date)}
+                        </li>
+                        {interaction ? (
+                          <>
+                            <li>
+                              <ItemHint>Name/Team</ItemHint>{' '}
+                              {interaction.created_by?.name || 'Name unknown'}
+                              {interaction.created_by?.dit_team
+                                ? `/${interaction.created_by.dit_team.name}`
+                                : ' - Team unknown'}
+                            </li>
+                            <li>
+                              <ItemHint>Type of interaction</ItemHint>{' '}
+                              {INTERACTION_NAMES[interaction.kind]}
+                            </li>
+                            <li>
+                              <ItemHint>Interaction title</ItemHint>{' '}
+                              {interaction.subject}
+                            </li>
+                          </>
+                        ) : (
+                          <>
+                            <li>
+                              <ItemHint>Name/Team</ItemHint>
+                              {' N/A'}
+                            </li>
+                            <li>
+                              <ItemHint>Type of interaction</ItemHint>
+                              {' N/A'}
+                            </li>
+                            <li>
+                              <ItemHint>Interaction title</ItemHint>
+                              {' N/A'}
+                            </li>
+                          </>
+                        )}
+                      </ul>
+                    </ItemContent>
+                    {/* Display on mobile only */}
+                    {onDeleteReminder && !disableDelete && (
                       <DeleteButton
+                        isMobile={true}
                         data-test="delete-button"
                         onClick={() => onDeleteReminder(id)}
                       >
                         Delete reminder
                       </DeleteButton>
                     )}
-                  </RightCol>
-                )}
-              </>
-            )}
-          </GridRow>
-        </ListItem>
-      ))}
+                  </GridCol>
+                  {/* Display on Tablet and Desktop only */}
+                  {onDeleteReminder && (
+                    <RightCol setWidth="one-quarter">
+                      {!disableDelete && (
+                        <DeleteButton
+                          data-test="delete-button"
+                          onClick={() => onDeleteReminder(id)}
+                        >
+                          Delete reminder
+                        </DeleteButton>
+                      )}
+                    </RightCol>
+                  )}
+                </>
+              )}
+            </GridRow>
+          </ListItem>
+        )
+      )}
     </List>
   )
 }

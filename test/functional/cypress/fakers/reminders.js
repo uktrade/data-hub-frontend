@@ -4,6 +4,14 @@ import { relativeDateFaker } from './dates'
 import { investmentProjectCodeFaker } from './investment-projects'
 import { listFaker } from './utils'
 
+export const nestedAdviserFaker = (overrides = {}) => ({
+  name: faker.name.fullName(),
+  dit_team: {
+    name: `${faker.address.country()} Team`,
+  },
+  ...overrides,
+})
+
 export const nestedProjectFaker = (overrides = {}) => ({
   id: faker.datatype.uuid(),
   name: faker.lorem.words(),
@@ -18,12 +26,7 @@ export const nestedCompanyFaker = (overrides = {}) => ({
 })
 
 export const nestedInteractionFaker = (overrides = {}) => ({
-  created_by: {
-    name: faker.name.fullName(),
-    dit_team: {
-      name: `${faker.address.country()} Team`,
-    },
-  },
+  created_by: nestedAdviserFaker(),
   date: relativeDateFaker({ minDays: -365, maxDays: 0 }),
   kind: faker.helpers.arrayElement(['interaction', 'service_delivery']),
   subject: faker.datatype.string(),
@@ -47,6 +50,7 @@ export const reminderListFaker = (
 export const exportReminderFaker = (overrides = {}) => ({
   id: faker.datatype.uuid(),
   created_on: relativeDateFaker({ minDays: -365, maxDays: 0 }),
+  last_interaction_date: relativeDateFaker({ minDays: -365, maxDays: 0 }),
   event: faker.lorem.words(),
   company: nestedCompanyFaker(),
   interaction: nestedInteractionFaker(),
