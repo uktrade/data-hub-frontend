@@ -125,19 +125,37 @@ const EventsCollection = ({
               })}
             >
               <CollectionFilters taskProps={collectionListMetadataTask}>
+                <Filters.Input
+                  id="EventsCollection.name"
+                  qsParam="name"
+                  name="name"
+                  label={LABELS.eventName}
+                  placeholder="Search event name"
+                  data-test="event-name-filter"
+                />
                 <FilterToggleSection
-                  id="EventCollection.event-details-filters"
-                  label="Event details"
+                  id="EventCollection.date"
+                  label="Dates"
                   isOpen={true}
                 >
-                  <Filters.Input
-                    id="EventsCollection.name"
-                    qsParam="name"
-                    name="name"
-                    label={LABELS.eventName}
-                    placeholder="Search event name"
-                    data-test="event-name-filter"
+                  <Filters.Date
+                    label={LABELS.earliestStartDate}
+                    name="earliest_start_date"
+                    qsParamName="earliest_start_date"
+                    data-test="earliest-start-date-filter"
                   />
+                  <Filters.Date
+                    label={LABELS.latestStartDate}
+                    name="latest_start_date"
+                    qsParamName="latest_start_date"
+                    data-test="latest-start-date-filter"
+                  />
+                </FilterToggleSection>
+                <FilterToggleSection
+                  id="EventCollection.organiser"
+                  label="Organisers"
+                  isOpen={true}
+                >
                   <Filters.AdvisersTypeahead
                     isMulti={true}
                     taskProps={organisersTask}
@@ -149,33 +167,11 @@ const EventsCollection = ({
                     selectedOptions={selectedFilters.organisers.options}
                     data-test="organiser-filter"
                   />
-                  <Filters.Date
-                    label={LABELS.startDateAfter}
-                    name="start_date_after"
-                    qsParamName="start_date_after"
-                    data-test="start-date-after-filter"
-                  />
-                  <Filters.Date
-                    label={LABELS.startDateBefore}
-                    name="start_date_before"
-                    qsParamName="start_date_before"
-                    data-test="start-date-before-filter"
-                  />
-                  <Filters.CheckboxGroup
-                    maxScrollHeight={345}
-                    legend={LABELS.eventType}
-                    name="event_type"
-                    qsParam="event_type"
-                    options={optionMetadata.eventTypeOptions}
-                    selectedOptions={selectedFilters.eventTypes.options}
-                    data-test="event-type-filter"
-                    groupId="event-type-filter"
-                  />
                 </FilterToggleSection>
                 <FilterToggleSection
-                  id="EventCollection.event-location-details-filters"
-                  label="Event location details"
-                  isOpen={false}
+                  id="EventCollection.event-details-filters"
+                  label="Location"
+                  isOpen={true}
                 >
                   <Filters.Typeahead
                     isMulti={true}
@@ -196,6 +192,38 @@ const EventsCollection = ({
                     options={optionMetadata.ukRegionOptions}
                     selectedOptions={selectedFilters.ukRegions.options}
                     data-test="uk-region-filter"
+                  />
+                </FilterToggleSection>
+                <FilterToggleSection
+                  id="EventCollection.type-of-event"
+                  label="Type of event"
+                  isOpen={true}
+                >
+                  <Filters.CheckboxGroup
+                    maxScrollHeight={345}
+                    legend={LABELS.eventType}
+                    name="event_type"
+                    qsParam="event_type"
+                    options={optionMetadata.eventTypeOptions}
+                    selectedOptions={selectedFilters.eventTypes.options}
+                    data-test="event-type-filter"
+                    groupId="event-type-filter"
+                  />
+                </FilterToggleSection>
+                <FilterToggleSection
+                  id="EventCollection.event-aventri-events"
+                  label="Aventri events"
+                  isOpen={false}
+                >
+                  <Filters.AventriId
+                    id="EventsCollection.aventriId"
+                    label={LABELS.aventriId}
+                    name="aventri_id"
+                    qsParam="aventri_id"
+                    hintText="For example, 100100100"
+                    type="number"
+                    onInput={maxLengthAventriIdValidation}
+                    data-test="aventri-id-filter"
                   />
                 </FilterToggleSection>
               </CollectionFilters>
@@ -241,16 +269,6 @@ const EventsCollection = ({
                   noOptionsMessage="No organisers found"
                   selectedOptions={selectedFilters.organisers.options}
                   data-test="organiser-filter"
-                />
-                <Filters.AventriId
-                  id="EventsCollection.aventriId"
-                  label={LABELS.aventriId}
-                  name="aventri_id"
-                  qsParam="aventri_id"
-                  hintText="For example, 100100100"
-                  type="number"
-                  onInput={maxLengthAventriIdValidation}
-                  data-test="aventri-id-filter"
                 />
                 <Filters.Typeahead
                   isMulti={true}
