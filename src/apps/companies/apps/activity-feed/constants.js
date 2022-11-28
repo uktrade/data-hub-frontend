@@ -90,6 +90,43 @@ const EVENT_AVENTRI_ATTENDEES_STATUSES = Object.values(
   EVENT_AVENTRI_ATTENDEES_STATUS
 )
 
+const EVENT_ATTENDEES_STATUS = {
+  registered: 'Registered',
+  waitingList: 'Waiting list',
+  didNotAttend: 'Did not attend',
+  attended: 'Attended',
+}
+
+const mapStatusToObject = (status) => {
+  return { status, urlSlug: status.replaceAll(' ', '-').toLowerCase() }
+}
+
+const EVENT_AVENTRI_ATTENDEES_MAPPING = {
+  [EVENT_AVENTRI_ATTENDEES_STATUS.activated]: mapStatusToObject(
+    EVENT_ATTENDEES_STATUS.registered
+  ),
+  [EVENT_AVENTRI_ATTENDEES_STATUS.attended]: mapStatusToObject(
+    EVENT_ATTENDEES_STATUS.attended
+  ),
+  [EVENT_AVENTRI_ATTENDEES_STATUS.confirmed]: mapStatusToObject(
+    EVENT_ATTENDEES_STATUS.registered
+  ),
+  [EVENT_AVENTRI_ATTENDEES_STATUS.noShow]: mapStatusToObject(
+    EVENT_ATTENDEES_STATUS.didNotAttend
+  ),
+  [EVENT_AVENTRI_ATTENDEES_STATUS.waitlist]: mapStatusToObject(
+    EVENT_ATTENDEES_STATUS.waitingList
+  ),
+}
+
+const EVENT_ATTENDEES_STATUS_BEFORE_EVENT = [EVENT_ATTENDEES_STATUS.registered]
+
+const EVENT_ATTENDEES_STATUS_AFTER_EVENT = [
+  EVENT_ATTENDEES_STATUS.attended,
+  EVENT_ATTENDEES_STATUS.waitingList,
+  EVENT_ATTENDEES_STATUS.didNotAttend,
+]
+
 const EVENT_ACTIVITY_SORT_OPTIONS = {
   'modified_on:asc': {
     'object.updated': {
@@ -168,4 +205,7 @@ module.exports = {
   CONTACT_ACTIVITY_SORT_SELECT_OPTIONS,
   ACTIVITY_STREAM_FEATURE_FLAG,
   DATA_HUB_AND_AVENTRI_ACTIVITY,
+  EVENT_AVENTRI_ATTENDEES_MAPPING,
+  EVENT_ATTENDEES_STATUS_BEFORE_EVENT,
+  EVENT_ATTENDEES_STATUS_AFTER_EVENT,
 }
