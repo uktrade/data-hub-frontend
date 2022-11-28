@@ -154,7 +154,7 @@ const EventsCollection = ({
                 <FilterToggleSection
                   id="EventCollection.organiser"
                   label="Organisers"
-                  isOpen={true}
+                  isOpen={false}
                 >
                   <Filters.AdvisersTypeahead
                     isMulti={true}
@@ -171,7 +171,7 @@ const EventsCollection = ({
                 <FilterToggleSection
                   id="EventCollection.event-details-filters"
                   label="Location"
-                  isOpen={true}
+                  isOpen={false}
                 >
                   <Filters.Typeahead
                     isMulti={true}
@@ -197,7 +197,7 @@ const EventsCollection = ({
                 <FilterToggleSection
                   id="EventCollection.type-of-event"
                   label="Type of event"
-                  isOpen={true}
+                  isOpen={false}
                 >
                   <Filters.CheckboxGroup
                     maxScrollHeight={345}
