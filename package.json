@@ -67,7 +67,7 @@
     "node": "18.7.0"
   },
   "dependencies": {
-    "@govuk-react/constants": "^0.10.4",
+    "@govuk-react/constants": "^0.10.5",
     "@nivo/core": "^0.80.0",
     "@nivo/pie": "^0.80.0",
     "@nivo/tooltip": "^0.80.0",
