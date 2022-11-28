@@ -78,11 +78,17 @@ const EVENT_ATTENDEES_SORT_OPTIONS = {
 }
 
 const EVENT_AVENTRI_ATTENDEES_STATUS = {
+  activated: 'Activated',
   attended: 'Attended',
   confirmed: 'Confirmed',
   cancelled: 'Cancelled',
-  registered: 'Registered',
+  noShow: 'No Show',
+  waitlist: 'Waitlist',
 }
+
+const EVENT_AVENTRI_ATTENDEES_STATUSES = Object.values(
+  EVENT_AVENTRI_ATTENDEES_STATUS
+)
 
 const EVENT_ACTIVITY_SORT_OPTIONS = {
   'modified_on:asc': {
@@ -151,6 +157,7 @@ module.exports = {
   EVENT_ATTENDEES_SORT_OPTIONS,
   EVENT_ACTIVITY_SORT_OPTIONS,
   EVENT_AVENTRI_ATTENDEES_STATUS,
+  EVENT_AVENTRI_ATTENDEES_STATUSES,
   EVENT_ALL_ACTIVITY,
   FILTER_KEYS,
   FILTER_ITEMS,

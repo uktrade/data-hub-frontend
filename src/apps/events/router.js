@@ -12,6 +12,7 @@ const {
   fetchAventriEvent,
   fetchAventriEventAttended,
   fetchAllActivityFeedEvents,
+  fetchAventriEventRegistrationStatusAttendees,
 } = require('../companies/apps/activity-feed/controllers')
 
 router.get('/create', renderEventsView)
@@ -22,6 +23,10 @@ router.get('/aventri/:aventriEventId/details', renderEventsView)
 router.get(urls.events.aventri.detailsData.route, fetchAventriEvent)
 router.get('/aventri/:aventriEventId/attended', renderEventsView)
 router.get(urls.events.aventri.attendedData.route, fetchAventriEventAttended)
+router.get(
+  urls.events.aventri.registrationStatusData.route,
+  fetchAventriEventRegistrationStatusAttendees
+)
 
 router.use(
   '/:eventId',
