@@ -19,7 +19,6 @@ import { maxItemsToPaginate, itemsPerPage } from './constants'
 
 import { RoutedPagination } from '../../components'
 import CollectionHeader from './CollectionHeader'
-import RemindersLayout from './RemindersLayout'
 import Task from '../../components/Task'
 import urls from '../../../lib/urls'
 
@@ -66,25 +65,17 @@ const PaginationSummary = styled(Summary)({
   borderBottom: `solid 1px ${GREY_2}`,
 })
 
-const OutstandingPropositionReminders = ({
-  outstandingPropositionsReminders,
-}) => {
+const OutstandingPropositionsList = ({ outstandingPropositionsReminders }) => {
   const { results, count } = outstandingPropositionsReminders
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
   const page = parseInt(qsParams.page, 10) || 1
-  const subject = 'outstanding propositions'
-  const title = `Reminders for ${subject}`
   const totalPages = Math.ceil(
     Math.min(count, maxItemsToPaginate) / itemsPerPage
   )
 
   return (
-    <RemindersLayout
-      pageTitle={title}
-      subject={subject}
-      hasSettingsLink={false}
-    >
+    <>
       <CollectionHeader settings={false} totalItems={count} />
       {results.length === 0 ? (
         <Summary data-test="investments-no-reminders">
@@ -134,10 +125,10 @@ const OutstandingPropositionReminders = ({
           </>
         )}
       </Task.Status>
-    </RemindersLayout>
+    </>
   )
 }
 
 export const state2props = (state) => state[ID]
 
-export default connect(state2props)(OutstandingPropositionReminders)
+export default connect(state2props)(OutstandingPropositionsList)

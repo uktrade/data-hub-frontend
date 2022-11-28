@@ -1,11 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Switch } from 'react-router-dom'
 import * as Sentry from '@sentry/browser'
 import * as ReactSentry from '@sentry/react'
 import { BrowserTracing } from '@sentry/tracing'
 import { ErrorBoundary } from 'react-error-boundary'
-
-import { Redirect, Switch } from 'react-router-dom'
 
 import './components'
 import { SearchLocalHeader } from './components'
@@ -752,17 +751,9 @@ function App() {
           {() => (
             <Switch>
               {Object.keys(routes).map((module) =>
-                routes[module].map((route) =>
-                  route.redirect ? (
-                    <Redirect
-                      exact={true}
-                      from={route.path}
-                      to={route.redirect}
-                    />
-                  ) : (
-                    <ProtectedRoute exact={true} {...route} />
-                  )
-                )
+                routes[module].map((route) => (
+                  <ProtectedRoute exact={route.exact || true} {...route} />
+                ))
               )}
             </Switch>
           )}

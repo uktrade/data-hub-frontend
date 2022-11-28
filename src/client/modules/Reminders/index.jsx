@@ -1,19 +1,28 @@
-import RemindersSettings from './Settings'
-import EstimatedLandDateForm from './Settings/EstimatedLandDateForm'
-import NoRecentInteractionForm from './Settings/NoRecentInteractionForm'
+// Summary settings
+import ReminderSettings from './Settings/ReminderSettings'
+
+// Forms
+import ReminderForms from './Settings/ReminderForms'
+import InvestmentEstimatedLandDateForm from './Settings/InvestmentEstimatedLandDateForm'
+import InvestmentNoRecentInteractionForm from './Settings/InvestmentNoRecentInteractionForm'
 import ExportNoRecentInteractionForm from './Settings/ExportNoRecentInteractionForm'
-import EstimatedLandDateReminders from './EstimatedLandDateReminders'
-import NoRecentInteractionReminders from './NoRecentInteractionReminders'
-import OutstandingPropositionReminders from './OutstandingPropositionReminders'
-import ExportsNoRecentInteractionReminders from './ExportsNoRecentInteractionReminders'
+
+// Lists
+import RemindersLists from './RemindersLists'
+import InvestmentEstimatedLandDateList from './InvestmentEstimatedLandDateList'
+import InvestmentNoRecentInteractionList from './InvestmentNoRecentInteractionList'
+import InvestmentOutstandingPropositionsList from './InvestmentOutstandingPropositionsList'
+import ExportsNoRecentInteractionList from './ExportsNoRecentInteractionList'
 
 export {
-  RemindersSettings,
-  EstimatedLandDateForm,
-  NoRecentInteractionForm,
+  ReminderSettings,
+  ReminderForms,
+  InvestmentEstimatedLandDateForm,
+  InvestmentNoRecentInteractionForm,
   ExportNoRecentInteractionForm,
-  EstimatedLandDateReminders,
-  NoRecentInteractionReminders,
-  OutstandingPropositionReminders,
-  ExportsNoRecentInteractionReminders,
+  RemindersLists,
+  InvestmentEstimatedLandDateList,
+  InvestmentNoRecentInteractionList,
+  InvestmentOutstandingPropositionsList,
+  ExportsNoRecentInteractionList,
 }

@@ -7,17 +7,8 @@ import EventAventriAttended from './modules/Events/EventAventriAttended'
 import EventForm from './modules/Events/EventForm'
 import InteractionsCollectionList from './modules/Interactions/CollectionList'
 import OmisCollectionList from './modules/Omis/CollectionList'
-import {
-  RemindersSettings,
-  EstimatedLandDateForm,
-  NoRecentInteractionForm,
-  ExportNoRecentInteractionForm,
-  EstimatedLandDateReminders,
-  NoRecentInteractionReminders,
-  OutstandingPropositionReminders,
-  ExportsNoRecentInteractionReminders,
-} from './modules/Reminders'
 import EventAventriRegistrationStatus from './modules/Events/EventAventriRegistrationStatus'
+import RemindersRoutes from './modules/Reminders/RemindersRoutes'
 
 const routes = {
   companies: [
@@ -87,49 +78,10 @@ const routes = {
   ],
   reminders: [
     {
+      exact: false,
       path: '/reminders',
       module: 'datahub:companies',
-      redirect: '/reminders/investments-estimated-land-date',
-    },
-    {
-      path: '/reminders/investments-estimated-land-date',
-      module: 'datahub:companies',
-      component: EstimatedLandDateReminders,
-    },
-    {
-      path: '/reminders/investments-no-recent-interaction',
-      module: 'datahub:companies',
-      component: NoRecentInteractionReminders,
-    },
-    {
-      path: '/reminders/investments-outstanding-propositions',
-      module: 'datahub:companies',
-      component: OutstandingPropositionReminders,
-    },
-    {
-      path: '/reminders/exports-no-recent-interactions',
-      module: 'datahub:companies',
-      component: ExportsNoRecentInteractionReminders,
-    },
-    {
-      path: '/reminders/settings',
-      module: 'datahub:companies',
-      component: RemindersSettings,
-    },
-    {
-      path: '/reminders/settings/investments-estimated-land-date',
-      module: 'datahub:companies',
-      component: EstimatedLandDateForm,
-    },
-    {
-      path: '/reminders/settings/investments-no-recent-interaction',
-      module: 'datahub:companies',
-      component: NoRecentInteractionForm,
-    },
-    {
-      path: '/reminders/settings/exports-no-recent-interactions',
-      module: 'datahub:companies',
-      component: ExportNoRecentInteractionForm,
+      component: RemindersRoutes,
     },
   ],
 }

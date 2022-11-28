@@ -41,15 +41,15 @@ describe('Edit no recent export interaction', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        'Reminders and email notifications settings': `${urls.reminders.settings.index()}?exports_no_recent_interaction=true`,
-        'Settings for exports with no recent interaction': null,
+        'Reminders and email notifications settings': `${urls.reminders.settings.index()}?exports_no_recent_interactions=true`,
+        'Settings for companies with no recent interaction': null,
       })
     })
 
     it('should render the heading', () => {
       cy.get('[data-test="heading"]').should(
         'contain',
-        'Settings for exports with no recent interaction'
+        'Settings for companies with no recent interaction'
       )
     })
   })
