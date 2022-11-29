@@ -10,7 +10,7 @@ const propositionsEndpoint = '/api-proxy/v4/proposition'
 const whoAmIEndpoint = '/api-proxy/whoami/'
 
 describe('Outstanding Proposition Reminders', () => {
-  const user = userFaker()
+  const user = userFaker({ active_features: ['export-email-reminders'] })
   const totalCount = 11
   const propositions = [
     propositionFaker({
