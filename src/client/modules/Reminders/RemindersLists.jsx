@@ -6,7 +6,6 @@ import { Link } from 'govuk-react'
 
 import { DefaultLayout } from '../../components'
 import RemindersMenu from './RemindersMenu'
-import Heading from './Heading'
 
 import InvestmentEstimatedLandDateList from './InvestmentEstimatedLandDateList'
 import InvestmentNoRecentInteractionList from './InvestmentNoRecentInteractionList'
@@ -68,12 +67,16 @@ const HomeLink = styled(Link)({
 const RemindersLists = () => {
   const { reminderType } = useParams()
   const subject = reminderTypeToLabel[reminderType]
-  const title = `Reminders for ${subject}`
+
   return (
     <DefaultLayout
-      pageTitle={title}
-      heading={<Heading preHeading="Reminders for">{subject}</Heading>}
-      breadcrumbs={[{ link: urls.dashboard(), text: 'Home' }, { text: title }]}
+      pageTitle={`Reminders - ${subject}`}
+      heading="Reminders"
+      subheading={subject}
+      breadcrumbs={[
+        { link: urls.dashboard(), text: 'Home' },
+        { text: subject },
+      ]}
     >
       <>
         <Container>

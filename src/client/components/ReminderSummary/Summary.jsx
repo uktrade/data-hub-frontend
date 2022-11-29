@@ -67,7 +67,7 @@ const Summary = ({ summary }) => (
         ))}
     </StyledList>
     <StyledReminderLink href={urls.reminders.settings.index()}>
-      Reminders and email notifications settings
+      Settings: reminders and email notifications
     </StyledReminderLink>
   </>
 )

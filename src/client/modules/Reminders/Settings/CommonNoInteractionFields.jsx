@@ -20,7 +20,7 @@ const StyledFieldInput = styled(FieldInput)({
 
 const MAX_DAYS = 365
 const POSITIVE_INT_REGEX = /^[0-9]+$/
-const ERROR_MESSAGE = 'Enter a whole number that’s between 1 and 365, like 25'
+const ERROR_MESSAGE = 'Add a number between 1 and 365'
 
 const isPositiveInteger = (value) => POSITIVE_INT_REGEX.test(value)
 
@@ -40,23 +40,25 @@ const hasReminderDayDuplicates = (formValue, field, formValues) => {
 }
 
 const CommonNoInteractionFields = ({
-  reminder_days,
-  email_reminders_enabled,
   reminders,
-  entity,
+  reminderDays,
+  emailRemindersEnabled,
+  legendPrefix,
+  doYouWantQuestion,
+  whenYouWantQuestion,
+  emptyErrorMessage,
 }) => {
-  const emptyErrorMessage = `Enter when you want to get reminders for your ${entity}`
   return (
     <>
-      {reminder_days && (
+      {reminderDays && (
         <>
           <FieldRadios
             name="reminders"
-            legend="Reminders"
+            legend={`${legendPrefix} reminders`}
             showBorder={true}
-            label={`Do you want to get reminders for ${entity} with no recent interaction?`}
+            label={doYouWantQuestion}
             hint="Selecting 'no' deletes current settings so you'll get no reminders or emails."
-            initialValue={isEmpty(reminder_days) ? OPTION_NO : OPTION_YES}
+            initialValue={isEmpty(reminderDays) ? OPTION_NO : OPTION_YES}
             options={OPTIONS_NO_YES.map((option) => ({
               ...option,
               ...(option.value === OPTION_YES && {
@@ -64,17 +66,17 @@ const CommonNoInteractionFields = ({
                   <>
                     <FieldAddAnother
                       name="days"
-                      label={`When do you want to get reminders for your ${entity}?`}
+                      label={whenYouWantQuestion}
                       hint="You can add up to 5 reminders"
                       itemName="reminder"
                       buttonText="Add another"
                       limitChildGroupCount={5}
-                      initialChildGroupCount={reminder_days.length || 1}
+                      initialChildGroupCount={reminderDays.length || 1}
                     >
                       {({ groupIndex }) => (
                         <StyledFieldInput
                           type="text"
-                          text="days with no interaction"
+                          text="days with no interactions"
                           name={`reminder_days_${groupIndex}`}
                           data-test={`reminder_days_${groupIndex}`}
                           validate={(value, field, state) => {
@@ -87,7 +89,7 @@ const CommonNoInteractionFields = ({
                                   state.values
                                 )
                               ) {
-                                return 'Enter a different number of days for each reminder'
+                                return 'Add a different number of days for each reminder'
                               }
                               return formValue > 0 && formValue <= MAX_DAYS
                                 ? null
@@ -110,10 +112,10 @@ const CommonNoInteractionFields = ({
             <FieldRadios
               name="emailNotifications"
               showBorder={true}
-              legend="Email notifications"
-              label="Do you want to get emails at the same time as reminders?"
+              legend={`${legendPrefix} email notifications`}
+              label="Do you want to get emails as well as on-line reminders?"
               options={OPTIONS_NO_YES}
-              initialValue={email_reminders_enabled ? OPTION_YES : OPTION_NO}
+              initialValue={emailRemindersEnabled ? OPTION_YES : OPTION_NO}
             />
           )}
         </>

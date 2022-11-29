@@ -26,13 +26,13 @@ const assertInputFields = (days) => {
   })
 
   days.forEach((day, index) => {
-    it(`should render an input field (${day} days with no interaction)`, () => {
+    it(`should render an input field (${day} days with no interactions)`, () => {
       cy.get(`[data-test="reminder_days_${index}"]`).should('have.value', day)
     })
   })
 }
 
-describe('Edit no recent export interaction', () => {
+describe('Settings - companies with no recent interactions', () => {
   context('Page breadcrumbs and title', () => {
     before(() => {
       cy.visit(urls.reminders.settings.exports.noRecentInteraction())
@@ -41,20 +41,21 @@ describe('Edit no recent export interaction', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        'Reminders and email notifications settings': `${urls.reminders.settings.index()}?exports_no_recent_interactions=true`,
-        'Settings for companies with no recent interaction': null,
+        Settings: `${urls.reminders.settings.index()}?exports_no_recent_interactions=true`,
+        'Companies with no recent interaction': null,
       })
     })
 
-    it('should render the heading', () => {
-      cy.get('[data-test="heading"]').should(
-        'contain',
-        'Settings for companies with no recent interaction'
+    it('should render the headings', () => {
+      cy.get('[data-test="heading"]').should('have.text', 'Settings')
+      cy.get('[data-test="subheading"]').should(
+        'have.text',
+        'Companies with no recent interactions'
       )
     })
   })
 
-  context('Reminders - the default', () => {
+  context('Settings - the default', () => {
     before(() => {
       cy.intercept('GET', endpoint, {
         body: {
@@ -69,14 +70,14 @@ describe('Edit no recent export interaction', () => {
     it('should render a "Reminders" legend', () => {
       cy.get('[data-test="field-reminders"] legend').should(
         'have.text',
-        'Reminders'
+        'Export reminders'
       )
     })
 
     it('should render a question', () => {
       cy.get('[data-test="field-reminders"] label').should(
         'contain',
-        'Do you want to get reminders for exports with no recent interaction?'
+        'Do you want to get reminders for companies with no recent interactions?'
       )
     })
 
@@ -96,7 +97,7 @@ describe('Edit no recent export interaction', () => {
     })
   })
 
-  context('Reminders - disabled', () => {
+  context('Settings - disabled', () => {
     before(() => {
       cy.intercept('GET', endpoint, {
         body: {
@@ -239,7 +240,7 @@ describe('Edit no recent export interaction', () => {
     })
   })
 
-  context('Email notifications - the basics', () => {
+  context('Export email notifications - the basics', () => {
     before(() => {
       cy.visit(urls.reminders.settings.exports.noRecentInteraction())
       cy.get('[data-test="reminders-yes"]').click()
@@ -248,14 +249,14 @@ describe('Edit no recent export interaction', () => {
     it('should render an "Email notifications" legend', () => {
       cy.get('[data-test="field-emailNotifications"] legend').should(
         'have.text',
-        'Email notifications'
+        'Export email notifications'
       )
     })
 
     it('should render a question', () => {
       cy.get('[data-test="field-emailNotifications"] label').should(
         'contain',
-        'Do you want to get emails at the same time as reminders?'
+        'Do you want to get emails as well as on-line reminders?'
       )
     })
 
@@ -316,7 +317,7 @@ describe('Edit no recent export interaction', () => {
     cy.get('[data-test="submit-button"]').click()
     cy.get('[data-test="summary-form-errors"] ul > li').should(
       'contain',
-      'Enter a whole number that’s between 1 and 365, like 25'
+      'Add a number between 1 and 365'
     )
   }
 
@@ -355,13 +356,13 @@ describe('Edit no recent export interaction', () => {
       )
       cy.get('[data-test="summary-form-errors"] ul > li').each(($li) => {
         expect($li.text()).to.equal(
-          'Enter when you want to get reminders for your exports'
+          'Add when you want to get company reminders'
         )
       })
       indices.forEach((index) => {
         cy.get(`[data-test="field-reminder_days_${index}"]`).should(
           'contain',
-          'Enter when you want to get reminders for your exports'
+          'Add when you want to get company reminders'
         )
       })
     })
@@ -394,7 +395,7 @@ describe('Edit no recent export interaction', () => {
       cy.get('[data-test="submit-button"]').click()
       cy.get('[data-test="summary-form-errors"] ul > li').should(
         'contain',
-        'Enter a different number of days for each reminder'
+        'Add a different number of days for each reminder'
       )
     })
 
@@ -415,13 +416,13 @@ describe('Edit no recent export interaction', () => {
       )
       cy.get('[data-test="summary-form-errors"] ul > li').each(($li) => {
         expect($li.text()).to.equal(
-          'Enter a different number of days for each reminder'
+          'Add a different number of days for each reminder'
         )
       })
       indices.forEach((index) => {
         cy.get(`[data-test="field-reminder_days_${index}"]`).should(
           'contain',
-          'Enter a different number of days for each reminder'
+          'Add a different number of days for each reminder'
         )
       })
     })
