@@ -1,6 +1,9 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { BLACK } from 'govuk-colours'
+import { SPACING, FONT_SIZE } from '@govuk-react/constants'
+import styled from 'styled-components'
 import qs from 'qs'
 
 import {
@@ -24,6 +27,12 @@ import Task from '../../components/Task'
 import ExportsCollectionList from './ExportsCollectionList'
 import { CollectionSort, RoutedPagination } from '../../components'
 
+const Summary = styled('p')({
+  color: BLACK,
+  paddingTop: SPACING.SCALE_2,
+  fontSize: FONT_SIZE.SIZE_19,
+})
+
 const ExportsNoRecentInteractionList = ({
   exportsNoRecentInteractionReminders,
 }) => {
@@ -42,7 +51,9 @@ const ExportsNoRecentInteractionList = ({
         pageOrigin="exports_no_recent_interactions"
       />
       {results.length === 0 ? (
-        <p data-test="investments-no-reminders">You have no reminders.</p>
+        <Summary data-test="investments-no-reminders">
+          You have no reminders.
+        </Summary>
       ) : (
         <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
       )}
