@@ -74,7 +74,6 @@ describe('Activity feed controllers', () => {
 
         it('should call fetchActivityFeed with correct params when retrieving aventri attendees', async () => {
           const expectedEsQuery = {
-            size: 20,
             query: {
               bool: {
                 must: [

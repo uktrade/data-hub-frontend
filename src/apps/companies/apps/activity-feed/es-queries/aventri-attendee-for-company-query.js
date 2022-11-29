@@ -1,5 +1,4 @@
 const aventriAttendeeForCompanyQuery = (contacts) => ({
-  size: 20,
   query: {
     bool: {
       must: [
