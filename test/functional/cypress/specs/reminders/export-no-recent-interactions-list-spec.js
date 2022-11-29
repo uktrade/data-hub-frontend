@@ -99,14 +99,15 @@ describe('Exports no recent Interaction Reminders', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        'Reminders for companies with no recent interactions': null,
+        'Companies with no recent interactions': null,
       })
     })
 
-    it('should render the heading', () => {
-      cy.get('[data-test="heading"]').should(
+    it('should render the headings', () => {
+      cy.get('[data-test="heading"]').should('have.text', 'Reminders')
+      cy.get('[data-test="subheading"]').should(
         'have.text',
-        'Reminders for companies with no recent interactions'
+        'Companies with no recent interactions'
       )
     })
 
@@ -117,7 +118,7 @@ describe('Exports no recent Interaction Reminders', () => {
       cy.get('@listItems')
         .eq(0)
         .find('a')
-        .should('contain', 'Reminders for approaching estimated land dates')
+        .should('contain', 'Approaching estimated land dates')
         .should(
           'have.attr',
           'href',
@@ -127,7 +128,7 @@ describe('Exports no recent Interaction Reminders', () => {
       cy.get('@listItems')
         .eq(1)
         .find('a')
-        .should('contain', 'Reminders for projects with no recent interaction')
+        .should('contain', 'Projects with no recent interaction')
         .should(
           'have.attr',
           'href',
@@ -137,7 +138,7 @@ describe('Exports no recent Interaction Reminders', () => {
       cy.get('@listItems')
         .eq(2)
         .find('a')
-        .should('contain', 'Reminders for outstanding propositions')
+        .should('contain', 'Outstanding propositions')
         .should(
           'have.attr',
           'href',
@@ -147,7 +148,7 @@ describe('Exports no recent Interaction Reminders', () => {
       cy.get('@listItems')
         .eq(3)
         .find('a')
-        .should('contain', 'Reminders for companies with no recent interaction')
+        .should('contain', 'Companies with no recent interaction')
         .should(
           'have.attr',
           'href',

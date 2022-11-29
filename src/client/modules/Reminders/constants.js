@@ -25,8 +25,8 @@ export const INVESTMENTS_OUTSTANDING_PROPOSITIONS =
 export const EXPORTS_NO_RECENT_INTERACTION = 'exports-no-recent-interactions'
 
 export const reminderTypeToLabel = {
-  [INVESTMENTS_ESTIMATED_LAND_DATE]: 'approaching estimated land dates',
-  [INVESTMENTS_NO_RECENT_INTERACTION]: 'projects with no recent interaction',
-  [INVESTMENTS_OUTSTANDING_PROPOSITIONS]: 'outstanding propositions',
-  [EXPORTS_NO_RECENT_INTERACTION]: 'companies with no recent interactions',
+  [INVESTMENTS_ESTIMATED_LAND_DATE]: 'Approaching estimated land dates',
+  [INVESTMENTS_NO_RECENT_INTERACTION]: 'Projects with no recent interactions',
+  [INVESTMENTS_OUTSTANDING_PROPOSITIONS]: 'Outstanding propositions',
+  [EXPORTS_NO_RECENT_INTERACTION]: 'Companies with no recent interactions',
 }

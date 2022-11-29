@@ -88,14 +88,15 @@ describe('Outstanding Proposition Reminders', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        'Reminders for outstanding propositions': null,
+        'Outstanding propositions': null,
       })
     })
 
-    it('should render the heading', () => {
-      cy.get('[data-test="heading"]').should(
+    it('should render the headings', () => {
+      cy.get('[data-test="heading"]').should('have.text', 'Reminders')
+      cy.get('[data-test="subheading"]').should(
         'have.text',
-        'Reminders for outstanding propositions'
+        'Outstanding propositions'
       )
     })
 
@@ -106,7 +107,7 @@ describe('Outstanding Proposition Reminders', () => {
       cy.get('@listItems')
         .eq(0)
         .find('a')
-        .should('contain', 'Reminders for approaching estimated land dates')
+        .should('contain', 'Approaching estimated land dates')
         .should(
           'have.attr',
           'href',
@@ -116,7 +117,7 @@ describe('Outstanding Proposition Reminders', () => {
       cy.get('@listItems')
         .eq(1)
         .find('a')
-        .should('contain', 'Reminders for projects with no recent interaction')
+        .should('contain', 'Projects with no recent interaction')
         .should(
           'have.attr',
           'href',
@@ -126,7 +127,7 @@ describe('Outstanding Proposition Reminders', () => {
       cy.get('@listItems')
         .eq(2)
         .find('a')
-        .should('contain', 'Reminders for outstanding propositions')
+        .should('contain', 'Outstanding propositions')
         .should(
           'have.attr',
           'href',
@@ -136,7 +137,7 @@ describe('Outstanding Proposition Reminders', () => {
       cy.get('@listItems')
         .eq(3)
         .find('a')
-        .should('contain', 'Reminders for companies with no recent interaction')
+        .should('contain', 'Companies with no recent interaction')
         .should(
           'have.attr',
           'href',

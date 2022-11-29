@@ -56,19 +56,19 @@ const RemindersMenu = () => {
           to={urls.reminders.investments.estimatedLandDate()}
           pathname={location.pathname}
         >
-          Reminders for approaching estimated land dates
+          Approaching estimated land dates
         </MenuItem>
         <MenuItem
           to={urls.reminders.investments.noRecentInteraction()}
           pathname={location.pathname}
         >
-          Reminders for projects with no recent interaction
+          Projects with no recent interactions
         </MenuItem>
         <MenuItem
           to={urls.reminders.investments.outstandingPropositions()}
           pathname={location.pathname}
         >
-          Reminders for outstanding propositions
+          Outstanding propositions
         </MenuItem>
       </Menu>
       <CheckUserFeatureFlag userFeatureFlagName="export-email-reminders">
@@ -80,7 +80,7 @@ const RemindersMenu = () => {
                 to={urls.reminders.exports.noRecentInteractions()}
                 pathname={location.pathname}
               >
-                Reminders for companies with no recent interactions
+                Companies with no recent interactions
               </MenuItem>
             </Menu>
           )
