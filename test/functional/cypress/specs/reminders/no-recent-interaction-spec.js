@@ -1,11 +1,14 @@
 import { assertBreadcrumbs } from '../../support/assertions'
 import urls from '../../../../../src/lib/urls'
 import { reminderFaker, reminderListFaker } from '../../fakers/reminders'
+import { userFaker } from '../../fakers/users'
 
 const remindersEndpoint =
   '/api-proxy/v4/reminder/no-recent-investment-interaction'
+const whoAmIEndpoint = '/api-proxy/whoami/'
 
 describe('No Recent Interaction Reminders', () => {
+  const user = userFaker({ active_features: ['export-email-reminders'] })
   const reminders = [
     reminderFaker({
       created_on: '2022-01-01T10:00:00.000000Z',
@@ -16,6 +19,15 @@ describe('No Recent Interaction Reminders', () => {
   const nextReminder = reminderFaker()
 
   const interceptApiCalls = () => {
+    cy.intercept(
+      {
+        method: 'GET',
+        pathname: whoAmIEndpoint,
+      },
+      {
+        body: user,
+      }
+    ).as('whoAmIApiRequest')
     cy.intercept(
       {
         method: 'GET',
@@ -74,6 +86,7 @@ describe('No Recent Interaction Reminders', () => {
     before(() => {
       interceptApiCalls()
       cy.visit(urls.reminders.investments.noRecentInteraction())
+      cy.wait('@whoAmIApiRequest')
       cy.wait('@remindersApiRequest')
     })
 
