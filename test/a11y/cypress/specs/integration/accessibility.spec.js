@@ -1,26 +1,28 @@
 import urls from '../../../../../src/lib/urls'
 import { testIdentityNumbers } from './testIdentityNumbers'
 
-const { companies } = urls
-const collectionName = 'companies'
+const mountPoint = urls.companies
+const mountPointName = 'companies'
 const arrayOfItems = []
 
-for (const item in companies) {
-  if (companies[item].route) {
-    arrayOfItems.push({ item: companies[item].route })
+for (const levelOnePath in mountPoint) {
+  if (mountPoint[levelOnePath].route) {
+    arrayOfItems.push({ url: mountPoint[levelOnePath].route })
   } else {
-    const lowerItems = Object.keys(companies[item])
-    lowerItems.forEach((key) => {
-      if (companies[item][key].route) {
+    const levelTwoPaths = Object.keys(mountPoint[levelOnePath])
+    levelTwoPaths.forEach((levelTwoPath) => {
+      if (mountPoint[levelOnePath][levelTwoPath].route) {
         arrayOfItems.push({
-          item: companies[item][key].route,
+          url: mountPoint[levelOnePath][levelTwoPath].route,
         })
       } else {
-        const evenLowerItems = Object.keys(companies[item][key])
-        evenLowerItems.forEach((element) => {
-          if (companies[item][key][element].route) {
+        const levelThreePaths = Object.keys(
+          mountPoint[levelOnePath][levelTwoPath]
+        )
+        levelThreePaths.forEach((levelThreePath) => {
+          if (mountPoint[levelOnePath][levelTwoPath][levelThreePath].route) {
             arrayOfItems.push({
-              item: companies[item][key][element].route,
+              url: mountPoint[levelOnePath][levelTwoPath][levelThreePath].route,
             })
           }
         })
@@ -30,22 +32,22 @@ for (const item in companies) {
 }
 
 arrayOfItems.map((path) => {
-  let adviserRoute = path.item.split('/')
-  const currentAdvisorRoute = adviserRoute.map((route) => {
+  let pathUrl = path.url.split('/')
+  const currentPathUrl = pathUrl.map((route) => {
     if (route.startsWith(':')) {
       return (route = testIdentityNumbers[route])
     }
     return route
   })
-  adviserRoute = currentAdvisorRoute.join('/')
-  describe('Data Hub accessibility tests', () => {
+  pathUrl = currentPathUrl.join('/')
+  describe(`${mountPointName}${path.url}`, () => {
     before(() => {
-      cy.visit('/' + collectionName + adviserRoute)
+      cy.visit('/' + mountPointName + pathUrl)
       // Wait until page has loaded first
       cy.initA11y()
     })
 
-    it('should not have any a11y violations', () => {
+    it('Page should not have any a11y violations', () => {
       cy.runA11y()
     })
   })
