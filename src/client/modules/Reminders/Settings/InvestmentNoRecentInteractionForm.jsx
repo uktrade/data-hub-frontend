@@ -36,10 +36,13 @@ const InvestmentNoRecentInteractionForm = () => (
       <>
         {reminder_days && (
           <CommonNoInteractionFields
-            entity="projects"
-            reminder_days={reminder_days}
-            email_reminders_enabled={email_reminders_enabled}
             reminders={reminders}
+            reminderDays={reminder_days}
+            emailRemindersEnabled={email_reminders_enabled}
+            legendPrefix="Investment"
+            doYouWantQuestion="Do you want to get reminders for projects with no recent interactions?"
+            whenYouWantQuestion="When do you want to get projects reminders?"
+            emptyErrorMessage="Add when you want to get project reminders"
           />
         )}
       </>

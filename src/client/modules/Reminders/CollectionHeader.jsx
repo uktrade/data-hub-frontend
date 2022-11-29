@@ -53,7 +53,7 @@ const CollectionHeader = ({ totalItems, pageOrigin, settings = true }) => {
           : '/reminders/settings'
       }
     >
-      Reminders settings
+      Settings
     </SettingsLink>
   ) : null
   return (
