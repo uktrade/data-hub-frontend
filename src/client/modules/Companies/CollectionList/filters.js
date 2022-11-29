@@ -1,6 +1,6 @@
 import {
-  export_segments_filter_options,
-  export_sub_segments_filter_options,
+  export_segments,
+  export_sub_segments,
 } from '../../../../apps/companies/apps/edit-company/client/constants'
 import {
   buildDatesFilter,
@@ -126,7 +126,7 @@ export const buildSelectedFilters = (
   exportSegment: {
     queryParam: 'export_segment',
     options: buildOptionsFilter({
-      options: export_segments_filter_options,
+      options: export_segments,
       value: queryParams.export_segment,
       categoryLabel: LABELS.exportSegment,
     }),
@@ -134,7 +134,7 @@ export const buildSelectedFilters = (
   exportSubsegment: {
     queryParam: 'export_sub_segment',
     options: buildOptionsFilter({
-      options: export_sub_segments_filter_options,
+      options: export_sub_segments,
       value: queryParams.export_sub_segment,
       categoryLabel: LABELS.exportSubsegment,
     }),

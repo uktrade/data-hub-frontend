@@ -3,11 +3,6 @@ export const export_segments = [
   { value: 'non-hep', label: 'Not high export potential' },
 ]
 
-export const export_segments_filter_options = [
-  { value: '', label: 'No export segment or not known' },
-  ...export_segments,
-]
-
 export const export_sub_segments = [
   { value: 'sustain_nurture_and_grow', label: 'Sustain: nurture & grow' },
   {
@@ -39,9 +34,4 @@ export const export_sub_segments = [
   },
   { value: 'promote_change_the_game', label: 'Promote: change the game' },
   { value: 'challenge', label: 'Challenge' },
-]
-
-export const export_sub_segments_filter_options = [
-  { value: 'anything', label: 'No sub export segment or not known' },
-  ...export_sub_segments,
 ]

@@ -34,8 +34,8 @@ import {
 
 import { sanitizeFilter } from '../../../../client/filters'
 import {
-  export_segments_filter_options,
-  export_sub_segments_filter_options,
+  export_segments,
+  export_sub_segments,
 } from '../../../../apps/companies/apps/edit-company/client/constants'
 
 const CompaniesCollection = ({
@@ -263,7 +263,7 @@ const CompaniesCollection = ({
               name="export_segment"
               qsParam="export_segment"
               placeholder="Search export segment"
-              options={export_segments_filter_options}
+              options={export_segments}
               selectedOptions={selectedFilters.exportSegment.options}
               data-test="export-segment-filter"
             />
@@ -273,7 +273,7 @@ const CompaniesCollection = ({
               name="export_sub_segment"
               qsParam="export_sub_segment"
               placeholder="Search export subsegment"
-              options={export_sub_segments_filter_options}
+              options={export_sub_segments}
               selectedOptions={selectedFilters.exportSubsegment.options}
               data-test="export-sub-segment-filter"
             />
