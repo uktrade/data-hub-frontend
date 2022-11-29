@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker'
 
-const userFaker = () => {
+const userFaker = (overrides) => {
   const first_name = faker.name.firstName()
   const last_name = faker.name.lastName()
   return {
@@ -8,6 +8,7 @@ const userFaker = () => {
     first_name,
     last_name,
     name: `${first_name} ${last_name}`,
+    ...overrides,
   }
 }
 
