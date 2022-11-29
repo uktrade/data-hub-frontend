@@ -11,11 +11,6 @@ import {
 } from '../../utils/date'
 
 import { transformIdNameToValueLabel } from '../../transformers'
-import {
-  EVENT_ATTENDEES_STATUS_AFTER_EVENT,
-  EVENT_ATTENDEES_STATUS_BEFORE_EVENT,
-  EVENT_AVENTRI_ATTENDEES_MAPPING,
-} from '../../../apps/companies/apps/activity-feed/constants'
 
 const transformEventToListItem = ({
   id,
@@ -159,13 +154,6 @@ const transformResponseToEventAventriDetails = ({
       object['dit:aventri:location_country'],
     ]),
   }
-  const allowedStatuses = eventDetails.upcomingEvent
-    ? EVENT_ATTENDEES_STATUS_BEFORE_EVENT
-    : EVENT_ATTENDEES_STATUS_AFTER_EVENT
-  eventDetails.registrationStatuses = transformAventriEventStatus({
-    allowedStatuses,
-    registrationStatuses,
-  })
   return eventDetails
 }
 
@@ -173,41 +161,9 @@ const transformAventriEventAttendeesRegistionStatusToBolean = ({
   totalAttendees,
 }) => ({ status: totalAttendees >= 1 ? true : false, total: totalAttendees })
 
-const transformAventriEventStatus = ({
-  allowedStatuses,
-  registrationStatuses,
-}) => {
-  const mappedStatus = registrationStatuses
-    .map((regStatus) => {
-      return {
-        ...regStatus,
-        ...EVENT_AVENTRI_ATTENDEES_MAPPING[regStatus.status],
-      }
-    })
-    .filter(
-      (status) => status.count > 0 && allowedStatuses.includes(status.status)
-    )
-  const groupedStatusCounts = groupAndSumStatusCounts(mappedStatus)
-
-  return groupedStatusCounts
-}
-
-const groupAndSumStatusCounts = (statuses) => {
-  return Object.values(
-    statuses.reduce(
-      (r, o) => (
-        r[o.status] ? (r[o.status].count += o.count) : (r[o.status] = { ...o }),
-        r
-      ),
-      {}
-    )
-  )
-}
-
 export {
   transformResponseToEventCollection,
   transformResponseToEventDetails,
   transformResponseToEventAventriDetails,
   transformAventriEventAttendeesRegistionStatusToBolean,
-  transformAventriEventStatus,
 }
