@@ -2,7 +2,6 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 
 import { DefaultLayout } from '../../../components'
-import Heading from '../Heading'
 import urls from '../../../../lib/urls'
 import { snakeCase } from 'lodash'
 import {
@@ -19,12 +18,13 @@ import ExportNoRecentInteractionForm from './ExportNoRecentInteractionForm'
 const ReminderForms = () => {
   const { reminderType } = useParams()
   const subject = reminderTypeToLabel[reminderType]
-  const title = `Settings for ${subject}`
   const queryParams = `${snakeCase(reminderType)}=true`
+
   return (
     <DefaultLayout
-      heading={<Heading preHeading="Settings for">{subject}</Heading>}
-      pageTitle={title}
+      pageTitle={`Settings - ${subject}`}
+      heading="Settings"
+      subheading={subject}
       breadcrumbs={[
         {
           link: urls.dashboard(),
@@ -32,10 +32,10 @@ const ReminderForms = () => {
         },
         {
           link: `${urls.reminders.settings.index()}?${queryParams}`,
-          text: 'Reminders and email notifications settings',
+          text: 'Settings',
         },
         {
-          text: title,
+          text: subject,
         },
       ]}
     >

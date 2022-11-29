@@ -87,7 +87,7 @@ const assertSettingsTableToggles = ({
   })
 }
 
-describe('Reminders Settings', () => {
+describe('Settings: reminders and email notifications', () => {
   context('Breadcrumbs and title', () => {
     before(() => {
       interceptAPICalls()
@@ -98,14 +98,14 @@ describe('Reminders Settings', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        'Reminders and email notifications settings': null,
+        'Settings: reminders and email notifications': null,
       })
     })
 
     it('should render the heading', () => {
       cy.get('[data-test="heading"]').should(
         'contain',
-        'Reminders and email notifications settings'
+        'Settings: reminders and email notifications'
       )
     })
   })

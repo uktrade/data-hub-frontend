@@ -8,6 +8,7 @@ import Breadcrumbs from '@govuk-react/breadcrumbs'
 import { Link } from 'react-router-dom'
 
 import LocalHeaderHeading from './LocalHeaderHeading'
+import LocalSubHeader from './LocalSubHeader'
 import FlashMessages from './FlashMessages'
 
 // Using <div> as there is already a <header> on the page
@@ -47,6 +48,7 @@ const LocalHeader = ({
   breadcrumbs,
   flashMessages,
   heading,
+  subheading,
   headingLink,
   superheading,
   children,
@@ -90,6 +92,9 @@ const LocalHeader = ({
       {heading && (
         <LocalHeaderHeading data-test="heading">{heading}</LocalHeaderHeading>
       )}
+      {subheading && (
+        <LocalSubHeader data-test="subheading">{subheading}</LocalSubHeader>
+      )}
       {children}
     </StyledMain>
   </StyledHeader>
@@ -121,9 +126,14 @@ LocalHeader.propTypes = {
     ]),
   }),
   /**
-   * Contains the text to be displayed
+   * Contains the heading text to be displayed
    */
   heading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+
+  /**
+   * Contains the subheading text to be displayed
+   */
+  subheading: PropTypes.string,
   /**
    * Contains a link that appears above the heading
    */
