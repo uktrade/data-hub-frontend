@@ -7,6 +7,7 @@ import { H3 } from 'govuk-react'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
 import urls from '../../../lib/urls'
+import CheckUserFeatureFlag from '../../components/CheckUserFeatureFlags'
 
 const LinkList = styled('ul')({
   listStyleType: 'none',
@@ -70,15 +71,21 @@ const RemindersMenu = () => {
           Reminders for outstanding propositions
         </MenuItem>
       </Menu>
-      <Menu>
-        <H3 as="h2">Export</H3>
-        <MenuItem
-          to={urls.reminders.exports.noRecentInteractions()}
-          pathname={location.pathname}
-        >
-          Reminders for companies with no recent interactions
-        </MenuItem>
-      </Menu>
+      <CheckUserFeatureFlag userFeatureFlagName="export-email-reminders">
+        {(isFeatureFlagOn) =>
+          isFeatureFlagOn && (
+            <Menu>
+              <H3 as="h2">Export</H3>
+              <MenuItem
+                to={urls.reminders.exports.noRecentInteractions()}
+                pathname={location.pathname}
+              >
+                Reminders for companies with no recent interactions
+              </MenuItem>
+            </Menu>
+          )
+        }
+      </CheckUserFeatureFlag>
     </>
   )
 }
