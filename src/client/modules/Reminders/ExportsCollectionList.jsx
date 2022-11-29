@@ -14,7 +14,7 @@ import {
 } from '@govuk-react/constants'
 
 import { DARK_GREY } from '../../utils/colors'
-import { formatLongDate } from '../../utils/date'
+import { formatMediumDate } from '../../utils/date'
 import { INTERACTION_NAMES } from '../../../apps/interactions/constants'
 import urls from '../../../lib/urls'
 
@@ -110,8 +110,7 @@ const ExportsCollectionList = ({
                     Reminder deleted
                   </ItemHeader>
                   <ItemContent colour={DARK_GREY} data-test="item-content">
-                    Reminder received {formatLongDate(created_on)} for{' '}
-                    {company.name}
+                    Received {formatMediumDate(created_on)} for {company.name}
                   </ItemContent>
                 </GridCol>
               ) : (
@@ -119,7 +118,7 @@ const ExportsCollectionList = ({
                   <GridCol>
                     <ItemHeader data-test="item-header">
                       <ul>
-                        <li>Reminder received {formatLongDate(created_on)}</li>
+                        <li>Received {formatMediumDate(created_on)}</li>
                         <li>
                           <ItemHeaderLink
                             href={`${urls.companies.detail(company.id)}`}
@@ -132,40 +131,40 @@ const ExportsCollectionList = ({
                     <ItemContent colour={BLACK} data-test="item-content">
                       <ul>
                         <li>
-                          <ItemHint>Date of last interaction</ItemHint>{' '}
-                          {formatLongDate(last_interaction_date)}
+                          <ItemHint>Date of last interaction:</ItemHint>{' '}
+                          {formatMediumDate(last_interaction_date)}
                         </li>
                         {interaction ? (
                           <>
                             <li>
-                              <ItemHint>Name/Team</ItemHint>{' '}
+                              <ItemHint>Recorded by:</ItemHint>{' '}
                               {interaction.created_by?.name || 'Name unknown'}
                               {interaction.created_by?.dit_team
-                                ? `/${interaction.created_by.dit_team.name}`
-                                : ' - Team unknown'}
+                                ? ` in ${interaction.created_by.dit_team.name}`
+                                : ' - team unknown'}
                             </li>
                             <li>
-                              <ItemHint>Type of interaction</ItemHint>{' '}
+                              <ItemHint>Interaction type:</ItemHint>{' '}
                               {INTERACTION_NAMES[interaction.kind]}
                             </li>
                             <li>
-                              <ItemHint>Interaction title</ItemHint>{' '}
+                              <ItemHint>Subject:</ItemHint>{' '}
                               {interaction.subject}
                             </li>
                           </>
                         ) : (
                           <>
                             <li>
-                              <ItemHint>Name/Team</ItemHint>
-                              {' N/A'}
+                              <ItemHint>Recorded by:</ItemHint>
+                              {' no information'}
                             </li>
                             <li>
-                              <ItemHint>Type of interaction</ItemHint>
-                              {' N/A'}
+                              <ItemHint>Interaction type:</ItemHint>
+                              {' no information'}
                             </li>
                             <li>
-                              <ItemHint>Interaction title</ItemHint>
-                              {' N/A'}
+                              <ItemHint>Subject:</ItemHint>
+                              {' no information'}
                             </li>
                           </>
                         )}
