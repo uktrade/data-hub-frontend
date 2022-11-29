@@ -10,7 +10,7 @@ const transformSummaryData = ({ data }) => ({
       count: data.investment.estimated_land_date,
     },
     {
-      name: 'Projects with no recent interaction',
+      name: 'Projects with no recent interactions',
       url: urls.reminders.investments.noRecentInteraction(),
       count: data.investment.no_recent_interaction,
     },

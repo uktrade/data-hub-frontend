@@ -41,15 +41,15 @@ const ReminderSettings = () => {
 
   return (
     <DefaultLayout
-      heading="Reminders and email notifications settings"
-      pageTitle="Reminders"
+      pageTitle="Settings"
+      heading="Settings: reminders and email notifications"
       breadcrumbs={[
         {
           link: urls.dashboard(),
           text: 'Home',
         },
         {
-          text: 'Reminders and email notifications settings',
+          text: 'Settings: reminders and email notifications',
         },
       ]}
     >
@@ -66,7 +66,7 @@ const ReminderSettings = () => {
             <H2 size={LEVEL_SIZE[3]}>Investment</H2>
             <ToggleSectionContainer>
               <RemindersToggleSection
-                label="Approaching estimated land date"
+                label="Approaching estimated land dates"
                 id="estimated-land-date-toggle"
                 data-test="estimated-land-date-toggle"
                 isOpen={openESL}
@@ -78,7 +78,7 @@ const ReminderSettings = () => {
                 />
               </RemindersToggleSection>
               <RemindersToggleSection
-                label="Projects with no recent interaction"
+                label="Projects with no recent interactions"
                 id="no-recent-interaction-toggle"
                 data-test="no-recent-interaction-toggle"
                 isOpen={openNRI}
@@ -98,7 +98,7 @@ const ReminderSettings = () => {
                     <H2 size={LEVEL_SIZE[3]}>Export</H2>
                     <ToggleSectionContainer>
                       <RemindersToggleSection
-                        label="Companies with no recent interaction"
+                        label="Companies with no recent interactions"
                         id="exports-no-recent-interaction-toggle"
                         data-test="exports-no-recent-interaction-toggle"
                         isOpen={openENRI}
