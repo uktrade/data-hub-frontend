@@ -3,16 +3,16 @@ import { testIdentityNumbers } from './testIdentityNumbers'
 
 const mountPoint = urls.companies
 const mountPointName = 'companies'
-const arrayOfItems = []
+const arrayOfUrls = []
 
 for (const levelOnePath in mountPoint) {
   if (mountPoint[levelOnePath].route) {
-    arrayOfItems.push({ url: mountPoint[levelOnePath].route })
+    arrayOfUrls.push({ url: mountPoint[levelOnePath].route })
   } else {
     const levelTwoPaths = Object.keys(mountPoint[levelOnePath])
     levelTwoPaths.forEach((levelTwoPath) => {
       if (mountPoint[levelOnePath][levelTwoPath].route) {
-        arrayOfItems.push({
+        arrayOfUrls.push({
           url: mountPoint[levelOnePath][levelTwoPath].route,
         })
       } else {
@@ -21,7 +21,7 @@ for (const levelOnePath in mountPoint) {
         )
         levelThreePaths.forEach((levelThreePath) => {
           if (mountPoint[levelOnePath][levelTwoPath][levelThreePath].route) {
-            arrayOfItems.push({
+            arrayOfUrls.push({
               url: mountPoint[levelOnePath][levelTwoPath][levelThreePath].route,
             })
           }
@@ -31,7 +31,7 @@ for (const levelOnePath in mountPoint) {
   }
 }
 
-arrayOfItems.map((path) => {
+arrayOfUrls.map((path) => {
   let pathUrl = path.url.split('/')
   const currentPathUrl = pathUrl.map((route) => {
     if (route.startsWith(':')) {
