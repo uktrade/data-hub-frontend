@@ -43,7 +43,7 @@ const InvestmentEstimatedLandDateForm = () => (
             <FieldRadios
               name="reminders"
               showBorder={true}
-              legend="Reminders"
+              legend="Investment reminders"
               label={
                 <Label>
                   Do you want to get reminders for projects with approaching
@@ -60,7 +60,7 @@ const InvestmentEstimatedLandDateForm = () => (
                   children: (
                     <FieldCheckboxes
                       name="reminderDays"
-                      label="When do you want to get reminders for your projects?"
+                      label="When do you want to get project reminders?"
                       hint="Select all that apply"
                       required="Select when you want to get reminders"
                       initialValue={estimatedLandDate.reminderDays}
@@ -83,8 +83,8 @@ const InvestmentEstimatedLandDateForm = () => (
               <FieldRadios
                 name="emailRemindersEnabled"
                 showBorder={true}
-                legend="Email notifications"
-                label="Do you want to get emails at the same time as reminders?"
+                legend="Investment email notifications"
+                label="Do you want to get emails as well as on-line reminders?"
                 options={OPTIONS_NO_YES}
                 initialValue={
                   estimatedLandDate.emailRemindersEnabled
