@@ -6,7 +6,7 @@ import {
   nestedInteractionFaker,
   reminderListFaker,
 } from '../../fakers/reminders'
-import { formatLongDate } from '../../../../../src/client/utils/date'
+import { formatMediumDate } from '../../../../../src/client/utils/date'
 
 const remindersEndpoint = '/api-proxy/v4/reminder/no-recent-export-interaction'
 
@@ -172,7 +172,7 @@ describe('Exports no recent Interaction Reminders', () => {
         .find('[data-test="item-content"]')
         .should(
           'contain',
-          `${formatLongDate(reminders[0].last_interaction_date)}`
+          `${formatMediumDate(reminders[0].last_interaction_date)}`
         )
     })
   })
@@ -210,7 +210,7 @@ describe('Exports no recent Interaction Reminders', () => {
       cy.get('[data-test="reminders-list-item"]').eq(0).as('reminder')
       cy.get('@reminder')
         .find('[data-test="item-content"]')
-        .should('contain', 'Team unknown')
+        .should('contain', 'team unknown')
     })
   })
 
@@ -245,7 +245,7 @@ describe('Exports no recent Interaction Reminders', () => {
       cy.get('[data-test="reminders-list-item"]').eq(0).as('reminder')
       cy.get('@reminder')
         .find('[data-test="item-content"]')
-        .should('contain', ' N/A')
+        .should('contain', ' no information')
     })
   })
 
@@ -377,7 +377,7 @@ describe('Exports no recent Interaction Reminders', () => {
         .find('[data-test="item-content"]')
         .should(
           'contain',
-          `Reminder received ${formatLongDate(
+          `Received ${formatMediumDate(
             deleted_reminder_date.toISOString()
           )} for ${reminders[4].company.name}`
         )
