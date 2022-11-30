@@ -47,7 +47,7 @@ const InvestmentEstimatedLandDateList = ({ estimatedLandDateReminders }) => {
     <>
       <CollectionHeader
         totalItems={count}
-        pageOrigin="investments_estimated_land_date"
+        pageOrigin="investments_estimated_land_dates"
       />
       {results.length === 0 ? (
         <Summary data-test="investments-no-reminders">

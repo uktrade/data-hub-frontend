@@ -48,7 +48,7 @@ const InvestmentNoRecentInteractionList = ({
     <>
       <CollectionHeader
         totalItems={count}
-        pageOrigin="investments_no_recent_interaction"
+        pageOrigin="investments_no_recent_interactions"
       />
       {results.length === 0 ? (
         <Summary data-test="investments-no-reminders">

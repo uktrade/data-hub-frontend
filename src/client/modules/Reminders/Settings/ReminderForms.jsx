@@ -6,9 +6,9 @@ import urls from '../../../../lib/urls'
 import { snakeCase } from 'lodash'
 import {
   reminderTypeToLabel,
-  INVESTMENTS_ESTIMATED_LAND_DATE,
-  INVESTMENTS_NO_RECENT_INTERACTION,
-  EXPORTS_NO_RECENT_INTERACTION,
+  INVESTMENTS_ESTIMATED_LAND_DATES,
+  INVESTMENTS_NO_RECENT_INTERACTIONS,
+  COMPANIES_NO_RECENT_INTERACTIONS,
 } from '../constants'
 
 import InvestmentEstimatedLandDateForm from './InvestmentEstimatedLandDateForm'
@@ -40,13 +40,13 @@ const ReminderForms = () => {
       ]}
     >
       <>
-        {reminderType === INVESTMENTS_ESTIMATED_LAND_DATE && (
+        {reminderType === INVESTMENTS_ESTIMATED_LAND_DATES && (
           <InvestmentEstimatedLandDateForm />
         )}
-        {reminderType === INVESTMENTS_NO_RECENT_INTERACTION && (
+        {reminderType === INVESTMENTS_NO_RECENT_INTERACTIONS && (
           <InvestmentNoRecentInteractionForm />
         )}
-        {reminderType === EXPORTS_NO_RECENT_INTERACTION && (
+        {reminderType === COMPANIES_NO_RECENT_INTERACTIONS && (
           <ExportNoRecentInteractionForm />
         )}
       </>

@@ -15,7 +15,7 @@ const RemindersRoutes = () => {
       <Redirect
         exact={true}
         from={path}
-        to={`${path}/investments-estimated-land-date`}
+        to={`${path}/investments-estimated-land-dates`}
       />
       <Route path={`${path}/:reminderType`}>
         <RemindersLists />

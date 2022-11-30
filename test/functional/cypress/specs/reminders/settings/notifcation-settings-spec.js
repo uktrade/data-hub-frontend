@@ -3,12 +3,12 @@ import urls from '../../../../../../src/lib/urls'
 const selectors = {
   collectionItem: '[data-test="item-content"]',
   reminderSettings: 'a[data-test="reminders-settings-link"]',
-  ELDSettingsClose: '#estimated-land-date-toggle-toggle-button-close',
-  ELDSettingsOpen: '#estimated-land-date-toggle-toggle-button-open',
-  ELDEdit: '[data-test="estimated-land-date-link"]',
-  NRISettingsClose: '#no-recent-interaction-toggle-toggle-button-close',
-  NRISettingsOpen: '#no-recent-interaction-toggle-toggle-button-open',
-  NRIEdit: '[data-test="no-recent-interaction-link"]',
+  ELDSettingsClose: '#estimated-land-dates-toggle-toggle-button-close',
+  ELDSettingsOpen: '#estimated-land-dates-toggle-toggle-button-open',
+  ELDEdit: '[data-test="estimated-land-dates-link"]',
+  NRISettingsClose: '#no-recent-interactions-toggle-toggle-button-close',
+  NRISettingsOpen: '#no-recent-interactions-toggle-toggle-button-open',
+  NRIEdit: '[data-test="no-recent-interactions-link"]',
 }
 
 describe('Notification settings', () => {

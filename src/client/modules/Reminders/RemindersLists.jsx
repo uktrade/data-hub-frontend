@@ -15,10 +15,10 @@ import ExportsNoRecentInteractionList from './ExportsNoRecentInteractionList'
 import urls from '../../../lib/urls'
 import {
   reminderTypeToLabel,
-  INVESTMENTS_ESTIMATED_LAND_DATE,
-  INVESTMENTS_NO_RECENT_INTERACTION,
+  INVESTMENTS_ESTIMATED_LAND_DATES,
+  INVESTMENTS_NO_RECENT_INTERACTIONS,
   INVESTMENTS_OUTSTANDING_PROPOSITIONS,
-  EXPORTS_NO_RECENT_INTERACTION,
+  COMPANIES_NO_RECENT_INTERACTIONS,
 } from './constants'
 
 const Container = styled('div')({
@@ -92,16 +92,16 @@ const RemindersLists = () => {
             )}
           </MenuContainer>
           <ListContainer>
-            {reminderType === INVESTMENTS_ESTIMATED_LAND_DATE && (
+            {reminderType === INVESTMENTS_ESTIMATED_LAND_DATES && (
               <InvestmentEstimatedLandDateList />
             )}
-            {reminderType === INVESTMENTS_NO_RECENT_INTERACTION && (
+            {reminderType === INVESTMENTS_NO_RECENT_INTERACTIONS && (
               <InvestmentNoRecentInteractionList />
             )}
             {reminderType === INVESTMENTS_OUTSTANDING_PROPOSITIONS && (
               <InvestmentOutstandingPropositionsList />
             )}
-            {reminderType === EXPORTS_NO_RECENT_INTERACTION && (
+            {reminderType === COMPANIES_NO_RECENT_INTERACTIONS && (
               <ExportsNoRecentInteractionList />
             )}
           </ListContainer>

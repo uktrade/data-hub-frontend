@@ -6,7 +6,7 @@ import { Form } from '../../../components'
 import { OPTION_YES } from '../../../../common/constants'
 import urls from '../../../../lib/urls'
 
-const redirectUrl = `${urls.reminders.settings.index()}?investments_no_recent_interaction=true`
+const redirectUrl = `${urls.reminders.settings.index()}?investments_no_recent_interactions=true`
 
 import {
   TASK_GET_NRI_REMINDER_SUBSCRIPTIONS,

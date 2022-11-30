@@ -15,7 +15,7 @@ import {
   transformNRIFormValuesToAnalyticsData,
 } from '../transformers'
 
-const redirectUrl = `${urls.reminders.settings.index()}?exports_no_recent_interactions=true`
+const redirectUrl = `${urls.reminders.settings.index()}?companies_no_recent_interactions=true`
 
 const ExportNoRecentInteractionForm = () => (
   <Form
