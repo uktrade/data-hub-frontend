@@ -40,7 +40,7 @@ const ExportNoRecentInteractionForm = () => (
             reminderDays={reminder_days}
             emailRemindersEnabled={email_reminders_enabled}
             legendPrefix="Export"
-            doYouWantQuestion="Do you want to get reminders for companies with no recent interaction?"
+            doYouWantQuestion="Do you want to get reminders for companies with no recent interactions?"
             whenYouWantQuestion="When do you want to get company reminders?"
             emptyErrorMessage="Add when you want to get company reminders"
           />

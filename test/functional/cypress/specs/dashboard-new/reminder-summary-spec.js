@@ -67,8 +67,8 @@ describe('Dashboard reminder summary', () => {
           '/reminders/investments-estimated-land-date'
         )
 
-      cy.get('[data-test="investment-projects-with-no-recent-interaction"]')
-        .contains('Projects with no recent interaction (2)')
+      cy.get('[data-test="investment-projects-with-no-recent-interactions"]')
+        .contains('Projects with no recent interactions (2)')
         .find('a')
         .should(
           'have.attr',
@@ -133,8 +133,8 @@ describe('Dashboard reminder summary', () => {
         '[data-test="investment-approaching-estimated-land-dates"]'
       ).contains('Approaching estimated land dates (0)')
       cy.get(
-        '[data-test="investment-projects-with-no-recent-interaction"]'
-      ).contains('Projects with no recent interaction (0)')
+        '[data-test="investment-projects-with-no-recent-interactions"]'
+      ).contains('Projects with no recent interactions (0)')
 
       cy.get('[data-test="investment-outstanding-propositions"]').contains(
         'Outstanding propositions (0)'

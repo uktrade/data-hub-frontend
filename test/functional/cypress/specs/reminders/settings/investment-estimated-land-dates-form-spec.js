@@ -37,7 +37,7 @@ const assertTwoCheckboxes = (
     .should('have.text', '60 days before estimated land date')
 }
 
-describe('Edit approaching estimated land dates', () => {
+describe('Settings - approaching estimated land dates', () => {
   context('Page breadcrumbs and title', () => {
     before(() => {
       cy.visit(urls.reminders.settings.investments.estimatedLandDate())
@@ -46,20 +46,21 @@ describe('Edit approaching estimated land dates', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        'Reminders and email notifications settings': `${urls.reminders.settings.index()}?investments_estimated_land_date=true`,
-        'Settings for approaching estimated land dates': null,
+        Settings: `${urls.reminders.settings.index()}?investments_estimated_land_date=true`,
+        'Approaching estimated land dates': null,
       })
     })
 
-    it('should render the heading', () => {
-      cy.get('[data-test="heading"]').should(
-        'contain',
-        'Settings for approaching estimated land dates'
+    it('should render the headings', () => {
+      cy.get('[data-test="heading"]').should('have.text', 'Settings')
+      cy.get('[data-test="subheading"]').should(
+        'have.text',
+        'Approaching estimated land dates'
       )
     })
   })
 
-  context('Reminders - the basics', () => {
+  context('Settings - the basics', () => {
     before(() => {
       cy.intercept('GET', endpoint, {
         body: {
@@ -71,10 +72,10 @@ describe('Edit approaching estimated land dates', () => {
       cy.wait('@apiRequest')
     })
 
-    it('should render a "Reminders" legend', () => {
+    it('should render a "Investment reminders" legend', () => {
       cy.get('[data-test="field-reminders"] legend').should(
         'have.text',
-        'Reminders'
+        'Investment reminders'
       )
     })
 
@@ -102,7 +103,7 @@ describe('Edit approaching estimated land dates', () => {
     })
   })
 
-  context('Reminders - disabled', () => {
+  context('Settings - disabled', () => {
     before(() => {
       cy.intercept('GET', endpoint, {
         body: {
@@ -220,17 +221,17 @@ describe('Edit approaching estimated land dates', () => {
       cy.visit(urls.reminders.settings.investments.estimatedLandDate())
     })
 
-    it('should render an "Email notifications" legend', () => {
+    it('should render an "Investment email notifications" legend', () => {
       cy.get('[data-test="field-emailRemindersEnabled"] legend').should(
         'have.text',
-        'Email notifications'
+        'Investment email notifications'
       )
     })
 
     it('should render some text', () => {
       cy.get('[data-test="field-emailRemindersEnabled"]').should(
         'contain',
-        'Do you want to get emails at the same time as reminders?'
+        'Do you want to get emails as well as on-line reminders?'
       )
     })
 
