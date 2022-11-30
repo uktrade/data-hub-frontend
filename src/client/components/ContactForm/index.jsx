@@ -104,7 +104,7 @@ const _ContactForm = ({
 
   const getAreaValue = (values) => {
     if (values.country === UNITED_STATES_ID) {
-      return values.areaUS
+      return values.area
     } else if (values.country === CANADA_ID) {
       return values.areaCanada
     } else {
@@ -146,6 +146,7 @@ const _ContactForm = ({
                     'new-contact-name': name,
                     'new-contact-id': id,
                   })
+
                   return origin_url
                     ? `${origin_url}?${encoded}`
                     : urls.contacts.details(id)
