@@ -77,7 +77,7 @@ const StyledTag = styled.strong({
 })
 
 const NavigationList = styled.ul({
-  display: ({ showVerticalNav }) => (showVerticalNav ? 'block' : 'none'),
+  display: ({ showVerticalNav }) => (showVerticalNav ? 'inline-block' : 'none'),
   fontSize: FONT_SIZE.SIZE_16,
   listStyle: 'none',
   margin: 0,
@@ -85,13 +85,13 @@ const NavigationList = styled.ul({
   outline: '3px solid transparent',
   fontWeight: FONT_WEIGHTS.bold,
   [MEDIA_QUERIES.TABLET]: {
-    display: 'block',
+    display: 'inline-block',
     float: 'right',
   },
 })
 
 const NavigationListItem = styled.li({
-  display: 'block',
+  display: 'inline-flex',
   [MEDIA_QUERIES.TABLET]: {
     padding: `${SPACING.SCALE_1} 0 ${SPACING.SCALE_1} ${SPACING.SCALE_2}`,
   },
@@ -119,29 +119,33 @@ const NavigationLink = styled.a({
 })
 
 const LogoBar = ({ showVerticalNav }) => (
-  <StyledLogoContainer>
-    <StyledLogo>
-      <VisuallyHidden>Department for International Trade</VisuallyHidden>
-      <StyledLogoNavLink as="a" href="/">
-        Data Hub
-      </StyledLogoNavLink>
-      <StyledTag>beta</StyledTag>
-    </StyledLogo>
-    <NavigationList
-      showVerticalNav={showVerticalNav}
-      id="logo-navigation"
-      aria-label="Header links"
-    >
-      <NavigationListItem>
-        <NavigationLink
-          href={`https://data.trade.gov.uk?${googleAnalyticsUTM}`}
-        >
-          {SWITCH_TO_DATA_WORKSPACE}
-        </NavigationLink>
-        <NotificationAlert />
-      </NavigationListItem>
-    </NavigationList>
-  </StyledLogoContainer>
+  <>
+    <StyledLogoContainer>
+      <StyledLogo>
+        <VisuallyHidden>Department for International Trade</VisuallyHidden>
+        <StyledLogoNavLink as="a" href="/">
+          Data Hub
+        </StyledLogoNavLink>
+        <StyledTag>beta</StyledTag>
+      </StyledLogo>
+      <NavigationList
+        showVerticalNav={showVerticalNav}
+        id="logo-navigation"
+        aria-label="Header links"
+      >
+        <NavigationListItem>
+          <NavigationLink
+            href={`https://data.trade.gov.uk?${googleAnalyticsUTM}`}
+          >
+            {SWITCH_TO_DATA_WORKSPACE}
+          </NavigationLink>
+        </NavigationListItem>
+        <NavigationListItem>
+          <NotificationAlert />
+        </NavigationListItem>
+      </NavigationList>
+    </StyledLogoContainer>
+  </>
 )
 
 export default LogoBar
