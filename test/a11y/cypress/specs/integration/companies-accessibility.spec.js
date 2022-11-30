@@ -1,9 +1,13 @@
 import urls from '../../../../../src/lib/urls'
 import { testIdentityNumbers } from './testIdentityNumbers'
+import { urlTestExclusions } from './urlTestExclusions'
+import { differenceBy } from 'lodash'
 
 const mountPoint = urls.companies
 const mountPointName = 'companies'
+
 const arrayOfUrls = []
+const excludedUrls = urlTestExclusions[mountPointName]
 
 for (const levelOnePath in mountPoint) {
   if (mountPoint[levelOnePath].route) {
@@ -31,8 +35,14 @@ for (const levelOnePath in mountPoint) {
   }
 }
 
-const filteredArrayOfUrls = arrayOfUrls.filter(
+let filteredArrayOfUrls = differenceBy(arrayOfUrls, excludedUrls, 'url')
+
+filteredArrayOfUrls = filteredArrayOfUrls.filter(
   (path) => path.url.split('/').pop() !== 'data'
+)
+
+filteredArrayOfUrls = filteredArrayOfUrls.filter(
+  (path) => path.url.split('/').pop() !== 'export'
 )
 
 filteredArrayOfUrls.map((path) => {
