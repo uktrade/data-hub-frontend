@@ -31,7 +31,11 @@ for (const levelOnePath in mountPoint) {
   }
 }
 
-arrayOfUrls.map((path) => {
+const filteredArrayOfUrls = arrayOfUrls.filter(
+  (path) => path.url.split('/').pop() !== 'data'
+)
+
+filteredArrayOfUrls.map((path) => {
   let pathUrl = path.url.split('/')
   const currentPathUrl = pathUrl.map((route) => {
     if (route.startsWith(':')) {
@@ -39,10 +43,13 @@ arrayOfUrls.map((path) => {
     }
     return route
   })
-  pathUrl = currentPathUrl.join('/')
+  return currentPathUrl.join('/')
+})
+
+filteredArrayOfUrls.map((path) => {
   describe(`${mountPointName}${path.url}`, () => {
     before(() => {
-      cy.visit('/' + mountPointName + pathUrl)
+      cy.visit('/' + mountPointName + path.url)
       // Wait until page has loaded first
       cy.initA11y()
     })
