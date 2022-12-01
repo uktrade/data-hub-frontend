@@ -166,17 +166,42 @@ async function getMaxemailCampaigns(req, next, contacts) {
   }
 }
 
-async function getAventriEventIds(req, next, contacts) {
+async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
   try {
     // Fetch aventri attendee info for company contacts
     const aventriQuery = aventriAttendeeForCompanyQuery(contacts)
     const aventriResults = await fetchActivityFeed(req, aventriQuery)
     const aventriAttendees = aventriResults.hits.hits.map((hit) => hit._source)
-    // Fetch aventri event ids for aventri attendees
-    const aventriEventIds = aventriAttendees.map(
-      (attendee) => `${attendee.object.attributedTo.id}:Create`
+
+    const groupedEventsWithContactsObj = aventriAttendees.reduce(
+      (obj, attendee) => {
+        const eventId = `${attendee.object.attributedTo.id}:Create`
+        const event = obj[eventId]
+        const contact = contacts.find(
+          (contact) => contact.email == attendee.object['dit:emailAddress']
+        )
+        const mappedContact = contact
+          ? [
+              {
+                'dit:emailAddress': contact.email,
+                id: contact.id,
+                name: contact.name,
+                type: ['dit:Contact'],
+                url: urls.contacts.details(contact.id),
+              },
+            ]
+          : []
+        if (event) {
+          event.push(...mappedContact)
+        } else {
+          obj[eventId] = mappedContact
+        }
+        return obj
+      },
+      {}
     )
-    return aventriEventIds
+
+    return groupedEventsWithContactsObj
   } catch (error) {
     next(error)
   }
@@ -306,11 +331,13 @@ async function fetchActivityFeedHandler(req, res, next) {
         .map((company) => company.id)
     }
 
-    const aventriEventIds = await getAventriEventIds(
+    const aventriEvents = await getAventriEventsAttendedByCompanyContacts(
       req,
       next,
       company.contacts
     )
+
+    const aventriEventIds = Object.keys(aventriEvents)
 
     const queries = getQueries({
       from,
@@ -334,6 +361,18 @@ async function fetchActivityFeedHandler(req, res, next) {
       activities = [...activities, ...campaigns]
       total += campaigns.length
     }
+
+    // console.log(activities)
+    //loop over all the results, set the contact to be the matching contact from the contacts array
+    activities = activities.map((activity) => {
+      if (activity.type == 'dit:aventri:Event') {
+        activity.object.attributedTo = [
+          activity.object.attributedTo,
+          ...aventriEvents[activity.id],
+        ]
+      }
+      return activity
+    })
 
     res.json({
       total,
@@ -581,4 +620,5 @@ module.exports = {
   fetchAventriEventAttended,
   fetchAllActivityFeedEvents,
   eventsColListQueryBuilder,
+  getAventriEventsAttendedByCompanyContacts,
 }
