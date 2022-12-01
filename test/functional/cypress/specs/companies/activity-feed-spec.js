@@ -171,6 +171,34 @@ describe('Company activity feed', () => {
     })
   })
 
+  context('Aventri', () => {
+    it('displays the correct activity type label', () => {
+      cy.get('[data-test="aventri-event"]').within(() =>
+        cy
+          .get('[data-test="activity-kind-label"]')
+          .contains('Aventri Service Delivery', {
+            matchCase: false,
+          })
+      )
+    })
+
+    it('displays the correct sub-topic label', () => {
+      cy.get('[data-test="aventri-event"]').within(() =>
+        cy.get('[data-test="activity-service-label"]').contains('Event', {
+          matchCase: false,
+        })
+      )
+    })
+
+    it('displays the correct contact', () => {
+      cy.get('[data-test="aventri-event"]').within(() =>
+        cy.get('[data-test="contact-link-0"]').contains('Super Glue', {
+          matchCase: false,
+        })
+      )
+    })
+  })
+
   context('Email Campaign (Maxemail)', () => {
     before(() => {
       const companyId = fixtures.company.externalActivitiesLtd.id

@@ -13,23 +13,37 @@
     "hits": [
       {
         "_source": {
-          "id": 1,
+          "id": "dit:aventri:Event:1111:Attendee:1111:Create",
           "object": {
             "attributedTo": {
-              "id": "dit:aventri:Event:1",
+              "id": "dit:aventri:Event:1111",
               "type": "dit:aventri:Event"
-            }
+            },
+            "dit:emailAddress":"contact@bob.com"
           }
         }
       },
       {
         "_source": {
-          "id": 2,
+          "id": "dit:aventri:Event:1111:Attendee:2222:Create",
           "object": {
             "attributedTo": {
-              "id": "dit:aventri:Event:2",
+              "id": "dit:aventri:Event:1111",
               "type": "dit:aventri:Event"
-            }
+            },
+            "dit:emailAddress":"superglue@gov.uk"
+          }
+        }
+      },
+      {
+        "_source": {
+          "id": "dit:aventri:Event:1112:Attendee:1111:Create",
+          "object": {
+            "attributedTo": {
+              "id": "dit:aventri:Event:1112",
+              "type": "dit:aventri:Event"
+            },
+            "dit:emailAddress":"contact@bob.com"
           }
         }
       }

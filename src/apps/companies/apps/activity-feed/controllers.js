@@ -177,6 +177,7 @@ async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
       (obj, attendee) => {
         const eventId = `${attendee.object.attributedTo.id}:Create`
         const event = obj[eventId]
+
         const contact = contacts.find(
           (contact) => contact.email == attendee.object['dit:emailAddress']
         )
@@ -362,10 +363,9 @@ async function fetchActivityFeedHandler(req, res, next) {
       total += campaigns.length
     }
 
-    // console.log(activities)
     //loop over all the results, set the contact to be the matching contact from the contacts array
     activities = activities.map((activity) => {
-      if (activity.type == 'dit:aventri:Event') {
+      if (activity.type == 'dit:aventri:Event' && aventriEvents[activity.id]) {
         activity.object.attributedTo = [
           activity.object.attributedTo,
           ...aventriEvents[activity.id],
