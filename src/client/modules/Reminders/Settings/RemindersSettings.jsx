@@ -32,7 +32,7 @@ const openSettings = (queryParamType, qsParams) => {
   return !!settingsExpand
 }
 
-const ReminderSettings = () => {
+const RemindersSettings = () => {
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
   const openESL = openSettings('investments_estimated_land_dates', qsParams)
@@ -125,4 +125,4 @@ const ReminderSettings = () => {
   )
 }
 
-export default ReminderSettings
+export default RemindersSettings

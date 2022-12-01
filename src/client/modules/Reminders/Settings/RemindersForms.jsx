@@ -11,11 +11,11 @@ import {
   COMPANIES_NO_RECENT_INTERACTIONS,
 } from '../constants'
 
-import InvestmentEstimatedLandDateForm from './InvestmentEstimatedLandDateForm'
-import InvestmentNoRecentInteractionForm from './InvestmentNoRecentInteractionForm'
-import ExportNoRecentInteractionForm from './ExportNoRecentInteractionForm'
+import InvestmentsEstimatedLandDatesForm from './InvestmentsEstimatedLandDatesForm'
+import InvestmentsNoRecentInteractionsForm from './InvestmentsNoRecentInteractionsForm'
+import ExportsNoRecentInteractionsForm from './ExportsNoRecentInteractionsForm'
 
-const ReminderForms = () => {
+const RemindersForms = () => {
   const { reminderType } = useParams()
   const subject = reminderTypeToLabel[reminderType]
   const queryParams = `${snakeCase(reminderType)}=true`
@@ -41,17 +41,17 @@ const ReminderForms = () => {
     >
       <>
         {reminderType === INVESTMENTS_ESTIMATED_LAND_DATES && (
-          <InvestmentEstimatedLandDateForm />
+          <InvestmentsEstimatedLandDatesForm />
         )}
         {reminderType === INVESTMENTS_NO_RECENT_INTERACTIONS && (
-          <InvestmentNoRecentInteractionForm />
+          <InvestmentsNoRecentInteractionsForm />
         )}
         {reminderType === COMPANIES_NO_RECENT_INTERACTIONS && (
-          <ExportNoRecentInteractionForm />
+          <ExportsNoRecentInteractionsForm />
         )}
       </>
     </DefaultLayout>
   )
 }
 
-export default ReminderForms
+export default RemindersForms

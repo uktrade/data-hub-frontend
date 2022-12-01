@@ -39,7 +39,7 @@ const hasReminderDayDuplicates = (formValue, field, formValues) => {
   return Object.values(filteredReminderDays).includes(formValue)
 }
 
-const CommonNoInteractionFields = ({
+const NoRecentInteractionsCommonFields = ({
   reminders,
   reminderDays,
   emailRemindersEnabled,
@@ -124,4 +124,4 @@ const CommonNoInteractionFields = ({
   )
 }
 
-export default CommonNoInteractionFields
+export default NoRecentInteractionsCommonFields

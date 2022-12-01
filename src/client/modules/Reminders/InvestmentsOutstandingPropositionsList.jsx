@@ -65,7 +65,9 @@ const PaginationSummary = styled(Summary)({
   borderBottom: `solid 1px ${GREY_2}`,
 })
 
-const OutstandingPropositionsList = ({ outstandingPropositionsReminders }) => {
+const InvestmentsOutstandingPropositionsList = ({
+  outstandingPropositionsReminders,
+}) => {
   const { results, count } = outstandingPropositionsReminders
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
@@ -131,4 +133,4 @@ const OutstandingPropositionsList = ({ outstandingPropositionsReminders }) => {
 
 export const state2props = (state) => state[ID]
 
-export default connect(state2props)(OutstandingPropositionsList)
+export default connect(state2props)(InvestmentsOutstandingPropositionsList)

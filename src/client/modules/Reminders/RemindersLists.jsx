@@ -7,10 +7,10 @@ import { Link } from 'govuk-react'
 import { DefaultLayout } from '../../components'
 import RemindersMenu from './RemindersMenu'
 
-import InvestmentEstimatedLandDateList from './InvestmentEstimatedLandDateList'
-import InvestmentNoRecentInteractionList from './InvestmentNoRecentInteractionList'
-import InvestmentOutstandingPropositionsList from './InvestmentOutstandingPropositionsList'
-import ExportsNoRecentInteractionList from './ExportsNoRecentInteractionList'
+import InvestmentsEstimatedLandDatesList from './InvestmentsEstimatedLandDatesList'
+import InvestmentsNoRecentInteractionsList from './InvestmentsNoRecentInteractionsList'
+import InvestmentsOutstandingPropositionsList from './InvestmentsOutstandingPropositionsList'
+import ExportsNoRecentInteractionsList from './ExportsNoRecentInteractionsList'
 
 import urls from '../../../lib/urls'
 import {
@@ -93,16 +93,16 @@ const RemindersLists = () => {
           </MenuContainer>
           <ListContainer>
             {reminderType === INVESTMENTS_ESTIMATED_LAND_DATES && (
-              <InvestmentEstimatedLandDateList />
+              <InvestmentsEstimatedLandDatesList />
             )}
             {reminderType === INVESTMENTS_NO_RECENT_INTERACTIONS && (
-              <InvestmentNoRecentInteractionList />
+              <InvestmentsNoRecentInteractionsList />
             )}
             {reminderType === INVESTMENTS_OUTSTANDING_PROPOSITIONS && (
-              <InvestmentOutstandingPropositionsList />
+              <InvestmentsOutstandingPropositionsList />
             )}
             {reminderType === COMPANIES_NO_RECENT_INTERACTIONS && (
-              <ExportsNoRecentInteractionList />
+              <ExportsNoRecentInteractionsList />
             )}
           </ListContainer>
         </Container>
