@@ -9,6 +9,12 @@ export const urlTestExclusions = {
     { url: '/:companyId/exports/history/:countryId' },
     { url: '/:companyId/referrals/:referralId/interactions' },
   ],
-
+  contacts: [
+    { url: '/:contactId/archive' },
+    { url: '/:contactId/unarchive' },
+    { url: ':companyId' },
+  ],
+  companyLists: [{ url: '/:listId/delete' }, { url: '/:listId/rename' }],
   events: [],
+  omis: [{ url: ':companyId' }, { url: '/edit/payment-reconciliation' }],
 }
