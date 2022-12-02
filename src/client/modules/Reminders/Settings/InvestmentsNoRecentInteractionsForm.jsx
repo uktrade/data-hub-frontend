@@ -1,12 +1,12 @@
 import React from 'react'
 
-import CommonNoInteractionFields from './CommonNoInteractionFields'
+import NoRecentInteractionsCommonFields from './NoRecentInteractionsCommonFields'
 import { Form } from '../../../components'
 
 import { OPTION_YES } from '../../../../common/constants'
 import urls from '../../../../lib/urls'
 
-const redirectUrl = `${urls.reminders.settings.index()}?investments_no_recent_interaction=true`
+const redirectUrl = `${urls.reminders.settings.index()}?investments_no_recent_interactions=true`
 
 import {
   TASK_GET_NRI_REMINDER_SUBSCRIPTIONS,
@@ -17,7 +17,7 @@ import {
   transformNRIFormValuesToAnalyticsData,
 } from '../transformers'
 
-const InvestmentNoRecentInteractionForm = () => (
+const InvestmentsNoRecentInteractionsForm = () => (
   <Form
     id="reminders-settings-no-recent-interaction"
     initialValuesTaskName={TASK_GET_NRI_REMINDER_SUBSCRIPTIONS}
@@ -35,7 +35,7 @@ const InvestmentNoRecentInteractionForm = () => (
     {({ values: { reminder_days, email_reminders_enabled, reminders } }) => (
       <>
         {reminder_days && (
-          <CommonNoInteractionFields
+          <NoRecentInteractionsCommonFields
             reminders={reminders}
             reminderDays={reminder_days}
             emailRemindersEnabled={email_reminders_enabled}
@@ -50,4 +50,4 @@ const InvestmentNoRecentInteractionForm = () => (
   </Form>
 )
 
-export default InvestmentNoRecentInteractionForm
+export default InvestmentsNoRecentInteractionsForm

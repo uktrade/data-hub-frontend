@@ -24,7 +24,7 @@ import { sortOptions, maxItemsToPaginate, itemsPerPage } from './constants'
 import CollectionHeader from './CollectionHeader'
 import Effect from '../../components/Effect'
 import Task from '../../components/Task'
-import InvestmentCollectionList from './InvestmentCollectionList'
+import InvestmentsCollectionList from './InvestmentsCollectionList'
 
 import { CollectionSort, RoutedPagination } from '../../components'
 
@@ -34,7 +34,7 @@ const Summary = styled('p')({
   fontSize: FONT_SIZE.SIZE_19,
 })
 
-const InvestmentEstimatedLandDateList = ({ estimatedLandDateReminders }) => {
+const InvestmentsEstimatedLandDatesList = ({ estimatedLandDateReminders }) => {
   const { results, count, nextPending } = estimatedLandDateReminders
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
@@ -47,7 +47,7 @@ const InvestmentEstimatedLandDateList = ({ estimatedLandDateReminders }) => {
     <>
       <CollectionHeader
         totalItems={count}
-        pageOrigin="investments_estimated_land_date"
+        pageOrigin="investments_estimated_land_dates"
       />
       {results.length === 0 ? (
         <Summary data-test="investments-no-reminders">
@@ -88,7 +88,7 @@ const InvestmentEstimatedLandDateList = ({ estimatedLandDateReminders }) => {
                       })
                     }
                   />
-                  <InvestmentCollectionList
+                  <InvestmentsCollectionList
                     results={results}
                     disableDelete={nextPending}
                     onDeleteReminder={(reminderId) => {
@@ -112,4 +112,4 @@ const InvestmentEstimatedLandDateList = ({ estimatedLandDateReminders }) => {
 
 export const state2props = (state) => state[ID]
 
-export default connect(state2props)(InvestmentEstimatedLandDateList)
+export default connect(state2props)(InvestmentsEstimatedLandDatesList)

@@ -6,16 +6,16 @@ import urls from '../../../../lib/urls'
 import { snakeCase } from 'lodash'
 import {
   reminderTypeToLabel,
-  INVESTMENTS_ESTIMATED_LAND_DATE,
-  INVESTMENTS_NO_RECENT_INTERACTION,
-  EXPORTS_NO_RECENT_INTERACTION,
+  INVESTMENTS_ESTIMATED_LAND_DATES,
+  INVESTMENTS_NO_RECENT_INTERACTIONS,
+  COMPANIES_NO_RECENT_INTERACTIONS,
 } from '../constants'
 
-import InvestmentEstimatedLandDateForm from './InvestmentEstimatedLandDateForm'
-import InvestmentNoRecentInteractionForm from './InvestmentNoRecentInteractionForm'
-import ExportNoRecentInteractionForm from './ExportNoRecentInteractionForm'
+import InvestmentsEstimatedLandDatesForm from './InvestmentsEstimatedLandDatesForm'
+import InvestmentsNoRecentInteractionsForm from './InvestmentsNoRecentInteractionsForm'
+import ExportsNoRecentInteractionsForm from './ExportsNoRecentInteractionsForm'
 
-const ReminderForms = () => {
+const RemindersForms = () => {
   const { reminderType } = useParams()
   const subject = reminderTypeToLabel[reminderType]
   const queryParams = `${snakeCase(reminderType)}=true`
@@ -40,18 +40,18 @@ const ReminderForms = () => {
       ]}
     >
       <>
-        {reminderType === INVESTMENTS_ESTIMATED_LAND_DATE && (
-          <InvestmentEstimatedLandDateForm />
+        {reminderType === INVESTMENTS_ESTIMATED_LAND_DATES && (
+          <InvestmentsEstimatedLandDatesForm />
         )}
-        {reminderType === INVESTMENTS_NO_RECENT_INTERACTION && (
-          <InvestmentNoRecentInteractionForm />
+        {reminderType === INVESTMENTS_NO_RECENT_INTERACTIONS && (
+          <InvestmentsNoRecentInteractionsForm />
         )}
-        {reminderType === EXPORTS_NO_RECENT_INTERACTION && (
-          <ExportNoRecentInteractionForm />
+        {reminderType === COMPANIES_NO_RECENT_INTERACTIONS && (
+          <ExportsNoRecentInteractionsForm />
         )}
       </>
     </DefaultLayout>
   )
 }
 
-export default ReminderForms
+export default RemindersForms

@@ -9,16 +9,16 @@ Going forward, all users will receive notification emails with the new links.
 All redirects:
 
     From : /reminders/estimated-land-date
-    To :   /reminders/investments-estimated-land-date
+    To :   /reminders/investments-estimated-land-dates
 
     From : /reminders/no-recent-interaction
-    To :   /reminders/investments-no-recent-interaction
+    To :   /reminders/investments-no-recent-interactions
 
     From : /reminders/outstanding-propositions
     To :   /reminders/investments-outstanding-propositions
 
     From : /reminders/settings/estimated-land-date
-    To :   /reminders/settings/investments-estimated-land-date
+    To :   /reminders/settings/investments-estimated-land-dates
 
     From : /reminders/settings/no-recent-interaction
-    To :   /reminders/settings/investments-no-recent-interaction
+    To :   /reminders/settings/investments-no-recent-interactions
