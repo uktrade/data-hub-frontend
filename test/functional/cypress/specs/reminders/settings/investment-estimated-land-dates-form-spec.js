@@ -46,7 +46,7 @@ describe('Settings - approaching estimated land dates', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Settings: `${urls.reminders.settings.index()}?investments_estimated_land_date=true`,
+        Settings: `${urls.reminders.settings.index()}?investments_estimated_land_dates=true`,
         'Approaching estimated land dates': null,
       })
     })

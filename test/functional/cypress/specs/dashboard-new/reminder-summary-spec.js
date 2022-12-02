@@ -64,7 +64,7 @@ describe('Dashboard reminder summary', () => {
         .should(
           'have.attr',
           'href',
-          '/reminders/investments-estimated-land-date'
+          '/reminders/investments-estimated-land-dates'
         )
 
       cy.get('[data-test="investment-projects-with-no-recent-interactions"]')
@@ -73,7 +73,7 @@ describe('Dashboard reminder summary', () => {
         .should(
           'have.attr',
           'href',
-          '/reminders/investments-no-recent-interaction'
+          '/reminders/investments-no-recent-interactions'
         )
 
       cy.get('[data-test="investment-outstanding-propositions"]')
@@ -91,7 +91,7 @@ describe('Dashboard reminder summary', () => {
         .should(
           'have.attr',
           'href',
-          '/reminders/exports-no-recent-interactions'
+          '/reminders/companies-no-recent-interactions'
         )
     })
 

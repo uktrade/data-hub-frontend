@@ -4,7 +4,7 @@ const urls = require('../../../lib/urls')
 
 describe('Reminders redirected routes', () => {
   context(
-    'Redirecting the user to /reminders/investments-estimated-land-date',
+    'Redirecting the user to /reminders/investments-estimated-land-dates',
     () => {
       const middlewareParameters = buildMiddlewareParameters()
 
@@ -22,7 +22,7 @@ describe('Reminders redirected routes', () => {
   )
 
   context(
-    'Redirecting the user to /reminders/investments-no-recent-interaction',
+    'Redirecting the user to /reminders/investments-no-recent-interactions',
     () => {
       const middlewareParameters = buildMiddlewareParameters()
 
@@ -58,7 +58,7 @@ describe('Reminders redirected routes', () => {
   )
 
   context(
-    'Redirecting the user to /reminders/settings/investments-estimated-land-date',
+    'Redirecting the user to /reminders/settings/investments-estimated-land-dates',
     () => {
       const middlewareParameters = buildMiddlewareParameters()
 
@@ -76,7 +76,7 @@ describe('Reminders redirected routes', () => {
   )
 
   context(
-    'Redirecting the user to /reminders/settings/investments-no-recent-interaction',
+    'Redirecting the user to /reminders/settings/investments-no-recent-interactions',
     () => {
       const middlewareParameters = buildMiddlewareParameters()
 

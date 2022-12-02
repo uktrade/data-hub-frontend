@@ -2,13 +2,13 @@ import urls from '../../../../../../src/lib/urls'
 
 const selectors = {
   collectionItem: '[data-test="item-content"]',
-  reminderSettings: 'a[data-test="reminders-settings-link"]',
-  ELDSettingsClose: '#estimated-land-date-toggle-toggle-button-close',
-  ELDSettingsOpen: '#estimated-land-date-toggle-toggle-button-open',
-  ELDEdit: '[data-test="estimated-land-date-link"]',
-  NRISettingsClose: '#no-recent-interaction-toggle-toggle-button-close',
-  NRISettingsOpen: '#no-recent-interaction-toggle-toggle-button-open',
-  NRIEdit: '[data-test="no-recent-interaction-link"]',
+  remindersSettings: 'a[data-test="reminders-settings-link"]',
+  ELDSettingsClose: '#estimated-land-dates-toggle-toggle-button-close',
+  ELDSettingsOpen: '#estimated-land-dates-toggle-toggle-button-open',
+  ELDEdit: '[data-test="estimated-land-dates-link"]',
+  NRISettingsClose: '#no-recent-interactions-toggle-toggle-button-close',
+  NRISettingsOpen: '#no-recent-interactions-toggle-toggle-button-open',
+  NRIEdit: '[data-test="no-recent-interactions-link"]',
 }
 
 describe('Notification settings', () => {
@@ -16,7 +16,7 @@ describe('Notification settings', () => {
     before(() => {
       cy.visit(urls.reminders.investments.estimatedLandDate())
       cy.get(selectors.collectionItem).should('be.visible')
-      cy.get(selectors.reminderSettings).eq(1).should('be.visible').click()
+      cy.get(selectors.remindersSettings).eq(1).should('be.visible').click()
     })
 
     it('should have approaching estimated land date settings expanded', () => {
@@ -40,7 +40,7 @@ describe('Notification settings', () => {
     beforeEach(() => {
       cy.visit(urls.reminders.investments.noRecentInteraction())
       cy.contains('days since last interaction').should('be.visible')
-      cy.get(selectors.reminderSettings).eq(1).should('be.visible').click()
+      cy.get(selectors.remindersSettings).eq(1).should('be.visible').click()
     })
 
     it('should have no recent interaction settings expanded', () => {

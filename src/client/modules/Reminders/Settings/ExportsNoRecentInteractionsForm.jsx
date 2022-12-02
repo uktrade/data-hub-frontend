@@ -1,6 +1,6 @@
 import React from 'react'
 
-import CommonNoInteractionFields from './CommonNoInteractionFields'
+import NoRecentInteractionsCommonFields from './NoRecentInteractionsCommonFields'
 import { Form } from '../../../components'
 
 import { OPTION_YES } from '../../../../common/constants'
@@ -15,9 +15,9 @@ import {
   transformNRIFormValuesToAnalyticsData,
 } from '../transformers'
 
-const redirectUrl = `${urls.reminders.settings.index()}?exports_no_recent_interactions=true`
+const redirectUrl = `${urls.reminders.settings.index()}?companies_no_recent_interactions=true`
 
-const ExportNoRecentInteractionForm = () => (
+const ExportsNoRecentInteractionsForm = () => (
   <Form
     id="reminders-settings-export-no-recent-interaction"
     initialValuesTaskName={TASK_GET_EXPORT_NRI_REMINDER_SUBSCRIPTIONS}
@@ -35,7 +35,7 @@ const ExportNoRecentInteractionForm = () => (
     {({ values: { reminder_days, email_reminders_enabled, reminders } }) => (
       <>
         {reminder_days && (
-          <CommonNoInteractionFields
+          <NoRecentInteractionsCommonFields
             reminders={reminders}
             reminderDays={reminder_days}
             emailRemindersEnabled={email_reminders_enabled}
@@ -50,4 +50,4 @@ const ExportNoRecentInteractionForm = () => (
   </Form>
 )
 
-export default ExportNoRecentInteractionForm
+export default ExportsNoRecentInteractionsForm
