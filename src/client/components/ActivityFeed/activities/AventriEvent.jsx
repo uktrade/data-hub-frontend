@@ -21,7 +21,7 @@ export default function AventriEvent({ activity: event }) {
   const contacts = CardUtils.getContacts(event)
 
   const formattedContacts = () =>
-    !!contacts.length &&
+    contacts &&
     contacts.map((contact, index) => (
       <span key={`contact-link-${index}`}>
         {index ? ', ' : ''}
