@@ -7,18 +7,18 @@ import { Link } from 'govuk-react'
 import { DefaultLayout } from '../../components'
 import RemindersMenu from './RemindersMenu'
 
-import InvestmentEstimatedLandDateList from './InvestmentEstimatedLandDateList'
-import InvestmentNoRecentInteractionList from './InvestmentNoRecentInteractionList'
-import InvestmentOutstandingPropositionsList from './InvestmentOutstandingPropositionsList'
-import ExportsNoRecentInteractionList from './ExportsNoRecentInteractionList'
+import InvestmentsEstimatedLandDatesList from './InvestmentsEstimatedLandDatesList'
+import InvestmentsNoRecentInteractionsList from './InvestmentsNoRecentInteractionsList'
+import InvestmentsOutstandingPropositionsList from './InvestmentsOutstandingPropositionsList'
+import ExportsNoRecentInteractionsList from './ExportsNoRecentInteractionsList'
 
 import urls from '../../../lib/urls'
 import {
   reminderTypeToLabel,
-  INVESTMENTS_ESTIMATED_LAND_DATE,
-  INVESTMENTS_NO_RECENT_INTERACTION,
+  INVESTMENTS_ESTIMATED_LAND_DATES,
+  INVESTMENTS_NO_RECENT_INTERACTIONS,
   INVESTMENTS_OUTSTANDING_PROPOSITIONS,
-  EXPORTS_NO_RECENT_INTERACTION,
+  COMPANIES_NO_RECENT_INTERACTIONS,
 } from './constants'
 
 const Container = styled('div')({
@@ -92,17 +92,17 @@ const RemindersLists = () => {
             )}
           </MenuContainer>
           <ListContainer>
-            {reminderType === INVESTMENTS_ESTIMATED_LAND_DATE && (
-              <InvestmentEstimatedLandDateList />
+            {reminderType === INVESTMENTS_ESTIMATED_LAND_DATES && (
+              <InvestmentsEstimatedLandDatesList />
             )}
-            {reminderType === INVESTMENTS_NO_RECENT_INTERACTION && (
-              <InvestmentNoRecentInteractionList />
+            {reminderType === INVESTMENTS_NO_RECENT_INTERACTIONS && (
+              <InvestmentsNoRecentInteractionsList />
             )}
             {reminderType === INVESTMENTS_OUTSTANDING_PROPOSITIONS && (
-              <InvestmentOutstandingPropositionsList />
+              <InvestmentsOutstandingPropositionsList />
             )}
-            {reminderType === EXPORTS_NO_RECENT_INTERACTION && (
-              <ExportsNoRecentInteractionList />
+            {reminderType === COMPANIES_NO_RECENT_INTERACTIONS && (
+              <ExportsNoRecentInteractionsList />
             )}
           </ListContainer>
         </Container>

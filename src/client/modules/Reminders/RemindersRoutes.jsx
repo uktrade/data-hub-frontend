@@ -1,21 +1,21 @@
 import React from 'react'
 import { useRouteMatch, Redirect, Switch, Route } from 'react-router-dom'
-import { RemindersLists, ReminderSettings, ReminderForms } from '.'
+import { RemindersLists, RemindersSettings, RemindersForms } from '.'
 
 const RemindersRoutes = () => {
   const { path } = useRouteMatch()
   return (
     <Switch>
       <Route exact={true} path={`${path}/settings`}>
-        <ReminderSettings />
+        <RemindersSettings />
       </Route>
       <Route path={`${path}/settings/:reminderType`}>
-        <ReminderForms />
+        <RemindersForms />
       </Route>
       <Redirect
         exact={true}
         from={path}
-        to={`${path}/investments-estimated-land-date`}
+        to={`${path}/investments-estimated-land-dates`}
       />
       <Route path={`${path}/:reminderType`}>
         <RemindersLists />

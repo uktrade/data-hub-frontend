@@ -17,16 +17,18 @@ export const sortOptions = [
 export const maxItemsToPaginate = 10000
 export const itemsPerPage = 10
 
-export const INVESTMENTS_ESTIMATED_LAND_DATE = 'investments-estimated-land-date'
-export const INVESTMENTS_NO_RECENT_INTERACTION =
-  'investments-no-recent-interaction'
+export const INVESTMENTS_ESTIMATED_LAND_DATES =
+  'investments-estimated-land-dates'
+export const INVESTMENTS_NO_RECENT_INTERACTIONS =
+  'investments-no-recent-interactions'
 export const INVESTMENTS_OUTSTANDING_PROPOSITIONS =
   'investments-outstanding-propositions'
-export const EXPORTS_NO_RECENT_INTERACTION = 'exports-no-recent-interactions'
+export const COMPANIES_NO_RECENT_INTERACTIONS =
+  'companies-no-recent-interactions'
 
 export const reminderTypeToLabel = {
-  [INVESTMENTS_ESTIMATED_LAND_DATE]: 'Approaching estimated land dates',
-  [INVESTMENTS_NO_RECENT_INTERACTION]: 'Projects with no recent interactions',
+  [INVESTMENTS_ESTIMATED_LAND_DATES]: 'Approaching estimated land dates',
+  [INVESTMENTS_NO_RECENT_INTERACTIONS]: 'Projects with no recent interactions',
   [INVESTMENTS_OUTSTANDING_PROPOSITIONS]: 'Outstanding propositions',
-  [EXPORTS_NO_RECENT_INTERACTION]: 'Companies with no recent interactions',
+  [COMPANIES_NO_RECENT_INTERACTIONS]: 'Companies with no recent interactions',
 }

@@ -82,7 +82,7 @@ const ItemFooter = styled('div')({
   marginBottom: SPACING.SCALE_4,
 })
 
-const InvestmentCollectionList = ({
+const InvestmentsCollectionList = ({
   results,
   onDeleteReminder,
   disableDelete,
@@ -152,4 +152,4 @@ const InvestmentCollectionList = ({
   )
 }
 
-export default InvestmentCollectionList
+export default InvestmentsCollectionList
