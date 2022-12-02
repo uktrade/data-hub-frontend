@@ -3,8 +3,8 @@ import { testIdentityNumbers } from './testIdentityNumbers'
 import { urlTestExclusions } from './urlTestExclusions'
 import { differenceBy } from 'lodash'
 
-const mountPoint = urls.investments
-const mountPointName = 'investments'
+const mountPoint = urls.contacts
+const mountPointName = 'contacts'
 
 const arrayOfUrls = []
 const excludedUrls = urlTestExclusions[mountPointName]
@@ -59,7 +59,7 @@ filteredArrayOfUrls.map((path) => {
 filteredArrayOfUrls.map((path) => {
   describe(`${mountPointName}${path.url}`, () => {
     before(() => {
-      cy.visit('/' + mountPointName + path.url, { timeout: 20000 })
+      cy.visit('/' + mountPointName + path.url)
       // Wait until page has loaded first
       cy.initA11y()
     })
