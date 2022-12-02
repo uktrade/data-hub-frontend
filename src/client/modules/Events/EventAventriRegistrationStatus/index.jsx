@@ -8,6 +8,7 @@ import urls from '../../../../lib/urls'
 import {
   CollectionSort,
   CollectionHeader,
+  CollectionHeaderRow,
   DefaultLayout,
   LocalNav,
   LocalNavLink,
@@ -30,6 +31,7 @@ import { ATTENDEES_SORT_OPTIONS } from './constants'
 const EventAventriRegistrationStatus = ({
   aventriEventId,
   aventriAttendees,
+  registrationStatus,
   aventriRegistrationStatuses,
   aventriEventData,
   defaultQueryParams = {
@@ -78,7 +80,7 @@ const EventAventriRegistrationStatus = ({
         return (
           <DefaultLayout
             heading={eventName}
-            pageTitle="Events STATUS"
+            pageTitle="Events"
             breadcrumbs={breadcrumbs}
             useReactRouter={true}
           >
@@ -115,15 +117,17 @@ const EventAventriRegistrationStatus = ({
                         </GridCol>
                         {aventriAttendees && (
                           <GridCol setWidth="three-quarters">
-                            <CollectionHeader
-                              totalItems={totalAttendees}
-                              collectionName="attendee"
-                              data-test="attendee-collection-header"
-                            />
                             <CollectionSort
                               sortOptions={ATTENDEES_SORT_OPTIONS}
                               totalPages={totalPages}
                             />
+                            <CollectionHeader
+                              totalItems={totalAttendees}
+                              collectionName={registrationStatus}
+                              data-test="attendee-collection-header"
+                              shouldPluralize={false}
+                            />
+
                             <ActivityList>
                               {aventriAttendees?.map((attendee, index) => (
                                 <li key={`aventri-attended-${index}`}>
@@ -139,6 +143,7 @@ const EventAventriRegistrationStatus = ({
                 )
               }
             </CheckUserFeatureFlag>
+            <RoutedPagination initialPage={page} items={totalAttendees} />
           </DefaultLayout>
         )
       }}

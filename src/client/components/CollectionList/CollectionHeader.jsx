@@ -30,10 +30,13 @@ function CollectionHeader({
   totalItems,
   collectionName = 'result',
   addItemUrl,
+  shouldPluralize = true,
   ...rest
 }) {
   const formattedTotal = decimal(totalItems)
-  const counterSuffix = pluralize(collectionName, totalItems)
+  const counterSuffix = shouldPluralize
+    ? pluralize(collectionName, totalItems)
+    : collectionName
 
   const actions = addItemUrl && (
     <Button
@@ -49,7 +52,7 @@ function CollectionHeader({
 
   return (
     <CollectionHeaderRow primary={true} actions={actions} {...rest}>
-      <StyledHeaderText>
+      <StyledHeaderText data-test="collection-header-name">
         <StyledResultCount>{formattedTotal}</StyledResultCount>
         {` ${counterSuffix}`}
       </StyledHeaderText>

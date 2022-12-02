@@ -27,22 +27,27 @@ export const state2props = (state, router) => {
   console.log(`match.params: ${JSON.stringify(queryParams)}`)
   const selectedSortBy =
     qs.parse(location.search.slice(1)).sortby || 'first_name:asc'
-
+  console.log(EVENT_AVENTRI_ATTENDEES_MAPPING)
+  let registrationStatus
   const aventriRegistrationStatuses = Object.entries(
     EVENT_AVENTRI_ATTENDEES_MAPPING
   ).reduce((status, item) => {
     if (item[1].urlSlug == match.params.status) {
+      console.log(item)
+      registrationStatus = item[1].status
       status.push(item[0])
     }
     return status
   }, [])
 
   console.log(aventriRegistrationStatuses)
+  console.log(registrationStatus)
 
   // console.log()
   return {
     payload: { ...queryParams, selectedSortBy },
     page: queryParams.page,
+    registrationStatus,
     aventriEventId: match.params.aventriEventId,
     aventriRegistrationStatuses: aventriRegistrationStatuses,
     ...state[ID],
