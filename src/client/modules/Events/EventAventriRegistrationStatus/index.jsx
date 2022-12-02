@@ -7,6 +7,7 @@ import urls from '../../../../lib/urls'
 import {
   CollectionSort,
   CollectionHeader,
+  CollectionHeaderRow,
   DefaultLayout,
   LocalNav,
   LocalNavLink,
