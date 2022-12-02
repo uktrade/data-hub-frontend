@@ -7,9 +7,9 @@ import urls from '../../../../../../src/lib/urls'
 const userEndpoint = '/api-proxy/whoami'
 const summaryEndpoint = '/api-proxy/v4/reminder/subscription/summary'
 
-const eslDataTest = 'estimated-land-date'
-const nriDataTest = 'no-recent-interaction'
-const enriDataTest = 'exports-no-recent-interaction'
+const eslDataTest = 'estimated-land-dates'
+const nriDataTest = 'no-recent-interactions'
+const enriDataTest = 'companies-no-recent-interactions'
 
 const getToggle = (dataTest) => `[data-test="${dataTest}-toggle"]`
 const getTable = (dataTest) => `[data-test="${dataTest}-table"]`
@@ -125,7 +125,7 @@ describe('Settings: reminders and email notifications', () => {
   context(
     'When estimated land settings are visible and no recent interaction settings are hidden',
     () => {
-      const queryParams = 'investments_estimated_land_date=true'
+      const queryParams = 'investments_estimated_land_dates=true'
       before(() => {
         interceptAPICalls()
         cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)
@@ -148,7 +148,7 @@ describe('Settings: reminders and email notifications', () => {
   context(
     'When only no recent investment interaction settings are visible',
     () => {
-      const queryParams = 'investments_no_recent_interaction=true'
+      const queryParams = 'investments_no_recent_interactions=true'
       before(() => {
         interceptAPICalls()
         cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)
@@ -169,7 +169,7 @@ describe('Settings: reminders and email notifications', () => {
   )
 
   context('When only no recent export interaction settings are visible', () => {
-    const queryParams = 'exports_no_recent_interactions=true'
+    const queryParams = 'companies_no_recent_interactions=true'
     before(() => {
       interceptAPICalls()
       cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)
@@ -190,7 +190,7 @@ describe('Settings: reminders and email notifications', () => {
 
   context('When all settings are visible', () => {
     const queryParams =
-      'investments_estimated_land_date=true&investments_no_recent_interaction=true&exports_no_recent_interactions=true'
+      'investments_estimated_land_dates=true&investments_no_recent_interactions=true&companies_no_recent_interactions=true'
     before(() => {
       interceptAPICalls()
       cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)
@@ -217,21 +217,21 @@ describe('Settings: reminders and email notifications', () => {
     })
 
     it('should render the ELD settings table with Off', () => {
-      assertKeyValueTable('estimated-land-date-table', {
+      assertKeyValueTable('estimated-land-dates-table', {
         Reminders: 'Off',
         'Email notifications': 'Off',
       })
     })
 
     it('should render the NRI settings table with Off', () => {
-      assertKeyValueTable('no-recent-interaction-table', {
+      assertKeyValueTable('no-recent-interactions-table', {
         Reminders: 'Off',
         'Email notifications': 'Off',
       })
     })
 
     it('should render the ENRI settings table with Off', () => {
-      assertKeyValueTable('exports-no-recent-interaction-table', {
+      assertKeyValueTable('companies-no-recent-interactions-table', {
         Reminders: 'Off',
         'Email notifications': 'Off',
       })

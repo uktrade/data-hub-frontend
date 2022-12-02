@@ -41,7 +41,7 @@ describe('Settings - companies with no recent interactions', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        Settings: `${urls.reminders.settings.index()}?exports_no_recent_interactions=true`,
+        Settings: `${urls.reminders.settings.index()}?companies_no_recent_interactions=true`,
         'Companies with no recent interaction': null,
       })
     })

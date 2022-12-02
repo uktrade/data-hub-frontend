@@ -32,12 +32,12 @@ const openSettings = (queryParamType, qsParams) => {
   return !!settingsExpand
 }
 
-const ReminderSettings = () => {
+const RemindersSettings = () => {
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
-  const openESL = openSettings('investments_estimated_land_date', qsParams)
-  const openNRI = openSettings('investments_no_recent_interaction', qsParams)
-  const openENRI = openSettings('exports_no_recent_interactions', qsParams)
+  const openESL = openSettings('investments_estimated_land_dates', qsParams)
+  const openNRI = openSettings('investments_no_recent_interactions', qsParams)
+  const openENRI = openSettings('companies_no_recent_interactions', qsParams)
 
   return (
     <DefaultLayout
@@ -67,25 +67,25 @@ const ReminderSettings = () => {
             <ToggleSectionContainer>
               <RemindersToggleSection
                 label="Approaching estimated land dates"
-                id="estimated-land-date-toggle"
-                data-test="estimated-land-date-toggle"
+                id="estimated-land-dates-toggle"
+                data-test="estimated-land-dates-toggle"
                 isOpen={openESL}
               >
                 <RemindersSettingsTable
-                  dataName={'estimated-land-date'}
+                  dataName={'estimated-land-dates'}
                   data={estimatedLandDate}
                   to={urls.reminders.settings.investments.estimatedLandDate()}
                 />
               </RemindersToggleSection>
               <RemindersToggleSection
                 label="Projects with no recent interactions"
-                id="no-recent-interaction-toggle"
-                data-test="no-recent-interaction-toggle"
+                id="no-recent-interactions-toggle"
+                data-test="no-recent-interactions-toggle"
                 isOpen={openNRI}
                 borderBottom={true}
               >
                 <RemindersSettingsTable
-                  dataName={'no-recent-interaction'}
+                  dataName={'no-recent-interactions'}
                   data={noRecentInteraction}
                   to={urls.reminders.settings.investments.noRecentInteraction()}
                 />
@@ -99,13 +99,13 @@ const ReminderSettings = () => {
                     <ToggleSectionContainer>
                       <RemindersToggleSection
                         label="Companies with no recent interactions"
-                        id="exports-no-recent-interaction-toggle"
-                        data-test="exports-no-recent-interaction-toggle"
+                        id="companies-no-recent-interactions-toggle"
+                        data-test="companies-no-recent-interactions-toggle"
                         isOpen={openENRI}
                         borderBottom={true}
                       >
                         <RemindersSettingsTable
-                          dataName={'exports-no-recent-interaction'}
+                          dataName={'companies-no-recent-interactions'}
                           data={exportNoRecentInteractions}
                           to={urls.reminders.settings.exports.noRecentInteraction()}
                         />
@@ -125,4 +125,4 @@ const ReminderSettings = () => {
   )
 }
 
-export default ReminderSettings
+export default RemindersSettings

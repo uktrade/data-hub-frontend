@@ -1,28 +1,28 @@
 // Summary settings
-import ReminderSettings from './Settings/ReminderSettings'
+import RemindersSettings from './Settings/RemindersSettings'
 
 // Forms
-import ReminderForms from './Settings/ReminderForms'
-import InvestmentEstimatedLandDateForm from './Settings/InvestmentEstimatedLandDateForm'
-import InvestmentNoRecentInteractionForm from './Settings/InvestmentNoRecentInteractionForm'
-import ExportNoRecentInteractionForm from './Settings/ExportNoRecentInteractionForm'
+import RemindersForms from './Settings/RemindersForms'
+import InvestmentsEstimatedLandDatesForm from './Settings/InvestmentsEstimatedLandDatesForm'
+import InvestmentsNoRecentInteractionsForm from './Settings/InvestmentsNoRecentInteractionsForm'
+import ExportsNoRecentInteractionsForm from './Settings/ExportsNoRecentInteractionsForm'
 
 // Lists
 import RemindersLists from './RemindersLists'
-import InvestmentEstimatedLandDateList from './InvestmentEstimatedLandDateList'
-import InvestmentNoRecentInteractionList from './InvestmentNoRecentInteractionList'
-import InvestmentOutstandingPropositionsList from './InvestmentOutstandingPropositionsList'
-import ExportsNoRecentInteractionList from './ExportsNoRecentInteractionList'
+import InvestmentsEstimatedLandDatesList from './InvestmentsEstimatedLandDatesList'
+import InvestmentsNoRecentInteractionsList from './InvestmentsNoRecentInteractionsList'
+import InvestmentsOutstandingPropositionsList from './InvestmentsOutstandingPropositionsList'
+import ExportsNoRecentInteractionsList from './ExportsNoRecentInteractionsList'
 
 export {
-  ReminderSettings,
-  ReminderForms,
-  InvestmentEstimatedLandDateForm,
-  InvestmentNoRecentInteractionForm,
-  ExportNoRecentInteractionForm,
+  RemindersSettings,
+  RemindersForms,
+  InvestmentsEstimatedLandDatesForm,
+  InvestmentsNoRecentInteractionsForm,
+  ExportsNoRecentInteractionsForm,
   RemindersLists,
-  InvestmentEstimatedLandDateList,
-  InvestmentNoRecentInteractionList,
-  InvestmentOutstandingPropositionsList,
-  ExportsNoRecentInteractionList,
+  InvestmentsEstimatedLandDatesList,
+  InvestmentsNoRecentInteractionsList,
+  InvestmentsOutstandingPropositionsList,
+  ExportsNoRecentInteractionsList,
 }

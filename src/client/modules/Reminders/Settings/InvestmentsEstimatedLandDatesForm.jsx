@@ -19,9 +19,9 @@ import {
 import urls from '../../../../lib/urls'
 
 const OPTIONS_NO_YES = [...OPTIONS_YES_NO].reverse()
-const redirectUrl = `${urls.reminders.settings.index()}?investments_estimated_land_date=true`
+const redirectUrl = `${urls.reminders.settings.index()}?investments_estimated_land_dates=true`
 
-const InvestmentEstimatedLandDateForm = () => (
+const InvestmentsEstimatedLandDatesForm = () => (
   <Form
     id="reminders-settings-estimated-land-date"
     initialValuesTaskName={TASK_GET_ELD_REMINDER_SUBSCRIPTIONS}
@@ -100,4 +100,4 @@ const InvestmentEstimatedLandDateForm = () => (
   </Form>
 )
 
-export default InvestmentEstimatedLandDateForm
+export default InvestmentsEstimatedLandDatesForm
