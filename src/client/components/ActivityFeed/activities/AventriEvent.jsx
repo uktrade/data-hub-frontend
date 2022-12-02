@@ -18,7 +18,18 @@ export default function AventriEvent({ activity: event }) {
   const name = eventObject.name
   const aventriEventId = eventObject.id.split(':')[EVENT_ID_INDEX]
   const date = formatStartAndEndDate(eventObject.startTime, eventObject.endTime)
+  const contacts = CardUtils.getContacts(event)
 
+  const formattedContacts = () =>
+    contacts &&
+    contacts.map((contact, index) => (
+      <span key={`contact-link-${index}`}>
+        {index ? ', ' : ''}
+        <Link data-test={`contact-link-${index}`} href={contact.url}>
+          {contact.name}
+        </Link>
+      </span>
+    ))
   return (
     <ActivityCardWrapper dataTest="aventri-event">
       <ActivityCardLabels service="Event" kind="Aventri Service Delivery" />
@@ -34,6 +45,10 @@ export default function AventriEvent({ activity: event }) {
           {
             label: 'Aventri ID',
             value: aventriEventId,
+          },
+          {
+            label: 'Contact(s)',
+            value: formattedContacts(),
           },
         ]}
       />

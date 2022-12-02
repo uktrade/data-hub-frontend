@@ -1,3 +1,4 @@
+const { faker } = require('@faker-js/faker')
 const activityFeedEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-from-es.json')
 const activityFeedAventriAtendeeEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-aventri-attendee-from-es.json')
 
@@ -1079,6 +1080,206 @@ describe('Activity feed controllers', () => {
       it('should call next with an error', async () => {
         expect(middlewareParameters.resMock.json).to.not.have.been.called
         expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
+      })
+    })
+  })
+
+  describe('#getAventriEventsAttendedByCompanyContacts', () => {
+    let fakeActivityFeed = () => {
+      return { hits: { hits: [] } }
+    }
+
+    const generateEventResponse = (hits) => {
+      return {
+        hits: {
+          hits,
+        },
+      }
+    }
+
+    before(() => {
+      fetchActivityFeedStub = sinon.stub().callsFake(fakeActivityFeed)
+      controllers = proxyquire(
+        '../../src/apps/companies/apps/activity-feed/controllers',
+        {
+          './repos': {
+            fetchActivityFeed: fetchActivityFeedStub,
+          },
+        }
+      )
+      middlewareParameters = buildMiddlewareParameters()
+    })
+
+    it('when called with an empty list of contacts should return an empty event object', async () => {
+      const events =
+        await controllers.getAventriEventsAttendedByCompanyContacts(
+          middlewareParameters.reqMock,
+          middlewareParameters.nextSpy,
+          []
+        )
+      expect(events).to.be.deep.equal({})
+    })
+
+    it('when called with a single contact that has no aventri events should return an empty event object', async () => {
+      const events =
+        await controllers.getAventriEventsAttendedByCompanyContacts(
+          middlewareParameters.reqMock,
+          middlewareParameters.nextSpy,
+          [{ email: faker.internet.email }]
+        )
+      expect(events).to.be.deep.equal({})
+    })
+
+    it('when called with a single contact that has 1 aventri events should return an event object with 1 event and 1 contact email', async () => {
+      const email = faker.internet.email()
+
+      fetchActivityFeedStub.resolves(
+        generateEventResponse([
+          {
+            _source: {
+              object: {
+                attributedTo: { id: 1 },
+                'dit:emailAddress': email,
+              },
+            },
+          },
+        ])
+      )
+
+      const events =
+        await controllers.getAventriEventsAttendedByCompanyContacts(
+          middlewareParameters.reqMock,
+          middlewareParameters.nextSpy,
+          [
+            {
+              email: email,
+              name: faker.name.fullName(),
+              id: faker.random.numeric(),
+            },
+          ]
+        )
+      expect(events['1:Create'].length).to.be.equal(1)
+      expect(events['1:Create'][0]['dit:emailAddress']).to.be.equal(email)
+    })
+
+    it('when called with a single contact that has 5 aventri events should return an event object with 5 events and 1 contact email', async () => {
+      const email = faker.internet.email()
+
+      fetchActivityFeedStub.resolves(
+        generateEventResponse(
+          [...Array(5).keys()].map((x) => {
+            return {
+              _source: {
+                object: {
+                  attributedTo: { id: x },
+                  'dit:emailAddress': email,
+                },
+              },
+            }
+          })
+        )
+      )
+
+      const events =
+        await controllers.getAventriEventsAttendedByCompanyContacts(
+          middlewareParameters.reqMock,
+          middlewareParameters.nextSpy,
+          [
+            {
+              email: email,
+              name: faker.name.fullName(),
+              id: faker.random.numeric(),
+            },
+          ]
+        )
+      expect(Object.keys(events).length).to.be.equal(5)
+      Object.values(events).forEach((e) => {
+        expect(e.length).to.be.equal(1)
+        expect(e[0]['dit:emailAddress']).to.be.equal(email)
+      })
+    })
+
+    it('when called with 3 contacts that attended different events should return an event object with 3 event and 1 contact emails', async () => {
+      const emails = [
+        faker.internet.email(),
+        faker.internet.email(),
+        faker.internet.email(),
+      ]
+
+      fetchActivityFeedStub.resolves(
+        generateEventResponse(
+          [...emails].map((x, index) => {
+            return {
+              _source: {
+                object: {
+                  attributedTo: { id: index },
+                  'dit:emailAddress': x,
+                },
+              },
+            }
+          })
+        )
+      )
+
+      const events =
+        await controllers.getAventriEventsAttendedByCompanyContacts(
+          middlewareParameters.reqMock,
+          middlewareParameters.nextSpy,
+          emails.map((x) => {
+            return {
+              email: x,
+              name: faker.name.fullName(),
+              id: faker.random.numeric(),
+            }
+          })
+        )
+      expect(Object.keys(events).length).to.be.equal(3)
+      Object.values(events).forEach((e, index) => {
+        expect(e.length).to.be.equal(1)
+        expect(e[0]['dit:emailAddress']).to.be.equal(emails[index])
+      })
+    })
+
+    it('when called with 3 contacts that attended the same event should return an event object with 1 event and 3 contact emails', async () => {
+      const emails = [
+        faker.internet.email(),
+        faker.internet.email(),
+        faker.internet.email(),
+      ]
+      const eventId = faker.random.numeric()
+
+      fetchActivityFeedStub.resolves(
+        generateEventResponse(
+          [...emails].map((x) => {
+            return {
+              _source: {
+                object: {
+                  attributedTo: { id: eventId },
+                  'dit:emailAddress': x,
+                },
+              },
+            }
+          })
+        )
+      )
+
+      const events =
+        await controllers.getAventriEventsAttendedByCompanyContacts(
+          middlewareParameters.reqMock,
+          middlewareParameters.nextSpy,
+          emails.map((x) => {
+            return {
+              email: x,
+              name: faker.name.fullName(),
+              id: faker.random.numeric(),
+            }
+          })
+        )
+      expect(Object.keys(events).length).to.be.equal(1)
+
+      Object.values(events).forEach((e, index) => {
+        expect(e.length).to.be.equal(3)
+        expect(e[0]['dit:emailAddress']).to.be.equal(emails[index])
       })
     })
   })
