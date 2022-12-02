@@ -120,6 +120,7 @@ const EventAventriRegistrationStatus = ({
                             <CollectionSort
                               sortOptions={ATTENDEES_SORT_OPTIONS}
                               totalPages={totalPages}
+                              shouldPluralize={false}
                             />
                             <CollectionHeader
                               totalItems={totalAttendees}
