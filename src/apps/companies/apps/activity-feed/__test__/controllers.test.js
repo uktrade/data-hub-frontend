@@ -10,6 +10,7 @@ const {
   EXTERNAL_ACTIVITY,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
   DATA_HUB_AND_AVENTRI_ACTIVITY,
+  ACTIVITY_STREAM_FEATURE_FLAG,
 } = require('../constants')
 const { eventsColListQueryBuilder } = require('../controllers')
 const { has } = require('lodash')
@@ -63,6 +64,9 @@ describe('Activity feed controllers', () => {
             },
             user: {
               id: 123,
+            },
+            locals: {
+              userFeatures: [ACTIVITY_STREAM_FEATURE_FLAG],
             },
           })
 
@@ -285,6 +289,9 @@ describe('Activity feed controllers', () => {
           user: {
             id: 123,
           },
+          locals: {
+            userFeatures: [ACTIVITY_STREAM_FEATURE_FLAG],
+          },
         })
 
         await controllers.fetchActivityFeedHandler(
@@ -371,6 +378,9 @@ describe('Activity feed controllers', () => {
           },
           user: {
             id: 123,
+          },
+          locals: {
+            userFeatures: [ACTIVITY_STREAM_FEATURE_FLAG],
           },
         })
 
@@ -496,6 +506,9 @@ describe('Activity feed controllers', () => {
             user: {
               id: 123,
             },
+            locals: {
+              userFeatures: [ACTIVITY_STREAM_FEATURE_FLAG],
+            },
           })
 
           await controllers.fetchActivityFeedHandler(
@@ -585,6 +598,9 @@ describe('Activity feed controllers', () => {
           },
           user: {
             id: 123,
+          },
+          locals: {
+            userFeatures: [ACTIVITY_STREAM_FEATURE_FLAG],
           },
         })
 
