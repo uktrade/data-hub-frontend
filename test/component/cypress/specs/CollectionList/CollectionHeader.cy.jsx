@@ -1,25 +1,23 @@
 import React from 'react'
 import CollectionHeader from '../../../../../src/client/components/CollectionList/CollectionHeader'
 
-const urls = require('../../../../../src/lib/urls')
-
 describe('AventriAttendee', () => {
   const Component = (props) => <CollectionHeader {...props} />
 
-  context('when the shouldPluralize is false', () => {
+  context('when the shouldPluralize prop is false', () => {
     it('should render the collection name without modifications', () => {
       cy.mount(
         <Component
-          totalItems={1}
+          totalItems={5}
           shouldPluralize={false}
-          collectionName="A title"
+          collectionName="Waiting list"
         />
       )
-      cy.get('[data-test=collection-header-name]').contains('A title')
+      cy.get('[data-test=collection-header-name]').contains('Waiting list')
     })
   })
 
-  context('when the shouldPluralize is true', () => {
+  context('when the shouldPluralize prop is true', () => {
     it('the collection name should be rendered in a singular form when totalItems is 1', () => {
       cy.mount(
         <Component
