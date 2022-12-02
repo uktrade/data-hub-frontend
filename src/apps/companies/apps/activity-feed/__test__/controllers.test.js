@@ -1092,7 +1092,7 @@ describe('Activity feed controllers', () => {
     const generateEventResponse = (hits) => {
       return {
         hits: {
-          hits: hits,
+          hits,
         },
       }
     }
