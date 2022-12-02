@@ -47,11 +47,11 @@ filteredArrayOfUrls = filteredArrayOfUrls.filter(
 
 filteredArrayOfUrls.map((path) => {
   let pathUrl = path.url.split('/')
-  const currentPathUrl = pathUrl.map((route) => {
-    if (route.startsWith(':')) {
-      return (route = testIdentityNumbers[route])
+  const currentPathUrl = pathUrl.map((pathId) => {
+    if (pathId.startsWith(':')) {
+      return (pathId = testIdentityNumbers[pathId])
     }
-    return route
+    return pathId
   })
   return currentPathUrl.join('/')
 })
