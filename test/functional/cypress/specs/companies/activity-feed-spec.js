@@ -195,14 +195,6 @@ describe('Company activity feed', () => {
           })
         )
       })
-
-      it('displays the correct contact', () => {
-        cy.get('[data-test="aventri-event"]').within(() =>
-          cy.get('[data-test="contact-link-0"]').contains('Super Glue', {
-            matchCase: false,
-          })
-        )
-      })
     })
   })
 
