@@ -21,7 +21,8 @@ export const state2props = (state, router) => {
   const queryParams = parseQueryString(queryString)
   const selectedSortBy =
     qs.parse(location.search.slice(1)).sortby || 'first_name:asc'
-  let registrationStatus
+
+  let registrationStatus = null
   const aventriRegistrationStatuses = Object.entries(
     EVENT_AVENTRI_ATTENDEES_MAPPING
   ).reduce((status, item) => {

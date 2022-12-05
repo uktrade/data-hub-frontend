@@ -21,7 +21,7 @@ import {
   state2props,
   TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES,
 } from './state'
-import { EVENTS__AVENTRI_REGISTRATION_STATUS_LOADED } from '../../../actions'
+import { EVENTS__AVENTRI_REGISTRATION_STATUS_ATTENDEES_LOADED } from '../../../actions'
 import Activity from '../../../components/ActivityFeed/Activity'
 import ActivityList from '../../../components/ActivityFeed/activities/card/ActivityList'
 import { ATTENDEES_SORT_OPTIONS } from './constants'
@@ -96,7 +96,7 @@ const EventAventriRegistrationStatus = ({
                         ...payload,
                       },
                       onSuccessDispatch:
-                        EVENTS__AVENTRI_REGISTRATION_STATUS_LOADED,
+                        EVENTS__AVENTRI_REGISTRATION_STATUS_ATTENDEES_LOADED,
                     }}
                   >
                     {() => (
