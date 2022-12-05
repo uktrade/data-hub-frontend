@@ -9,6 +9,7 @@ import { ID, TASK_GET_NOTIFICATION_ALERT_COUNT, state2props } from './state'
 import { NOTIFICATION_ALERT_COUNT__LOADED } from '../../actions'
 import Task from '../Task'
 import urls from '../../../lib/urls'
+import CheckUserFeatureFlag from '../CheckUserFeatureFlags'
 
 const StyledNotificationAlertNavLink = styled(NavLink)({
   '&:link, &:visited': {
@@ -37,32 +38,40 @@ const StyledNotificationAlertSpan = styled('span')`
   left: -5px;
 `
 
-const NotificationAlert = ({ count, isFeatureFlagOn }) =>
-  isFeatureFlagOn && (
-    <Task.Status
-      name={TASK_GET_NOTIFICATION_ALERT_COUNT}
-      id={ID}
-      progressMessage="Loading your notification alert"
-      startOnRender={{
-        onSuccessDispatch: NOTIFICATION_ALERT_COUNT__LOADED,
-      }}
-    >
-      {() => (
-        <StyledNotificationAlertNavLink as="a" href={urls.reminders.index()}>
-          <img src="/images/bell-icon.svg" alt="Notification icon" />
-          {count > 0 ? (
-            <StyledNotificationAlertSpan
-              aria-label="notification-alert-badge"
-              data-test="notification-alert-badge"
+const NotificationAlert = ({ count }) => (
+  <CheckUserFeatureFlag userFeatureFlagName="reminder-summary">
+    {(isFeatureFlagOn) =>
+      isFeatureFlagOn && (
+        <Task.Status
+          name={TASK_GET_NOTIFICATION_ALERT_COUNT}
+          id={ID}
+          progressMessage="Loading your notification alert"
+          startOnRender={{
+            onSuccessDispatch: NOTIFICATION_ALERT_COUNT__LOADED,
+          }}
+        >
+          {() => (
+            <StyledNotificationAlertNavLink
+              as="a"
+              href={urls.reminders.index()}
             >
-              {count}
-            </StyledNotificationAlertSpan>
-          ) : (
-            <></>
+              <img src="/images/bell-icon.svg" alt="Notification icon" />
+              {count > 0 ? (
+                <StyledNotificationAlertSpan
+                  aria-label="notification-alert-badge"
+                  data-test="notification-alert-badge"
+                >
+                  {count}
+                </StyledNotificationAlertSpan>
+              ) : (
+                <></>
+              )}
+            </StyledNotificationAlertNavLink>
           )}
-        </StyledNotificationAlertNavLink>
-      )}
-    </Task.Status>
-  )
+        </Task.Status>
+      )
+    }
+  </CheckUserFeatureFlag>
+)
 
 export default connect(state2props)(NotificationAlert)
