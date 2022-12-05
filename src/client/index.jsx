@@ -452,7 +452,8 @@ function App() {
           [TASK_GET_EVENT_DETAILS]: getEventDetails,
           [TASK_GET_EVENT_AVENTRI_DETAILS]: getEventAventriDetails,
           [TASK_GET_EVENT_AVENTRI_ATTENDED]: getEventAventriAttended,
-          [TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES]: getEventAventriRegistrationStatusAttendees,
+          [TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES]:
+            getEventAventriRegistrationStatusAttendees,
           [TASK_GET_EVENTS_FORM_AND_METADATA]: getEventFormAndMetadata,
           [TASK_SAVE_EVENT]: saveEvent,
           [TASK_GET_ORDERS_METADATA]: getOrdersMetadata,

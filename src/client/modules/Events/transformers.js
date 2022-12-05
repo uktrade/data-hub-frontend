@@ -133,12 +133,7 @@ const transformResponseToEventDetails = ({
   disabledOn: disabled_on,
 })
 
-const transformResponseToEventAventriDetails = ({
-  id,
-  object,
-  type,
-  registrationStatuses = [],
-}) => {
+const transformResponseToEventAventriDetails = ({ id, object, type }) => {
   const eventDetails = {
     id,
     name: object?.name,

@@ -207,7 +207,8 @@ const reducer = {
   [EVENTS_DETAILS_ID]: eventDetailsReducer,
   [EVENTS_AVENTRI_DETAILS_ID]: eventAventriDetailsReducer,
   [EVENTS_AVENTRI_ATTENDED_ID]: eventAventriAttendedReducer,
-  [EVENTS_AVENTRI_REGISTRATION_STATUS_ID]: eventAventriRegistrationStatusReducer,
+  [EVENTS_AVENTRI_REGISTRATION_STATUS_ID]:
+    eventAventriRegistrationStatusReducer,
   [ORDERS_LIST_ID]: ordersReducer,
   [COMPANY_ORDERS_LIST_ID]: ordersReducer,
   [REMINDERS_ID]: remindersReducer,
