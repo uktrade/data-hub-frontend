@@ -10,6 +10,7 @@ const {
   EVENT_ALL_ACTIVITY,
   ACTIVITY_STREAM_FEATURE_FLAG,
   DATA_HUB_AND_AVENTRI_ACTIVITY,
+  EVENT_AVENTRI_ATTENDEES_STATUS,
 } = require('./constants')
 
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
@@ -30,6 +31,7 @@ const {
   maxemailEmailSentQuery,
   aventriAttendeeForCompanyQuery,
   dataHubAndAventriActivityQuery,
+  aventriAttendeeQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
 const {
@@ -38,7 +40,6 @@ const {
 const allActivityFeedEventsQuery = require('./es-queries/activity-feed-all-events-query')
 
 const { aventriEventQuery } = require('./es-queries/aventri-event-query')
-const { aventriAttendeeQuery } = require('./es-queries/aventri-attendee-query')
 
 async function renderActivityFeed(req, res, next) {
   const { company, dnbHierarchyCount, dnbRelatedCompaniesCount } = res.locals
@@ -471,6 +472,72 @@ async function fetchAventriEventAttended(req, res, next) {
   }
 }
 
+async function fetchAventriEventRegistrationStatusAttendees(req, res, next) {
+  try {
+    const eventId = req.params.aventriEventId
+    const { page, size, registrationStatuses, sortBy } = req.query
+
+    const invalidRegStatuses = registrationStatuses.filter(
+      (s) => !Object.values(EVENT_AVENTRI_ATTENDEES_STATUS).includes(s)
+    )
+
+    if (invalidRegStatuses.length > 0) {
+      throw new Error('Invalid status')
+    }
+
+    const sort = EVENT_ATTENDEES_SORT_OPTIONS[sortBy]
+    const from = (page - 1) * ACTIVITIES_PER_PAGE
+
+    //get the attendees
+    const aventriAttendeeResults = await fetchActivityFeed(
+      req,
+      aventriAttendeeQuery({
+        eventId,
+        sort,
+        from,
+        size,
+        registrationStatuses,
+      })
+    )
+
+    const totalAttendees = aventriAttendeeResults.hits.total.value
+
+    let aventriAttendees = aventriAttendeeResults.hits.hits.map(
+      (hit) => hit._source
+    )
+
+    // add the datahub ID to aventri attendees object
+    const addDataHubUrlToAttendee = async (attendee) => {
+      const attendeeEmail = attendee.object['dit:aventri:email']
+      let attendeeContactUrl = null
+      if (attendeeEmail) {
+        const dataHubContactResults = await fetchMatchingDataHubContact(
+          req,
+          attendeeEmail
+        )
+        const dataHubContactId = dataHubContactResults?.results[0]?.id
+        attendeeContactUrl = dataHubContactId
+          ? `/contacts/${dataHubContactId}/details`
+          : null
+      }
+      attendee.datahubContactUrl = attendeeContactUrl
+      return attendee
+    }
+    aventriAttendees = await Promise.all(
+      aventriAttendees.map(async (attendee) => {
+        return await addDataHubUrlToAttendee(attendee)
+      })
+    )
+
+    res.json({
+      totalAttendees,
+      aventriAttendees,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 const eventsColListQueryBuilder = ({
   name,
   earliestStartDate,
@@ -629,4 +696,5 @@ module.exports = {
   fetchAllActivityFeedEvents,
   eventsColListQueryBuilder,
   getAventriEventsAttendedByCompanyContacts,
+  fetchAventriEventRegistrationStatusAttendees,
 }

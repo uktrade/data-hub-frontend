@@ -3,6 +3,7 @@ const activityFeedEventsQuery = require('../es-queries/activity-feed-all-events-
 const aventriAttendeeForCompanyQuery = require('../es-queries/aventri-attendee-for-company-query')
 const externalActivityQuery = require('../es-queries/external-activity-query')
 const dataHubAndAventriActivityQuery = require('../es-queries/data-hub-and-aventri-activity-query')
+const aventriAttendeeQuery = require('../es-queries/aventri-attendee-query')
 
 const { faker } = require('@faker-js/faker')
 
@@ -164,7 +165,7 @@ describe('#activityFeedEventsQuery', () => {
   })
 
   context('query applies correct filtering', () => {
-    context('should return the filtered aventri attendee data', () => {
+    context('should return the filtered aventri company attendee data', () => {
       const expectedEsQuery = (emails) => ({
         query: {
           bool: {
@@ -264,6 +265,49 @@ describe('#activityFeedEventsQuery', () => {
         })
         expect(has(queryResult, 'query.bool.filter.bool.should[2]')).to.be.false
       })
+    })
+
+    context('should return the filtered aventri attendee data', () => {
+      const expectedEsQuery = ({ eventId, registrationStatuses }) => ({
+        from: 3,
+        size: 8,
+        query: {
+          bool: {
+            must: [
+              {
+                term: {
+                  'object.type': 'dit:aventri:Attendee',
+                },
+              },
+              {
+                term: {
+                  'object.attributedTo.id': `dit:aventri:Event:${eventId}`,
+                },
+              },
+              {
+                terms: {
+                  'object.dit:registrationStatus': registrationStatuses,
+                },
+              },
+            ],
+          },
+        },
+        sort: 'first_name',
+      })
+
+      const queryResult = aventriAttendeeQuery({
+        from: 3,
+        size: 8,
+        eventId: 'ABC',
+        registrationStatuses: ['D', 'G', 'Y'],
+        sort: 'first_name',
+      })
+      expect(
+        expectedEsQuery({
+          eventId: 'ABC',
+          registrationStatuses: ['D', 'G', 'Y'],
+        })
+      ).to.deep.equal(queryResult)
     })
   })
 })
