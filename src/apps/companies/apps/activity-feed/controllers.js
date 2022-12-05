@@ -487,7 +487,7 @@ async function fetchAventriEventRegistrationStatusAttendees(req, res, next) {
 
     const sort = EVENT_ATTENDEES_SORT_OPTIONS[sortBy]
     const from = (page - 1) * ACTIVITIES_PER_PAGE
-    console.log(from)
+
     //get the attendees
     const aventriAttendeeResults = await fetchActivityFeed(
       req,

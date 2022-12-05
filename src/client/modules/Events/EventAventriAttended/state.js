@@ -16,7 +16,7 @@ const parseQueryString = (queryString) => {
 export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
   const queryParams = parseQueryString(queryString)
-  console.log(queryString)
+
   const selectedSortBy =
     qs.parse(location.search.slice(1)).sortby || 'first_name:asc'
 

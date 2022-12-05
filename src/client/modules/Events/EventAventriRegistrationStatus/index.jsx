@@ -1,14 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Route, useParams, withRouter } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import { isEmpty } from 'lodash'
 import qs from 'qs'
-import { compose } from 'redux'
 import urls from '../../../../lib/urls'
 import {
   CollectionSort,
   CollectionHeader,
-  CollectionHeaderRow,
   DefaultLayout,
   LocalNav,
   LocalNavLink,
@@ -45,9 +43,7 @@ const EventAventriRegistrationStatus = ({
   itemsPerPage = 10,
   maxItemsToPaginate = 10000,
 }) => {
-  console.log(aventriEventData)
   const eventName = aventriEventData?.object.name
-  console.log(eventName)
   const breadcrumbs = [
     {
       link: urls.dashboard(),
