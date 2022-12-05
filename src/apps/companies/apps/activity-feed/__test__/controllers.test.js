@@ -1558,9 +1558,7 @@ describe('Activity feed controllers', () => {
 
       it('should call fetchMatchingDataHubContacts with the correct ids', async () => {
         const attendeeEmails = allAttendees.hits.hits
-          .map((hit) => {
-            return hit._source.object['dit:aventri:email']
-          })
+          .map((hit) => hit._source.object['dit:aventri:email'])
           .filter((f) => f)
 
         attendeeEmails.forEach((email) =>
