@@ -8,7 +8,6 @@ export const getEventAventriRegistrationStatusAttendees = ({
   page,
   size,
 }) => {
-  console.log(selectedSortBy, page, size)
   return Promise.all([
     axios.get(urls.events.aventri.detailsData(aventriEventId)),
     axios.get(urls.events.aventri.registrationStatusData(aventriEventId), {
