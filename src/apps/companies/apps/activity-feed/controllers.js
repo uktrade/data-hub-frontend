@@ -332,13 +332,21 @@ async function fetchActivityFeedHandler(req, res, next) {
         .map((company) => company.id)
     }
 
-    const aventriEvents = await getAventriEventsAttendedByCompanyContacts(
-      req,
-      next,
-      company.contacts
+    let isActivityStreamFeatureFlagEnabled = res.locals?.userFeatures?.includes(
+      ACTIVITY_STREAM_FEATURE_FLAG
     )
 
-    const aventriEventIds = Object.keys(aventriEvents)
+    let aventriEventIds = []
+    let aventriEvents = []
+    if (isActivityStreamFeatureFlagEnabled) {
+      aventriEvents = await getAventriEventsAttendedByCompanyContacts(
+        req,
+        next,
+        company.contacts
+      )
+
+      aventriEventIds = Object.keys(aventriEvents)
+    }
 
     const queries = getQueries({
       from,

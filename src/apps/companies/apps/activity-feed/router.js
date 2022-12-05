@@ -6,11 +6,14 @@ const {
   renderActivityFeed,
   fetchActivityFeedHandler,
 } = require('./controllers')
+const { ACTIVITY_STREAM_FEATURE_FLAG } = require('./constants')
+const userFeatures = require('../../../../middleware/user-features')
 
 router.get(urls.companies.activity.index.route, renderActivityFeed)
 router.get(
   urls.companies.activity.data.route,
   convertQueryTypes,
+  userFeatures(ACTIVITY_STREAM_FEATURE_FLAG),
   fetchActivityFeedHandler
 )
 
