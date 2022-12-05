@@ -477,6 +477,13 @@ async function fetchAventriEventRegistrationStatusAttendees(req, res, next) {
     const eventId = req.params.aventriEventId
     const { page, size, registrationStatuses, sortBy } = req.query
 
+    if (
+      !Array.isArray(registrationStatuses) ||
+      registrationStatuses.length == 0
+    ) {
+      throw new Error('Missing status')
+    }
+
     const invalidRegStatuses = registrationStatuses.filter(
       (s) => !Object.values(EVENT_AVENTRI_ATTENDEES_STATUS).includes(s)
     )
