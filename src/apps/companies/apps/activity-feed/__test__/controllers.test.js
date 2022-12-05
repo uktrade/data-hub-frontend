@@ -1474,6 +1474,29 @@ describe('Activity feed controllers', () => {
       )
     })
 
+    context('when requesting without a status an error is thrown', () => {
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters({
+          requestQuery: {
+            registrationStatuses: [],
+          },
+        })
+
+        await controllers.fetchAventriEventRegistrationStatusAttendees(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy
+        )
+      })
+
+      it('should call next with an error', async () => {
+        const error = 'Error: Missing registration status'
+        expect(
+          middlewareParameters.nextSpy.getCalls()[0].firstArg.toString()
+        ).to.equal(error)
+      })
+    })
+
     context('when requesting an invalid status an error is thrown', () => {
       before(async () => {
         middlewareParameters = buildMiddlewareParameters({

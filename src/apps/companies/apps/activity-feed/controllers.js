@@ -481,7 +481,7 @@ async function fetchAventriEventRegistrationStatusAttendees(req, res, next) {
       !Array.isArray(registrationStatuses) ||
       registrationStatuses.length == 0
     ) {
-      throw new Error('Missing status')
+      throw new Error('Missing registration status')
     }
 
     const invalidRegStatuses = registrationStatuses.filter(
