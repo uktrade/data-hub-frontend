@@ -28,8 +28,9 @@ const validateContactForm = function (formData) {
     .map((fieldName) => [fieldName, ['This field may not be null.']])
 }
 
-const AventriEmailWithDataHubMatch =
-  aventriContact.hits?.hits[0]?._source.object['dit:emailAddress']
+const AventriEmailWithDataHubMatches = aventriContact.hits?.hits
+  .filter((h) => h._source.datahubContactUrl)
+  .map((h) => h._source.object['dit:emailAddress'])
 
 const AventriEmailWithoutDataHubMatch =
   aventriContact.hits?.hits[1]?._source.object['dit:emailAddress']
@@ -49,7 +50,7 @@ exports.contact = function (req, res) {
     )
     return res.json(contactsForReferral)
   }
-  if (req.query.email === AventriEmailWithDataHubMatch) {
+  if (AventriEmailWithDataHubMatches.includes(req.query.email)) {
     return res.json(ditContactforAventri)
   }
   if (
