@@ -11,6 +11,7 @@ const {
   ACTIVITY_STREAM_FEATURE_FLAG,
   DATA_HUB_AND_AVENTRI_ACTIVITY,
   EVENT_AVENTRI_ATTENDEES_STATUS,
+  EVENT_AVENTRI_ATTENDEES_STATUSES,
 } = require('./constants')
 
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
@@ -32,6 +33,7 @@ const {
   aventriAttendeeForCompanyQuery,
   dataHubAndAventriActivityQuery,
   aventriAttendeeQuery,
+  aventriAttendeeRegistrationStatusQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
 const {
@@ -403,10 +405,34 @@ async function fetchAventriEvent(req, res, next) {
     )
     const aventriEventData = aventriEventResults.hits.hits[0]._source
 
-    return res.json({ ...aventriEventData })
+    const statusCounts = await getAventriRegistrationStatusCounts(req, id)
+
+    return res.json({ ...aventriEventData, registrationStatuses: statusCounts })
   } catch (error) {
     next(error)
   }
+}
+
+async function getAventriRegistrationStatusCounts(req, eventId) {
+  const registrationStatusResults = await fetchActivityFeed(
+    req,
+    aventriAttendeeRegistrationStatusQuery({
+      eventId,
+      registrationStatuses: EVENT_AVENTRI_ATTENDEES_STATUSES,
+    })
+  )
+
+  const statusCounts = registrationStatusResults.aggregations.countfield.buckets
+    .map((result) => ({
+      status: result.key,
+      count: result.doc_count,
+    }))
+    .filter(
+      (status) =>
+        EVENT_AVENTRI_ATTENDEES_STATUSES.includes(status.status) &&
+        status.count > 0
+    )
+  return statusCounts
 }
 
 async function fetchAventriEventAttended(req, res, next) {
@@ -704,4 +730,5 @@ module.exports = {
   eventsColListQueryBuilder,
   getAventriEventsAttendedByCompanyContacts,
   fetchAventriEventRegistrationStatusAttendees,
+  getAventriRegistrationStatusCounts,
 }

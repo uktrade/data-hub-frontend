@@ -6,6 +6,9 @@ const allActivityFeedEvents = require('../../../../../../test/sandbox/fixtures/v
 const allAttendees = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/aventri-attendees.json')
 const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/middleware-parameters-builder')
 const companyMock = require('../../../../../../test/unit/data/company.json')
+const aventriRegistrationStatusNoDetails = require('../../../../../../test/unit/data/activity-feed/aventri-registration-status-no-details.json')
+const aventriRegistrationStatusWithAggregations = require('../../../../../../test/unit/data/activity-feed/aventri-registration-status-with-aggregation-counts.json')
+
 const {
   DATA_HUB_ACTIVITY,
   EXTERNAL_ACTIVITY,
@@ -16,7 +19,7 @@ const {
   EVENT_ATTENDEES_SORT_OPTIONS,
 } = require('../constants')
 const { eventsColListQueryBuilder } = require('../controllers')
-const { has } = require('lodash')
+const { has, get } = require('lodash')
 
 describe('Activity feed controllers', () => {
   let fetchActivityFeedStub,
@@ -1613,6 +1616,86 @@ describe('Activity feed controllers', () => {
             middlewareParameters.reqMock,
             email
           )
+        )
+      })
+    })
+  })
+
+  describe('#getAventriRegistrationStatusCounts', () => {
+    let statusCounts
+    before(async () => {
+      const mockActivityFeedApiFunction = (req, body) => {
+        //is this a query for empty registation status data
+        if (
+          get(
+            body,
+            "query.bool.must[1].term['object.attributedTo.id']"
+          ).includes(1)
+        ) {
+          return aventriRegistrationStatusNoDetails
+        }
+
+        return aventriRegistrationStatusWithAggregations
+      }
+      fetchActivityFeedStub = sinon
+        .stub()
+        .callsFake(mockActivityFeedApiFunction)
+
+      controllers = proxyquire(
+        '../../src/apps/companies/apps/activity-feed/controllers',
+        {
+          './repos': {
+            fetchActivityFeed: fetchActivityFeedStub,
+          },
+        }
+      )
+    })
+
+    context('when requesting an event without any attendees', () => {
+      it('should return an empty array', async () => {
+        middlewareParameters = buildMiddlewareParameters()
+
+        statusCounts = await controllers.getAventriRegistrationStatusCounts(
+          middlewareParameters.reqMock,
+          1
+        )
+        expect(statusCounts).to.be.deep.equal([])
+      })
+    })
+
+    context('when requesting an event with attendees', () => {
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters()
+
+        statusCounts = await controllers.getAventriRegistrationStatusCounts(
+          middlewareParameters.reqMock,
+          2
+        )
+      })
+
+      it('should exclude any known status in the response with count of 0 from the aggregation result', () => {
+        expect(
+          statusCounts.find(
+            (x) => x.status == EVENT_AVENTRI_ATTENDEES_STATUS.confirmed
+          )
+        ).to.be.undefined
+      })
+
+      it('should exclude any status in the response that is unknown from the aggregation result', () => {
+        expect(statusCounts.find((x) => x.status == 'Incomplete')).to.be
+          .undefined
+      })
+
+      it('should include all known statuses in the response with count greater than 0 from the aggregation result', () => {
+        const statuses = [
+          EVENT_AVENTRI_ATTENDEES_STATUS.attended,
+          EVENT_AVENTRI_ATTENDEES_STATUS.activated,
+          EVENT_AVENTRI_ATTENDEES_STATUS.waitlist,
+          EVENT_AVENTRI_ATTENDEES_STATUS.noShow,
+        ]
+        statuses.forEach(
+          (s) =>
+            expect(statusCounts.find((x) => x.status == s)).to.not.be.undefined
         )
       })
     })

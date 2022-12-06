@@ -12,6 +12,12 @@ import {
 
 import { transformIdNameToValueLabel } from '../../transformers'
 
+import {
+  EVENT_AVENTRI_ATTENDEES_MAPPING,
+  EVENT_ATTENDEES_STATUS_BEFORE_EVENT,
+  EVENT_ATTENDEES_STATUS_AFTER_EVENT,
+} from '../../../apps/companies/apps/activity-feed/constants'
+
 const transformEventToListItem = ({
   id,
   name,
@@ -133,20 +139,67 @@ const transformResponseToEventDetails = ({
   disabledOn: disabled_on,
 })
 
-const transformResponseToEventAventriDetails = ({ id, object, type }) => ({
+const transformResponseToEventAventriDetails = ({
   id,
-  name: object?.name,
+  object,
   type,
-  eventDate: formatStartAndEndDate(object?.startTime, object?.endTime),
-  location: object['dit:aventri:locationname'],
-  fullAddress: compact([
-    object['dit:aventri:location_address1'],
-    object['dit:aventri:location_address2'],
-    object['dit:aventri:location_city'],
-    object['dit:aventri:location_postcode'],
-    object['dit:aventri:location_country'],
-  ]),
-})
+  registrationStatuses = [],
+}) => {
+  const eventDetails = {
+    id,
+    name: object?.name,
+    type,
+    eventDate: formatStartAndEndDate(object?.startTime, object?.endTime),
+    upcomingEvent: getDifferenceInDays(object?.endTime) > 0,
+    location: object['dit:aventri:locationname'],
+    fullAddress: compact([
+      object['dit:aventri:location_address1'],
+      object['dit:aventri:location_address2'],
+      object['dit:aventri:location_city'],
+      object['dit:aventri:location_postcode'],
+      object['dit:aventri:location_country'],
+    ]),
+  }
+  const allowedStatuses = eventDetails.upcomingEvent
+    ? EVENT_ATTENDEES_STATUS_BEFORE_EVENT
+    : EVENT_ATTENDEES_STATUS_AFTER_EVENT
+  eventDetails.registrationStatusCounts = transformAventriEventStatus({
+    allowedStatuses,
+    registrationStatuses,
+  })
+  return eventDetails
+}
+
+const transformAventriEventStatus = ({
+  allowedStatuses,
+  registrationStatuses,
+}) => {
+  const mappedStatus = registrationStatuses
+    .map((regStatus) => {
+      return {
+        ...regStatus,
+        ...EVENT_AVENTRI_ATTENDEES_MAPPING[regStatus.status],
+      }
+    })
+    .filter(
+      (status) => status.count > 0 && allowedStatuses.includes(status.status)
+    )
+  const groupedStatusCounts = groupAndSumCounts(mappedStatus)
+
+  return groupedStatusCounts
+}
+
+const groupAndSumCounts = (statuses) => {
+  return Object.values(
+    statuses.reduce(
+      (r, o) => (
+        r[o.status] ? (r[o.status].count += o.count) : (r[o.status] = { ...o }),
+        r
+      ),
+      {}
+    )
+  )
+}
 
 const transformAventriEventAttendeesRegistionStatusToBolean = ({
   totalAttendees,
@@ -157,4 +210,5 @@ export {
   transformResponseToEventDetails,
   transformResponseToEventAventriDetails,
   transformAventriEventAttendeesRegistionStatusToBolean,
+  transformAventriEventStatus,
 }
