@@ -17,7 +17,7 @@ describe('Aventri status event registration attendees', () => {
       cy.setUserFeatures([ACTIVITY_STREAM_FEATURE_FLAG])
     })
     context('With normal behaviour', () => {
-      var tests = [
+      var registrationStatusTests = [
         {
           status: 'did-not-attend',
           expected: {
@@ -52,7 +52,7 @@ describe('Aventri status event registration attendees', () => {
         },
       ]
 
-      tests.forEach(function (test) {
+      registrationStatusTests.forEach(function (test) {
         context(
           `With normal behaviour for registration status ${test.status}`,
           () => {
