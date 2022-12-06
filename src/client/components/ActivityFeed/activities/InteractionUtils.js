@@ -1,5 +1,6 @@
 import { get, includes } from 'lodash'
 import { STATUS, BADGES, INTERACTION_SERVICES } from '../constants'
+import urls from '../../../../lib/urls'
 
 const getStatus = (activity) => {
   const apiStatus = get(activity, 'object.dit:status')
@@ -20,6 +21,12 @@ const getStatus = (activity) => {
 const isServiceDelivery = (activity) => {
   const activityTypes = get(activity, 'object.type')
   return includes(activityTypes, 'dit:ServiceDelivery')
+}
+
+const getCompanyInteractionUrl = (activity) => {
+  const companyId = activity.object.attributedTo[0].id.split(':').pop()
+  const interactionId = activity.id.split(':')[2]
+  return urls.companies.interactions.detail(companyId, interactionId)
 }
 
 export const getServiceText = (service) => {
@@ -74,6 +81,7 @@ export default class InteractionUtils {
       activity,
       'object.dit:communicationChannel.name'
     )
+    const interactionUrl = getCompanyInteractionUrl(activity)
 
     return {
       badge,
@@ -82,6 +90,7 @@ export default class InteractionUtils {
       serviceText,
       themeText,
       communicationChannel,
+      interactionUrl,
     }
   }
 }

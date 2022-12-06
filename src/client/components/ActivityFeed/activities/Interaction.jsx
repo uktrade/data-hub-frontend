@@ -100,7 +100,10 @@ export default class Interaction extends React.PureComponent {
       <ActivityCardWrapper dataTest="interaction-activity">
         <ActivityCardLabels theme={theme} service={service} kind={kind} />
         <ActivityCardSubject>
-          <Link data-test="interaction-subject" href={transformed.url}>
+          <Link
+            data-test="interaction-subject"
+            href={transformed.interactionUrl}
+          >
             {transformed.subject}
           </Link>
         </ActivityCardSubject>
@@ -112,7 +115,10 @@ export default class Interaction extends React.PureComponent {
         <Row>
           <LeftCol>
             <ActivityCardSubject>
-              <Link data-test="interaction-subject" href={transformed.url}>
+              <Link
+                data-test="interaction-subject"
+                href={transformed.interactionUrl}
+              >
                 {transformed.subject}
               </Link>
             </ActivityCardSubject>
