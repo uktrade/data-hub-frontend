@@ -1,10 +1,6 @@
 import axios from 'axios'
 import urls from '../../../../lib/urls'
-import {
-  transformResponseToEventAventriDetails,
-  transformAventriEventAttendeesRegistionStatusToBolean,
-} from '../transformers'
-import { EVENT_AVENTRI_ATTENDEES_STATUS } from '../../../../apps/companies/apps/activity-feed/constants'
+import { transformResponseToEventAventriDetails } from '../transformers'
 
 export const paramsGetAventriEventAttendeeStatus = (status) => ({
   params: {
@@ -16,17 +12,8 @@ export const paramsGetAventriEventAttendeeStatus = (status) => ({
 })
 
 export const getEventAventriDetails = (aventriEventId) =>
-  Promise.all([
-    axios.get(urls.events.aventri.detailsData(aventriEventId)),
-    axios.get(urls.events.aventri.attendedData(aventriEventId), {
-      ...paramsGetAventriEventAttendeeStatus(
-        EVENT_AVENTRI_ATTENDEES_STATUS.attended
-      ),
-    }),
-  ])
-    .then(([{ data }, { data: attendees }]) => ({
+  Promise.all([axios.get(urls.events.aventri.detailsData(aventriEventId))])
+    .then(([{ data }]) => ({
       ...transformResponseToEventAventriDetails(data),
-      attended:
-        transformAventriEventAttendeesRegistionStatusToBolean(attendees),
     }))
     .catch(() => Promise.reject('Unable to load aventri event details.'))
