@@ -526,6 +526,9 @@ describe('events Collections Filter', () => {
           ).as('dateRequest')
         })
         beforeEach(() => {
+          cy.get('[data-test="toggle-section-button"]')
+            .contains('Dates')
+            .click()
           cy.get(earliestStartElement).clear()
           cy.get(latestStartElement).clear()
         })
@@ -561,6 +564,12 @@ describe('events Collections Filter', () => {
           cy.url().should('not.include', queryParamWithEarliestStartDate)
           cy.url().should('not.include', queryParamWithLatestStartDate)
         })
+
+        afterEach(() => {
+          cy.get('[data-test="toggle-section-button"]')
+            .contains('Dates')
+            .click()
+        })
       })
 
       context('should filter from url', () => {
@@ -573,6 +582,9 @@ describe('events Collections Filter', () => {
         })
       })
       after(() => {
+        cy.get('[data-test="toggle-section-button"]')
+            .contains('Dates')
+            .click()
         cy.get(earliestStartElement).clear()
         cy.get(latestStartElement).clear()
       })
@@ -595,6 +607,9 @@ describe('events Collections Filter', () => {
         })
 
         it('should pass the aventri Id to the controller', () => {
+          cy.get('[data-test="toggle-section-button"]')
+            .contains('Aventri')
+            .click()
           cy.get(element).type(`${aventriId}{enter}`)
           cy.wait('@aventriIdRequest').then((request) => {
             expect(request.response.statusCode).to.eql(200)
@@ -635,6 +650,9 @@ describe('events Collections Filter', () => {
       })
 
       after(() => {
+        cy.get('[data-test="toggle-section-button"]')
+          .contains('Aventri')
+          .click()
         cy.get(element).clear()
       })
     })
@@ -653,6 +671,9 @@ describe('events Collections Filter', () => {
         })
 
         it('should pass the country to the controller', () => {
+          cy.get('[data-test="toggle-section-button"]')
+            .contains('Location')
+            .click()
           testTypeahead({
             element,
             label: 'Country',
@@ -702,6 +723,9 @@ describe('events Collections Filter', () => {
         })
 
         it('should pass the uk Region to the controller', () => {
+          cy.get('[data-test="toggle-section-button"]')
+            .contains('Location')
+            .click()
           testTypeahead({
             element,
             label: 'UK region',
@@ -750,6 +774,9 @@ describe('events Collections Filter', () => {
             'GET',
             `${urls.events.activity.data()}?sortBy=modified_on:desc&organiser[]=${adviserId}&page=1`
           ).as('organiserRequest')
+          cy.get('[data-test="toggle-section-button"]')
+            .contains('Organiser')
+            .click()
         })
 
         it('should pass the organiser to the controller', () => {
@@ -807,6 +834,9 @@ describe('events Collections Filter', () => {
 
         it('should pass the event type to the controller', () => {
           cy.visit(events.index())
+          cy.get('[data-test="toggle-section-button"]')
+            .contains('Type of event')
+            .click()
           testCheckBoxGroup({ element, value: eventType.id })
 
           cy.wait('@eventTypeRequest').then((request) => {
