@@ -9,7 +9,9 @@ describe('AventriEventSyncWarning', () => {
     })
 
     it('renders link to aventri with the correct id', () => {
-      cy.get('[data-test=newWindowLink]').contains('1122')
+      cy.get('[data-test=newWindowLink]')
+        .should('have.attr', 'href')
+        .and('include', '1122')
     })
   })
 })
