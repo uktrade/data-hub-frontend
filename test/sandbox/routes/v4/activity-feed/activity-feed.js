@@ -33,13 +33,8 @@ var aventriAttendeesZToAOrder = require('../../../fixtures/v4/activity-feed/aven
 //All Activitiy feed events
 var allActivityFeedEvents = require('../../../fixtures/v4/activity-feed/all-activity-feed-events.json')
 const { faker } = require('@faker-js/faker')
-const {
-  EVENT_AVENTRI_ATTENDEES_STATUSES,
-} = require('../../../../../src/apps/companies/apps/activity-feed/constants')
 
 const generateFakeAttendeeHitObject = (status) => {
-  const regStatus =
-    status ?? faker.helpers.arrayElement(EVENT_AVENTRI_ATTENDEES_STATUSES)
   const firstName = faker.name.firstName()
   const lastName = faker.name.lastName()
 
@@ -67,7 +62,7 @@ const generateFakeAttendeeHitObject = (status) => {
         'dit:aventri:lastmodified': '2022-01-24T11:12:13',
         'dit:aventri:lastname': lastName,
         'dit:aventri:modifiedby': 'attendee',
-        'dit:aventri:registrationstatus': regStatus,
+        'dit:aventri:registrationstatus': status,
         'dit:aventri:virtual_event_attendance': 'Yes',
         'dit:emailAddress': '',
         'dit:firstName': firstName,
