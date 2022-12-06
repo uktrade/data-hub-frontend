@@ -24,6 +24,8 @@ Identification numbers such as companyId and countryId are accessed from testIde
 
 Any urls entered in urlTestExclusions.js are excluded from testing.
 
+Data and Export endpoints are excluded as a default.
+
 ## Add a New Mount Point
 
 To create a set of tests for a new mount point

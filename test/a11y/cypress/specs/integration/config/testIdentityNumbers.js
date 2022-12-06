@@ -1,0 +1,17 @@
+export const testIdentityNumbers = {
+  ':aventriEventId': '1111',
+  ':companyId': '0fb3379c-341c-4da4-b825-bf8d47b26baa',
+  ':contactId': '952232d2-1d25-4c3a-bcac-2f3a30a94da9',
+  ':countryId': '3e6debb4-1596-40c5-aa25-f00da0e05af9',
+  ':eventId': 'b93d4273-36fe-4008-ac40-fbc197910791',
+  ':globalHqId': '3e6debb4-1596-40c5-aa25-f00da0e05af9',
+  ':interactionId': 'd14abf23-7f07-4640-8908-cb6b40dc3ce3',
+  ':investmentId': 'b30dee70-b2d6-48cf-9ce4-b9264854470c',
+  ':listId': '75e14e32-292e-4d1b-a361-992d548251f7',
+  ':opportunityId': 'a84f8405-c419-40a6-84c8-642b7c3209b2',
+  ':orderId': '7ea3943c-6220-41c8-b704-ff0c4b33b346',
+  ':projectId': '0e686ea4-b8a2-4337-aec4-114d92ad4588',
+  ':referralId': 'cc5b9953-894c-44b4-a4ac-d0f6a6f6128f',
+  ':subsidiaryCompanyId': 'cc7e2f19-7251-4a41-a27a-f98437720532',
+  ':pipelineItemId': 'do_not_have',
+}
