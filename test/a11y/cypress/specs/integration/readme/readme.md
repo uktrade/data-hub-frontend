@@ -6,14 +6,12 @@
 
 To run the tests first ensure any locally running instances of the application are stopped. Then start 4 terminal sessions to for the following instructions.
 
-1. *in the route of the appication run* redis-server
-2. *navigate through the folder **test** then **sandbox** and run* npm install && npx nodemon .
-3. *in the route of the appication run* npm run develop
-4. *in the route of the appication run* npm run test:a11y:watch
+1. redis-server
+2. cd test/sandbox && npm install && npx nodemon .
+3. npm run develop
+4. npm run test:a11y:watch
 
 This will open Cypress in the browser. At the time of writing when the browser opens select **E2E Testing** and then start E2E testing in the browser of your choice.
-
-![Cypress Testing Home Screen](cypress-testing-1.png)
 
 ## Configuration
 
@@ -33,6 +31,6 @@ To create a set of tests for a new mount point
 1. copy an existing spec.js file within the integration folder. Rename this file to match your mount point name.
 2. Open the new file and change
     - const mountPoint = urls.your-mount-point
-    - const mountPointName = 'your-mount-point-name'
+    - const excludedUrls = urlTestExclusions.your-mount-point
 
 The new test will automatically appear in the browser when running the tests and include any urls connected to the mount point.
