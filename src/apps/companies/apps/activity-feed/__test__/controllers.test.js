@@ -1496,7 +1496,7 @@ describe('Activity feed controllers', () => {
     })
 
     context(
-      'when requesting without an empty list of statuses an error is thrown',
+      'when requesting with an empty list of statuses an error is thrown',
       () => {
         before(async () => {
           middlewareParameters = buildMiddlewareParameters({
