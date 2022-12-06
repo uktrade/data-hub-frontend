@@ -49,7 +49,7 @@ describe('LEP add Investment Project interaction', () => {
         .get(formSelectors.hasRelatedTradeAgreementsNo)
         .click()
         .get(formSelectors.contact)
-        .selectTypeaheadOption('Fred Peterson')
+        .selectTypeaheadOption('Mark Halomi')
         .get(formSelectors.communicationChannel)
         .selectTypeaheadOption('Email/Website')
         .get(formSelectors.subject)

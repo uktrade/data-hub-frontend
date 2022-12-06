@@ -25,6 +25,7 @@ export const rgba = (colorHex, alpha) => `rgba(${hexToRgb(colorHex)},${alpha})`
 export const DARK_GREY = '#505a5f'
 export const MID_GREY = '#b1b4b6'
 export const LIGHT_GREY = '#f3f2f1' // This is GREY_3 from 'govuk-colours'
+export const MID_BLUE = '#003399'
 
 // -----------------------------------
 // Taken from the GDS legacy palette
@@ -40,6 +41,6 @@ export const GREY_3_LEGACY = '#dee0e2'
 // -----------------------------------
 // We're unable to choose a colour from the GDS modern palette.
 // We require this specific blue for the navigation hover/selection.
-// This blue has to match the colour of both 'Find Exporters' and 'Market Access'.
+// This blue has to match the colour of both 'Find Exporters' and 'Market access'.
 // It is also used for the investment project timeline.
 export const DARK_BLUE_LEGACY = '#005ea5'

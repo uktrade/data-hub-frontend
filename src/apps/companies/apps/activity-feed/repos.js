@@ -2,8 +2,8 @@ const config = require('../../../../config')
 const { authorisedRequest } = require('../../../../lib/authorised-request')
 const { get } = require('lodash')
 
-function fetchActivityFeed(req, body) {
-  return authorisedRequest(req, {
+async function fetchActivityFeed(req, body) {
+  return await authorisedRequest(req, {
     url: `${config.apiRoot}/v4/activity-feed`,
     body,
   })

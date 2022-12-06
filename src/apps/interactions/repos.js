@@ -40,18 +40,8 @@ function getInteractionsForEntity({ req, entityQuery, page = 1, sortby }) {
   })
 }
 
-function archiveInteraction(req, interactionId, reason) {
-  const options = {
-    body: { reason },
-    url: `${config.apiRoot}/v3/interaction/${interactionId}/archive`,
-    method: 'POST',
-  }
-  return authorisedRequest(req, options)
-}
-
 module.exports = {
   saveInteraction,
   fetchInteraction,
   getInteractionsForEntity,
-  archiveInteraction,
 }

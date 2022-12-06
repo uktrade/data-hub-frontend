@@ -295,6 +295,9 @@ import { getUserFeatureFlags } from './components/CheckUserFeatureFlags/tasks'
 import { getEventAventriAttended } from './modules/Events/EventAventriAttended/tasks'
 import ErrorFallback from './components/ErrorFallback'
 
+import { TASK_ARCHIVE_INTERACTION } from './modules/Interactions/InteractionDetails/state'
+import { archiveInteraction } from './modules/Interactions/InteractionDetails/tasks'
+
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
 }
@@ -482,6 +485,7 @@ function App() {
           [TASK_GET_CONTACT_ACTIVITIES]: getContactActivities,
           [TASK_ARCHIVE_CONTACT]: archiveContact,
           [TASK_GET_USER_FEATURE_FLAGS]: getUserFeatureFlags,
+          [TASK_ARCHIVE_INTERACTION]: archiveInteraction,
           ...resourceTasks,
         }}
       >

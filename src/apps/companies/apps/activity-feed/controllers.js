@@ -9,6 +9,8 @@ const {
   EVENT_ATTENDEES_SORT_OPTIONS,
   EVENT_ALL_ACTIVITY,
   ACTIVITY_STREAM_FEATURE_FLAG,
+  DATA_HUB_AND_AVENTRI_ACTIVITY,
+  EVENT_AVENTRI_ATTENDEES_STATUS,
 } = require('./constants')
 
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
@@ -24,10 +26,12 @@ const config = require('../../../../config')
 
 const {
   myActivityQuery,
-  dataHubActivityQuery,
   externalActivityQuery,
   maxemailCampaignQuery,
   maxemailEmailSentQuery,
+  aventriAttendeeForCompanyQuery,
+  dataHubAndAventriActivityQuery,
+  aventriAttendeeQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
 const {
@@ -36,7 +40,6 @@ const {
 const allActivityFeedEventsQuery = require('./es-queries/activity-feed-all-events-query')
 
 const { aventriEventQuery } = require('./es-queries/aventri-event-query')
-const { aventriAttendeeQuery } = require('./es-queries/aventri-attendee-query')
 
 async function renderActivityFeed(req, res, next) {
   const { company, dnbHierarchyCount, dnbRelatedCompaniesCount } = res.locals
@@ -90,9 +93,9 @@ function getQueries(options) {
       ...options,
       types: DATA_HUB_ACTIVITY,
     }),
-    [FILTER_KEYS.dataHubActivity]: dataHubActivityQuery({
+    [FILTER_KEYS.dataHubActivity]: dataHubAndAventriActivityQuery({
       ...options,
-      types: DATA_HUB_ACTIVITY,
+      types: DATA_HUB_AND_AVENTRI_ACTIVITY,
     }),
     [FILTER_KEYS.externalActivity]: externalActivityQuery({
       ...options,
@@ -159,6 +162,48 @@ async function getMaxemailCampaigns(req, next, contacts) {
     return campaignActivities.filter(
       (campaign) => campaign.object.contacts.length
     )
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
+  try {
+    // Fetch aventri attendee info for company contacts
+    const aventriQuery = aventriAttendeeForCompanyQuery(contacts)
+    const aventriResults = await fetchActivityFeed(req, aventriQuery)
+    const aventriAttendees = aventriResults.hits.hits.map((hit) => hit._source)
+
+    const groupedEventsWithContactsObj = aventriAttendees.reduce(
+      (obj, attendee) => {
+        const eventId = `${attendee.object.attributedTo.id}:Create`
+        const event = obj[eventId]
+
+        const contact = contacts.find(
+          (contact) => contact.email == attendee.object['dit:emailAddress']
+        )
+        const mappedContact = contact
+          ? [
+              {
+                'dit:emailAddress': contact.email,
+                id: contact.id,
+                name: contact.name,
+                type: ['dit:Contact'],
+                url: urls.contacts.details(contact.id),
+              },
+            ]
+          : []
+        if (event) {
+          event.push(...mappedContact)
+        } else {
+          obj[eventId] = mappedContact
+        }
+        return obj
+      },
+      {}
+    )
+
+    return groupedEventsWithContactsObj
   } catch (error) {
     next(error)
   }
@@ -288,12 +333,29 @@ async function fetchActivityFeedHandler(req, res, next) {
         .map((company) => company.id)
     }
 
+    let isActivityStreamFeatureFlagEnabled = res.locals?.userFeatures?.includes(
+      ACTIVITY_STREAM_FEATURE_FLAG
+    )
+
+    let aventriEventIds = []
+    let aventriEvents = []
+    if (isActivityStreamFeatureFlagEnabled) {
+      aventriEvents = await getAventriEventsAttendedByCompanyContacts(
+        req,
+        next,
+        company.contacts
+      )
+
+      aventriEventIds = Object.keys(aventriEvents)
+    }
+
     const queries = getQueries({
       from,
       size,
       companyIds: [company.id, ...dnbHierarchyIds],
       contacts: company.contacts,
       user,
+      aventriEventIds,
     })
 
     const results = await fetchActivityFeed(
@@ -309,6 +371,17 @@ async function fetchActivityFeedHandler(req, res, next) {
       activities = [...activities, ...campaigns]
       total += campaigns.length
     }
+
+    //loop over all the results, set the contact to be the matching contact from the contacts array
+    activities = activities.map((activity) => {
+      if (activity.type == 'dit:aventri:Event' && aventriEvents[activity.id]) {
+        activity.object.attributedTo = [
+          activity.object.attributedTo,
+          ...aventriEvents[activity.id],
+        ]
+      }
+      return activity
+    })
 
     res.json({
       total,
@@ -399,12 +472,81 @@ async function fetchAventriEventAttended(req, res, next) {
   }
 }
 
+async function fetchAventriEventRegistrationStatusAttendees(req, res, next) {
+  try {
+    const eventId = req.params.aventriEventId
+    const { page, size, registrationStatuses, sortBy } = req.query
+
+    const invalidRegStatuses = registrationStatuses.filter(
+      (s) => !Object.values(EVENT_AVENTRI_ATTENDEES_STATUS).includes(s)
+    )
+
+    if (invalidRegStatuses.length > 0) {
+      throw new Error('Invalid status')
+    }
+
+    const sort = EVENT_ATTENDEES_SORT_OPTIONS[sortBy]
+    const from = (page - 1) * ACTIVITIES_PER_PAGE
+
+    //get the attendees
+    const aventriAttendeeResults = await fetchActivityFeed(
+      req,
+      aventriAttendeeQuery({
+        eventId,
+        sort,
+        from,
+        size,
+        registrationStatuses,
+      })
+    )
+
+    const totalAttendees = aventriAttendeeResults.hits.total.value
+
+    let aventriAttendees = aventriAttendeeResults.hits.hits.map(
+      (hit) => hit._source
+    )
+
+    // add the datahub ID to aventri attendees object
+    const addDataHubUrlToAttendee = async (attendee) => {
+      const attendeeEmail = attendee.object['dit:aventri:email']
+      let attendeeContactUrl = null
+      if (attendeeEmail) {
+        const dataHubContactResults = await fetchMatchingDataHubContact(
+          req,
+          attendeeEmail
+        )
+        const dataHubContactId = dataHubContactResults?.results[0]?.id
+        attendeeContactUrl = dataHubContactId
+          ? `/contacts/${dataHubContactId}/details`
+          : null
+      }
+      attendee.datahubContactUrl = attendeeContactUrl
+      return attendee
+    }
+    aventriAttendees = await Promise.all(
+      aventriAttendees.map(async (attendee) => {
+        return await addDataHubUrlToAttendee(attendee)
+      })
+    )
+
+    res.json({
+      totalAttendees,
+      aventriAttendees,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 const eventsColListQueryBuilder = ({
   name,
   earliestStartDate,
   latestStartDate,
   aventriId,
   addressCountry,
+  ukRegion,
+  organiser,
+  eventType,
 }) => {
   const eventNameFilter = name
     ? {
@@ -453,11 +595,38 @@ const eventsColListQueryBuilder = ({
       }
     : null
 
+  const ukRegionFilter = ukRegion
+    ? {
+        terms: {
+          'object.dit:ukRegion.id': ukRegion,
+        },
+      }
+    : null
+
+  const organiserFilter = organiser
+    ? {
+        terms: {
+          'object.dit:organiser.id': organiser,
+        },
+      }
+    : null
+
+  const eventTypeFilter = eventType
+    ? {
+        terms: {
+          'object.dit:eventType.id': eventType,
+        },
+      }
+    : null
+
   const filtersArray = [
     eventNameFilter,
     dateFilter,
     aventriIdFilter,
     countryFilter,
+    ukRegionFilter,
+    organiserFilter,
+    eventTypeFilter,
   ]
 
   const cleansedFiltersArray = filtersArray.filter((filter) => filter)
@@ -474,8 +643,11 @@ async function fetchAllActivityFeedEvents(req, res, next) {
       earliestStartDate,
       latestStartDate,
       aventriId,
+      ukRegion,
+      organiser,
       page,
       addressCountry,
+      eventType,
     } = req.query
 
     const from = (page - 1) * ACTIVITIES_PER_PAGE
@@ -489,6 +661,9 @@ async function fetchAllActivityFeedEvents(req, res, next) {
           latestStartDate,
           aventriId,
           addressCountry,
+          ukRegion,
+          organiser,
+          eventType,
         }),
         from,
         size: ACTIVITIES_PER_PAGE,
@@ -520,4 +695,6 @@ module.exports = {
   fetchAventriEventAttended,
   fetchAllActivityFeedEvents,
   eventsColListQueryBuilder,
+  getAventriEventsAttendedByCompanyContacts,
+  fetchAventriEventRegistrationStatusAttendees,
 }

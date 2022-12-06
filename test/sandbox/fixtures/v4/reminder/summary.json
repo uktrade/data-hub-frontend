@@ -1,5 +1,11 @@
 {
-  "estimated_land_date": 230,
-  "no_recent_investment_interaction": 10,
-  "outstanding_propositions": 5
+  "count": 289,
+  "investment": {
+    "estimated_land_date": 230,
+    "no_recent_interaction": 10,
+    "outstanding_propositions": 5
+  },
+  "export": {
+    "no_recent_interaction": 44
+  }
 }

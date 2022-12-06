@@ -16,7 +16,7 @@ const assertTradeAgreementArticle = (articleElement) => {
     'Select a trade agreement and then a related event.'
   )
   assertTextVisible(
-    'Find more information about selecting trade agreements. This will open in a new window'
+    'Find more information about selecting trade agreements.This will open in a new window'
   )
   cy.contains('more information')
     .should('have.attr', 'href')

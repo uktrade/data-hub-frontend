@@ -78,11 +78,17 @@ const EVENT_ATTENDEES_SORT_OPTIONS = {
 }
 
 const EVENT_AVENTRI_ATTENDEES_STATUS = {
+  activated: 'Activated',
   attended: 'Attended',
   confirmed: 'Confirmed',
   cancelled: 'Cancelled',
-  registered: 'Registered',
+  noShow: 'No Show',
+  waitlist: 'Waitlist',
 }
+
+const EVENT_AVENTRI_ATTENDEES_STATUSES = Object.values(
+  EVENT_AVENTRI_ATTENDEES_STATUS
+)
 
 const EVENT_ACTIVITY_SORT_OPTIONS = {
   'modified_on:asc': {
@@ -131,6 +137,11 @@ const DATA_HUB_ACTIVITY = [
   'dit:CompanyReferral',
 ]
 
+const DATA_HUB_AND_AVENTRI_ACTIVITY = [
+  ...DATA_HUB_ACTIVITY,
+  'dit:aventri:Event',
+]
+
 const EXTERNAL_ACTIVITY = [
   'dit:Accounts', // Companies House Accounts
   'dit:Company', // Companies House Company
@@ -138,7 +149,7 @@ const EXTERNAL_ACTIVITY = [
 ]
 
 const DATA_HUB_AND_EXTERNAL_ACTIVITY = [
-  ...DATA_HUB_ACTIVITY,
+  ...DATA_HUB_AND_AVENTRI_ACTIVITY,
   ...EXTERNAL_ACTIVITY,
 ]
 
@@ -146,6 +157,7 @@ module.exports = {
   EVENT_ATTENDEES_SORT_OPTIONS,
   EVENT_ACTIVITY_SORT_OPTIONS,
   EVENT_AVENTRI_ATTENDEES_STATUS,
+  EVENT_AVENTRI_ATTENDEES_STATUSES,
   EVENT_ALL_ACTIVITY,
   FILTER_KEYS,
   FILTER_ITEMS,
@@ -155,4 +167,5 @@ module.exports = {
   CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS,
   CONTACT_ACTIVITY_SORT_SELECT_OPTIONS,
   ACTIVITY_STREAM_FEATURE_FLAG,
+  DATA_HUB_AND_AVENTRI_ACTIVITY,
 }

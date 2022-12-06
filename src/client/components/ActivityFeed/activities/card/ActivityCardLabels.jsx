@@ -40,11 +40,13 @@ const ActivityCardLabels = ({ isExternalActivity, theme, service, kind }) => (
         </Tag>
       )}
     </TagColumn>
-    <TagColumn>
-      <Tag data-test="activity-kind-label" colour="grey">
-        {kind}
-      </Tag>
-    </TagColumn>
+    {kind && (
+      <TagColumn>
+        <Tag data-test="activity-kind-label" colour="grey">
+          {kind}
+        </Tag>
+      </TagColumn>
+    )}
   </TagRow>
 )
 

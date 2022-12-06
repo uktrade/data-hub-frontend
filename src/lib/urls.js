@@ -66,7 +66,6 @@ function createInteractionsSubApp(mountPoint, pathPrefix = '') {
     create: url(mountPoint, pathPrefix + '/create'),
     createType: url(mountPoint, pathPrefix + '/create/:theme/:kind'),
     edit: url(mountPoint, pathPrefix + '/:interactionId/edit'),
-    complete: url(mountPoint, pathPrefix + '/:interactionId/complete'),
   }
 }
 
@@ -257,6 +256,10 @@ module.exports = {
       detailsData: url('/events', '/aventri/:aventriEventId/details/data'),
       attended: url('/events', '/aventri/:aventriEventId/attended'),
       attendedData: url('/events', '/aventri/:aventriEventId/attended/data'),
+      registrationStatusData: url(
+        '/events',
+        '/aventri/:aventriEventId/registration/attendees/data'
+      ),
     },
   },
   search: {

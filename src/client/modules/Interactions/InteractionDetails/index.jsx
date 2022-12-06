@@ -1,16 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Details, Link } from 'govuk-react'
-import { BLACK, GREEN, GREY_3, WHITE } from 'govuk-colours'
+import { BLACK, GREY_3 } from 'govuk-colours'
 
 import InteractionResource from '../../../components/Resource/Interaction'
+import ArchivePanel from '../../../components/ArchivePanel'
 import { NewWindowLink, SummaryTable } from '../../../components'
 import urls from '../../../../lib/urls'
 import { currencyGBP } from '../../../utils/number-utils'
 import InteractionReferralDetails from './InteractionReferralDetails'
+import CompleteInteraction from './CompleteInteraction'
 import {
   getEditLink,
-  getCompleteLink,
   isEditable,
   isIncomplete,
   isNotEditable,
@@ -31,6 +32,15 @@ const InteractionDetails = ({ interactionId, archivedDocumentPath }) => {
     <InteractionResource id={interactionId}>
       {(interaction) => (
         <>
+          {interaction.archived && (
+            <ArchivePanel
+              archivedBy={interaction.archivedBy}
+              archivedOn={interaction.archivedOn}
+              archiveReason={interaction.archivedReason}
+              type={transformKind(interaction.kind)}
+              archiveMessage={'cancelled'}
+            />
+          )}
           <SummaryTable data-test="interaction-details-table">
             {transformCompany(interaction.company, interaction.companies)}
             <SummaryTable.Row
@@ -186,19 +196,13 @@ const InteractionDetails = ({ interactionId, archivedDocumentPath }) => {
             interaction.date,
             interaction.archived
           ) && (
-            <Button
-              as={Link}
-              href={getCompleteLink(
-                interaction.id,
-                interaction.company,
-                interaction.companies
-              )}
-              buttonColour={GREEN}
-              buttonTextColour={WHITE}
-              data-test="complete-interaction-button"
-            >
-              Complete {transformKind(interaction.kind)}
-            </Button>
+            <CompleteInteraction
+              interactionId={interaction.id}
+              companyObject={interaction.company}
+              companyArray={interaction.companies}
+              kind={transformKind(interaction.kind)}
+              archived={interaction.archived}
+            />
           )}
           {isNotEditable(
             interaction.status,

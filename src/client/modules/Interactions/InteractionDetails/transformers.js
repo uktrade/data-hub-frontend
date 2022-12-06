@@ -103,14 +103,6 @@ export const setReferralId = (referral, companies) => {
   return null
 }
 
-export const getCompleteLink = (id, companyObject, companyArray) => {
-  const isCompanyPage = checkUrl('companies')
-  const companyId = getCompanyId(companyObject, companyArray)
-  return isCompanyPage
-    ? urls.companies.interactions.complete(companyId, id)
-    : urls.interactions.complete(id)
-}
-
 export const getEditLink = (
   interactionId,
   companyObject,
@@ -118,6 +110,7 @@ export const getEditLink = (
   referral
 ) => {
   const companyId = getCompanyId(companyObject, companyArray)
+  const isCompanyPage = checkUrl('companies')
   const isReferral = checkUrl('referral')
   return isReferral
     ? urls.companies.referrals.interactions.edit(
@@ -125,5 +118,27 @@ export const getEditLink = (
         referral.id,
         interactionId
       )
+    : isCompanyPage
+    ? urls.companies.interactions.edit(companyId, interactionId)
     : urls.interactions.edit(interactionId)
+}
+
+export const getDetailsLink = (
+  interactionId,
+  companyObject,
+  companyArray,
+  referral
+) => {
+  const companyId = getCompanyId(companyObject, companyArray)
+  const isCompanyPage = checkUrl('companies')
+  const isReferral = checkUrl('referral')
+  return isReferral
+    ? urls.companies.referrals.interactions.detail(
+        companyId,
+        referral.id,
+        interactionId
+      )
+    : isCompanyPage
+    ? urls.companies.interactions.detail(companyId, interactionId)
+    : urls.interactions.detail(interactionId)
 }

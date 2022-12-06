@@ -8,7 +8,7 @@ import { REMINDER_SUMMARY__LOADED } from '../../actions'
 import Summary from './Summary'
 import Task from '../Task'
 
-const ReminderSummary = ({ summary }) => (
+const ReminderSummary = (data) => (
   <div data-test="reminder-summary">
     <Task.Status
       name={TASK_GET_REMINDER_SUMMARY}
@@ -18,17 +18,22 @@ const ReminderSummary = ({ summary }) => (
         onSuccessDispatch: REMINDER_SUMMARY__LOADED,
       }}
     >
-      {() => <Summary summary={summary} />}
+      {() => <Summary summary={data} />}
     </Task.Status>
   </div>
 )
 
+const reminderType = PropTypes.arrayOf(
+  PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    count: PropTypes.number.isRequired,
+  })
+)
+
 ReminderSummary.propTypes = {
-  summary: PropTypes.shape({
-    estimated_land_date: PropTypes.number.isRequired,
-    no_recent_investment_interaction: PropTypes.number.isRequired,
-    outstanding_propositions: PropTypes.number.isRequired,
-  }),
+  count: PropTypes.number,
+  investment: reminderType,
 }
 
 export default connect(state2props)(ReminderSummary)

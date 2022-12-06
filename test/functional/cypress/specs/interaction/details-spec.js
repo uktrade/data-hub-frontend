@@ -4,6 +4,10 @@ const selectors = require('../../../../selectors')
 const {
   assertSummaryTable,
   assertBreadcrumbs,
+  assertFieldRadios,
+  assertErrorSummary,
+  assertFieldDate,
+  assertFlashMessage,
 } = require('../../support/assertions')
 const {
   interactions,
@@ -61,10 +65,77 @@ describe('Interaction details', () => {
       cy.get('[data-test=complete-interaction-button]')
         .should('be.visible')
         .should('have.text', 'Complete interaction')
+        .should(
+          'have.attr',
+          'href',
+          companies.interactions.edit(params.companyId, params.interactionId)
+        )
     })
 
     assertEditButtonNotVisible()
     assertCannotCompleteTextNotVisible()
+
+    context('when cancelling the interaction', () => {
+      it('should render the archive container', () => {
+        cy.get('[data-test=archive-interaction-container]').should('exist')
+        cy.get('[data-test=archive-button')
+          .should('be.visible')
+          .should('have.text', 'Cancel')
+        cy.get('[data-test=archive-header]')
+          .should('be.visible')
+          .should('have.text', 'Cancel interaction')
+        cy.get('[data-test=archive-hint]')
+          .should('be.visible')
+          .should(
+            'have.text',
+            'Cancel this interaction if the meeting did not happen'
+          )
+        cy.get('[data-test=field-archived_reason]').should('not.exist')
+      })
+
+      it('should render the archive reasons', () => {
+        cy.get('[data-test="archive-button"]').click()
+        cy.get('[data-test=field-archived_reason]')
+          .should('exist')
+          .then((element) => {
+            assertFieldRadios({
+              element,
+              label: 'Cancellation reason',
+              optionsCount: 3,
+            })
+          })
+      })
+
+      it('should not submit if no reason is selected', () => {
+        cy.get('[data-test=submit-button]').click()
+        assertErrorSummary(['You must select a reason'])
+      })
+
+      it('should render the date field when reschedule is selected', () => {
+        cy.get('[data-test=archived-reason-meeting-was-rescheduled]').click()
+        cy.get('[data-test="field-date"]')
+          .should('exist')
+          .then((element) => {
+            assertFieldDate({
+              element,
+              label: 'When will the meeting take place?',
+              hint: 'This will change the date of the interaction rather than cancelling it.',
+              value: { day: '', month: '', year: '' },
+            })
+          })
+      })
+
+      it('should not submit if reschedule is selected and no date is entered', () => {
+        cy.get('[data-test=submit-button]').click()
+        assertErrorSummary(['You must enter a valid date'])
+      })
+
+      it('should submit the form if a reason is seleted', () => {
+        cy.get('[data-test=archived-reason-client-cancelled]').click()
+        cy.get('[data-test=submit-button]').click()
+        assertFlashMessage('The interaction has been updated')
+      })
+    })
   })
 
   context('Future draft interaction', () => {
@@ -118,6 +189,20 @@ describe('Interaction details', () => {
 
     assertInteractionBreadcrumbs()
     assertHeader(fixtures.interaction.cancelledMeeting.subject)
+
+    it('should render the archive panel', () => {
+      cy.get('[data-test=archive-panel]').should('exist')
+      cy.get('[data-test=archive-message]')
+        .should('be.visible')
+        .should(
+          'have.text',
+          'This interaction was cancelled on 12 Jun 2019 by Lee Wilson.'
+        )
+      cy.get('[data-test=archive-reason]')
+        .should('be.visible')
+        .should('have.text', 'Reason: Client cancelled')
+      cy.get('[data-test=unarchive-link]').should('not.exist')
+    })
 
     it('should render the details', () => {
       assertSummaryTable({

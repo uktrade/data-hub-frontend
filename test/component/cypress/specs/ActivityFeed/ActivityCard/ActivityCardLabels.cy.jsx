@@ -41,6 +41,16 @@ describe('ActivityCardLabels', () => {
       })
     })
 
+    context('When there is NOT a kind property value', () => {
+      beforeEach(() => {
+        cy.mount(<Component kind={undefined} />)
+      })
+
+      it('should not render the label', () => {
+        cy.get('[data-test="activity-kind-label"]').should('not.exist')
+      })
+    })
+
     context('When there is an topic/theme label', () => {
       beforeEach(() => {
         cy.mount(<Component theme="Topic Label" />)

@@ -1,9 +1,8 @@
-const externalActivityQuery = ({
+const dataHubAndAventriActivityQuery = ({
   from,
   size,
   types,
   companyIds,
-  contacts,
   aventriEventIds,
 }) => {
   const shouldCriteria = [
@@ -25,41 +24,7 @@ const externalActivityQuery = ({
         ],
       },
     },
-    {
-      bool: {
-        must: [
-          {
-            term: {
-              // Great.gov.uk forms
-              'object.type': 'dit:directoryFormsApi:Submission',
-            },
-          },
-          {
-            term: {
-              // JSON format (Note: there two other formats HTML and Text)
-              'object.attributedTo.type':
-                'dit:directoryFormsApi:SubmissionAction:gov-notify-email',
-            },
-          },
-          {
-            term: {
-              // For now, we only care about `Export enquiry` forms
-              'object.url': '/contact/export-advice/comment/',
-            },
-          },
-          {
-            // Match a Data Hub company contact to the user filling out the form at Great.gov.uk
-            terms: {
-              'actor.dit:emailAddress': [
-                ...contacts.map((contact) => contact.email),
-              ],
-            },
-          },
-        ],
-      },
-    },
   ]
-
   if (aventriEventIds?.length) {
     shouldCriteria.push({
       bool: {
@@ -78,7 +43,6 @@ const externalActivityQuery = ({
       },
     })
   }
-
   const dsl = {
     from,
     size,
@@ -99,8 +63,7 @@ const externalActivityQuery = ({
       },
     },
   }
-
   return dsl
 }
 
-module.exports = externalActivityQuery
+module.exports = dataHubAndAventriActivityQuery

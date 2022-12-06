@@ -47,6 +47,7 @@ const SummaryTable = ({ caption, actions, children, ...rest }) => (
 const StyledTableRow = styled(Table.Row)`
   font-size: ${FONT_SIZE.SIZE_16};
   line-height: ${LINE_HEIGHT.SIZE_24};
+  white-space: pre-wrap;
 `
 
 SummaryTable.Row = ({ heading, children, hideWhenEmpty }) => {

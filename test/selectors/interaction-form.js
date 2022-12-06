@@ -4,7 +4,7 @@ const { EXPORT_INTEREST_STATUS } = require('../../src/apps/constants')
 module.exports = {
   form: 'form',
   subject: '#field-subject',
-  notes: '#field-notes',
+  notes: '#notes',
   dateOfInteractionYear: '#field-date_year',
   dateOfInteractionMonth: '#field-date_month',
   dateOfInteractionDay: '#field-date_day',
@@ -32,7 +32,7 @@ module.exports = {
   policyFeedbackYes: '#field-was_policy_feedback_provided [value=yes]',
   policyFeedbackNo: '#field-was_policy_feedback_provided [value=no]',
   policyArea: '#field-policy_areas',
-  policyFeedbackNotes: '#field-policy_feedback_notes',
+  policyFeedbackNotes: '#notes',
   teamSearch: '#dit_team__typeahead .multiselect__single',
   countriesDiscussed: {
     yes: '#field-were_countries_discussed [value=yes]',

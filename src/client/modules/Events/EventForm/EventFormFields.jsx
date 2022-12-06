@@ -32,7 +32,9 @@ export const EventFormFields = ({ values }) => (
         >
           more information
         </Link>{' '}
-        about selecting trade agreements. This will open in a new window.
+        about selecting trade agreements.
+        <br />
+        This will open in a new window.
       </p>
     </article>
     <FieldRadios

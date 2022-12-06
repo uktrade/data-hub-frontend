@@ -24,7 +24,7 @@ describe('DIT Permission', () => {
         'Interactions',
         'Investments',
         'Orders',
-        'Market Access',
+        'Market access',
         'Support',
       ])
     })

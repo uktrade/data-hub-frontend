@@ -1,24 +1,44 @@
+const { faker } = require('@faker-js/faker')
 const activityFeedEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-from-es.json')
+const activityFeedAventriAtendeeEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-aventri-attendee-from-es.json')
+
 const allActivityFeedEvents = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/all-activity-feed-events.json')
+const allAttendees = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/aventri-attendees.json')
 const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/middleware-parameters-builder')
 const companyMock = require('../../../../../../test/unit/data/company.json')
 const {
   DATA_HUB_ACTIVITY,
   EXTERNAL_ACTIVITY,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
+  DATA_HUB_AND_AVENTRI_ACTIVITY,
+  ACTIVITY_STREAM_FEATURE_FLAG,
+  EVENT_AVENTRI_ATTENDEES_STATUS,
+  EVENT_ATTENDEES_SORT_OPTIONS,
 } = require('../constants')
 const { eventsColListQueryBuilder } = require('../controllers')
+const { has } = require('lodash')
 
 describe('Activity feed controllers', () => {
   let fetchActivityFeedStub,
     fetchAllActivityFeedEventsStub,
     getGlobalUltimateHierarchyStub,
     controllers,
-    middlewareParameters
+    middlewareParameters,
+    fetchMatchingDataHubContactStub
 
   describe('#fetchActivityFeedHandler', () => {
     before(() => {
-      fetchActivityFeedStub = sinon.stub().resolves(activityFeedEsFixtures)
+      const mockActivityFeedApiFunction = (req, body) => {
+        //is this a query for aventriAttendeeForCompanyQuery
+        if (has(body, 'query.bool.must[0].term')) {
+          return activityFeedAventriAtendeeEsFixtures
+        }
+
+        return activityFeedEsFixtures
+      }
+      fetchActivityFeedStub = sinon
+        .stub()
+        .callsFake(mockActivityFeedApiFunction)
       getGlobalUltimateHierarchyStub = sinon
         .stub()
         .resolves({ results: [{ id: '123' }, { id: '456' }] })
@@ -39,103 +59,304 @@ describe('Activity feed controllers', () => {
     context(
       'when filtering on "Data Hub & External activity" for a company',
       () => {
-        before(async () => {
-          middlewareParameters = buildMiddlewareParameters({
-            company: companyMock,
-            requestQuery: {
-              activityTypeFilter: 'dataHubAndExternalActivity',
-              showDnbHierarchy: false,
-            },
-            user: {
-              id: 123,
-            },
+        context('with the aventri feature flag on', () => {
+          before(async () => {
+            middlewareParameters = buildMiddlewareParameters({
+              company: companyMock,
+              requestQuery: {
+                activityTypeFilter: 'dataHubAndExternalActivity',
+                showDnbHierarchy: false,
+              },
+              user: {
+                id: 123,
+              },
+              locals: {
+                userFeatures: [ACTIVITY_STREAM_FEATURE_FLAG],
+              },
+            })
+
+            await controllers.fetchActivityFeedHandler(
+              middlewareParameters.reqMock,
+              middlewareParameters.resMock,
+              middlewareParameters.nextSpy
+            )
           })
 
-          await controllers.fetchActivityFeedHandler(
-            middlewareParameters.reqMock,
-            middlewareParameters.resMock,
-            middlewareParameters.nextSpy
-          )
-        })
-
-        it('should call fetchActivityFeed with the right params', async () => {
-          const expectedEsQuery = {
-            from: 0,
-            size: 20,
-            sort: [
-              {
-                'object.startTime': {
-                  order: 'desc',
+          it('should call fetchActivityFeed with correct params when retrieving aventri attendees', async () => {
+            const expectedEsQuery = {
+              query: {
+                bool: {
+                  must: [
+                    {
+                      term: {
+                        'object.type': 'dit:aventri:Attendee',
+                      },
+                    },
+                    {
+                      terms: {
+                        'object.dit:emailAddress': [
+                          'fred@acme.org',
+                          'fred@acme.org',
+                          'fred@acme.org',
+                          'byvanuwenu@yahoo.com',
+                        ],
+                      },
+                    },
+                  ],
                 },
               },
-            ],
-            query: {
-              bool: {
-                filter: {
-                  bool: {
-                    should: [
-                      {
-                        bool: {
-                          must: [
-                            {
-                              terms: {
-                                'object.type': DATA_HUB_AND_EXTERNAL_ACTIVITY,
+              sort: {
+                'object.updated': {
+                  order: 'desc',
+                  unmapped_type: 'date',
+                },
+              },
+            }
+
+            expect(fetchActivityFeedStub).to.be.calledWith(
+              middlewareParameters.reqMock,
+              expectedEsQuery
+            )
+          })
+
+          it('should call fetchActivityFeed with the right params', async () => {
+            const expectedEsQuery = {
+              from: 0,
+              size: 20,
+              sort: [
+                {
+                  'object.startTime': {
+                    order: 'desc',
+                  },
+                },
+              ],
+              query: {
+                bool: {
+                  filter: {
+                    bool: {
+                      should: [
+                        {
+                          bool: {
+                            must: [
+                              {
+                                terms: {
+                                  'object.type': DATA_HUB_AND_EXTERNAL_ACTIVITY,
+                                },
                               },
-                            },
-                            {
-                              terms: {
-                                'object.attributedTo.id': [
-                                  'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-                                ],
+                              {
+                                terms: {
+                                  'object.attributedTo.id': [
+                                    'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                                  ],
+                                },
                               },
-                            },
-                          ],
+                            ],
+                          },
                         },
-                      },
-                      {
-                        bool: {
-                          must: [
-                            {
-                              term: {
-                                'object.type':
-                                  'dit:directoryFormsApi:Submission',
+                        {
+                          bool: {
+                            must: [
+                              {
+                                term: {
+                                  'object.type':
+                                    'dit:directoryFormsApi:Submission',
+                                },
                               },
-                            },
-                            {
-                              term: {
-                                'object.attributedTo.type':
-                                  'dit:directoryFormsApi:SubmissionAction:gov-notify-email',
+                              {
+                                term: {
+                                  'object.attributedTo.type':
+                                    'dit:directoryFormsApi:SubmissionAction:gov-notify-email',
+                                },
                               },
-                            },
-                            {
-                              term: {
-                                'object.url': '/contact/export-advice/comment/',
+                              {
+                                term: {
+                                  'object.url':
+                                    '/contact/export-advice/comment/',
+                                },
                               },
-                            },
-                            {
-                              terms: {
-                                'actor.dit:emailAddress': [
-                                  'fred@acme.org',
-                                  'fred@acme.org',
-                                  'fred@acme.org',
-                                  'byvanuwenu@yahoo.com',
-                                ],
+                              {
+                                terms: {
+                                  'actor.dit:emailAddress': [
+                                    'fred@acme.org',
+                                    'fred@acme.org',
+                                    'fred@acme.org',
+                                    'byvanuwenu@yahoo.com',
+                                  ],
+                                },
                               },
-                            },
-                          ],
+                            ],
+                          },
                         },
-                      },
-                    ],
+                        {
+                          bool: {
+                            must: [
+                              {
+                                term: {
+                                  'object.type': 'dit:aventri:Event',
+                                },
+                              },
+                              {
+                                terms: {
+                                  id: [
+                                    'dit:aventri:Event:1:Create',
+                                    'dit:aventri:Event:2:Create',
+                                  ],
+                                },
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                    },
                   },
                 },
               },
-            },
-          }
+            }
 
-          expect(fetchActivityFeedStub).to.be.calledWith(
-            middlewareParameters.reqMock,
-            expectedEsQuery
-          )
+            expect(fetchActivityFeedStub).to.be.calledWith(
+              middlewareParameters.reqMock,
+              expectedEsQuery
+            )
+          })
+        })
+
+        context('with the aventri feature flag off', () => {
+          before(async () => {
+            middlewareParameters = buildMiddlewareParameters({
+              company: companyMock,
+              requestQuery: {
+                activityTypeFilter: 'dataHubAndExternalActivity',
+                showDnbHierarchy: false,
+              },
+              user: {
+                id: 123,
+              },
+            })
+
+            await controllers.fetchActivityFeedHandler(
+              middlewareParameters.reqMock,
+              middlewareParameters.resMock,
+              middlewareParameters.nextSpy
+            )
+          })
+
+          it('should not call the fetchActivityFeed with retrieve aventri attendees', async () => {
+            const expectedEsQuery = {
+              query: {
+                bool: {
+                  must: [
+                    {
+                      term: {
+                        'object.type': 'dit:aventri:Attendee',
+                      },
+                    },
+                    {
+                      terms: {
+                        'object.dit:emailAddress': [
+                          'fred@acme.org',
+                          'fred@acme.org',
+                          'fred@acme.org',
+                          'byvanuwenu@yahoo.com',
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+              sort: {
+                'object.updated': {
+                  order: 'desc',
+                  unmapped_type: 'date',
+                },
+              },
+            }
+
+            expect(fetchActivityFeedStub).not.to.be.calledWith(
+              middlewareParameters.reqMock,
+              expectedEsQuery
+            )
+          })
+
+          it('should call fetchActivityFeed with the right params', async () => {
+            const expectedEsQuery = {
+              from: 0,
+              size: 20,
+              sort: [
+                {
+                  'object.startTime': {
+                    order: 'desc',
+                  },
+                },
+              ],
+              query: {
+                bool: {
+                  filter: {
+                    bool: {
+                      should: [
+                        {
+                          bool: {
+                            must: [
+                              {
+                                terms: {
+                                  'object.type': DATA_HUB_AND_EXTERNAL_ACTIVITY,
+                                },
+                              },
+                              {
+                                terms: {
+                                  'object.attributedTo.id': [
+                                    'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                                  ],
+                                },
+                              },
+                            ],
+                          },
+                        },
+                        {
+                          bool: {
+                            must: [
+                              {
+                                term: {
+                                  'object.type':
+                                    'dit:directoryFormsApi:Submission',
+                                },
+                              },
+                              {
+                                term: {
+                                  'object.attributedTo.type':
+                                    'dit:directoryFormsApi:SubmissionAction:gov-notify-email',
+                                },
+                              },
+                              {
+                                term: {
+                                  'object.url':
+                                    '/contact/export-advice/comment/',
+                                },
+                              },
+                              {
+                                terms: {
+                                  'actor.dit:emailAddress': [
+                                    'fred@acme.org',
+                                    'fred@acme.org',
+                                    'fred@acme.org',
+                                    'byvanuwenu@yahoo.com',
+                                  ],
+                                },
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                    },
+                  },
+                },
+              },
+            }
+
+            expect(fetchActivityFeedStub).to.be.calledWith(
+              middlewareParameters.reqMock,
+              expectedEsQuery
+            )
+          })
         })
       }
     )
@@ -203,179 +424,21 @@ describe('Activity feed controllers', () => {
       })
     })
 
-    context('when filtering on "Data Hub activity" for a company', () => {
-      before(async () => {
-        middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
-          requestQuery: {
-            activityTypeFilter: 'dataHubActivity',
-            showDnbHierarchy: false,
-          },
-          user: {
-            id: 123,
-          },
-        })
-
-        await controllers.fetchActivityFeedHandler(
-          middlewareParameters.reqMock,
-          middlewareParameters.resMock,
-          middlewareParameters.nextSpy
-        )
-      })
-
-      it('should call fetchActivityFeed with the right params', async () => {
-        const expectedEsQuery = {
-          from: 0,
-          size: 20,
-          sort: [
-            {
-              'object.startTime': {
-                order: 'desc',
-              },
-            },
-          ],
-          query: {
-            bool: {
-              must: [
-                {
-                  terms: {
-                    'object.type': DATA_HUB_ACTIVITY,
-                  },
-                },
-                {
-                  terms: {
-                    'object.attributedTo.id': [
-                      'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        }
-
-        expect(fetchActivityFeedStub).to.be.calledWith(
-          middlewareParameters.reqMock,
-          expectedEsQuery
-        )
-      })
-    })
-
-    context('when filtering on "External activity"', () => {
-      before(async () => {
-        middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
-          requestQuery: {
-            activityTypeFilter: 'externalActivity',
-            showDnbHierarchy: false,
-          },
-          user: {
-            id: 123,
-          },
-        })
-
-        await controllers.fetchActivityFeedHandler(
-          middlewareParameters.reqMock,
-          middlewareParameters.resMock,
-          middlewareParameters.nextSpy
-        )
-      })
-
-      it('should call fetchActivityFeed with the right params', async () => {
-        const expectedEsQuery = {
-          from: 0,
-          size: 20,
-          sort: [
-            {
-              'object.startTime': {
-                order: 'desc',
-              },
-            },
-          ],
-          query: {
-            bool: {
-              filter: {
-                bool: {
-                  should: [
-                    {
-                      bool: {
-                        must: [
-                          {
-                            terms: {
-                              'object.type': EXTERNAL_ACTIVITY,
-                            },
-                          },
-                          {
-                            terms: {
-                              'object.attributedTo.id': [
-                                'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-                              ],
-                            },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      bool: {
-                        must: [
-                          {
-                            term: {
-                              'object.type': 'dit:directoryFormsApi:Submission',
-                            },
-                          },
-                          {
-                            term: {
-                              'object.attributedTo.type':
-                                'dit:directoryFormsApi:SubmissionAction:gov-notify-email',
-                            },
-                          },
-                          {
-                            term: {
-                              'object.url': '/contact/export-advice/comment/',
-                            },
-                          },
-                          {
-                            terms: {
-                              'actor.dit:emailAddress': [
-                                'fred@acme.org',
-                                'fred@acme.org',
-                                'fred@acme.org',
-                                'byvanuwenu@yahoo.com',
-                              ],
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                },
-              },
-            },
-          },
-        }
-
-        expect(fetchActivityFeedStub).to.be.calledWith(
-          middlewareParameters.reqMock,
-          expectedEsQuery
-        )
-      })
-    })
-
     context(
-      'when applying both Data Hub activity and DnB hierarchical filters',
+      'when filtering on "Data Hub activity" for a company with the aventri feature flag on',
       () => {
         before(async () => {
           middlewareParameters = buildMiddlewareParameters({
-            company: {
-              ...companyMock,
-              is_global_ultimate: true,
-            },
+            company: companyMock,
             requestQuery: {
               activityTypeFilter: 'dataHubActivity',
-              showDnbHierarchy: true,
+              showDnbHierarchy: false,
             },
             user: {
               id: 123,
+            },
+            locals: {
+              userFeatures: [ACTIVITY_STREAM_FEATURE_FLAG],
             },
           })
 
@@ -399,22 +462,49 @@ describe('Activity feed controllers', () => {
             ],
             query: {
               bool: {
-                must: [
-                  {
-                    terms: {
-                      'object.type': DATA_HUB_ACTIVITY,
-                    },
+                filter: {
+                  bool: {
+                    should: [
+                      {
+                        bool: {
+                          must: [
+                            {
+                              terms: {
+                                'object.type': DATA_HUB_AND_AVENTRI_ACTIVITY,
+                              },
+                            },
+                            {
+                              terms: {
+                                'object.attributedTo.id': [
+                                  'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        bool: {
+                          must: [
+                            {
+                              term: {
+                                'object.type': 'dit:aventri:Event',
+                              },
+                            },
+                            {
+                              terms: {
+                                id: [
+                                  'dit:aventri:Event:1:Create',
+                                  'dit:aventri:Event:2:Create',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
                   },
-                  {
-                    terms: {
-                      'object.attributedTo.id': [
-                        'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-                        'dit:DataHubCompany:123',
-                        'dit:DataHubCompany:456',
-                      ],
-                    },
-                  },
-                ],
+                },
               },
             },
           }
@@ -427,63 +517,322 @@ describe('Activity feed controllers', () => {
       }
     )
 
-    context('when filtering param is invalid', () => {
-      before(async () => {
-        middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
-          requestQuery: {
-            activityTypeFilter: 'foobar',
-            showDnbHierarchy: false,
-          },
-          user: {
-            id: 123,
-          },
+    context(
+      'when filtering on "External activity" with the aventri feature flag on',
+      () => {
+        before(async () => {
+          middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+            requestQuery: {
+              activityTypeFilter: 'externalActivity',
+              showDnbHierarchy: false,
+            },
+            user: {
+              id: 123,
+            },
+            locals: {
+              userFeatures: [ACTIVITY_STREAM_FEATURE_FLAG],
+            },
+          })
+
+          await controllers.fetchActivityFeedHandler(
+            middlewareParameters.reqMock,
+            middlewareParameters.resMock,
+            middlewareParameters.nextSpy
+          )
         })
 
-        await controllers.fetchActivityFeedHandler(
-          middlewareParameters.reqMock,
-          middlewareParameters.resMock,
-          middlewareParameters.nextSpy
-        )
-      })
-
-      it('should default to dataHubActivity', async () => {
-        const expectedEsQuery = {
-          from: 0,
-          size: 20,
-          sort: [
-            {
-              'object.startTime': {
-                order: 'desc',
-              },
-            },
-          ],
-          query: {
-            bool: {
-              must: [
-                {
-                  terms: {
-                    'object.type': DATA_HUB_ACTIVITY,
-                  },
+        it('should call fetchActivityFeed with the right params', async () => {
+          const expectedEsQuery = {
+            from: 0,
+            size: 20,
+            sort: [
+              {
+                'object.startTime': {
+                  order: 'desc',
                 },
-                {
-                  terms: {
-                    'object.attributedTo.id': [
-                      'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+              },
+            ],
+            query: {
+              bool: {
+                filter: {
+                  bool: {
+                    should: [
+                      {
+                        bool: {
+                          must: [
+                            {
+                              terms: {
+                                'object.type': EXTERNAL_ACTIVITY,
+                              },
+                            },
+                            {
+                              terms: {
+                                'object.attributedTo.id': [
+                                  'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        bool: {
+                          must: [
+                            {
+                              term: {
+                                'object.type':
+                                  'dit:directoryFormsApi:Submission',
+                              },
+                            },
+                            {
+                              term: {
+                                'object.attributedTo.type':
+                                  'dit:directoryFormsApi:SubmissionAction:gov-notify-email',
+                              },
+                            },
+                            {
+                              term: {
+                                'object.url': '/contact/export-advice/comment/',
+                              },
+                            },
+                            {
+                              terms: {
+                                'actor.dit:emailAddress': [
+                                  'fred@acme.org',
+                                  'fred@acme.org',
+                                  'fred@acme.org',
+                                  'byvanuwenu@yahoo.com',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        bool: {
+                          must: [
+                            {
+                              term: {
+                                'object.type': 'dit:aventri:Event',
+                              },
+                            },
+                            {
+                              terms: {
+                                id: [
+                                  'dit:aventri:Event:1:Create',
+                                  'dit:aventri:Event:2:Create',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
                     ],
                   },
                 },
-              ],
+              },
             },
-          },
-        }
+          }
 
-        expect(fetchActivityFeedStub).to.be.calledWith(
-          middlewareParameters.reqMock,
-          expectedEsQuery
-        )
-      })
-    })
+          expect(fetchActivityFeedStub).to.be.calledWith(
+            middlewareParameters.reqMock,
+            expectedEsQuery
+          )
+        })
+      }
+    )
+
+    context(
+      'when applying both Data Hub activity and DnB hierarchical filters with the aventri feature flag on',
+      () => {
+        before(async () => {
+          middlewareParameters = buildMiddlewareParameters({
+            company: {
+              ...companyMock,
+              is_global_ultimate: true,
+            },
+            requestQuery: {
+              activityTypeFilter: 'dataHubActivity',
+              showDnbHierarchy: true,
+            },
+            user: {
+              id: 123,
+            },
+            locals: {
+              userFeatures: [ACTIVITY_STREAM_FEATURE_FLAG],
+            },
+          })
+
+          await controllers.fetchActivityFeedHandler(
+            middlewareParameters.reqMock,
+            middlewareParameters.resMock,
+            middlewareParameters.nextSpy
+          )
+        })
+
+        it('should call fetchActivityFeed with the right params', async () => {
+          const expectedEsQuery = {
+            from: 0,
+            size: 20,
+            sort: [
+              {
+                'object.startTime': {
+                  order: 'desc',
+                },
+              },
+            ],
+            query: {
+              bool: {
+                filter: {
+                  bool: {
+                    should: [
+                      {
+                        bool: {
+                          must: [
+                            {
+                              terms: {
+                                'object.type': DATA_HUB_AND_AVENTRI_ACTIVITY,
+                              },
+                            },
+                            {
+                              terms: {
+                                'object.attributedTo.id': [
+                                  'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                                  'dit:DataHubCompany:123',
+                                  'dit:DataHubCompany:456',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        bool: {
+                          must: [
+                            {
+                              term: {
+                                'object.type': 'dit:aventri:Event',
+                              },
+                            },
+                            {
+                              terms: {
+                                id: [
+                                  'dit:aventri:Event:1:Create',
+                                  'dit:aventri:Event:2:Create',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          }
+
+          expect(fetchActivityFeedStub).to.be.calledWith(
+            middlewareParameters.reqMock,
+            expectedEsQuery
+          )
+        })
+      }
+    )
+
+    context(
+      'when filtering param is invalid with the aventri feature flag on',
+      () => {
+        before(async () => {
+          middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+            requestQuery: {
+              activityTypeFilter: 'foobar',
+              showDnbHierarchy: false,
+            },
+            user: {
+              id: 123,
+            },
+            locals: {
+              userFeatures: [ACTIVITY_STREAM_FEATURE_FLAG],
+            },
+          })
+
+          await controllers.fetchActivityFeedHandler(
+            middlewareParameters.reqMock,
+            middlewareParameters.resMock,
+            middlewareParameters.nextSpy
+          )
+        })
+
+        it('should default to dataHubActivity', async () => {
+          const expectedEsQuery = {
+            from: 0,
+            size: 20,
+            sort: [
+              {
+                'object.startTime': {
+                  order: 'desc',
+                },
+              },
+            ],
+            query: {
+              bool: {
+                filter: {
+                  bool: {
+                    should: [
+                      {
+                        bool: {
+                          must: [
+                            {
+                              terms: {
+                                'object.type': DATA_HUB_AND_AVENTRI_ACTIVITY,
+                              },
+                            },
+                            {
+                              terms: {
+                                'object.attributedTo.id': [
+                                  'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        bool: {
+                          must: [
+                            {
+                              term: {
+                                'object.type': 'dit:aventri:Event',
+                              },
+                            },
+                            {
+                              terms: {
+                                id: [
+                                  'dit:aventri:Event:1:Create',
+                                  'dit:aventri:Event:2:Create',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          }
+
+          expect(fetchActivityFeedStub).to.be.calledWith(
+            middlewareParameters.reqMock,
+            expectedEsQuery
+          )
+        })
+      }
+    )
 
     context('when the endpoint returns error', () => {
       const error = {
@@ -491,24 +840,56 @@ describe('Activity feed controllers', () => {
       }
 
       before(async () => {
+        fetchActivityFeedStub.reset()
         fetchActivityFeedStub.rejects(error)
-        middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
-          user: {
-            id: 123,
-          },
-        })
-
-        await controllers.fetchActivityFeedHandler(
-          middlewareParameters.reqMock,
-          middlewareParameters.resMock,
-          middlewareParameters.nextSpy
-        )
       })
 
-      it('should call next with an error', async () => {
-        expect(middlewareParameters.resMock.json).to.not.have.been.called
-        expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
+      context('when the get aventri details endpoint returns error', () => {
+        before(async () => {
+          middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+            user: {
+              id: 123,
+            },
+          })
+
+          await controllers.fetchActivityFeedHandler(
+            middlewareParameters.reqMock,
+            middlewareParameters.resMock,
+            middlewareParameters.nextSpy
+          )
+        })
+
+        it('should call next with an error', async () => {
+          expect(middlewareParameters.resMock.json).to.not.have.been.called
+          expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
+        })
+      })
+
+      context('when the get aventri details endpoint returns error', () => {
+        before(async () => {
+          middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+            requestQuery: {
+              activityTypeFilter: 'dataHubAndExternalActivity',
+              showDnbHierarchy: false,
+            },
+            user: {
+              id: 123,
+            },
+          })
+
+          await controllers.fetchActivityFeedHandler(
+            middlewareParameters.reqMock,
+            middlewareParameters.resMock,
+            middlewareParameters.nextSpy
+          )
+        })
+
+        it('should call next with an error', async () => {
+          expect(middlewareParameters.resMock.json).to.not.have.been.called
+          expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
+        })
       })
     })
   })
@@ -668,6 +1049,72 @@ describe('Activity feed controllers', () => {
         expect(expectedQuery(addressCountry)).to.deep.equal(actualQuery)
       })
     })
+
+    context('check query builder when filtering on event type', () => {
+      const expectedQuery = (eventType) => [
+        {
+          terms: {
+            'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+          },
+        },
+        {
+          terms: {
+            'object.dit:eventType.id': eventType,
+          },
+        },
+      ]
+
+      it('builds the right query when a event type is selected', () => {
+        const eventType = ['an-event-type-id']
+        const actualQuery = eventsColListQueryBuilder({ eventType })
+
+        expect(expectedQuery(eventType)).to.deep.equal(actualQuery)
+      })
+    })
+
+    context('check query builder when filtering on uk region', () => {
+      const expectedQuery = (ukRegion) => [
+        {
+          terms: {
+            'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+          },
+        },
+        {
+          terms: {
+            'object.dit:ukRegion.id': ukRegion,
+          },
+        },
+      ]
+
+      it('builds the right query when a uk region is selected', () => {
+        const ukRegion = ['1718e330-6095-e211-a939-e4115bead28a']
+        const actualQuery = eventsColListQueryBuilder({ ukRegion })
+
+        expect(expectedQuery(ukRegion)).to.deep.equal(actualQuery)
+      })
+    })
+
+    context('check query builder when filtering on organiser', () => {
+      const expectedQuery = (organiser) => [
+        {
+          terms: {
+            'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+          },
+        },
+        {
+          terms: {
+            'object.dit:organiser.id': organiser,
+          },
+        },
+      ]
+
+      it('builds the right query when an organiser is selected', () => {
+        const organiser = ['org-id-guid']
+        const actualQuery = eventsColListQueryBuilder({ organiser })
+
+        expect(expectedQuery(organiser)).to.deep.equal(actualQuery)
+      })
+    })
   })
 
   describe('#fetchAllActivityFeedEvents', () => {
@@ -686,17 +1133,20 @@ describe('Activity feed controllers', () => {
     })
 
     context('when filtering for the events collection page', () => {
+      const requestQuery = {
+        sortBy: 'name:asc',
+        name: 'project zeus',
+        earliestStartDate: '2020-11-01',
+        latestStartDate: '2020-11-10',
+        page: 1,
+        aventriId: 123456789,
+        addressCountry: ['Canada', 'United Kingdom'],
+        ukRegion: ['1718e330-6095-e211-a939-e4115bead28a'],
+      }
+
       before(async () => {
         middlewareParameters = buildMiddlewareParameters({
-          requestQuery: {
-            sortBy: 'name:asc',
-            name: 'project zeus',
-            earliestStartDate: '2020-11-01',
-            latestStartDate: '2020-11-10',
-            page: 1,
-            aventriId: 123456789,
-            addressCountry: ['Canada', 'United Kingdom'],
-          },
+          requestQuery,
         })
 
         await controllers.fetchAllActivityFeedEvents(
@@ -707,13 +1157,9 @@ describe('Activity feed controllers', () => {
       })
 
       it('should call fetchAllActivityFeedEvents with the right params', async () => {
-        const name = 'project zeus'
         const from = 0
         const size = 10
-        const earliestStartDate = '2020-11-01'
-        const latestStartDate = '2020-11-10'
-        const transformedAventriId = 'dit:aventri:Event:123456789:Create'
-        const addressCountry = ['Canada', 'United Kingdom']
+        const transformedAventriId = `dit:aventri:Event:${requestQuery.aventriId}:Create`
 
         const expectedEsQuery = {
           from,
@@ -728,14 +1174,14 @@ describe('Activity feed controllers', () => {
                 },
                 {
                   match_phrase_prefix: {
-                    'object.name': name,
+                    'object.name': requestQuery.name,
                   },
                 },
                 {
                   range: {
                     'object.startTime': {
-                      gte: earliestStartDate,
-                      lte: latestStartDate,
+                      gte: requestQuery.earliestStartDate,
+                      lte: requestQuery.latestStartDate,
                     },
                   },
                 },
@@ -749,15 +1195,22 @@ describe('Activity feed controllers', () => {
                     should: [
                       {
                         terms: {
-                          'object.dit:address_country.name': addressCountry,
+                          'object.dit:address_country.name':
+                            requestQuery.addressCountry,
                         },
                       },
                       {
                         terms: {
-                          'object.dit:aventri:location_country': addressCountry,
+                          'object.dit:aventri:location_country':
+                            requestQuery.addressCountry,
                         },
                       },
                     ],
+                  },
+                },
+                {
+                  terms: {
+                    'object.dit:ukRegion.id': requestQuery.ukRegion,
                   },
                 },
               ],
@@ -799,6 +1252,321 @@ describe('Activity feed controllers', () => {
       it('should call next with an error', async () => {
         expect(middlewareParameters.resMock.json).to.not.have.been.called
         expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
+      })
+    })
+  })
+
+  describe('#getAventriEventsAttendedByCompanyContacts', () => {
+    let fakeActivityFeed = () => {
+      return { hits: { hits: [] } }
+    }
+
+    const generateEventResponse = (hits) => {
+      return {
+        hits: {
+          hits,
+        },
+      }
+    }
+
+    before(() => {
+      fetchActivityFeedStub = sinon.stub().callsFake(fakeActivityFeed)
+      controllers = proxyquire(
+        '../../src/apps/companies/apps/activity-feed/controllers',
+        {
+          './repos': {
+            fetchActivityFeed: fetchActivityFeedStub,
+          },
+        }
+      )
+      middlewareParameters = buildMiddlewareParameters()
+    })
+
+    it('when called with an empty list of contacts should return an empty event object', async () => {
+      const events =
+        await controllers.getAventriEventsAttendedByCompanyContacts(
+          middlewareParameters.reqMock,
+          middlewareParameters.nextSpy,
+          []
+        )
+      expect(events).to.be.deep.equal({})
+    })
+
+    it('when called with a single contact that has no aventri events should return an empty event object', async () => {
+      const events =
+        await controllers.getAventriEventsAttendedByCompanyContacts(
+          middlewareParameters.reqMock,
+          middlewareParameters.nextSpy,
+          [{ email: faker.internet.email }]
+        )
+      expect(events).to.be.deep.equal({})
+    })
+
+    it('when called with a single contact that has 1 aventri events should return an event object with 1 event and 1 contact email', async () => {
+      const email = faker.internet.email()
+
+      fetchActivityFeedStub.resolves(
+        generateEventResponse([
+          {
+            _source: {
+              object: {
+                attributedTo: { id: 1 },
+                'dit:emailAddress': email,
+              },
+            },
+          },
+        ])
+      )
+
+      const events =
+        await controllers.getAventriEventsAttendedByCompanyContacts(
+          middlewareParameters.reqMock,
+          middlewareParameters.nextSpy,
+          [
+            {
+              email: email,
+              name: faker.name.fullName(),
+              id: faker.random.numeric(),
+            },
+          ]
+        )
+      expect(events['1:Create'].length).to.be.equal(1)
+      expect(events['1:Create'][0]['dit:emailAddress']).to.be.equal(email)
+    })
+
+    it('when called with a single contact that has 5 aventri events should return an event object with 5 events and 1 contact email', async () => {
+      const email = faker.internet.email()
+
+      fetchActivityFeedStub.resolves(
+        generateEventResponse(
+          [...Array(5).keys()].map((x) => {
+            return {
+              _source: {
+                object: {
+                  attributedTo: { id: x },
+                  'dit:emailAddress': email,
+                },
+              },
+            }
+          })
+        )
+      )
+
+      const events =
+        await controllers.getAventriEventsAttendedByCompanyContacts(
+          middlewareParameters.reqMock,
+          middlewareParameters.nextSpy,
+          [
+            {
+              email: email,
+              name: faker.name.fullName(),
+              id: faker.random.numeric(),
+            },
+          ]
+        )
+      expect(Object.keys(events).length).to.be.equal(5)
+      Object.values(events).forEach((e) => {
+        expect(e.length).to.be.equal(1)
+        expect(e[0]['dit:emailAddress']).to.be.equal(email)
+      })
+    })
+
+    it('when called with 3 contacts that attended different events should return an event object with 3 event and 1 contact emails', async () => {
+      const emails = [
+        faker.internet.email(),
+        faker.internet.email(),
+        faker.internet.email(),
+      ]
+
+      fetchActivityFeedStub.resolves(
+        generateEventResponse(
+          [...emails].map((x, index) => {
+            return {
+              _source: {
+                object: {
+                  attributedTo: { id: index },
+                  'dit:emailAddress': x,
+                },
+              },
+            }
+          })
+        )
+      )
+
+      const events =
+        await controllers.getAventriEventsAttendedByCompanyContacts(
+          middlewareParameters.reqMock,
+          middlewareParameters.nextSpy,
+          emails.map((x) => {
+            return {
+              email: x,
+              name: faker.name.fullName(),
+              id: faker.random.numeric(),
+            }
+          })
+        )
+      expect(Object.keys(events).length).to.be.equal(3)
+      Object.values(events).forEach((e, index) => {
+        expect(e.length).to.be.equal(1)
+        expect(e[0]['dit:emailAddress']).to.be.equal(emails[index])
+      })
+    })
+
+    it('when called with 3 contacts that attended the same event should return an event object with 1 event and 3 contact emails', async () => {
+      const emails = [
+        faker.internet.email(),
+        faker.internet.email(),
+        faker.internet.email(),
+      ]
+      const eventId = faker.random.numeric()
+
+      fetchActivityFeedStub.resolves(
+        generateEventResponse(
+          [...emails].map((x) => {
+            return {
+              _source: {
+                object: {
+                  attributedTo: { id: eventId },
+                  'dit:emailAddress': x,
+                },
+              },
+            }
+          })
+        )
+      )
+
+      const events =
+        await controllers.getAventriEventsAttendedByCompanyContacts(
+          middlewareParameters.reqMock,
+          middlewareParameters.nextSpy,
+          emails.map((x) => {
+            return {
+              email: x,
+              name: faker.name.fullName(),
+              id: faker.random.numeric(),
+            }
+          })
+        )
+      expect(Object.keys(events).length).to.be.equal(1)
+
+      Object.values(events).forEach((e, index) => {
+        expect(e.length).to.be.equal(3)
+        expect(e[0]['dit:emailAddress']).to.be.equal(emails[index])
+      })
+    })
+  })
+
+  describe('#fetchAventriEventRegistrationStatusAttendees', () => {
+    before(() => {
+      fetchAllActivityFeedEventsStub = sinon.stub().resolves(allAttendees)
+      fetchMatchingDataHubContactStub = sinon
+        .stub()
+        .resolves({ results: [{ id: 1 }] })
+
+      controllers = proxyquire(
+        '../../src/apps/companies/apps/activity-feed/controllers',
+        {
+          './repos': {
+            fetchActivityFeed: fetchAllActivityFeedEventsStub,
+            fetchMatchingDataHubContact: fetchMatchingDataHubContactStub,
+          },
+        }
+      )
+    })
+
+    context('when requesting an invalid status an error is thrown', () => {
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters({
+          requestQuery: {
+            registrationStatuses: [
+              'FAKE',
+              EVENT_AVENTRI_ATTENDEES_STATUS.activated,
+              EVENT_AVENTRI_ATTENDEES_STATUS.noShow,
+            ],
+          },
+        })
+
+        await controllers.fetchAventriEventRegistrationStatusAttendees(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy
+        )
+      })
+
+      it('should call next with an error', async () => {
+        const error = 'Error: Invalid status'
+        expect(
+          middlewareParameters.nextSpy.getCalls()[0].firstArg.toString()
+        ).to.equal(error)
+      })
+    })
+
+    context('when requesting attendees matching statuses', () => {
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters({
+          requestQuery: {
+            registrationStatuses: [EVENT_AVENTRI_ATTENDEES_STATUS.activated],
+            page: 1,
+            size: 25,
+            sortBy: 'first_name:asc',
+          },
+          requestParams: { aventriEventId: 12 },
+        })
+
+        await controllers.fetchAventriEventRegistrationStatusAttendees(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy
+        )
+      })
+
+      it('should call fetchActivityFeed with the correct params', async () => {
+        const expectedESQuery = {
+          from: 0,
+          size: 25,
+          query: {
+            bool: {
+              must: [
+                {
+                  term: {
+                    'object.type': 'dit:aventri:Attendee',
+                  },
+                },
+                {
+                  term: {
+                    'object.attributedTo.id': `dit:aventri:Event:${12}`,
+                  },
+                },
+                {
+                  terms: {
+                    'object.dit:registrationStatus': [
+                      EVENT_AVENTRI_ATTENDEES_STATUS.activated,
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          sort: EVENT_ATTENDEES_SORT_OPTIONS['first_name:asc'],
+        }
+
+        expect(fetchAllActivityFeedEventsStub).to.be.calledWith(
+          middlewareParameters.reqMock,
+          expectedESQuery
+        )
+      })
+
+      it('should call fetchMatchingDataHubContacts with the correct ids', async () => {
+        const attendeeEmails = allAttendees.hits.hits
+          .map((hit) => hit._source.object['dit:aventri:email'])
+          .filter((f) => f)
+
+        attendeeEmails.forEach((email) =>
+          expect(fetchMatchingDataHubContactStub).to.be.calledWith(
+            middlewareParameters.reqMock,
+            email
+          )
+        )
       })
     })
   })
