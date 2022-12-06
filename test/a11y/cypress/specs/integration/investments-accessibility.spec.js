@@ -1,65 +1,18 @@
 import urls from '../../../../../src/lib/urls'
-import { testIdentityNumbers } from './testIdentityNumbers'
-import { urlTestExclusions } from './urlTestExclusions'
-import { differenceBy } from 'lodash'
+import { urlTestExclusions } from './config/urlTestExclusions'
+import { cleanseArrayOfUrls, createArrayOfUrls } from './config/utils'
 
 const mountPoint = urls.investments
-const mountPointName = 'investments'
+const excludedUrls = urlTestExclusions.investments
 
-const arrayOfUrls = []
-const excludedUrls = urlTestExclusions[mountPointName]
+const arrayOfUrls = createArrayOfUrls(mountPoint)
 
-for (const levelOnePath in mountPoint) {
-  if (mountPoint[levelOnePath].route) {
-    arrayOfUrls.push({ url: mountPoint[levelOnePath].route })
-  } else {
-    const levelTwoPaths = Object.keys(mountPoint[levelOnePath])
-    levelTwoPaths.forEach((levelTwoPath) => {
-      if (mountPoint[levelOnePath][levelTwoPath].route) {
-        arrayOfUrls.push({
-          url: mountPoint[levelOnePath][levelTwoPath].route,
-        })
-      } else {
-        const levelThreePaths = Object.keys(
-          mountPoint[levelOnePath][levelTwoPath]
-        )
-        levelThreePaths.forEach((levelThreePath) => {
-          if (mountPoint[levelOnePath][levelTwoPath][levelThreePath].route) {
-            arrayOfUrls.push({
-              url: mountPoint[levelOnePath][levelTwoPath][levelThreePath].route,
-            })
-          }
-        })
-      }
-    })
-  }
-}
-
-let filteredArrayOfUrls = differenceBy(arrayOfUrls, excludedUrls, 'url')
-
-filteredArrayOfUrls = filteredArrayOfUrls.filter(
-  (path) => path.url.split('/').pop() !== 'data'
-)
-
-filteredArrayOfUrls = filteredArrayOfUrls.filter(
-  (path) => path.url.split('/').pop() !== 'export'
-)
+const filteredArrayOfUrls = cleanseArrayOfUrls(arrayOfUrls, excludedUrls)
 
 filteredArrayOfUrls.map((path) => {
-  let pathUrl = path.url.split('/')
-  const currentPathUrl = pathUrl.map((pathId) => {
-    if (pathId.startsWith(':')) {
-      return (pathId = testIdentityNumbers[pathId])
-    }
-    return pathId
-  })
-  return currentPathUrl.join('/')
-})
-
-filteredArrayOfUrls.map((path) => {
-  describe(`${mountPointName}${path.url}`, () => {
+  describe(`${path}`, () => {
     before(() => {
-      cy.visit('/' + mountPointName + path.url, { timeout: 20000 })
+      cy.visit(path, { timeout: 20000 })
       // Wait until page has loaded first
       cy.initA11y()
     })
