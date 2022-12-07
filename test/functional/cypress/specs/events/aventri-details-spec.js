@@ -9,7 +9,7 @@ const {
 } = require('../../../../../src/apps/companies/apps/activity-feed/constants')
 
 describe('Event Aventri Details', () => {
-  const eventAlreadyTakenPlaceId = '1111'
+  const eventInPastId = '1111'
   const eventInFutureId = '1114'
   const notFoundEventId = '404'
   const errorEventId = '500'
@@ -26,7 +26,7 @@ describe('Event Aventri Details', () => {
 
     context('when it is a valid event in the past', () => {
       before(() => {
-        cy.visit(urls.events.aventri.details(eventAlreadyTakenPlaceId))
+        cy.visit(urls.events.aventri.details(eventInPastId))
       })
       it('should display aventri event name in breadcrumb', () => {
         assertBreadcrumbs({
@@ -44,7 +44,7 @@ describe('Event Aventri Details', () => {
             .should(
               'have.attr',
               'href',
-              urls.events.aventri.details(eventAlreadyTakenPlaceId)
+              urls.events.aventri.details(eventInPastId)
             )
         })
         var registrationStatusTests = [
@@ -88,7 +88,7 @@ describe('Event Aventri Details', () => {
                 'have.attr',
                 'href',
                 urls.events.aventri.registrationStatus(
-                  eventAlreadyTakenPlaceId,
+                  eventInPastId,
                   test.status
                 )
               )
@@ -112,7 +112,7 @@ describe('Event Aventri Details', () => {
         cy.get('[data-test="eventAventriDetails"]').within(() => {
           cy.get('[data-test="newWindowLink"]')
             .should('have.attr', 'aria-label', 'Opens in a new window or tab')
-            .should('have.attr', 'href', aventriLink + eventAlreadyTakenPlaceId)
+            .should('have.attr', 'href', aventriLink + eventInPastId)
             .should('have.text', aventriLinkText)
         })
       })
@@ -134,7 +134,7 @@ describe('Event Aventri Details', () => {
           )
           cy.get('[data-test="newWindowLink"]')
             .should('have.attr', 'aria-label', 'Opens in a new window or tab')
-            .should('have.attr', 'href', aventriLink + eventAlreadyTakenPlaceId)
+            .should('have.attr', 'href', aventriLink + eventInPastId)
             .should('have.text', aventriLinkText)
           cy.contains(newTabText).should('be.visible')
         })
@@ -253,7 +253,7 @@ describe('Event Aventri Details', () => {
     'when viewing aventri details with the feature flag is disabled',
     () => {
       before(() => {
-        cy.visit(urls.events.aventri.details(eventAlreadyTakenPlaceId))
+        cy.visit(urls.events.aventri.details(eventInPastId))
       })
 
       it('should not display aventri event name in breadcrumb', () => {
