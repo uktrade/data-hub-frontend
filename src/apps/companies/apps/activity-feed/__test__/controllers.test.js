@@ -1692,6 +1692,7 @@ describe('Activity feed controllers', () => {
           EVENT_AVENTRI_ATTENDEES_STATUS.activated,
           EVENT_AVENTRI_ATTENDEES_STATUS.waitlist,
           EVENT_AVENTRI_ATTENDEES_STATUS.noShow,
+          EVENT_AVENTRI_ATTENDEES_STATUS.cancelled,
         ]
         statuses.forEach(
           (s) =>
