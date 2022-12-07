@@ -11,17 +11,23 @@ export const urlTestExclusions = {
     { url: '/companies/:companyId/exports/history/:countryId' },
     { url: '/companies/:companyId/referrals/:referralId/interactions' },
   ],
+  companyLists: [
+    { url: '/company-lists/:listId/delete' },
+    { url: '/company-lists/:listId/rename' },
+  ],
   contacts: [
     // 404 errors for the below
     { url: '/contacts/:contactId/archive' },
     { url: '/contacts/:contactId/unarchive' },
   ],
-  companyLists: [
-    { url: '/company-lists/:listId/delete' },
-    { url: '/company-lists/:listId/rename' },
-  ],
+  events: [],
   dashboard: [],
-  interactions: [],
+  interactions: [
+    { url: '/interactions/create' },
+    { url: '/interactions/create/:theme/:kind' },
+    { url: '/interactions/activeEvents' },
+    { url: '/activeEvents/' },
+  ],
   investments: [
     // don't have permission to view this page
     { url: '/investments/projects/:investmentId/propositions' },
@@ -41,9 +47,11 @@ export const urlTestExclusions = {
   ],
   pipelines: [
     // No sandbox data available for testing the below locations
-    { url: '/my-pipeline/:pipelineItemId/edit' },
-    { url: '/my-pipeline/:pipelineItemId/archive' },
-    { url: '/my-pipeline/:pipelineItemId/unarchive' },
-    { url: '/my-pipeline/:pipelineItemId/delete' },
+    { url: '/my-pipeline/:pipelineId/edit' },
+    { url: '/my-pipeline/:pipelineId/archive' },
+    { url: '/my-pipeline/:pipelineId/unarchive' },
+    { url: '/my-pipeline/:pipelineId/delete' },
   ],
+  reminders: [],
+  search: [],
 }
