@@ -676,7 +676,7 @@ describe('events Collections Filter', () => {
             element,
             label: 'Country',
             input: 'braz',
-            placeholder: '',
+            placeholder: 'Search country',
             expectedOption: 'Brazil',
           })
 
