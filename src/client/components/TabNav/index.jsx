@@ -127,7 +127,7 @@ const StyledTabpanel = styled('div')`
 `
 
 const createId = (id, key, routed) =>
-  routed ? `${id}.tab.${key.replace('/', '_')}` : `tab.${key}`
+  routed ? `${id}.tab.${key.replace('/', '_')}` : `tab.${key.replace('/', '_')}`
 
 function getContent(tabs, keys, selectedTab) {
   if (keys.includes(selectedTab)) {
