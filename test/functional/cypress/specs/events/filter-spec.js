@@ -582,9 +582,7 @@ describe('events Collections Filter', () => {
         })
       })
       after(() => {
-        cy.get('[data-test="toggle-section-button"]')
-            .contains('Dates')
-            .click()
+        cy.get('[data-test="toggle-section-button"]').contains('Dates').click()
         cy.get(earliestStartElement).clear()
         cy.get(latestStartElement).clear()
       })
