@@ -528,7 +528,7 @@ describe('events Collections Filter', () => {
         beforeEach(() => {
           cy.get('[data-test="toggle-section-button"]')
             .contains('Dates')
-            .click()
+            .click({ force: true })
           cy.get(earliestStartElement).clear()
           cy.get(latestStartElement).clear()
         })
@@ -564,7 +564,6 @@ describe('events Collections Filter', () => {
           cy.url().should('not.include', queryParamWithEarliestStartDate)
           cy.url().should('not.include', queryParamWithLatestStartDate)
         })
-
         afterEach(() => {
           cy.get('[data-test="toggle-section-button"]')
             .contains('Dates')
@@ -671,7 +670,7 @@ describe('events Collections Filter', () => {
         it('should pass the country to the controller', () => {
           cy.get('[data-test="toggle-section-button"]')
             .contains('Location')
-            .click()
+            .click({ force: true })
           testTypeahead({
             element,
             label: 'Country',
@@ -719,11 +718,7 @@ describe('events Collections Filter', () => {
             `${urls.events.activity.data()}?sortBy=modified_on:desc&ukRegion[]=${ukRegion}&page=1`
           ).as('ukRegionRequest')
         })
-
         it('should pass the uk Region to the controller', () => {
-          cy.get('[data-test="toggle-section-button"]')
-            .contains('Location')
-            .click()
           testTypeahead({
             element,
             label: 'UK region',
