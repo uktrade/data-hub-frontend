@@ -69,6 +69,13 @@ describe('Event Aventri Details', () => {
               label: 'Attended',
             },
           },
+          {
+            status: 'cancelled',
+            expected: {
+              total: 7,
+              label: 'Cancelled',
+            },
+          },
         ]
         registrationStatusTests.forEach(function (test) {
           it(`with the link for the ${test.status} status`, () => {
@@ -174,6 +181,13 @@ describe('Event Aventri Details', () => {
             expected: {
               total: 28,
               label: 'Registered',
+            },
+          },
+          {
+            status: 'cancelled',
+            expected: {
+              total: 7,
+              label: 'Cancelled',
             },
           },
         ]

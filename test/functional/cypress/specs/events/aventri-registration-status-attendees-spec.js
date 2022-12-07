@@ -50,6 +50,14 @@ describe('Aventri status event registration attendees', () => {
             pageCount: 2,
           },
         },
+        {
+          status: 'cancelled',
+          expected: {
+            total: 16,
+            totalLabel: 'Cancelled',
+            pageCount: 2,
+          },
+        },
       ]
 
       registrationStatusTests.forEach(function (test) {
@@ -69,7 +77,7 @@ describe('Aventri status event registration attendees', () => {
               assertBreadcrumbs({
                 Home: urls.dashboard.route,
                 Events: urls.events.index(),
-                'EITA Test Event 2022': null,
+                'EITA Test Filtering Event 2022': null,
               })
             })
 
