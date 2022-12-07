@@ -242,20 +242,22 @@ describe('Aventri status event registration attendees', () => {
                 cy.get('[data-test="aventri-attendee"]').should('exist')
               })
             })
+
+            context('With errors', () => {
+              before(() => {
+                cy.visit(
+                  urls.events.aventri.registrationStatus(errorId, test.status)
+                )
+              })
+
+              it('should render an error message', () => {
+                assertErrorDialog(
+                  'TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES',
+                  'Error: Unable to load Aventri Registration Status.'
+                )
+              })
+            })
           }
-        )
-      })
-    })
-
-    context('With errors', () => {
-      before(() => {
-        cy.visit(urls.events.aventri.attended(errorId))
-      })
-
-      it('should render an error message', () => {
-        assertErrorDialog(
-          'TASK_GET_EVENT_AVENTRI_ATTENDED',
-          'Unable to load Aventri Attended.'
         )
       })
     })
