@@ -257,6 +257,20 @@ describe('Aventri status event registration attendees', () => {
                 )
               })
             })
+
+            context('With the feature flag turned off', () => {
+              before(() => {
+                cy.visit(
+                  urls.events.aventri.registrationStatus(
+                    existingEventId,
+                    test.status
+                  )
+                )
+              })
+              it('should not display an aventri attendee', () => {
+                cy.get('[data-test="aventri-attended"]').should('not.exist')
+              })
+            })
           }
         )
       })
@@ -264,15 +278,6 @@ describe('Aventri status event registration attendees', () => {
 
     after(() => {
       cy.resetUser()
-    })
-  })
-
-  context('With the feature flag turned off', () => {
-    before(() => {
-      cy.visit(urls.events.aventri.attended(existingEventId))
-    })
-    it('should not display an aventri attendee', () => {
-      cy.get('[data-test="aventri-attended"]').should('not.exist')
     })
   })
 })
