@@ -292,6 +292,7 @@ exports.activityFeed = function (req, res) {
           hits: paginated,
         },
       })
+
       return res.json(updatedHits)
     }
 

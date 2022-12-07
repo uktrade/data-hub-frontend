@@ -29,12 +29,12 @@ import AventriEventSyncWarning from '../../../components/ActivityFeed/activities
 import { ATTENDEES_SORT_OPTIONS } from './constants'
 
 const EventAventriRegistrationStatus = ({
+  name,
   aventriEventId,
   aventriAttendees,
   registrationStatus,
   aventriRegistrationStatuses,
   registrationStatusCounts,
-  aventriEventData,
   defaultQueryParams = {
     page: 1,
     size: 10,
@@ -46,7 +46,6 @@ const EventAventriRegistrationStatus = ({
   itemsPerPage = 10,
   maxItemsToPaginate = 10000,
 }) => {
-  const eventName = aventriEventData?.object.name
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -57,7 +56,7 @@ const EventAventriRegistrationStatus = ({
       text: 'Events',
     },
     {
-      text: eventName,
+      text: name,
     },
   ]
   const totalPages = Math.ceil(
@@ -78,7 +77,7 @@ const EventAventriRegistrationStatus = ({
 
         return (
           <DefaultLayout
-            heading={eventName}
+            heading={name}
             pageTitle="Events"
             breadcrumbs={breadcrumbs}
             useReactRouter={true}
