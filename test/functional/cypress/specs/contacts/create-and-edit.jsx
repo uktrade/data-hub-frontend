@@ -142,7 +142,7 @@ describe('Create contact form', () => {
 
     it('should only show the state field when US is selected', () => {
       cy.contains('Country').parent().find('select').select('United States')
-      cy.get('#field-areaUS').should('contain.text', 'State')
+      cy.get('#field-area').should('contain.text', 'State')
       cy.get('#postcode-search').should('not.exist')
     })
 
@@ -233,7 +233,7 @@ describe('Edit contact', () => {
   describe('country specific address fields', () => {
     it('should prepopulate the state', () => {
       cy.visit(`/contacts/${EDIT_US_CONTACT_ID}/edit`)
-      cy.get('#areaUS')
+      cy.get('#area')
         .find('option:selected')
         .should('have.text', 'Massachusetts')
     })
@@ -281,7 +281,7 @@ describe('Edit contact', () => {
         it('should clear the province value', () => {
           cy.visit(`/contacts/${EDIT_US_CONTACT_ID}/edit`)
           cy.get('#country').select('United States')
-          cy.get('#areaUS').select('Massachusetts')
+          cy.get('#area').select('Massachusetts')
           cy.get('#country').select('Canada')
           cy.get('#address1').type('Address first line')
           cy.get('#city').type('Address city')

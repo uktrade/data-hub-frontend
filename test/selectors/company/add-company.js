@@ -50,7 +50,7 @@ module.exports = {
     },
     region: 'select#uk_region',
     sector: 'select#sector',
-    areaUS: 'select#areaUS',
+    areaUS: 'select#area',
     areaCanada: 'select#areaCanada',
   },
   companyDetails: {

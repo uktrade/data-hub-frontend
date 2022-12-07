@@ -10,6 +10,7 @@ var maxemailEmailSentActivities = require('../../../fixtures/v4/activity-feed/ex
 // Data Hub and external activities
 var dataHubAndExternalActivities = require('../../../fixtures/v4/activity-feed/data-hub-and-external-activities.json')
 var companyActivities = require('../../../fixtures/v4/activity-feed/company-activity-feed-activities.json')
+var contactDataHubAndExternalActivities = require('../../../fixtures/v4/activity-feed/contact-data-hub-and-external-activities.json')
 
 // My activities
 var myActivities = require('../../../fixtures/v4/activity-feed/my-activities.json')
@@ -25,6 +26,7 @@ var aventriEventsNoDetails = require('../../../fixtures/v4/activity-feed/aventri
 var aventriAttendees = require('../../../fixtures/v4/activity-feed/aventri-attendees.json')
 ////This order is correct when sorted by: First Name A-Z, Last name A-Z and Company name A-Z
 var aventriAttendeesAToZOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-a-z.json')
+var aventriAttendeeForCompany = require('../../../fixtures/v4/activity-feed/aventri-attendee-for-company.json')
 
 ////This order is correct when sorted by: First Name Z-A, Last name Z-A and Company name Z-A
 var aventriAttendeesZToAOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-z-a.json')
@@ -37,6 +39,7 @@ const DATA_HUB_ACTIVITY = [
   'dit:InvestmentProject',
   'dit:OMISOrder',
   'dit:CompanyReferral',
+  'dit:aventri:Event',
 ]
 
 const EXTERNAL_ACTIVITY = ['dit:Accounts', 'dit:Company', 'dit:Export']
@@ -83,7 +86,7 @@ exports.activityFeed = function (req, res) {
 
     //if the sort by is newest
     if (req.body.sort[0].published.order === 'desc') {
-      return res.json(dataHubAndExternalActivities)
+      return res.json(contactDataHubAndExternalActivities)
     }
     //if the story by is oldest
     if (req.body.sort[0].published.order === 'asc') {
@@ -155,8 +158,16 @@ exports.activityFeed = function (req, res) {
   var isAventriAttendeeQuery =
     get(req.body, "query.bool.must[0].term['object.type']") ===
     'dit:aventri:Attendee'
-
   if (isAventriAttendeeQuery) {
+    var isCompanyQuery = get(
+      req.body,
+      "query.bool.must[1].terms['object.dit:emailAddress']"
+    )
+
+    if (isCompanyQuery) {
+      return res.json(aventriAttendeeForCompany)
+    }
+
     var aventriId = get(
       req.body,
       "query.bool.must[1].term['object.attributedTo.id']"

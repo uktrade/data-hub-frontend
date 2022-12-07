@@ -8,6 +8,7 @@ import Form from '../../../components/Form'
 import { TASK_GET_EVENTS_FORM_AND_METADATA, TASK_SAVE_EVENT } from './state'
 import { EventFormFields } from './EventFormFields'
 import { transformEventFormForAPIRequest } from './transformers'
+import { FormLayout } from '../../../../client/components'
 
 const DISPLAY_EDIT_EVENT = 'Edit event'
 const DISPLAY_ADD_EVENT = 'Add event'
@@ -46,30 +47,32 @@ const EventForm = () => {
       breadcrumbs={breadcrumbs}
       useReactRouter={true}
     >
-      <Form
-        id="event-form"
-        submissionTaskName={TASK_SAVE_EVENT}
-        analyticsFormName={id ? 'editEvent' : 'createEvent'}
-        initialValuesTaskName={TASK_GET_EVENTS_FORM_AND_METADATA}
-        initialValuesPayload={{
-          eventId: id,
-        }}
-        redirectTo={({ data }) => urls.events.details(data.id)}
-        redirectMode="soft"
-        flashMessage={flashMessage}
-        submitButtonLabel={id ? DISPLAY_SAVE : DISPLAY_ADD_EVENT}
-        transformPayload={transformEventFormForAPIRequest}
-        cancelButtonLabel={DISPLAY_CANCEL}
-        cancelRedirectTo={() =>
-          id ? urls.events.details(id) : urls.events.index()
-        } //this originally used the react to: instead of a hard redirect, so it might break after being switched, watch out
-      >
-        {({ values }) => {
-          if (Object.keys(values).length !== 0) {
-            return <EventFormFields values={values} />
-          }
-        }}
-      </Form>
+      <FormLayout setWidth="three-quarters">
+        <Form
+          id="event-form"
+          submissionTaskName={TASK_SAVE_EVENT}
+          analyticsFormName={id ? 'editEvent' : 'createEvent'}
+          initialValuesTaskName={TASK_GET_EVENTS_FORM_AND_METADATA}
+          initialValuesPayload={{
+            eventId: id,
+          }}
+          redirectTo={({ data }) => urls.events.details(data.id)}
+          redirectMode="soft"
+          flashMessage={flashMessage}
+          submitButtonLabel={id ? DISPLAY_SAVE : DISPLAY_ADD_EVENT}
+          transformPayload={transformEventFormForAPIRequest}
+          cancelButtonLabel={DISPLAY_CANCEL}
+          cancelRedirectTo={() =>
+            id ? urls.events.details(id) : urls.events.index()
+          } //this originally used the react to: instead of a hard redirect, so it might break after being switched, watch out
+        >
+          {({ values }) => {
+            if (Object.keys(values).length !== 0) {
+              return <EventFormFields values={values} />
+            }
+          }}
+        </Form>
+      </FormLayout>
     </DefaultLayout>
   )
 }

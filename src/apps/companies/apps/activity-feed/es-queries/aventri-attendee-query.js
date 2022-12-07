@@ -31,4 +31,4 @@ const aventriAttendeeQuery = ({
   sort,
 })
 
-module.exports = { aventriAttendeeQuery }
+module.exports = aventriAttendeeQuery

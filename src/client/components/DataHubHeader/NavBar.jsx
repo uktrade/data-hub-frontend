@@ -12,7 +12,7 @@ import {
 import ProtectedLink from '../ProtectedLink'
 
 // Colours not defined in 'govuk-colours' which we need for consistency
-// with Find Exporters and Market Access.
+// with Find Exporters and Market access.
 import { GREY_3_LEGACY, DARK_BLUE_LEGACY } from '../../utils/colors'
 
 import links from './links'

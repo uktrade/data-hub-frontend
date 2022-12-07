@@ -12,7 +12,7 @@ import {
 } from '@govuk-react/constants'
 
 // Colours not defined in 'govuk-colours' which we need for consistency
-// with Find Exporters and Market Access.
+// with Find Exporters and Market access.
 import { DARK_BLUE_LEGACY } from '../../utils/colors'
 
 const SWITCH_TO_DATA_WORKSPACE = 'Switch to Data Workspace'

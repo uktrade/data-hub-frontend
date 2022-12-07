@@ -21,9 +21,12 @@ describe('Dashboard reminder summary', () => {
     before(() => {
       cy.intercept('GET', '/api-proxy/v4/reminder/summary', {
         body: {
-          estimated_land_date: 1,
-          no_recent_investment_interaction: 2,
-          outstanding_propositions: 5,
+          count: 8,
+          investment: {
+            estimated_land_date: 1,
+            no_recent_interaction: 2,
+            outstanding_propositions: 5,
+          },
         },
       }).as('apiRequest')
       cy.visit('/')
@@ -31,7 +34,7 @@ describe('Dashboard reminder summary', () => {
     })
 
     beforeEach(() => {
-      cy.get('[data-test="summary-item-estimated_land_date"]').as(
+      cy.get('[data-test="investment-approaching-estimated-land-dates"]').as(
         'estimatedLandDate'
       )
 
@@ -50,14 +53,14 @@ describe('Dashboard reminder summary', () => {
     })
 
     it('should contain summary entries', () => {
-      cy.get('[data-test="summary-item-estimated_land_date"]').contains(
-        'Approaching estimated land dates (1)'
-      )
       cy.get(
-        '[data-test="summary-item-no_recent_investment_interaction"]'
+        '[data-test="investment-approaching-estimated-land-dates"]'
+      ).contains('Approaching estimated land dates (1)')
+      cy.get(
+        '[data-test="investment-projects-with-no-recent-interaction"]'
       ).contains('Projects with no recent interaction (2)')
 
-      cy.get('[data-test="summary-item-outstanding_propositions"]').contains(
+      cy.get('[data-test="investment-outstanding-propositions"]').contains(
         'Outstanding propositions (5)'
       )
     })
@@ -72,9 +75,12 @@ describe('Dashboard reminder summary', () => {
     before(() => {
       cy.intercept('GET', '/api-proxy/v4/reminder/summary', {
         body: {
-          estimated_land_date: 0,
-          no_recent_investment_interaction: 0,
-          outstanding_propositions: 0,
+          count: 0,
+          investment: {
+            estimated_land_date: 0,
+            no_recent_interaction: 0,
+            outstanding_propositions: 0,
+          },
         },
       }).as('apiRequest')
       cy.visit('/')

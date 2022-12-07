@@ -15,6 +15,72 @@
     "max_score": null,
     "hits": [
       {
+        "_index": "activities__feed_id_dummy-data-feed__date_2022-03-11__timestamp_1646998003__batch_id_kc0ew8vl__",
+        "_type": "_doc",
+        "_id": "dit:aventri:Event:1111:Attendee:1111:Create",
+        "_score": null,
+        "_source": {
+          "dit:application": "aventri",
+          "id": "dit:aventri:Event:1111:Attendee:1111:Create",
+          "object": {
+            "attributedTo": {
+              "id": "dit:aventri:Event:1111",
+              "type": "dit:aventri:Event"
+            },
+            "dit:aventri:approvalstatus": null,
+            "dit:aventri:companyname": "Acme2 Ltd",
+            "dit:aventri:createdby": "attendee",
+            "dit:aventri:email": "firstname2.lastname1@example.host",
+            "dit:aventri:firstname": "Firstname2",
+            "dit:aventri:language": "eng",
+            "dit:aventri:lastmodified": "2022-01-24T11:12:13",
+            "dit:aventri:lastname": "Lastname2",
+            "dit:aventri:modifiedby": "attendee",
+            "dit:aventri:registrationstatus": "Confirmed",
+            "dit:aventri:virtual_event_attendance": "Yes",
+            "id": "dit:aventri:Attendee:1234",
+            "published": "1970-01-01T00:00:00",
+            "type": ["dit:aventri:Attendee"]
+          },
+          "published": "2022-02-24T11:28:57",
+          "type": "dit:aventri:Attendee"
+        },
+        "sort": [1645702137000]
+      },
+      {
+        "_index": "activities__feed_id_dummy-data-feed__date_2022-03-11__timestamp_1646998003__batch_id_kc0ew8vl__",
+        "_type": "_doc",
+        "_id": "dit:aventri:Event:1111:Attendee:1113:Create",
+        "_score": null,
+        "_source": {
+          "dit:application": "aventri",
+          "id": "dit:aventri:Event:1113:Attendee:1113:Create",
+          "object": {
+            "attributedTo": {
+              "id": "dit:aventri:Event:1113",
+              "type": "dit:aventri:Event"
+            },
+            "dit:aventri:approvalstatus": null,
+            "dit:aventri:companyname": "Acme Ltd",
+            "dit:aventri:createdby": "attendee",
+            "dit:aventri:email": "firstname1.lastname1@example.host",
+            "dit:aventri:firstname": "Firstname1",
+            "dit:aventri:language": "eng",
+            "dit:aventri:lastmodified": "2022-01-24T11:12:13",
+            "dit:aventri:lastname": "Lastname1",
+            "dit:aventri:modifiedby": "attendee",
+            "dit:aventri:registrationstatus": "Attended",
+            "dit:aventri:virtual_event_attendance": "",
+            "id": "dit:aventri:Attendee:1234",
+            "published": "1970-01-01T00:00:00",
+            "type": ["dit:aventri:Attendee"]
+          },
+          "published": "2022-02-24T11:28:57",
+          "type": "dit:aventri:Attendee"
+        },
+        "sort": [1645702137000]
+      },
+      {
         "_index" : "activities__feed_id_dummy-data-feed__date_2022-05-03__timestamp_1651585823__batch_id_jaedyooq__",
         "_type" : "_doc",
         "_id" : "dit:aventri:Event:1111:Create",

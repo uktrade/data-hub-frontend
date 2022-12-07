@@ -153,7 +153,7 @@ const FieldAddress = ({
       return (
         <FieldSelect
           type="text"
-          name="areaUS"
+          name="area"
           label="State"
           options={usStates}
           required="Select a state"

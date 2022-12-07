@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { kebabCase } from 'lodash'
 
 import { LINK_COLOUR } from 'govuk-colours'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
@@ -23,44 +24,39 @@ const StyledListItem = styled('li')(() => ({
   margin: `${SPACING.SCALE_2} 0`,
 }))
 
-const typeToReminderName = {
-  estimated_land_date: 'Approaching estimated land dates',
-  no_recent_investment_interaction: 'Projects with no recent interaction',
-  outstanding_propositions: 'Outstanding propositions',
-}
-
-const typeToURL = {
-  estimated_land_date: urls.reminders.estimatedLandDate(),
-  no_recent_investment_interaction: urls.reminders.noRecentInteraction(),
-  outstanding_propositions: urls.reminders.outstandingPropositions(),
-}
-
-const Summary = ({ summary }) => {
-  return (
-    <>
-      <StyledList>
-        {Object.entries(summary).map(([type, number]) => (
-          <StyledListItem key={type} data-test={`summary-item-${type}`}>
-            <StyledReminderLink href={typeToURL[type]}>
-              {typeToReminderName[type]}
+const Summary = ({ summary }) => (
+  <>
+    <StyledList>
+      {summary &&
+        summary.investment.map((reminder) => (
+          <StyledListItem
+            key={reminder.name}
+            data-test={`investment-${kebabCase(reminder.name)}`}
+          >
+            <StyledReminderLink href={reminder.url}>
+              {reminder.name}
             </StyledReminderLink>
-            &nbsp;({number})
+            &nbsp;({reminder.count})
           </StyledListItem>
         ))}
-      </StyledList>
-      <StyledReminderLink href={urls.reminders.settings.index()}>
-        Reminders and email notifications settings
-      </StyledReminderLink>
-    </>
-  )
-}
+    </StyledList>
+    <StyledReminderLink href={urls.reminders.settings.index()}>
+      Reminders and email notifications settings
+    </StyledReminderLink>
+  </>
+)
+
+const reminderType = PropTypes.arrayOf(
+  PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    count: PropTypes.number.isRequired,
+  })
+)
 
 Summary.propTypes = {
-  summary: PropTypes.shape({
-    estimated_land_date: PropTypes.number.isRequired,
-    no_recent_investment_interaction: PropTypes.number.isRequired,
-    outstanding_propositions: PropTypes.number.isRequired,
-  }),
+  count: PropTypes.number,
+  investment: reminderType,
 }
 
 export default Summary

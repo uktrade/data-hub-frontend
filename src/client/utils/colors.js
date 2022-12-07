@@ -41,6 +41,6 @@ export const GREY_3_LEGACY = '#dee0e2'
 // -----------------------------------
 // We're unable to choose a colour from the GDS modern palette.
 // We require this specific blue for the navigation hover/selection.
-// This blue has to match the colour of both 'Find Exporters' and 'Market Access'.
+// This blue has to match the colour of both 'Find Exporters' and 'Market access'.
 // It is also used for the investment project timeline.
 export const DARK_BLUE_LEGACY = '#005ea5'

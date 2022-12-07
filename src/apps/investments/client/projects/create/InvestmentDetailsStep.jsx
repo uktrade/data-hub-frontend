@@ -14,6 +14,7 @@ import {
   FieldTypeahead,
   SummaryTable,
   ContactInformation,
+  FormLayout,
 } from '../../../../../client/components'
 import CompanyContactsResource from '../../../../../client/components/Resource/CompanyContacts'
 import { OPTION_NO, OPTIONS_YES_NO } from '../../../../constants'
@@ -114,206 +115,211 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
   )
   const fdiType = findSelectedItem(values.fdiTypes, values.fdi_type)
   return (
-    <Step name="details">
-      <SummaryTable caption="Investment type" data-test="typeOfInvestmentTable">
-        <SummaryTable.Row heading="Investment type">
-          {investmentType ? investmentType.label : null}
-        </SummaryTable.Row>
-        <SummaryTable.Row heading="Type of FDI" hideWhenEmpty={true}>
-          {fdiType ? fdiType.label : null}
-        </SummaryTable.Row>
-      </SummaryTable>
+    <FormLayout setWidth="three-quarters">
+      <Step name="details">
+        <SummaryTable
+          caption="Investment type"
+          data-test="typeOfInvestmentTable"
+        >
+          <SummaryTable.Row heading="Investment type">
+            {investmentType ? investmentType.label : null}
+          </SummaryTable.Row>
+          <SummaryTable.Row heading="Type of FDI" hideWhenEmpty={true}>
+            {fdiType ? fdiType.label : null}
+          </SummaryTable.Row>
+        </SummaryTable>
 
-      <FieldInput
-        type="text"
-        name="name"
-        label="Project name"
-        required="Enter a project name"
-        data-test="name"
-      />
+        <FieldInput
+          type="text"
+          name="name"
+          label="Project name"
+          required="Enter a project name"
+          data-test="name"
+        />
 
-      <FieldTextarea
-        type="text"
-        name="description"
-        label="Project description"
-        hint="Provide a short description of the project"
-        required="Enter a project description"
-        data-test="description"
-      />
+        <FieldTextarea
+          type="text"
+          name="description"
+          label="Project description"
+          hint="Provide a short description of the project"
+          required="Enter a project description"
+          data-test="description"
+        />
 
-      <FieldTextarea
-        type="text"
-        name="anonymous_description"
-        label="Anonymous project details (optional)"
-        hint="Do not include company names, financial details or addresses"
-        data-test="anonymous-description"
-      />
+        <FieldTextarea
+          type="text"
+          name="anonymous_description"
+          label="Anonymous project details (optional)"
+          hint="Do not include company names, financial details or addresses"
+          data-test="anonymous-description"
+        />
 
-      <FieldTypeahead
-        name="sector"
-        label="Primary sector"
-        options={values.sectors}
-        placeholder="Choose a sector"
-        required="Choose a sector"
-        data-test="primary-sector"
-      />
+        <FieldTypeahead
+          name="sector"
+          label="Primary sector"
+          options={values.sectors}
+          placeholder="Choose a sector"
+          required="Choose a sector"
+          data-test="primary-sector"
+        />
 
-      <FieldTypeahead
-        name="business_activities"
-        label="Business activities"
-        hint="You can select more than one activity"
-        placeholder="Search"
-        required="Choose a business activity"
-        options={values.investmentBusinessActivity}
-        isMulti={true}
-        data-test="business-activities"
-      />
+        <FieldTypeahead
+          name="business_activities"
+          label="Business activities"
+          hint="You can select more than one activity"
+          placeholder="Search"
+          required="Choose a business activity"
+          options={values.investmentBusinessActivity}
+          isMulti={true}
+          data-test="business-activities"
+        />
 
-      {Object.keys(values).length &&
-        values?.business_activities?.find(
-          (element) => element.label === 'Other'
-        ) && (
-          <FieldInput
-            type="text"
-            name="other_business_activity"
-            label="Other business activity"
-            hint="Tell us more about the other business activity here"
-            required="Enter an 'Other' business activity"
-          />
-        )}
+        {Object.keys(values).length &&
+          values?.business_activities?.find(
+            (element) => element.label === 'Other'
+          ) && (
+            <FieldInput
+              type="text"
+              name="other_business_activity"
+              label="Other business activity"
+              hint="Tell us more about the other business activity here"
+              required="Enter an 'Other' business activity"
+            />
+          )}
 
-      <Task>
-        {(getTask) => {
-          const openContactFormTask = getTask(
-            TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM,
-            CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID
-          )
-          return (
-            <CompanyContactsResource id={company.id}>
-              {({ results }) => {
-                return (
-                  <>
-                    <FieldTypeahead
-                      name="client_contacts"
-                      label="Client contact details"
-                      placeholder="Search"
-                      required="Choose a client contact"
-                      data-test="client-contact"
-                      options={results.map(({ name, id }) => ({
-                        label: name,
-                        value: id,
-                      }))}
-                      isMulti={true}
-                    />
-                    <ContactInformation
-                      onOpenContactForm={(e) => {
-                        e.preventDefault()
-                        openContactFormTask.start({
-                          payload: {
-                            values,
-                            url: e.target.href,
-                          },
-                        })
-                      }}
-                      companyId={company.id}
-                    />
-                  </>
-                )
-              }}
-            </CompanyContactsResource>
-          )
-        }}
-      </Task>
+        <Task>
+          {(getTask) => {
+            const openContactFormTask = getTask(
+              TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM,
+              CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID
+            )
+            return (
+              <CompanyContactsResource id={company.id}>
+                {({ results }) => {
+                  return (
+                    <>
+                      <FieldTypeahead
+                        name="client_contacts"
+                        label="Client contact details"
+                        placeholder="Search"
+                        required="Choose a client contact"
+                        data-test="client-contact"
+                        options={results.map(({ name, id }) => ({
+                          label: name,
+                          value: id,
+                        }))}
+                        isMulti={true}
+                      />
+                      <ContactInformation
+                        onOpenContactForm={(e) => {
+                          e.preventDefault()
+                          openContactFormTask.start({
+                            payload: {
+                              values,
+                              url: e.target.href,
+                            },
+                          })
+                        }}
+                        companyId={company.id}
+                      />
+                    </>
+                  )
+                }}
+              </CompanyContactsResource>
+            )
+          }}
+        </Task>
 
-      <FieldRadios
-        name="clientRelationshipManager"
-        legend="Are you the client relationship manager for this project?"
-        required="Select yes if you're the client relationship manager for this project"
-        options={OPTIONS_YES_NO.map((option) => ({
-          ...option,
-          ...(option.value === OPTION_NO && {
-            children: (
-              <FieldSelect
-                name="client_relationship_manager"
-                options={values.advisers}
-                required="Choose a client relationship manager"
-                aria-label="Choose a client relationship manager"
-              />
-            ),
-          }),
-        }))}
-      />
+        <FieldRadios
+          name="clientRelationshipManager"
+          legend="Are you the client relationship manager for this project?"
+          required="Select yes if you're the client relationship manager for this project"
+          options={OPTIONS_YES_NO.map((option) => ({
+            ...option,
+            ...(option.value === OPTION_NO && {
+              children: (
+                <FieldSelect
+                  name="client_relationship_manager"
+                  options={values.advisers}
+                  required="Choose a client relationship manager"
+                  aria-label="Choose a client relationship manager"
+                />
+              ),
+            }),
+          }))}
+        />
 
-      <FieldRadios
-        name="referralSourceAdviser"
-        legend="Are you the referral source for this project?"
-        required="Select yes if you're the referral source for this project"
-        options={OPTIONS_YES_NO.map((option) => ({
-          ...option,
-          ...(option.value === OPTION_NO && {
-            children: (
-              <FieldSelect
-                name="referral_source_adviser"
-                options={values.advisers}
-                required="Choose a referral source adviser"
-                aria-label="Choose a referral source adviser"
-              />
-            ),
-          }),
-        }))}
-      />
+        <FieldRadios
+          name="referralSourceAdviser"
+          legend="Are you the referral source for this project?"
+          required="Select yes if you're the referral source for this project"
+          options={OPTIONS_YES_NO.map((option) => ({
+            ...option,
+            ...(option.value === OPTION_NO && {
+              children: (
+                <FieldSelect
+                  name="referral_source_adviser"
+                  options={values.advisers}
+                  required="Choose a referral source adviser"
+                  aria-label="Choose a referral source adviser"
+                />
+              ),
+            }),
+          }))}
+        />
 
-      <StyledFieldSelect
-        name="referral_source_activity"
-        label="Referral source activity"
-        emptyOption="Choose a referral source activity"
-        options={referralSourceHierarchy}
-        required="Choose a referral source activity"
-        data-test="referral-source-activity"
-      />
+        <StyledFieldSelect
+          name="referral_source_activity"
+          label="Referral source activity"
+          emptyOption="Choose a referral source activity"
+          options={referralSourceHierarchy}
+          required="Choose a referral source activity"
+          data-test="referral-source-activity"
+        />
 
-      <FieldDate
-        format="short"
-        name="estimated_land_date"
-        label="Estimated land date"
-        hint="An estimated date of when investment project activities will start"
-        required="Enter an estimated land date"
-        invalid="Enter a valid estimated land date"
-        data-test="estimated-land-date"
-      />
+        <FieldDate
+          format="short"
+          name="estimated_land_date"
+          label="Estimated land date"
+          hint="An estimated date of when investment project activities will start"
+          required="Enter an estimated land date"
+          invalid="Enter a valid estimated land date"
+          data-test="estimated-land-date"
+        />
 
-      <FieldDate
-        name="actual_land_date"
-        label="Actual land date (optional)"
-        hint="The date investment project activities started"
-        invalid="Enter a valid actual land date"
-        data-test="actual-land-date"
-      />
+        <FieldDate
+          name="actual_land_date"
+          label="Actual land date (optional)"
+          hint="The date investment project activities started"
+          invalid="Enter a valid actual land date"
+          data-test="actual-land-date"
+        />
 
-      <FieldTypeahead
-        name="investor_type"
-        label="Is the investor new or existing? (optional)"
-        options={values.investmentInvestorType}
-        placeholder="Choose an investor type"
-        data-test="investor-type"
-      />
+        <FieldTypeahead
+          name="investor_type"
+          label="Is the investor new or existing? (optional)"
+          options={values.investmentInvestorType}
+          placeholder="Choose an investor type"
+          data-test="investor-type"
+        />
 
-      <FieldTypeahead
-        name="level_of_involvement"
-        label="Level of investor involvement (optional)"
-        options={values.investmentInvolvement}
-        placeholder="Choose a level of involvement"
-        data-test="level-of-involvement"
-      />
+        <FieldTypeahead
+          name="level_of_involvement"
+          label="Level of investor involvement (optional)"
+          options={values.investmentInvolvement}
+          placeholder="Choose a level of involvement"
+          data-test="level-of-involvement"
+        />
 
-      <FieldTypeahead
-        name="specific_programme"
-        label="Specific investment programme (optional)"
-        options={values.investmentSpecificProgramme}
-        placeholder="Choose a specific programme"
-        data-test="specific-investment-programme"
-      />
-    </Step>
+        <FieldTypeahead
+          name="specific_programme"
+          label="Specific investment programme (optional)"
+          options={values.investmentSpecificProgramme}
+          placeholder="Choose a specific programme"
+          data-test="specific-investment-programme"
+        />
+      </Step>
+    </FormLayout>
   )
 }
 

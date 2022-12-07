@@ -216,7 +216,6 @@ const EventsCollection = ({
                   qsParam="name"
                   name="name"
                   label={LABELS.eventName}
-                  placeholder="Search event name"
                   data-test="event-name-filter"
                 />
                 <FilterToggleSection

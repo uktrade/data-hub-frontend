@@ -40,7 +40,7 @@ describe('DA Permission', () => {
         'Contacts',
         'Investments',
         'Orders',
-        'Market Access',
+        'Market access',
         'Support',
       ])
     })

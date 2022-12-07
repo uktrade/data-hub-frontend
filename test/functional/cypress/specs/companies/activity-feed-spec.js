@@ -1,6 +1,8 @@
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 
+import { ACTIVITY_STREAM_FEATURE_FLAG } from '../../../../../src/apps/companies/apps/activity-feed/constants'
+
 describe('Company activity feed', () => {
   before(() => {
     cy.visit(
@@ -168,6 +170,31 @@ describe('Company activity feed', () => {
             '/companies/01e3366a-aa2b-40c0-aaf9-9013f714a671/referrals/fd6a151f-90db-41e3-841f-1ca0dd63b674'
           )
       )
+    })
+  })
+
+  context('Aventri', () => {
+    context('when the activity stream flag is on', () => {
+      before(() => {
+        cy.setUserFeatures([ACTIVITY_STREAM_FEATURE_FLAG])
+      })
+      it('displays the correct activity type label', () => {
+        cy.get('[data-test="aventri-event"]').within(() =>
+          cy
+            .get('[data-test="activity-kind-label"]')
+            .contains('Aventri Service Delivery', {
+              matchCase: false,
+            })
+        )
+      })
+
+      it('displays the correct sub-topic label', () => {
+        cy.get('[data-test="aventri-event"]').within(() =>
+          cy.get('[data-test="activity-service-label"]').contains('Event', {
+            matchCase: false,
+          })
+        )
+      })
     })
   })
 

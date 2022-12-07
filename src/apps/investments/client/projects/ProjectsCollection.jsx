@@ -1,4 +1,7 @@
 import React from 'react'
+import { Details, Paragraph } from 'govuk-react'
+import { FONT_SIZE } from '@govuk-react/constants'
+import styled from 'styled-components'
 import { connect } from 'react-redux'
 import urls from '../../../../lib/urls'
 import {
@@ -30,6 +33,15 @@ import {
 
 import { sanitizeFilter } from '../../../../client/filters'
 
+const StyledParagraph = styled(Paragraph)`
+  font-size: ${FONT_SIZE.SIZE_16}; ;
+`
+const StyledDetails = styled(Details)`
+  margin-bottom: 0;
+  span {
+    font-size: ${FONT_SIZE.SIZE_16};
+  }
+`
 const ProjectsCollection = ({
   payload,
   currentAdviserId,
@@ -172,6 +184,12 @@ const ProjectsCollection = ({
             selectedOptions={selectedFilters.financialYears.options}
             data-test="financial-year-filter"
           />
+          <StyledDetails summary="What do these options mean?">
+            <StyledParagraph>
+              Options show financial year. They filter by land date if
+              available, then by estimated land date.
+            </StyledParagraph>
+          </StyledDetails>
         </FilterToggleSection>
 
         <FilterToggleSection
