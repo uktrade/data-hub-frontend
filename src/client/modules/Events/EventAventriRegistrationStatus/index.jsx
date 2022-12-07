@@ -122,7 +122,7 @@ const EventAventriRegistrationStatus = ({
                                 (status, index) => (
                                   <LocalNavLink
                                     key={`reg-status-${index}`}
-                                    dataTest="event-aventri-status-link"
+                                    dataTest={`event-aventri-status-link-${status.urlSlug}`}
                                     href={urls.events.aventri.registrationStatus(
                                       aventriEventId,
                                       status.urlSlug
