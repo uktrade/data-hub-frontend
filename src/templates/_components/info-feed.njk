@@ -25,12 +25,12 @@
 
 {% set feedLimit =  feedLimit | default(5) %}
 <div class="dashboard-section" data-test="info-feed">
+{% if heading %} <h1 class="govuk-heading-m" data-test="info-feed-heading">{{heading}}</h1> {% endif %}
 {% if outboundLinkText %}
   <a href="{{ outboundLinkURL }}" class="dashboard-section__top-link" target="_blank" data-test="info-feed-top-link">
     {{ outboundLinkText }}
   </a>
 {% endif %}
-{% if heading %} <h1 class="govuk-heading-m" data-test="info-feed-heading">{{heading}}</h1> {% endif %}
 {% if subHeading %} <p class="dashboard-section__subheading">{{subHeading}}</p> {% endif %}
 {% if dataFeed.length %}
   <ul data-test="info-feed-list">
