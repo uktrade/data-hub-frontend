@@ -135,7 +135,7 @@ This method is recommended if you are only making frontend changes.
     or run in docker
 
     ```bash
-    docker run -it -p 6379:6379 redis:3.2
+    docker run -it -p 6379:6379 redis:6.2.6
     ```
 
 9.  Go to the Django admin site for your relevant environment and get an access token by adding the following path `/add-access-token/` to the URL. Add a frontend environment variable `OAUTH2_DEV_TOKEN` and set this as equal to the access token.
