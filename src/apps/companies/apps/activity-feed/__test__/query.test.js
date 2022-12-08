@@ -2,7 +2,7 @@ const { EVENT_ACTIVITY_SORT_OPTIONS } = require('../constants')
 const activityFeedEventsQuery = require('../es-queries/activity-feed-all-events-query')
 const aventriAttendeeForCompanyQuery = require('../es-queries/aventri-attendee-for-company-query')
 const externalActivityQuery = require('../es-queries/external-activity-query')
-const dataHubAndAventriActivityQuery = require('../es-queries/data-hub-and-aventri-activity-query')
+const dataHubAndActivtyStreamServicesQuery = require('../es-queries/data-hub-and-activity-stream-services-query')
 const aventriAttendeeQuery = require('../es-queries/aventri-attendee-query')
 
 const { faker } = require('@faker-js/faker')
@@ -203,7 +203,7 @@ describe('#activityFeedEventsQuery', () => {
 
     context('should return the filtered datahub and aventri data', () => {
       it('should include the aventri event id filters when provided', () => {
-        const queryResult = dataHubAndAventriActivityQuery({
+        const queryResult = dataHubAndActivtyStreamServicesQuery({
           from: 0,
           size: 1,
           types: ['a', 'b'],
@@ -223,7 +223,7 @@ describe('#activityFeedEventsQuery', () => {
       })
 
       it('should exclude the aventri event id filters when they are missing', () => {
-        const queryResult = dataHubAndAventriActivityQuery({
+        const queryResult = dataHubAndActivtyStreamServicesQuery({
           from: 0,
           size: 1,
           types: ['a', 'b'],

@@ -31,7 +31,7 @@ const {
   maxemailCampaignQuery,
   maxemailEmailSentQuery,
   aventriAttendeeForCompanyQuery,
-  dataHubAndAventriActivityQuery,
+  dataHubAndActivtyStreamServicesQuery,
   aventriAttendeeQuery,
   aventriAttendeeRegistrationStatusQuery,
 } = require('./es-queries')
@@ -99,7 +99,7 @@ function getQueries(options) {
       ...options,
       types: DATA_HUB_ACTIVITY,
     }),
-    [FILTER_KEYS.dataHubActivity]: dataHubAndAventriActivityQuery({
+    [FILTER_KEYS.dataHubActivity]: dataHubAndActivtyStreamServicesQuery({
       ...options,
       types: DATA_HUB_AND_AVENTRI_ACTIVITY,
     }),
