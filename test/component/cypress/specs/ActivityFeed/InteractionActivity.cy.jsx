@@ -11,7 +11,8 @@ import { getServiceText } from '../../../../../src/client/components/ActivityFee
 const subject = 'An interaction with a company'
 const typeInteraction = 'dit:Interaction'
 const typeServiceDelivery = 'dit:ServiceDelivery'
-const interactionUrl = urls.interactions.detail(
+const interactionUrl = urls.companies.interactions.detail(
+  'bbab3b56-d2bb-4d5e-bb2f-dd159e5439dc',
   'accf9d98-93c5-48ad-adf5-d71757cdeb44'
 )
 const shortNotes = 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.'
