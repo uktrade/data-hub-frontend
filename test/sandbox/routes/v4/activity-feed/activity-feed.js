@@ -16,14 +16,13 @@ var contactDataHubAndExternalActivities = require('../../../fixtures/v4/activity
 var myActivities = require('../../../fixtures/v4/activity-feed/my-activities.json')
 
 // Data Hub activities
-var dataHubActivities = require('../../../fixtures/v4/activity-feed/data-hub-activities.json')
 var noActivity = require('../../../fixtures/v4/activity-feed/no-activity.json')
 var dataHubEvents = require('../../../fixtures/v4/activity-feed/data-hub-events.json')
 
 //Aventri events
-var aventriEvents = require('../../../fixtures/v4/activity-feed/aventri-events.json')
+// var aventriEvents = require('../../../fixtures/v4/activity-feed/aventri-events.json')
 var aventriEventsNoDetails = require('../../../fixtures/v4/activity-feed/aventri-events-no-details.json')
-var aventriAttendees = require('../../../fixtures/v4/activity-feed/aventri-attendees.json')
+// var aventriAttendees = require('../../../fixtures/v4/activity-feed/aventri-attendees.json')
 ////This order is correct when sorted by: First Name A-Z, Last name A-Z and Company name A-Z
 var aventriAttendeesAToZOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-a-z.json')
 var aventriAttendeeForCompany = require('../../../fixtures/v4/activity-feed/aventri-attendee-for-company.json')
@@ -34,6 +33,19 @@ var aventriAttendeesZToAOrder = require('../../../fixtures/v4/activity-feed/aven
 //All Activitiy feed events
 var allActivityFeedEvents = require('../../../fixtures/v4/activity-feed/all-activity-feed-events.json')
 const { faker } = require('@faker-js/faker')
+const {
+  generateAventriEventESResponse,
+} = require('../../../fixtures/v4/activity-feed/aventri-events')
+const {
+  generateDataHubActivitiesESResponse,
+} = require('../../../fixtures/v4/activity-feed/data-hub-activities')
+const {
+  generateAventriAttendeeESResponse,
+} = require('../../../fixtures/v4/activity-feed/aventri-attendees')
+
+let aventriEvents = generateAventriEventESResponse()
+let dataHubActivities = generateDataHubActivitiesESResponse()
+let aventriAttendees = generateAventriAttendeeESResponse()
 
 const generateFakeAttendeeHitObject = (status) => {
   const firstName = faker.name.firstName()
@@ -295,7 +307,6 @@ exports.activityFeed = function (req, res) {
 
       return res.json(updatedHits)
     }
-
     // happy path
     return res.json(aventriAttendees)
   }
@@ -308,7 +319,10 @@ exports.activityFeed = function (req, res) {
   }
 
   // Data Hub activity
-  var dataHubTypes = get(req.body, "query.bool.must[0].terms['object.type']")
+  var dataHubTypes = get(
+    req.body,
+    "query.bool.filter.bool.should[0].bool.must[0].terms['object.type']"
+  )
   if (isEqual(dataHubTypes, DATA_HUB_ACTIVITY)) {
     var company = get(
       req.body,
