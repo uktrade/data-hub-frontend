@@ -182,7 +182,7 @@ describe('Company activity feed', () => {
         cy.get('[data-test="aventri-event"]').within(() =>
           cy
             .get('[data-test="activity-kind-label"]')
-            .contains('Aventri Service Delivery', {
+            .contains('Aventri Event', {
               matchCase: false,
             })
         )
