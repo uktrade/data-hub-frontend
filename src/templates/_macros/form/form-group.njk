@@ -50,6 +50,7 @@
         class="
           {{ labelClassName }}
           {{ 'u-visually-hidden' if isLabelHidden and not (props.error and forceErrorMessage) }}
+          {{ labelClassName + '-text' }}
         "
         {% if labelElement == 'label' %}for="{{ props.fieldId }}"{% endif %}
       >
