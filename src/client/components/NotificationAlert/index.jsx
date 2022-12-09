@@ -20,8 +20,6 @@ const StyledNotificationAlertNavLink = styled(NavLink)({
   },
 })
 
-// TODO: Notification alert styling layout location
-
 const StyledNotificationAlertSpan = styled('span')`
   font-size: ${FONT_SIZE.SIZE_16};
   font-weight: ${FONT_WEIGHTS.bold};
@@ -34,8 +32,13 @@ const StyledNotificationAlertSpan = styled('span')`
   background-color: ${RED};
   text-align: center;
   white-space: nowrap;
-  top: -7px;
+  top: -5px;
   left: -5px;
+`
+
+const StyledImg = styled('img')`
+  margin-top: 3px;
+  margin-bottom: -3px;
 `
 
 const NotificationAlert = ({ count }) => (
@@ -55,7 +58,7 @@ const NotificationAlert = ({ count }) => (
               as="a"
               href={urls.reminders.index()}
             >
-              <img src="/images/bell-icon.svg" alt="Notification icon" />
+              <StyledImg src="/images/bell-icon.svg" alt="Notification icon" />
               {count > 0 ? (
                 <StyledNotificationAlertSpan
                   aria-label="notification-alert-badge"
