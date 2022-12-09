@@ -1,71 +1,65 @@
 const { faker } = require('@faker-js/faker')
 
-const generateAttendee = (
-  {
-    id,
-    eventId,
-    firstName,
-    lastName,
-    email,
-    companyName,
-    registrationStatus,
-    datahubContactUrl,
-  } = {
-    id: faker.random.numeric(),
-    eventId: faker.random.numeric(),
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    email: faker.internet.email(),
-    companyName: faker.company.name(),
-    registrationStatus: faker.helpers.arrayElement([
-      'Activated',
-      'Attended',
-      'Confirmed',
-      'Cancelled',
-      'No Show',
-      'Waitlist',
-    ]),
-    datahubContactUrl: faker.internet.domainName(),
-  }
-) => ({
-  _index:
-    'activities__feed_id_dummy-data-feed__date_2022-06-28__timestamp_1656410763__batch_id_ltepro51__',
-  _type: '_doc',
-  _id: `dit:aventri:Event:${eventId}:Attendee:${id}:Create`,
-  _score: 3.6005385,
-  _source: {
-    'dit:application': 'aventri',
-    id: `dit:aventri:Event:${eventId}:Attendee:${id}:Create`,
-    object: {
-      attributedTo: {
-        id: `dit:aventri:Event:${eventId}`,
-        type: 'dit:aventri:Event',
+const futureEventIdWithLargeAttendeeList = 1114
+const pastEventIdWithLargeAttendeeList = 1111
+
+function generateAttendee({
+  id = faker.random.numeric(),
+  eventId = faker.random.numeric(),
+  firstName = faker.name.firstName(),
+  lastName = faker.name.lastName(),
+  email = faker.internet.email(),
+  companyName = faker.company.name(),
+  registrationStatus = faker.helpers.arrayElement([
+    'Activated',
+    'Attended',
+    'Confirmed',
+    'Cancelled',
+    'No Show',
+    'Waitlist',
+  ]),
+  datahubContactUrl = faker.internet.domainName(),
+} = {}) {
+  return {
+    _index:
+      'activities__feed_id_dummy-data-feed__date_2022-06-28__timestamp_1656410763__batch_id_ltepro51__',
+    _type: '_doc',
+    _id: `dit:aventri:Event:${eventId}:Attendee:${id}:Create`,
+    _score: 3.6005385,
+    _source: {
+      'dit:application': 'aventri',
+      id: `dit:aventri:Event:${eventId}:Attendee:${id}:Create`,
+      object: {
+        attributedTo: {
+          id: `dit:aventri:Event:${eventId}`,
+          type: 'dit:aventri:Event',
+        },
+        'dit:aventri:approvalstatus': '',
+        'dit:aventri:category': null,
+        'dit:aventri:companyname': companyName,
+        'dit:aventri:createdby': 'attendee',
+        'dit:aventri:email': email,
+        'dit:aventri:firstname': firstName,
+        'dit:aventri:language': 'eng',
+        'dit:aventri:lastmodified': '2022-01-24T11:12:13',
+        'dit:aventri:lastname': lastName,
+        'dit:aventri:modifiedby': 'attendee',
+        'dit:aventri:registrationstatus': registrationStatus,
+        'dit:aventri:virtual_event_attendance': 'Yes',
+        'dit:emailAddress': email,
+        'dit:firstName': firstName,
+        'dit:lastName': lastName,
+        'dit:registrationStatus': registrationStatus,
+        id: `dit:aventri:Attendee:${id}`,
+        published: '1970-01-01T00:00:00',
+        type: ['dit:aventri:Attendee'],
       },
-      'dit:aventri:approvalstatus': '',
-      'dit:aventri:category': null,
-      'dit:aventri:companyname': companyName,
-      'dit:aventri:createdby': 'attendee',
-      'dit:aventri:email': email,
-      'dit:aventri:firstname': firstName,
-      'dit:aventri:language': 'eng',
-      'dit:aventri:lastmodified': '2022-01-24T11:12:13',
-      'dit:aventri:lastname': lastName,
-      'dit:aventri:modifiedby': 'attendee',
-      'dit:aventri:registrationstatus': registrationStatus,
-      'dit:aventri:virtual_event_attendance': 'Yes',
-      'dit:emailAddress': email,
-      'dit:firstName': firstName,
-      'dit:lastName': lastName,
-      'dit:registrationStatus': registrationStatus,
-      id: `dit:aventri:Attendee:${id}`,
-      published: '1970-01-01T00:00:00',
-      type: ['dit:aventri:Attendee'],
+      published: '2022-02-24T11:28:57',
+      type: 'dit:aventri:Attendee',
+      datahubContactUrl,
     },
-    published: '2022-02-24T11:28:57',
-    type: 'dit:aventri:Attendee',
-    datahubContactUrl,
-  },
-})
+  }
+}
 
 /**
  * Generate an array of aventri attendee hits
@@ -202,6 +196,28 @@ const generateAventriAttendeeHits = (additionalAttendeeCount = 0) => {
       },
     ].map(generateAttendee),
     ...Array.from({ length: additionalAttendeeCount }).map(generateAttendee),
+    ...['Activated', 'Confirmed', 'Cancelled']
+      .map((status) =>
+        Array.from({ length: 12 }).map((_, index) =>
+          generateAttendee({
+            eventId: futureEventIdWithLargeAttendeeList,
+            email: `contact${index}@bob.com`,
+            registrationStatus: status,
+          })
+        )
+      )
+      .flat(),
+    ...['Attended', 'Cancelled', 'No Show', 'Waitlist']
+      .map((status) =>
+        Array.from({ length: 12 }).map((_, index) =>
+          generateAttendee({
+            eventId: pastEventIdWithLargeAttendeeList,
+            email: `contact${index}@bob.com`,
+            registrationStatus: status,
+          })
+        )
+      )
+      .flat(),
   ]
 }
 

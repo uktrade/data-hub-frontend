@@ -78,10 +78,10 @@ describe('AventriAttendee', () => {
         cy.mount(<Component activity={activity} />)
       })
 
-      it('should display the Aventri Service Delivery label when registration status is Attended', () => {
+      it('should display the Aventri Event label when registration status is Attended', () => {
         cy.get('[data-test="aventri-activity"]').within(() => {
           cy.get('[data-test="activity-kind-label"]').contains(
-            'aventri service delivery',
+            'Aventri Event',
             {
               matchCase: false,
             }

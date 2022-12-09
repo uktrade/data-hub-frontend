@@ -18,21 +18,29 @@ export default function AventriEvent({ activity: event }) {
   const name = eventObject.name
   const aventriEventId = eventObject.id.split(':')[EVENT_ID_INDEX]
   const date = formatStartAndEndDate(eventObject.startTime, eventObject.endTime)
-  const contacts = CardUtils.getContacts(event)
+  const contacts = CardUtils.getContactsGroupedByRegistrationStatus(event)
 
-  const formattedContacts = () =>
-    contacts &&
-    contacts.map((contact, index) => (
-      <span key={`contact-link-${index}`}>
-        {index ? ', ' : ''}
-        <Link data-test={`contact-link-${index}`} href={contact.url}>
-          {contact.name}
-        </Link>
-      </span>
-    ))
+  //TODO check whether this can be moved into redux state / transformers
+  const formattedContacts = Object.entries(contacts)
+    .filter(([, value]) => Array.isArray(value))
+    .map(([key, value]) => ({
+      label: key,
+      value: (
+        <ul>
+          {value.map((contact, index) => (
+            <li key={`contact-link-${index}`}>
+              <Link data-test={`contact-link-${index}`} href={contact.url}>
+                {contact.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ),
+    }))
+
   return (
     <ActivityCardWrapper dataTest="aventri-event">
-      <ActivityCardLabels service="Event" kind="Aventri Service Delivery" />
+      <ActivityCardLabels service="Event" kind="Aventri Event" />
       <ActivityCardSubject dataTest="aventri-event-name">
         <Link href={`/events/aventri/${aventriEventId}/details`}>{name}</Link>
       </ActivityCardSubject>
@@ -46,10 +54,7 @@ export default function AventriEvent({ activity: event }) {
             label: 'Aventri ID',
             value: aventriEventId,
           },
-          {
-            label: 'Contact(s)',
-            value: formattedContacts(),
-          },
+          ...formattedContacts,
         ]}
       />
     </ActivityCardWrapper>

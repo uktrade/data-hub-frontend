@@ -175,6 +175,7 @@ async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
     const aventriQuery = aventriAttendeeForCompanyQuery(contacts)
     const aventriResults = await fetchActivityFeed(req, aventriQuery)
     const aventriAttendees = aventriResults.hits.hits.map((hit) => hit._source)
+    //TODO need to implement some logic here to limit attendees by status on past/future events
 
     const groupedEventsWithContactsObj = aventriAttendees.reduce(
       (obj, attendee) => {
@@ -192,6 +193,7 @@ async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
                 name: contact.name,
                 type: ['dit:Contact'],
                 url: urls.contacts.details(contact.id),
+                registrationStatus: attendee.object['dit:registrationStatus'],
               },
             ]
           : []
@@ -204,7 +206,6 @@ async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
       },
       {}
     )
-
     return groupedEventsWithContactsObj
   } catch (error) {
     next(error)

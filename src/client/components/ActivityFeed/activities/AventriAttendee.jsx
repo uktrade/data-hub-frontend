@@ -58,9 +58,7 @@ export default function AventriAttendee({ activity: attendee }) {
       <ActivityCardLabels
         service="event"
         kind={
-          registrationStatus === 'Attended'
-            ? 'aventri service delivery'
-            : 'interaction'
+          registrationStatus === 'Attended' ? 'aventri event' : 'interaction'
         }
       />
       <ActivityCardSubject>

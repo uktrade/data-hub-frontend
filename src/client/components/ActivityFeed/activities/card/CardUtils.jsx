@@ -14,16 +14,30 @@ const getContacts = (activity) => {
   return mapPeople(
     activity,
     'dit:Contact',
-    ({ id, url, name, 'dit:jobTitle': jobTitle }) => {
+    ({ id, url, name, 'dit:jobTitle': jobTitle, registrationStatus }) => {
       return pickBy({
         id,
         url,
         name,
         jobTitle, // Optional field,
         type: 'Contact',
+        registrationStatus,
       })
     }
   )
+}
+
+const getContactsGroupedByRegistrationStatus = (activity) => {
+  return getContacts(activity)
+    .filter((a) => a.registrationStatus)
+    .reduce((r, a) => {
+      if (r[a.registrationStatus]) {
+        r[a.registrationStatus].push(a)
+      } else {
+        r[a.registrationStatus] = [a]
+      }
+      return r
+    }, {})
 }
 
 const getCompany = (activity) => {
@@ -79,4 +93,5 @@ export default {
   getCompany,
   getAdviser,
   transform,
+  getContactsGroupedByRegistrationStatus,
 }
