@@ -12,6 +12,7 @@ const generateAventriEvent = (
     city,
     country,
     postcode,
+    nameOfLocation,
   } = {
     id: faker.random.numeric(),
     name: faker.random.word(),
@@ -23,6 +24,7 @@ const generateAventriEvent = (
     city: faker.address.buildingNumber(),
     country: faker.address.buildingNumber(),
     postcode: faker.address.buildingNumber(),
+    nameOfLocation: faker.address.streetAddress(),
   }
 ) => {
   return {
@@ -60,7 +62,7 @@ const generateAventriEvent = (
         'dit:aventri:location_name': '',
         'dit:aventri:location_postcode': postcode,
         'dit:aventri:location_state': '',
-        'dit:aventri:locationname': 'Name of Location',
+        'dit:aventri:locationname': nameOfLocation,
         'dit:aventri:max_reg': '0',
         'dit:aventri:modifiedby': 'firstname1.lastname1@example.host',
         'dit:aventri:modifieddatetime': '2022-01-23T20:53:38',
@@ -101,6 +103,7 @@ const generateAventriEventHits = (additionalEventCount = 0) => {
         city: 'London',
         country: 'England',
         postcode: 'ABC 123',
+        nameOfLocation: 'Name of Location',
       },
       {
         id: 1113,
@@ -125,6 +128,19 @@ const generateAventriEventHits = (additionalEventCount = 0) => {
         name: 'EITA Test Filtering Event 2022',
         startTime: '2021-03-02T20:09:14',
         endTime: '2021-03-02T20:09:14',
+      },
+      {
+        id: 6666,
+        name: 'Aventri event no details',
+        startTime: '2021-03-02T20:09:14',
+        endTime: null,
+        address1: null,
+        address2: null,
+        address3: null,
+        city: null,
+        country: null,
+        postcode: null,
+        nameOfLocation: null,
       },
     ].map(generateAventriEvent),
     ...Array.from({ length: additionalEventCount }).map(generateAventriEvent),

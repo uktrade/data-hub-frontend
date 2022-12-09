@@ -21,7 +21,7 @@ var dataHubEvents = require('../../../fixtures/v4/activity-feed/data-hub-events.
 
 //Aventri events
 // var aventriEvents = require('../../../fixtures/v4/activity-feed/aventri-events.json')
-var aventriEventsNoDetails = require('../../../fixtures/v4/activity-feed/aventri-events-no-details.json')
+// var aventriEventsNoDetails = require('../../../fixtures/v4/activity-feed/aventri-events-no-details.json')
 // var aventriAttendees = require('../../../fixtures/v4/activity-feed/aventri-attendees.json')
 ////This order is correct when sorted by: First Name A-Z, Last name A-Z and Company name A-Z
 var aventriAttendeesAToZOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-a-z.json')
@@ -206,9 +206,9 @@ exports.activityFeed = function (req, res) {
     }
 
     //no optional details
-    if (aventriId === 'dit:aventri:Event:6666:Create') {
-      return res.json(aventriEventsNoDetails)
-    }
+    // if (aventriId === 'dit:aventri:Event:6666:Create') {
+    //   return res.json(aventriEventsNoDetails)
+    // }
     //happy path
     const foundEvent = aventriEvents.hits.hits.find(
       (e) => e._source.id == aventriId
