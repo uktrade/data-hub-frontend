@@ -1,13 +1,30 @@
 const { faker } = require('@faker-js/faker')
 
-const generateFakerAventriEvent = () => ({
-  id: faker.random.numeric(),
-  name: faker.random.word(),
-  startTime: faker.date.between(faker.date.past(), faker.date.future()),
-  endTime: faker.date.between(faker.date.past(), faker.date.future()),
-})
-
-const generateAventriEvent = ({ id, name, startTime, endTime }) => {
+const generateAventriEvent = (
+  {
+    id,
+    name,
+    startTime,
+    endTime,
+    address1,
+    address2,
+    address3,
+    city,
+    country,
+    postcode,
+  } = {
+    id: faker.random.numeric(),
+    name: faker.random.word(),
+    startTime: faker.date.between(faker.date.past(), faker.date.future()),
+    endTime: faker.date.between(faker.date.past(), faker.date.future()),
+    address1: faker.address.buildingNumber(),
+    address2: faker.address.buildingNumber(),
+    address3: faker.address.buildingNumber(),
+    city: faker.address.buildingNumber(),
+    country: faker.address.buildingNumber(),
+    postcode: faker.address.buildingNumber(),
+  }
+) => {
   return {
     _index:
       'activities__feed_id_dummy-data-feed__date_2022-05-03__timestamp_1651585823__batch_id_jaedyooq__',
@@ -35,13 +52,13 @@ const generateAventriEvent = ({ id, name, startTime, endTime }) => {
         'dit:aventri:defaultlanguage': 'eng',
         'dit:aventri:folderid': id,
         'dit:aventri:live_date': null,
-        'dit:aventri:location_address1': faker.address.buildingNumber(),
-        'dit:aventri:location_address2': 'Brockley',
-        'dit:aventri:location_address3': 'Lewisham',
-        'dit:aventri:location_city': faker.address.city(),
-        'dit:aventri:location_country': faker.address.country(),
+        'dit:aventri:location_address1': address1,
+        'dit:aventri:location_address2': address2,
+        'dit:aventri:location_address3': address3,
+        'dit:aventri:location_city': city,
+        'dit:aventri:location_country': country,
         'dit:aventri:location_name': '',
-        'dit:aventri:location_postcode': faker.address.zipCode(),
+        'dit:aventri:location_postcode': postcode,
         'dit:aventri:location_state': '',
         'dit:aventri:locationname': 'Name of Location',
         'dit:aventri:max_reg': '0',
@@ -77,13 +94,19 @@ const generateAventriEventHits = (additionalEventCount = 0) => {
         id: 1111,
         name: 'EITA Test Event 2022',
         startTime: '2021-03-02T20:09:14',
-        endTime: '2021-03-02T20:09:14',
+        endTime: '2022-05-04T20:09:14',
+        address1: '1 street avenue',
+        address2: 'Brockley',
+        address3: 'Lewisham',
+        city: 'London',
+        country: 'England',
+        postcode: 'ABC 123',
       },
       {
         id: 1113,
         name: 'EITA Test Event 2 2022',
         startTime: '2021-03-02T20:09:14',
-        endTime: '2021-03-02T20:09:14',
+        endTime: '2022-05-04T20:09:14',
       },
       {
         id: 1112,
@@ -104,9 +127,7 @@ const generateAventriEventHits = (additionalEventCount = 0) => {
         endTime: '2021-03-02T20:09:14',
       },
     ].map(generateAventriEvent),
-    ...Array.from({ length: additionalEventCount }).map(
-      generateFakerAventriEvent
-    ),
+    ...Array.from({ length: additionalEventCount }).map(generateAventriEvent),
   ]
 }
 
