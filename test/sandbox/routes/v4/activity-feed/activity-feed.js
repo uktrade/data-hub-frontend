@@ -20,12 +20,8 @@ var noActivity = require('../../../fixtures/v4/activity-feed/no-activity.json')
 var dataHubEvents = require('../../../fixtures/v4/activity-feed/data-hub-events.json')
 
 //Aventri events
-// var aventriEvents = require('../../../fixtures/v4/activity-feed/aventri-events.json')
-// var aventriEventsNoDetails = require('../../../fixtures/v4/activity-feed/aventri-events-no-details.json')
-// var aventriAttendees = require('../../../fixtures/v4/activity-feed/aventri-attendees.json')
 ////This order is correct when sorted by: First Name A-Z, Last name A-Z and Company name A-Z
 var aventriAttendeesAToZOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-a-z.json')
-var aventriAttendeeForCompany = require('../../../fixtures/v4/activity-feed/aventri-attendee-for-company.json')
 var aventriRegistrationStatusWithAggregations = require('../../../fixtures/v4/activity-feed/aventri-registration-status-with-aggregation-counts.json')
 
 ////This order is correct when sorted by: First Name Z-A, Last name Z-A and Company name Z-A
@@ -235,7 +231,7 @@ exports.activityFeed = function (req, res) {
     )
 
     if (isCompanyQuery) {
-      return res.json(aventriAttendeeForCompany)
+      return res.json(aventriAttendees)
     }
 
     var isRegistrationStatusQuery = get(req.body, 'aggs.countfield.terms.field')
