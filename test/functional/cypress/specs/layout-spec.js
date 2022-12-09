@@ -56,6 +56,7 @@ describe('Layout', () => {
 
 describe('When reminders feature flag notification is on', () => {
   beforeEach(() => {
+    cy.setUserFeatures(['reminder-summary'])
     cy.visit('/reminders')
   })
 
