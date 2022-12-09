@@ -1,7 +1,4 @@
 const { faker } = require('@faker-js/faker')
-const {
-  EVENT_AVENTRI_ATTENDEES_STATUSES,
-} = require('../../../../../src/apps/companies/apps/activity-feed/constants')
 
 const generateAttendee = (
   {
@@ -20,9 +17,14 @@ const generateAttendee = (
     lastName: faker.name.lastName(),
     email: faker.internet.email(),
     companyName: faker.company.name(),
-    registrationStatus: faker.helpers.arrayElement(
-      EVENT_AVENTRI_ATTENDEES_STATUSES
-    ),
+    registrationStatus: faker.helpers.arrayElement([
+      'Activated',
+      'Attended',
+      'Confirmed',
+      'Cancelled',
+      'No Show',
+      'Waitlist',
+    ]),
     datahubContactUrl: faker.internet.domainName(),
   }
 ) => ({
