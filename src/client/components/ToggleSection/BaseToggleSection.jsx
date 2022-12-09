@@ -78,6 +78,7 @@ const BaseToggleSection = ({
         data-test="toggle-section-button"
         onClick={() => open(!isOpen)}
         isOpen={isOpen}
+        aria-expanded={isOpen}
       >
         <ToggleButtonIcon
           src={icon}
