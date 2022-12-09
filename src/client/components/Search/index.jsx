@@ -25,9 +25,9 @@ const Search = ({ csrfToken }) => (
     action={`${urls.search.type('companies')}?_csrf=${csrfToken}`}
   >
     <StyledSearchContainer role="search">
-      <label htmlFor="search-input">
-        <VisuallyHidden>Input your search term</VisuallyHidden>
-      </label>
+      <VisuallyHidden as="label" htmlFor="search-input">
+        Input your search term
+      </VisuallyHidden>
       <StyledSearchInput
         name="term"
         type="text"
