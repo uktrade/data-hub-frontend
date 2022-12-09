@@ -9,7 +9,6 @@ import {
   LINK_VISITED_COLOUR,
   PAGE_COLOUR,
 } from 'govuk-colours'
-import VisuallyHidden from '@govuk-react/visually-hidden'
 import React from 'react'
 import LinesEllipsis from 'react-lines-ellipsis'
 import styled from 'styled-components'
@@ -141,9 +140,7 @@ const CompaniesTable = ({ companies }) => (
         </StyledTableHeaderCell>
         <StyledTableHeaderCell width="25%">Subject</StyledTableHeaderCell>
         <StyledTableHeaderCell width="20%">Added by</StyledTableHeaderCell>
-        <StyledTableHeaderCell width="151px">
-          <VisuallyHidden>Action</VisuallyHidden>
-        </StyledTableHeaderCell>
+        <StyledTableHeaderCell width="151px">Action</StyledTableHeaderCell>
       </Table.Row>
     }
   >
