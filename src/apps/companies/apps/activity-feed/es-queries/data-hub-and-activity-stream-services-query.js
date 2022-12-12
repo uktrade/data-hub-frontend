@@ -4,7 +4,6 @@ const dataHubAndActivtyStreamServicesQuery = ({
   types,
   companyIds,
   aventriEventIds,
-  contacts,
 }) => {
   const shouldCriteria = [
     {
@@ -19,29 +18,6 @@ const dataHubAndActivtyStreamServicesQuery = ({
             terms: {
               'object.attributedTo.id': [
                 ...companyIds.map((id) => `dit:DataHubCompany:${id}`),
-              ],
-            },
-          },
-        ],
-      },
-      bool: {
-        must: [
-          {
-            term: {
-              'object.attributedTo.id':
-                'dit:directoryFormsApi:SubmissionType:export-support-service',
-            },
-          },
-          {
-            term: {
-              'object.attributedTo.type':
-                'dit:directoryFormsApi:SubmissionAction:zendesk',
-            },
-          },
-          {
-            terms: {
-              'actor.dit:emailAddress': [
-                ...contacts.map((contact) => contact.email),
               ],
             },
           },

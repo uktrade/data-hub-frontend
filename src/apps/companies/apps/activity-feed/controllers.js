@@ -33,6 +33,7 @@ const {
   aventriAttendeeForCompanyQuery,
   dataHubAndActivtyStreamServicesQuery,
   aventriAttendeeQuery,
+  exportServiceSupportQuery,
   aventriAttendeeRegistrationStatusQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
@@ -65,22 +66,22 @@ async function renderActivityFeed(req, res, next) {
   try {
     const contentProps = company.archived
       ? {
-          company,
-          breadcrumbs,
-          flashMessages: res.locals.getMessages(),
-        }
+        company,
+        breadcrumbs,
+        flashMessages: res.locals.getMessages(),
+      }
       : {
-          company,
-          breadcrumbs,
-          flashMessages: res.locals.getMessages(),
-          activityTypeFilter: FILTER_KEYS.dataHubActivity,
-          activityTypeFilters: FILTER_ITEMS,
-          isGlobalUltimate: company.is_global_ultimate,
-          dnbHierarchyCount,
-          dnbRelatedCompaniesCount,
-          showMatchingPrompt:
-            !company.duns_number && !company.pending_dnb_investigation,
-        }
+        company,
+        breadcrumbs,
+        flashMessages: res.locals.getMessages(),
+        activityTypeFilter: FILTER_KEYS.dataHubActivity,
+        activityTypeFilters: FILTER_ITEMS,
+        isGlobalUltimate: company.is_global_ultimate,
+        dnbHierarchyCount,
+        dnbRelatedCompaniesCount,
+        showMatchingPrompt:
+          !company.duns_number && !company.pending_dnb_investigation,
+      }
 
     const props = {
       ...contentProps,
@@ -121,13 +122,20 @@ function isExternalFilter(activityTypeFilter) {
   )
 }
 
+function isEssFilter(activityTypeFilter) {
+  return (
+    activityTypeFilter === FILTER_KEYS.dataHubActivity ||
+    activityTypeFilter === FILTER_KEYS.dataHubAndExternalActivity
+  )
+}
+
 function getContactFromEmailAddress(emailAddress, contacts) {
   const contact = contacts.find((contact) => contact.email === emailAddress)
   return contact
     ? {
-        ...contact,
-        url: urls.contacts.details(contact.id),
-      }
+      ...contact,
+      url: urls.contacts.details(contact.id),
+    }
     : null
 }
 
@@ -173,6 +181,36 @@ async function getMaxemailCampaigns(req, next, contacts) {
   }
 }
 
+async function getExportSupportActivities(req, next, contacts) {
+  try {
+    // Fetch ESS  Activities
+    const essQuery = exportServiceSupportQuery(contacts)
+    const essQueryResults = await fetchActivityFeed(req, essQuery)
+
+    const essActivities = essQueryResults.hits.hits.map((hit) => hit._source)
+
+    //Add Ess contacts to each Activity
+    const essActivitiesWithContact = essActivities.map((activity) => {
+      if (
+        activity.object.attributedTo.id ==
+        'dit:directoryFormsApi:SubmissionType:export-support-service'
+      ) {
+        const essContactEmail = activity.actor['dit:emailAddress']
+        const essContact = getContactFromEmailAddress(essContactEmail, contacts)
+        activity.object.attributedTo = [
+          activity.object.attributedTo,
+          mapEssContacts(essContact),
+        ]
+      }
+      return activity
+    })
+
+    return essActivitiesWithContact
+  } catch (error) {
+    next(error)
+  }
+}
+
 async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
   try {
     // Fetch aventri attendee info for company contacts
@@ -190,17 +228,17 @@ async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
         )
         const mappedContact = contact
           ? [
-              {
-                'dit:emailAddress': contact.email,
-                id: contact.id,
-                name: contact.name,
-                type: ['dit:Contact'],
-                url: urls.contacts.details(contact.id),
+            {
+              'dit:emailAddress': contact.email,
+              id: contact.id,
+              name: contact.name,
+              type: ['dit:Contact'],
+              url: urls.contacts.details(contact.id),
                 registrationStatus: transformAventriEventStatusToEventStatus(
                   attendee.object['dit:registrationStatus']
                 ),
-              },
-            ]
+            },
+          ]
           : []
         if (event) {
           event.push(...mappedContact)
@@ -242,33 +280,33 @@ async function fetchActivitiesForContact(req, res, next) {
     // istanbul ignore next: Covered by functional tests
     let results = isActivityStreamFeatureFlagEnabled
       ? await fetchActivityFeed(
-          req,
-          contactActivityQuery(
-            from,
-            ACTIVITIES_PER_PAGE,
-            contact.email,
-            contact.id,
-            DATA_HUB_AND_EXTERNAL_ACTIVITY,
-            CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
-          )
-          // istanbul ignore next: Covered by functional tests
-        ).catch((error) => {
-          next(error)
-        })
+        req,
+        contactActivityQuery(
+          from,
+          ACTIVITIES_PER_PAGE,
+          contact.email,
+          contact.id,
+          DATA_HUB_AND_EXTERNAL_ACTIVITY,
+          CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
+        )
+        // istanbul ignore next: Covered by functional tests
+      ).catch((error) => {
+        next(error)
+      })
       : await fetchActivityFeed(
-          req,
-          contactActivityQueryNoAventri(
-            from,
-            ACTIVITIES_PER_PAGE,
-            contact.email,
-            contact.id,
-            DATA_HUB_AND_EXTERNAL_ACTIVITY,
-            CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
-          )
-          // istanbul ignore next: Covered by functional tests
-        ).catch((error) => {
-          next(error)
-        })
+        req,
+        contactActivityQueryNoAventri(
+          from,
+          ACTIVITIES_PER_PAGE,
+          contact.email,
+          contact.id,
+          DATA_HUB_AND_EXTERNAL_ACTIVITY,
+          CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
+        )
+        // istanbul ignore next: Covered by functional tests
+      ).catch((error) => {
+        next(error)
+      })
 
     const total = results.hits.total.value
     let activities = results.hits.hits.map((hit) => hit._source)
@@ -380,28 +418,23 @@ async function fetchActivityFeedHandler(req, res, next) {
       total += campaigns.length
     }
 
-    //loop over all the results, set the contact to be the matching contact from the contacts array
-    //Aventri Contacts
+    // Get Export Support Service Activites
+    if (isEssFilter(activityTypeFilter)) {
+      const essActivities = await getExportSupportActivities(
+        req,
+        next,
+        company.contacts
+      )
+      activities = [...activities, ...essActivities]
+      total += essActivities.length
+    }
+
+    //loop over all aventri results, set the contact to be the matching contact from the contacts array
     activities = activities.map((activity) => {
       if (activity.type == 'dit:aventri:Event' && aventriEvents[activity.id]) {
         activity.object.attributedTo = [
           activity.object.attributedTo,
           ...aventriEvents[activity.id],
-        ]
-      }
-      // // ESS Contacts
-      if (
-        activity.object.attributedTo.id ==
-        'dit:directoryFormsApi:SubmissionType:export-support-service'
-      ) {
-        const essContactEmail = activity.actor['dit:emailAddress']
-        const essContact = getContactFromEmailAddress(
-          essContactEmail,
-          company.contacts
-        )
-        activity.object.attributedTo = [
-          activity.object.attributedTo,
-          mapEssContacts(essContact),
         ]
       }
       return activity
@@ -419,12 +452,12 @@ async function fetchActivityFeedHandler(req, res, next) {
 function mapEssContacts(contact) {
   const mappedContact = contact
     ? {
-        'dit:emailAddress': contact.email,
-        id: contact.id,
-        name: contact.name,
-        type: ['dit:Contact'],
-        url: urls.contacts.details(contact.id),
-      }
+      'dit:emailAddress': contact.email,
+      id: contact.id,
+      name: contact.name,
+      type: ['dit:Contact'],
+      url: urls.contacts.details(contact.id),
+    }
     : []
   return mappedContact
 }
@@ -556,73 +589,73 @@ const eventsColListQueryBuilder = ({
 }) => {
   const eventNameFilter = name
     ? {
-        match_phrase_prefix: {
-          'object.name': name,
-        },
-      }
+      match_phrase_prefix: {
+        'object.name': name,
+      },
+    }
     : null
 
   const dateFilter =
     earliestStartDate || latestStartDate
       ? {
-          range: {
-            'object.startTime': {
-              gte: earliestStartDate,
-              lte: latestStartDate,
-            },
+        range: {
+          'object.startTime': {
+            gte: earliestStartDate,
+            lte: latestStartDate,
           },
-        }
+        },
+      }
       : null
 
   const countryFilter = addressCountry
     ? {
-        bool: {
-          should: [
-            {
-              terms: {
-                'object.dit:address_country.name': addressCountry,
-              },
+      bool: {
+        should: [
+          {
+            terms: {
+              'object.dit:address_country.name': addressCountry,
             },
-            {
-              terms: {
-                'object.dit:aventri:location_country': addressCountry,
-              },
+          },
+          {
+            terms: {
+              'object.dit:aventri:location_country': addressCountry,
             },
-          ],
-        },
-      }
+          },
+        ],
+      },
+    }
     : null
 
   const aventriIdFilter = aventriId
     ? {
-        term: {
-          id: `dit:aventri:Event:${aventriId}:Create`,
-        },
-      }
+      term: {
+        id: `dit:aventri:Event:${aventriId}:Create`,
+      },
+    }
     : null
 
   const ukRegionFilter = ukRegion
     ? {
-        terms: {
-          'object.dit:ukRegion.id': ukRegion,
-        },
-      }
+      terms: {
+        'object.dit:ukRegion.id': ukRegion,
+      },
+    }
     : null
 
   const organiserFilter = organiser
     ? {
-        terms: {
-          'object.dit:organiser.id': organiser,
-        },
-      }
+      terms: {
+        'object.dit:organiser.id': organiser,
+      },
+    }
     : null
 
   const eventTypeFilter = eventType
     ? {
-        terms: {
-          'object.dit:eventType.id': eventType,
-        },
-      }
+      terms: {
+        'object.dit:eventType.id': eventType,
+      },
+    }
     : null
 
   const filtersArray = [
