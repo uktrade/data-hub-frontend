@@ -21,11 +21,12 @@ import {
 
 import { sortOptions, maxItemsToPaginate, itemsPerPage } from './constants'
 
+import { CollectionSort, RoutedPagination } from '../../components'
+import ExportItemRenderer from './ItemRenderers/ExportItemRenderer'
 import CollectionHeader from './CollectionHeader'
+import CollectionList from './CollectionList'
 import Effect from '../../components/Effect'
 import Task from '../../components/Task'
-import ExportsCollectionList from './ExportsCollectionList'
-import { CollectionSort, RoutedPagination } from '../../components'
 
 const Summary = styled('p')({
   color: BLACK,
@@ -93,8 +94,9 @@ const ExportsNoRecentInteractionsList = ({
                       })
                     }
                   />
-                  <ExportsCollectionList
+                  <CollectionList
                     results={results}
+                    itemRenderer={ExportItemRenderer}
                     disableDelete={deleteTask.status || nextPending}
                     onDeleteReminder={(reminderId) => {
                       deleteTask.start({

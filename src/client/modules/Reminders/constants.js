@@ -32,3 +32,9 @@ export const reminderTypeToLabel = {
   [INVESTMENTS_OUTSTANDING_PROPOSITIONS]: 'Outstanding propositions',
   [COMPANIES_NO_RECENT_INTERACTIONS]: 'Companies with no recent interactions',
 }
+
+export const INTERACTION_NAMES = {
+  interaction: 'Interaction',
+  service_delivery: 'Service delivery',
+  policy_feedback: 'Business intelligence',
+}
