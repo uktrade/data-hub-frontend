@@ -5,7 +5,7 @@ const urls = require('../../../../lib/urls')
 
 export const getEventAventriRegistrationStatusAttendees = ({
   aventriEventId,
-  aventriRegistrationStatuses,
+  registrationStatus,
   selectedSortBy,
   page,
   size,
@@ -17,7 +17,7 @@ export const getEventAventriRegistrationStatusAttendees = ({
         sortBy: selectedSortBy,
         page,
         size,
-        registrationStatuses: aventriRegistrationStatuses,
+        registrationStatus,
       },
     }),
   ])
