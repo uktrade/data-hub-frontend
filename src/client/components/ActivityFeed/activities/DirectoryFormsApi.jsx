@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { get } from 'lodash'
 import Link from '@govuk-react/link'
+import Link from '@govuk-react/link'
 
 import { ACTIVITY_TYPE } from '../constants'
 import CardUtils from './card/CardUtils'
@@ -25,7 +26,7 @@ export default class DirectoryFormsApi extends React.PureComponent {
   render() {
     const { activity } = this.props
 
-    const formType = get(activity, 'object.attributedTo.[0].id')
+    const formType = get(activity, 'object.attributedTo.[0].[0].id')
     const sentDate = get(activity, 'object.published')
     const formData = get(
       activity,
@@ -102,7 +103,88 @@ export default class DirectoryFormsApi extends React.PureComponent {
     if (
       formType === 'dit:directoryFormsApi:SubmissionType:export-support-service'
     ) {
-      const metadata = [{ label: 'Date', value: format(sentDate) }]
+      const contacts = CardUtils.getContacts(activity)
+      const formattedContacts = () =>
+        contacts &&
+        contacts.map((contact, index) => (
+          <span key={`contact-link-${index}`}>
+            {index ? ', ' : ''}
+            <Link data-test={`contact-link-${index}`} href={contact.url}>
+              {contact.name}
+            </Link>
+          </span>
+        ))
+      const metadata = [
+        { label: 'Date', value: format(sentDate) },
+        {
+          label: 'Contact(s)',
+          value: formattedContacts(),
+        },
+      ]
+
+      //Mapping from https://github.com/uktrade/export-support/blob/93fb921e33f0f49c5cecc0b9c18579941a384ad7/export_support/core/forms.py
+      return (
+        <ActivityCardWrapper dataTest="export-support-service">
+          <ActivityCardLabels
+            theme="export"
+            service="Export Support Service"
+            kind="Interaction"
+          />
+          <ActivityCardSubject dataTest="export-support-service-name">
+            {formData.nature_of_enquiry}
+          </ActivityCardSubject>
+          <ActivityCardMetadata metadata={metadata} />
+        </ActivityCardWrapper>
+      )
+    } else {
+      const metadata = [
+        { label: 'Date', value: format(sentDate) },
+        {
+          label: 'Name',
+          value: `${formData.first_name} ${formData.last_name}`,
+        },
+        { label: 'Job title', value: formData.position },
+        { label: 'Email', value: formData.email },
+      ]
+      return (
+        <ActivityCardWrapper>
+          <ActivityCardLabels
+            theme="great.gov.uk"
+            service="export"
+            kind="great.gov.uk Enquiry"
+          />
+          <ActivityCardSubject>Enquiry</ActivityCardSubject>
+          <ActivityCardNotes notes={formData.comment} />
+          <ActivityCardMetadata metadata={metadata} />
+        </ActivityCardWrapper>
+      )
+    }
+  }
+}
+    //if export support submission
+    if (
+      formType === 'dit:directoryFormsApi:SubmissionType:export-support-service'
+    ) {
+      const contacts = CardUtils.getContacts(activity)
+      const formattedContacts = () =>
+        contacts &&
+        contacts.map((contact, index) => (
+          <span key={`contact-link-${index}`}>
+            {index ? ', ' : ''}
+            <Link data-test={`contact-link-${index}`} href={contact.url}>
+              {contact.name}
+            </Link>
+          </span>
+        ))
+      const metadata = [
+        { label: 'Date', value: format(sentDate) },
+        {
+          label: 'Contact(s)',
+          value: formattedContacts(),
+        },
+      ]
+
+      //Mapping from https://github.com/uktrade/export-support/blob/93fb921e33f0f49c5cecc0b9c18579941a384ad7/export_support/core/forms.py
       return (
         <ActivityCardWrapper dataTest="export-service-support">
           <ActivityCardLabels
@@ -111,9 +193,9 @@ export default class DirectoryFormsApi extends React.PureComponent {
             kind="Interaction"
           />
           <ActivityCardSubject dataTest="export-service-support-name">
-            {formData.enquiry_subject}
+            {formData.nature_of_enquiry}
           </ActivityCardSubject>
-          <ActivityCardNotes notes={formData.nature_of_enquiry} />
+          <ActivityCardNotes notes={formData.aaa_question} />
           <ActivityCardMetadata metadata={metadata} />
         </ActivityCardWrapper>
       )

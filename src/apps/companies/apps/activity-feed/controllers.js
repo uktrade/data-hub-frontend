@@ -438,6 +438,21 @@ async function fetchActivityFeedHandler(req, res, next) {
           ...aventriEvents[activity.id],
         ]
       }
+      // // ESS Contacts
+      if (
+        activity.object.attributedTo.id ==
+        'dit:directoryFormsApi:SubmissionType:export-support-service'
+      ) {
+        const essContactEmail = activity.actor['dit:emailAddress']
+        const essContact = getContactFromEmailAddress(
+          essContactEmail,
+          company.contacts
+        )
+        activity.object.attributedTo = [
+          activity.object.attributedTo,
+          mapEssContacts(essContact),
+        ]
+      }
       return activity
     })
 
@@ -448,6 +463,19 @@ async function fetchActivityFeedHandler(req, res, next) {
   } catch (error) {
     next(error)
   }
+}
+
+function mapEssContacts(contact) {
+  const mappedContact = contact
+    ? {
+        'dit:emailAddress': contact.email,
+        id: contact.id,
+        name: contact.name,
+        type: ['dit:Contact'],
+        url: urls.contacts.details(contact.id),
+      }
+    : []
+  return mappedContact
 }
 
 function mapEssContacts(contact) {
