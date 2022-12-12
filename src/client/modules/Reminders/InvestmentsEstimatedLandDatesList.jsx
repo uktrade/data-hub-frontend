@@ -21,12 +21,12 @@ import {
 
 import { sortOptions, maxItemsToPaginate, itemsPerPage } from './constants'
 
+import InvestmentItemRenderer from './ItemRenderers/InvestmentItemRenderer'
+import { CollectionSort, RoutedPagination } from '../../components'
 import CollectionHeader from './CollectionHeader'
+import CollectionList from './CollectionList'
 import Effect from '../../components/Effect'
 import Task from '../../components/Task'
-import InvestmentsCollectionList from './InvestmentsCollectionList'
-
-import { CollectionSort, RoutedPagination } from '../../components'
 
 const Summary = styled('p')({
   color: BLACK,
@@ -88,8 +88,9 @@ const InvestmentsEstimatedLandDatesList = ({ estimatedLandDateReminders }) => {
                       })
                     }
                   />
-                  <InvestmentsCollectionList
+                  <CollectionList
                     results={results}
+                    itemRenderer={InvestmentItemRenderer}
                     disableDelete={nextPending}
                     onDeleteReminder={(reminderId) => {
                       deleteTask.start({
