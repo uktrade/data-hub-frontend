@@ -219,6 +219,7 @@ const Pagination = ({
                       aria-current={isActive ? 'page' : 'false'}
                       ref={(el) => (linkRefs.current[index] = el)}
                       href="#"
+                      aria-current={isActive}
                     >
                       {page}
                     </StyledPaginationLink>

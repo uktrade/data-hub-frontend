@@ -107,6 +107,7 @@ function Pagination({ totalPages, activePage, getPageUrl, onPageClick }) {
                     data-test="prev"
                     onClick={onClick}
                     href={getPageUrl(pageNumber)}
+                    aria-current={isActive}
                   >
                     Previous
                   </StyledPaginationLink>
