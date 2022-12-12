@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { get } from 'lodash'
+import Link from '@govuk-react/link'
 
 import { ACTIVITY_TYPE } from '../constants'
 import CardUtils from './card/CardUtils'
@@ -24,7 +25,7 @@ export default class DirectoryFormsApi extends React.PureComponent {
   render() {
     const { activity } = this.props
 
-    const formType = get(activity, 'object.attributedTo.id')
+    const formType = get(activity, 'object.attributedTo.[0].id')
     const sentDate = get(activity, 'object.published')
     const formData = get(
       activity,
@@ -35,7 +36,26 @@ export default class DirectoryFormsApi extends React.PureComponent {
     if (
       formType === 'dit:directoryFormsApi:SubmissionType:export-support-service'
     ) {
-      const metadata = [{ label: 'Date', value: format(sentDate) }]
+      const contacts = CardUtils.getContacts(activity)
+      const formattedContacts = () =>
+        contacts &&
+        contacts.map((contact, index) => (
+          <span key={`contact-link-${index}`}>
+            {index ? ', ' : ''}
+            <Link data-test={`contact-link-${index}`} href={contact.url}>
+              {contact.name}
+            </Link>
+          </span>
+        ))
+      const metadata = [
+        { label: 'Date', value: format(sentDate) },
+        {
+          label: 'Contact(s)',
+          value: formattedContacts(),
+        },
+      ]
+
+      //Mapping from https://github.com/uktrade/export-support/blob/93fb921e33f0f49c5cecc0b9c18579941a384ad7/export_support/core/forms.py
       return (
         <ActivityCardWrapper dataTest="export-service-support">
           <ActivityCardLabels
@@ -44,9 +64,9 @@ export default class DirectoryFormsApi extends React.PureComponent {
             kind="Interaction"
           />
           <ActivityCardSubject dataTest="export-service-support-name">
-            {formData.enquiry_subject}
+            {formData.nature_of_enquiry}
           </ActivityCardSubject>
-          <ActivityCardNotes notes={formData.nature_of_enquiry} />
+          <ActivityCardNotes notes={formData.aaa_question} />
           <ActivityCardMetadata metadata={metadata} />
         </ActivityCardWrapper>
       )

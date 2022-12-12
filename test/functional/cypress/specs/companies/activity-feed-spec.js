@@ -24,6 +24,45 @@ describe('Company activity feed', () => {
       )
     })
   })
+  context('Export Service Support', () => {
+    it('displays the correct activity theme label', () => {
+      cy.get('[data-test="export-service-support"]').within(() =>
+        cy.get('[data-test="activity-theme-label"]').contains('export', {
+          matchCase: false,
+        })
+      )
+    })
+
+    it('displays the correct activity service label', () => {
+      cy.get('[data-test="export-service-support"]').within(() =>
+        cy
+          .get('[data-test="activity-service-label"]')
+          .contains('Export Service Support', {
+            matchCase: false,
+          })
+      )
+    })
+
+    it('displays the correct export support title', () => {
+      cy.get('[data-test="export-service-support"]').within(() =>
+        cy
+          .get('[data-test="export-service-support-name"]')
+          .contains('Enquiring about Exporting some things', {
+            matchCase: false,
+          })
+      )
+    })
+
+    it('displays the correct export support question', () => {
+      cy.get('[data-test="export-service-support"]').within(() =>
+        cy
+          .get('[data-test="activity-card-notes"]')
+          .contains('I have a very important question', {
+            matchCase: false,
+          })
+      )
+    })
+  })
 
   context('Companies House Account', () => {
     it('displays the correct activity type label', () => {

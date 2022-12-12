@@ -357,7 +357,6 @@ async function fetchActivityFeedHandler(req, res, next) {
 
       aventriEventIds = Object.keys(aventriEvents)
     }
-
     const queries = getQueries({
       from,
       size,
@@ -382,11 +381,27 @@ async function fetchActivityFeedHandler(req, res, next) {
     }
 
     //loop over all the results, set the contact to be the matching contact from the contacts array
+    //Aventri Contacts
     activities = activities.map((activity) => {
       if (activity.type == 'dit:aventri:Event' && aventriEvents[activity.id]) {
         activity.object.attributedTo = [
           activity.object.attributedTo,
           ...aventriEvents[activity.id],
+        ]
+      }
+      // // ESS Contacts
+      if (
+        activity.object.attributedTo.id ==
+        'dit:directoryFormsApi:SubmissionType:export-support-service'
+      ) {
+        const essContactEmail = activity.actor['dit:emailAddress']
+        const essContact = getContactFromEmailAddress(
+          essContactEmail,
+          company.contacts
+        )
+        activity.object.attributedTo = [
+          activity.object.attributedTo,
+          mapEssContacts(essContact),
         ]
       }
       return activity
@@ -399,6 +414,19 @@ async function fetchActivityFeedHandler(req, res, next) {
   } catch (error) {
     next(error)
   }
+}
+
+function mapEssContacts(contact) {
+  const mappedContact = contact
+    ? {
+        'dit:emailAddress': contact.email,
+        id: contact.id,
+        name: contact.name,
+        type: ['dit:Contact'],
+        url: urls.contacts.details(contact.id),
+      }
+    : []
+  return mappedContact
 }
 
 async function fetchAventriEvent(req, res, next) {
