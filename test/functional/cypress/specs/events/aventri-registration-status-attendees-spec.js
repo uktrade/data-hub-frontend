@@ -122,37 +122,37 @@ describe('Aventri status event registration attendees', () => {
                   'GET',
                   `${urls.events.aventri.registrationStatusData(
                     existingEventId
-                  )}?sortBy=first_name:asc&page=1&size=10&registrationStatuses*`
+                  )}?sortBy=first_name:asc&page=1&size=10&registrationStatus*`
                 ).as('firstNameA-Z')
                 cy.intercept(
                   'GET',
                   `${urls.events.aventri.registrationStatusData(
                     existingEventId
-                  )}?sortBy=first_name:desc&page=1&size=10&registrationStatuses*`
+                  )}?sortBy=first_name:desc&page=1&size=10&registrationStatus*`
                 ).as('firstNameZ-A')
                 cy.intercept(
                   'GET',
                   `${urls.events.aventri.registrationStatusData(
                     existingEventId
-                  )}?sortBy=last_name:asc&page=1&size=10&registrationStatuses*`
+                  )}?sortBy=last_name:asc&page=1&size=10&registrationStatus*`
                 ).as('lastNameA-Z')
                 cy.intercept(
                   'GET',
                   `${urls.events.aventri.registrationStatusData(
                     existingEventId
-                  )}?sortBy=last_name:desc&page=1&size=10&registrationStatuses*`
+                  )}?sortBy=last_name:desc&page=1&size=10&registrationStatus*`
                 ).as('lastNameZ-A')
                 cy.intercept(
                   'GET',
                   `${urls.events.aventri.registrationStatusData(
                     existingEventId
-                  )}?sortBy=company_name:asc&page=1&size=10&registrationStatuses*`
+                  )}?sortBy=company_name:asc&page=1&size=10&registrationStatus*`
                 ).as('companyNameA-Z')
                 cy.intercept(
                   'GET',
                   `${urls.events.aventri.registrationStatusData(
                     existingEventId
-                  )}?sortBy=company_name:desc&page=1&size=10&registrationStatuses*`
+                  )}?sortBy=company_name:desc&page=1&size=10&registrationStatus*`
                 ).as('companyNameZ-A')
 
                 cy.visit(

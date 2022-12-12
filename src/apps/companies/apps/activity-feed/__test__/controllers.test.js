@@ -17,8 +17,13 @@ const {
   ACTIVITY_STREAM_FEATURE_FLAG,
   EVENT_AVENTRI_ATTENDEES_STATUS,
   EVENT_ATTENDEES_SORT_OPTIONS,
+  EVENT_ATTENDEES_STATUS,
+  EVENT_ATTENDEES_MAPPING,
 } = require('../constants')
-const { eventsColListQueryBuilder } = require('../controllers')
+const {
+  eventsColListQueryBuilder,
+  transformAventriEventStatusToEventStatus,
+} = require('../controllers')
 const { has, get } = require('lodash')
 
 describe('Activity feed controllers', () => {
@@ -1528,11 +1533,7 @@ describe('Activity feed controllers', () => {
       before(async () => {
         middlewareParameters = buildMiddlewareParameters({
           requestQuery: {
-            registrationStatuses: [
-              'FAKE',
-              EVENT_AVENTRI_ATTENDEES_STATUS.activated,
-              EVENT_AVENTRI_ATTENDEES_STATUS.noShow,
-            ],
+            registrationStatus: 'FAKE',
           },
         })
 
@@ -1555,7 +1556,7 @@ describe('Activity feed controllers', () => {
       before(async () => {
         middlewareParameters = buildMiddlewareParameters({
           requestQuery: {
-            registrationStatuses: [EVENT_AVENTRI_ATTENDEES_STATUS.activated],
+            registrationStatus: EVENT_ATTENDEES_STATUS.registered,
             page: 1,
             size: 25,
             sortBy: 'first_name:asc',
@@ -1589,9 +1590,9 @@ describe('Activity feed controllers', () => {
                 },
                 {
                   terms: {
-                    'object.dit:registrationStatus': [
-                      EVENT_AVENTRI_ATTENDEES_STATUS.activated,
-                    ],
+                    'object.dit:registrationStatus':
+                      EVENT_ATTENDEES_MAPPING[EVENT_ATTENDEES_STATUS.registered]
+                        .statuses,
                   },
                 },
               ],
@@ -1700,5 +1701,69 @@ describe('Activity feed controllers', () => {
         )
       })
     })
+  })
+
+  describe('#transformAventriEventStatusToEventStatus', () => {
+    context(
+      'when there are both known and unknown aventri statuses to transform',
+      () => {
+        let transformResult
+
+        before(() => {
+          transformResult = transformAventriEventStatusToEventStatus([
+            { status: 'FAKE', count: 17 },
+            { status: EVENT_AVENTRI_ATTENDEES_STATUS.activated, count: 5 },
+            { status: EVENT_AVENTRI_ATTENDEES_STATUS.attended, count: 9 },
+            { status: EVENT_AVENTRI_ATTENDEES_STATUS.cancelled, count: 14 },
+            { status: EVENT_AVENTRI_ATTENDEES_STATUS.confirmed, count: 3 },
+            { status: EVENT_AVENTRI_ATTENDEES_STATUS.noShow, count: 45 },
+            { status: EVENT_AVENTRI_ATTENDEES_STATUS.waitlist, count: 1 },
+          ])
+        })
+
+        it('does not include unknown statuses', () => {
+          expect(transformResult).to.deep.not.include({
+            status: 'FAKE',
+            count: 17,
+          })
+        })
+
+        it('returns known statuses in a grouped format', () => {
+          expect(transformResult).to.deep.include({
+            status: EVENT_ATTENDEES_STATUS.cancelled,
+            urlSlug:
+              EVENT_ATTENDEES_MAPPING[EVENT_ATTENDEES_STATUS.cancelled].urlSlug,
+            count: 14,
+          })
+          expect(transformResult).to.deep.include({
+            status: EVENT_ATTENDEES_STATUS.attended,
+            urlSlug:
+              EVENT_ATTENDEES_MAPPING[EVENT_ATTENDEES_STATUS.attended].urlSlug,
+            count: 9,
+          })
+          expect(transformResult).to.deep.include({
+            status: EVENT_ATTENDEES_STATUS.didNotAttend,
+            urlSlug:
+              EVENT_ATTENDEES_MAPPING[EVENT_ATTENDEES_STATUS.didNotAttend]
+                .urlSlug,
+            count: 45,
+          })
+          expect(transformResult).to.deep.include({
+            status: EVENT_ATTENDEES_STATUS.waitingList,
+            urlSlug:
+              EVENT_ATTENDEES_MAPPING[EVENT_ATTENDEES_STATUS.waitingList]
+                .urlSlug,
+            count: 1,
+          })
+          expect(transformResult).to.deep.include({
+            status: EVENT_ATTENDEES_STATUS.registered,
+            urlSlug:
+              EVENT_ATTENDEES_MAPPING[EVENT_ATTENDEES_STATUS.registered]
+                .urlSlug,
+            count: 8,
+          })
+        })
+      }
+    )
   })
 })

@@ -97,31 +97,31 @@ const EVENT_ATTENDEES_STATUS = {
   attended: 'Attended',
   cancelled: 'Cancelled',
 }
+const createMappingObject = (status, aventriStatuses) => ({
+  [status]: {
+    statuses: aventriStatuses,
+    urlSlug: status.replaceAll(' ', '-').toLowerCase(),
+  },
+})
 
-const mapStatusToObject = (status) => {
-  return { status, urlSlug: status.replaceAll(' ', '-').toLowerCase() }
-}
-
-const EVENT_AVENTRI_ATTENDEES_MAPPING = {
-  [EVENT_AVENTRI_ATTENDEES_STATUS.activated]: mapStatusToObject(
-    EVENT_ATTENDEES_STATUS.registered
-  ),
-  [EVENT_AVENTRI_ATTENDEES_STATUS.attended]: mapStatusToObject(
-    EVENT_ATTENDEES_STATUS.attended
-  ),
-  [EVENT_AVENTRI_ATTENDEES_STATUS.confirmed]: mapStatusToObject(
-    EVENT_ATTENDEES_STATUS.registered
-  ),
-  [EVENT_AVENTRI_ATTENDEES_STATUS.noShow]: mapStatusToObject(
-    EVENT_ATTENDEES_STATUS.didNotAttend
-  ),
-  [EVENT_AVENTRI_ATTENDEES_STATUS.waitlist]: mapStatusToObject(
-    EVENT_ATTENDEES_STATUS.waitingList
-  ),
-  [EVENT_AVENTRI_ATTENDEES_STATUS.cancelled]: mapStatusToObject(
-    EVENT_ATTENDEES_STATUS.cancelled
-  ),
-}
+const EVENT_ATTENDEES_MAPPING = [
+  createMappingObject(EVENT_ATTENDEES_STATUS.registered, [
+    EVENT_AVENTRI_ATTENDEES_STATUS.activated,
+    EVENT_AVENTRI_ATTENDEES_STATUS.confirmed,
+  ]),
+  createMappingObject(EVENT_ATTENDEES_STATUS.cancelled, [
+    EVENT_AVENTRI_ATTENDEES_STATUS.cancelled,
+  ]),
+  createMappingObject(EVENT_ATTENDEES_STATUS.attended, [
+    EVENT_AVENTRI_ATTENDEES_STATUS.attended,
+  ]),
+  createMappingObject(EVENT_ATTENDEES_STATUS.didNotAttend, [
+    EVENT_AVENTRI_ATTENDEES_STATUS.noShow,
+  ]),
+  createMappingObject(EVENT_ATTENDEES_STATUS.waitingList, [
+    EVENT_AVENTRI_ATTENDEES_STATUS.waitlist,
+  ]),
+].reduce((a, v) => ({ ...a, ...v }), {})
 
 const EVENT_ATTENDEES_STATUS_BEFORE_EVENT = [
   EVENT_ATTENDEES_STATUS.registered,
@@ -213,7 +213,7 @@ module.exports = {
   CONTACT_ACTIVITY_SORT_SELECT_OPTIONS,
   ACTIVITY_STREAM_FEATURE_FLAG,
   DATA_HUB_AND_AVENTRI_ACTIVITY,
-  EVENT_AVENTRI_ATTENDEES_MAPPING,
+  EVENT_ATTENDEES_MAPPING,
   EVENT_ATTENDEES_STATUS,
   EVENT_ATTENDEES_STATUS_BEFORE_EVENT,
   EVENT_ATTENDEES_STATUS_AFTER_EVENT,
