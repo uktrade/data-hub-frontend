@@ -22,7 +22,7 @@ const {
 } = require('../constants')
 const {
   eventsColListQueryBuilder,
-  transformAventriEventStatusToEventStatus,
+  transformAventriEventStatusCountsToEventStatusCounts,
 } = require('../controllers')
 const { has, get } = require('lodash')
 
@@ -1703,22 +1703,23 @@ describe('Activity feed controllers', () => {
     })
   })
 
-  describe('#transformAventriEventStatusToEventStatus', () => {
+  describe('#transformAventriEventStatusCountsToEventStatusCounts', () => {
     context(
       'when there are both known and unknown aventri statuses to transform',
       () => {
         let transformResult
 
         before(() => {
-          transformResult = transformAventriEventStatusToEventStatus([
-            { status: 'FAKE', count: 17 },
-            { status: EVENT_AVENTRI_ATTENDEES_STATUS.activated, count: 5 },
-            { status: EVENT_AVENTRI_ATTENDEES_STATUS.attended, count: 9 },
-            { status: EVENT_AVENTRI_ATTENDEES_STATUS.cancelled, count: 14 },
-            { status: EVENT_AVENTRI_ATTENDEES_STATUS.confirmed, count: 3 },
-            { status: EVENT_AVENTRI_ATTENDEES_STATUS.noShow, count: 45 },
-            { status: EVENT_AVENTRI_ATTENDEES_STATUS.waitlist, count: 1 },
-          ])
+          transformResult =
+            transformAventriEventStatusCountsToEventStatusCounts([
+              { status: 'FAKE', count: 17 },
+              { status: EVENT_AVENTRI_ATTENDEES_STATUS.activated, count: 5 },
+              { status: EVENT_AVENTRI_ATTENDEES_STATUS.attended, count: 9 },
+              { status: EVENT_AVENTRI_ATTENDEES_STATUS.cancelled, count: 14 },
+              { status: EVENT_AVENTRI_ATTENDEES_STATUS.confirmed, count: 3 },
+              { status: EVENT_AVENTRI_ATTENDEES_STATUS.noShow, count: 45 },
+              { status: EVENT_AVENTRI_ATTENDEES_STATUS.waitlist, count: 1 },
+            ])
         })
 
         it('does not include unknown statuses', () => {

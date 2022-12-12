@@ -175,6 +175,7 @@ async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
     const aventriQuery = aventriAttendeeForCompanyQuery(contacts)
     const aventriResults = await fetchActivityFeed(req, aventriQuery)
     const aventriAttendees = aventriResults.hits.hits.map((hit) => hit._source)
+
     //TODO need to implement some logic here to limit attendees by status on past/future events
 
     const groupedEventsWithContactsObj = aventriAttendees.reduce(
@@ -193,10 +194,13 @@ async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
                 name: contact.name,
                 type: ['dit:Contact'],
                 url: urls.contacts.details(contact.id),
-                registrationStatus: attendee.object['dit:registrationStatus'],
+                registrationStatus: transformAventriEventStatusToEventStatus(
+                  attendee.object['dit:registrationStatus']
+                ),
               },
             ]
           : []
+
         if (event) {
           event.push(...mappedContact)
         } else {
@@ -412,7 +416,7 @@ async function fetchAventriEvent(req, res, next) {
     )
 
     const statusCounts =
-      transformAventriEventStatusToEventStatus(aventriStatusCounts)
+      transformAventriEventStatusCountsToEventStatusCounts(aventriStatusCounts)
 
     return res.json({ ...aventriEventData, registrationStatuses: statusCounts })
   } catch (error) {
@@ -443,7 +447,9 @@ async function getAventriRegistrationStatusCounts(req, eventId) {
   return statusCounts
 }
 
-const transformAventriEventStatusToEventStatus = (aventriStatusCounts) =>
+const transformAventriEventStatusCountsToEventStatusCounts = (
+  aventriStatusCounts
+) =>
   Object.entries(EVENT_ATTENDEES_MAPPING).map(([key, value]) => ({
     status: key,
     urlSlug: value.urlSlug,
@@ -451,6 +457,13 @@ const transformAventriEventStatusToEventStatus = (aventriStatusCounts) =>
       .filter((s) => value.statuses.includes(s.status))
       .reduce((sum, cur) => sum + cur.count, 0),
   }))
+
+const transformAventriEventStatusToEventStatus = (aventriStatus) => {
+  const matchingStatus = Object.entries(EVENT_ATTENDEES_MAPPING).find(
+    ([, value]) => value.statuses.includes(aventriStatus)
+  )
+  return matchingStatus ? matchingStatus[0] : undefined
+}
 
 async function fetchAventriEventAttended(req, res, next) {
   // istanbul ignore next: Covered by functional tests
@@ -742,5 +755,5 @@ module.exports = {
   getAventriEventsAttendedByCompanyContacts,
   fetchAventriEventRegistrationStatusAttendees,
   getAventriRegistrationStatusCounts,
-  transformAventriEventStatusToEventStatus,
+  transformAventriEventStatusCountsToEventStatusCounts,
 }
