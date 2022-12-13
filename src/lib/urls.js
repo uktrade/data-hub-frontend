@@ -254,8 +254,6 @@ module.exports = {
     aventri: {
       details: url('/events', '/aventri/:aventriEventId/details'),
       detailsData: url('/events', '/aventri/:aventriEventId/details/data'),
-      attended: url('/events', '/aventri/:aventriEventId/attended'),
-      attendedData: url('/events', '/aventri/:aventriEventId/attended/data'),
       registrationStatus: url(
         '/events',
         '/aventri/:aventriEventId/registration/:status'

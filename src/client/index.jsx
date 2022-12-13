@@ -138,7 +138,6 @@ import {
 import { TASK_GET_EVENT_DETAILS } from '../client/modules/Events/EventDetails/state'
 import { getEventDetails } from '../client/modules/Events/EventDetails/tasks'
 import { TASK_GET_EVENT_AVENTRI_DETAILS } from './modules/Events/EventAventriDetails/state'
-import { TASK_GET_EVENT_AVENTRI_ATTENDED } from './modules/Events/EventAventriAttended/state'
 import { getEventAventriDetails } from './modules/Events/EventAventriDetails/tasks'
 import { TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES } from './modules/Events/EventAventriRegistrationStatus/state'
 import {
@@ -293,7 +292,6 @@ import { TASK_ARCHIVE_CONTACT } from '../client/modules/Contacts/ContactDetails/
 import { archiveContact } from '../client/modules/Contacts/ContactDetails/tasks'
 import { TASK_GET_USER_FEATURE_FLAGS } from './components/CheckUserFeatureFlags/state'
 import { getUserFeatureFlags } from './components/CheckUserFeatureFlags/tasks'
-import { getEventAventriAttended } from './modules/Events/EventAventriAttended/tasks'
 import { getEventAventriRegistrationStatusAttendees } from './modules/Events/EventAventriRegistrationStatus/tasks'
 import ErrorFallback from './components/ErrorFallback'
 
@@ -452,7 +450,6 @@ function App() {
           [TASK_GET_EVENTS_ORGANISER_NAME]: getAdviserNames,
           [TASK_GET_EVENT_DETAILS]: getEventDetails,
           [TASK_GET_EVENT_AVENTRI_DETAILS]: getEventAventriDetails,
-          [TASK_GET_EVENT_AVENTRI_ATTENDED]: getEventAventriAttended,
           [TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES]:
             getEventAventriRegistrationStatusAttendees,
           [TASK_GET_EVENTS_FORM_AND_METADATA]: getEventFormAndMetadata,
