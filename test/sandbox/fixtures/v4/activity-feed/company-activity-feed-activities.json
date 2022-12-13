@@ -356,10 +356,6 @@
         "_id": "dit:DataHubCompanyReferral:fd6a151f-90db-41e3-841f-1ca0dd63b674:Announce",
         "_score": 1.0,
         "_source": {
-          "generator": {
-            "name": "dit:dataHub",
-            "type": "Application"
-          },
           "id": "dit:DataHubCompanyReferral:fd6a151f-90db-41e3-841f-1ca0dd63b674:Announce",
           "object": {
             "attributedTo": [
@@ -450,10 +446,12 @@
           },
           "id": "dit:directoryFormsApi:Submission:1111:Create",
           "object": {
-            "attributedTo": {
-              "id": "dit:directoryFormsApi:SubmissionType:export-support-service",
-              "type": "dit:directoryFormsApi:SubmissionAction:zendesk"
-            },
+            "attributedTo": [
+              {
+                "id": "dit:directoryFormsApi:SubmissionType:export-support-service",
+                "type": "dit:directoryFormsApi:SubmissionAction:zendesk"
+              }
+            ],
             "dit:directoryFormsApi:Submission:Data": {
               "_custom_fields": [
                 {
@@ -474,7 +472,7 @@
                   "1900000265733": "-"
                 }
               ],
-              "aaa_question": "I have a very important question that I would like help with, regarding Exporting",
+              "aaa_question": "I have a very important question that I would like help with, regarding Exporting - Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
               "company_name": "Best Ever Company",
               "company_post_code": "GL11 4DH",
               "company_registration_number": "123456",

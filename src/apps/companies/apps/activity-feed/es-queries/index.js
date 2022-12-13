@@ -6,7 +6,7 @@ const myActivityQuery = require('./my-activity-query')
 const aventriAttendeeForCompanyQuery = require('./aventri-attendee-for-company-query')
 const dataHubAndActivtyStreamServicesQuery = require('./data-hub-and-activity-stream-services-query')
 const aventriAttendeeQuery = require('./aventri-attendee-query')
-const exportServiceSupportQuery = require('./export-service-support-query')
+const exportSupportServiceQuery = require('./export-support-service-query')
 const aventriAttendeeRegistrationStatusQuery = require('./aventri-attendee-registration-status-query')
 
 module.exports = {
@@ -18,6 +18,6 @@ module.exports = {
   aventriAttendeeForCompanyQuery,
   dataHubAndActivtyStreamServicesQuery,
   aventriAttendeeQuery,
-  exportServiceSupportQuery,
+  exportSupportServiceQuery,
   aventriAttendeeRegistrationStatusQuery,
 }
