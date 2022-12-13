@@ -66,22 +66,22 @@ async function renderActivityFeed(req, res, next) {
   try {
     const contentProps = company.archived
       ? {
-        company,
-        breadcrumbs,
-        flashMessages: res.locals.getMessages(),
-      }
+          company,
+          breadcrumbs,
+          flashMessages: res.locals.getMessages(),
+        }
       : {
-        company,
-        breadcrumbs,
-        flashMessages: res.locals.getMessages(),
-        activityTypeFilter: FILTER_KEYS.dataHubActivity,
-        activityTypeFilters: FILTER_ITEMS,
-        isGlobalUltimate: company.is_global_ultimate,
-        dnbHierarchyCount,
-        dnbRelatedCompaniesCount,
-        showMatchingPrompt:
-          !company.duns_number && !company.pending_dnb_investigation,
-      }
+          company,
+          breadcrumbs,
+          flashMessages: res.locals.getMessages(),
+          activityTypeFilter: FILTER_KEYS.dataHubActivity,
+          activityTypeFilters: FILTER_ITEMS,
+          isGlobalUltimate: company.is_global_ultimate,
+          dnbHierarchyCount,
+          dnbRelatedCompaniesCount,
+          showMatchingPrompt:
+            !company.duns_number && !company.pending_dnb_investigation,
+        }
 
     const props = {
       ...contentProps,
@@ -133,9 +133,9 @@ function getContactFromEmailAddress(emailAddress, contacts) {
   const contact = contacts.find((contact) => contact.email === emailAddress)
   return contact
     ? {
-      ...contact,
-      url: urls.contacts.details(contact.id),
-    }
+        ...contact,
+        url: urls.contacts.details(contact.id),
+      }
     : null
 }
 
@@ -281,33 +281,33 @@ async function fetchActivitiesForContact(req, res, next) {
     // istanbul ignore next: Covered by functional tests
     let results = isActivityStreamFeatureFlagEnabled
       ? await fetchActivityFeed(
-        req,
-        contactActivityQuery(
-          from,
-          ACTIVITIES_PER_PAGE,
-          contact.email,
-          contact.id,
-          DATA_HUB_AND_EXTERNAL_ACTIVITY,
-          CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
-        )
-        // istanbul ignore next: Covered by functional tests
-      ).catch((error) => {
-        next(error)
-      })
+          req,
+          contactActivityQuery(
+            from,
+            ACTIVITIES_PER_PAGE,
+            contact.email,
+            contact.id,
+            DATA_HUB_AND_EXTERNAL_ACTIVITY,
+            CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
+          )
+          // istanbul ignore next: Covered by functional tests
+        ).catch((error) => {
+          next(error)
+        })
       : await fetchActivityFeed(
-        req,
-        contactActivityQueryNoAventri(
-          from,
-          ACTIVITIES_PER_PAGE,
-          contact.email,
-          contact.id,
-          DATA_HUB_AND_EXTERNAL_ACTIVITY,
-          CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
-        )
-        // istanbul ignore next: Covered by functional tests
-      ).catch((error) => {
-        next(error)
-      })
+          req,
+          contactActivityQueryNoAventri(
+            from,
+            ACTIVITIES_PER_PAGE,
+            contact.email,
+            contact.id,
+            DATA_HUB_AND_EXTERNAL_ACTIVITY,
+            CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
+          )
+          // istanbul ignore next: Covered by functional tests
+        ).catch((error) => {
+          next(error)
+        })
 
     const total = results.hits.total.value
     let activities = results.hits.hits.map((hit) => hit._source)
@@ -466,12 +466,12 @@ function mapEssContacts(contact) {
 function mapEssContacts(contact) {
   const mappedContact = contact
     ? {
-      'dit:emailAddress': contact.email,
-      id: contact.id,
-      name: contact.name,
-      type: ['dit:Contact'],
-      url: urls.contacts.details(contact.id),
-    }
+        'dit:emailAddress': contact.email,
+        id: contact.id,
+        name: contact.name,
+        type: ['dit:Contact'],
+        url: urls.contacts.details(contact.id),
+      }
     : []
   return mappedContact
 }
@@ -603,73 +603,73 @@ const eventsColListQueryBuilder = ({
 }) => {
   const eventNameFilter = name
     ? {
-      match_phrase_prefix: {
-        'object.name': name,
-      },
-    }
+        match_phrase_prefix: {
+          'object.name': name,
+        },
+      }
     : null
 
   const dateFilter =
     earliestStartDate || latestStartDate
       ? {
-        range: {
-          'object.startTime': {
-            gte: earliestStartDate,
-            lte: latestStartDate,
+          range: {
+            'object.startTime': {
+              gte: earliestStartDate,
+              lte: latestStartDate,
+            },
           },
-        },
-      }
+        }
       : null
 
   const countryFilter = addressCountry
     ? {
-      bool: {
-        should: [
-          {
-            terms: {
-              'object.dit:address_country.name': addressCountry,
+        bool: {
+          should: [
+            {
+              terms: {
+                'object.dit:address_country.name': addressCountry,
+              },
             },
-          },
-          {
-            terms: {
-              'object.dit:aventri:location_country': addressCountry,
+            {
+              terms: {
+                'object.dit:aventri:location_country': addressCountry,
+              },
             },
-          },
-        ],
-      },
-    }
+          ],
+        },
+      }
     : null
 
   const aventriIdFilter = aventriId
     ? {
-      term: {
-        id: `dit:aventri:Event:${aventriId}:Create`,
-      },
-    }
+        term: {
+          id: `dit:aventri:Event:${aventriId}:Create`,
+        },
+      }
     : null
 
   const ukRegionFilter = ukRegion
     ? {
-      terms: {
-        'object.dit:ukRegion.id': ukRegion,
-      },
-    }
+        terms: {
+          'object.dit:ukRegion.id': ukRegion,
+        },
+      }
     : null
 
   const organiserFilter = organiser
     ? {
-      terms: {
-        'object.dit:organiser.id': organiser,
-      },
-    }
+        terms: {
+          'object.dit:organiser.id': organiser,
+        },
+      }
     : null
 
   const eventTypeFilter = eventType
     ? {
-      terms: {
-        'object.dit:eventType.id': eventType,
-      },
-    }
+        terms: {
+          'object.dit:eventType.id': eventType,
+        },
+      }
     : null
 
   const filtersArray = [

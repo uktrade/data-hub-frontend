@@ -186,16 +186,145 @@ export default class DirectoryFormsApi extends React.PureComponent {
 
       //Mapping from https://github.com/uktrade/export-support/blob/93fb921e33f0f49c5cecc0b9c18579941a384ad7/export_support/core/forms.py
       return (
-        <ActivityCardWrapper dataTest="export-service-support">
+        <ActivityCardWrapper dataTest="export-support-service">
           <ActivityCardLabels
             theme="export"
-            service="Export Service Support"
+            service="Export Support Service"
             kind="Interaction"
           />
-          <ActivityCardSubject dataTest="export-service-support-name">
+          <ActivityCardSubject dataTest="export-support-service-name">
             {formData.nature_of_enquiry}
           </ActivityCardSubject>
-          <ActivityCardNotes notes={formData.aaa_question} />
+          <ActivityCardMetadata metadata={metadata} />
+        </ActivityCardWrapper>
+      )
+    } else {
+      const metadata = [
+        { label: 'Date', value: format(sentDate) },
+        {
+          label: 'Name',
+          value: `${formData.first_name} ${formData.last_name}`,
+        },
+        { label: 'Job title', value: formData.position },
+        { label: 'Email', value: formData.email },
+      ]
+      return (
+        <ActivityCardWrapper>
+          <ActivityCardLabels
+            theme="great.gov.uk"
+            service="export"
+            kind="great.gov.uk Enquiry"
+          />
+          <ActivityCardSubject>Enquiry</ActivityCardSubject>
+          <ActivityCardNotes notes={formData.comment} />
+          <ActivityCardMetadata metadata={metadata} />
+        </ActivityCardWrapper>
+      )
+    }
+  }
+}
+    //if export support submission
+    if (
+      formType === 'dit:directoryFormsApi:SubmissionType:export-support-service'
+    ) {
+      const contacts = CardUtils.getContacts(activity)
+      const formattedContacts = () =>
+        contacts &&
+        contacts.map((contact, index) => (
+          <span key={`contact-link-${index}`}>
+            {index ? ', ' : ''}
+            <Link data-test={`contact-link-${index}`} href={contact.url}>
+              {contact.name}
+            </Link>
+          </span>
+        ))
+      const metadata = [
+        { label: 'Date', value: format(sentDate) },
+        {
+          label: 'Contact(s)',
+          value: formattedContacts(),
+        },
+      ]
+
+      //Mapping from https://github.com/uktrade/export-support/blob/93fb921e33f0f49c5cecc0b9c18579941a384ad7/export_support/core/forms.py
+      return (
+        <ActivityCardWrapper dataTest="export-support-service">
+          <ActivityCardLabels
+            theme="export"
+            service="Export Support Service"
+            kind="Interaction"
+          />
+          <ActivityCardSubject dataTest="export-support-service-name">
+            {formData.nature_of_enquiry}
+          </ActivityCardSubject>
+          <ActivityCardMetadata metadata={metadata} />
+        </ActivityCardWrapper>
+      )
+    } else {
+      const metadata = [
+        { label: 'Date', value: format(sentDate) },
+        {
+          label: 'Name',
+          value: `${formData.first_name} ${formData.last_name}`,
+        },
+        { label: 'Job title', value: formData.position },
+        { label: 'Email', value: formData.email },
+      ]
+      return (
+        <ActivityCardWrapper>
+          <ActivityCardLabels
+            theme="great.gov.uk"
+            service="export"
+            kind="great.gov.uk Enquiry"
+          />
+          <ActivityCardSubject>Enquiry</ActivityCardSubject>
+          <ActivityCardNotes notes={formData.comment} />
+          <ActivityCardMetadata metadata={metadata} />
+        </ActivityCardWrapper>
+      )
+    }
+  }
+}
+    //if export support submission
+    if (
+      formType === 'dit:directoryFormsApi:SubmissionType:export-support-service'
+    ) {
+      const contacts = CardUtils.getContacts(activity)
+      const formattedContacts = () =>
+        contacts &&
+        contacts.map((contact, index) => (
+          <span key={`contact-link-${index}`}>
+            {index ? ', ' : ''}
+            <Link data-test={`contact-link-${index}`} href={contact.url}>
+              {contact.name}
+            </Link>
+          </span>
+        ))
+      const metadata = [
+        { label: 'Date', value: format(sentDate) },
+        {
+          label: 'Contact(s)',
+          value: formattedContacts(),
+        },
+      ]
+
+      //Mapping from https://github.com/uktrade/export-support/blob/93fb921e33f0f49c5cecc0b9c18579941a384ad7/export_support/core/forms.py
+      const essQuestion = get(
+        activity,
+        'object.dit:directoryFormsApi:Submission:Data.aaa_question',
+        ''
+      )
+      return (
+        <ActivityCardWrapper dataTest="export-support-service">
+          <ActivityCardLabels
+            theme="export"
+            service="Export Support Service"
+            kind="Interaction"
+          />
+          <ActivityCardSubject dataTest="export-support-service-name">
+            {formData.nature_of_enquiry}
+          </ActivityCardSubject>
+          <ActivityCardNotes notes={essQuestion} />
           <ActivityCardMetadata metadata={metadata} />
         </ActivityCardWrapper>
       )
