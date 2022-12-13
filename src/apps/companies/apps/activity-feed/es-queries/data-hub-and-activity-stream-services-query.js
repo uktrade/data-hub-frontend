@@ -1,4 +1,4 @@
-const dataHubAndActivtyStreamServicesQuery = ({
+const dataHubAndActivityStreamServicesQuery = ({
   from,
   size,
   types,
@@ -66,4 +66,4 @@ const dataHubAndActivtyStreamServicesQuery = ({
   return dsl
 }
 
-module.exports = dataHubAndActivtyStreamServicesQuery
+module.exports = dataHubAndActivityStreamServicesQuery

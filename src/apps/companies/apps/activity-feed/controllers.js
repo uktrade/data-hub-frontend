@@ -31,7 +31,7 @@ const {
   maxemailCampaignQuery,
   maxemailEmailSentQuery,
   aventriAttendeeForCompanyQuery,
-  dataHubAndActivtyStreamServicesQuery,
+  dataHubAndActivityStreamServicesQuery,
   aventriAttendeeQuery,
   exportSupportServiceQuery,
   aventriAttendeeRegistrationStatusQuery,
@@ -100,7 +100,7 @@ function getQueries(options) {
       ...options,
       types: DATA_HUB_ACTIVITY,
     }),
-    [FILTER_KEYS.dataHubActivity]: dataHubAndActivtyStreamServicesQuery({
+    [FILTER_KEYS.dataHubActivity]: dataHubAndActivityStreamServicesQuery({
       ...options,
       types: DATA_HUB_AND_AVENTRI_ACTIVITY,
     }),
