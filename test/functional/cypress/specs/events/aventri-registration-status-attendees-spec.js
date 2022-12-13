@@ -21,7 +21,7 @@ describe('Aventri status event registration attendees', () => {
         {
           status: 'did-not-attend',
           expected: {
-            total: 14,
+            total: 12,
             totalLabel: 'Did not attend',
             pageCount: 2,
           },
@@ -29,7 +29,7 @@ describe('Aventri status event registration attendees', () => {
         {
           status: 'registered',
           expected: {
-            total: 28,
+            total: 24,
             totalLabel: 'Registered',
             pageCount: 3,
           },
@@ -37,7 +37,7 @@ describe('Aventri status event registration attendees', () => {
         {
           status: 'waiting-list',
           expected: {
-            total: 14,
+            total: 12,
             totalLabel: 'Waiting list',
             pageCount: 2,
           },
@@ -45,7 +45,7 @@ describe('Aventri status event registration attendees', () => {
         {
           status: 'attended',
           expected: {
-            total: 15,
+            total: 13,
             totalLabel: 'Attended',
             pageCount: 2,
           },
@@ -53,9 +53,9 @@ describe('Aventri status event registration attendees', () => {
         {
           status: 'cancelled',
           expected: {
-            total: 25,
+            total: 11,
             totalLabel: 'Cancelled',
-            pageCount: 3,
+            pageCount: 2,
           },
         },
       ]

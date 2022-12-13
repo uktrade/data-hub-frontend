@@ -2,6 +2,8 @@ import React from 'react'
 import CardUtils from './card/CardUtils'
 import Link from '@govuk-react/link'
 
+import styled from 'styled-components'
+
 import { formatStartAndEndDate } from '../../../utils/date'
 import { ACTIVITY_TYPE } from '../constants'
 
@@ -9,6 +11,10 @@ import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityCardLabels from './card/ActivityCardLabels'
+
+const StyledContactsList = styled('ul')`
+  padding-left: 15px;
+`
 
 // Event index to extract id from Aventri Event string feed by activity-stream
 // e.g. dit:aventri:Event:1113:Create
@@ -26,7 +32,7 @@ export default function AventriEvent({ activity: event }) {
     .map(([key, value]) => ({
       label: key,
       value: (
-        <ul>
+        <StyledContactsList>
           {value.map((contact, index) => (
             <li key={`contact-link-${index}`}>
               <Link data-test={`contact-link-${index}`} href={contact.url}>
@@ -34,7 +40,7 @@ export default function AventriEvent({ activity: event }) {
               </Link>
             </li>
           ))}
-        </ul>
+        </StyledContactsList>
       ),
     }))
 

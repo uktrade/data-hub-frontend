@@ -61,10 +61,23 @@ function generateAttendee({
   }
 }
 
+const generateListOfAttendeesForEvent = (eventId) =>
+  ['Activated', 'Confirmed', 'Attended', 'Cancelled', 'No Show', 'Waitlist']
+    .map((status) =>
+      Array.from({ length: 5 }).map((_, index) =>
+        generateAttendee({
+          eventId: eventId,
+          email: `contact${index}@bob.com`,
+          registrationStatus: status,
+        })
+      )
+    )
+    .flat()
+
 /**
  * Generate an array of aventri attendee hits
  */
-const generateAventriAttendeeHits = (additionalAttendeeCount = 0) => {
+const generateAventriAttendeeHits = () => {
   return [
     ...[
       {
@@ -195,37 +208,16 @@ const generateAventriAttendeeHits = (additionalAttendeeCount = 0) => {
           '/contacts/26f61090-df61-446c-b846-60c8bbca522f/details',
       },
     ].map(generateAttendee),
-    ...Array.from({ length: additionalAttendeeCount }).map(generateAttendee),
-    ...['Activated', 'Confirmed', 'Cancelled']
-      .map((status) =>
-        Array.from({ length: 12 }).map((_, index) =>
-          generateAttendee({
-            eventId: futureEventIdWithLargeAttendeeList,
-            email: `contact${index}@bob.com`,
-            registrationStatus: status,
-          })
-        )
-      )
-      .flat(),
-    ...['Attended', 'Cancelled', 'No Show', 'Waitlist']
-      .map((status) =>
-        Array.from({ length: 12 }).map((_, index) =>
-          generateAttendee({
-            eventId: pastEventIdWithLargeAttendeeList,
-            email: `contact${index}@bob.com`,
-            registrationStatus: status,
-          })
-        )
-      )
-      .flat(),
+    ...generateListOfAttendeesForEvent(futureEventIdWithLargeAttendeeList),
+    ...generateListOfAttendeesForEvent(pastEventIdWithLargeAttendeeList),
   ]
 }
 
 /**
  * Generates a full ES response for aventri attendees
  */
-const generateAventriAttendeeESResponse = (additionalAttendeeCount = 0) => {
-  const attendees = generateAventriAttendeeHits(additionalAttendeeCount)
+const generateAventriAttendeeESResponse = () => {
+  const attendees = generateAventriAttendeeHits()
   return {
     took: 1930,
     timed_out: false,

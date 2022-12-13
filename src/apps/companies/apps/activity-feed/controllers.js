@@ -42,6 +42,11 @@ const {
 const allActivityFeedEventsQuery = require('./es-queries/activity-feed-all-events-query')
 
 const { aventriEventQuery } = require('./es-queries/aventri-event-query')
+const {
+  transformAventriEventStatusToEventStatus,
+  transformAventriEventStatusCountsToEventStatusCounts,
+  filterAttendeesByEventStatus,
+} = require('./transformers')
 
 async function renderActivityFeed(req, res, next) {
   const { company, dnbHierarchyCount, dnbRelatedCompaniesCount } = res.locals
@@ -176,8 +181,6 @@ async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
     const aventriResults = await fetchActivityFeed(req, aventriQuery)
     const aventriAttendees = aventriResults.hits.hits.map((hit) => hit._source)
 
-    //TODO need to implement some logic here to limit attendees by status on past/future events
-
     const groupedEventsWithContactsObj = aventriAttendees.reduce(
       (obj, attendee) => {
         const eventId = `${attendee.object.attributedTo.id}:Create`
@@ -186,6 +189,7 @@ async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
         const contact = contacts.find(
           (contact) => contact.email == attendee.object['dit:emailAddress']
         )
+
         const mappedContact = contact
           ? [
               {
@@ -210,6 +214,7 @@ async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
       },
       {}
     )
+    // console.log(groupedEventsWithContactsObj)
     return groupedEventsWithContactsObj
   } catch (error) {
     next(error)
@@ -384,7 +389,7 @@ async function fetchActivityFeedHandler(req, res, next) {
       if (activity.type == 'dit:aventri:Event' && aventriEvents[activity.id]) {
         activity.object.attributedTo = [
           activity.object.attributedTo,
-          ...aventriEvents[activity.id],
+          ...filterAttendeesByEventStatus(activity, aventriEvents[activity.id]),
         ]
       }
       return activity
@@ -409,6 +414,8 @@ async function fetchAventriEvent(req, res, next) {
       aventriEventQuery([formattedAventriEventId])
     )
     const aventriEventData = aventriEventResults.hits.hits[0]._source
+
+    //TODO set the registration for past / future here instead of in redux
 
     const aventriStatusCounts = await getAventriRegistrationStatusCounts(
       req,
@@ -445,24 +452,6 @@ async function getAventriRegistrationStatusCounts(req, eventId) {
     )
 
   return statusCounts
-}
-
-const transformAventriEventStatusCountsToEventStatusCounts = (
-  aventriStatusCounts
-) =>
-  Object.entries(EVENT_ATTENDEES_MAPPING).map(([key, value]) => ({
-    status: key,
-    urlSlug: value.urlSlug,
-    count: aventriStatusCounts
-      .filter((s) => value.statuses.includes(s.status))
-      .reduce((sum, cur) => sum + cur.count, 0),
-  }))
-
-const transformAventriEventStatusToEventStatus = (aventriStatus) => {
-  const matchingStatus = Object.entries(EVENT_ATTENDEES_MAPPING).find(
-    ([, value]) => value.statuses.includes(aventriStatus)
-  )
-  return matchingStatus ? matchingStatus[0] : undefined
 }
 
 async function fetchAventriEventAttended(req, res, next) {
