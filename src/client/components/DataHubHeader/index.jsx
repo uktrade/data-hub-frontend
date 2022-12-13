@@ -12,8 +12,12 @@ const Header = styled.header({
   backgroundColor: BLACK,
 })
 
-const DataHubHeader = ({ onShowVerticalNav, showVerticalNav }) => (
-  <Header role="banner">
+const DataHubHeader = ({
+  onShowVerticalNav,
+  showVerticalNav,
+  disableReactRouter,
+}) => (
+  <Header id="datahub-header" role="banner">
     <LogoBar showVerticalNav={showVerticalNav}></LogoBar>
     <NavButton
       onShowVerticalNav={onShowVerticalNav}
@@ -22,6 +26,7 @@ const DataHubHeader = ({ onShowVerticalNav, showVerticalNav }) => (
     <NavBar
       onShowVerticalNav={onShowVerticalNav}
       showVerticalNav={showVerticalNav}
+      disableReactRouter={disableReactRouter}
     />
   </Header>
 )

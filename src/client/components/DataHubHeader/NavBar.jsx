@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { BLACK } from 'govuk-colours'
 import {
@@ -87,45 +87,57 @@ const styledLink = {
 const StyledNavLink = styled(NavLink)(styledLink)
 const StyledLink = styled.a(styledLink)
 
-const NavBar = ({ onShowVerticalNav, showVerticalNav }) => (
-  <StyledNavContainer>
-    <StyledNav aria-labelledby="navigation" data-test="primary-navigation">
-      <StyledList
-        showVerticalNav={showVerticalNav}
-        id="navigation"
-        aria-label="Top Level Navigation"
-        onClick={() => onShowVerticalNav(!showVerticalNav)}
-      >
-        {links.map(({ label, useRouter, module, to, ...rest }, i) => (
-          <ProtectedLink module={module} key={i}>
-            {useRouter ? (
-              <StyledListItem>
-                <StyledNavLink to={to} activeClassName="active" {...rest}>
-                  {label}
-                </StyledNavLink>
-              </StyledListItem>
-            ) : (
-              <StyledListItem>
-                <StyledLink
-                  href={`${to.pathname}${to.search ? to.search : ''}`}
-                >
-                  {label}
-                </StyledLink>
-              </StyledListItem>
-            )}
-          </ProtectedLink>
-        ))}
-        <StyledListItem>
-          <StyledLink
-            href="/support"
-            className="datahub-header__navigation__item__link"
-          >
-            Support
-          </StyledLink>
-        </StyledListItem>
-      </StyledList>
-    </StyledNav>
-  </StyledNavContainer>
-)
+const isActiveLink = (location, to) => location.pathname.startsWith(to.pathname)
+
+const NavBar = ({ onShowVerticalNav, showVerticalNav, disableReactRouter }) => {
+  const location = useLocation()
+  return (
+    <StyledNavContainer>
+      <StyledNav aria-labelledby="navigation" data-test="primary-navigation">
+        <StyledList
+          showVerticalNav={showVerticalNav}
+          id="navigation"
+          aria-label="Top Level Navigation"
+          onClick={() => onShowVerticalNav(!showVerticalNav)}
+        >
+          {links.map(({ label, useRouter, module, to, ...rest }, i) => (
+            <ProtectedLink module={module} key={i}>
+              {useRouter && !disableReactRouter ? (
+                <StyledListItem>
+                  <StyledNavLink to={to} activeClassName="active" {...rest}>
+                    {label}
+                  </StyledNavLink>
+                </StyledListItem>
+              ) : (
+                <StyledListItem>
+                  <StyledLink
+                    href={`${to.pathname}${to.search ? to.search : ''}`}
+                    className={isActiveLink(location, to) ? 'active' : ''}
+                  >
+                    {label}
+                  </StyledLink>
+                </StyledListItem>
+              )}
+            </ProtectedLink>
+          ))}
+          <StyledListItem>
+            <StyledLink
+              href="/support"
+              className={
+                isActiveLink(location, {
+                  pathname: '/support',
+                })
+                  ? 'active'
+                  : ''
+              }
+            >
+              Support
+            </StyledLink>
+          </StyledListItem>
+        </StyledList>
+      </StyledNav>
+    </StyledNavContainer>
+  )
+}
 
 export default NavBar

@@ -107,6 +107,14 @@ const NavigationLink = styled.a({
     color: BLACK,
     background: YELLOW,
   },
+  ':visited': {
+    color: WHITE,
+  },
+  ':hover': {
+    textDecoration: 'underline',
+    textDecorationThickness: '3px',
+    textUnderlineOffset: '.1em',
+  },
 })
 
 const LogoBar = ({ showVerticalNav }) => (
