@@ -9,7 +9,8 @@ const {
 } = require('../../../../../src/apps/companies/apps/activity-feed/constants')
 
 describe('Event Aventri Details', () => {
-  const existingEventId = '1111'
+  const eventInPastId = '1111'
+  const eventInFutureId = '1114'
   const notFoundEventId = '404'
   const errorEventId = '500'
 
@@ -21,10 +22,12 @@ describe('Event Aventri Details', () => {
   context('when the feature flag is on', () => {
     before(() => {
       cy.setUserFeatures([ACTIVITY_STREAM_FEATURE_FLAG])
-      cy.visit(urls.events.aventri.details(existingEventId))
     })
 
-    context('when it is a valid event', () => {
+    context('when it is a valid event in the past', () => {
+      before(() => {
+        cy.visit(urls.events.aventri.details(eventInPastId))
+      })
       it('should display aventri event name in breadcrumb', () => {
         assertBreadcrumbs({
           Home: urls.dashboard.route,
@@ -33,22 +36,64 @@ describe('Event Aventri Details', () => {
         })
       })
 
-      it('should display the side nav bar', () => {
-        cy.get('[data-test="event-aventri-nav"]').should('exist')
-        cy.get('[data-test="event-aventri-details-link"]')
-          .should('contain', 'Details')
-          .should(
-            'have.attr',
-            'href',
-            urls.events.aventri.details(existingEventId)
-          )
-        cy.get('[data-test="event-aventri-attended-link"]')
-          .should('contain', 'Attended (32)')
-          .should(
-            'have.attr',
-            'href',
-            urls.events.aventri.attended(existingEventId)
-          )
+      context('should display the side nav bar', () => {
+        it('with the details link', () => {
+          cy.get('[data-test="event-aventri-nav"]').should('exist')
+          cy.get('[data-test="event-aventri-details-link"]')
+            .should('contain', 'Details')
+            .should(
+              'have.attr',
+              'href',
+              urls.events.aventri.details(eventInPastId)
+            )
+        })
+        var registrationStatusTests = [
+          {
+            status: 'did-not-attend',
+            expected: {
+              total: 2,
+              label: 'Did not attend',
+            },
+          },
+          {
+            status: 'waiting-list',
+            expected: {
+              total: 11,
+              label: 'Waiting list',
+            },
+          },
+          {
+            status: 'attended',
+            expected: {
+              total: 24,
+              label: 'Attended',
+            },
+          },
+          {
+            status: 'cancelled',
+            expected: {
+              total: 7,
+              label: 'Cancelled',
+            },
+          },
+        ]
+        registrationStatusTests.forEach(function (test) {
+          it(`with the link for the ${test.status} status`, () => {
+            cy.get(`[data-test="event-aventri-status-link-${test.status}"]`)
+              .should(
+                'contain',
+                `${test.expected.label} (${test.expected.total})`
+              )
+              .should(
+                'have.attr',
+                'href',
+                urls.events.aventri.registrationStatus(
+                  eventInPastId,
+                  test.status
+                )
+              )
+          })
+        })
       })
 
       it('should display the event name in the header', () => {
@@ -67,7 +112,7 @@ describe('Event Aventri Details', () => {
         cy.get('[data-test="eventAventriDetails"]').within(() => {
           cy.get('[data-test="newWindowLink"]')
             .should('have.attr', 'aria-label', 'Opens in a new window or tab')
-            .should('have.attr', 'href', aventriLink + existingEventId)
+            .should('have.attr', 'href', aventriLink + eventInPastId)
             .should('have.text', aventriLinkText)
         })
       })
@@ -89,7 +134,7 @@ describe('Event Aventri Details', () => {
           )
           cy.get('[data-test="newWindowLink"]')
             .should('have.attr', 'aria-label', 'Opens in a new window or tab')
-            .should('have.attr', 'href', aventriLink + existingEventId)
+            .should('have.attr', 'href', aventriLink + eventInPastId)
             .should('have.text', aventriLinkText)
           cy.contains(newTabText).should('be.visible')
         })
@@ -109,6 +154,58 @@ describe('Event Aventri Details', () => {
               .should('have.attr', 'aria-label', 'Opens in a new window or tab')
               .should('have.attr', 'href', aventriLink + eventId)
               .should('have.text', aventriLinkText)
+          })
+        })
+      })
+    })
+
+    context('when it is a valid event in the future', () => {
+      before(() => {
+        cy.visit(urls.events.aventri.details(eventInFutureId))
+      })
+
+      context('should display the side nav bar', () => {
+        it('with the details link', () => {
+          cy.get('[data-test="event-aventri-nav"]').should('exist')
+          cy.get('[data-test="event-aventri-details-link"]')
+            .should('contain', 'Details')
+            .should(
+              'have.attr',
+              'href',
+              urls.events.aventri.details(eventInFutureId)
+            )
+        })
+        var registrationStatusTests = [
+          {
+            status: 'registered',
+            expected: {
+              total: 28,
+              label: 'Registered',
+            },
+          },
+          {
+            status: 'cancelled',
+            expected: {
+              total: 7,
+              label: 'Cancelled',
+            },
+          },
+        ]
+        registrationStatusTests.forEach(function (test) {
+          it(`with the link for the ${test.status} status`, () => {
+            cy.get(`[data-test="event-aventri-status-link-${test.status}"]`)
+              .should(
+                'contain',
+                `${test.expected.label} (${test.expected.total})`
+              )
+              .should(
+                'have.attr',
+                'href',
+                urls.events.aventri.registrationStatus(
+                  eventInFutureId,
+                  test.status
+                )
+              )
           })
         })
       })
@@ -156,7 +253,7 @@ describe('Event Aventri Details', () => {
     'when viewing aventri details with the feature flag is disabled',
     () => {
       before(() => {
-        cy.visit(urls.events.aventri.details(existingEventId))
+        cy.visit(urls.events.aventri.details(eventInPastId))
       })
 
       it('should not display aventri event name in breadcrumb', () => {

@@ -11,26 +11,14 @@ import {
   LocalNav,
   LocalNavLink,
   NewWindowLink,
-  StatusMessage,
   SummaryTable,
 } from '../../../components'
+import AventriEventSyncWarning from '../../../components/ActivityFeed/activities/AventriEventSyncWarning'
 import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
 import { ACTIVITY_STREAM_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
 import { isEmpty } from 'lodash'
-
-const StyledStatusMessage = styled(StatusMessage)`
-  div.statusHeader {
-    font-size: x-large;
-  }
-  div.statusContent {
-    font-size: medium;
-  }
-  div.statusLink {
-    font-size: 80%;
-  }
-`
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
@@ -41,7 +29,7 @@ const EventAventriDetails = ({
   eventDate,
   location,
   fullAddress,
-  attended,
+  registrationStatusCounts,
 }) => {
   const { aventriEventId } = useParams()
   const breadcrumbs = [
@@ -57,10 +45,6 @@ const EventAventriDetails = ({
       text: name,
     },
   ]
-
-  const aventriEventLink =
-    'https://eu-admin.eventscloud.com/loggedin/eVent/index.php?eventid=' +
-    aventriEventId
 
   return (
     <DefaultLayout
@@ -82,27 +66,14 @@ const EventAventriDetails = ({
               }}
             >
               {() => {
+                const aventriEventLink = `https://eu-admin.eventscloud.com/loggedin/eVent/index.php?eventid=${aventriEventId}`
+
                 return (
                   name && (
                     <>
-                      <StyledStatusMessage>
-                        <div class="statusHeader">
-                          {' '}
-                          This event has been automatically synced from Aventri.
-                        </div>
-
-                        <div class="statusContent">
-                          Event details, registrants and attendees can only be
-                          edited in Aventri. Changes can take up to 24 hours to
-                          sync.
-                        </div>
-
-                        <div class="statusLink">
-                          <NewWindowLink href={aventriEventLink}>
-                            View in Aventri
-                          </NewWindowLink>
-                        </div>
-                      </StyledStatusMessage>
+                      <AventriEventSyncWarning
+                        aventriEventId={aventriEventId}
+                      />
                       <GridRow data-test="eventAventriDetails">
                         <GridCol setWidth="one-quarter">
                           <LocalNav dataTest="event-aventri-nav">
@@ -112,16 +83,18 @@ const EventAventriDetails = ({
                             >
                               Details
                             </LocalNavLink>
-                            {attended.status && (
+                            {registrationStatusCounts?.map((status, index) => (
                               <LocalNavLink
-                                dataTest="event-aventri-attended-link"
-                                href={urls.events.aventri.attended(
-                                  aventriEventId
+                                key={`reg-status-${index}`}
+                                dataTest={`event-aventri-status-link-${status.urlSlug}`}
+                                href={urls.events.aventri.registrationStatus(
+                                  aventriEventId,
+                                  status.urlSlug
                                 )}
                               >
-                                Attended ({attended.total})
+                                {status.status} ({status.count})
                               </LocalNavLink>
-                            )}
+                            ))}
                           </LocalNav>
                         </GridCol>
                         <GridCol setWidth="three-quarters">

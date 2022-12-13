@@ -10,6 +10,7 @@ import Referral from './Referral'
 import AventriAttendee from './AventriAttendee'
 import DataHubEvent from './DataHubEvent'
 import AventriEvent from './AventriEvent'
+import AventriEventSyncWarning from './AventriEventSyncWarning'
 
 export default [
   AventriAttendee,
@@ -24,4 +25,5 @@ export default [
   InvestmentProject,
   Omis,
   Referral,
+  AventriEventSyncWarning,
 ]

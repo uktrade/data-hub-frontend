@@ -50,6 +50,14 @@ describe('Aventri status event registration attendees', () => {
             pageCount: 2,
           },
         },
+        {
+          status: 'cancelled',
+          expected: {
+            total: 16,
+            totalLabel: 'Cancelled',
+            pageCount: 2,
+          },
+        },
       ]
 
       registrationStatusTests.forEach(function (test) {
@@ -69,7 +77,7 @@ describe('Aventri status event registration attendees', () => {
               assertBreadcrumbs({
                 Home: urls.dashboard.route,
                 Events: urls.events.index(),
-                'EITA Test Event 2022': null,
+                'EITA Test Filtering Event 2022': null,
               })
             })
 
@@ -234,35 +242,42 @@ describe('Aventri status event registration attendees', () => {
                 cy.get('[data-test="aventri-attendee"]').should('exist')
               })
             })
+
+            context('With errors', () => {
+              before(() => {
+                cy.visit(
+                  urls.events.aventri.registrationStatus(errorId, test.status)
+                )
+              })
+
+              it('should render an error message', () => {
+                assertErrorDialog(
+                  'TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES',
+                  'Error: Unable to load Aventri Registration Status.'
+                )
+              })
+            })
+
+            context('With the feature flag turned off', () => {
+              before(() => {
+                cy.visit(
+                  urls.events.aventri.registrationStatus(
+                    existingEventId,
+                    test.status
+                  )
+                )
+              })
+              it('should not display an aventri attendee', () => {
+                cy.get('[data-test="aventri-attended"]').should('not.exist')
+              })
+            })
           }
-        )
-      })
-    })
-
-    context('With errors', () => {
-      before(() => {
-        cy.visit(urls.events.aventri.attended(errorId))
-      })
-
-      it('should render an error message', () => {
-        assertErrorDialog(
-          'TASK_GET_EVENT_AVENTRI_ATTENDED',
-          'Unable to load Aventri Attended.'
         )
       })
     })
 
     after(() => {
       cy.resetUser()
-    })
-  })
-
-  context('With the feature flag turned off', () => {
-    before(() => {
-      cy.visit(urls.events.aventri.attended(existingEventId))
-    })
-    it('should not display an aventri attendee', () => {
-      cy.get('[data-test="aventri-attended"]').should('not.exist')
     })
   })
 })

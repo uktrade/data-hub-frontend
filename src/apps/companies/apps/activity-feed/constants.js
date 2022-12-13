@@ -95,6 +95,7 @@ const EVENT_ATTENDEES_STATUS = {
   waitingList: 'Waiting list',
   didNotAttend: 'Did not attend',
   attended: 'Attended',
+  cancelled: 'Cancelled',
 }
 
 const mapStatusToObject = (status) => {
@@ -117,7 +118,22 @@ const EVENT_AVENTRI_ATTENDEES_MAPPING = {
   [EVENT_AVENTRI_ATTENDEES_STATUS.waitlist]: mapStatusToObject(
     EVENT_ATTENDEES_STATUS.waitingList
   ),
+  [EVENT_AVENTRI_ATTENDEES_STATUS.cancelled]: mapStatusToObject(
+    EVENT_ATTENDEES_STATUS.cancelled
+  ),
 }
+
+const EVENT_ATTENDEES_STATUS_BEFORE_EVENT = [
+  EVENT_ATTENDEES_STATUS.registered,
+  EVENT_ATTENDEES_STATUS.cancelled,
+]
+
+const EVENT_ATTENDEES_STATUS_AFTER_EVENT = [
+  EVENT_ATTENDEES_STATUS.attended,
+  EVENT_ATTENDEES_STATUS.waitingList,
+  EVENT_ATTENDEES_STATUS.didNotAttend,
+  EVENT_ATTENDEES_STATUS.cancelled,
+]
 
 const EVENT_ACTIVITY_SORT_OPTIONS = {
   'modified_on:asc': {
@@ -199,4 +215,6 @@ module.exports = {
   DATA_HUB_AND_AVENTRI_ACTIVITY,
   EVENT_AVENTRI_ATTENDEES_MAPPING,
   EVENT_ATTENDEES_STATUS,
+  EVENT_ATTENDEES_STATUS_BEFORE_EVENT,
+  EVENT_ATTENDEES_STATUS_AFTER_EVENT,
 }
