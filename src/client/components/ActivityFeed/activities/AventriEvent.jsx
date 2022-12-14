@@ -25,6 +25,13 @@ export default function AventriEvent({ activity: event }) {
   const aventriEventId = eventObject.id.split(':')[EVENT_ID_INDEX]
   const date = formatStartAndEndDate(eventObject.startTime, eventObject.endTime)
   const contacts = CardUtils.getContactsGroupedByRegistrationStatus(event)
+  const isEventInFuture = event.isEventInFuture
+  const isEventInFutureDataTestId =
+    isEventInFuture === undefined
+      ? ''
+      : isEventInFuture
+      ? 'future-event'
+      : 'past-event'
 
   //TODO check whether this can be moved into redux state / transformers
   const formattedContacts = Object.entries(contacts)
@@ -45,7 +52,9 @@ export default function AventriEvent({ activity: event }) {
     }))
 
   return (
-    <ActivityCardWrapper dataTest="aventri-event">
+    <ActivityCardWrapper
+      dataTest={`aventri-event ${isEventInFutureDataTestId}`}
+    >
       <ActivityCardLabels service="Event" kind="Aventri Event" />
       <ActivityCardSubject dataTest="aventri-event-name">
         <Link href={`/events/aventri/${aventriEventId}/details`}>{name}</Link>

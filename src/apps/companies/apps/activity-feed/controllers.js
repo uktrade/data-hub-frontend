@@ -46,6 +46,7 @@ const {
   transformAventriEventStatusToEventStatus,
   transformAventriEventStatusCountsToEventStatusCounts,
   filterAttendeesByEventStatus,
+  isEventInFuture,
 } = require('./transformers')
 
 async function renderActivityFeed(req, res, next) {
@@ -387,6 +388,7 @@ async function fetchActivityFeedHandler(req, res, next) {
     //loop over all the results, set the contact to be the matching contact from the contacts array
     activities = activities.map((activity) => {
       if (activity.type == 'dit:aventri:Event' && aventriEvents[activity.id]) {
+        activity.isEventInFuture = isEventInFuture(activity)
         activity.object.attributedTo = [
           activity.object.attributedTo,
           ...filterAttendeesByEventStatus(activity, aventriEvents[activity.id]),

@@ -179,7 +179,7 @@ describe('Company activity feed', () => {
         cy.setUserFeatures([ACTIVITY_STREAM_FEATURE_FLAG])
       })
       it('displays the correct activity type label', () => {
-        cy.get('[data-test="aventri-event"]').within(() =>
+        cy.get('[data-test~="aventri-event"]').within(() =>
           cy
             .get('[data-test="activity-kind-label"]')
             .contains('Aventri Event', {
@@ -189,12 +189,49 @@ describe('Company activity feed', () => {
       })
 
       it('displays the correct sub-topic label', () => {
-        cy.get('[data-test="aventri-event"]').within(() =>
+        cy.get('[data-test~="aventri-event"]').within(() =>
           cy.get('[data-test="activity-service-label"]').contains('Event', {
             matchCase: false,
           })
         )
       })
+
+      context(
+        'when a company with large number contacts attending aventri events is viewed',
+        () => {
+          before(() => {
+            cy.visit(
+              urls.companies.activity.index(
+                fixtures.company.companyWithManyContacts.id
+              )
+            )
+          })
+
+          it('correctly displays contacts for a past event', () => {
+            cy.get('[data-test~="past-event"]').within(() => {
+              cy.get('[data-test="cancelled-label"]').should('exist')
+              cy.get('[data-test="attended-label"]').should('exist')
+              cy.get('[data-test="did-not-attend-label"]').should('exist')
+              cy.get('[data-test="waiting-list-label"]').should('exist')
+
+              cy.get('[data-test="registered-label"]registered-label').should(
+                'not.exist'
+              )
+            })
+          })
+
+          it('correctly displays contacts for a future event', () => {
+            cy.get('[data-test~="future-event"]').within(() => {
+              cy.get('[data-test="registered-label"]').should('exist')
+              cy.get('[data-test="cancelled-label"]').should('exist')
+
+              cy.get('[data-test="attended-label"]').should('not.exist')
+              cy.get('[data-test="did-not-attend-label"]').should('not.exist')
+              cy.get('[data-test="waiting-list-label"]').should('not.exist')
+            })
+          })
+        }
+      )
     })
   })
 
