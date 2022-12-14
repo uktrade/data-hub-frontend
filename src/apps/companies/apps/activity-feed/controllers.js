@@ -451,69 +451,6 @@ const transformAventriEventStatusToEventStatus = (aventriStatusCounts) =>
       .reduce((sum, cur) => sum + cur.count, 0),
   }))
 
-async function fetchAventriEventAttended(req, res, next) {
-  // istanbul ignore next: Covered by functional tests
-  try {
-    const eventId = req.params.aventriEventId
-    const { page, size, registrationStatus } = req.query
-
-    const sort = EVENT_ATTENDEES_SORT_OPTIONS[req.query.sortBy]
-    const from = (page - 1) * ACTIVITIES_PER_PAGE
-
-    //get the attendees
-    let registrationStatuses = [registrationStatus]
-    const aventriAttendeeResults = await fetchActivityFeed(
-      req,
-      aventriAttendeeQuery({
-        eventId,
-        sort,
-        from,
-        size,
-        registrationStatuses,
-      })
-    )
-
-    const totalAttendees = aventriAttendeeResults.hits.total.value
-
-    // istanbul ignore next: Covered by functional tests
-    let aventriAttendees = aventriAttendeeResults.hits.hits.map(
-      (hit) => hit._source
-    )
-
-    // add the datahub ID to aventri attendees object
-    // istanbul ignore next: Covered by functional tests
-    const addDataHubUrlToAttendee = async (attendee) => {
-      const attendeeEmail = attendee.object['dit:aventri:email']
-      let attendeeContactUrl = null
-      if (attendeeEmail) {
-        const dataHubContactResults = await fetchMatchingDataHubContact(
-          req,
-          attendeeEmail
-        )
-        const dataHubContactId = dataHubContactResults?.results[0]?.id
-        attendeeContactUrl = dataHubContactId
-          ? `/contacts/${dataHubContactId}/details`
-          : null
-      }
-      attendee.datahubContactUrl = attendeeContactUrl
-      return attendee
-    }
-    // istanbul ignore next: Covered by functional tests
-    aventriAttendees = await Promise.all(
-      aventriAttendees.map(async (attendee) => {
-        return await addDataHubUrlToAttendee(attendee)
-      })
-    )
-
-    res.json({
-      totalAttendees,
-      aventriAttendees,
-    })
-  } catch (error) {
-    next(error)
-  }
-}
-
 async function fetchAventriEventRegistrationStatusAttendees(req, res, next) {
   try {
     const eventId = req.params.aventriEventId
@@ -735,7 +672,6 @@ module.exports = {
   fetchActivityFeedHandler,
   fetchActivitiesForContact,
   fetchAventriEvent,
-  fetchAventriEventAttended,
   fetchAllActivityFeedEvents,
   eventsColListQueryBuilder,
   getAventriEventsAttendedByCompanyContacts,
