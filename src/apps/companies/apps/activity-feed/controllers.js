@@ -10,7 +10,8 @@ const {
   EVENT_ALL_ACTIVITY,
   ACTIVITY_STREAM_FEATURE_FLAG,
   DATA_HUB_AND_AVENTRI_ACTIVITY,
-  EVENT_AVENTRI_ATTENDEES_STATUS,
+  EVENT_AVENTRI_ATTENDEES_STATUSES,
+  EVENT_ATTENDEES_MAPPING,
 } = require('./constants')
 
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
@@ -32,6 +33,7 @@ const {
   aventriAttendeeForCompanyQuery,
   dataHubAndAventriActivityQuery,
   aventriAttendeeQuery,
+  aventriAttendeeRegistrationStatusQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
 const {
@@ -403,11 +405,51 @@ async function fetchAventriEvent(req, res, next) {
     )
     const aventriEventData = aventriEventResults.hits.hits[0]._source
 
-    return res.json({ ...aventriEventData })
+    const aventriStatusCounts = await getAventriRegistrationStatusCounts(
+      req,
+      id
+    )
+
+    const statusCounts =
+      transformAventriEventStatusToEventStatus(aventriStatusCounts)
+
+    return res.json({ ...aventriEventData, registrationStatuses: statusCounts })
   } catch (error) {
     next(error)
   }
 }
+
+async function getAventriRegistrationStatusCounts(req, eventId) {
+  const registrationStatusResults = await fetchActivityFeed(
+    req,
+    aventriAttendeeRegistrationStatusQuery({
+      eventId,
+      registrationStatuses: EVENT_AVENTRI_ATTENDEES_STATUSES,
+    })
+  )
+
+  const statusCounts = registrationStatusResults.aggregations.countfield.buckets
+    .map((result) => ({
+      status: result.key,
+      count: result.doc_count,
+    }))
+    .filter(
+      (status) =>
+        EVENT_AVENTRI_ATTENDEES_STATUSES.includes(status.status) &&
+        status.count > 0
+    )
+
+  return statusCounts
+}
+
+const transformAventriEventStatusToEventStatus = (aventriStatusCounts) =>
+  Object.entries(EVENT_ATTENDEES_MAPPING).map(([key, value]) => ({
+    status: key,
+    urlSlug: value.urlSlug,
+    count: aventriStatusCounts
+      .filter((s) => value.statuses.includes(s.status))
+      .reduce((sum, cur) => sum + cur.count, 0),
+  }))
 
 async function fetchAventriEventAttended(req, res, next) {
   // istanbul ignore next: Covered by functional tests
@@ -475,20 +517,14 @@ async function fetchAventriEventAttended(req, res, next) {
 async function fetchAventriEventRegistrationStatusAttendees(req, res, next) {
   try {
     const eventId = req.params.aventriEventId
-    const { page, size, registrationStatuses, sortBy } = req.query
+    const { page, size, registrationStatus, sortBy } = req.query
 
-    if (
-      !Array.isArray(registrationStatuses) ||
-      registrationStatuses.length == 0
-    ) {
+    if (!registrationStatus) {
       throw new Error('Missing registration status')
     }
 
-    const invalidRegStatuses = registrationStatuses.filter(
-      (s) => !Object.values(EVENT_AVENTRI_ATTENDEES_STATUS).includes(s)
-    )
-
-    if (invalidRegStatuses.length > 0) {
+    const matchingStatus = EVENT_ATTENDEES_MAPPING[registrationStatus]
+    if (!matchingStatus) {
       throw new Error('Invalid status')
     }
 
@@ -503,7 +539,7 @@ async function fetchAventriEventRegistrationStatusAttendees(req, res, next) {
         sort,
         from,
         size,
-        registrationStatuses,
+        registrationStatuses: matchingStatus.statuses,
       })
     )
 
@@ -704,4 +740,6 @@ module.exports = {
   eventsColListQueryBuilder,
   getAventriEventsAttendedByCompanyContacts,
   fetchAventriEventRegistrationStatusAttendees,
+  getAventriRegistrationStatusCounts,
+  transformAventriEventStatusToEventStatus,
 }

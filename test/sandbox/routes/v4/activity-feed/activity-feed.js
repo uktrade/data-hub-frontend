@@ -27,6 +27,7 @@ var aventriAttendees = require('../../../fixtures/v4/activity-feed/aventri-atten
 ////This order is correct when sorted by: First Name A-Z, Last name A-Z and Company name A-Z
 var aventriAttendeesAToZOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-a-z.json')
 var aventriAttendeeForCompany = require('../../../fixtures/v4/activity-feed/aventri-attendee-for-company.json')
+var aventriRegistrationStatusWithAggregations = require('../../../fixtures/v4/activity-feed/aventri-registration-status-with-aggregation-counts.json')
 
 ////This order is correct when sorted by: First Name Z-A, Last name Z-A and Company name Z-A
 var aventriAttendeesZToAOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-z-a.json')
@@ -196,9 +197,19 @@ exports.activityFeed = function (req, res) {
     if (aventriId === 'dit:aventri:Event:6666:Create') {
       return res.json(aventriEventsNoDetails)
     }
-
     //happy path
-    return res.json(aventriEvents)
+    const foundEvent = aventriEvents.hits.hits.find(
+      (e) => e._source.id == aventriId
+    )
+    const updatedHits = Object.assign({}, aventriAttendees, {
+      hits: {
+        total: {
+          value: foundEvent ? 1 : 0,
+        },
+        hits: foundEvent ? [foundEvent] : [],
+      },
+    })
+    return res.json(updatedHits)
   }
 
   var isAventriAttendeeQuery =
@@ -213,6 +224,11 @@ exports.activityFeed = function (req, res) {
 
     if (isCompanyQuery) {
       return res.json(aventriAttendeeForCompany)
+    }
+
+    var isRegistrationStatusQuery = get(req.body, 'aggs.countfield.terms.field')
+    if (isRegistrationStatusQuery) {
+      return res.json(aventriRegistrationStatusWithAggregations)
     }
 
     var aventriId = get(
@@ -276,6 +292,7 @@ exports.activityFeed = function (req, res) {
           hits: paginated,
         },
       })
+
       return res.json(updatedHits)
     }
 

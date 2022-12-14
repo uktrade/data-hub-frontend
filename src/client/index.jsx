@@ -9,6 +9,7 @@ import { Redirect, Switch } from 'react-router-dom'
 
 import './components'
 import { SearchLocalHeader } from './components'
+import { default as DataHubHeaderWrapper } from './components/DataHubHeader/Wrapper'
 import Provider from './provider'
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
 import InteractionDetailsForm from '../apps/interactions/apps/details-form/client/InteractionDetailsForm'
@@ -492,6 +493,9 @@ function App() {
           ...resourceTasks,
         }}
       >
+        <Mount selector="#data-hub-header">
+          {(props) => <DataHubHeaderWrapper {...props} />}
+        </Mount>
         <Mount selector="#add-company-form">
           {(props) => (
             <AddCompanyForm csrfToken={globalProps.csrfToken} {...props} />

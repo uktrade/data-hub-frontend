@@ -1,9 +1,11 @@
+import { transformResponseToEventAventriDetails } from '../transformers'
+
 const { default: axios } = require('axios')
 const urls = require('../../../../lib/urls')
 
 export const getEventAventriRegistrationStatusAttendees = ({
   aventriEventId,
-  aventriRegistrationStatuses,
+  registrationStatus,
   selectedSortBy,
   page,
   size,
@@ -15,12 +17,12 @@ export const getEventAventriRegistrationStatusAttendees = ({
         sortBy: selectedSortBy,
         page,
         size,
-        registrationStatuses: aventriRegistrationStatuses,
+        registrationStatus,
       },
     }),
   ])
     .then(([{ data: aventriEventData }, { data: attendeesData }]) => ({
-      aventriEventData,
+      ...transformResponseToEventAventriDetails(aventriEventData),
       ...attendeesData,
     }))
     .catch(() => Promise.reject('Unable to load Aventri Registration Status.'))

@@ -6,6 +6,9 @@ const allActivityFeedEvents = require('../../../../../../test/sandbox/fixtures/v
 const allAttendees = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/aventri-attendees.json')
 const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/middleware-parameters-builder')
 const companyMock = require('../../../../../../test/unit/data/company.json')
+const aventriRegistrationStatusNoDetails = require('../../../../../../test/unit/data/activity-feed/aventri-registration-status-no-details.json')
+const aventriRegistrationStatusWithAggregations = require('../../../../../../test/unit/data/activity-feed/aventri-registration-status-with-aggregation-counts.json')
+
 const {
   DATA_HUB_ACTIVITY,
   EXTERNAL_ACTIVITY,
@@ -14,9 +17,14 @@ const {
   ACTIVITY_STREAM_FEATURE_FLAG,
   EVENT_AVENTRI_ATTENDEES_STATUS,
   EVENT_ATTENDEES_SORT_OPTIONS,
+  EVENT_ATTENDEES_STATUS,
+  EVENT_ATTENDEES_MAPPING,
 } = require('../constants')
-const { eventsColListQueryBuilder } = require('../controllers')
-const { has } = require('lodash')
+const {
+  eventsColListQueryBuilder,
+  transformAventriEventStatusToEventStatus,
+} = require('../controllers')
+const { has, get } = require('lodash')
 
 describe('Activity feed controllers', () => {
   let fetchActivityFeedStub,
@@ -1495,41 +1503,11 @@ describe('Activity feed controllers', () => {
       })
     })
 
-    context(
-      'when requesting with an empty list of statuses an error is thrown',
-      () => {
-        before(async () => {
-          middlewareParameters = buildMiddlewareParameters({
-            requestQuery: {
-              registrationStatuses: [],
-            },
-          })
-
-          await controllers.fetchAventriEventRegistrationStatusAttendees(
-            middlewareParameters.reqMock,
-            middlewareParameters.resMock,
-            middlewareParameters.nextSpy
-          )
-        })
-
-        it('should call next with an error', async () => {
-          const error = 'Error: Missing registration status'
-          expect(
-            middlewareParameters.nextSpy.getCalls()[0].firstArg.toString()
-          ).to.equal(error)
-        })
-      }
-    )
-
     context('when requesting an invalid status an error is thrown', () => {
       before(async () => {
         middlewareParameters = buildMiddlewareParameters({
           requestQuery: {
-            registrationStatuses: [
-              'FAKE',
-              EVENT_AVENTRI_ATTENDEES_STATUS.activated,
-              EVENT_AVENTRI_ATTENDEES_STATUS.noShow,
-            ],
+            registrationStatus: 'FAKE',
           },
         })
 
@@ -1552,7 +1530,7 @@ describe('Activity feed controllers', () => {
       before(async () => {
         middlewareParameters = buildMiddlewareParameters({
           requestQuery: {
-            registrationStatuses: [EVENT_AVENTRI_ATTENDEES_STATUS.activated],
+            registrationStatus: EVENT_ATTENDEES_STATUS.registered,
             page: 1,
             size: 25,
             sortBy: 'first_name:asc',
@@ -1586,9 +1564,9 @@ describe('Activity feed controllers', () => {
                 },
                 {
                   terms: {
-                    'object.dit:registrationStatus': [
-                      EVENT_AVENTRI_ATTENDEES_STATUS.activated,
-                    ],
+                    'object.dit:registrationStatus':
+                      EVENT_ATTENDEES_MAPPING[EVENT_ATTENDEES_STATUS.registered]
+                        .statuses,
                   },
                 },
               ],
@@ -1616,5 +1594,150 @@ describe('Activity feed controllers', () => {
         )
       })
     })
+  })
+
+  describe('#getAventriRegistrationStatusCounts', () => {
+    let statusCounts
+    before(async () => {
+      const mockActivityFeedApiFunction = (req, body) => {
+        //is this a query for empty registation status data
+        if (
+          get(
+            body,
+            "query.bool.must[1].term['object.attributedTo.id']"
+          ).includes(1)
+        ) {
+          return aventriRegistrationStatusNoDetails
+        }
+
+        return aventriRegistrationStatusWithAggregations
+      }
+      fetchActivityFeedStub = sinon
+        .stub()
+        .callsFake(mockActivityFeedApiFunction)
+
+      controllers = proxyquire(
+        '../../src/apps/companies/apps/activity-feed/controllers',
+        {
+          './repos': {
+            fetchActivityFeed: fetchActivityFeedStub,
+          },
+        }
+      )
+    })
+
+    context('when requesting an event without any attendees', () => {
+      it('should return an empty array', async () => {
+        middlewareParameters = buildMiddlewareParameters()
+
+        statusCounts = await controllers.getAventriRegistrationStatusCounts(
+          middlewareParameters.reqMock,
+          1
+        )
+        expect(statusCounts).to.be.deep.equal([])
+      })
+    })
+
+    context('when requesting an event with attendees', () => {
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters()
+
+        statusCounts = await controllers.getAventriRegistrationStatusCounts(
+          middlewareParameters.reqMock,
+          2
+        )
+      })
+
+      it('should exclude any known status in the response with count of 0 from the aggregation result', () => {
+        expect(
+          statusCounts.find(
+            (x) => x.status == EVENT_AVENTRI_ATTENDEES_STATUS.confirmed
+          )
+        ).to.be.undefined
+      })
+
+      it('should exclude any status in the response that is unknown from the aggregation result', () => {
+        expect(statusCounts.find((x) => x.status == 'Incomplete')).to.be
+          .undefined
+      })
+
+      it('should include all known statuses in the response with count greater than 0 from the aggregation result', () => {
+        const statuses = [
+          EVENT_AVENTRI_ATTENDEES_STATUS.attended,
+          EVENT_AVENTRI_ATTENDEES_STATUS.activated,
+          EVENT_AVENTRI_ATTENDEES_STATUS.waitlist,
+          EVENT_AVENTRI_ATTENDEES_STATUS.noShow,
+          EVENT_AVENTRI_ATTENDEES_STATUS.cancelled,
+        ]
+        statuses.forEach(
+          (s) =>
+            expect(statusCounts.find((x) => x.status == s)).to.not.be.undefined
+        )
+      })
+    })
+  })
+
+  describe('#transformAventriEventStatusToEventStatus', () => {
+    context(
+      'when there are both known and unknown aventri statuses to transform',
+      () => {
+        let transformResult
+
+        before(() => {
+          transformResult = transformAventriEventStatusToEventStatus([
+            { status: 'FAKE', count: 17 },
+            { status: EVENT_AVENTRI_ATTENDEES_STATUS.activated, count: 5 },
+            { status: EVENT_AVENTRI_ATTENDEES_STATUS.attended, count: 9 },
+            { status: EVENT_AVENTRI_ATTENDEES_STATUS.cancelled, count: 14 },
+            { status: EVENT_AVENTRI_ATTENDEES_STATUS.confirmed, count: 3 },
+            { status: EVENT_AVENTRI_ATTENDEES_STATUS.noShow, count: 45 },
+            { status: EVENT_AVENTRI_ATTENDEES_STATUS.waitlist, count: 1 },
+          ])
+        })
+
+        it('does not include unknown statuses', () => {
+          expect(transformResult).to.deep.not.include({
+            status: 'FAKE',
+            count: 17,
+          })
+        })
+
+        it('returns known statuses in a grouped format', () => {
+          expect(transformResult).to.deep.include({
+            status: EVENT_ATTENDEES_STATUS.cancelled,
+            urlSlug:
+              EVENT_ATTENDEES_MAPPING[EVENT_ATTENDEES_STATUS.cancelled].urlSlug,
+            count: 14,
+          })
+          expect(transformResult).to.deep.include({
+            status: EVENT_ATTENDEES_STATUS.attended,
+            urlSlug:
+              EVENT_ATTENDEES_MAPPING[EVENT_ATTENDEES_STATUS.attended].urlSlug,
+            count: 9,
+          })
+          expect(transformResult).to.deep.include({
+            status: EVENT_ATTENDEES_STATUS.didNotAttend,
+            urlSlug:
+              EVENT_ATTENDEES_MAPPING[EVENT_ATTENDEES_STATUS.didNotAttend]
+                .urlSlug,
+            count: 45,
+          })
+          expect(transformResult).to.deep.include({
+            status: EVENT_ATTENDEES_STATUS.waitingList,
+            urlSlug:
+              EVENT_ATTENDEES_MAPPING[EVENT_ATTENDEES_STATUS.waitingList]
+                .urlSlug,
+            count: 1,
+          })
+          expect(transformResult).to.deep.include({
+            status: EVENT_ATTENDEES_STATUS.registered,
+            urlSlug:
+              EVENT_ATTENDEES_MAPPING[EVENT_ATTENDEES_STATUS.registered]
+                .urlSlug,
+            count: 8,
+          })
+        })
+      }
+    )
   })
 })
