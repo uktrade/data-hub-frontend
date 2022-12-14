@@ -17,7 +17,7 @@ import ActivityList from '../ActivityFeed/activities/card/ActivityList'
 import Activity from '../ActivityFeed/Activity'
 
 const ActivityFeedFilteredCollectionList = ({
-  itemsPerPage = 20,
+  itemsPerPage = 10,
   sortOptions = null,
   taskProps,
   total = 0,
