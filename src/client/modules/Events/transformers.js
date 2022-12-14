@@ -13,7 +13,6 @@ import {
 import { transformIdNameToValueLabel } from '../../transformers'
 
 import {
-  EVENT_AVENTRI_ATTENDEES_MAPPING,
   EVENT_ATTENDEES_STATUS_BEFORE_EVENT,
   EVENT_ATTENDEES_STATUS_AFTER_EVENT,
 } from '../../../apps/companies/apps/activity-feed/constants'
@@ -163,43 +162,17 @@ const transformResponseToEventAventriDetails = ({
   const allowedStatuses = eventDetails.upcomingEvent
     ? EVENT_ATTENDEES_STATUS_BEFORE_EVENT
     : EVENT_ATTENDEES_STATUS_AFTER_EVENT
-  eventDetails.registrationStatusCounts = transformAventriEventStatus({
+  eventDetails.registrationStatusCounts = filterEventStatus({
     allowedStatuses,
     registrationStatuses,
   })
   return eventDetails
 }
 
-const transformAventriEventStatus = ({
-  allowedStatuses,
-  registrationStatuses,
-}) => {
-  const mappedStatus = registrationStatuses
-    .map((regStatus) => {
-      return {
-        ...regStatus,
-        ...EVENT_AVENTRI_ATTENDEES_MAPPING[regStatus.status],
-      }
-    })
-    .filter(
-      (status) => status.count > 0 && allowedStatuses.includes(status.status)
-    )
-  const groupedStatusCounts = groupAndSumCounts(mappedStatus)
-
-  return groupedStatusCounts
-}
-
-const groupAndSumCounts = (statuses) => {
-  return Object.values(
-    statuses.reduce(
-      (r, o) => (
-        r[o.status] ? (r[o.status].count += o.count) : (r[o.status] = { ...o }),
-        r
-      ),
-      {}
-    )
+const filterEventStatus = ({ allowedStatuses, registrationStatuses }) =>
+  registrationStatuses.filter(
+    (s) => allowedStatuses.includes(s.status) && s.count > 0
   )
-}
 
 const transformAventriEventAttendeesRegistionStatusToBolean = ({
   totalAttendees,
@@ -210,5 +183,5 @@ export {
   transformResponseToEventDetails,
   transformResponseToEventAventriDetails,
   transformAventriEventAttendeesRegistionStatusToBolean,
-  transformAventriEventStatus,
+  filterEventStatus,
 }

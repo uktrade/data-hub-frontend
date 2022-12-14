@@ -33,7 +33,6 @@ const EventAventriRegistrationStatus = ({
   aventriEventId,
   aventriAttendees,
   registrationStatus,
-  aventriRegistrationStatuses,
   registrationStatusCounts,
   defaultQueryParams = {
     page: 1,
@@ -94,7 +93,7 @@ const EventAventriRegistrationStatus = ({
                     startOnRender={{
                       payload: {
                         aventriEventId,
-                        aventriRegistrationStatuses,
+                        registrationStatus,
                         ...payload,
                       },
                       onSuccessDispatch:
