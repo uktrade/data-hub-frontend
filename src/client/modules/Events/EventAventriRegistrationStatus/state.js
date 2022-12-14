@@ -17,7 +17,7 @@ const parseQueryString = (queryString) => {
 
 export const mapUrlSlugToRegistrationStatus = (urlSlug) => {
   const status = Object.entries(EVENT_ATTENDEES_MAPPING).find(
-    (value) => value[1].urlSlug == urlSlug
+    ([, value]) => value.urlSlug == urlSlug
   )
   return Array.isArray(status) ? status[0] : null
 }
