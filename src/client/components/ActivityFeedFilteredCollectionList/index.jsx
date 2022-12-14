@@ -17,7 +17,7 @@ import ActivityList from '../ActivityFeed/activities/card/ActivityList'
 import Activity from '../ActivityFeed/Activity'
 
 const ActivityFeedFilteredCollectionList = ({
-  itemsPerPage = 10,
+  itemsPerPage = 20,
   sortOptions = null,
   taskProps,
   total = 0,
@@ -75,7 +75,11 @@ const ActivityFeedFilteredCollectionList = ({
                     </ActivityList>
                   )}
                 </Task.Status>
-                <RoutedPagination initialPage={initialPage} items={total} />
+                <RoutedPagination
+                  initialPage={initialPage}
+                  items={total}
+                  pageSize={itemsPerPage}
+                />
               </article>
             </GridCol>
           </GridRow>
