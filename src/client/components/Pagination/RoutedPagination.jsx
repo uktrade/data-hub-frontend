@@ -57,6 +57,31 @@ const StyledPaginationPiece = styled('li')`
 `
 
 const StyledPaginationLink = styled(Link)`
+  {
+    font-weight: bold;
+    font-size: ${FONT_SIZE.SIZE_16};
+    display: inline-block;
+    padding: ${SPACING.SCALE_1} 12px;
+    line-height: 1.9em;
+    text-decoration: none;
+    :hover {
+      background-color: ${GREY_3};
+      text-decoration-thickness: max(3px, 0.1875rem, 0.12em);
+  }
+  ${({ $isActive }) =>
+    $isActive
+      ? `
+      color: ${WHITE};
+      background-color: ${LINK_COLOUR};
+      :hover {
+        color: ${WHITE};
+        background-color: ${LINK_COLOUR};
+      }
+      `
+      : `
+      color: ${LINK_COLOUR};
+      background-color: transparent;
+    `}
   &:link {
     cursor: pointer;
     font-weight: bold;
@@ -70,19 +95,8 @@ const StyledPaginationLink = styled(Link)`
       background-color: ${GREY_3};
       text-decoration-thickness: max(3px, 0.1875rem, 0.12em);
     }
-    ${({ $isActive }) =>
-      $isActive
-        ? `
-        color: ${WHITE};
-        background-color: ${LINK_COLOUR};
-        :hover {
-          background-color: ${LINK_COLOUR};
-        }
-       `
-        : `
-        color: ${LINK_COLOUR};
-        background-color: transparent;
-      `}
+
+
     ${(props) => props['data-page-number'] && `display: none;`}
     ${MEDIA_QUERIES.TABLET} {
       ${(props) => props['data-page-number'] && `display: block;`}
@@ -223,7 +237,7 @@ const Pagination = ({
                       aria-label={`Page ${page}`}
                       aria-current={isActive ? 'page' : 'false'}
                       ref={(el) => (linkRefs.current[index] = el)}
-                      href="#"
+                      href={isActive ? null : '#'}
                       aria-current={isActive}
                     >
                       {page}
