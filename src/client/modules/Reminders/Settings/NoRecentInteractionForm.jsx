@@ -1,6 +1,7 @@
 import React from 'react'
 import { isEmpty } from 'lodash'
 import styled from 'styled-components'
+import InsetText from '@govuk-react/inset-text'
 
 import urls from '../../../../lib/urls'
 import {
@@ -35,6 +36,11 @@ const OPTIONS_NO_YES = [...OPTIONS_YES_NO].reverse()
 const StyledFieldInput = styled(FieldInput)({
   width: 50,
 })
+
+const StyledInsetText = styled(InsetText)`
+  border-left: 5px solid #bfc1c3;
+  margin-left: -37px;
+`
 
 const MAX_DAYS = 365
 const POSITIVE_INT_REGEX = /^[0-9]+$/
@@ -113,45 +119,48 @@ const NoRecentInteractionForm = () => (
                   ...(option.value === OPTION_YES && {
                     children: (
                       <>
-                        <FieldAddAnother
-                          name="days"
-                          label="When do you want to get reminders for your projects?"
-                          hint="You can add up to 5 reminders"
-                          itemName="reminder"
-                          buttonText="Add another"
-                          limitChildGroupCount={5}
-                          initialChildGroupCount={reminder_days.length || 1}
-                        >
-                          {({ groupIndex }) => (
-                            <StyledFieldInput
-                              type="text"
-                              text="days with no interaction"
-                              name={`reminder_days_${groupIndex}`}
-                              data-test={`reminder_days_${groupIndex}`}
-                              validate={(value, field, state) => {
-                                if (isPositiveInteger(value)) {
-                                  const formValue = parseInt(value, 10)
-                                  if (
-                                    hasReminderDayDuplicates(
-                                      formValue,
-                                      field,
-                                      state.values
-                                    )
-                                  ) {
-                                    return 'Enter a different number of days for each reminder'
+                        <StyledInsetText>
+                          <FieldAddAnother
+                            name="days"
+                            label="When do you want to get reminders for your projects?"
+                            hint="You can add up to 5 reminders"
+                            itemName="reminder"
+                            buttonText="Add another"
+                            limitChildGroupCount={5}
+                            initialChildGroupCount={reminder_days.length || 1}
+                          >
+                            {({ groupIndex }) => (
+                              <StyledFieldInput
+                                type="text"
+                                text="days with no interaction"
+                                name={`reminder_days_${groupIndex}`}
+                                data-test={`reminder_days_${groupIndex}`}
+                                validate={(value, field, state) => {
+                                  if (isPositiveInteger(value)) {
+                                    const formValue = parseInt(value, 10)
+                                    if (
+                                      hasReminderDayDuplicates(
+                                        formValue,
+                                        field,
+                                        state.values
+                                      )
+                                    ) {
+                                      return 'Enter a different number of days for each reminder'
+                                    }
+                                    return formValue > 0 &&
+                                      formValue <= MAX_DAYS
+                                      ? null
+                                      : ERROR_MESSAGE
+                                  } else if (isEmpty(value)) {
+                                    return EMPTY_ERROR_MESSAGE
+                                  } else {
+                                    return ERROR_MESSAGE
                                   }
-                                  return formValue > 0 && formValue <= MAX_DAYS
-                                    ? null
-                                    : ERROR_MESSAGE
-                                } else if (isEmpty(value)) {
-                                  return EMPTY_ERROR_MESSAGE
-                                } else {
-                                  return ERROR_MESSAGE
-                                }
-                              }}
-                            />
-                          )}
-                        </FieldAddAnother>
+                                }}
+                              />
+                            )}
+                          </FieldAddAnother>
+                        </StyledInsetText>
                       </>
                     ),
                   }),
