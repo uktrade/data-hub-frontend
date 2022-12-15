@@ -208,27 +208,27 @@ describe('Company activity feed', () => {
           })
 
           it('correctly displays contacts for a past event', () => {
-            cy.get('[data-test~="past-event"]').within(() => {
-              cy.get('[data-test="cancelled-label"]').should('exist')
-              cy.get('[data-test="attended-label"]').should('exist')
-              cy.get('[data-test="did-not-attend-label"]').should('exist')
-              cy.get('[data-test="waiting-list-label"]').should('exist')
-
-              cy.get('[data-test="registered-label"]registered-label').should(
-                'not.exist'
-              )
-            })
+            cy.get('[data-test="aventri-event"]')
+              .eq(2)
+              .within(() => {
+                cy.get('[data-test="cancelled-label"]').should('exist')
+                cy.get('[data-test="attended-label"]').should('exist')
+                cy.get('[data-test="did-not-attend-label"]').should('exist')
+                cy.get('[data-test="waiting-list-label"]').should('exist')
+                cy.get('[data-test="registered-label"]').should('exist')
+              })
           })
 
           it('correctly displays contacts for a future event', () => {
-            cy.get('[data-test~="future-event"]').within(() => {
-              cy.get('[data-test="registered-label"]').should('exist')
-              cy.get('[data-test="cancelled-label"]').should('exist')
-
-              cy.get('[data-test="attended-label"]').should('not.exist')
-              cy.get('[data-test="did-not-attend-label"]').should('not.exist')
-              cy.get('[data-test="waiting-list-label"]').should('not.exist')
-            })
+            cy.get('[data-test="aventri-event"]')
+              .eq(4)
+              .within(() => {
+                cy.get('[data-test="cancelled-label"]').should('exist')
+                cy.get('[data-test="attended-label"]').should('exist')
+                cy.get('[data-test="did-not-attend-label"]').should('exist')
+                cy.get('[data-test="waiting-list-label"]').should('exist')
+                cy.get('[data-test="registered-label"]').should('exist')
+              })
           })
         }
       )
