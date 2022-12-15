@@ -42,6 +42,10 @@ const {
 const allActivityFeedEventsQuery = require('./es-queries/activity-feed-all-events-query')
 
 const { aventriEventQuery } = require('./es-queries/aventri-event-query')
+const {
+  transformAventriEventStatusToEventStatus,
+  transformAventriEventStatusCountsToEventStatusCounts,
+} = require('./transformers')
 
 async function renderActivityFeed(req, res, next) {
   const { company, dnbHierarchyCount, dnbRelatedCompaniesCount } = res.locals
@@ -192,6 +196,9 @@ async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
                 name: contact.name,
                 type: ['dit:Contact'],
                 url: urls.contacts.details(contact.id),
+                registrationStatus: transformAventriEventStatusToEventStatus(
+                  attendee.object['dit:registrationStatus']
+                ),
               },
             ]
           : []
@@ -411,7 +418,7 @@ async function fetchAventriEvent(req, res, next) {
     )
 
     const statusCounts =
-      transformAventriEventStatusToEventStatus(aventriStatusCounts)
+      transformAventriEventStatusCountsToEventStatusCounts(aventriStatusCounts)
 
     return res.json({ ...aventriEventData, registrationStatuses: statusCounts })
   } catch (error) {
@@ -441,15 +448,6 @@ async function getAventriRegistrationStatusCounts(req, eventId) {
 
   return statusCounts
 }
-
-const transformAventriEventStatusToEventStatus = (aventriStatusCounts) =>
-  Object.entries(EVENT_ATTENDEES_MAPPING).map(([key, value]) => ({
-    status: key,
-    urlSlug: value.urlSlug,
-    count: aventriStatusCounts
-      .filter((s) => value.statuses.includes(s.status))
-      .reduce((sum, cur) => sum + cur.count, 0),
-  }))
 
 async function fetchAventriEventRegistrationStatusAttendees(req, res, next) {
   try {
@@ -677,5 +675,4 @@ module.exports = {
   getAventriEventsAttendedByCompanyContacts,
   fetchAventriEventRegistrationStatusAttendees,
   getAventriRegistrationStatusCounts,
-  transformAventriEventStatusToEventStatus,
 }
