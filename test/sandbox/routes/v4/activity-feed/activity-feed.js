@@ -16,68 +16,31 @@ var contactDataHubAndExternalActivities = require('../../../fixtures/v4/activity
 var myActivities = require('../../../fixtures/v4/activity-feed/my-activities.json')
 
 // Data Hub activities
-var dataHubActivities = require('../../../fixtures/v4/activity-feed/data-hub-activities.json')
 var noActivity = require('../../../fixtures/v4/activity-feed/no-activity.json')
 var dataHubEvents = require('../../../fixtures/v4/activity-feed/data-hub-events.json')
 
 //Aventri events
-var aventriEvents = require('../../../fixtures/v4/activity-feed/aventri-events.json')
-var aventriEventsNoDetails = require('../../../fixtures/v4/activity-feed/aventri-events-no-details.json')
-var aventriAttendees = require('../../../fixtures/v4/activity-feed/aventri-attendees.json')
 ////This order is correct when sorted by: First Name A-Z, Last name A-Z and Company name A-Z
 var aventriAttendeesAToZOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-a-z.json')
-var aventriAttendeeForCompany = require('../../../fixtures/v4/activity-feed/aventri-attendee-for-company.json')
 var aventriRegistrationStatusWithAggregations = require('../../../fixtures/v4/activity-feed/aventri-registration-status-with-aggregation-counts.json')
 
 ////This order is correct when sorted by: First Name Z-A, Last name Z-A and Company name Z-A
 var aventriAttendeesZToAOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-z-a.json')
 //All Activitiy feed events
 var allActivityFeedEvents = require('../../../fixtures/v4/activity-feed/all-activity-feed-events.json')
-const { faker } = require('@faker-js/faker')
+const {
+  generateAventriEventESResponse,
+} = require('../../../fixtures/v4/activity-feed/aventri-events')
+const {
+  generateDataHubActivitiesESResponse,
+} = require('../../../fixtures/v4/activity-feed/data-hub-activities')
+const {
+  generateAventriAttendeeESResponse,
+} = require('../../../fixtures/v4/activity-feed/aventri-attendees')
 
-const generateFakeAttendeeHitObject = (status) => {
-  const firstName = faker.name.firstName()
-  const lastName = faker.name.lastName()
-
-  return {
-    _index:
-      'activities__feed_id_dummy-data-feed__date_2022-06-28__timestamp_1656410763__batch_id_ltepro51__',
-    _type: '_doc',
-    _id: 'dit:aventri:Event:1111:Attendee:2222:Create',
-    _score: 3.6005385,
-    _source: {
-      'dit:application': 'aventri',
-      id: 'dit:aventri:Event:1111:Attendee:2222:Create',
-      object: {
-        attributedTo: {
-          id: 'dit:aventri:Event:1111',
-          type: 'dit:aventri:Event',
-        },
-        'dit:aventri:approvalstatus': '',
-        'dit:aventri:category': null,
-        'dit:aventri:companyname': faker.company.name(),
-        'dit:aventri:createdby': 'attendee',
-        'dit:aventri:email': '',
-        'dit:aventri:firstname': firstName,
-        'dit:aventri:language': 'eng',
-        'dit:aventri:lastmodified': '2022-01-24T11:12:13',
-        'dit:aventri:lastname': lastName,
-        'dit:aventri:modifiedby': 'attendee',
-        'dit:aventri:registrationstatus': status,
-        'dit:aventri:virtual_event_attendance': 'Yes',
-        'dit:emailAddress': '',
-        'dit:firstName': firstName,
-        'dit:lastName': lastName,
-        'dit:registrationStatus': status,
-        id: 'dit:aventri:Attendee:2222',
-        published: '1970-01-01T00:00:00',
-        type: ['dit:aventri:Attendee'],
-      },
-      published: '2022-02-24T11:28:57',
-      type: 'dit:aventri:Attendee',
-    },
-  }
-}
+let aventriEvents = generateAventriEventESResponse()
+let dataHubActivities = generateDataHubActivitiesESResponse()
+let aventriAttendees = generateAventriAttendeeESResponse()
 
 const DATA_HUB_ACTIVITY = [
   'dit:Interaction',
@@ -102,7 +65,6 @@ const ALL_ACTIVITIES_PER_PAGE = 10
 const VENUS_LTD = 'dit:DataHubCompany:0f5216e0-849f-11e6-ae22-56b6b6499611'
 const BEST_EVER_COMPANY =
   'dit:DataHubCompany:c79ba298-106e-4629-aa12-61ec6e2e47ce'
-const AVENTRI_ID_TO_FILTER_CONTACTS = 'dit:aventri:Event:2222'
 
 exports.activityFeed = function (req, res) {
   // Activities by contact
@@ -193,10 +155,6 @@ exports.activityFeed = function (req, res) {
       return res.status(500).send('something went wrong')
     }
 
-    //no optional details
-    if (aventriId === 'dit:aventri:Event:6666:Create') {
-      return res.json(aventriEventsNoDetails)
-    }
     //happy path
     const foundEvent = aventriEvents.hits.hits.find(
       (e) => e._source.id == aventriId
@@ -223,7 +181,7 @@ exports.activityFeed = function (req, res) {
     )
 
     if (isCompanyQuery) {
-      return res.json(aventriAttendeeForCompany)
+      return res.json(aventriAttendees)
     }
 
     var isRegistrationStatusQuery = get(req.body, 'aggs.countfield.terms.field')
@@ -262,21 +220,9 @@ exports.activityFeed = function (req, res) {
     )
 
     //filter the attendees to only return the ones matching the registration status in the ES query
-    if (
-      aventriId == AVENTRI_ID_TO_FILTER_CONTACTS &&
-      Array.isArray(registrationStatus) &&
-      registrationStatus.length > 0
-    ) {
+    if (Array.isArray(registrationStatus) && registrationStatus.length > 0) {
       const filteredHits = aventriAttendees.hits.hits.filter((h) =>
         registrationStatus.includes(h._source.object['dit:registrationStatus'])
-      )
-
-      registrationStatus.forEach((status) =>
-        filteredHits.push(
-          ...[...Array(15).keys()].map(() =>
-            generateFakeAttendeeHitObject(status)
-          )
-        )
       )
 
       const paginated = filteredHits.slice(
@@ -308,7 +254,10 @@ exports.activityFeed = function (req, res) {
   }
 
   // Data Hub activity
-  var dataHubTypes = get(req.body, "query.bool.must[0].terms['object.type']")
+  var dataHubTypes = get(
+    req.body,
+    "query.bool.filter.bool.should[0].bool.must[0].terms['object.type']"
+  )
   if (isEqual(dataHubTypes, DATA_HUB_ACTIVITY)) {
     var company = get(
       req.body,

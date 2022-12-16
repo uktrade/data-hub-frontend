@@ -12,11 +12,6 @@ import {
 
 import { transformIdNameToValueLabel } from '../../transformers'
 
-import {
-  EVENT_ATTENDEES_STATUS_BEFORE_EVENT,
-  EVENT_ATTENDEES_STATUS_AFTER_EVENT,
-} from '../../../apps/companies/apps/activity-feed/constants'
-
 const transformEventToListItem = ({
   id,
   name,
@@ -159,20 +154,11 @@ const transformResponseToEventAventriDetails = ({
       object['dit:aventri:location_country'],
     ]),
   }
-  const allowedStatuses = eventDetails.upcomingEvent
-    ? EVENT_ATTENDEES_STATUS_BEFORE_EVENT
-    : EVENT_ATTENDEES_STATUS_AFTER_EVENT
-  eventDetails.registrationStatusCounts = filterEventStatus({
-    allowedStatuses,
-    registrationStatuses,
-  })
+  eventDetails.registrationStatusCounts = registrationStatuses.filter(
+    (s) => s.count > 0
+  )
   return eventDetails
 }
-
-const filterEventStatus = ({ allowedStatuses, registrationStatuses }) =>
-  registrationStatuses.filter(
-    (s) => allowedStatuses.includes(s.status) && s.count > 0
-  )
 
 const transformAventriEventAttendeesRegistionStatusToBolean = ({
   totalAttendees,
@@ -183,5 +169,4 @@ export {
   transformResponseToEventDetails,
   transformResponseToEventAventriDetails,
   transformAventriEventAttendeesRegistionStatusToBolean,
-  filterEventStatus,
 }

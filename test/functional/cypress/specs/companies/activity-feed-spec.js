@@ -195,6 +195,43 @@ describe('Company activity feed', () => {
           })
         )
       })
+
+      context(
+        'when a company with large number contacts attending aventri events is viewed',
+        () => {
+          before(() => {
+            cy.visit(
+              urls.companies.activity.index(
+                fixtures.company.companyWithManyContacts.id
+              )
+            )
+          })
+
+          it('correctly displays contacts for a past event', () => {
+            cy.get('[data-test="aventri-event"]')
+              .eq(0)
+              .within(() => {
+                cy.get('[data-test="cancelled-label"]').should('exist')
+                cy.get('[data-test="attended-label"]').should('exist')
+                cy.get('[data-test="did-not-attend-label"]').should('exist')
+                cy.get('[data-test="waiting-list-label"]').should('exist')
+                cy.get('[data-test="registered-label"]').should('exist')
+              })
+          })
+
+          it('correctly displays contacts for a future event', () => {
+            cy.get('[data-test="aventri-event"]')
+              .eq(3)
+              .within(() => {
+                cy.get('[data-test="cancelled-label"]').should('exist')
+                cy.get('[data-test="attended-label"]').should('exist')
+                cy.get('[data-test="did-not-attend-label"]').should('exist')
+                cy.get('[data-test="waiting-list-label"]').should('exist')
+                cy.get('[data-test="registered-label"]').should('exist')
+              })
+          })
+        }
+      )
     })
   })
 
