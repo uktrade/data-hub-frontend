@@ -10,7 +10,6 @@ const {
 
 describe('Event Aventri Details', () => {
   const eventInPastId = '1111'
-  const eventInFutureId = '1114'
   const notFoundEventId = '404'
   const errorEventId = '500'
 
@@ -24,7 +23,7 @@ describe('Event Aventri Details', () => {
       cy.setUserFeatures([ACTIVITY_STREAM_FEATURE_FLAG])
     })
 
-    context('when it is a valid event in the past', () => {
+    context('when it is a valid event ', () => {
       before(() => {
         cy.visit(urls.events.aventri.details(eventInPastId))
       })
@@ -48,6 +47,13 @@ describe('Event Aventri Details', () => {
             )
         })
         var registrationStatusTests = [
+          {
+            status: 'registered',
+            expected: {
+              total: 28,
+              label: 'Registered',
+            },
+          },
           {
             status: 'did-not-attend',
             expected: {
@@ -154,58 +160,6 @@ describe('Event Aventri Details', () => {
               .should('have.attr', 'aria-label', 'Opens in a new window or tab')
               .should('have.attr', 'href', aventriLink + eventId)
               .should('have.text', aventriLinkText)
-          })
-        })
-      })
-    })
-
-    context('when it is a valid event in the future', () => {
-      before(() => {
-        cy.visit(urls.events.aventri.details(eventInFutureId))
-      })
-
-      context('should display the side nav bar', () => {
-        it('with the details link', () => {
-          cy.get('[data-test="event-aventri-nav"]').should('exist')
-          cy.get('[data-test="event-aventri-details-link"]')
-            .should('contain', 'Details')
-            .should(
-              'have.attr',
-              'href',
-              urls.events.aventri.details(eventInFutureId)
-            )
-        })
-        var registrationStatusTests = [
-          {
-            status: 'registered',
-            expected: {
-              total: 28,
-              label: 'Registered',
-            },
-          },
-          {
-            status: 'cancelled',
-            expected: {
-              total: 7,
-              label: 'Cancelled',
-            },
-          },
-        ]
-        registrationStatusTests.forEach(function (test) {
-          it(`with the link for the ${test.status} status`, () => {
-            cy.get(`[data-test="event-aventri-status-link-${test.status}"]`)
-              .should(
-                'contain',
-                `${test.expected.label} (${test.expected.total})`
-              )
-              .should(
-                'have.attr',
-                'href',
-                urls.events.aventri.registrationStatus(
-                  eventInFutureId,
-                  test.status
-                )
-              )
           })
         })
       })
