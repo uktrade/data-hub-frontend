@@ -1,5 +1,3 @@
-const ACTIVITY_STREAM_FEATURE_FLAG = 'user-activity-stream-aventri'
-
 const FILTER_KEYS = {
   dataHubAndExternalActivity: 'dataHubAndExternalActivity',
   myActivity: 'myActivity',
@@ -200,7 +198,7 @@ module.exports = {
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
   CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS,
   CONTACT_ACTIVITY_SORT_SELECT_OPTIONS,
-  ACTIVITY_STREAM_FEATURE_FLAG,
+
   DATA_HUB_AND_AVENTRI_ACTIVITY,
   EVENT_ATTENDEES_STATUS,
   EVENT_ATTENDEES_MAPPING,
