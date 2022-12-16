@@ -52,16 +52,6 @@ describe('Company activity feed', () => {
           })
       )
     })
-
-    it('displays the correct export support question', () => {
-      cy.get('[data-test="export-support-service"]').within(() =>
-        cy
-          .get('[data-test="activity-card-notes"]')
-          .contains('I have a very important question', {
-            matchCase: false,
-          })
-      )
-    })
   })
 
   context('Companies House Account', () => {

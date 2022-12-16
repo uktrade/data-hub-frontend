@@ -56,11 +56,6 @@ export default class DirectoryFormsApi extends React.PureComponent {
       ]
 
       //Mapping from https://github.com/uktrade/export-support/blob/93fb921e33f0f49c5cecc0b9c18579941a384ad7/export_support/core/forms.py
-      const essQuestion = get(
-        activity,
-        'object.dit:directoryFormsApi:Submission:Data.aaa_question',
-        ''
-      )
       return (
         <ActivityCardWrapper dataTest="export-support-service">
           <ActivityCardLabels
@@ -71,7 +66,6 @@ export default class DirectoryFormsApi extends React.PureComponent {
           <ActivityCardSubject dataTest="export-support-service-name">
             {formData.nature_of_enquiry}
           </ActivityCardSubject>
-          <ActivityCardNotes notes={essQuestion} />
           <ActivityCardMetadata metadata={metadata} />
         </ActivityCardWrapper>
       )
