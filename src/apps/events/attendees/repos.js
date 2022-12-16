@@ -8,7 +8,7 @@ async function fetchEventAttendees({
   eventId,
   page = 1,
   sortby,
-  limit = 20,
+  limit = 10,
   contactId,
 }) {
   if (!eventId) {
@@ -21,7 +21,6 @@ async function fetchEventAttendees({
     url: `${config.apiRoot}/v3/interaction`,
     qs: pickBy(
       {
-        limit,
         offset,
         sortby,
         event_id: eventId,
@@ -29,10 +28,6 @@ async function fetchEventAttendees({
       },
       (value) => !isNil(value)
     ),
-  }).then((result) => {
-    return Object.assign(result, {
-      limit: limit,
-    })
   })
   return eventAttendees
 }
