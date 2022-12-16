@@ -75,11 +75,7 @@ const ActivityFeedFilteredCollectionList = ({
                     </ActivityList>
                   )}
                 </Task.Status>
-                <RoutedPagination
-                  initialPage={initialPage}
-                  items={total}
-                  pageSize={itemsPerPage}
-                />
+                <RoutedPagination initialPage={initialPage} items={total} />
               </article>
             </GridCol>
           </GridRow>

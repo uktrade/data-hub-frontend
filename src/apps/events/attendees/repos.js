@@ -8,7 +8,7 @@ async function fetchEventAttendees({
   eventId,
   page = 1,
   sortby,
-  limit = 10,
+  limit = 20,
   contactId,
 }) {
   if (!eventId) {
@@ -29,6 +29,10 @@ async function fetchEventAttendees({
       },
       (value) => !isNil(value)
     ),
+  }).then((result) => {
+    return Object.assign(result, {
+      limit: limit,
+    })
   })
   return eventAttendees
 }
