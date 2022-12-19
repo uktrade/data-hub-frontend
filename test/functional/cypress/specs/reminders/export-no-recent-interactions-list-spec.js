@@ -7,13 +7,10 @@ import {
   reminderListFaker,
 } from '../../fakers/reminders'
 import { formatMediumDate } from '../../../../../src/client/utils/date'
-import { userFaker } from '../../fakers/users'
 
 const remindersEndpoint = '/api-proxy/v4/reminder/no-recent-export-interaction'
-const whoAmIEndpoint = '/api-proxy/whoami/'
 
 describe('Exports no recent Interaction Reminders', () => {
-  const user = userFaker({ active_features: ['export-email-reminders'] })
   const reminders = [
     exportReminderFaker({
       created_on: '2022-01-01T10:00:00.000000Z',
@@ -26,15 +23,6 @@ describe('Exports no recent Interaction Reminders', () => {
   const nextReminder = exportReminderFaker()
 
   const interceptApiCalls = () => {
-    cy.intercept(
-      {
-        method: 'GET',
-        pathname: whoAmIEndpoint,
-      },
-      {
-        body: user,
-      }
-    ).as('whoAmIApiRequest')
     cy.intercept(
       {
         method: 'GET',
@@ -90,9 +78,12 @@ describe('Exports no recent Interaction Reminders', () => {
 
   context('Reminders List', () => {
     before(() => {
+      cy.setUserFeatureGroups([
+        'export-notifications',
+        'investment-notifications',
+      ])
       interceptApiCalls()
       cy.visit(urls.reminders.exports.noRecentInteractions())
-      cy.wait('@whoAmIApiRequest')
       cy.wait('@remindersApiRequest')
     })
 

@@ -1,13 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link, useLocation } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import { BLUE, BORDER_COLOUR } from 'govuk-colours'
 import { H3 } from 'govuk-react'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
 import urls from '../../../lib/urls'
-import CheckUserFeatureFlag from '../../components/CheckUserFeatureFlags'
+import { state2props } from './state'
 
 const LinkList = styled('ul')({
   listStyleType: 'none',
@@ -46,48 +47,49 @@ const MenuItem = ({ to, pathname, children }) => (
   </LinkListItem>
 )
 
-const RemindersMenu = () => {
+const RemindersMenu = ({
+  hasInvestmentFeatureGroup,
+  hasExportFeatureGroup,
+}) => {
   const location = useLocation()
   return (
     <>
-      <Menu>
-        <H3 as="h2">Investment</H3>
-        <MenuItem
-          to={urls.reminders.investments.estimatedLandDate()}
-          pathname={location.pathname}
-        >
-          Approaching estimated land dates
-        </MenuItem>
-        <MenuItem
-          to={urls.reminders.investments.noRecentInteraction()}
-          pathname={location.pathname}
-        >
-          Projects with no recent interactions
-        </MenuItem>
-        <MenuItem
-          to={urls.reminders.investments.outstandingPropositions()}
-          pathname={location.pathname}
-        >
-          Outstanding propositions
-        </MenuItem>
-      </Menu>
-      <CheckUserFeatureFlag userFeatureFlagName="export-email-reminders">
-        {(isFeatureFlagOn) =>
-          isFeatureFlagOn && (
-            <Menu>
-              <H3 as="h2">Export</H3>
-              <MenuItem
-                to={urls.reminders.exports.noRecentInteractions()}
-                pathname={location.pathname}
-              >
-                Companies with no recent interactions
-              </MenuItem>
-            </Menu>
-          )
-        }
-      </CheckUserFeatureFlag>
+      {hasInvestmentFeatureGroup && (
+        <Menu>
+          <H3 as="h2">Investment</H3>
+          <MenuItem
+            to={urls.reminders.investments.estimatedLandDate()}
+            pathname={location.pathname}
+          >
+            Approaching estimated land dates
+          </MenuItem>
+          <MenuItem
+            to={urls.reminders.investments.noRecentInteraction()}
+            pathname={location.pathname}
+          >
+            Projects with no recent interactions
+          </MenuItem>
+          <MenuItem
+            to={urls.reminders.investments.outstandingPropositions()}
+            pathname={location.pathname}
+          >
+            Outstanding propositions
+          </MenuItem>
+        </Menu>
+      )}
+      {hasExportFeatureGroup && (
+        <Menu>
+          <H3 as="h2">Export</H3>
+          <MenuItem
+            to={urls.reminders.exports.noRecentInteractions()}
+            pathname={location.pathname}
+          >
+            Companies with no recent interactions
+          </MenuItem>
+        </Menu>
+      )}
     </>
   )
 }
 
-export default RemindersMenu
+export default connect(state2props)(RemindersMenu)

@@ -32,45 +32,59 @@ const StyledListItem = styled('li')(() => ({
   margin: `${SPACING.SCALE_2} 0`,
 }))
 
-const Summary = ({ summary }) => (
-  <>
-    <StyledSubHeading data-test="investment-heading">
-      Investment
-    </StyledSubHeading>
-    <StyledList>
-      {summary &&
-        summary.investment.map((reminder) => (
-          <StyledListItem
-            key={reminder.name}
-            data-test={`investment-${kebabCase(reminder.name)}`}
-          >
-            <StyledReminderLink href={reminder.url}>
-              {reminder.name}
-            </StyledReminderLink>
-            &nbsp;({reminder.count})
-          </StyledListItem>
-        ))}
-    </StyledList>
-    <StyledSubHeading data-test="export-heading">Export</StyledSubHeading>
-    <StyledList>
-      {summary &&
-        summary.export.map((reminder) => (
-          <StyledListItem
-            key={reminder.name}
-            data-test={`export-${kebabCase(reminder.name)}`}
-          >
-            <StyledReminderLink href={reminder.url}>
-              {reminder.name}
-            </StyledReminderLink>
-            &nbsp;({reminder.count})
-          </StyledListItem>
-        ))}
-    </StyledList>
-    <StyledReminderLink href={urls.reminders.settings.index()}>
-      Settings: reminders and email notifications
-    </StyledReminderLink>
-  </>
-)
+const Summary = ({
+  summary,
+  hasInvestmentFeatureGroup,
+  hasExportFeatureGroup,
+}) => {
+  const showInvestment = hasInvestmentFeatureGroup && summary
+  const showExport = hasExportFeatureGroup && summary
+  return (
+    <>
+      {showInvestment && (
+        <>
+          <StyledSubHeading data-test="investment-heading">
+            Investment
+          </StyledSubHeading>
+          <StyledList>
+            {summary.investment.map((reminder) => (
+              <StyledListItem
+                key={reminder.name}
+                data-test={`investment-${kebabCase(reminder.name)}`}
+              >
+                <StyledReminderLink href={reminder.url}>
+                  {reminder.name}
+                </StyledReminderLink>
+                &nbsp;({reminder.count})
+              </StyledListItem>
+            ))}
+          </StyledList>
+        </>
+      )}
+      {showExport && (
+        <>
+          <StyledSubHeading data-test="export-heading">Export</StyledSubHeading>
+          <StyledList>
+            {summary.export.map((reminder) => (
+              <StyledListItem
+                key={reminder.name}
+                data-test={`export-${kebabCase(reminder.name)}`}
+              >
+                <StyledReminderLink href={reminder.url}>
+                  {reminder.name}
+                </StyledReminderLink>
+                &nbsp;({reminder.count})
+              </StyledListItem>
+            ))}
+          </StyledList>
+        </>
+      )}
+      <StyledReminderLink href={urls.reminders.settings.index()}>
+        Settings: reminders and email notifications
+      </StyledReminderLink>
+    </>
+  )
+}
 
 const reminderType = PropTypes.arrayOf(
   PropTypes.shape({
@@ -81,9 +95,13 @@ const reminderType = PropTypes.arrayOf(
 )
 
 Summary.propTypes = {
-  count: PropTypes.number,
-  investment: reminderType,
-  export: reminderType,
+  summary: PropTypes.shape({
+    count: PropTypes.number,
+    investment: reminderType,
+    export: reminderType,
+  }),
+  hasExportFeatureGroup: PropTypes.bool.isRequired,
+  hasInvestmentFeatureGroup: PropTypes.bool.isRequired,
 }
 
 export default Summary

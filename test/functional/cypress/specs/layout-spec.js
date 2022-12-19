@@ -53,24 +53,3 @@ describe('Layout', () => {
     })
   })
 })
-
-describe('When reminders feature flag notification is on', () => {
-  beforeEach(() => {
-    cy.setUserFeatures(['reminder-summary'])
-    cy.visit('/reminders')
-  })
-
-  it('should display notification alert badge', () => {
-    cy.get('[data-test="notification-alert-badge"]').should('contain', '289')
-  })
-})
-
-describe('When reminders feature flag notification is off', () => {
-  beforeEach(() => {
-    cy.visit('/')
-  })
-
-  it('should display empty notification alert badge', () => {
-    cy.get(selectors.nav.headerNav).should('not.contain', 'Notification alert')
-  })
-})
