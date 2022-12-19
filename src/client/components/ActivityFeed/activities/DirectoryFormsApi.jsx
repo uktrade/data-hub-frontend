@@ -23,6 +23,10 @@ export default class DirectoryFormsApi extends React.PureComponent {
 
   render() {
     const { activity } = this.props
+    // ESS index to extract id from ESS string feed by activity-stream
+    // e.g. dit:directoryFormsApi:Submission:89321:create
+    const ESS_ID_INDEX = 3
+    const essId = activity.object.id.split(':')[ESS_ID_INDEX]
 
     const formType = get(activity, 'object.attributedTo.[0].id')
     const sentDate = get(activity, 'object.published')
@@ -67,7 +71,8 @@ export default class DirectoryFormsApi extends React.PureComponent {
             kind="Interaction"
           />
           <ActivityCardSubject dataTest="export-support-service-name">
-            {natureOfEnquiry}
+            <Link href={`/interactions/ess/${essId}/details`}>{formData.nature_of_enquiry}</Link>
+
           </ActivityCardSubject>
           <ActivityCardMetadata metadata={metadata} />
         </ActivityCardWrapper>
