@@ -235,10 +235,10 @@ async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
                 name: contact.name,
                 type: ['dit:Contact'],
                 url: urls.contacts.details(contact.id),
-                  registrationStatus: transformAventriEventStatusToEventStatus(
+                registrationStatus: transformAventriEventStatusToEventStatus(
                   attendee.object['dit:registrationStatus']
                 ),
-            },
+              },
             ]
           : []
         if (event) {
