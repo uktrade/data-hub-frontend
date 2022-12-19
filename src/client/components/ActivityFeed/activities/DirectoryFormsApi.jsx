@@ -71,8 +71,9 @@ export default class DirectoryFormsApi extends React.PureComponent {
             kind="Interaction"
           />
           <ActivityCardSubject dataTest="export-support-service-name">
-            <Link href={`/interactions/ess/${essId}/details`}>{formData.nature_of_enquiry}</Link>
-
+            <Link href={`/interactions/ess/${essId}/details`}>
+              {formData.nature_of_enquiry}
+            </Link>
           </ActivityCardSubject>
           <ActivityCardMetadata metadata={metadata} />
         </ActivityCardWrapper>
