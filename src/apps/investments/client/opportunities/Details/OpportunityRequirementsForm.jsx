@@ -24,6 +24,7 @@ import {
   FieldInput,
   FieldCheckboxes,
   FieldRadios,
+  FormLayout,
 } from '../../../../../client/components'
 import {
   TOTAL_INVESTMENT_SOUGHT_FIELD_NAME,
@@ -86,30 +87,32 @@ const OpportunityRequirementsForm = (state) => {
                   urls.investments.opportunities.details(opportunityId)
                 }
               >
-                <FieldInput
-                  label="Total investment sought"
-                  hint="Enter value in £"
-                  name={TOTAL_INVESTMENT_SOUGHT_FIELD_NAME}
-                  initialValue={totalInvestmentSought}
-                  type="text"
-                  validate={(value) =>
-                    !value || IS_NUMBER.test(value)
-                      ? null
-                      : 'Total investment sought value must be a number'
-                  }
-                />
-                <FieldInput
-                  label="Investment secured so far"
-                  hint="Enter value in £"
-                  name={CURRENT_INVESTMENT_SECURED_FIELD_NAME}
-                  initialValue={currentInvestmentSecured}
-                  type="text"
-                  validate={(value) =>
-                    !value || IS_NUMBER.test(value)
-                      ? null
-                      : 'Investment secured so far value must be a number'
-                  }
-                />
+                <FormLayout setWidth="one-third">
+                  <FieldInput
+                    label="Total investment sought"
+                    hint="Enter value in £"
+                    name={TOTAL_INVESTMENT_SOUGHT_FIELD_NAME}
+                    initialValue={totalInvestmentSought}
+                    type="text"
+                    validate={(value) =>
+                      !value || IS_NUMBER.test(value)
+                        ? null
+                        : 'Total investment sought value must be a number'
+                    }
+                  />
+                  <FieldInput
+                    label="Investment secured so far"
+                    hint="Enter value in £"
+                    name={CURRENT_INVESTMENT_SECURED_FIELD_NAME}
+                    initialValue={currentInvestmentSecured}
+                    type="text"
+                    validate={(value) =>
+                      !value || IS_NUMBER.test(value)
+                        ? null
+                        : 'Investment secured so far value must be a number'
+                    }
+                  />
+                </FormLayout>
                 <StyledFieldCheckboxes
                   legend="Types of investment"
                   name={INVESTMENT_TYPES_FIELD_NAME}
