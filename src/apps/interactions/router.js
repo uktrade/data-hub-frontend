@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { renderDetailsPage } = require('./controllers/details')
+const { renderEssDetails } = require('./controllers/essDetails')
 const urls = require('../../lib/urls')
 const {
   fetchESSDetails,

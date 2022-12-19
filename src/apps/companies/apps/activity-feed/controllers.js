@@ -60,22 +60,22 @@ async function renderActivityFeed(req, res, next) {
   try {
     const contentProps = company.archived
       ? {
-        company,
-        breadcrumbs,
-        flashMessages: res.locals.getMessages(),
-      }
+          company,
+          breadcrumbs,
+          flashMessages: res.locals.getMessages(),
+        }
       : {
-        company,
-        breadcrumbs,
-        flashMessages: res.locals.getMessages(),
-        activityTypeFilter: FILTER_KEYS.dataHubActivity,
-        activityTypeFilters: FILTER_ITEMS,
-        isGlobalUltimate: company.is_global_ultimate,
-        dnbHierarchyCount,
-        dnbRelatedCompaniesCount,
-        showMatchingPrompt:
-          !company.duns_number && !company.pending_dnb_investigation,
-      }
+          company,
+          breadcrumbs,
+          flashMessages: res.locals.getMessages(),
+          activityTypeFilter: FILTER_KEYS.dataHubActivity,
+          activityTypeFilters: FILTER_ITEMS,
+          isGlobalUltimate: company.is_global_ultimate,
+          dnbHierarchyCount,
+          dnbRelatedCompaniesCount,
+          showMatchingPrompt:
+            !company.duns_number && !company.pending_dnb_investigation,
+        }
 
     const props = {
       ...contentProps,
@@ -127,9 +127,9 @@ function getContactFromEmailAddress(emailAddress, contacts) {
   const contact = contacts.find((contact) => contact.email === emailAddress)
   return contact
     ? {
-      ...contact,
-      url: urls.contacts.details(contact.id),
-    }
+        ...contact,
+        url: urls.contacts.details(contact.id),
+      }
     : null
 }
 
@@ -175,12 +175,13 @@ async function getMaxemailCampaigns(req, next, contacts) {
   }
 }
 
-async function getExportSupportActivities(req, next, contacts) {
+async function getExportSupportActivities(req, next, company) {
   try {
     const { from, size } = req.query
 
     // Fetch ESS  Activities
-    const essQuery = exportSupportServiceQuery(from, size, contacts)
+    const essQuery = exportSupportServiceQuery(from, size, company.contacts)
+
     const essQueryResults = await fetchActivityFeed(req, essQuery)
     const essActivities = essQueryResults.hits.hits.map((hit) => hit._source)
 
@@ -196,6 +197,7 @@ async function getExportSupportActivities(req, next, contacts) {
         activity.object.attributedTo = [
           activity.object.attributedTo,
           mapEssContacts(essContact),
+          mapEssCompany(company),
         ]
       }
       return activity
@@ -206,8 +208,6 @@ async function getExportSupportActivities(req, next, contacts) {
     next(error)
   }
 }
-
-
 
 async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
   try {
@@ -381,11 +381,7 @@ async function fetchActivityFeedHandler(req, res, next) {
 
     // Get Export Support Service Activites
     if (isEssFilter(activityTypeFilter)) {
-      const essActivities = await getExportSupportActivities(
-        req,
-        next,
-        company.contacts
-      )
+      const essActivities = await getExportSupportActivities(req, next, company)
       activities = [...activities, ...essActivities]
       total += essActivities.length
     }
@@ -423,17 +419,15 @@ function mapEssContacts(contact) {
   return mappedContact
 }
 
-function mapEssContacts(contact) {
-  const mappedContact = contact
+function mapEssCompany(company) {
+  const mappedCompany = company
     ? {
-      'dit:emailAddress': contact.email,
-      id: contact.id,
-      name: contact.name,
-      type: ['dit:Contact'],
-      url: urls.contacts.details(contact.id),
-    }
+        id: company.id,
+        name: company.name,
+        type: 'dit:Company',
+      }
     : []
-  return mappedContact
+  return mappedCompany
 }
 
 async function fetchAventriEvent(req, res, next) {
@@ -580,73 +574,73 @@ const eventsColListQueryBuilder = ({
 }) => {
   const eventNameFilter = name
     ? {
-      match_phrase_prefix: {
-        'object.name': name,
-      },
-    }
+        match_phrase_prefix: {
+          'object.name': name,
+        },
+      }
     : null
 
   const dateFilter =
     earliestStartDate || latestStartDate
       ? {
-        range: {
-          'object.startTime': {
-            gte: earliestStartDate,
-            lte: latestStartDate,
+          range: {
+            'object.startTime': {
+              gte: earliestStartDate,
+              lte: latestStartDate,
+            },
           },
-        },
-      }
+        }
       : null
 
   const countryFilter = addressCountry
     ? {
-      bool: {
-        should: [
-          {
-            terms: {
-              'object.dit:address_country.name': addressCountry,
+        bool: {
+          should: [
+            {
+              terms: {
+                'object.dit:address_country.name': addressCountry,
+              },
             },
-          },
-          {
-            terms: {
-              'object.dit:aventri:location_country': addressCountry,
+            {
+              terms: {
+                'object.dit:aventri:location_country': addressCountry,
+              },
             },
-          },
-        ],
-      },
-    }
+          ],
+        },
+      }
     : null
 
   const aventriIdFilter = aventriId
     ? {
-      term: {
-        id: `dit:aventri:Event:${aventriId}:Create`,
-      },
-    }
+        term: {
+          id: `dit:aventri:Event:${aventriId}:Create`,
+        },
+      }
     : null
 
   const ukRegionFilter = ukRegion
     ? {
-      terms: {
-        'object.dit:ukRegion.id': ukRegion,
-      },
-    }
+        terms: {
+          'object.dit:ukRegion.id': ukRegion,
+        },
+      }
     : null
 
   const organiserFilter = organiser
     ? {
-      terms: {
-        'object.dit:organiser.id': organiser,
-      },
-    }
+        terms: {
+          'object.dit:organiser.id': organiser,
+        },
+      }
     : null
 
   const eventTypeFilter = eventType
     ? {
-      terms: {
-        'object.dit:eventType.id': eventType,
-      },
-    }
+        terms: {
+          'object.dit:eventType.id': eventType,
+        },
+      }
     : null
 
   const filtersArray = [

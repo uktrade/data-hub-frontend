@@ -18,5 +18,3 @@ const transformResponseToESSInteractionDetails = ({ id, object }) => {
 }
 
 export { transformResponseToESSInteractionDetails }
-
-export { transformResponseToESSInteractionDetails }
