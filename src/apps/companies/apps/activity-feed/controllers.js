@@ -31,8 +31,9 @@ const {
   maxemailCampaignQuery,
   maxemailEmailSentQuery,
   aventriAttendeeForCompanyQuery,
-  dataHubAndAventriActivityQuery,
+  dataHubAndActivityStreamServicesQuery,
   aventriAttendeeQuery,
+  exportSupportServiceQuery,
   aventriAttendeeRegistrationStatusQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
@@ -99,7 +100,7 @@ function getQueries(options) {
       ...options,
       types: DATA_HUB_ACTIVITY,
     }),
-    [FILTER_KEYS.dataHubActivity]: dataHubAndAventriActivityQuery({
+    [FILTER_KEYS.dataHubActivity]: dataHubAndActivityStreamServicesQuery({
       ...options,
       types: DATA_HUB_AND_AVENTRI_ACTIVITY,
     }),
@@ -117,6 +118,13 @@ function getQueries(options) {
 function isExternalFilter(activityTypeFilter) {
   return (
     activityTypeFilter === FILTER_KEYS.externalActivity ||
+    activityTypeFilter === FILTER_KEYS.dataHubAndExternalActivity
+  )
+}
+
+function isEssFilter(activityTypeFilter) {
+  return (
+    activityTypeFilter === FILTER_KEYS.dataHubActivity ||
     activityTypeFilter === FILTER_KEYS.dataHubAndExternalActivity
   )
 }
@@ -168,6 +176,37 @@ async function getMaxemailCampaigns(req, next, contacts) {
     return campaignActivities.filter(
       (campaign) => campaign.object.contacts.length
     )
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function getExportSupportActivities(req, next, contacts) {
+  try {
+    const { from, size } = req.query
+
+    // Fetch ESS  Activities
+    const essQuery = exportSupportServiceQuery(from, size, contacts)
+    const essQueryResults = await fetchActivityFeed(req, essQuery)
+    const essActivities = essQueryResults.hits.hits.map((hit) => hit._source)
+
+    //Add Ess contacts to each Activity
+    const essActivitiesWithContact = essActivities.map((activity) => {
+      if (
+        activity.object.attributedTo.id ==
+        'dit:directoryFormsApi:SubmissionType:export-support-service'
+      ) {
+        const essContactEmail = activity.actor['dit:emailAddress']
+        const essContact = getContactFromEmailAddress(essContactEmail, contacts)
+        activity.object.attributedTo = [
+          activity.object.attributedTo,
+          mapEssContacts(essContact),
+        ]
+      }
+      return activity
+    })
+
+    return essActivitiesWithContact
   } catch (error) {
     next(error)
   }
@@ -357,7 +396,6 @@ async function fetchActivityFeedHandler(req, res, next) {
 
       aventriEventIds = Object.keys(aventriEvents)
     }
-
     const queries = getQueries({
       from,
       size,
@@ -381,7 +419,18 @@ async function fetchActivityFeedHandler(req, res, next) {
       total += campaigns.length
     }
 
-    //loop over all the results, set the contact to be the matching contact from the contacts array
+    // Get Export Support Service Activites
+    if (isEssFilter(activityTypeFilter)) {
+      const essActivities = await getExportSupportActivities(
+        req,
+        next,
+        company.contacts
+      )
+      activities = [...activities, ...essActivities]
+      total += essActivities.length
+    }
+
+    //loop over all aventri results, set the contact to be the matching contact from the contacts array
     activities = activities.map((activity) => {
       if (activity.type == 'dit:aventri:Event' && aventriEvents[activity.id]) {
         activity.object.attributedTo = [
@@ -399,6 +448,19 @@ async function fetchActivityFeedHandler(req, res, next) {
   } catch (error) {
     next(error)
   }
+}
+
+function mapEssContacts(contact) {
+  const mappedContact = contact
+    ? {
+        'dit:emailAddress': contact.email,
+        id: contact.id,
+        name: contact.name,
+        type: ['dit:Contact'],
+        url: urls.contacts.details(contact.id),
+      }
+    : []
+  return mappedContact
 }
 
 async function fetchAventriEvent(req, res, next) {
