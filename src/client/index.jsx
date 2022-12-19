@@ -752,6 +752,9 @@ function App() {
         <Mount selector="#interaction-details">
           {(props) => <InteractionDetails {...props} />}
         </Mount>
+        <Mount selector="#ess-interaction-details">
+          {(props) => <ESSInteractionDetails {...props} />}
+        </Mount>
 
         <Mount selector="#react-app">
           {() => (

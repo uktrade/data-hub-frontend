@@ -23,17 +23,18 @@ export default class DirectoryFormsApi extends React.PureComponent {
 
   render() {
     const { activity } = this.props
+
     // ESS index to extract id from ESS string feed by activity-stream
     // e.g. dit:directoryFormsApi:Submission:89321:create
     const ESS_ID_INDEX = 3
     const essId = activity.object.id.split(':')[ESS_ID_INDEX]
-
     const formType = get(activity, 'object.attributedTo.[0].id')
     const sentDate = get(activity, 'object.published')
     const formData = get(
       activity,
       'object.dit:directoryFormsApi:Submission:Data'
     )
+    // const company = urls.companies.detail(companyId),
 
     //if export support submission
     if (

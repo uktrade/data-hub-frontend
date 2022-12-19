@@ -4,32 +4,25 @@ import { useParams } from 'react-router-dom'
 
 import urls from '../../../../lib/urls'
 import { TASK_GET_ESS_INTERACTION_DETAILS, ID, state2props } from './state'
-import { INTERACTION_ESS_DETAILS_LOADED } from '../../../actions'
+import { INTERACTION__ESS_DETAILS_LOADED } from '../../../actions'
 import Task from '../../../components/Task'
-import {
-  DefaultLayout,
-  LocalNav,
-  LocalNavLink,
-  NewWindowLink,
-  SummaryTable,
-} from '../../../components'
+import { DefaultLayout, SummaryTable } from '../../../components'
 
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
-import { isEmpty } from 'lodash'
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
 })
 
 const ESSInteractionDetails = ({
-  name,
-  // eventDate,
-  // location,
-  // fullAddress,
-  // registrationStatusCounts,
+  subject,
+  question,
+  dateOfInteraction,
+  countries,
 }) => {
   const { essInteractionId } = useParams()
+
   const breadcrumbs = [
     {
       link: urls.dashboard(),
@@ -40,14 +33,14 @@ const ESSInteractionDetails = ({
       text: 'Interactions',
     },
     {
-      text: name,
+      text: subject,
     },
   ]
 
   return (
     <DefaultLayout
-      heading={name}
-      pageTitle="Interaction ESS"
+      heading={subject}
+      pageTitle="ESS Interaction"
       breadcrumbs={breadcrumbs}
       useReactRouter={true}
     >
@@ -57,22 +50,32 @@ const ESSInteractionDetails = ({
         progressMessage="loading Export Support Service Interaction details"
         startOnRender={{
           payload: essInteractionId,
-          onSuccessDispatch: INTERACTION_ESS_DETAILS_LOADED,
+          onSuccessDispatch: INTERACTION__ESS_DETAILS_LOADED,
         }}
       >
         {() => {
-
           return (
-            name && (
+            subject && (
               <>
-                <GridRow data-test="eventEssDetails">
-                  <GridCol setWidth="one-quarter">
-                  </GridCol>
+                <GridRow data-test="essInteractionDetails">
                   <GridCol setWidth="three-quarters">
                     <StyledSummaryTable>
+                      <SummaryTable.Row heading="Subject" children={subject} />
                       <SummaryTable.Row
-                        heading="Interaction date"
-                        children={"Test"}
+                        heading="Question"
+                        children={question}
+                      />
+                      <SummaryTable.Row
+                        heading="Date of interaction"
+                        children={dateOfInteraction}
+                      />
+                      <SummaryTable.Row
+                        heading="Countries"
+                        children={countries}
+                      />
+                      <SummaryTable.Row
+                        heading="Communication channel"
+                        children="Export Support Services"
                       />
                     </StyledSummaryTable>
                   </GridCol>

@@ -1,8 +1,9 @@
 const router = require('express').Router()
-const { renderDetailsPage } = require('./controllers/details')
+const { renderEssDetails } = require('./controllers/essDetails')
 const urls = require('../../lib/urls')
-const { fetchESSDetails } = require('../companies/apps/activity-feed/controllers')//
-
+const {
+  fetchESSDetails,
+} = require('../companies/apps/activity-feed/controllers')
 
 const {
   APP_PERMISSIONS,
@@ -21,9 +22,11 @@ const subAppRouter = require('./router.sub-app')
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 // Ess Location
-router.get('interactions/ess/:essInteractionId/details', renderDetailsPage)
-router.get(urls.interactions.exportSupportService.detailsData.route, fetchESSDetails)
-
+router.get('/ess/:essInteractionId/details', renderEssDetails)
+router.get(
+  urls.interactions.exportSupportService.detailsData.route,
+  fetchESSDetails
+)
 
 router.get(
   '/export',
@@ -43,7 +46,5 @@ router.get('/', (req, res, next) => {
 })
 
 router.use(subAppRouter)
-
-
 
 module.exports = router

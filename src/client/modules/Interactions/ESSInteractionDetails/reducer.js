@@ -1,8 +1,8 @@
-import { EVENTS__AVENTRI_DETAILS_LOADED } from '../../../../client/actions'
+import { INTERACTION__ESS_DETAILS_LOADED } from '../../../../client/actions'
 
 export default (state = {}, { type, result }) => {
   switch (type) {
-    case EVENTS__AVENTRI_DETAILS_LOADED:
+    case INTERACTION__ESS_DETAILS_LOADED:
       return {
         ...state,
         ...result,
