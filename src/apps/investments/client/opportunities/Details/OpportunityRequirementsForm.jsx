@@ -33,6 +33,7 @@ import {
   ESTIMATED_RETURN_RATE_FIELD_NAME,
   TIME_HORIZONS_FIELD_NAME,
 } from '../Details/constants'
+import { FORM_LAYOUT } from '../../../../../common/constants'
 
 const StyledFieldCheckboxes = styled(FieldCheckboxes)`
   margin-bottom: 0;
@@ -87,7 +88,7 @@ const OpportunityRequirementsForm = (state) => {
                   urls.investments.opportunities.details(opportunityId)
                 }
               >
-                <FormLayout setWidth="one-third">
+                <FormLayout setWidth={FORM_LAYOUT.ONE_THIRD}>
                   <FieldInput
                     label="Total investment sought"
                     hint="Enter value in £"

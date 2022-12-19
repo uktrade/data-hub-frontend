@@ -29,6 +29,8 @@ const OPTIONS_YES_NO = [
   { label: 'No', value: OPTION_NO },
 ]
 
+const FORM_LAYOUT = { THREE_QUARTERS: 'three-quaters', ONE_THIRD: 'one-third' }
+
 const METHOD_PATCH = 'PATCH'
 const METHOD_POST = 'POST'
 
@@ -51,6 +53,7 @@ module.exports = {
   OPTIONS_YES_NO,
   OPTION_YES,
   OPTION_NO,
+  FORM_LAYOUT,
   METHOD_PATCH,
   METHOD_POST,
 }
