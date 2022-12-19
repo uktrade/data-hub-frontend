@@ -6,12 +6,13 @@ import { H2 } from '@govuk-react/heading'
 import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
 import { get } from 'lodash'
 import qs from 'qs'
+import { connect } from 'react-redux'
 
 import { DefaultLayout, RemindersToggleSection } from '../../../components'
 import RemindersSettingsTable from './RemindersSettingsTable'
-import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
 import Resource from '../../../components/Resource'
 import urls from '../../../../lib/urls'
+import { state2props } from '../state'
 
 import { TASK_GET_SUBSCRIPTION_SUMMARY } from '../state'
 
@@ -32,7 +33,10 @@ const openSettings = (queryParamType, qsParams) => {
   return !!settingsExpand
 }
 
-const RemindersSettings = () => {
+const RemindersSettings = ({
+  hasInvestmentFeatureGroup,
+  hasExportFeatureGroup,
+}) => {
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
   const openESL = openSettings('investments_estimated_land_dates', qsParams)
@@ -63,58 +67,58 @@ const RemindersSettings = () => {
           exportNoRecentInteractions,
         }) => (
           <>
-            <H2 size={LEVEL_SIZE[3]}>Investment</H2>
-            <ToggleSectionContainer>
-              <RemindersToggleSection
-                label="Approaching estimated land dates"
-                id="estimated-land-dates-toggle"
-                data-test="estimated-land-dates-toggle"
-                isOpen={openESL}
-              >
-                <RemindersSettingsTable
-                  dataName={'estimated-land-dates'}
-                  data={estimatedLandDate}
-                  to={urls.reminders.settings.investments.estimatedLandDate()}
-                />
-              </RemindersToggleSection>
-              <RemindersToggleSection
-                label="Projects with no recent interactions"
-                id="no-recent-interactions-toggle"
-                data-test="no-recent-interactions-toggle"
-                isOpen={openNRI}
-                borderBottom={true}
-              >
-                <RemindersSettingsTable
-                  dataName={'no-recent-interactions'}
-                  data={noRecentInteraction}
-                  to={urls.reminders.settings.investments.noRecentInteraction()}
-                />
-              </RemindersToggleSection>
-            </ToggleSectionContainer>
-            <CheckUserFeatureFlag userFeatureFlagName="export-email-reminders">
-              {(isFeatureFlagEnabled) =>
-                isFeatureFlagEnabled && (
-                  <>
-                    <H2 size={LEVEL_SIZE[3]}>Export</H2>
-                    <ToggleSectionContainer>
-                      <RemindersToggleSection
-                        label="Companies with no recent interactions"
-                        id="companies-no-recent-interactions-toggle"
-                        data-test="companies-no-recent-interactions-toggle"
-                        isOpen={openENRI}
-                        borderBottom={true}
-                      >
-                        <RemindersSettingsTable
-                          dataName={'companies-no-recent-interactions'}
-                          data={exportNoRecentInteractions}
-                          to={urls.reminders.settings.exports.noRecentInteraction()}
-                        />
-                      </RemindersToggleSection>
-                    </ToggleSectionContainer>
-                  </>
-                )
-              }
-            </CheckUserFeatureFlag>
+            {hasInvestmentFeatureGroup && (
+              <>
+                <H2 size={LEVEL_SIZE[3]}>Investment</H2>
+                <ToggleSectionContainer>
+                  <RemindersToggleSection
+                    label="Approaching estimated land dates"
+                    id="estimated-land-dates-toggle"
+                    data-test="estimated-land-dates-toggle"
+                    isOpen={openESL}
+                  >
+                    <RemindersSettingsTable
+                      dataName={'estimated-land-dates'}
+                      data={estimatedLandDate}
+                      to={urls.reminders.settings.investments.estimatedLandDate()}
+                    />
+                  </RemindersToggleSection>
+                  <RemindersToggleSection
+                    label="Projects with no recent interactions"
+                    id="no-recent-interactions-toggle"
+                    data-test="no-recent-interactions-toggle"
+                    isOpen={openNRI}
+                    borderBottom={true}
+                  >
+                    <RemindersSettingsTable
+                      dataName={'no-recent-interactions'}
+                      data={noRecentInteraction}
+                      to={urls.reminders.settings.investments.noRecentInteraction()}
+                    />
+                  </RemindersToggleSection>
+                </ToggleSectionContainer>
+              </>
+            )}
+            {hasExportFeatureGroup && (
+              <>
+                <H2 size={LEVEL_SIZE[3]}>Export</H2>
+                <ToggleSectionContainer>
+                  <RemindersToggleSection
+                    label="Companies with no recent interactions"
+                    id="companies-no-recent-interactions-toggle"
+                    data-test="companies-no-recent-interactions-toggle"
+                    isOpen={openENRI}
+                    borderBottom={true}
+                  >
+                    <RemindersSettingsTable
+                      dataName={'companies-no-recent-interactions'}
+                      data={exportNoRecentInteractions}
+                      to={urls.reminders.settings.exports.noRecentInteraction()}
+                    />
+                  </RemindersToggleSection>
+                </ToggleSectionContainer>
+              </>
+            )}
             <StyledHomeLink href={urls.dashboard()} aria-label="Home">
               Home
             </StyledHomeLink>
@@ -125,4 +129,4 @@ const RemindersSettings = () => {
   )
 }
 
-export default RemindersSettings
+export default connect(state2props)(RemindersSettings)

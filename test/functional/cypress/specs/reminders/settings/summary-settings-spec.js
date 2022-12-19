@@ -4,7 +4,6 @@ import {
 } from '../../../support/assertions'
 import urls from '../../../../../../src/lib/urls'
 
-const userEndpoint = '/api-proxy/whoami'
 const summaryEndpoint = '/api-proxy/v4/reminder/subscription/summary'
 
 const eslDataTest = 'estimated-land-dates'
@@ -23,9 +22,6 @@ const interceptAPICalls = ({
   enri_reminder_days = [10, 40, 30],
   enri_email_reminders_enabled = true,
 } = {}) => {
-  cy.intercept('GET', userEndpoint, {
-    active_features: 'export-email-reminders',
-  }).as('userRequest')
   cy.intercept('GET', summaryEndpoint, {
     body: {
       estimated_land_date: {
@@ -45,7 +41,6 @@ const interceptAPICalls = ({
 }
 
 const waitForAPICalls = () => {
-  cy.wait('@userRequest')
   cy.wait('@summaryRequest')
 }
 
@@ -90,6 +85,10 @@ const assertSettingsTableToggles = ({
 describe('Settings: reminders and email notifications', () => {
   context('Breadcrumbs and title', () => {
     before(() => {
+      cy.setUserFeatureGroups([
+        'export-notifications',
+        'investment-notifications',
+      ])
       interceptAPICalls()
       cy.visit(urls.reminders.settings.index())
       waitForAPICalls()

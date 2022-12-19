@@ -18,7 +18,7 @@ const ReminderSummary = (data) => (
         onSuccessDispatch: REMINDER_SUMMARY__LOADED,
       }}
     >
-      {() => <Summary summary={data} />}
+      {() => <Summary {...data} />}
     </Task.Status>
   </div>
 )
