@@ -1,9 +1,11 @@
 const router = require('express').Router()
-const { renderEssDetails } = require('./controllers/essDetails')
+const { renderDetailsPage } = require('./controllers/details')
 const urls = require('../../lib/urls')
 const {
   fetchESSDetails,
 } = require('../companies/apps/activity-feed/controllers')
+
+const { renderEssDetails } = require('./controllers/essDetails')
 
 const {
   APP_PERMISSIONS,

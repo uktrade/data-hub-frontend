@@ -23,7 +23,6 @@ export default class DirectoryFormsApi extends React.PureComponent {
 
   render() {
     const { activity } = this.props
-
     // ESS index to extract id from ESS string feed by activity-stream
     // e.g. dit:directoryFormsApi:Submission:89321:create
     const ESS_ID_INDEX = 3
