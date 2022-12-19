@@ -19,6 +19,7 @@ import {
   ONE_LIST_TEAM_FIELD_NAME,
   TIER_FIELD_NAME,
 } from '../constants'
+import { FORM_LAYOUT } from '../../../../../common/constants'
 
 function EditOneListForm({
   companyId,
@@ -62,7 +63,7 @@ function EditOneListForm({
             </Step>
 
             {values.one_list_tier !== NONE && (
-              <FormLayout setWidth="three-quarters">
+              <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
                 <Step name="oneListAdvisers">
                   <FieldAdvisersTypeahead
                     name={ACCOUNT_MANAGER_FIELD_NAME}

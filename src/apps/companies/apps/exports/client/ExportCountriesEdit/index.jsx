@@ -11,6 +11,7 @@ import {
   FieldTypeahead,
   FormLayout,
 } from '../../../../../../client/components/'
+import { FORM_LAYOUT } from '../../../../../../common/constants'
 
 const StyledH2 = styled.h2`
   font-weight: bold;
@@ -72,7 +73,7 @@ export default ({ companyId, countryOptions, fields }) => {
               return acc
             }, {})}
         >
-          <FormLayout setWidth="three-quarters">
+          <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
             {fields.map(({ label, name }) => (
               <FieldTypeahead
                 key={name}

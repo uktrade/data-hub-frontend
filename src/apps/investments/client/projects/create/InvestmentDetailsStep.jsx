@@ -23,6 +23,7 @@ import {
   CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID,
   TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM,
 } from './state'
+import { FORM_LAYOUT } from '../../../../../common/constants'
 
 const StyledContainer = styled.div(({ error }) => ({
   paddingLeft: SPACING.SCALE_4,
@@ -115,7 +116,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
   )
   const fdiType = findSelectedItem(values.fdiTypes, values.fdi_type)
   return (
-    <FormLayout setWidth="three-quarters">
+    <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
       <Step name="details">
         <SummaryTable
           caption="Investment type"
