@@ -44,3 +44,17 @@ export const TASK_GET_EXPORT_NRI_REMINDER_SUBSCRIPTIONS =
   'TASK_GET_EXPORT_NRI_REMINDER_SUBSCRIPTIONS'
 export const TASK_SAVE_EXPORT_NRI_REMINDER_SUBSCRIPTIONS =
   'TASK_SAVE_EXPORT_NRI_REMINDER_SUBSCRIPTIONS'
+
+export const state2props = (state) => {
+  const activeFeatureGroups = state?.activeFeatureGroups || []
+  const hasInvestmentFeatureGroup = activeFeatureGroups.includes(
+    'investment-notifications'
+  )
+  const hasExportFeatureGroup = activeFeatureGroups.includes(
+    'export-notifications'
+  )
+  return {
+    hasInvestmentFeatureGroup,
+    hasExportFeatureGroup,
+  }
+}

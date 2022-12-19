@@ -3,14 +3,14 @@ import {
   propositionFaker,
   propositionListFaker,
 } from '../../fakers/propositions'
-import { userFaker } from '../../fakers/users'
 import urls from '../../../../../src/lib/urls'
 
 const propositionsEndpoint = '/api-proxy/v4/proposition'
-const whoAmIEndpoint = '/api-proxy/whoami/'
+
+// Whoami adviser id
+const adviserId = '7d19d407-9aec-4d06-b190-d3f404627f21'
 
 describe('Outstanding Proposition Reminders', () => {
-  const user = userFaker({ active_features: ['export-email-reminders'] })
   const totalCount = 11
   const propositions = [
     propositionFaker({
@@ -23,18 +23,9 @@ describe('Outstanding Proposition Reminders', () => {
     cy.intercept(
       {
         method: 'GET',
-        pathname: whoAmIEndpoint,
-      },
-      {
-        body: user,
-      }
-    ).as('whoAmIApiRequest')
-    cy.intercept(
-      {
-        method: 'GET',
         pathname: propositionsEndpoint,
         query: {
-          adviser_id: user.id,
+          adviser_id: adviserId,
           status: 'ongoing',
           sortby: 'deadline',
           offset: '0',
@@ -55,7 +46,7 @@ describe('Outstanding Proposition Reminders', () => {
         method: 'GET',
         pathname: propositionsEndpoint,
         query: {
-          adviser_id: user.id,
+          adviser_id: adviserId,
           status: 'ongoing',
           sortby: 'deadline',
           offset: '10',
@@ -74,12 +65,15 @@ describe('Outstanding Proposition Reminders', () => {
   }
 
   const waitForAPICalls = () => {
-    cy.wait('@whoAmIApiRequest')
     cy.wait('@propositionAPIRequest')
   }
 
   context('Reminders List', () => {
     before(() => {
+      cy.setUserFeatureGroups([
+        'export-notifications',
+        'investment-notifications',
+      ])
       interceptApiCalls()
       cy.visit(urls.reminders.investments.outstandingPropositions())
       waitForAPICalls()
@@ -195,15 +189,11 @@ describe('Outstanding Proposition Reminders', () => {
   context('No reminders', () => {
     before(() => {
       cy.intercept(
-        { method: 'GET', pathname: whoAmIEndpoint },
-        { body: user }
-      ).as('whoAmIApiRequest')
-      cy.intercept(
         {
           method: 'GET',
           pathname: propositionsEndpoint,
           query: {
-            adviser_id: user.id,
+            adviser_id: adviserId,
             status: 'ongoing',
             sortby: 'deadline',
             offset: '0',
@@ -220,7 +210,6 @@ describe('Outstanding Proposition Reminders', () => {
         }
       ).as('noPropositionsAPIRequest')
       cy.visit(urls.reminders.investments.outstandingPropositions())
-      cy.wait('@whoAmIApiRequest')
       cy.wait('@noPropositionsAPIRequest')
     })
 

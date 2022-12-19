@@ -35,8 +35,8 @@ const StyledImage = styled('img')({
   verticalAlign: 'sub',
 })
 
-const NotificationAlert = ({ count, hasFeatureFlag }) =>
-  hasFeatureFlag ? (
+const NotificationAlert = ({ count, hasFeatureGroup }) =>
+  hasFeatureGroup ? (
     <Task.Status
       name={TASK_GET_NOTIFICATION_ALERT_COUNT}
       id={ID}

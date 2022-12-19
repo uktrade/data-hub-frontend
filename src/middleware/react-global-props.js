@@ -17,7 +17,8 @@ module.exports = () => {
         ...res.locals.PERMITTED_APPLICATIONS.map(({ key }) => key),
       ]),
       currentAdviserId: req.session?.user?.id,
-      adviser: req.session?.user,
+      activeFeatures: req.session?.user?.active_features,
+      activeFeatureGroups: req.session?.user?.active_feature_groups || [],
     }
     next()
   }
