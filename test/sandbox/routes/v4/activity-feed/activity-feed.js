@@ -24,6 +24,9 @@ var dataHubEvents = require('../../../fixtures/v4/activity-feed/data-hub-events.
 var aventriAttendeesAToZOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-a-z.json')
 var aventriRegistrationStatusWithAggregations = require('../../../fixtures/v4/activity-feed/aventri-registration-status-with-aggregation-counts.json')
 
+//ESS Interactions
+var essInteractionsNoTitle = require('../../../fixtures/v4/activity-feed/ess-interaction-no-title.json')
+
 ////This order is correct when sorted by: First Name Z-A, Last name Z-A and Company name Z-A
 var aventriAttendeesZToAOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-z-a.json')
 //All Activitiy feed events
@@ -65,6 +68,9 @@ const ALL_ACTIVITIES_PER_PAGE = 10
 const VENUS_LTD = 'dit:DataHubCompany:0f5216e0-849f-11e6-ae22-56b6b6499611'
 const BEST_EVER_COMPANY =
   'dit:DataHubCompany:c79ba298-106e-4629-aa12-61ec6e2e47ce'
+
+const BEST_EVER_COMPANY_2 =
+  'dit:DataHubCompany:c79ba298-106e-4629-aa12-61ec6e2e47be'
 
 exports.activityFeed = function (req, res) {
   // Activities by contact
@@ -290,11 +296,16 @@ exports.activityFeed = function (req, res) {
       req.body,
       "query.bool.filter.bool.should[0].bool.must[1].terms['object.attributedTo.id'][0]"
     )
-    return res.json(
-      company === BEST_EVER_COMPANY
-        ? companyActivities
-        : dataHubAndExternalActivities
-    )
+    var activities
+    if (company === BEST_EVER_COMPANY) {
+      activities = companyActivities
+    } else if (company === BEST_EVER_COMPANY_2) {
+      activities = essInteractionsNoTitle
+    } else {
+      activities = dataHubAndExternalActivities
+    }
+
+    return res.json(activities)
   }
 
   // Maxemail campaigns
