@@ -36,13 +36,13 @@ const EventAventriRegistrationStatus = ({
   registrationStatusCounts,
   defaultQueryParams = {
     page: 1,
-    size: 10,
+    size: 20,
     sortby: 'first_name:asc',
   },
   payload,
-  page = parseInt(page || 1, 10),
+  page = parseInt(page || 1, 20),
   totalAttendees,
-  itemsPerPage = 10,
+  itemsPerPage = 20,
   maxItemsToPaginate = 10000,
 }) => {
   const breadcrumbs = [
@@ -162,7 +162,11 @@ const EventAventriRegistrationStatus = ({
                 )
               }
             </CheckUserFeatureFlag>
-            <RoutedPagination initialPage={page} items={totalAttendees} />
+            <RoutedPagination
+              initialPage={page}
+              items={totalAttendees}
+              pageSize={itemsPerPage}
+            />
           </DefaultLayout>
         )
       }}
