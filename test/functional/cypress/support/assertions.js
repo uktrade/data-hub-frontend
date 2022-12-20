@@ -305,6 +305,7 @@ const assertFieldInput = ({
     .wrap(element)
     .find('label')
     .should('have.text', label)
+    .parent()
     .next()
     .then(
       ($el) =>
@@ -328,6 +329,7 @@ const assertFieldTextarea = ({ element, label, hint, value }) =>
     .wrap(element)
     .find('label')
     .should('contain', label)
+    .parent()
     .next()
     .then(
       ($el) =>
@@ -619,6 +621,7 @@ const assertDateInput = ({ element, label, value }) => {
   cy.get(element)
     .find('label')
     .should('contain', label)
+    .parent()
     .next()
     .should('have.attr', 'value', value)
 }
