@@ -296,14 +296,12 @@ exports.activityFeed = function (req, res) {
       req.body,
       "query.bool.filter.bool.should[0].bool.must[1].terms['object.attributedTo.id'][0]"
     )
-    var activities
-    if (company === BEST_EVER_COMPANY) {
-      activities = companyActivities
-    } else if (company === BEST_EVER_COMPANY_2) {
-      activities = essInteractionsNoTitle
-    } else {
-      activities = dataHubAndExternalActivities
-    }
+    const activities =
+      company === BEST_EVER_COMPANY
+        ? companyActivities
+        : company === BEST_EVER_COMPANY_2
+        ? essInteractionsNoTitle
+        : dataHubAndExternalActivities
 
     return res.json(activities)
   }
