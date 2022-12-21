@@ -72,45 +72,72 @@ describe('Estimated Land Date Reminders', () => {
   context('Reminders List', () => {
     before(() => {
       interceptApiCalls()
-      cy.visit(urls.reminders.estimatedLandDate())
+      cy.setUserFeatureGroups([
+        'export-notifications',
+        'investment-notifications',
+      ])
+      cy.visit(urls.reminders.investments.estimatedLandDate())
       cy.wait('@remindersApiRequest')
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        'Reminders for approaching estimated land dates': null,
+        'Approaching estimated land dates': null,
       })
     })
 
-    it('should render the heading', () => {
-      cy.get('[data-test="heading"]').should(
+    it('should render the headings', () => {
+      cy.get('[data-test="heading"]').should('have.text', 'Reminders')
+      cy.get('[data-test="subheading"]').should(
         'have.text',
-        'Reminders for approaching estimated land dates'
+        'Approaching estimated land dates'
       )
     })
 
     it('should include a list of links to other reminders', () => {
       cy.get('[data-test="link-list-item"]')
-        .should('have.length', 3)
+        .should('have.length', 4)
         .as('listItems')
       cy.get('@listItems')
         .eq(0)
         .find('a')
-        .should('contain', 'Reminders for approaching estimated land dates')
-        .should('have.attr', 'href', urls.reminders.estimatedLandDate())
+        .should('contain', 'Approaching estimated land dates')
+        .should(
+          'have.attr',
+          'href',
+          urls.reminders.investments.estimatedLandDate()
+        )
 
       cy.get('@listItems')
         .eq(1)
         .find('a')
-        .should('contain', 'Reminders for projects with no recent interaction')
-        .should('have.attr', 'href', urls.reminders.noRecentInteraction())
+        .should('contain', 'Projects with no recent interaction')
+        .should(
+          'have.attr',
+          'href',
+          urls.reminders.investments.noRecentInteraction()
+        )
 
       cy.get('@listItems')
         .eq(2)
         .find('a')
-        .should('contain', 'Reminders for outstanding propositions')
-        .should('have.attr', 'href', urls.reminders.outstandingPropositions())
+        .should('contain', 'Outstanding propositions')
+        .should(
+          'have.attr',
+          'href',
+          urls.reminders.investments.outstandingPropositions()
+        )
+
+      cy.get('@listItems')
+        .eq(3)
+        .find('a')
+        .should('contain', 'Companies with no recent interaction')
+        .should(
+          'have.attr',
+          'href',
+          urls.reminders.exports.noRecentInteractions()
+        )
     })
 
     it('should render the list heading with the total number of reminders', () => {
@@ -170,12 +197,12 @@ describe('Estimated Land Date Reminders', () => {
           },
         }
       ).as('remindersApiRequest')
-      cy.visit(urls.reminders.estimatedLandDate())
+      cy.visit(urls.reminders.investments.estimatedLandDate())
       cy.wait('@remindersApiRequest')
     })
 
     it('should include a message "You have no reminders"', () => {
-      cy.get('[data-test="no-reminders"]').should(
+      cy.get('[data-test="investments-no-reminders"]').should(
         'contain',
         'You have no reminders.'
       )
@@ -185,7 +212,7 @@ describe('Estimated Land Date Reminders', () => {
   context('Pagination', () => {
     beforeEach(() => {
       interceptApiCalls()
-      cy.visit(urls.reminders.estimatedLandDate())
+      cy.visit(urls.reminders.investments.estimatedLandDate())
       cy.wait('@remindersApiRequest')
     })
 
@@ -216,7 +243,7 @@ describe('Estimated Land Date Reminders', () => {
   context('Sort', () => {
     beforeEach(() => {
       cy.intercept('GET', `${remindersEndpoint}*`).as('remindersApiRequest')
-      cy.visit(urls.reminders.estimatedLandDate())
+      cy.visit(urls.reminders.investments.estimatedLandDate())
     })
 
     it('should apply the default sort', () => {
@@ -252,7 +279,7 @@ describe('Estimated Land Date Reminders', () => {
   context('Delete', () => {
     beforeEach(() => {
       interceptApiCalls()
-      cy.visit(urls.reminders.estimatedLandDate())
+      cy.visit(urls.reminders.investments.estimatedLandDate())
       cy.wait('@remindersApiRequest')
     })
 

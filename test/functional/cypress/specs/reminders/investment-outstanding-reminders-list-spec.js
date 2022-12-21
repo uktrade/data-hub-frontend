@@ -3,14 +3,14 @@ import {
   propositionFaker,
   propositionListFaker,
 } from '../../fakers/propositions'
-import { userFaker } from '../../fakers/users'
 import urls from '../../../../../src/lib/urls'
 
 const propositionsEndpoint = '/api-proxy/v4/proposition'
-const whoAmIEndpoint = '/api-proxy/whoami/'
+
+// Whoami adviser id
+const adviserId = '7d19d407-9aec-4d06-b190-d3f404627f21'
 
 describe('Outstanding Proposition Reminders', () => {
-  const user = userFaker()
   const totalCount = 11
   const propositions = [
     propositionFaker({
@@ -23,18 +23,9 @@ describe('Outstanding Proposition Reminders', () => {
     cy.intercept(
       {
         method: 'GET',
-        pathname: whoAmIEndpoint,
-      },
-      {
-        body: user,
-      }
-    ).as('whoAmIApiRequest')
-    cy.intercept(
-      {
-        method: 'GET',
         pathname: propositionsEndpoint,
         query: {
-          adviser_id: user.id,
+          adviser_id: adviserId,
           status: 'ongoing',
           sortby: 'deadline',
           offset: '0',
@@ -55,7 +46,7 @@ describe('Outstanding Proposition Reminders', () => {
         method: 'GET',
         pathname: propositionsEndpoint,
         query: {
-          adviser_id: user.id,
+          adviser_id: adviserId,
           status: 'ongoing',
           sortby: 'deadline',
           offset: '10',
@@ -74,52 +65,78 @@ describe('Outstanding Proposition Reminders', () => {
   }
 
   const waitForAPICalls = () => {
-    cy.wait('@whoAmIApiRequest')
     cy.wait('@propositionAPIRequest')
   }
 
   context('Reminders List', () => {
     before(() => {
+      cy.setUserFeatureGroups([
+        'export-notifications',
+        'investment-notifications',
+      ])
       interceptApiCalls()
-      cy.visit(urls.reminders.outstandingPropositions())
+      cy.visit(urls.reminders.investments.outstandingPropositions())
       waitForAPICalls()
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
-        'Reminders for outstanding propositions': null,
+        'Outstanding propositions': null,
       })
     })
 
-    it('should render the heading', () => {
-      cy.get('[data-test="heading"]').should(
+    it('should render the headings', () => {
+      cy.get('[data-test="heading"]').should('have.text', 'Reminders')
+      cy.get('[data-test="subheading"]').should(
         'have.text',
-        'Reminders for outstanding propositions'
+        'Outstanding propositions'
       )
     })
 
     it('should include a list of links to other reminders', () => {
       cy.get('[data-test="link-list-item"]')
-        .should('have.length', 3)
+        .should('have.length', 4)
         .as('listItems')
       cy.get('@listItems')
         .eq(0)
         .find('a')
-        .should('contain', 'Reminders for approaching estimated land dates')
-        .should('have.attr', 'href', urls.reminders.estimatedLandDate())
+        .should('contain', 'Approaching estimated land dates')
+        .should(
+          'have.attr',
+          'href',
+          urls.reminders.investments.estimatedLandDate()
+        )
 
       cy.get('@listItems')
         .eq(1)
         .find('a')
-        .should('contain', 'Reminders for projects with no recent interaction')
-        .should('have.attr', 'href', urls.reminders.noRecentInteraction())
+        .should('contain', 'Projects with no recent interaction')
+        .should(
+          'have.attr',
+          'href',
+          urls.reminders.investments.noRecentInteraction()
+        )
 
       cy.get('@listItems')
         .eq(2)
         .find('a')
-        .should('contain', 'Reminders for outstanding propositions')
-        .should('have.attr', 'href', urls.reminders.outstandingPropositions())
+        .should('contain', 'Outstanding propositions')
+        .should(
+          'have.attr',
+          'href',
+          urls.reminders.investments.outstandingPropositions()
+        )
+
+      cy.get('@listItems')
+        .eq(3)
+        .find('a')
+        .should('contain', 'Companies with no recent interaction')
+        .should(
+          'have.attr',
+          'href',
+          urls.reminders.exports.noRecentInteractions()
+        )
     })
 
     it('should render the list heading with the total number of reminders', () => {
@@ -172,15 +189,11 @@ describe('Outstanding Proposition Reminders', () => {
   context('No reminders', () => {
     before(() => {
       cy.intercept(
-        { method: 'GET', pathname: whoAmIEndpoint },
-        { body: user }
-      ).as('whoAmIApiRequest')
-      cy.intercept(
         {
           method: 'GET',
           pathname: propositionsEndpoint,
           query: {
-            adviser_id: user.id,
+            adviser_id: adviserId,
             status: 'ongoing',
             sortby: 'deadline',
             offset: '0',
@@ -196,13 +209,12 @@ describe('Outstanding Proposition Reminders', () => {
           },
         }
       ).as('noPropositionsAPIRequest')
-      cy.visit(urls.reminders.outstandingPropositions())
-      cy.wait('@whoAmIApiRequest')
+      cy.visit(urls.reminders.investments.outstandingPropositions())
       cy.wait('@noPropositionsAPIRequest')
     })
 
     it('should include a message "You have no reminders"', () => {
-      cy.get('[data-test="no-reminders"]').should(
+      cy.get('[data-test="investments-no-reminders"]').should(
         'contain',
         'You have no reminders.'
       )
@@ -212,7 +224,7 @@ describe('Outstanding Proposition Reminders', () => {
   context('Pagination', () => {
     beforeEach(() => {
       interceptApiCalls()
-      cy.visit(urls.reminders.outstandingPropositions())
+      cy.visit(urls.reminders.investments.outstandingPropositions())
       waitForAPICalls()
     })
 

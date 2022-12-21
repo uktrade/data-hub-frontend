@@ -1,17 +1,8 @@
-const { get } = require('lodash')
-
 const config = require('../config')
 const { authorisedRequest } = require('../lib/authorised-request')
 
 async function userMiddleware(req, res, next) {
   const token = req.session.token
-  const userSession = req.session.user
-
-  if (userSession) {
-    res.locals.user = userSession
-    return next()
-  }
-
   if (!token) {
     return next()
   }
@@ -22,15 +13,7 @@ async function userMiddleware(req, res, next) {
       `${config.apiRoot}/whoami/`
     )
 
-    const userId = get(req.session, 'userProfile.user_id')
-
-    const user = {
-      ...userResponse,
-      userId,
-    }
-
-    req.session.user = res.locals.user = user
-
+    req.session.user = res.locals.user = userResponse
     next()
   } catch (error) {
     next(error)

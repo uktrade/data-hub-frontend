@@ -257,6 +257,12 @@ Cypress.Commands.add('setUserFeatures', (features) => {
   })
 })
 
+Cypress.Commands.add('setUserFeatureGroups', (groups) => {
+  return cy.request('PUT', `${Cypress.env('sandbox_url')}/whoami`, {
+    active_feature_groups: groups,
+  })
+})
+
 Cypress.Commands.add('setAdviserId', (id) => {
   return cy.request('PUT', `${Cypress.env('sandbox_url')}/whoami`, { id })
 })

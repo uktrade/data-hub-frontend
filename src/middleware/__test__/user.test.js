@@ -24,33 +24,6 @@ describe('user middleware', () => {
     })
   })
 
-  context('if user already exists on session', () => {
-    beforeEach(() => {
-      this.reqMock = {
-        session: {
-          token,
-          user,
-        },
-      }
-      this.resMock = {
-        locals: {},
-      }
-      this.userMiddleware(this.reqMock, this.resMock, this.nextSpy)
-    })
-
-    it('should add user property on locals', () => {
-      expect(this.resMock.locals).to.have.property('user')
-    })
-
-    it('should set user to session value', () => {
-      expect(this.resMock.locals.user).to.deep.equal(user)
-    })
-
-    it('should call next with no arguments', () => {
-      expect(this.nextSpy).to.be.calledWith()
-    })
-  })
-
   context('if not token is set', () => {
     beforeEach(() => {
       this.reqMock = {
