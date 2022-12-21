@@ -8,7 +8,6 @@ import { BLUE } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
 import Banner from '../LocalHeader/Banner'
-import CheckUserFeatureFlag from '../CheckUserFeatureFlags'
 import { ID as INVESTMENT_REMINDERS_ID } from '../InvestmentReminders/state'
 import { ID as REMINDER_SUMMARY_ID } from '../ReminderSummary/state'
 import {
@@ -61,11 +60,22 @@ const state2props = (state) => {
   const { count: reminderSummaryCount } = state[REMINDER_SUMMARY_ID]
   const { hasInvestmentProjects } = state[CHECK_FOR_INVESTMENTS_ID]
   const { dataHubFeed } = state[DATA_HUB_FEED_ID]
+
+  const activeFeatureGroups = state.activeFeatureGroups || []
+  const hasInvestmentFeatureGroup = activeFeatureGroups.includes(
+    'investment-notifications'
+  )
+  const hasExportFeatureGroup = activeFeatureGroups.includes(
+    'export-notifications'
+  )
+
   return {
     hasInvestmentProjects,
     dataHubFeed,
     remindersCount,
     reminderSummaryCount,
+    hasInvestmentFeatureGroup,
+    hasExportFeatureGroup,
   }
 }
 
@@ -77,6 +87,8 @@ const PersonalisedDashboard = ({
   reminderSummaryCount,
   hasInvestmentProjects,
   dataHubFeed,
+  hasInvestmentFeatureGroup,
+  hasExportFeatureGroup,
 }) => (
   <ThemeProvider theme={blueTheme}>
     <Banner items={dataHubFeed} />
@@ -101,44 +113,40 @@ const PersonalisedDashboard = ({
             {hasInvestmentProjects && (
               <GridCol setWidth="one-third">
                 <Aside>
-                  <CheckUserFeatureFlag userFeatureFlagName="reminder-summary">
-                    {(isFeatureFlagOn) =>
-                      isFeatureFlagOn ? (
-                        <DashboardToggleSection
-                          label="Reminders"
-                          id="reminder-summary-section"
-                          badge={
-                            !!reminderSummaryCount && (
-                              <NotificationBadge
-                                label={`${reminderSummaryCount}`}
-                              />
-                            )
-                          }
-                          major={true}
-                          isOpen={reminderSummaryCount > 0}
-                          data-test="reminder-summary-section"
-                        >
-                          <ReminderSummary />
-                        </DashboardToggleSection>
-                      ) : (
-                        <DashboardToggleSection
-                          label="Reminders"
-                          id="investment-reminders-section"
-                          badge={
-                            !!remindersCount && (
-                              <NotificationBadge label={`${remindersCount}`} />
-                            )
-                          }
-                          major={true}
-                          isOpen={false}
-                          data-test="investment-reminders-section"
-                        >
-                          <InvestmentReminders adviser={adviser} />
-                        </DashboardToggleSection>
-                      )
-                    }
-                  </CheckUserFeatureFlag>
-
+                  {hasInvestmentFeatureGroup || hasExportFeatureGroup ? (
+                    <DashboardToggleSection
+                      label="Reminders"
+                      id="reminder-summary-section"
+                      badge={
+                        !!reminderSummaryCount && (
+                          <NotificationBadge
+                            label={`${reminderSummaryCount}`}
+                          />
+                        )
+                      }
+                      major={true}
+                      isOpen={reminderSummaryCount > 0}
+                      data-test="reminder-summary-section"
+                    >
+                      <ReminderSummary />
+                    </DashboardToggleSection>
+                  ) : (
+                    // Outstanding propositions
+                    <DashboardToggleSection
+                      label="Reminders"
+                      id="investment-reminders-section"
+                      badge={
+                        !!remindersCount && (
+                          <NotificationBadge label={`${remindersCount}`} />
+                        )
+                      }
+                      major={true}
+                      isOpen={false}
+                      data-test="investment-reminders-section"
+                    >
+                      <InvestmentReminders adviser={adviser} />
+                    </DashboardToggleSection>
+                  )}
                   <DashboardToggleSection
                     label="Investment projects summary"
                     id="investment-project-summary-section"

@@ -18,6 +18,7 @@ import {
   GENERIC_PHONE_NUMBER_REGEX,
 } from './constants'
 import nameValidator from './nameValidator'
+import { FORM_LAYOUT } from '../../../../../common/constants'
 
 const websiteValidator = (
   value,
@@ -51,7 +52,7 @@ const telephoneValidator = (
 
 function CompanyNotFoundStep({ organisationTypes, country, features }) {
   return (
-    <FormLayout setWidth="three-quarters">
+    <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
       <Step name="unhappy">
         <Details summary="Why am I seeing this?">
           The company you want to add to Data Hub cannot be found in the

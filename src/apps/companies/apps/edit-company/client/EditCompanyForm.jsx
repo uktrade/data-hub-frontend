@@ -3,7 +3,11 @@ import PropTypes from 'prop-types'
 import CompanyMatched from './CompanyMatched'
 import CompanyUnmatched from './CompanyUnmatched'
 import Form from '../../../../../client/components/Form'
-import { UNITED_STATES_ID, CANADA_ID } from '../../../../../common/constants'
+import {
+  UNITED_STATES_ID,
+  CANADA_ID,
+  FORM_LAYOUT,
+} from '../../../../../common/constants'
 import urls from '../../../../../lib/urls'
 import { FormLayout } from '../../../../../client/components'
 
@@ -36,7 +40,7 @@ function EditCompanyForm({
 
   // TODO: Support nested form values to avoid transformation
   return (
-    <FormLayout setWidth="three-quarters">
+    <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
       <Form
         id="edit-company-form"
         submissionTaskName="Edit company"

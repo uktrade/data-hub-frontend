@@ -282,3 +282,22 @@ describe('Company activity feed', () => {
     })
   })
 })
+
+context('Export Support Service No Title', () => {
+  before(() => {
+    cy.visit(urls.companies.activity.index(fixtures.company.essNoTitle.id))
+    cy.get('[data-test="activity-feed"] select').select(
+      'dataHubAndExternalActivity'
+    )
+  })
+
+  it('Displays the ESS Inbound Enquiry support title when no title provided', () => {
+    cy.get('[data-test="export-support-service"]').within(() =>
+      cy
+        .get('[data-test="export-support-service-name"]')
+        .contains('ESS Inbound Enquiry', {
+          matchCase: false,
+        })
+    )
+  })
+})

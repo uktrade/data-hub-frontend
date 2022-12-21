@@ -1,16 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link, useLocation } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-import { BLUE } from 'govuk-colours'
+import { BLUE, BORDER_COLOUR } from 'govuk-colours'
+import { H3 } from 'govuk-react'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
 import urls from '../../../lib/urls'
+import { state2props } from './state'
 
 const LinkList = styled('ul')({
   listStyleType: 'none',
-  padding: 0,
-  margin: 0,
+  padding: `0 0 ${SPACING.SCALE_4}`,
+  margin: `0 0 ${SPACING.SCALE_4}`,
+  borderBottom: `1px solid ${BORDER_COLOUR}`,
 })
 
 const LinkListItem = styled('li')({
@@ -43,30 +47,49 @@ const MenuItem = ({ to, pathname, children }) => (
   </LinkListItem>
 )
 
-const RemindersMenu = () => {
+const RemindersMenu = ({
+  hasInvestmentFeatureGroup,
+  hasExportFeatureGroup,
+}) => {
   const location = useLocation()
   return (
-    <Menu>
-      <MenuItem
-        to={urls.reminders.estimatedLandDate()}
-        pathname={location.pathname}
-      >
-        Reminders for approaching estimated land dates
-      </MenuItem>
-      <MenuItem
-        to={urls.reminders.noRecentInteraction()}
-        pathname={location.pathname}
-      >
-        Reminders for projects with no recent interaction
-      </MenuItem>
-      <MenuItem
-        to={urls.reminders.outstandingPropositions()}
-        pathname={location.pathname}
-      >
-        Reminders for outstanding propositions
-      </MenuItem>
-    </Menu>
+    <>
+      {hasInvestmentFeatureGroup && (
+        <Menu>
+          <H3 as="h2">Investment</H3>
+          <MenuItem
+            to={urls.reminders.investments.estimatedLandDate()}
+            pathname={location.pathname}
+          >
+            Approaching estimated land dates
+          </MenuItem>
+          <MenuItem
+            to={urls.reminders.investments.noRecentInteraction()}
+            pathname={location.pathname}
+          >
+            Projects with no recent interactions
+          </MenuItem>
+          <MenuItem
+            to={urls.reminders.investments.outstandingPropositions()}
+            pathname={location.pathname}
+          >
+            Outstanding propositions
+          </MenuItem>
+        </Menu>
+      )}
+      {hasExportFeatureGroup && (
+        <Menu>
+          <H3 as="h2">Export</H3>
+          <MenuItem
+            to={urls.reminders.exports.noRecentInteractions()}
+            pathname={location.pathname}
+          >
+            Companies with no recent interactions
+          </MenuItem>
+        </Menu>
+      )}
+    </>
   )
 }
 
-export default RemindersMenu
+export default connect(state2props)(RemindersMenu)

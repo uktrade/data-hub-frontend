@@ -1,11 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Switch } from 'react-router-dom'
 import * as Sentry from '@sentry/browser'
 import * as ReactSentry from '@sentry/react'
 import { BrowserTracing } from '@sentry/tracing'
 import { ErrorBoundary } from 'react-error-boundary'
-
-import { Redirect, Switch } from 'react-router-dom'
 
 import './components'
 import { SearchLocalHeader } from './components'
@@ -215,6 +214,9 @@ import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentRemind
 import { fetchReminderSummary } from './components/ReminderSummary/tasks'
 import { TASK_GET_REMINDER_SUMMARY } from './components/ReminderSummary/state'
 
+import { fetchNotificationAlertCount } from './components/NotificationAlert/tasks'
+import { TASK_GET_NOTIFICATION_ALERT_COUNT } from './components/NotificationAlert/state'
+
 import { TASK_GET_TYPEAHEAD_OPTIONS } from './components/Typeahead/state'
 
 import * as exportsEdit from '../apps/companies/apps/exports/client/tasks'
@@ -257,16 +259,21 @@ import {
 
 import * as reminders from '../client/modules/Reminders/tasks'
 import {
-  TASK_GET_ALL_REMINDER_SUBSCRIPTIONS,
+  TASK_GET_SUBSCRIPTION_SUMMARY,
   TASK_GET_ELD_REMINDER_SUBSCRIPTIONS,
   TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS,
   TASK_GET_NRI_REMINDER_SUBSCRIPTIONS,
   TASK_SAVE_NRI_REMINDER_SUBSCRIPTIONS,
+  TASK_GET_EXPORT_NRI_REMINDER_SUBSCRIPTIONS,
+  TASK_SAVE_EXPORT_NRI_REMINDER_SUBSCRIPTIONS,
   TASK_GET_ESTIMATED_LAND_DATE_REMINDERS,
+  TASK_GET_EXPORTS_NO_RECENT_INTERACTION_REMINDERS,
   TASK_GET_NO_RECENT_INTERACTION_REMINDERS,
   TASK_GET_NEXT_ESTIMATED_LAND_DATE_REMINDER,
+  TASK_GET_NEXT_EXPORTS_NO_RECENT_INTERACTION_REMINDERS,
   TASK_GET_NEXT_NO_RECENT_INTERACTION_REMINDER,
   TASK_DELETE_ESTIMATED_LAND_DATE_REMINDER,
+  TASK_DELETE_EXPORTS_NO_RECENT_INTERACTION_REMINDER,
   TASK_DELETE_NO_RECENT_INTERACTION_REMINDER,
   TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS,
 } from '../client/modules/Reminders/state'
@@ -437,6 +444,7 @@ function App() {
             myInvestmentProjects.fetchMyInvestmentsList,
           [TASK_GET_OUTSTANDING_PROPOSITIONS]: fetchOutstandingPropositions,
           [TASK_GET_REMINDER_SUMMARY]: fetchReminderSummary,
+          [TASK_GET_NOTIFICATION_ALERT_COUNT]: fetchNotificationAlertCount,
           'Large investment profiles filters':
             investmentProfilesTasks.loadFilterOptions,
           [TASK_GET_CONTACTS_LIST]: getContacts,
@@ -462,25 +470,35 @@ function App() {
           [TASK_GET_TYPEAHEAD_OPTIONS]: getTypeaheadOptions,
           [TASK_SAVE_ORDER_ASSIGNEES]: editOMISTasks.saveOrderAssignees,
           [TASK_SAVE_ORDER_SUBSCRIBERS]: editOMISTasks.saveOrderSubscribers,
-          [TASK_GET_ALL_REMINDER_SUBSCRIPTIONS]: reminders.getAllSubscriptions,
+          [TASK_GET_SUBSCRIPTION_SUMMARY]: reminders.getSubscriptionSummary,
           [TASK_GET_ELD_REMINDER_SUBSCRIPTIONS]: reminders.getEldSubscriptions,
           [TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS]:
             reminders.saveEldSubscriptions,
           [TASK_GET_NRI_REMINDER_SUBSCRIPTIONS]: reminders.getNriSubscriptions,
           [TASK_SAVE_NRI_REMINDER_SUBSCRIPTIONS]:
             reminders.saveNriSubscriptions,
+          [TASK_GET_EXPORT_NRI_REMINDER_SUBSCRIPTIONS]:
+            reminders.getNriExportSubscriptions,
+          [TASK_SAVE_EXPORT_NRI_REMINDER_SUBSCRIPTIONS]:
+            reminders.saveNriExportSubscriptions,
           [TASK_GET_ESTIMATED_LAND_DATE_REMINDERS]:
             reminders.getEstimatedLandDateReminders,
           [TASK_GET_NO_RECENT_INTERACTION_REMINDERS]:
             reminders.getNoRecentInteractionReminders,
+          [TASK_GET_EXPORTS_NO_RECENT_INTERACTION_REMINDERS]:
+            reminders.getExportsNoRecentInteractionReminders,
           [TASK_DELETE_ESTIMATED_LAND_DATE_REMINDER]:
             reminders.deleteEstimatedLandDateReminder,
           [TASK_DELETE_NO_RECENT_INTERACTION_REMINDER]:
             reminders.deleteNoRecentInteractionReminder,
+          [TASK_DELETE_EXPORTS_NO_RECENT_INTERACTION_REMINDER]:
+            reminders.deleteExportNoRecentInteractionReminder,
           [TASK_GET_NEXT_ESTIMATED_LAND_DATE_REMINDER]:
             reminders.getNextEstimatedLandDateReminder,
           [TASK_GET_NEXT_NO_RECENT_INTERACTION_REMINDER]:
             reminders.getNextNoRecentInteractionReminder,
+          [TASK_GET_NEXT_EXPORTS_NO_RECENT_INTERACTION_REMINDERS]:
+            reminders.getNextExportNoRecentInteractionReminder,
           [TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS]:
             reminders.getOutstandingPropositions,
           [TASK_GET_CONTACT_ACTIVITIES]: getContactActivities,
@@ -734,17 +752,9 @@ function App() {
           {() => (
             <Switch>
               {Object.keys(routes).map((module) =>
-                routes[module].map((route) =>
-                  route.redirect ? (
-                    <Redirect
-                      exact={true}
-                      from={route.path}
-                      to={route.redirect}
-                    />
-                  ) : (
-                    <ProtectedRoute exact={true} {...route} />
-                  )
-                )
+                routes[module].map((route) => (
+                  <ProtectedRoute exact={route.exact || true} {...route} />
+                ))
               )}
             </Switch>
           )}

@@ -3,7 +3,7 @@
 window.dataLayer = window.dataLayer || []
 window.dataLayer.push({
   userId: '{{user.id}}',
-  userUserId: '{{user.userId}}',
+  userUserId: '{{user.sso_user_id}}',
 })
 if ('{{userFeatureGTMEvent}}') {
   window.dataLayer.push({
