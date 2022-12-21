@@ -26,6 +26,7 @@ module.exports = {
     canadianCompany: require('../../../../test/sandbox/fixtures/v4/company/company-canada-province.json'),
     allActivitiesCompany: require('../../../../test/sandbox/fixtures/v4/company/company-with-all-activities.json'),
     companyWithManyContacts: require('../../../../test/sandbox/fixtures/v4/company/company-with-many-contacts.json'),
+    essNoTitle: require('../../../../test/sandbox/fixtures/v4/company/company-with-ess-interactions.json'),
   },
   contact: {
     deanCox: require('./contact/dean-cox'),

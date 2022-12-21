@@ -36,6 +36,10 @@ export default class DirectoryFormsApi extends React.PureComponent {
     if (
       formType === 'dit:directoryFormsApi:SubmissionType:export-support-service'
     ) {
+      const natureOfEnquiry = formData.nature_of_enquiry
+        ? formData.nature_of_enquiry
+        : 'ESS Inbound Enquiry'
+
       const contacts = CardUtils.getContacts(activity)
       const formattedContacts = () =>
         contacts &&
@@ -64,7 +68,7 @@ export default class DirectoryFormsApi extends React.PureComponent {
             kind="Interaction"
           />
           <ActivityCardSubject dataTest="export-support-service-name">
-            {formData.nature_of_enquiry}
+            {natureOfEnquiry}
           </ActivityCardSubject>
           <ActivityCardMetadata metadata={metadata} />
         </ActivityCardWrapper>
