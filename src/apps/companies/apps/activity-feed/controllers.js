@@ -182,12 +182,12 @@ async function getMaxemailCampaigns(req, next, contacts) {
   }
 }
 
-async function getExportSupportActivities(req, next, company) {
+async function getExportSupportActivities(req, next, contacts) {
   try {
     const { from, size } = req.query
 
     // Fetch ESS  Activities
-    const essQuery = exportSupportServiceQuery(from, size, company.contacts)
+    const essQuery = exportSupportServiceQuery(from, size, contacts)
 
     const essQueryResults = await fetchActivityFeed(req, essQuery)
     const essActivities = essQueryResults.hits.hits.map((hit) => hit._source)
@@ -199,15 +199,11 @@ async function getExportSupportActivities(req, next, company) {
         'dit:directoryFormsApi:SubmissionType:export-support-service'
       ) {
         const essContactEmail = activity.actor['dit:emailAddress']
-        const essContact = getContactFromEmailAddress(
-          essContactEmail,
-          company.contacts
-        )
+        const essContact = getContactFromEmailAddress(essContactEmail, contacts)
 
         activity.object.attributedTo = [
           activity.object.attributedTo,
           mapEssContacts(essContact),
-          mapEssCompany(company),
         ]
       }
       return activity
@@ -428,7 +424,11 @@ async function fetchActivityFeedHandler(req, res, next) {
 
     // Get Export Support Service Activites
     if (isEssFilter(activityTypeFilter)) {
-      const essActivities = await getExportSupportActivities(req, next, company)
+      const essActivities = await getExportSupportActivities(
+        req,
+        next,
+        company.contacts
+      )
       activities = [...activities, ...essActivities]
       total += essActivities.length
     }
@@ -464,17 +464,6 @@ function mapEssContacts(contact) {
       }
     : []
   return mappedContact
-}
-
-function mapEssCompany(company) {
-  const mappedCompany = company
-    ? {
-        id: company.id,
-        name: company.name,
-        type: 'dit:Company',
-      }
-    : []
-  return mappedCompany
 }
 
 async function fetchAventriEvent(req, res, next) {
@@ -768,6 +757,5 @@ module.exports = {
   getAventriEventsAttendedByCompanyContacts,
   fetchAventriEventRegistrationStatusAttendees,
   getAventriRegistrationStatusCounts,
-  transformAventriEventStatusToEventStatus,
   fetchESSDetails,
 }
