@@ -10,6 +10,8 @@ const transformResponseToESSInteractionDetails = ({ id, object }) => {
     question: formData.aaa_question,
     dateOfInteraction: formatLongDate(object.published),
     countries: formData.countries,
+    companyName: formData.company_name,
+    enquirer: formData.full_name,
   }
   return essDetails
 }
