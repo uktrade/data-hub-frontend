@@ -17,6 +17,7 @@ import {
 } from './state'
 import urls from '../../../../../lib/urls'
 import { FormLayout } from '../../../../../client/components'
+import { FORM_LAYOUT } from '../../../../../common/constants'
 
 const getReturnLink = (
   companyId,
@@ -75,7 +76,7 @@ const InteractionDetailsForm = ({
         const openContactFormTask = getTask(TASK_OPEN_CONTACT_FORM, STATE_ID)
         const companyIds = [companyId]
         return (
-          <FormLayout setWidth="three-quarters">
+          <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
             <Route>
               {({ location }) => {
                 const contactCreated =

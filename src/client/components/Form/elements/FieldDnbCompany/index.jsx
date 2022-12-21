@@ -23,6 +23,7 @@ import useDnbSearch from '../../../EntityList/useDnbSearch'
 import FormActions from '../FormActions'
 import EntityList from '../../../EntityList'
 import FormLayout from '../../../Layout/FormLayout'
+import { FORM_LAYOUT } from '../../../../../common/constants'
 
 const COMPANY_NAME_MIN_LENGTH = 2
 const COMPANY_NAME_MAX_LENGTH = 30
@@ -81,7 +82,7 @@ const FieldDnbCompany = ({
   useEffect(() => setIsLoading(searching), [searching])
 
   return (
-    <FormLayout setWidth="three-quarters">
+    <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
       <FieldWrapper {...{ name, label, legend, hint }}>
         {country && (
           <FieldUneditable

@@ -31,6 +31,7 @@ import { idNamesToValueLabels } from '../../../../../client/utils'
 
 import { FieldOpportunityValueTypeRadios } from '../../../../../client/components/Form/elements/FieldOpportunityValueType'
 import { apiProxyAxios } from '../../../../../client/components/Task/utils'
+import { FORM_LAYOUT } from '../../../../../common/constants'
 
 function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
   const {
@@ -53,7 +54,7 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
 
   return (
     <Main>
-      <FormLayout setWidth="three-quarters">
+      <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
         <Form
           id="opportunity-details"
           submissionTaskName={TASK_SAVE_OPPORTUNITY_DETAILS}
