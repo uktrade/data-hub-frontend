@@ -31,7 +31,7 @@ var companyCreateInvestigation = require('../../../fixtures/v4/dnb/company-creat
 var companyWithNoGlobalAccountManager = require('../../../fixtures/v4/company/company-with-no-global-account-manager.json')
 var companyWithAllActivities = require('../../../fixtures/v4/company/company-with-all-activities.json')
 var companyWithManyContacts = require('../../../fixtures/v4/company/company-with-many-contacts.json')
-var companyWithEssInteractionnoTitle = require('../../../fixtures/v4/company/company-with-ess-interactions.json')
+var companyWithEssInteractionNoTitle = require('../../../fixtures/v4/company/company-with-ess-interactions.json')
 
 var largeCapitalProfileEmpty = require('../../../fixtures/v4/company/large-capital-profile-empty.json')
 var largeCapitalProfileNew = require('../../../fixtures/v4/company/large-capital-profile-new.json')
@@ -130,7 +130,7 @@ exports.company = function (req, res) {
     'b319d019-444a-4d2f-9e76-c70f84bb22f6': companyCanadianProvince,
     'c79ba298-106e-4629-aa12-61ec6e2e47ce': companyWithAllActivities,
     '57c41268-26be-4335-a873-557e8b0deb29': companyWithManyContacts,
-    'c79ba298-106e-4629-aa12-61ec6e2e47be': companyWithEssInteractionnoTitle,
+    'c79ba298-106e-4629-aa12-61ec6e2e47be': companyWithEssInteractionNoTitle,
     'not-managed': _.assign({}, company, {
       name: 'Not Managed Company',
       id: 'not-managed',
