@@ -62,6 +62,14 @@ const ESSInteractionDetails = ({
                 <GridRow data-test="essInteractionDetails">
                   <GridCol setWidth="three-quarters">
                     <StyledSummaryTable>
+                      <SummaryTable.Row
+                        heading="Company"
+                        children={companyName}
+                      />
+                      <SummaryTable.Row
+                        heading="Enquirer"
+                        children={enquirer}
+                      />
                       <SummaryTable.Row heading="Subject" children={subject} />
                       <SummaryTable.Row
                         heading="Question"
