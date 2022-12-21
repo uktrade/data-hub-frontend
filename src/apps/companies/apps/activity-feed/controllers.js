@@ -188,7 +188,6 @@ async function getExportSupportActivities(req, next, contacts) {
 
     // Fetch ESS  Activities
     const essQuery = exportSupportServiceQuery(from, size, contacts)
-
     const essQueryResults = await fetchActivityFeed(req, essQuery)
     const essActivities = essQueryResults.hits.hits.map((hit) => hit._source)
 

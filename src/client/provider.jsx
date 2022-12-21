@@ -111,7 +111,7 @@ import { ID as EVENTS_AVENTRI_REGISTRATION_STATUS_ID } from './modules/Events/Ev
 import eventAventriRegistrationStatusReducer from './modules/Events/EventAventriRegistrationStatus/reducer'
 
 import { ID as INTERACTION_ESS_DETAILS_ID } from './modules/Interactions/ESSInteractionDetails/state'
-import interactionsEssDetailsReducer from './modules/Interactions/ESSInteractionDetails/reducer'
+import interactionEssDetailsReducer from './modules/Interactions/ESSInteractionDetails/reducer'
 
 import { ID as EVENTS_ID } from './modules/Events/CollectionList/state'
 import eventsReducer from './modules/Events/CollectionList/reducer'
@@ -219,7 +219,7 @@ const reducer = {
   [EVENTS_AVENTRI_DETAILS_ID]: eventAventriDetailsReducer,
   [EVENTS_AVENTRI_REGISTRATION_STATUS_ID]:
     eventAventriRegistrationStatusReducer,
-  [INTERACTION_ESS_DETAILS_ID]: interactionsEssDetailsReducer,
+  [INTERACTION_ESS_DETAILS_ID]: interactionEssDetailsReducer,
   [ORDERS_LIST_ID]: ordersReducer,
   [COMPANY_ORDERS_LIST_ID]: ordersReducer,
   [REMINDERS_ID]: remindersReducer,
