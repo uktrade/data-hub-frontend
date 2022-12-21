@@ -46,7 +46,11 @@ const NotificationAlert = ({ count, hasFeatureGroup }) =>
       }}
     >
       {() => (
-        <StyledNotificationAlertNavLink as="a" href={urls.reminders.index()}>
+        <StyledNotificationAlertNavLink
+          as="a"
+          href={urls.reminders.index()}
+          id="notification-bell-count"
+        >
           <StyledImage
             src={BellSVG}
             alt="An image of a bell with the notification count overlaid"
