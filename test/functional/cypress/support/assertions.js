@@ -621,6 +621,7 @@ const assertDateInput = ({ element, label, value }) => {
   cy.get(element)
     .find('label')
     .should('contain', label)
+    .parent()
     .next()
     .should('have.attr', 'value', value)
 }
