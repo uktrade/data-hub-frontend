@@ -34,7 +34,6 @@ export default class DirectoryFormsApi extends React.PureComponent {
       activity,
       'object.dit:directoryFormsApi:Submission:Data'
     )
-    // const company = urls.companies.detail(companyId),
 
     //if export support submission
     if (
