@@ -218,6 +218,7 @@ const assertFieldRadios = ({ element, label, value, optionsCount }) =>
     .first()
     .should('have.text', label)
     .parent()
+    .parent()
     .find('input')
     .should('have.length', optionsCount)
     .then(
