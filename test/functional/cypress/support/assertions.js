@@ -218,6 +218,7 @@ const assertFieldRadios = ({ element, label, value, optionsCount }) =>
     .first()
     .should('have.text', label)
     .parent()
+    .parent()
     .find('input')
     .should('have.length', optionsCount)
     .then(
@@ -315,6 +316,7 @@ const assertFieldInput = ({
           .should('have.text', hint || '')
           .next()
     )
+
     .find('input')
     .then(
       ($el) =>
@@ -339,6 +341,7 @@ const assertFieldTextarea = ({ element, label, hint, value }) =>
           .should('have.text', hint || '')
           .next()
     )
+    .parent()
     .find('textarea')
     .then(($el) => value ?? cy.wrap($el).should('have.text', value || ''))
 

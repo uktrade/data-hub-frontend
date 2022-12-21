@@ -162,7 +162,7 @@ const FieldWrapper = ({
     hint={hint}
     {...rest}
   >
-    {legend && (
+    {legend ? (
       <FieldInner
         legend={legend}
         error={error}
@@ -177,8 +177,7 @@ const FieldWrapper = ({
         )}
         {children}
       </FieldInner>
-    )}
-    {label && (
+    ) : (
       <fieldset>
         <FieldInner
           legend={legend}
