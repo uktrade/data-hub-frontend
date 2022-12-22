@@ -21,6 +21,7 @@ async function fetchEventAttendees({
     url: `${config.apiRoot}/v3/interaction`,
     qs: pickBy(
       {
+        limit,
         offset,
         sortby,
         event_id: eventId,

@@ -41,7 +41,7 @@ describe('Create attendee controller', () => {
 
         nock(config.apiRoot)
           .get(
-            '/v3/interaction?limit=20&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1&contacts__id=59c815d1-91d0-4d1f-b980-1d04157a298f'
+            '/v3/interaction?limit=10&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1&contacts__id=59c815d1-91d0-4d1f-b980-1d04157a298f'
           )
           .reply(200, {
             count: 0,
