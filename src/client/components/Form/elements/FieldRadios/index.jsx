@@ -3,11 +3,18 @@ import PropTypes from 'prop-types'
 import Radio from '@govuk-react/radio'
 import MultiChoice from '@govuk-react/multi-choice'
 import styled from 'styled-components'
+import InsetText from 'govuk-react/inset-text'
 import { kebabCase } from 'lodash'
 
 import { useField } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
 
+const StyledInsetText = styled(InsetText)`
+  border-left: 5px solid #bfc1c3;
+  padding-left: 0px;
+  margin-left: 17px;
+  padding-inline: 1px;
+`
 const StyledChildField = styled('div')`
   margin-left: 55px;
   clear: both;
@@ -72,7 +79,9 @@ const FieldRadios = ({
               </StyledRadio>
 
               {value === optionValue && optionChildren && (
-                <StyledChildField>{optionChildren}</StyledChildField>
+                <StyledInsetText>
+                  <StyledChildField>{optionChildren}</StyledChildField>
+                </StyledInsetText>
               )}
             </React.Fragment>
           )
