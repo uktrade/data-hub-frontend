@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Radio from '@govuk-react/radio'
 import MultiChoice from '@govuk-react/multi-choice'
 import styled from 'styled-components'
-import InsetText from 'govuk-react/inset-text'
+import InsetText from 'govuk-react'
 import { kebabCase } from 'lodash'
 
 import { useField } from '../../hooks'
