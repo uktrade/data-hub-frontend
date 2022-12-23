@@ -28,7 +28,7 @@ describe('Edit company list page', () => {
       )
     })
     it('displays hint text', () => {
-      cy.get(selectors.companyList.edit.form.hint).should(
+      cy.get('[data-test="hint-text"]').should(
         'have.text',
         'This is a name only you see, and can be up to 30 characters'
       )
