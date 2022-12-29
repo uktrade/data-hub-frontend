@@ -29,7 +29,11 @@ const OPTIONS_YES_NO = [
   { label: 'No', value: OPTION_NO },
 ]
 
-const FORM_LAYOUT = { THREE_QUARTERS: 'three-quarters', ONE_THIRD: 'one-third' }
+const FORM_LAYOUT = {
+  THREE_QUARTERS: 'three-quarters',
+  ONE_THIRD: 'one-third',
+  TWO_THIRDS: 'two-thirds',
+}
 
 const METHOD_PATCH = 'PATCH'
 const METHOD_POST = 'POST'
