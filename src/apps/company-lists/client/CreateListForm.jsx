@@ -13,7 +13,7 @@ const CreateListForm = ({
   maxLength,
   csrfToken,
 }) => (
-  <FormLayout setWidth={FORM_LAYOUT.ONE_THIRD}>
+  <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
     <Form
       id="create-list-form"
       submissionTaskName="Create list"
