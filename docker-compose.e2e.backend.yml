@@ -5,7 +5,8 @@ services:
       - api
 
   api:
-    image: gcr.io/sre-docker-registry/github.com/uktrade/data-hub-api:main
+    # image: gcr.io/sre-docker-registry/github.com/uktrade/data-hub-api:main
+    build: https://github.com/uktrade/data-hub-api.git#feature/remove_aventri
     env_file: .env
     environment:
       DEBUG: 'True'
@@ -19,6 +20,10 @@ services:
       ACTIVITY_STREAM_OUTGOING_URL: http://activity-feed-reverseproxy:8081/v2/activities
       ACTIVITY_STREAM_OUTGOING_ACCESS_KEY_ID: incoming-some-id-1
       ACTIVITY_STREAM_OUTGOING_SECRET_ACCESS_KEY: incoming-some-secret-1
+      ACTIVITY_STREAM_ACCESS_KEY_ID: some-id
+      ACTIVITY_STREAM_INCOMING_ACCESS_KEY_ID: some-id
+      ACTIVITY_STREAM_SECRET_ACCESS_KEY: some-secret
+      ACTIVITY_STREAM_INCOMING_SECRET_ACCESS_KEY: some-secret
     ports:
       - 8000:8000
     depends_on:
@@ -63,11 +68,12 @@ services:
       - '9200:9200'
       - '9300:9300'
     environment:
-      - plugins.security.disabled=true
       - cluster.name=cluster-001
       - node.name=node-001
       - discovery.type=single-node
       - bootstrap.memory_lock=true
+      - DISABLE_INSTALL_DEMO_CONFIG=true # Prevents execution of bundled demo script which installs demo certificates and security configurations to OpenSearch
+      - DISABLE_SECURITY_PLUGIN=true # Disables security plugin
 
   activity-feed-reverseproxy:
     build: ./test/end-to-end/proxy
@@ -77,7 +83,7 @@ services:
       - activity-feed
 
   activity-feed:
-    build: https://github.com/uktrade/activity-stream.git#feature/dockerize_stream
+    build: https://github.com/uktrade/activity-stream.git#feature/dockerize
     depends_on:
       - postgres
       - opensearch
@@ -97,13 +103,8 @@ services:
       - FEEDS__1__TYPE=activity_stream
       - INCOMING_ACCESS_KEY_PAIRS__1__KEY_ID=incoming-some-id-1
       - INCOMING_ACCESS_KEY_PAIRS__1__SECRET_KEY=incoming-some-secret-1
-      - INCOMING_ACCESS_KEY_PAIRS__1__PERMISSIONS__1=POST
-      - INCOMING_ACCESS_KEY_PAIRS__2__KEY_ID=incoming-some-id-2
-      - INCOMING_ACCESS_KEY_PAIRS__2__SECRET_KEY=incoming-some-secret-2
-      - INCOMING_ACCESS_KEY_PAIRS__2__PERMISSIONS__1=POST
-      - INCOMING_ACCESS_KEY_PAIRS__3__KEY_ID=incoming-some-id-3
-      - INCOMING_ACCESS_KEY_PAIRS__3__SECRET_KEY=incoming-some-secret-3
-      - INCOMING_ACCESS_KEY_PAIRS__3__PERMISSIONS__1=GET
+      - INCOMING_ACCESS_KEY_PAIRS__1__PERMISSIONS__activities__1=__MATCH_ALL__
+      - INCOMING_ACCESS_KEY_PAIRS__1__PERMISSIONS__objects__1=__MATCH_ALL__
       - INCOMING_IP_WHITELIST__1=1.2.3.4
       - INCOMING_IP_WHITELIST__2=2.3.4.5
-      - PYTHONUNBUFFERED=1
+      - FULL_INGEST_SECONDS_INTERVAL=10
