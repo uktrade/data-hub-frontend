@@ -6,10 +6,9 @@ services:
 
   api:
     image: gcr.io/sre-docker-registry/github.com/uktrade/data-hub-api:main
-    # build: https://github.com/uktrade/data-hub-api.git#feature/remove_aventri
     env_file: .env
     environment:
-      DEBUG: 'True'
+      DEBUG: 'False'
       RESOURCE_SERVER_AUTH_TOKEN: sso-token
       STAFF_SSO_BASE_URL: http://mock-sso:8080/
       STAFF_SSO_AUTH_TOKEN: sso-token
@@ -83,7 +82,7 @@ services:
       - activity-feed
 
   activity-feed:
-    build: https://github.com/uktrade/activity-stream.git#feature/dockerize
+    build: https://github.com/uktrade/activity-stream.git
     depends_on:
       - postgres
       - opensearch
@@ -107,4 +106,3 @@ services:
       - INCOMING_ACCESS_KEY_PAIRS__1__PERMISSIONS__objects__1=__MATCH_ALL__
       - INCOMING_IP_WHITELIST__1=1.2.3.4
       - INCOMING_IP_WHITELIST__2=2.3.4.5
-      - FULL_INGEST_SECONDS_INTERVAL=10

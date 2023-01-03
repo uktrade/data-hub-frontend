@@ -94,6 +94,9 @@ Ensure you have [node](https://nodejs.org/en/download/) v10 installed then insta
 
 `$ npm install`
 
+#### Ngnix reverse proxy
+The E2E tests make use of an ngnix container to replicate the GOV PAAS functionality. The activity stream requires specific HTTP Headers to be included that are provided by GOV PAAS, nginx is used here to attach those headers to all requests to the activity stream without requiring any code changes
+
 ### Setting up E2E tests within docker (preferred method)
 1. In `test/cypress/support/commands.js`, find the `loadFixture` Cypress command and change `${backend_url}` to `http://localhost:8000`. 
 
