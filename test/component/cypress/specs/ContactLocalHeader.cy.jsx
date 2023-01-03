@@ -110,45 +110,6 @@ describe('ContactLocalHeader', () => {
       cy.get('[data-test=archive-panel]').should('exist')
     })
   })
-
-  // context('When the Aventri feature flag is set', () => {
-  //   context('When a contact is passed in', () => {
-  //     beforeEach(() => {
-  //       cy.mount(
-  //         <DataHubProvider>
-  //           <Component
-  //             contact={primaryContact}
-  //             isActivityStreamFeatureFlagEnabled={true}
-  //           />
-  //         </DataHubProvider>
-  //       )
-  //     })
-
-  //     it('should render the Add Interaction button', () => {
-  //       cy.get('[data-test=add-interaction-button]')
-  //         .should('exist')
-  //         .should('have.text', 'Add interaction')
-  //         .should('have.attr', 'href', addInteractionUrl)
-  //     })
-  //   })
-
-  //   context('When an archived contact is passed in', () => {
-  //     beforeEach(() => {
-  //       cy.mount(
-  //         <DataHubProvider>
-  //           <Component
-  //             contact={archivedContact}
-  //             isActivityStreamFeatureFlagEnabled={true}
-  //           />
-  //         </DataHubProvider>
-  //       )
-  //     })
-
-  //     it('should not render the Add Interaction button', () => {
-  //       cy.get('[data-test=add-interaction-button]').should('not.exist')
-  //     })
-  //   })
-  // })
 })
 
 const assertCompanyLink = () => {
