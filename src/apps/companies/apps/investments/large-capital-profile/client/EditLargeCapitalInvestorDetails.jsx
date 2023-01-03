@@ -8,6 +8,7 @@ import {
   FieldInput,
   FieldTextarea,
   FieldRadios,
+  FormLayout,
 } from '../../../../../../client/components'
 import {
   transformIdNameToValueLabel,
@@ -17,6 +18,7 @@ import {
 
 import { InvestorCheckDetails } from './InvestorCheckDetails'
 import { TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS } from './state'
+import { FORM_LAYOUT } from '../../../../../../common/constants'
 
 const InvestorDescriptionHint = () => (
   <>
@@ -47,71 +49,75 @@ const EditLargeCapitalInvestorDetails = ({
   )?.value
 
   return (
-    <Form
-      id="edit-large-capital-investor-details"
-      analyticsFormName="editLargeCapitalInvestorDetails"
-      cancelButtonLabel="Return without saving"
-      cancelRedirectTo={() =>
-        urls.companies.investments.largeCapitalProfile(companyId)
-      }
-      flashMessage={() => 'Investor details changes saved'}
-      submitButtonLabel="Save and return"
-      submissionTaskName={TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS}
-      redirectTo={() =>
-        urls.companies.investments.largeCapitalProfile(companyId)
-      }
-      transformPayload={(values) =>
-        transformInvestorDetailsToApi({ profileId, companyId, values })
-      }
-    >
-      {() => (
-        <>
-          <FieldTypeahead
-            name="investor_type"
-            label="Investor type"
-            initialValue={transformObjectToValueLabel(investorType)}
-            options={transformIdNameToValueLabel(investorType?.items)}
-            placeholder="Please select an investor type"
-            arial-label="Select an investor type"
-          />
-          <FieldInput
-            name="global_assets_under_management"
-            label="Global assets under management"
-            initialValue={globalAssetsUnderManagement?.value?.toString()}
-            type="text"
-            hint="Enter value in US dollars"
-          />
-          <FieldInput
-            name="investable_capital"
-            label="Investable capital"
-            initialValue={investableCapital?.value?.toString()}
-            type="text"
-            hint="Enter value in US dollars"
-          />
-          <FieldTextarea
-            name="investor_notes"
-            label="Investor description"
-            initialValue={investorDescription?.value}
-            type="text"
-            hint={<InvestorDescriptionHint />}
-          />
-          <FieldRadios
-            legend="Has this investor cleared the required checks within the last 12 months?"
-            name="required_checks"
-            initialValue={requiredChecksCheckedValue}
-            options={Object.values(requiredChecks).map((option) => ({
-              label: option.text,
-              value: option.value,
-              ...((option.text === OPTION_CLEARED ||
-                option.text === OPTION_ISSUES_IDENTIFIED) && {
-                children: <InvestorCheckDetails {...option} />,
-              }),
-            }))}
-            inline={false}
-          />
-        </>
-      )}
-    </Form>
+    <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
+      <Form
+        id="edit-large-capital-investor-details"
+        analyticsFormName="editLargeCapitalInvestorDetails"
+        cancelButtonLabel="Return without saving"
+        cancelRedirectTo={() =>
+          urls.companies.investments.largeCapitalProfile(companyId)
+        }
+        flashMessage={() => 'Investor details changes saved'}
+        submitButtonLabel="Save and return"
+        submissionTaskName={TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS}
+        redirectTo={() =>
+          urls.companies.investments.largeCapitalProfile(companyId)
+        }
+        transformPayload={(values) =>
+          transformInvestorDetailsToApi({ profileId, companyId, values })
+        }
+      >
+        {() => (
+          <>
+            <FieldTypeahead
+              name="investor_type"
+              label="Investor type"
+              initialValue={transformObjectToValueLabel(investorType)}
+              options={transformIdNameToValueLabel(investorType?.items)}
+              placeholder="Please select an investor type"
+              arial-label="Select an investor type"
+            />
+            <FormLayout setWidth={FORM_LAYOUT.TWO_THIRDS}>
+              <FieldInput
+                name="global_assets_under_management"
+                label="Global assets under management"
+                initialValue={globalAssetsUnderManagement?.value?.toString()}
+                type="text"
+                hint="Enter value in US dollars"
+              />
+              <FieldInput
+                name="investable_capital"
+                label="Investable capital"
+                initialValue={investableCapital?.value?.toString()}
+                type="text"
+                hint="Enter value in US dollars"
+              />
+            </FormLayout>
+            <FieldTextarea
+              name="investor_notes"
+              label="Investor description"
+              initialValue={investorDescription?.value}
+              type="text"
+              hint={<InvestorDescriptionHint />}
+            />
+            <FieldRadios
+              legend="Has this investor cleared the required checks within the last 12 months?"
+              name="required_checks"
+              initialValue={requiredChecksCheckedValue}
+              options={Object.values(requiredChecks).map((option) => ({
+                label: option.text,
+                value: option.value,
+                ...((option.text === OPTION_CLEARED ||
+                  option.text === OPTION_ISSUES_IDENTIFIED) && {
+                  children: <InvestorCheckDetails {...option} />,
+                }),
+              }))}
+              inline={false}
+            />
+          </>
+        )}
+      </Form>
+    </FormLayout>
   )
 }
 
