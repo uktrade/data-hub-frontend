@@ -5,8 +5,8 @@ services:
       - api
 
   api:
-    # image: gcr.io/sre-docker-registry/github.com/uktrade/data-hub-api:main
-    build: https://github.com/uktrade/data-hub-api.git#feature/remove_aventri
+    image: gcr.io/sre-docker-registry/github.com/uktrade/data-hub-api:main
+    # build: https://github.com/uktrade/data-hub-api.git#feature/remove_aventri
     env_file: .env
     environment:
       DEBUG: 'True'

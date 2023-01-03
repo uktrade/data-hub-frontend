@@ -116,6 +116,9 @@ describe('Event', () => {
 
     it('should create an attendee on a event', () => {
       createEvent()
+      // This is here to allow the activity stream to poll the event api and detect the new event.
+      //TODO once the activity stream poll is made customisable remove this wait
+      cy.wait(120000)
 
       cy.visit(urls.events.index())
       cy.contains(eventName).click()
@@ -143,18 +146,16 @@ describe('Event', () => {
     })
 
     it('should display newly created event in events page', () => {
-      // This is here to allow the activity stream to poll the event api and detect the new event.
-      //TODO once the activity stream poll is made customisable remove this wait
-      cy.wait(120000)
-      cy.visit(urls.events.index())
-
       cy.get('[data-test="data-hub-event"]').eq(0).should('contain', eventName)
     })
 
     it('should edit event details', () => {
       cy.get('[data-test="data-hub-event"]')
         .eq(0)
-        .should('contain', 'Account management')
+        .get('[data-test="service-type-label"]')
+        .eq(0)
+        .invoke('text')
+        .should('contain', 'Account Management')
       cy.contains(eventName).click()
       cy.get(selectors.entityCollection.editEvent).click()
       fillEventType('Exhibition')
