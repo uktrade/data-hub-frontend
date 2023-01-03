@@ -142,16 +142,17 @@ describe('Event', () => {
       cy.visit(urls.events.index())
     })
 
-    it('should display newly created event in collection page', () => {
+    it('should display newly created event in events page', () => {
       // This is here to allow the activity stream to poll the event api and detect the new event.
       //TODO once the activity stream poll is made customisable remove this wait
       cy.wait(120000)
+      cy.visit(urls.events.index())
 
-      cy.get('[data-test="collection-item"]').eq(0).should('contain', eventName)
+      cy.get('[data-test="data-hub-event"]').eq(0).should('contain', eventName)
     })
 
     it('should edit event details', () => {
-      cy.get('[data-test="collection-item"]')
+      cy.get('[data-test="data-hub-event"]')
         .eq(0)
         .should('contain', 'Account management')
       cy.contains(eventName).click()
