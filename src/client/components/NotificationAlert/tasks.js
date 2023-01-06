@@ -1,8 +1,6 @@
 import { apiProxyAxios } from '../Task/utils'
 
-const transformNotificationAlertCount = ({ data }) => {
-  return { count: data.count }
-}
+const transformNotificationAlertCount = ({ data }) => ({ count: data.count })
 
 export const fetchNotificationAlertCount = () =>
   apiProxyAxios

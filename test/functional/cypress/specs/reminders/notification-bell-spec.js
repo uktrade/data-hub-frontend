@@ -3,7 +3,7 @@ import urls from '../../../../../src/lib/urls'
 const assertNotificationBadgeExists = () => {
   cy.get('[data-test="notification-alert-badge"]')
     .should('exist')
-    .should('contain', '289')
+    .should('contain', '99+')
 }
 
 const assertNotificationBadgeNotExist = () =>

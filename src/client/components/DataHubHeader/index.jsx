@@ -1,14 +1,15 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { BLACK } from 'govuk-colours'
 
-import LogoBar from './LogoBar'
-import NavButton from './NavButton'
+import DataHubBar from './DataHubBar'
 import NavBar from './NavBar'
 
+import { state2props } from './state'
+
 const Header = styled.header({
-  position: 'relative',
-  lineHeight: 1.5,
   backgroundColor: BLACK,
 })
 
@@ -16,12 +17,13 @@ const DataHubHeader = ({
   onShowVerticalNav,
   showVerticalNav,
   disableReactRouter,
+  hasFeatureGroup,
 }) => (
   <Header id="datahub-header" role="banner">
-    <LogoBar showVerticalNav={showVerticalNav}></LogoBar>
-    <NavButton
+    <DataHubBar
       onShowVerticalNav={onShowVerticalNav}
       showVerticalNav={showVerticalNav}
+      hasFeatureGroup={hasFeatureGroup}
     />
     <NavBar
       onShowVerticalNav={onShowVerticalNav}
@@ -31,4 +33,11 @@ const DataHubHeader = ({
   </Header>
 )
 
-export default DataHubHeader
+DataHubHeader.propTypes = {
+  onShowVerticalNav: PropTypes.func.isRequired,
+  showVerticalNav: PropTypes.bool.isRequired,
+  disableReactRouter: PropTypes.bool,
+  hasFeatureGroup: PropTypes.bool.isRequired,
+}
+
+export default connect(state2props)(DataHubHeader)
