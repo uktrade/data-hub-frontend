@@ -34,7 +34,7 @@ import {
 import { sanitizeFilter } from '../../../../client/filters'
 
 const StyledParagraph = styled(Paragraph)`
-  font-size: ${FONT_SIZE.SIZE_16}; ;
+  font-size: ${FONT_SIZE.SIZE_16};
 `
 const StyledDetails = styled(Details)`
   margin-bottom: 0;
