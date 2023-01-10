@@ -1,0 +1,23 @@
+@import "../../settings";
+
+.c-form-actions {
+  * {
+    display: block;
+  }
+
+  * + * {
+    margin-top: $default-spacing-unit;
+  }
+
+  @include media(tablet) {
+    * {
+      display: inline-block;
+      vertical-align: baseline;
+    }
+
+    * + * {
+      margin-top: 0;
+      margin-left: $default-spacing-unit;
+    }
+  }
+}

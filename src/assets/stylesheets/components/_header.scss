@@ -1,0 +1,370 @@
+$govuk-black: #0b0c0c;
+$govuk-grey-1: #6f777b;
+$govuk-grey-2: #bfc1c3;
+$govuk-grey-3: #dee0e2;
+$govuk-grey-4: #f8f8f8;
+$govuk-blue: #005EA5;
+$govuk-light-blue: #5694CA;
+$govuk-yellow: #ffbf47;
+$govuk-focus: #ffdd01;
+
+$tablet: 40.0625em;
+
+@function iff($condition, $if-true) {
+	@return if($condition, $if-true, null);
+}
+
+@mixin govuk-visually-hidden($important: true) {
+	position: absolute iff($important, !important);
+
+	width: 1px iff($important, !important);
+	height: 1px iff($important, !important);
+	// If margin is set to a negative value it can cause text to be announced in the wrong order in VoiceOver for OSX
+	margin: 0 iff($important, !important);
+	padding: 0 iff($important, !important);
+
+	overflow: hidden iff($important, !important);
+	clip: rect(0 0 0 0) iff($important, !important);
+	-webkit-clip-path: inset(50%) iff($important, !important);
+	clip-path: inset(50%) iff($important, !important);
+
+	border: 0 iff($important, !important);
+
+	// For long content, line feeds are not interpreted as spaces and small width
+	// causes content to wrap 1 word per line:
+	// https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+	white-space: nowrap iff($important, !important);
+}
+
+@mixin tablet-padding() {
+	@media ( min-width: $tablet ) {
+		padding-left: 30px;
+		padding-right: 30px;
+	}
+}
+
+@mixin underline($color: inherit) {
+	position: relative;
+	&::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		border-bottom: 5px solid;
+		border-color: $color;
+	}
+}
+
+@mixin focus() {
+	outline: none;
+	// We are increasing specificity here because of color
+	&#{&}:focus {
+		color: $govuk-black;
+		background: $govuk-focus;
+	}
+}
+
+@mixin underline-focus() {
+	@include focus;
+	&:focus {
+		@include underline;
+	}
+}
+
+.datahub-header {
+	font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+	line-height: 1.5;
+	background-color: black;
+	position: relative; //contain button
+
+	// Prevent apps to add an outline to the header's links
+	a {
+		box-shadow: none !important;
+		outline: none !important;
+	}
+
+	&__logo {
+		font-size: 30px;
+		font-weight: bold;
+		display: inline-block;
+		padding-right: 2em;
+
+		&__site-name {
+			@include govuk-visually-hidden;
+		}
+
+		&__link {
+			@include focus;
+		}
+
+		&__text {
+			-webkit-font-smoothing: initial; /* makes the font bolder */
+		}
+		
+		&__tag {
+			-webkit-font-smoothing: initial; /* makes the font bolder */
+			font-weight: 700;
+			font-size: 14px;
+			line-height: 1.25;
+			display: inline-block;
+			padding: 4px 8px 2px 8px;
+			outline: 2px solid transparent;
+			outline-offset: -2px;
+			color: white;
+			background-color: $govuk-blue;
+			letter-spacing: 1px;
+			text-decoration: none;
+			text-transform: uppercase;
+			position: relative;
+			top: -5px;
+		}
+
+		&-container {
+			color: white;
+			overflow: hidden;
+			font-weight: 700;
+			padding: 2px 15px;
+			box-sizing: content-box;
+			-moz-osx-font-smoothing: grayscale;
+			@include tablet-padding;
+		
+			a,
+			a:visited,
+			a:link {
+				color: white;
+				text-decoration: none;
+			}
+		}
+	}
+
+	&__menu-button {
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 1.14286;
+		display: none;
+		position: absolute;
+		top: 20px;
+		right: 30px;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		color: white;
+		background: 0 0;
+		@include focus;
+
+		@media print {
+			font-family: sans-serif;
+			font-size: 14pt;
+			line-height: 1.2;
+		}
+
+		@media ( min-width: $tablet ){
+			font-size:16px;
+			line-height: 1.25;
+			top: 15px;
+		}
+
+		&:hover {
+			text-decoration: underline;
+		}
+
+		&::after {
+			display: inline-block;
+			width: 0;
+			height: 0;
+			border-style: solid;
+			border-color: transparent;
+			-webkit-clip-path: polygon( 0 0,50% 100%,100% 0 );
+			clip-path: polygon( 0 0,50% 100%,100% 0 );
+			border-width: 8.66px 5px 0 5px;
+			border-top-color: inherit;
+			content: "";
+			margin-left: 5px;
+		}
+
+		&--open::after {
+			display: inline-block;
+			width: 0;
+			height: 0;
+			border-style: solid;
+			border-color: transparent;
+			-webkit-clip-path: polygon( 50% 0,0 100%,100% 100% );
+			clip-path: polygon( 50% 0,0 100%,100% 100% );
+			border-width: 0 5px 8.66px 5px;
+			border-bottom-color: inherit;
+		}
+	}
+
+	&__links {
+		display: block;
+		font-size: 16px;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		outline: 3px solid transparent;
+		font-weight: 700;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+
+		@media ( min-width: $tablet ) {
+			float: right;
+
+			&__item {
+				display: inline-block;
+				padding: 5px 10px;
+				border-bottom: 0;
+
+				&:last-of-type {
+					padding-right: 0;
+				}
+			}
+		}
+
+		&__item {
+			display: block;
+			border-bottom: 1px solid $govuk-grey-1;
+
+			:hover {
+				text-decoration: underline;
+			}
+
+			&:last-of-type {
+				border-bottom: 0;
+			}
+
+			&__text {
+				display: inline-block;
+				padding: 5px 0;
+				width: 100%;
+				@include focus;
+
+				// Is this ever used?
+				&--active {
+					color: $govuk-blue;
+					&:link,
+					&:visited {
+						color: $govuk-light-blue;
+					}
+				}
+			}
+		}
+	}
+
+	&__navigation {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		padding: 0 15px;
+		box-sizing: content-box;
+		@include tablet-padding;
+
+		&-wrapper {
+			background-color: $govuk-grey-3;
+			font-weight: 700;
+
+			&--sub {
+				background-color: $govuk-grey-4;
+				font-weight: normal;
+				border-bottom: 1px solid $govuk-grey-3;
+			}
+		}
+
+		&__item {
+			display: block;
+			padding-right: 20px;
+
+			@media ( min-width: $tablet ) {
+				display: inline-block;
+			}
+
+			&:last-of-type {
+				padding-right: 0;
+			}
+
+			&__link {
+				display: block;
+				padding: 5px 0;
+				margin: 0;
+				font-size: 16px;
+				line-height: 23px;
+				text-decoration: none;
+				color: $govuk-black;
+
+				@media ( min-width: $tablet ) {
+					display: inline-block;
+					padding: 8px 0;
+				}
+
+				&:visited,
+				&:link {
+					color: $govuk-black;
+				}
+
+				&:hover {
+					@media ( max-width: $tablet ) {
+						color: $govuk-blue;
+					}
+					@media ( min-width: $tablet ) {
+						@include underline($govuk-blue);
+					}
+				}
+
+				&--active {
+					color: $govuk-blue;
+
+					@media ( min-width: $tablet ) {
+						@include underline;
+					}
+
+					&:visited,
+					&:link {
+						color: $govuk-blue;
+					}
+				}
+
+				@include underline-focus;
+			}
+		}
+	}
+
+	$grandparent: &;
+	&--max-width {
+		#{$grandparent} {
+			&__navigation,
+			&__logo-container {
+				max-width: 960px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+		}
+	}
+}
+
+.js-datahub-header-enabled {
+	.datahub-header {
+		&__menu-button {
+			display: block;
+			@media ( min-width: $tablet ){
+				display: none;
+			}
+		}
+
+		&__navigation,
+		&__links {
+			display: none;
+			@media ( min-width: $tablet ){
+				display: block;
+			}
+		}
+	}
+
+	&.datahub-header--open {
+		.datahub-header {
+			&__navigation,
+			&__links {
+				display: block;
+			}
+		}
+	}
+ }

@@ -9,7 +9,7 @@ import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 
-const { format } = require('../../../utils/date')
+import { format } from '../../../utils/date'
 
 export default class HmrcExporter extends React.PureComponent {
   static propTypes = {

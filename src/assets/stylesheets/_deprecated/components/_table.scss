@@ -1,0 +1,114 @@
+@import "../../tools/mixins";
+
+.table--key-value {
+
+  margin: 20px 0;
+  table-layout: fixed;
+
+  tbody {
+    th, td {
+      word-wrap: break-word;
+    }
+    th {
+      vertical-align: top;
+      width: 40%;
+
+      @include media(tablet) {
+        width: 30%;
+      }
+    }
+
+    tr:first-child {
+      td,
+      th {
+        border-top: 1px solid $border-colour;
+      }
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  div + ul {
+    margin-top: $default-spacing-unit * 0.5;
+  }
+}
+
+.table--striped {
+  tr:nth-child(odd) {
+    background: $highlight-colour;
+  }
+}
+
+table.table--key-value.table--small {
+  th {
+    @include core-font(16);
+    color: $secondary-text-colour;
+  }
+
+  td {
+    @include core-font(16)
+  }
+}
+
+.table--key-value.table--plain {
+  tr {
+    th, td {
+      border-bottom: 0;
+    }
+
+    th {
+      color: $secondary-text-colour;
+    }
+
+    &:first-child {
+      td,
+      th {
+        border-top: 0;
+      }
+    }
+  }
+}
+
+.table__details {
+  display: flex;
+  flex-flow: row wrap;
+  color: $secondary-text-colour;
+
+  .table__details-name {
+    padding-top: $default-spacing-unit * 0.25;
+  }
+
+  .table__details-content {
+    width: 100%;
+  }
+
+  @include media(tablet) {
+    .table__details-content {
+      width: auto;
+      flex: 1;
+      margin-left: auto;
+      padding-left: $default-spacing-unit * 1.5;
+    }
+  }
+
+  .govuk-details--table-cell {
+    @include core-font(16);
+    margin-bottom: 0;
+
+    .govuk-details__summary-text {
+      @include core-font(16);
+    }
+  }
+}
+
+.table__actions {
+  float: right;
+}
+
+.table__action {
+  padding-left: $default-spacing-unit * 0.5;
+}

@@ -25,7 +25,7 @@ import {
   transformService,
 } from './transformers'
 
-const { formatLongDate } = require('../../../utils/date')
+import { formatLongDate } from '../../../utils/date'
 
 const InteractionDetails = ({ interactionId, archivedDocumentPath }) => {
   return (

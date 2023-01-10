@@ -28,7 +28,7 @@ import {
 import { DNB__CHECK_PENDING_REQUEST } from '../../../../../client/actions'
 import Task from '../../../../../client/components/Task'
 
-const { format } = require('../../../../../client/utils/date')
+import { format } from '../../../../../client/utils/date'
 
 const StyledRoot = styled('div')`
   & > table {

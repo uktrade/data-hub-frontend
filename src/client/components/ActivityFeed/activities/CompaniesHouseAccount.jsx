@@ -11,7 +11,7 @@ import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityCardSubject from './card/ActivityCardSubject'
 
-const { format } = require('../../../utils/date')
+import { format } from '../../../utils/date'
 
 export default class CompaniesHouseAccount extends React.PureComponent {
   static propTypes = {

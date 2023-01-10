@@ -1,0 +1,34 @@
+@import "../settings/colours";
+@import "../settings/layout";
+@import "../tools/functions/typography";
+
+.c-entity-list__item {
+  padding: $default-spacing-unit 0;
+
+  & + & {
+    border-top: 1px solid $grey-2;
+  }
+}
+
+.c-entity-list__link {
+  border: 1px solid $grey-2;
+  display: block;
+  margin-top: -1px;
+  padding: 0 ($gutter * 0.5) ($gutter * 0.5);
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    background: $grey-4;
+    border-color: $grey-1;
+  }
+}
+
+.c-entity-list--block-links {
+  margin-top: -1px;
+
+  .c-entity-list__item {
+    border-top: 0;
+    margin-top: $default-spacing-unit * 0.5;
+  }
+}

@@ -32,10 +32,10 @@ module.exports = (env) => ({
   devtool: config.isProd ? false : 'source-map',
   mode: config.isProd ? 'production' : 'development',
   entry: {
-    styles: './assets/stylesheets/application.scss',
+    styles: './src/assets/stylesheets/application.scss',
     app: [
-      './assets/javascripts/govuk-frontend-all.js',
-      './assets/javascripts/app.js',
+      './src/assets/javascripts/govuk-frontend-all.js',
+      './src/assets/javascripts/app.js',
     ],
     'react-app': [
       'react-app-polyfill/stable',

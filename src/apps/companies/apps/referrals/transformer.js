@@ -4,7 +4,7 @@ const transformAdviser = ({ name, contact_email, dit_team }) => ({
   team: dit_team && dit_team.name,
 })
 
-const transformReferralDetails = ({
+export const transformReferralDetails = ({
   subject,
   company,
   contact,

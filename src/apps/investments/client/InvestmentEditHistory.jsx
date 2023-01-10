@@ -6,10 +6,10 @@ import { CHANGE_TYPE_TEXT, TRUE, FALSE, NOT_SET } from '../constants'
 
 import EditHistory from '../../../client/components/EditHistory/EditHistory'
 
-const {
+import {
   formatMediumDateTime,
   isDateValid,
-} = require('../../../client/utils/date')
+} from '../../../client/utils/date'
 
 function getValue(value) {
   if (isBoolean(value)) {

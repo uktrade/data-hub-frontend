@@ -12,7 +12,7 @@ import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 
-const { format } = require('../../../utils/date')
+import { format } from '../../../utils/date'
 
 export default class Omis extends React.PureComponent {
   static propTypes = {

@@ -14,7 +14,7 @@ import Task from '../../../../../../client/components/Task'
 
 import { REFERRAL_DETAILS } from '../../../../../../client/actions'
 
-const { format } = require('../../../../../../client/utils/date')
+import { format } from '../../../../../../client/utils/date'
 
 export const AdviserDetails = ({ name, email, team }) => (
   <>

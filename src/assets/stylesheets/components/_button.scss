@@ -1,0 +1,35 @@
+@import "../settings/colours";
+
+// Buttons
+// ==========================================================================
+
+.govuk-button {
+  margin-bottom: 0;
+}
+
+.button--link {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  color: $link-colour;
+  cursor: pointer;
+  padding: .4em 0;
+  text-align: left;
+  text-decoration: underline;
+
+  &:hover,
+  &:active,
+  &:focus {
+    background: transparent;
+    color: $link-colour;
+    top: 0;
+  }
+
+  &:hover {
+    color: $link-hover-colour;
+  }
+}
+
+.button--compact {
+  padding: 0;
+}

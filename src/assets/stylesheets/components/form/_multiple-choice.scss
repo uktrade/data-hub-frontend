@@ -1,0 +1,187 @@
+@use "sass:math";
+
+@import "../../settings";
+@import "../../tools";
+
+.c-multiple-choice {
+  position: relative;
+  clear: left;
+  transform: translateZ(0); // Enforcing GPU acceleration fixes overflow cropping caused by CSS columns
+}
+
+@mixin _scale-input($font-size) {
+  $input-size: $font-size * 2;
+
+  width: $input-size;
+  height: $input-size;
+
+  &[type="checkbox"] + .c-multiple-choice__label::after {
+    @if round($font-size) < 10 {
+      border-width: 0 0 2px 2px;
+    } @else {
+      border-width: 0 0 5px 5px;
+    }
+
+    width: round(math.div($input-size, 1.7));
+    height: round(math.div($input-size, 3));
+  }
+
+  & + .c-multiple-choice__label {
+    &::before {
+      height: $input-size;
+      width: $input-size;
+    }
+
+    &::after {
+      border: ceil($font-size * 0.5) solid $text-colour;
+      left: floor($font-size * 0.5);
+      top: floor($font-size * 0.5);
+    }
+  }
+}
+
+.c-multiple-choice__input {
+  @include _scale-input(19px);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: auto;
+  opacity: 0;
+
+  &[type="checkbox"] + .c-multiple-choice__label::after {
+    transform: rotate(-45deg);
+  }
+
+  &[type="radio"] + .c-multiple-choice__label {
+    &::before,
+    &::after {
+      border-radius: 100%;
+    }
+  }
+
+  & + .c-multiple-choice__label {
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      margin: auto;
+    }
+
+    &::before {
+      border: 2px solid $text-colour;
+      background-color: $white;
+      top: 0;
+      left: 0;
+    }
+
+    &::after {
+      height: 0;
+      width: 0;
+      visibility: hidden;
+    }
+  }
+
+  &:checked + .c-multiple-choice__label::after {
+    visibility: visible;
+  }
+
+  &:disabled + .c-multiple-choice__label::after,
+  &:disabled + .c-multiple-choice__label::before {
+    opacity: 0.4;
+  }
+
+  &:focus + .c-multiple-choice__label::before {
+    box-shadow: 0 0 0 3px $focus-colour;
+  }
+}
+
+.c-multiple-choice__label {
+  cursor: pointer;
+  vertical-align: middle;
+  display: inline-block;
+  padding: ($default-spacing-unit * 0.5) ($default-spacing-unit * 0.5) ($default-spacing-unit * 0.5) ($default-spacing-unit * 3);
+  line-height: 1.2;
+}
+
+.c-multiple-choice__hint {
+  @include core-font(16);
+  display: block;
+  margin-top: 5px;
+  color: $grey-1;
+
+  a {
+    &,
+    &:active,
+    &:link,
+    &:hover,
+    &:visited {
+      color: $grey-1;
+    }
+  }
+}
+
+// Modifiers
+
+.c-multiple-choice--small {
+  .c-multiple-choice__input {
+    @include _scale-input(16px);
+  }
+
+  .c-multiple-choice__label {
+    padding-left: round($default-spacing-unit * 3 * math.div(16, 19));
+    line-height: 16px;
+  }
+}
+
+.c-multiple-choice--smaller {
+  .c-multiple-choice__input {
+    @include _scale-input(9px);
+  }
+
+  .c-multiple-choice__label {
+    padding-left: round($default-spacing-unit * 3 * math.div(10, 19));
+    line-height: 18px;
+  }
+}
+
+.c-multiple-choice--filter {
+  border-bottom: 1px solid $grey-2;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  & + & {
+    margin-top: 0;
+  }
+
+  .c-multiple-choice__input {
+    left: $default-spacing-unit * 0.5;
+    top: $default-spacing-unit * 0.5;
+
+    + .c-multiple-choice__label {
+      &:after,
+      &:before {
+        margin-left: $default-spacing-unit * 0.5;
+        margin-top: $default-spacing-unit * 0.5;
+      }
+    }
+  }
+
+  .c-multiple-choice__label {
+    display: block;
+    padding-left: round($default-spacing-unit * 3 * math.div(10, 19) + ($default-spacing-unit * 0.5));
+
+    &:hover {
+      background-color: $grey-4;
+    }
+  }
+}
+
+.c-multiple-choice--inline {
+  width: auto;
+  display: inline-block;
+  margin-top: 0;
+  margin-right: $default-spacing-unit;
+}

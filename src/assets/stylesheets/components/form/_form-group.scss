@@ -1,0 +1,222 @@
+@import "../../tools";
+@import "../../settings";
+
+.c-form-group {
+  max-width: 40em;
+
+  [type="hidden"] + &,
+  .c-form-fieldset__legend + &,
+  .c-form-fieldset__hint + & {
+    margin-top: 0;
+  }
+}
+
+.c-form-group__inner {
+  position: relative;
+}
+
+.c-form-group__label {
+  display: table;
+  line-height: 1.1;
+
+  > * {
+    display: inline-block;
+    margin-bottom: $baseline-grid-unit * 2.5;
+  }
+}
+
+.c-form-group__label-text {
+  font-weight: 600;
+}
+
+.c-form-group__hint {
+  color: $grey-6;
+  display: block;
+}
+
+.c-form-group__error-message {
+  color: $error-colour;
+  font-weight: 600;
+  display: block;
+}
+
+.c-form-group__action {
+  @include media(desktop) {
+    position: absolute;
+    left: 100%;
+    margin-left: $default-spacing-unit;
+    top: 0;
+  }
+}
+
+// States
+.c-form-group.has-error {
+  border-left: 5px solid $error-colour;
+  padding-left: $default-spacing-unit;
+}
+
+fieldset.c-form-group.has-error {
+  border-left: 0;
+  padding-left: $default-spacing-unit + 5;
+  position: relative;
+
+  &::before {
+    position: absolute;
+    left: $default-spacing-unit;
+    top: 0;
+    bottom: 0;
+    border-left: 5px solid $error-colour;
+    margin-left: -$default-spacing-unit;
+    content: "";
+  }
+}
+
+.c-form-group:target {
+  animation: 1s targetHighlight ease;
+}
+
+// Modifiers
+.c-form-group--subfield,
+.c-form-fieldset--subfield {
+  border-left: 5px solid $grey-2;
+  margin-left: $default-spacing-unit;
+
+  &,
+  &.has-error {
+    padding-left: ($default-spacing-unit * 2) - 4;
+  }
+}
+
+fieldset.c-form-group.c-form-group--subfield,
+fieldset.c-form-group.c-form-fieldset--subfield {
+  border-left: 0;
+  padding-left: $default-spacing-unit * 2;
+  position: relative;
+
+  &::before {
+    position: absolute;
+    left: $default-spacing-unit;
+    top: 0;
+    bottom: 0;
+    border-left: 5px solid $grey-2;
+    margin-left: -$default-spacing-unit;
+    content: "";
+  }
+
+  &.has-error::before {
+    border-left-color: $error-colour;
+  }
+}
+
+
+fieldset.c-form-group.c-form-fieldset--subfield {
+  border: none;
+
+  .c-form-fieldset__legend {
+    @include bold-19();
+    color: $black;
+  }
+}
+
+.c-form-group--inline:not(fieldset) {
+  @include media(tablet) {
+    vertical-align: top;
+    display: inline-block;
+
+    .c-form-group__label:not(legend) {
+      display: inline-block;
+      margin-right: $default-spacing-unit * 0.5;
+    }
+
+    .c-form-control {
+      width: auto;
+      display: inline-block;
+      margin-top: 0;
+    }
+
+    & + &:not(fieldset) {
+      margin-left: $default-spacing-unit;
+      margin-top: 0;
+    }
+  }
+}
+
+.c-form-group--light {
+  .c-form-control,
+  .c-multiple-choice__input + .c-multiple-choice__label::before {
+    border: 1px solid $grey-1;
+  }
+
+  .c-form-control:focus,
+  .c-multiple-choice__input:checked + .c-multiple-choice__label::before,
+  .c-multiple-choice__input:focus + .c-multiple-choice__label::before {
+    border-color: $black;
+  }
+}
+
+.c-form-group--soft {
+  .c-form-group__label-text {
+    font-weight: normal;
+  }
+}
+
+.c-form-group--small,
+.c-form-group--smaller {
+  font-size: 16px;
+}
+
+.c-form-group--columns {
+  .c-form-group__inner {
+    column-count: 2;
+  }
+}
+
+.c-form-group--filter {
+  background: $grey-3;
+  padding: $default-spacing-unit * 0.5;
+  margin-top: $default-spacing-unit;
+}
+
+.c-form-group--filter + .c-typeahead--alternative {
+  margin-top: $default-spacing-unit;
+}
+
+.c-form-group--filter.c-form-group--hide-label {
+  padding-top: ($default-spacing-unit * 0.5) - 3;
+}
+
+.c-form-group--hide-label {
+  .c-form-group__label {
+    display: none;
+  }
+}
+
+.c-form-group--option-select {
+  legend.c-form-group__label {
+    float: left;
+  }
+
+  .c-form-group__inner {
+    background: $white;
+    clear: left;
+    margin: 0 -4px -4px;
+    max-height: 230px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+  }
+}
+
+@keyframes targetHighlight {
+  0% {
+    border-color: $black;
+  }
+
+  50% {
+    background-color: $yellow-25;
+  }
+
+  100% {
+    border-color: $error-colour;
+  }
+}

@@ -1,0 +1,96 @@
+@use "sass:math";
+
+@import "../settings";
+@import "../tools";
+
+@mixin progress-bar-node {
+  background-color: $govuk-blue;
+  border: 2px solid $govuk-blue;
+}
+
+$_section-width: 25%;
+
+.c-progress {
+  margin-left: $default-spacing-unit * 0.5;
+  margin-right: $default-spacing-unit * 0.5;
+
+  @include media(tablet) {
+    margin-left: $default-spacing-unit * 2;
+    margin-right: $default-spacing-unit * 2;
+    padding-bottom: $default-spacing-unit * 0.5;
+    padding-top: math.div($default-spacing-unit, 3);
+  }
+}
+
+.c-progress-bar {
+  @include media(tablet) {
+    display: table;
+    width: 100%;
+    position: relative;
+  }
+}
+
+.c-progress__stage {
+  @include core-font(14);
+  position: relative;
+  border-color: $grey-3;
+  border-width: 0 0 0 2px;
+  border-style: solid;
+  padding-bottom: $default-spacing-unit;
+
+  @include media(tablet) {
+    display: table-cell;
+    width: $_section-width;
+    border-width: 2px 0 0;
+  }
+
+  &::before {
+    position: absolute;
+    top: 3px;
+    left: -8px;
+    width: 14px;
+    height: 14px;
+    content: "";
+    border-radius: 20px;
+    background-color: $white;
+    border: 2px solid $grey-3;
+    outline: 2px solid $white;
+    display: block;
+    z-index: 30;
+
+    @include media(tablet) {
+      top: -8px;
+    }
+  }
+
+  &.is-complete {
+    border-color: $govuk-blue;
+    &::before {
+      @include progress-bar-node;
+    }
+  }
+
+  &.is-active {
+    &::before {
+      @include progress-bar-node;
+    }
+  }
+
+  &:last-child {
+    border-color: transparent;
+    padding-bottom: 0;
+  }
+}
+
+.c-progress__stage-title {
+  display: block;
+  padding: 0 0 0 $default-spacing-unit;
+
+  @include media(tablet) {
+    position: absolute;
+    left: -50px;
+    width: 100px;
+    text-align: center;
+    padding: $default-spacing-unit 0 0;
+  }
+}

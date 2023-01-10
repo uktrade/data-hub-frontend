@@ -2,7 +2,6 @@
   "name": "data-hub-frontend",
   "description": "Data Hub Frontend",
   "main": "src/server.js",
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/uktrade/data-hub-frontend"
@@ -15,7 +14,7 @@
     "start": "node --use-strict src/server.js",
     "start:coverage": "nyc --silent npm run start",
     "build": "npm run clean && webpack",
-    "build:vite": "vite build",
+    "build:vite": "vite build --emptyOutDir",
     "develop": "NODE_ENV=development npm run watch:js:client -- --env development",
     "develop:vite": "vite serve",
     "watch:test": "npm run test:unit -- -w",

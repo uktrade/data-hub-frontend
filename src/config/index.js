@@ -42,6 +42,7 @@ const buildRedisConfig = () => {
 const config = {
   root,
   buildDir: path.join(root, '.build'),
+  viteBuildDir: path.join(root, '.dist'),
   env: envVars.NODE_ENV,
   ci: envVars.CI,
   forceHttps: envVars.FORCE_HTTPS,

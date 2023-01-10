@@ -1,0 +1,52 @@
+@import "../settings/colours";
+@import "../settings/layout";
+@import "../tools/mixins";
+
+.details-list {
+  border-top: 1px solid $border-colour;
+}
+
+.details-list__item {
+  border-bottom: 1px solid $border-colour;
+  margin-top: $gutter;
+  padding-bottom: $gutter;
+}
+
+.details-list__item-section {
+  @include grid-row;
+  margin-bottom: $gutter * 0.25;
+}
+
+.details-list__item-heading {
+  display: block;
+  margin-bottom: $gutter * 0.5;
+}
+
+.details-list__item-title {
+  @include grid-column(1 * 0.25);
+  color: $grey-1;
+}
+
+.details-list__item-description {
+  @include grid-column(3 * 0.25);
+  display: inline;
+}
+
+.js-enabled {
+  .details-list__item-heading {
+    &::before {
+      font-family: "FontAwesome";
+      width: $gutter * 0.5;
+      display: inline-block;
+      content: "\f0da";
+    }
+  }
+
+  .is-open {
+    .details-list__item-heading {
+      &::before {
+        content: "\f0d7";
+      }
+    }
+  }
+}

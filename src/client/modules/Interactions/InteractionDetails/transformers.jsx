@@ -5,7 +5,7 @@ import { INTERACTION_STATUS } from '../../../../apps/interactions/constants'
 import { SummaryTable } from '../../../components'
 import urls from '../../../../lib/urls'
 
-const groupExportCountries = require('../../../../lib/group-export-countries')
+import groupExportCountries from '../../../../lib/group-export-countries'
 
 const excludedServiceStrings = [
   'A Specific DIT Export Service or Funding',

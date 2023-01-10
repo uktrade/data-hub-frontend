@@ -1,0 +1,25 @@
+$images-dir: '/images/';
+
+$govuk-canvas-background-colour: #f3f2f1;
+$govuk-font-family: Arial, sans-serif;
+@import '../../../node_modules/govuk-frontend/all';
+
+$toolkit-font-stack: $govuk-font-family;
+@import '_deprecated/trade-elements';
+
+@import 'settings';
+@import 'tools';
+@import 'generic';
+@import 'layout';
+@import 'elements';
+@import 'objects';
+@import 'components';
+@import '../../templates/_macros/all';
+@import 'trumps';
+
+@import '../../apps/companies/apps/investments/styles';
+@import '../../apps/contacts/styles';
+
+//// application specific (deprecated)
+@import '_deprecated/dashboard';
+@import '_deprecated/shame';

@@ -1,0 +1,68 @@
+@import "../settings/colours";
+
+.data-table {
+
+  &.is-sortable {
+    thead th {
+      cursor: pointer;
+    }
+
+    .is-descending {
+      &::after {
+        content: "\00a0\00a0\25BC";
+      }
+    }
+
+    .is-ascending   {
+      &::after {
+        content: "\00a0\00a0\25B2";
+      }
+    }
+
+  }
+}
+
+.data-table--striped {
+  tbody tr:nth-child(odd) {
+    background: $highlight-colour;
+  }
+}
+.data-table--slim {
+  thead{
+    @include visually-hidden
+  }
+  tr:first-of-type {
+    border-top: 1px solid $grey-2;
+  }
+
+  tr td:first-child
+  {
+    color: inherit;
+  }
+
+  tr td:not(:first-child)
+  {
+    @include media(desktop) {
+      padding-left: $default-spacing-unit * 2;
+    }
+  }
+
+  tr{
+    border-bottom: 1px solid $grey-2;
+  }
+  td{
+    border: 0;
+    color: $grey-5;
+    font-size: inherit;
+    padding: $default-spacing-unit*0.25 0;
+    @include media (mobile) {
+      display:block;
+    }
+  }
+}
+
+.data-table--equal-columns {
+  thead tr th {
+    width: 33%
+  }
+}

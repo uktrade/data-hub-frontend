@@ -1,0 +1,15 @@
+@import "../tools/functions/typography";
+@import "../settings/layout";
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: ($gutter * 0.5);
+}
+
+h3 {
+  @include core-font(20);
+}

@@ -4,4 +4,4 @@ function castCompactArray(value) {
   return compact(castArray(value))
 }
 
-module.exports = castCompactArray
+module.exports = { castCompactArray }

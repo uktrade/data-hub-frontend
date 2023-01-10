@@ -1,4 +1,4 @@
-const { formatMediumDateTime } = require('../../../../../../client/utils/date')
+import { formatMediumDateTime } from '../../../../../../client/utils/date'
 
 import { GREEN } from 'govuk-colours'
 

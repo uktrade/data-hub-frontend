@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { SummaryTable } from '../../../components'
 import urls from '../../../../lib/urls'
 
-const { format } = require('../../../utils/date')
+import { format } from '../../../utils/date'
 
 const StyledSummaryTable = styled(SummaryTable)({
   'margin-top': SPACING_POINTS[8],

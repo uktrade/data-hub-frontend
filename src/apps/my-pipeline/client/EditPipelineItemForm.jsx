@@ -10,11 +10,11 @@ import { Main } from '../../../client/components'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 import PipelineItemResource from '../../../client/components/Resource/PipelineItem'
 
-const {
+import {
   formatWithoutParsing,
   isUnparsedDateValid,
   createAndFormatDateObject,
-} = require('../../../client/utils/date')
+} from '../../../client/utils/date'
 
 function formatInitialValues(values) {
   const { sector, contacts } = values

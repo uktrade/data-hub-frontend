@@ -1,0 +1,44 @@
+@import '../settings/colours';
+@import '../settings/typography';
+@import '../tools/mixins/addons';
+
+html {
+  font-family: $dit-font-stack;
+}
+
+a {
+  color: $link-colour;
+  text-decoration-skip-ink: auto;
+  outline-color: transparent;
+
+  &:hover {
+    color: $link-hover-colour;
+  }
+
+  &:visited {
+    color: $link-visited-colour;
+  }
+
+  &:active {
+    color: $link-active-colour;
+  }
+}
+
+a,
+input,
+textarea {
+  outline: 3px solid transparent;
+
+  &:focus,
+  &:focus + label::before {
+    transition: box-shadow 0.1s, outline-color 0.1s 0.1s;
+    box-shadow: 0 0 0 3px $focus-colour;
+    outline-color: $focus-colour;
+    text-decoration: none;
+    outline-offset: 0;
+  }
+}
+
+input:focus + label::before {
+  outline: none;
+}

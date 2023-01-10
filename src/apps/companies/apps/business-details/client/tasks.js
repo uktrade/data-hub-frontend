@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-const {
+import {
   isDateAfter,
   subtractDays,
   today,
-} = require('../../../../../client/utils/date')
+} from '../../../../../client/utils/date'
 
 export function checkIfPendingRequest(duns_number) {
   if (duns_number) {

@@ -1,0 +1,86 @@
+@import "../tools";
+
+.c-entity__title {
+  @include bold-font(20);
+  margin: 0;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.c-entity__subtitle {
+  @include core-font(14);
+  color: $grey-1;
+  margin: 0;
+}
+
+.c-entity__badges {
+  @include core-font(14);
+  margin: 20 - 14px 0;
+}
+
+.c-entity__content {
+  @include core-font(16);
+
+  * + & {
+    margin-top: $default-spacing-unit * 0.5;
+  }
+}
+
+.c-entity__cta-list {
+  text-align: right;
+}
+
+@include media(tablet) {
+  .c-entity__header {
+    @include clearfix;
+  }
+
+  .c-entity__title,
+  .c-entity__subtitle {
+    max-width: 80%;
+  }
+
+  .c-entity__badges {
+    float: right;
+  }
+}
+
+// modifiers
+
+.c-entity--block-link {
+  margin-top: -$default-spacing-unit;
+  margin-bottom: -$default-spacing-unit;
+  padding: ($baseline-grid-unit * 3) $default-spacing-unit;
+  border: 2px solid $grey-2;
+  display: block;
+  text-decoration: none;
+
+  &:focus,
+  &:hover {
+    background-color: $grey-4;
+    border-color: $link-hover-colour;
+    color: $link-hover-colour;
+  }
+
+  &.disabled {
+    background-color: $grey-4;
+    border-color: $grey-4;
+
+    &:focus,
+    &:hover {
+      background-color: $grey-4;
+      border-color: $grey-4;
+      color: $black;
+    }
+  }
+
+  .c-entity__badges {
+    color: $black;
+  }
+}

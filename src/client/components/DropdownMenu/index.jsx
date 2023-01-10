@@ -6,7 +6,7 @@ import { spacing } from '@govuk-react/lib'
 import styled from 'styled-components'
 import Link from '@govuk-react/link'
 import SecondaryButton from '../SecondaryButton'
-import trianglePng from '../../../../assets/images/icon-triangle.svg'
+import trianglePng from '../../../assets/images/icon-triangle.svg'
 
 const DropdownMenuContainer = styled.div`
   position: relative;

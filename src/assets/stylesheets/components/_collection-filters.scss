@@ -1,0 +1,12 @@
+@import "../settings";
+
+.c-collection-filters {
+  .govuk-button {
+    width: 100%;
+  }
+
+  * + .c-form-group,
+  * + .c-typeahead--alternative {
+    margin-top: $default-spacing-unit;
+  }
+}

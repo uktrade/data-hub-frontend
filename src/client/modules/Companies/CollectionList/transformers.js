@@ -5,7 +5,7 @@ import urls from '../../../../lib/urls'
 
 import { addressToString } from '../../../utils/addresses'
 
-const { format, formatMediumDateTime } = require('../../../utils/date')
+import { format, formatMediumDateTime } from '../../../utils/date'
 
 export const transformArchivedToApi = (archivedParam) => {
   const archived = Array.isArray(archivedParam)

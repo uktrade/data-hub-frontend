@@ -16,10 +16,10 @@ import FieldWrapper from '../FieldWrapper'
 import useField from '../../hooks/useField'
 import { useFormContext } from '../../hooks'
 
-const {
+import {
   isNormalisedDateValid,
   isShortDateValid,
-} = require('../../../../utils/date')
+} from '../../../../utils/date'
 
 const DAY = 'day'
 const MONTH = 'month'

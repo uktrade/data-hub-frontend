@@ -17,7 +17,7 @@ import styled from 'styled-components'
 import urls from '../../../lib/urls'
 import SecondaryButton from '../SecondaryButton'
 
-const { format } = require('../../utils/date')
+import { format } from '../../utils/date'
 
 const getMediaQuery = (theme) =>
   theme?.toHorizontalMediaQuery || MEDIA_QUERIES.TABLET

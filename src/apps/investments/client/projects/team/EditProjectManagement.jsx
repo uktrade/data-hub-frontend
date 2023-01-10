@@ -19,8 +19,8 @@ import {
 } from './transformers'
 import styled from 'styled-components'
 
-const { format } = require('../../../../../client/utils/date')
-const { currencyGBP } = require('../../../../../client/utils/number-utils')
+import { format } from '../../../../../client/utils/date'
+import { currencyGBP } from '../../../../../client/utils/number-utils'
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: -23,

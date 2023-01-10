@@ -1,0 +1,20 @@
+@import "../settings/layout";
+@import "../tools/mixins/typography";
+
+.stack-trace {
+  margin-bottom: $gutter;
+  max-width: 100%;
+}
+
+.stack-trace__heading {
+  @include core-font(24);
+  margin-bottom: $gutter * 0.5;
+}
+
+.stack-trace__details {
+  @include core-font(16);
+  font-family: monospace;
+  overflow: auto;
+  word-wrap: normal;
+  white-space: pre;
+}

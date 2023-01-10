@@ -1,4 +1,4 @@
-const { formatLongDate, formatShortDate } = require('./utils/date')
+import { formatLongDate, formatShortDate } from './utils/date'
 
 const getDateLabel = (value) => (value ? formatLongDate(value) : '')
 const getShortDateLabel = (value) => (value ? formatShortDate(value) : '')

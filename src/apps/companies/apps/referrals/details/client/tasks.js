@@ -1,6 +1,6 @@
 import { apiProxyAxios } from '../../../../../../client/components/Task/utils'
 
-const transformReferralDetails = require('../../transformer')
+import { transformReferralDetails } from '../../transformer'
 
 export const fetchReferralDetails = (id) =>
   apiProxyAxios

@@ -8,11 +8,11 @@ import { SummaryTable } from '../../../client/components/'
 import { WIDTHS } from '@govuk-react/constants'
 import { currencyGBP } from '../../../client/utils/number-utils'
 
-const {
+import {
   format,
   formatWithoutParsing,
   parseDateString,
-} = require('../../../client/utils/date')
+} from '../../../client/utils/date'
 
 function getLabels(acc, { value, label }) {
   acc[value] = label

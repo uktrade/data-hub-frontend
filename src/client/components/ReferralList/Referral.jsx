@@ -11,7 +11,7 @@ import SummaryList from '../../components/SummaryList'
 import styled from 'styled-components'
 import urls from '../../../lib/urls'
 
-const { format } = require('../../utils/date')
+import { format } from '../../utils/date'
 
 const StyledSummaryListWrapper = styled.div({
   flexGrow: 1,

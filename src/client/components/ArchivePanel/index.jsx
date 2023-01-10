@@ -7,7 +7,7 @@ import Link from '@govuk-react/link'
 
 import StatusMessage from '../../../client/components/StatusMessage'
 
-const { format } = require('../../utils/date')
+import { format } from '../../utils/date'
 
 const negativeSpacing = '-' + SPACING.SCALE_4
 

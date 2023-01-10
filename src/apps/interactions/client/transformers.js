@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
-const { get } = require('lodash')
+import { get } from 'lodash'
 
-const { format } = require('../../../client/utils/date')
-const urls = require('../../../lib/urls')
+import { format } from '../../../client/utils/date'
+import urls from '../../../lib/urls'
 
 import { LABELS } from './constants'
 

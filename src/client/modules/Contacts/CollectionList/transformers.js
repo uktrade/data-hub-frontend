@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { get } = require('lodash')
+import { get } from 'lodash'
 
 import { formatMediumDateTime } from '../../../utils/date'
 

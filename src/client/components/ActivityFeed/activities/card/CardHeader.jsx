@@ -16,7 +16,7 @@ import {
 import Badge from '../../../Badge'
 import { SOURCE_TYPES } from '../../constants'
 
-const { format } = require('../../../../utils/date')
+import { format } from '../../../../utils/date'
 
 const StyledBlockText = styled(H3)`
   display: inline-block;

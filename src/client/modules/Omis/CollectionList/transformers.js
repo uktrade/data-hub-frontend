@@ -3,7 +3,7 @@ import { find } from 'lodash'
 import { STATUSES } from './constants'
 import { omis } from '../../../../lib/urls'
 
-const { format, formatMediumDateTime } = require('../../../utils/date')
+import { format, formatMediumDateTime } from '../../../utils/date'
 
 export const transformOrderToListItem = ({
   id,

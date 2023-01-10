@@ -15,10 +15,10 @@ import {
   NOT_SET,
 } from '../constants'
 
-const {
+import {
   formatMediumDateTime,
   isDateValid,
-} = require('../../../../../client/utils/date')
+} from '../../../../../client/utils/date'
 
 const CURRENCY_FIELDS = ['Turnover']
 

@@ -22,7 +22,7 @@ import {
 
 import { formatWithoutParsing } from '../../../../../client/utils/date'
 
-const { transformValueForAPI } = require('../../../../../client/utils/date')
+import { transformValueForAPI } from '../../../../../client/utils/date'
 
 const FIELDS_TO_OMIT = [
   'currently_exporting',

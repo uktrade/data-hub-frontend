@@ -10,10 +10,10 @@ import { DATE_DAY_LONG_FORMAT } from '../../../common/constants'
 import urls from '../../../lib/urls'
 import { DARK_GREY } from '../../utils/colors'
 
-const {
+import {
   formatWithoutParsing,
   getDifferenceInDaysLabel,
-} = require('../../utils/date')
+} from '../../utils/date'
 
 const StyledSubHeading = styled(H3)`
   color: ${RED};

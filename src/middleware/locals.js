@@ -4,8 +4,12 @@ const logger = require('../config/logger')
 const config = require('../config')
 
 let webpackManifest = {}
+let viteManifest = {}
 
 try {
+  // console.log(`config.viteBuildDir:${config.viteBuildDir}`)
+  viteManifest = require(`${config.viteBuildDir}/manifest.json`)
+  // console.log(viteManifest)
   webpackManifest = require(`${config.buildDir}/assets-manifest.json`)
 } catch (err) {
   logger.error('Manifest file is not found. Ensure assets are built.')
@@ -58,9 +62,40 @@ module.exports = function locals(req, res, next) {
     },
 
     getAssetPath(asset) {
+      // console.log(`loading asset ${asset}`)
+      const usePreview = true
+      if (usePreview) {
+        if (asset == 'styles.css') {
+          return `http://localhost:4173/${viteManifest['assets/stylesheets/application.scss'].file}`
+        }
+
+        if (asset == 'react-app.js') {
+          return `http://localhost:4173/${viteManifest['client/index.jsx'].file}`
+        }
+
+        // if (asset == 'app.js') {
+        //   return `http://localhost:4173/${viteManifest['../assets/javascripts/app.js'].file}`
+        // }
+      } else {
+        if (asset == 'styles.css') {
+          return `http://localhost:4000/assets/stylesheets/application.scss`
+        }
+
+        if (asset == 'react-app.js') {
+          return `http://localhost:4000/client/index.jsx`
+        }
+
+        if (asset == 'app.js') {
+          return `http://localhost:4000/assets/javascripts/app.js`
+        }
+      }
+
       const webpackAssetPath = webpackManifest[asset]
 
       if (webpackAssetPath) {
+        console.log(
+          `found webpackAssetPath asset ${webpackAssetPath} that matches ${asset}`
+        )
         return `${baseUrl}/${webpackAssetPath}`
       }
 

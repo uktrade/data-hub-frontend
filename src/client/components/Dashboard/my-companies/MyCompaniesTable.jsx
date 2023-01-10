@@ -12,7 +12,7 @@ import { useMyCompaniesContext } from './useMyCompaniesContext'
 import Filters from './MyCompaniesFilters'
 import urls from '../../../../lib/urls'
 
-const { formatMediumDate } = require('../../../utils/date')
+import { formatMediumDate } from '../../../utils/date'
 
 const StyledCellHeader = styled(Table.CellHeader)(
   typography.font({ size: 14, weight: 'bold' }),

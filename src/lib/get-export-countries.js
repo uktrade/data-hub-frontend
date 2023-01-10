@@ -2,7 +2,7 @@ const castCompactArray = require('./cast-compact-array')
 
 const { EXPORT_INTEREST_STATUS_VALUES } = require('../apps/constants')
 
-module.exports = (body) => {
+function getExportCountries(body) {
   const data = []
 
   EXPORT_INTEREST_STATUS_VALUES.forEach((status) => {
@@ -15,3 +15,4 @@ module.exports = (body) => {
 
   return data.length ? data : null
 }
+module.exports = getExportCountries

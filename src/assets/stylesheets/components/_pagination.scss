@@ -1,0 +1,83 @@
+@import "../settings";
+@import "../tools/mixins";
+
+@mixin _pageless {
+  .c-pagination__list {
+    display: none;
+  }
+
+  .c-pagination__label--prev,
+  .c-pagination__label--next {
+    float: left;
+    font-size: 24px;
+    margin: 0;
+  }
+
+  .c-pagination__label--next {
+    float: right;
+  }
+}
+
+.c-pagination {
+  @include clearfix;
+  text-align: center;
+  line-height: 1;
+}
+
+.c-pagination__list {
+  display: inline-block;
+}
+
+.c-pagination__list-item {
+  display: inline-block;
+
+  & + & {
+    margin-left: $baseline-grid-unit * 1.5;
+  }
+}
+
+.c-pagination__label {
+  @include bold-font(16);
+  display: inline-block;
+  padding: ($default-spacing-unit * 0.5) $default-spacing-unit;
+  background-color: $grey-4;
+
+  &:link,
+  &:visited {
+    color: $link-colour;
+    text-decoration: none;
+
+    &:hover:not(.is-current) {
+      background-color: $grey-3;
+    }
+  }
+
+  &.is-current {
+    background-color: transparent;
+    color: $text-colour;
+    text-decoration: none;
+  }
+}
+
+.c-pagination__label--prev {
+  margin-right: $baseline-grid-unit * 1.5;
+}
+
+.c-pagination__label--next {
+  margin-left: $baseline-grid-unit * 1.5;
+}
+
+.c-pagination__label--truncation {
+  background-color: transparent;
+  padding-right: $default-spacing-unit * 0.5;
+  padding-left: $default-spacing-unit * 0.5;
+  color: $grey-1;
+}
+
+@include media(mobile) {
+  @include _pageless;
+}
+
+.c-pagination--pageless {
+  @include _pageless;
+}

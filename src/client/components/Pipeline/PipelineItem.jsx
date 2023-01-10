@@ -17,7 +17,7 @@ import { PipeLineItemPropType } from './types'
 import urls from '../../../lib/urls'
 import { LIKELIHOOD_TO_SUCCEED } from './constants'
 
-const { format } = require('../../utils/date')
+import { format } from '../../utils/date'
 
 const StyledH3 = styled(H3)`
   font-size: ${FONT_SIZE.SIZE_27};

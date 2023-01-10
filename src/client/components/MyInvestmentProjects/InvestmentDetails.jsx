@@ -7,7 +7,7 @@ import { SPACING, FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 import { companies, interactions } from '../../../lib/urls'
 import { DARK_GREY } from '../../utils/colors'
 
-const { format } = require('../../utils/date')
+import { format } from '../../utils/date'
 
 const StyledDiv = styled('div')({
   height: '100%',

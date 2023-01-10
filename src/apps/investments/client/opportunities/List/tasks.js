@@ -1,7 +1,7 @@
 import { apiProxyAxios } from '../../../../../client/components/Task/utils'
 
-const { formatLongDate } = require('../../../../../client/utils/date')
-const { investments } = require('../../../../../lib/urls')
+import { formatLongDate } from '../../../../../client/utils/date'
+import { investments } from '../../../../../lib/urls'
 
 export function getOpportunities({ activePage, payload }) {
   return apiProxyAxios

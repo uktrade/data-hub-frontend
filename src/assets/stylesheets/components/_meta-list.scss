@@ -1,0 +1,100 @@
+@import "../settings";
+@import "../tools";
+
+.c-meta-list__item {
+  & + & {
+    margin-top: $default-spacing-unit * 0.25;
+  }
+}
+
+.c-meta-list__item-label {
+  color: $grey-1;
+  word-break: break-all;
+}
+
+.c-meta-list__item-value {
+  color: $text-colour;
+  word-break: break-all;
+
+  &:link,
+  &:visited {
+    color: inherit;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &.is-selected {
+    font-weight: 600;
+  }
+}
+
+// Modifiers
+
+.c-meta-list--inline {
+  display: inline-block;
+  margin-top: -($default-spacing-unit * 0.5);
+
+  .c-meta-list__item-label {
+    display: inline-block;
+  }
+
+  .c-meta-list__item {
+    display: inline-block;
+    margin-right: $default-spacing-unit * 2;
+    margin-top: $default-spacing-unit * 0.5;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.c-meta-list--condensed {
+  &.c-meta-list--inline .c-meta-list__item {
+    margin-right: $default-spacing-unit * 0.25;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.c-meta-list__item--stacked {
+  display: block;
+
+  & + & {
+    margin-top: $default-spacing-unit * 0.5;
+  }
+
+  .c-meta-list__item-label {
+    display: block;
+  }
+}
+
+.c-meta-list--split {
+  @include clearfix;
+  margin-top: -($default-spacing-unit * 0.25);
+  width: 100%;
+
+  .c-meta-list__item {
+    display: block;
+    margin-top: $default-spacing-unit * 0.25;
+  }
+
+  @include media(tablet) {
+    .c-meta-list__item:nth-child(odd) {
+      float: left;
+      clear: both;
+      max-width: 50%;
+    }
+
+    .c-meta-list__item:nth-child(even) {
+      float: right;
+      text-align: right;
+      max-width: 50%;
+    }
+  }
+}
+

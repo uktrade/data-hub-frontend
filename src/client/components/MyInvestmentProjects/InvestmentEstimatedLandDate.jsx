@@ -7,11 +7,11 @@ import { BLACK, BUTTON_COLOUR, GREY_2, RED, YELLOW } from 'govuk-colours'
 import { DATE_DAY_LONG_FORMAT } from '../../../common/constants'
 import { rgba } from '../../utils/colors'
 
-const {
+import {
   formatWithoutParsing,
   getDifferenceInDays,
   getDifferenceInDaysLabel,
-} = require('../../utils/date')
+} from '../../utils/date'
 
 const StyledPanel = styled('div')`
   padding: ${SPACING.SCALE_2};

@@ -1,0 +1,97 @@
+@import "../../../../../node_modules/govuk_frontend_toolkit/stylesheets/design-patterns/buttons";
+@import "../../settings";
+@import "../../settings/colours";
+
+.c-form-control {
+  appearance: none;
+  border: 2px solid $text-colour;
+  background-color: $white;
+  display: inline-block;
+  height: 2em;
+  padding: 0 ($default-spacing-unit * 0.5);
+  font-size: 1em;
+  outline: 0;
+
+  &:focus {
+    box-shadow: 0 0 0 3px $focus-colour;
+  }
+
+  &[type="text"],
+  &[type="search"],
+  &[type="password"],
+  &[type="date"]{
+    width: 100%;
+  }
+
+  &[type="file"] {
+    $button-width: 128px;
+    border: none;
+    margin-left: $button-width;
+    padding-top: 10px;
+    line-height: 1ex;
+    text-align: left;
+
+    &::-webkit-file-upload-button {
+      visibility: hidden;
+    }
+
+    &::before {
+      @include button ($grey-3);
+      padding-bottom: .526315em;
+      content: 'Choose a file';
+      display: inline-block;
+      position: absolute;
+      left: 0;
+      top: -3px;
+      -webkit-user-select: none;
+      cursor: pointer;
+
+      @include media (mobile) {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+
+  &::placeholder {
+    color: $grey-2;
+  }
+}
+
+textarea.c-form-control {
+  min-height: 8em;
+  max-height: 50vh;
+  padding-top: $default-spacing-unit * 0.5;
+  padding-bottom: $default-spacing-unit * 0.5;
+  width: 100%;
+  max-width: 100%;
+}
+
+select.c-form-control {
+  width: 100%;
+  border-radius: 0;
+  appearance: none;
+  background: $white url("../../../images/icon-triangle.svg") no-repeat right 8px top 50%;
+  background-size: .8em;
+  padding-right: $default-spacing-unit * 2;
+}
+
+.c-form-control.has-error {
+  border-color: $error-colour;
+}
+
+.c-form-control--medium {
+  max-width: 15em;
+}
+
+.c-form-control--short {
+  max-width: 10em;
+}
+
+.c-form-control--shorter {
+  max-width: 4em;
+}
+
+.c-form-control--shortest {
+  max-width: 2.6em;
+}
