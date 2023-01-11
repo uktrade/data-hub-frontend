@@ -13,6 +13,7 @@ const {
 } = require('../../../../functional/cypress/support/eventform-fillers')
 
 const today = new Date()
+const eventName = `Eventful event ${Cypress._.random(0, 1e6)}`
 
 const createEvent = () => {
   fillEventForm({
@@ -29,7 +30,7 @@ const createEvent = () => {
     eventType: 'Account management',
     leadTeam: 'Advanced Manufacturing Sector',
     locationType: 'HQ',
-    eventName: 'Eventful event',
+    eventName: eventName,
     notes: 'Testing a valid form for all fields',
     organiser: 'Barry Oling',
     hasRelatedTradeAgreements: true,
@@ -50,7 +51,7 @@ const createEvent = () => {
 
   clickAddEventButton()
 
-  cy.contains(`'Eventful event' event has been created`).should('be.visible')
+  cy.contains(`'${eventName}' event has been created`).should('be.visible')
 }
 
 describe('Event', () => {
@@ -115,9 +116,12 @@ describe('Event', () => {
 
     it('should create an attendee on a event', () => {
       createEvent()
+      // This is here to allow the activity stream to poll the event api and detect the new event.
+      //TODO once the activity stream poll is made customisable remove this wait
+      cy.wait(120000)
 
       cy.visit(urls.events.index())
-      cy.contains('Eventful event').click()
+      cy.contains(eventName).click()
       cy.contains('Attendees').click()
       cy.get(selectors.entityCollection.addAttendee).click()
 
@@ -141,17 +145,18 @@ describe('Event', () => {
       cy.visit(urls.events.index())
     })
 
-    it('should display newly created event in collection page', () => {
-      cy.get('[data-test="collection-item"]')
-        .eq(0)
-        .should('contain', 'Eventful event')
+    it('should display newly created event in events page', () => {
+      cy.get('[data-test="data-hub-event"]').eq(0).should('contain', eventName)
     })
 
     it('should edit event details', () => {
-      cy.get('[data-test="collection-item"]')
+      cy.get('[data-test="data-hub-event"]')
         .eq(0)
-        .should('contain', 'Account management')
-      cy.contains('Eventful event').click()
+        .get('[data-test="service-type-label"]')
+        .eq(0)
+        .invoke('text')
+        .should('contain', 'Account Management')
+      cy.contains(eventName).click()
       cy.get(selectors.entityCollection.editEvent).click()
       fillEventType('Exhibition')
       clickSaveAndReturnButton()
