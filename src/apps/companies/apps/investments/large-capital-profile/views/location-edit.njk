@@ -1,4 +1,13 @@
-{% call Form({
+{% block body %}
+  {% set props = {"profileId": profile.id, "ukRegionLocations": profile.location.uk_region_locations, "otherCountriesBeingConsidered": profile.location.other_countries_being_considered, "notesOnInvestorsLocation": profile.location.notes_on_locations} %}
+  {% component 'react-slot', {
+    id: 'edit-large-capital-investor-location',
+    props: props
+  } %}
+{% endblock %}
+
+
+{# {% call Form({
   buttonText: 'Save',
   buttonDataAttr: 'locationSave',
   returnText: 'Cancel',
@@ -67,4 +76,4 @@
   }}
 
 
-{% endcall %}
+{% endcall %} #}

@@ -634,6 +634,9 @@ function App() {
         <Mount selector="#edit-large-capital-investor-details">
           {(props) => <EditLargeCapitalInvestorDetails {...props} />}
         </Mount>
+        <Mount selector="#edit-large-capital-investor-location">
+          {(props) => <EditLargeCapitalInvestorLocation {...props} />}
+        </Mount>
         <Mount selector="#unfiltered-large-capital-opportunity-collection">
           {(props) => (
             <UnfilteredLargeCapitalOpportunityCollection {...props} />
