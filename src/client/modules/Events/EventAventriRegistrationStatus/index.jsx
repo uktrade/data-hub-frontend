@@ -28,6 +28,8 @@ import AventriEventSyncWarning from '../../../components/ActivityFeed/activities
 
 import { ATTENDEES_SORT_OPTIONS } from './constants'
 
+const activityListSize = 20
+
 const EventAventriRegistrationStatus = ({
   name,
   aventriEventId,
@@ -36,13 +38,13 @@ const EventAventriRegistrationStatus = ({
   registrationStatusCounts,
   defaultQueryParams = {
     page: 1,
-    size: 20,
+    size: activityListSize,
     sortby: 'first_name:asc',
   },
   payload,
-  page = parseInt(page || 1, 20),
+  page = parseInt(page || 1, activityListSize),
   totalAttendees,
-  itemsPerPage = 20,
+  itemsPerPage = activityListSize,
   maxItemsToPaginate = 10000,
 }) => {
   const breadcrumbs = [
