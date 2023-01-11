@@ -1,6 +1,5 @@
 import React from 'react'
 import DataHubProvider from '../provider'
-import { ACTIVITY_STREAM_FEATURE_FLAG } from '../../../../../src/apps/companies/apps/activity-feed/constants'
 import { TASK_GET_USER_FEATURE_FLAGS } from '../../../../../src/client/components/CheckUserFeatureFlags/state'
 import { getUserFeatureFlags } from '../../../../../src/client/components/CheckUserFeatureFlags/tasks'
 
@@ -205,12 +204,6 @@ const buildAndMountWithCustomService = (service) => {
 }
 
 describe('Interaction activity card', () => {
-  beforeEach(() => {
-    cy.intercept('GET', '**/whoami', {
-      active_features: ACTIVITY_STREAM_FEATURE_FLAG,
-    })
-  })
-
   context('When the card is rendered with a complete interaction', () => {
     beforeEach(() => {
       buildAndMountActivity(

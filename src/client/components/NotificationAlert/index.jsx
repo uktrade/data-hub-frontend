@@ -8,7 +8,6 @@ import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import { ID, TASK_GET_NOTIFICATION_ALERT_COUNT, state2props } from './state'
 import { NOTIFICATION_ALERT_COUNT__LOADED } from '../../actions'
 import Task from '../Task'
-import urls from '../../../lib/urls'
 import BellSVG from './bell-icon.svg'
 
 const StyledNotificationAlertNavLink = styled(NavLink)({})
@@ -35,7 +34,7 @@ const StyledImage = styled('img')({
   verticalAlign: 'sub',
 })
 
-const NotificationAlert = ({ count, hasFeatureGroup }) =>
+const NotificationAlert = ({ count, remindersURL, hasFeatureGroup }) =>
   hasFeatureGroup ? (
     <Task.Status
       name={TASK_GET_NOTIFICATION_ALERT_COUNT}
@@ -48,7 +47,7 @@ const NotificationAlert = ({ count, hasFeatureGroup }) =>
       {() => (
         <StyledNotificationAlertNavLink
           as="a"
-          href={urls.reminders.index()}
+          href={remindersURL}
           id="notification-bell-count"
         >
           <StyledImage

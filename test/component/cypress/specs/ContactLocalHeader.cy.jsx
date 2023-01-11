@@ -22,10 +22,7 @@ describe('ContactLocalHeader', () => {
     beforeEach(() => {
       cy.mount(
         <DataHubProvider>
-          <Component
-            contact={primaryContact}
-            isActivityStreamFeatureFlagEnabled={false}
-          />
+          <Component contact={primaryContact} />
         </DataHubProvider>
       )
     })
@@ -57,10 +54,7 @@ describe('ContactLocalHeader', () => {
     beforeEach(() => {
       cy.mount(
         <DataHubProvider>
-          <Component
-            contact={notPrimaryContact}
-            isActivityStreamFeatureFlagEnabled={false}
-          />
+          <Component contact={notPrimaryContact} />
         </DataHubProvider>
       )
     })
@@ -92,10 +86,7 @@ describe('ContactLocalHeader', () => {
     beforeEach(() => {
       cy.mount(
         <DataHubProvider>
-          <Component
-            contact={archivedContact}
-            isActivityStreamFeatureFlagEnabled={false}
-          />
+          <Component contact={archivedContact} />
         </DataHubProvider>
       )
     })
@@ -117,45 +108,6 @@ describe('ContactLocalHeader', () => {
 
     it('should render the archive panel', () => {
       cy.get('[data-test=archive-panel]').should('exist')
-    })
-  })
-
-  context('When the Aventri feature flag is set', () => {
-    context('When a contact is passed in', () => {
-      beforeEach(() => {
-        cy.mount(
-          <DataHubProvider>
-            <Component
-              contact={primaryContact}
-              isActivityStreamFeatureFlagEnabled={true}
-            />
-          </DataHubProvider>
-        )
-      })
-
-      it('should render the Add Interaction button', () => {
-        cy.get('[data-test=add-interaction-button]')
-          .should('exist')
-          .should('have.text', 'Add interaction')
-          .should('have.attr', 'href', addInteractionUrl)
-      })
-    })
-
-    context('When an archived contact is passed in', () => {
-      beforeEach(() => {
-        cy.mount(
-          <DataHubProvider>
-            <Component
-              contact={archivedContact}
-              isActivityStreamFeatureFlagEnabled={true}
-            />
-          </DataHubProvider>
-        )
-      })
-
-      it('should not render the Add Interaction button', () => {
-        cy.get('[data-test=add-interaction-button]').should('not.exist')
-      })
     })
   })
 })

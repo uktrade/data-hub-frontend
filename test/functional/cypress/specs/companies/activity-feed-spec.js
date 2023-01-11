@@ -1,8 +1,6 @@
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 
-import { ACTIVITY_STREAM_FEATURE_FLAG } from '../../../../../src/apps/companies/apps/activity-feed/constants'
-
 describe('Company activity feed', () => {
   before(() => {
     cy.visit(
@@ -203,65 +201,58 @@ describe('Company activity feed', () => {
   })
 
   context('Aventri', () => {
-    context('when the activity stream flag is on', () => {
-      before(() => {
-        cy.setUserFeatures([ACTIVITY_STREAM_FEATURE_FLAG])
-      })
-      it('displays the correct activity type label', () => {
-        cy.get('[data-test="aventri-event"]').within(() =>
-          cy
-            .get('[data-test="activity-kind-label"]')
-            .contains('Aventri Event', {
-              matchCase: false,
-            })
-        )
-      })
-
-      it('displays the correct sub-topic label', () => {
-        cy.get('[data-test="aventri-event"]').within(() =>
-          cy.get('[data-test="activity-service-label"]').contains('Event', {
-            matchCase: false,
-          })
-        )
-      })
-
-      context(
-        'when a company with large number contacts attending aventri events is viewed',
-        () => {
-          before(() => {
-            cy.visit(
-              urls.companies.activity.index(
-                fixtures.company.companyWithManyContacts.id
-              )
-            )
-          })
-
-          it('correctly displays contacts for a past event', () => {
-            cy.get('[data-test="aventri-event"]')
-              .eq(0)
-              .within(() => {
-                cy.get('[data-test="cancelled-label"]').should('exist')
-                cy.get('[data-test="attended-label"]').should('exist')
-                cy.get('[data-test="did-not-attend-label"]').should('exist')
-                cy.get('[data-test="waiting-list-label"]').should('exist')
-                cy.get('[data-test="registered-label"]').should('exist')
-              })
-          })
-
-          it('correctly displays contacts for a future event', () => {
-            cy.get('[data-test="aventri-event"]')
-              .eq(3)
-              .within(() => {
-                cy.get('[data-test="cancelled-label"]').should('exist')
-                cy.get('[data-test="attended-label"]').should('exist')
-                cy.get('[data-test="did-not-attend-label"]').should('exist')
-                cy.get('[data-test="waiting-list-label"]').should('exist')
-                cy.get('[data-test="registered-label"]').should('exist')
-              })
-          })
-        }
+    it('displays the correct activity type label', () => {
+      cy.get('[data-test="aventri-event"]').within(() =>
+        cy.get('[data-test="activity-kind-label"]').contains('Aventri Event', {
+          matchCase: false,
+        })
       )
     })
+
+    it('displays the correct sub-topic label', () => {
+      cy.get('[data-test="aventri-event"]').within(() =>
+        cy.get('[data-test="activity-service-label"]').contains('Event', {
+          matchCase: false,
+        })
+      )
+    })
+
+    context(
+      'when a company with large number contacts attending aventri events is viewed',
+      () => {
+        before(() => {
+          cy.visit(
+            urls.companies.activity.index(
+              fixtures.company.companyWithManyContacts.id
+            )
+          )
+        })
+
+        it('correctly displays contacts for a past event', () => {
+          cy.get('[data-test="aventri-event"]')
+            .eq(0)
+            .within(() => {
+              cy.get('[data-test="cancelled-label"]').should('exist')
+              cy.get('[data-test="attended-label"]').should('exist')
+              cy.get('[data-test="did-not-attend-label"]').should('exist')
+              cy.get('[data-test="waiting-list-label"]').should('exist')
+              cy.get('[data-test="registered-label"]').should('exist')
+            })
+        })
+
+        it('correctly displays contacts for a future event', () => {
+          cy.get('[data-test="aventri-event"]')
+            .eq(3)
+            .within(() => {
+              cy.get('[data-test="cancelled-label"]').should('exist')
+              cy.get('[data-test="attended-label"]').should('exist')
+              cy.get('[data-test="did-not-attend-label"]').should('exist')
+              cy.get('[data-test="waiting-list-label"]').should('exist')
+              cy.get('[data-test="registered-label"]').should('exist')
+            })
+        })
+      }
+    )
   })
 
   context('Email Campaign (Maxemail)', () => {

@@ -8,7 +8,6 @@ const {
   EVENT_ACTIVITY_SORT_OPTIONS,
   EVENT_ATTENDEES_SORT_OPTIONS,
   EVENT_ALL_ACTIVITY,
-  ACTIVITY_STREAM_FEATURE_FLAG,
   DATA_HUB_AND_AVENTRI_ACTIVITY,
   EVENT_AVENTRI_ATTENDEES_STATUSES,
   EVENT_ATTENDEES_MAPPING,
@@ -18,11 +17,7 @@ const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
 
 const { getGlobalUltimateHierarchy } = require('../../repos')
 const urls = require('../../../../lib/urls')
-const {
-  fetchActivityFeed,
-  fetchMatchingDataHubContact,
-  fetchUserFeatureFlags,
-} = require('./repos')
+const { fetchActivityFeed, fetchMatchingDataHubContact } = require('./repos')
 const config = require('../../../../config')
 
 const {
@@ -37,9 +32,6 @@ const {
   aventriAttendeeRegistrationStatusQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
-const {
-  contactActivityQueryNoAventri,
-} = require('./es-queries/contact-activity-query-no-aventri')
 const allActivityFeedEventsQuery = require('./es-queries/activity-feed-all-events-query')
 
 const { aventriEventQuery } = require('./es-queries/aventri-event-query')
@@ -264,50 +256,21 @@ async function fetchActivitiesForContact(req, res, next) {
 
     const from = (req.query.page - 1) * ACTIVITIES_PER_PAGE
 
-    // This will be deleted when the feature flag is removed
     // istanbul ignore next: Covered by functional tests
-    res.locals.userFeatures = await fetchUserFeatureFlags(req).catch(
+    let results = await fetchActivityFeed(
+      req,
+      contactActivityQuery(
+        from,
+        ACTIVITIES_PER_PAGE,
+        contact.email,
+        contact.id,
+        DATA_HUB_AND_EXTERNAL_ACTIVITY,
+        CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
+      )
       // istanbul ignore next: Covered by functional tests
-      (error) => {
-        next(error)
-      }
-    )
-
-    // istanbul ignore next: Covered by functional tests
-    let isActivityStreamFeatureFlagEnabled = res.locals?.userFeatures?.includes(
-      ACTIVITY_STREAM_FEATURE_FLAG
-    )
-
-    // istanbul ignore next: Covered by functional tests
-    let results = isActivityStreamFeatureFlagEnabled
-      ? await fetchActivityFeed(
-          req,
-          contactActivityQuery(
-            from,
-            ACTIVITIES_PER_PAGE,
-            contact.email,
-            contact.id,
-            DATA_HUB_AND_EXTERNAL_ACTIVITY,
-            CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
-          )
-          // istanbul ignore next: Covered by functional tests
-        ).catch((error) => {
-          next(error)
-        })
-      : await fetchActivityFeed(
-          req,
-          contactActivityQueryNoAventri(
-            from,
-            ACTIVITIES_PER_PAGE,
-            contact.email,
-            contact.id,
-            DATA_HUB_AND_EXTERNAL_ACTIVITY,
-            CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
-          )
-          // istanbul ignore next: Covered by functional tests
-        ).catch((error) => {
-          next(error)
-        })
+    ).catch((error) => {
+      next(error)
+    })
 
     const total = results.hits.total.value
     let activities = results.hits.hits.map((hit) => hit._source)
@@ -381,21 +344,13 @@ async function fetchActivityFeedHandler(req, res, next) {
         .map((company) => company.id)
     }
 
-    let isActivityStreamFeatureFlagEnabled = res.locals?.userFeatures?.includes(
-      ACTIVITY_STREAM_FEATURE_FLAG
+    const aventriEvents = await getAventriEventsAttendedByCompanyContacts(
+      req,
+      next,
+      company.contacts
     )
+    const aventriEventIds = Object.keys(aventriEvents)
 
-    let aventriEventIds = []
-    let aventriEvents = []
-    if (isActivityStreamFeatureFlagEnabled) {
-      aventriEvents = await getAventriEventsAttendedByCompanyContacts(
-        req,
-        next,
-        company.contacts
-      )
-
-      aventriEventIds = Object.keys(aventriEvents)
-    }
     const queries = getQueries({
       from,
       size,
