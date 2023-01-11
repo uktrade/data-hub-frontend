@@ -269,7 +269,6 @@ workflows:
             branches:
               only:
                 - main
-                - ssh-key-circleci
       - merge-and-publish-coverage:
           <<: *ignore_ghpages
           requires:
