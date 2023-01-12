@@ -1,13 +1,15 @@
-{% from '../form/form.njk' import Form %}
+{# {% from '../form/form.njk' import Form %}
 
 {% set buildQuery = buildQuery or props.buildQuery %}
 {% set totalCost = props.summary.total_subtotal_cost %}
 {% set count = props.count | default('0') %}
-{% set countLabel = props.countLabel | default('result') %}
-{% set actionButtons = props.actionButtons | default([]) | castArray %}
+{% set countLabel = props.countLabel | default('result') %} #}
+{# {% set actionButtons = props.actionButtons | default([]) | castArray %} #}
 
-<header class="c-collection__header">
-  <div class="c-collection__header-row">
+{# <header class="c-collection__header">
+  <div class="c-collection__header-row"> #}
+    {# DELETE THIS FILE
+    
     <h2
       class="c-collection__header-intro js-search-results"
       data-results-returned="{{ count }}"
@@ -21,9 +23,10 @@
           <span class="u-highlight">{{ props.highlightTerm }}</span>
         {% endif %}
       {% endif %}
-    </h2>
+    </h2> #}
 
-    {% if props.selectedFilters | length or actionButtons.length %}
+
+    {# {% if props.selectedFilters | length or actionButtons.length %}
       <div class="c-collection__header-actions">
         {% if props.selectedFilters | length %}
           <a
@@ -35,14 +38,22 @@
             Remove all filters
           </a>
         {% endif %}
-
+          <a
+            href="http://localhost:3000/companies?archived[0]=false&sortby=modified_on:desc&page=1" 
+            class="govuk-link govuk-link--secondary"
+            data-test="anything"
+          >
+            Filter Results
+          </a>
         {% for actionButton in actionButtons %}
           <a class="govuk-button govuk-button--secondary" href="{{ actionButton.url }}" data-test="{{ actionButton.label }}">{{ actionButton.label }}</a>
+          
         {% endfor %}
+        
       </div>
-    {% endif %}
+    {% endif %} #}
 
-    {% if props.selectedFilters %}
+    {# {% if props.selectedFilters %}
       <div class="c-collection__filter-summary">
         {% for name, filter in props.selectedFilters %}
           <span class="c-collection__filter-tag">
@@ -57,14 +68,14 @@
             </span>
         {% endfor %}
       </div>
-    {% endif %}
+    {% endif %} #}
 
-    {% if props.summary %}
+    {# {% if props.summary %}
       <div class="c-collection__total-cost">
         Total value: <span class="c-collection__total-cost__value">£{{ (totalCost / 100) | formatNumber }}</span>
       </div>
-    {% endif %}
-  </div>
+    {% endif %} #}
+  {# </div>
 
   {% if props.sortForm or props.pagination %}
     <div class="c-collection__header-row">
@@ -91,4 +102,4 @@
     </div>
   {% endif %}
 
-</header>
+</header> #}

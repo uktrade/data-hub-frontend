@@ -67,8 +67,8 @@ import ContactDocuments from './modules/Contacts/ContactDocuments/ContactDocumen
 import InvestmentDocuments from '../apps/investments/client/projects/ProjectDocuments'
 import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactAuditHistory'
 import InteractionDetails from './modules/Interactions/InteractionDetails'
+import GlobalSearchHeader from './components/GlobalSearchHeader'
 import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
-
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
 import * as exportsHistoryTasks from '../apps/companies/apps/exports/client/ExportsHistory/tasks'
@@ -757,6 +757,9 @@ function App() {
         </Mount>
         <Mount selector="#interaction-details">
           {(props) => <InteractionDetails {...props} />}
+        </Mount>
+        <Mount selector="#global-search-header">
+          {(props) => <GlobalSearchHeader {...props} />}
         </Mount>
         <Mount selector="#ess-interaction-details">
           {(props) => <ESSInteractionDetails {...props} />}

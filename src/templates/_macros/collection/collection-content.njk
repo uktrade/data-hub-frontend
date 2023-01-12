@@ -13,12 +13,17 @@
  # @param {string, array} [props.listModifier] - entity list modifier
  # @param {string}  [props.highlightTerm] - text to use to apply highlight filter
  # @param {object,array}   [props.actionButtons] - An object or array of objects with a label and url to generate an action button
+ # @param {object,array}   [props.actionLinks] - An object or array of objects with a label and url to generate an action link
  #
  # @param {function} props.caller - Inner contents
 #}
 {% macro CollectionContent(props) %}
   <article class="c-collection" {% if props.id %}id="{{ props.id }}"{% endif %}>
-    {{ CollectionHeader(props) }}
+
+    {% component 'react-slot', {
+    id: 'global-search-header',
+    props: props
+  } %}
 
     {% if props.items | length %}
       {% if caller %}
