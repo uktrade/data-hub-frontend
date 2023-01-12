@@ -8,6 +8,7 @@ const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/m
 const companyMock = require('../../../../../../test/unit/data/company.json')
 const aventriRegistrationStatusNoDetails = require('../../../../../../test/unit/data/activity-feed/aventri-registration-status-no-details.json')
 const aventriRegistrationStatusWithAggregations = require('../../../../../../test/unit/data/activity-feed/aventri-registration-status-with-aggregation-counts.json')
+const essDetails = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/ess-interaction.json')
 
 const {
   DATA_HUB_ACTIVITY,
@@ -28,7 +29,8 @@ describe('Activity feed controllers', () => {
     getGlobalUltimateHierarchyStub,
     controllers,
     middlewareParameters,
-    fetchMatchingDataHubContactStub
+    fetchMatchingDataHubContactStub,
+    fetchESSDetailsStub
 
   describe('#fetchActivityFeedHandler', () => {
     before(() => {
@@ -1505,6 +1507,80 @@ describe('Activity feed controllers', () => {
           (s) =>
             expect(statusCounts.find((x) => x.status == s)).to.not.be.undefined
         )
+      })
+    })
+  })
+
+  describe('#fetchESSDetails', () => {
+    before(() => {
+      fetchESSDetailsStub = sinon.stub().resolves(essDetails)
+      controllers = proxyquire(
+        '../../src/apps/companies/apps/activity-feed/controllers',
+        {
+          './repos': {
+            fetchActivityFeed: fetchESSDetailsStub,
+          },
+        }
+      )
+    })
+
+    context('when getting ess details', () => {
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters({
+          requestParams: { essInteractionId: 1111 },
+        })
+
+        await controllers.fetchESSDetails(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy
+        )
+      })
+
+      it('should call fetchESSDetails with the right params', async () => {
+        const essDetailId = `dit:directoryFormsApi:Submission:1111:Create`
+        const expectedEsQuery = {
+          query: {
+            bool: {
+              must: [
+                {
+                  term: {
+                    id: essDetailId,
+                  },
+                },
+              ],
+            },
+          },
+        }
+
+        expect(fetchESSDetailsStub).to.be.calledWith(
+          middlewareParameters.reqMock,
+          expectedEsQuery
+        )
+      })
+
+      context('when the endpoint returns error', () => {
+        const error = {
+          status: 500,
+        }
+
+        before(async () => {
+          fetchESSDetailsStub.rejects(error)
+          middlewareParameters = buildMiddlewareParameters({
+            requestParams: {},
+          })
+
+          await controllers.fetchAllActivityFeedEvents(
+            middlewareParameters.reqMock,
+            middlewareParameters.resMock,
+            middlewareParameters.nextSpy
+          )
+        })
+
+        it('should call next with an error', async () => {
+          expect(middlewareParameters.resMock.json).to.not.have.been.called
+          expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
+        })
       })
     })
   })

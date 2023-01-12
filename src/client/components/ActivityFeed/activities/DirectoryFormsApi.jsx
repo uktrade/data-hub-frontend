@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { get } from 'lodash'
 import Link from '@govuk-react/link'
-
 import { ACTIVITY_TYPE } from '../constants'
 import CardUtils from './card/CardUtils'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
@@ -25,6 +24,10 @@ export default class DirectoryFormsApi extends React.PureComponent {
   render() {
     const { activity } = this.props
 
+    // ESS index to extract id from ESS string feed by activity-stream
+    // e.g. dit:directoryFormsApi:Submission:89321:create
+    const ESS_ID_INDEX = 3
+    const essId = activity.object.id.split(':')[ESS_ID_INDEX]
     const formType = get(activity, 'object.attributedTo.[0].id')
     const sentDate = get(activity, 'object.published')
     const formData = get(
@@ -68,7 +71,9 @@ export default class DirectoryFormsApi extends React.PureComponent {
             kind="Interaction"
           />
           <ActivityCardSubject dataTest="export-support-service-name">
-            {natureOfEnquiry}
+            <Link href={`/interactions/ess/${essId}/details`}>
+              {natureOfEnquiry}
+            </Link>
           </ActivityCardSubject>
           <ActivityCardMetadata metadata={metadata} />
         </ActivityCardWrapper>

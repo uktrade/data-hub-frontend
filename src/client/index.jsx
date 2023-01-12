@@ -67,6 +67,7 @@ import ContactDocuments from './modules/Contacts/ContactDocuments/ContactDocumen
 import InvestmentDocuments from '../apps/investments/client/projects/ProjectDocuments'
 import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactAuditHistory'
 import InteractionDetails from './modules/Interactions/InteractionDetails'
+import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -147,6 +148,8 @@ import {
   getEventFormAndMetadata,
   saveEvent,
 } from '../client/modules/Events/EventForm/tasks'
+
+import { getESSInteractionDetails } from './modules/Interactions/ESSInteractionDetails/tasks'
 
 import {
   getEvents,
@@ -304,6 +307,7 @@ import ErrorFallback from './components/ErrorFallback'
 
 import { TASK_ARCHIVE_INTERACTION } from './modules/Interactions/InteractionDetails/state'
 import { archiveInteraction } from './modules/Interactions/InteractionDetails/tasks'
+import { TASK_GET_ESS_INTERACTION_DETAILS } from './modules/Interactions/ESSInteractionDetails/state'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -506,6 +510,7 @@ function App() {
           [TASK_GET_USER_FEATURE_FLAGS]: getUserFeatureFlags,
           [TASK_ARCHIVE_INTERACTION]: archiveInteraction,
           ...resourceTasks,
+          [TASK_GET_ESS_INTERACTION_DETAILS]: getESSInteractionDetails,
         }}
       >
         <Mount selector="#data-hub-header">
@@ -746,6 +751,9 @@ function App() {
         </Mount>
         <Mount selector="#interaction-details">
           {(props) => <InteractionDetails {...props} />}
+        </Mount>
+        <Mount selector="#ess-interaction-details">
+          {(props) => <ESSInteractionDetails {...props} />}
         </Mount>
 
         <Mount selector="#react-app">

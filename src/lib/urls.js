@@ -273,6 +273,10 @@ module.exports = {
     activeEvents: url('/activeEvents'),
     activeEventsData: url('/interactions', '/activeEvents'),
     export: url('/interactions', '/export'),
+    exportSupportService: {
+      details: url('/interactions', '/ess/:essInteractionId/details'),
+      detailsData: url('/interactions', '/ess/:essInteractionId/details/data'),
+    },
   },
   investments: {
     index: url('/investments', PRIMARY_LINK_PARAMS.investments),
