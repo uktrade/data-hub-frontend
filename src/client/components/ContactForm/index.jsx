@@ -27,6 +27,7 @@ import {
   UNITED_STATES_ID,
   CANADA_ID,
   GENERIC_PHONE_NUMBER_REGEX,
+  FORM_LAYOUT,
 } from '../../../common/constants'
 
 import useAdministrativeAreaLookup from '../AdministrativeAreaSearch/useAdministrativeAreaLookup'
@@ -152,7 +153,7 @@ const _ContactForm = ({
                     : urls.contacts.details(id)
                 }
                 return (
-                  <FormLayout setWidth="three-quarters">
+                  <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
                     <Form
                       id="add-contact-form"
                       analyticsFormName={update ? 'editContact' : 'addContact'}

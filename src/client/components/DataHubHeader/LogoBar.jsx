@@ -14,6 +14,7 @@ import {
 // Colours not defined in 'govuk-colours' which we need for consistency
 // with Find Exporters and Market access.
 import { DARK_BLUE_LEGACY } from '../../utils/colors'
+import NotificationAlert from '../NotificationAlert'
 
 const SWITCH_TO_DATA_WORKSPACE = 'Switch to Data Workspace'
 
@@ -41,7 +42,6 @@ const StyledLogo = styled.div({
   fontSize: 30,
   fontWeight: FONT_WEIGHTS.bold,
   display: 'inline-block',
-  paddingRight: '2em',
 })
 
 const StyledLogoNavLink = styled(NavLink)({
@@ -76,7 +76,7 @@ const StyledTag = styled.strong({
 })
 
 const NavigationList = styled.ul({
-  display: ({ showVerticalNav }) => (showVerticalNav ? 'block' : 'none'),
+  display: ({ showVerticalNav }) => (showVerticalNav ? 'inline-block' : 'none'),
   fontSize: FONT_SIZE.SIZE_16,
   listStyle: 'none',
   margin: 0,
@@ -84,13 +84,13 @@ const NavigationList = styled.ul({
   outline: '3px solid transparent',
   fontWeight: FONT_WEIGHTS.bold,
   [MEDIA_QUERIES.TABLET]: {
-    display: 'block',
+    display: 'inline-block',
     float: 'right',
   },
 })
 
 const NavigationListItem = styled.li({
-  display: 'block',
+  display: 'inline-flex',
   [MEDIA_QUERIES.TABLET]: {
     padding: `${SPACING.SCALE_1} 0 ${SPACING.SCALE_1} ${SPACING.SCALE_2}`,
   },
@@ -107,6 +107,20 @@ const NavigationLink = styled.a({
     color: BLACK,
     background: YELLOW,
   },
+  ':visited': {
+    color: WHITE,
+  },
+  ':hover': {
+    textDecoration: 'underline',
+    textDecorationThickness: '3px',
+    textUnderlineOffset: '.1em',
+  },
+})
+
+const NotificationAlertContainer = styled('div')({
+  display: 'inline-flex',
+  justifyContent: 'flex-start',
+  marginLeft: 25,
 })
 
 const LogoBar = ({ showVerticalNav }) => (
@@ -118,6 +132,9 @@ const LogoBar = ({ showVerticalNav }) => (
       </StyledLogoNavLink>
       <StyledTag>beta</StyledTag>
     </StyledLogo>
+    <NotificationAlertContainer>
+      <NotificationAlert />
+    </NotificationAlertContainer>
     <NavigationList
       showVerticalNav={showVerticalNav}
       id="logo-navigation"

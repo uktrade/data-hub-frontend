@@ -10,9 +10,6 @@ updates:
   open-pull-requests-limit: 10
   ignore:
 # When updating this list please ensure that a ticket for unblocking the update has been added to the TechEx backlog.
-  - dependency-name: cypress-image-diff-js # TET-164
-    versions:
-    - "> 1.16.4"
   - dependency-name: govuk-frontend # TET-219
     versions:
     - ">= 0"

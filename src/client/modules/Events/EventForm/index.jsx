@@ -9,6 +9,7 @@ import { TASK_GET_EVENTS_FORM_AND_METADATA, TASK_SAVE_EVENT } from './state'
 import { EventFormFields } from './EventFormFields'
 import { transformEventFormForAPIRequest } from './transformers'
 import { FormLayout } from '../../../../client/components'
+import { FORM_LAYOUT } from '../../../../common/constants'
 
 const DISPLAY_EDIT_EVENT = 'Edit event'
 const DISPLAY_ADD_EVENT = 'Add event'
@@ -47,7 +48,7 @@ const EventForm = () => {
       breadcrumbs={breadcrumbs}
       useReactRouter={true}
     >
-      <FormLayout setWidth="three-quarters">
+      <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
         <Form
           id="event-form"
           submissionTaskName={TASK_SAVE_EVENT}

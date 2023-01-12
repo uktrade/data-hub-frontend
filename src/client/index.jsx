@@ -1,14 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Switch } from 'react-router-dom'
 import * as Sentry from '@sentry/browser'
 import * as ReactSentry from '@sentry/react'
 import { BrowserTracing } from '@sentry/tracing'
 import { ErrorBoundary } from 'react-error-boundary'
 
-import { Redirect, Switch } from 'react-router-dom'
-
 import './components'
 import { SearchLocalHeader } from './components'
+import { default as DataHubHeaderWrapper } from './components/DataHubHeader/Wrapper'
 import Provider from './provider'
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
 import InteractionDetailsForm from '../apps/interactions/apps/details-form/client/InteractionDetailsForm'
@@ -138,8 +138,8 @@ import {
 import { TASK_GET_EVENT_DETAILS } from '../client/modules/Events/EventDetails/state'
 import { getEventDetails } from '../client/modules/Events/EventDetails/tasks'
 import { TASK_GET_EVENT_AVENTRI_DETAILS } from './modules/Events/EventAventriDetails/state'
-import { TASK_GET_EVENT_AVENTRI_ATTENDED } from './modules/Events/EventAventriAttended/state'
 import { getEventAventriDetails } from './modules/Events/EventAventriDetails/tasks'
+import { TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES } from './modules/Events/EventAventriRegistrationStatus/state'
 import {
   TASK_GET_EVENTS_FORM_AND_METADATA,
   TASK_SAVE_EVENT,
@@ -215,6 +215,9 @@ import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentRemind
 import { fetchReminderSummary } from './components/ReminderSummary/tasks'
 import { TASK_GET_REMINDER_SUMMARY } from './components/ReminderSummary/state'
 
+import { fetchNotificationAlertCount } from './components/NotificationAlert/tasks'
+import { TASK_GET_NOTIFICATION_ALERT_COUNT } from './components/NotificationAlert/state'
+
 import { TASK_GET_TYPEAHEAD_OPTIONS } from './components/Typeahead/state'
 
 import * as exportsEdit from '../apps/companies/apps/exports/client/tasks'
@@ -257,16 +260,21 @@ import {
 
 import * as reminders from '../client/modules/Reminders/tasks'
 import {
-  TASK_GET_ALL_REMINDER_SUBSCRIPTIONS,
+  TASK_GET_SUBSCRIPTION_SUMMARY,
   TASK_GET_ELD_REMINDER_SUBSCRIPTIONS,
   TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS,
   TASK_GET_NRI_REMINDER_SUBSCRIPTIONS,
   TASK_SAVE_NRI_REMINDER_SUBSCRIPTIONS,
+  TASK_GET_EXPORT_NRI_REMINDER_SUBSCRIPTIONS,
+  TASK_SAVE_EXPORT_NRI_REMINDER_SUBSCRIPTIONS,
   TASK_GET_ESTIMATED_LAND_DATE_REMINDERS,
+  TASK_GET_EXPORTS_NO_RECENT_INTERACTION_REMINDERS,
   TASK_GET_NO_RECENT_INTERACTION_REMINDERS,
   TASK_GET_NEXT_ESTIMATED_LAND_DATE_REMINDER,
+  TASK_GET_NEXT_EXPORTS_NO_RECENT_INTERACTION_REMINDERS,
   TASK_GET_NEXT_NO_RECENT_INTERACTION_REMINDER,
   TASK_DELETE_ESTIMATED_LAND_DATE_REMINDER,
+  TASK_DELETE_EXPORTS_NO_RECENT_INTERACTION_REMINDER,
   TASK_DELETE_NO_RECENT_INTERACTION_REMINDER,
   TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS,
 } from '../client/modules/Reminders/state'
@@ -292,7 +300,7 @@ import { TASK_ARCHIVE_CONTACT } from '../client/modules/Contacts/ContactDetails/
 import { archiveContact } from '../client/modules/Contacts/ContactDetails/tasks'
 import { TASK_GET_USER_FEATURE_FLAGS } from './components/CheckUserFeatureFlags/state'
 import { getUserFeatureFlags } from './components/CheckUserFeatureFlags/tasks'
-import { getEventAventriAttended } from './modules/Events/EventAventriAttended/tasks'
+import { getEventAventriRegistrationStatusAttendees } from './modules/Events/EventAventriRegistrationStatus/tasks'
 import ErrorFallback from './components/ErrorFallback'
 
 import { TASK_ARCHIVE_INTERACTION } from './modules/Interactions/InteractionDetails/state'
@@ -437,6 +445,7 @@ function App() {
             myInvestmentProjects.fetchMyInvestmentsList,
           [TASK_GET_OUTSTANDING_PROPOSITIONS]: fetchOutstandingPropositions,
           [TASK_GET_REMINDER_SUMMARY]: fetchReminderSummary,
+          [TASK_GET_NOTIFICATION_ALERT_COUNT]: fetchNotificationAlertCount,
           'Large investment profiles filters':
             investmentProfilesTasks.loadFilterOptions,
           [TASK_GET_CONTACTS_LIST]: getContacts,
@@ -450,7 +459,8 @@ function App() {
           [TASK_GET_EVENTS_ORGANISER_NAME]: getAdviserNames,
           [TASK_GET_EVENT_DETAILS]: getEventDetails,
           [TASK_GET_EVENT_AVENTRI_DETAILS]: getEventAventriDetails,
-          [TASK_GET_EVENT_AVENTRI_ATTENDED]: getEventAventriAttended,
+          [TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES]:
+            getEventAventriRegistrationStatusAttendees,
           [TASK_GET_EVENTS_FORM_AND_METADATA]: getEventFormAndMetadata,
           [TASK_SAVE_EVENT]: saveEvent,
           [TASK_GET_ORDERS_METADATA]: getOrdersMetadata,
@@ -461,25 +471,35 @@ function App() {
           [TASK_GET_TYPEAHEAD_OPTIONS]: getTypeaheadOptions,
           [TASK_SAVE_ORDER_ASSIGNEES]: editOMISTasks.saveOrderAssignees,
           [TASK_SAVE_ORDER_SUBSCRIBERS]: editOMISTasks.saveOrderSubscribers,
-          [TASK_GET_ALL_REMINDER_SUBSCRIPTIONS]: reminders.getAllSubscriptions,
+          [TASK_GET_SUBSCRIPTION_SUMMARY]: reminders.getSubscriptionSummary,
           [TASK_GET_ELD_REMINDER_SUBSCRIPTIONS]: reminders.getEldSubscriptions,
           [TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS]:
             reminders.saveEldSubscriptions,
           [TASK_GET_NRI_REMINDER_SUBSCRIPTIONS]: reminders.getNriSubscriptions,
           [TASK_SAVE_NRI_REMINDER_SUBSCRIPTIONS]:
             reminders.saveNriSubscriptions,
+          [TASK_GET_EXPORT_NRI_REMINDER_SUBSCRIPTIONS]:
+            reminders.getNriExportSubscriptions,
+          [TASK_SAVE_EXPORT_NRI_REMINDER_SUBSCRIPTIONS]:
+            reminders.saveNriExportSubscriptions,
           [TASK_GET_ESTIMATED_LAND_DATE_REMINDERS]:
             reminders.getEstimatedLandDateReminders,
           [TASK_GET_NO_RECENT_INTERACTION_REMINDERS]:
             reminders.getNoRecentInteractionReminders,
+          [TASK_GET_EXPORTS_NO_RECENT_INTERACTION_REMINDERS]:
+            reminders.getExportsNoRecentInteractionReminders,
           [TASK_DELETE_ESTIMATED_LAND_DATE_REMINDER]:
             reminders.deleteEstimatedLandDateReminder,
           [TASK_DELETE_NO_RECENT_INTERACTION_REMINDER]:
             reminders.deleteNoRecentInteractionReminder,
+          [TASK_DELETE_EXPORTS_NO_RECENT_INTERACTION_REMINDER]:
+            reminders.deleteExportNoRecentInteractionReminder,
           [TASK_GET_NEXT_ESTIMATED_LAND_DATE_REMINDER]:
             reminders.getNextEstimatedLandDateReminder,
           [TASK_GET_NEXT_NO_RECENT_INTERACTION_REMINDER]:
             reminders.getNextNoRecentInteractionReminder,
+          [TASK_GET_NEXT_EXPORTS_NO_RECENT_INTERACTION_REMINDERS]:
+            reminders.getNextExportNoRecentInteractionReminder,
           [TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS]:
             reminders.getOutstandingPropositions,
           [TASK_GET_CONTACT_ACTIVITIES]: getContactActivities,
@@ -489,6 +509,9 @@ function App() {
           ...resourceTasks,
         }}
       >
+        <Mount selector="#data-hub-header">
+          {(props) => <DataHubHeaderWrapper {...props} />}
+        </Mount>
         <Mount selector="#add-company-form">
           {(props) => (
             <AddCompanyForm csrfToken={globalProps.csrfToken} {...props} />
@@ -733,17 +756,9 @@ function App() {
           {() => (
             <Switch>
               {Object.keys(routes).map((module) =>
-                routes[module].map((route) =>
-                  route.redirect ? (
-                    <Redirect
-                      exact={true}
-                      from={route.path}
-                      to={route.redirect}
-                    />
-                  ) : (
-                    <ProtectedRoute exact={true} {...route} />
-                  )
-                )
+                routes[module].map((route) => (
+                  <ProtectedRoute exact={route.exact || true} {...route} />
+                ))
               )}
             </Switch>
           )}

@@ -1,5 +1,3 @@
-const ACTIVITY_STREAM_FEATURE_FLAG = 'user-activity-stream-aventri'
-
 const FILTER_KEYS = {
   dataHubAndExternalActivity: 'dataHubAndExternalActivity',
   myActivity: 'myActivity',
@@ -90,6 +88,40 @@ const EVENT_AVENTRI_ATTENDEES_STATUSES = Object.values(
   EVENT_AVENTRI_ATTENDEES_STATUS
 )
 
+const EVENT_ATTENDEES_STATUS = {
+  registered: 'Registered',
+  waitingList: 'Waiting list',
+  didNotAttend: 'Did not attend',
+  attended: 'Attended',
+  cancelled: 'Cancelled',
+}
+
+const createMappingObject = (status, aventriStatuses) => ({
+  [status]: {
+    statuses: aventriStatuses,
+    urlSlug: status.replaceAll(' ', '-').toLowerCase(),
+  },
+})
+
+const EVENT_ATTENDEES_MAPPING = [
+  createMappingObject(EVENT_ATTENDEES_STATUS.registered, [
+    EVENT_AVENTRI_ATTENDEES_STATUS.activated,
+    EVENT_AVENTRI_ATTENDEES_STATUS.confirmed,
+  ]),
+  createMappingObject(EVENT_ATTENDEES_STATUS.cancelled, [
+    EVENT_AVENTRI_ATTENDEES_STATUS.cancelled,
+  ]),
+  createMappingObject(EVENT_ATTENDEES_STATUS.attended, [
+    EVENT_AVENTRI_ATTENDEES_STATUS.attended,
+  ]),
+  createMappingObject(EVENT_ATTENDEES_STATUS.didNotAttend, [
+    EVENT_AVENTRI_ATTENDEES_STATUS.noShow,
+  ]),
+  createMappingObject(EVENT_ATTENDEES_STATUS.waitingList, [
+    EVENT_AVENTRI_ATTENDEES_STATUS.waitlist,
+  ]),
+].reduce((a, v) => ({ ...a, ...v }), {})
+
 const EVENT_ACTIVITY_SORT_OPTIONS = {
   'modified_on:asc': {
     'object.updated': {
@@ -166,6 +198,8 @@ module.exports = {
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
   CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS,
   CONTACT_ACTIVITY_SORT_SELECT_OPTIONS,
-  ACTIVITY_STREAM_FEATURE_FLAG,
+
   DATA_HUB_AND_AVENTRI_ACTIVITY,
+  EVENT_ATTENDEES_STATUS,
+  EVENT_ATTENDEES_MAPPING,
 }

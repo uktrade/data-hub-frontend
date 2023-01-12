@@ -7,9 +7,6 @@ const { transformAdviserToOption } = require('../../adviser/transformers')
 const { saveSession } = require('../../../lib/session-helper')
 
 const FILTER_CONSTANTS = require('../../../lib/filter-constants')
-const {
-  ACTIVITY_STREAM_FEATURE_FLAG,
-} = require('../../companies/apps/activity-feed/constants')
 
 const QUERY_STRING = FILTER_CONSTANTS.INTERACTIONS.SECTOR.PRIMARY.QUERY_STRING
 const SECTOR = FILTER_CONSTANTS.INTERACTIONS.SECTOR.NAME
@@ -108,12 +105,7 @@ function renderInteractionsForEntity(req, res, next) {
 
     const contact = res.locals.contact
 
-    const isActivityStreamFeatureFlagEnabled =
-      res.locals.userFeatures?.includes(ACTIVITY_STREAM_FEATURE_FLAG)
-
-    const breadcrumbTitle = isActivityStreamFeatureFlagEnabled
-      ? 'Activity'
-      : 'Interactions'
+    const breadcrumbTitle = 'Activity'
 
     const actionButtons = canAdd
       ? [
@@ -134,7 +126,6 @@ function renderInteractionsForEntity(req, res, next) {
         contactId: contactId,
         contact: contact,
       },
-      isActivityStreamFeatureFlagEnabled,
     })
   } catch (error) {
     next(error)

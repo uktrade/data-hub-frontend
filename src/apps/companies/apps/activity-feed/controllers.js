@@ -8,20 +8,16 @@ const {
   EVENT_ACTIVITY_SORT_OPTIONS,
   EVENT_ATTENDEES_SORT_OPTIONS,
   EVENT_ALL_ACTIVITY,
-  ACTIVITY_STREAM_FEATURE_FLAG,
   DATA_HUB_AND_AVENTRI_ACTIVITY,
-  EVENT_AVENTRI_ATTENDEES_STATUS,
+  EVENT_AVENTRI_ATTENDEES_STATUSES,
+  EVENT_ATTENDEES_MAPPING,
 } = require('./constants')
 
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
 
 const { getGlobalUltimateHierarchy } = require('../../repos')
 const urls = require('../../../../lib/urls')
-const {
-  fetchActivityFeed,
-  fetchMatchingDataHubContact,
-  fetchUserFeatureFlags,
-} = require('./repos')
+const { fetchActivityFeed, fetchMatchingDataHubContact } = require('./repos')
 const config = require('../../../../config')
 
 const {
@@ -30,16 +26,19 @@ const {
   maxemailCampaignQuery,
   maxemailEmailSentQuery,
   aventriAttendeeForCompanyQuery,
-  dataHubAndAventriActivityQuery,
+  dataHubAndActivityStreamServicesQuery,
   aventriAttendeeQuery,
+  exportSupportServiceQuery,
+  aventriAttendeeRegistrationStatusQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
-const {
-  contactActivityQueryNoAventri,
-} = require('./es-queries/contact-activity-query-no-aventri')
 const allActivityFeedEventsQuery = require('./es-queries/activity-feed-all-events-query')
 
 const { aventriEventQuery } = require('./es-queries/aventri-event-query')
+const {
+  transformAventriEventStatusToEventStatus,
+  transformAventriEventStatusCountsToEventStatusCounts,
+} = require('./transformers')
 
 async function renderActivityFeed(req, res, next) {
   const { company, dnbHierarchyCount, dnbRelatedCompaniesCount } = res.locals
@@ -93,7 +92,7 @@ function getQueries(options) {
       ...options,
       types: DATA_HUB_ACTIVITY,
     }),
-    [FILTER_KEYS.dataHubActivity]: dataHubAndAventriActivityQuery({
+    [FILTER_KEYS.dataHubActivity]: dataHubAndActivityStreamServicesQuery({
       ...options,
       types: DATA_HUB_AND_AVENTRI_ACTIVITY,
     }),
@@ -111,6 +110,13 @@ function getQueries(options) {
 function isExternalFilter(activityTypeFilter) {
   return (
     activityTypeFilter === FILTER_KEYS.externalActivity ||
+    activityTypeFilter === FILTER_KEYS.dataHubAndExternalActivity
+  )
+}
+
+function isEssFilter(activityTypeFilter) {
+  return (
+    activityTypeFilter === FILTER_KEYS.dataHubActivity ||
     activityTypeFilter === FILTER_KEYS.dataHubAndExternalActivity
   )
 }
@@ -167,6 +173,37 @@ async function getMaxemailCampaigns(req, next, contacts) {
   }
 }
 
+async function getExportSupportActivities(req, next, contacts) {
+  try {
+    const { from, size } = req.query
+
+    // Fetch ESS  Activities
+    const essQuery = exportSupportServiceQuery(from, size, contacts)
+    const essQueryResults = await fetchActivityFeed(req, essQuery)
+    const essActivities = essQueryResults.hits.hits.map((hit) => hit._source)
+
+    //Add Ess contacts to each Activity
+    const essActivitiesWithContact = essActivities.map((activity) => {
+      if (
+        activity.object.attributedTo.id ==
+        'dit:directoryFormsApi:SubmissionType:export-support-service'
+      ) {
+        const essContactEmail = activity.actor['dit:emailAddress']
+        const essContact = getContactFromEmailAddress(essContactEmail, contacts)
+        activity.object.attributedTo = [
+          activity.object.attributedTo,
+          mapEssContacts(essContact),
+        ]
+      }
+      return activity
+    })
+
+    return essActivitiesWithContact
+  } catch (error) {
+    next(error)
+  }
+}
+
 async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
   try {
     // Fetch aventri attendee info for company contacts
@@ -190,6 +227,9 @@ async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
                 name: contact.name,
                 type: ['dit:Contact'],
                 url: urls.contacts.details(contact.id),
+                registrationStatus: transformAventriEventStatusToEventStatus(
+                  attendee.object['dit:registrationStatus']
+                ),
               },
             ]
           : []
@@ -216,50 +256,21 @@ async function fetchActivitiesForContact(req, res, next) {
 
     const from = (req.query.page - 1) * ACTIVITIES_PER_PAGE
 
-    // This will be deleted when the feature flag is removed
     // istanbul ignore next: Covered by functional tests
-    res.locals.userFeatures = await fetchUserFeatureFlags(req).catch(
+    let results = await fetchActivityFeed(
+      req,
+      contactActivityQuery(
+        from,
+        ACTIVITIES_PER_PAGE,
+        contact.email,
+        contact.id,
+        DATA_HUB_AND_EXTERNAL_ACTIVITY,
+        CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
+      )
       // istanbul ignore next: Covered by functional tests
-      (error) => {
-        next(error)
-      }
-    )
-
-    // istanbul ignore next: Covered by functional tests
-    let isActivityStreamFeatureFlagEnabled = res.locals?.userFeatures?.includes(
-      ACTIVITY_STREAM_FEATURE_FLAG
-    )
-
-    // istanbul ignore next: Covered by functional tests
-    let results = isActivityStreamFeatureFlagEnabled
-      ? await fetchActivityFeed(
-          req,
-          contactActivityQuery(
-            from,
-            ACTIVITIES_PER_PAGE,
-            contact.email,
-            contact.id,
-            DATA_HUB_AND_EXTERNAL_ACTIVITY,
-            CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
-          )
-          // istanbul ignore next: Covered by functional tests
-        ).catch((error) => {
-          next(error)
-        })
-      : await fetchActivityFeed(
-          req,
-          contactActivityQueryNoAventri(
-            from,
-            ACTIVITIES_PER_PAGE,
-            contact.email,
-            contact.id,
-            DATA_HUB_AND_EXTERNAL_ACTIVITY,
-            CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
-          )
-          // istanbul ignore next: Covered by functional tests
-        ).catch((error) => {
-          next(error)
-        })
+    ).catch((error) => {
+      next(error)
+    })
 
     const total = results.hits.total.value
     let activities = results.hits.hits.map((hit) => hit._source)
@@ -333,21 +344,12 @@ async function fetchActivityFeedHandler(req, res, next) {
         .map((company) => company.id)
     }
 
-    let isActivityStreamFeatureFlagEnabled = res.locals?.userFeatures?.includes(
-      ACTIVITY_STREAM_FEATURE_FLAG
+    const aventriEvents = await getAventriEventsAttendedByCompanyContacts(
+      req,
+      next,
+      company.contacts
     )
-
-    let aventriEventIds = []
-    let aventriEvents = []
-    if (isActivityStreamFeatureFlagEnabled) {
-      aventriEvents = await getAventriEventsAttendedByCompanyContacts(
-        req,
-        next,
-        company.contacts
-      )
-
-      aventriEventIds = Object.keys(aventriEvents)
-    }
+    const aventriEventIds = Object.keys(aventriEvents)
 
     const queries = getQueries({
       from,
@@ -372,7 +374,18 @@ async function fetchActivityFeedHandler(req, res, next) {
       total += campaigns.length
     }
 
-    //loop over all the results, set the contact to be the matching contact from the contacts array
+    // Get Export Support Service Activites
+    if (isEssFilter(activityTypeFilter)) {
+      const essActivities = await getExportSupportActivities(
+        req,
+        next,
+        company.contacts
+      )
+      activities = [...activities, ...essActivities]
+      total += essActivities.length
+    }
+
+    //loop over all aventri results, set the contact to be the matching contact from the contacts array
     activities = activities.map((activity) => {
       if (activity.type == 'dit:aventri:Event' && aventriEvents[activity.id]) {
         activity.object.attributedTo = [
@@ -392,6 +405,19 @@ async function fetchActivityFeedHandler(req, res, next) {
   }
 }
 
+function mapEssContacts(contact) {
+  const mappedContact = contact
+    ? {
+        'dit:emailAddress': contact.email,
+        id: contact.id,
+        name: contact.name,
+        type: ['dit:Contact'],
+        url: urls.contacts.details(contact.id),
+      }
+    : []
+  return mappedContact
+}
+
 async function fetchAventriEvent(req, res, next) {
   try {
     const id = req.params.aventriEventId
@@ -403,85 +429,54 @@ async function fetchAventriEvent(req, res, next) {
     )
     const aventriEventData = aventriEventResults.hits.hits[0]._source
 
-    return res.json({ ...aventriEventData })
+    const aventriStatusCounts = await getAventriRegistrationStatusCounts(
+      req,
+      id
+    )
+
+    const statusCounts =
+      transformAventriEventStatusCountsToEventStatusCounts(aventriStatusCounts)
+
+    return res.json({ ...aventriEventData, registrationStatuses: statusCounts })
   } catch (error) {
     next(error)
   }
 }
 
-async function fetchAventriEventAttended(req, res, next) {
-  // istanbul ignore next: Covered by functional tests
-  try {
-    const eventId = req.params.aventriEventId
-    const { page, size, registrationStatus } = req.query
-
-    const sort = EVENT_ATTENDEES_SORT_OPTIONS[req.query.sortBy]
-    const from = (page - 1) * ACTIVITIES_PER_PAGE
-
-    //get the attendees
-    let registrationStatuses = [registrationStatus]
-    const aventriAttendeeResults = await fetchActivityFeed(
-      req,
-      aventriAttendeeQuery({
-        eventId,
-        sort,
-        from,
-        size,
-        registrationStatuses,
-      })
-    )
-
-    const totalAttendees = aventriAttendeeResults.hits.total.value
-
-    // istanbul ignore next: Covered by functional tests
-    let aventriAttendees = aventriAttendeeResults.hits.hits.map(
-      (hit) => hit._source
-    )
-
-    // add the datahub ID to aventri attendees object
-    // istanbul ignore next: Covered by functional tests
-    const addDataHubUrlToAttendee = async (attendee) => {
-      const attendeeEmail = attendee.object['dit:aventri:email']
-      let attendeeContactUrl = null
-      if (attendeeEmail) {
-        const dataHubContactResults = await fetchMatchingDataHubContact(
-          req,
-          attendeeEmail
-        )
-        const dataHubContactId = dataHubContactResults?.results[0]?.id
-        attendeeContactUrl = dataHubContactId
-          ? `/contacts/${dataHubContactId}/details`
-          : null
-      }
-      attendee.datahubContactUrl = attendeeContactUrl
-      return attendee
-    }
-    // istanbul ignore next: Covered by functional tests
-    aventriAttendees = await Promise.all(
-      aventriAttendees.map(async (attendee) => {
-        return await addDataHubUrlToAttendee(attendee)
-      })
-    )
-
-    res.json({
-      totalAttendees,
-      aventriAttendees,
+async function getAventriRegistrationStatusCounts(req, eventId) {
+  const registrationStatusResults = await fetchActivityFeed(
+    req,
+    aventriAttendeeRegistrationStatusQuery({
+      eventId,
+      registrationStatuses: EVENT_AVENTRI_ATTENDEES_STATUSES,
     })
-  } catch (error) {
-    next(error)
-  }
+  )
+
+  const statusCounts = registrationStatusResults.aggregations.countfield.buckets
+    .map((result) => ({
+      status: result.key,
+      count: result.doc_count,
+    }))
+    .filter(
+      (status) =>
+        EVENT_AVENTRI_ATTENDEES_STATUSES.includes(status.status) &&
+        status.count > 0
+    )
+
+  return statusCounts
 }
 
 async function fetchAventriEventRegistrationStatusAttendees(req, res, next) {
   try {
     const eventId = req.params.aventriEventId
-    const { page, size, registrationStatuses, sortBy } = req.query
+    const { page, size, registrationStatus, sortBy } = req.query
 
-    const invalidRegStatuses = registrationStatuses.filter(
-      (s) => !Object.values(EVENT_AVENTRI_ATTENDEES_STATUS).includes(s)
-    )
+    if (!registrationStatus) {
+      throw new Error('Missing registration status')
+    }
 
-    if (invalidRegStatuses.length > 0) {
+    const matchingStatus = EVENT_ATTENDEES_MAPPING[registrationStatus]
+    if (!matchingStatus) {
       throw new Error('Invalid status')
     }
 
@@ -496,7 +491,7 @@ async function fetchAventriEventRegistrationStatusAttendees(req, res, next) {
         sort,
         from,
         size,
-        registrationStatuses,
+        registrationStatuses: matchingStatus.statuses,
       })
     )
 
@@ -692,9 +687,9 @@ module.exports = {
   fetchActivityFeedHandler,
   fetchActivitiesForContact,
   fetchAventriEvent,
-  fetchAventriEventAttended,
   fetchAllActivityFeedEvents,
   eventsColListQueryBuilder,
   getAventriEventsAttendedByCompanyContacts,
   fetchAventriEventRegistrationStatusAttendees,
+  getAventriRegistrationStatusCounts,
 }

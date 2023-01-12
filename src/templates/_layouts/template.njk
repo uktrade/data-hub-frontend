@@ -8,7 +8,6 @@
 {% from "_macros/common.njk" import Message, MessageList, Pagination, LocalNav, Progress, FromNow, AnswersSummary, HiddenContent, TabbedLocalNav %}
 {% from "_macros/collection.njk" import CollectionContent, CollectionFilters %}
 {% from "_macros/entity.njk" import MetaList %}
-{% from "_components/header.njk" import datahubHeader %}
 
 {% if IS_XHR %}
   {% extends "./xhr.njk" %}
@@ -101,19 +100,10 @@
 {% endblock %}
 
 {% block header %}
-  {{ datahubHeader( PERMITTED_APPLICATIONS, {
-      crmApps: ALLOWED_APPS,
-      active: ACTIVE_KEY,
-      fluid: false,
-      user: user,
-      domains: {
-        datahub: '/',
-        findExporters: FIND_EXPORTERS_URL,
-        marketAccess: MARKET_ACCESS_URL,
-        dataWorkspaceDomain: DATA_WORKSPACE_URL
-      }
-    })
-  }}
+  {% component 'react-slot', {
+    id: 'data-hub-header',
+    props: props
+  } %}
 
   {% block local_header %}
     {% set pageTitle = getPageTitle() if getPageTitle %}

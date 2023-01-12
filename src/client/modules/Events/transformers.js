@@ -133,20 +133,32 @@ const transformResponseToEventDetails = ({
   disabledOn: disabled_on,
 })
 
-const transformResponseToEventAventriDetails = ({ id, object, type }) => ({
+const transformResponseToEventAventriDetails = ({
   id,
-  name: object?.name,
+  object,
   type,
-  eventDate: formatStartAndEndDate(object?.startTime, object?.endTime),
-  location: object['dit:aventri:locationname'],
-  fullAddress: compact([
-    object['dit:aventri:location_address1'],
-    object['dit:aventri:location_address2'],
-    object['dit:aventri:location_city'],
-    object['dit:aventri:location_postcode'],
-    object['dit:aventri:location_country'],
-  ]),
-})
+  registrationStatuses = [],
+}) => {
+  const eventDetails = {
+    id,
+    name: object?.name,
+    type,
+    eventDate: formatStartAndEndDate(object?.startTime, object?.endTime),
+    upcomingEvent: getDifferenceInDays(object?.endTime) > 0,
+    location: object['dit:aventri:locationname'],
+    fullAddress: compact([
+      object['dit:aventri:location_address1'],
+      object['dit:aventri:location_address2'],
+      object['dit:aventri:location_city'],
+      object['dit:aventri:location_postcode'],
+      object['dit:aventri:location_country'],
+    ]),
+  }
+  eventDetails.registrationStatusCounts = registrationStatuses.filter(
+    (s) => s.count > 0
+  )
+  return eventDetails
+}
 
 const transformAventriEventAttendeesRegistionStatusToBolean = ({
   totalAttendees,

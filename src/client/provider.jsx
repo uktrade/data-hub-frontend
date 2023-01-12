@@ -90,7 +90,8 @@ import { ID as INVESTMENT_REMINDERS_ID } from './components/InvestmentReminders/
 import investmentRemindersReducer from './components/InvestmentReminders/reducer'
 import { ID as REMINDER_SUMMARY_ID } from './components/ReminderSummary/state'
 import reminderSummaryReducer from './components/ReminderSummary/reducer'
-
+import { ID as NOTIFICATION_ALERT_ID } from './components/NotificationAlert/state'
+import notificationAlertReducer from './components/NotificationAlert/reducer'
 import {
   CONTACTS_LIST_ID,
   COMPANY_CONTACTS_LIST_ID,
@@ -106,8 +107,8 @@ import eventDetailsReducer from './modules/Events/EventDetails/reducer'
 import { ID as EVENTS_AVENTRI_DETAILS_ID } from './modules/Events/EventAventriDetails/state'
 import eventAventriDetailsReducer from './modules/Events/EventAventriDetails/reducer'
 
-import { ID as EVENTS_AVENTRI_ATTENDED_ID } from './modules/Events/EventAventriAttended/state'
-import eventAventriAttendedReducer from './modules/Events/EventAventriAttended/reducer'
+import { ID as EVENTS_AVENTRI_REGISTRATION_STATUS_ID } from './modules/Events/EventAventriRegistrationStatus/state'
+import eventAventriRegistrationStatusReducer from './modules/Events/EventAventriRegistrationStatus/reducer'
 
 import { ID as EVENTS_ID } from './modules/Events/CollectionList/state'
 import eventsReducer from './modules/Events/CollectionList/reducer'
@@ -147,6 +148,8 @@ const parseProps = (domNode) => {
     return {
       modulePermissions: [],
       currentAdviserId: '',
+      activeFeatures: null,
+      activeFeatureGroups: null,
     }
   }
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -154,10 +157,17 @@ const parseProps = (domNode) => {
 
 const appWrapper = document.getElementById('react-app')
 
-const { modulePermissions, currentAdviserId } = parseProps(appWrapper)
+const {
+  modulePermissions,
+  currentAdviserId,
+  activeFeatures,
+  activeFeatureGroups,
+} = parseProps(appWrapper)
 
 const reducer = {
   currentAdviserId: () => currentAdviserId,
+  activeFeatures: () => activeFeatures,
+  activeFeatureGroups: () => activeFeatureGroups,
   modulePermissions: () => modulePermissions,
   router: connectRouter(history),
   tasks,
@@ -196,6 +206,7 @@ const reducer = {
   [DATA_HUB_FEED_ID]: personalDashboardReducer,
   [INVESTMENT_REMINDERS_ID]: investmentRemindersReducer,
   [REMINDER_SUMMARY_ID]: reminderSummaryReducer,
+  [NOTIFICATION_ALERT_ID]: notificationAlertReducer,
   [CONTACTS_LIST_ID]: contactsReducer,
   [CONTACT_ACTIVITIES_ID]: contactActivitiesReducer,
   [COMPANY_CONTACTS_LIST_ID]: contactsReducer,
@@ -203,7 +214,8 @@ const reducer = {
   [EVENTS_ID]: eventsReducer,
   [EVENTS_DETAILS_ID]: eventDetailsReducer,
   [EVENTS_AVENTRI_DETAILS_ID]: eventAventriDetailsReducer,
-  [EVENTS_AVENTRI_ATTENDED_ID]: eventAventriAttendedReducer,
+  [EVENTS_AVENTRI_REGISTRATION_STATUS_ID]:
+    eventAventriRegistrationStatusReducer,
   [ORDERS_LIST_ID]: ordersReducer,
   [COMPANY_ORDERS_LIST_ID]: ordersReducer,
   [REMINDERS_ID]: remindersReducer,

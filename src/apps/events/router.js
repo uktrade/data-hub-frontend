@@ -10,7 +10,6 @@ const attendeesRouter = require('./attendees/router')
 
 const {
   fetchAventriEvent,
-  fetchAventriEventAttended,
   fetchAllActivityFeedEvents,
   fetchAventriEventRegistrationStatusAttendees,
 } = require('../companies/apps/activity-feed/controllers')
@@ -21,8 +20,7 @@ router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.get('/aventri/:aventriEventId/details', renderEventsView)
 router.get(urls.events.aventri.detailsData.route, fetchAventriEvent)
-router.get('/aventri/:aventriEventId/attended', renderEventsView)
-router.get(urls.events.aventri.attendedData.route, fetchAventriEventAttended)
+router.get('/aventri/:aventriEventId/registration/:status', renderEventsView)
 router.get(
   urls.events.aventri.registrationStatusData.route,
   fetchAventriEventRegistrationStatusAttendees

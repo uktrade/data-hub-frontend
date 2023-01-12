@@ -11,26 +11,12 @@ import {
   LocalNav,
   LocalNavLink,
   NewWindowLink,
-  StatusMessage,
   SummaryTable,
 } from '../../../components'
-import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
-import { ACTIVITY_STREAM_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
+import AventriEventSyncWarning from '../../../components/ActivityFeed/activities/AventriEventSyncWarning'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
 import { isEmpty } from 'lodash'
-
-const StyledStatusMessage = styled(StatusMessage)`
-  div.statusHeader {
-    font-size: x-large;
-  }
-  div.statusContent {
-    font-size: medium;
-  }
-  div.statusLink {
-    font-size: 80%;
-  }
-`
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
@@ -41,7 +27,7 @@ const EventAventriDetails = ({
   eventDate,
   location,
   fullAddress,
-  attended,
+  registrationStatusCounts,
 }) => {
   const { aventriEventId } = useParams()
   const breadcrumbs = [
@@ -58,10 +44,6 @@ const EventAventriDetails = ({
     },
   ]
 
-  const aventriEventLink =
-    'https://eu-admin.eventscloud.com/loggedin/eVent/index.php?eventid=' +
-    aventriEventId
-
   return (
     <DefaultLayout
       heading={name}
@@ -69,103 +51,82 @@ const EventAventriDetails = ({
       breadcrumbs={breadcrumbs}
       useReactRouter={true}
     >
-      <CheckUserFeatureFlag userFeatureFlagName={ACTIVITY_STREAM_FEATURE_FLAG}>
-        {(isFeatureFlagEnabled) =>
-          isFeatureFlagEnabled && (
-            <Task.Status
-              name={TASK_GET_EVENT_AVENTRI_DETAILS}
-              id={ID}
-              progressMessage="loading event aventri details"
-              startOnRender={{
-                payload: aventriEventId,
-                onSuccessDispatch: EVENTS__AVENTRI_DETAILS_LOADED,
-              }}
-            >
-              {() => {
-                return (
-                  name && (
-                    <>
-                      <StyledStatusMessage>
-                        <div class="statusHeader">
-                          {' '}
-                          This event has been automatically synced from Aventri.
-                        </div>
+      <Task.Status
+        name={TASK_GET_EVENT_AVENTRI_DETAILS}
+        id={ID}
+        progressMessage="loading event aventri details"
+        startOnRender={{
+          payload: aventriEventId,
+          onSuccessDispatch: EVENTS__AVENTRI_DETAILS_LOADED,
+        }}
+      >
+        {() => {
+          const aventriEventLink = `https://eu-admin.eventscloud.com/loggedin/eVent/index.php?eventid=${aventriEventId}`
 
-                        <div class="statusContent">
-                          Event details, registrants and attendees can only be
-                          edited in Aventri. Changes can take up to 24 hours to
-                          sync.
-                        </div>
-
-                        <div class="statusLink">
-                          <NewWindowLink href={aventriEventLink}>
-                            View in Aventri
-                          </NewWindowLink>
-                        </div>
-                      </StyledStatusMessage>
-                      <GridRow data-test="eventAventriDetails">
-                        <GridCol setWidth="one-quarter">
-                          <LocalNav dataTest="event-aventri-nav">
-                            <LocalNavLink
-                              dataTest="event-aventri-details-link"
-                              href={urls.events.aventri.details(aventriEventId)}
-                            >
-                              Details
-                            </LocalNavLink>
-                            {attended.status && (
-                              <LocalNavLink
-                                dataTest="event-aventri-attended-link"
-                                href={urls.events.aventri.attended(
-                                  aventriEventId
-                                )}
-                              >
-                                Attended ({attended.total})
-                              </LocalNavLink>
-                            )}
-                          </LocalNav>
-                        </GridCol>
-                        <GridCol setWidth="three-quarters">
-                          <StyledSummaryTable>
-                            <SummaryTable.Row
-                              heading="Event date"
-                              children={eventDate}
-                            />
-                            <SummaryTable.Row
-                              heading="Event location type"
-                              children={
-                                isEmpty(location) ? 'Not set' : location
-                              }
-                            />
-                            <SummaryTable.Row
-                              heading="Address"
-                              children={
-                                isEmpty(fullAddress) ? 'Not set' : fullAddress
-                              }
-                            />
-                            <SummaryTable.Row
-                              heading="Aventri reference number"
-                              children={
-                                <>
-                                  <span>
-                                    {aventriEventId}&nbsp;
-                                    <NewWindowLink href={aventriEventLink}>
-                                      View in Aventri
-                                    </NewWindowLink>
-                                  </span>
-                                </>
-                              }
-                            />
-                          </StyledSummaryTable>
-                        </GridCol>
-                      </GridRow>
-                    </>
-                  )
-                )
-              }}
-            </Task.Status>
+          return (
+            name && (
+              <>
+                <AventriEventSyncWarning aventriEventId={aventriEventId} />
+                <GridRow data-test="eventAventriDetails">
+                  <GridCol setWidth="one-quarter">
+                    <LocalNav dataTest="event-aventri-nav">
+                      <LocalNavLink
+                        dataTest="event-aventri-details-link"
+                        href={urls.events.aventri.details(aventriEventId)}
+                      >
+                        Details
+                      </LocalNavLink>
+                      {registrationStatusCounts?.map((status, index) => (
+                        <LocalNavLink
+                          key={`reg-status-${index}`}
+                          dataTest={`event-aventri-status-link-${status.urlSlug}`}
+                          href={urls.events.aventri.registrationStatus(
+                            aventriEventId,
+                            status.urlSlug
+                          )}
+                        >
+                          {status.status} ({status.count})
+                        </LocalNavLink>
+                      ))}
+                    </LocalNav>
+                  </GridCol>
+                  <GridCol setWidth="three-quarters">
+                    <StyledSummaryTable>
+                      <SummaryTable.Row
+                        heading="Event date"
+                        children={eventDate}
+                      />
+                      <SummaryTable.Row
+                        heading="Event location type"
+                        children={isEmpty(location) ? 'Not set' : location}
+                      />
+                      <SummaryTable.Row
+                        heading="Address"
+                        children={
+                          isEmpty(fullAddress) ? 'Not set' : fullAddress
+                        }
+                      />
+                      <SummaryTable.Row
+                        heading="Aventri reference number"
+                        children={
+                          <>
+                            <span>
+                              {aventriEventId}&nbsp;
+                              <NewWindowLink href={aventriEventLink}>
+                                View in Aventri
+                              </NewWindowLink>
+                            </span>
+                          </>
+                        }
+                      />
+                    </StyledSummaryTable>
+                  </GridCol>
+                </GridRow>
+              </>
+            )
           )
-        }
-      </CheckUserFeatureFlag>
+        }}
+      </Task.Status>
     </DefaultLayout>
   )
 }

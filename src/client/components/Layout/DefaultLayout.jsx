@@ -17,6 +17,7 @@ const GlobalStyles = createGlobalStyle`
 
 const DefaultLayout = ({
   heading,
+  subheading,
   pageTitle,
   flashMessages,
   breadcrumbs,
@@ -36,6 +37,7 @@ const DefaultLayout = ({
       />
       <LocalHeader
         heading={heading}
+        subheading={subheading}
         flashMessages={flashMessages}
         breadcrumbs={
           breadcrumbs || [{ link: '/', text: 'Home' }, { text: heading }]
@@ -54,6 +56,7 @@ const DefaultLayout = ({
 
 DefaultLayout.propTypes = {
   heading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+  subheading: PropTypes.string,
   pageTitle: PropTypes.string.isRequired,
   children: PropTypes.element.isRequired,
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import DataHubProvider from '../provider'
-import { ACTIVITY_STREAM_FEATURE_FLAG } from '../../../../../src/apps/companies/apps/activity-feed/constants'
 import { TASK_GET_USER_FEATURE_FLAGS } from '../../../../../src/client/components/CheckUserFeatureFlags/state'
 import { getUserFeatureFlags } from '../../../../../src/client/components/CheckUserFeatureFlags/tasks'
 
@@ -11,7 +10,8 @@ import { getServiceText } from '../../../../../src/client/components/ActivityFee
 const subject = 'An interaction with a company'
 const typeInteraction = 'dit:Interaction'
 const typeServiceDelivery = 'dit:ServiceDelivery'
-const interactionUrl = urls.interactions.detail(
+const interactionUrl = urls.companies.interactions.detail(
+  'bbab3b56-d2bb-4d5e-bb2f-dd159e5439dc',
   'accf9d98-93c5-48ad-adf5-d71757cdeb44'
 )
 const shortNotes = 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.'
@@ -204,12 +204,6 @@ const buildAndMountWithCustomService = (service) => {
 }
 
 describe('Interaction activity card', () => {
-  beforeEach(() => {
-    cy.intercept('GET', '**/whoami', {
-      active_features: ACTIVITY_STREAM_FEATURE_FLAG,
-    })
-  })
-
   context('When the card is rendered with a complete interaction', () => {
     beforeEach(() => {
       buildAndMountActivity(

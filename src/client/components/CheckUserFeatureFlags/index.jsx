@@ -19,7 +19,7 @@ action based on whether the user feature is enabled. e.g.
 const CheckUserFeatureFlag = ({ children, userFeatureFlagName }) => (
   <Resource
     name={TASK_GET_USER_FEATURE_FLAGS}
-    id={ID}
+    id={ID + userFeatureFlagName}
     payload={userFeatureFlagName}
   >
     {(isFeatureFlagEnabled) => (
