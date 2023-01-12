@@ -1,0 +1,9 @@
+{% extends "react.njk" %}
+
+{% block main_grid_right_column %}
+  {% component 'react-slot', {
+    id: 'ess-interaction-details',
+    props: props
+    } %}
+{% endblock %}
+
