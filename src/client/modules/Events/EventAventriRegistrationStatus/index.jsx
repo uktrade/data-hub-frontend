@@ -12,8 +12,6 @@ import {
   LocalNavLink,
   RoutedPagination,
 } from '../../../components'
-import CheckUserFeatureFlag from '../../../components/CheckUserFeatureFlags'
-import { ACTIVITY_STREAM_FEATURE_FLAG } from '../../../../apps/companies/apps/activity-feed/constants'
 import { GridCol, GridRow } from 'govuk-react'
 import Task from '../../../components/Task'
 import {
@@ -83,87 +81,73 @@ const EventAventriRegistrationStatus = ({
             breadcrumbs={breadcrumbs}
             useReactRouter={true}
           >
-            <CheckUserFeatureFlag
-              userFeatureFlagName={ACTIVITY_STREAM_FEATURE_FLAG}
+            <Task.Status
+              name={TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES}
+              id={ID}
+              progressMessage="Loading Aventri attendees"
+              startOnRender={{
+                payload: {
+                  aventriEventId,
+                  registrationStatus,
+                  ...payload,
+                },
+                onSuccessDispatch:
+                  EVENTS__AVENTRI_REGISTRATION_STATUS_ATTENDEES_LOADED,
+              }}
             >
-              {(isFeatureFlagEnabled) =>
-                isFeatureFlagEnabled && (
-                  <Task.Status
-                    name={TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES}
-                    id={ID}
-                    progressMessage="Loading Aventri attendees"
-                    startOnRender={{
-                      payload: {
-                        aventriEventId,
-                        registrationStatus,
-                        ...payload,
-                      },
-                      onSuccessDispatch:
-                        EVENTS__AVENTRI_REGISTRATION_STATUS_ATTENDEES_LOADED,
-                    }}
-                  >
-                    {() => (
-                      <>
-                        <AventriEventSyncWarning
-                          aventriEventId={aventriEventId}
+              {() => (
+                <>
+                  <AventriEventSyncWarning aventriEventId={aventriEventId} />
+                  <GridRow data-test="event-aventri-attended">
+                    <GridCol setWidth="one-quarter">
+                      <LocalNav dataTest="event-aventri-nav">
+                        <LocalNavLink
+                          dataTest="event-aventri-details-link"
+                          href={urls.events.aventri.details(aventriEventId)}
+                        >
+                          Details
+                        </LocalNavLink>
+                        {registrationStatusCounts?.map((status, index) => (
+                          <LocalNavLink
+                            key={`reg-status-${index}`}
+                            dataTest={`event-aventri-status-link-${status.urlSlug}`}
+                            href={urls.events.aventri.registrationStatus(
+                              aventriEventId,
+                              status.urlSlug
+                            )}
+                          >
+                            {status.status} ({status.count})
+                          </LocalNavLink>
+                        ))}
+                      </LocalNav>
+                    </GridCol>
+                    {aventriAttendees && (
+                      <GridCol setWidth="three-quarters">
+                        <CollectionSort
+                          sortOptions={ATTENDEES_SORT_OPTIONS}
+                          totalPages={totalPages}
+                          shouldPluralize={false}
                         />
-                        <GridRow data-test="event-aventri-attended">
-                          <GridCol setWidth="one-quarter">
-                            <LocalNav dataTest="event-aventri-nav">
-                              <LocalNavLink
-                                dataTest="event-aventri-details-link"
-                                href={urls.events.aventri.details(
-                                  aventriEventId
-                                )}
-                              >
-                                Details
-                              </LocalNavLink>
-                              {registrationStatusCounts?.map(
-                                (status, index) => (
-                                  <LocalNavLink
-                                    key={`reg-status-${index}`}
-                                    dataTest={`event-aventri-status-link-${status.urlSlug}`}
-                                    href={urls.events.aventri.registrationStatus(
-                                      aventriEventId,
-                                      status.urlSlug
-                                    )}
-                                  >
-                                    {status.status} ({status.count})
-                                  </LocalNavLink>
-                                )
-                              )}
-                            </LocalNav>
-                          </GridCol>
-                          {aventriAttendees && (
-                            <GridCol setWidth="three-quarters">
-                              <CollectionSort
-                                sortOptions={ATTENDEES_SORT_OPTIONS}
-                                totalPages={totalPages}
-                                shouldPluralize={false}
-                              />
-                              <CollectionHeader
-                                totalItems={totalAttendees}
-                                collectionName={registrationStatus}
-                                data-test="attendee-collection-header"
-                                shouldPluralize={false}
-                              />
+                        <CollectionHeader
+                          totalItems={totalAttendees}
+                          collectionName={registrationStatus}
+                          data-test="attendee-collection-header"
+                          shouldPluralize={false}
+                        />
 
-                              <ActivityList>
-                                {aventriAttendees?.map((attendee, index) => (
-                                  <li key={`aventri-attended-${index}`}>
-                                    <Activity activity={attendee}></Activity>
-                                  </li>
-                                ))}
-                              </ActivityList>
-                            </GridCol>
-                          )}
-                        </GridRow>
-                      </>
+                        <ActivityList>
+                          {aventriAttendees?.map((attendee, index) => (
+                            <li key={`aventri-attended-${index}`}>
+                              <Activity activity={attendee}></Activity>
+                            </li>
+                          ))}
+                        </ActivityList>
+                      </GridCol>
                     )}
-                  </Task.Status>
-                )
-              }
-            </CheckUserFeatureFlag>
+                  </GridRow>
+                </>
+              )}
+            </Task.Status>
             <RoutedPagination
               initialPage={page}
               items={totalAttendees}
