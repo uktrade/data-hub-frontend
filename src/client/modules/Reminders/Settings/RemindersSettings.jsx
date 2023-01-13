@@ -42,7 +42,6 @@ const RemindersSettings = ({
   const openESL = openSettings('investments_estimated_land_dates', qsParams)
   const openNRI = openSettings('investments_no_recent_interactions', qsParams)
   const openENRI = openSettings('companies_no_recent_interactions', qsParams)
-  const openENI = openSettings('companies_new_interactions', qsParams)
 
   return (
     <DefaultLayout
@@ -66,7 +65,6 @@ const RemindersSettings = ({
           estimatedLandDate,
           noRecentInteraction,
           exportNoRecentInteractions,
-          exportNewInteractions,
         }) => (
           <>
             {hasInvestmentFeatureGroup && (
@@ -116,19 +114,6 @@ const RemindersSettings = ({
                       dataName={'companies-no-recent-interactions'}
                       data={exportNoRecentInteractions}
                       to={urls.reminders.settings.exports.noRecentInteraction()}
-                    />
-                  </RemindersToggleSection>
-                  <RemindersToggleSection
-                    label="Companies with new interaction"
-                    id="companies-new-interaction-toggle"
-                    data-test="companies-new-interaction-toggle"
-                    isOpen={openENI}
-                    borderBottom={true}
-                  >
-                    <RemindersSettingsTable
-                      dataName={'companies-new-interaction'}
-                      data={exportNewInteractions}
-                      to={urls.reminders.settings.exports.newInteraction()}
                     />
                   </RemindersToggleSection>
                 </ToggleSectionContainer>
