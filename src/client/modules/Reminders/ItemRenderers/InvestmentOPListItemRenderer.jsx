@@ -4,7 +4,7 @@ import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { Link } from 'govuk-react'
 import styled from 'styled-components'
-import { ListItem, ItemHeader, ItemFooter } from './components/ListItem'
+import { ListItem, ItemHeader, ItemFooter } from './styled'
 
 import { DATE_DAY_LONG_FORMAT } from '../../../../common/constants'
 import { format } from '../../../utils/date'

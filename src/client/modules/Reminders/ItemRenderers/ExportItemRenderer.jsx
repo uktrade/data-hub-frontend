@@ -5,10 +5,13 @@ import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { Link } from 'govuk-react'
 import styled from 'styled-components'
-
-import DeleteButton from './components/DeleteButton'
-import RightCol from './components/RightCol'
-import { ListItem, ItemHeader, ItemContent } from './components/ListItem'
+import {
+  ListItem,
+  ItemHeader,
+  ItemContent,
+  DeleteButton,
+  RightCol,
+} from './styled'
 
 import { formatMediumDate } from '../../../utils/date'
 import { DARK_GREY } from '../../../utils/colors'
