@@ -1,35 +1,18 @@
 import React from 'react'
-import { SPACING, FONT_SIZE, HEADING_SIZES } from '@govuk-react/constants'
-import { GREY_2 } from 'govuk-colours'
+import { SPACING } from '@govuk-react/constants'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { Link } from 'govuk-react'
 import styled from 'styled-components'
+import { ListItem, ItemHeader, ItemFooter } from './styled'
 
 import { DATE_DAY_LONG_FORMAT } from '../../../../common/constants'
-import { DARK_GREY } from '../../../utils/colors'
 import { format } from '../../../utils/date'
 import urls from '../../../../lib/urls'
-
-const ListItem = styled('li')({
-  borderBottom: `solid 1px ${GREY_2}`,
-})
-
-const ItemHeader = styled('div')({
-  fontSize: HEADING_SIZES.SMALL,
-  marginTop: SPACING.SCALE_3,
-  marginBottom: SPACING.SCALE_4,
-})
 
 const ItemContent = styled('div')({
   marginBottom: SPACING.SCALE_2,
   marginTop: SPACING.SCALE_2,
-})
-
-const ItemFooter = styled('div')({
-  color: DARK_GREY,
-  fontSize: FONT_SIZE.SIZE_16,
-  marginBottom: SPACING.SCALE_4,
 })
 
 const InvestmentOPListItemRenderer = (item) => (
