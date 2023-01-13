@@ -111,37 +111,37 @@ describe('Aventri status event registration attendees', () => {
               'GET',
               `${urls.events.aventri.registrationStatusData(
                 existingEventId
-              )}?sortBy=first_name:asc&page=1&size=10&registrationStatus*`
+              )}?sortBy=first_name:asc&page=1&size=20&registrationStatus*`
             ).as('firstNameA-Z')
             cy.intercept(
               'GET',
               `${urls.events.aventri.registrationStatusData(
                 existingEventId
-              )}?sortBy=first_name:desc&page=1&size=10&registrationStatus*`
+              )}?sortBy=first_name:desc&page=1&size=20&registrationStatus*`
             ).as('firstNameZ-A')
             cy.intercept(
               'GET',
               `${urls.events.aventri.registrationStatusData(
                 existingEventId
-              )}?sortBy=last_name:asc&page=1&size=10&registrationStatus*`
+              )}?sortBy=last_name:asc&page=1&size=20&registrationStatus*`
             ).as('lastNameA-Z')
             cy.intercept(
               'GET',
               `${urls.events.aventri.registrationStatusData(
                 existingEventId
-              )}?sortBy=last_name:desc&page=1&size=10&registrationStatus*`
+              )}?sortBy=last_name:desc&page=1&size=20&registrationStatus*`
             ).as('lastNameZ-A')
             cy.intercept(
               'GET',
               `${urls.events.aventri.registrationStatusData(
                 existingEventId
-              )}?sortBy=company_name:asc&page=1&size=10&registrationStatus*`
+              )}?sortBy=company_name:asc&page=1&size=20&registrationStatus*`
             ).as('companyNameA-Z')
             cy.intercept(
               'GET',
               `${urls.events.aventri.registrationStatusData(
                 existingEventId
-              )}?sortBy=company_name:desc&page=1&size=10&registrationStatus*`
+              )}?sortBy=company_name:desc&page=1&size=20&registrationStatus*`
             ).as('companyNameZ-A')
 
             cy.visit(
