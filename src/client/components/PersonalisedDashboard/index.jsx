@@ -120,7 +120,7 @@ const PersonalisedDashboard = ({
                       badge={
                         !!reminderSummaryCount && (
                           <NotificationBadge
-                            label={`${reminderSummaryCount}`}
+                            value={`${reminderSummaryCount}`}
                           />
                         )
                       }
@@ -137,7 +137,7 @@ const PersonalisedDashboard = ({
                       id="investment-reminders-section"
                       badge={
                         !!remindersCount && (
-                          <NotificationBadge label={`${remindersCount}`} />
+                          <NotificationBadge value={`${remindersCount}`} />
                         )
                       }
                       major={true}
