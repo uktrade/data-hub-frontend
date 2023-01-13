@@ -1,37 +1,22 @@
 import React from 'react'
-import { SPACING, FONT_WEIGHTS, HEADING_SIZES } from '@govuk-react/constants'
-import { BLACK, GREY_1, GREY_2 } from 'govuk-colours'
+import { FONT_WEIGHTS } from '@govuk-react/constants'
+import { BLACK, GREY_1 } from 'govuk-colours'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
-import { H3 } from '@govuk-react/heading'
 import { Link } from 'govuk-react'
 import styled from 'styled-components'
 
 import DeleteButton from './components/DeleteButton'
 import RightCol from './components/RightCol'
+import { ListItem, ItemHeader, ItemContent } from './components/ListItem'
 
 import { formatMediumDate } from '../../../utils/date'
 import { DARK_GREY } from '../../../utils/colors'
 import { INTERACTION_NAMES } from '../constants'
 import urls from '../../../../lib/urls'
 
-const ListItem = styled('li')({
-  borderBottom: `solid 1px ${GREY_2}`,
-})
-
-const ItemHeader = styled(H3)({
-  fontSize: HEADING_SIZES.SMALL,
-  marginTop: SPACING.SCALE_3,
-  marginBottom: SPACING.SCALE_4,
-})
-
 const ItemHeaderLink = styled(Link)({
   fontWeight: FONT_WEIGHTS.regular,
-})
-
-const ItemContent = styled('div')({
-  color: ({ colour }) => colour,
-  marginBottom: SPACING.SCALE_3,
 })
 
 const ItemHint = styled('span')({
@@ -105,11 +90,12 @@ const ExportItemRenderer = (item, onDeleteReminder, disableDelete) => (
               </ul>
             </ItemContent>
             {/* Display on mobile only */}
-            {onDeleteReminder && !disableDelete && (
+            {onDeleteReminder && (
               <DeleteButton
                 isMobile={true}
                 data-test="delete-button"
                 onClick={() => onDeleteReminder(item.id)}
+                disabled={disableDelete}
               >
                 Delete reminder
               </DeleteButton>
@@ -118,14 +104,13 @@ const ExportItemRenderer = (item, onDeleteReminder, disableDelete) => (
           {/* Display on Tablet and Desktop only */}
           {onDeleteReminder && (
             <RightCol setWidth="one-quarter">
-              {!disableDelete && (
-                <DeleteButton
-                  data-test="delete-button"
-                  onClick={() => onDeleteReminder(item.id)}
-                >
-                  Delete reminder
-                </DeleteButton>
-              )}
+              <DeleteButton
+                data-test="delete-button"
+                onClick={() => onDeleteReminder(item.id)}
+                disabled={disableDelete}
+              >
+                Delete reminder
+              </DeleteButton>
             </RightCol>
           )}
         </>
