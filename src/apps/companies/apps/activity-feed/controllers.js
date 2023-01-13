@@ -29,6 +29,7 @@ const {
   dataHubAndActivityStreamServicesQuery,
   aventriAttendeeQuery,
   exportSupportServiceQuery,
+  exportSupportServiceDetailQuery,
   aventriAttendeeRegistrationStatusQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
@@ -190,6 +191,7 @@ async function getExportSupportActivities(req, next, contacts) {
       ) {
         const essContactEmail = activity.actor['dit:emailAddress']
         const essContact = getContactFromEmailAddress(essContactEmail, contacts)
+
         activity.object.attributedTo = [
           activity.object.attributedTo,
           mapEssContacts(essContact),
@@ -438,6 +440,23 @@ async function fetchAventriEvent(req, res, next) {
       transformAventriEventStatusCountsToEventStatusCounts(aventriStatusCounts)
 
     return res.json({ ...aventriEventData, registrationStatuses: statusCounts })
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function fetchESSDetails(req, res, next) {
+  try {
+    const essInteractionId = req.params.essInteractionId
+    const essQuery = exportSupportServiceDetailQuery(essInteractionId)
+
+    const essInteractionResults = await fetchActivityFeed(req, essQuery)
+
+    const essInteractionDetail = essInteractionResults.hits.hits.map(
+      (hit) => hit._source
+    )
+
+    return res.json(...essInteractionDetail)
   } catch (error) {
     next(error)
   }
@@ -692,4 +711,5 @@ module.exports = {
   getAventriEventsAttendedByCompanyContacts,
   fetchAventriEventRegistrationStatusAttendees,
   getAventriRegistrationStatusCounts,
+  fetchESSDetails,
 }

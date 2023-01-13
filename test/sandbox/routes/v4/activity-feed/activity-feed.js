@@ -26,6 +26,7 @@ var aventriRegistrationStatusWithAggregations = require('../../../fixtures/v4/ac
 
 //ESS Interactions
 var essInteractionsNoTitle = require('../../../fixtures/v4/activity-feed/ess-interaction-no-title.json')
+var essInteractionDetail = require('../../../fixtures/v4/activity-feed/ess-interaction.json')
 
 ////This order is correct when sorted by: First Name Z-A, Last name Z-A and Company name Z-A
 var aventriAttendeesZToAOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-z-a.json')
@@ -305,6 +306,13 @@ exports.activityFeed = function (req, res) {
 
     return res.json(activities)
   }
+
+  // ESS Interactions
+  var essDetails = get(req.body, "query.bool.must[0].term['id']")
+  if (startsWith(essDetails, 'dit:directoryFormsApi:Submission:1111'))
+    return res.json(essInteractionDetail)
+  if (startsWith(essDetails, 'dit:directoryFormsApi:Submission:2222'))
+    return res.json(essInteractionsNoTitle)
 
   // Maxemail campaigns
   if (isEqual(maxemailCampaignQuery, req.body)) {
