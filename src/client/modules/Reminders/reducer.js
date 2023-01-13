@@ -31,6 +31,11 @@ const initialState = {
     count: 0,
     nextPending: false,
   },
+  exportsNewInteractionReminders: {
+    results: [],
+    count: 0,
+    nextPending: false,
+  },
 }
 
 export default (state = initialState, { type, result, payload }) => {

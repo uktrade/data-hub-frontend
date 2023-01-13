@@ -21,6 +21,8 @@ const interceptAPICalls = ({
   nri_email_reminders_enabled = true,
   enri_reminder_days = [10, 40, 30],
   enri_email_reminders_enabled = true,
+  eni_reminder_days = [2, 4, 7],
+  eni_email_reminders_enabled = true,
 } = {}) => {
   cy.intercept('GET', summaryEndpoint, {
     body: {
@@ -35,6 +37,10 @@ const interceptAPICalls = ({
       no_recent_export_interaction: {
         email_reminders_enabled: enri_email_reminders_enabled,
         reminder_days: enri_reminder_days,
+      },
+      new_export_interaction: {
+        email_reminders_enabled: eni_email_reminders_enabled,
+        reminder_days: eni_reminder_days,
       },
     },
   }).as('summaryRequest')
@@ -189,7 +195,7 @@ describe('Settings: reminders and email notifications', () => {
 
   context('When all settings are visible', () => {
     const queryParams =
-      'investments_estimated_land_dates=true&investments_no_recent_interactions=true&companies_no_recent_interactions=true'
+      'investments_estimated_land_dates=true&investments_no_recent_interactions=true&companies_no_recent_interactions=true&companies_new_interactions=true'
     before(() => {
       interceptAPICalls()
       cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)

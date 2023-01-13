@@ -1,57 +1,19 @@
 import React from 'react'
+import { SPACING, FONT_WEIGHTS, HEADING_SIZES } from '@govuk-react/constants'
+import { BLACK, GREY_1, GREY_2 } from 'govuk-colours'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
+import { H3 } from '@govuk-react/heading'
 import { Link } from 'govuk-react'
 import styled from 'styled-components'
-import { BLACK, GREY_1, GREY_2 } from 'govuk-colours'
-import { H3 } from '@govuk-react/heading'
-import {
-  SPACING,
-  FONT_SIZE,
-  FONT_WEIGHTS,
-  HEADING_SIZES,
-  MEDIA_QUERIES,
-} from '@govuk-react/constants'
+
+import DeleteButton from './components/DeleteButton'
+import RightCol from './components/RightCol'
 
 import { formatMediumDate } from '../../../utils/date'
 import { DARK_GREY } from '../../../utils/colors'
 import { INTERACTION_NAMES } from '../constants'
 import urls from '../../../../lib/urls'
-
-const Button = styled('button')({
-  padding: 0,
-  background: 'transparent',
-  border: 'none',
-  fontSize: FONT_SIZE.SIZE_16,
-  fontFamily: 'inherit',
-  color: DARK_GREY,
-  cursor: 'pointer',
-  textDecoration: 'underline',
-})
-
-const DeleteButton = styled(Button)({
-  display: ({ isMobile }) => (isMobile ? 'inline' : 'none'),
-  marginBottom: SPACING.SCALE_4,
-  [MEDIA_QUERIES.TABLET]: {
-    display: ({ isMobile }) => (isMobile ? 'none' : 'inline'),
-    margin: `${SPACING.SCALE_3} 0`,
-  },
-  [MEDIA_QUERIES.DESKTOP]: {
-    display: ({ isMobile }) => (isMobile ? 'none' : 'inline'),
-    margin: `${SPACING.SCALE_3} 0`,
-  },
-})
-
-const RightCol = styled(GridCol)({
-  display: 'none',
-  textAlign: 'right',
-  [MEDIA_QUERIES.TABLET]: {
-    display: 'block',
-  },
-  [MEDIA_QUERIES.DESKTOP]: {
-    display: 'block',
-  },
-})
 
 const ListItem = styled('li')({
   borderBottom: `solid 1px ${GREY_2}`,

@@ -152,7 +152,7 @@ storiesOf('ToggleSection', module)
       label="Toggle me"
       id="toggle.one"
       isOpen={true}
-      badge={<NotificationBadge label="15" />}
+      badge={<NotificationBadge value={15} />}
     >
       <Form
         id="toggleSectionExample"

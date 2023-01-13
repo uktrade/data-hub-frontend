@@ -30,10 +30,14 @@ export const DashboardToggleSection = styled(MultiInstanceToggleSection)`
 
   ${ButtonContent} {
     text-decoration: underline;
+    white-space: nowrap;
   }
 
   ${BadgeContainer} {
-    margin-left: ${SPACING.SCALE_1};
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-right: ${SPACING.SCALE_3};
   }
 
   ${ToggleContent} {

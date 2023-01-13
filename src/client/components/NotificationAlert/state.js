@@ -22,6 +22,5 @@ export const state2props = (state) => {
   return {
     ...state[ID],
     remindersURL,
-    hasFeatureGroup: hasInvestmentFeatureGroup || hasExportFeatureGroup,
   }
 }

@@ -524,6 +524,16 @@ app.patch(
   v4Reminders.saveNoRecentExportInteractionsSubscriptions
 )
 
+app.get(
+  '/v4/reminder/subscription/new-export-interaction',
+  v4Reminders.getNewExportInteractionsSubscriptions
+)
+
+app.patch(
+  '/v4/reminder/subscription/new-export-interaction',
+  v4Reminders.saveNewExportInteractionsSubscriptions
+)
+
 // Reminders lists
 
 app.get(
