@@ -47,6 +47,7 @@ const NoRecentInteractionsCommonFields = ({
   doYouWantQuestion,
   whenYouWantQuestion,
   emptyErrorMessage,
+  remindersDaysLabelHint,
 }) => {
   return (
     <>
@@ -76,7 +77,9 @@ const NoRecentInteractionsCommonFields = ({
                       {({ groupIndex }) => (
                         <StyledFieldInput
                           type="text"
-                          text="days with no interactions"
+                          text={
+                            remindersDaysLabelHint || 'days with no interaction'
+                          }
                           name={`reminder_days_${groupIndex}`}
                           data-test={`reminder_days_${groupIndex}`}
                           validate={(value, field, state) => {

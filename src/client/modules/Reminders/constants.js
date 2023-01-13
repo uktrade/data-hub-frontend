@@ -25,12 +25,14 @@ export const INVESTMENTS_OUTSTANDING_PROPOSITIONS =
   'investments-outstanding-propositions'
 export const COMPANIES_NO_RECENT_INTERACTIONS =
   'companies-no-recent-interactions'
+export const COMPANIES_NEW_INTERACTIONS = 'companies-new-interactions'
 
 export const reminderTypeToLabel = {
   [INVESTMENTS_ESTIMATED_LAND_DATES]: 'Approaching estimated land dates',
   [INVESTMENTS_NO_RECENT_INTERACTIONS]: 'Projects with no recent interactions',
   [INVESTMENTS_OUTSTANDING_PROPOSITIONS]: 'Outstanding propositions',
   [COMPANIES_NO_RECENT_INTERACTIONS]: 'Companies with no recent interactions',
+  [COMPANIES_NEW_INTERACTIONS]: 'Companies with new interactions',
 }
 
 export const INTERACTION_NAMES = {

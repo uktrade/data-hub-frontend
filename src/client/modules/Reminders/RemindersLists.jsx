@@ -67,7 +67,6 @@ const HomeLink = styled(Link)({
 const RemindersLists = () => {
   const { reminderType } = useParams()
   const subject = reminderTypeToLabel[reminderType]
-
   return (
     <DefaultLayout
       pageTitle={`Reminders - ${subject}`}

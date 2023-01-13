@@ -149,6 +149,15 @@ const transformSubscriptionSummary = ({ data }) => ({
       ? settings.ON
       : settings.OFF,
   },
+  exportNewInteractions: {
+    formattedReminderDays: formatDays(
+      data.new_export_interaction.reminder_days.sort((a, b) => a - b),
+      'days after a new interaction was posted'
+    ),
+    emailRemindersOnOff: data.new_export_interaction.email_reminders_enabled
+      ? settings.ON
+      : settings.OFF,
+  },
 })
 
 export const getSubscriptionSummary = () =>
@@ -204,5 +213,22 @@ export const getNriExportSubscriptions = () =>
 export const saveNriExportSubscriptions = (payload) =>
   apiProxyAxios.patch(
     '/v4/reminder/subscription/no-recent-export-interaction',
+    payload
+  )
+
+export const getNIExportSubscriptions = () =>
+  apiProxyAxios
+    .get('/v4/reminder/subscription/new-export-interaction')
+    .then(({ data }) => ({
+      ...transformReminderDaysToForm(
+        [...data.reminder_days].sort((a, b) => a - b)
+      ),
+      reminder_days: data.reminder_days,
+      email_reminders_enabled: data.email_reminders_enabled,
+    }))
+
+export const saveNIExportSubscriptions = (payload) =>
+  apiProxyAxios.patch(
+    '/v4/reminder/subscription/new-export-interaction',
     payload
   )
