@@ -11,6 +11,7 @@ import InvestmentsEstimatedLandDatesList from './InvestmentsEstimatedLandDatesLi
 import InvestmentsNoRecentInteractionsList from './InvestmentsNoRecentInteractionsList'
 import InvestmentsOutstandingPropositionsList from './InvestmentsOutstandingPropositionsList'
 import ExportsNoRecentInteractionsList from './ExportsNoRecentInteractionsList'
+import ExportsNewInteractionsList from './ExportsNewInteractionsList'
 
 import urls from '../../../lib/urls'
 import {
@@ -19,6 +20,7 @@ import {
   INVESTMENTS_NO_RECENT_INTERACTIONS,
   INVESTMENTS_OUTSTANDING_PROPOSITIONS,
   COMPANIES_NO_RECENT_INTERACTIONS,
+  COMPANIES_NEW_INTERACTIONS,
 } from './constants'
 
 const Container = styled('div')({
@@ -102,6 +104,9 @@ const RemindersLists = () => {
             )}
             {reminderType === COMPANIES_NO_RECENT_INTERACTIONS && (
               <ExportsNoRecentInteractionsList />
+            )}
+            {reminderType === COMPANIES_NEW_INTERACTIONS && (
+              <ExportsNewInteractionsList />
             )}
           </ListContainer>
         </Container>

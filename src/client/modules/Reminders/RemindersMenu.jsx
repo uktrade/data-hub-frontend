@@ -86,6 +86,12 @@ export const RemindersMenu = ({
           >
             Companies with no recent interactions
           </MenuItem>
+          <MenuItem
+            to={urls.reminders.exports.newInteractions()}
+            pathname={location.pathname}
+          >
+            Companies with new interactions
+          </MenuItem>
         </Menu>
       )}
     </>
