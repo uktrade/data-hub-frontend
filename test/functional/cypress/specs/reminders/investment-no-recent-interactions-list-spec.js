@@ -94,7 +94,7 @@ describe('No Recent Interaction Reminders', () => {
     })
 
     it('should include investment menu section', () => {
-      cy.get('[data-test="investment-menu-group"]').should('exist')
+      cy.get('[data-test="investment-menu-group link-list"]').should('exist')
     })
 
     it('should render the list heading with the total number of reminders', () => {
