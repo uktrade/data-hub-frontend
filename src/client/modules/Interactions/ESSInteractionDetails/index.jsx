@@ -84,27 +84,6 @@ const ESSInteractionDetails = ({
                         children={countries}
                       />
                       <SummaryTable.Row
-                        heading="Company"
-                        children={companyName}
-                      />
-                      <SummaryTable.Row
-                        heading="Enquirer"
-                        children={enquirer}
-                      />
-                      <SummaryTable.Row heading="Subject" children={subject} />
-                      <SummaryTable.Row
-                        heading="Question"
-                        children={question}
-                      />
-                      <SummaryTable.Row
-                        heading="Date of interaction"
-                        children={dateOfInteraction}
-                      />
-                      <SummaryTable.Row
-                        heading="Countries"
-                        children={countries}
-                      />
-                      <SummaryTable.Row
                         heading="Communication channel"
                         children="Export Support Services"
                       />

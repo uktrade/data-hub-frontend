@@ -5,8 +5,6 @@ const {
   fetchESSDetails,
 } = require('../companies/apps/activity-feed/controllers')
 
-const { renderEssDetails } = require('./controllers/essDetails')
-
 const {
   APP_PERMISSIONS,
   QUERY_FIELDS,

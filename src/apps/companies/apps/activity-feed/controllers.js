@@ -28,8 +28,6 @@ const {
   aventriAttendeeForCompanyQuery,
   dataHubAndActivityStreamServicesQuery,
   aventriAttendeeQuery,
-  exportSupportServiceQuery,
-  exportSupportServiceDetailQuery,
   exportSupportServiceDetailQuery,
   aventriAttendeeRegistrationStatusQuery,
 } = require('./es-queries')
@@ -322,9 +320,7 @@ async function fetchActivityFeedHandler(req, res, next) {
     )
     const aventriEventIds = Object.keys(aventriEvents)
 
-      aventriEventIds = Object.keys(aventriEvents)
-    }
-
+    // Get Ess Activities
     const getEssInteractions = isEssFilter(activityTypeFilter)
     const queries = getQueries({
       from,
