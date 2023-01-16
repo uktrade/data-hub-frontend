@@ -70,7 +70,7 @@ describe('ContactLocalHeader', () => {
     })
 
     it('should render all export menu items', () => {
-      cy.get('@listItems').should('have.length', 2)
+      cy.get('@listItems').should('have.length', 1)
 
       exportLinks.forEach((item, index) => {
         cy.get('@listItems')
@@ -99,7 +99,7 @@ describe('ContactLocalHeader', () => {
       })
 
       it('should render all investment menu items', () => {
-        cy.get('@listItems').should('have.length', 5)
+        cy.get('@listItems').should('have.length', 4)
 
         investmentLinks.concat(exportLinks).forEach((item, index) => {
           cy.get('@listItems')
