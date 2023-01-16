@@ -231,7 +231,7 @@ describe('Exports New Interaction Reminders', () => {
     })
 
     it('should include a message "You have no reminders"', () => {
-      cy.get('[data-test="investments-no-reminders"]').should(
+      cy.get('[data-test="exports-new-reminders"]').should(
         'contain',
         'You have no reminders.'
       )
