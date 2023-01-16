@@ -26,6 +26,10 @@ describe('ContactLocalHeader', () => {
       title: 'Companies with no recent interaction',
       url: urls.reminders.exports.noRecentInteractions(),
     },
+    {
+      title: 'Companies with new interaction',
+      url: urls.reminders.exports.newInteractions(),
+    },
   ]
 
   context('When hasInvestmentFeatureGroup is true', () => {
@@ -70,7 +74,7 @@ describe('ContactLocalHeader', () => {
     })
 
     it('should render all export menu items', () => {
-      cy.get('@listItems').should('have.length', 1)
+      cy.get('@listItems').should('have.length', 2)
 
       exportLinks.forEach((item, index) => {
         cy.get('@listItems')
@@ -99,7 +103,7 @@ describe('ContactLocalHeader', () => {
       })
 
       it('should render all investment menu items', () => {
-        cy.get('@listItems').should('have.length', 4)
+        cy.get('@listItems').should('have.length', 5)
 
         investmentLinks.concat(exportLinks).forEach((item, index) => {
           cy.get('@listItems')
