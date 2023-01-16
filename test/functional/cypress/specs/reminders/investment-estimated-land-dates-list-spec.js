@@ -72,10 +72,7 @@ describe('Estimated Land Date Reminders', () => {
   context('Reminders List', () => {
     before(() => {
       interceptApiCalls()
-      cy.setUserFeatureGroups([
-        'export-notifications',
-        'investment-notifications',
-      ])
+      cy.setUserFeatureGroups(['investment-notifications'])
       cy.visit(urls.reminders.investments.estimatedLandDate())
       cy.wait('@remindersApiRequest')
     })
@@ -93,6 +90,10 @@ describe('Estimated Land Date Reminders', () => {
         'have.text',
         'Approaching estimated land dates'
       )
+    })
+
+    it('should include investment menu section', () => {
+      cy.get('[data-test="investment-menu-group"]').should('exist')
     })
 
     it('should render the list heading with the total number of reminders', () => {

@@ -70,10 +70,7 @@ describe('Outstanding Proposition Reminders', () => {
 
   context('Reminders List', () => {
     before(() => {
-      cy.setUserFeatureGroups([
-        'export-notifications',
-        'investment-notifications',
-      ])
+      cy.setUserFeatureGroups(['investment-notifications'])
       interceptApiCalls()
       cy.visit(urls.reminders.investments.outstandingPropositions())
       waitForAPICalls()
@@ -92,6 +89,10 @@ describe('Outstanding Proposition Reminders', () => {
         'have.text',
         'Outstanding propositions'
       )
+    })
+
+    it('should include investment menu section', () => {
+      cy.get('[data-test="investment-menu-group"]').should('exist')
     })
 
     it('should render the list heading with the total number of reminders', () => {

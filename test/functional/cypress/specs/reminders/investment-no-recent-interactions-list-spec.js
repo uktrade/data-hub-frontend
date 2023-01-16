@@ -73,10 +73,7 @@ describe('No Recent Interaction Reminders', () => {
   context('Reminders List', () => {
     before(() => {
       interceptApiCalls()
-      cy.setUserFeatureGroups([
-        'export-notifications',
-        'investment-notifications',
-      ])
+      cy.setUserFeatureGroups(['investment-notifications'])
       cy.visit(urls.reminders.investments.noRecentInteraction())
       cy.wait('@remindersApiRequest')
     })
@@ -94,6 +91,10 @@ describe('No Recent Interaction Reminders', () => {
         'have.text',
         'Projects with no recent interactions'
       )
+    })
+
+    it('should include investment menu section', () => {
+      cy.get('[data-test="investment-menu-group"]').should('exist')
     })
 
     it('should render the list heading with the total number of reminders', () => {
