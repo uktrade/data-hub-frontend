@@ -372,8 +372,6 @@ async function fetchActivityFeedHandler(req, res, next) {
           activity.object.attributedTo,
           mapEssContacts(essContact),
         ]
-        //TODO: This might need to change on API, or can we sort by StartTime OR Published if startTime not there?
-        activity.object.startTime = activity.object.published
       }
       return activity
     })

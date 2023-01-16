@@ -71,6 +71,11 @@ const dataHubAndActivityStreamServicesQuery = ({
     size,
     sort: [
       {
+        'object.published': {
+          order: 'desc',
+        },
+      },
+      {
         'object.startTime': {
           order: 'desc',
         },
