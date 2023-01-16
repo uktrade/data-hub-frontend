@@ -47,7 +47,7 @@ const MenuItem = ({ to, pathname, children }) => (
   </LinkListItem>
 )
 
-const RemindersMenu = ({
+export const RemindersMenu = ({
   hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
 }) => {
