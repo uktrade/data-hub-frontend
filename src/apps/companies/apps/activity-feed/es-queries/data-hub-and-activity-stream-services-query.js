@@ -4,6 +4,8 @@ const dataHubAndActivityStreamServicesQuery = ({
   types,
   companyIds,
   aventriEventIds,
+  getEssInteractions,
+  contacts,
 }) => {
   const shouldCriteria = [
     {
@@ -37,6 +39,27 @@ const dataHubAndActivityStreamServicesQuery = ({
           {
             terms: {
               id: aventriEventIds,
+            },
+          },
+        ],
+      },
+    })
+  }
+  if (getEssInteractions) {
+    shouldCriteria.push({
+      bool: {
+        must: [
+          {
+            term: {
+              'object.attributedTo.id':
+                'dit:directoryFormsApi:SubmissionType:export-support-service',
+            },
+          },
+          {
+            terms: {
+              'actor.dit:emailAddress': [
+                ...contacts.map((contact) => contact.email),
+              ],
             },
           },
         ],

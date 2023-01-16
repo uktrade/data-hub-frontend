@@ -5,6 +5,7 @@ const externalActivityQuery = ({
   companyIds,
   contacts,
   aventriEventIds,
+  getEssInteractions,
 }) => {
   const shouldCriteria = [
     {
@@ -72,6 +73,27 @@ const externalActivityQuery = ({
           {
             terms: {
               id: aventriEventIds,
+            },
+          },
+        ],
+      },
+    })
+  }
+  if (getEssInteractions) {
+    shouldCriteria.push({
+      bool: {
+        must: [
+          {
+            term: {
+              'object.attributedTo.id':
+                'dit:directoryFormsApi:SubmissionType:export-support-service',
+            },
+          },
+          {
+            terms: {
+              'actor.dit:emailAddress': [
+                ...contacts.map((contact) => contact.email),
+              ],
             },
           },
         ],

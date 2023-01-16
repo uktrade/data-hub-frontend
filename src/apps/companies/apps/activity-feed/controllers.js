@@ -175,38 +175,6 @@ async function getMaxemailCampaigns(req, next, contacts) {
   }
 }
 
-async function getExportSupportActivities(req, next, contacts) {
-  try {
-    const { from, size } = req.query
-
-    // Fetch ESS  Activities
-    const essQuery = exportSupportServiceQuery(from, size, contacts)
-    const essQueryResults = await fetchActivityFeed(req, essQuery)
-    const essActivities = essQueryResults.hits.hits.map((hit) => hit._source)
-
-    //Add Ess contacts to each Activity
-    const essActivitiesWithContact = essActivities.map((activity) => {
-      if (
-        activity.object.attributedTo.id ==
-        'dit:directoryFormsApi:SubmissionType:export-support-service'
-      ) {
-        const essContactEmail = activity.actor['dit:emailAddress']
-        const essContact = getContactFromEmailAddress(essContactEmail, contacts)
-
-        activity.object.attributedTo = [
-          activity.object.attributedTo,
-          mapEssContacts(essContact),
-        ]
-      }
-      return activity
-    })
-
-    return essActivitiesWithContact
-  } catch (error) {
-    next(error)
-  }
-}
-
 async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
   try {
     // Fetch aventri attendee info for company contacts
@@ -354,6 +322,10 @@ async function fetchActivityFeedHandler(req, res, next) {
     )
     const aventriEventIds = Object.keys(aventriEvents)
 
+      aventriEventIds = Object.keys(aventriEvents)
+    }
+
+    const getEssInteractions = isEssFilter(activityTypeFilter)
     const queries = getQueries({
       from,
       size,
@@ -361,6 +333,7 @@ async function fetchActivityFeedHandler(req, res, next) {
       contacts: company.contacts,
       user,
       aventriEventIds,
+      getEssInteractions,
     })
 
     const results = await fetchActivityFeed(
@@ -377,17 +350,6 @@ async function fetchActivityFeedHandler(req, res, next) {
       total += campaigns.length
     }
 
-    // Get Export Support Service Activites
-    if (isEssFilter(activityTypeFilter)) {
-      const essActivities = await getExportSupportActivities(
-        req,
-        next,
-        company.contacts
-      )
-      activities = [...activities, ...essActivities]
-      total += essActivities.length
-    }
-
     //loop over all aventri results, set the contact to be the matching contact from the contacts array
     activities = activities.map((activity) => {
       if (activity.type == 'dit:aventri:Event' && aventriEvents[activity.id]) {
@@ -395,6 +357,23 @@ async function fetchActivityFeedHandler(req, res, next) {
           activity.object.attributedTo,
           ...aventriEvents[activity.id],
         ]
+      }
+      if (
+        activity.object.attributedTo.id ==
+        'dit:directoryFormsApi:SubmissionType:export-support-service'
+      ) {
+        const essContactEmail = activity.actor['dit:emailAddress']
+        const essContact = getContactFromEmailAddress(
+          essContactEmail,
+          company.contacts
+        )
+
+        activity.object.attributedTo = [
+          activity.object.attributedTo,
+          mapEssContacts(essContact),
+        ]
+        //TODO: This might need to change on API, or can we sort by StartTime OR Published if startTime not there?
+        activity.object.startTime = activity.object.published
       }
       return activity
     })
