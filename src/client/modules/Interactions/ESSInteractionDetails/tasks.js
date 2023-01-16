@@ -10,4 +10,3 @@ export const getESSInteractionDetails = (essId) =>
       ...transformResponseToESSInteractionDetails(data),
     }))
     .catch(() => Promise.reject('Unable to load Export Support details.'))
-
