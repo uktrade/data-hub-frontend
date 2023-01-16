@@ -78,10 +78,7 @@ describe('Exports New Interaction Reminders', () => {
 
   context('Reminders List', () => {
     before(() => {
-      cy.setUserFeatureGroups([
-        'export-notifications',
-        'investment-notifications',
-      ])
+      cy.setUserFeatureGroups(['export-notifications'])
       interceptApiCalls()
       cy.visit(urls.reminders.exports.newInteractions())
       cy.wait('@remindersApiRequest')
@@ -100,6 +97,10 @@ describe('Exports New Interaction Reminders', () => {
         'have.text',
         'Companies with new interactions'
       )
+    })
+
+    it('should include export menu section', () => {
+      cy.get('[data-test="export-menu-group"]').should('exist')
     })
 
     it('should render the list heading with the total number of reminders', () => {
