@@ -100,7 +100,7 @@ describe('Exports New Interaction Reminders', () => {
     })
 
     it('should include export menu section', () => {
-      cy.get('[data-test="export-menu-group"]').should('exist')
+      cy.get('[data-test="export-menu-group link-list"]').should('exist')
     })
 
     it('should render the list heading with the total number of reminders', () => {
