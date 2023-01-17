@@ -44,9 +44,6 @@ describe('Dashboard reminders', () => {
 
   context('View reminders', () => {
     before(() => {
-      cy.intercept('GET', '/api-proxy/help-centre/feed', {
-        body: [],
-      })
       cy.intercept('GET', '/api-proxy/v4/proposition*', {
         body: {
           count: myPropositions.length,
@@ -121,9 +118,6 @@ describe('Dashboard reminders', () => {
 
   context('View empty reminders', () => {
     before(() => {
-      cy.intercept('GET', '/api-proxy/help-centre/feed', {
-        body: [],
-      })
       cy.intercept('GET', '/api-proxy/v4/proposition*', {
         body: {
           count: 0,
@@ -156,9 +150,6 @@ describe('Dashboard reminders', () => {
 
   context('Toggle section', () => {
     before(() => {
-      cy.intercept('GET', '/api-proxy/help-centre/feed', {
-        body: [],
-      })
       cy.visit('/')
     })
 
