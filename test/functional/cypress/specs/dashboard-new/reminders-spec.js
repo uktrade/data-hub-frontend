@@ -25,8 +25,6 @@ describe('Dashboard reminders', () => {
   const myPropositions = [proposition1, ...propositionListFaker(2)]
 
   before(() => {
-    cy.resetUser()
-    cy.resetFeatureFlags()
     cy.setUserFeatures(['personalised-dashboard'])
   })
 
