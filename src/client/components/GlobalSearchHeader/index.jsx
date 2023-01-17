@@ -76,7 +76,7 @@ function GlobalSearchHeader({
           href={actionButton.url}
           buttonColour={GREY_3}
           buttonTextColour={BLACK}
-          data-test="add-collection-item-button"
+          data-test={`${actionButton.label}`}
         >
           {actionButton.label}
         </Button>
