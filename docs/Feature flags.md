@@ -60,15 +60,38 @@ router.get(
 ## Adding feature flags in Sandbox
 
 ### Nunjucks feature flags
-To add a feature flag in Sandbox for functional testing you just need to add your feature flag name to this JSON file: https://github.com/uktrade/data-hub-frontend/blob/main/test/sandbox/fixtures/v3/feature-flag/feature-flag.json . 
+
+To add a feature flag in Sandbox for functional testing you just need to add your feature flag name to this JSON file: https://github.com/uktrade/data-hub-frontend/blob/main/test/sandbox/fixtures/v3/feature-flag/feature-flag.json .
 
 ### React feature flags
+
 To add a React-built feature flag to Sandbox for testing, add it to the `active_features` array at the end of this JSON file: https://github.com/uktrade/data-hub-frontend/blob/main/test/sandbox/fixtures/whoami.json .
 
-Alternatively, in Cypress, you can intercept and update the feature flag request, for example: 
+Alternatively, in Cypress, you can intercept and update the feature flag request, for example:
 
 ```
 cy.intercept('GET', '/api-proxy/whoami', {
     active_features: ['your-flag-name'],
   })
 ```
+
+### Flaky tests
+
+The functional tests have the ability to turn on feature flags, usually seen like this:
+
+```
+before(() => {
+  cy.setUserFeatures(['FEATURE_NAME'])
+})
+```
+
+Whilst this enables the test currently being run to make some assertions about how the UI should display with that feature flag on, it will also enable that feature for every subsequent test as we are using a single sandbox api for all tests. To avoid this scenario, when using feature flags inside a test we need to use the Cypress `after` function like below to remove that flag from the sandbox api ready for the next test to run
+
+```
+after(() => {
+	cy.resetUser()
+})
+```
+
+The reason we only see this sometimes, is because we are running our functional tests with the Cypress `--parallel` flag which splits the tests over multiple CI machines. If a test that sets a feature flag is missing the `after()` call to remove that feature flag, there is a chance of breaking tests that run after it if those tests are interacting with the same area of the website that a feature flag can modify.
+The reason that same test can pass if you re-run the Circle Ci job, is the next time when Cypress splits the test files over multiple machines, the test that previously failed might not be running on the same machine as a test that sets a feature flag
