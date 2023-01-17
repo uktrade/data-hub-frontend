@@ -143,7 +143,7 @@ describe('Company edit', () => {
           assert: assertFieldSelect,
         },
         {
-          label: 'Address',
+          label: 'Trading address',
           value: company.address,
           hint:
             'This should be the address for this particular office of the' +
@@ -238,7 +238,7 @@ describe('Company edit', () => {
           assert: assertFieldSelect,
         },
         {
-          label: 'Address',
+          label: 'Trading address',
           value: company.address,
           hint:
             'This should be the address for this particular office of the' +
@@ -339,7 +339,7 @@ describe('Company edit', () => {
           assert: assertFieldSelect,
         },
         {
-          label: 'Address',
+          label: 'Trading address',
           value: company.address,
           hint:
             'This should be the address for this particular office of the' +
@@ -445,7 +445,7 @@ describe('Company edit', () => {
           assert: assertFieldSelect,
         },
         {
-          label: 'Address',
+          label: 'Trading address',
           value: company.address,
           hint:
             'This should be the address for this particular office of the' +
