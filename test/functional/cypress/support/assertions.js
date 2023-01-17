@@ -356,7 +356,8 @@ const assertFieldAddress = ({ element, hint = null, value = {} }) => {
   }
   let addressElements = [
     {
-      assert: ({ element }) => cy.wrap(element).should('have.text', 'Address'),
+      assert: ({ element }) =>
+        cy.wrap(element).should('have.text', 'Trading address'),
     },
     hint && {
       assert: ({ element }) => cy.wrap(element).should('have.text', hint),
