@@ -6,6 +6,10 @@ const remindersEndpoint =
   '/api-proxy/v4/reminder/no-recent-investment-interaction'
 
 describe('No Recent Interaction Reminders', () => {
+  after(() => {
+    cy.resetUser()
+  })
+
   const reminders = [
     reminderFaker({
       created_on: '2022-01-01T10:00:00.000000Z',

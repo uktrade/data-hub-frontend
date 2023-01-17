@@ -89,6 +89,10 @@ const assertSettingsTableToggles = ({
 }
 
 describe('Settings: reminders and email notifications', () => {
+  after(() => {
+    cy.resetUser()
+  })
+
   context('Breadcrumbs and title', () => {
     before(() => {
       cy.setUserFeatureGroups([

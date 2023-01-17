@@ -11,6 +11,10 @@ const propositionsEndpoint = '/api-proxy/v4/proposition'
 const adviserId = '7d19d407-9aec-4d06-b190-d3f404627f21'
 
 describe('Outstanding Proposition Reminders', () => {
+  after(() => {
+    cy.resetUser()
+  })
+
   const totalCount = 11
   const propositions = [
     propositionFaker({

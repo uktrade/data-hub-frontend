@@ -5,6 +5,10 @@ import { reminderFaker, reminderListFaker } from '../../fakers/reminders'
 const remindersEndpoint = '/api-proxy/v4/reminder/estimated-land-date'
 
 describe('Estimated Land Date Reminders', () => {
+  after(() => {
+    cy.resetUser()
+  })
+
   const reminders = [
     reminderFaker({
       created_on: '2022-01-01T10:00:00.000000Z',
