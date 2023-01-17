@@ -2,6 +2,7 @@ export const export_segments = [
   { value: 'hep', label: 'High export potential' },
   { value: 'non-hep', label: 'Not high export potential' },
 ]
+
 export const export_sub_segments = [
   { value: 'sustain_nurture_and_grow', label: 'Sustain: nurture & grow' },
   {
