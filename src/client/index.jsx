@@ -196,7 +196,10 @@ import {
 } from '../apps/investments/client/projects/create/state'
 import * as createInvestmentProjectTasks from '../apps/investments/client/projects/create/tasks'
 
-import { TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS } from '../apps/companies/apps/investments/large-capital-profile/client/state'
+import {
+  TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS,
+  TASK_SAVE_LARGE_CAPITAL_INVESTOR_LOCATION,
+} from '../apps/companies/apps/investments/large-capital-profile/client/state'
 import * as updateLargeCapitalInvestorDetails from '../apps/companies/apps/investments/large-capital-profile/client/tasks'
 
 import {
@@ -428,6 +431,8 @@ function App() {
             createInvestmentProjectTasks.createInvestmentProject,
           [TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS]:
             updateLargeCapitalInvestorDetails.updateInvestorDetails,
+          [TASK_SAVE_LARGE_CAPITAL_INVESTOR_LOCATION]:
+            updateLargeCapitalInvestorDetails.updateInvestorLocation,
           [TASK_GET_INVESTMENT_PROJECT_INITIAL_VALUES]:
             createInvestmentProjectTasks.getInitialFormValues,
           [TASK_SEARCH_COMPANY]: createInvestmentProjectTasks.searchCompany,
