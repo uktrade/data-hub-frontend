@@ -10,6 +10,11 @@ const assertNotificationBadgeNotExist = () =>
   cy.get('[data-test="notification-alert-badge"]').should('not.exist')
 
 describe('Notification bell', () => {
+  after(() => {
+    cy.resetUser()
+    cy.resetFeatureFlags()
+  })
+
   context('Dashboard', () => {
     beforeEach(() => {
       cy.setUserFeatures(['personalised-dashboard'])
