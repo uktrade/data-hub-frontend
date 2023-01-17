@@ -4,6 +4,8 @@ const dataHubAndActivityStreamServicesQuery = ({
   types,
   companyIds,
   aventriEventIds,
+  getEssInteractions,
+  contacts,
 }) => {
   const shouldCriteria = [
     {
@@ -43,10 +45,36 @@ const dataHubAndActivityStreamServicesQuery = ({
       },
     })
   }
+  if (getEssInteractions) {
+    shouldCriteria.push({
+      bool: {
+        must: [
+          {
+            term: {
+              'object.attributedTo.id':
+                'dit:directoryFormsApi:SubmissionType:export-support-service',
+            },
+          },
+          {
+            terms: {
+              'actor.dit:emailAddress': [
+                ...contacts.map((contact) => contact.email),
+              ],
+            },
+          },
+        ],
+      },
+    })
+  }
   const dsl = {
     from,
     size,
     sort: [
+      {
+        'object.published': {
+          order: 'desc',
+        },
+      },
       {
         'object.startTime': {
           order: 'desc',
