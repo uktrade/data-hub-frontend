@@ -35,8 +35,8 @@ const LinkListLink = styled(Link)(({ $isActive }) => ({
     : {}),
 }))
 
-const Menu = ({ children }) => (
-  <LinkList data-test="link-list">{children}</LinkList>
+const Menu = ({ children, dataTest }) => (
+  <LinkList data-test={`${dataTest} link-list`}>{children}</LinkList>
 )
 
 const MenuItem = ({ to, pathname, children }) => (
@@ -47,7 +47,7 @@ const MenuItem = ({ to, pathname, children }) => (
   </LinkListItem>
 )
 
-const RemindersMenu = ({
+export const RemindersMenu = ({
   hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
 }) => {
@@ -55,7 +55,7 @@ const RemindersMenu = ({
   return (
     <>
       {hasInvestmentFeatureGroup && (
-        <Menu>
+        <Menu dataTest="investment-menu-group">
           <H3 as="h2">Investment</H3>
           <MenuItem
             to={urls.reminders.investments.estimatedLandDate()}
@@ -78,7 +78,7 @@ const RemindersMenu = ({
         </Menu>
       )}
       {hasExportFeatureGroup && (
-        <Menu>
+        <Menu dataTest="export-menu-group">
           <H3 as="h2">Export</H3>
           <MenuItem
             to={urls.reminders.exports.noRecentInteractions()}

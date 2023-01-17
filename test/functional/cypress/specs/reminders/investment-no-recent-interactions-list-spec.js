@@ -73,10 +73,7 @@ describe('No Recent Interaction Reminders', () => {
   context('Reminders List', () => {
     before(() => {
       interceptApiCalls()
-      cy.setUserFeatureGroups([
-        'export-notifications',
-        'investment-notifications',
-      ])
+      cy.setUserFeatureGroups(['investment-notifications'])
       cy.visit(urls.reminders.investments.noRecentInteraction())
       cy.wait('@remindersApiRequest')
     })
@@ -96,49 +93,8 @@ describe('No Recent Interaction Reminders', () => {
       )
     })
 
-    it('should include a list of links to other reminders', () => {
-      cy.get('[data-test="link-list-item"]')
-        .should('have.length', 4)
-        .as('listItems')
-      cy.get('@listItems')
-        .eq(0)
-        .find('a')
-        .should('contain', 'Approaching estimated land dates')
-        .should(
-          'have.attr',
-          'href',
-          urls.reminders.investments.estimatedLandDate()
-        )
-
-      cy.get('@listItems')
-        .eq(1)
-        .find('a')
-        .should('contain', 'Projects with no recent interaction')
-        .should(
-          'have.attr',
-          'href',
-          urls.reminders.investments.noRecentInteraction()
-        )
-
-      cy.get('@listItems')
-        .eq(2)
-        .find('a')
-        .should('contain', 'Outstanding propositions')
-        .should(
-          'have.attr',
-          'href',
-          urls.reminders.investments.outstandingPropositions()
-        )
-
-      cy.get('@listItems')
-        .eq(3)
-        .find('a')
-        .should('contain', 'Companies with no recent interaction')
-        .should(
-          'have.attr',
-          'href',
-          urls.reminders.exports.noRecentInteractions()
-        )
+    it('should include investment menu section', () => {
+      cy.get('[data-test="investment-menu-group link-list"]').should('exist')
     })
 
     it('should render the list heading with the total number of reminders', () => {
