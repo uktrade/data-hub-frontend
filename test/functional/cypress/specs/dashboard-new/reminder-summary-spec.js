@@ -9,6 +9,7 @@ describe('Dashboard reminder summary', () => {
 
   after(() => {
     cy.resetUser()
+    cy.resetFeatureFlags()
   })
 
   beforeEach(() => {
