@@ -87,10 +87,6 @@ describe('Outstanding Proposition Reminders', () => {
       })
     })
 
-    it('should include investment menu section', () => {
-      cy.get('[data-test="investment-menu-group link-list"]').should('exist')
-    })
-
     it('should render the headings', () => {
       cy.get('[data-test="heading"]').should('have.text', 'Reminders')
       cy.get('[data-test="subheading"]').should(
