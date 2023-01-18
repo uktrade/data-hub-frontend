@@ -5,25 +5,40 @@ import urls from '../../../../../src/lib/urls'
 import DataHubProvider from '../provider'
 
 describe('ContactLocalHeader', () => {
-  const Component = (props) => <RemindersMenu {...props} />
+  const Component = (props) => (
+    <RemindersMenu
+      reminderSummary={{
+        count: 10,
+        investment: {
+          estimated_land_date: 1,
+          no_recent_interaction: 2,
+          outstanding_propositions: 3,
+        },
+        export: {
+          no_recent_interaction: 4,
+        },
+      }}
+      {...props}
+    />
+  )
   const investmentLinks = [
     {
-      title: 'Approaching estimated land dates',
+      title: 'Approaching estimated land dates (1)',
       url: urls.reminders.investments.estimatedLandDate(),
     },
     {
-      title: 'Projects with no recent interaction',
+      title: 'Projects with no recent interactions (2)',
       url: urls.reminders.investments.noRecentInteraction(),
     },
     {
-      title: 'Outstanding propositions',
+      title: 'Outstanding propositions (3)',
       url: urls.reminders.investments.outstandingPropositions(),
     },
   ]
 
   const exportLinks = [
     {
-      title: 'Companies with no recent interaction',
+      title: 'Companies with no recent interactions (4)',
       url: urls.reminders.exports.noRecentInteractions(),
     },
   ]
@@ -49,7 +64,7 @@ describe('ContactLocalHeader', () => {
         cy.get('@listItems')
           .eq(index)
           .find('a')
-          .should('contain', item.title)
+          .should('have.text', item.title)
           .should('have.attr', 'href', item.url)
       })
     })
@@ -76,7 +91,7 @@ describe('ContactLocalHeader', () => {
         cy.get('@listItems')
           .eq(index)
           .find('a')
-          .should('contain', item.title)
+          .should('have.text', item.title)
           .should('have.attr', 'href', item.url)
       })
     })
@@ -105,7 +120,7 @@ describe('ContactLocalHeader', () => {
           cy.get('@listItems')
             .eq(index)
             .find('a')
-            .should('contain', item.title)
+            .should('have.text', item.title)
             .should('have.attr', 'href', item.url)
         })
       })

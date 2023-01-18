@@ -1,15 +1,13 @@
 import urls from '../../../lib/urls'
 
-export const ID = 'notificationAlertCount'
-export const TASK_GET_NOTIFICATION_ALERT_COUNT =
-  'TASK_GET_NOTIFICATION_ALERT_COUNT'
+export const ID = 'reminderSummary'
+export const TASK_GET_REMINDER_SUMMARY = 'TASK_GET_REMINDER_SUMMARY'
 
 export const state2props = (state) => {
-  const activeFeatureGroups = state.activeFeatureGroups
-  const hasInvestmentFeatureGroup = activeFeatureGroups.includes(
+  const hasInvestmentFeatureGroup = state.activeFeatureGroups.includes(
     'investment-notifications'
   )
-  const hasExportFeatureGroup = activeFeatureGroups.includes(
+  const hasExportFeatureGroup = state.activeFeatureGroups.includes(
     'export-notifications'
   )
   const remindersURL =
