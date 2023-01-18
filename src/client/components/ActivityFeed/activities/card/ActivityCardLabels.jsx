@@ -6,18 +6,18 @@ import PropTypes from 'prop-types'
 import { SPACING } from '@govuk-react/constants'
 
 const TagRow = styled('div')`
-  display: inline-block;
+  display: flex;
   justify-content: space-between;
   padding-bottom: ${SPACING.SCALE_2};
   margin-right: ${SPACING.SCALE_1};
 `
 
 const TagColumn = styled('div')`
-  display: inline-block;
+  display: flex;
 `
 
 const StyledThemeTag = styled(Tag)`
-  margin-bottom: ${SPACING.SCALE_1};
+  margin-right: ${SPACING.SCALE_1};
 `
 
 const ActivityCardLabels = ({ isExternalActivity, theme, service, kind }) => (
@@ -32,19 +32,21 @@ const ActivityCardLabels = ({ isExternalActivity, theme, service, kind }) => (
         </StyledThemeTag>
       )}
       {service && (
-        <StyledThemeTag
+        <Tag
           data-test="activity-service-label"
           colour={isExternalActivity ? 'turquoise' : 'blue'}
         >
           {service}
-        </StyledThemeTag>
-      )}
-      {kind && (
-        <StyledThemeTag data-test="activity-kind-label" colour="grey">
-          {kind}
-        </StyledThemeTag>
+        </Tag>
       )}
     </TagColumn>
+    {kind && (
+      <TagColumn>
+        <Tag data-test="activity-kind-label" colour="grey">
+          {kind}
+        </Tag>
+      </TagColumn>
+    )}
   </TagRow>
 )
 

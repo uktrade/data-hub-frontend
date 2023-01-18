@@ -10,6 +10,7 @@ import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityCardLabels from './card/ActivityCardLabels'
+import { getServiceText } from './InteractionUtils'
 
 // Event index to extract unique uuid from DataHubEvent id string feed by activity-stream
 // e.g. dit:DataHubEvent:b93d4274-36fe-4008-ac40-fbc197916666:Announce
@@ -22,14 +23,15 @@ export default function DataHubEvent({ activity: event }) {
   const organiser = eventObject['dit:organiser']?.name || 'Not set'
   const serviceType = eventObject['dit:service']?.name || 'Not set'
   const leadTeam = eventObject['dit:leadTeam']?.name || 'Not set'
-  const typeOfEvent = eventObject['dit:eventType']?.name || null
-  const [theme, service] = serviceType.split(':')
+  const typeOfEvent = eventObject['dit:eventType']?.name || undefined
+  const [, service2] = serviceType.split(':')
+  const serviceText = getServiceText(serviceType)
   return (
     <ActivityCardWrapper dataTest="data-hub-event">
       <ActivityCardSubject dataTest="data-hub-event-name">
         <ActivityCardLabels
-          theme={theme}
-          service={service}
+          theme={serviceText}
+          service={service2}
           kind={typeOfEvent}
         />
         <Link as={RouterLink} to={`/events/${eventId}/details`}>
