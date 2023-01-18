@@ -22,10 +22,8 @@ export default function DataHubEvent({ activity: event }) {
   const organiser = eventObject['dit:organiser']?.name || 'Not set'
   const serviceType = eventObject['dit:service']?.name || 'Not set'
   const leadTeam = eventObject['dit:leadTeam']?.name || 'Not set'
-  const typeOfEvent = eventObject['dit:eventType']?.name || 'Not set'
-  const serviceTypeSplit = serviceType.split(':')
-  const theme = serviceTypeSplit[0]
-  const service = serviceTypeSplit[1]
+  const typeOfEvent = eventObject['dit:eventType']?.name || null
+  const [theme, service] = serviceType.split(':')
   return (
     <ActivityCardWrapper dataTest="data-hub-event">
       <ActivityCardSubject dataTest="data-hub-event-name">
