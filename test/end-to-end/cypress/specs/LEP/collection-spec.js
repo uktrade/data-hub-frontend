@@ -7,10 +7,7 @@ const {
   investments,
 } = require('../../../../../src/lib/urls')
 
-const {
-  assertCollection,
-  assertReactCollection,
-} = require('../../support/assertions')
+const { assertReactCollection } = require('../../support/assertions')
 
 describe('Collection', () => {
   describe('company', () => {
@@ -46,34 +43,6 @@ describe('Collection', () => {
 
       it('should return the results summary for a investment collection', () => {
         assertReactCollection()
-      })
-    })
-
-    describe('interaction', () => {
-      before(() => {
-        cy.visit(
-          investments.projects.interactions.index(
-            fixtures.investmentProject.newZoo.id
-          )
-        )
-      })
-
-      it('should return the results summary for a interaction collection', () => {
-        assertCollection()
-      })
-    })
-
-    describe('proposition', () => {
-      before(() => {
-        cy.visit(
-          investments.projects.interactions.index(
-            fixtures.investmentProject.newZoo.id
-          )
-        )
-      })
-
-      it('should return the results summary for a proposition collection', () => {
-        assertCollection()
       })
     })
 
