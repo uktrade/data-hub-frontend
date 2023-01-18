@@ -3,17 +3,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {
   Form,
-  Filters,
+  FieldTypeahead,
   FormLayout,
   FieldTextarea,
 } from '../../../../../../client/components'
 import { FORM_LAYOUT } from '../../../../../../common/constants'
 import urls from '../../../../../../lib/urls'
 import { TASK_SAVE_LARGE_CAPITAL_INVESTOR_LOCATION } from './state'
-import {
-  transformLocationDetailsToApi,
-  transformNameIdToValueLabel,
-} from './transformers'
+import { transformLocationDetailsToApi } from './transformers'
+import { transformArrayIdNameToValueLabel } from '../../../../../../client/transformers'
 
 const EditLargeCapitalInvestorLocation = ({
   companyId,
@@ -43,27 +41,27 @@ const EditLargeCapitalInvestorLocation = ({
       >
         {() => (
           <>
-            <Filters.Typeahead
+            <FieldTypeahead
               name="uk_region_locations"
               label="UK locations of interest"
-              options={ukRegionLocations.items}
-              selectedOptions={transformNameIdToValueLabel(
+              initialValue={transformArrayIdNameToValueLabel(
                 ukRegionLocations?.value
               )}
+              options={ukRegionLocations.items}
               placeholder="-- Select region --"
               arial-label="Uk locations of interest"
               isMulti={true}
             />
-            <Filters.Typeahead
-              isMulti={true}
-              label="Other countries the investor is considering"
+            <FieldTypeahead
               name="other_countries_being_considered"
-              placeholder="-- Select country --"
-              options={otherCountriesBeingConsidered.items}
-              selectedOptions={transformNameIdToValueLabel(
+              label="Other countries the investor is considering"
+              initialValue={transformArrayIdNameToValueLabel(
                 otherCountriesBeingConsidered?.value
               )}
-              data-test="country-filter"
+              options={otherCountriesBeingConsidered.items}
+              placeholder="-- Select country --"
+              arial-label="Other countries the investor is considering"
+              isMulti={true}
             />
             <FieldTextarea
               name="notes_on_locations"
