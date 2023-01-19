@@ -1,4 +1,5 @@
 export const ID = 'reminders'
+import { ID as REMINDER_SUMMARY_ID } from '../../components/NotificationAlert/state'
 
 // Investment lists
 export const TASK_GET_ESTIMATED_LAND_DATE_REMINDERS =
@@ -50,6 +51,7 @@ export const TASK_SAVE_EXPORT_NI_REMINDER_SUBSCRIPTIONS =
   'TASK_SAVE_EXPORT_NI_REMINDER_SUBSCRIPTIONS'
 
 export const state2props = (state) => {
+  const reminderSummary = state[REMINDER_SUMMARY_ID]
   const activeFeatureGroups = state?.activeFeatureGroups || []
   const hasInvestmentFeatureGroup = activeFeatureGroups.includes(
     'investment-notifications'
@@ -58,6 +60,7 @@ export const state2props = (state) => {
     'export-notifications'
   )
   return {
+    reminderSummary,
     hasInvestmentFeatureGroup,
     hasExportFeatureGroup,
   }

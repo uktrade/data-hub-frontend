@@ -4,8 +4,8 @@ import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import { ID, TASK_GET_NOTIFICATION_ALERT_COUNT, state2props } from './state'
-import { NOTIFICATION_ALERT_COUNT__LOADED } from '../../actions'
+import { ID, TASK_GET_REMINDER_SUMMARY, state2props } from './state'
+import { REMINDER_SUMMARY__LOADED } from '../../actions'
 import BellSVG from './bell-icon.svg'
 import Task from '../Task'
 
@@ -40,11 +40,11 @@ const NotificationAlert = ({ count, remindersURL }) => (
       alt="An image of a bell with the notification count overlaid"
     />
     <Task.Status
-      name={TASK_GET_NOTIFICATION_ALERT_COUNT}
+      name={TASK_GET_REMINDER_SUMMARY}
       id={ID}
       renderProgress={() => null}
       startOnRender={{
-        onSuccessDispatch: NOTIFICATION_ALERT_COUNT__LOADED,
+        onSuccessDispatch: REMINDER_SUMMARY__LOADED,
       }}
     >
       {() =>
