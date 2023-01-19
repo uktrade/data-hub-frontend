@@ -13,6 +13,7 @@ import {
   TASK_DELETE_EXPORT_NEW_INTERACTION_REMINDER,
   TASK_GET_EXPORTS_NEXT_NEW_INTERACTION_REMINDERS,
 } from './state'
+import { ExportNewInteractionsItemRenderer } from './ItemRenderers/ExportNewInteractionsItemRenderer'
 
 const ExportsNewInteractionsList = ({ exportsNewInteractionReminders }) => {
   return (
@@ -32,6 +33,7 @@ const ExportsNewInteractionsList = ({ exportsNewInteractionReminders }) => {
       deleteTaskSuccessFunction={
         REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_DELETED
       }
+      itemRenderer={ExportNewInteractionsItemRenderer}
     />
   )
 }
