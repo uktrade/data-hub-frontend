@@ -354,20 +354,24 @@ async function fetchActivityFeedHandler(req, res, next) {
           ...aventriEvents[activity.id],
         ]
       }
-      if (
-        activity.object.attributedTo.id ==
-        'dit:directoryFormsApi:SubmissionType:export-support-service'
-      ) {
-        const essContactEmail = activity.actor['dit:emailAddress']
-        const essContact = getContactFromEmailAddress(
-          essContactEmail,
-          company.contacts
-        )
+      // Check attributed to is part of the object, as this avoids errors with maxemail objects and exernal activities that are not ESS
+      if ('activity.object.attributedTo.id' in activity) {
+        if (
+          activity.object.attributedTo.id ==
+          'dit:directoryFormsApi:SubmissionType:export-support-service'
+        ) {
+          // Add contacts to ESS activities
+          const essContactEmail = activity.actor['dit:emailAddress']
+          const essContact = getContactFromEmailAddress(
+            essContactEmail,
+            company.contacts
+          )
 
-        activity.object.attributedTo = [
-          activity.object.attributedTo,
-          mapEssContacts(essContact),
-        ]
+          activity.object.attributedTo = [
+            activity.object.attributedTo,
+            mapEssContacts(essContact),
+          ]
+        }
       }
       return activity
     })
