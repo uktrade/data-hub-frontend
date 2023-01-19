@@ -6,6 +6,7 @@
     "outstanding_propositions": 5
   },
   "export": {
-    "no_recent_interaction": 44
+    "no_recent_interaction": 44,
+    "new_interaction": 16
   }
 }
