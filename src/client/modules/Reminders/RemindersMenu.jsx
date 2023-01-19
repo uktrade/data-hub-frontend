@@ -48,6 +48,7 @@ const MenuItem = ({ to, pathname, children }) => (
 )
 
 export const RemindersMenu = ({
+  reminderSummary,
   hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
 }) => {
@@ -61,19 +62,22 @@ export const RemindersMenu = ({
             to={urls.reminders.investments.estimatedLandDate()}
             pathname={location.pathname}
           >
-            Approaching estimated land dates
+            Approaching estimated land dates (
+            {reminderSummary.investment.estimated_land_date})
           </MenuItem>
           <MenuItem
             to={urls.reminders.investments.noRecentInteraction()}
             pathname={location.pathname}
           >
-            Projects with no recent interactions
+            Projects with no recent interactions (
+            {reminderSummary.investment.no_recent_interaction})
           </MenuItem>
           <MenuItem
             to={urls.reminders.investments.outstandingPropositions()}
             pathname={location.pathname}
           >
-            Outstanding propositions
+            Outstanding propositions (
+            {reminderSummary.investment.outstanding_propositions})
           </MenuItem>
         </Menu>
       )}
@@ -84,7 +88,8 @@ export const RemindersMenu = ({
             to={urls.reminders.exports.noRecentInteractions()}
             pathname={location.pathname}
           >
-            Companies with no recent interactions
+            Companies with no recent interactions (
+            {reminderSummary.export.no_recent_interaction})
           </MenuItem>
           <MenuItem
             to={urls.reminders.exports.newInteractions()}
