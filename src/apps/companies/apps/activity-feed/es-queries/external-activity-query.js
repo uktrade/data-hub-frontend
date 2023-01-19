@@ -100,11 +100,15 @@ const externalActivityQuery = ({
       },
     })
   }
-
   const dsl = {
     from,
     size,
     sort: [
+      {
+        'object.published': {
+          order: 'desc',
+        },
+      },
       {
         'object.startTime': {
           order: 'desc',
