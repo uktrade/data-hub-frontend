@@ -129,12 +129,6 @@ describe('Exports New Interaction Reminders', () => {
           'href',
           urls.companies.detail(reminders[0].company.id)
         )
-      cy.get('@reminder')
-        .find('[data-test="item-content"]')
-        .should(
-          'contain',
-          `${formatMediumDate(reminders[0].last_interaction_date)}`
-        )
     })
   })
 

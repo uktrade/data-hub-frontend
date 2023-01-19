@@ -21,7 +21,7 @@ export const ExportNewInteractionsItemRenderer = (
       onDeleteReminder={onDeleteReminder}
       disableDelete={disableDelete}
       headerLinkTitle={`New interaction recorded for ${item.company.name}`}
-      itemContent={
+      itemInteractionContent={
         <ItemContent colour={BLACK} data-test="item-content">
           <ul>
             {item.interaction ? (

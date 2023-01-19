@@ -25,7 +25,7 @@ export const ExportItemRenderer = ({
   onDeleteReminder,
   disableDelete,
   headerLinkTitle,
-  itemContent,
+  itemInteractionContent,
 }) => {
   return (
     <ListItem key={item.id} data-test="reminders-list-item">
@@ -53,7 +53,8 @@ export const ExportItemRenderer = ({
                   </li>
                 </ul>
               </ItemHeader>
-              {itemContent}
+
+              {itemInteractionContent}
 
               {/* Display on mobile only */}
               {onDeleteReminder && (
