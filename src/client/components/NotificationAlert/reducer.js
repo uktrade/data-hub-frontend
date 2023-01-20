@@ -9,6 +9,7 @@ const initialState = {
   },
   export: {
     no_recent_interaction: 0,
+    new_interaction: 0,
   },
 }
 

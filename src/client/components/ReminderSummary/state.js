@@ -26,6 +26,11 @@ const transformReminderSummary = (data) => ({
       url: urls.reminders.exports.noRecentInteractions(),
       count: data.export.no_recent_interaction,
     },
+    {
+      name: 'Companies with new interactions',
+      url: urls.reminders.exports.newInteractions(),
+      count: data.export.new_interaction,
+    },
   ],
 })
 

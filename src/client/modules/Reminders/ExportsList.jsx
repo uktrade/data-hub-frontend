@@ -10,7 +10,6 @@ import { ID } from './state'
 import { sortOptions, maxItemsToPaginate, itemsPerPage } from './constants'
 
 import { CollectionSort, RoutedPagination } from '../../components'
-import ExportItemRenderer from './ItemRenderers/ExportItemRenderer'
 import CollectionHeader from './CollectionHeader'
 import CollectionList from './CollectionList'
 import Effect from '../../components/Effect'
@@ -32,6 +31,7 @@ const ExportsList = ({
   getNextTaskName,
   effectSuccessFunction,
   deleteTaskSuccessFunction,
+  itemRenderer,
 }) => {
   const { results, count, nextPending } = reminders
   const location = useLocation()
@@ -79,7 +79,7 @@ const ExportsList = ({
                   />
                   <CollectionList
                     results={results}
-                    itemRenderer={ExportItemRenderer}
+                    itemRenderer={itemRenderer}
                     disableDelete={deleteTask.status || nextPending}
                     onDeleteReminder={(reminderId) => {
                       deleteTask.start({

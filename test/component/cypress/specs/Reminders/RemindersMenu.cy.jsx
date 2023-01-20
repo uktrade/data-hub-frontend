@@ -16,6 +16,7 @@ describe('ContactLocalHeader', () => {
         },
         export: {
           no_recent_interaction: 4,
+          new_interaction: 8,
         },
       }}
       {...props}
@@ -40,6 +41,10 @@ describe('ContactLocalHeader', () => {
     {
       title: 'Companies with no recent interactions (4)',
       url: urls.reminders.exports.noRecentInteractions(),
+    },
+    {
+      title: 'Companies with new interactions (8)',
+      url: urls.reminders.exports.newInteractions(),
     },
   ]
 
@@ -85,7 +90,7 @@ describe('ContactLocalHeader', () => {
     })
 
     it('should render all export menu items', () => {
-      cy.get('@listItems').should('have.length', 1)
+      cy.get('@listItems').should('have.length', 2)
 
       exportLinks.forEach((item, index) => {
         cy.get('@listItems')
@@ -114,7 +119,7 @@ describe('ContactLocalHeader', () => {
       })
 
       it('should render all investment menu items', () => {
-        cy.get('@listItems').should('have.length', 4)
+        cy.get('@listItems').should('have.length', 5)
 
         investmentLinks.concat(exportLinks).forEach((item, index) => {
           cy.get('@listItems')

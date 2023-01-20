@@ -118,6 +118,7 @@ describe('Dashboard reminder summary', () => {
           },
           export: {
             no_recent_interaction: 0,
+            new_interaction: 0,
           },
         },
       }).as('apiRequest')

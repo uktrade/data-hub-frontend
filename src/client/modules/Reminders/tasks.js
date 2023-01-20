@@ -117,6 +117,35 @@ export const getNextExportNoRecentInteractionReminder = ({
 export const deleteExportNoRecentInteractionReminder = ({ id } = {}) =>
   apiProxyAxios.delete(`/v4/reminder/no-recent-export-interaction/${id}`)
 
+export const getExportsNewInteractionReminders = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) =>
+  apiProxyAxios
+    .get('/v4/reminder/new-export-interaction', {
+      params: { sortby, limit, offset: getPageOffset({ page, limit }) },
+    })
+    .then(({ data }) => data)
+
+export const getNextExportsNewInteractionReminder = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) =>
+  apiProxyAxios
+    .get('/v4/reminder/new-export-interaction', {
+      params: {
+        sortby,
+        limit: 1,
+        offset: Math.max(getPageOffset({ page: page + 1, limit }) - 1, 1),
+      },
+    })
+    .then(({ data }) => data.results)
+
+export const deleteExportNewInteractionReminder = ({ id } = {}) =>
+  apiProxyAxios.delete(`/v4/reminder/new-export-interaction/${id}`)
+
 // ********************** Summary ***************************
 
 const transformSubscriptionSummary = ({ data }) => ({

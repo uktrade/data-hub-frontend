@@ -91,6 +91,13 @@ export const RemindersMenu = ({
             Companies with no recent interactions (
             {reminderSummary.export.no_recent_interaction})
           </MenuItem>
+          <MenuItem
+            to={urls.reminders.exports.newInteractions()}
+            pathname={location.pathname}
+          >
+            Companies with new interactions (
+            {reminderSummary.export.new_interaction})
+          </MenuItem>
         </Menu>
       )}
     </>
