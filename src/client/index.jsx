@@ -25,6 +25,7 @@ import DnbHierarchy from '../apps/companies/apps/dnb-hierarchy/client/DnbHierarc
 import LeadAdvisers from '../apps/companies/apps/advisers/client/LeadAdvisers'
 import LargeCapitalProfileCollection from '../apps/investments/client/profiles/LargeCapitalProfileCollection'
 import EditLargeCapitalInvestorDetails from '../apps/companies/apps/investments/large-capital-profile/client/EditLargeCapitalInvestorDetails'
+import EditLargeCapitalInvestorLocation from '../apps/companies/apps/investments/large-capital-profile/client/EditLargeCapitalInvestorLocation'
 import UnfilteredLargeCapitalOpportunityCollection from '../apps/investments/client/opportunities/List/UnfilteredLargeCapitalOpportunityCollection'
 import InvestmentEditHistory from '../apps/investments/client/InvestmentEditHistory'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'

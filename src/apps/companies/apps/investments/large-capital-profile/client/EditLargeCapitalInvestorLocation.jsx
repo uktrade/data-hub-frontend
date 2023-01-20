@@ -76,16 +76,16 @@ const EditLargeCapitalInvestorLocation = ({
   )
 }
 
-// const arrayProp = PropTypes.shape({
-//   label: PropTypes.string.isRequired,
-//   value: PropTypes.string.isRequired,
-// })
-// EditLargeCapitalInvestorLocation.prototype = {
-//   profileId: PropTypes.string.isRequired,
-//   companyId: PropTypes.string.isRequired,
-//   ukRegionLocations: PropTypes.arrayOf(arrayProp),
-//   otherCountriesBeingConsidered: PropTypes.arrayOf(arrayProp),
-//   notesOnInvestorsLocation: PropTypes.string.isRequired,
-// }
+const arrayProp = PropTypes.shape({
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+})
+EditLargeCapitalInvestorLocation.prototype = {
+  profileId: PropTypes.string.isRequired,
+  companyId: PropTypes.string.isRequired,
+  ukRegionLocations: PropTypes.arrayOf(arrayProp),
+  otherCountriesBeingConsidered: PropTypes.arrayOf(arrayProp),
+  notesOnInvestorsLocation: PropTypes.string.isRequired,
+}
 
 export default EditLargeCapitalInvestorLocation
