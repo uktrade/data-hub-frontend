@@ -2,7 +2,7 @@ import React from 'react'
 import { BLACK, GREY_1 } from 'govuk-colours'
 import styled from 'styled-components'
 import { ItemContent } from './styled'
-
+import { formatMediumDate } from '../../../utils/date'
 import { INTERACTION_NAMES } from '../constants'
 import ExportItemRenderer from './ExportItemRenderer'
 
@@ -24,6 +24,10 @@ export const ExportNewInteractionsItemRenderer = (
       itemInteractionContent={
         <ItemContent colour={BLACK} data-test="item-content">
           <ul>
+            <li>
+              <ItemHint>Date of interaction: </ItemHint>
+              {formatMediumDate(item.last_interaction_date)}
+            </li>
             {item.interaction ? (
               <>
                 <li>
