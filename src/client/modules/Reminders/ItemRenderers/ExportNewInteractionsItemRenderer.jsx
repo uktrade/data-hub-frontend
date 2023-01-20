@@ -31,33 +31,33 @@ export const ExportNewInteractionsItemRenderer = (
             {item.interaction ? (
               <>
                 <li>
-                  <ItemHint>Name/Team: </ItemHint>
+                  <ItemHint>Recorded by: </ItemHint>
                   {item.interaction.created_by?.name || 'Name unknown'}
                   {item.interaction.created_by?.dit_team
                     ? ` in ${item.interaction.created_by.dit_team.name}`
                     : ' - team unknown'}
                 </li>
                 <li>
-                  <ItemHint>Type of interaction: </ItemHint>
+                  <ItemHint>Interaction type: </ItemHint>
                   {INTERACTION_NAMES[item.interaction.kind]}
                 </li>
                 <li>
-                  <ItemHint>Interaction title: </ItemHint>
+                  <ItemHint>Subject: </ItemHint>
                   {item.interaction.subject}
                 </li>
               </>
             ) : (
               <>
                 <li>
-                  <ItemHint>Name/Team: </ItemHint>
+                  <ItemHint>Recorded by: </ItemHint>
                   {' no information'}
                 </li>
                 <li>
-                  <ItemHint>Type of interaction: </ItemHint>
+                  <ItemHint>Interaction type: </ItemHint>
                   {' no information'}
                 </li>
                 <li>
-                  <ItemHint>Interaction title: </ItemHint>
+                  <ItemHint>Subject: </ItemHint>
                   {' no information'}
                 </li>
               </>
