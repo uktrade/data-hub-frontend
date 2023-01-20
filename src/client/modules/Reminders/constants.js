@@ -27,12 +27,29 @@ export const COMPANIES_NO_RECENT_INTERACTIONS =
   'companies-no-recent-interactions'
 export const COMPANIES_NEW_INTERACTIONS = 'companies-new-interactions'
 
+export const INVESTMENTS_ESTIMATED_LAND_DATES_LABEL =
+  'Approaching estimated land dates'
+
+export const INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL =
+  'Projects with no recent interactions'
+
+export const INVESTMENTS_OUTSTANDING_PROPOSITIONS_LABEL =
+  'Outstanding propositions'
+
+export const COMPANIES_NO_RECENT_INTERACTIONS_LABEL =
+  'Companies with no recent interactions'
+
+export const COMPANIES_NEW_INTERACTIONS_LABEL =
+  'Companies with new interactions'
+
 export const reminderTypeToLabel = {
-  [INVESTMENTS_ESTIMATED_LAND_DATES]: 'Approaching estimated land dates',
-  [INVESTMENTS_NO_RECENT_INTERACTIONS]: 'Projects with no recent interactions',
-  [INVESTMENTS_OUTSTANDING_PROPOSITIONS]: 'Outstanding propositions',
-  [COMPANIES_NO_RECENT_INTERACTIONS]: 'Companies with no recent interactions',
-  [COMPANIES_NEW_INTERACTIONS]: 'Companies with new interactions',
+  [INVESTMENTS_ESTIMATED_LAND_DATES]: INVESTMENTS_ESTIMATED_LAND_DATES_LABEL,
+  [INVESTMENTS_NO_RECENT_INTERACTIONS]:
+    INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL,
+  [INVESTMENTS_OUTSTANDING_PROPOSITIONS]:
+    INVESTMENTS_OUTSTANDING_PROPOSITIONS_LABEL,
+  [COMPANIES_NO_RECENT_INTERACTIONS]: COMPANIES_NO_RECENT_INTERACTIONS_LABEL,
+  [COMPANIES_NEW_INTERACTIONS]: COMPANIES_NEW_INTERACTIONS_LABEL,
 }
 
 export const INTERACTION_NAMES = {

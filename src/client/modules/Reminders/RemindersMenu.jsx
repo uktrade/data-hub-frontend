@@ -9,6 +9,13 @@ import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
 import urls from '../../../lib/urls'
 import { state2props } from './state'
+import {
+  COMPANIES_NEW_INTERACTIONS_LABEL,
+  COMPANIES_NO_RECENT_INTERACTIONS_LABEL,
+  INVESTMENTS_ESTIMATED_LAND_DATES_LABEL,
+  INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL,
+  INVESTMENTS_OUTSTANDING_PROPOSITIONS_LABEL,
+} from './constants'
 
 const LinkList = styled('ul')({
   listStyleType: 'none',
@@ -62,22 +69,19 @@ export const RemindersMenu = ({
             to={urls.reminders.investments.estimatedLandDate()}
             pathname={location.pathname}
           >
-            Approaching estimated land dates (
-            {reminderSummary.investment.estimated_land_date})
+            {`${INVESTMENTS_ESTIMATED_LAND_DATES_LABEL} (${reminderSummary.investment.estimated_land_date})`}
           </MenuItem>
           <MenuItem
             to={urls.reminders.investments.noRecentInteraction()}
             pathname={location.pathname}
           >
-            Projects with no recent interactions (
-            {reminderSummary.investment.no_recent_interaction})
+            {`${INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL} (${reminderSummary.investment.no_recent_interaction})`}
           </MenuItem>
           <MenuItem
             to={urls.reminders.investments.outstandingPropositions()}
             pathname={location.pathname}
           >
-            Outstanding propositions (
-            {reminderSummary.investment.outstanding_propositions})
+            {`${INVESTMENTS_OUTSTANDING_PROPOSITIONS_LABEL} (${reminderSummary.investment.outstanding_propositions})`}
           </MenuItem>
         </Menu>
       )}
@@ -88,15 +92,13 @@ export const RemindersMenu = ({
             to={urls.reminders.exports.noRecentInteractions()}
             pathname={location.pathname}
           >
-            Companies with no recent interactions (
-            {reminderSummary.export.no_recent_interaction})
+            {`${COMPANIES_NO_RECENT_INTERACTIONS_LABEL} (${reminderSummary.export.no_recent_interaction})`}
           </MenuItem>
           <MenuItem
             to={urls.reminders.exports.newInteractions()}
             pathname={location.pathname}
           >
-            Companies with new interactions (
-            {reminderSummary.export.new_interaction})
+            {`${COMPANIES_NEW_INTERACTIONS_LABEL} (${reminderSummary.export.new_interaction})`}
           </MenuItem>
         </Menu>
       )}
