@@ -418,7 +418,7 @@ describe('Interaction details', () => {
     })
   })
 
-  context('Interaction with business intelligence and TAP fields', () => {
+  context('Interaction with business intelligence and UKTP fields', () => {
     before(() => {
       cy.visit(interactions.detail(fixtures.interaction.withBusIntel.id))
     })
@@ -431,7 +431,7 @@ describe('Interaction details', () => {
         content: {
           Company: companyObject,
           'Contact(s)': contactObjectTheodore,
-          Service: 'Tradeshow Access Programme (TAP)',
+          Service: 'UK Tradeshow Programme (UKTP) – Exhibitor',
           'Service status': 'Completed',
           'Grant offered': '£1',
           'Net receipt': '£2',
