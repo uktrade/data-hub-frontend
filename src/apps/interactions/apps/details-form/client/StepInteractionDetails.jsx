@@ -100,7 +100,7 @@ const getServiceContext = (theme, kind, investmentProject) => {
   return kind && mapping[theme][kind] ? mapping[theme][kind] : mapping[theme]
 }
 
-const isTapService = (service) => service?.label?.includes('(TAP)')
+const isUktpService = (service) => service?.label?.includes('(UKTP)')
 
 const buildServicesHierarchy = (services) =>
   Object.values(
@@ -228,7 +228,7 @@ const StepInteractionDetails = ({
         />
       ))}
 
-      {isServiceDelivery && isTapService(selectedService) && (
+      {isServiceDelivery && isUktpService(selectedService) && (
         <>
           <FieldSelect
             label="Service status (optional)"
