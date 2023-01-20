@@ -392,7 +392,7 @@
   },
   {
       "id": "380bba2b-3499-e211-a939-e4115bead28a",
-      "name": "A Specific DIT Export Service or Funding : Tradeshow Access Programme (TAP)",
+      "name": "A Specific DIT Export Service or Funding : UK Tradeshow Programme (UKTP) – Exhibitor",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
@@ -401,6 +401,17 @@
       ],
       "interaction_questions": []
   },
+  {
+    "id": "380bba2b-3499-e211-a939-e4115bead28b",
+    "name": "A Specific DIT Export Service or Funding : UK Tradeshow Programme (UKTP) – Attendee-only",
+    "disabled_on": null,
+    "contexts": [
+        "export_interaction",
+        "event",
+        "export_service_delivery"
+    ],
+    "interaction_questions": []
+},
   {
       "id": "4664f856-166f-4f48-9865-653250f84086",
       "name": "A Specific DIT Export Service or Funding : Global Growth Service: Diagnostic and Output Report Completed by DIT",

@@ -13886,7 +13886,7 @@
     },
     {
         "id": "88a963f8-9698-e211-a939-e4115bead28a",
-        "name": "SG4 - Director & PA SG4 TAP/Enquiry Service",
+        "name": "SG4 - Director & PA SG4 UKTP/Enquiry Service",
         "disabled_on": "2013-03-31T16:22:16Z",
         "role": {
             "name": "UKTI HQ Department",
@@ -15569,7 +15569,7 @@
     },
     {
         "id": "fd65239e-9698-e211-a939-e4115bead28a",
-        "name": "TD - TAP - Deputy Director",
+        "name": "TD - UKTP - Deputy Director",
         "disabled_on": null,
         "role": {
             "name": "UKTI HQ Department",
@@ -15586,7 +15586,7 @@
     },
     {
         "id": "0066239e-9698-e211-a939-e4115bead28a",
-        "name": "TD - TAP Team",
+        "name": "TD - UKTP Team",
         "disabled_on": null,
         "role": {
             "name": "UKTI HQ Department",

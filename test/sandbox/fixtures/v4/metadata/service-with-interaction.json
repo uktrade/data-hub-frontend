@@ -379,7 +379,7 @@
     },
     {
         "id": "5359ba2b-3499-e211-a939-e4115bead28a",
-        "name": "Exhibitions (Not TAP)",
+        "name": "Exhibitions (Not UKTP)",
         "disabled_on": "2017-01-19T15:07:21.999000Z",
         "contexts": [
             "investment_project_interaction",
@@ -1069,7 +1069,19 @@
     },
     {
         "id": "f76eb92b-3499-e211-a939-e4115bead28a",
-        "name": "Trade - Tradeshow Access Programme (TAP)",
+        "name": "Trade - UK Tradeshow Programme (UKTP) – Exhibitor",
+        "disabled_on": "2018-04-25T15:05:19Z",
+        "contexts": [
+            "investment_project_interaction",
+            "event",
+            "service_delivery",
+            "interaction"
+        ],
+        "interaction_questions": []
+    },
+    {
+        "id": "f76eb92b-3499-e211-a939-e4115bead28b",
+        "name": "Trade - UK Tradeshow Programme (UKTP) – Attendee-only",
         "disabled_on": "2018-04-25T15:05:19Z",
         "contexts": [
             "investment_project_interaction",

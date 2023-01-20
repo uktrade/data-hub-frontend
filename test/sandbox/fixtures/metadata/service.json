@@ -55,7 +55,14 @@
   },
   {
     "id": "380bba2b-3499-e211-a939-e4115bead28a",
-    "name": "A Specific DIT Export Service or Funding : Tradeshow Access Programme (TAP)",
+    "name": "A Specific DIT Export Service or Funding : UK Tradeshow Programme (UKTP) – Exhibitor",
+    "disabled_on": null,
+    "contexts": ["event", "export_interaction", "export_service_delivery"],
+    "interaction_questions": []
+  },
+  {
+    "id": "380bba2b-3499-e211-a939-e4115bead28b",
+    "name": "A Specific DIT Export Service or Funding : UK Tradeshow Programme (UKTP) – Attendee-only",
     "disabled_on": null,
     "contexts": ["event", "export_interaction", "export_service_delivery"],
     "interaction_questions": []
@@ -281,7 +288,7 @@
   },
   {
     "id": "5359ba2b-3499-e211-a939-e4115bead28a",
-    "name": "Exhibitions (Not TAP)",
+    "name": "Exhibitions (Not UKTP)",
     "disabled_on": null,
     "contexts": [
       "event",
@@ -1532,7 +1539,19 @@
   },
   {
     "id": "f76eb92b-3499-e211-a939-e4115bead28a",
-    "name": "Trade - Tradeshow Access Programme (TAP)",
+    "name": "Trade - UK Tradeshow Programme (UKTP) – Exhibitor",
+    "disabled_on": null,
+    "contexts": [
+      "event",
+      "investment_project_interaction",
+      "interaction",
+      "service_delivery"
+    ],
+    "interaction_questions": []
+  },
+  {
+    "id": "f76eb92b-3499-e211-a939-e4115bead28b",
+    "name": "Trade - UK Tradeshow Programme (UKTP) – Attendee-only",
     "disabled_on": null,
     "contexts": [
       "event",
