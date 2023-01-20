@@ -354,13 +354,12 @@ async function fetchActivityFeedHandler(req, res, next) {
           ...aventriEvents[activity.id],
         ]
       }
-      // Check attributed to is part of the object, as this avoids errors with maxemail objects and exernal activities that are not ESS
-      if ('activity.object.attributedTo.id' in activity) {
+      // Add Contacts to ESS activities (need to check type as Maxemail does not have attributedTo.id key)
+      if (activity.object.type == 'dit:directoryFormsApi:Submission') {
         if (
           activity.object.attributedTo.id ==
           'dit:directoryFormsApi:SubmissionType:export-support-service'
         ) {
-          // Add contacts to ESS activities
           const essContactEmail = activity.actor['dit:emailAddress']
           const essContact = getContactFromEmailAddress(
             essContactEmail,
