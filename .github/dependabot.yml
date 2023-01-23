@@ -28,6 +28,9 @@ updates:
   - dependency-name: cypress # TET-372
     versions:
     - "> 11.2.0"
+  - dependency-name: jsdom # TET-371
+    versions:
+      - "> 20.0.3"
 
   # These are part of dependency groups and should be updated via the relevant script.
   - dependency-name: "@storybook/addon-a11y"
