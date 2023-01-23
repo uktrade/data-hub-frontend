@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect, useParams, withRouter } from 'react-router-dom'
+import { Redirect, useParams } from 'react-router-dom'
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { Link } from 'govuk-react'
@@ -24,7 +24,6 @@ import {
   COMPANIES_NEW_INTERACTIONS,
 } from './constants'
 import { state2props } from './state'
-import { compose } from 'redux'
 
 const Container = styled('div')({
   [MEDIA_QUERIES.DESKTOP]: {
@@ -125,4 +124,4 @@ export const RemindersLists = ({ defaultUrl }) => {
   )
 }
 
-export default compose(withRouter, connect(state2props))(RemindersLists)
+export default connect(state2props)(RemindersLists)
