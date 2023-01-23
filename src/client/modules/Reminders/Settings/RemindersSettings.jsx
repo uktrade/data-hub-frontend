@@ -33,13 +33,14 @@ const StyledHomeLink = styled(Link)({
   display: 'block',
 })
 
-const openSettings = (queryParamType, qsParams, label) => {
+const openSettings = (queryParamType, qsParams, label, reminderReturnUrl) => {
   const settingsExpand = get(qsParams, queryParamType, false)
 
   return {
     isOpen: !!settingsExpand,
-    breadcrumbUrl: `${urls.reminders.index()}/?${queryParamType}=true`,
+    breadcrumbUrl: `${urls.reminders.settings.index()}/?${queryParamType}=true`,
     breadcrumbLabel: label,
+    reminderReturnUrl,
   }
 }
 
@@ -52,22 +53,26 @@ const RemindersSettings = ({
   const openESL = openSettings(
     'investments_estimated_land_dates',
     qsParams,
-    INVESTMENTS_ESTIMATED_LAND_DATES_LABEL
+    INVESTMENTS_ESTIMATED_LAND_DATES_LABEL,
+    urls.reminders.investments.estimatedLandDate()
   )
   const openNRI = openSettings(
     'investments_no_recent_interactions',
     qsParams,
-    INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL
+    INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL,
+    urls.reminders.investments.noRecentInteraction()
   )
   const openENRI = openSettings(
     'companies_no_recent_interactions',
     qsParams,
-    COMPANIES_NO_RECENT_INTERACTIONS_LABEL
+    COMPANIES_NO_RECENT_INTERACTIONS_LABEL,
+    urls.reminders.exports.noRecentInteractions()
   )
   const openENI = openSettings(
     'companies_new_interactions',
     qsParams,
-    COMPANIES_NEW_INTERACTIONS_LABEL
+    COMPANIES_NEW_INTERACTIONS_LABEL,
+    urls.reminders.exports.newInteractions()
   )
 
   const openSettingsBreadCrumb = [openENI, openENRI, openESL, openNRI].find(
@@ -93,6 +98,7 @@ const RemindersSettings = ({
       link: openSettingsBreadCrumb.breadcrumbUrl,
       text: openSettingsBreadCrumb.breadcrumbLabel,
     })
+    breadcrumbs[1].link = openSettingsBreadCrumb.reminderReturnUrl
   }
 
   return (
