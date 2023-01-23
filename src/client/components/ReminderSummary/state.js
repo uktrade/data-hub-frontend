@@ -1,33 +1,40 @@
 import { ID } from '../NotificationAlert/state'
 import urls from '../../../lib/urls'
+import {
+  COMPANIES_NEW_INTERACTIONS_LABEL,
+  COMPANIES_NO_RECENT_INTERACTIONS_LABEL,
+  INVESTMENTS_ESTIMATED_LAND_DATES_LABEL,
+  INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL,
+  INVESTMENTS_OUTSTANDING_PROPOSITIONS_LABEL,
+} from '../../modules/Reminders/constants'
 
 const transformReminderSummary = (data) => ({
   count: data.count,
   investment: [
     {
-      name: 'Approaching estimated land dates',
+      name: INVESTMENTS_ESTIMATED_LAND_DATES_LABEL,
       url: urls.reminders.investments.estimatedLandDate(),
       count: data.investment.estimated_land_date,
     },
     {
-      name: 'Projects with no recent interactions',
+      name: INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL,
       url: urls.reminders.investments.noRecentInteraction(),
       count: data.investment.no_recent_interaction,
     },
     {
-      name: 'Outstanding propositions',
+      name: INVESTMENTS_OUTSTANDING_PROPOSITIONS_LABEL,
       url: urls.reminders.investments.outstandingPropositions(),
       count: data.investment.outstanding_propositions,
     },
   ],
   export: [
     {
-      name: 'Companies with no recent interactions',
+      name: COMPANIES_NO_RECENT_INTERACTIONS_LABEL,
       url: urls.reminders.exports.noRecentInteractions(),
       count: data.export.no_recent_interaction,
     },
     {
-      name: 'Companies with new interactions',
+      name: COMPANIES_NEW_INTERACTIONS_LABEL,
       url: urls.reminders.exports.newInteractions(),
       count: data.export.new_interaction,
     },
