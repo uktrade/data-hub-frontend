@@ -35,8 +35,8 @@ const LinkListLink = styled(Link)(({ $isActive }) => ({
     : {}),
 }))
 
-const Menu = ({ children }) => (
-  <LinkList data-test="link-list">{children}</LinkList>
+const Menu = ({ children, dataTest }) => (
+  <LinkList data-test={`${dataTest} link-list`}>{children}</LinkList>
 )
 
 const MenuItem = ({ to, pathname, children }) => (
@@ -47,7 +47,8 @@ const MenuItem = ({ to, pathname, children }) => (
   </LinkListItem>
 )
 
-const RemindersMenu = ({
+export const RemindersMenu = ({
+  reminderSummary,
   hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
 }) => {
@@ -55,36 +56,47 @@ const RemindersMenu = ({
   return (
     <>
       {hasInvestmentFeatureGroup && (
-        <Menu>
+        <Menu dataTest="investment-menu-group">
           <H3 as="h2">Investment</H3>
           <MenuItem
             to={urls.reminders.investments.estimatedLandDate()}
             pathname={location.pathname}
           >
-            Approaching estimated land dates
+            Approaching estimated land dates (
+            {reminderSummary.investment.estimated_land_date})
           </MenuItem>
           <MenuItem
             to={urls.reminders.investments.noRecentInteraction()}
             pathname={location.pathname}
           >
-            Projects with no recent interactions
+            Projects with no recent interactions (
+            {reminderSummary.investment.no_recent_interaction})
           </MenuItem>
           <MenuItem
             to={urls.reminders.investments.outstandingPropositions()}
             pathname={location.pathname}
           >
-            Outstanding propositions
+            Outstanding propositions (
+            {reminderSummary.investment.outstanding_propositions})
           </MenuItem>
         </Menu>
       )}
       {hasExportFeatureGroup && (
-        <Menu>
+        <Menu dataTest="export-menu-group">
           <H3 as="h2">Export</H3>
           <MenuItem
             to={urls.reminders.exports.noRecentInteractions()}
             pathname={location.pathname}
           >
-            Companies with no recent interactions
+            Companies with no recent interactions (
+            {reminderSummary.export.no_recent_interaction})
+          </MenuItem>
+          <MenuItem
+            to={urls.reminders.exports.newInteractions()}
+            pathname={location.pathname}
+          >
+            Companies with new interactions (
+            {reminderSummary.export.new_interaction})
           </MenuItem>
         </Menu>
       )}

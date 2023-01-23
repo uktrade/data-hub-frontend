@@ -14,6 +14,7 @@ import InvestmentsEstimatedLandDatesList from './InvestmentsEstimatedLandDatesLi
 import InvestmentsNoRecentInteractionsList from './InvestmentsNoRecentInteractionsList'
 import InvestmentsOutstandingPropositionsList from './InvestmentsOutstandingPropositionsList'
 import ExportsNoRecentInteractionsList from './ExportsNoRecentInteractionsList'
+import ExportsNewInteractionsList from './ExportsNewInteractionsList'
 
 export {
   RemindersSettings,
@@ -27,4 +28,5 @@ export {
   InvestmentsNoRecentInteractionsList,
   InvestmentsOutstandingPropositionsList,
   ExportsNoRecentInteractionsList,
+  ExportsNewInteractionsList,
 }

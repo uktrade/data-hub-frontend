@@ -549,6 +549,11 @@ app.get(
   v4Reminders.getNoRecentInvestmentInteractionReminders
 )
 
+app.get(
+  '/v4/reminder/new-export-interaction',
+  v4Reminders.getNewExportInteractionReminders
+)
+
 // V4 Investment
 app.get('/v4/large-investor-profile', v4Company.largeInvestorProfile)
 app.patch(
@@ -601,6 +606,7 @@ app.post('/whoami', user.resetWhoami)
 
 // Help centre endpoint
 app.get('/help-centre/announcement', helpCentre.announcement)
+app.get('/help-centre/feed', helpCentre.feed)
 
 // Zendesk tickets endpoint
 app.post('/zendesk/tickets', zendesk.tickets)

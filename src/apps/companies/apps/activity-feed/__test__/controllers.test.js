@@ -128,6 +128,11 @@ describe('Activity feed controllers', () => {
               size: 20,
               sort: [
                 {
+                  'object.published': {
+                    order: 'desc',
+                  },
+                },
+                {
                   'object.startTime': {
                     order: 'desc',
                   },
@@ -203,6 +208,28 @@ describe('Activity feed controllers', () => {
                                   id: [
                                     'dit:aventri:Event:1:Create',
                                     'dit:aventri:Event:2:Create',
+                                  ],
+                                },
+                              },
+                            ],
+                          },
+                        },
+                        {
+                          bool: {
+                            must: [
+                              {
+                                term: {
+                                  'object.attributedTo.id':
+                                    'dit:directoryFormsApi:SubmissionType:export-support-service',
+                                },
+                              },
+                              {
+                                terms: {
+                                  'actor.dit:emailAddress': [
+                                    'fred@acme.org',
+                                    'fred@acme.org',
+                                    'fred@acme.org',
+                                    'byvanuwenu@yahoo.com',
                                   ],
                                 },
                               },
@@ -314,6 +341,11 @@ describe('Activity feed controllers', () => {
           size: 20,
           sort: [
             {
+              'object.published': {
+                order: 'desc',
+              },
+            },
+            {
               'object.startTime': {
                 order: 'desc',
               },
@@ -361,6 +393,28 @@ describe('Activity feed controllers', () => {
                         ],
                       },
                     },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            term: {
+                              'object.attributedTo.id':
+                                'dit:directoryFormsApi:SubmissionType:export-support-service',
+                            },
+                          },
+                          {
+                            terms: {
+                              'actor.dit:emailAddress': [
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'byvanuwenu@yahoo.com',
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
                   ],
                 },
               },
@@ -400,6 +454,11 @@ describe('Activity feed controllers', () => {
           from: 0,
           size: 20,
           sort: [
+            {
+              'object.published': {
+                order: 'desc',
+              },
+            },
             {
               'object.startTime': {
                 order: 'desc',
@@ -525,6 +584,11 @@ describe('Activity feed controllers', () => {
             size: 20,
             sort: [
               {
+                'object.published': {
+                  order: 'desc',
+                },
+              },
+              {
                 'object.startTime': {
                   order: 'desc',
                 },
@@ -574,6 +638,28 @@ describe('Activity feed controllers', () => {
                           ],
                         },
                       },
+                      {
+                        bool: {
+                          must: [
+                            {
+                              term: {
+                                'object.attributedTo.id':
+                                  'dit:directoryFormsApi:SubmissionType:export-support-service',
+                              },
+                            },
+                            {
+                              terms: {
+                                'actor.dit:emailAddress': [
+                                  'fred@acme.org',
+                                  'fred@acme.org',
+                                  'fred@acme.org',
+                                  'byvanuwenu@yahoo.com',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
                     ],
                   },
                 },
@@ -614,6 +700,11 @@ describe('Activity feed controllers', () => {
           from: 0,
           size: 20,
           sort: [
+            {
+              'object.published': {
+                order: 'desc',
+              },
+            },
             {
               'object.startTime': {
                 order: 'desc',

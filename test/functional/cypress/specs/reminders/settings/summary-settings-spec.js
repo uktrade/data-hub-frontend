@@ -9,6 +9,7 @@ const summaryEndpoint = '/api-proxy/v4/reminder/subscription/summary'
 const eslDataTest = 'estimated-land-dates'
 const nriDataTest = 'no-recent-interactions'
 const enriDataTest = 'companies-no-recent-interactions'
+const eniDataTest = 'companies-new-interactions'
 
 const getToggle = (dataTest) => `[data-test="${dataTest}-toggle"]`
 const getTable = (dataTest) => `[data-test="${dataTest}-table"]`
@@ -89,6 +90,10 @@ const assertSettingsTableToggles = ({
 }
 
 describe('Settings: reminders and email notifications', () => {
+  after(() => {
+    cy.resetUser()
+  })
+
   context('Breadcrumbs and title', () => {
     before(() => {
       cy.setUserFeatureGroups([
@@ -125,6 +130,7 @@ describe('Settings: reminders and email notifications', () => {
     assertSettingsTableNotVisible('ELD', eslDataTest)
     assertSettingsTableNotVisible('NRI', nriDataTest)
     assertSettingsTableNotVisible('ENRI', enriDataTest)
+    assertSettingsTableNotVisible('ENI', eniDataTest)
   })
 
   context(
@@ -140,6 +146,7 @@ describe('Settings: reminders and email notifications', () => {
       assertSettingsTableVisible('ELD', eslDataTest)
       assertSettingsTableNotVisible('NRI', nriDataTest)
       assertSettingsTableNotVisible('ENRI', enriDataTest)
+      assertSettingsTableNotVisible('ENI', eniDataTest)
 
       assertSettingsTableToggles({
         title: 'ELD',
@@ -184,12 +191,34 @@ describe('Settings: reminders and email notifications', () => {
     assertSettingsTableNotVisible('ELD', eslDataTest)
     assertSettingsTableNotVisible('NRI', nriDataTest)
     assertSettingsTableVisible('ENRI', enriDataTest)
+    assertSettingsTableNotVisible('ENI', eniDataTest)
 
     assertSettingsTableToggles({
       title: 'ENRI',
       dataTest: enriDataTest,
       reminderText: '10, 30 and 40 days after the last interaction',
       buttonText: 'Companies with no recent interaction',
+    })
+  })
+
+  context('When only new export interaction settings are visible', () => {
+    const queryParams = 'companies_new_interactions=true'
+    before(() => {
+      interceptAPICalls()
+      cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)
+      waitForAPICalls()
+    })
+
+    assertSettingsTableNotVisible('ELD', eslDataTest)
+    assertSettingsTableNotVisible('NRI', nriDataTest)
+    assertSettingsTableNotVisible('ENRI', enriDataTest)
+    assertSettingsTableVisible('ENI', eniDataTest)
+
+    assertSettingsTableToggles({
+      title: 'ENI',
+      dataTest: eniDataTest,
+      reminderText: '2, 4 and 7 days after a new interaction was posted',
+      buttonText: 'Companies with new interactions',
     })
   })
 
@@ -205,6 +234,7 @@ describe('Settings: reminders and email notifications', () => {
     assertSettingsTableVisible('ELD', eslDataTest)
     assertSettingsTableVisible('NRI', nriDataTest)
     assertSettingsTableVisible('ENRI', enriDataTest)
+    assertSettingsTableVisible('ENI', eniDataTest)
   })
 
   context('When no settings have been set - the default', () => {
@@ -216,6 +246,8 @@ describe('Settings: reminders and email notifications', () => {
         nri_email_reminders_enabled: false,
         enri_reminder_days: [],
         enri_email_reminders_enabled: false,
+        eni_reminder_days: [],
+        eni_email_reminders_enabled: false,
       })
       cy.visit(urls.reminders.settings.index())
       waitForAPICalls()
@@ -237,6 +269,13 @@ describe('Settings: reminders and email notifications', () => {
 
     it('should render the ENRI settings table with Off', () => {
       assertKeyValueTable('companies-no-recent-interactions-table', {
+        Reminders: 'Off',
+        'Email notifications': 'Off',
+      })
+    })
+
+    it('should render the ENI settings table with Off', () => {
+      assertKeyValueTable('companies-new-interactions-table', {
         Reminders: 'Off',
         'Email notifications': 'Off',
       })

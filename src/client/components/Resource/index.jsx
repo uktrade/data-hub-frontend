@@ -82,7 +82,6 @@ const Resource = multiInstance({
         {...taskStatusProps}
         name={name}
         id={id}
-        renderProgress={() => <></>} //TODO: This empty pragment will implemented as props later
         startOnRender={{
           onSuccessDispatch: 'RESOURCE',
           payload,

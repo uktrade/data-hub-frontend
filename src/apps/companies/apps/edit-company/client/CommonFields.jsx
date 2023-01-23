@@ -54,7 +54,7 @@ const CommonFields = ({ company, regions, features }) => (
     />
 
     <FieldAddress
-      legend="Address"
+      legend="Trading address"
       name="address"
       hint="This should be the address for this particular office of the
          business. If you need to record activity or a contact for a different

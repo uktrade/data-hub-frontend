@@ -214,11 +214,8 @@ import { TASK_DATA_HUB_FEED } from './components/PersonalisedDashboard/state'
 
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
 import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentReminders/state'
-import { fetchReminderSummary } from './components/ReminderSummary/tasks'
-import { TASK_GET_REMINDER_SUMMARY } from './components/ReminderSummary/state'
-
-import { fetchNotificationAlertCount } from './components/NotificationAlert/tasks'
-import { TASK_GET_NOTIFICATION_ALERT_COUNT } from './components/NotificationAlert/state'
+import { fetchReminderSummary } from './components/NotificationAlert/tasks'
+import { TASK_GET_REMINDER_SUMMARY } from './components/NotificationAlert/state'
 
 import { TASK_GET_TYPEAHEAD_OPTIONS } from './components/Typeahead/state'
 
@@ -281,6 +278,9 @@ import {
   TASK_DELETE_EXPORTS_NO_RECENT_INTERACTION_REMINDER,
   TASK_DELETE_NO_RECENT_INTERACTION_REMINDER,
   TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS,
+  TASK_GET_EXPORTS_NEW_INTERACTION_REMINDERS,
+  TASK_DELETE_EXPORT_NEW_INTERACTION_REMINDER,
+  TASK_GET_EXPORTS_NEXT_NEW_INTERACTION_REMINDERS,
 } from '../client/modules/Reminders/state'
 
 import Footer from '../client/components/Footer'
@@ -450,7 +450,6 @@ function App() {
             myInvestmentProjects.fetchMyInvestmentsList,
           [TASK_GET_OUTSTANDING_PROPOSITIONS]: fetchOutstandingPropositions,
           [TASK_GET_REMINDER_SUMMARY]: fetchReminderSummary,
-          [TASK_GET_NOTIFICATION_ALERT_COUNT]: fetchNotificationAlertCount,
           'Large investment profiles filters':
             investmentProfilesTasks.loadFilterOptions,
           [TASK_GET_CONTACTS_LIST]: getContacts,
@@ -497,12 +496,18 @@ function App() {
             reminders.getNoRecentInteractionReminders,
           [TASK_GET_EXPORTS_NO_RECENT_INTERACTION_REMINDERS]:
             reminders.getExportsNoRecentInteractionReminders,
+          [TASK_GET_EXPORTS_NEW_INTERACTION_REMINDERS]:
+            reminders.getExportsNewInteractionReminders,
+          [TASK_GET_EXPORTS_NEXT_NEW_INTERACTION_REMINDERS]:
+            reminders.getNextExportsNewInteractionReminder,
           [TASK_DELETE_ESTIMATED_LAND_DATE_REMINDER]:
             reminders.deleteEstimatedLandDateReminder,
           [TASK_DELETE_NO_RECENT_INTERACTION_REMINDER]:
             reminders.deleteNoRecentInteractionReminder,
           [TASK_DELETE_EXPORTS_NO_RECENT_INTERACTION_REMINDER]:
             reminders.deleteExportNoRecentInteractionReminder,
+          [TASK_DELETE_EXPORT_NEW_INTERACTION_REMINDER]:
+            reminders.deleteExportNewInteractionReminder,
           [TASK_GET_NEXT_ESTIMATED_LAND_DATE_REMINDER]:
             reminders.getNextEstimatedLandDateReminder,
           [TASK_GET_NEXT_NO_RECENT_INTERACTION_REMINDER]:
