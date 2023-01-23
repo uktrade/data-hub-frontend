@@ -3,6 +3,7 @@ import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { Link } from 'govuk-react'
 
+import { connect } from 'react-redux'
 import { DefaultLayout } from '../../components'
 import RemindersMenu from './RemindersMenu'
 
@@ -21,6 +22,7 @@ import {
   COMPANIES_NO_RECENT_INTERACTIONS,
   COMPANIES_NEW_INTERACTIONS,
 } from './constants'
+import { state2props } from './state'
 
 const Container = styled('div')({
   [MEDIA_QUERIES.DESKTOP]: {
@@ -116,4 +118,4 @@ const RemindersLists = ({ reminderType }) => {
   )
 }
 
-export default RemindersLists
+export default connect(state2props)(RemindersLists)
