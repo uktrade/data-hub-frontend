@@ -4,7 +4,7 @@ import urls from '../../../../../src/lib/urls'
 
 import DataHubProvider from '../provider'
 
-describe('ContactLocalHeader', () => {
+describe('RemindersMenu', () => {
   const Component = (props) => (
     <RemindersMenu
       reminderSummary={{

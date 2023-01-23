@@ -1,9 +1,10 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { Redirect, useParams, withRouter } from 'react-router-dom'
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { Link } from 'govuk-react'
 
+import { connect } from 'react-redux'
 import { DefaultLayout } from '../../components'
 import RemindersMenu from './RemindersMenu'
 
@@ -22,6 +23,8 @@ import {
   COMPANIES_NO_RECENT_INTERACTIONS,
   COMPANIES_NEW_INTERACTIONS,
 } from './constants'
+import { state2props } from './state'
+import { compose } from 'redux'
 
 const Container = styled('div')({
   [MEDIA_QUERIES.DESKTOP]: {
@@ -66,8 +69,12 @@ const HomeLink = styled(Link)({
   },
 })
 
-const RemindersLists = () => {
+export const RemindersLists = ({ defaultUrl }) => {
   const { reminderType } = useParams()
+  if (!reminderType) {
+    return <Redirect to={{ pathname: defaultUrl }} />
+  }
+
   const subject = reminderTypeToLabel[reminderType]
   return (
     <DefaultLayout
@@ -118,4 +125,4 @@ const RemindersLists = () => {
   )
 }
 
-export default RemindersLists
+export default compose(withRouter, connect(state2props))(RemindersLists)

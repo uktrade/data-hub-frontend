@@ -15,6 +15,9 @@ const RemindersRoutes = () => {
       <Route path={`${path}/:reminderType`}>
         <RemindersLists />
       </Route>
+      <Route path={path}>
+        <RemindersLists />
+      </Route>
     </Switch>
   )
 }
