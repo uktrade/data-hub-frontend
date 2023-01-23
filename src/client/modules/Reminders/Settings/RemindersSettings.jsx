@@ -15,6 +15,12 @@ import urls from '../../../../lib/urls'
 import { state2props } from '../state'
 
 import { TASK_GET_SUBSCRIPTION_SUMMARY } from '../state'
+import {
+  INVESTMENTS_ESTIMATED_LAND_DATES_LABEL,
+  INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL,
+  COMPANIES_NO_RECENT_INTERACTIONS_LABEL,
+  COMPANIES_NEW_INTERACTIONS_LABEL,
+} from '../constants'
 
 const ToggleSectionContainer = styled('div')({
   marginTop: SPACING.SCALE_3,
@@ -74,7 +80,7 @@ const RemindersSettings = ({
                 <H2 size={LEVEL_SIZE[3]}>Investment</H2>
                 <ToggleSectionContainer>
                   <RemindersToggleSection
-                    label="Approaching estimated land dates"
+                    label={INVESTMENTS_ESTIMATED_LAND_DATES_LABEL}
                     id="estimated-land-dates-toggle"
                     data-test="estimated-land-dates-toggle"
                     isOpen={openESL}
@@ -86,7 +92,7 @@ const RemindersSettings = ({
                     />
                   </RemindersToggleSection>
                   <RemindersToggleSection
-                    label="Projects with no recent interactions"
+                    label={INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL}
                     id="no-recent-interactions-toggle"
                     data-test="no-recent-interactions-toggle"
                     isOpen={openNRI}
@@ -106,7 +112,7 @@ const RemindersSettings = ({
                 <H2 size={LEVEL_SIZE[3]}>Export</H2>
                 <ToggleSectionContainer>
                   <RemindersToggleSection
-                    label="Companies with no recent interactions"
+                    label={COMPANIES_NO_RECENT_INTERACTIONS_LABEL}
                     id="companies-no-recent-interactions-toggle"
                     data-test="companies-no-recent-interactions-toggle"
                     isOpen={openENRI}
@@ -119,7 +125,7 @@ const RemindersSettings = ({
                     />
                   </RemindersToggleSection>
                   <RemindersToggleSection
-                    label="Companies with new interactions"
+                    label={COMPANIES_NEW_INTERACTIONS_LABEL}
                     id="companies-new-interactions-toggle"
                     data-test="companies-new-interactions-toggle"
                     isOpen={openENI}
