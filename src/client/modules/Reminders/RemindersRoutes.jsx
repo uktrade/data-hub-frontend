@@ -4,7 +4,7 @@ import { RemindersLists } from '.'
 import { connect } from 'react-redux'
 import { state2props } from './state'
 
-const RemindersRoutes = ({ defaultUrl }) => {
+export const RemindersRoutes = ({ defaultUrl }) => {
   const { reminderType } = useParams()
 
   if (!reminderType) {
