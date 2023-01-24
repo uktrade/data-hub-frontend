@@ -14,6 +14,13 @@ import Resource from '../../../components/Resource'
 import urls from '../../../../lib/urls'
 import { state2props } from '../state'
 
+import {
+  INVESTMENTS_ESTIMATED_LAND_DATES_LABEL,
+  INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL,
+  COMPANIES_NO_RECENT_INTERACTIONS_LABEL,
+  COMPANIES_NEW_INTERACTIONS_LABEL,
+} from '../constants'
+
 import { TASK_GET_SUBSCRIPTION_SUMMARY } from '../state'
 import {
   INVESTMENTS_ESTIMATED_LAND_DATES_LABEL,
@@ -33,10 +40,15 @@ const StyledHomeLink = styled(Link)({
   display: 'block',
 })
 
-const openSettings = (queryParamType, qsParams) => {
+const openSettings = (queryParamType, qsParams, label, reminderReturnUrl) => {
   const settingsExpand = get(qsParams, queryParamType, false)
 
-  return !!settingsExpand
+  return {
+    isOpen: !!settingsExpand,
+    breadcrumbUrl: `${urls.reminders.settings.index()}/?${queryParamType}=true`,
+    breadcrumbLabel: label,
+    reminderReturnUrl,
+  }
 }
 
 const RemindersSettings = ({
@@ -45,24 +57,64 @@ const RemindersSettings = ({
 }) => {
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
-  const openESL = openSettings('investments_estimated_land_dates', qsParams)
-  const openNRI = openSettings('investments_no_recent_interactions', qsParams)
-  const openENRI = openSettings('companies_no_recent_interactions', qsParams)
-  const openENI = openSettings('companies_new_interactions', qsParams)
+
+  let breadcrumbs = [
+    {
+      link: urls.dashboard(),
+      text: 'Home',
+    },
+    {
+      link: urls.reminders.index(),
+      text: 'Reminders',
+    },
+    {
+      link: urls.reminders.settings.index(),
+      text: 'Settings',
+    },
+  ]
+
+  const openESL = openSettings(
+    'investments_estimated_land_dates',
+    qsParams,
+    INVESTMENTS_ESTIMATED_LAND_DATES_LABEL,
+    urls.reminders.investments.estimatedLandDate()
+  )
+  const openNRI = openSettings(
+    'investments_no_recent_interactions',
+    qsParams,
+    INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL,
+    urls.reminders.investments.noRecentInteraction()
+  )
+  const openENRI = openSettings(
+    'companies_no_recent_interactions',
+    qsParams,
+    COMPANIES_NO_RECENT_INTERACTIONS_LABEL,
+    urls.reminders.exports.noRecentInteractions()
+  )
+  const openENI = openSettings(
+    'companies_new_interactions',
+    qsParams,
+    COMPANIES_NEW_INTERACTIONS_LABEL,
+    urls.reminders.exports.newInteractions()
+  )
+
+  const openSettingsBreadCrumb = [openENI, openENRI, openESL, openNRI].find(
+    (setting) => setting.isOpen
+  )
+
+  if (openSettingsBreadCrumb?.isOpen) {
+    breadcrumbs.push({
+      link: openSettingsBreadCrumb.breadcrumbUrl,
+      text: openSettingsBreadCrumb.breadcrumbLabel,
+    })
+    breadcrumbs[1].link = openSettingsBreadCrumb.reminderReturnUrl
+  }
 
   return (
     <DefaultLayout
       pageTitle="Settings"
       heading="Settings: reminders and email notifications"
-      breadcrumbs={[
-        {
-          link: urls.dashboard(),
-          text: 'Home',
-        },
-        {
-          text: 'Settings: reminders and email notifications',
-        },
-      ]}
+      breadcrumbs={breadcrumbs}
     >
       <Resource
         name={TASK_GET_SUBSCRIPTION_SUMMARY}
