@@ -98,7 +98,6 @@ const RemindersSettings = ({
 
   if (openSettingsBreadCrumb?.isOpen) {
     breadcrumbs.push({
-      link: openSettingsBreadCrumb.breadcrumbUrl,
       text: openSettingsBreadCrumb.breadcrumbLabel,
     })
     breadcrumbs[1].link = openSettingsBreadCrumb.reminderReturnUrl
