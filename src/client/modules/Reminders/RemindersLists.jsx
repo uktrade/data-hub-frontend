@@ -1,5 +1,4 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { Link } from 'govuk-react'
@@ -66,8 +65,7 @@ const HomeLink = styled(Link)({
   },
 })
 
-const RemindersLists = () => {
-  const { reminderType } = useParams()
+const RemindersLists = ({ reminderType }) => {
   const subject = reminderTypeToLabel[reminderType]
   return (
     <DefaultLayout
