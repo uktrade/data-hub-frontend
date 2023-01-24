@@ -91,6 +91,7 @@ describe('Exports no recent Interaction Reminders', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
+        Reminders: urls.reminders.index(),
         'Companies with no recent interactions': null,
       })
     })
