@@ -22,12 +22,6 @@ import {
 } from '../constants'
 
 import { TASK_GET_SUBSCRIPTION_SUMMARY } from '../state'
-import {
-  INVESTMENTS_ESTIMATED_LAND_DATES_LABEL,
-  INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL,
-  COMPANIES_NO_RECENT_INTERACTIONS_LABEL,
-  COMPANIES_NEW_INTERACTIONS_LABEL,
-} from '../constants'
 
 const ToggleSectionContainer = styled('div')({
   marginTop: SPACING.SCALE_3,
