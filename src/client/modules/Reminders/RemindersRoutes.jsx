@@ -1,25 +1,16 @@
 import React from 'react'
-import { useRouteMatch, Switch, Route } from 'react-router-dom'
-import { RemindersLists, RemindersSettings, RemindersForms } from '.'
+import { useParams, Redirect } from 'react-router-dom'
+import { RemindersLists } from '.'
+import { connect } from 'react-redux'
+import { state2props } from './state'
 
-const RemindersRoutes = () => {
-  const { path } = useRouteMatch()
-  return (
-    <Switch>
-      <Route exact={true} path={`${path}/settings`}>
-        <RemindersSettings />
-      </Route>
-      <Route path={`${path}/settings/:reminderType`}>
-        <RemindersForms />
-      </Route>
-      <Route path={`${path}/:reminderType`}>
-        <RemindersLists />
-      </Route>
-      <Route path={path}>
-        <RemindersLists />
-      </Route>
-    </Switch>
-  )
+const RemindersRoutes = ({ defaultUrl }) => {
+  const { reminderType } = useParams()
+
+  if (!reminderType) {
+    return <Redirect to={{ pathname: defaultUrl }} />
+  }
+  return <RemindersLists reminderType={reminderType} />
 }
 
-export default RemindersRoutes
+export default connect(state2props)(RemindersRoutes)

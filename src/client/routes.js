@@ -9,6 +9,7 @@ import OmisCollectionList from './modules/Omis/CollectionList'
 import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
 import EventAventriRegistrationStatus from './modules/Events/EventAventriRegistrationStatus'
 import RemindersRoutes from './modules/Reminders/RemindersRoutes'
+import { RemindersForms, RemindersSettings } from './modules/Reminders'
 
 const routes = {
   companies: [
@@ -78,8 +79,20 @@ const routes = {
   ],
   reminders: [
     {
+      exact: true,
+      path: '/reminders/settings',
+      module: 'datahub:companies',
+      component: RemindersSettings,
+    },
+    {
       exact: false,
-      path: '/reminders',
+      path: '/reminders/settings/:reminderType',
+      module: 'datahub:companies',
+      component: RemindersForms,
+    },
+    {
+      exact: false,
+      path: ['/reminders/:reminderType', '/reminders'],
       module: 'datahub:companies',
       component: RemindersRoutes,
     },
