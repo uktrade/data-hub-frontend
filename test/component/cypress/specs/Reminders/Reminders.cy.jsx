@@ -1,9 +1,9 @@
 import React from 'react'
-import { RemindersRoutes } from '../../../../../src/client/modules/Reminders/RemindersRoutes.jsx'
+import { Reminders } from '../../../../../src/client/modules/Reminders/Reminders.jsx'
 import DataHubProvider from '../provider'
 
-describe('RemindersMenu', () => {
-  const Component = (props) => <RemindersRoutes {...props} />
+describe('Reminders', () => {
+  const Component = (props) => <Reminders {...props} />
 
   context('When reminderType is missing', () => {
     beforeEach(() => {
