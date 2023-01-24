@@ -62,7 +62,6 @@ const RemindersSettings = ({
       text: 'Reminders',
     },
     {
-      link: urls.reminders.settings.index(),
       text: 'Settings',
     },
   ]
@@ -101,6 +100,7 @@ const RemindersSettings = ({
       text: openSettingsBreadCrumb.breadcrumbLabel,
     })
     breadcrumbs[1].link = openSettingsBreadCrumb.reminderReturnUrl
+    breadcrumbs[2].link = urls.reminders.settings.index()
   }
 
   return (
