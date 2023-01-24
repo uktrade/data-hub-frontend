@@ -109,7 +109,7 @@ describe('Settings: reminders and email notifications', () => {
       assertBreadcrumbs({
         Home: '/',
         Reminders: urls.reminders.index(),
-        Settings: urls.reminders.settings.index(),
+        Settings: null,
       })
     })
 

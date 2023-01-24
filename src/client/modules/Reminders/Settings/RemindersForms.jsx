@@ -33,6 +33,10 @@ const RemindersForms = () => {
           text: 'Home',
         },
         {
+          link: `${urls.reminders.index()}/${reminderType}`,
+          text: 'Reminders',
+        },
+        {
           link: `${urls.reminders.settings.index()}?${queryParams}`,
           text: 'Settings',
         },
