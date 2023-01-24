@@ -129,7 +129,7 @@ const RemindersSettings = ({
                     label={INVESTMENTS_ESTIMATED_LAND_DATES_LABEL}
                     id="estimated-land-dates-toggle"
                     data-test="estimated-land-dates-toggle"
-                    isOpen={openESL}
+                    isOpen={openESL.isOpen}
                   >
                     <RemindersSettingsTable
                       dataName={'estimated-land-dates'}
@@ -141,7 +141,7 @@ const RemindersSettings = ({
                     label={INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL}
                     id="no-recent-interactions-toggle"
                     data-test="no-recent-interactions-toggle"
-                    isOpen={openNRI}
+                    isOpen={openNRI.isOpen}
                     borderBottom={true}
                   >
                     <RemindersSettingsTable
@@ -161,7 +161,7 @@ const RemindersSettings = ({
                     label={COMPANIES_NO_RECENT_INTERACTIONS_LABEL}
                     id="companies-no-recent-interactions-toggle"
                     data-test="companies-no-recent-interactions-toggle"
-                    isOpen={openENRI}
+                    isOpen={openENRI.isOpen}
                     borderBottom={true}
                   >
                     <RemindersSettingsTable
@@ -174,7 +174,7 @@ const RemindersSettings = ({
                     label={COMPANIES_NEW_INTERACTIONS_LABEL}
                     id="companies-new-interactions-toggle"
                     data-test="companies-new-interactions-toggle"
-                    isOpen={openENI}
+                    isOpen={openENI.isOpen}
                     borderBottom={true}
                   >
                     <RemindersSettingsTable

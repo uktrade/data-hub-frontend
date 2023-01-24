@@ -74,6 +74,7 @@ const RemindersLists = ({ reminderType }) => {
       subheading={subject}
       breadcrumbs={[
         { link: urls.dashboard(), text: 'Home' },
+        { link: urls.reminders.index(), text: 'Reminders' },
         { text: subject },
       ]}
     >
