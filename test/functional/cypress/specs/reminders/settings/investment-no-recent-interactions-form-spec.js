@@ -41,6 +41,7 @@ describe('Settings - projects with no recent interaction', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
+        Reminders: urls.reminders.investments.noRecentInteraction(),
         Settings: `${urls.reminders.settings.index()}?investments_no_recent_interactions=true`,
         'Projects with no recent interaction': null,
       })

@@ -87,6 +87,7 @@ describe('Exports New Interaction Reminders', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
+        Reminders: urls.reminders.index(),
         'Companies with new interactions': null,
       })
     })

@@ -84,6 +84,7 @@ describe('Estimated Land Date Reminders', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
+        Reminders: urls.reminders.index(),
         'Approaching estimated land dates': null,
       })
     })

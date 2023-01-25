@@ -83,6 +83,7 @@ describe('Outstanding Proposition Reminders', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
+        Reminders: urls.reminders.index(),
         'Outstanding propositions': null,
       })
     })

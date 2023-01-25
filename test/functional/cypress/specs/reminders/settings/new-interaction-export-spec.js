@@ -40,6 +40,7 @@ describe('Edit new export interaction', () => {
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',
+        Reminders: urls.reminders.exports.newInteractions(),
         Settings: `${urls.reminders.settings.index()}?companies_new_interactions=true`,
         'Companies with new interaction': null,
       })
