@@ -35,6 +35,8 @@ export default class DirectoryFormsApi extends React.PureComponent {
       'object.dit:directoryFormsApi:Submission:Data'
     )
 
+    console.log(activity)
+
     //if export support submission
     if (
       formType === 'dit:directoryFormsApi:SubmissionType:export-support-service'
@@ -96,7 +98,7 @@ export default class DirectoryFormsApi extends React.PureComponent {
             kind="great.gov.uk Enquiry"
           />
           <ActivityCardSubject>Enquiry</ActivityCardSubject>
-          <ActivityCardNotes notes={formData.comment} />
+          {/* <ActivityCardNotes notes={formData.comment} /> */}
           <ActivityCardMetadata metadata={metadata} />
         </ActivityCardWrapper>
       )

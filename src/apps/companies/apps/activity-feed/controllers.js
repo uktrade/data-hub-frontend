@@ -248,6 +248,12 @@ async function fetchActivitiesForContact(req, res, next) {
       isAventriAttendee(activity)
     )
 
+    const test = activities.some((activity) => isEssData(activity))
+
+    if (test) {
+      console.log(test)
+    }
+
     if (hasAventriData) {
       activities = await getAventriEvents(activities, req)
     }
@@ -291,6 +297,10 @@ const getAventriEvents = async (activities, req) => {
 
 const isAventriAttendee = (attendee) =>
   attendee['dit:application'] === 'aventri'
+
+const isEssData = (activity) =>
+  activity['activity.object.attributedTo.id'] ===
+  'dit:directoryFormsApi:SubmissionType:export-support-service'
 
 async function fetchActivityFeedHandler(req, res, next) {
   try {
