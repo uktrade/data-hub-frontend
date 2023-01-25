@@ -117,7 +117,7 @@ const RemindersSettings = ({
     (setting) => setting.isOpen
   )
 
-  let breadcrumbs = generateBreadcrumbs(openSettingsBreadCrumb)
+  const breadcrumbs = generateBreadcrumbs(openSettingsBreadCrumb)
 
   return (
     <DefaultLayout
