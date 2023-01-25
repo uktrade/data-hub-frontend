@@ -1,7 +1,7 @@
 import React from 'react'
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 import styled from 'styled-components'
-import { Link } from 'govuk-react'
+import { Link, H6 } from 'govuk-react'
 
 import { DefaultLayout } from '../../components'
 import RemindersMenu from './RemindersMenu'
@@ -55,8 +55,19 @@ const ListContainer = styled('div')({
   },
 })
 
-const HomeLink = styled(Link)({
+// const HomeLink = styled(Link)({
+//   display: 'block',
+//   marginTop: SPACING.SCALE_4,
+//   marginBottom: SPACING.SCALE_4,
+//   [MEDIA_QUERIES.DESKTOP]: {
+//     marginLeft: 25,
+//     marginBottom: 25,
+//   },
+// })
+
+const FooterLink = styled('div')({
   display: 'block',
+  // borderTop: BLUE,
   marginTop: SPACING.SCALE_4,
   marginBottom: SPACING.SCALE_4,
   [MEDIA_QUERIES.DESKTOP]: {
@@ -109,9 +120,19 @@ const RemindersLists = ({ reminderType }) => {
             )}
           </ListContainer>
         </Container>
-        <HomeLink data-test="home-link" href={urls.dashboard()}>
+        {/* <HomeLink data-test="home-link" href={urls.dashboard()}>
           Home
-        </HomeLink>
+        </HomeLink> */}
+        <FooterLink data-test="help-text-link">
+          <hr />
+          <H6 as="h2">Need Help?</H6>
+          <p>
+            See the{' '}
+            <a href="/reminders/settings/">
+              guidance on reminders and email notifications
+            </a>
+          </p>
+        </FooterLink>
       </>
     </DefaultLayout>
   )
