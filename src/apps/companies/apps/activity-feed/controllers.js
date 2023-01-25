@@ -376,7 +376,7 @@ async function fetchActivityFeedHandler(req, res, next) {
       return activity
     })
 
-    //Sort activities by published date
+    // Sort activities by startTime
     activities.sort(
       (a, b) => Date.parse(b.object.startTime) - Date.parse(a.object.startTime)
     )
