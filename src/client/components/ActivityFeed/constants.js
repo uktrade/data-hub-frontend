@@ -105,6 +105,53 @@ export const INTERACTION_SERVICES = {
   'Trade Agreement Implementation Activity': 'Implementation',
 }
 
+export const INTERACTION_SERVICEOTHER = {
+  'Export Support Service - International Markets':
+    'Export Support Service: International',
+  'Global Growth Service: Diagnostic and Output Report Completed by DIT':
+    'Global Growth: Diagnostic and Output Report',
+  'Global Growth Service: Engagement Letter Signed by Company':
+    'Global Growth: Engagement Letter Signed',
+  'Global Growth Service: Project Closed': 'Global Growth: Project Closed',
+  'Global Growth Service: Signed Export Growth Plan Received from Company':
+    'Global Growth: Export Growth Plan Received',
+  'Overseas Business Network Chargeable Services (OBN)':
+    'OBN Chargeable Services',
+  'Participation at Glasgow/getting involved with COP26':
+    'Participation at Glasgow/COP26 involvement',
+  'DIT Middle East & Pakistan Comms & Marketing campaigns':
+    'DIT Middle East & Pakistan Comms & Marketing',
+  'Commonwealth Games 2022 - BATP Programme': 'Commonwealth Games 2022 – BATP',
+  'Commonwealth Games 2022 - GEP Programme': 'Commonwealth Games 2022 – GEP',
+  'HPO High Potential Opportunity Investment Enquiry via IIGB':
+    'HPO Investment Enquiry via IIGB',
+  'HPO High Potential Opportunity Investment Enquiry via IST Target Company':
+    'HPO Investment Enquiry via IST Target Company',
+  'Abandoned - No Investor Response (ERU Use)':
+    'Abandoned - No Response (ERU Use)',
+  'Follow Up Email - No Investor Response (ERU Use)':
+    'Follow Up Email - No Response (ERU Use)',
+  'Business Partners (e.g. distributors or manufacturers)': 'Business Partners',
+  'Financial and Professional Service Providers':
+    'Financial + Professional Service Providers',
+  'Engagement with Local Enterprise Partnerships':
+    'Engagement: Local Enterprise Partnerships',
+  'Engaging with Devolved Authorities on Trade Agreements':
+    'Engagement: Devolved Authorities Trade Agreements',
+  'Informing key stakeholder groups of opportunities & gathering business intelligence':
+    'Informing stakeholders + gathering intelligence',
+  'Negotiating rounds - pre-ratification and negotiating amendments':
+    'Negotiating: pre-ratification + amendments',
+  'One-to-one with exporters explaining new trade agreement opportunities, messages and resources':
+    '121 with exporters: new trade agreement opportunities',
+  'One-to-one with investors explaining new trade agreement opportunities, messages and resources':
+    '121 with investors: new trade agreement opportunities',
+  'Partner country interaction - post-ratification (Trade Agreement related)':
+    'Partner country interaction: post-ratification',
+  'Partner country interaction - related to Market Access Barriers':
+    'Partner country interaction: Market Access Barriers',
+}
+
 export default {
   ACTIVITY_TYPE,
   ACTIVITY_TYPE_FILTERS,
@@ -113,4 +160,5 @@ export default {
   STATUS,
   BADGES,
   INTERACTION_SERVICES,
+  INTERACTION_SERVICEOTHER,
 }
