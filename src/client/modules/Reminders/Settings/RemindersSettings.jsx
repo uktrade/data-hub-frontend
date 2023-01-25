@@ -45,26 +45,48 @@ const openSettings = (queryParamType, qsParams, label, reminderReturnUrl) => {
   }
 }
 
+const generateBreadcrumbs = (openSettingsBreadCrumb) => {
+  if (openSettingsBreadCrumb?.isOpen) {
+    return [
+      {
+        link: urls.dashboard(),
+        text: 'Home',
+      },
+      {
+        link: openSettingsBreadCrumb.reminderReturnUrl,
+        text: 'Reminders',
+      },
+      {
+        link: urls.reminders.settings.index(),
+        text: 'Settings',
+      },
+      {
+        text: openSettingsBreadCrumb.breadcrumbLabel,
+      },
+    ]
+  } else {
+    return [
+      {
+        link: urls.dashboard(),
+        text: 'Home',
+      },
+      {
+        link: urls.reminders.index(),
+        text: 'Reminders',
+      },
+      {
+        text: 'Settings',
+      },
+    ]
+  }
+}
+
 const RemindersSettings = ({
   hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
 }) => {
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
-
-  let breadcrumbs = [
-    {
-      link: urls.dashboard(),
-      text: 'Home',
-    },
-    {
-      link: urls.reminders.index(),
-      text: 'Reminders',
-    },
-    {
-      text: 'Settings',
-    },
-  ]
 
   const openESL = openSettings(
     'investments_estimated_land_dates',
@@ -95,13 +117,7 @@ const RemindersSettings = ({
     (setting) => setting.isOpen
   )
 
-  if (openSettingsBreadCrumb?.isOpen) {
-    breadcrumbs.push({
-      text: openSettingsBreadCrumb.breadcrumbLabel,
-    })
-    breadcrumbs[1].link = openSettingsBreadCrumb.reminderReturnUrl
-    breadcrumbs[2].link = urls.reminders.settings.index()
-  }
+  let breadcrumbs = generateBreadcrumbs(openSettingsBreadCrumb)
 
   return (
     <DefaultLayout
