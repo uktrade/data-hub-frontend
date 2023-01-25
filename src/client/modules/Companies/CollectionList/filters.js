@@ -1,4 +1,8 @@
 import {
+  export_segments,
+  export_sub_segments,
+} from '../../../../apps/companies/apps/edit-company/client/constants'
+import {
   buildDatesFilter,
   buildOptionsFilter,
   buildInputFieldFilter,
@@ -118,5 +122,21 @@ export const buildSelectedFilters = (
       value: advisers.id,
       categoryLabel: LABELS.leadItaOrGlobalAccountManager,
     })),
+  },
+  exportSegment: {
+    queryParam: 'export_segment',
+    options: buildOptionsFilter({
+      options: export_segments,
+      value: queryParams.export_segment,
+      categoryLabel: LABELS.exportSegment,
+    }),
+  },
+  exportSubsegment: {
+    queryParam: 'export_sub_segment',
+    options: buildOptionsFilter({
+      options: export_sub_segments,
+      value: queryParams.export_sub_segment,
+      categoryLabel: LABELS.exportSubsegment,
+    }),
   },
 })

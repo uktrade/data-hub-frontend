@@ -88,10 +88,8 @@ import createInvestmentProjectsReducer from '../apps/investments/client/projects
 
 import { ID as INVESTMENT_REMINDERS_ID } from './components/InvestmentReminders/state'
 import investmentRemindersReducer from './components/InvestmentReminders/reducer'
-import { ID as REMINDER_SUMMARY_ID } from './components/ReminderSummary/state'
-import reminderSummaryReducer from './components/ReminderSummary/reducer'
-import { ID as NOTIFICATION_ALERT_ID } from './components/NotificationAlert/state'
-import notificationAlertReducer from './components/NotificationAlert/reducer'
+import { ID as REMINDER_SUMMARY_ID } from './components/NotificationAlert/state'
+import reminderSummaryReducer from './components/NotificationAlert/reducer'
 import {
   CONTACTS_LIST_ID,
   COMPANY_CONTACTS_LIST_ID,
@@ -109,6 +107,9 @@ import eventAventriDetailsReducer from './modules/Events/EventAventriDetails/red
 
 import { ID as EVENTS_AVENTRI_REGISTRATION_STATUS_ID } from './modules/Events/EventAventriRegistrationStatus/state'
 import eventAventriRegistrationStatusReducer from './modules/Events/EventAventriRegistrationStatus/reducer'
+
+import { ID as INTERACTION_ESS_DETAILS_ID } from './modules/Interactions/ESSInteractionDetails/state'
+import interactionEssDetailsReducer from './modules/Interactions/ESSInteractionDetails/reducer'
 
 import { ID as EVENTS_ID } from './modules/Events/CollectionList/state'
 import eventsReducer from './modules/Events/CollectionList/reducer'
@@ -206,7 +207,6 @@ const reducer = {
   [DATA_HUB_FEED_ID]: personalDashboardReducer,
   [INVESTMENT_REMINDERS_ID]: investmentRemindersReducer,
   [REMINDER_SUMMARY_ID]: reminderSummaryReducer,
-  [NOTIFICATION_ALERT_ID]: notificationAlertReducer,
   [CONTACTS_LIST_ID]: contactsReducer,
   [CONTACT_ACTIVITIES_ID]: contactActivitiesReducer,
   [COMPANY_CONTACTS_LIST_ID]: contactsReducer,
@@ -216,6 +216,7 @@ const reducer = {
   [EVENTS_AVENTRI_DETAILS_ID]: eventAventriDetailsReducer,
   [EVENTS_AVENTRI_REGISTRATION_STATUS_ID]:
     eventAventriRegistrationStatusReducer,
+  [INTERACTION_ESS_DETAILS_ID]: interactionEssDetailsReducer,
   [ORDERS_LIST_ID]: ordersReducer,
   [COMPANY_ORDERS_LIST_ID]: ordersReducer,
   [REMINDERS_ID]: remindersReducer,

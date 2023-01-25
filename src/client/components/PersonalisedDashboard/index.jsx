@@ -9,7 +9,7 @@ import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
 import Banner from '../LocalHeader/Banner'
 import { ID as INVESTMENT_REMINDERS_ID } from '../InvestmentReminders/state'
-import { ID as REMINDER_SUMMARY_ID } from '../ReminderSummary/state'
+import { ID as REMINDER_SUMMARY_ID } from '../NotificationAlert/state'
 import {
   TASK_CHECK_FOR_INVESTMENTS,
   ID as CHECK_FOR_INVESTMENTS_ID,
@@ -119,9 +119,7 @@ const PersonalisedDashboard = ({
                       id="reminder-summary-section"
                       badge={
                         !!reminderSummaryCount && (
-                          <NotificationBadge
-                            label={`${reminderSummaryCount}`}
-                          />
+                          <NotificationBadge value={reminderSummaryCount} />
                         )
                       }
                       major={true}
@@ -137,7 +135,7 @@ const PersonalisedDashboard = ({
                       id="investment-reminders-section"
                       badge={
                         !!remindersCount && (
-                          <NotificationBadge label={`${remindersCount}`} />
+                          <NotificationBadge value={remindersCount} />
                         )
                       }
                       major={true}

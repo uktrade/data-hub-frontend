@@ -19,10 +19,12 @@ const reactRoutes = [
   '/reminders/investments-no-recent-interactions',
   '/reminders/investments-outstanding-propositions',
   '/reminders/companies-no-recent-interactions',
+  '/reminders/companies-new-interactions',
   '/reminders/settings',
   '/reminders/settings/investments-estimated-land-dates',
   '/reminders/settings/investments-no-recent-interactions',
   '/reminders/settings/companies-no-recent-interactions',
+  '/reminders/settings/companies-new-interactions',
 ]
 
 reactRoutes.forEach((path) => {

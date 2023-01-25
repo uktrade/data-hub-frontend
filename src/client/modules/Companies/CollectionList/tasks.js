@@ -30,6 +30,8 @@ const getCompanies = ({
   latest_interaction_date_before,
   latest_interaction_date_after,
   one_list_group_global_account_manager,
+  export_segment,
+  export_sub_segment,
   sortby = 'modified_on:desc',
 }) => {
   const administrativeAreas = [...us_state, ...canadian_province]
@@ -50,6 +52,8 @@ const getCompanies = ({
       latest_interaction_date_before,
       latest_interaction_date_after,
       one_list_group_global_account_manager,
+      export_segment,
+      export_sub_segment,
       sortby,
     })
     .then(({ data }) => transformResponseToCompanyCollection(data))

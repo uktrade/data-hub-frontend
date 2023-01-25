@@ -1,8 +1,5 @@
 const contactsRepository = require('../repos')
 const companyRepository = require('../../companies/repos')
-const {
-  ACTIVITY_STREAM_FEATURE_FLAG,
-} = require('../../companies/apps/activity-feed/constants')
 
 async function getCommon(req, res, next) {
   try {
@@ -35,17 +32,13 @@ function getDetails(req, res, next) {
     const contactId = req.params.contactId
     const contact = res.locals.contact
     const companyAddress = res.locals.company.address
-    const isActivityStreamFeatureFlagEnabled =
-      res.locals.userFeatures?.includes(ACTIVITY_STREAM_FEATURE_FLAG)
 
     res.render('contacts/views/details', {
       props: {
         contactId: contactId,
         contact: contact,
-        isActivityStreamFeatureFlagEnabled,
         companyAddress: companyAddress,
       },
-      isActivityStreamFeatureFlagEnabled,
     })
   } catch (error) {
     next(error)

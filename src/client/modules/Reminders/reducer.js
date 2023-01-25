@@ -9,6 +9,9 @@ import {
   REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_DELETED,
   REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_GOT_NEXT,
   REMINDERS__OUTSTANDING_PROPOSITIONS_LOADED,
+  REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_LOADED,
+  REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_DELETED,
+  REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_GOT_NEXT,
 } from '../../actions'
 
 const initialState = {
@@ -27,6 +30,11 @@ const initialState = {
     count: 0,
   },
   exportsNoRecentInteractionReminders: {
+    results: [],
+    count: 0,
+    nextPending: false,
+  },
+  exportsNewInteractionReminders: {
     results: [],
     count: 0,
     nextPending: false,
@@ -123,6 +131,33 @@ export default (state = initialState, { type, result, payload }) => {
             ...state.exportsNoRecentInteractionReminders.results,
             ...result,
           ],
+          nextPending: false,
+        },
+      }
+    case REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_LOADED:
+      return {
+        ...state,
+        exportsNewInteractionReminders: result,
+      }
+    case REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_DELETED:
+      return {
+        ...state,
+        exportsNewInteractionReminders: {
+          ...state.exportsNewInteractionReminders,
+          results: state.exportsNewInteractionReminders.results.map((item) => ({
+            ...item,
+            deleted: item.deleted || item.id === payload.id,
+          })),
+          count: state.exportsNewInteractionReminders.count - 1,
+          nextPending: true,
+        },
+      }
+    case REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_GOT_NEXT:
+      return {
+        ...state,
+        exportsNewInteractionReminders: {
+          ...state.exportsNewInteractionReminders,
+          results: [...state.exportsNewInteractionReminders.results, ...result],
           nextPending: false,
         },
       }

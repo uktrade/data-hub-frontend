@@ -9,11 +9,13 @@ import {
   INVESTMENTS_ESTIMATED_LAND_DATES,
   INVESTMENTS_NO_RECENT_INTERACTIONS,
   COMPANIES_NO_RECENT_INTERACTIONS,
+  COMPANIES_NEW_INTERACTIONS,
 } from '../constants'
 
 import InvestmentsEstimatedLandDatesForm from './InvestmentsEstimatedLandDatesForm'
 import InvestmentsNoRecentInteractionsForm from './InvestmentsNoRecentInteractionsForm'
 import ExportsNoRecentInteractionsForm from './ExportsNoRecentInteractionsForm'
+import ExportsNewInteractionsForm from './ExportsNewInteractionsForm'
 
 const RemindersForms = () => {
   const { reminderType } = useParams()
@@ -29,6 +31,10 @@ const RemindersForms = () => {
         {
           link: urls.dashboard(),
           text: 'Home',
+        },
+        {
+          link: `${urls.reminders.index()}/${reminderType}`,
+          text: 'Reminders',
         },
         {
           link: `${urls.reminders.settings.index()}?${queryParams}`,
@@ -48,6 +54,9 @@ const RemindersForms = () => {
         )}
         {reminderType === COMPANIES_NO_RECENT_INTERACTIONS && (
           <ExportsNoRecentInteractionsForm />
+        )}
+        {reminderType === COMPANIES_NEW_INTERACTIONS && (
+          <ExportsNewInteractionsForm />
         )}
       </>
     </DefaultLayout>

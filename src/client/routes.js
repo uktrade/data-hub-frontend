@@ -6,8 +6,10 @@ import EventAventriDetails from './modules/Events/EventAventriDetails'
 import EventForm from './modules/Events/EventForm'
 import InteractionsCollectionList from './modules/Interactions/CollectionList'
 import OmisCollectionList from './modules/Omis/CollectionList'
+import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
 import EventAventriRegistrationStatus from './modules/Events/EventAventriRegistrationStatus'
-import RemindersRoutes from './modules/Reminders/RemindersRoutes'
+import Reminders from './modules/Reminders/Reminders'
+import { RemindersForms, RemindersSettings } from './modules/Reminders'
 
 const routes = {
   companies: [
@@ -62,6 +64,11 @@ const routes = {
       module: 'datahub:interactions',
       component: InteractionsCollectionList,
     },
+    {
+      path: '/interactions/ess/:essInteractionId/details',
+      module: 'datahub:interactions',
+      component: ESSInteractionDetails,
+    },
   ],
   orders: [
     {
@@ -72,10 +79,22 @@ const routes = {
   ],
   reminders: [
     {
-      exact: false,
-      path: '/reminders',
+      exact: true,
+      path: '/reminders/settings',
       module: 'datahub:companies',
-      component: RemindersRoutes,
+      component: RemindersSettings,
+    },
+    {
+      exact: false,
+      path: '/reminders/settings/:reminderType',
+      module: 'datahub:companies',
+      component: RemindersForms,
+    },
+    {
+      exact: false,
+      path: ['/reminders/:reminderType', '/reminders'],
+      module: 'datahub:companies',
+      component: Reminders,
     },
   ],
 }

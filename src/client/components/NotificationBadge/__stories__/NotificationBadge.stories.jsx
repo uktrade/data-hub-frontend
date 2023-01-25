@@ -5,4 +5,4 @@ import NotificationBadge from 'NotificationBadge'
 
 storiesOf('NotificationBadge', module)
   .addParameters({ component: NotificationBadge })
-  .add('Default', () => <NotificationBadge label={3} />)
+  .add('Default', () => <NotificationBadge value={3} />)

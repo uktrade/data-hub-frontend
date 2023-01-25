@@ -8,7 +8,6 @@ const {
   EVENT_ACTIVITY_SORT_OPTIONS,
   EVENT_ATTENDEES_SORT_OPTIONS,
   EVENT_ALL_ACTIVITY,
-  ACTIVITY_STREAM_FEATURE_FLAG,
   DATA_HUB_AND_AVENTRI_ACTIVITY,
   EVENT_AVENTRI_ATTENDEES_STATUSES,
   EVENT_ATTENDEES_MAPPING,
@@ -18,11 +17,7 @@ const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
 
 const { getGlobalUltimateHierarchy } = require('../../repos')
 const urls = require('../../../../lib/urls')
-const {
-  fetchActivityFeed,
-  fetchMatchingDataHubContact,
-  fetchUserFeatureFlags,
-} = require('./repos')
+const { fetchActivityFeed, fetchMatchingDataHubContact } = require('./repos')
 const config = require('../../../../config')
 
 const {
@@ -33,13 +28,10 @@ const {
   aventriAttendeeForCompanyQuery,
   dataHubAndActivityStreamServicesQuery,
   aventriAttendeeQuery,
-  exportSupportServiceQuery,
+  exportSupportServiceDetailQuery,
   aventriAttendeeRegistrationStatusQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
-const {
-  contactActivityQueryNoAventri,
-} = require('./es-queries/contact-activity-query-no-aventri')
 const allActivityFeedEventsQuery = require('./es-queries/activity-feed-all-events-query')
 
 const { aventriEventQuery } = require('./es-queries/aventri-event-query')
@@ -181,37 +173,6 @@ async function getMaxemailCampaigns(req, next, contacts) {
   }
 }
 
-async function getExportSupportActivities(req, next, contacts) {
-  try {
-    const { from, size } = req.query
-
-    // Fetch ESS  Activities
-    const essQuery = exportSupportServiceQuery(from, size, contacts)
-    const essQueryResults = await fetchActivityFeed(req, essQuery)
-    const essActivities = essQueryResults.hits.hits.map((hit) => hit._source)
-
-    //Add Ess contacts to each Activity
-    const essActivitiesWithContact = essActivities.map((activity) => {
-      if (
-        activity.object.attributedTo.id ==
-        'dit:directoryFormsApi:SubmissionType:export-support-service'
-      ) {
-        const essContactEmail = activity.actor['dit:emailAddress']
-        const essContact = getContactFromEmailAddress(essContactEmail, contacts)
-        activity.object.attributedTo = [
-          activity.object.attributedTo,
-          mapEssContacts(essContact),
-        ]
-      }
-      return activity
-    })
-
-    return essActivitiesWithContact
-  } catch (error) {
-    next(error)
-  }
-}
-
 async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
   try {
     // Fetch aventri attendee info for company contacts
@@ -264,50 +225,21 @@ async function fetchActivitiesForContact(req, res, next) {
 
     const from = (req.query.page - 1) * ACTIVITIES_PER_PAGE
 
-    // This will be deleted when the feature flag is removed
     // istanbul ignore next: Covered by functional tests
-    res.locals.userFeatures = await fetchUserFeatureFlags(req).catch(
+    let results = await fetchActivityFeed(
+      req,
+      contactActivityQuery(
+        from,
+        ACTIVITIES_PER_PAGE,
+        contact.email,
+        contact.id,
+        DATA_HUB_AND_EXTERNAL_ACTIVITY,
+        CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
+      )
       // istanbul ignore next: Covered by functional tests
-      (error) => {
-        next(error)
-      }
-    )
-
-    // istanbul ignore next: Covered by functional tests
-    let isActivityStreamFeatureFlagEnabled = res.locals?.userFeatures?.includes(
-      ACTIVITY_STREAM_FEATURE_FLAG
-    )
-
-    // istanbul ignore next: Covered by functional tests
-    let results = isActivityStreamFeatureFlagEnabled
-      ? await fetchActivityFeed(
-          req,
-          contactActivityQuery(
-            from,
-            ACTIVITIES_PER_PAGE,
-            contact.email,
-            contact.id,
-            DATA_HUB_AND_EXTERNAL_ACTIVITY,
-            CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
-          )
-          // istanbul ignore next: Covered by functional tests
-        ).catch((error) => {
-          next(error)
-        })
-      : await fetchActivityFeed(
-          req,
-          contactActivityQueryNoAventri(
-            from,
-            ACTIVITIES_PER_PAGE,
-            contact.email,
-            contact.id,
-            DATA_HUB_AND_EXTERNAL_ACTIVITY,
-            CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS[selectedSortBy]
-          )
-          // istanbul ignore next: Covered by functional tests
-        ).catch((error) => {
-          next(error)
-        })
+    ).catch((error) => {
+      next(error)
+    })
 
     const total = results.hits.total.value
     let activities = results.hits.hits.map((hit) => hit._source)
@@ -381,21 +313,15 @@ async function fetchActivityFeedHandler(req, res, next) {
         .map((company) => company.id)
     }
 
-    let isActivityStreamFeatureFlagEnabled = res.locals?.userFeatures?.includes(
-      ACTIVITY_STREAM_FEATURE_FLAG
+    const aventriEvents = await getAventriEventsAttendedByCompanyContacts(
+      req,
+      next,
+      company.contacts
     )
+    const aventriEventIds = Object.keys(aventriEvents)
 
-    let aventriEventIds = []
-    let aventriEvents = []
-    if (isActivityStreamFeatureFlagEnabled) {
-      aventriEvents = await getAventriEventsAttendedByCompanyContacts(
-        req,
-        next,
-        company.contacts
-      )
-
-      aventriEventIds = Object.keys(aventriEvents)
-    }
+    // Get Ess Activities
+    const getEssInteractions = isEssFilter(activityTypeFilter)
     const queries = getQueries({
       from,
       size,
@@ -403,6 +329,7 @@ async function fetchActivityFeedHandler(req, res, next) {
       contacts: company.contacts,
       user,
       aventriEventIds,
+      getEssInteractions,
     })
 
     const results = await fetchActivityFeed(
@@ -419,17 +346,6 @@ async function fetchActivityFeedHandler(req, res, next) {
       total += campaigns.length
     }
 
-    // Get Export Support Service Activites
-    if (isEssFilter(activityTypeFilter)) {
-      const essActivities = await getExportSupportActivities(
-        req,
-        next,
-        company.contacts
-      )
-      activities = [...activities, ...essActivities]
-      total += essActivities.length
-    }
-
     //loop over all aventri results, set the contact to be the matching contact from the contacts array
     activities = activities.map((activity) => {
       if (activity.type == 'dit:aventri:Event' && aventriEvents[activity.id]) {
@@ -437,6 +353,24 @@ async function fetchActivityFeedHandler(req, res, next) {
           activity.object.attributedTo,
           ...aventriEvents[activity.id],
         ]
+      }
+      // Add Contacts to ESS activities (need to check type as Maxemail does not have attributedTo.id key)
+      if (activity.object.type == 'dit:directoryFormsApi:Submission') {
+        if (
+          activity.object.attributedTo.id ==
+          'dit:directoryFormsApi:SubmissionType:export-support-service'
+        ) {
+          const essContactEmail = activity.actor['dit:emailAddress']
+          const essContact = getContactFromEmailAddress(
+            essContactEmail,
+            company.contacts
+          )
+
+          activity.object.attributedTo = [
+            activity.object.attributedTo,
+            mapEssContacts(essContact),
+          ]
+        }
       }
       return activity
     })
@@ -488,6 +422,23 @@ async function fetchAventriEvent(req, res, next) {
   }
 }
 
+async function fetchESSDetails(req, res, next) {
+  try {
+    const essInteractionId = req.params.essInteractionId
+    const essQuery = exportSupportServiceDetailQuery(essInteractionId)
+
+    const essInteractionResults = await fetchActivityFeed(req, essQuery)
+
+    const essInteractionDetail = essInteractionResults.hits.hits.map(
+      (hit) => hit._source
+    )
+
+    return res.json(...essInteractionDetail)
+  } catch (error) {
+    next(error)
+  }
+}
+
 async function getAventriRegistrationStatusCounts(req, eventId) {
   const registrationStatusResults = await fetchActivityFeed(
     req,
@@ -526,7 +477,7 @@ async function fetchAventriEventRegistrationStatusAttendees(req, res, next) {
     }
 
     const sort = EVENT_ATTENDEES_SORT_OPTIONS[sortBy]
-    const from = (page - 1) * ACTIVITIES_PER_PAGE
+    const from = (page - 1) * size
 
     //get the attendees
     const aventriAttendeeResults = await fetchActivityFeed(
@@ -737,4 +688,5 @@ module.exports = {
   getAventriEventsAttendedByCompanyContacts,
   fetchAventriEventRegistrationStatusAttendees,
   getAventriRegistrationStatusCounts,
+  fetchESSDetails,
 }

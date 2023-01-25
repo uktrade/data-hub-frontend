@@ -524,6 +524,16 @@ app.patch(
   v4Reminders.saveNoRecentExportInteractionsSubscriptions
 )
 
+app.get(
+  '/v4/reminder/subscription/new-export-interaction',
+  v4Reminders.getNewExportInteractionsSubscriptions
+)
+
+app.patch(
+  '/v4/reminder/subscription/new-export-interaction',
+  v4Reminders.saveNewExportInteractionsSubscriptions
+)
+
 // Reminders lists
 
 app.get(
@@ -537,6 +547,11 @@ app.get(
 app.get(
   '/v4/reminder/no-recent-investment-interaction',
   v4Reminders.getNoRecentInvestmentInteractionReminders
+)
+
+app.get(
+  '/v4/reminder/new-export-interaction',
+  v4Reminders.getNewExportInteractionReminders
 )
 
 // V4 Investment
@@ -591,6 +606,7 @@ app.post('/whoami', user.resetWhoami)
 
 // Help centre endpoint
 app.get('/help-centre/announcement', helpCentre.announcement)
+app.get('/help-centre/feed', helpCentre.feed)
 
 // Zendesk tickets endpoint
 app.post('/zendesk/tickets', zendesk.tickets)

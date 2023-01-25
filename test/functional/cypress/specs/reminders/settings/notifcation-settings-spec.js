@@ -12,6 +12,10 @@ const selectors = {
 }
 
 describe('Notification settings', () => {
+  after(() => {
+    cy.resetUser()
+  })
+
   context('when in estimated land date page', () => {
     before(() => {
       cy.setUserFeatureGroups(['investment-notifications'])

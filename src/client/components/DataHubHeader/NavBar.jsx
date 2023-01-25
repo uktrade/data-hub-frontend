@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { NavLink, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { BLACK } from 'govuk-colours'
@@ -11,8 +12,6 @@ import {
 } from '@govuk-react/constants'
 import ProtectedLink from '../ProtectedLink'
 
-// Colours not defined in 'govuk-colours' which we need for consistency
-// with Find Exporters and Market access.
 import { GREY_3_LEGACY, DARK_BLUE_LEGACY } from '../../utils/colors'
 
 import links from './links'
@@ -138,6 +137,12 @@ const NavBar = ({ onShowVerticalNav, showVerticalNav, disableReactRouter }) => {
       </StyledNav>
     </StyledNavContainer>
   )
+}
+
+NavBar.propTypes = {
+  onShowVerticalNav: PropTypes.func.isRequired,
+  showVerticalNav: PropTypes.bool.isRequired,
+  disableReactRouter: PropTypes.bool,
 }
 
 export default NavBar

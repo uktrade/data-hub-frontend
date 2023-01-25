@@ -67,6 +67,7 @@ import ContactDocuments from './modules/Contacts/ContactDocuments/ContactDocumen
 import InvestmentDocuments from '../apps/investments/client/projects/ProjectDocuments'
 import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactAuditHistory'
 import InteractionDetails from './modules/Interactions/InteractionDetails'
+import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -148,6 +149,8 @@ import {
   saveEvent,
 } from '../client/modules/Events/EventForm/tasks'
 
+import { getESSInteractionDetails } from './modules/Interactions/ESSInteractionDetails/tasks'
+
 import {
   getEvents,
   getAllActivityFeedEvents,
@@ -211,11 +214,8 @@ import { TASK_DATA_HUB_FEED } from './components/PersonalisedDashboard/state'
 
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
 import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentReminders/state'
-import { fetchReminderSummary } from './components/ReminderSummary/tasks'
-import { TASK_GET_REMINDER_SUMMARY } from './components/ReminderSummary/state'
-
-import { fetchNotificationAlertCount } from './components/NotificationAlert/tasks'
-import { TASK_GET_NOTIFICATION_ALERT_COUNT } from './components/NotificationAlert/state'
+import { fetchReminderSummary } from './components/NotificationAlert/tasks'
+import { TASK_GET_REMINDER_SUMMARY } from './components/NotificationAlert/state'
 
 import { TASK_GET_TYPEAHEAD_OPTIONS } from './components/Typeahead/state'
 
@@ -266,6 +266,8 @@ import {
   TASK_SAVE_NRI_REMINDER_SUBSCRIPTIONS,
   TASK_GET_EXPORT_NRI_REMINDER_SUBSCRIPTIONS,
   TASK_SAVE_EXPORT_NRI_REMINDER_SUBSCRIPTIONS,
+  TASK_GET_EXPORT_NI_REMINDER_SUBSCRIPTIONS,
+  TASK_SAVE_EXPORT_NI_REMINDER_SUBSCRIPTIONS,
   TASK_GET_ESTIMATED_LAND_DATE_REMINDERS,
   TASK_GET_EXPORTS_NO_RECENT_INTERACTION_REMINDERS,
   TASK_GET_NO_RECENT_INTERACTION_REMINDERS,
@@ -276,6 +278,9 @@ import {
   TASK_DELETE_EXPORTS_NO_RECENT_INTERACTION_REMINDER,
   TASK_DELETE_NO_RECENT_INTERACTION_REMINDER,
   TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS,
+  TASK_GET_EXPORTS_NEW_INTERACTION_REMINDERS,
+  TASK_DELETE_EXPORT_NEW_INTERACTION_REMINDER,
+  TASK_GET_EXPORTS_NEXT_NEW_INTERACTION_REMINDERS,
 } from '../client/modules/Reminders/state'
 
 import Footer from '../client/components/Footer'
@@ -304,6 +309,7 @@ import ErrorFallback from './components/ErrorFallback'
 
 import { TASK_ARCHIVE_INTERACTION } from './modules/Interactions/InteractionDetails/state'
 import { archiveInteraction } from './modules/Interactions/InteractionDetails/tasks'
+import { TASK_GET_ESS_INTERACTION_DETAILS } from './modules/Interactions/ESSInteractionDetails/state'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -444,7 +450,6 @@ function App() {
             myInvestmentProjects.fetchMyInvestmentsList,
           [TASK_GET_OUTSTANDING_PROPOSITIONS]: fetchOutstandingPropositions,
           [TASK_GET_REMINDER_SUMMARY]: fetchReminderSummary,
-          [TASK_GET_NOTIFICATION_ALERT_COUNT]: fetchNotificationAlertCount,
           'Large investment profiles filters':
             investmentProfilesTasks.loadFilterOptions,
           [TASK_GET_CONTACTS_LIST]: getContacts,
@@ -481,18 +486,28 @@ function App() {
             reminders.getNriExportSubscriptions,
           [TASK_SAVE_EXPORT_NRI_REMINDER_SUBSCRIPTIONS]:
             reminders.saveNriExportSubscriptions,
+          [TASK_GET_EXPORT_NI_REMINDER_SUBSCRIPTIONS]:
+            reminders.getNIExportSubscriptions,
+          [TASK_SAVE_EXPORT_NI_REMINDER_SUBSCRIPTIONS]:
+            reminders.saveNIExportSubscriptions,
           [TASK_GET_ESTIMATED_LAND_DATE_REMINDERS]:
             reminders.getEstimatedLandDateReminders,
           [TASK_GET_NO_RECENT_INTERACTION_REMINDERS]:
             reminders.getNoRecentInteractionReminders,
           [TASK_GET_EXPORTS_NO_RECENT_INTERACTION_REMINDERS]:
             reminders.getExportsNoRecentInteractionReminders,
+          [TASK_GET_EXPORTS_NEW_INTERACTION_REMINDERS]:
+            reminders.getExportsNewInteractionReminders,
+          [TASK_GET_EXPORTS_NEXT_NEW_INTERACTION_REMINDERS]:
+            reminders.getNextExportsNewInteractionReminder,
           [TASK_DELETE_ESTIMATED_LAND_DATE_REMINDER]:
             reminders.deleteEstimatedLandDateReminder,
           [TASK_DELETE_NO_RECENT_INTERACTION_REMINDER]:
             reminders.deleteNoRecentInteractionReminder,
           [TASK_DELETE_EXPORTS_NO_RECENT_INTERACTION_REMINDER]:
             reminders.deleteExportNoRecentInteractionReminder,
+          [TASK_DELETE_EXPORT_NEW_INTERACTION_REMINDER]:
+            reminders.deleteExportNewInteractionReminder,
           [TASK_GET_NEXT_ESTIMATED_LAND_DATE_REMINDER]:
             reminders.getNextEstimatedLandDateReminder,
           [TASK_GET_NEXT_NO_RECENT_INTERACTION_REMINDER]:
@@ -506,6 +521,7 @@ function App() {
           [TASK_GET_USER_FEATURE_FLAGS]: getUserFeatureFlags,
           [TASK_ARCHIVE_INTERACTION]: archiveInteraction,
           ...resourceTasks,
+          [TASK_GET_ESS_INTERACTION_DETAILS]: getESSInteractionDetails,
         }}
       >
         <Mount selector="#data-hub-header">
@@ -746,6 +762,9 @@ function App() {
         </Mount>
         <Mount selector="#interaction-details">
           {(props) => <InteractionDetails {...props} />}
+        </Mount>
+        <Mount selector="#ess-interaction-details">
+          {(props) => <ESSInteractionDetails {...props} />}
         </Mount>
 
         <Mount selector="#react-app">

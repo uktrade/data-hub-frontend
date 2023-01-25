@@ -64,7 +64,7 @@ function generateAttendee({
 const generateListOfAttendeesForEvent = (eventId) =>
   ['Activated', 'Confirmed', 'Attended', 'Cancelled', 'No Show', 'Waitlist']
     .map((status) =>
-      Array.from({ length: 5 }).map((_, index) =>
+      Array.from({ length: 10 }).map((_, index) =>
         generateAttendee({
           eventId: eventId,
           email: `contact${index}@bob.com`,

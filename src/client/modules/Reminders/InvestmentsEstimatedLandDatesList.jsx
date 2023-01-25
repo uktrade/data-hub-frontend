@@ -91,7 +91,7 @@ const InvestmentsEstimatedLandDatesList = ({ estimatedLandDateReminders }) => {
                   <CollectionList
                     results={results}
                     itemRenderer={InvestmentItemRenderer}
-                    disableDelete={nextPending}
+                    disableDelete={deleteTask.status || nextPending}
                     onDeleteReminder={(reminderId) => {
                       deleteTask.start({
                         payload: { id: reminderId },
