@@ -370,10 +370,16 @@ async function fetchActivityFeedHandler(req, res, next) {
             activity.object.attributedTo,
             mapEssContacts(essContact),
           ]
+          activity.object.startTime = activity.published
         }
       }
       return activity
     })
+
+    //Sort activities by published date
+    activities.sort(
+      (a, b) => Date.parse(b.object.startTime) - Date.parse(a.object.startTime)
+    )
 
     res.json({
       total,
