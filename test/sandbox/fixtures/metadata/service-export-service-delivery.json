@@ -158,7 +158,19 @@
   },
   {
     "id": "380bba2b-3499-e211-a939-e4115bead28a",
-    "name": "Tradeshow Access Programme (TAP)",
+    "name": "UK Tradeshow Programme (UKTP) – Exhibitor",
+    "disabled_on": null,
+    "contexts": [
+      "export_service_delivery",
+      "other_service_delivery",
+      "export_interaction",
+      "service_delivery",
+      "other_interaction"
+    ]
+  },
+  {
+    "id": "380bba2b-3499-e211-a939-e4115bead28b",
+    "name": "UK Tradeshow Programme (UKTP) – Attendee-only",
     "disabled_on": null,
     "contexts": [
       "export_service_delivery",

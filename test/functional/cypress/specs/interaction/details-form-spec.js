@@ -474,7 +474,7 @@ describe('Interaction theme', () => {
     it('should save the interaction', () => {
       submitForm(KINDS.INTERACTION, THEMES.EXPORT, {
         service: 'A Specific DIT Export Service or Funding',
-        subservice: 'Tradeshow Access Programme (TAP)',
+        subservice: 'UK Tradeshow Programme (UKTP) – Exhibitor',
       })
 
       assertRequestBody(
@@ -583,7 +583,7 @@ describe('Service delivery theme', () => {
     it('should save the service delivery', () => {
       submitForm(KINDS.SERVICE_DELIVERY, THEMES.EXPORT, {
         service: 'A Specific DIT Export Service or Funding',
-        subservice: 'Tradeshow Access Programme (TAP)',
+        subservice: 'UK Tradeshow Programme (UKTP) – Exhibitor',
       })
 
       const expectedBody = {

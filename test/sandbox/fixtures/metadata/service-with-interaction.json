@@ -641,7 +641,7 @@
   },
   {
       "id": "f76eb92b-3499-e211-a939-e4115bead28a",
-      "name": "Trade - Tradeshow Access Programme (TAP)",
+      "name": "Trade - UK Tradeshow Programme (UKTP) – Exhibitor",
       "disabled_on": null,
       "contexts": [
           "investment_project_interaction",
@@ -649,6 +649,16 @@
           "event"
       ]
   },
+  {
+    "id": "f76eb92b-3499-e211-a939-e4115bead28b",
+    "name": "Trade - UK Tradeshow Programme (UKTP) – Attendee-only",
+    "disabled_on": null,
+    "contexts": [
+        "investment_project_interaction",
+        "interaction",
+        "event"
+    ]
+},
   {
       "id": "561c6040-db21-e311-a78e-e4115bead28a",
       "name": "UKEF - Bond Support Scheme",
