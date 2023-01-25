@@ -67,11 +67,11 @@ const ListContainer = styled('div')({
 
 const FooterLink = styled('div')({
   display: 'block',
-  // borderTop: BLUE,
+  // borderTop: '#1d70b8',
   marginTop: SPACING.SCALE_4,
   marginBottom: SPACING.SCALE_4,
   [MEDIA_QUERIES.DESKTOP]: {
-    marginLeft: 25,
+    marginLeft: 1,
     marginBottom: 25,
   },
 })
