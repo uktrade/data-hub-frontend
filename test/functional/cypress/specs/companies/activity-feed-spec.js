@@ -242,7 +242,7 @@ describe('Company activity feed', () => {
 
         it('correctly displays contacts for a future event', () => {
           cy.get('[data-test="aventri-event"]')
-            .eq(3)
+            .eq(1)
             .within(() => {
               cy.get('[data-test="cancelled-label"]').should('exist')
               cy.get('[data-test="attended-label"]').should('exist')
