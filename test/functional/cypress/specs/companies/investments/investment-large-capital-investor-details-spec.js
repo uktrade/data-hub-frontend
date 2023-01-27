@@ -24,6 +24,7 @@ const {
   clearAndTypeInput,
   clearAndTypeTextArea,
 } = require('../../../support/actions')
+const { testTypeahead } = require('../../../support/tests')
 
 const { oneListCorp: existingCompany, lambdaPlc: newCompany } = fixtures.company
 
@@ -52,6 +53,10 @@ describe('View large capital investor details page', () => {
 
     it('should make sure we are on the investment details', () => {
       assertAndGetInvestorDetails().find('summary').contains('Investor details')
+    })
+
+    it('should make sure we are on the investment location', () => {
+      assertAndGetInvestorDetails().find('summary').contains('Location')
     })
 
     it('should have investor details expanded ready to view data', () => {
@@ -132,6 +137,12 @@ describe('View large capital investor details page', () => {
           expectedOption: 'Aaron Chan',
         })
       })
+    })
+
+    it('should have location expanded ready to view data', () => {
+      assertAndGetInvestorLocation()
+        .find('summary')
+        .should('have.attr', 'aria-expanded', 'true')
     })
   })
 
@@ -406,6 +417,18 @@ describe('View large capital investor details page', () => {
   })
 })
 
+context('when cancelling without saving', () => {
+  before(() => {
+    gotoEditInvestorLocation(newCompany.id)
+  })
+
+  it('should redirect back to large capital profile', () => {
+    clickCancelLink()
+
+    assertUrl(urls.companies.investments.largeCapitalProfile(newCompany.id))
+  })
+})
+
 function getDateFromNow({ day = 1, monthAddition = 0, yearAddition = 0 }) {
   const now = new Date()
   now.setDate(day)
@@ -444,6 +467,18 @@ function assertInvestorType() {
 
 function assertAndGetInvestorDetails() {
   return cy.get('.large-capital-profile')
+}
+
+function assertAndGetInvestorLocation() {
+  return cy.get('.large-capital-profile')
+}
+
+function gotoEditInvestorLocation(companyId) {
+  cy.visit(
+    `${urls.companies.investments.largeCapitalProfile(
+      companyId
+    )}?editing=location`
+  )
 }
 
 function gotoEditInvestorDetails(companyId) {
