@@ -1,45 +1,11 @@
-{% extends "_layouts/collection.njk" %}
+{% extends "_layouts/template.njk" %}
 
-{% block collection_results %}
-  {% call CollectionContent(results | assign({
-    countLabel: 'order',
-    sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
-    selectedFilters: selectedFilters,
-    query: QUERY
-  })) %}
-    <table>
-      <thead>
-        <tr>
-          <th>Reference</th>
-          <th>Payment due date</th>
-          <th>Company name</th>
-          <th align="right">
-            Amount
-            <br>
-            (ex.&nbsp;VAT)
-          </th>
-          <th align="right">
-            Amount
-            <br>
-            (inc.&nbsp;VAT)
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in results.items %}
-          <tr>
-            <td>
-              <a href="/omis/reconciliation/{{ item.id }}/edit/payment-reconciliation?returnUrl=/omis/reconciliation?{{ QUERY | encodeQueryString }}">
-                {{ item.reference }}
-              </a>
-            </td>
-            <td>{{ item.payment_due_date | formatDate }}</td>
-            <td>{{ item.company }}</td>
-            <td align="right">{{ item.subtotal_cost | formatCurrency }}</td>
-            <td align="right">{{ item.total_cost | formatCurrency }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% endcall %}
+{% block content %}
+  <div class="govuk-grid-column-full">
+      {% component 'react-slot', {
+        id: 'orders-reconciliation-collection',
+        props: props
+      }
+      %}
+  </div>
 {% endblock %}

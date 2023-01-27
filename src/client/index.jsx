@@ -68,6 +68,7 @@ import InvestmentDocuments from '../apps/investments/client/projects/ProjectDocu
 import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactAuditHistory'
 import InteractionDetails from './modules/Interactions/InteractionDetails'
 import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
+import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -234,11 +235,15 @@ import {
 import {
   TASK_GET_ORDERS_LIST,
   TASK_GET_ORDERS_METADATA,
+  TASK_GET_ORDERS_RECONCILIATION,
+  TASK_GET_ORDERS_RECONCILIATION_METADATA,
 } from './modules/Omis/CollectionList/state'
 
 import {
   getOrders,
   getOrdersMetadata,
+  getOrdersReconciliation,
+  getOrdersReconciliationMetadata,
 } from './modules/Omis/CollectionList/tasks'
 
 import { getAdviserNames } from './advisers'
@@ -469,6 +474,9 @@ function App() {
           [TASK_SAVE_EVENT]: saveEvent,
           [TASK_GET_ORDERS_METADATA]: getOrdersMetadata,
           [TASK_GET_ORDERS_LIST]: getOrders,
+          [TASK_GET_ORDERS_RECONCILIATION]: getOrdersReconciliation,
+          [TASK_GET_ORDERS_RECONCILIATION_METADATA]:
+            getOrdersReconciliationMetadata,
           [TASK_GET_INTERACTIONS_TEAM_NAME]: getTeamNames,
           [TASK_ARCHIVE_COMPANY]: businessDetails.archiveSubmitCallback,
           'Exports Edit': exportsEdit.saveWinCategory,
@@ -765,6 +773,9 @@ function App() {
         </Mount>
         <Mount selector="#ess-interaction-details">
           {(props) => <ESSInteractionDetails {...props} />}
+        </Mount>
+        <Mount selector="#orders-reconciliation-collection">
+          {(props) => <OrdersReconciliationCollection {...props} />}
         </Mount>
 
         <Mount selector="#react-app">

@@ -117,6 +117,7 @@ import eventsReducer from './modules/Events/CollectionList/reducer'
 import {
   ORDERS_LIST_ID,
   COMPANY_ORDERS_LIST_ID,
+  ORDERS_RECONCILIATION_LIST_ID,
 } from './modules/Omis/CollectionList/state'
 import ordersReducer from './modules/Omis/CollectionList/reducer'
 
@@ -219,6 +220,7 @@ const reducer = {
   [INTERACTION_ESS_DETAILS_ID]: interactionEssDetailsReducer,
   [ORDERS_LIST_ID]: ordersReducer,
   [COMPANY_ORDERS_LIST_ID]: ordersReducer,
+  [ORDERS_RECONCILIATION_LIST_ID]: ordersReducer,
   [REMINDERS_ID]: remindersReducer,
 }
 
