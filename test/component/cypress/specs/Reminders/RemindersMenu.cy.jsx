@@ -82,6 +82,7 @@ describe('RemindersMenu', () => {
           <Component
             hasInvestmentFeatureGroup={false}
             hasExportFeatureGroup={true}
+            hasExportNewInteractionReminders={true}
           />
         </DataHubProvider>
       )
@@ -100,6 +101,32 @@ describe('RemindersMenu', () => {
           .should('have.attr', 'href', item.url)
       })
     })
+
+    context('and hasExportNewInteractionReminders is false', () => {
+      beforeEach(() => {
+        cy.mount(
+          <DataHubProvider>
+            <Component
+              hasInvestmentFeatureGroup={false}
+              hasExportFeatureGroup={true}
+              hasExportNewInteractionReminders={false}
+            />
+          </DataHubProvider>
+        )
+
+        cy.get('[data-test="link-list-item"]').as('listItems')
+      })
+
+      it('should not render Companies with new interactions', () => {
+        cy.get('@listItems').should('have.length', 1)
+
+        cy.get('@listItems')
+          .eq(0)
+          .find('a')
+          .should('have.text', exportLinks[0].title)
+          .should('have.attr', 'href', exportLinks[0].url)
+      })
+    })
   })
 
   context(
@@ -111,6 +138,7 @@ describe('RemindersMenu', () => {
             <Component
               hasInvestmentFeatureGroup={true}
               hasExportFeatureGroup={true}
+              hasExportNewInteractionReminders={true}
             />
           </DataHubProvider>
         )

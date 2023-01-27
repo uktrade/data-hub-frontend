@@ -62,12 +62,17 @@ export const TASK_SAVE_EXPORT_NI_REMINDER_SUBSCRIPTIONS =
 export const state2props = (state) => {
   const reminderSummary = state[REMINDER_SUMMARY_ID]
   const activeFeatureGroups = state?.activeFeatureGroups || []
+  const activeFeatures = state?.activeFeatures || []
 
   const hasInvestmentFeatureGroup = activeFeatureGroups.includes(
     'investment-notifications'
   )
   const hasExportFeatureGroup = activeFeatureGroups.includes(
     'export-notifications'
+  )
+
+  const hasExportNewInteractionReminders = activeFeatures.includes(
+    'export-new-interaction-reminders'
   )
 
   const defaultUrl =
@@ -81,6 +86,7 @@ export const state2props = (state) => {
     reminderSummary,
     hasInvestmentFeatureGroup,
     hasExportFeatureGroup,
+    hasExportNewInteractionReminders,
     defaultUrl,
   }
 }
