@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 import Paragraph from '@govuk-react/paragraph'
 import { H4 } from '@govuk-react/heading'
 import { currencyGBP } from '../../../../../client/utils/number-utils'
-
 import {
   FieldInput,
   FieldSelect,
-  FieldWrapper,
+  FieldUneditable,
 } from '../../../../../client/components'
 import OneListFields from './OneListFields'
 import CommonFields from './CommonFields'
@@ -26,31 +25,27 @@ const CompanyMatched = ({
 
     <CommonFields company={company} regions={regions} features={features} />
 
-    <FieldWrapper
+    <FieldUneditable
       legend="Annual turnover"
       name="turnover"
       data-test="company-matched-annual-turnover"
     >
-      <Paragraph>
-        {company.turnover
-          ? currencyGBP(company.turnover, {
-              maximumSignificantDigits: 2,
-            })
-          : company.turnover_range.name}
-      </Paragraph>
-    </FieldWrapper>
+      {company.turnover
+        ? currencyGBP(company.turnover, {
+            maximumSignificantDigits: 2,
+          })
+        : company.turnover_range.name}
+    </FieldUneditable>
 
-    <FieldWrapper
+    <FieldUneditable
       legend="Number of employees"
       name="number_of_employees"
       data-test="company-matched-number-of-employees"
     >
-      <Paragraph>
-        {company.number_of_employees
-          ? company.number_of_employees.toString()
-          : company.employee_range.name}
-      </Paragraph>
-    </FieldWrapper>
+      {company.number_of_employees
+        ? company.number_of_employees.toString()
+        : company.employee_range.name}
+    </FieldUneditable>
 
     {isOnOneList ? (
       <OneListFields
