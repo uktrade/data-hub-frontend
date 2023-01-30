@@ -61,8 +61,8 @@ export const TASK_SAVE_EXPORT_NI_REMINDER_SUBSCRIPTIONS =
 
 export const state2props = (state) => {
   const reminderSummary = state[REMINDER_SUMMARY_ID]
-  const activeFeatureGroups = state?.activeFeatureGroups
-  const activeFeatures = state?.activeFeatures
+  const activeFeatureGroups = state.activeFeatureGroups
+  const activeFeatures = state.activeFeatures
 
   const hasInvestmentFeatureGroup = activeFeatureGroups.includes(
     'investment-notifications'
