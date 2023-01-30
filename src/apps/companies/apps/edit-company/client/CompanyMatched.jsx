@@ -26,23 +26,17 @@ const CompanyMatched = ({
 
     <CommonFields company={company} regions={regions} features={features} />
 
-    {/* <FieldInput
-      label="Annual turnover"
-      hint="Amount in GBP"
-      name="turnover"
-      type="number"
-      data-test="company-matched-annual-turnover"
-    /> */}
-
     <FieldWrapper
       legend="Annual turnover"
       name="turnover"
       data-test="company-matched-annual-turnover"
     >
       <Paragraph>
-        {currencyGBP(company.turnover, {
-          maximumSignificantDigits: 2,
-        })}
+        {company.turnover
+          ? currencyGBP(company.turnover, {
+              maximumSignificantDigits: 2,
+            })
+          : company.turnover_range.name}
       </Paragraph>
     </FieldWrapper>
 
@@ -51,7 +45,11 @@ const CompanyMatched = ({
       name="number_of_employees"
       data-test="company-matched-number-of-employees"
     >
-      <Paragraph>{company.employee_range.name}</Paragraph>
+      <Paragraph>
+        {company.number_of_employees
+          ? company.number_of_employees.toString()
+          : company.employee_range.name}
+      </Paragraph>
     </FieldWrapper>
 
     {isOnOneList ? (
