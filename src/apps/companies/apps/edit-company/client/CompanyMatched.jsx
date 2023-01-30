@@ -3,7 +3,11 @@ import PropTypes from 'prop-types'
 import Paragraph from '@govuk-react/paragraph'
 import { H4 } from '@govuk-react/heading'
 
-import { FieldInput, FieldSelect } from '../../../../../client/components'
+import {
+  FieldInput,
+  FieldSelect,
+  FieldWrapper,
+} from '../../../../../client/components'
 import OneListFields from './OneListFields'
 import CommonFields from './CommonFields'
 
@@ -21,20 +25,29 @@ const CompanyMatched = ({
 
     <CommonFields company={company} regions={regions} features={features} />
 
-    <FieldInput
-      label="Annual turnover (optional)"
+    {/* <FieldInput
+      label="Annual turnover"
       hint="Amount in GBP"
       name="turnover"
       type="number"
       data-test="company-matched-annual-turnover"
-    />
+    /> */}
 
-    <FieldInput
-      label="Number of employees (optional)"
+    <FieldWrapper
+      legend="Annual turnover"
+      name="turnover"
+      data-test="company-matched-annual-turnover"
+    >
+      <Paragraph>{company.turnover_range.name}</Paragraph>
+    </FieldWrapper>
+
+    <FieldWrapper
+      legend="Number of employees"
       name="number_of_employees"
-      type="number"
       data-test="company-matched-number-of-employees"
-    />
+    >
+      <Paragraph>{company.employee_range.name}</Paragraph>
+    </FieldWrapper>
 
     {isOnOneList ? (
       <OneListFields
