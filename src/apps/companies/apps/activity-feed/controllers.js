@@ -709,4 +709,6 @@ module.exports = {
   fetchAventriEventRegistrationStatusAttendees,
   getAventriRegistrationStatusCounts,
   fetchESSDetails,
+  isEssActivity,
+  augmentEssActivity,
 }
