@@ -50,6 +50,20 @@ describe('Company activity feed', () => {
           })
       )
     })
+
+    it('displays the correct contact', () => {
+      cy.get('[data-test="export-support-service"]').within(() =>
+        cy
+          .get('[data-test="contact-link-0"]')
+          .should('exist')
+          .should('have.text', 'Super Glue')
+          .should(
+            'have.attr',
+            'href',
+            '/contacts/67ecb4fc-2db9-4afb-9b7b-e4736b0a2d9d/details'
+          )
+      )
+    })
   })
 
   context('Companies House Account', () => {
