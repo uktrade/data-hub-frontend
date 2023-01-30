@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Paragraph from '@govuk-react/paragraph'
 import { H4 } from '@govuk-react/heading'
+import { currencyGBP } from '../../../../../client/utils/number-utils'
 
 import {
   FieldInput,
@@ -38,7 +39,11 @@ const CompanyMatched = ({
       name="turnover"
       data-test="company-matched-annual-turnover"
     >
-      <Paragraph>{company.turnover_range.name}</Paragraph>
+      <Paragraph>
+        {currencyGBP(company.turnover, {
+          maximumSignificantDigits: 2,
+        })}
+      </Paragraph>
     </FieldWrapper>
 
     <FieldWrapper
