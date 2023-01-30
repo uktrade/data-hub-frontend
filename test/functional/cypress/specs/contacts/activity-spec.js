@@ -165,6 +165,54 @@ describe('Contact activity', () => {
       })
     })
 
+    context('When viewing a Contact with ESS activities', () => {
+      it('should display the ESS activity', () => {
+        cy.get('[data-test="export-support-service"]').should('exist')
+      })
+
+      it('displays the correct activity theme label', () => {
+        cy.get('[data-test="export-support-service"]').within(() =>
+          cy.get('[data-test="activity-theme-label"]').contains('export', {
+            matchCase: false,
+          })
+        )
+      })
+
+      it('displays the correct activity service label', () => {
+        cy.get('[data-test="export-support-service"]').within(() =>
+          cy
+            .get('[data-test="activity-service-label"]')
+            .contains('Export Support Service', {
+              matchCase: false,
+            })
+        )
+      })
+
+      it('displays the correct export support title', () => {
+        cy.get('[data-test="export-support-service"]').within(() =>
+          cy
+            .get('[data-test="export-support-service-name"]')
+            .contains('Test ESS Interaction', {
+              matchCase: false,
+            })
+        )
+      })
+
+      it('displays the correct contact', () => {
+        cy.get('[data-test="export-support-service"]').within(() =>
+          cy
+            .get('[data-test="contact-link-0"]')
+            .should('exist')
+            .should('have.text', 'Joseph Woof')
+            .should(
+              'have.attr',
+              'href',
+              '/contacts/5e75d636-1d24-416a-aaf0-3fb220d594ce/details'
+            )
+        )
+      })
+    })
+
     context('when there are more than 10 activities', () => {
       it('should be possible to page through', () => {
         cy.get('[data-page-number="2"]').click()
