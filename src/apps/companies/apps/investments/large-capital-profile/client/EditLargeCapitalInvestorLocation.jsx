@@ -47,7 +47,7 @@ const EditLargeCapitalInvestorLocation = ({
               initialValue={transformArrayIdNameToValueLabel(
                 ukRegionLocations?.value
               )}
-              options={ukRegionLocations.items}
+              options={ukRegionLocations?.items}
               placeholder="-- Select region --"
               arial-label="Uk locations of interest"
               isMulti={true}
@@ -58,7 +58,7 @@ const EditLargeCapitalInvestorLocation = ({
               initialValue={transformArrayIdNameToValueLabel(
                 otherCountriesBeingConsidered?.value
               )}
-              options={otherCountriesBeingConsidered.items}
+              options={otherCountriesBeingConsidered?.items}
               placeholder="-- Select country --"
               arial-label="Other countries the investor is considering"
               isMulti={true}
