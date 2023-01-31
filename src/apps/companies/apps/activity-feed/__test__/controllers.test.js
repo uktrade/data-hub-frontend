@@ -9,6 +9,7 @@ const companyMock = require('../../../../../../test/unit/data/company.json')
 const aventriRegistrationStatusNoDetails = require('../../../../../../test/unit/data/activity-feed/aventri-registration-status-no-details.json')
 const aventriRegistrationStatusWithAggregations = require('../../../../../../test/unit/data/activity-feed/aventri-registration-status-with-aggregation-counts.json')
 const essDetails = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/ess-interaction.json')
+const contactMock = require('../../../../../../test/sandbox/fixtures/v3/contact/contact-by-id-uk.json')
 
 const {
   DATA_HUB_ACTIVITY,
@@ -20,7 +21,11 @@ const {
   EVENT_ATTENDEES_STATUS,
   EVENT_ATTENDEES_MAPPING,
 } = require('../constants')
-const { eventsColListQueryBuilder } = require('../controllers')
+const {
+  eventsColListQueryBuilder,
+  isEssActivity,
+  augmentEssActivity,
+} = require('../controllers')
 const { has, get } = require('lodash')
 
 describe('Activity feed controllers', () => {
@@ -1674,5 +1679,101 @@ describe('Activity feed controllers', () => {
         })
       })
     })
+  })
+  describe('#fetchActivitiesForContact', () => {
+    before(() => {
+      fetchESSDetailsStub = sinon.stub().resolves(essDetails)
+
+      controllers = proxyquire(
+        '../../src/apps/companies/apps/activity-feed/controllers',
+        {
+          './repos': {
+            fetchActivityFeed: fetchESSDetailsStub,
+          },
+        }
+      )
+    })
+
+    context(
+      'when returning contact activities including ESS activities',
+      () => {
+        before(async () => {
+          middlewareParameters = buildMiddlewareParameters({
+            requestQuery: { selectedSortBy: 'desc', page: 1 },
+            contact: contactMock,
+          })
+        })
+
+        it('should return results', async () => {
+          await controllers.fetchActivitiesForContact(
+            middlewareParameters.reqMock,
+            middlewareParameters.resMock,
+            middlewareParameters.nextSpy
+          )
+
+          expect(middlewareParameters.resMock.json).to.have.been.called
+        })
+
+        it('isEssActivity returns true if activity is an Ess Activity', () => {
+          const activity = {
+            object: {
+              type: 'dit:directoryFormsApi:Submission',
+              attributedTo: {
+                id: 'dit:directoryFormsApi:SubmissionType:export-support-service',
+              },
+            },
+          }
+          const result = isEssActivity(activity)
+          expect(result).to.be.true
+        })
+
+        it('isEssActivity returns false if activity is not an Ess Activity', () => {
+          const activity = {
+            object: {
+              type: 'IAmNotA_dit:directoryFormsApi:Submission',
+              attributedTo: {
+                id: 'dit:directoryFormsApi:SubmissionType:UNKNOWN_Service',
+              },
+            },
+          }
+          const result = isEssActivity(activity)
+          expect(result).to.be.false
+        })
+
+        it('augmentEssActivity returns activity with contact details and start time', () => {
+          const initialActivity = {
+            object: {
+              type: 'dit:directoryFormsApi:Submission',
+              attributedTo: {
+                id: 'dit:directoryFormsApi:SubmissionType:export-support-service',
+              },
+            },
+            published: '2022-12-02T16:48:19.344421+00:00',
+          }
+          const augmentedActivity = {
+            object: {
+              type: 'dit:directoryFormsApi:Submission',
+              startTime: '2022-12-02T16:48:19.344421+00:00',
+              attributedTo: [
+                {
+                  id: 'dit:directoryFormsApi:SubmissionType:export-support-service',
+                },
+                {
+                  'dit:emailAddress': 'contact@bob.com',
+                  name: 'Joseph Woof',
+                  id: 'f3d19ea7-d4cf-43e0-8e97-755c57cae313',
+                  type: ['dit:Contact'],
+                  url: '/contacts/f3d19ea7-d4cf-43e0-8e97-755c57cae313/details',
+                },
+              ],
+            },
+            published: '2022-12-02T16:48:19.344421+00:00',
+          }
+
+          const result = augmentEssActivity(initialActivity, contactMock)
+          expect(result).to.deep.equal(augmentedActivity)
+        })
+      }
+    )
   })
 })

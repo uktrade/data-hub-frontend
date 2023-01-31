@@ -65,6 +65,21 @@ const contactActivityQuery = (
                     ],
                   },
                 },
+                {
+                  bool: {
+                    must: [
+                      {
+                        term: {
+                          'object.attributedTo.id':
+                            'dit:directoryFormsApi:SubmissionType:export-support-service',
+                        },
+                      },
+                      {
+                        term: { 'actor.dit:emailAddress': email },
+                      },
+                    ],
+                  },
+                },
               ],
             },
           },

@@ -252,6 +252,13 @@ async function fetchActivitiesForContact(req, res, next) {
       activities = await getAventriEvents(activities, req)
     }
 
+    //Add Contact to Ess Record to render on card
+    activities = activities.map((activity) => {
+      if (isEssActivity(activity)) {
+        activity = augmentEssActivity(activity, contact)
+      }
+      return activity
+    })
     res.json({ activities, total })
   } catch (error) {
     next(error)
@@ -355,24 +362,15 @@ async function fetchActivityFeedHandler(req, res, next) {
         ]
       }
       // Add Contacts to ESS activities (need to check type as Maxemail does not have attributedTo.id key)
-      if (activity.object.type == 'dit:directoryFormsApi:Submission') {
-        if (
-          activity.object.attributedTo.id ==
-          'dit:directoryFormsApi:SubmissionType:export-support-service'
-        ) {
-          const essContactEmail = activity.actor['dit:emailAddress']
-          const essContact = getContactFromEmailAddress(
-            essContactEmail,
-            company.contacts
-          )
-
-          activity.object.attributedTo = [
-            activity.object.attributedTo,
-            mapEssContacts(essContact),
-          ]
-          activity.object.startTime = activity.published
-        }
+      if (isEssActivity(activity)) {
+        const essContactEmail = activity.actor['dit:emailAddress']
+        const essContact = getContactFromEmailAddress(
+          essContactEmail,
+          company.contacts
+        )
+        activity = augmentEssActivity(activity, essContact)
       }
+
       return activity
     })
 
@@ -388,6 +386,22 @@ async function fetchActivityFeedHandler(req, res, next) {
   } catch (error) {
     next(error)
   }
+}
+const isEssActivity = (activity) =>
+  activity.object.type === 'dit:directoryFormsApi:Submission' &&
+  activity.object.attributedTo.id ===
+    'dit:directoryFormsApi:SubmissionType:export-support-service'
+
+function augmentEssActivity(activity, contact) {
+  // Add additional fields to ESS Activity for Card Parsing
+  activity.object.attributedTo = [
+    activity.object.attributedTo,
+    mapEssContacts(contact),
+  ]
+  // Add published time for sorting
+  activity.object.startTime = activity.published
+
+  return activity
 }
 
 function mapEssContacts(contact) {
@@ -695,4 +709,6 @@ module.exports = {
   fetchAventriEventRegistrationStatusAttendees,
   getAventriRegistrationStatusCounts,
   fetchESSDetails,
+  isEssActivity,
+  augmentEssActivity,
 }
