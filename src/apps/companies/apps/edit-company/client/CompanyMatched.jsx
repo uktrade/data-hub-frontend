@@ -26,7 +26,7 @@ const CompanyMatched = ({
     <CommonFields company={company} regions={regions} features={features} />
 
     <FieldUneditable
-      legend="Annual turnover"
+      label="Annual turnover"
       name="turnover"
       data-test="company-matched-annual-turnover"
     >
@@ -38,7 +38,7 @@ const CompanyMatched = ({
     </FieldUneditable>
 
     <FieldUneditable
-      legend="Number of employees"
+      label="Number of employees"
       name="number_of_employees"
       data-test="company-matched-number-of-employees"
     >

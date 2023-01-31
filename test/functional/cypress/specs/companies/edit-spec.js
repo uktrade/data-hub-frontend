@@ -1,4 +1,3 @@
-const { roundToSignificantDigits } = require('../../../../../src/common/number')
 const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures')
@@ -458,10 +457,10 @@ describe('Company edit', () => {
           assert: assertRegisteredAddress,
         },
         {
-          label: 'Annual turnover (optional)',
+          label: 'Annual turnover',
           hint: 'Amount in GBP',
-          value: roundToSignificantDigits(company.turnover_gbp, 2),
-          assert: assertFieldInput,
+          value: company.turnover,
+          assert: assertFieldUneditable,
         },
         {
           label: 'Number of employees (optional)',
