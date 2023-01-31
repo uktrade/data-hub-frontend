@@ -58,6 +58,7 @@ export const RemindersMenu = ({
   reminderSummary,
   hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
+  hasExportNewInteractionReminders,
 }) => {
   const location = useLocation()
   return (
@@ -94,12 +95,14 @@ export const RemindersMenu = ({
           >
             {`${COMPANIES_NO_RECENT_INTERACTIONS_LABEL} (${reminderSummary.export.no_recent_interaction})`}
           </MenuItem>
-          <MenuItem
-            to={urls.reminders.exports.newInteractions()}
-            pathname={location.pathname}
-          >
-            {`${COMPANIES_NEW_INTERACTIONS_LABEL} (${reminderSummary.export.new_interaction})`}
-          </MenuItem>
+          {hasExportNewInteractionReminders && (
+            <MenuItem
+              to={urls.reminders.exports.newInteractions()}
+              pathname={location.pathname}
+            >
+              {`${COMPANIES_NEW_INTERACTIONS_LABEL} (${reminderSummary.export.new_interaction})`}
+            </MenuItem>
+          )}
         </Menu>
       )}
     </>
