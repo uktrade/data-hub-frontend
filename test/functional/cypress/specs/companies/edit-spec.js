@@ -468,7 +468,7 @@ describe('Company edit', () => {
         {
           label: 'Number of employees',
           value: company.number_of_employees,
-          assert: assertFieldInput,
+          assert: assertFieldUneditable,
         },
         {
           label: 'DIT sector',
