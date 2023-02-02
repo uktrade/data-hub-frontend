@@ -2,6 +2,7 @@ const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures')
 
+import { currencyGBP } from '../../../../../src/client/utils/number-utils'
 import {
   testBreadcrumbs,
   assertFieldUneditable,
@@ -459,7 +460,9 @@ describe('Company edit', () => {
         {
           label: 'Annual turnover',
           hint: 'Amount in GBP',
-          value: company.turnover,
+          value: currencyGBP(company.turnover, {
+            maximumSignificantDigits: 2,
+          }),
           assert: assertFieldUneditable,
         },
         {
