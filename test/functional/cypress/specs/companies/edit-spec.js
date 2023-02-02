@@ -466,7 +466,7 @@ describe('Company edit', () => {
           assert: assertFieldUneditable,
         },
         {
-          label: 'Number of employees (optional)',
+          label: 'Number of employees',
           value: company.number_of_employees,
           assert: assertFieldInput,
         },
