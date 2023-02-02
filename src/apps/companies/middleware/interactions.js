@@ -1,10 +1,14 @@
 const urls = require('../../../lib/urls')
+const queryString = require('qs')
 
 function setInteractionsDetails(req, res, next) {
   const { company } = res.locals
 
   if (req.path === '/') {
-    return res.redirect(301, 'activity')
+    return res.redirect(
+      301,
+      `activity${req.query ? '?' + queryString.stringify(req.query) : ''}`
+    )
   }
 
   res.locals.interactions = {
