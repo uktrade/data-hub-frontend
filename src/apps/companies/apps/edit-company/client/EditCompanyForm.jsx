@@ -10,6 +10,7 @@ import {
 } from '../../../../../common/constants'
 import urls from '../../../../../lib/urls'
 import { FormLayout } from '../../../../../client/components'
+import { Paragraph } from 'govuk-react'
 
 function EditCompanyForm({
   csrfToken,
@@ -41,6 +42,10 @@ function EditCompanyForm({
   // TODO: Support nested form values to avoid transformation
   return (
     <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
+      <Paragraph>
+        Some data cannot be edited because it is managed by Dun & Bradstreet.
+        Dun & Bradstreet audit and validate the accuracy of our company records.
+      </Paragraph>
       <Form
         id="edit-company-form"
         submissionTaskName="Edit company"
