@@ -35,6 +35,7 @@ var communicationChannel = require('../../../fixtures/v4/metadata/communication-
 var team = require('../../../fixtures/v4/metadata/team.json')
 var policyArea = require('../../../fixtures/v4/metadata/policy-area.json')
 var policyIssueType = require('../../../fixtures/v4/metadata/policy-issue-type.json')
+var exportBarrier = require('../../../fixtures/v4/metadata/export-barrier.json')
 var serviceDeliveryStatus = require('../../../fixtures/v4/metadata/service-delivery-status.json')
 var capitalInvestmentInvestorType = require('../../../fixtures/v4/metadata/capital-investment-investor-type.json')
 var capitalInvestmentRequiredChecks = require('../../../fixtures/v4/metadata/capital-investment-required-checks.json')
@@ -203,6 +204,10 @@ exports.policyArea = function (req, res) {
 
 exports.policyIssueType = function (req, res) {
   res.json(policyIssueType)
+}
+
+exports.exportBarrier = function (req, res) {
+  res.json(exportBarrier)
 }
 
 exports.serviceDeliveryStatus = function (req, res) {

@@ -260,6 +260,7 @@ app.get('/v4/metadata/communication-channel', v4Metadata.communicationChannel)
 app.get('/v4/metadata/team', v4Metadata.team)
 app.get('/v4/metadata/policy-area', v4Metadata.policyArea)
 app.get('/v4/metadata/policy-issue-type', v4Metadata.policyIssueType)
+app.get('/v4/metadata/export-barrier', v4Metadata.exportBarrier)
 app.get(
   '/v4/metadata/service-delivery-status',
   v4Metadata.serviceDeliveryStatus

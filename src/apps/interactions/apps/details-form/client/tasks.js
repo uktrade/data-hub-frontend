@@ -8,7 +8,11 @@ import {
 } from '../../../../../client/components/Task/utils'
 import getContactFromQuery from '../../../../../client/utils/getContactFromQuery'
 import { INTERACTION_STATUS, KINDS, THEMES } from '../../../constants'
-import { EXPORT_INTEREST_STATUS_VALUES, OPTION_NO } from '../../../../constants'
+import {
+  EXPORT_INTEREST_STATUS_VALUES,
+  OPTION_NO,
+  OPTION_YES,
+} from '../../../../constants'
 import { ID as STORE_ID } from './state'
 
 import {
@@ -130,6 +134,9 @@ const transformInteractionToValues = (interaction, companyId, investmentId) => {
     },
     companies: [companyId],
     investment_project: investmentId,
+    helped_remove_export_barrier: interaction.helped_remove_export_barrier
+      ? OPTION_YES
+      : OPTION_NO,
     ...pick(interaction, [
       'id',
       'kind',
@@ -138,6 +145,7 @@ const transformInteractionToValues = (interaction, companyId, investmentId) => {
       'grant_amount_offered',
       'net_company_receipt',
       'policy_feedback_notes',
+      'export_barrier_notes',
     ]),
     ...transformValues(interaction, transformToYesNo, [
       'was_policy_feedback_provided',
@@ -147,6 +155,7 @@ const transformInteractionToValues = (interaction, companyId, investmentId) => {
     ]),
     ...transformValues(interaction, transformToID, [
       'service_delivery_status',
+      'export_barrier_types',
       'policy_issue_types',
     ]),
     ...transformValues(interaction, transformObjectToTypeahead, [
@@ -258,6 +267,11 @@ export function saveInteraction({ values, companyIds, referralId }) {
       'policy_issue_types',
       'has_related_trade_agreements',
     ]),
+    helped_remove_export_barrier:
+      values.helped_remove_export_barrier === OPTION_YES,
+    export_barrier_types: values.export_barrier_types || [],
+    export_barrier_notes: values.export_barrier_notes || '',
+
     related_trade_agreements: transformArrayOfOptionsToValues(
       values.related_trade_agreements
     ),

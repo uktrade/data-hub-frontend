@@ -138,6 +138,17 @@ const ELEMENT_FEEDBACK_POLICY = {
   assert: assertFieldRadiosWithLegend,
   optionsCount: 2,
 }
+
+const ELEMENT_EXPORT_BARRIER = {
+  legend: 'Did the interaction help remove an export barrier?',
+  assert: assertFieldRadiosWithLegend,
+  optionsCount: 2,
+}
+
+const ELEMENT_EXPORT_BARRIER_HOW = {
+  legend: 'Tell us how the interaction helped remove an export barrier',
+}
+
 const ELEMENT_POLICY_ISSUE_TYPES = {
   label: 'Policy issue types',
 }
@@ -189,6 +200,9 @@ const COMMON_REQUEST_BODY = {
     '50370070-71f9-4ada-ae2c-cd0a737ba5e2',
     '09787712-0d94-4137-a5f3-3f9131e681f0',
   ],
+  helped_remove_export_barrier: true,
+  export_barrier_types: ['8ef83315-2b0f-4d5e-98da-a16f8b2217a6'], // Something else
+  export_barrier_notes: 'My export barrier notes',
 }
 
 function fillCommonFields({
@@ -254,6 +268,20 @@ function fillCommonFields({
     .next()
     .find('textarea')
     .type('Some policy feedback notes')
+
+  cy.contains(ELEMENT_EXPORT_BARRIER.legend).next().find('input').check('yes')
+  cy.contains(ELEMENT_EXPORT_BARRIER_HOW.legend)
+    .next()
+    .next()
+    .contains('Something else')
+    .click()
+
+  cy.contains(
+    'What happened in the interaction to help remove an export barrier?'
+  )
+    .next()
+    .find('textarea')
+    .type('My export barrier notes')
 }
 
 function fillExportCountriesFields() {
@@ -439,6 +467,7 @@ describe('Interaction theme', () => {
         ELEMENT_NOTES,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
+        ELEMENT_EXPORT_BARRIER,
         ELEMENT_STEP2_BUTTONS,
       ])
     })
@@ -467,6 +496,7 @@ describe('Interaction theme', () => {
             'Enter a subject',
             'Answer if the contact provided business intelligence',
             'Answer if any countries were discussed',
+            'Select if the interaction helped remove an export barrier',
           ].join('')
         )
     })
@@ -558,6 +588,7 @@ describe('Service delivery theme', () => {
         ELEMENT_NOTES,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
+        ELEMENT_EXPORT_BARRIER,
         ELEMENT_STEP2_BUTTONS,
       ])
     })
@@ -576,6 +607,7 @@ describe('Service delivery theme', () => {
             'Enter a subject',
             'Answer if the contact provided business intelligence',
             'Answer if any countries were discussed',
+            'Select if the interaction helped remove an export barrier',
           ].join('')
         )
     })
@@ -586,40 +618,41 @@ describe('Service delivery theme', () => {
         subservice: 'UK Tradeshow Programme (UKTP) – Exhibitor',
       })
 
-      const expectedBody = {
-        ...COMMON_REQUEST_BODY,
-        theme: 'export',
-        service: '380bba2b-3499-e211-a939-e4115bead28a',
-        is_event: 'yes',
-        were_countries_discussed: 'yes',
-        service_delivery_status: '47329c18-6095-e211-a939-e4115bead28a',
-        grant_amount_offered: '123',
-        net_company_receipt: '456',
-        event: '0010f189-9331-4916-818a-231bf2f4882b',
-        kind: 'service_delivery',
-        communication_channel: null,
-        export_countries: [
-          {
-            country: '6e6a9ab2-5d95-e211-a939-e4115bead28a',
-            status: 'currently_exporting',
-          },
-          {
-            country: 'a05f66a0-5d95-e211-a939-e4115bead28a',
-            status: 'future_interest',
-          },
-          {
-            country: '83756b9a-5d95-e211-a939-e4115bead28a',
-            status: 'not_interested',
-          },
-        ],
-      }
-
-      assertRequestBody(expectedBody, (xhr) => {
-        cy.location('pathname').should(
-          'eq',
-          urls.companies.interactions.detail(company.id, xhr.response.body.id)
-        )
-      })
+      assertRequestBody(
+        {
+          ...COMMON_REQUEST_BODY,
+          theme: 'export',
+          service: '380bba2b-3499-e211-a939-e4115bead28a',
+          is_event: 'yes',
+          were_countries_discussed: 'yes',
+          service_delivery_status: '47329c18-6095-e211-a939-e4115bead28a',
+          grant_amount_offered: '123',
+          net_company_receipt: '456',
+          event: '0010f189-9331-4916-818a-231bf2f4882b',
+          kind: 'service_delivery',
+          communication_channel: null,
+          export_countries: [
+            {
+              country: '6e6a9ab2-5d95-e211-a939-e4115bead28a',
+              status: 'currently_exporting',
+            },
+            {
+              country: 'a05f66a0-5d95-e211-a939-e4115bead28a',
+              status: 'future_interest',
+            },
+            {
+              country: '83756b9a-5d95-e211-a939-e4115bead28a',
+              status: 'not_interested',
+            },
+          ],
+        },
+        (xhr) => {
+          cy.location('pathname').should(
+            'eq',
+            urls.companies.interactions.detail(company.id, xhr.response.body.id)
+          )
+        }
+      )
     })
   })
 })
@@ -653,6 +686,7 @@ describe('Investment theme', () => {
         ELEMENT_NOTES,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_RELATED_OPPORTUNITY,
+        ELEMENT_EXPORT_BARRIER,
         ELEMENT_STEP2_BUTTONS,
       ])
     })
@@ -671,6 +705,7 @@ describe('Investment theme', () => {
             'Enter a subject',
             'Answer if the contact provided business intelligence',
             'Answer if this interaction relates to a large capital opportunity',
+            'Select if the interaction helped remove an export barrier',
           ].join('')
         )
     })
@@ -770,6 +805,7 @@ describe('Trade Agreement theme', () => {
         ELEMENT_NOTES,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
+        ELEMENT_EXPORT_BARRIER,
         ELEMENT_STEP2_BUTTONS,
       ])
     })
@@ -788,6 +824,7 @@ describe('Trade Agreement theme', () => {
             'Enter a subject',
             'Answer if the contact provided business intelligence',
             'Answer if any countries were discussed',
+            'Select if the interaction helped remove an export barrier',
           ].join('')
         )
     })
