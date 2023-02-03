@@ -129,3 +129,41 @@ export const clickButton = (buttonText) => {
 export const clickCancelLink = () => {
   cy.get('[data-test="cancel-button"]').click()
 }
+
+/**
+ * Generic search request for a CollectionList
+ * @param {*} endpoint The search endpoint
+ * @param {*} fakeList The fake list of items to display
+ * @param {*} link The page to render
+ */
+export const collectionListRequest = (endpoint, fakeList, link) => {
+  const fullEndpoint = '/api-proxy/' + endpoint
+  cy.intercept('POST', fullEndpoint, {
+    body: {
+      count: fakeList.length,
+      results: fakeList,
+    },
+  }).as('apiRequest')
+  cy.visit(link)
+  cy.wait('@apiRequest')
+}
+
+export const omisCollectionListRequest = (
+  endpoint,
+  fakeList,
+  link,
+  subtotalCost = 23218.0
+) => {
+  const fullEndpoint = '/api-proxy/' + endpoint
+  cy.intercept('POST', fullEndpoint, {
+    body: {
+      count: fakeList.length,
+      results: fakeList,
+      summary: {
+        total_subtotal_cost: subtotalCost,
+      },
+    },
+  }).as('apiRequest')
+  cy.visit(link)
+  cy.wait('@apiRequest')
+}
