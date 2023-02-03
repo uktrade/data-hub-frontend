@@ -1,33 +1,71 @@
 const buildMiddlewareParameters = require('../../../../../test/unit/helpers/middleware-parameters-builder')
-
+const urls = require('../../../../lib/urls')
 const companyMock = require('../../../../../test/unit/data/companies/company-v4.json')
 const { setInteractionsDetails } = require('../interactions')
 
 describe('Interactions middleware', () => {
   describe('#setInteractionsDetails', () => {
     context('when browsing and the route is "/interactions"', () => {
-      beforeEach(() => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          requestPath: '/',
-          company: companyMock,
+      context('and query string params are included', () => {
+        beforeEach(() => {
+          this.middlewareParameters = buildMiddlewareParameters({
+            reqMock: { protocol: 'http', get: () => 'localhost' },
+            requestQuery: { param1: 'a', param2: 'b' },
+            requestPath: '/',
+            company: companyMock,
+          })
+
+          setInteractionsDetails(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy
+          )
         })
 
-        setInteractionsDetails(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy
-        )
+        it('should permanently redirect to activity with query string params', () => {
+          expect(
+            this.middlewareParameters.resMock.redirect
+          ).to.have.been.calledOnceWithExactly(
+            301,
+            sinon.match({
+              pathname: urls.companies.activity.index(companyMock.id),
+              search: '?param1=a&param2=b',
+            })
+          )
+        })
       })
 
-      it('should redirect to the activity', () => {
-        expect(
-          this.middlewareParameters.resMock.redirect
-        ).to.have.been.calledOnceWithExactly(301, 'activity')
-      })
+      context('and query string params do not exist', () => {
+        beforeEach(() => {
+          this.middlewareParameters = buildMiddlewareParameters({
+            reqMock: { protocol: 'http', get: () => 'localhost' },
+            requestPath: '/',
+            company: companyMock,
+          })
 
-      it('should not set the interactions object on locals', () => {
-        expect(this.middlewareParameters.resMock.locals.interactions).to.not
-          .exist
+          setInteractionsDetails(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy
+          )
+        })
+
+        it('should permanently redirect to activity without query string params', () => {
+          expect(
+            this.middlewareParameters.resMock.redirect
+          ).to.have.been.calledOnceWithExactly(
+            301,
+            sinon.match({
+              pathname: urls.companies.activity.index(companyMock.id),
+              search: '',
+            })
+          )
+        })
+
+        it('should not set the interactions object on locals', () => {
+          expect(this.middlewareParameters.resMock.locals.interactions).to.not
+            .exist
+        })
       })
     })
 

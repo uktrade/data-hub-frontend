@@ -1,5 +1,10 @@
 import { get, includes } from 'lodash'
-import { STATUS, BADGES, INTERACTION_SERVICES } from '../constants'
+import {
+  STATUS,
+  BADGES,
+  INTERACTION_SERVICES,
+  INTERACTION_SERVICEOTHER,
+} from '../constants'
 import urls from '../../../../lib/urls'
 
 const getStatus = (activity) => {
@@ -44,6 +49,14 @@ export const getServiceText = (service) => {
       : INTERACTION_SERVICES[serviceType]
 
   return serviceText
+}
+
+export const getServiceOtherText = (service) => {
+  let serviceType = service
+  if (INTERACTION_SERVICEOTHER[service] !== undefined) {
+    serviceType = INTERACTION_SERVICEOTHER[service]
+  }
+  return serviceType
 }
 
 const getThemeText = (activity) => {

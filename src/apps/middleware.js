@@ -2,6 +2,7 @@ const { get, isEmpty, assign, intersection, isUndefined } = require('lodash')
 const queryString = require('qs')
 const { parse } = require('url')
 const path = require('path')
+const { URL } = require('url')
 
 const { filterNonPermittedItem } = require('../modules/permissions/filters')
 
@@ -89,6 +90,13 @@ function redirectToFirstNavItem(req, res) {
   return res.redirect(res.locals.localNavItems[0].url)
 }
 
+function redirectWithQueryString(req, res, relativeUrl) {
+  const url = new URL(relativeUrl, `${req.protocol}://${req.get('host')}`)
+
+  url.search = new URLSearchParams(queryString.stringify(req.query))
+  return res.redirect(301, url)
+}
+
 module.exports = {
   setHomeBreadcrumb,
   removeBreadcrumb,
@@ -97,4 +105,5 @@ module.exports = {
   setDefaultQuery,
   handleRoutePermissions,
   isPermittedRoute,
+  redirectWithQueryString,
 }

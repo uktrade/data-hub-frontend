@@ -1,5 +1,8 @@
 import { getMetadataOptions } from '../../../metadata'
-import { transformResponseToCollection } from './transformers'
+import {
+  transformResponseToCollection,
+  transformResponseToReconciliationCollection,
+} from './transformers'
 import { getPageOffset } from '../../../utils/pagination'
 import { metadata } from '../../../../lib/urls'
 import { apiProxyAxios } from '../../../components/Task/utils'
@@ -43,6 +46,37 @@ export const getOrders = ({
     })
     .then(({ data }) => transformResponseToCollection(data))
 
+export const getOrdersReconciliation = ({
+  page,
+  limit = 10,
+  status,
+  sortby,
+  uk_region,
+  reference,
+  companyId,
+  company_name,
+  payment_due_date,
+  subtotal_cost,
+  net_cost,
+  total_cost,
+}) =>
+  apiProxyAxios
+    .post('/v3/search/order', {
+      limit,
+      offset: getPageOffset({ limit, page }),
+      status,
+      sortby,
+      uk_region,
+      reference,
+      company: companyId,
+      company_name,
+      payment_due_date,
+      subtotal_cost,
+      total_cost,
+      net_cost,
+    })
+    .then(({ data }) => transformResponseToReconciliationCollection(data))
+
 export const getOrdersMetadata = () =>
   Promise.all([
     getMetadataOptions(metadata.sector(), {
@@ -59,3 +93,12 @@ export const getOrdersMetadata = () =>
       ukRegionOptions,
     }))
     .catch(handleError)
+
+export const getOrdersReconciliationMetadata = () =>
+  Promise.all([
+    getMetadataOptions(metadata.sector(), {
+      params: {
+        level__lte: '0',
+      },
+    }),
+  ]).catch(handleError)
