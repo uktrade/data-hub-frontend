@@ -31,7 +31,6 @@ export default function AventriEvent({ activity: event }) {
   const contacts = CardUtils.getContactsGroupedByRegistrationStatus(event)
   const status = CardUtils.getStatusByLatest(contacts)
   const sortOrder = ['Attended', 'Registered', 'Cancelled', 'WaitingList']
-
   const formattedContacts = Object.entries(contacts)
     .sort(function (a, b) {
       return sortOrder.indexOf(a[0]) - sortOrder.indexOf(b[0])
@@ -57,7 +56,7 @@ export default function AventriEvent({ activity: event }) {
       <ActivityCardLabels service="Event" kind="Aventri Event" />
       <ActivityCardSubject dataTest="aventri-event-name">
         <Link href={`/events/aventri/${aventriEventId}/details`}>{name}</Link>
-        <RegisteredLabel> {status}</RegisteredLabel>
+        <RegisteredLabel>: {status}</RegisteredLabel>
       </ActivityCardSubject>
       <ActivityCardMetadata
         metadata={[
