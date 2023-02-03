@@ -1,4 +1,9 @@
-import { assertBreadcrumbs } from '../../support/assertions'
+import {
+  getCollectionList,
+  assertCollectionBreadcrumbs,
+  assertMetadataItem,
+} from '../../support/collection-list-assertions'
+import { collectionListRequest } from '../../support/actions'
 import { companies } from '../../../../../src/lib/urls'
 
 import { companyFaker, companyListFaker } from '../../fakers/companies'
@@ -26,34 +31,19 @@ describe('Company Collection Address', () => {
   const companyList = [usCompany, ...otherCompanies]
 
   before(() => {
-    cy.intercept('POST', '/api-proxy/v4/search/company', {
-      body: {
-        count: companyList.length,
-        results: companyList,
-      },
-    }).as('apiRequest')
-    cy.visit(companies.index())
-    cy.wait('@apiRequest')
+    collectionListRequest('v4/search/company', companyList, companies.index())
   })
 
   beforeEach(() => {
-    cy.get('[data-test="collection-item"]').as('collectionItems')
-    cy.get('@collectionItems').eq(0).as('firstListItem')
+    getCollectionList()
   })
 
-  it('should render home breadcumb', () => {
-    assertBreadcrumbs({
-      Home: '/',
-      Companies: null,
-    })
-  })
+  assertCollectionBreadcrumbs('Companies')
 
   it('should contain california displaying area for an US address', () => {
-    cy.get('@firstListItem')
-      .find('[data-test="metadata"]')
-      .should(
-        'contain',
-        '3525 Eastham Drive, Culver City, CA, 90232, California, United States'
-      )
+    assertMetadataItem(
+      '@firstListItem',
+      '3525 Eastham Drive, Culver City, CA, 90232, California, United States'
+    )
   })
 })

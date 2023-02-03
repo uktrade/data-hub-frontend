@@ -1,4 +1,16 @@
-import { assertBreadcrumbs } from '../../support/assertions'
+import {
+  getCollectionList,
+  assertCollectionBreadcrumbs,
+  assertBadge,
+  assertBadgeNotPresent,
+  assertMetadataItem,
+  assertListLength,
+  assertItemLink,
+  assertUpdatedOn,
+  assertMetadataItemNotPresent,
+  assertBadgeShouldNotExist,
+} from '../../support/collection-list-assertions'
+import { collectionListRequest } from '../../support/actions'
 import { contacts } from '../../../../../src/lib/urls'
 import { contactsListFaker, contactFaker } from '../../fakers/contacts'
 
@@ -53,154 +65,100 @@ describe('Contacts Collections', () => {
   ]
 
   before(() => {
-    cy.intercept('POST', '/api-proxy/v3/search/contact', {
-      body: {
-        count: contactsList.length,
-        results: contactsList,
-      },
-    }).as('apiRequest')
-    cy.visit(contacts.index())
-    cy.wait('@apiRequest')
+    collectionListRequest('v3/search/contact', contactsList, contacts.index())
   })
 
   beforeEach(() => {
-    cy.get('[data-test="collection-list"]').as('collectionList')
-    cy.get('[data-test="collection-item"]').as('collectionItems')
-    cy.get('@collectionItems').eq(0).as('firstListItem')
+    getCollectionList()
     cy.get('@collectionItems').eq(1).as('secondListItem')
     cy.get('@collectionItems').eq(2).as('thirdListItem')
   })
 
-  it('should render breadcrumbs', () => {
-    assertBreadcrumbs({
-      Home: '/',
-      Contacts: null,
-    })
-  })
+  assertCollectionBreadcrumbs('Contacts')
 
   it('should render a title', () => {
     cy.get('h1').should('have.text', 'Contacts')
   })
 
   it('should display a list of contacts', () => {
-    cy.get('@collectionList').should('have.length', 1)
-    cy.get('@collectionItems').should('have.length', contactsList.length)
+    assertListLength(contactsList)
   })
 
   context('UK contact', () => {
     it('should have a link with the contact name', () => {
-      cy.get('@firstListItem')
-        .find('h3')
-        .children()
-        .should('have.text', 'Hanna Reinger')
-        .should('have.attr', 'href', '/contacts/1/details')
+      assertItemLink('@firstListItem', 'Hanna Reinger', '/contacts/1/details')
     })
 
     it('should contain a primary contact badge', () => {
-      cy.get('@firstListItem')
-        .find('[data-test="badge"]')
-        .should('contain', 'Primary')
+      assertBadge('@firstListItem', 'Primary')
     })
 
     it('should not contain an archived badge', () => {
-      cy.get('@firstListItem')
-        .find('[data-test="badge"]')
-        .should('not.contain', 'Archived')
+      assertBadgeNotPresent('@firstListItem', 'Archived')
     })
 
     it('should render the updated date and time', () => {
-      cy.get('@firstListItem')
-        .find('h4')
-        .should('have.text', 'Updated on 10 Aug 2020, 8:09pm')
+      assertUpdatedOn('@firstListItem', 'Updated on 10 Aug 2020, 8:09pm')
     })
 
     it('should render the company name', () => {
-      cy.get('@firstListItem')
-        .find('[data-test="metadata-item"]')
-        .eq(0)
-        .should('contain', 'Company Murray, Price and Hodkiewicz')
+      assertMetadataItem(
+        '@firstListItem',
+        'Company Murray, Price and Hodkiewicz'
+      )
     })
 
     it('should render the job title', () => {
-      cy.get('@firstListItem')
-        .find('[data-test="metadata-item"]')
-        .eq(1)
-        .should('contain', 'Job title Dynamic Accountability Administrator')
+      assertMetadataItem(
+        '@firstListItem',
+        'Job title Dynamic Accountability Administrator'
+      )
     })
 
     it('should render the sector', () => {
-      cy.get('@firstListItem')
-        .find('[data-test="metadata-item"]')
-        .eq(2)
-        .should('contain', 'Sector Advanced Engineering')
+      assertMetadataItem('@firstListItem', 'Sector Advanced Engineering')
     })
 
     it('should render the country', () => {
-      cy.get('@firstListItem')
-        .find('[data-test="metadata-item"]')
-        .eq(3)
-        .should('contain', 'Country United Kingdom')
+      assertMetadataItem('@firstListItem', 'Country United Kingdom')
     })
 
     it('should render the UK region', () => {
-      cy.get('@firstListItem')
-        .find('[data-test="metadata-item"]')
-        .eq(4)
-        .should('contain', 'UK region London')
+      assertMetadataItem('@firstListItem', 'UK region London')
     })
 
     it('should render the UK telephone number', () => {
-      cy.get('@firstListItem')
-        .find('[data-test="metadata-item"]')
-        .eq(5)
-        .should('contain', 'Phone number +44 02071234567')
+      assertMetadataItem('@firstListItem', 'Phone number +44 02071234567')
     })
 
     it('should render the email', () => {
-      cy.get('@firstListItem')
-        .find('[data-test="metadata-item"]')
-        .eq(6)
-        .should('contain', 'Email gloria33@gmail.com')
+      assertMetadataItem('@firstListItem', 'Email gloria33@gmail.com')
     })
   })
 
   context('Foreign contact', () => {
     it('should have a link with the contact name', () => {
-      cy.get('@secondListItem')
-        .find('h3')
-        .children()
-        .should('have.text', 'Ted Woods')
-        .should('have.attr', 'href', '/contacts/2/details')
+      assertItemLink('@secondListItem', 'Ted Woods', '/contacts/2/details')
     })
 
     it('should not contain a primary contact badge', () => {
-      cy.get('@secondListItem').find('[data-test="badge"]').should('not.exist')
+      assertBadgeShouldNotExist('@secondListItem')
     })
 
     it('should render the foreign country', () => {
-      cy.get('@secondListItem')
-        .find('[data-test="metadata-item"]')
-        .eq(3)
-        .should('contain', 'Country United States')
+      assertMetadataItem('@secondListItem', 'Country United States')
     })
     it('should not render the UK region', () => {
-      cy.get('@secondListItem')
-        .find('[data-test="metadata-item"]')
-        .should('not.contain', 'UK region')
+      assertMetadataItemNotPresent('@secondListItem', 'UK region')
     })
     it('should render the telephone number', () => {
-      cy.get('@secondListItem')
-        .find('[data-test="metadata-item"]')
-        .eq(4)
-        .should('contain', 'Phone number 0045 48770000')
+      assertMetadataItem('@secondListItem', 'Phone number 0045 48770000')
     })
   })
 
   context('Archived contact', () => {
     it('should contain an archived badge', () => {
-      cy.get('@thirdListItem')
-        .find('[data-test="badge"]')
-        .should('contain', 'Archived')
+      assertBadge('@thirdListItem', 'Archived')
     })
   })
 })

@@ -1,6 +1,10 @@
 import { omit } from 'lodash'
 
-import { assertBreadcrumbs } from '../../support/assertions'
+import {
+  assertCollectionBreadcrumbs,
+  assertListLength,
+} from '../../support/collection-list-assertions'
+import { collectionListRequest } from '../../support/actions'
 import { interactions } from '../../../../../src/lib/urls'
 import {
   interactionsListFaker,
@@ -158,14 +162,11 @@ const assertInteractionDetails = ({
 
 describe('Interactions Collections', () => {
   before(() => {
-    cy.intercept('POST', '/api-proxy/v3/search/interaction', {
-      body: {
-        count: interactionsList.length,
-        results: interactionsList,
-      },
-    }).as('apiRequest')
-    cy.visit(interactions.index())
-    cy.wait('@apiRequest')
+    collectionListRequest(
+      'v3/search/interaction',
+      interactionsList,
+      interactions.index()
+    )
   })
 
   beforeEach(() => {
@@ -173,20 +174,14 @@ describe('Interactions Collections', () => {
     cy.get('[data-test="collection-item"]').as('collectionItems')
   })
 
-  it('should render breadcrumbs', () => {
-    assertBreadcrumbs({
-      Home: '/',
-      Interactions: null,
-    })
-  })
+  assertCollectionBreadcrumbs('Interactions')
 
   it('should render a title', () => {
     cy.get('h1').should('have.text', 'Interactions')
   })
 
   it('should display a list of interactions', () => {
-    cy.get('@collectionList').should('have.length', 1)
-    cy.get('@collectionItems').should('have.length', interactionsList.length)
+    assertListLength(interactionsList)
   })
 
   context('when an interaction has multiple contacts', () => {
