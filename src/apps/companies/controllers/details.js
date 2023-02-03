@@ -1,17 +1,14 @@
 const urls = require('../../../lib/urls')
-const queryString = require('qs')
-const { URL } = require('url')
+const { redirectWithQueryString } = require('../../middleware')
 
 async function renderDetails(req, res) {
   const { company } = res.locals
 
-  const url = new URL(
-    urls.companies.interactions.index(company.id),
-    `${req.protocol}://${req.get('host')}`
+  return redirectWithQueryString(
+    req,
+    res,
+    urls.companies.interactions.index(company.id)
   )
-
-  url.search = new URLSearchParams(queryString.stringify(req.query))
-  return res.redirect(301, url)
 }
 
 module.exports = {

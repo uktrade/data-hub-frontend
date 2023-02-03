@@ -458,4 +458,44 @@ describe('Apps middleware', () => {
       })
     })
   })
+
+  describe('redirectWithQueryString()', () => {
+    context('when query string params are included', () => {
+      it('should permanently redirect with query string params', () => {
+        const resMock = { redirect: sinon.spy() }
+        this.middleware.redirectWithQueryString(
+          { protocol: 'http', get: () => 'localhost', query: { a: 1, b: 2 } },
+          resMock,
+          '/somepath'
+        )
+
+        expect(resMock.redirect).to.have.been.calledWith(
+          301,
+          sinon.match({
+            pathname: '/somepath',
+            search: '?a=1&b=2',
+          })
+        )
+      })
+    })
+
+    context('when query string params are missing', () => {
+      it('should permanently redirect without query string params', () => {
+        const resMock = { redirect: sinon.spy() }
+        this.middleware.redirectWithQueryString(
+          { protocol: 'http', get: () => 'localhost' },
+          resMock,
+          '/somepath'
+        )
+
+        expect(resMock.redirect).to.have.been.calledWith(
+          301,
+          sinon.match({
+            pathname: '/somepath',
+            search: '',
+          })
+        )
+      })
+    })
+  })
 })
