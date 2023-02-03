@@ -1,14 +1,17 @@
 const urls = require('../../../lib/urls')
 const queryString = require('qs')
+const { URL } = require('url')
 
 function setInteractionsDetails(req, res, next) {
   const { company } = res.locals
 
   if (req.path === '/') {
-    return res.redirect(
-      301,
-      `activity${req.query ? '?' + queryString.stringify(req.query) : ''}`
+    const url = new URL(
+      urls.companies.activity.index(company.id),
+      `${req.protocol}://${req.get('host')}`
     )
+    url.search = new URLSearchParams(queryString.stringify(req.query))
+    return res.redirect(301, url)
   }
 
   res.locals.interactions = {
