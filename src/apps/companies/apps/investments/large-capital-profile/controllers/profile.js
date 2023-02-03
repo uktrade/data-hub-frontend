@@ -20,6 +20,8 @@ const { assetClassSectors } = require('../constants')
 const { getCompanyProfiles } = require('../repos')
 const { get } = require('lodash')
 const urls = require('../../../../../../lib/urls')
+const { id } = require('../../../../../../config/envSchema')
+const { PrecompiledLoader } = require('nunjucks')
 
 const getCompanyProfile = async (req, company, editing) => {
   const profiles = await getCompanyProfiles(req, company.id)
@@ -126,13 +128,16 @@ const renderProfile = async (req, res, next) => {
     }
 
     res.locals.title = `Large capital profile - ${company.name} - Companies`
-
     res.render(
       'companies/apps/investments/large-capital-profile/views/profile',
       {
-        profile,
         props: {
+          profileId: Profile.id,
           company,
+          ukRegionLocations: profile.location.uk_region_locations,
+          otherCountriesBeingConsidered:
+            profile.location.other_countries_being_considered,
+          notesOnInvestorsLocation: profile.notesOnInvestorsLocation,
           breadcrumbs: [
             { link: urls.dashboard(), text: 'Home' },
             {

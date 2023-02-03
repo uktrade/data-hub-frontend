@@ -14,12 +14,13 @@ import { transformLocationDetailsToApi } from './transformers'
 import { transformArrayIdNameToValueLabel } from '../../../../../../client/transformers'
 
 const EditLargeCapitalInvestorLocation = ({
-  companyId,
+  company,
   profileId,
   ukRegionLocations,
   otherCountriesBeingConsidered,
   notesOnInvestorsLocation,
 }) => {
+  const companyId = company.id
   return (
     <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
       <Form
@@ -82,7 +83,7 @@ const arrayProp = PropTypes.shape({
 })
 EditLargeCapitalInvestorLocation.prototype = {
   profileId: PropTypes.string.isRequired,
-  companyId: PropTypes.string.isRequired,
+  company: PropTypes.string.isRequired,
   ukRegionLocations: PropTypes.arrayOf(arrayProp),
   otherCountriesBeingConsidered: PropTypes.arrayOf(arrayProp),
   notesOnInvestorsLocation: PropTypes.string.isRequired,
