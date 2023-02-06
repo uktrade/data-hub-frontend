@@ -131,6 +131,7 @@ const renderProfile = async (req, res, next) => {
     res.render(
       'companies/apps/investments/large-capital-profile/views/profile',
       {
+        profile,
         props: {
           profileId: Profile.id,
           company,

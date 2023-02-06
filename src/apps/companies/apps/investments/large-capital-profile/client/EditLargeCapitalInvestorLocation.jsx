@@ -28,16 +28,20 @@ const EditLargeCapitalInvestorLocation = ({
         analyticsFormName="EditLargeCapitalInvestorLocation"
         cancelButtonLabel="Return without saving"
         cancelRedirectTo={() =>
-          urls.companies.investments.largeCapitalProfile(companyId)
+          urls.companies.investments.largeCapitalProfile(company.id)
         }
         flashMessage={() => 'Investor location details changes saved'}
         submitButtonLabel="Save and return"
         submissionTaskName={TASK_SAVE_LARGE_CAPITAL_INVESTOR_LOCATION}
         redirectTo={() =>
-          urls.companies.investments.largeCapitalProfile(companyId)
+          urls.companies.investments.largeCapitalProfile(company.id)
         }
         transformPayload={(values) =>
-          transformLocationDetailsToApi({ profileId, companyId, values })
+          transformLocationDetailsToApi({
+            profileId,
+            companyId: company.id,
+            values,
+          })
         }
       >
         {() => (
@@ -83,7 +87,7 @@ const arrayProp = PropTypes.shape({
 })
 EditLargeCapitalInvestorLocation.prototype = {
   profileId: PropTypes.string.isRequired,
-  company: PropTypes.string.isRequired,
+  companyId: PropTypes.string.isRequired,
   ukRegionLocations: PropTypes.arrayOf(arrayProp),
   otherCountriesBeingConsidered: PropTypes.arrayOf(arrayProp),
   notesOnInvestorsLocation: PropTypes.string.isRequired,
