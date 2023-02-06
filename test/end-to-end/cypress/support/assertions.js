@@ -78,10 +78,24 @@ const assertLocalNav = (selector, navList) => {
   })
 }
 
+const assertLocalReactNav = (selector, navList) => {
+  cy.get(selector).as('navElements')
+  cy.get('@navElements').should(
+    'have.prop',
+    'childElementCount',
+    navList.length
+  )
+
+  navList.forEach((nav) => {
+    cy.get('@navElements').should('contain', nav)
+  })
+}
+
 module.exports = {
   assertError,
   assertCollection,
   assertReactCollection,
   assertLocalNav,
   assertKeyValueTable,
+  assertLocalReactNav,
 }

@@ -109,7 +109,7 @@ describe('interaction list', () => {
     context('when everything is okay', () => {
       const commonTests = () => {
         it('should render breadcrumbs', () => {
-          expect(res.breadcrumb).to.have.been.calledWith('Activity')
+          expect(res.breadcrumb).to.have.been.calledWith('Interactions')
           expect(res.breadcrumb).to.have.been.calledOnce
         })
 
