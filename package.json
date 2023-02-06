@@ -222,6 +222,7 @@
   },
   "overrides": {
     "semver-regex": "^3.1.4",
-    "d3-color": "3.1.0"
+    "d3-color": "3.1.0",
+    "http-cache-semantics": "4.1.1"
   }
 }
