@@ -19,10 +19,10 @@ const createAndEdit = require('./controllers/create-and-edit')
 const { unarchiveContact } = require('./controllers/archive')
 const { renderDocuments } = require('./controllers/documents')
 const { getAudit } = require('./controllers/audit')
+const { renderContactActivityForEntity } = require('./controllers/activity')
 
 const { setInteractionsDetails } = require('./middleware/interactions')
 
-const interactionsRouter = require('../interactions/router.sub-app')
 const {
   fetchActivitiesForContact,
 } = require('../companies/apps/activity-feed/controllers')
@@ -51,7 +51,7 @@ router.get('/:contactId/documents', renderDocuments)
 router.use(
   '/:contactId/interactions',
   setInteractionsDetails,
-  interactionsRouter
+  renderContactActivityForEntity
 )
 
 router.get(urls.contacts.activity.data.route, fetchActivitiesForContact)
