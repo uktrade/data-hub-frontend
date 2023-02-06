@@ -2,15 +2,18 @@ import React from 'react'
 
 import ContactResource from '../../../components/Resource/Contact'
 import DocumentsSection from '../../../components/DocumentsSection'
+import ContactLayout from '../../../components/Layout/ContactLayout'
 
-const ContactDocuments = ({ contactId, archivedDocumentPath }) => {
+const ContactDocuments = ({ contactId, archivedDocumentPath, permissions }) => {
   return (
     <ContactResource id={contactId}>
       {(contact) => (
-        <DocumentsSection
-          fileBrowserRoot={archivedDocumentPath}
-          documentPath={contact.archivedDocumentsUrlPath}
-        />
+        <ContactLayout contact={contact} permissions={permissions}>
+          <DocumentsSection
+            fileBrowserRoot={archivedDocumentPath}
+            documentPath={contact.archivedDocumentsUrlPath}
+          />
+        </ContactLayout>
       )}
     </ContactResource>
   )
