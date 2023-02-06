@@ -1,11 +1,11 @@
 .govuk-tabs__list--full {
-  @include media(desktop) {
+  @include media('>=desktop') {
     display: flex;
   }
 }
 
 .govuk-tabs__list-item--full {
-  @include media(desktop) {
+  @include media('>=desktop') {
     flex-grow: 1;
 
     a {
