@@ -1,10 +1,24 @@
 const qs = require('qs')
 
-const { assertBreadcrumbs } = require('../../../support/assertions')
+const {
+  assertCompanyCollectionBreadcrumbs,
+  assertRemoveAllFiltersNotPresent,
+  assertAddItemButton,
+  assertAddItemButtonNotPresent,
+  assertListLength,
+  assertBadge,
+  assertMetadataItem,
+  assertItemLink,
+  assertArchiveMessage,
+  assertArchiveSummary,
+  assertUnarchiveLink,
+  assertTitle,
+} = require('../../../support/collection-list-assertions')
+const { collectionListRequest } = require('../../../support/actions')
 const {
   investmentProjectFaker,
 } = require('../../../fakers/investment-projects')
-const urls = require('../../../../../../src/lib/urls')
+const { companies, investments } = require('../../../../../../src/lib/urls')
 const fixtures = require('../../../fixtures')
 
 const { dnbCorp, archivedLtd } = fixtures.company
@@ -22,29 +36,19 @@ function assertListItem({
   formattedEstimatedLandDate,
 }) {
   it('should have a link with the investment project name', () => {
-    cy.get(alias)
-      .find('h3')
-      .children()
-      .should('have.text', name)
-      .should('have.attr', 'href', `/investments/projects/${id}/details`)
+    assertItemLink(alias, name, `/investments/projects/${id}/details`)
   })
 
   it('should render the stage badge', () => {
-    cy.get(alias)
-      .find('[data-test="badge"]')
-      .eq(0)
-      .should('contain', stage.name)
+    assertBadge(alias, stage.name)
   })
 
   it('should render the investment type badge', () => {
-    cy.get(alias)
-      .find('[data-test="badge"]')
-      .eq(1)
-      .should('contain', investment_type.name)
+    assertBadge(alias, investment_type.name)
   })
 
   it('should render the status badge', () => {
-    cy.get(alias).find('[data-test="badge"]').eq(2).should('contain', status)
+    assertBadge(alias, status)
   })
 
   it('should render the project code', () => {
@@ -52,24 +56,18 @@ function assertListItem({
   })
 
   it('should render the investor name', () => {
-    cy.get(alias)
-      .find('[data-test="metadata-item"]')
-      .eq(0)
-      .should('contain', investor_company.name)
+    assertMetadataItem(alias, investor_company.name)
   })
 
   it('should render the sector', () => {
-    cy.get(alias)
-      .find('[data-test="metadata-item"]')
-      .eq(1)
-      .should('contain', `Sector ${sector.name}`)
+    assertMetadataItem(alias, `Sector ${sector.name}`)
   })
 
   it('should render the estimated land date', () => {
-    cy.get(alias)
-      .find('[data-test="metadata-item"]')
-      .eq(2)
-      .should('contain', `Estimated land date ${formattedEstimatedLandDate}`)
+    assertMetadataItem(
+      alias,
+      `Estimated land date ${formattedEstimatedLandDate}`
+    )
   })
 }
 
@@ -96,14 +94,10 @@ describe('Company Investments Collection Page', () => {
 
   before(() => {
     const queryString = buildQueryString()
-    cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
-      body: {
-        count: investmentProjects.length,
-        results: investmentProjects,
-      },
-    }).as('apiRequest')
-    cy.visit(
-      `${urls.companies.investments.companyInvestmentProjects(
+    collectionListRequest(
+      'v3/search/investment_project',
+      investmentProjects,
+      `${companies.investments.companyInvestmentProjects(
         dnbCorp.id
       )}?${queryString}`
     )
@@ -117,27 +111,14 @@ describe('Company Investments Collection Page', () => {
       )
     })
 
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: urls.dashboard(),
-        Companies: urls.companies.index(),
-        [dnbCorp.name]: urls.companies.detail(dnbCorp.id),
-        Investment: null,
-      })
-    })
-
-    it('should render a heading', () => {
-      cy.get('h2').should('have.text', '3 investment projects')
-    })
-
-    it('should not render a "Remove all filters" button', () => {
-      cy.get('[data-test="clear-filters"]').should('not.exist')
-    })
+    assertCompanyCollectionBreadcrumbs(dnbCorp, 'Investment')
+    assertTitle('3 investment projects')
+    assertRemoveAllFiltersNotPresent()
 
     it('should render an "Add investment project" button', () => {
-      cy.get('[data-test="add-collection-item-button"]').should(
-        'have.text',
-        'Add investment project'
+      assertAddItemButton(
+        'Add investment project',
+        investments.projects.create(dnbCorp.id)
       )
     })
 
@@ -157,11 +138,7 @@ describe('Company Investments Collection Page', () => {
     })
 
     it('should display a list of investment projects', () => {
-      cy.get('[data-test="collection-list"]').should('have.length', 1)
-      cy.get('[data-test="collection-item"]').should(
-        'have.length',
-        investmentProjects.length
-      )
+      assertListLength(investmentProjects)
     })
   })
 
@@ -200,34 +177,15 @@ describe('Company Investments Collection Page', () => {
 
   context('when viewing investments projects for an archived company', () => {
     before(() => {
-      cy.visit(
-        urls.companies.investments.companyInvestmentProjects(archivedLtd.id)
-      )
+      cy.visit(companies.investments.companyInvestmentProjects(archivedLtd.id))
     })
 
-    it('should render the archived summary', () => {
-      cy.get('[data-test="archived-details"]').should(
-        'contain',
-        'Why can I not add an investment project?'
-      )
-    })
-
-    it('should render an archived explanation', () => {
-      cy.get('[data-test="archived-details"]').should(
-        'contain',
-        'Investment projects cannot be added to an archived company.'
-      )
-    })
-
-    it('should render "Click here to unarchive"', () => {
-      cy.get('[data-test="archived-details"]')
-        .find('a')
-        .should('have.text', 'Click here to unarchive')
-        .should('have.attr', 'href', `/companies/${archivedLtd.id}/unarchive`)
-    })
+    assertArchiveSummary('investment project')
+    assertArchiveMessage('Investment projects')
+    assertUnarchiveLink(`/companies/${archivedLtd.id}/unarchive`)
 
     it('should not render an "Add investment project" button', () => {
-      cy.get('[data-test="add-collection-item-button"]').should('not.exist')
+      assertAddItemButtonNotPresent()
     })
   })
 
@@ -241,7 +199,7 @@ describe('Company Investments Collection Page', () => {
         },
       }).as('apiRequest')
       cy.visit(
-        `${urls.companies.investments.companyInvestmentProjects(
+        `${companies.investments.companyInvestmentProjects(
           dnbCorp.id
         )}?${queryString}`
       )

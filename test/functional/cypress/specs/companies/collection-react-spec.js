@@ -1,5 +1,13 @@
-import { assertBreadcrumbs } from '../../support/assertions'
-import urls from '../../../../../src/lib/urls'
+import {
+  getCollectionList,
+  assertCollectionBreadcrumbs,
+  assertAddItemButton,
+  assertBadge,
+  assertMetadataItem,
+  assertListLength,
+} from '../../support/collection-list-assertions'
+import { collectionListRequest } from '../../support/actions'
+import { companies } from '../../../../../src/lib/urls'
 
 import { companyFaker, companyListFaker } from '../../fakers/companies'
 
@@ -52,84 +60,51 @@ describe('Company Collections - React', () => {
   const companyList = [company1, company2, company3, ...otherCompanies]
 
   before(() => {
-    cy.intercept('POST', '/api-proxy/v4/search/company', {
-      body: {
-        count: companyList.length,
-        results: companyList,
-      },
-    }).as('apiRequest')
-    cy.visit(urls.companies.index())
-    cy.wait('@apiRequest')
+    collectionListRequest('v4/search/company', companyList, companies.index())
   })
 
   beforeEach(() => {
-    cy.get('[data-test="collection-list"]').as('collectionList')
-    cy.get('[data-test="collection-item"]').as('collectionItems')
-    cy.get('@collectionItems').eq(0).as('firstListItem')
+    getCollectionList()
     cy.get('@collectionItems').eq(1).as('secondListItem')
     cy.get('@collectionItems').eq(2).as('thirdListItem')
   })
 
-  it('should render breadcrumbs', () => {
-    assertBreadcrumbs({
-      Home: '/',
-      Companies: null,
-    })
-  })
+  assertCollectionBreadcrumbs('Companies')
 
   it('should have a link to add company', () => {
-    cy.get('[data-test="add-collection-item-button"]')
-      .should('exist')
-      .should('contain', 'Add company')
-      .should('have.attr', 'href', '/companies/create')
+    assertAddItemButton('Add company', '/companies/create')
   })
 
   it('should display a list of companies', () => {
-    cy.get('@collectionList').should('have.length', 1)
-    cy.get('@collectionItems').should('have.length', companyList.length)
+    assertListLength(companyList)
   })
 
   it('should contain country badge', () => {
-    cy.get('@firstListItem')
-      .find('[data-test="badge"]')
-      .eq(0)
-      .should('contain', 'Malaysia')
+    assertBadge('@firstListItem', 'Malaysia')
   })
 
   it('should contain company sector and primary address', () => {
-    cy.get('@firstListItem')
-      .find('[data-test="metadata"]')
-      .should('contain', 'Energy')
-      .and(
-        'contain',
-        'Level 6, Avenue K Tower, 156 Jalan Ampang, Kuala Lumpur, 50450, Malaysia'
-      )
+    assertMetadataItem('@firstListItem', 'Energy')
+    assertMetadataItem(
+      '@firstListItem',
+      'Level 6, Avenue K Tower, 156 Jalan Ampang, Kuala Lumpur, 50450, Malaysia'
+    )
   })
 
   it('should contain trading names', () => {
-    cy.get('@secondListItem')
-      .find('[data-test="metadata"]')
-      .should('contain', 'Company Corp, Company Ltd')
+    assertMetadataItem('@secondListItem', 'Company Corp, Company Ltd')
   })
 
   it('should contain UK HQ Badge', () => {
-    cy.get('@secondListItem')
-      .find('[data-test="badge"]')
-      .should('contain', 'UK HQ')
+    assertBadge('@secondListItem', 'UK HQ')
   })
 
   it('should contain UK Region Badge', () => {
-    cy.get('@secondListItem')
-      .find('[data-test="badge"]')
-      .should('contain', 'London')
+    assertBadge('@secondListItem', 'London')
   })
 
   it('should contain Global HQ Badge', () => {
-    cy.get('@thirdListItem')
-      .find('[data-test="badge"]')
-      .should('contain', 'Global HQ')
-    cy.get('@thirdListItem')
-      .find('[data-test="metadata"]')
-      .should('contain', company3.global_headquarters.name)
+    assertBadge('@thirdListItem', 'Global HQ')
+    assertMetadataItem('@thirdListItem', company3.global_headquarters.name)
   })
 })
