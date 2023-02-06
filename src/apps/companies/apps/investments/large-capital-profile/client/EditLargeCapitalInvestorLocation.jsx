@@ -20,7 +20,7 @@ const EditLargeCapitalInvestorLocation = ({
   otherCountriesBeingConsidered,
   notesOnInvestorsLocation,
 }) => {
-  const companyId = company.id
+  const company = company.id
   return (
     <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
       <Form
