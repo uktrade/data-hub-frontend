@@ -105,9 +105,9 @@ const ContactLocalHeader = ({ contact, writeFlashMessage }) => {
         </GridRow>
         {contact.archived && (
           <ArchivePanel
-            archivedBy={contact.archived_by}
-            archivedOn={contact.archived_on}
-            archiveReason={contact.archived_reason}
+            archivedBy={contact.archivedBy}
+            archivedOn={contact.archivedOn}
+            archiveReason={contact.archivedReason}
             unarchiveUrl={urls.contacts.unarchive(contact.id)}
             onClick={() => {
               writeFlashMessage('Contact record updated')
@@ -121,7 +121,7 @@ const ContactLocalHeader = ({ contact, writeFlashMessage }) => {
 }
 
 ContactLocalHeader.propTypes = {
-  contactId: PropTypes.string.isRequired,
+  contact: PropTypes.object.isRequired,
   writeFlashMessage: PropTypes.func,
 }
 
