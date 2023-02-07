@@ -2,7 +2,7 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 import Link from '@govuk-react/link'
 import styled from 'styled-components'
-import { H2 } from '@govuk-react/heading'
+import { H2, H6 } from '@govuk-react/heading'
 import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
 import { get } from 'lodash'
 import qs from 'qs'
@@ -22,6 +22,7 @@ import {
 } from '../constants'
 
 import { TASK_GET_SUBSCRIPTION_SUMMARY } from '../state'
+import FooterLink from '../RemindersLists'
 
 const ToggleSectionContainer = styled('div')({
   marginTop: SPACING.SCALE_3,
@@ -201,9 +202,24 @@ const RemindersSettings = ({
                 </ToggleSectionContainer>
               </>
             )}
-            <StyledHomeLink href={urls.dashboard()} aria-label="Home">
+            {/* <FooterLink>
+              headingText="Need Help?" linkUrl=
+              {urls.external.reminderAndSettings}
+              linkText="guidance on reminders and email notifications"
+            </FooterLink> */}
+            {/* <StyledHomeLink href={urls.dashboard()} aria-label="Home">
               Home
-            </StyledHomeLink>
+            </StyledHomeLink> */}
+            {/* <FooterLink data-test="help-text-link">
+              <hr />
+              <H6 as="h2">Need Help?</H6>
+              <p>
+                See the{' '}
+                <a href={urls.external.reminderAndSettings}>
+                  guidance on reminders and email notifications
+                </a>
+              </p>
+            </FooterLink> */}
           </>
         )}
       </Resource>

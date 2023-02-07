@@ -2,6 +2,7 @@ import React from 'react'
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { Link, H6 } from 'govuk-react'
+import FooterLink from './FooterLink'
 
 import { DefaultLayout } from '../../components'
 import RemindersMenu from './RemindersMenu'
@@ -55,26 +56,30 @@ const ListContainer = styled('div')({
   },
 })
 
-// const HomeLink = styled(Link)({
+// const StyledFooterLink = styled('div')({
 //   display: 'block',
 //   marginTop: SPACING.SCALE_4,
 //   marginBottom: SPACING.SCALE_4,
 //   [MEDIA_QUERIES.DESKTOP]: {
-//     marginLeft: 25,
+//     marginLeft: 1,
 //     marginBottom: 25,
 //   },
 // })
 
-const FooterLink = styled('div')({
-  display: 'block',
-  // borderTop: '#1d70b8',
-  marginTop: SPACING.SCALE_4,
-  marginBottom: SPACING.SCALE_4,
-  [MEDIA_QUERIES.DESKTOP]: {
-    marginLeft: 1,
-    marginBottom: 25,
-  },
-})
+// const FooterLink = ({urls, title}) => {
+//   return (
+//     <div data-test="help-text-link">
+//       <hr />
+//       <h6 as="h2">{title}</h6>
+//       <p>
+//         See the{' '}
+//         <a href={urls}>
+//           guidance on reminders and email notifications
+//         </a>
+//       </p>
+//     </div>
+//   );
+// };
 
 const RemindersLists = ({ reminderType }) => {
   const subject = reminderTypeToLabel[reminderType]
@@ -120,19 +125,25 @@ const RemindersLists = ({ reminderType }) => {
             )}
           </ListContainer>
         </Container>
-        {/* <HomeLink data-test="home-link" href={urls.dashboard()}>
-          Home
-        </HomeLink> */}
-        <FooterLink data-test="help-text-link">
+        {/* <FooterLink data-test="help-text-link">
           <hr />
           <H6 as="h2">Need Help?</H6>
           <p>
             See the{' '}
-            <a href="/reminders/settings/">
+            <a href={urls.external.reminderAndSettings}>
               guidance on reminders and email notifications
             </a>
           </p>
-        </FooterLink>
+        </FooterLink> */}
+        {/* <FooterLink data-test="help-text-link">
+          headingText="Need Help?", linkUrl={urls.external.reminderAndSettings},
+          linkText="guidance on reminders and email notifications"
+        </FooterLink> */}
+        <FooterLink
+          headingText="Need Help?"
+          linkUrl={urls.external.reminderAndSettings}
+          linkText="guidance on reminders and email notifications"
+        />
       </>
     </DefaultLayout>
   )
