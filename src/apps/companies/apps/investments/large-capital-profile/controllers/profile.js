@@ -20,8 +20,6 @@ const { assetClassSectors } = require('../constants')
 const { getCompanyProfiles } = require('../repos')
 const { get } = require('lodash')
 const urls = require('../../../../../../lib/urls')
-const { id } = require('../../../../../../config/envSchema')
-const { PrecompiledLoader } = require('nunjucks')
 
 const getCompanyProfile = async (req, company, editing) => {
   const profiles = await getCompanyProfiles(req, company.id)
