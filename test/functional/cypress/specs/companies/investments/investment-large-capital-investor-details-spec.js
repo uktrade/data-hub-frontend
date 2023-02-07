@@ -24,7 +24,6 @@ const {
   clearAndTypeInput,
   clearAndTypeTextArea,
 } = require('../../../support/actions')
-const { testTypeahead } = require('../../../support/tests')
 
 const { oneListCorp: existingCompany, lambdaPlc: newCompany } = fixtures.company
 
