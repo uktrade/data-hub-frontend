@@ -133,12 +133,12 @@ const renderProfile = async (req, res, next) => {
       {
         profile,
         props: {
-          profileId: Profile.id,
+          profileId: profile?.id,
           company,
-          ukRegionLocations: profile.location.uk_region_locations,
+          ukRegionLocations: profile?.location?.uk_region_locations,
           otherCountriesBeingConsidered:
-            profile.location.other_countries_being_considered,
-          notesOnInvestorsLocation: profile.notesOnInvestorsLocation,
+            profile?.location?.other_countries_being_considered,
+          notesOnInvestorsLocation: profile?.notesOnInvestorsLocation,
           breadcrumbs: [
             { link: urls.dashboard(), text: 'Home' },
             {
