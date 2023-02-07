@@ -14,6 +14,7 @@ import {
   transformReminderDaysToAPI,
   transformNRIFormValuesToAnalyticsData,
 } from '../transformers'
+import FooterLink from '../FooterLink'
 
 const redirectUrl = `${urls.reminders.settings.index()}?companies_new_interactions=true`
 const doYouWantQuestion =
@@ -23,37 +24,44 @@ const whenYouWantQuestion =
 const remindersDaysLabelHint = 'days after the interaction was posted'
 
 const ExportsNewInteractionsForm = () => (
-  <Form
-    id="reminders-settings-companies-new-interaction"
-    initialValuesTaskName={TASK_GET_EXPORT_NI_REMINDER_SUBSCRIPTIONS}
-    submissionTaskName={TASK_SAVE_EXPORT_NI_REMINDER_SUBSCRIPTIONS}
-    redirectTo={() => redirectUrl}
-    transformPayload={(formValues) => ({
-      reminder_days: transformReminderDaysToAPI(formValues),
-      email_reminders_enabled: formValues.emailNotifications === OPTION_YES,
-    })}
-    analyticsFormName="editCompaniesNewInteractionReminderSettings"
-    analyticsData={transformNRIFormValuesToAnalyticsData}
-    flashMessage={() => 'Settings updated'}
-    cancelRedirectTo={() => redirectUrl}
-  >
-    {({ values: { reminder_days, email_reminders_enabled, reminders } }) => (
-      <>
-        {reminder_days && (
-          <NoRecentInteractionsCommonFields
-            legendPrefix="Export"
-            reminderDays={reminder_days}
-            emailRemindersEnabled={email_reminders_enabled}
-            reminders={reminders}
-            doYouWantQuestion={doYouWantQuestion}
-            whenYouWantQuestion={whenYouWantQuestion}
-            remindersDaysLabelHint={remindersDaysLabelHint}
-            emptyErrorMessage="Add when you want to get company reminders"
-          />
-        )}
-      </>
-    )}
-  </Form>
+  <>
+    <Form
+      id="reminders-settings-companies-new-interaction"
+      initialValuesTaskName={TASK_GET_EXPORT_NI_REMINDER_SUBSCRIPTIONS}
+      submissionTaskName={TASK_SAVE_EXPORT_NI_REMINDER_SUBSCRIPTIONS}
+      redirectTo={() => redirectUrl}
+      transformPayload={(formValues) => ({
+        reminder_days: transformReminderDaysToAPI(formValues),
+        email_reminders_enabled: formValues.emailNotifications === OPTION_YES,
+      })}
+      analyticsFormName="editCompaniesNewInteractionReminderSettings"
+      analyticsData={transformNRIFormValuesToAnalyticsData}
+      flashMessage={() => 'Settings updated'}
+      cancelRedirectTo={() => redirectUrl}
+    >
+      {({ values: { reminder_days, email_reminders_enabled, reminders } }) => (
+        <>
+          {reminder_days && (
+            <NoRecentInteractionsCommonFields
+              legendPrefix="Export"
+              reminderDays={reminder_days}
+              emailRemindersEnabled={email_reminders_enabled}
+              reminders={reminders}
+              doYouWantQuestion={doYouWantQuestion}
+              whenYouWantQuestion={whenYouWantQuestion}
+              remindersDaysLabelHint={remindersDaysLabelHint}
+              emptyErrorMessage="Add when you want to get company reminders"
+            />
+          )}
+        </>
+      )}
+    </Form>
+    <FooterLink
+      headingText="Need Help?"
+      linkUrl={'urls.external.reminderAndSettings'}
+      linkText="guidance on reminders and email notifications"
+    />
+  </>
 )
 
 export default ExportsNewInteractionsForm

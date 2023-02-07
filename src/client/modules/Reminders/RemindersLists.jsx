@@ -1,7 +1,7 @@
 import React from 'react'
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 import styled from 'styled-components'
-import { Link, H6 } from 'govuk-react'
+import { Link } from 'govuk-react'
 import FooterLink from './FooterLink'
 
 import { DefaultLayout } from '../../components'
@@ -125,23 +125,9 @@ const RemindersLists = ({ reminderType }) => {
             )}
           </ListContainer>
         </Container>
-        {/* <FooterLink data-test="help-text-link">
-          <hr />
-          <H6 as="h2">Need Help?</H6>
-          <p>
-            See the{' '}
-            <a href={urls.external.reminderAndSettings}>
-              guidance on reminders and email notifications
-            </a>
-          </p>
-        </FooterLink> */}
-        {/* <FooterLink data-test="help-text-link">
-          headingText="Need Help?", linkUrl={urls.external.reminderAndSettings},
-          linkText="guidance on reminders and email notifications"
-        </FooterLink> */}
         <FooterLink
           headingText="Need Help?"
-          linkUrl={urls.external.reminderAndSettings}
+          linkUrl={'urls.external.reminderAndSettings'}
           linkText="guidance on reminders and email notifications"
         />
       </>

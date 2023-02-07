@@ -12,7 +12,7 @@ const StyledFooterLink = styled('div')({
   },
 })
 
-export const FooterLink = ({ headingText, linkText, linkUrl }) => {
+const FooterLink = ({ headingText, linkText, linkUrl }) => {
   return (
     <StyledFooterLink>
       <div data-test="footer-link">
