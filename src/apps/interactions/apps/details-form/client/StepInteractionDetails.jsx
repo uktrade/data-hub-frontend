@@ -158,6 +158,26 @@ const validatedDuplicatedCountries = (countries, field, { values }) =>
     ? 'A country that was discussed cannot be entered in multiple fields'
     : null
 
+const exportBarrierTypes = {
+  FINANCE: '758c4132-a07b-4e4d-a43d-f2f630113023',
+  KNOWLEDGE: 'ef9b19d8-510b-4819-8304-5387e4c6df29',
+  CAPACITY: 'd0c8fe10-dd29-4e39-a422-80dd111199e7',
+  ACCESS: '27ea2db8-4383-42dd-aa7d-62023950f97d',
+  SOMETHING_ELSE: '8ef83315-2b0f-4d5e-98da-a16f8b2217a6',
+}
+
+const exportBarrierIdToHintMap = {
+  [exportBarrierTypes.FINANCE]:
+    'For example, delivering export contracts, having access to export finance and insurance',
+  [exportBarrierTypes.KNOWLEDGE]:
+    'For example, having information about regulations or how to export to a market',
+  [exportBarrierTypes.CAPACITY]:
+    'For example, understanding international markets and their costs, as well as having enough people',
+  [exportBarrierTypes.ACCESS]:
+    'For example, having access to contacts, customers and the right networks',
+  [exportBarrierTypes.SOMETHING_ELSE]: '',
+}
+
 const StepInteractionDetails = ({
   companyId,
   contacts,
@@ -169,6 +189,7 @@ const StepInteractionDetails = ({
   countries,
   onOpenContactForm,
   relatedTradeAgreements,
+  exportBarrier,
 }) => {
   const { values = {} } = useFormContext()
   const serviceContext = getServiceContext(
@@ -513,6 +534,38 @@ const StepInteractionDetails = ({
             />
           )}
         </>
+      )}
+
+      <FieldRadios
+        inline={true}
+        name="helped_remove_export_barrier"
+        legend="Did the interaction help remove an export barrier?"
+        options={OPTIONS_YES_NO}
+        required="Select if the interaction helped remove an export barrier"
+      />
+
+      {values.helped_remove_export_barrier === OPTION_YES && (
+        <FieldCheckboxes
+          name="export_barrier_types"
+          legend="Tell us how the interaction helped remove an export barrier"
+          hint="Select all that apply"
+          options={exportBarrier.map((barrierType) => ({
+            ...barrierType,
+            hint: exportBarrierIdToHintMap[barrierType.value],
+          }))}
+          required="Select at least one option"
+        />
+      )}
+
+      {values.export_barrier_types?.includes(
+        exportBarrierTypes.SOMETHING_ELSE
+      ) && (
+        <FieldTextarea
+          type="text"
+          name="export_barrier_notes"
+          label="What happened in the interaction to help remove an export barrier?"
+          required="Enter a description"
+        />
       )}
     </>
   )

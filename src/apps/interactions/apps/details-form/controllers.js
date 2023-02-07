@@ -26,6 +26,7 @@ async function renderInteractionDetailsForm(req, res, next) {
       communicationChannels,
       countries,
       relatedTradeAgreements,
+      exportBarrier,
     ] = await Promise.all([
       getOptions(req, 'service', {
         transformer: transformServiceToOption,
@@ -36,6 +37,7 @@ async function renderInteractionDetailsForm(req, res, next) {
       getOptions(req, 'communication-channel'),
       getOptions(req, 'country'),
       getOptions(req, 'trade-agreement'),
+      getOptions(req, 'export-barrier', { sorted: false }),
     ])
 
     res
@@ -60,6 +62,7 @@ async function renderInteractionDetailsForm(req, res, next) {
           communicationChannels,
           countries,
           relatedTradeAgreements,
+          exportBarrier,
           interactionId: get(interaction, 'id'),
           user,
         },

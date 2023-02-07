@@ -45,4 +45,10 @@ module.exports = {
   },
   hasRelatedTradeAgreementsNo: '#field-has_related_trade_agreements [value=no]',
   hasRelatedOpportunityNo: '#field-has_related_opportunity [value=no]',
+  exportBarrier: {
+    yes: '#field-helped_remove_export_barrier [value=yes]',
+    no: '#field-helped_remove_export_barrier [value=no]',
+    somethingElse: '[aria-label="Something else"]',
+    notes: '#field-export_barrier_notes',
+  },
 }

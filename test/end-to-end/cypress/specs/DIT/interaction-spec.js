@@ -43,7 +43,8 @@ describe('Interaction', () => {
       cy.get(formSelectors.notes).type('Conversation with potential client')
       cy.get(formSelectors.policyFeedbackNo).click()
       cy.get(formSelectors.countriesDiscussed.no).click()
-      cy.get(selectors.interactionForm.add).click()
+      cy.get(formSelectors.exportBarrier.no).click()
+      cy.get(formSelectors.add).click()
 
       cy.contains('h1', subject)
 
@@ -84,8 +85,8 @@ describe('Interaction', () => {
         cy.get(formSelectors.countries.export).selectTypeaheadOption('Fran')
         cy.get(formSelectors.countries.future).selectTypeaheadOption('Germ')
         cy.get(formSelectors.countries.noInterest).selectTypeaheadOption('Spai')
-
-        cy.get(selectors.interactionForm.add).click()
+        cy.get(formSelectors.exportBarrier.no).click()
+        cy.get(formSelectors.add).click()
 
         assertSummaryTable({
           dataTest: 'interaction-details-table',
@@ -134,8 +135,9 @@ describe('Interaction', () => {
         cy.get(formSelectors.countriesDiscussed.yes).click()
         cy.get(formSelectors.countries.export).selectTypeaheadOption('Fran')
         cy.get(formSelectors.countries.future).selectTypeaheadOption('Fran')
+        cy.get(formSelectors.exportBarrier.no).click()
+        cy.get(formSelectors.add).click()
 
-        cy.get(selectors.interactionForm.add).click()
         cy.contains(
           'A country that was discussed cannot be entered in multiple fields'
         )
@@ -158,8 +160,9 @@ describe('Interaction', () => {
         )
         cy.get(formSelectors.policyFeedbackNo).click()
         cy.get(formSelectors.countriesDiscussed.yes).click()
+        cy.get(formSelectors.exportBarrier.no).click()
+        cy.get(formSelectors.add).click()
 
-        cy.get(selectors.interactionForm.add).click()
         cy.contains('Select at least one country in one of the three fields')
       })
     })
@@ -182,7 +185,6 @@ describe('Service delivery', () => {
 
   it('should create the service delivery', () => {
     const subject = 'Some interesting service delivery'
-
     const formSelectors = selectors.interactionForm
 
     cy.get(formSelectors.service).select('Export Win')
@@ -193,7 +195,8 @@ describe('Service delivery', () => {
     cy.get(formSelectors.notes).type('Conversation with potential client')
     cy.get(formSelectors.policyFeedbackNo).click()
     cy.get(formSelectors.countriesDiscussed.no).click()
-    cy.get(selectors.interactionForm.add).click()
+    cy.get(formSelectors.exportBarrier.no).click()
+    cy.get(formSelectors.add).click()
 
     cy.contains('h1', subject)
   })

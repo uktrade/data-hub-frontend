@@ -75,7 +75,8 @@ describe('Referrals', () => {
       cy.get(formSelectors.notes).type('Conversation with potential client')
       cy.get(formSelectors.policyFeedbackNo).click()
       cy.get(formSelectors.countriesDiscussed.no).click()
-      cy.get(selectors.interactionForm.add).click()
+      cy.get(formSelectors.exportBarrier.no).click()
+      cy.get(formSelectors.add).click()
     })
 
     it('should display the referral in the interaction', () => {
