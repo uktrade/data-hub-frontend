@@ -108,7 +108,10 @@ module.exports = {
     },
     copyright:
       'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',
+    reminderAndSettings:
+      'https://data-services-help.trade.gov.uk/data-hub/how-articles/reminders-and-email-notifications/',
   },
+
   dashboard: url('/'),
   oauth: {
     redirect: url('/oauth'),
