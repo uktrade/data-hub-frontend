@@ -5,8 +5,8 @@ async function getAudit(req, res, next) {
 
     return res.breadcrumb('Audit history').render('contacts/views/audit', {
       props: {
-        contactId: contactId,
-        permissions: permissions,
+        contactId,
+        permissions,
       },
     })
   } catch (error) {

@@ -6,8 +6,8 @@ function renderContactActivityForEntity(req, res, next) {
 
     res.breadcrumb(breadcrumbTitle).render(view, {
       props: {
-        contactId: contactId,
-        permissions: permissions,
+        contactId,
+        permissions,
       },
     })
   } catch (error) {

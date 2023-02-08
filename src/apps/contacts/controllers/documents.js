@@ -7,9 +7,9 @@ function renderDocuments(req, res) {
 
   return res.breadcrumb('Documents').render('contacts/views/documents', {
     props: {
-      contactId: contactId,
+      contactId,
       archivedDocumentPath: ARCHIVED_DOCUMENT_BASE_URL,
-      permissions: permissions,
+      permissions,
     },
   })
 }

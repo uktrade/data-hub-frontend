@@ -35,9 +35,9 @@ function getDetails(req, res, next) {
 
     res.render('contacts/views/details', {
       props: {
-        contactId: contactId,
-        companyAddress: companyAddress,
-        permissions: permissions,
+        contactId,
+        companyAddress,
+        permissions,
       },
     })
   } catch (error) {
