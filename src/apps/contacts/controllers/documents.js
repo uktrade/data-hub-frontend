@@ -3,7 +3,7 @@ function renderDocuments(req, res) {
 
   const { ARCHIVED_DOCUMENT_BASE_URL } = res.locals
 
-  const permissions = res.locals.user.permissions
+  const permissions = res.locals?.user.permissions
 
   return res.breadcrumb('Documents').render('contacts/views/documents', {
     props: {

@@ -1,7 +1,7 @@
 async function getAudit(req, res, next) {
   try {
     const contactId = req.params.contactId
-    const permissions = res.locals.user.permissions
+    const permissions = res.locals?.user.permissions
 
     return res.breadcrumb('Audit history').render('contacts/views/audit', {
       props: {
