@@ -40,6 +40,23 @@ const getContactsGroupedByRegistrationStatus = (activity) => {
     }, {})
 }
 
+const getStatusByLatest = (contactsList) => {
+  let status
+  if (contactsList.WaitingList) {
+    status = 'Waiting List'
+  }
+  if (contactsList.Cancelled) {
+    status = 'Cancelled'
+  }
+  if (contactsList.Registered) {
+    status = 'Registered'
+  }
+  if (contactsList.Attended) {
+    status = 'Attended'
+  }
+  return status
+}
+
 const getCompany = (activity) => {
   return get(activity, 'object.attributedTo', [])
     .filter(({ type }) => type !== 'dit:Company')
@@ -94,4 +111,5 @@ export default {
   getAdviser,
   transform,
   getContactsGroupedByRegistrationStatus,
+  getStatusByLatest,
 }
