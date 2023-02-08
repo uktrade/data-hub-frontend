@@ -5,8 +5,12 @@ import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
 import { SPACING } from '@govuk-react/constants'
 
-import { Main } from '../../components'
-import { ContactLocalHeader, LocalNav, LocalNavLink } from '../../components'
+import {
+  ContactLocalHeader,
+  LocalNav,
+  LocalNavLink,
+  Main,
+} from '../../components'
 import urls from '../../../lib/urls'
 
 const StyledNavWrapper = styled('div')`
