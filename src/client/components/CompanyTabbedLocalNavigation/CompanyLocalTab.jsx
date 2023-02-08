@@ -1,19 +1,18 @@
 import React from 'react'
-import './tab-local-nav.scss'
 
 const CompanyLocalTab = (props) => {
-  const { navItem, index, active, handleClick, id } = props
+  const { navItem, index, active, handleClick, id, finalTabIndex } = props
   const generateFullUrl = (navItemPath) => `/companies/${id}/${navItemPath}`
 
   return (
     <li
       className="govuk-tabs__list-item govuk-tabs__list-item--full"
       key={`tab-${index}`}
-      style={{ flex: 1 }}
+      style={{ display: 'flex' }}
     >
       <a
         className={
-          active == `tab-${index}` && index == 5
+          active == `tab-${index}` && index == finalTabIndex
             ? 'govuk-tabs__tab govuk-tabs__tab--selected last-child'
             : active == `tab-${index}`
             ? 'govuk-tabs__tab govuk-tabs__tab--selected'

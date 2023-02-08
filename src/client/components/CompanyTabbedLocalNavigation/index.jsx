@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { LOCAL_NAV } from '../../../apps/companies/constants'
 import CompanyLocalTab from './CompanyLocalTab'
-import './tab-local-nav.scss'
 
 const CompanyTabbedLocalNavigation = (props) => {
   const {
@@ -33,11 +32,9 @@ const CompanyTabbedLocalNavigation = (props) => {
           aria-label="local navigation"
           data-test="tabbedLocalNav"
         >
-          <ul
-            className="govuk-tabs__list govuk-tabs__list--full"
-            style={{ display: 'flex' }}
-          >
+          <ul className="govuk-tabs__list govuk-tabs__list--full">
             {LOCAL_NAV.map((navItem, index) => {
+              const finalTabIndex = LOCAL_NAV.length - 1
               return (
                 <CompanyLocalTab
                   navItem={navItem}
@@ -46,6 +43,7 @@ const CompanyTabbedLocalNavigation = (props) => {
                   active={active}
                   handleClick={handleClick}
                   key={`company-tab-${index}`}
+                  finalTabIndex={finalTabIndex}
                 />
               )
             })}

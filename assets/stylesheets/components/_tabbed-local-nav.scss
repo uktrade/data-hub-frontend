@@ -1,20 +1,34 @@
 .govuk-tabs__list--full {
-  @include media('>=desktop') {
+  @include media(desktop) {
     display: flex;
   }
 }
 
 .govuk-tabs__list-item--full {
-  @include media('>=desktop') {
+  @include media(desktop) {
     flex-grow: 1;
 
     a {
       display: block;
       width: calc(100% - 5px);
     }
+  }
+}
 
-    &:last-child a {
-      width: 100%;
+.other-children {
+  @include media(desktop) {
+    flex-grow: 1;
+
+    a {
+      display: block;
+      width: calc(100% - 5px);
     }
+  }
+}
+
+.last-child {
+  @include media(desktop) {
+    display: block;
+    width: 100%;
   }
 }
