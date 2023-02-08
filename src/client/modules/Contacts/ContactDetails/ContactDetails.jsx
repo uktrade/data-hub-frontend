@@ -44,91 +44,86 @@ const getAddress = (contact, companyAddress) => {
   return Object.values(addressCleaned).join(', ')
 }
 
-const ContactDetails = ({ contactId, companyAddress, permissions }) => {
-  return (
-    <ContactResource id={contactId}>
-      {(contact) => (
-        <>
-          <ContactLayout contact={contact} permissions={permissions}>
-            <SummaryTable
-              caption="Contact details"
-              data-test="contact-details-table"
-            >
-              <SummaryTable.Row
-                heading="Job title"
-                children={contact.jobTitle}
-              />
-              <SummaryTable.Row
-                hideWhenEmpty={true}
-                heading="Phone number"
-                children={contact.fullTelephoneNumber}
-              />
-              <SummaryTable.Row
-                heading="Address"
-                children={getAddress(contact, companyAddress)}
-              />
-              <SummaryTable.Row heading="Email" children={contact.email} />
-              {contact.notes && (
-                <SummaryTable.Row
-                  heading="More details"
-                  children={contact.notes}
-                />
-              )}
-              <SummaryTable.Row
-                heading="Email marketing"
-                children={
-                  contact.acceptsDitEmailMarketing
-                    ? EMAIL_CONSENT_YES
-                    : EMAIL_CONSENT_NO
-                }
-              />
-            </SummaryTable>
-            {!contact.archived && (
-              <Button
-                as={Link}
-                href={urls.contacts.edit(contactId)}
-                buttonColour={GREY_3}
-                buttonTextColour={BLACK}
-                data-test="edit-contact-button"
-              >
-                Edit Contact
-              </Button>
-            )}
-
-            <ArchiveForm
-              id={ID}
-              submissionTaskName={TASK_ARCHIVE_CONTACT}
-              type="contact"
-              isArchived={contact.archived}
-              transformPayload={(values) => ({
-                values,
-                contactId,
-              })}
-              flashMessage={() => `Contact record updated`}
-              redirectUrl={urls.contacts.details(contactId)}
-              analyticsFormName="archiveContact"
-              archiveReasons={[
-                {
-                  label: LEFT_COMPANY_OPTION,
-                  value: LEFT_COMPANY_OPTION,
-                },
-                {
-                  label: NO_CONTACT_OPTION,
-                  value: NO_CONTACT_OPTION,
-                },
-                {
-                  label: ROLE_CHANGE_OPTION,
-                  value: ROLE_CHANGE_OPTION,
-                },
-              ]}
-              radioHint="This contact has:"
+const ContactDetails = ({ contactId, companyAddress, permissions }) => (
+  <ContactResource id={contactId}>
+    {(contact) => (
+      <>
+        <ContactLayout contact={contact} permissions={permissions}>
+          <SummaryTable
+            caption="Contact details"
+            data-test="contact-details-table"
+          >
+            <SummaryTable.Row heading="Job title" children={contact.jobTitle} />
+            <SummaryTable.Row
+              hideWhenEmpty={true}
+              heading="Phone number"
+              children={contact.fullTelephoneNumber}
             />
-          </ContactLayout>
-        </>
-      )}
-    </ContactResource>
-  )
-}
+            <SummaryTable.Row
+              heading="Address"
+              children={getAddress(contact, companyAddress)}
+            />
+            <SummaryTable.Row heading="Email" children={contact.email} />
+            {contact.notes && (
+              <SummaryTable.Row
+                heading="More details"
+                children={contact.notes}
+              />
+            )}
+            <SummaryTable.Row
+              heading="Email marketing"
+              children={
+                contact.acceptsDitEmailMarketing
+                  ? EMAIL_CONSENT_YES
+                  : EMAIL_CONSENT_NO
+              }
+            />
+          </SummaryTable>
+          {!contact.archived && (
+            <Button
+              as={Link}
+              href={urls.contacts.edit(contactId)}
+              buttonColour={GREY_3}
+              buttonTextColour={BLACK}
+              data-test="edit-contact-button"
+            >
+              Edit Contact
+            </Button>
+          )}
+
+          <ArchiveForm
+            id={ID}
+            submissionTaskName={TASK_ARCHIVE_CONTACT}
+            type="contact"
+            isArchived={contact.archived}
+            transformPayload={(values) => ({
+              values,
+              contactId,
+            })}
+            flashMessage={() => `Contact record updated`}
+            redirectUrl={urls.contacts.details(contactId)}
+            analyticsFormName="archiveContact"
+            archiveReasons={[
+              {
+                label: LEFT_COMPANY_OPTION,
+                value: LEFT_COMPANY_OPTION,
+              },
+              {
+                label: NO_CONTACT_OPTION,
+                value: NO_CONTACT_OPTION,
+              },
+              {
+                label: ROLE_CHANGE_OPTION,
+                value: ROLE_CHANGE_OPTION,
+              },
+            ]}
+            radioHint="This contact has:"
+          />
+        </ContactLayout>
+      </>
+    )}
+  </ContactResource>
+)
 
 ContactDetails.propTypes = {
   contactId: PropTypes.string.isRequired,
