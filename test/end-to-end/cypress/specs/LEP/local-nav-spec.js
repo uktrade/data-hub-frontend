@@ -8,7 +8,10 @@ const {
   investments,
 } = require('../../../../../src/lib/urls')
 
-const { assertLocalNav } = require('../../support/assertions')
+const {
+  assertLocalNav,
+  assertLocalReactNav,
+} = require('../../support/assertions')
 
 describe('LEP Permission', () => {
   describe('activity', () => {
@@ -54,7 +57,7 @@ describe('LEP Permission', () => {
     })
 
     it('should display LEP only tabs', () => {
-      assertLocalNav(selectors.nav.sideNav, ['Details', 'Audit history'])
+      assertLocalReactNav('[data-test=local-nav]', ['Details', 'Audit history'])
     })
   })
 

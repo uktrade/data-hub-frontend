@@ -100,12 +100,9 @@ function renderInteractionsForEntity(req, res, next) {
       createKind,
       canAdd,
       theme = '',
-      contactId,
     } = res.locals.interactions
 
-    const contact = res.locals.contact
-
-    const breadcrumbTitle = 'Activity'
+    const breadcrumbTitle = 'Interactions'
 
     const actionButtons = canAdd
       ? [
@@ -122,10 +119,6 @@ function renderInteractionsForEntity(req, res, next) {
 
     res.breadcrumb(breadcrumbTitle).render(view, {
       actionButtons,
-      props: {
-        contactId: contactId,
-        contact: contact,
-      },
     })
   } catch (error) {
     next(error)

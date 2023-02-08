@@ -16,6 +16,7 @@ import {
 } from '../../../../apps/contacts/constants'
 import { ID, TASK_ARCHIVE_CONTACT } from './state'
 import ArchiveForm from '../../../components/ArchiveForm'
+import ContactLayout from '../../../components/Layout/ContactLayout'
 
 const getAddress = (contact, companyAddress) => {
   const address = contact.addressSameAsCompany
@@ -43,11 +44,11 @@ const getAddress = (contact, companyAddress) => {
   return Object.values(addressCleaned).join(', ')
 }
 
-const ContactDetails = ({ contactId, companyAddress }) => {
-  return (
-    <ContactResource id={contactId}>
-      {(contact) => (
-        <>
+const ContactDetails = ({ contactId, companyAddress, permissions }) => (
+  <ContactResource id={contactId}>
+    {(contact) => (
+      <>
+        <ContactLayout contact={contact} permissions={permissions}>
           <SummaryTable
             caption="Contact details"
             data-test="contact-details-table"
@@ -118,11 +119,11 @@ const ContactDetails = ({ contactId, companyAddress }) => {
             ]}
             radioHint="This contact has:"
           />
-        </>
-      )}
-    </ContactResource>
-  )
-}
+        </ContactLayout>
+      </>
+    )}
+  </ContactResource>
+)
 
 ContactDetails.propTypes = {
   contactId: PropTypes.string.isRequired,

@@ -1032,7 +1032,7 @@ describe('Adding an interaction from a contact', () => {
   const contact = fixtures.contact.deanCox
 
   it('should be able to create an interaction from a contact', () => {
-    cy.visit(urls.contacts.interactions.index(contact.id))
+    cy.visit(urls.contacts.details(contact.id))
 
     cy.contains('Add interaction').click()
     cy.contains('Export').click()

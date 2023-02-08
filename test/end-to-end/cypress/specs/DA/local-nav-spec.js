@@ -8,7 +8,10 @@ const {
   investments,
 } = require('../../../../../src/lib/urls')
 
-const { assertLocalNav } = require('../../support/assertions')
+const {
+  assertLocalNav,
+  assertLocalReactNav,
+} = require('../../support/assertions')
 
 describe('DA Permission', () => {
   describe('activity', () => {
@@ -57,7 +60,7 @@ describe('DA Permission', () => {
     })
 
     it('should display DA only tabs', () => {
-      assertLocalNav(selectors.nav.sideNav, ['Details', 'Audit history'])
+      assertLocalReactNav('[data-test=local-nav]', ['Details', 'Audit history'])
     })
   })
 
