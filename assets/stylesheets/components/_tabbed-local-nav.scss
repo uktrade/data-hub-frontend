@@ -12,6 +12,21 @@
       display: block;
       width: calc(100% - 5px);
     }
+
+    &:last-child a {
+      width: 100%;
+    }
+  }
+}
+
+.govuk-tabs__react-list-item--full {
+  @include media(desktop) {
+    flex-grow: 1;
+
+    a {
+      display: block;
+      width: calc(100% - 5px);
+    }
   }
 }
 

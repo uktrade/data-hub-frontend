@@ -6,9 +6,8 @@ const CompanyLocalTab = (props) => {
 
   return (
     <li
-      className="govuk-tabs__list-item govuk-tabs__list-item--full"
+      className="govuk-tabs__list-item govuk-tabs__list--full govuk-tabs__react-list-item--full"
       key={`tab-${index}`}
-      style={{ display: 'flex' }}
     >
       <a
         className={
