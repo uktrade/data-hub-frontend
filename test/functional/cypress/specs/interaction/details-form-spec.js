@@ -200,9 +200,6 @@ const COMMON_REQUEST_BODY = {
     '50370070-71f9-4ada-ae2c-cd0a737ba5e2',
     '09787712-0d94-4137-a5f3-3f9131e681f0',
   ],
-  helped_remove_export_barrier: true,
-  export_barrier_types: ['8ef83315-2b0f-4d5e-98da-a16f8b2217a6'], // Something else
-  export_barrier_notes: 'My export barrier notes',
 }
 
 function fillCommonFields({
@@ -268,20 +265,6 @@ function fillCommonFields({
     .next()
     .find('textarea')
     .type('Some policy feedback notes')
-
-  cy.contains(ELEMENT_EXPORT_BARRIER.legend).next().find('input').check('yes')
-  cy.contains(ELEMENT_EXPORT_BARRIER_HOW.legend)
-    .next()
-    .next()
-    .contains('Something else')
-    .click()
-
-  cy.contains(
-    'What happened in the interaction to help remove an export barrier?'
-  )
-    .next()
-    .find('textarea')
-    .type('My export barrier notes')
 }
 
 function fillExportCountriesFields() {
@@ -303,9 +286,30 @@ function fillExportCountriesFields() {
     .should('contain', 'Germany')
 }
 
+function fillExportBarrierFields() {
+  cy.contains(ELEMENT_EXPORT_BARRIER.legend).next().find('input').check('yes')
+
+  cy.contains(ELEMENT_EXPORT_BARRIER_HOW.legend)
+    .next()
+    .next()
+    .contains('Something else')
+    .click()
+
+  cy.contains(
+    'What happened in the interaction to help remove an export barrier?'
+  )
+    .next()
+    .find('textarea')
+    .type('My export barrier notes')
+}
+
 function submitForm(kind, theme, values) {
   cy.get('#interaction-details-form').within(() => {
     fillCommonFields(values)
+
+    if (theme === THEMES.EXPORT) {
+      fillExportBarrierFields()
+    }
 
     if (theme !== THEMES.INVESTMENT) {
       fillExportCountriesFields()
@@ -530,6 +534,9 @@ describe('Interaction theme', () => {
               status: 'not_interested',
             },
           ],
+          helped_remove_export_barrier: true,
+          export_barrier_types: ['8ef83315-2b0f-4d5e-98da-a16f8b2217a6'], // Something else
+          export_barrier_notes: 'My export barrier notes',
         },
         (xhr) => {
           cy.location('pathname').should(
@@ -645,6 +652,9 @@ describe('Service delivery theme', () => {
               status: 'not_interested',
             },
           ],
+          helped_remove_export_barrier: true,
+          export_barrier_types: ['8ef83315-2b0f-4d5e-98da-a16f8b2217a6'], // Something else
+          export_barrier_notes: 'My export barrier notes',
         },
         (xhr) => {
           cy.location('pathname').should(
@@ -686,7 +696,6 @@ describe('Investment theme', () => {
         ELEMENT_NOTES,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_RELATED_OPPORTUNITY,
-        ELEMENT_EXPORT_BARRIER,
         ELEMENT_STEP2_BUTTONS,
       ])
     })
@@ -705,7 +714,6 @@ describe('Investment theme', () => {
             'Enter a subject',
             'Answer if the contact provided business intelligence',
             'Answer if this interaction relates to a large capital opportunity',
-            'Select if the interaction helped remove an export barrier',
           ].join('')
         )
     })
@@ -726,6 +734,9 @@ describe('Investment theme', () => {
           large_capital_opportunity: 'a84f8405-c419-40a6-84c8-642b7c3209b2',
           event: null,
           export_countries: [],
+          helped_remove_export_barrier: false,
+          export_barrier_types: [],
+          export_barrier_notes: '',
         },
         (xhr) => {
           cy.location('pathname').should(
@@ -805,7 +816,6 @@ describe('Trade Agreement theme', () => {
         ELEMENT_NOTES,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
-        ELEMENT_EXPORT_BARRIER,
         ELEMENT_STEP2_BUTTONS,
       ])
     })
@@ -824,7 +834,6 @@ describe('Trade Agreement theme', () => {
             'Enter a subject',
             'Answer if the contact provided business intelligence',
             'Answer if any countries were discussed',
-            'Select if the interaction helped remove an export barrier',
           ].join('')
         )
     })
@@ -858,6 +867,9 @@ describe('Trade Agreement theme', () => {
               status: 'not_interested',
             },
           ],
+          helped_remove_export_barrier: false,
+          export_barrier_types: [],
+          export_barrier_notes: '',
         },
         (xhr) => {
           cy.location('pathname').should(
@@ -897,6 +909,9 @@ describe('Trade Agreement theme', () => {
               status: 'not_interested',
             },
           ],
+          helped_remove_export_barrier: false,
+          export_barrier_types: [],
+          export_barrier_notes: '',
         },
         (xhr) => {
           cy.location('pathname').should(
@@ -1013,6 +1028,9 @@ describe('Adding an interaction from a referral', () => {
             status: 'not_interested',
           },
         ],
+        helped_remove_export_barrier: true,
+        export_barrier_types: ['8ef83315-2b0f-4d5e-98da-a16f8b2217a6'], // Something else
+        export_barrier_notes: 'My export barrier notes',
       },
       (xhr) => {
         cy.location('pathname').should(

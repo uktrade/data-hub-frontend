@@ -536,36 +536,40 @@ const StepInteractionDetails = ({
         </>
       )}
 
-      <FieldRadios
-        inline={true}
-        name="helped_remove_export_barrier"
-        legend="Did the interaction help remove an export barrier?"
-        options={OPTIONS_YES_NO}
-        required="Select if the interaction helped remove an export barrier"
-      />
+      {values.theme === THEMES.EXPORT && (
+        <>
+          <FieldRadios
+            inline={true}
+            name="helped_remove_export_barrier"
+            legend="Did the interaction help remove an export barrier?"
+            options={OPTIONS_YES_NO}
+            required="Select if the interaction helped remove an export barrier"
+          />
 
-      {values.helped_remove_export_barrier === OPTION_YES && (
-        <FieldCheckboxes
-          name="export_barrier_types"
-          legend="Tell us how the interaction helped remove an export barrier"
-          hint="Select all that apply"
-          options={exportBarrier.map((barrierType) => ({
-            ...barrierType,
-            hint: exportBarrierIdToHintMap[barrierType.value],
-          }))}
-          required="Select at least one option"
-        />
-      )}
+          {values.helped_remove_export_barrier === OPTION_YES && (
+            <FieldCheckboxes
+              name="export_barrier_types"
+              legend="Tell us how the interaction helped remove an export barrier"
+              hint="Select all that apply"
+              options={exportBarrier.map((barrierType) => ({
+                ...barrierType,
+                hint: exportBarrierIdToHintMap[barrierType.value],
+              }))}
+              required="Select at least one option"
+            />
+          )}
 
-      {values.export_barrier_types?.includes(
-        exportBarrierTypes.SOMETHING_ELSE
-      ) && (
-        <FieldTextarea
-          type="text"
-          name="export_barrier_notes"
-          label="What happened in the interaction to help remove an export barrier?"
-          required="Enter a description"
-        />
+          {values.export_barrier_types?.includes(
+            exportBarrierTypes.SOMETHING_ELSE
+          ) && (
+            <FieldTextarea
+              type="text"
+              name="export_barrier_notes"
+              label="What happened in the interaction to help remove an export barrier?"
+              required="Enter a description"
+            />
+          )}
+        </>
       )}
     </>
   )
