@@ -11,7 +11,7 @@ storiesOf('Form/Form Elements/Help', module)
         helpSummary="Help with policy issue types"
         helpText="A policy is the broad category/categories that information fits into."
         footerUrl="http://datahub.trade.gov.uk/"
-        footerUrlDescription="See more guidance"
+        footerUrlDescription="Learn more about policy issue types. This will open in a new tab or window"
       />
     </>
   ))

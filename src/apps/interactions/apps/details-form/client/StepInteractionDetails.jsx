@@ -397,7 +397,7 @@ const StepInteractionDetails = ({
             helpSummary="Help with policy issue types"
             helpText="A policy type is the broad category/categories that the information fits into."
             footerUrl={helpUrl(2)}
-            footerUrlDescription="See more guidance"
+            footerUrlDescription="Learn more about policy issue types"
           />
 
           <FieldTypeahead
@@ -413,7 +413,7 @@ const StepInteractionDetails = ({
             helpSummary="Help with Policy areas"
             helpText="A policy area is the specific area that the information fits into. Completing this enables the correct team(s) to find the information and input into their reports to support businesses and ministers effectively."
             footerUrl={helpUrl(3)}
-            footerUrlDescription="See more guidance"
+            footerUrlDescription="Learn more about policy areas"
           />
 
           <FieldTextarea
@@ -443,7 +443,7 @@ const StepInteractionDetails = ({
               </>
             }
             footerUrl={helpUrl(4)}
-            footerUrlDescription="See more guidance"
+            footerUrlDescription="Learn more about business intelligence"
           />
         </>
       )}
