@@ -27,7 +27,62 @@ const StyledThemeTagGreyLabel = styled(Tag)`
   float: right;
 `
 
-const ActivityCardLabels = ({ isExternalActivity, theme, service, kind }) => (
+const TagRowFlex = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: ${SPACING.SCALE_2};
+  margin-right: ${SPACING.SCALE_1};
+`
+
+const TagColumnFlex = styled('div')`
+  display: flex;
+`
+
+const StyledThemeTagFlex = styled(Tag)`
+  margin-right: ${SPACING.SCALE_1};
+`
+
+const ActivityCardLabelsInLine = ({
+  isExternalActivity,
+  theme,
+  service,
+  kind,
+}) => (
+  <TagRowFlex>
+    <TagColumnFlex>
+      {theme && (
+        <StyledThemeTagFlex
+          data-test="activity-theme-label"
+          colour={isExternalActivity ? 'darkGreen' : 'default'}
+        >
+          {theme}
+        </StyledThemeTagFlex>
+      )}
+      {service && (
+        <Tag
+          data-test="activity-service-label"
+          colour={isExternalActivity ? 'turquoise' : 'blue'}
+        >
+          {service}
+        </Tag>
+      )}
+    </TagColumnFlex>
+    {kind && (
+      <TagColumnFlex>
+        <Tag data-test="activity-kind-label" colour="grey">
+          {kind}
+        </Tag>
+      </TagColumnFlex>
+    )}
+  </TagRowFlex>
+)
+
+const ActivityCardLabelsStack = ({
+  isExternalActivity,
+  theme,
+  service,
+  kind,
+}) => (
   <TagRow>
     <TagColumn>
       {theme && (
@@ -56,6 +111,23 @@ const ActivityCardLabels = ({ isExternalActivity, theme, service, kind }) => (
     </TagColumn>
   </TagRow>
 )
+
+const ActivityCardLabels = ({ isExternalActivity, theme, service, kind }) =>
+  theme.length + service.length + kind.length > 50 ? (
+    <ActivityCardLabelsStack
+      isExternalActivity={isExternalActivity}
+      theme={theme}
+      service={service}
+      kind={kind}
+    />
+  ) : (
+    <ActivityCardLabelsInLine
+      isExternalActivity={isExternalActivity}
+      theme={theme}
+      service={service}
+      kind={kind}
+    />
+  )
 
 ActivityCardLabels.propTypes = {
   theme: PropTypes.string,
