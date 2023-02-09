@@ -21,6 +21,7 @@ import {
 } from '../constants'
 
 import { TASK_GET_SUBSCRIPTION_SUMMARY } from '../state'
+import FooterLink from '../FooterLink'
 
 const ToggleSectionContainer = styled('div')({
   marginTop: SPACING.SCALE_3,

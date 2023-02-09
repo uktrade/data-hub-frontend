@@ -16,7 +16,6 @@ import InvestmentsEstimatedLandDatesForm from './InvestmentsEstimatedLandDatesFo
 import InvestmentsNoRecentInteractionsForm from './InvestmentsNoRecentInteractionsForm'
 import ExportsNoRecentInteractionsForm from './ExportsNoRecentInteractionsForm'
 import ExportsNewInteractionsForm from './ExportsNewInteractionsForm'
-import FooterLink from '../FooterLink'
 
 const RemindersForms = () => {
   const { reminderType } = useParams()
