@@ -138,5 +138,8 @@ ActivityCardLabels.propTypes = {
 
 ActivityCardLabels.defaultProps = {
   isExternalActivity: false,
+  theme: '',
+  service: '',
+  kind: '',
 }
 export default ActivityCardLabels
