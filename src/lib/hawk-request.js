@@ -6,6 +6,8 @@ const request = require('request')
 const Hawk = require('hawk')
 const config = require('../config')
 
+const HTTP_OK = 200
+
 function getHawkHeader(credentials, requestOptions) {
   if (config.isTest) {
     return 'hawk-test-header'
@@ -29,7 +31,7 @@ function createPromiseRequest(
 ) {
   return new Promise((resolve, reject) => {
     request(requestOptions, (err, response, responseBody) => {
-      if (err) {
+      if (err || response?.statusCode !== HTTP_OK) {
         return reject(new Error(err))
       }
       if (!config.isTest) {
