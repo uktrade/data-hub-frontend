@@ -59,7 +59,7 @@ export const transformContacts = (contacts) =>
   ))
 
 export const transformAdvisers = (advisers) =>
-  advisers.map((adviser) => adviser.adviser.name + ', ' + adviser.team.name)
+  advisers.map((adviser) => adviser?.adviser?.name + ', ' + adviser?.team?.name)
 
 export const transformExportCountries = (countries) => {
   const groupedCountries = groupExportCountries(countries)
