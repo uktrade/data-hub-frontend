@@ -30,7 +30,11 @@ const StyledButton = styled('button')`
  * A Chip could be used to display a list of selected filters in a collection list.
  */
 const Chip = ({ children, value, onClick = null }) => (
-  <StyledButton onClick={onClick} data-value={value}>
+  <StyledButton
+    onClick={onClick}
+    data-value={value}
+    aria-labelledby={`remove filter ${children}`}
+  >
     {onClick && <span>✕</span>}
     <span>{children}</span>
   </StyledButton>
