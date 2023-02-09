@@ -485,8 +485,12 @@ async function getAventriRegistrationStatusCounts(req, eventId) {
 async function fetchAventriEventRegistrationStatusAttendees(req, res, next) {
   try {
     const eventId = req.params.aventriEventId
-    const { page, size, registrationStatus, sortBy } = req.query
-
+    const {
+      page,
+      size = config.activityFeed.paginationSize,
+      registrationStatus,
+      sortBy,
+    } = req.query
     if (!registrationStatus) {
       throw new Error('Missing registration status')
     }
