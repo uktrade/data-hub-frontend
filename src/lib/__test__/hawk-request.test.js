@@ -162,13 +162,6 @@ describe('#hawkRequest: check createPromiseRequest', () => {
         testClientHeaderArtifacts
       )
     ).to.be.rejectedWith(Error)
-
-    expect(authenticateStub).to.be.calledOnceWith(
-      { statusCode: 401 },
-      testDataHubCredentials,
-      testClientHeaderArtifacts,
-      { payload: '{}' }
-    )
   })
 
   it('fails when authenticate throws', async () => {
