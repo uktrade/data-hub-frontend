@@ -126,13 +126,17 @@ const renderProfile = async (req, res, next) => {
     }
 
     res.locals.title = `Large capital profile - ${company.name} - Companies`
-
     res.render(
       'companies/apps/investments/large-capital-profile/views/profile',
       {
         profile,
         props: {
+          profileId: profile?.id,
           company,
+          ukRegionLocations: profile?.location?.uk_region_locations,
+          otherCountriesBeingConsidered:
+            profile?.location?.other_countries_being_considered,
+          notesOnInvestorsLocation: profile?.notesOnInvestorsLocation,
           breadcrumbs: [
             { link: urls.dashboard(), text: 'Home' },
             {

@@ -25,6 +25,7 @@ import DnbHierarchy from '../apps/companies/apps/dnb-hierarchy/client/DnbHierarc
 import LeadAdvisers from '../apps/companies/apps/advisers/client/LeadAdvisers'
 import LargeCapitalProfileCollection from '../apps/investments/client/profiles/LargeCapitalProfileCollection'
 import EditLargeCapitalInvestorDetails from '../apps/companies/apps/investments/large-capital-profile/client/EditLargeCapitalInvestorDetails'
+import EditLargeCapitalInvestorLocation from '../apps/companies/apps/investments/large-capital-profile/client/EditLargeCapitalInvestorLocation'
 import UnfilteredLargeCapitalOpportunityCollection from '../apps/investments/client/opportunities/List/UnfilteredLargeCapitalOpportunityCollection'
 import InvestmentEditHistory from '../apps/investments/client/InvestmentEditHistory'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
@@ -196,7 +197,10 @@ import {
 } from '../apps/investments/client/projects/create/state'
 import * as createInvestmentProjectTasks from '../apps/investments/client/projects/create/tasks'
 
-import { TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS } from '../apps/companies/apps/investments/large-capital-profile/client/state'
+import {
+  TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS,
+  TASK_SAVE_LARGE_CAPITAL_INVESTOR_LOCATION,
+} from '../apps/companies/apps/investments/large-capital-profile/client/state'
 import * as updateLargeCapitalInvestorDetails from '../apps/companies/apps/investments/large-capital-profile/client/tasks'
 
 import {
@@ -428,6 +432,8 @@ function App() {
             createInvestmentProjectTasks.createInvestmentProject,
           [TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS]:
             updateLargeCapitalInvestorDetails.updateInvestorDetails,
+          [TASK_SAVE_LARGE_CAPITAL_INVESTOR_LOCATION]:
+            updateLargeCapitalInvestorDetails.updateInvestorLocation,
           [TASK_GET_INVESTMENT_PROJECT_INITIAL_VALUES]:
             createInvestmentProjectTasks.getInitialFormValues,
           [TASK_SEARCH_COMPANY]: createInvestmentProjectTasks.searchCompany,
@@ -633,6 +639,9 @@ function App() {
         </Mount>
         <Mount selector="#edit-large-capital-investor-details">
           {(props) => <EditLargeCapitalInvestorDetails {...props} />}
+        </Mount>
+        <Mount selector="#edit-large-capital-investor-location">
+          {(props) => <EditLargeCapitalInvestorLocation {...props} />}
         </Mount>
         <Mount selector="#unfiltered-large-capital-opportunity-collection">
           {(props) => (

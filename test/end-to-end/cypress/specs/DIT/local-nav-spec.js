@@ -1,6 +1,9 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
-const { assertLocalNav } = require('../../support/assertions')
+const {
+  assertLocalNav,
+  assertLocalReactNav,
+} = require('../../support/assertions')
 
 const {
   companies,
@@ -61,9 +64,9 @@ describe('DIT Permission', () => {
     })
 
     it('should display DIT only side navs', () => {
-      assertLocalNav(selectors.nav.sideNav, [
+      assertLocalReactNav('[data-test=local-nav]', [
         'Details',
-        'Interactions',
+        'Activity',
         'Audit history',
         'Documents',
       ])
