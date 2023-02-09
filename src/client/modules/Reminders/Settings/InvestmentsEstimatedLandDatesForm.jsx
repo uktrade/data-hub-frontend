@@ -104,7 +104,7 @@ const InvestmentsEstimatedLandDatesForm = () => (
     </Form>
     <FooterLink
       headingText="Need Help?"
-      linkUrl={'urls.external.reminderAndSettings'}
+      linkUrl={urls.external.reminderAndSettings}
       linkText="guidance on reminders and email notifications"
     />
   </>

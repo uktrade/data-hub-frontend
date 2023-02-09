@@ -56,31 +56,6 @@ const ListContainer = styled('div')({
   },
 })
 
-// const StyledFooterLink = styled('div')({
-//   display: 'block',
-//   marginTop: SPACING.SCALE_4,
-//   marginBottom: SPACING.SCALE_4,
-//   [MEDIA_QUERIES.DESKTOP]: {
-//     marginLeft: 1,
-//     marginBottom: 25,
-//   },
-// })
-
-// const FooterLink = ({urls, title}) => {
-//   return (
-//     <div data-test="help-text-link">
-//       <hr />
-//       <h6 as="h2">{title}</h6>
-//       <p>
-//         See the{' '}
-//         <a href={urls}>
-//           guidance on reminders and email notifications
-//         </a>
-//       </p>
-//     </div>
-//   );
-// };
-
 const RemindersLists = ({ reminderType }) => {
   const subject = reminderTypeToLabel[reminderType]
   return (
@@ -127,7 +102,7 @@ const RemindersLists = ({ reminderType }) => {
         </Container>
         <FooterLink
           headingText="Need Help?"
-          linkUrl={'urls.external.reminderAndSettings'}
+          linkUrl={urls.external.reminderAndSettings}
           linkText="guidance on reminders and email notifications"
         />
       </>
