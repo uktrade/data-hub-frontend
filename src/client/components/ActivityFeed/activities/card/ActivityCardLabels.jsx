@@ -111,9 +111,20 @@ const ActivityCardLabelsStack = ({
     </TagColumn>
   </TagRow>
 )
-
+function isOverflow(theme, service, kind) {
+  if (!theme) {
+    theme = ''
+  }
+  if (!service) {
+    service = ''
+  }
+  if (!kind) {
+    kind = ''
+  }
+  return theme.length + service.length + kind.length > 50
+}
 const ActivityCardLabels = ({ isExternalActivity, theme, service, kind }) =>
-  theme.length + service.length + kind.length > 50 ? (
+  isOverflow(theme, service, kind) ? (
     <ActivityCardLabelsStack
       isExternalActivity={isExternalActivity}
       theme={theme}
@@ -138,8 +149,5 @@ ActivityCardLabels.propTypes = {
 
 ActivityCardLabels.defaultProps = {
   isExternalActivity: false,
-  theme: '',
-  service: '',
-  kind: '',
 }
 export default ActivityCardLabels
