@@ -111,8 +111,8 @@ const ActivityCardLabelsStack = ({
     </TagColumn>
   </TagRow>
 )
-function isOverflow(theme = '', service = '', kind = '') {
-  return theme.length + service.length + kind.length > 50
+function isOverflow(theme, service, kind) {
+  return theme?.length + service?.length + kind?.length > 50
 }
 const ActivityCardLabels = ({ isExternalActivity, theme, service, kind }) =>
   isOverflow(theme, service, kind) ? (
