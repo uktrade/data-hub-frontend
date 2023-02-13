@@ -2,6 +2,7 @@ const path = require('path')
 const { spawn } = require('child_process')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
 
 const config = require('./src/config')
 
@@ -114,7 +115,24 @@ module.exports = (env) => ({
         generator: {
           filename: 'images/[name].[hash:8].[ext]',
         },
-        use: [{ loader: 'image-webpack-loader' }],
+        use: [
+          {
+            loader: ImageMinimizerPlugin.loader,
+            options: {
+              minimizer: {
+                implementation: ImageMinimizerPlugin.imageminMinify,
+                options: {
+                  plugins: [
+                    'imagemin-gifsicle',
+                    'imagemin-mozjpeg',
+                    'imagemin-pngquant',
+                    'imagemin-svgo',
+                  ],
+                },
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.scss$/,
