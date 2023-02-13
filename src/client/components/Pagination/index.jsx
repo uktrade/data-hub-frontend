@@ -122,6 +122,7 @@ function Pagination({ totalPages, activePage, getPageUrl, onPageClick }) {
                   <PageNumberLink
                     data-test={isActive ? 'page-number-active' : 'page-number'}
                     data-page-number={pageNumber}
+                    aria-label={`Page ${pageNumber}`}
                     onClick={onClick}
                     href={getPageUrl(pageNumber)}
                   >
