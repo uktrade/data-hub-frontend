@@ -328,7 +328,7 @@ describe('Interaction activity card', () => {
       beforeEach(() => {
         buildAndMountActivity(
           interactionServices.specificDITService,
-          null,
+          '',
           'Email/Fax',
           typeInteraction,
           shortNotes,
@@ -353,7 +353,7 @@ describe('Interaction activity card', () => {
     context('When the service is missing', () => {
       beforeEach(() => {
         buildAndMountActivity(
-          null,
+          '',
           interactionThemes[0],
           'Email/Fax',
           typeInteraction,
@@ -379,8 +379,8 @@ describe('Interaction activity card', () => {
     context('When the theme and service are missing', () => {
       beforeEach(() => {
         buildAndMountActivity(
-          null,
-          null,
+          '',
+          '',
           'Email/Fax',
           typeInteraction,
           shortNotes,
