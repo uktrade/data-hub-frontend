@@ -413,6 +413,9 @@ describe('Interaction details', () => {
             'Taiwan, Tajikistan, Tanzania, Thailand, The Bahamas, The Gambia, Togo, Tonga, Trinidad and Tobago, Tunisia, Turkey, Turkmenistan, Turks and Caicos Islands, Tuvalu, Uganda, Ukraine, United Arab Emirates, United Kingdom',
           'Countries not interested in':
             'United States, United States Virgin Islands, Uruguay, Uzbekistan, Vanuatu, Vatican City, Venezuela, Vietnam, Yemen, Zambia, Zimbabwe',
+          'Helped remove an export barrier': 'Yes',
+          'Export barrier category': 'Other',
+          'Export barrier - other': 'My export barrier notes...',
         },
       })
     })
@@ -446,6 +449,7 @@ describe('Interaction details', () => {
             'Any comments the company made to you on areas such as issues impacting them or feedback on government policy. This information will be visible to other Data Hub users, the Business Intelligence Unit and may also be shared within DIT.',
           'Named trade agreement(s)':
             'EU-UK Trade Co-operation Agreement, Free Trade Agreements: Gulf Cooperation Council (GCC), Test agreement, UK-Iceland, Liechtenstein and Norway Free Trade Agreement, UK-Singapore Digital Economy Agreement',
+          'Helped remove an export barrier': 'No',
         },
       })
     })
