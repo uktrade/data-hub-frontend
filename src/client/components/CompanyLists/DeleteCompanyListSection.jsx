@@ -10,7 +10,8 @@ import Paragraph from '@govuk-react/paragraph'
 import UnorderedList from '@govuk-react/unordered-list'
 import pluralize from 'pluralize'
 
-import { FormActions } from '../../../client/components'
+import { FormActions, LocalHeader, Main } from '../../../client/components'
+import urls from '../../../lib/urls'
 
 const DeleteCompanyListSection = ({
   companyList,
@@ -19,35 +20,47 @@ const DeleteCompanyListSection = ({
   returnUrl,
 }) => {
   const companyCountText = pluralize('company', companyList.item_count, true)
-
   return (
-    <div>
-      {errorMessage && (
-        <ErrorSummary
-          heading="There was an error deleting this list"
-          description={errorMessage}
-          errors={[]}
-        />
-      )}
-      <Paragraph>
-        Deleting this list will remove all companies from this list. These
-        companies will remain on any other lists.
-      </Paragraph>
-      <InsetText>
-        <UnorderedList listStyleType="none" mb={0}>
-          <ListItem>
-            <strong>{companyList.name}</strong>
-          </ListItem>
-          <ListItem>{companyCountText}</ListItem>
-        </UnorderedList>
-      </InsetText>
-      <FormActions>
-        <Button buttonColour={RED} onClick={onDelete}>
-          Delete list
-        </Button>
-        <Link href={returnUrl}>Return without deleting</Link>
-      </FormActions>
-    </div>
+    <>
+      <LocalHeader
+        heading="Delete list"
+        breadcrumbs={[
+          { link: urls.dashboard(), text: 'Home' },
+          {
+            text: 'Delete list',
+          },
+        ]}
+      />
+      <Main>
+        {errorMessage && (
+          <ErrorSummary
+            heading="There was an error deleting this list"
+            description={errorMessage}
+            errors={[]}
+          />
+        )}
+        <Paragraph>
+          Deleting this list will remove all companies from this list. These
+          companies will remain on any other lists.
+        </Paragraph>
+        <InsetText>
+          <UnorderedList listStyleType="none" mb={0}>
+            <ListItem data-test="list-name">
+              <strong>{companyList.name}</strong>
+            </ListItem>
+            <ListItem data-test="company-count">{companyCountText}</ListItem>
+          </UnorderedList>
+        </InsetText>
+        <FormActions>
+          <Button buttonColour={RED} onClick={onDelete}>
+            Delete list
+          </Button>
+          <Link href={returnUrl} data-test="return-link">
+            Return without deleting
+          </Link>
+        </FormActions>
+      </Main>
+    </>
   )
 }
 
