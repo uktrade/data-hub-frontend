@@ -21,17 +21,14 @@ describe('Delete company list page', () => {
     })
 
     it('displays the list name', () => {
-      cy.get(selectors.companyList.delete.insetListItem.byIndex(1)).should(
+      cy.get('[data-test=list-name]').should(
         'have.text',
         'A list with multiple items'
       )
     })
 
     it('displays the number of companies on the list', () => {
-      cy.get(selectors.companyList.delete.insetListItem.byIndex(2)).should(
-        'have.text',
-        '13 companies'
-      )
+      cy.get('[data-test=company-count]').should('have.text', '13 companies')
     })
 
     it('displays the "Delete list" button', () => {
@@ -42,7 +39,7 @@ describe('Delete company list page', () => {
     })
 
     it('displays the "Return without deleting" link', () => {
-      cy.get(selectors.companyList.delete.returnAnchor).should(
+      cy.get('[data-test=return-link]').should(
         'have.text',
         'Return without deleting'
       )

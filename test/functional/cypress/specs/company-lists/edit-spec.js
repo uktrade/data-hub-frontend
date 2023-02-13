@@ -43,15 +43,9 @@ describe('Edit company list page', () => {
       cy.get(selectors.companyList.edit.saveButton).should('have.text', 'Save')
     })
     it('displays a cancel link', () => {
-      cy.get(selectors.companyList.edit.cancelLink).should(
-        'have.text',
-        'Cancel'
-      )
-      cy.get(selectors.companyList.edit.cancelLink).should(
-        'have.attr',
-        'href',
-        '/'
-      )
+      cy.get('[data-test=cancel-button]')
+        .should('have.text', 'Cancel')
+        .should('have.attr', 'href', '/')
     })
   })
 
