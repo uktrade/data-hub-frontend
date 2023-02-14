@@ -123,6 +123,7 @@ function Pagination({ totalPages, activePage, getPageUrl, onPageClick }) {
                     data-test={isActive ? 'page-number-active' : 'page-number'}
                     data-page-number={pageNumber}
                     aria-label={`Page ${pageNumber}`}
+                    aria-current={isActive ? 'page' : 'false'}
                     onClick={onClick}
                     href={getPageUrl(pageNumber)}
                   >
