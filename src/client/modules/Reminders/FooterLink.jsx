@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'govuk-react'
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 
 const StyledFooterLink = styled('div')({
@@ -19,7 +20,7 @@ const FooterLink = ({ headingText, linkText, linkUrl }) => {
         <hr />
         <h2>{headingText}</h2>
         <p>
-          See the <a href={linkUrl}>{linkText}</a>
+          See the <Link href={linkUrl}>{linkText} </Link>
         </p>
       </div>
     </StyledFooterLink>

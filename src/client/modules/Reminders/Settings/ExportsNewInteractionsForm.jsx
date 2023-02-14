@@ -56,11 +56,6 @@ const ExportsNewInteractionsForm = () => (
         </>
       )}
     </Form>
-    <FooterLink
-      headingText="Need Help?"
-      linkUrl={urls.external.reminderAndSettings}
-      linkText="guidance on reminders and email notifications"
-    />
   </>
 )
 
