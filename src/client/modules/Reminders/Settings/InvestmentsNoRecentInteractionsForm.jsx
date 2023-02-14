@@ -16,7 +16,6 @@ import {
   transformReminderDaysToAPI,
   transformNRIFormValuesToAnalyticsData,
 } from '../transformers'
-import FooterLink from '../FooterLink'
 
 const InvestmentsNoRecentInteractionsForm = () => (
   <>

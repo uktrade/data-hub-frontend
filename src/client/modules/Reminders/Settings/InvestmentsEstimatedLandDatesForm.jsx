@@ -17,7 +17,6 @@ import {
 } from '../../../../common/constants'
 
 import urls from '../../../../lib/urls'
-import FooterLink from '../FooterLink'
 
 const OPTIONS_NO_YES = [...OPTIONS_YES_NO].reverse()
 const redirectUrl = `${urls.reminders.settings.index()}?investments_estimated_land_dates=true`

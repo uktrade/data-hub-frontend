@@ -14,7 +14,6 @@ import {
   transformReminderDaysToAPI,
   transformNRIFormValuesToAnalyticsData,
 } from '../transformers'
-import FooterLink from '../FooterLink'
 
 const redirectUrl = `${urls.reminders.settings.index()}?companies_new_interactions=true`
 const doYouWantQuestion =
