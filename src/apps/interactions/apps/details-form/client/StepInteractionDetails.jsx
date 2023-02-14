@@ -163,7 +163,7 @@ const exportBarrierTypes = {
   KNOWLEDGE: 'ef9b19d8-510b-4819-8304-5387e4c6df29',
   CAPACITY: 'd0c8fe10-dd29-4e39-a422-80dd111199e7',
   ACCESS: '27ea2db8-4383-42dd-aa7d-62023950f97d',
-  SOMETHING_ELSE: '8ef83315-2b0f-4d5e-98da-a16f8b2217a6',
+  OTHER: '8ef83315-2b0f-4d5e-98da-a16f8b2217a6',
 }
 
 const exportBarrierIdToHintMap = {
@@ -175,7 +175,7 @@ const exportBarrierIdToHintMap = {
     'For example, understanding international markets and their costs, as well as having enough people',
   [exportBarrierTypes.ACCESS]:
     'For example, having access to contacts, customers and the right networks',
-  [exportBarrierTypes.SOMETHING_ELSE]: '',
+  [exportBarrierTypes.OTHER]: '',
 }
 
 const StepInteractionDetails = ({
@@ -559,9 +559,7 @@ const StepInteractionDetails = ({
             />
           )}
 
-          {values.export_barrier_types?.includes(
-            exportBarrierTypes.SOMETHING_ELSE
-          ) && (
+          {values.export_barrier_types?.includes(exportBarrierTypes.OTHER) && (
             <FieldTextarea
               type="text"
               name="export_barrier_notes"

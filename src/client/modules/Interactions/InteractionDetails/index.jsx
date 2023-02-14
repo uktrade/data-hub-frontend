@@ -4,12 +4,14 @@ import { Button, Details, Link } from 'govuk-react'
 import { BLACK, GREY_3 } from 'govuk-colours'
 
 import InteractionResource from '../../../components/Resource/Interaction'
-import ArchivePanel from '../../../components/ArchivePanel'
-import { NewWindowLink, SummaryTable } from '../../../components'
-import urls from '../../../../lib/urls'
-import { currencyGBP } from '../../../utils/number-utils'
 import InteractionReferralDetails from './InteractionReferralDetails'
+import { NewWindowLink, SummaryTable } from '../../../components'
+import ArchivePanel from '../../../components/ArchivePanel'
 import CompleteInteraction from './CompleteInteraction'
+
+import { currencyGBP } from '../../../utils/number-utils'
+import { formatLongDate } from '../../../utils/date'
+import urls from '../../../../lib/urls'
 import {
   getEditLink,
   isEditable,
@@ -25,7 +27,7 @@ import {
   transformService,
 } from './transformers'
 
-const { formatLongDate } = require('../../../utils/date')
+const EXPORT = 'export'
 
 const InteractionDetails = ({ interactionId, archivedDocumentPath }) => {
   return (
@@ -172,6 +174,30 @@ const InteractionDetails = ({ interactionId, archivedDocumentPath }) => {
                   </NewWindowLink>
                 }
               />
+            )}
+            {interaction.theme === EXPORT && (
+              <>
+                <SummaryTable.Row
+                  heading="Helped remove an export barrier"
+                  children={
+                    interaction.helpedRemoveExportBarrier ? 'Yes' : 'No'
+                  }
+                />
+                {interaction.exportBarrierTypes.length > 0 && (
+                  <SummaryTable.Row
+                    heading="Export barrier category"
+                    children={interaction.exportBarrierTypes
+                      .map((barrierType) => barrierType.name)
+                      .join(', ')}
+                  />
+                )}
+                {interaction.exportBarrierNotes.length > 0 && (
+                  <SummaryTable.Row
+                    heading="Export barrier - other"
+                    children={interaction.exportBarrierNotes}
+                  />
+                )}
+              </>
             )}
           </SummaryTable>
           {isEditable(interaction.status) && (

@@ -292,7 +292,7 @@ function fillExportBarrierFields() {
   cy.contains(ELEMENT_EXPORT_BARRIER_HOW.legend)
     .next()
     .next()
-    .contains('Something else')
+    .contains('Other')
     .click()
 
   cy.contains(
@@ -535,7 +535,7 @@ describe('Interaction theme', () => {
             },
           ],
           helped_remove_export_barrier: true,
-          export_barrier_types: ['8ef83315-2b0f-4d5e-98da-a16f8b2217a6'], // Something else
+          export_barrier_types: ['8ef83315-2b0f-4d5e-98da-a16f8b2217a6'], // Other
           export_barrier_notes: 'My export barrier notes',
         },
         (xhr) => {
@@ -653,7 +653,7 @@ describe('Service delivery theme', () => {
             },
           ],
           helped_remove_export_barrier: true,
-          export_barrier_types: ['8ef83315-2b0f-4d5e-98da-a16f8b2217a6'], // Something else
+          export_barrier_types: ['8ef83315-2b0f-4d5e-98da-a16f8b2217a6'], // Other
           export_barrier_notes: 'My export barrier notes',
         },
         (xhr) => {
@@ -1029,7 +1029,7 @@ describe('Adding an interaction from a referral', () => {
           },
         ],
         helped_remove_export_barrier: true,
-        export_barrier_types: ['8ef83315-2b0f-4d5e-98da-a16f8b2217a6'], // Something else
+        export_barrier_types: ['8ef83315-2b0f-4d5e-98da-a16f8b2217a6'], // Other
         export_barrier_notes: 'My export barrier notes',
       },
       (xhr) => {
