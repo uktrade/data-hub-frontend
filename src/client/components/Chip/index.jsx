@@ -33,7 +33,7 @@ const Chip = ({ children, value, onClick = null }) => (
   <StyledButton
     onClick={onClick}
     data-value={value}
-    aria-labelledby={`remove filter ${children}`}
+    aria-label={`remove filter ${children}`}
   >
     {onClick && <span>✕</span>}
     <span>{children}</span>
