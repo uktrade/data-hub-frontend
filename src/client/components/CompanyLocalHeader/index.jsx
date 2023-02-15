@@ -223,7 +223,11 @@ const CompanyLocalHeader = ({
       {company.account_plan_url && (
         <StyledMainMuted data-test="accountPlanMessage">
           <StatusMessage>
-            <a href={company.account_plan_url} target="_blank">
+            <a
+              href={company.account_plan_url}
+              target="_blank"
+              aria-label="Opens in a new window or tab"
+            >
               Go to Sharepoint to view the account plan
             </a>{' '}
             for {company.name} (opens in a new window or tab). You might have to

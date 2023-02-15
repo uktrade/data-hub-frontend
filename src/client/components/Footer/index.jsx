@@ -140,6 +140,7 @@ export default function Footer() {
           href={urls.external.copyright}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Opens in a new window or tab"
         >
           &#169; Crown copyright
         </CopyrightLink>
