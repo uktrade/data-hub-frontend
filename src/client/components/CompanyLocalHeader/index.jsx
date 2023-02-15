@@ -227,6 +227,7 @@ const CompanyLocalHeader = ({
               href={company.account_plan_url}
               target="_blank"
               aria-label="Opens in a new window or tab"
+              rel="noopener noreferrer"
             >
               Go to Sharepoint to view the account plan
             </a>{' '}
