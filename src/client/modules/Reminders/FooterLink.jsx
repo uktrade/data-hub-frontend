@@ -5,7 +5,7 @@ import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 
 const StyledFooterLink = styled('div')({
   display: 'block',
-  marginTop: SPACING.SCALE_4,
+  marginTop: SPACING.SCALE_6,
   marginBottom: SPACING.SCALE_4,
   [MEDIA_QUERIES.DESKTOP]: {
     marginLeft: 1,
