@@ -62,7 +62,7 @@ const DataHubFeed = ({ items, feedLimit = 5 }) => {
             View all Data Hub updates
           </Link>
           &nbsp;
-          <Note data-test={`data-hub-feed-note`}>
+          <Note data-test={`data-hub-feed-note-all-data-hub`}>
             (Link opens in a new window)
           </Note>
         </>
