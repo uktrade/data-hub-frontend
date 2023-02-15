@@ -17,10 +17,14 @@ const FooterLink = ({ headingText, linkText, linkUrl }) => {
   return (
     <StyledFooterLink>
       <div data-test="footer-link">
-        <hr />
-        <h2>{headingText}</h2>
+        <h2>
+          <strong>{headingText}</strong>
+        </h2>
         <p>
-          See the <Link href={linkUrl}>{linkText} </Link>
+          See the{' '}
+          <Link target="_blank" rel="noopener noreferrer" href={linkUrl}>
+            {linkText}{' '}
+          </Link>
         </p>
       </div>
     </StyledFooterLink>
