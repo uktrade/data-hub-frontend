@@ -59,8 +59,12 @@ const DataHubFeed = ({ items, feedLimit = 5 }) => {
             rel="noopener noreferrer"
             data-test={`data-hub-feed-view-all`}
           >
-            View all Data Hub updates (opens in a new tab)
+            View all Data Hub updates
           </Link>
+          &nbsp;
+          <Note data-test={`data-hub-feed-note`}>
+            (Link opens in a new window)
+          </Note>
         </>
       )}
       {!items.length && <Paragraph>No updates available</Paragraph>}
