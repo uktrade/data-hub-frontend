@@ -1,14 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import { spacing, typography } from '@govuk-react/lib'
-import { FONT_SIZE, SPACING } from '@govuk-react/constants'
+import { SPACING } from '@govuk-react/constants'
 import {
   FOOTER_BACKGROUND,
   FOOTER_TEXT,
   FOOTER_BORDER_TOP,
   FOCUS_COLOUR,
   BLACK,
-  GREY_1,
 } from 'govuk-colours'
 import govukCrest from './govuk-crest-2x.png'
 
@@ -78,12 +77,6 @@ const Container = styled(InnerContainer)`
   flex-wrap: wrap;
 `
 
-const Note = styled('div')({
-  display: `inline`,
-  color: GREY_1,
-  fontSize: FONT_SIZE.SIZE_14,
-})
-
 /**
  * The Footer displayed in all pages across the Data Hub site.
  */
@@ -97,65 +90,50 @@ export default function Footer() {
               href={urls.support()}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Opens in a new window or tab"
             >
               Request Support
             </FooterLink>
-            &nbsp;
-            <Note data-test={`data-hub-footer-note-support`}>
-              (Link opens in a new window)
-            </Note>
           </li>
           <li>
             <FooterLink
               href={urls.external.helpCentre.dhHomepage()}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Opens in a new window or tab"
             >
               Help Centre
             </FooterLink>
-            &nbsp;
-            <Note data-test={`data-hub-footer-note-help`}>
-              (Link opens in a new window)
-            </Note>
           </li>
           <li>
             <FooterLink
               href={urls.external.helpCentre.privacyNotice()}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Opens in a new window or tab"
             >
               Privacy Notice
             </FooterLink>
-            &nbsp;
-            <Note data-test={`data-hub-footer-note-support-privacy`}>
-              (Link opens in a new window)
-            </Note>
           </li>
           <li>
             <FooterLink
               href={urls.external.helpCentre.cookies()}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Opens in a new window or tab"
             >
               Cookies
             </FooterLink>
-            &nbsp;
-            <Note data-test={`data-hub-footer-note-cookies`}>
-              (Link opens in a new window)
-            </Note>
           </li>
           <li>
             <FooterLink
               href={urls.external.helpCentre.accessibilityStatement()}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Opens in a new window or tab"
             >
               Accessibility Statement
             </FooterLink>
-            &nbsp;
-            <Note data-test={`data-hub-footer-note-accessibility`}>
-              (Link opens in a new window)
-            </Note>
           </li>
         </StyleList>
         <CopyrightLink
