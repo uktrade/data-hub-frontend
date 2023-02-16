@@ -67,6 +67,7 @@ async function renderBusinessDetails(req, res) {
           editOneList: urls.companies.editOneList(company.id),
         },
         canEditOneList: canEditOneList(userPermissions),
+        localNavItems: res.locals.localNavItems,
       },
     })
 }
