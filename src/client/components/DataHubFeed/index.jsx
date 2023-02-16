@@ -40,11 +40,12 @@ const DataHubFeed = ({ items, feedLimit = 5 }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   data-test={`data-hub-feed-link-${index}`}
+                  aria-labelledby="link-label"
                 >
                   {item.heading}
                 </Link>
                 &nbsp;
-                <Note data-test={`data-hub-feed-note-${index}`}>
+                <Note id="link-label" data-test={`data-hub-feed-note-${index}`}>
                   (Link opens in a new window)
                 </Note>
                 <Date data-test={`data-hub-feed-date-${index}`}>
@@ -58,6 +59,7 @@ const DataHubFeed = ({ items, feedLimit = 5 }) => {
             target="_blank"
             rel="noopener noreferrer"
             data-test={`data-hub-feed-view-all`}
+            aria-label="Opens in a new window or tab"
           >
             View all Data Hub updates
           </Link>

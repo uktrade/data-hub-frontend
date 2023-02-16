@@ -90,6 +90,7 @@ export default function Footer() {
               href={urls.support()}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Opens in a new window or tab"
             >
               Request Support
             </FooterLink>
@@ -99,6 +100,7 @@ export default function Footer() {
               href={urls.external.helpCentre.dhHomepage()}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Opens in a new window or tab"
             >
               Help Centre
             </FooterLink>
@@ -108,6 +110,7 @@ export default function Footer() {
               href={urls.external.helpCentre.privacyNotice()}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Opens in a new window or tab"
             >
               Privacy Notice
             </FooterLink>
@@ -117,6 +120,7 @@ export default function Footer() {
               href={urls.external.helpCentre.cookies()}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Opens in a new window or tab"
             >
               Cookies
             </FooterLink>
@@ -126,6 +130,7 @@ export default function Footer() {
               href={urls.external.helpCentre.accessibilityStatement()}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Opens in a new window or tab"
             >
               Accessibility Statement
             </FooterLink>
@@ -135,6 +140,7 @@ export default function Footer() {
           href={urls.external.copyright}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Opens in a new window or tab"
         >
           &#169; Crown copyright
         </CopyrightLink>
