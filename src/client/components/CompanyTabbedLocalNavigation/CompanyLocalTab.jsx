@@ -11,7 +11,7 @@ const StyledListItem = styled.li`
   border-left-width: 1px;
   flex-grow: 1;
   text-align: center;
-
+  white-space: nowrap;
   @media (min-width: 40.0625em) {
     margin-left: 0;
   }
