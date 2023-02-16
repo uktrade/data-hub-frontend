@@ -69,7 +69,7 @@ SubsectionDnBHierarchy.propTypes = {
   isDnbCompany: PropTypes.bool.isRequired,
   isGlobalUltimate: PropTypes.bool.isRequired,
   dnbRelatedCompaniesCount: PropTypes.number.isRequired,
-  globalUltimate: PropTypes.object.isRequired,
+  globalUltimate: PropTypes.object,
   urls: PropTypes.object.isRequired,
 }
 
@@ -243,7 +243,7 @@ SectionHierarchy.propTypes = {
   isGlobalUltimate: PropTypes.bool.isRequired,
   subsidiariesCount: PropTypes.number.isRequired,
   dnbRelatedCompaniesCount: PropTypes.number.isRequired,
-  globalUltimate: PropTypes.object.isRequired,
+  globalUltimate: PropTypes.object,
   urls: PropTypes.object.isRequired,
 }
 
