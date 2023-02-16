@@ -71,6 +71,7 @@ function renderExports(req, res) {
       companyNumber: company.company_number,
       companyName: company.name,
       company,
+      localNavItems: res.locals.localNavItems,
       breadcrumbs: [
         { link: urls.dashboard(), text: 'Home' },
         {
