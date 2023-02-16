@@ -193,11 +193,6 @@ const CompanyLocalHeader = ({
             )}
           </StyledDescription>
         )}
-        <p>
-          <a href={urls.companies.businessDetails(company.id)}>
-            View full business details
-          </a>
-        </p>
       </LocalHeader>
 
       {company.archived && (
