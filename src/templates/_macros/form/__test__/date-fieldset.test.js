@@ -40,7 +40,9 @@ describe('DateFieldset component', () => {
         const labelElems = this.component.querySelectorAll('label')
 
         expect(
-          this.component.querySelector('legend').textContent.trim()
+          this.component
+            .querySelector('label')
+            .firstElementChild.textContent.trim()
         ).to.equal('What is your favourite day?')
         expect(inputElems.length).to.equal(2)
         expect(labelElems.length).to.equal(2)
@@ -101,7 +103,9 @@ describe('DateFieldset component', () => {
         const labelElems = this.component.querySelectorAll('label')
 
         expect(
-          this.component.querySelector('legend').textContent.trim()
+          this.component
+            .querySelector('legend')
+            .firstElementChild.textContent.trim()
         ).to.equal('What is your favourite day?')
         expect(inputElems.length).to.equal(3)
         expect(labelElems.length).to.equal(3)
