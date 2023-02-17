@@ -54,12 +54,9 @@ const assertBusinessDetailsBreadcrumbs = (company) => {
   })
 }
 
-const assertBusinessDetailsHeading = () => {
+const assertBusinessDetailsHeading = (company) => {
   it('should display the "Business details" heading', () => {
-    cy.get(selectors.localHeader().heading).should(
-      'have.text',
-      'Business details'
-    )
+    cy.get(selectors.localHeader().heading).should('have.text', company.name)
   })
 }
 
@@ -199,7 +196,7 @@ describe('Companies business details', () => {
 
       assertBusinessDetailsBreadcrumbs(fixtures.company.oneListCorp)
       assertArchivePanelNotVisible()
-      assertBusinessDetailsHeading()
+      assertBusinessDetailsHeading(fixtures.company.oneListCorp)
       assertLastUpdatedParagraph('26 Nov 2017')
 
       it('should not display the "Pending Change Request" box', () => {
@@ -338,7 +335,7 @@ describe('Companies business details', () => {
 
       assertBusinessDetailsBreadcrumbs(fixtures.company.venusLtd)
       assertArchivePanelNotVisible()
-      assertBusinessDetailsHeading()
+      assertBusinessDetailsHeading(fixtures.company.venusLtd)
       assertLastUpdatedParagraph('15 Jul 2016')
       assertAreDetailsRightNotVisible()
       assertUnarchiveLinkNotVisible()
@@ -410,7 +407,7 @@ describe('Companies business details', () => {
 
       assertBusinessDetailsBreadcrumbs(fixtures.company.dnbCorp)
       assertArchivePanelNotVisible()
-      assertBusinessDetailsHeading()
+      assertBusinessDetailsHeading(fixtures.company.dnbCorp)
       assertLastUpdatedParagraph('26 Oct 2018')
       assertAreDetailsRight()
       assertUnarchiveLinkNotVisible()
@@ -496,7 +493,7 @@ describe('Companies business details', () => {
       })
 
       assertBusinessDetailsBreadcrumbs(fixtures.company.archivedLtd)
-      assertBusinessDetailsHeading()
+      assertBusinessDetailsHeading(fixtures.company.archivedLtd)
       assertLastUpdatedParagraph('16 Jul 2017')
       assertAreDetailsRightNotVisible()
 
@@ -568,7 +565,7 @@ describe('Companies business details', () => {
 
       assertBusinessDetailsBreadcrumbs(fixtures.company.minimallyMinimalLtd)
       assertArchivePanelNotVisible()
-      assertBusinessDetailsHeading()
+      assertBusinessDetailsHeading(fixtures.company.minimallyMinimalLtd)
       assertLastUpdatedParagraph('11 Dec 2015')
       assertAreDetailsRightNotVisible()
       assertUnarchiveLinkNotVisible()
