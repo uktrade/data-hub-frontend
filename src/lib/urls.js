@@ -123,6 +123,7 @@ module.exports = {
     create: url('/companies', '/create'),
     export: url('/companies', '/export'),
     detail: url('/companies', '/:companyId'),
+    overview: url('/companies', '/:companyId/company-overview'),
     edit: url('/companies', '/:companyId/edit'),
     audit: url('/companies', '/:companyId/audit'),
     lists: {
