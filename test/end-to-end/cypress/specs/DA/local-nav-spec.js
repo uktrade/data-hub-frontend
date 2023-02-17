@@ -25,6 +25,7 @@ describe('DA Permission', () => {
     it('should display DA only tabs', () => {
       assertLocalReactNav('[data-test="tabbedLocalNavList"]', [
         'Company contacts',
+        'Business details',
         'Core team',
         'Investment',
         'Orders',
