@@ -123,7 +123,6 @@ module.exports = {
     create: url('/companies', '/create'),
     export: url('/companies', '/export'),
     detail: url('/companies', '/:companyId'),
-    overview: url('/companies', '/:companyId/company-overview'),
     edit: url('/companies', '/:companyId/edit'),
     audit: url('/companies', '/:companyId/audit'),
     lists: {
@@ -179,6 +178,9 @@ module.exports = {
         index: url('/companies', '/:companyId/exports/history'),
         country: url('/companies', '/:companyId/exports/history/:countryId'),
       },
+    },
+    overview: {
+      index: url('/companies', '/:companyId/company-overview'),
     },
     hierarchies: {
       ghq: {
