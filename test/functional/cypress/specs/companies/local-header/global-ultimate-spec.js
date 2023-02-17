@@ -8,7 +8,6 @@ const {
   assertButtons,
   assertBreadcrumbs,
   assertExportCountryHistoryBreadcrumbs,
-  assertViewFullBusinessDetails,
   assertOneListTierA,
   assertCoreTeam,
   assertArchivePanelNotVisible,
@@ -22,7 +21,6 @@ const address =
 
 const advisersUrl = urls.companies.advisers.index(company.id)
 const addRemoveFromListUrl = urls.companies.lists.addRemove(company.id)
-const businessDetailsUrl = urls.companies.businessDetails(company.id)
 const detailsUrl = urls.companies.detail(company.id)
 const dnbHierarchyUrl = urls.companies.dnbHierarchy.index(company.id)
 
@@ -61,9 +59,40 @@ describe('Local header for global ultimate company', () => {
     it('should display the correct description', () => {
       assertDescription()
     })
+  })
+  context('when visting a global ultimate company activity page', () => {
+    before(() => {
+      cy.visit(urls.companies.businessDetails(company.id))
+    })
 
-    it('should display the link to the full business details', () => {
-      assertViewFullBusinessDetails(businessDetailsUrl)
+    assertBreadcrumbs(company.name, detailsUrl, 'Business details')
+
+    it('should not display the archive panel', () => {
+      assertArchivePanelNotVisible()
+    })
+
+    it('should display the company name', () => {
+      assertCompanyName(company.name)
+    })
+
+    it('should display the company address', () => {
+      assertCompanyAddress(address)
+    })
+
+    it('should display the correct buttons', () => {
+      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}`)
+    })
+
+    it('should display an "Ultimate HQ" badge', () => {
+      assertBadgeText('Ultimate HQ')
+    })
+
+    it('should display "What does Ultimate HQ mean?" details', () => {
+      assertMetaList()
+    })
+
+    it('should display the correct description', () => {
+      assertDescription()
     })
   })
   context('when visting a global ultimate company contacts page', () => {
@@ -95,10 +124,6 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the correct description', () => {
       assertDescription()
-    })
-
-    it('should display the link to the full business details', () => {
-      assertViewFullBusinessDetails(businessDetailsUrl)
     })
   })
   context('when visting a global ultimate company core team page', () => {
@@ -134,10 +159,6 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the correct description', () => {
       assertDescription()
-    })
-
-    it('should display the link to the full business details', () => {
-      assertViewFullBusinessDetails(businessDetailsUrl)
     })
   })
   context(
@@ -177,10 +198,6 @@ describe('Local header for global ultimate company', () => {
 
       it('should display the correct description', () => {
         assertDescription()
-      })
-
-      it('should display the link to the full business details', () => {
-        assertViewFullBusinessDetails(businessDetailsUrl)
       })
     }
   )
@@ -222,10 +239,6 @@ describe('Local header for global ultimate company', () => {
       it('should display the correct description', () => {
         assertDescription()
       })
-
-      it('should display the link to the full business details', () => {
-        assertViewFullBusinessDetails(businessDetailsUrl)
-      })
     }
   )
   context('when visting a global ultimate company export page', () => {
@@ -261,10 +274,6 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the correct description', () => {
       assertDescription()
-    })
-
-    it('should display the link to the full business details', () => {
-      assertViewFullBusinessDetails(businessDetailsUrl)
     })
   })
   context('when visting a global ultimate company export history page', () => {
@@ -303,10 +312,6 @@ describe('Local header for global ultimate company', () => {
     it('should display the correct description', () => {
       assertDescription()
     })
-
-    it('should display the link to the full business details', () => {
-      assertViewFullBusinessDetails(businessDetailsUrl)
-    })
   })
   context('when visting a global ultimate company orders page', () => {
     before(() => {
@@ -341,10 +346,6 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the correct description', () => {
       assertDescription()
-    })
-
-    it('should display the link to the full business details', () => {
-      assertViewFullBusinessDetails(businessDetailsUrl)
     })
   })
 })
