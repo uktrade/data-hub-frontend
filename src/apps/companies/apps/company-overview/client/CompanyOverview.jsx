@@ -1,7 +1,11 @@
 import React from 'react'
 
 const CompanyOverview = () => {
-  return <p>Hello World</p>
+  return (
+    <>
+      <p>Hello World</p>
+    </>
+  )
 }
 
 export default CompanyOverview
