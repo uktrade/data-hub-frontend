@@ -23,10 +23,11 @@ const StyledSearchInput = styled(Input)`
   margin-top: 10px;
 `
 const StyledMain = styled(Main)`
-  padding-top: 0;
+  padding-top: 40px;
 `
 
 const StyledLabel = styled('label')({
+  marginTop: 2 * 20.5,
   fontSize: 19,
   color: DARK_GREY,
 })
