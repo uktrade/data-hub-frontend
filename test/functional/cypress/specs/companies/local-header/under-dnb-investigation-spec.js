@@ -7,7 +7,6 @@ const {
   assertBreadcrumbs,
   assertExportCountryHistoryBreadcrumbs,
   assertButtons,
-  assertViewFullBusinessDetails,
   assertArchivePanelNotVisible,
 } = require('../../../support/company-local-header-assertions')
 
@@ -17,7 +16,6 @@ const address = 'Unit 10, Ockham Drive, GREENFORD, UB6 0F2, United Kingdom'
 const company = fixtures.company.investigationLimited
 
 const addRemoveFromListUrl = urls.companies.lists.addRemove(company.id)
-const businessDetailsUrl = urls.companies.businessDetails(company.id)
 const detailsUrl = urls.companies.detail(company.id)
 
 describe('Local header for company under dnb investigation', () => {
@@ -52,10 +50,6 @@ describe('Local header for company under dnb investigation', () => {
 
       it('should display the correct description', () => {
         cy.get(companyLocalHeader.description.paragraph(1)).should('not.exist')
-      })
-
-      it('should display the link to the full business details', () => {
-        assertViewFullBusinessDetails(businessDetailsUrl)
       })
 
       it('should display the investigation message', () => {
@@ -102,10 +96,6 @@ describe('Local header for company under dnb investigation', () => {
         cy.get(companyLocalHeader.description.paragraph(1)).should('not.exist')
       })
 
-      it('should display the link to the full business details', () => {
-        assertViewFullBusinessDetails(businessDetailsUrl)
-      })
-
       it('should display the investigation message', () => {
         assertInvestigationMessage()
       })
@@ -150,10 +140,6 @@ describe('Local header for company under dnb investigation', () => {
         cy.get(companyLocalHeader.description.paragraph(1)).should('not.exist')
       })
 
-      it('should display the link to the full business details', () => {
-        assertViewFullBusinessDetails(businessDetailsUrl)
-      })
-
       it('should display the investigation message', () => {
         assertInvestigationMessage()
       })
@@ -192,10 +178,6 @@ describe('Local header for company under dnb investigation', () => {
 
       it('should display the correct description', () => {
         cy.get(companyLocalHeader.description.paragraph(1)).should('not.exist')
-      })
-
-      it('should display the link to the full business details', () => {
-        assertViewFullBusinessDetails(businessDetailsUrl)
       })
 
       it('should display the investigation message', () => {
@@ -242,10 +224,6 @@ describe('Local header for company under dnb investigation', () => {
         cy.get(companyLocalHeader.description.paragraph(1)).should('not.exist')
       })
 
-      it('should display the link to the full business details', () => {
-        assertViewFullBusinessDetails(businessDetailsUrl)
-      })
-
       it('should display the investigation message', () => {
         assertInvestigationMessage()
       })
@@ -284,10 +262,6 @@ describe('Local header for company under dnb investigation', () => {
 
     it('should display the correct description', () => {
       cy.get(companyLocalHeader.description.paragraph(1)).should('not.exist')
-    })
-
-    it('should display the link to the full business details', () => {
-      assertViewFullBusinessDetails(businessDetailsUrl)
     })
 
     it('should display the investigation message', () => {
@@ -333,10 +307,6 @@ describe('Local header for company under dnb investigation', () => {
         cy.get(companyLocalHeader.description.paragraph(1)).should('not.exist')
       })
 
-      it('should display the link to the full business details', () => {
-        assertViewFullBusinessDetails(businessDetailsUrl)
-      })
-
       it('should display the investigation message', () => {
         assertInvestigationMessage()
       })
@@ -371,10 +341,6 @@ describe('Local header for company under dnb investigation', () => {
 
     it('should display the correct description', () => {
       cy.get(companyLocalHeader.description.paragraph(1)).should('not.exist')
-    })
-
-    it('should display the link to the full business details', () => {
-      assertViewFullBusinessDetails(businessDetailsUrl)
     })
 
     it('should display the investigation message', () => {
