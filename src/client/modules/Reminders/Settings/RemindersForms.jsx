@@ -24,50 +24,48 @@ const RemindersForms = () => {
   const queryParams = `${snakeCase(reminderType)}=true`
 
   return (
-    <>
-      <DefaultLayout
-        pageTitle={`Settings - ${subject}`}
-        heading="Settings"
-        subheading={subject}
-        breadcrumbs={[
-          {
-            link: urls.dashboard(),
-            text: 'Home',
-          },
-          {
-            link: `${urls.reminders.index()}/${reminderType}`,
-            text: 'Reminders',
-          },
-          {
-            link: `${urls.reminders.settings.index()}?${queryParams}`,
-            text: 'Settings',
-          },
-          {
-            text: subject,
-          },
-        ]}
-      >
-        <>
-          {reminderType === INVESTMENTS_ESTIMATED_LAND_DATES && (
-            <InvestmentsEstimatedLandDatesForm />
-          )}
-          {reminderType === INVESTMENTS_NO_RECENT_INTERACTIONS && (
-            <InvestmentsNoRecentInteractionsForm />
-          )}
-          {reminderType === COMPANIES_NO_RECENT_INTERACTIONS && (
-            <ExportsNoRecentInteractionsForm />
-          )}
-          {reminderType === COMPANIES_NEW_INTERACTIONS && (
-            <ExportsNewInteractionsForm />
-          )}
-        </>
-        <FooterLink
-          headingText="Need Help?"
-          linkUrl={urls.external.reminderAndSettings}
-          linkText="guidance on reminders and email notifications"
-        />
-      </DefaultLayout>
-    </>
+    <DefaultLayout
+      pageTitle={`Settings - ${subject}`}
+      heading="Settings"
+      subheading={subject}
+      breadcrumbs={[
+        {
+          link: urls.dashboard(),
+          text: 'Home',
+        },
+        {
+          link: `${urls.reminders.index()}/${reminderType}`,
+          text: 'Reminders',
+        },
+        {
+          link: `${urls.reminders.settings.index()}?${queryParams}`,
+          text: 'Settings',
+        },
+        {
+          text: subject,
+        },
+      ]}
+    >
+      <>
+        {reminderType === INVESTMENTS_ESTIMATED_LAND_DATES && (
+          <InvestmentsEstimatedLandDatesForm />
+        )}
+        {reminderType === INVESTMENTS_NO_RECENT_INTERACTIONS && (
+          <InvestmentsNoRecentInteractionsForm />
+        )}
+        {reminderType === COMPANIES_NO_RECENT_INTERACTIONS && (
+          <ExportsNoRecentInteractionsForm />
+        )}
+        {reminderType === COMPANIES_NEW_INTERACTIONS && (
+          <ExportsNewInteractionsForm />
+        )}
+      </>
+      <FooterLink
+        headingText="Need Help?"
+        linkUrl={urls.external.reminderAndSettings}
+        linkText="guidance on reminders and email notifications"
+      />
+    </DefaultLayout>
   )
 }
 
