@@ -2,6 +2,7 @@ import React from 'react'
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { Link } from 'govuk-react'
+import FooterLink from './FooterLink'
 
 import { DefaultLayout } from '../../components'
 import RemindersMenu from './RemindersMenu'
@@ -55,16 +56,6 @@ const ListContainer = styled('div')({
   },
 })
 
-const HomeLink = styled(Link)({
-  display: 'block',
-  marginTop: SPACING.SCALE_4,
-  marginBottom: SPACING.SCALE_4,
-  [MEDIA_QUERIES.DESKTOP]: {
-    marginLeft: 25,
-    marginBottom: 25,
-  },
-})
-
 const RemindersLists = ({ reminderType }) => {
   const subject = reminderTypeToLabel[reminderType]
   return (
@@ -109,9 +100,11 @@ const RemindersLists = ({ reminderType }) => {
             )}
           </ListContainer>
         </Container>
-        <HomeLink data-test="home-link" href={urls.dashboard()}>
-          Home
-        </HomeLink>
+        <FooterLink
+          headingText="Need Help?"
+          linkUrl={urls.external.reminderAndSettings}
+          linkText="guidance on reminders and email notifications"
+        />
       </>
     </DefaultLayout>
   )

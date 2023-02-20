@@ -1,6 +1,5 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
-import Link from '@govuk-react/link'
 import styled from 'styled-components'
 import { H2 } from '@govuk-react/heading'
 import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
@@ -22,16 +21,11 @@ import {
 } from '../constants'
 
 import { TASK_GET_SUBSCRIPTION_SUMMARY } from '../state'
+import FooterLink from '../FooterLink'
 
 const ToggleSectionContainer = styled('div')({
   marginTop: SPACING.SCALE_3,
   marginBottom: '40px',
-})
-
-const StyledHomeLink = styled(Link)({
-  marginTop: SPACING.SCALE_5,
-  marginBottom: SPACING.SCALE_5,
-  display: 'block',
 })
 
 const openSettings = (queryParamType, qsParams, label, reminderReturnUrl) => {
@@ -201,9 +195,11 @@ const RemindersSettings = ({
                 </ToggleSectionContainer>
               </>
             )}
-            <StyledHomeLink href={urls.dashboard()} aria-label="Home">
-              Home
-            </StyledHomeLink>
+            <FooterLink
+              headingText="Need Help?"
+              linkUrl={urls.external.reminderAndSettings}
+              linkText="guidance on reminders and email notifications"
+            />
           </>
         )}
       </Resource>
