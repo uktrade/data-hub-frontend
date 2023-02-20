@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'govuk-react'
+import { Link, Table } from 'govuk-react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { SummaryTable } from '../../../../../client/components'
@@ -51,11 +51,13 @@ const CompanyOverview = (props) => {
         <SummaryTable.Row heading="DIT Sector">
           {company.sector.name}
         </SummaryTable.Row>
-        <SummaryTable.Row value="Hello">
-          <Link href={`${queryString}/business-details`}>
-            View full business details
-          </Link>
-        </SummaryTable.Row>
+        <Table.Row>
+          <Table.Cell colSpan={2}>
+            <Link href={`${queryString}/business-details`}>
+              View full business details
+            </Link>
+          </Table.Cell>
+        </Table.Row>
       </SummaryTable>
     </>
   )
