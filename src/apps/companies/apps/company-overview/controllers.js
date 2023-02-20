@@ -17,6 +17,7 @@ async function renderOverview(req, res) {
     breadcrumbs,
     company,
     localNavItems: res.locals.localNavItems,
+    urls,
   }
 
   res.render('companies/apps/company-overview/views/client-container', {
