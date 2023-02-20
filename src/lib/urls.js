@@ -180,7 +180,7 @@ module.exports = {
       },
     },
     overview: {
-      index: url('/companies', '/:companyId/company-overview'),
+      index: url('/companies', '/:companyId/overview'),
     },
     hierarchies: {
       ghq: {
