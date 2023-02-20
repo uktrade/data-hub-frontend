@@ -18,38 +18,36 @@ import {
 } from '../transformers'
 
 const InvestmentsNoRecentInteractionsForm = () => (
-  <>
-    <Form
-      id="reminders-settings-no-recent-interaction"
-      initialValuesTaskName={TASK_GET_NRI_REMINDER_SUBSCRIPTIONS}
-      submissionTaskName={TASK_SAVE_NRI_REMINDER_SUBSCRIPTIONS}
-      redirectTo={() => redirectUrl}
-      transformPayload={(formValues) => ({
-        reminder_days: transformReminderDaysToAPI(formValues),
-        email_reminders_enabled: formValues.emailNotifications === OPTION_YES,
-      })}
-      analyticsFormName="editNoRecentInteractionReminderSettings"
-      analyticsData={transformNRIFormValuesToAnalyticsData}
-      flashMessage={() => 'Settings updated'}
-      cancelRedirectTo={() => redirectUrl}
-    >
-      {({ values: { reminder_days, email_reminders_enabled, reminders } }) => (
-        <>
-          {reminder_days && (
-            <NoRecentInteractionsCommonFields
-              reminders={reminders}
-              reminderDays={reminder_days}
-              emailRemindersEnabled={email_reminders_enabled}
-              legendPrefix="Investment"
-              doYouWantQuestion="Do you want to get reminders for projects with no recent interactions?"
-              whenYouWantQuestion="When do you want to get projects reminders?"
-              emptyErrorMessage="Add when you want to get project reminders"
-            />
-          )}
-        </>
-      )}
-    </Form>
-  </>
+  <Form
+    id="reminders-settings-no-recent-interaction"
+    initialValuesTaskName={TASK_GET_NRI_REMINDER_SUBSCRIPTIONS}
+    submissionTaskName={TASK_SAVE_NRI_REMINDER_SUBSCRIPTIONS}
+    redirectTo={() => redirectUrl}
+    transformPayload={(formValues) => ({
+      reminder_days: transformReminderDaysToAPI(formValues),
+      email_reminders_enabled: formValues.emailNotifications === OPTION_YES,
+    })}
+    analyticsFormName="editNoRecentInteractionReminderSettings"
+    analyticsData={transformNRIFormValuesToAnalyticsData}
+    flashMessage={() => 'Settings updated'}
+    cancelRedirectTo={() => redirectUrl}
+  >
+    {({ values: { reminder_days, email_reminders_enabled, reminders } }) => (
+      <>
+        {reminder_days && (
+          <NoRecentInteractionsCommonFields
+            reminders={reminders}
+            reminderDays={reminder_days}
+            emailRemindersEnabled={email_reminders_enabled}
+            legendPrefix="Investment"
+            doYouWantQuestion="Do you want to get reminders for projects with no recent interactions?"
+            whenYouWantQuestion="When do you want to get projects reminders?"
+            emptyErrorMessage="Add when you want to get project reminders"
+          />
+        )}
+      </>
+    )}
+  </Form>
 )
 
 export default InvestmentsNoRecentInteractionsForm
