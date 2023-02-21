@@ -19,7 +19,6 @@ function renderContacts(req, res) {
       ],
       returnUrl,
       dnbRelatedCompaniesCount,
-      localNavItems: res.locals.localNavItems,
     },
   })
 }

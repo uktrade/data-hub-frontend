@@ -10,9 +10,9 @@
 {% endblock %}
 
 {% block local_nav %}
-  {% component 'react-slot', {
-    id: 'company-tabbed-local-navigation',
-    props: props
-  } %}
-
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {{ TabbedLocalNav({ items: localNavItems }) }}
+    </div>
+  </div>
 {% endblock %}
