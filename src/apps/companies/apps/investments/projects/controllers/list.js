@@ -18,7 +18,6 @@ function renderProjects(req, res) {
       ],
       returnUrl,
       dnbRelatedCompaniesCount,
-      localNavItems: res.locals.localNavItems,
     },
   })
 }

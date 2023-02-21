@@ -51,7 +51,6 @@ function renderLeadAdvisers(req, res) {
       returnUrl,
       dnbRelatedCompaniesCount,
       flashMessages: res.locals.getMessages(),
-      localNavItems: res.locals.localNavItems,
     },
   })
 }
@@ -99,7 +98,6 @@ async function renderCoreTeamAdvisers(req, res, next) {
         returnUrl,
         dnbRelatedCompaniesCount,
         flashMessages: res.locals.getMessages(),
-        localNavItems: res.locals.localNavItems,
       },
     })
   } catch (error) {
