@@ -74,6 +74,7 @@ async function renderBusinessDetails(req, res) {
       canEditOneList: canEditOneList(userPermissions),
       company,
       localNavItems: res.locals.localNavItems,
+      flashMessages: res.locals.getMessages(),
     },
   })
 }
