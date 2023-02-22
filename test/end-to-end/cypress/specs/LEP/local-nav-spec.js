@@ -23,7 +23,7 @@ describe('LEP Permission', () => {
     })
 
     it('should display LEP only tabs', () => {
-      assertLocalNav(selectors.tabbedLocalNav().tabs, [
+      assertLocalReactNav('[data-test="tabbedLocalNavList"]', [
         'Company contacts',
         'Core team',
         'Investment',
