@@ -29,6 +29,10 @@ describe('Company business details', () => {
           )
           .reply(200, { count: 999 })
 
+        const getMessages = () => {
+          return []
+        }
+
         middlewareParams = buildMiddlewareParameters({
           company: companyMock,
           locals: {
@@ -42,6 +46,21 @@ describe('Company business details', () => {
             user: {
               permissions: [],
             },
+            localNavItems: [
+              {
+                path: 'business-details',
+                label: 'Business details',
+                url: '/companies/375094ac-f79a-43e5-9c88-059a7caa17f0/business-details',
+                isActive: true,
+              },
+              {
+                path: 'advisers',
+                label: 'Core team',
+                url: '/companies/375094ac-f79a-43e5-9c88-059a7caa17f0/advisers',
+                isActive: false,
+              },
+            ],
+            getMessages,
           },
         })
 
@@ -60,13 +79,25 @@ describe('Company business details', () => {
         expect(middlewareParams.resMock.render).to.be.calledOnceWithExactly(
           'companies/apps/business-details/views/client-container',
           {
-            heading: 'Business details',
             props: {
+              breadcrumbs: [
+                { link: urls.dashboard(), text: 'Home' },
+                {
+                  link: urls.companies.index(),
+                  text: 'Companies',
+                },
+                {
+                  link: urls.companies.detail(companyMock.id),
+                  text: companyMock.name,
+                },
+                { text: 'Business details' },
+              ],
               businessDetails: {
                 id: '1',
                 name: 'Test company',
                 company_number: '222',
               },
+              company: companyMock,
               globalUltimate: {
                 name: 'Test Global Ultimate',
                 url: '/test/222',
@@ -110,16 +141,24 @@ describe('Company business details', () => {
                 dnbHierarchy: urls.companies.dnbHierarchy.index(companyMock.id),
                 editOneList: urls.companies.editOneList(companyMock.id),
               },
+              localNavItems: [
+                {
+                  path: 'business-details',
+                  label: 'Business details',
+                  url: '/companies/375094ac-f79a-43e5-9c88-059a7caa17f0/business-details',
+                  isActive: true,
+                },
+                {
+                  path: 'advisers',
+                  label: 'Core team',
+                  url: '/companies/375094ac-f79a-43e5-9c88-059a7caa17f0/advisers',
+                  isActive: false,
+                },
+              ],
+              flashMessages: [],
             },
           }
         )
-      })
-
-      it('should add a breadcrumb', () => {
-        expect(middlewareParams.resMock.breadcrumb.args).to.deep.equal([
-          ['Test company', urls.companies.detail(companyMock.id)],
-          ['Business details'],
-        ])
       })
 
       it('should not call "next" with an error', () => {
