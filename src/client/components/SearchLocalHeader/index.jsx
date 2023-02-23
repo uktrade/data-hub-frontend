@@ -51,7 +51,7 @@ const SearchLocalHeader = ({ csrfToken, flashMessages }) => (
     >
       <FlashMessages flashMessages={flashMessages} />
       <StyledMain>
-        <StyledLabel for="search-input">
+        <StyledLabel htmlFor="search-input">
           Search for company, contact, event, investment project or OMIS order
         </StyledLabel>
         <StyledSearchContainer role="search">
