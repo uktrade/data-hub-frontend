@@ -13,28 +13,18 @@ const StyledGridColumn = styled.div`
   box-sizing: border-box;
   width: 100%;
   padding: 0 15px;
-  @media (min-width: 40.0625em) {
+  @media (min-width: 840px) {
     width: 100%;
     float: left;
   }
 `
 const StyledNav = styled.nav`
   margin-bottom: 15px;
-  font-family: Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-weight: 400;
-  font-size: 16px;
-  font-size: 1rem;
-  line-height: 1.25;
   color: #0b0c0c;
   margin-top: 5px;
-  @media (min-width: 40.0625em) {
+  @media (min-width: 840px) {
     margin-bottom: 30px;
     margin-top: 5px;
-    font-size: 19px;
-    font-size: 1.1875rem;
-    line-height: 1.3157894737;
   }
 `
 
@@ -43,9 +33,11 @@ const StyledUnorderedList = styled.ul`
   padding: 0;
   list-style: none;
   display: flex;
-
-  @media (min-width: 40.0625em) {
-    border-bottom: 1px solid #bfc1c3;
+  border-bottom: none;
+  @media (max-width: 839px) {
+    display: block;
+    padding-bottom: 20px;
+    border-bottom: 0;
   }
 `
 

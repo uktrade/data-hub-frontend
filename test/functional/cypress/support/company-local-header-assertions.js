@@ -60,17 +60,6 @@ const assertExportCountryHistoryBreadcrumbs = (company, detailsUrl) => {
   })
 }
 
-/**
- * Asserts that the business details URL appears and is correct
- */
-const assertViewFullBusinessDetails = (businessDetailsUrl) => {
-  cy.contains('View full business details').should(
-    'have.attr',
-    'href',
-    businessDetailsUrl
-  )
-}
-
 const assertOneListTierA = (paragraphNumber) => {
   cy.get(companyLocalHeader.description.paragraph(paragraphNumber)).contains(
     'This is an account managed company (One List Tier A - Strategic Account)'
@@ -95,7 +84,6 @@ module.exports = {
   assertButtons,
   assertBreadcrumbs,
   assertExportCountryHistoryBreadcrumbs,
-  assertViewFullBusinessDetails,
   assertOneListTierA,
   assertCoreTeam,
   assertArchivePanelNotVisible,
