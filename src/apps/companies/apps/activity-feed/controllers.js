@@ -61,6 +61,7 @@ async function renderActivityFeed(req, res, next) {
           company,
           breadcrumbs,
           flashMessages: res.locals.getMessages(),
+          localNavItems: res.locals.localNavItems,
         }
       : {
           company,
