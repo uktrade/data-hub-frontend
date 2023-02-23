@@ -132,7 +132,7 @@ export default class ActivityFeed extends React.Component {
           totalActivities={totalActivities}
           actions={actions}
         />
-        {!companyIsArchived && (
+        {!companyIsArchived && !isOverview && (
           <ActivityFeedFilters
             activityTypeFilters={activityTypeFilters}
             activityTypeFilter={activityTypeFilter}
@@ -142,20 +142,19 @@ export default class ActivityFeed extends React.Component {
             dnbHierarchyCount={dnbHierarchyCount}
           />
         )}
-        {!isOverview && (
-          <ActivityFeedCardList>
-            {activities.map((activity) => (
-              <li key={activity.id}>
-                <Activity
-                  activity={activity}
-                  showDnbHierarchy={showDnbHierarchy}
-                />
-              </li>
-            ))}
-          </ActivityFeedCardList>
-        )}
+        <ActivityFeedCardList>
+          {activities.map((activity) => (
+            <li key={activity.id}>
+              <Activity
+                activity={activity}
+                showDnbHierarchy={showDnbHierarchy}
+                isOverview={isOverview}
+              />
+            </li>
+          ))}
+        </ActivityFeedCardList>
 
-        {hasMore && (
+        {hasMore && !isOverview && (
           <ActivityFeedPagination
             isLoading={isLoading}
             onLoadMore={onLoadMore}

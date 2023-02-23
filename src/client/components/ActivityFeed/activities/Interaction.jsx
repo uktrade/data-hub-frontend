@@ -28,7 +28,7 @@ export default class Interaction extends React.PureComponent {
   }
 
   render() {
-    const { activity } = this.props
+    const { activity, isOverview } = this.props
     const transformed = {
       ...CardUtils.transform(activity),
       ...InteractionUtils.transform(activity),
@@ -96,40 +96,82 @@ export default class Interaction extends React.PureComponent {
       flex: 25%;
     `
 
-    return theme || service ? (
-      <ActivityCardWrapper dataTest="interaction-activity">
-        <ActivityCardLabels theme={theme} service={service} kind={kind} />
-        <ActivityCardSubject>
-          <Link
-            data-test="interaction-subject"
-            href={transformed.interactionUrl}
-          >
-            {transformed.subject}
-          </Link>
-        </ActivityCardSubject>
-        {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
-        <ActivityCardMetadata metadata={metadata} />
-      </ActivityCardWrapper>
-    ) : (
-      <ActivityCardWrapper dataTest="interaction-activity">
-        <Row>
-          <LeftCol>
-            <ActivityCardSubject>
-              <Link
-                data-test="interaction-subject"
-                href={transformed.interactionUrl}
-              >
-                {transformed.subject}
-              </Link>
-            </ActivityCardSubject>
-            {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
-            <ActivityCardMetadata metadata={metadata} />
-          </LeftCol>
-          <RightCol>
-            <ActivityCardLabels kind={kind} />
-          </RightCol>
-        </Row>
-      </ActivityCardWrapper>
-    )
+    const ActivityTabRender =
+      theme || service ? (
+        <ActivityCardWrapper dataTest="interaction-activity">
+          <ActivityCardLabels theme={theme} service={service} kind={kind} />
+          <ActivityCardSubject>
+            <Link
+              data-test="interaction-subject"
+              href={transformed.interactionUrl}
+            >
+              {transformed.subject}
+            </Link>
+          </ActivityCardSubject>
+          {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
+          <ActivityCardMetadata metadata={metadata} />
+        </ActivityCardWrapper>
+      ) : (
+        <ActivityCardWrapper dataTest="interaction-activity">
+          <Row>
+            <LeftCol>
+              <ActivityCardSubject>
+                <Link
+                  data-test="interaction-subject"
+                  href={transformed.interactionUrl}
+                >
+                  {transformed.subject}
+                </Link>
+              </ActivityCardSubject>
+              {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
+              <ActivityCardMetadata metadata={metadata} />
+            </LeftCol>
+            <RightCol>
+              <ActivityCardLabels kind={kind} />
+            </RightCol>
+          </Row>
+        </ActivityCardWrapper>
+      )
+
+    const OverviewTabRender =
+      theme || service ? (
+        <ActivityCardWrapper dataTest="interaction-activity">
+          <ActivityCardLabels theme={theme} service={service} kind={kind} />
+          <ActivityCardSubject>
+            <Link
+              data-test="interaction-subject"
+              href={transformed.interactionUrl}
+            >
+              Overview
+              {transformed.subject}
+            </Link>
+          </ActivityCardSubject>
+          {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
+          <ActivityCardMetadata metadata={metadata} />
+        </ActivityCardWrapper>
+      ) : (
+        <ActivityCardWrapper dataTest="interaction-activity">
+          <Row>
+            <LeftCol>
+              <ActivityCardSubject>
+                <Link
+                  data-test="interaction-subject"
+                  href={transformed.interactionUrl}
+                >
+                  {transformed.subject}
+                </Link>
+              </ActivityCardSubject>
+              Overview
+              {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
+              <ActivityCardMetadata metadata={metadata} />
+            </LeftCol>
+            <RightCol>
+              <ActivityCardLabels kind={kind} />
+            </RightCol>
+          </Row>
+        </ActivityCardWrapper>
+      )
+
+    return isOverview ? OverviewTabRender : ActivityTabRender
   }
 }

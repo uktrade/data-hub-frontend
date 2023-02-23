@@ -123,6 +123,7 @@ export default class ActivityFeedApp extends React.Component {
       isGlobalUltimate,
       dnbHierarchyCount,
       companyIsArchived,
+      isOverview,
     } = this.props
 
     const isEmptyFeed = activities.length === 0 && !hasMore
@@ -140,6 +141,7 @@ export default class ActivityFeedApp extends React.Component {
         isGlobalUltimate={isGlobalUltimate}
         dnbHierarchyCount={dnbHierarchyCount}
         companyIsArchived={companyIsArchived}
+        isOverview={isOverview}
       >
         {isEmptyFeed && !error && (
           <div data-test="noActivites">There are no activities to show.</div>
