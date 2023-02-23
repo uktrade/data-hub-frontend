@@ -175,6 +175,13 @@ async function getMaxemailCampaigns(req, next, contacts) {
   }
 }
 
+// Filter unwanted Contacts, e.g. those with empty email addresses
+function filterContactList(contacts) {
+  const removeEmptyEmails = contacts.filter((contact) => contact.email != '')
+
+  return removeEmptyEmails
+}
+
 async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
   try {
     // Fetch aventri attendee info for company contacts
@@ -322,10 +329,11 @@ async function fetchActivityFeedHandler(req, res, next) {
         .map((company) => company.id)
     }
 
+    const filteredContacts = filterContactList(company.contacts)
     const aventriEvents = await getAventriEventsAttendedByCompanyContacts(
       req,
       next,
-      company.contacts
+      filteredContacts
     )
     const aventriEventIds = Object.keys(aventriEvents)
 
@@ -368,7 +376,7 @@ async function fetchActivityFeedHandler(req, res, next) {
         const essContactEmail = activity.actor['dit:emailAddress']
         const essContact = getContactFromEmailAddress(
           essContactEmail,
-          company.contacts
+          filteredContacts
         )
         activity = augmentEssActivity(activity, essContact)
       }
@@ -717,4 +725,5 @@ module.exports = {
   fetchESSDetails,
   isEssActivity,
   augmentEssActivity,
+  filterContactList,
 }
