@@ -177,8 +177,7 @@ async function getMaxemailCampaigns(req, next, contacts) {
 
 // Filter unwanted Contacts, e.g. those with empty email addresses
 function filterContactList(contacts) {
-  const removeEmptyEmails = contacts.filter((contact) => contact.email != '')
-
+  const removeEmptyEmails = contacts.filter((contact) => contact.email)
   return removeEmptyEmails
 }
 
@@ -343,7 +342,7 @@ async function fetchActivityFeedHandler(req, res, next) {
       from,
       size,
       companyIds: [company.id, ...dnbHierarchyIds],
-      contacts: company.contacts,
+      contacts: filteredContacts,
       user,
       aventriEventIds,
       getEssInteractions,
