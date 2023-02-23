@@ -120,9 +120,9 @@ Cypress.Commands.add(
   'selectTypeaheadOption',
   { prevSubject: 'element' },
   (subject, text) => {
-    cy.wrap(subject).find('input').click().clear().type(text)
+    cy.wrap(subject).parent().find('input').click().clear().type(text)
     cy.get('[data-test="typeahead-menu-option"]').should('be.visible')
-    cy.wrap(subject).find('input').type('{downarrow}{enter}{esc}')
+    cy.wrap(subject).parent().find('input').type('{downarrow}{enter}{esc}')
     return cy.wrap(subject)
   }
 )
@@ -131,7 +131,7 @@ Cypress.Commands.add(
   'checkNoTypeaheadOptionsDisplayed',
   { prevSubject: 'element' },
   (subject, text) => {
-    cy.wrap(subject).find('input').click().clear().type(text)
+    cy.wrap(subject).parent().find('input').click().clear().type(text)
     cy.get('[data-test="typeahead-no-options"]').should('be.visible')
     return cy.wrap(subject)
   }

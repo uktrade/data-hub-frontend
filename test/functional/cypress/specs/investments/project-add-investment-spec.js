@@ -124,10 +124,12 @@ describe('Adding an investment via "Investments"', () => {
   })
 
   it('should display "Search for a company as the source of foreign equity"', () => {
-    cy.get('label').should(
-      'have.text',
-      'Search for a company as the source of foreign equity'
-    )
+    cy.get('label')
+      .parent()
+      .should(
+        'have.text',
+        'Search for a company as the source of foreign equity'
+      )
   })
 
   it('should display a "Search" button', () => {

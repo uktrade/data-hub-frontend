@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom'
 import qs from 'qs'
 import { FONT_SIZE, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import Link from '@govuk-react/link'
-import { GREY_3, GREY_4, LINK_COLOUR, TEXT_COLOUR } from 'govuk-colours'
+import { GREY_3, LINK_COLOUR, WHITE } from 'govuk-colours'
 import { PAGINATION_PIECE_PREVIOUS, PAGINATION_PIECE_NEXT } from './constants'
 
 const StyledNav = styled('nav')`
@@ -57,8 +57,7 @@ const StyledPaginationPiece = styled('li')`
 `
 
 const StyledPaginationLink = styled(Link)`
-  &:link {
-    cursor: pointer;
+  {
     font-weight: bold;
     font-size: ${FONT_SIZE.SIZE_16};
     display: inline-block;
@@ -67,17 +66,37 @@ const StyledPaginationLink = styled(Link)`
     text-decoration: none;
     :hover {
       background-color: ${GREY_3};
+      text-decoration-thickness: max(3px, 0.1875rem, 0.12em);
+  }
+  ${({ $isActive }) =>
+    $isActive
+      ? `
+      color: ${WHITE};
+      background-color: ${LINK_COLOUR};
+      :hover {
+        color: ${WHITE};
+        background-color: ${LINK_COLOUR};
+      }
+      `
+      : `
+      color: ${LINK_COLOUR};
+      background-color: transparent;
+    `}
+  &:link {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: ${FONT_SIZE.SIZE_16};
+    display: inline-block;
+    padding: ${SPACING.SCALE_1} 12px;
+    line-height: 1.9em;
+    text-decoration: underline;
+    text-decoration-thickness: max(1px, 0.0625rem);
+    :hover {
+      background-color: ${GREY_3};
+      text-decoration-thickness: max(3px, 0.1875rem, 0.12em);
     }
-    ${({ $isActive }) =>
-      $isActive
-        ? `
-        color: ${TEXT_COLOUR};
-        background-color: transparent;
-       `
-        : `
-        color: ${LINK_COLOUR};
-        background-color: ${GREY_4};
-      `}
+
+
     ${(props) => props['data-page-number'] && `display: none;`}
     ${MEDIA_QUERIES.TABLET} {
       ${(props) => props['data-page-number'] && `display: block;`}
@@ -218,7 +237,8 @@ const Pagination = ({
                       aria-label={`Page ${page}`}
                       aria-current={isActive ? 'page' : 'false'}
                       ref={(el) => (linkRefs.current[index] = el)}
-                      href="#"
+                      href={isActive ? null : '#'}
+                      aria-current={isActive}
                     >
                       {page}
                     </StyledPaginationLink>

@@ -218,6 +218,7 @@ const assertFieldRadios = ({ element, label, value, optionsCount }) =>
     .first()
     .should('have.text', label)
     .parent()
+    .parent()
     .find('input')
     .should('have.length', optionsCount)
     .then(
@@ -305,6 +306,7 @@ const assertFieldInput = ({
     .wrap(element)
     .find('label')
     .should('have.text', label)
+    .parent()
     .next()
     .then(
       ($el) =>
@@ -314,6 +316,7 @@ const assertFieldInput = ({
           .should('have.text', hint || '')
           .next()
     )
+
     .find('input')
     .then(
       ($el) =>
@@ -328,6 +331,7 @@ const assertFieldTextarea = ({ element, label, hint, value }) =>
     .wrap(element)
     .find('label')
     .should('contain', label)
+    .parent()
     .next()
     .then(
       ($el) =>
@@ -337,6 +341,7 @@ const assertFieldTextarea = ({ element, label, hint, value }) =>
           .should('have.text', hint || '')
           .next()
     )
+    .parent()
     .find('textarea')
     .then(($el) => value ?? cy.wrap($el).should('have.text', value || ''))
 
@@ -619,6 +624,7 @@ const assertDateInput = ({ element, label, value }) => {
   cy.get(element)
     .find('label')
     .should('contain', label)
+    .parent()
     .next()
     .should('have.attr', 'value', value)
 }
