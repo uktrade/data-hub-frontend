@@ -136,18 +136,16 @@ export default class Interaction extends React.PureComponent {
     const OverviewTabRender =
       theme || service ? (
         <ActivityCardWrapper dataTest="interaction-activity">
-          <ActivityCardLabels theme={theme} service={service} kind={kind} />
-          <ActivityCardSubject>
-            <Link
-              data-test="interaction-subject"
-              href={transformed.interactionUrl}
-            >
-              Overview
-              {transformed.subject}
-            </Link>
-          </ActivityCardSubject>
+          <Row>
+            <LeftCol>
+              <p>{date}</p>
+            </LeftCol>
+            <RightCol>
+              <ActivityCardLabels service={service} />
+            </RightCol>
+          </Row>
+          <ActivityCardSubject>{transformed.subject}</ActivityCardSubject>
           {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
-          <ActivityCardMetadata metadata={metadata} />
         </ActivityCardWrapper>
       ) : (
         <ActivityCardWrapper dataTest="interaction-activity">
