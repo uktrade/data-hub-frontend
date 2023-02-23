@@ -36,6 +36,7 @@ const BusinessDetailsCard = (props) => {
             // dnbHierarchyCount={dnbHierarchyCount}
             apiEndpoint={urls.companies.activity.data(company.id)}
             companyIsArchived={company.archived}
+            isOverview={true}
           />
         </Table.Cell>
         <Table.Row>

@@ -140,7 +140,6 @@ export default class ActivityFeedApp extends React.Component {
         isGlobalUltimate={isGlobalUltimate}
         dnbHierarchyCount={dnbHierarchyCount}
         companyIsArchived={companyIsArchived}
-        isOverview={true}
       >
         {isEmptyFeed && !error && (
           <div data-test="noActivites">There are no activities to show.</div>

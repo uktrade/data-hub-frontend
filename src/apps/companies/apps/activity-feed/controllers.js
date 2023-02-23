@@ -67,7 +67,7 @@ async function renderActivityFeed(req, res, next) {
           company,
           breadcrumbs,
           flashMessages: res.locals.getMessages(),
-          isOverview: true,
+          isOverview: false,
           activityTypeFilter: FILTER_KEYS.dataHubActivity,
           activityTypeFilters: FILTER_ITEMS,
           localNavItems: res.locals.localNavItems,
