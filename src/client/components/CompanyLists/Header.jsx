@@ -48,7 +48,7 @@ export const Header = connect(state2props, (dispatch) => ({
           input={{
             onChange: (e) => onChange(e.target.value),
             initialValue: selectedId,
-            id: 'view-list,',
+            id: 'view-list',
           }}
         >
           {Object.entries(lists).map(([id, { name }]) => (
