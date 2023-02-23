@@ -96,7 +96,8 @@ function Pagination({ totalPages, activePage, getPageUrl, onPageClick }) {
             const onClick = (event) => {
               event.target.blur()
               event.preventDefault()
-              onPageClick(pageNumber)
+              onPageClick(pageNumber, event)
+              window.scrollTo({ top: 0 })
             }
             const PageNumberLink = isActive
               ? StyledActivePaginationLink

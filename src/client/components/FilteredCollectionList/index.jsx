@@ -14,7 +14,7 @@ import Analytics from '../Analytics'
 import CollectionItem from '../../components/CollectionList/CollectionItem'
 import CollectionSort from '../../components/CollectionList/CollectionSort'
 import RoutedDownloadDataHeader from '../../components/RoutedDownloadDataHeader'
-import RoutedPagination from '../../components/Pagination/RoutedPagination'
+import Pagination from '../../components/Pagination'
 import FilteredCollectionHeader from './FilteredCollectionHeader'
 
 /**
@@ -138,7 +138,19 @@ const FilteredCollectionList = ({
                     )
                   }
                 </Task.Status>
-                <RoutedPagination initialPage={initialPage} items={count} />
+                <Pagination
+                  totalPages={totalPages}
+                  activePage={initialPage}
+                  onPageClick={(page, e) => {
+                    e.preventDefault()
+                    history.push({
+                      search: qs.stringify({
+                        ...qsParams,
+                        page,
+                      }),
+                    })
+                  }}
+                />
               </article>
             </GridCol>
           </GridRow>
