@@ -29,13 +29,13 @@ const Date = styled('div')({
 const DataHubFeed = ({ items, feedLimit = 5 }) => {
   return items ? (
     <>
-      <FeedContainer>
-        <H3>What's new</H3>
+      <FeedContainer data-test="info-feed">
+        <H3 data-test="info-feed-heading">What's new</H3>
         {!!items.length && (
           <>
-            <UnorderedList listStyleType="none">
+            <UnorderedList listStyleType="none" data-test="info-feed-list">
               {items.slice(0, feedLimit).map((item, index) => (
-                <ListItem key={index}>
+                <ListItem key={index} data-test="info-feed-list-item">
                   <Link
                     href={item.link}
                     target="_blank"
@@ -69,7 +69,11 @@ const DataHubFeed = ({ items, feedLimit = 5 }) => {
             </Link>
           </>
         )}
-        {!items.length && <Paragraph>No updates available</Paragraph>}
+        {!items.length && (
+          <Paragraph data-test="info-feed-no-results">
+            No updates available
+          </Paragraph>
+        )}
       </FeedContainer>
     </>
   ) : (
