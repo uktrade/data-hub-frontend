@@ -128,10 +128,12 @@ export default class ActivityFeed extends React.Component {
       this.state
     return (
       <ActivityFeedContainer data-test="activity-feed">
-        <ActivityFeedHeader
-          totalActivities={totalActivities}
-          actions={actions}
-        />
+        {!isOverview && (
+          <ActivityFeedHeader
+            totalActivities={totalActivities}
+            actions={actions}
+          />
+        )}
         {!companyIsArchived && !isOverview && (
           <ActivityFeedFilters
             activityTypeFilters={activityTypeFilters}
