@@ -47,6 +47,7 @@ import UnarchivePipelineItemForm from '../apps/my-pipeline/client/UnarchivePipel
 import DeletePipelineItemForm from '../apps/my-pipeline/client/DeletePipelineItemForm.jsx'
 import Dashboard from './components/Dashboard'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
+import DataHubFeed from './components/DataHubFeed'
 import CompanyLocalHeader from './components/CompanyLocalHeader'
 import CompanyTabbedLocalNavigation from './components/CompanyTabbedLocalNavigation'
 import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/CompanyOrdersCollection'
@@ -602,6 +603,9 @@ function App() {
               {...props}
             />
           )}
+        </Mount>
+        <Mount selector="#data-hub-feed">
+          {(props) => <DataHubFeed {...props} />}
         </Mount>
         <Mount selector="#delete-company-list">
           {(props) => (
