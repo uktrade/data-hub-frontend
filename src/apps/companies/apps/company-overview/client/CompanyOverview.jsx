@@ -19,10 +19,10 @@ const CompanyOverview = (props) => {
   return (
     <>
       <GridRow>
-        <StyledGridCol>
+        <StyledGridCol columnOneHalf={true}>
           <BusinessDetailsCard {...props} queryString={queryString} />
         </StyledGridCol>
-        <StyledGridCol>
+        <StyledGridCol columnOneHalf={true}>
           <RecentActivityCard {...props} queryString={queryString} />
         </StyledGridCol>
       </GridRow>
