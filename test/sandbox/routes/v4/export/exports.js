@@ -1,0 +1,49 @@
+const { faker } = require('@faker-js/faker')
+var sector = require('../../../fixtures/v4/metadata/sector.json')
+var country = require('../../../fixtures/v4/metadata/country.json')
+const exporterExperience = require('../../../fixtures/v4/export/export-experience.json')
+const estimatedYears = require('../../../fixtures/v4/export/estimated-years.json')
+
+const generateExport = () => {
+  const { id: sectorId, name: sectorName } = faker.helpers.arrayElement(sector)
+  const { id: countryId, name: countryName } =
+    faker.helpers.arrayElement(country)
+  const { id: exportExperienceId } =
+    faker.helpers.arrayElement(exporterExperience)
+  const { id: estimatedYearsId } = faker.helpers.arrayElement(estimatedYears)
+
+  return {
+    id: faker.datatype.uuid(),
+    company: { id: faker.datatype.uuid(), name: faker.company.name() },
+    owner: { id: faker.datatype.uuid(), name: faker.name.fullName() },
+    team_members: [{ id: faker.datatype.uuid(), name: faker.name.fullName() }],
+    contacts: { id: faker.datatype.uuid(), name: faker.name.fullName() },
+    destination_country: {
+      id: countryId,
+      name: countryName,
+    },
+    sector: { id: sectorId, name: sectorName },
+    exporter_experience: exportExperienceId,
+    estimated_export_value_years: estimatedYearsId,
+    created_on: faker.date.past(),
+    modified_on: faker.date.past(),
+    title: faker.random.word(),
+    estimated_export_value_amount: faker.random.numeric(6),
+    estimated_win_date: faker.date.future(),
+    export_potential: faker.helpers.arrayElement(['high', 'medium', 'low']),
+    status: faker.helpers.arrayElement(['active', 'won', 'inactive']),
+    notes: faker.random.words(25),
+    created_by: faker.datatype.uuid(),
+    modified_by: faker.datatype.uuid(),
+  }
+}
+const generateExports = () => {
+  return {
+    count: 10,
+    next: null,
+    previous: null,
+    results: [...Array.from({ length: 10 })].map(generateExport),
+  }
+}
+
+module.exports = { generateExports }
