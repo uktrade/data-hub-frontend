@@ -58,7 +58,8 @@ const styledLinkActive = {
   right: 0,
   bottom: 0,
   borderBottom: `${BORDER_WIDTH} solid`,
-  borderColor: DARK_BLUE_LEGACY,
+  borderColor: BLACK,
+  // boxShadow: RED,
 }
 
 const styledLink = {
