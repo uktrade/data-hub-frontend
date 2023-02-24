@@ -35,7 +35,9 @@ const BusinessDetailsCard = (props) => {
             )}
           </StyledAddressList>
         </SummaryTable.Row>
-        <SummaryTable.Row heading="Website">{company.website}</SummaryTable.Row>
+        <SummaryTable.Row heading="Website">
+          <Link href={company.website}>{company.website}</Link>
+        </SummaryTable.Row>
         <SummaryTable.Row heading="Turnover">
           {company.turnover
             ? currencyGBP(company.turnover, {
