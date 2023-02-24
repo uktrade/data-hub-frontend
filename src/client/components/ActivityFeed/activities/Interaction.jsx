@@ -143,7 +143,12 @@ export default class Interaction extends React.PureComponent {
               <ActivityCardLabels service={service} />
             </RightCol>
           </Row>
-          <ActivityCardSubject>The Subject Heading is here</ActivityCardSubject>
+          <ActivityCardSubject
+            linkDataTest={'interaction-subject'}
+            url={transformed.interactionUrl}
+          >
+            {transformed.subject}
+          </ActivityCardSubject>
           {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
           <Row>
             <p>
