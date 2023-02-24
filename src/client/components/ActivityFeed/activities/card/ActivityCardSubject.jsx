@@ -38,8 +38,8 @@ const ActivityCardSubject = ({
   children,
   url,
   linkDataTest,
-  isOverview,
   dataTest = 'activity-card-subject',
+  isOverview,
 }) => {
   return isOverview ? (
     <StyledActivitySubject data-test={dataTest}>
