@@ -126,6 +126,7 @@ export default class ActivityFeed extends React.Component {
 
     const { activityTypeFilters, activityTypeFilter, showDnbHierarchy } =
       this.state
+
     return (
       <ActivityFeedContainer data-test="activity-feed">
         {!isOverview && (

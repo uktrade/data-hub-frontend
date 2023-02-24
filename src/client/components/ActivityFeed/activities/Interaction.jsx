@@ -33,7 +33,6 @@ export default class Interaction extends React.PureComponent {
       ...CardUtils.transform(activity),
       ...InteractionUtils.transform(activity),
     }
-
     const advisers = CardUtils.getAdvisers(activity)
     const contacts = CardUtils.getContacts(activity)
     const activityObject = activity.object
@@ -51,7 +50,7 @@ export default class Interaction extends React.PureComponent {
       !!advisers.length &&
       advisers.map((adviser) => (
         <span key={adviser.name}>
-          <AdviserActivityRenderer adviser={adviser} />
+          <AdviserActivityRenderer adviser={adviser} isOverview={isOverview} />
         </span>
       ))
 
@@ -144,8 +143,13 @@ export default class Interaction extends React.PureComponent {
               <ActivityCardLabels service={service} />
             </RightCol>
           </Row>
-          <ActivityCardSubject>{transformed.subject}</ActivityCardSubject>
+          <ActivityCardSubject>The Subject Heading is here</ActivityCardSubject>
           {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
+          <Row>
+            <p>
+              {formattedAdvisers(advisers)} {transformed.subject.toLowerCase()}
+            </p>
+          </Row>
         </ActivityCardWrapper>
       ) : (
         <ActivityCardWrapper dataTest="interaction-activity">
