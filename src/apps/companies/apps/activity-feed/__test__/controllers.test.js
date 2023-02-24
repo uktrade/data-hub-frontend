@@ -25,7 +25,7 @@ const {
   eventsColListQueryBuilder,
   isEssActivity,
   augmentEssActivity,
-  filterContactList,
+  filterContactListOnEmail,
 } = require('../controllers')
 const { has, get } = require('lodash')
 
@@ -1393,8 +1393,10 @@ describe('Activity feed controllers', () => {
         expect(e[0]['dit:emailAddress']).to.be.equal(emails[index])
       })
     })
+  })
 
-    it('filterContactList removes contacts with empty email address', () => {
+  describe('#filterContactListOnEmail', () => {
+    it('filterContactListOnEmail removes contacts with empty email address', () => {
       const mockContactList = [
         {
           id: '9150ffcf-5b06-4229-9ede-5e5df836f213',
@@ -1418,7 +1420,7 @@ describe('Activity feed controllers', () => {
 
       expect(mockContactList.length).to.equal(2)
 
-      const removedEmailList = filterContactList(mockContactList)
+      const removedEmailList = filterContactListOnEmail(mockContactList)
       expect(removedEmailList.length).to.equal(1)
       expect(removedEmailList[0].name).to.equal('test with email')
     })
