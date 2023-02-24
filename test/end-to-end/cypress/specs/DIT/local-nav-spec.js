@@ -65,7 +65,7 @@ describe('DIT Permission', () => {
     })
 
     it('should display DIT only side navs', () => {
-      assertLocalReactNav('[data-test=local-nav]', [
+      assertLocalReactNav('[data-test=local-nav] > ul', [
         'Details',
         'Activity',
         'Audit history',
