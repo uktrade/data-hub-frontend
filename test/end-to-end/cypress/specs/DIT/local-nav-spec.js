@@ -102,7 +102,7 @@ describe('DIT Permission', () => {
     })
 
     it('should display DIT only side navs', () => {
-      const navSelector = '[data-test="eventDetails"] > div > nav > a'
+      const navSelector = '[data-test="event-details-nav-link"]'
       assertLocalNav(navSelector, ['Details', 'Attendee'])
     })
   })

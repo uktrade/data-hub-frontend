@@ -31,15 +31,18 @@ const StyledInactiveLink = styled('a')({
   },
 })
 
-export const LocalNav = ({ children, dataTest = 'local-nav' }) => (
-  <nav data-test={dataTest}>
-    <ul>
-      {children.map((link) => (
-        <li> {link} </li>
-      ))}
-    </ul>
-  </nav>
-)
+export const LocalNav = ({ children, dataTest = 'local-nav' }) => {
+  children = children.filter((child) => child !== false)
+  return (
+    <nav data-test={dataTest}>
+      <ul>
+        {children.map((link) => (
+          <li> {link} </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
 
 export const LocalNavLink = ({
   children,
