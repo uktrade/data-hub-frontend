@@ -70,8 +70,8 @@ jobs:
     machine:
       image: ubuntu-2004:2022.07.1
       docker_layer_caching: false
-    parallelism: 9
-    resource_class: 2xlarge
+    parallelism: 7
+    resource_class: 2xlarge+
     steps:
       - checkout
       - run_make:
