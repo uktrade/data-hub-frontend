@@ -7,6 +7,14 @@ ignore_ghpages: &ignore_ghpages
         - gh-pages
 
 jobs:
+  docker-purge:
+    docker:  
+      - image: cimg/base:2020.01  
+    parallelism: 30
+    steps:
+      - setup_remote_docker
+      - run: docker volume prune -f
+
   lint:
     machine:
       image: ubuntu-2004:2022.07.1
@@ -243,6 +251,7 @@ workflows:
   version: 2
   datahub:
     jobs:
+      - docker-purge: *ignore_ghpages
       - lint: *ignore_ghpages
       - unit_tests: *ignore_ghpages
       - unit_client_tests: *ignore_ghpages
