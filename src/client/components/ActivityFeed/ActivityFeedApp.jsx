@@ -13,6 +13,13 @@ export default class ActivityFeedApp extends React.Component {
     dnbHierarchyCount: PropTypes.number,
     companyIsArchived: PropTypes.bool,
     numberOfItems: PropTypes.number,
+    feedType: PropTypes.string,
+  }
+
+  static FEED_TYPE = {
+    ALL: 'all',
+    RECENT: 'recent',
+    UPCOMING: 'upcoming',
   }
 
   static defaultProps = {
@@ -22,12 +29,13 @@ export default class ActivityFeedApp extends React.Component {
     isGlobalUltimate: false,
     dnbHierarchyCount: null,
     numberOfItems: 20,
+    feedType: this.FEED_TYPE.ALL,
   }
 
   constructor(props) {
     super(props)
 
-    const { activityTypeFilter } = props
+    const { activityTypeFilter, feedType } = props
 
     this.state = {
       activities: [],
@@ -39,6 +47,7 @@ export default class ActivityFeedApp extends React.Component {
       queryParams: {
         activityTypeFilter,
         showDnbHierarchy: false,
+        feedType: feedType,
       },
     }
 
@@ -97,13 +106,14 @@ export default class ActivityFeedApp extends React.Component {
   }
 
   static async fetchActivities(apiEndpoint, from, numberOfItems, queryParams) {
-    const { activityTypeFilter, showDnbHierarchy } = queryParams
+    const { activityTypeFilter, showDnbHierarchy, feedType } = queryParams
 
     const params = {
       from,
       size: numberOfItems,
       activityTypeFilter,
       showDnbHierarchy,
+      feedType,
     }
 
     const { data } = await axios.get(apiEndpoint, { params })

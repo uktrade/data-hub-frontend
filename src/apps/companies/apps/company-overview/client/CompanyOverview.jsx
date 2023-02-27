@@ -5,6 +5,7 @@ import BusinessDetailsCard from '../overview-table-cards/BusinessDetailsCard'
 import ActivityCard from '../overview-table-cards/ActivityCard'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
+import { ActivityFeedApp } from '../../../../../client/components'
 
 const CardContainer = styled('div')`
   border: 1px solid #b1b4b6;
@@ -33,6 +34,7 @@ const CompanyOverview = (props) => {
               {...props}
               queryString={queryString}
               numberOfItems={3}
+              feedType={ActivityFeedApp.FEED_TYPE.RECENT}
             />
           </CardContainer>
           <CardContainer>
@@ -40,6 +42,7 @@ const CompanyOverview = (props) => {
               {...props}
               queryString={queryString}
               numberOfItems={2}
+              feedType={ActivityFeedApp.FEED_TYPE.UPCOMING}
             />
           </CardContainer>
         </GridCol>

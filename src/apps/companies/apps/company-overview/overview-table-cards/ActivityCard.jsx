@@ -16,7 +16,7 @@ const StyledSummaryTable = styled(SummaryTable)`
 `
 
 const ActivityCard = (props) => {
-  const { company, queryString, numberOfItems } = props
+  const { company, queryString, numberOfItems, feedType } = props
 
   return (
     <div>
@@ -43,6 +43,7 @@ const ActivityCard = (props) => {
             companyIsArchived={company.archived}
             isOverview={true}
             numberOfItems={numberOfItems}
+            feedType={feedType}
           />
         </Table.Cell>
         <Table.Row>
