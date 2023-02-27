@@ -15,7 +15,7 @@ const StyledSummaryTable = styled(SummaryTable)`
   margin: 0;
 `
 
-const BusinessDetailsCard = (props) => {
+const ActivityCard = (props) => {
   const { company, queryString, numberOfItems } = props
 
   return (
@@ -55,8 +55,8 @@ const BusinessDetailsCard = (props) => {
   )
 }
 
-BusinessDetailsCard.propTypes = {
+ActivityCard.propTypes = {
   company: PropTypes.object.isRequired,
 }
 
-export default BusinessDetailsCard
+export default ActivityCard

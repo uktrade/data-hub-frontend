@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import BusinessDetailsCard from '../overview-table-cards/BusinessDetailsCard'
-import RecentActivityCard from '../overview-table-cards/RecentActivityCard'
+import ActivityCard from '../overview-table-cards/ActivityCard'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
 
@@ -29,14 +29,14 @@ const CompanyOverview = (props) => {
         </GridCol>
         <GridCol columnOneHalf={true}>
           <CardContainer>
-            <RecentActivityCard
+            <ActivityCard
               {...props}
               queryString={queryString}
               numberOfItems={3}
             />
           </CardContainer>
           <CardContainer>
-            <RecentActivityCard
+            <ActivityCard
               {...props}
               queryString={queryString}
               numberOfItems={2}
