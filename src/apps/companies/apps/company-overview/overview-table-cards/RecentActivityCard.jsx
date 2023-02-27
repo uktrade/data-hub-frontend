@@ -7,15 +7,20 @@ import { ActivityFeedApp } from '../../../../../client/components'
 import urls from '../../../../../lib/urls'
 
 import CompanyActivityFeed from '../../activity-feed/client/CompanyActivityFeed'
+import styled from 'styled-components'
 
 const { FILTER_ITEMS, FILTER_KEYS } = require('../../activity-feed/constants')
+
+const StyledSummaryTable = styled(SummaryTable)`
+  margin: 0;
+`
 
 const BusinessDetailsCard = (props) => {
   const { company, queryString } = props
 
   return (
-    <>
-      <SummaryTable
+    <div>
+      <StyledSummaryTable
         caption={
           <>
             Recent activities
@@ -44,8 +49,8 @@ const BusinessDetailsCard = (props) => {
             <Link href={`${queryString}/activity`}>View all activities</Link>
           </Table.Cell>
         </Table.Row>
-      </SummaryTable>
-    </>
+      </StyledSummaryTable>
+    </div>
   )
 }
 

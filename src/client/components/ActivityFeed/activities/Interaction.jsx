@@ -136,11 +136,9 @@ export default class Interaction extends React.PureComponent {
       theme || service ? (
         <ActivityCardWrapper dataTest="interaction-activity">
           <Row>
-            <LeftCol>
-              <p>{date}</p>
-            </LeftCol>
+            <LeftCol>{date}</LeftCol>
             <RightCol>
-              <ActivityCardLabels service={service} />
+              <ActivityCardLabels service={service} isOverview={true} />
             </RightCol>
           </Row>
           <ActivityCardSubject
@@ -151,9 +149,7 @@ export default class Interaction extends React.PureComponent {
           </ActivityCardSubject>
           {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
           <Row>
-            <p>
-              {formattedAdvisers(advisers)} {transformed.subject.toLowerCase()}
-            </p>
+            {formattedAdvisers(advisers)} {transformed.subject.toLowerCase()}
           </Row>
         </ActivityCardWrapper>
       ) : (

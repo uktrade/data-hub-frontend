@@ -6,25 +6,35 @@ import RecentActivityCard from '../overview-table-cards/RecentActivityCard'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
 
-const StyledGridCol = styled(GridCol)`
-  border: 1px solid #454a4c;
-  margin: 15px;
+const CardContainer = styled('div')`
+  border: 1px solid #b1b4b6;
+  padding: 20px;
+  margin-bottom: 20px;
 `
 
 const CompanyOverview = (props) => {
   const { company } = props
 
   const queryString = `/companies/${company.id}`
-
   return (
     <>
       <GridRow>
-        <StyledGridCol columnOneHalf={true}>
-          <BusinessDetailsCard {...props} queryString={queryString} />
-        </StyledGridCol>
-        <StyledGridCol columnOneHalf={true}>
-          <RecentActivityCard {...props} queryString={queryString} />
-        </StyledGridCol>
+        <GridCol columnOneHalf={true}>
+          <CardContainer>
+            <BusinessDetailsCard {...props} queryString={queryString} />
+          </CardContainer>
+          <CardContainer>
+            <BusinessDetailsCard {...props} queryString={queryString} />
+          </CardContainer>
+        </GridCol>
+        <GridCol columnOneHalf={true}>
+          <CardContainer>
+            <RecentActivityCard {...props} queryString={queryString} />
+          </CardContainer>
+          <CardContainer>
+            <RecentActivityCard {...props} queryString={queryString} />
+          </CardContainer>
+        </GridCol>
       </GridRow>
     </>
   )

@@ -5,13 +5,20 @@ import styled from 'styled-components'
 import { SummaryTable } from '../../../../../client/components'
 import { currencyGBP } from '../../../../../client/utils/number-utils'
 
+const StyledSummaryTable = styled(SummaryTable)`
+  margin: 0;
+`
+const StyledTableRow = styled(Table.Row)`
+  border: 0;
+`
+
 const BusinessDetailsCard = (props) => {
   const { company, queryString } = props
 
   const StyledAddressList = styled('ul')``
   return (
     <>
-      <SummaryTable
+      <StyledSummaryTable
         caption="Business details"
         data-test="businessDetailsContainer"
       >
@@ -51,14 +58,14 @@ const BusinessDetailsCard = (props) => {
         <SummaryTable.Row heading="DIT Sector">
           {company.sector?.name}
         </SummaryTable.Row>
-        <Table.Row>
+        <StyledTableRow>
           <Table.Cell colSpan={2}>
             <Link href={`${queryString}/business-details`}>
               View full business details
             </Link>
           </Table.Cell>
-        </Table.Row>
-      </SummaryTable>
+        </StyledTableRow>
+      </StyledSummaryTable>
     </>
   )
 }
