@@ -28,16 +28,16 @@ const BusinessDetailsCard = (props) => {
 
         <SummaryTable.Row heading="Trading Address">
           <StyledAddressList>
-            {company.registered_address.line_1 && (
+            {company.registered_address?.line_1 && (
               <li>{company.registered_address.line_1}</li>
             )}
-            {company.registered_address.line_2 && (
+            {company.registered_address?.line_2 && (
               <li>{company.registered_address.line_2}</li>
             )}
-            {company.registered_address.town && (
+            {company.registered_address?.town && (
               <li>{company.registered_address.town}</li>
             )}
-            {company.registered_address.postcode && (
+            {company.registered_address?.postcode && (
               <li>{company.registered_address.postcode}</li>
             )}
           </StyledAddressList>
