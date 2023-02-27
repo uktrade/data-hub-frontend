@@ -29,10 +29,18 @@ const CompanyOverview = (props) => {
         </GridCol>
         <GridCol columnOneHalf={true}>
           <CardContainer>
-            <RecentActivityCard {...props} queryString={queryString} />
+            <RecentActivityCard
+              {...props}
+              queryString={queryString}
+              numberOfItems={3}
+            />
           </CardContainer>
           <CardContainer>
-            <RecentActivityCard {...props} queryString={queryString} />
+            <RecentActivityCard
+              {...props}
+              queryString={queryString}
+              numberOfItems={2}
+            />
           </CardContainer>
         </GridCol>
       </GridRow>

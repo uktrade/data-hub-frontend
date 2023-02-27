@@ -12,6 +12,7 @@ export default class ActivityFeedApp extends React.Component {
     isGlobalUltimate: PropTypes.bool,
     dnbHierarchyCount: PropTypes.number,
     companyIsArchived: PropTypes.bool,
+    numberOfItems: PropTypes.number,
   }
 
   static defaultProps = {
@@ -20,6 +21,7 @@ export default class ActivityFeedApp extends React.Component {
     actions: null,
     isGlobalUltimate: false,
     dnbHierarchyCount: null,
+    numberOfItems: 20,
   }
 
   constructor(props) {
@@ -61,8 +63,7 @@ export default class ActivityFeedApp extends React.Component {
 
   async onLoadMore() {
     const { activities, queryParams, from } = this.state
-    const { apiEndpoint } = this.props
-    const size = 20
+    const { apiEndpoint, numberOfItems } = this.props
 
     this.setState({
       isLoading: true,
@@ -73,7 +74,7 @@ export default class ActivityFeedApp extends React.Component {
         await ActivityFeedApp.fetchActivities(
           apiEndpoint,
           from,
-          size,
+          numberOfItems,
           queryParams
         )
 
@@ -83,7 +84,7 @@ export default class ActivityFeedApp extends React.Component {
         activities: allActivities,
         isLoading: false,
         hasMore: total > allActivities.length,
-        from: from + size,
+        from: from + numberOfItems,
         total,
       })
     } catch (e) {
@@ -95,12 +96,12 @@ export default class ActivityFeedApp extends React.Component {
     }
   }
 
-  static async fetchActivities(apiEndpoint, from, size, queryParams) {
+  static async fetchActivities(apiEndpoint, from, numberOfItems, queryParams) {
     const { activityTypeFilter, showDnbHierarchy } = queryParams
 
     const params = {
       from,
-      size,
+      size: numberOfItems,
       activityTypeFilter,
       showDnbHierarchy,
     }

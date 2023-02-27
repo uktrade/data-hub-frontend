@@ -16,7 +16,7 @@ const StyledSummaryTable = styled(SummaryTable)`
 `
 
 const BusinessDetailsCard = (props) => {
-  const { company, queryString } = props
+  const { company, queryString, numberOfItems } = props
 
   return (
     <div>
@@ -42,6 +42,7 @@ const BusinessDetailsCard = (props) => {
             apiEndpoint={urls.companies.activity.data(company.id)}
             companyIsArchived={company.archived}
             isOverview={true}
+            numberOfItems={numberOfItems}
           />
         </Table.Cell>
         <Table.Row>
