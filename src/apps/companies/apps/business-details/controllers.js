@@ -28,47 +28,55 @@ async function renderBusinessDetails(req, res) {
   const userPermissions = res.locals.user.permissions
   const subsidiaries = await getCompanySubsidiaries(req, company.id)
 
-  res
-    .breadcrumb(company.name, urls.companies.detail(company.id))
-    .breadcrumb('Business details')
-    .render('companies/apps/business-details/views/client-container', {
-      heading: 'Business details',
-      props: {
-        businessDetails: transformCompanyToBusinessDetails(company),
-        subsidiariesCount: subsidiaries.count,
-        dnbRelatedCompaniesCount,
-        globalUltimate: globalUltimate
-          ? pick(globalUltimate, ['name', 'url'])
-          : undefined,
-        urls: {
-          companiesHouse: urls.external.companiesHouse(company.company_number),
-          companyBusinessDetails: urls.companies.businessDetails(company.id),
-          companyEdit: urls.companies.edit(company.id),
-          companyArchive: `${urls.companies.archive(
-            company.id
-          )}?_csrf=${csrfToken}`,
-          companyUnarchive: `${urls.companies.unarchive(
-            company.id
-          )}?_csrf=${csrfToken}`,
-          companyAdvisers: urls.companies.advisers.index(company.id),
-          companyEditHistory: urls.companies.editHistory.index(company.id),
-          support: urls.support(),
-          subsidiaries: urls.companies.subsidiaries.index(company.id),
-          linkSubsidiary: urls.companies.subsidiaries.link(company.id),
-          dnbHierarchy: urls.companies.dnbHierarchy.index(company.id),
-          linkGlobalHQ: urls.companies.hierarchies.ghq.link(company.id),
-          globalHQ: company.global_headquarters
-            ? urls.companies.detail(company.global_headquarters.id)
-            : undefined,
-          removeGlobalHQ: urls.companies.hierarchies.ghq.remove(company.id),
-          archivedDocument: company.archived_documents_url_path
-            ? ARCHIVED_DOCUMENT_BASE_URL + company.archived_documents_url_path
-            : undefined,
-          editOneList: urls.companies.editOneList(company.id),
+  res.render('companies/apps/business-details/views/client-container', {
+    props: {
+      breadcrumbs: [
+        { link: urls.dashboard(), text: 'Home' },
+        {
+          link: urls.companies.index(),
+          text: 'Companies',
         },
-        canEditOneList: canEditOneList(userPermissions),
+        { link: urls.companies.detail(company.id), text: company.name },
+        { text: 'Business details' },
+      ],
+      businessDetails: transformCompanyToBusinessDetails(company),
+      subsidiariesCount: subsidiaries.count,
+      dnbRelatedCompaniesCount,
+      globalUltimate: globalUltimate
+        ? pick(globalUltimate, ['name', 'url'])
+        : undefined,
+      urls: {
+        companiesHouse: urls.external.companiesHouse(company.company_number),
+        companyBusinessDetails: urls.companies.businessDetails(company.id),
+        companyEdit: urls.companies.edit(company.id),
+        companyArchive: `${urls.companies.archive(
+          company.id
+        )}?_csrf=${csrfToken}`,
+        companyUnarchive: `${urls.companies.unarchive(
+          company.id
+        )}?_csrf=${csrfToken}`,
+        companyAdvisers: urls.companies.advisers.index(company.id),
+        companyEditHistory: urls.companies.editHistory.index(company.id),
+        support: urls.support(),
+        subsidiaries: urls.companies.subsidiaries.index(company.id),
+        linkSubsidiary: urls.companies.subsidiaries.link(company.id),
+        dnbHierarchy: urls.companies.dnbHierarchy.index(company.id),
+        linkGlobalHQ: urls.companies.hierarchies.ghq.link(company.id),
+        globalHQ: company.global_headquarters
+          ? urls.companies.detail(company.global_headquarters.id)
+          : undefined,
+        removeGlobalHQ: urls.companies.hierarchies.ghq.remove(company.id),
+        archivedDocument: company.archived_documents_url_path
+          ? ARCHIVED_DOCUMENT_BASE_URL + company.archived_documents_url_path
+          : undefined,
+        editOneList: urls.companies.editOneList(company.id),
       },
-    })
+      canEditOneList: canEditOneList(userPermissions),
+      company,
+      localNavItems: res.locals.localNavItems,
+      flashMessages: res.locals.getMessages(),
+    },
+  })
 }
 
 module.exports = {

@@ -16,6 +16,7 @@ function renderOrders(req, res) {
       ],
       returnUrl,
       dnbRelatedCompaniesCount,
+      localNavItems: res.locals.localNavItems,
     },
   })
 }

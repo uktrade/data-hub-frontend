@@ -48,7 +48,7 @@ module.exports = {
   exportBarrier: {
     yes: '#field-helped_remove_export_barrier [value=yes]',
     no: '#field-helped_remove_export_barrier [value=no]',
-    somethingElse: '[aria-label="Something else"]',
+    other: '[aria-label="Other"]',
     notes: '#field-export_barrier_notes',
   },
 }

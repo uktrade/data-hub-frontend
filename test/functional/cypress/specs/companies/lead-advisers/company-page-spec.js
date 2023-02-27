@@ -6,7 +6,7 @@ describe('Lead advisers', () => {
   context('when viewing a non One List tier company', () => {
     before(() => {
       cy.visit(urls.companies.detail(fixtures.company.marsExportsLtd.id))
-      cy.get(selectors.tabbedLocalNav().item(3)).click()
+      cy.get('#tab-advisers').click()
     })
 
     it('should render a meta title', () => {
@@ -17,10 +17,7 @@ describe('Lead advisers', () => {
     })
 
     it('should display the "Lead Adviser" tab in the navigation', () => {
-      cy.get(selectors.tabbedLocalNav().item(3)).should(
-        'contain',
-        'Lead adviser'
-      )
+      cy.get('#tab-advisers').should('contain', 'Lead adviser')
     })
     it('should display a header with the company name', () => {
       cy.get(selectors.companyLeadAdviser.header).should(
@@ -51,7 +48,7 @@ describe('Lead advisers', () => {
     })
 
     it('should display the "Core team" tab in the navigation', () => {
-      cy.get(selectors.tabbedLocalNav().item(3)).should('contain', 'Core team')
+      cy.get('#tab-advisers').should('contain', 'Core team')
     })
   })
   context(
@@ -59,7 +56,7 @@ describe('Lead advisers', () => {
     () => {
       before(() => {
         cy.visit(urls.companies.detail(fixtures.company.oneListTierDita.id))
-        cy.get(selectors.tabbedLocalNav().item(3)).click()
+        cy.get('#tab-advisers').click()
       })
 
       it('should have a link to the Lead adviser tab', () => {
@@ -71,10 +68,7 @@ describe('Lead advisers', () => {
           )
       })
       it('should display the "Lead Adviser" tab in the navigation', () => {
-        cy.get(selectors.tabbedLocalNav().item(3)).should(
-          'contain',
-          'Lead adviser'
-        )
+        cy.get('#tab-advisers').should('contain', 'Lead adviser')
       })
       it('should display a header with the company name', () => {
         cy.get(selectors.companyLeadAdviser.header).should(

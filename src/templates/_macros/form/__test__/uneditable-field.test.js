@@ -35,9 +35,7 @@ describe('Uneditable field macro', () => {
 
     it('should render a label', () => {
       expect(
-        this.component
-          .querySelector('.c-form-group__label-text')
-          .textContent.trim()
+        this.component.querySelector('.c-form-group__label').textContent.trim()
       ).to.equal('Uneditable field')
     })
 

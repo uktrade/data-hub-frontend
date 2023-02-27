@@ -61,6 +61,7 @@ async function renderActivityFeed(req, res, next) {
           company,
           breadcrumbs,
           flashMessages: res.locals.getMessages(),
+          localNavItems: res.locals.localNavItems,
         }
       : {
           company,
@@ -68,6 +69,7 @@ async function renderActivityFeed(req, res, next) {
           flashMessages: res.locals.getMessages(),
           activityTypeFilter: FILTER_KEYS.dataHubActivity,
           activityTypeFilters: FILTER_ITEMS,
+          localNavItems: res.locals.localNavItems,
           isGlobalUltimate: company.is_global_ultimate,
           dnbHierarchyCount,
           dnbRelatedCompaniesCount,
@@ -171,6 +173,11 @@ async function getMaxemailCampaigns(req, next, contacts) {
   } catch (error) {
     next(error)
   }
+}
+
+// Filter Contacts with empty email addresses or Null Emails
+function filterContactListOnEmail(contacts) {
+  return contacts.filter((contact) => contact.email)
 }
 
 async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
@@ -320,10 +327,11 @@ async function fetchActivityFeedHandler(req, res, next) {
         .map((company) => company.id)
     }
 
+    const filteredContacts = filterContactListOnEmail(company.contacts)
     const aventriEvents = await getAventriEventsAttendedByCompanyContacts(
       req,
       next,
-      company.contacts
+      filteredContacts
     )
     const aventriEventIds = Object.keys(aventriEvents)
 
@@ -333,7 +341,7 @@ async function fetchActivityFeedHandler(req, res, next) {
       from,
       size,
       companyIds: [company.id, ...dnbHierarchyIds],
-      contacts: company.contacts,
+      contacts: filteredContacts,
       user,
       aventriEventIds,
       getEssInteractions,
@@ -366,7 +374,7 @@ async function fetchActivityFeedHandler(req, res, next) {
         const essContactEmail = activity.actor['dit:emailAddress']
         const essContact = getContactFromEmailAddress(
           essContactEmail,
-          company.contacts
+          filteredContacts
         )
         activity = augmentEssActivity(activity, essContact)
       }
@@ -715,4 +723,5 @@ module.exports = {
   fetchESSDetails,
   isEssActivity,
   augmentEssActivity,
+  filterContactListOnEmail,
 }

@@ -190,7 +190,7 @@ CompanyBusinessDetails.propTypes = {
   urls: PropTypes.object.isRequired,
   subsidiariesCount: PropTypes.number,
   dnbRelatedCompaniesCount: PropTypes.number,
-  globalUltimate: PropTypes.object.isRequired,
+  globalUltimate: PropTypes.object,
   canEditOneList: PropTypes.bool,
 }
 

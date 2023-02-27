@@ -236,7 +236,7 @@ const TabNav = ({
             <StyledTabpanel
               role="tabpanel"
               tabIndex={-1}
-              aria-labelledby={createId(id, selectedIndex)}
+              aria-labelledby={createId(id, selectedIndex, true)}
               data-test="tabpanel"
             >
               {getContent(tabs, tabKeys, selectedIndex)}

@@ -97,7 +97,7 @@ const assertBreadcrumbs = (specs) => {
 }
 
 /**
- * @description Same as asserBreadcrumbs but already wrapped in an `it` block.
+ * @description Same as assertBreadcrumbs but already wrapped in an `it` block.
  * @param {Object} specs - A map of expected breadcrumb item labels to hrefs.
  */
 const testBreadcrumbs = (specs) =>

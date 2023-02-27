@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import VisuallyHidden from '@govuk-react/visually-hidden'
 import { SPACING } from '@govuk-react/constants'
 import Input from '@govuk-react/input'
 import styled from 'styled-components'
@@ -21,14 +20,14 @@ const StyledSearchInput = styled(Input)`
   border: 2px solid #0b0c0c;
   width: 100%;
   padding-left: ${SPACING.SCALE_3};
+  margin-top: 10px;
 `
 const StyledMain = styled(Main)`
-  padding-top: 0;
+  padding-top: 40px;
 `
 
-const StyledDiv = styled('div')({
+const StyledLabel = styled('label')({
   marginTop: 2 * 20.5,
-  marginBottom: 10,
   fontSize: 19,
   color: DARK_GREY,
 })
@@ -52,13 +51,10 @@ const SearchLocalHeader = ({ csrfToken, flashMessages }) => (
     >
       <FlashMessages flashMessages={flashMessages} />
       <StyledMain>
-        <StyledDiv>
+        <StyledLabel htmlFor="search-input">
           Search for company, contact, event, investment project or OMIS order
-        </StyledDiv>
+        </StyledLabel>
         <StyledSearchContainer role="search">
-          <label htmlFor="search-input">
-            <VisuallyHidden>Input your search term</VisuallyHidden>
-          </label>
           <StyledSearchInput
             name="term"
             type="text"

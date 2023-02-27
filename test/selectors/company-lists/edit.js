@@ -6,5 +6,4 @@ module.exports = {
     input: '#edit-company-list form input[name="listName"]',
   },
   saveButton: '#edit-company-list button',
-  cancelLink: '#edit-company-list a',
 }

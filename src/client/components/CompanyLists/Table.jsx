@@ -39,6 +39,10 @@ const StyledCell = styled.td({
   padding: 0,
   borderBottom: 'none',
 })
+const StyledHeaderCell = styled.th({
+  padding: 0,
+  borderBottom: 'none',
+})
 const StyledTableCell = styled(StyledCell)(({ theme }) => ({
   display: 'inline-block',
   width: '100%',
@@ -50,7 +54,7 @@ const StyledTableCell = styled(StyledCell)(({ theme }) => ({
   },
 }))
 
-const StyledHeaderCell = styled(StyledCell)(({ theme }) => ({
+const StyledTableHeaderCell = styled(StyledHeaderCell)(({ theme }) => ({
   display: 'none',
   fontWeight: FONT_WEIGHTS.bold,
   [getMediaQuery(theme)]: {
@@ -131,13 +135,15 @@ const CompaniesTable = ({ companies }) => (
   <Table
     head={
       <Table.Row>
-        <StyledHeaderCell width="auto">Company name</StyledHeaderCell>
-        <StyledHeaderCell width="15%">Last interaction</StyledHeaderCell>
-        <StyledHeaderCell width="25%">Subject</StyledHeaderCell>
-        <StyledHeaderCell width="20%">Added by</StyledHeaderCell>
-        <StyledHeaderCell width="151px">
+        <StyledTableHeaderCell width="auto">Company name</StyledTableHeaderCell>
+        <StyledTableHeaderCell width="15%">
+          Last interaction
+        </StyledTableHeaderCell>
+        <StyledTableHeaderCell width="25%">Subject</StyledTableHeaderCell>
+        <StyledTableHeaderCell width="20%">Added by</StyledTableHeaderCell>
+        <StyledTableHeaderCell width="151px">
           <VisuallyHidden>Action</VisuallyHidden>
-        </StyledHeaderCell>
+        </StyledTableHeaderCell>
       </Table.Row>
     }
   >

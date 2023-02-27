@@ -1,5 +1,22 @@
 {% extends "_layouts/template.njk" %}
 
+{% block local_header %}
+
+  {% component 'react-slot', {
+    id: 'company-local-header',
+    props: props
+  } %}
+
+{% endblock %}
+
+{% block local_nav %}
+  {% component 'react-slot', {
+    id: 'company-tabbed-local-navigation',
+    props: props
+  } %}
+
+{% endblock %}
+
 {% block body_main_content %}
   {% component 'react-slot', {
     id: 'company-business-details',

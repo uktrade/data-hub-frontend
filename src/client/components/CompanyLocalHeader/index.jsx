@@ -112,163 +112,166 @@ const CompanyLocalHeader = ({
 }) => {
   const queryString = returnUrl ? `${returnUrl}` : `/companies/${company.id}`
   return (
-    <>
-      <LocalHeader breadcrumbs={breadcrumbs} flashMessages={flashMessages}>
-        <GridRow>
-          <GridCol setWidth="two-thirds">
-            <LocalHeaderHeading data-test="heading">
-              {company.name}
-            </LocalHeaderHeading>
-            <StyledAddress data-test="address">
-              {addressToString(company.address)}
-            </StyledAddress>
-          </GridCol>
-          <GridCol setWith="one-third">
-            <ConnectedDropdownMenu
-              label="View options"
-              closedLabel="Hide options"
-              id="local_header"
-            >
-              <DropdownButton
-                href={`/companies/${company.id}/lists/add-remove?returnUrl=${queryString}`}
+    company && (
+      <>
+        <LocalHeader breadcrumbs={breadcrumbs} flashMessages={flashMessages}>
+          <GridRow>
+            <GridCol setWidth="two-thirds">
+              <LocalHeaderHeading data-test="heading">
+                {company.name}
+              </LocalHeaderHeading>
+              <StyledAddress data-test="address">
+                {addressToString(company.address)}
+              </StyledAddress>
+            </GridCol>
+            <GridCol setWith="one-third">
+              <ConnectedDropdownMenu
+                label="View options"
+                closedLabel="Hide options"
+                id="local_header"
               >
-                Add to or remove from lists
-              </DropdownButton>
-              <DropdownButton href={urls.companies.pipelineAdd(company.id)}>
-                Add to my pipeline
-              </DropdownButton>
-            </ConnectedDropdownMenu>
-          </GridCol>
-        </GridRow>
-        {(company.isUltimate || company.isGlobalHQ) && (
-          <TypeWrapper>
-            <BadgeWrapper>
-              <Badge>
-                <BadgeText data-test="badge">
-                  {company.isUltimate ? 'Ultimate HQ' : 'Global HQ'}
-                </BadgeText>
-              </Badge>
-            </BadgeWrapper>
-            {company.isUltimate && (
-              <StyledDetails
-                summary="What does Ultimate HQ mean?"
-                data-test="metaList"
-              >
-                This HQ is in control of all related company records for{' '}
-                {company.name}.
-              </StyledDetails>
-            )}
-          </TypeWrapper>
-        )}
-        {(dnbRelatedCompaniesCount > 0 || company.hasManagedAccountDetails) && (
-          <StyledDescription data-test="description">
-            {dnbRelatedCompaniesCount > 0 && (
-              <p>
-                Data Hub contains{' '}
-                <a href={urls.companies.dnbHierarchy.index(company.id)}>
-                  {dnbRelatedCompaniesCount} other company{' '}
-                  {pluralize('record', dnbRelatedCompaniesCount)}
-                </a>{' '}
-                related to this company
-              </p>
-            )}
-            {company.hasManagedAccountDetails && (
-              <>
+                <DropdownButton
+                  href={`/companies/${company.id}/lists/add-remove?returnUrl=${queryString}`}
+                >
+                  Add to or remove from lists
+                </DropdownButton>
+                <DropdownButton href={urls.companies.pipelineAdd(company.id)}>
+                  Add to my pipeline
+                </DropdownButton>
+              </ConnectedDropdownMenu>
+            </GridCol>
+          </GridRow>
+          {(company.isUltimate || company.isGlobalHQ) && (
+            <TypeWrapper>
+              <BadgeWrapper>
+                <Badge>
+                  <BadgeText data-test="badge">
+                    {company.isUltimate ? 'Ultimate HQ' : 'Global HQ'}
+                  </BadgeText>
+                </Badge>
+              </BadgeWrapper>
+              {company.isUltimate && (
+                <StyledDetails
+                  summary="What does Ultimate HQ mean?"
+                  data-test="metaList"
+                >
+                  This HQ is in control of all related company records for{' '}
+                  {company.name}.
+                </StyledDetails>
+              )}
+            </TypeWrapper>
+          )}
+          {(dnbRelatedCompaniesCount > 0 ||
+            company.hasManagedAccountDetails) && (
+            <StyledDescription data-test="description">
+              {dnbRelatedCompaniesCount > 0 && (
                 <p>
-                  This is an account managed company (One List{' '}
-                  {company.one_list_group_tier.name})
+                  Data Hub contains{' '}
+                  <a href={urls.companies.dnbHierarchy.index(company.id)}>
+                    {dnbRelatedCompaniesCount} other company{' '}
+                    {pluralize('record', dnbRelatedCompaniesCount)}
+                  </a>{' '}
+                  related to this company
                 </p>
-                <p>
-                  {company.isItaTierDAccount
-                    ? 'Lead ITA'
-                    : 'Global Account Manager'}
-                  : {company.one_list_group_global_account_manager.name}{' '}
-                  <a href={urls.companies.advisers.index(company.id)}>
-                    {company.isItaTierDAccount
-                      ? 'View Lead adviser'
-                      : 'View core team'}
-                  </a>
-                </p>
-              </>
-            )}
-          </StyledDescription>
-        )}
-        <p>
-          <a href={urls.companies.businessDetails(company.id)}>
-            View full business details
-          </a>
-        </p>
-      </LocalHeader>
-
-      {company.archived && (
-        <ArchivePanel
-          archivedBy={company.archived_by}
-          archivedOn={company.archived_on}
-          archiveReason={company.archived_reason}
-          unarchiveUrl={urls.companies.unarchive(company.id)}
-          type="company"
-        />
-      )}
-
-      {company.pending_dnb_investigation && (
-        <StyledMain data-test="investigationMessage">
-          <StatusMessage>
-            This company record is based on information that has not yet been
-            validated. This information is currently being checked by the Data
-            Hub support team.
-          </StatusMessage>
-        </StyledMain>
-      )}
-
-      {company.account_plan_url && (
-        <StyledMainMuted data-test="accountPlanMessage">
-          <StatusMessage>
-            <a href={company.account_plan_url} target="_blank">
-              Go to Sharepoint to view the account plan
-            </a>{' '}
-            for {company.name} (opens in a new window or tab). You might have to
-            request access to this file.
-            {company.one_list_group_global_account_manager &&
-              company.one_list_group_global_account_manager.contact_email && (
+              )}
+              {company.hasManagedAccountDetails && (
                 <>
-                  &nbsp;To do so, contact the Global Account Manager at&nbsp;
-                  <a
-                    href={
-                      'mailto:' +
-                      company.one_list_group_global_account_manager
-                        .contact_email
-                    }
-                  >
-                    {
-                      company.one_list_group_global_account_manager
-                        .contact_email
-                    }
-                  </a>
-                  .
+                  <p>
+                    This is an account managed company (One List{' '}
+                    {company.one_list_group_tier.name})
+                  </p>
+                  <p>
+                    {company.isItaTierDAccount
+                      ? 'Lead ITA'
+                      : 'Global Account Manager'}
+                    : {company.one_list_group_global_account_manager.name}{' '}
+                    <a href={urls.companies.advisers.index(company.id)}>
+                      {company.isItaTierDAccount
+                        ? 'View Lead adviser'
+                        : 'View core team'}
+                    </a>
+                  </p>
                 </>
               )}
-            <StyledDetailsMuted
-              summary="What is an account plan?"
-              data-test="metaList"
-            >
-              All businesses on the One List are expected to have an account
-              plan, to ensure that the wider virtual team understands the
-              company and its key priorities. The Global Account Manager is
-              responsible for adding and updating the account plan. For further
-              information{' '}
-              <NewWindowLink
-                href={
-                  urls.external.digitalWorkspace.accountManagementStrategyTeam
-                }
-                aria-label="view the Account Management Framework"
+            </StyledDescription>
+          )}
+        </LocalHeader>
+
+        {company.archived && (
+          <ArchivePanel
+            archivedBy={company.archived_by}
+            archivedOn={company.archived_on}
+            archiveReason={company.archived_reason}
+            unarchiveUrl={urls.companies.unarchive(company.id)}
+            type="company"
+          />
+        )}
+
+        {company.pending_dnb_investigation && (
+          <StyledMain data-test="investigationMessage">
+            <StatusMessage>
+              This company record is based on information that has not yet been
+              validated. This information is currently being checked by the Data
+              Hub support team.
+            </StatusMessage>
+          </StyledMain>
+        )}
+
+        {company.account_plan_url && (
+          <StyledMainMuted data-test="accountPlanMessage">
+            <StatusMessage>
+              <a
+                href={company.account_plan_url}
+                target="_blank"
+                aria-label="Opens in a new window or tab"
+                rel="noopener noreferrer"
               >
-                view the Account Management Framework
-              </NewWindowLink>
-            </StyledDetailsMuted>
-          </StatusMessage>
-        </StyledMainMuted>
-      )}
-    </>
+                Go to Sharepoint to view the account plan
+              </a>{' '}
+              for {company.name} (opens in a new window or tab). You might have
+              to request access to this file.
+              {company.one_list_group_global_account_manager &&
+                company.one_list_group_global_account_manager.contact_email && (
+                  <>
+                    &nbsp;To do so, contact the Global Account Manager at&nbsp;
+                    <a
+                      href={
+                        'mailto:' +
+                        company.one_list_group_global_account_manager
+                          .contact_email
+                      }
+                    >
+                      {
+                        company.one_list_group_global_account_manager
+                          .contact_email
+                      }
+                    </a>
+                    .
+                  </>
+                )}
+              <StyledDetailsMuted
+                summary="What is an account plan?"
+                data-test="metaList"
+              >
+                All businesses on the One List are expected to have an account
+                plan, to ensure that the wider virtual team understands the
+                company and its key priorities. The Global Account Manager is
+                responsible for adding and updating the account plan. For
+                further information{' '}
+                <NewWindowLink
+                  href={
+                    urls.external.digitalWorkspace.accountManagementStrategyTeam
+                  }
+                  aria-label="view the Account Management Framework"
+                >
+                  view the Account Management Framework
+                </NewWindowLink>
+              </StyledDetailsMuted>
+            </StatusMessage>
+          </StyledMainMuted>
+        )}
+      </>
+    )
   )
 }
 

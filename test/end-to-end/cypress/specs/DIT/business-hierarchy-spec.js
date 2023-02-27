@@ -27,10 +27,11 @@ describe('Business hierarchy', () => {
           .next()
           .click()
         cy.get('.c-entity-list li a').first().click()
-        cy.get('.c-message--success').should(
+        cy.get('[data-test="status-message"]').should(
           'contain',
           'You’ve linked the Global Headquarters'
         )
+
         cy.get(selectors.companyBusinessDetails().hierarchy).should(
           'contain',
           'Global HQOne List CorpRemove link'
@@ -42,7 +43,7 @@ describe('Business hierarchy', () => {
         cy.get(
           `${selectors.companyBusinessDetails().hierarchy} td a:nth-child(2)`
         ).click()
-        cy.get('.c-message--success').should(
+        cy.get('[data-test="status-message"]').should(
           'contain',
           'You’ve removed the link to Global Headquarters'
         )
@@ -94,7 +95,7 @@ describe('Business hierarchy', () => {
       cy.get(selectors.companySubsidiaries().oneLinkedSubsidiary).click()
       cy.get(selectors.companySubsidiariesLink().removeSubsidiary).click()
 
-      cy.get(selectors.message.successful).should(
+      cy.get('[data-test="status-message"]').should(
         'contain',
         'You’ve removed the link to Global Headquarters'
       )

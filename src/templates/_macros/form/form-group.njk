@@ -53,9 +53,7 @@
         "
         {% if labelElement == 'label' %}for="{{ props.fieldId }}"{% endif %}
       >
-        <span class="{{ labelClassName + '-text' }}">
-          {{ props.label }} {{ '(optional)' if props.optional }}
-        </span>
+        {{ props.label }} {{ '(optional)' if props.optional }}
         {% if props.error and labelElement == 'label' %}
           <span class="c-form-group__error-message" data-test="field-error">{{ props.error }}</span>
         {% endif %}

@@ -32,6 +32,10 @@ const LOCAL_NAV = [
     permissions: ['interaction.view_all_interaction'],
   },
   {
+    path: 'business-details',
+    label: 'Business details',
+  },
+  {
     path: 'contacts',
     label: 'Company contacts',
     permissions: ['company.view_contact'],

@@ -215,6 +215,8 @@ const Pagination = ({
                       onClick={(e) => handleOnClick(page, e)}
                       data-page-number={page}
                       data-test={`${isActive && 'page-number-active'}`}
+                      aria-label={`Page ${page}`}
+                      aria-current={isActive ? 'page' : false}
                       ref={(el) => (linkRefs.current[index] = el)}
                       href="#"
                     >
