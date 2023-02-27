@@ -38,6 +38,7 @@ const ActivityCardSubject = ({
   children,
   url,
   linkDataTest,
+  isOverview,
   dataTest = 'activity-card-subject',
   isOverview,
 }) => {
