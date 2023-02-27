@@ -35,7 +35,7 @@ const StyledAnchorTag = styled.a`
   display: inline-block;
 
   @media (min-width: 840px) {
-    padding: 10px 20px;
+    padding: 10px 11px;
     margin: 0 5px 0 0;
     &:link,
     &:visited,
