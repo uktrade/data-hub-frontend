@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { BLACK } from 'govuk-colours'
+import { BLACK } from '../../client/utils/colours'
 import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 
 export default styled.label({

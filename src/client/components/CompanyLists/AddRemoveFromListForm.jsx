@@ -2,8 +2,8 @@ import React from 'react'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
-import { GREY_3, TEXT_COLOUR } from 'govuk-colours'
 
+import { GREY_3, TEXT_COLOUR } from '../../../client/utils/colours'
 import { FieldRadios } from '../../../client/components'
 
 import Form from '../../../client/components/Form'

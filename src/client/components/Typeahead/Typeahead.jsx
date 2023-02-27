@@ -10,7 +10,7 @@ import {
   RED,
   TEXT_COLOUR,
   WHITE,
-} from 'govuk-colours'
+} from '../../utils/colours'
 import { FOCUSABLE, SPACING } from '@govuk-react/constants'
 import Label from '@govuk-react/label'
 import multiInstance from '../../utils/multiinstance'

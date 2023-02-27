@@ -6,7 +6,12 @@ import Link from '@govuk-react/link'
 import LoadingBox from '@govuk-react/loading-box'
 import { H3 } from '@govuk-react/heading'
 import Button from '@govuk-react/button'
-import { BLACK, GREY_2, GREY_4, YELLOW_25 } from 'govuk-colours'
+import {
+  BLACK,
+  GREY_2,
+  GREY_4,
+  YELLOW_25,
+} from '../../../../../client/utils/colours'
 import {
   FONT_SIZE,
   FONT_WEIGHTS,

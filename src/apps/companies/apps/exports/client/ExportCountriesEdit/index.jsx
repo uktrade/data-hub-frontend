@@ -1,7 +1,7 @@
 import React from 'react'
-import { ERROR_COLOUR } from 'govuk-colours'
 import styled from 'styled-components'
 
+import { ERROR_COLOUR } from '../../../../../../client/utils/colours'
 import Task from '../../../../../../client/components/Task'
 import Form from '../../../../../../client/components/Form'
 import { ID as TASK_ID, TASK_NAME, API_ERROR, API_WARN } from './state'

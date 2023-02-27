@@ -4,14 +4,13 @@ import PropTypes from 'prop-types'
 
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
-import { WHITE } from 'govuk-colours'
 
 import { state2props } from './state'
 import {
   LATEST_ANNOUNCEMENT__WRITE_TO_LOCALSTORAGE,
   LATEST_ANNOUNCEMENT__READ_FROM_LOCALSTORAGE,
 } from '../../actions'
-import { MID_BLUE } from '../../../client/utils/colors'
+import { MID_BLUE, WHITE } from '../../utils/colours'
 
 const StyledBody = styled('div')`
   background-color: ${MID_BLUE};

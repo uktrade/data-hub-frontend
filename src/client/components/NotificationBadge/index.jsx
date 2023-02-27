@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { RED, WHITE } from 'govuk-colours'
+import { RED, WHITE } from '../../../client/utils/colours'
 import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 
 export const Size = {

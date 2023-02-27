@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Details, Paragraph, WarningText } from 'govuk-react'
-import { BLACK } from 'govuk-colours'
 import styled from 'styled-components'
 
 import {
@@ -10,6 +9,7 @@ import {
   StatusMessage,
 } from '../../../../../client/components'
 import { companies } from '../../../../../lib/urls'
+import { BLACK } from '../../../../../client/utils/colours'
 
 const StyledLink = styled('a')`
   margin-bottom: 0;

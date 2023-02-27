@@ -1,4 +1,4 @@
-import { TEXT_COLOUR, GREY_3 } from 'govuk-colours'
+import { TEXT_COLOUR, GREY_3 } from '../../client/utils/colours'
 import Button from '@govuk-react/button'
 import React from 'react'
 

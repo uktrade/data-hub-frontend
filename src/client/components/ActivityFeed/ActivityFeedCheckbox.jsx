@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import { SPACING, BORDER_WIDTH_MOBILE } from '@govuk-react/constants'
-import { WHITE } from 'govuk-colours'
 import PropTypes from 'prop-types'
 import Checkbox from '@govuk-react/checkbox'
+
+import { WHITE } from '../../../client/utils/colours'
 
 const StyledCheckbox = styled(Checkbox)`
   display: flex;

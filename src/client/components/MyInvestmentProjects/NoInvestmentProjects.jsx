@@ -8,7 +8,7 @@ import Link from '@govuk-react/link'
 import { MEDIA_QUERIES, SPACING, FONT_SIZE } from '@govuk-react/constants'
 
 import { investments } from '../../../lib/urls'
-import { DARK_GREY } from '../../utils/colors'
+import { DARK_GREY } from '../../utils/colours'
 import TimelineImage from './timeline.png'
 
 const StyledContainer = styled('div')`

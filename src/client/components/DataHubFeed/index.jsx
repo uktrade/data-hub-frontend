@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { SPACING, FONT_SIZE } from '@govuk-react/constants'
-import { GREY_1, GREY_2 } from 'govuk-colours'
+import { GREY_1, GREY_2 } from '../../utils/colours'
 import { Link } from 'govuk-react'
 import ListItem from '@govuk-react/list-item'
 import Paragraph from '@govuk-react/paragraph'

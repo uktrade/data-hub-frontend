@@ -2,10 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
-import { BLACK, BUTTON_COLOUR, GREY_2, RED, YELLOW } from 'govuk-colours'
 
 import { DATE_DAY_LONG_FORMAT } from '../../../common/constants'
-import { rgba } from '../../utils/colors'
+import {
+  BLACK,
+  BUTTON_COLOUR,
+  GREY_2,
+  RED,
+  YELLOW,
+  rgba,
+} from '../../utils/colours'
 
 const {
   formatWithoutParsing,

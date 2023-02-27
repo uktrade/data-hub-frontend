@@ -1,5 +1,5 @@
 import React from 'react'
-import { BLACK, GREY_1 } from 'govuk-colours'
+import { BLACK, GREY_1 } from '../../../utils/colours'
 import styled from 'styled-components'
 import { ItemContent } from './styled'
 import { formatMediumDate } from '../../../utils/date'

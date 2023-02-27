@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { GREY_2 } from 'govuk-colours'
+import { GREY_2 } from '../../../client/utils/colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import { spacing } from '@govuk-react/lib'
 import styled from 'styled-components'

@@ -4,7 +4,11 @@ import FormGroup from '@govuk-react/form-group'
 import Label from '@govuk-react/label'
 import styled from 'styled-components'
 import HintText from '@govuk-react/hint-text'
-import { ERROR_COLOUR, GREY_2, GREY_3 } from 'govuk-colours'
+import {
+  ERROR_COLOUR,
+  GREY_2,
+  GREY_3,
+} from '../../../../../client/utils/colours'
 import {
   BORDER_WIDTH_FORM_ELEMENT_ERROR,
   FONT_WEIGHTS,

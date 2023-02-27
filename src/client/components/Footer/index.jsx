@@ -8,7 +8,7 @@ import {
   FOOTER_BORDER_TOP,
   FOCUS_COLOUR,
   BLACK,
-} from 'govuk-colours'
+} from '../../../client/utils/colours'
 import govukCrest from './govuk-crest-2x.png'
 
 import urls from '../../../lib/urls'

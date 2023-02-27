@@ -1,4 +1,5 @@
-const { BLACK, GREY_1 } = require('govuk-colours')
+const { BLACK } = require('govuk-colours')
+const { GREY_1 } = require('../../utils/colors')
 const { sortBy } = require('lodash')
 
 const {
@@ -7,9 +8,7 @@ const {
 const inProgress = require('../../../../sandbox/fixtures/v4/pipeline-item/in-progress.json')
 const { currencyGBP } = require('../../../../../src/client/utils/number-utils')
 const leads = require('../../../../sandbox/fixtures/v4/pipeline-item/leads.json')
-const {
-  TAG_COLOURS,
-} = require('../../../../../src/client/components/Tag/colours')
+const { TAG_COLOURS } = require('../../../../../src/client/utils/colours')
 const win = require('../../../../sandbox/fixtures/v4/pipeline-item/win.json')
 const urls = require('../../../../../src/lib/urls')
 const { format } = require('../../../../../src/client/utils/date')

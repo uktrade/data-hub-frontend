@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
-import { BLACK, GREY_3 } from 'govuk-colours'
+import { BLACK, GREY_3 } from '../../../../client/utils/colours'
 
 import ContactResource from '../../../components/Resource/Contact'
 import { SummaryTable } from '../../../components'

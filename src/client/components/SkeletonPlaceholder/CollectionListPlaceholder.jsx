@@ -1,5 +1,5 @@
 import React from 'react'
-import { GREY_4 } from 'govuk-colours'
+import { GREY_4 } from '../../../client/utils/colours'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
 

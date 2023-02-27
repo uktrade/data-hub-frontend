@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Link from '@govuk-react/link'
-import { GREY_1 } from 'govuk-colours'
 import {
   FONT_SIZE,
   FONT_WEIGHTS,
@@ -10,6 +9,7 @@ import {
   SPACING,
 } from '@govuk-react/constants'
 
+import { GREY_1 } from '../../../../../client/utils/colours'
 import {
   Step,
   FieldRadios,

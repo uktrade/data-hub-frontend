@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { WHITE, BLUE, LIGHT_BLUE_50 } from 'govuk-colours'
+import { WHITE, BLUE, LIGHT_BLUE_50 } from '../../../client/utils/colours'
 import { typography } from '@govuk-react/lib'
 import { SPACING } from '@govuk-react/constants'
 

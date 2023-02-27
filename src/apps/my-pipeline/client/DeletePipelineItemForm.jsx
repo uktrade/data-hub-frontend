@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { RED } from 'govuk-colours'
 import WarningText from '@govuk-react/warning-text'
 import { SPACING } from '@govuk-react/constants'
 
 import urls from '../../../lib/urls'
 
+import { RED } from '../../../client/utils/colours'
 import { Main } from '../../../client/components'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 import Form from '../../../client/components/Form'

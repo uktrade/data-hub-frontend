@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { BLACK, GREY_3 } from 'govuk-colours'
+import { BLACK, GREY_3 } from '../../../../../client/utils/colours'
 import { Search } from '@govuk-react/icons'
 import Select from '@govuk-react/select'
 import { isEmpty } from 'lodash'

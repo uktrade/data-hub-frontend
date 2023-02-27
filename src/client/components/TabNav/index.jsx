@@ -10,12 +10,13 @@ import {
   TEXT_COLOUR,
   BORDER_COLOUR,
   FOCUS_COLOUR,
-} from 'govuk-colours'
+} from '../../../client/utils/colours'
 import { MEDIA_QUERIES, SPACING_POINTS } from '@govuk-react/constants'
 
 import multiInstance from '../../utils/multiinstance'
 import { TAB_NAV__SELECT, TAB_NAV__FOCUS } from '../../actions'
 import reducer from './reducer'
+import { BLACK } from '../../../client/utils/colours'
 
 const LEFT_ARROW_KEY = 37
 const RIGHT_ARROW_KEY = 39
@@ -33,7 +34,7 @@ const focusStyle = {
 const StyledSpan = styled('span')({
   display: 'block',
   '::before': {
-    color: '#0b0c0c',
+    color: `${BLACK}`,
     content: '"\u2014 "',
     paddingRight: `${SPACING_POINTS[1]}px`,
   },

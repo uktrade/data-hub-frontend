@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import MultiChoice from '@govuk-react/multi-choice'
 import PropTypes from 'prop-types'
-import { GREY_2, YELLOW } from 'govuk-colours'
 import styled, { css } from 'styled-components'
 import {
   FONT_SIZE,
@@ -10,6 +9,7 @@ import {
   FONT_WEIGHTS,
 } from '@govuk-react/constants'
 
+import { GREY_2, YELLOW } from '../../../client/utils/colours'
 import Checkbox from '../Checkbox'
 import FieldWrapper from '../Form/elements/FieldWrapper'
 

@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { BLUE, GREY_1, GREY_4 } from 'govuk-colours'
 import { H3 } from '@govuk-react/heading'
 import ListItem from '@govuk-react/list-item'
 import {
@@ -13,6 +12,7 @@ import {
   SPACING_POINTS,
 } from '@govuk-react/constants'
 
+import { BLUE, GREY_1, GREY_4 } from '../../../../utils/colours'
 import Badge from '../../../Badge'
 import { SOURCE_TYPES } from '../../constants'
 

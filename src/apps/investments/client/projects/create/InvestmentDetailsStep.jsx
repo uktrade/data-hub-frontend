@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { GREY_2 } from 'govuk-colours'
 import { SPACING } from '@govuk-react/constants'
 
+import { GREY_2 } from '../../../../../client/utils/colours'
 import {
   Step,
   FieldDate,

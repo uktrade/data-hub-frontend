@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
-import { BLACK } from 'govuk-colours'
+import { BLACK } from '../../../client/utils/colours'
 import { SPACING, FONT_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
 import qs from 'qs'
