@@ -138,7 +138,7 @@ export default class Interaction extends React.PureComponent {
           <Row>
             <LeftCol>{date}</LeftCol>
             <RightCol>
-              <ActivityCardLabels service={service} isOverview={true} />
+              <ActivityCardLabels kind={kind} isOverview={true} />
             </RightCol>
           </Row>
           <ActivityCardSubject
@@ -149,7 +149,8 @@ export default class Interaction extends React.PureComponent {
           </ActivityCardSubject>
           {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
           <Row>
-            {formattedAdvisers(advisers)} {transformed.subject.toLowerCase()}
+            {formattedAdvisers(advisers)} &nbsp;
+            {transformed.subject.toLowerCase()}
           </Row>
         </ActivityCardWrapper>
       ) : (
