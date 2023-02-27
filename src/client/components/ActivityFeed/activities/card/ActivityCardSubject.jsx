@@ -20,23 +20,47 @@ const StyledActivitySubject = styled('h3')`
   }
 `
 
+const StyledActivitySubjectSquash = styled('h3')`
+  font-size: ${FONT_SIZE.SIZE_20};
+  font-weight: ${FONT_WEIGHTS.bold};
+  line-height: ${FONT_SIZE.SIZE_24};
+  margin-bottom: 0;
+  & > a:link,
+  a:visited,
+  a:hover,
+  a:active {
+    text-decoration: none;
+    color: ${BLUE};
+  }
+`
+
 const ActivityCardSubject = ({
   children,
   url,
   linkDataTest,
+  isOverview,
   dataTest = 'activity-card-subject',
 }) => {
-  return (
+  return isOverview ? (
     <StyledActivitySubject data-test={dataTest}>
       <Link dataTest={linkDataTest} href={url}>
         {children}
       </Link>
     </StyledActivitySubject>
+  ) : (
+    <StyledActivitySubjectSquash data-test={dataTest}>
+      <Link dataTest={linkDataTest} href={url}>
+        {children}
+      </Link>
+    </StyledActivitySubjectSquash>
   )
 }
 
 ActivityCardSubject.propTypes = {
   children: PropTypes.node.isRequired,
+}
+ActivityCardSubject.defaultProps = {
+  isOverview: false,
 }
 
 export default ActivityCardSubject
