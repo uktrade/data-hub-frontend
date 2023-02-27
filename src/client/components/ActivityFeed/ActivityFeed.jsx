@@ -157,7 +157,7 @@ export default class ActivityFeed extends React.Component {
           ))}
         </ActivityFeedCardList>
 
-        {hasMore && !isOverview && (
+        {hasMore && (
           <ActivityFeedPagination
             isLoading={isLoading}
             onLoadMore={onLoadMore}
