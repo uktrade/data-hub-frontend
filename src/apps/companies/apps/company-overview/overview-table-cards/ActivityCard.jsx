@@ -34,11 +34,10 @@ const ActivityCard = (props) => {
         <Table.Cell colspan={2}>
           <ActivityFeedApp
             actions={!company.archived && CompanyActivityFeed.actions}
-            activityTypeFilter={FILTER_KEYS.dataHubActivity}
+            activityTypeFilter={FILTER_KEYS.companyRecentActivitiesQuery}
             activityTypeFilters={FILTER_ITEMS}
             isGlobalUltimate={company.is_global_ultimate}
-            dnbHierarchyCount={3}
-            // dnbHierarchyCount={dnbHierarchyCount}
+            dnbHierarchyCount={0}
             apiEndpoint={urls.companies.activity.data(company.id)}
             companyIsArchived={company.archived}
             isOverview={true}
