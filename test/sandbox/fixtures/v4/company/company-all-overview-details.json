@@ -1,0 +1,70 @@
+{
+  "address": {
+    "country": {
+      "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+      "name": "United Kingdom"
+    },
+    "county": "North Somerset",
+    "line_1": "Unit 10, Ockham Drive",
+    "line_2": "On the Way",
+    "postcode": "UB6 0F2",
+    "town": "GREENFORD"
+  },
+  "archived": false,
+  "archived_by": null,
+  "archived_documents_url_path": "",
+  "archived_on": null,
+  "archived_reason": null,
+  "business_type": null,
+  "company_number": "01261539",
+  "contacts": [],
+  "created_on": "2019-09-03T15:50:37.892394Z",
+  "description": null,
+  "duns_number": "121212121",
+  "employee_range": null,
+  "export_experience_category": null,
+  "export_to_countries": [],
+  "future_interest_countries": [],
+  "global_headquarters": null,
+  "headquarter_type": null,
+  "id": "ba8fae21-2895-47cf-90ba-9273c94dab88",
+  "is_number_of_employees_estimated": true,
+  "modified_on": "2019-09-03T15:50:37.892435Z",
+  "name": "All Overview Details Inc.",
+  "number_of_employees": 260,
+  "one_list_group_global_account_manager": null,
+  "one_list_group_tier": null,
+  "reference_code": "",
+  "registered_address": {
+    "line_1": "1 Way Road",
+    "line_2": "The Estate",
+    "town": "Townland",
+    "county": "North Somerset",
+    "postcode": "DE74 1LS",
+    "country": {
+      "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+      "name": "United Kingdom"
+    }
+  },
+  "sector": {
+    "name": "Retail",
+    "id": "355f977b-8ac3-e211-a646-e4115bead28a"
+  },
+  "trading_names": [],
+  "transfer_reason": "",
+  "transferred_by": null,
+  "transferred_on": null,
+  "transferred_to": null,
+  "turnover_range": {
+    "name": "£33.5M+",
+    "id": "7a4cd12a-6095-e211-a939-e4115bead28a"
+  },
+  "turnover": 1000000,
+  "turnover_gbp": 720000,
+  "is_turnover_estimated": true,
+  "uk_based": true,
+  "uk_region": null,
+  "vat_number": "",
+  "website": "http://all-the-details.com",
+  "pending_dnb_investigation": false
+}

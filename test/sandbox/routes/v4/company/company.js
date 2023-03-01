@@ -1,3 +1,4 @@
+var companyAllOverviewDetails = require('../../../fixtures/v4/company/company-all-overview-details.json')
 var companiesNoResults = require('../../../fixtures/v4/company/companies-no-results.json')
 var companyArchivedSubsidiaries = require('../../../fixtures/v4/company/company-archived-subsidiaries')
 var company = require('../../../fixtures/v4/company/company.json')
@@ -111,6 +112,7 @@ exports.company = function (req, res) {
     'cc7e2f19-7251-4a41-a27a-f98437720532': companyDnBSubsidiary,
     'cc7e2f19-7251-4a41-a27a-f98437720531': companyDnBCorp,
     's07e2f19-8251-1a41-h27a-f98737520831': companyDnBLtd,
+    'ba8fae21-2895-47cf-90ba-9273c94dab88': companyAllOverviewDetails,
     'd27bde24-6330-464b-a48c-0394831586fd': companyDnBGlobalUltimate,
     '0418f79f-154b-4f55-85a6-8ddad559663e': companyDnBGlobalUltimateAndGlobalHq,
     'ca8fae21-2895-47cf-90ba-9273c94dab81': companyInvestigationLtd,
