@@ -69,7 +69,7 @@ const DataHubFeed = ({ items, feedLimit = 5 }) => {
             </Link>
           </>
         )}
-        {items && !items.length && (
+        {!items?.length && (
           <Paragraph data-test="info-feed-no-results">
             No updates available
           </Paragraph>
