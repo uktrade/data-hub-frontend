@@ -21,6 +21,7 @@ const { fetchActivityFeed, fetchMatchingDataHubContact } = require('./repos')
 const config = require('../../../../config')
 
 const {
+  companyRecentActivitiesQuery,
   myActivityQuery,
   externalActivityQuery,
   maxemailCampaignQuery,
@@ -106,6 +107,10 @@ function getQueries(options) {
     [FILTER_KEYS.dataHubAndExternalActivity]: externalActivityQuery({
       ...options,
       types: DATA_HUB_AND_EXTERNAL_ACTIVITY,
+    }),
+    [FILTER_KEYS.companyRecentActivitiesQuery]: companyRecentActivitiesQuery({
+      ...options,
+      types: DATA_HUB_AND_AVENTRI_ACTIVITY,
     }),
   }
 }
