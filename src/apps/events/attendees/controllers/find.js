@@ -15,7 +15,11 @@ async function renderFindAttendee(req, res, next) {
       .breadcrumb(event.name, `/events/${event.id}/attendees`)
       .breadcrumb('Add attendee')
       .title(event.name)
-      .render('events/attendees/views/find')
+      .render('events/attendees/views/find', {
+        props: {
+          eventId: event.id,
+        },
+      })
   } catch (error) {
     next(error)
   }
