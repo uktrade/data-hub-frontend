@@ -26,7 +26,7 @@ const ActivityCard = (props) => {
       <StyledSummaryTable
         caption={
           <>
-            {feedTypeText} activities
+            {feedTypeText} activity
             {/* <Link href={`${queryString}/interactions/create`}>
               Add interaction
             </Link> */}
@@ -35,7 +35,7 @@ const ActivityCard = (props) => {
         data-test="recentInteractionsContainer"
       >
         <Table.Cell colspan={2}>
-          {feedTypeText} activities - coming soon
+          {feedTypeText} activity - coming soon
           {/* <ActivityFeedApp
             actions={!company.archived && CompanyActivityFeed.actions}
             activityTypeFilter={FILTER_KEYS.companyRecentActivitiesQuery}
