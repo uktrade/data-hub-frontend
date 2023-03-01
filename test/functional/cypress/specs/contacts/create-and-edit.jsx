@@ -188,7 +188,7 @@ describe('Create contact form', () => {
       'Last name': 'Pipkin',
       'Job title': 'On dole',
       'Phone number': '456789',
-      'Email address': 'andy@new.email',
+      'Email address': 'AndY@nEw.emAIl',
     })
 
     cy.clickSubmitButton('Add contact')
