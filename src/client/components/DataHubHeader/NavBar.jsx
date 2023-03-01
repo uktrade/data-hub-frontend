@@ -51,17 +51,31 @@ const StyledListItem = styled.li({
   },
 })
 
-const styledLinkActive = {
+const styledLinkMixin = {
   content: '""',
   position: 'absolute',
   left: 0,
   right: 0,
   bottom: 0,
   borderBottom: `${BORDER_WIDTH} solid`,
+}
+
+const styledLinkActive = {
+  ...styledLinkMixin,
   borderColor: DARK_BLUE_LEGACY,
 }
 
+const styledLinkFocus = {
+  ...styledLinkMixin,
+  borderColor: BLACK,
+}
+
 const styledLink = {
+  '&:focus': {
+    backgroundColor: '#FFDD00',
+    boxShadow: 'none',
+    outline: 'none',
+  },
   '&:link, &:visited': {
     position: 'relative',
     display: 'block',
@@ -79,6 +93,7 @@ const styledLink = {
       padding: '8px 0',
       ':hover::after': styledLinkActive,
       '&.active::after': styledLinkActive,
+      ':focus::after': styledLinkFocus,
     },
   },
 }
