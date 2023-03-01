@@ -32,7 +32,7 @@ const ActivityCard = (props) => {
             </Link> */}
           </>
         }
-        data-test="recentInteractionsContainer"
+        data-test={`${feedType} activityCardContainer`}
       >
         <Table.Cell colspan={2}>
           {feedTypeText} activity - coming soon
