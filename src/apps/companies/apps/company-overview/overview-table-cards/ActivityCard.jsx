@@ -3,36 +3,40 @@ import { Link, Table } from 'govuk-react'
 import PropTypes from 'prop-types'
 import { SummaryTable } from '../../../../../client/components'
 // import { fetchAllActivityFeedEvents } from '../../activity-feed/controllers'
-import { ActivityFeedApp } from '../../../../../client/components'
-import urls from '../../../../../lib/urls'
+// import { ActivityFeedApp } from '../../../../../client/components'
+// import urls from '../../../../../lib/urls'
+import camelCase from 'camelcase'
 
-import CompanyActivityFeed from '../../activity-feed/client/CompanyActivityFeed'
+// import CompanyActivityFeed from '../../activity-feed/client/CompanyActivityFeed'
 import styled from 'styled-components'
 
-const { FILTER_ITEMS, FILTER_KEYS } = require('../../activity-feed/constants')
+// const { FILTER_ITEMS, FILTER_KEYS } = require('../../activity-feed/constants')
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin: 0;
 `
 
 const ActivityCard = (props) => {
-  const { company, queryString, numberOfItems, feedType } = props
+  const { queryString, feedType } = props
+
+  const feedTypeText = camelCase(feedType, { pascalCase: true })
 
   return (
     <div>
       <StyledSummaryTable
         caption={
           <>
-            Recent activities
-            <Link href={`${queryString}/interactions/create`}>
+            {feedTypeText} activities
+            {/* <Link href={`${queryString}/interactions/create`}>
               Add interaction
-            </Link>
+            </Link> */}
           </>
         }
         data-test="recentInteractionsContainer"
       >
         <Table.Cell colspan={2}>
-          <ActivityFeedApp
+          {feedTypeText} activities - coming soon
+          {/* <ActivityFeedApp
             actions={!company.archived && CompanyActivityFeed.actions}
             activityTypeFilter={FILTER_KEYS.companyRecentActivitiesQuery}
             activityTypeFilters={FILTER_ITEMS}
@@ -43,7 +47,7 @@ const ActivityCard = (props) => {
             isOverview={true}
             numberOfItems={numberOfItems}
             feedType={feedType}
-          />
+          /> */}
         </Table.Cell>
         <Table.Row>
           <Table.Cell colSpan={2}>
