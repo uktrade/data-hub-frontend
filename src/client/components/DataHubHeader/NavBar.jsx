@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { NavLink, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
-import { BLACK } from 'govuk-colours'
+import { BLACK, YELLOW } from 'govuk-colours'
 import {
   FONT_SIZE,
   FONT_WEIGHTS,
@@ -44,10 +44,30 @@ const StyledList = styled.ul({
   },
 })
 
+// const StyledListItem = styled.li({
+//   paddingRight: SPACING.SCALE_4,
+//   [MEDIA_QUERIES.TABLET]: {
+//     display: 'inline-block',
+//     '&:focus': '${NavContent}',
+//     backGroundColor: '${YELLOW}',
+//     boxShadow: '0 -2px ${YELLOW}, 0 4px ${BLACK}',
+// })
+
 const StyledListItem = styled.li({
   paddingRight: SPACING.SCALE_4,
   [MEDIA_QUERIES.TABLET]: {
     display: 'inline-block',
+    cursor: 'pointer',
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+    '&:focus': {
+      outline: 'none',
+    },
+    '&:active': {
+      backgroundColor: YELLOW,
+      paddingRight: SPACING.SCALE_1,
+    },
   },
 })
 
@@ -59,7 +79,6 @@ const styledLinkActive = {
   bottom: 0,
   borderBottom: `${BORDER_WIDTH} solid`,
   borderColor: BLACK,
-  // boxShadow: RED,
 }
 
 const styledLink = {
