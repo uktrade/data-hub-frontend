@@ -6,6 +6,7 @@ const {
 
 const testTab = (tabText) => {
   const lookUp = {
+    Overview: 'tab-overview',
     Activity: 'tab-activity',
     'Business details': 'tab-business-details',
     'Company contacts': 'tab-contacts',
@@ -30,6 +31,7 @@ describe('Company tab history', () => {
     cy.visit(`/companies/${fixtures.company.marsExportsLtd.id}`)
   })
   ;[
+    'Overview',
     'Activity',
     'Business details',
     'Company contacts',
