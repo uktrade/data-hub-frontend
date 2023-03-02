@@ -45,7 +45,24 @@ const CompanyOverview = (props) => {
             />
           </CardContainer>
         </GridCol>
-        <GridCol columnOneHalf={true}></GridCol>
+        <GridCol columnOneHalf={true}>
+          <CardContainer>
+            <ActivityCard
+              {...props}
+              queryString={queryString}
+              numberOfItems={3}
+              feedType={FILTER_FEED_TYPE.RECENT}
+            />
+          </CardContainer>
+          <CardContainer>
+            <ActivityCard
+              {...props}
+              queryString={queryString}
+              numberOfItems={2}
+              feedType={FILTER_FEED_TYPE.UPCOMING}
+            />
+          </CardContainer>
+        </GridCol>
       </GridRow>
     </>
   )
