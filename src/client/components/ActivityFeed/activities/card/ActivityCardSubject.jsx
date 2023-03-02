@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import { BLUE } from 'govuk-colours'
 import styled from 'styled-components'
-import Link from '@govuk-react/link'
 
 const StyledActivitySubject = styled('h3')`
   font-size: ${FONT_SIZE.SIZE_20};
@@ -43,9 +42,7 @@ const ActivityCardSubject = ({
 }) => {
   return isOverview ? (
     <StyledActivitySubject data-test={dataTest}>
-      <Link dataTest={linkDataTest} href={url}>
-        {children}
-      </Link>
+      {children}
     </StyledActivitySubject>
   ) : (
     <StyledActivitySubjectSquash data-test={dataTest}>
