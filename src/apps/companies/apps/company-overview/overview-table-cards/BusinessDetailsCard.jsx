@@ -72,7 +72,10 @@ const BusinessDetailsCard = (props) => {
         </SummaryTable.Row>
         <StyledTableRow>
           <Table.Cell colSpan={2}>
-            <Link href={`${queryString}/business-details`}>
+            <Link
+              href={`${queryString}/business-details`}
+              data-test="business-page-link"
+            >
               View full business details
             </Link>
           </Table.Cell>
