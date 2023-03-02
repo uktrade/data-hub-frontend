@@ -11,6 +11,10 @@ const StyledSummaryTable = styled(SummaryTable)`
 const StyledTableRow = styled(Table.Row)`
   border: 0;
 `
+const StyledLastTableCell = styled(Table.Cell)`
+  border: 0;
+  padding-bottom: 0;
+`
 
 const BusinessDetailsCard = (props) => {
   const { company, queryString } = props
@@ -71,14 +75,14 @@ const BusinessDetailsCard = (props) => {
           {!company.sector ? 'Not set' : company.sector.name}
         </SummaryTable.Row>
         <StyledTableRow>
-          <Table.Cell colSpan={2}>
+          <StyledLastTableCell colSpan={2}>
             <Link
               href={`${queryString}/business-details`}
               data-test="business-page-link"
             >
               View full business details
             </Link>
-          </Table.Cell>
+          </StyledLastTableCell>
         </StyledTableRow>
       </StyledSummaryTable>
     </>
