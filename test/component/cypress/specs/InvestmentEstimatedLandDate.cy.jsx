@@ -1,8 +1,13 @@
 import React from 'react'
 import InvestmentEstimatedLandDate from '../../../../src/client/components/MyInvestmentProjects/InvestmentEstimatedLandDate'
 import { DATE_DAY_LONG_FORMAT } from '../../../../src/common/constants'
-import { BUTTON_COLOUR, GREY_2, RED, YELLOW } from 'govuk-colours'
-import { rgba } from '../../../../src/client/utils/colors'
+import {
+  BUTTON_COLOUR,
+  GREY_2,
+  RED,
+  YELLOW,
+  rgba,
+} from '../../../../src/client/utils/colours'
 
 const {
   addDays,

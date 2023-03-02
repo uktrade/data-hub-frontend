@@ -1,9 +1,9 @@
 import React from 'react'
 import HintText from '@govuk-react/hint-text'
 import { SPACING, BORDER_WIDTH_MOBILE } from '@govuk-react/constants'
-import { GREY_2 } from 'govuk-colours'
 import styled from 'styled-components'
 
+import { GREY_2 } from '../../../../client/utils/colours'
 import { useMyCompaniesContext } from './useMyCompaniesContext'
 import MyCompaniesTable from './MyCompaniesTable'
 import ListSelector from './ListSelector'

@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { GREY_3, WHITE } from 'govuk-colours'
 import { SPACING } from '@govuk-react/constants'
 
+import { GREY_3, WHITE } from '../../../client/utils/colours'
 import ActivityFeedCheckbox from './ActivityFeedCheckbox'
 
 const ActivityFeedShowAllContainer = styled('div')`

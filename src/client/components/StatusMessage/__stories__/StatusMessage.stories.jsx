@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { ERROR_COLOUR } from 'govuk-colours'
 
+import { ERROR_COLOUR } from '../../../../client/utils/colours'
 import StatusMessage from 'StatusMessage'
 
 storiesOf('StatusMessage', module)

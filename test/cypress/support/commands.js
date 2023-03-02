@@ -214,7 +214,7 @@ Cypress.Commands.add('loadFixture', (fixture) => {
   })
 })
 
-// This command helps us to check colours in cypress as cypress always return rgb, and our govuk-colours library uses hexes.
+// This command helps us to check colours in cypress as cypress always return rgb, and our utils/colours library uses hexes.
 const compareColor = (color, property) => (targetElement) => {
   const tempElement = document.createElement('div')
   tempElement.style.color = color

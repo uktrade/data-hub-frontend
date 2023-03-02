@@ -1,5 +1,4 @@
-const { BLACK } = require('govuk-colours')
-const { GREY_1 } = require('../../utils/colors')
+const { BLACK, GREY_1 } = require('../../../../../src/client/utils/colours')
 const { sortBy } = require('lodash')
 
 const {
