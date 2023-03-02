@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import BusinessDetailsCard from '../overview-table-cards/BusinessDetailsCard'
-import ActivityCard from '../overview-table-cards/ActivityCard'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
 import { FILTER_FEED_TYPE } from '../../activity-feed/constants'
@@ -46,6 +45,7 @@ const CompanyOverview = (props) => {
             />
           </CardContainer>
         </GridCol>
+        <GridCol columnOneHalf={true}></GridCol>
       </GridRow>
     </>
   )
