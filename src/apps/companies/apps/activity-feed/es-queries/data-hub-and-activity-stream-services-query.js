@@ -52,6 +52,22 @@ const dataHubAndActivityStreamServicesQuery = ({
       },
     },
   ]
+  if (feedType != FILTER_FEED_TYPE.ALL) {
+    // TODO Fix
+    // shouldCriteria.push({
+    //   bool: {
+    //     must: [
+    //       {
+    //         range: {
+    //           'object.startTime': {
+    //             lte: 'now/d',
+    //           },
+    //         },
+    //       },
+    //     ],
+    //   },
+    // })
+  }
   if (aventriEventIds?.length) {
     shouldCriteria.push({
       bool: {
