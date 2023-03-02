@@ -25,7 +25,7 @@ const ActivityCard = (props) => {
       <StyledSummaryTable
         caption={
           <>
-            {feedTypeText} activities
+            {feedTypeText} activity
             <Link href={`${queryString}/interactions/create`}>
               Add interaction
             </Link>

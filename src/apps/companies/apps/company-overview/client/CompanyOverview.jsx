@@ -5,6 +5,7 @@ import BusinessDetailsCard from '../overview-table-cards/BusinessDetailsCard'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
 import { FILTER_FEED_TYPE } from '../../activity-feed/constants'
+import ActivityCard from '../overview-table-cards/ActivityCard'
 
 const CardContainer = styled('div')`
   border: 1px solid #b1b4b6;
