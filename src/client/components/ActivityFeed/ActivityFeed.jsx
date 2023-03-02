@@ -7,6 +7,7 @@ import Activity from './Activity'
 import ActivityFeedHeader from './ActivityFeedHeader'
 import ActivityFeedFilters from './ActivityFeedFilters'
 import ActivityFeedPagination from './ActivityFeedPagination'
+import { FILTER_FEED_TYPE } from '../../../apps/companies/apps/activity-feed/constants'
 
 const ActivityFeedContainer = styled('div')`
   margin: ${SPACING.SCALE_2} 0;
@@ -122,11 +123,11 @@ export default class ActivityFeed extends React.Component {
       dnbHierarchyCount,
       companyIsArchived,
       isOverview,
+      feedType,
     } = this.props
 
     const { activityTypeFilters, activityTypeFilter, showDnbHierarchy } =
       this.state
-
     return (
       <ActivityFeedContainer data-test="activity-feed">
         {!isOverview && (
@@ -157,7 +158,7 @@ export default class ActivityFeed extends React.Component {
           ))}
         </ActivityFeedCardList>
 
-        {hasMore && (
+        {hasMore && feedType === FILTER_FEED_TYPE.ALL && (
           <ActivityFeedPagination
             isLoading={isLoading}
             onLoadMore={onLoadMore}

@@ -130,6 +130,7 @@ export default class ActivityFeedApp extends React.Component {
       dnbHierarchyCount,
       companyIsArchived,
       isOverview,
+      feedType,
     } = this.props
 
     const isEmptyFeed = activities.length === 0 && !hasMore
@@ -148,6 +149,7 @@ export default class ActivityFeedApp extends React.Component {
         dnbHierarchyCount={dnbHierarchyCount}
         companyIsArchived={companyIsArchived}
         isOverview={isOverview}
+        feedType={feedType}
       >
         {isEmptyFeed && !error && (
           <div data-test="noActivites">There are no activities to show.</div>

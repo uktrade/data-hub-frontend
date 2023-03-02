@@ -14,6 +14,13 @@ const { FILTER_ITEMS, FILTER_KEYS } = require('../../activity-feed/constants')
 const StyledSummaryTable = styled(SummaryTable)`
   margin: 0;
 `
+const StyledTableRow = styled(Table.Row)`
+  border: 0;
+`
+const StyledLastTableCell = styled(Table.Cell)`
+  border: 0;
+  padding-bottom: 0;
+`
 
 const ActivityCard = (props) => {
   const { company, queryString, numberOfItems, feedType } = props
@@ -47,11 +54,11 @@ const ActivityCard = (props) => {
             feedType={feedType}
           />
         </Table.Cell>
-        <Table.Row>
-          <Table.Cell colSpan={2}>
+        <StyledTableRow>
+          <StyledLastTableCell colSpan={2}>
             <Link href={`${queryString}/activity`}>View all activities</Link>
-          </Table.Cell>
-        </Table.Row>
+          </StyledLastTableCell>
+        </StyledTableRow>
       </StyledSummaryTable>
     </div>
   )
