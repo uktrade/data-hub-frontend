@@ -7,6 +7,9 @@ import { currencyGBP } from '../../../../../client/utils/number-utils'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin: 0;
+  & > tbody th {
+    width: 50%;
+  }
 `
 const StyledTableRow = styled(Table.Row)`
   border: 0;
