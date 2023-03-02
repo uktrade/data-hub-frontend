@@ -5,7 +5,7 @@ import { SummaryTable } from '../../../../../client/components'
 // import { fetchAllActivityFeedEvents } from '../../activity-feed/controllers'
 import { ActivityFeedApp } from '../../../../../client/components'
 import urls from '../../../../../lib/urls'
-
+import camelCase from 'camelcase'
 import CompanyActivityFeed from '../../activity-feed/client/CompanyActivityFeed'
 import styled from 'styled-components'
 
@@ -18,18 +18,20 @@ const StyledSummaryTable = styled(SummaryTable)`
 const ActivityCard = (props) => {
   const { company, queryString, numberOfItems, feedType } = props
 
+  const feedTypeText = camelCase(feedType, { pascalCase: true })
+
   return (
     <div>
       <StyledSummaryTable
         caption={
           <>
-            Recent activities
+            {feedTypeText} activities
             <Link href={`${queryString}/interactions/create`}>
               Add interaction
             </Link>
           </>
         }
-        data-test="recentInteractionsContainer"
+        data-test={`${feedTypeText} activityCardContainer`}
       >
         <Table.Cell colspan={2}>
           <ActivityFeedApp
