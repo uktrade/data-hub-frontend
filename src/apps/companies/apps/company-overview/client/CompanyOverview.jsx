@@ -2,10 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import BusinessDetailsCard from '../overview-table-cards/BusinessDetailsCard'
-import ActivityCard from '../overview-table-cards/ActivityCard'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
-import { ActivityFeedApp } from '../../../../../client/components'
 
 const CardContainer = styled('div')`
   border: 1px solid #b1b4b6;
@@ -24,28 +22,8 @@ const CompanyOverview = (props) => {
           <CardContainer>
             <BusinessDetailsCard {...props} queryString={queryString} />
           </CardContainer>
-          <CardContainer>
-            <BusinessDetailsCard {...props} queryString={queryString} />
-          </CardContainer>
         </GridCol>
-        <GridCol columnOneHalf={true}>
-          <CardContainer>
-            <ActivityCard
-              {...props}
-              queryString={queryString}
-              numberOfItems={3}
-              feedType={ActivityFeedApp.FEED_TYPE.RECENT}
-            />
-          </CardContainer>
-          <CardContainer>
-            <ActivityCard
-              {...props}
-              queryString={queryString}
-              numberOfItems={2}
-              feedType={ActivityFeedApp.FEED_TYPE.UPCOMING}
-            />
-          </CardContainer>
-        </GridCol>
+        <GridCol columnOneHalf={true}></GridCol>
       </GridRow>
     </>
   )
