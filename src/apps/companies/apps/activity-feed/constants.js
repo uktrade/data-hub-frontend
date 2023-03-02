@@ -27,6 +27,13 @@ const FILTER_ITEMS = {
     value: FILTER_KEYS.dataHubActivity,
   },
 }
+
+const FILTER_FEED_TYPE = {
+  ALL: 'all',
+  RECENT: 'recent',
+  UPCOMING: 'upcoming',
+}
+
 const CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS = {
   newest: 'desc',
   oldest: 'asc',
@@ -194,6 +201,7 @@ module.exports = {
   EVENT_ALL_ACTIVITY,
   FILTER_KEYS,
   FILTER_ITEMS,
+  FILTER_FEED_TYPE,
   DATA_HUB_ACTIVITY,
   EXTERNAL_ACTIVITY,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,

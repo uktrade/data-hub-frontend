@@ -23,6 +23,13 @@ const companyRecentActivitiesQuery = ({
               ],
             },
           },
+          {
+            range: {
+              'object.startTime': {
+                lte: 'now/d',
+              },
+            },
+          },
         ],
       },
     },
@@ -66,21 +73,6 @@ const companyRecentActivitiesQuery = ({
       },
     })
   }
-  shouldCriteria.push({
-    bool: {
-      must: [
-        {
-          range: {
-            'object.startTime': {
-              lt: 'now/d',
-              // lt: 'now/d',
-              boost: 2.0,
-            },
-          },
-        },
-      ],
-    },
-  })
   const dsl = {
     from,
     size,

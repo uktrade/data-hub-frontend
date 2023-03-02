@@ -2,6 +2,7 @@ import React from 'react'
 import ActivityFeed from './ActivityFeed'
 import PropTypes from 'prop-types'
 import axios from 'axios'
+import { FILTER_FEED_TYPE } from '../../../apps/companies/apps/activity-feed/constants'
 
 export default class ActivityFeedApp extends React.Component {
   static propTypes = {
@@ -16,12 +17,6 @@ export default class ActivityFeedApp extends React.Component {
     feedType: PropTypes.string,
   }
 
-  static FEED_TYPE = {
-    ALL: 'all',
-    RECENT: 'recent',
-    UPCOMING: 'upcoming',
-  }
-
   static defaultProps = {
     activityTypeFilter: null,
     activityTypeFilters: {},
@@ -29,7 +24,7 @@ export default class ActivityFeedApp extends React.Component {
     isGlobalUltimate: false,
     dnbHierarchyCount: null,
     numberOfItems: 20,
-    feedType: this.FEED_TYPE.ALL,
+    feedType: FILTER_FEED_TYPE.ALL,
   }
 
   constructor(props) {

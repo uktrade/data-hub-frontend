@@ -1,3 +1,5 @@
+const { FILTER_FEED_TYPE } = require('../constants')
+
 const dataHubAndActivityStreamServicesQuery = ({
   from,
   size,
@@ -6,6 +8,7 @@ const dataHubAndActivityStreamServicesQuery = ({
   aventriEventIds,
   getEssInteractions,
   contacts,
+  feedType = FILTER_FEED_TYPE.ALL,
 }) => {
   const shouldCriteria = [
     {
@@ -27,6 +30,22 @@ const dataHubAndActivityStreamServicesQuery = ({
       },
     },
   ]
+  if (feedType != FILTER_FEED_TYPE.ALL) {
+    // TODO Fix
+    // shouldCriteria.push({
+    //   bool: {
+    //     must: [
+    //       {
+    //         range: {
+    //           'object.startTime': {
+    //             lte: 'now/d',
+    //           },
+    //         },
+    //       },
+    //     ],
+    //   },
+    // })
+  }
   if (aventriEventIds?.length) {
     shouldCriteria.push({
       bool: {

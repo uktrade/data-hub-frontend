@@ -34,7 +34,7 @@ const ActivityCard = (props) => {
         <Table.Cell colspan={2}>
           <ActivityFeedApp
             actions={!company.archived && CompanyActivityFeed.actions}
-            activityTypeFilter={FILTER_KEYS.companyRecentActivitiesQuery}
+            activityTypeFilter={FILTER_KEYS.dataHubActivity}
             activityTypeFilters={FILTER_ITEMS}
             isGlobalUltimate={company.is_global_ultimate}
             dnbHierarchyCount={0}
