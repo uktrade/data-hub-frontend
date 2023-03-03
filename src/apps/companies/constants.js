@@ -27,14 +27,14 @@ const GLOBAL_NAV_ITEM = {
 
 const LOCAL_NAV = [
   {
-    path: 'overview',
-    label: 'Overview',
-    permissions: ['company.view_contact'],
-  },
-  {
     path: 'activity',
     label: 'Activity',
     permissions: ['interaction.view_all_interaction'],
+  },
+  {
+    path: 'overview',
+    label: 'Overview',
+    permissions: ['company.view_contact'],
   },
   {
     path: 'business-details',
