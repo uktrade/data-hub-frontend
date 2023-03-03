@@ -26,6 +26,8 @@
     {% set highlightedName = props.name | highlight(props.highlightTerm) %}
     {% set containerElement = 'a' if props.isBlockLink and not props.isLinkDisabled else 'div' %}
 
+    <script> console.log( "{{ urlPrefix }}" )</script>
+
     <{{ containerElement }}
       class="c-entity c-entity--{{ props.type }}
       {{ 'c-entity--block-link' if props.isBlockLink }}
@@ -52,7 +54,7 @@
         <h3 class="c-entity__title">
           {% if props.id and not props.isBlockLink %}
             <a
-              href="{{ url }}"
+              href="{% if urlPrefix === 'companies/' %}{{ url }}/activity{% else %}{{ url }}{% endif %}"
               class="c-entity__link{% if props.index and props.type %} js-search-entity{% endif %}"
               data-search-result-rank="{{ props.index }}"
               data-search-category="{{ props.type }}"

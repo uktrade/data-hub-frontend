@@ -82,6 +82,10 @@ const CollectionItem = ({
           <Link as={RouterLink} to={headingUrl} onClick={onClick}>
             {headingText}
           </Link>
+        ) : location.pathname === '/companies' ? (
+          <Link href={`${headingUrl}/activity`} onClick={onClick}>
+            {headingText}
+          </Link>
         ) : (
           <Link href={headingUrl} onClick={onClick}>
             {headingText}
