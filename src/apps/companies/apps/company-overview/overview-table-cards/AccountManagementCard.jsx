@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Link, Table } from 'govuk-react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import pluralize from 'pluralize'
+
 import { SummaryTable } from '../../../../../client/components'
 
 const StyledSummaryTable = styled(SummaryTable)`
@@ -26,78 +28,85 @@ const Button = styled('button')`
   cursor: pointer;
 `
 
-const StyledAddressList = styled('ul')``
+const StyledAddressList = styled('ol')`
+  ${'' /* list-style: decimal; */}
+`
 
-const generatePrimaryContacts = (list, listSize) => {
-  let contacts = []
-  for (let i = 0; i < listSize; i++) {
-    if (list[i] !== undefined) {
-      contacts.push(
-        <li>
-          <Link href={`/contacts/${list[i].id}`}>{list[i].name}</Link>
-        </li>
-      )
-    }
-  }
-  return <StyledAddressList>{contacts}</StyledAddressList>
-}
+const MAX_PRIMARY_CONTACTS = 4
 
-function getContactsAmount(value) {
-  let contactViewMore = 0
-  if (value > 2) {
-    for (let i = 2; i < 4; i++) {
-      contactViewMore++
-    }
-  }
-  return contactViewMore
-}
+const AccountManagementCard = ({ company, queryString }) => {
+  const [primaryContacts] = useState(
+    company.contacts.filter((contact) => contact.primary)
+  )
 
-const AccountManagementCard = (props) => {
-  const [contacts] = useState([props.company.contacts])
-  const { company, queryString } = props
+  // Set up to two primary contacts
+  const [viewablePrimaryContacts, setViewablePrimaryContacts] = useState(
+    primaryContacts.slice(0, 2)
+  )
+
+  const maxNumberOfContacts = Math.min(
+    primaryContacts.length,
+    MAX_PRIMARY_CONTACTS
+  )
+
+  const hiddenContactCount =
+    maxNumberOfContacts - viewablePrimaryContacts.length
+
+  const onViewMore = () =>
+    // Add up to two further primary contacts
+    setViewablePrimaryContacts(
+      viewablePrimaryContacts.concat(primaryContacts.slice(2, 4))
+    )
+
   return (
-    <>
-      <StyledSummaryTable
-        caption="Account Management"
-        data-test="accountManagementContainer"
-      >
-        <SummaryTable.Row heading="DIT Region">
-          {company.uk_region.name}
-        </SummaryTable.Row>
-        <SummaryTable.Row heading="Account Manager">
-          {company.one_list_group_global_account_manager.name}
-        </SummaryTable.Row>
-        <SummaryTable.Row heading="Relationship manager">
-          Smith Smith
-        </SummaryTable.Row>
-        <SummaryTable.Row heading="Lead ITA">
-          {/*<Link ref="google.co.uk"> Firstname last name </Link>*/}
-        </SummaryTable.Row>
-        <SummaryTable.Row heading="One List">
-          {company.one_list_group_tier.name}
-        </SummaryTable.Row>
-        <SummaryTable.Row heading="Primary Contact(s)">
-          {generatePrimaryContacts(contacts, 2)}
-          <Button onClick={generatePrimaryContacts(company.contacts, 4)}>
-            {company.contacts.length > 2 ? (
-              <span>
-                View {getContactsAmount(company.contacts.length)} more contacts
-              </span>
-            ) : (
-              <span></span>
-            )}
+    <StyledSummaryTable
+      caption="Account Management"
+      data-test="accountManagementContainer"
+    >
+      <SummaryTable.Row heading="DIT Region">
+        {company?.uk_region?.name}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Account Manager">
+        {company?.one_list_group_global_account_manager?.name}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Relationship manager">
+        Smith Smith
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Lead ITA">
+        {/*<Link ref="google.co.uk"> Firstname last name </Link>*/}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="One List">
+        {company?.one_list_group_tier?.name}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Primary Contact(s)">
+        {viewablePrimaryContacts.length > 0 ? (
+          <StyledAddressList>
+            {viewablePrimaryContacts.map((contact) => (
+              <li>
+                <Link href={`/contacts/${contact.id}`}>{contact.name}</Link>
+              </li>
+            ))}
+          </StyledAddressList>
+        ) : (
+          <span>No contacts</span>
+        )}
+        {viewablePrimaryContacts.length < maxNumberOfContacts && (
+          <Button onClick={onViewMore}>
+            <span>
+              View {hiddenContactCount} more{' '}
+              {pluralize('contact', hiddenContactCount)}
+            </span>
           </Button>
-        </SummaryTable.Row>
-
-        <StyledTableRow>
-          <Table.Cell colSpan={2}>
-            <Link href={`${queryString}/business-details`}>
-              View full account management
-            </Link>
-          </Table.Cell>
-        </StyledTableRow>
-      </StyledSummaryTable>
-    </>
+        )}
+      </SummaryTable.Row>
+      <StyledTableRow>
+        <Table.Cell colSpan={2}>
+          <Link href={`${queryString}/business-details`}>
+            View full account management
+          </Link>
+        </Table.Cell>
+      </StyledTableRow>
+    </StyledSummaryTable>
   )
 }
 
