@@ -60,6 +60,7 @@ var v4pipelineItem = require('./routes/v4/pipeline-item/index.js')
 var v4Proposition = require('./routes/v4/proposition/proposition.js')
 var v4Reminders = require('./routes/v4/reminders/index.js')
 var v4Reminder = require('./routes/v4/reminder/reminder.js')
+var v4Export = require('./routes/v4/export/index.js')
 
 // Datahub API 3rd party dependencies
 var consentService = require('./routes/api/consentService.js')
@@ -641,6 +642,13 @@ app.post('/companies/search', dnbService.companiesSearch)
 app.post('/v4/large-capital-opportunity', (req, res) =>
   res.json({ id: 'new-large-capital-uk-opportunity-id' })
 )
+
+// company exports
+app.get('/v4/exports', v4Export.getExportItems)
+app.get('/v4/exports/:exportId', v4Export.getExportItem)
+app.post('/v4/exports', v4Export.createExportItem)
+app.patch('/v4/exports/:exportId', v4Export.updateExportItem)
+app.delete('/v4/exports/:exportId', v4Export.deleteExportItem)
 
 app.use((req, res) =>
   res.status(404).json({ message: 'Route' + req.url + ' Not found.' })
