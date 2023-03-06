@@ -1,15 +1,4 @@
 {
-  "address": {
-    "country": {
-      "id": "80756b9a-5d95-e211-a939-e4115bead28a",
-      "name": "United Kingdom"
-    },
-    "county": "North Somerset",
-    "line_1": "Unit 10, Ockham Drive",
-    "line_2": "On the Way",
-    "postcode": "UB6 0F2",
-    "town": "GREENFORD"
-  },
   "archived": false,
   "archived_by": null,
   "archived_documents_url_path": "",

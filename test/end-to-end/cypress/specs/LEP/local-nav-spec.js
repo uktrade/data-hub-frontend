@@ -59,7 +59,10 @@ describe('LEP Permission', () => {
     })
 
     it('should display LEP only tabs', () => {
-      assertLocalReactNav('[data-test=local-nav]', ['Details', 'Audit history'])
+      assertLocalReactNav('[data-test=local-nav] > ul', [
+        'Details',
+        'Audit history',
+      ])
     })
   })
 

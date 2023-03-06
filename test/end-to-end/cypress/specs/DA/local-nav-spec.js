@@ -62,7 +62,10 @@ describe('DA Permission', () => {
     })
 
     it('should display DA only tabs', () => {
-      assertLocalReactNav('[data-test=local-nav]', ['Details', 'Audit history'])
+      assertLocalReactNav('[data-test=local-nav] > ul', [
+        'Details',
+        'Audit history',
+      ])
     })
   })
 
