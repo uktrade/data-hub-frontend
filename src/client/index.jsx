@@ -321,6 +321,9 @@ import { TASK_ARCHIVE_INTERACTION } from './modules/Interactions/InteractionDeta
 import { archiveInteraction } from './modules/Interactions/InteractionDetails/tasks'
 import { TASK_GET_ESS_INTERACTION_DETAILS } from './modules/Interactions/ESSInteractionDetails/state'
 
+import { TASK_GET_COMPANY_DETAIL } from '../client/modules/Companies/CompanyDetails/state'
+import { getCompanyDetails } from '../client/modules/Companies/CompanyDetails/tasks'
+
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
 }
@@ -537,6 +540,7 @@ function App() {
           [TASK_ARCHIVE_INTERACTION]: archiveInteraction,
           ...resourceTasks,
           [TASK_GET_ESS_INTERACTION_DETAILS]: getESSInteractionDetails,
+          [TASK_GET_COMPANY_DETAIL]: getCompanyDetails,
         }}
       >
         <Mount selector="#data-hub-header">
