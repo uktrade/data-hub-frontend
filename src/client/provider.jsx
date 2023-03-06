@@ -137,6 +137,9 @@ import contactActivitiesReducer from '../client/modules/Contacts/ContactActivity
 import { ID as REMINDERS_ID } from './modules/Reminders/state'
 import remindersReducer from './modules/Reminders/reducer'
 
+import { ID as COMPANY_DETAIL_ID } from './modules/Companies/CompanyDetails/state'
+import companyDetailReducer from './modules/Companies/CompanyDetails/reducer'
+
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
   // The baseURI is set to the <base/> tag by the spaFallbackSpread
@@ -222,6 +225,7 @@ const reducer = {
   [COMPANY_ORDERS_LIST_ID]: ordersReducer,
   [ORDERS_RECONCILIATION_LIST_ID]: ordersReducer,
   [REMINDERS_ID]: remindersReducer,
+  [COMPANY_DETAIL_ID]: companyDetailReducer,
 }
 
 const preloadedState = {
