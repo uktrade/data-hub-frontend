@@ -32,6 +32,10 @@ const StyledAddressList = styled('ol')`
   ${'' /* list-style: decimal; */}
 `
 
+const StyledSpan = styled('span')`
+  color: grey;
+`
+
 const MAX_PRIMARY_CONTACTS = 4
 
 const AccountManagementCard = ({ company, queryString }) => {
@@ -64,16 +68,24 @@ const AccountManagementCard = ({ company, queryString }) => {
       data-test="accountManagementContainer"
     >
       <SummaryTable.Row heading="DIT Region">
-        {company?.uk_region?.name}
+        {company?.uk_region?.name ? (
+          <span>{company.uk_region.name}</span>
+        ) : (
+          <StyledSpan>None set</StyledSpan>
+        )}
       </SummaryTable.Row>
-      <SummaryTable.Row heading="Account Manager">
-        {company?.one_list_group_global_account_manager?.name}
-      </SummaryTable.Row>
-      <SummaryTable.Row heading="Relationship manager">
-        Smith Smith
-      </SummaryTable.Row>
-      <SummaryTable.Row heading="Lead ITA">
-        {/*<Link ref="google.co.uk"> Firstname last name </Link>*/}
+      <SummaryTable.Row
+        heading={company.isItaTierDAccount ? 'Lead ITA' : 'Account Manager'}
+      >
+        {company?.one_list_group_global_account_manager?.name ? (
+          <Link
+            href={`/contacts/${company.one_list_group_global_account_manager.id}`}
+          >
+            {company.one_list_group_global_account_manager.name}
+          </Link>
+        ) : (
+          <StyledSpan>None</StyledSpan>
+        )}
       </SummaryTable.Row>
       <SummaryTable.Row heading="One List">
         {company?.one_list_group_tier?.name}
@@ -88,7 +100,7 @@ const AccountManagementCard = ({ company, queryString }) => {
             ))}
           </StyledAddressList>
         ) : (
-          <span>No contacts</span>
+          <span>None</span>
         )}
         {viewablePrimaryContacts.length < maxNumberOfContacts && (
           <Button onClick={onViewMore}>
