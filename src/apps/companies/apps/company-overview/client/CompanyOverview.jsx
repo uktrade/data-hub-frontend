@@ -44,9 +44,6 @@ const CompanyOverview = (props) => {
               feedType={FILTER_FEED_TYPE.UPCOMING}
             />
           </CardContainer>
-          <CardContainer>
-            <RecentActivityCard {...props} queryString={queryString} />
-          </CardContainer>
         </GridCol>
         <GridCol columnOneHalf={true}></GridCol>
       </GridRow>
