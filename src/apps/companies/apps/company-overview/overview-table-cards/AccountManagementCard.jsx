@@ -100,7 +100,7 @@ const AccountManagementCard = ({ company, queryString }) => {
             ))}
           </StyledAddressList>
         ) : (
-          <span>None</span>
+          <StyledSpan>None</StyledSpan>
         )}
         {viewablePrimaryContacts.length < maxNumberOfContacts && (
           <Button onClick={onViewMore}>
