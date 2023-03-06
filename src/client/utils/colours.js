@@ -44,6 +44,11 @@ export const GREY_3_LEGACY = '#dee0e2'
 // It is also used for the investment project timeline.
 export const DARK_BLUE_LEGACY = '#005ea5'
 
+export const DARK_GREY = '#505a5f'
+export const MID_GREY = '#b1b4b6'
+export const LIGHT_GREY = '#f3f2f1'
+export const MID_BLUE = '#003399'
+
 // Colours below are coming from govuk-react
 // Based on https://github.com/alphagov/govuk-frontend/blob/main/src/govuk/settings/_colours-palette.scss
 export const BLUE = '#1d70b8'
@@ -93,7 +98,7 @@ export const LIGHT_BLUE_25 = '#d5e8f3'
 export const BLACK = '#0b0c0c'
 export const GREY_1 = DARK_GREY
 export const GREY_2 = '#bfc1c3'
-export const GREY_3 = '#f3f2f1'
+export const GREY_3 = LIGHT_GREY
 export const GREY_4 = '#f8f8f8'
 export const WHITE = '#ffffff'
 export const LINK_COLOUR = BLUE
@@ -179,11 +184,6 @@ export const UK_TRADE_INVESTMENT = '#c80651'
 export const UK_TRADE_INVESTMENT_WEBSAFE = LINK_COLOUR
 export const WALES_OFFICE = '#a33038'
 export const WALES_OFFICE_WEBSAFE = '#7a242a'
-
-export const DARK_GREY = '#505a5f'
-export const MID_GREY = '#b1b4b6'
-export const LIGHT_GREY = GREY_3
-export const MID_BLUE = '#003399'
 
 export const TAG_COLOURS = {
   default: {
