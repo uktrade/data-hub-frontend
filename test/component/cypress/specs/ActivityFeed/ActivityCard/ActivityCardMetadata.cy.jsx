@@ -1,5 +1,6 @@
 import React from 'react'
 import ActivityCardMetadata from '../../../../../../src/client/components/ActivityFeed/activities/card/ActivityCardMetadata'
+import { GREY_1 } from '../../../../../../src/client/utils/colours'
 
 describe('ActivityCardMetadata', () => {
   const Component = (props) => <ActivityCardMetadata {...props} />
@@ -15,7 +16,7 @@ describe('ActivityCardMetadata', () => {
     it('should show the name label and value', () => {
       cy.get('[data-test="name-label"]')
         .should('have.text', 'Name: Chloe Wong')
-        .should('have.css', 'color', 'rgb(111, 119, 123)')
+        .should('have.colour', GREY_1)
     })
 
     it('should show the name label in bold', () => {
@@ -27,7 +28,7 @@ describe('ActivityCardMetadata', () => {
     it('should show the favourite food label and value', () => {
       cy.get('[data-test="favourite-food-label"]')
         .should('have.text', 'Favourite food: Sunday roast')
-        .should('have.css', 'color', 'rgb(111, 119, 123)')
+        .should('have.colour', GREY_1)
     })
 
     it('should show the favourite food label in bold', () => {

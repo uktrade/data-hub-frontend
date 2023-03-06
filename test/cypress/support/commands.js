@@ -16,7 +16,6 @@
  */
 
 import { mount } from 'cypress/react'
-import { hexToRgb } from '../../../src/client/utils/colours'
 
 Cypress.Commands.add('mount', mount)
 
@@ -215,17 +214,18 @@ Cypress.Commands.add('loadFixture', (fixture) => {
   })
 })
 
-// This command helps us to check colours in cypress as cypress always return rgb, and our utils/colours library uses hexes.
+// This command helps us to check colours in cypress as cypress always return rgb, and our govuk-colours library uses hexes.
 const compareColor = (color, property) => (targetElement) => {
-  const colorValue = parseInt(color.replace('#', ''), 16)
-  const rgb = [
-    (colorValue >> 16) & 255,
-    (colorValue >> 8) & 255,
-    colorValue & 255,
-  ]
+  const tempElement = document.createElement('div')
+  tempElement.style.color = color
+  tempElement.style.display = 'none' // make sure it doesn't actually render
+  document.body.appendChild(tempElement) // append so that `getComputedStyle` actually works
 
-  const tempColor = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
+  const tempColor = getComputedStyle(tempElement).color
   const targetColor = getComputedStyle(targetElement[0])[property]
+
+  document.body.removeChild(tempElement) // remove it because we're done with it
+
   expect(tempColor).to.equal(targetColor)
 }
 

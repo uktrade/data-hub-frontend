@@ -11,7 +11,7 @@ import {
   RED,
   YELLOW,
   rgba,
-} from '../../utils/colours'
+} from '../../../client/utils/colours'
 
 const {
   formatWithoutParsing,
