@@ -7,6 +7,9 @@ import { currencyGBP } from '../../../../../client/utils/number-utils'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin: 0;
+  & > tbody th {
+    width: 50%;
+  }
 `
 const StyledTableRow = styled(Table.Row)`
   border: 0;
@@ -31,21 +34,19 @@ const BusinessDetailsCard = (props) => {
         </SummaryTable.Row>
 
         <SummaryTable.Row heading="Trading Address">
-          {!company.registered_address ? (
+          {!company.address ? (
             'Not set'
           ) : (
             <StyledAddressList>
-              {company.registered_address?.line_1 && (
-                <li>{company.registered_address.line_1}</li>
-              )}
+              {company.address?.line_1 && <li>{company.address.line_1}</li>}
               {company.registered_address?.line_2 && (
-                <li>{company.registered_address.line_2}</li>
+                <li>{company.address.line_2}</li>
               )}
               {company.registered_address?.town && (
-                <li>{company.registered_address.town}</li>
+                <li>{company.address.town}</li>
               )}
               {company.registered_address?.postcode && (
-                <li>{company.registered_address.postcode}</li>
+                <li>{company.address.postcode}</li>
               )}
             </StyledAddressList>
           )}
