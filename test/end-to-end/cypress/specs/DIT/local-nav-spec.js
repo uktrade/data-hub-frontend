@@ -43,6 +43,7 @@ describe('DIT Permission', () => {
 
     it('should display DIT only tabs', () => {
       assertLocalReactNav('[data-test="tabbedLocalNavList"]', [
+        'Overview',
         'Activity',
         'Business details',
         'Company contacts',
