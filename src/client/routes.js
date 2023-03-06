@@ -10,7 +10,10 @@ import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
 import EventAventriRegistrationStatus from './modules/Events/EventAventriRegistrationStatus'
 import Reminders from './modules/Reminders/Reminders'
 import { RemindersForms, RemindersSettings } from './modules/Reminders'
-import ExportForm from './modules/ExportPipeline/ExportForm'
+import {
+  ExportFormAdd,
+  ExportFormEdit,
+} from './modules/ExportPipeline/ExportForm'
 
 const routes = {
   companies: [
@@ -102,7 +105,12 @@ const routes = {
     {
       path: '/export/create',
       module: 'datahub:companies',
-      component: ExportForm,
+      component: ExportFormAdd,
+    },
+    {
+      path: '/export/:exportId/edit',
+      module: 'datahub:companies',
+      component: ExportFormEdit,
     },
   ],
 }

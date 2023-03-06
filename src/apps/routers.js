@@ -26,6 +26,7 @@ const reactRoutes = [
   '/reminders/settings/companies-no-recent-interactions',
   '/reminders/settings/companies-new-interactions',
   '/export/create',
+  '/export/:exportId/edit',
 ]
 
 reactRoutes.forEach((path) => {
