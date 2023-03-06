@@ -7,7 +7,6 @@ import Activity from './Activity'
 import ActivityFeedHeader from './ActivityFeedHeader'
 import ActivityFeedFilters from './ActivityFeedFilters'
 import ActivityFeedPagination from './ActivityFeedPagination'
-import { FILTER_FEED_TYPE } from '../../../apps/companies/apps/activity-feed/constants'
 
 const ActivityFeedContainer = styled('div')`
   margin: ${SPACING.SCALE_2} 0;
@@ -158,10 +157,11 @@ export default class ActivityFeed extends React.Component {
           ))}
         </ActivityFeedCardList>
 
-        {hasMore && feedType === FILTER_FEED_TYPE.ALL && (
+        {hasMore && (
           <ActivityFeedPagination
             isLoading={isLoading}
             onLoadMore={onLoadMore}
+            feedType={feedType}
           />
         )}
 
