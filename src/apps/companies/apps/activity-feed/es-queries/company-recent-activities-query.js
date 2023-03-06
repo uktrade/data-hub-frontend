@@ -101,4 +101,19 @@ const companyRecentActivitiesQuery = ({
   return dsl
 }
 
+// shouldCriteria.push({
+//   bool: {
+//     must: [
+//       {
+//         range: {
+//           'object.startTime': {
+//             lt: 'now/d',
+//             // lt: 'now/d',
+//             boost: 2.0,
+//           },
+//         },
+//       },
+//     ],
+//   },
+// })
 module.exports = companyRecentActivitiesQuery
