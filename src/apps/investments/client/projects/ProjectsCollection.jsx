@@ -200,6 +200,7 @@ const ProjectsCollection = ({
           <Filters.Date
             type="month"
             label="Actual land date from"
+            hint="Date format month as text and year as four digits"
             name="actual_land_date_after"
             qsParamName="actual_land_date_after"
             data-test="actual-land-date-after-filter"
@@ -207,6 +208,7 @@ const ProjectsCollection = ({
           <Filters.Date
             type="month"
             label="Actual land date to"
+            hint="Date format month as text and year as four digits"
             name="actual_land_date_before"
             qsParamName="actual_land_date_before"
             data-test="actual-land-date-before-filter"
@@ -214,6 +216,7 @@ const ProjectsCollection = ({
           <Filters.Date
             type="month"
             label="Estimated land date from"
+            hint="Date format month as text and year as four digits"
             name="estimated_land_date_after"
             qsParamName="estimated_land_date_after"
             data-test="estimated-land-date-after-filter"
@@ -221,6 +224,7 @@ const ProjectsCollection = ({
           <Filters.Date
             type="month"
             label="Estimated land date to"
+            hint="Date format month as text and year as four digits"
             name="estimated_land_date_before"
             qsParamName="estimated_land_date_before"
             data-test="estimated-land-date-before-filter"
