@@ -17,6 +17,7 @@ import OrderSubscribers from './OrderSubscribers'
 import Investment from './Investment'
 import ContactAuditHistory from './ContactAuditHistory'
 import Interaction from './Interaction'
+import Event from './Event'
 
 export default {
   ...Advisers.tasks,
@@ -38,4 +39,5 @@ export default {
   ...Investment.tasks,
   ...ContactAuditHistory.tasks,
   ...Interaction.tasks,
+  ...Event.tasks,
 }

@@ -48,7 +48,7 @@ Panel.propTypes = {
   /**
    * Text for title
    */
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   /**
    * Text for panel
    */

@@ -71,6 +71,7 @@ import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactA
 import InteractionDetails from './modules/Interactions/InteractionDetails'
 import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
+import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -151,6 +152,14 @@ import {
   getEventFormAndMetadata,
   saveEvent,
 } from '../client/modules/Events/EventForm/tasks'
+import {
+  TASK_SEARCH_ATTENDEE,
+  TASK_GET_ATTENDEE_METADATA,
+} from '../client/modules/Events/AttendeeSearch/state'
+import {
+  searchAttendee,
+  getAttendeeMetadata,
+} from './modules/Events/AttendeeSearch/tasks'
 
 import { getESSInteractionDetails } from './modules/Interactions/ESSInteractionDetails/tasks'
 
@@ -482,6 +491,8 @@ function App() {
             getEventAventriRegistrationStatusAttendees,
           [TASK_GET_EVENTS_FORM_AND_METADATA]: getEventFormAndMetadata,
           [TASK_SAVE_EVENT]: saveEvent,
+          [TASK_SEARCH_ATTENDEE]: searchAttendee,
+          [TASK_GET_ATTENDEE_METADATA]: getAttendeeMetadata,
           [TASK_GET_ORDERS_METADATA]: getOrdersMetadata,
           [TASK_GET_ORDERS_LIST]: getOrders,
           [TASK_GET_ORDERS_RECONCILIATION]: getOrdersReconciliation,
@@ -793,6 +804,9 @@ function App() {
         </Mount>
         <Mount selector="#orders-reconciliation-collection">
           {(props) => <OrdersReconciliationCollection {...props} />}
+        </Mount>
+        <Mount selector="#attendee-search">
+          {(props) => <AttendeeSearch {...props} />}
         </Mount>
 
         <Mount selector="#react-app">
