@@ -100,7 +100,7 @@
         "id": 5,
         "user": null,
         "timestamp": "2020-01-09T00:00:00.274066Z",
-        "comment": "Updated from D&B [celery:get_company_updates:ddf50721-d4bf-4482-84f1-74f4c78c46aa]",
+        "comment": "Updated from D&B [rq:get_company_updates:ddf50721-d4bf-4482-84f1-74f4c78c46aa]",
         "changes": {
             "turnover": [
                 2382813,
