@@ -68,6 +68,10 @@ const StyledLogoNavLink = styled(NavLink)({
     '&::after': {
       content: '" "',
     },
+    ':focus': {
+      color: BLACK,
+      background: YELLOW,
+    },
   },
 })
 

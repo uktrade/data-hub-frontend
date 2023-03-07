@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { BLACK } from '../../../client/utils/colours'
+import { SkipLink } from 'govuk-react'
 
 import DataHubBar from './DataHubBar'
 import NavBar from './NavBar'
@@ -20,6 +21,7 @@ const DataHubHeader = ({
   hasFeatureGroup,
 }) => (
   <Header id="datahub-header" role="banner">
+    <SkipLink href="#main-content">Skip to main content</SkipLink>
     <DataHubBar
       onShowVerticalNav={onShowVerticalNav}
       showVerticalNav={showVerticalNav}
