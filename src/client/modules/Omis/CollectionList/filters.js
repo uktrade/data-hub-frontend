@@ -88,4 +88,18 @@ export const buildSelectedFilters = (queryParams, metadata) => ({
       categoryLabel: LABELS.ukRegion,
     }),
   },
+  netAmount: {
+    queryParam: 'subtotal_cost',
+    options: buildInputFieldFilter({
+      value: queryParams.subtotal_cost,
+      categoryLabel: LABELS.netAmount,
+    }),
+  },
+  grossAmount: {
+    queryParam: 'total_cost',
+    options: buildInputFieldFilter({
+      value: queryParams.total_cost,
+      categoryLabel: LABELS.grossAmount,
+    }),
+  },
 })
