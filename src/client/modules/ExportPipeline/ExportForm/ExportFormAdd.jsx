@@ -27,6 +27,7 @@ function ErrorHandler() {
       colour={ERROR_COLOUR}
       aria-labelledby="company-load-error-summary-title"
       role="alert"
+      data-test="company-load-error"
     >
       <H3 id="company-load-error-summary-title">Error loading company</H3>
     </StatusMessage>
@@ -67,6 +68,7 @@ const ExportFormAdd = ({ company }) => {
   return (
     <DefaultLayout
       heading={DISPLAY_ADD_EXPORT}
+      subheading={company.name ? company.name : undefined}
       pageTitle={DISPLAY_ADD_EXPORT}
       breadcrumbs={getBreadcrumbs(company)}
       useReactRouter={true}
@@ -81,7 +83,7 @@ const ExportFormAdd = ({ company }) => {
         }}
         renderError={ErrorHandler}
       >
-        {() => <ExportFormFields />}
+        {() => <ExportFormFields companyId={company.id} />}
       </Task.Status>
     </DefaultLayout>
   )
