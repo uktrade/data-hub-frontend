@@ -68,6 +68,13 @@ export const inputDateValue = ({ element, value }) => {
 }
 
 /**
+ * Adds a date to the any given date input field that also has a hint
+ */
+export const inputDateValueWithHint = ({ element, value }) => {
+  cy.get(element).children().next().next().type(value)
+}
+
+/**
  * Adds a date object of {day, month, year} to the relevent input fields
  */
 export const clearAndInputDateValueObject = ({ element, value }) => {
