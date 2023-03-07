@@ -21,7 +21,6 @@ const { fetchActivityFeed, fetchMatchingDataHubContact } = require('./repos')
 const config = require('../../../../config')
 
 const {
-  companyRecentActivitiesQuery,
   myActivityQuery,
   externalActivityQuery,
   maxemailCampaignQuery,
@@ -68,7 +67,6 @@ async function renderActivityFeed(req, res, next) {
           company,
           breadcrumbs,
           flashMessages: res.locals.getMessages(),
-          isOverview: false,
           activityTypeFilter: FILTER_KEYS.dataHubActivity,
           activityTypeFilters: FILTER_ITEMS,
           localNavItems: res.locals.localNavItems,
@@ -107,10 +105,6 @@ function getQueries(options) {
     [FILTER_KEYS.dataHubAndExternalActivity]: externalActivityQuery({
       ...options,
       types: DATA_HUB_AND_EXTERNAL_ACTIVITY,
-    }),
-    [FILTER_KEYS.companyRecentActivitiesQuery]: companyRecentActivitiesQuery({
-      ...options,
-      types: DATA_HUB_AND_AVENTRI_ACTIVITY,
     }),
   }
 }

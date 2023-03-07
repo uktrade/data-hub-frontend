@@ -28,11 +28,12 @@ export default class Interaction extends React.PureComponent {
   }
 
   render() {
-    const { activity, isOverview } = this.props
+    const { activity } = this.props
     const transformed = {
       ...CardUtils.transform(activity),
       ...InteractionUtils.transform(activity),
     }
+
     const advisers = CardUtils.getAdvisers(activity)
     const contacts = CardUtils.getContacts(activity)
     const activityObject = activity.object
@@ -50,7 +51,7 @@ export default class Interaction extends React.PureComponent {
       !!advisers.length &&
       advisers.map((adviser) => (
         <span key={adviser.name}>
-          <AdviserActivityRenderer adviser={adviser} isOverview={isOverview} />
+          <AdviserActivityRenderer adviser={adviser} />
         </span>
       ))
 
@@ -95,87 +96,40 @@ export default class Interaction extends React.PureComponent {
       flex: 25%;
     `
 
-    const ActivityTabRender =
-      theme || service ? (
-        <ActivityCardWrapper dataTest="interaction-activity">
-          <ActivityCardLabels theme={theme} service={service} kind={kind} />
-          <ActivityCardSubject>
-            <Link
-              data-test="interaction-subject"
-              href={transformed.interactionUrl}
-            >
-              {transformed.subject}
-            </Link>
-          </ActivityCardSubject>
-          {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
-          <ActivityCardMetadata metadata={metadata} />
-        </ActivityCardWrapper>
-      ) : (
-        <ActivityCardWrapper dataTest="interaction-activity">
-          <Row>
-            <LeftCol>
-              <ActivityCardSubject>
-                <Link
-                  data-test="interaction-subject"
-                  href={transformed.interactionUrl}
-                >
-                  {transformed.subject}
-                </Link>
-              </ActivityCardSubject>
-              {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
-              <ActivityCardMetadata metadata={metadata} />
-            </LeftCol>
-            <RightCol>
-              <ActivityCardLabels kind={kind} />
-            </RightCol>
-          </Row>
-        </ActivityCardWrapper>
-      )
-
-    const OverviewTabRender =
-      theme || service ? (
-        <ActivityCardWrapper dataTest="interaction-activity">
-          <Row>
-            <LeftCol>{date}</LeftCol>
-            <RightCol>
-              <ActivityCardLabels kind={kind} isOverview={true} />
-            </RightCol>
-          </Row>
-          <ActivityCardSubject
-            linkDataTest={'interaction-subject'}
-            url={transformed.interactionUrl}
+    return theme || service ? (
+      <ActivityCardWrapper dataTest="interaction-activity">
+        <ActivityCardLabels theme={theme} service={service} kind={kind} />
+        <ActivityCardSubject>
+          <Link
+            data-test="interaction-subject"
+            href={transformed.interactionUrl}
           >
             {transformed.subject}
-          </ActivityCardSubject>
-          {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
-          <Row>
-            {formattedAdvisers(advisers)} &nbsp;
-            {transformed.subject.toLowerCase()}
-          </Row>
-        </ActivityCardWrapper>
-      ) : (
-        <ActivityCardWrapper dataTest="interaction-activity">
-          <Row>
-            <LeftCol>
-              <ActivityCardSubject>
-                <Link
-                  data-test="interaction-subject"
-                  href={transformed.interactionUrl}
-                >
-                  {transformed.subject}
-                </Link>
-              </ActivityCardSubject>
-              Overview
-              {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
-              <ActivityCardMetadata metadata={metadata} />
-            </LeftCol>
-            <RightCol>
-              <ActivityCardLabels kind={kind} />
-            </RightCol>
-          </Row>
-        </ActivityCardWrapper>
-      )
-
-    return isOverview ? OverviewTabRender : ActivityTabRender
+          </Link>
+        </ActivityCardSubject>
+        {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
+        <ActivityCardMetadata metadata={metadata} />
+      </ActivityCardWrapper>
+    ) : (
+      <ActivityCardWrapper dataTest="interaction-activity">
+        <Row>
+          <LeftCol>
+            <ActivityCardSubject>
+              <Link
+                data-test="interaction-subject"
+                href={transformed.interactionUrl}
+              >
+                {transformed.subject}
+              </Link>
+            </ActivityCardSubject>
+            {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
+            <ActivityCardMetadata metadata={metadata} />
+          </LeftCol>
+          <RightCol>
+            <ActivityCardLabels kind={kind} />
+          </RightCol>
+        </Row>
+      </ActivityCardWrapper>
+    )
   }
 }
