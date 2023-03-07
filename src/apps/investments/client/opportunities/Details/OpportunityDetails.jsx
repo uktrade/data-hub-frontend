@@ -18,10 +18,11 @@ import { SummaryTable, ToggleSection } from '../../../../../client/components'
 import { FONT_SIZE } from '@govuk-react/constants'
 
 import styled from 'styled-components'
-import { RED } from 'govuk-colours'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import { Details, SectionBreak } from 'govuk-react'
+
+import { RED } from '../../../../../client/utils/colours'
 
 const StyledLabel = styled('label')`
   display: inline-table;

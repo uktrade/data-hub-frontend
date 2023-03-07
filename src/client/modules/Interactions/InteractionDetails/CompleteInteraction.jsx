@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { GREEN, WHITE } from 'govuk-colours'
+import { GREEN, WHITE } from '../../../../client/utils/colours'
 import { Button, Link } from 'govuk-react'
 
 import ArchiveForm from '../../../components/ArchiveForm'

@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
-import { BLUE } from 'govuk-colours'
 import styled from 'styled-components'
+
+import { BLUE } from '../../../../../client/utils/colours'
 
 const StyledActivitySubject = styled('h3')`
   font-size: ${FONT_SIZE.SIZE_20};

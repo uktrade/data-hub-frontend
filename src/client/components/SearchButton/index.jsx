@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { BLACK, WHITE } from 'govuk-colours'
+import { BLACK, WHITE } from '../../../client/utils/colours'
 import VisuallyHidden from '@govuk-react/visually-hidden'
 
 const StyledButton = styled('button')`

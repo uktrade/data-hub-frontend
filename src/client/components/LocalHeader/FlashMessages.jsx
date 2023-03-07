@@ -11,7 +11,7 @@ import {
   ORANGE,
   BLACK,
   WHITE,
-} from 'govuk-colours'
+} from '../../../client/utils/colours'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import UnorderedList from '@govuk-react/unordered-list'
 import StatusMessage from '../../components/StatusMessage'

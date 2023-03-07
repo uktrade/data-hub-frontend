@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { NavLink, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
-import { BLACK } from 'govuk-colours'
 import {
   FONT_SIZE,
   FONT_WEIGHTS,
@@ -12,7 +11,7 @@ import {
 } from '@govuk-react/constants'
 import ProtectedLink from '../ProtectedLink'
 
-import { GREY_3_LEGACY, DARK_BLUE_LEGACY } from '../../utils/colors'
+import { BLACK, GREY_3_LEGACY, DARK_BLUE_LEGACY } from '../../utils/colours'
 
 import links from './links'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'govuk-react'
 import { SPACING, FONT_SIZE } from '@govuk-react/constants'
-import { BLUE, GREEN } from 'govuk-colours'
+import { BLUE, GREEN } from '../../../client/utils/colours'
 import PropTypes from 'prop-types'
 
 import { AdviserDetails } from '../../../apps/companies/apps/referrals/details/client/ReferralDetails'

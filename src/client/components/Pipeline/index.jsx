@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { BLUE, WHITE } from 'govuk-colours'
+import { BLUE, WHITE } from '../../../client/utils/colours'
 import {
   FONT_SIZE,
   MEDIA_QUERIES,

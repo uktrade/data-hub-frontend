@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import { GREY_2 } from 'govuk-colours'
 
+import { GREY_2 } from '../../../client/utils/colours'
 import urls from '../../../lib/urls'
 import CompanyLists from '../../components/CompanyLists'
 import ReferralList from '../../components/ReferralList'

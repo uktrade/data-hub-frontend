@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 
+import { BLACK, GREY_2, GREY_4, WHITE } from '../../../client/utils/colours'
+
 const StyledListItem = styled.li`
   *,
   *:before,
@@ -10,7 +12,7 @@ const StyledListItem = styled.li`
   }
   border-left-width: 1px;
   text-align: center;
-  border-bottom: 1px solid #bfc1c3;
+  border-bottom: 1px solid ${GREY_2};
 
   @media (min-width: 1020px) {
     white-space: nowrap;
@@ -41,9 +43,9 @@ const StyledAnchorTag = styled.a`
     &:visited,
     &:hover,
     &:active {
-      color: black;
+      color: ${BLACK};
     }
-    background-color: #f8f8f8;
+    background-color: ${GREY_4};
     text-align: center;
     text-decoration: none;
     height: 90%;
@@ -56,10 +58,10 @@ const StyledAnchorTag = styled.a`
         padding-right: 19px;
         padding-bottom: 16px;
         padding-left: 19px;
-        border: 1px solid #bfc1c3;
+        border: 1px solid ${GREY_2};
         border-bottom: 0px;
-        color: #0b0c0c;
-        background-color: #fff;
+        color: ${BLACK};
+        background-color: ${WHITE};
         height: auto;
       `}
   }

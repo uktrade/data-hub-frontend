@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { GREY_3, BLACK } from 'govuk-colours'
 import { SPACING, FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
+
+import { GREY_3, BLACK } from '../../../client/utils/colours'
 
 const StyledButton = styled('button')`
   display: inline-table;

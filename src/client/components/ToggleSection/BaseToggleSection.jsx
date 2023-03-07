@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { BLUE } from 'govuk-colours'
+import { BLUE } from '../../../client/utils/colours'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 
 import { TOGGLE_SECTION__TOGGLE } from '../../actions'

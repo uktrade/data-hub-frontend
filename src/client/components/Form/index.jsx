@@ -22,7 +22,7 @@ import { FormContextProvider } from './hooks'
 import Effect from '../Effect'
 import HardRedirect from '../HardRedirect'
 
-import { BUTTON_COLOUR } from 'govuk-colours'
+import { BUTTON_COLOUR } from '../../../client/utils/colours'
 
 const validateForm = (state) =>
   Object.values(state.fields)

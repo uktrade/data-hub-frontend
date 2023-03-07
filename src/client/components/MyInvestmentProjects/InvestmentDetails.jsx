@@ -1,11 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { GREY_3 } from 'govuk-colours'
 import Link from '@govuk-react/link'
 import { SPACING, FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 
 import { companies, interactions } from '../../../lib/urls'
-import { DARK_GREY } from '../../utils/colors'
+import { GREY_3, DARK_GREY } from '../../utils/colours'
 
 const { format } = require('../../utils/date')
 

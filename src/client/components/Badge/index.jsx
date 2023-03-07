@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { FONT_SIZE } from '@govuk-react/constants'
 import VisuallyHidden from '@govuk-react/visually-hidden'
-import { GREY_2, TEXT_COLOUR } from 'govuk-colours'
+
+import { GREY_2, TEXT_COLOUR } from '../../../client/utils/colours'
 
 const StyledBadge = styled('span')`
   border: ${({ borderColour }) => `2px solid ${borderColour}`};

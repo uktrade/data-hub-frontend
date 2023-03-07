@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { GREY_1, GREY_4 } from 'govuk-colours'
 import { SPACING } from '@govuk-react/constants'
+
+import { GREY_1, GREY_4 } from '../../utils/colours'
 
 const StyledHeaderDetails = styled('div')`
   background-color: ${GREY_4};

@@ -5,7 +5,8 @@ import { Route } from 'react-router-dom'
 import qs from 'qs'
 import { FONT_SIZE, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import Link from '@govuk-react/link'
-import { GREY_3, LINK_COLOUR, WHITE } from 'govuk-colours'
+
+import { GREY_3, LINK_COLOUR, WHITE } from '../../../client/utils/colours'
 import { PAGINATION_PIECE_PREVIOUS, PAGINATION_PIECE_NEXT } from './constants'
 
 const StyledNav = styled('nav')`

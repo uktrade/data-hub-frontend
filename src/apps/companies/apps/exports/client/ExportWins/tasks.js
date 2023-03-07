@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { currencyGBP } from '../../../../../../client/utils/number-utils'
-import { GREEN, BLUE } from 'govuk-colours'
+import { GREEN, BLUE } from '../../../../../../client/utils/colours'
 
 import { NOT_IMPLEMENTED } from './state'
 

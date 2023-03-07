@@ -6,7 +6,7 @@ import Link from '@govuk-react/link'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { SPACING, MEDIA_QUERIES, FONT_SIZE } from '@govuk-react/constants'
-import { BLUE, GREY_1, BLACK } from 'govuk-colours'
+import { BLUE, BLACK, GREY_1 } from '../../utils/colours'
 import { H3 } from 'govuk-react'
 
 import { Card } from '../ActivityFeed/activities/card'

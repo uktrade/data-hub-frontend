@@ -4,10 +4,9 @@ import { SPACING } from '@govuk-react/constants'
 import Input from '@govuk-react/input'
 import styled from 'styled-components'
 import Main from '@govuk-react/main'
-import { GREY_3_LEGACY, DARK_GREY } from '../../../client/utils/colors'
+import { BLUE, DARK_GREY, GREY_3_LEGACY } from '../../utils/colours'
 import urls from '../../../lib/urls'
 import SearchButton from '../SearchButton'
-import { BLUE } from 'govuk-colours'
 
 import FlashMessages from '../LocalHeader/FlashMessages'
 
