@@ -16,6 +16,11 @@ const StyledSummaryTable = styled(SummaryTable)`
 const StyledTableRow = styled(Table.Row)`
   border: 0;
 `
+
+const StyledLastTableCell = styled(Table.Cell)`
+  border: 0;
+  padding-bottom: 0;
+`
 const Button = styled('button')`
   background: none !important;
   border: none;
@@ -112,11 +117,11 @@ const AccountManagementCard = ({ company, queryString }) => {
         )}
       </SummaryTable.Row>
       <StyledTableRow>
-        <Table.Cell colSpan={2}>
+        <StyledLastTableCell colSpan={2}>
           <Link href={`${queryString}/business-details`}>
             View full account management
           </Link>
-        </Table.Cell>
+        </StyledLastTableCell>
       </StyledTableRow>
     </StyledSummaryTable>
   )
