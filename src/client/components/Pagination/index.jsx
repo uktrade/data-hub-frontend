@@ -78,6 +78,7 @@ const StyledPagesTruncation = styled('span')`
 `
 
 function Pagination({ totalPages, activePage, getPageUrl, onPageClick }) {
+  activePage = activePage || 1
   const visiblePieces = computeVisiblePieces(totalPages, activePage)
   if (totalPages < 2) {
     return null
