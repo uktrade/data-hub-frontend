@@ -124,7 +124,7 @@ describe('Company business details', () => {
                 companyEditHistory: urls.companies.editHistory.index(
                   companyMock.id
                 ),
-                support: urls.support(),
+                support: urls.support.index(),
                 subsidiaries: urls.companies.subsidiaries.index(companyMock.id),
                 linkSubsidiary: urls.companies.subsidiaries.link(
                   companyMock.id

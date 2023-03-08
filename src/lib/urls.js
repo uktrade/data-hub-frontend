@@ -484,7 +484,10 @@ module.exports = {
       subscribers: url('/omis', '/:orderId/edit/subscribers'),
     },
   },
-  support: url('/support'),
+  support: {
+    index: url('/support'),
+    thankYou: url('/support/thank-you'),
+  },
   pipeline: {
     index: url('/my-pipeline'),
     active: url('/my-pipeline/active'),

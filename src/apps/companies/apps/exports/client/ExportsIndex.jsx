@@ -82,7 +82,7 @@ const ExportsIndex = ({
         <br />
         We are continuing to improve the algorithm so please do share your
         feedback or let us know of any anomalies through the{' '}
-        <a href={urls.support()}>support channel</a>.
+        <a href={urls.support.index()}>support channel</a>.
       </Details>
 
       <StyledSummaryTable

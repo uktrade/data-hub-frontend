@@ -57,7 +57,7 @@ async function renderBusinessDetails(req, res) {
         )}?_csrf=${csrfToken}`,
         companyAdvisers: urls.companies.advisers.index(company.id),
         companyEditHistory: urls.companies.editHistory.index(company.id),
-        support: urls.support(),
+        support: urls.support.index(),
         subsidiaries: urls.companies.subsidiaries.index(company.id),
         linkSubsidiary: urls.companies.subsidiaries.link(company.id),
         dnbHierarchy: urls.companies.dnbHierarchy.index(company.id),

@@ -270,7 +270,7 @@ describe('urls', () => {
 
   describe('support', () => {
     it('should return the correct values', () => {
-      expect(urls.support()).to.equal('/support')
+      expect(urls.support.index()).to.equal('/support')
       expect(urls.support.route).to.equal('/')
     })
   })

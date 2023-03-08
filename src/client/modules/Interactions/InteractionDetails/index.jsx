@@ -247,7 +247,7 @@ const InteractionDetails = ({ interactionId, archivedDocumentPath }) => {
 
               <div>
                 If you think the information is incomplete or incorrect,{' '}
-                <Link href={urls.support}>
+                <Link href={urls.support.index()}>
                   get in touch using the support form.
                 </Link>
               </div>

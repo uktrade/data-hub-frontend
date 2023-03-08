@@ -7,7 +7,7 @@ describe('Accessing support form', () => {
   context('when visiting the support form without authorisation', () => {
     it('should require to sign in', () => {
       cy.request({
-        url: urls.support(),
+        url: urls.support.index(),
         followRedirect: false,
         headers: {
           // skips the ssoBypass middleware functionality, so the request will not be authorised
@@ -22,7 +22,7 @@ describe('Accessing support form', () => {
 
   context('when visiting the support form', () => {
     it('should show a form when signed up', () => {
-      cy.visit(urls.support())
+      cy.visit(urls.support.index())
       cy.get(selectors.supportForm.header).should(
         'contain',
         'Report a problem or leave feedback'

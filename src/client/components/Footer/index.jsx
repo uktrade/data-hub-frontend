@@ -87,7 +87,7 @@ export default function Footer() {
         <StyleList>
           <li>
             <FooterLink
-              href={urls.support()}
+              href={urls.support.index()}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Opens in a new window or tab"
