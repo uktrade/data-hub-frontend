@@ -77,8 +77,12 @@ const StyledPagesTruncation = styled('span')`
   color: ${GREY_1};
 `
 
-function Pagination({ totalPages, activePage, getPageUrl, onPageClick }) {
-  activePage = activePage || 1
+function Pagination({
+  totalPages,
+  activePage = 1,
+  getPageUrl = () => '#',
+  onPageClick,
+}) {
   const visiblePieces = computeVisiblePieces(totalPages, activePage)
   if (totalPages < 2) {
     return null
@@ -164,10 +168,10 @@ Pagination.propTypes = {
   getPageUrl: PropTypes.func,
 }
 
-Pagination.defaultProps = {
-  activePage: 1,
-  onPageClick: null,
-  getPageUrl: () => '#',
-}
+// Pagination.defaultProps = {
+//   activePage: 1,
+//   onPageClick: null,
+//   getPageUrl: () => '#',
+// }
 
 export default Pagination

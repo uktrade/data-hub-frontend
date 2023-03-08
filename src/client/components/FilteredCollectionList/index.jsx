@@ -37,6 +37,11 @@ const getSelectedFilters = (filters) =>
     )
   )
 
+const getPageNumber = (qsParams, defaultValue = 1) => {
+  const pageNumber = parseInt(qsParams.page, 10)
+  return isNaN(pageNumber) ? defaultValue : pageNumber
+}
+
 const FilteredCollectionList = ({
   results = [],
   summary = null,
@@ -66,7 +71,7 @@ const FilteredCollectionList = ({
     <Route>
       {({ history, location }) => {
         const qsParams = qs.parse(location.search.slice(1))
-        const initialPage = parseInt(qsParams.page, 10)
+        const initialPage = getPageNumber(qsParams)
         if (defaultQueryParams && isEmpty(qsParams)) {
           history.push({
             search: qs.stringify({
