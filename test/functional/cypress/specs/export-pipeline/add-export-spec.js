@@ -53,5 +53,20 @@ describe('Export pipeline create', () => {
         'Add export': null,
       })
     })
+
+    it('displays a save button', () => {
+      cy.get('[data-test=submit-button]').should('have.text', 'Save')
+    })
+
+    it('displays a cancel link', () => {
+      cy.get('[data-test=cancel-button]')
+        .should('have.text', 'Cancel')
+        .should('have.attr', 'href', '/')
+    })
+
+    it('should redirect to the company page when the cancel button is clicked', () => {
+      cy.get('[data-test=cancel-button]').click()
+      assertUrl(urls.companies.detail(company.id))
+    })
   })
 })
