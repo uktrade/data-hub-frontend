@@ -65,6 +65,8 @@ const ALLOWLIST = [
   '/v3/contact/:id/audit',
   '/v4/interaction/:id',
   '/v4/interaction/:id/archive',
+  '/v4/export',
+  '/v4/export/:exportId',
 ]
 
 module.exports = (app) => {
