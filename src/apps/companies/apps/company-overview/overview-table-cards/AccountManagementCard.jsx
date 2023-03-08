@@ -76,7 +76,7 @@ const AccountManagementCard = ({ company, queryString }) => {
         {company?.uk_region?.name ? (
           <span>{company.uk_region.name}</span>
         ) : (
-          <StyledSpan>None set</StyledSpan>
+          <StyledSpan>Not set</StyledSpan>
         )}
       </SummaryTable.Row>
       <SummaryTable.Row
@@ -89,11 +89,15 @@ const AccountManagementCard = ({ company, queryString }) => {
             {company.one_list_group_global_account_manager.name}
           </Link>
         ) : (
-          <StyledSpan>None</StyledSpan>
+          <StyledSpan>Not set</StyledSpan>
         )}
       </SummaryTable.Row>
       <SummaryTable.Row heading="One List">
-        {company?.one_list_group_tier?.name}
+        {company?.one_list_group_tier?.name ? (
+          <span>{company.one_list_group_tier.name}</span>
+        ) : (
+          <StyledSpan>Not set</StyledSpan>
+        )}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Primary Contact(s)">
         {viewablePrimaryContacts.length > 0 ? (
@@ -105,7 +109,7 @@ const AccountManagementCard = ({ company, queryString }) => {
             ))}
           </StyledAddressList>
         ) : (
-          <StyledSpan>None</StyledSpan>
+          <StyledSpan>Not set</StyledSpan>
         )}
         {viewablePrimaryContacts.length < maxNumberOfContacts && (
           <Button onClick={onViewMore}>
@@ -118,7 +122,10 @@ const AccountManagementCard = ({ company, queryString }) => {
       </SummaryTable.Row>
       <StyledTableRow>
         <StyledLastTableCell colSpan={2}>
-          <Link href={`${queryString}/business-details`}>
+          <Link
+            href={`${queryString}/advisers`}
+            data-test="account-management-page-link"
+          >
             View full account management
           </Link>
         </StyledLastTableCell>
