@@ -61,7 +61,7 @@ describe('Export pipeline create', () => {
     it('the form should display a cancel link', () => {
       cy.get('[data-test=cancel-button]')
         .should('have.text', 'Cancel')
-        .should('have.attr', 'href', '/')
+        .should('have.attr', 'href', urls.companies.detail(company.id))
     })
 
     it('the form should redirect to the company page when the cancel button is clicked', () => {
