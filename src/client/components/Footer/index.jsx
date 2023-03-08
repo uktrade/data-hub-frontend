@@ -14,6 +14,11 @@ import govukCrest from './govuk-crest-2x.png'
 import urls from '../../../lib/urls'
 import { InnerContainer } from '../Main'
 
+// when screen is zoomed in so that the width becomes smaller than BREAKPOINT_ZOOMED_IN, we
+// ensure that footer links are shown in a column rather than a row, so they can be visible
+// at all times
+const BREAKPOINT_ZOOMED_IN = '340px'
+
 const StyledFooter = styled('footer')(
   {
     clear: 'both',
@@ -38,6 +43,26 @@ const StyleList = styled.ul`
     margin-left: ${SPACING.SCALE_3};
   }
   margin-bottom: ${SPACING.SCALE_3};
+
+  @media (max-width: ${BREAKPOINT_ZOOMED_IN}) {
+    margin-bottom: -${SPACING.SCALE_3};
+    margin-right: ${SPACING.SCALE_5};
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    li + li {
+      margin-left: 0;
+    }
+
+    li {
+      margin-left: 0;
+      margin-bottom: ${SPACING.SCALE_3};
+    }
+
+    li:last-child {
+      margin-bottom: ${SPACING.SCALE_5};
+    }
+  }
 `
 
 const FooterLink = styled.a`
@@ -68,6 +93,9 @@ const CopyrightLink = styled(FooterLink)`
   text-decoration: none;
   white-space: nowrap;
   margin-bottom: ${SPACING.SCALE_3};
+  @media (max-width: ${BREAKPOINT_ZOOMED_IN}) {
+    margin-bottom: ${SPACING.SCALE_5};
+  }
 `
 
 const Container = styled(InnerContainer)`
