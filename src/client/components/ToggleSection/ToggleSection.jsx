@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { BLACK, YELLOW } from 'govuk-colours'
+import { BLACK, YELLOW } from '../../../client/utils/colours'
 import { SPACING } from '@govuk-react/constants'
 
 import {

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { spacing } from '@govuk-react/lib'
 import { MEDIA_QUERIES } from '@govuk-react/constants'
 import { default as Checkbox } from '../ActivityFeed/ActivityFeedCheckbox'
-import { GREY_4, WHITE } from 'govuk-colours'
+import { GREY_4, WHITE } from '../../../client/utils/colours'
 import throttle from 'lodash/throttle'
 
 import { Select } from '..'

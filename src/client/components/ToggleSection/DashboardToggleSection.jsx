@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { BLUE, GREY_3, RED } from 'govuk-colours'
+import { BLUE, GREY_3, RED } from '../../../client/utils/colours'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
 import {

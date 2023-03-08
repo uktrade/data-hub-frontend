@@ -1,6 +1,11 @@
 import Link from '@govuk-react/link'
 import Table from '@govuk-react/table'
 import { FONT_WEIGHTS, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+import VisuallyHidden from '@govuk-react/visually-hidden'
+import React from 'react'
+import LinesEllipsis from 'react-lines-ellipsis'
+import styled from 'styled-components'
+
 import {
   BORDER_COLOUR,
   LINK_ACTIVE_COLOUR,
@@ -8,12 +13,7 @@ import {
   LINK_HOVER_COLOUR,
   LINK_VISITED_COLOUR,
   PAGE_COLOUR,
-} from 'govuk-colours'
-import VisuallyHidden from '@govuk-react/visually-hidden'
-import React from 'react'
-import LinesEllipsis from 'react-lines-ellipsis'
-import styled from 'styled-components'
-
+} from '../../../client/utils/colours'
 import urls from '../../../lib/urls'
 import SecondaryButton from '../SecondaryButton'
 

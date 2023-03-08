@@ -1,4 +1,4 @@
-import { RED, GREEN, BLUE } from 'govuk-colours'
+import { RED, GREEN, BLUE } from '../../../client/utils/colours'
 
 export const STATUS = {
   DRAFT: 'draft',

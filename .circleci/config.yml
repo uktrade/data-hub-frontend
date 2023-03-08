@@ -182,7 +182,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "0b:88:e7:46:60:b5:25:b1:fb:10:49:1b:8d:7f:c7:b0"
+            - '0b:88:e7:46:60:b5:25:b1:fb:10:49:1b:8d:7f:c7:b0'
       - run: npm install storybook
       - run:
           name: Release storybook

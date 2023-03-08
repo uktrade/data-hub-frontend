@@ -624,6 +624,18 @@ const assertDateInput = ({ element, label, value }) => {
 }
 
 /**
+ * Assert that the label and value exist on the date input where a hint is provided
+ */
+const assertDateInputWithHint = ({ element, label, value }) => {
+  cy.get(element)
+    .find('label')
+    .should('contain', label)
+    .next()
+    .next()
+    .should('have.attr', 'value', value)
+}
+
+/**
  * Assert error summary passing in a list of errors as as an array
  */
 const assertErrorSummary = (errors) => {
@@ -747,6 +759,7 @@ module.exports = {
   assertNotQueryParams,
   assertPayload,
   assertDateInput,
+  assertDateInputWithHint,
   assertErrorSummary,
   assertVisible,
   assertNotExists,

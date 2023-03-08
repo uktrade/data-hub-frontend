@@ -4,7 +4,7 @@ import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import styled, { ThemeProvider } from 'styled-components'
 import { connect } from 'react-redux'
-import { BLUE } from 'govuk-colours'
+import { BLUE } from '../../../client/utils/colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
 import Banner from '../LocalHeader/Banner'

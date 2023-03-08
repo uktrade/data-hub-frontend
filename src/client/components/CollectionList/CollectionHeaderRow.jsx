@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { BLACK, GREY_2 } from 'govuk-colours'
 import { FONT_SIZE, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+
+import { BLACK, GREY_2 } from '../../../client/utils/colours'
 
 const StyledRowWrapper = styled('div')`
   display: flex;

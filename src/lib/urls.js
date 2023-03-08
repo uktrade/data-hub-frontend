@@ -254,6 +254,7 @@ module.exports = {
     edit: url('/events', '/:eventId/edit'),
     attendees: url('/events', '/:eventId/attendees'),
     find: url('/events', '/:eventId/attendees/find-new'),
+    addAttendee: url('/events', '/:eventId/attendees/create/:contactId'),
     aventri: {
       details: url('/events', '/aventri/:aventriEventId/details'),
       detailsData: url('/events', '/aventri/:aventriEventId/details/data'),

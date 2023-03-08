@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { GREY_3, GREY_4 } from 'govuk-colours'
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 import styled from 'styled-components'
 
+import { GREY_3, GREY_4 } from '../../../client/utils/colours'
 import SelectFilter from './filters/SelectFilter'
 import ActivityFeedCheckbox from './ActivityFeedCheckbox'
 import Analytics from '../Analytics'

@@ -1,6 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { PURPLE, ORANGE, BLUE, YELLOW, GREEN } from 'govuk-colours'
+import {
+  PURPLE,
+  ORANGE,
+  BLUE,
+  YELLOW,
+  GREEN,
+} from '../../../client/utils/colours'
 import { connect } from 'react-redux'
 
 import PieChart from '../PieChart'

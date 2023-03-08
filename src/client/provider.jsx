@@ -114,6 +114,9 @@ import interactionEssDetailsReducer from './modules/Interactions/ESSInteractionD
 import { ID as EVENTS_ID } from './modules/Events/CollectionList/state'
 import eventsReducer from './modules/Events/CollectionList/reducer'
 
+import { SEARCH_ATTENDEE_ID } from './modules/Events/AttendeeSearch/state'
+import attendeeSearchReducer from './modules/Events/AttendeeSearch/reducer'
+
 import {
   ORDERS_LIST_ID,
   COMPANY_ORDERS_LIST_ID,
@@ -139,6 +142,9 @@ import remindersReducer from './modules/Reminders/reducer'
 
 import { ID as COMPANY_DETAIL_ID } from './modules/Companies/CompanyDetails/state'
 import companyDetailReducer from './modules/Companies/CompanyDetails/reducer'
+
+import { ID as EXPORT_DETAIL_ID } from './modules/ExportPipeline/ExportDetails/state'
+import exportDetailReducer from './modules/ExportPipeline/ExportDetails/reducer'
 
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
@@ -221,11 +227,13 @@ const reducer = {
   [EVENTS_AVENTRI_REGISTRATION_STATUS_ID]:
     eventAventriRegistrationStatusReducer,
   [INTERACTION_ESS_DETAILS_ID]: interactionEssDetailsReducer,
+  [SEARCH_ATTENDEE_ID]: attendeeSearchReducer,
   [ORDERS_LIST_ID]: ordersReducer,
   [COMPANY_ORDERS_LIST_ID]: ordersReducer,
   [ORDERS_RECONCILIATION_LIST_ID]: ordersReducer,
   [REMINDERS_ID]: remindersReducer,
   [COMPANY_DETAIL_ID]: companyDetailReducer,
+  [EXPORT_DETAIL_ID]: exportDetailReducer,
 }
 
 const preloadedState = {

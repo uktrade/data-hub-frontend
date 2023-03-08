@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty } from 'lodash'
-import { GREY_2 } from 'govuk-colours'
+import { GREY_2 } from '../../../client/utils/colours'
 import { typography } from '@govuk-react/lib'
 import { SPACING, FONT_SIZE, LINE_HEIGHT } from '@govuk-react/constants'
 

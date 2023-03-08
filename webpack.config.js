@@ -82,6 +82,9 @@ module.exports = (env) => ({
       zlib: false,
     },
     extensions: ['*', '.js', '.jsx', '.json'],
+    alias: {
+      'govuk-colours': path.resolve(__dirname, 'src/client/utils/colours.js'),
+    },
   },
   module: {
     rules: [

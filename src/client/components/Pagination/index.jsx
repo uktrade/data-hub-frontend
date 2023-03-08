@@ -1,7 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { GREY_1, GREY_3, GREY_4, LINK_COLOUR, TEXT_COLOUR } from 'govuk-colours'
+import {
+  GREY_1,
+  GREY_3,
+  GREY_4,
+  LINK_COLOUR,
+  TEXT_COLOUR,
+} from '../../utils/colours'
 import { FONT_SIZE, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import Link from '@govuk-react/link'
 
@@ -71,7 +77,12 @@ const StyledPagesTruncation = styled('span')`
   color: ${GREY_1};
 `
 
-function Pagination({ totalPages, activePage, getPageUrl, onPageClick }) {
+function Pagination({
+  totalPages,
+  activePage = 1,
+  getPageUrl = () => '#',
+  onPageClick,
+}) {
   const visiblePieces = computeVisiblePieces(totalPages, activePage)
   if (totalPages < 2) {
     return null
@@ -90,7 +101,8 @@ function Pagination({ totalPages, activePage, getPageUrl, onPageClick }) {
             const onClick = (event) => {
               event.target.blur()
               event.preventDefault()
-              onPageClick(pageNumber)
+              onPageClick(pageNumber, event)
+              window.scrollTo({ top: 0 })
             }
             const PageNumberLink = isActive
               ? StyledActivePaginationLink
@@ -154,12 +166,6 @@ Pagination.propTypes = {
   activePage: PropTypes.number,
   onPageClick: PropTypes.func,
   getPageUrl: PropTypes.func,
-}
-
-Pagination.defaultProps = {
-  activePage: 1,
-  onPageClick: null,
-  getPageUrl: () => '#',
 }
 
 export default Pagination

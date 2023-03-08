@@ -2,16 +2,43 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
 import styled from 'styled-components'
+import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 
 import { ACTIVITY_TYPE } from '../constants'
 import CardUtils from './card/CardUtils'
 import ReferralUtils from './ReferralUtils'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
-import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
+import Tag from '../../Tag'
 
 const { format } = require('../../../utils/date')
+
+const Row = styled('div')`
+  display: grid;
+  ${MEDIA_QUERIES.TABLET} {
+    display: flex;
+  }
+`
+
+// On mobile the order of the columns are swapped
+const LeftCol = styled('div')`
+  order: 2;
+  ${MEDIA_QUERIES.TABLET} {
+    order: 1;
+    flex: 75%;
+  }
+`
+
+// On mobile the order of the columns are swapped
+const RightCol = styled('div')`
+  order: 1;
+  margin-bottom: ${SPACING.SCALE_1};
+  ${MEDIA_QUERIES.TABLET} {
+    order: 2;
+    flex: 25%;
+  }
+`
 
 export default class Referral extends React.PureComponent {
   static propTypes = {
@@ -63,29 +90,22 @@ export default class Referral extends React.PureComponent {
       },
     ]
 
-    const Row = styled('div')`
-      display: flex;
-    `
-
-    const LeftCol = styled('div')`
-      flex: 75%;
-    `
-
-    const RightCol = styled('div')`
-      flex: 25%;
-    `
-
     return (
       <ActivityCardWrapper dataTest="referral-activity">
         <Row>
           <LeftCol>
-            <ActivityCardSubject dataTest="referral-activity-card-subject">
+            <ActivityCardSubject
+              margin={{ top: 0, bottom: 10 }}
+              dataTest="referral-activity-card-subject"
+            >
               <Link href={url}>{subject}</Link>
             </ActivityCardSubject>
             <ActivityCardMetadata metadata={metadata} />
           </LeftCol>
           <RightCol>
-            <ActivityCardLabels kind={badge.text} />
+            <Tag colour="grey" data-test="activity-kind-label">
+              {badge.text}
+            </Tag>
           </RightCol>
         </Row>
       </ActivityCardWrapper>

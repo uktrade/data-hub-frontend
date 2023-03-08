@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import GridCol from '@govuk-react/grid-col'
-import { GREY_2 } from 'govuk-colours'
 import { H3 } from '@govuk-react/heading'
 import {
   SPACING,
@@ -8,7 +7,7 @@ import {
   HEADING_SIZES,
   MEDIA_QUERIES,
 } from '@govuk-react/constants'
-import { DARK_GREY } from '../../../utils/colors'
+import { DARK_GREY, GREY_2 } from '../../../utils/colours'
 
 export const DeleteButton = styled('button')({
   padding: 0,

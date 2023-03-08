@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { MID_GREY } from '../../../client/utils/colors'
+import { MID_GREY } from '../../utils/colours'
 
 import InvestmentListItem from './InvestmentListItem'
 

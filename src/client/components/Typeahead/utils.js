@@ -76,6 +76,9 @@ export const getNewSelectedOptions = ({ selectedOptions, option, isMulti }) =>
  * Converts value to an array if it is not one already.
  *
  * If value is undefined, returns an empty array.
+ *
+ * If scrollTop is equal to 0 then set onkeydown scroll to top
+ *
  **/
 export const valueAsArray = (value) =>
   value ? (Array.isArray(value) ? value : [value]) : []
@@ -87,7 +90,7 @@ export const maintainScrollVisibility = ({ parent, target }) => {
   const { offsetHeight: parentOffsetHeight, scrollTop } = parent
   const { offsetHeight, offsetTop } = target
 
-  if (offsetTop < scrollTop) {
+  if (offsetTop <= scrollTop) {
     parent.scrollTo(0, offsetTop)
   } else if (offsetTop + offsetHeight > scrollTop + parentOffsetHeight) {
     parent.scrollTo(0, offsetTop - parentOffsetHeight + offsetHeight)

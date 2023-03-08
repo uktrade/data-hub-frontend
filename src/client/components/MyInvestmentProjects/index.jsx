@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Paragraph } from 'govuk-react'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
-import { MID_GREY } from '../../../client/utils/colors'
+import { MID_GREY } from '../../utils/colours'
 
 import { ID, TASK_GET_MY_INVESTMENTS_LIST, state2props } from './state'
 import {

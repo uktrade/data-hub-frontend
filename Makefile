@@ -60,7 +60,7 @@ start-e2e-dit:
 	$(docker-e2e) $(log-command) &
 start-dev:
 	@echo "*** To stop this stack run 'make stop-dev' ***"
-	@echo "*** IMPORTANT This will now use ../data-hub-api/.env for 'api' and 'celery' services ***"
+	@echo "*** IMPORTANT This will now use ../data-hub-api/.env for 'api' and 'rq' services ***"
 	$(MAKE) -C ../data-hub-api start-dev
 	$(docker-dev) $(start-command)
 start-storybook:

@@ -1,7 +1,6 @@
 const { formatMediumDateTime } = require('../../../../../../client/utils/date')
 
-import { GREEN } from 'govuk-colours'
-
+import { GREEN } from '../../../../../../client/utils/colours'
 import urls from '../../../../../../lib/urls'
 import groupExportCountries from '../../../../../../lib/group-export-countries'
 import {

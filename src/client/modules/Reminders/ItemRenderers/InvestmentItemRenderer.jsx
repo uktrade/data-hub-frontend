@@ -1,5 +1,5 @@
 import React from 'react'
-import { BLACK } from 'govuk-colours'
+import { BLACK } from '../../../../client/utils/colours'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { Link } from 'govuk-react'
@@ -14,7 +14,7 @@ import {
 } from './styled'
 
 import { formatMediumDate } from '../../../utils/date'
-import { DARK_GREY } from '../../../utils/colors'
+import { DARK_GREY } from '../../../utils/colours'
 import urls from '../../../../lib/urls'
 
 const InvestmentItemRenderer = (item, onDeleteReminder, disableDelete) => (

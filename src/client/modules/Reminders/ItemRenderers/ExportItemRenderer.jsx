@@ -13,7 +13,7 @@ import {
 } from './styled'
 
 import { formatMediumDate } from '../../../utils/date'
-import { DARK_GREY } from '../../../utils/colors'
+import { DARK_GREY } from '../../../utils/colours'
 import urls from '../../../../lib/urls'
 
 const ItemHeaderLink = styled(Link)({

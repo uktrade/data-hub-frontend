@@ -2,7 +2,7 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { SPACING, FONT_SIZE } from '@govuk-react/constants'
-import { BLACK, GREY_1, GREY_2 } from 'govuk-colours'
+import { BLACK, GREY_1, GREY_2 } from '../../utils/colours'
 import styled from 'styled-components'
 import qs from 'qs'
 

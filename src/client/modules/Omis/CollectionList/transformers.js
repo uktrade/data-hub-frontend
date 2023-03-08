@@ -10,6 +10,8 @@ const {
   formatMediumDateTime,
 } = require('../../../utils/date')
 
+export const transformOrderCost = (cost) => (cost ? cost * 100 : undefined)
+
 export const transformOrderToListItem = ({
   id,
   status,

@@ -1,4 +1,3 @@
-import { GREY_4 } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import Input from '@govuk-react/input'
 import { SelectInput } from '@govuk-react/select'
@@ -8,6 +7,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
+import { GREY_4 } from '../../../client/utils/colours'
 import InlineLabel from '../InlineLabel'
 import { COMPANY_LISTS__FILTER, COMPANY_LISTS__ORDER } from '../../actions'
 import { state2props } from './state'

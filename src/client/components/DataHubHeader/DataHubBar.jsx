@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 import VisuallyHidden from '@govuk-react/visually-hidden'
 import styled from 'styled-components'
-import { BLACK, WHITE, YELLOW } from 'govuk-colours'
 import qs from 'qs'
 import {
   FONT_SIZE,
@@ -12,7 +11,7 @@ import {
   SPACING,
 } from '@govuk-react/constants'
 
-import { DARK_BLUE_LEGACY } from '../../utils/colors'
+import { BLACK, DARK_BLUE_LEGACY, WHITE, YELLOW } from '../../utils/colours'
 import NotificationAlert from '../NotificationAlert'
 
 const SWITCH_TO_DATA_WORKSPACE = 'Switch to Data Workspace'
@@ -68,6 +67,10 @@ const StyledLogoNavLink = styled(NavLink)({
     outline: 'none',
     '&::after': {
       content: '" "',
+    },
+    ':focus': {
+      color: BLACK,
+      background: YELLOW,
     },
   },
 })

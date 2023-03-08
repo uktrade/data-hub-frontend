@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { TEXT_COLOUR, ERROR_COLOUR } from 'govuk-colours'
+import { TEXT_COLOUR, ERROR_COLOUR } from '../../../client/utils/colours'
 import { H2 } from '@govuk-react/heading'
 import {
   BORDER_WIDTH,
