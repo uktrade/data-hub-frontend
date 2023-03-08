@@ -168,10 +168,4 @@ Pagination.propTypes = {
   getPageUrl: PropTypes.func,
 }
 
-// Pagination.defaultProps = {
-//   activePage: 1,
-//   onPageClick: null,
-//   getPageUrl: () => '#',
-// }
-
 export default Pagination
