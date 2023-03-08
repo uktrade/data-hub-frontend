@@ -1,5 +1,6 @@
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
+const { assertUrl } = require('../../support/assertions')
 
 const {
   assertLocalHeader,
@@ -61,12 +62,12 @@ describe('Export pipeline create', () => {
     it('the form should display a cancel link', () => {
       cy.get('[data-test=cancel-button]')
         .should('have.text', 'Cancel')
-        .should('have.attr', 'href', urls.companies.detail(company.id))
+        .should('have.attr', 'href', urls.companies.activity.index(company.id))
     })
 
     it('the form should redirect to the company page when the cancel button is clicked', () => {
       cy.get('[data-test=cancel-button]').click()
-      assertUrl(urls.companies.detail(company.id))
+      assertUrl(urls.companies.activity.index(company.id))
     })
   })
 })

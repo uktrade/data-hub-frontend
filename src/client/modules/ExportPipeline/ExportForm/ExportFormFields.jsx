@@ -12,7 +12,7 @@ const ExportFormFields = ({ companyId, analyticsFormName }) => {
       <Form
         id="export-form"
         analyticsFormName={analyticsFormName}
-        cancelRedirectTo={() => urls.companies.details(companyId)}
+        cancelRedirectTo={() => urls.companies.activity.index(companyId)}
         submissionTaskName={TASK_SAVE_EXPORT}
       />
     </FormLayout>
