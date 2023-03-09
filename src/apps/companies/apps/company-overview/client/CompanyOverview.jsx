@@ -12,21 +12,22 @@ const CardContainer = styled('div')`
   margin-bottom: 20px;
 `
 
-const CompanyOverview = (props) => {
-  const { company } = props
-
+const CompanyOverview = (company) => {
   const queryString = `/companies/${company.id}`
   return (
     <>
       <GridRow>
         <GridCol columnOneHalf={true}>
           <CardContainer>
-            <BusinessDetailsCard {...props} queryString={queryString} />
+            <BusinessDetailsCard company={company} queryString={queryString} />
           </CardContainer>
         </GridCol>
         <GridCol columnOneHalf={true}>
           <CardContainer>
-            <AccountManagementCard {...props} queryString={queryString} />
+            <AccountManagementCard
+              company={company}
+              queryString={queryString}
+            />
           </CardContainer>
         </GridCol>
       </GridRow>

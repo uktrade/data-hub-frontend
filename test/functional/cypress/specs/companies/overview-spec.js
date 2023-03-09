@@ -1,9 +1,5 @@
-const {
-  // assertSummaryTable,
-  // assertBreadcrumbs,
-} = require('../../support/assertions')
+const {} = require('../../support/assertions')
 const fixtures = require('../../fixtures')
-// const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
 
 describe('Company overview page', () => {
