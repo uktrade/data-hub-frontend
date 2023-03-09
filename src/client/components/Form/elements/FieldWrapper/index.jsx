@@ -170,6 +170,11 @@ const FieldWrapper = ({
         bigLegend={bigLegend}
         groupId={groupId}
       >
+        {label && (
+          <StyledLabel error={error} htmlFor={name}>
+            {label}
+          </StyledLabel>
+        )}
         {hint && (
           <StyledHint data-test="hint-text" error={error}>
             {hint}
