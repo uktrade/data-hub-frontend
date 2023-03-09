@@ -2,26 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { ACTIVITY_TYPE } from '../../../constants'
-
-import CardUtils from '../CardUtils'
-
 import ActivityCardSubject from '../ActivityCardSubject'
 import ActivityCardWrapper from '../ActivityCardWrapper'
 import ActivityCardLabels from '../ActivityCardLabels'
 
 export default class ActivityOverviewSummary extends React.PureComponent {
   static propTypes = {
-    activity: PropTypes.object.isRequired,
     date: PropTypes.string,
     kind: PropTypes.string,
     subject: PropTypes.string,
     summary: PropTypes.string,
     url: PropTypes.string,
-  }
-
-  static canRender(activity) {
-    return CardUtils.canRenderByTypes(activity, ACTIVITY_TYPE.ActivitySummary)
   }
 
   render() {

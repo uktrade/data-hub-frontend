@@ -68,16 +68,28 @@ export default class AventriEvent extends React.PureComponent {
           </StyledContactsList>
         ),
       }))
+    const unFormattedContacts = Object.entries(contacts)
+      .sort(function (a, b) {
+        return sortOrder.indexOf(a[0]) - sortOrder.indexOf(b[0])
+      })
+      .filter(([, value]) => Array.isArray(value))
+      .map(([, value]) => [
+        <>
+          {value.map((contact) => (
+            <>{contact.name}</>
+          ))}
+        </>,
+      ])
     const href = `/events/aventri/${aventriEventId}/details`
     return isOverview ? (
       <ActivityOverviewSummary
-        dataTest="activity-summary"
+        dataTest="averntry-event-summary"
         activity={activity}
         date={date}
         kind="Aventri Event"
         url={href}
         subject={name}
-        metadata={[formattedContacts]}
+        summary={[status, ' by ', unFormattedContacts]}
       ></ActivityOverviewSummary>
     ) : (
       <ActivityCardWrapper dataTest="aventri-event">
