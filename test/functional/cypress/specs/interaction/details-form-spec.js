@@ -311,6 +311,7 @@ function fillExportBarrierFields() {
   cy.contains(
     'What happened in the interaction to help remove an export barrier?'
   )
+    .parent()
     .next()
     .find('textarea')
     .type('My export barrier notes')

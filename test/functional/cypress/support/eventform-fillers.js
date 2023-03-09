@@ -7,6 +7,8 @@ import {
   fillMultiOptionTypeahead,
   fillYesNoRadio,
   fillDate,
+  fillTypeaheadWithLegend,
+  fillMultiOptionTypeaheadWithLegend,
 } from './form-fillers'
 
 const selectors = require('../../../selectors/event/createOrEdit')
@@ -46,7 +48,7 @@ export const fillEventForm = ({
     fillRelatedTradeAgreements(relatedTradeAgreements)
   }
   fillEventName(eventName)
-  fillEventType(eventType)
+  fillEventTypeWithLegend(eventType)
   fillStartDateWith(startDate?.day, startDate?.month, startDate.year)
   fillEndDateWith(endDate?.day, endDate?.month, endDate?.year)
   fillLocationType(locationType)
@@ -87,30 +89,34 @@ export const fillAddress = ({
   fill(selectors.addressTownId, town)
   fill(selectors.addressCountryId, county)
   fill(selectors.addressPostcodeId, postcode)
-  fillCountry(country)
+  fillCountryWithLegend(country)
   if (country && country === UK) {
     fillRegion(region)
   }
 }
 
 export const fillOrganiser = (organiser) => {
-  fillTypeahead(selectors.organiserFieldId, organiser)
+  fillTypeaheadWithLegend(selectors.organiserFieldId, organiser)
 }
 
 export const fillService = (service) => {
-  fillTypeahead(selectors.serviceFieldId, service)
+  fillTypeaheadWithLegend(selectors.serviceFieldId, service)
 }
 
 export const fillRegion = (region) => {
-  fillTypeahead(selectors.ukRegionFieldId, region)
+  fillTypeaheadWithLegend(selectors.ukRegionFieldId, region)
 }
 
 export const fillLeadTeam = (leadTeam) => {
-  fillTypeahead(selectors.leadTeamFieldId, leadTeam)
+  fillTypeaheadWithLegend(selectors.leadTeamFieldId, leadTeam)
 }
 
 export const fillCountry = (country) => {
-  fillTypeahead(selectors.addressCountryFieldId, country)
+  fillTypeaheadWithLegend(selectors.addressCountryFieldId, country)
+}
+
+export const fillCountryWithLegend = (country) => {
+  fillTypeaheadWithLegend(selectors.addressCountryFieldId, country)
 }
 
 export const fillEventName = (name) => {
@@ -128,7 +134,10 @@ export const fillAndAssertProgrammes = (programmes = []) => {
 }
 
 export const fillProgrammes = (programmes = []) => {
-  fillMultiOptionTypeahead(selectors.relatedProgrammesFieldId, programmes)
+  fillMultiOptionTypeaheadWithLegend(
+    selectors.relatedProgrammesFieldId,
+    programmes
+  )
 }
 
 export const fillAndAssertSharedTeams = (teams = []) => {
@@ -164,11 +173,15 @@ export const fillRelatedTradeAgreements = (tradeAgreements = []) => {
 }
 
 export const fillLocationType = (value) => {
-  fillTypeahead(selectors.locationTypeFieldId, value)
+  fillTypeaheadWithLegend(selectors.locationTypeFieldId, value)
 }
 
 export const fillEventType = (value) => {
   fillTypeahead(selectors.eventTypeFieldId, value)
+}
+
+export const fillEventTypeWithLegend = (value) => {
+  fillTypeaheadWithLegend(selectors.eventTypeFieldId, value)
 }
 
 export const fillHasRelatedTradeAgreementsRadio = (isYes = false) => {

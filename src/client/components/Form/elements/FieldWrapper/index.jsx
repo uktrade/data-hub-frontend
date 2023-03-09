@@ -59,6 +59,13 @@ const StyledFieldset = styled('fieldset')`
   `}
 `
 
+const StyledFieldsetNoStyling = styled('fieldset')`
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+`
+
 const StyledLegend = styled('legend')`
   box-sizing: border-box;
   display: table;
@@ -163,7 +170,7 @@ const FieldWrapper = ({
     {...rest}
   >
     {!legend ? (
-      <fieldset>
+      <StyledFieldsetNoStyling>
         <FieldInner
           legend={legend}
           error={error}
@@ -185,7 +192,7 @@ const FieldWrapper = ({
           )}
           {children}
         </FieldInner>
-      </fieldset>
+      </StyledFieldsetNoStyling>
     ) : (
       <FieldInner
         legend={legend}

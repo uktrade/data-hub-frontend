@@ -71,7 +71,7 @@ export const inputDateValue = ({ element, value }) => {
  * Adds a date to the any given date input field that also has a hint
  */
 export const inputDateValueWithHint = ({ element, value }) => {
-  cy.get(element).children().next().next().type(value)
+  cy.get(element).find('fieldset > input').type(value)
 }
 
 /**
