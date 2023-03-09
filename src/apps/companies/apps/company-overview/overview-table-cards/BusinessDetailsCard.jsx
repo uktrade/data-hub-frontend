@@ -19,7 +19,7 @@ const StyledLastTableCell = styled(Table.Cell)`
   padding-bottom: 0;
 `
 
-const BusinessDetailsCard = (company, queryString) => {
+const BusinessDetailsCard = ({ company, queryString }) => {
   const StyledAddressList = styled('ul')``
   return (
     <>
