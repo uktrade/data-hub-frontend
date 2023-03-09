@@ -36,7 +36,7 @@ function ErrorHandler() {
 }
 
 const getBreadcrumbs = (company) => {
-  const breadcrumbs = [
+  const defaultBreadcrumbs = [
     {
       link: urls.dashboard(),
       text: 'Home',
@@ -45,21 +45,20 @@ const getBreadcrumbs = (company) => {
       link: urls.companies.index(),
       text: 'Companies',
     },
-    { text: 'Add export' },
   ]
 
-  if (Object.keys(company).length > 0) {
+  if (company) {
     return [
-      ...breadcrumbs.slice(0, 2),
+      ...defaultBreadcrumbs,
       {
         link: urls.companies.detail(company.id),
         text: company.name,
       },
-      ...breadcrumbs.slice(2, breadcrumbs.length),
+      { text: 'Add export' },
     ]
   }
 
-  return breadcrumbs
+  return [...defaultBreadcrumbs, { text: 'Add export' }]
 }
 
 const ExportFormAdd = ({ company }) => {
@@ -69,7 +68,7 @@ const ExportFormAdd = ({ company }) => {
   return (
     <DefaultLayout
       heading={DISPLAY_ADD_EXPORT}
-      subheading={company.name ? company.name : undefined}
+      subheading={company?.name}
       pageTitle={DISPLAY_ADD_EXPORT}
       breadcrumbs={getBreadcrumbs(company)}
       useReactRouter={true}
@@ -86,7 +85,7 @@ const ExportFormAdd = ({ company }) => {
       >
         {() => (
           <ExportFormFields
-            companyId={company.id}
+            companyId={companyId}
             analyticsFormName={'addExportForm'}
           />
         )}
