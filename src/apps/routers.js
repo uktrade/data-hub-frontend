@@ -25,6 +25,7 @@ const reactRoutes = [
   '/reminders/settings/investments-no-recent-interactions',
   '/reminders/settings/companies-no-recent-interactions',
   '/reminders/settings/companies-new-interactions',
+  '/export/create',
 ]
 
 reactRoutes.forEach((path) => {

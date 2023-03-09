@@ -337,6 +337,9 @@ import { getCompanyDetails } from '../client/modules/Companies/CompanyDetails/ta
 import { TASK_GET_EXPORT_DETAIL } from '../client/modules/ExportPipeline/ExportDetails/state'
 import { getExportDetails } from '../client/modules/ExportPipeline/ExportDetails/tasks'
 
+import { TASK_SAVE_EXPORT } from '../client/modules/ExportPipeline/ExportForm/state'
+import { saveExport } from '../client/modules/ExportPipeline/ExportForm/tasks'
+
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
 }
@@ -557,6 +560,7 @@ function App() {
           [TASK_GET_ESS_INTERACTION_DETAILS]: getESSInteractionDetails,
           [TASK_GET_COMPANY_DETAIL]: getCompanyDetails,
           [TASK_GET_EXPORT_DETAIL]: getExportDetails,
+          [TASK_SAVE_EXPORT]: saveExport,
         }}
       >
         <Mount selector="#data-hub-header">
