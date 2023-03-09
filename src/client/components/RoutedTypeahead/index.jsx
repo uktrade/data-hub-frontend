@@ -46,7 +46,7 @@ const RoutedTypeahead = ({
         <StyledFieldWrapper label={label} name={name} hint={hint} {...props}>
           <Typeahead
             name={name}
-            aria-label={name}
+            aria-label={label ? label : name}
             placeholder={placeholder}
             initialOptions={options}
             closeMenuOnSelect={closeMenuOnSelect}
