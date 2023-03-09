@@ -162,27 +162,7 @@ const FieldWrapper = ({
     hint={hint}
     {...rest}
   >
-    {legend ? (
-      <FieldInner
-        legend={legend}
-        error={error}
-        showBorder={showBorder}
-        bigLegend={bigLegend}
-        groupId={groupId}
-      >
-        {label && (
-          <StyledLabel error={error} htmlFor={name}>
-            {label}
-          </StyledLabel>
-        )}
-        {hint && (
-          <StyledHint data-test="hint-text" error={error}>
-            {hint}
-          </StyledHint>
-        )}
-        {children}
-      </FieldInner>
-    ) : (
+    {!legend ? (
       <fieldset>
         <FieldInner
           legend={legend}
@@ -206,6 +186,26 @@ const FieldWrapper = ({
           {children}
         </FieldInner>
       </fieldset>
+    ) : (
+      <FieldInner
+        legend={legend}
+        error={error}
+        showBorder={showBorder}
+        bigLegend={bigLegend}
+        groupId={groupId}
+      >
+        {label && (
+          <StyledLabel error={error} htmlFor={name}>
+            {label}
+          </StyledLabel>
+        )}
+        {hint && (
+          <StyledHint data-test="hint-text" error={error}>
+            {hint}
+          </StyledHint>
+        )}
+        {children}
+      </FieldInner>
     )}
   </StyledFormGroup>
 )
