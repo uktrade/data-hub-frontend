@@ -12,7 +12,7 @@ import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityCardLabels from './card/ActivityCardLabels'
-import ActivitySummary from './card/item-renderers/ActivityOverviewSummary'
+import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
 
 const StyledContactsList = styled('ul')`
   padding-left: 15px;
@@ -70,7 +70,7 @@ export default class AventriEvent extends React.PureComponent {
       }))
     const href = `/events/aventri/${aventriEventId}/details`
     return isOverview ? (
-      <ActivitySummary
+      <ActivityOverviewSummary
         dataTest="activity-summary"
         activity={activity}
         date={date}
@@ -78,7 +78,7 @@ export default class AventriEvent extends React.PureComponent {
         url={href}
         subject={name}
         metadata={[formattedContacts]}
-      ></ActivitySummary>
+      ></ActivityOverviewSummary>
     ) : (
       <ActivityCardWrapper dataTest="aventri-event">
         TODO MK AventriEvent Tab

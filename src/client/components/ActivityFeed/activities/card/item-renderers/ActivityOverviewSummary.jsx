@@ -10,7 +10,7 @@ import ActivityCardSubject from '../ActivityCardSubject'
 import ActivityCardWrapper from '../ActivityCardWrapper'
 import ActivityCardLabels from '../ActivityCardLabels'
 
-export default class ActivitySummary extends React.PureComponent {
+export default class ActivityOverviewSummary extends React.PureComponent {
   static propTypes = {
     activity: PropTypes.object.isRequired,
     date: PropTypes.string,

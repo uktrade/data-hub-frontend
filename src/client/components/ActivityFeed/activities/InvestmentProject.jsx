@@ -12,7 +12,7 @@ import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
-import ActivitySummary from './card/item-renderers/ActivityOverviewSummary'
+import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
 
 const { format } = require('../../../utils/date')
 
@@ -90,7 +90,7 @@ export default class InvestmentProject extends React.PureComponent {
       addedBy,
     ]
     return isOverview ? (
-      <ActivitySummary
+      <ActivityOverviewSummary
         dataTest="investment-activity-summary"
         activity={activity}
         date={format(published)}
@@ -98,7 +98,7 @@ export default class InvestmentProject extends React.PureComponent {
         url={url}
         subject={name}
         summary={summary}
-      ></ActivitySummary>
+      ></ActivityOverviewSummary>
     ) : (
       <ActivityCardWrapper dataTest="investment-activity">
         <ActivityCardLabels
