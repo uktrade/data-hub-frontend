@@ -12,7 +12,7 @@ const CardContainer = styled('div')`
   margin-bottom: 20px;
 `
 
-const CompanyOverview = (company) => {
+const CompanyOverview = ({ company }) => {
   const queryString = `/companies/${company.id}`
   return (
     <>
