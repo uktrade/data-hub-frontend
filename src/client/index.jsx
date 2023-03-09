@@ -30,6 +30,7 @@ import UnfilteredLargeCapitalOpportunityCollection from '../apps/investments/cli
 import InvestmentEditHistory from '../apps/investments/client/InvestmentEditHistory'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
+import CompanyOverview from '../apps/companies/apps/company-overview/client/CompanyOverview'
 import EditOneListForm from '../apps/companies/apps/edit-one-list/client/EditOneListForm'
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
 import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory/'
@@ -749,6 +750,9 @@ function App() {
         <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
         <Mount selector="#contact-form">
           {(props) => <ContactForm {...props} id="contact-form" />}
+        </Mount>
+        <Mount selector="#company-overview">
+          {(props) => <CompanyOverview {...props} />}
         </Mount>
         <Mount selector="#company-projects-collection">
           {(props) => <CompanyProjectsCollection {...props} />}

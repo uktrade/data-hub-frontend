@@ -1,0 +1,10 @@
+{% extends "../../../views/template.njk" %}
+
+{% block body_main_content %}
+
+  {% component 'react-slot', {
+    id: 'company-overview',
+    props: props
+  } %}
+
+{% endblock %}

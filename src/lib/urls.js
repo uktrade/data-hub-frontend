@@ -179,6 +179,9 @@ module.exports = {
         country: url('/companies', '/:companyId/exports/history/:countryId'),
       },
     },
+    overview: {
+      index: url('/companies', '/:companyId/overview'),
+    },
     hierarchies: {
       ghq: {
         add: url('/companies', '/:companyId/hierarchies/ghq/:globalHqId/add'),
