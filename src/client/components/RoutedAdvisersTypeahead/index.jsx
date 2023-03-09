@@ -45,6 +45,7 @@ const RoutedAdvisersTypeahead = ({
 
 RoutedAdvisersTypeahead.propTypes = {
   name: PropTypes.string.isRequired,
+  label: PropTypes.string,
   taskProps: PropTypes.shape({
     name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
