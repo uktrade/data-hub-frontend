@@ -225,11 +225,13 @@ function fillCommonFields({
 
   cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
     .parent()
+    .parent()
     .selectTypeaheadOption('UK-Australia Mutual Recognition Agreement')
     .parent()
     .should('contain', 'UK-Australia Mutual Recognition Agreement')
 
   cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
+    .parent()
     .parent()
     .selectTypeaheadOption('UK-Mexico Trade Continuity Agreement')
     .parent()
@@ -282,17 +284,20 @@ function fillExportCountriesFields() {
 
   cy.contains(ELEMENT_COUNTRIES_CURRENTLY_EXPORTING.label)
     .parent()
+    .parent()
     .selectTypeaheadOption('Iceland')
     .parent()
     .should('contain', 'Iceland')
 
   cy.contains(ELEMENT_COUNTRIES_FUTURE_INTEREST.label)
     .parent()
+    .parent()
     .selectTypeaheadOption('Austria')
     .parent()
     .should('contain', 'Austria')
 
   cy.contains(ELEMENT_COUNTRIES_NOT_INTERESTED.label)
+    .parent()
     .parent()
     .selectTypeaheadOption('Germany')
     .parent()
