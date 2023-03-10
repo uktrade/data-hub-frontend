@@ -100,6 +100,11 @@ const StyledLegend = styled('legend')`
   `}
 `
 
+const StyledLegendNoStyle = styled('legend')`
+  padding: 0;
+  margin: 0;
+`
+
 const StyledLabel = styled(Label)`
   padding-bottom: ${SPACING.SCALE_1};
   font-weight: ${FONT_WEIGHTS.bold};
@@ -179,11 +184,11 @@ const FieldWrapper = ({
           groupId={groupId}
         >
           {label && (
-            <legend>
+            <StyledLegendNoStyle>
               <StyledLabel error={error} htmlFor={name}>
                 {label}
               </StyledLabel>
-            </legend>
+            </StyledLegendNoStyle>
           )}
           {hint && (
             <StyledHint data-test="hint-text" error={error}>
