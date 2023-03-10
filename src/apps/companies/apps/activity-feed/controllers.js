@@ -382,11 +382,6 @@ async function fetchActivityFeedHandler(req, res, next) {
       return activity
     })
 
-    // Sort activities by startTime
-    activities.sort(
-      (a, b) => Date.parse(b.object.startTime) - Date.parse(a.object.startTime)
-    )
-
     res.json({
       total,
       activities,
@@ -406,9 +401,6 @@ function augmentEssActivity(activity, contact) {
     activity.object.attributedTo,
     mapEssContacts(contact),
   ]
-  // Add published time for sorting
-  activity.object.startTime = activity.published
-
   return activity
 }
 
