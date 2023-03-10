@@ -142,7 +142,7 @@ Cypress.Commands.add(
   'checkNoTypeaheadOptionsDisplayed',
   { prevSubject: 'element' },
   (subject, text) => {
-    cy.wrap(subject).parent().find('input').click().clear().type(text)
+    cy.wrap(subject).find('input').click().clear().type(text)
     cy.get('[data-test="typeahead-no-options"]').should('be.visible')
     return cy.wrap(subject)
   }
