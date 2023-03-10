@@ -181,7 +181,7 @@ describe('Company edit', () => {
           summary: 'Need to edit the sector?',
           content:
             'If you need to change the sector for a company on the' +
-            ' One List, please email look@in.vault.com',
+            ` One List, please email ${Cypress.env('one_list_email')}`,
           assert: assertDetails,
         },
         {
@@ -193,7 +193,7 @@ describe('Company edit', () => {
           summary: 'Need to edit the headquarter type?',
           content:
             'If you need to change the headquarter type for a company' +
-            ' on the One List, please email look@in.vault.com',
+            ` on the One List, please email ${Cypress.env('one_list_email')}`,
           assert: assertDetails,
         },
       ],
