@@ -5,6 +5,7 @@ import BusinessDetailsCard from '../overview-table-cards/BusinessDetailsCard'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
 import AccountManagementCard from '../overview-table-cards/AccountManagementCard.jsx'
+import ExportStatus from '../overview-table-cards/ExportStatus.jsx'
 
 const CardContainer = styled('div')`
   border: 1px solid #b1b4b6;
@@ -28,6 +29,13 @@ const CompanyOverview = ({ company }) => {
               company={company}
               queryString={queryString}
             />
+          </CardContainer>
+        </GridCol>
+      </GridRow>
+      <GridRow>
+        <GridCol columnOneHalf={true}>
+          <CardContainer>
+            <ExportStatus company={company} queryString={queryString} />
           </CardContainer>
         </GridCol>
       </GridRow>
