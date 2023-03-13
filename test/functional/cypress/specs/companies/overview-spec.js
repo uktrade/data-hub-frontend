@@ -324,6 +324,26 @@ describe('Company overview page', () => {
         )
         cy.go('back')
       })
+      it('the card should link to the export history page of the specific country', () => {
+        cy.get('[data-test="export-status-currently-exporting-to-link"]')
+          .contains('Western Sahara')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          '/companies/ba8fae21-2895-47cf-90ba-9273c94dab88/exports/history/36afd8d0-5d95-e211-a939-e4115bead28a'
+        )
+        cy.go('back')
+      })
+      it('the card should link to the future countries of interest', () => {
+        cy.get('[data-test="export-status-country-of-interest-link"]')
+          .contains('Yemen')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          '/companies/ba8fae21-2895-47cf-90ba-9273c94dab88/exports/history/37afd8d0-5d95-e211-a939-e4115bead28a'
+        )
+        cy.go('back')
+      })
     }
   )
   context(

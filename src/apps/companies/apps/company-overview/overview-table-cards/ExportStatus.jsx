@@ -86,6 +86,7 @@ const ExportStatus = ({ company, queryString }) => {
               <span>
                 <StyledLink
                   href={`/companies/${company.id}/exports/history/${country.id}`}
+                  data-test="export-status-currently-exporting-to-link"
                 >
                   {country.name}
                 </StyledLink>
@@ -104,6 +105,7 @@ const ExportStatus = ({ company, queryString }) => {
               <span>
                 <StyledLink
                   href={`/companies/${company.id}/exports/history/${country.id}`}
+                  data-test="export-status-country-of-interest-link"
                 >
                   {country.name}
                 </StyledLink>
