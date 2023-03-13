@@ -128,7 +128,7 @@
     "postcss-cli": "^10.1.0",
     "postcss-loader": "^7.0.2",
     "prop-types": "^15.8.1",
-    "pure-uuid": "^1.6.2",
+    "pure-uuid": "^1.6.3",
     "qs": "^6.11.0",
     "react": "^17.0.2",
     "react-app-polyfill": "^3.0.0",
