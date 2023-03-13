@@ -128,6 +128,17 @@ Cypress.Commands.add(
 )
 
 Cypress.Commands.add(
+  'selectTypeaheadOptionInFieldset',
+  { prevSubject: 'element' },
+  (subject, text) => {
+    cy.wrap(subject).children().find('input').click().clear().type(text)
+    cy.get('[data-test="typeahead-menu-option"]').should('be.visible')
+    cy.wrap(subject).children().find('input').type('{downarrow}{enter}{esc}')
+    return cy.wrap(subject)
+  }
+)
+
+Cypress.Commands.add(
   'checkNoTypeaheadOptionsDisplayed',
   { prevSubject: 'element' },
   (subject, text) => {

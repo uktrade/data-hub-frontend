@@ -14,8 +14,16 @@ export const fillTypeahead = (selector, value) => {
   cy.get(selector).selectTypeaheadOption(value)
 }
 
+export const fillTypeaheadWithLegend = (selector, value) => {
+  cy.get(selector).children().selectTypeaheadOption(value)
+}
+
 export const fillMultiOptionTypeahead = (selector, values = []) => {
   values.map((value) => fillTypeahead(selector, value))
+}
+
+export const fillMultiOptionTypeaheadWithLegend = (selector, values = []) => {
+  values.map((value) => fillTypeaheadWithLegend(selector, value))
 }
 
 export const fillDate = (dateId, day, month, year) => {

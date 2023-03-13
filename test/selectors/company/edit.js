@@ -21,8 +21,10 @@ module.exports = {
   sector: 'select#sector',
   needToEditTheSector: 'details[data-test="sector-details"]',
   businessHierarchy: 'input[name="headquarter_type"]',
-  globalHqHierarchy: '#field-headquarter_type > div > label:nth-child(5)',
-  notHqHierarchy: '#field-headquarter_type > div > label:nth-child(2)',
+  globalHqHierarchy:
+    '#field-headquarter_type > fieldset > div > label:nth-child(5)',
+  notHqHierarchy:
+    '#field-headquarter_type > fieldset > div > label:nth-child(2)',
   needToEditTheHeadquarterType: 'details[data-test="headquarter_type-details"]',
   saveButton: 'button:contains("Submit")',
   backLink: 'a:contains("Return without saving")',

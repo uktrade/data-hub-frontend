@@ -1,10 +1,10 @@
 const {
-  assertFormFields,
+  assertFormFieldsWithLegend,
   assertLocalHeader,
   assertBreadcrumbs,
   assertFieldAddAnother,
   assertFieldTextarea,
-  assertFieldInput,
+  assertFieldInputWithLegend,
 } = require('../../support/assertions')
 const { investments } = require('../../../../../src/lib/urls')
 
@@ -39,22 +39,22 @@ const assertRequirementsFieldAddress = ({ element, value = {} }) => {
     {
       label: 'Street',
       value: value.line_1,
-      assert: assertFieldInput,
+      assert: assertFieldInputWithLegend,
     },
     {
       label: 'Street 2',
       value: value.line_2,
-      assert: assertFieldInput,
+      assert: assertFieldInputWithLegend,
     },
     {
       label: 'Town',
       value: value.town,
-      assert: assertFieldInput,
+      assert: assertFieldInputWithLegend,
     },
     {
       label: 'Postcode',
       value: value.postcode,
-      assert: assertFieldInput,
+      assert: assertFieldInputWithLegend,
     },
   ]
   cy.wrap(element)
@@ -90,7 +90,7 @@ const testProjectRequirementsForm = ({ project }) => {
   })
 
   it('should render expected form fields with existing values', () => {
-    assertFormFields(cy.get('form'), [
+    assertFormFieldsWithLegend(cy.get('form'), [
       {
         assert: assertFieldAddAnother,
         label: 'Strategic drivers behind this investment',

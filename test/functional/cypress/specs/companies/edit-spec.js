@@ -181,7 +181,7 @@ describe('Company edit', () => {
           summary: 'Need to edit the sector?',
           content:
             'If you need to change the sector for a company on the' +
-            ' One List, please email onelist@example.com',
+            ` One List, please email ${Cypress.env('one_list_email')}`,
           assert: assertDetails,
         },
         {
@@ -193,7 +193,7 @@ describe('Company edit', () => {
           summary: 'Need to edit the headquarter type?',
           content:
             'If you need to change the headquarter type for a company' +
-            ' on the One List, please email onelist@example.com',
+            ` on the One List, please email ${Cypress.env('one_list_email')}`,
           assert: assertDetails,
         },
       ],
@@ -510,18 +510,21 @@ describe('Company edit', () => {
 
     it('should redirect to the business details page', () => {
       cy.contains('Company name')
+        .parent()
         .next()
         .find('input')
         .clear()
         .type('Test company name')
 
       cy.contains('Trading name')
+        .parent()
         .next()
         .find('input')
         .clear()
         .type('Test company trading name')
 
       cy.contains('Website (optional)')
+        .parent()
         .next()
         .find('input')
         .clear()
@@ -562,18 +565,21 @@ describe('Company edit', () => {
 
     it('should display the "Change requested. Thanks for keeping Data Hub running smoothly"', () => {
       cy.contains('Company name')
+        .parent()
         .next()
         .find('input')
         .clear()
         .type('Test company name')
 
       cy.contains('Trading name')
+        .parent()
         .next()
         .find('input')
         .clear()
         .type('Test company trading name')
 
       cy.contains('Website (optional)')
+        .parent()
         .next()
         .find('input')
         .clear()
@@ -599,6 +605,7 @@ describe('Company edit', () => {
 
     it('should update the company record and redirect to the business details', () => {
       cy.contains('Trading name')
+        .parent()
         .next()
         .find('input')
         .clear()

@@ -46,6 +46,7 @@ const addOrReplaceTestCase = ({
       .eq(0)
       .find('label')
       .contains('Select an ITA')
+      .parent()
       .next()
       .contains('Who should be the primary point of contact?')
       .next()
