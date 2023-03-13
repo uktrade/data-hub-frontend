@@ -1,0 +1,28 @@
+const transformExportPipelineDetails = ({
+  id,
+  owner,
+  team_members,
+  contacts,
+  destination_country,
+  sector,
+  exporter_experience,
+  title,
+  estimated_export_value_amount,
+  estimated_win_date,
+  export_potential,
+  notes,
+}) => ({
+  id,
+  owner: owner.name,
+  teamMembers: team_members,
+  contacts,
+  destination: destination_country.name,
+  sector: sector.name,
+  exporterExperience: exporter_experience.name,
+  title,
+  extimatedExportValueAmount: estimated_export_value_amount,
+  estimatedWinDate: estimated_win_date,
+  exportPotential: export_potential,
+  notes,
+})
+export { transformExportPipelineDetails }
