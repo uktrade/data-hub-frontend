@@ -10,6 +10,7 @@ import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
+import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
 
 const { format } = require('../../../utils/date')
 
@@ -23,7 +24,7 @@ export default class Referral extends React.PureComponent {
   }
 
   render() {
-    const { activity } = this.props
+    const { activity, isOverview } = this.props
     const {
       id,
       companyId,
@@ -35,20 +36,25 @@ export default class Referral extends React.PureComponent {
     } = ReferralUtils.transformReferral(activity)
     const url = `/companies/${companyId}/referrals/${id.split(':')[2]}`
     const badge = ReferralUtils.getStatus(activity)
-    const AdviserDetails = ({ name, email, team }) => (
-      <>
-        {name}
-        {email && (
-          <>
-            , <a href={`mailto:${email}`}>{email}</a>
-          </>
-        )}
-        {team && <>, {team}</>}
-      </>
-    )
+    const AdviserDetails = ({ name, email, team }) =>
+      isOverview ? (
+        `${name}` + (team ? `, ${team}` : ``)
+      ) : (
+        <>
+          {name}
+          {email && (
+            <>
+              , <a href={`mailto:${email}`}>{email}</a>
+            </>
+          )}
+          {team && <>, {team}</>}
+        </>
+      )
+
+    const date = !completedOn && format(startTime)
 
     const metadata = [
-      { label: 'Date', value: !completedOn && format(startTime) },
+      { label: 'Date', value: date },
       {
         label: 'Sending adviser',
         value: AdviserDetails(sender),
@@ -75,7 +81,22 @@ export default class Referral extends React.PureComponent {
       flex: 25%;
     `
 
-    return (
+    return isOverview ? (
+      <ActivityOverviewSummary
+        dataTest="averntry-event-summary"
+        activity={activity}
+        date={date}
+        kind={badge.text}
+        url={url}
+        subject={`${subject}`}
+        summary={[
+          'Completed sending adviser ',
+          AdviserDetails(sender),
+          ' receiving adviser ',
+          AdviserDetails(recipient),
+        ]}
+      ></ActivityOverviewSummary>
+    ) : (
       <ActivityCardWrapper dataTest="referral-activity">
         <Row>
           <LeftCol>

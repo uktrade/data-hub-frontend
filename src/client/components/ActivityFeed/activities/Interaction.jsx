@@ -49,11 +49,18 @@ export default class Interaction extends React.PureComponent {
 
     const formattedAdvisers = () =>
       !!advisers.length &&
-      advisers.map((adviser) => (
-        <span key={adviser.name}>
-          <AdviserActivityRenderer adviser={adviser} isOverview={isOverview} />
-        </span>
-      ))
+      advisers.map((adviser) =>
+        isOverview ? (
+          `${adviser.name}` + (adviser.team ? `, ${adviser.team}` : ``)
+        ) : (
+          <span key={adviser.name}>
+            <AdviserActivityRenderer
+              adviser={adviser}
+              isOverview={isOverview}
+            />
+          </span>
+        )
+      )
 
     const formattedContactUrl = (contact) => {
       return `/${contact.url.split('/').slice(3).join('/')}/details`
@@ -61,26 +68,25 @@ export default class Interaction extends React.PureComponent {
 
     const formattedContacts = () =>
       !!contacts.length &&
-      contacts.map((contact, index) => (
-        <span key={contact.name}>
-          {index ? ', ' : ''}
-          <Link
-            data-test={`contact-link-${index}`}
-            href={formattedContactUrl(contact)}
-          >
-            {contact.name}
-          </Link>
-        </span>
-      ))
-
-    const unFormattedContacts = () =>
-      !!contacts.length &&
-      contacts.map((contact, index) => (
-        <>
-          {index ? ', ' : ''}
-          {contact.name}
-        </>
-      ))
+      contacts.map((contact, index) =>
+        isOverview ? (
+          index ? (
+            `, `
+          ) : (
+            `` + `${contact.name}`
+          )
+        ) : (
+          <span key={contact.name}>
+            {index ? ', ' : ''}
+            <Link
+              data-test={`contact-link-${index}`}
+              href={formattedContactUrl(contact)}
+            >
+              {contact.name}
+            </Link>
+          </span>
+        )
+      )
 
     const metadata = [
       { label: 'Date', value: date },
@@ -111,18 +117,17 @@ export default class Interaction extends React.PureComponent {
         date={date}
         kind={kind}
         url={transformed.interactionUrl}
-        subject={`${transformed.subject}`}
-        summary={[
-          formattedAdvisers(),
-          <>&nbsp;had </>,
-          communicationChannel?.toLowerCase(),
-          ' contact with ',
-          unFormattedContacts(),
-        ]}
+        subject={transformed.subject}
+        summary={
+          formattedAdvisers() +
+          ` had ` +
+          communicationChannel?.toLowerCase() +
+          ' contact with ' +
+          formattedContacts()
+        }
       ></ActivityOverviewSummary>
     ) : theme || service ? (
       <ActivityCardWrapper dataTest="interaction-activity">
-        Interaction Tab theme/service
         <ActivityCardLabels theme={theme} service={service} kind={kind} />
         <ActivityCardSubject>
           <Link
@@ -137,7 +142,6 @@ export default class Interaction extends React.PureComponent {
       </ActivityCardWrapper>
     ) : (
       <ActivityCardWrapper dataTest="interaction-activity">
-        Interaction Tab !theme/service
         <Row>
           <LeftCol>
             <ActivityCardSubject>
