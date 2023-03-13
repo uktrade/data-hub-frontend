@@ -12,6 +12,7 @@ import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
+import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
 
 const { format } = require('../../../utils/date')
 
@@ -27,7 +28,8 @@ export default class InvestmentProject extends React.PureComponent {
   }
 
   render() {
-    const { activity } = this.props
+    const kind = 'New Investment Project'
+    const { activity, isOverview } = this.props
     const url = get(activity, 'object.url')
     const name = get(activity, 'object.name')
     const investmentType = get(activity, 'object.dit:investmentType.name')
@@ -51,18 +53,20 @@ export default class InvestmentProject extends React.PureComponent {
 
     const published = get(activity, 'published')
 
+    const addedBy = [adviser].map((adviser) => <>{adviser?.name}</>)
+
     const metadata = [
       { label: 'Date', value: format(published) },
       { label: 'Investment Type', value: investmentType },
       {
         label: 'Added by',
-        value: adviser
-          ? [adviser].map((adviser, index) => (
-              <span key={adviser.id}>
-                {AdviserItemRenderer(adviser, index)}
-              </span>
-            ))
-          : null,
+        value: [adviser].map((adviser, index) =>
+          adviser ? (
+            <span key={adviser.id}>{AdviserItemRenderer(adviser, index)}</span>
+          ) : (
+            <></>
+          )
+        ),
       },
       {
         label: 'Estimated land date',
@@ -85,16 +89,30 @@ export default class InvestmentProject extends React.PureComponent {
       },
       { label: 'Number of jobs', value: numberNewJobs },
     ]
-
-    return (
+    const subject = <Link href={`${url}/details`}>{name}</Link>
+    const summary = [
+      `${investmentType} investment for ${numberNewJobs} jobs added by `,
+      addedBy,
+    ]
+    return isOverview ? (
+      <ActivityOverviewSummary
+        dataTest="investment-activity-summary"
+        activity={activity}
+        date={format(published)}
+        kind={kind}
+        url={url}
+        subject={subject}
+        summary={summary}
+      ></ActivityOverviewSummary>
+    ) : (
       <ActivityCardWrapper dataTest="investment-activity">
         <ActivityCardLabels
           theme="Investment"
           service="Project - FDI"
-          kind="New Investment Project"
+          kind={kind}
         />
         <ActivityCardSubject dataTest="investment-activity-card-subject">
-          <Link href={`${url}/details`}>{name}</Link>
+          {subject}
         </ActivityCardSubject>
         <ActivityCardMetadata metadata={metadata} />
       </ActivityCardWrapper>

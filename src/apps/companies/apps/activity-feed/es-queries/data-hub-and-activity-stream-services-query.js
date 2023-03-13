@@ -1,4 +1,5 @@
 const { sortCriteria } = require('./sortCriteria')
+const { FILTER_FEED_TYPE } = require('../constants')
 
 const dataHubAndActivityStreamServicesQuery = ({
   from,
@@ -8,27 +9,66 @@ const dataHubAndActivityStreamServicesQuery = ({
   aventriEventIds,
   getEssInteractions,
   contacts,
+  feedType = FILTER_FEED_TYPE.ALL,
 }) => {
-  const shouldCriteria = [
+  const mustCriteria = [
     {
-      bool: {
-        must: [
-          {
-            terms: {
-              'object.type': types,
-            },
-          },
-          {
-            terms: {
-              'object.attributedTo.id': [
-                ...companyIds.map((id) => `dit:DataHubCompany:${id}`),
-              ],
-            },
-          },
+      terms: {
+        'object.type': types,
+      },
+    },
+    {
+      terms: {
+        'object.attributedTo.id': [
+          ...companyIds.map((id) => `dit:DataHubCompany:${id}`),
         ],
       },
     },
   ]
+
+  if (feedType != FILTER_FEED_TYPE.ALL) {
+    if (feedType != FILTER_FEED_TYPE.UPCOMING) {
+      mustCriteria.push({
+        range: {
+          'object.startTime': {
+            lt: 'now/d',
+          },
+        },
+      })
+    } else {
+      mustCriteria.push({
+        range: {
+          'object.startTime': {
+            gte: 'now/d',
+          },
+        },
+      })
+    }
+  }
+
+  const shouldCriteria = [
+    {
+      bool: {
+        must: mustCriteria,
+      },
+    },
+  ]
+  if (feedType != FILTER_FEED_TYPE.ALL) {
+    // TODO Fix
+    // shouldCriteria.push({
+    //   bool: {
+    //     must: [
+    //       {
+    //         range: {
+    //           'object.startTime': {
+    //             lte: 'now/d',
+    //           },
+    //         },
+    //       },
+    //     ],
+    //   },
+    // })
+  }
   if (aventriEventIds?.length) {
     shouldCriteria.push({
       bool: {

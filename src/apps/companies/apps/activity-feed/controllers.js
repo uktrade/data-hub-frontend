@@ -11,6 +11,7 @@ const {
   DATA_HUB_AND_AVENTRI_ACTIVITY,
   EVENT_AVENTRI_ATTENDEES_STATUSES,
   EVENT_ATTENDEES_MAPPING,
+  FILTER_FEED_TYPE,
 } = require('./constants')
 
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
@@ -21,6 +22,7 @@ const { fetchActivityFeed, fetchMatchingDataHubContact } = require('./repos')
 const config = require('../../../../config')
 
 const {
+  companyRecentActivitiesQuery,
   myActivityQuery,
   externalActivityQuery,
   maxemailCampaignQuery,
@@ -67,6 +69,7 @@ async function renderActivityFeed(req, res, next) {
           company,
           breadcrumbs,
           flashMessages: res.locals.getMessages(),
+          isOverview: false,
           activityTypeFilter: FILTER_KEYS.dataHubActivity,
           activityTypeFilters: FILTER_ITEMS,
           localNavItems: res.locals.localNavItems,
@@ -106,6 +109,10 @@ function getQueries(options) {
       ...options,
       types: DATA_HUB_AND_EXTERNAL_ACTIVITY,
     }),
+    [FILTER_KEYS.companyRecentActivitiesQuery]: companyRecentActivitiesQuery({
+      ...options,
+      types: DATA_HUB_AND_AVENTRI_ACTIVITY,
+    }),
   }
 }
 
@@ -118,6 +125,7 @@ function isExternalFilter(activityTypeFilter) {
 
 function isEssFilter(activityTypeFilter) {
   return (
+    activityTypeFilter === FILTER_KEYS.companyRecentActivitiesQuery ||
     activityTypeFilter === FILTER_KEYS.dataHubActivity ||
     activityTypeFilter === FILTER_KEYS.dataHubAndExternalActivity
   )
@@ -312,6 +320,7 @@ async function fetchActivityFeedHandler(req, res, next) {
     const {
       from = 0,
       size = config.activityFeed.paginationSize,
+      feedType = FILTER_FEED_TYPE.ALL,
       activityTypeFilter = FILTER_KEYS.dataHubActivity,
       showDnbHierarchy = false,
     } = req.query
@@ -344,6 +353,7 @@ async function fetchActivityFeedHandler(req, res, next) {
       contacts: filteredContacts,
       user,
       aventriEventIds,
+      feedType,
       getEssInteractions,
     })
 
