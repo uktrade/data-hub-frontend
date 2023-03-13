@@ -705,18 +705,18 @@ describe('Activity feed controllers', () => {
         const expectedEsQuery = {
           from: 0,
           size: 20,
-          sort: [
-            {
-              'object.published': {
-                order: 'desc',
+          sort: {
+            _script: {
+              type: 'number',
+              script: {
+                lang: 'painless',
+                source:
+                  "doc.containsKey('object.startTime') ? doc['object.startTime'].value.toInstant().toEpochMilli() " +
+                  ": doc['published'].value.toInstant().toEpochMilli()",
               },
+              order: 'desc',
             },
-            {
-              'object.startTime': {
-                order: 'desc',
-              },
-            },
-          ],
+          },
           query: {
             bool: {
               filter: {
