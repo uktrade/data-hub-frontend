@@ -303,7 +303,7 @@ describe('Company overview page', () => {
         cy.get('th')
           .contains('Export sub-segment')
           .siblings()
-          .contains('td', 'sustain_nurture_and_grow')
+          .contains('td', 'Sustain: Nurture & grow')
         cy.get('th')
           .contains('Currently exporting to')
           .siblings()
