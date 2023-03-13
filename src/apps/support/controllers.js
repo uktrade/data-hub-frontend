@@ -20,6 +20,7 @@ function renderFeedbackPage(req, res) {
   )
 
   const helpCentre = config.helpCentre
+  const zendesk = config.zen
 
   res
     .title('Report a problem or leave feedback')
@@ -29,13 +30,14 @@ function renderFeedbackPage(req, res) {
         errors: res.locals.formErrors,
       }),
       helpCentre,
+      props: {
+        zenVariables: zendesk,
+      },
     })
 }
 
 function renderThankYouPage(req, res) {
-  res.breadcrumb('Thank you').render('support/views/thank-you', {
-    heading: 'Thank you',
-  })
+  res.breadcrumb('Thank you').render('support/views/thank-you')
 }
 
 module.exports = {

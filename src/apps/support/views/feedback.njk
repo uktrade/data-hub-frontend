@@ -1,5 +1,9 @@
 {% extends "_layouts/template.njk" %}
 {% block body_main_content %}
-  Take a look at our <a href="{{ helpCentre.url }}">help centre</a> for help, guidance and updates.
+  {% component 'react-slot', {
+        id: 'support-form',
+        props: props
+        }
+    %}
   {{ Form(feedbackForm) }}
 {% endblock %}

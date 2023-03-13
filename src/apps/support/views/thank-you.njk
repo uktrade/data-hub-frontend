@@ -1,1 +1,9 @@
-{% extends "_layouts/template.njk" %}
+{% extends "_layouts/template-no-local-header.njk" %}
+
+{% block body %}
+    {% component 'react-slot', {
+        id: 'support-thank-you',
+        props: props
+        }
+    %}
+{% endblock %}

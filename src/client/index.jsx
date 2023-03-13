@@ -72,6 +72,8 @@ import InteractionDetails from './modules/Interactions/InteractionDetails'
 import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
 import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
+import SupportForm from './modules/Support/SupportForm'
+import ThankYou from './modules/Support/ThankYou'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -333,6 +335,9 @@ import { TASK_GET_ESS_INTERACTION_DETAILS } from './modules/Interactions/ESSInte
 import { TASK_GET_COMPANY_DETAIL } from '../client/modules/Companies/CompanyDetails/state'
 import { getCompanyDetails } from '../client/modules/Companies/CompanyDetails/tasks'
 
+import { TASK_SUBMIT_SUPPORT_REQUEST } from './modules/Support/state'
+import { submitSupportRequest } from './modules/Support/tasks'
+
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
 }
@@ -552,6 +557,7 @@ function App() {
           ...resourceTasks,
           [TASK_GET_ESS_INTERACTION_DETAILS]: getESSInteractionDetails,
           [TASK_GET_COMPANY_DETAIL]: getCompanyDetails,
+          [TASK_SUBMIT_SUPPORT_REQUEST]: submitSupportRequest,
         }}
       >
         <Mount selector="#data-hub-header">
@@ -807,6 +813,12 @@ function App() {
         </Mount>
         <Mount selector="#attendee-search">
           {(props) => <AttendeeSearch {...props} />}
+        </Mount>
+        <Mount selector="#support-form">
+          {(props) => <SupportForm {...props} />}
+        </Mount>
+        <Mount selector="#support-thank-you">
+          {(props) => <ThankYou {...props} />}
         </Mount>
 
         <Mount selector="#react-app">
