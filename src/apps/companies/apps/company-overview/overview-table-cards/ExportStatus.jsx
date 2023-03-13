@@ -15,6 +15,12 @@ const StyledSummaryTable = styled(SummaryTable)`
 const StyledTableRow = styled(Table.Row)`
   border: 0;
 `
+const StyledTD = styled('td')`
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  border: 0;
+`
 
 const StyledLastTableCell = styled(Table.Cell)`
   border: 0;
@@ -50,41 +56,47 @@ const ExportStatus = ({ company, queryString }) => {
       </SummaryTable.Row>
       <SummaryTable.Row heading="Export sub-segment">
         {company.export_sub_segment.length > 0 ? (
-          <>
+          <StyledTD>
             {company.export_sub_segment.map((segment) => (
               <GreenLabel>{segment}</GreenLabel>
             ))}
-          </>
+          </StyledTD>
         ) : (
           <StyledSpan>Not set</StyledSpan>
         )}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Currently exporting to">
         {company.export_to_countries.length > 0 ? (
-          <>
+          <StyledTD>
             {company.export_to_countries.map((country) => (
-              <StyledLink
-                href={`/companies/${company.id}/exports/history/${country.id}`}
-              >
-                {country.name}
-              </StyledLink>
+              <span>
+                <StyledLink
+                  href={`/companies/${company.id}/exports/history/${country.id}`}
+                >
+                  {country.name}
+                </StyledLink>
+                &nbsp;
+              </span>
             ))}
-          </>
+          </StyledTD>
         ) : (
           <StyledSpan>Not set</StyledSpan>
         )}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Future countries of interest">
         {company.future_interest_countries.length > 0 ? (
-          <>
+          <StyledTD>
             {company.future_interest_countries.map((country) => (
-              <StyledLink
-                href={`/companies/${company.id}/exports/history/${country.id}`}
-              >
-                {country.name}
-              </StyledLink>
+              <span>
+                <StyledLink
+                  href={`/companies/${company.id}/exports/history/${country.id}`}
+                >
+                  {country.name}
+                </StyledLink>
+                &nbsp;
+              </span>
             ))}
-          </>
+          </StyledTD>
         ) : (
           <StyledSpan>Not set</StyledSpan>
         )}
