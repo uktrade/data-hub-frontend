@@ -224,9 +224,25 @@
   "duns_number": "121212121",
   "employee_range": null,
   "export_experience_category": null,
-  "export_to_countries": [],
-  "future_interest_countries": [],
-  "global_headquarters": null,
+  "export_to_countries": [
+    {
+      "name": "Occupied Palestinian Territories",
+      "id": "35afd8d0-5d95-e211-a939-e4115bead28a"
+    },
+    {
+      "name": "Western Sahara",
+      "id": "36afd8d0-5d95-e211-a939-e4115bead28a"
+    }
+  ],
+
+  "export_potential" : "High",
+  "export_sub_segment":"sustain_nurture_and_grow",
+  "future_interest_countries": [
+    {
+      "name": "Yemen",
+      "id": "37afd8d0-5d95-e211-a939-e4115bead28a"
+    }
+  ],  "global_headquarters": null,
   "headquarter_type": null,
   "id": "ba8fae21-2895-47cf-90ba-9273c94dab88",
   "is_number_of_employees_estimated": true,

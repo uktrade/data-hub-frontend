@@ -41,6 +41,12 @@ const GreenLabel = styled('label')`
   font-weight: bold;
   font-size: 14px;
 `
+
+export const SUBSEGMENT = {
+  sustain_nurture_and_grow: 'Sustain: Nurture & grow',
+  sustain_develop_export_capability: '',
+}
+
 const ExportStatus = ({ company, queryString }) => {
   return (
     <StyledSummaryTable
@@ -55,18 +61,16 @@ const ExportStatus = ({ company, queryString }) => {
         )}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Export sub-segment">
-        {company.export_sub_segment.length > 0 ? (
+        {company.export_sub_segment ? (
           <StyledTD>
-            {company.export_sub_segment.map((segment) => (
-              <GreenLabel>{segment}</GreenLabel>
-            ))}
+            <GreenLabel>{SUBSEGMENT[company.export_sub_segment]}</GreenLabel>
           </StyledTD>
         ) : (
           <StyledSpan>Not set</StyledSpan>
         )}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Currently exporting to">
-        {company.export_to_countries.length > 0 ? (
+        {company.export_to_countries?.length > 0 ? (
           <StyledTD>
             {company.export_to_countries.map((country) => (
               <span>
@@ -84,7 +88,7 @@ const ExportStatus = ({ company, queryString }) => {
         )}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Future countries of interest">
-        {company.future_interest_countries.length > 0 ? (
+        {company.future_interest_countries?.length > 0 ? (
           <StyledTD>
             {company.future_interest_countries.map((country) => (
               <span>

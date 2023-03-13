@@ -279,4 +279,51 @@ describe('Company overview page', () => {
       })
     }
   )
+
+  context(
+    'when viewing the export status card for a business that has all information added',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
+        )
+      })
+
+      it('the card should contain the export status table including all keys and value', () => {
+        cy.get('[data-test="exportStatusContainer"]')
+          .children()
+          .first()
+          .contains('Export status')
+          .next()
+          .children()
+        cy.get('th')
+          .contains('Export potential')
+          .siblings()
+          .contains('td', 'High')
+        cy.get('th')
+          .contains('Export sub-segment')
+          .siblings()
+          .contains('td', 'sustain_nurture_and_grow')
+        cy.get('th')
+          .contains('Currently exporting to')
+          .siblings()
+          .contains('td', 'Western Sahara')
+        cy.get('th')
+          .contains('Future countries of interest')
+          .siblings()
+          .contains('td', 'Yemen')
+      })
+
+      it('the card should link to the export status overview page', () => {
+        cy.get('[data-test="export-status-page-link"]')
+          .contains('View full export details')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          '/companies/ba8fae21-2895-47cf-90ba-9273c94dab88/exports'
+        )
+        cy.go('back')
+      })
+    }
+  )
 })
