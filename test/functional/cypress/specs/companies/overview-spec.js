@@ -326,4 +326,39 @@ describe('Company overview page', () => {
       })
     }
   )
+  context(
+    'when viewing the Export Status Card for a business that has no information added',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
+        )
+      })
+
+      it('the card should contain the Export Status table with all values set to "Not set"', () => {
+        cy.get('[data-test="exportStatusContainer"]')
+          .children()
+          .first()
+          .contains('Export status')
+          .next()
+          .children()
+        cy.get('th')
+          .contains('Export potential')
+          .siblings()
+          .contains('td', 'Not set')
+        cy.get('th')
+          .contains('Export sub-segment')
+          .siblings()
+          .contains('td', 'Not set')
+        cy.get('th')
+          .contains('Currently exporting to')
+          .siblings()
+          .contains('td', 'Not set')
+        cy.get('th')
+          .contains('Future countries of interest')
+          .siblings()
+          .contains('td', 'Not set')
+      })
+    }
+  )
 })
