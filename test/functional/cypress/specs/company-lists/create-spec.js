@@ -60,10 +60,9 @@ describe('Create a company list', () => {
     })
     it('should display an error', () => {
       cy.get(selectors.companyList.create.submit).click()
-      cy.get(selectors.companyList.create.error).should(
-        'contain.text',
-        'Enter a name for your list'
-      )
+      cy.get('[data-test="hint-text"]')
+        .next()
+        .should('contain.text', 'Enter a name for your list')
     })
   })
 
@@ -76,10 +75,12 @@ describe('Create a company list', () => {
         'loooooooooooooonnnnnnnnnnnnnggggggggg text!'
       )
       cy.get(selectors.companyList.create.submit).click()
-      cy.get(selectors.companyList.create.error).should(
-        'contain.text',
-        'Enter list name which is no longer than 30 characters'
-      )
+      cy.get('[data-test="hint-text"]')
+        .next()
+        .should(
+          'contain.text',
+          'Enter list name which is no longer than 30 characters'
+        )
     })
   })
 

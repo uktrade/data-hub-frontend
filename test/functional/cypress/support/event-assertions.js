@@ -12,9 +12,9 @@ const YES = 'Yes'
 const UK = 'United Kingdom'
 
 const assertTradeAgreementArticle = (articleElement) => {
-  cy.wrap(articleElement).contains(
-    'Select a trade agreement and then a related event.'
-  )
+  cy.wrap(articleElement)
+    .parent()
+    .contains('Select a trade agreement and then a related event.')
   assertTextVisible(
     'Find more information about selecting trade agreements.This will open in a new window'
   )

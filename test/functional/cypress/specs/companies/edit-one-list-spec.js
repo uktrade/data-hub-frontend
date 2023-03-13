@@ -72,7 +72,7 @@ describe('Edit One List', () => {
     it('should submit updated data', () => {
       cy.get(
         selectors.companyEditOneList.globalAccountManagerField
-      ).selectTypeaheadOption('shawn')
+      ).selectTypeaheadOptionInFieldset('shawn')
 
       cy.contains('Holly Collins').click({ force: true })
 
@@ -81,9 +81,9 @@ describe('Edit One List', () => {
         'Holly Collins'
       )
 
-      cy.get(selectors.companyEditOneList.coreTeamField).selectTypeaheadOption(
-        'leroy'
-      )
+      cy.get(
+        selectors.companyEditOneList.coreTeamField
+      ).selectTypeaheadOptionInFieldset('leroy')
 
       cy.contains('Submit').click()
 
@@ -124,7 +124,7 @@ describe('Edit One List', () => {
 
       it('should submit updated data', () => {
         cy.get(selectors.companyEditOneList.globalAccountManagerField)
-          .selectTypeaheadOption('shawn')
+          .selectTypeaheadOptionInFieldset('shawn')
           .find('input')
           .should('have.attr', 'value', 'Shawn Cohen, Charles Gilbert')
 

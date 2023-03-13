@@ -20,7 +20,7 @@ const assertErrorSummary = (...errors) =>
     )
 
 const assertError = (label, error) =>
-  cy.contains(label).parent().contains(error)
+  cy.contains(label).parent().parent().contains(error)
 
 const assertErrors = (errors) => {
   assertErrorSummary(...Object.values(errors))
@@ -28,7 +28,7 @@ const assertErrors = (errors) => {
 }
 
 const assertInputValueByLabel = (label, value) =>
-  cy.contains(label).parent().find('input').should('have.value', value)
+  cy.contains(label).parent().parent().find('input').should('have.value', value)
 
 const assertInputValuesByLabels = (labelValueMap) =>
   Object.entries(labelValueMap).forEach(([label, value]) =>
@@ -112,7 +112,7 @@ describe('Create contact form', () => {
         "Select yes if this person is the company's primary contact",
     })
 
-    cy.contains('Country').parent().find('select').select('Brazil')
+    cy.contains('Country').parent().parent().find('select').select('Brazil')
     cy.clickSubmitButton('Add contact')
 
     assertErrors({
@@ -136,18 +136,26 @@ describe('Create contact form', () => {
     })
 
     it('should only show the find postcode button when UK is selected', () => {
-      cy.contains('Country').parent().find('select').select('United Kingdom')
+      cy.contains('Country')
+        .parent()
+        .parent()
+        .find('select')
+        .select('United Kingdom')
       cy.contains('Find UK address').should('be.visible')
     })
 
     it('should only show the state field when US is selected', () => {
-      cy.contains('Country').parent().find('select').select('United States')
+      cy.contains('Country')
+        .parent()
+        .parent()
+        .find('select')
+        .select('United States')
       cy.get('#field-area').should('contain.text', 'State')
       cy.get('#postcode-search').should('not.exist')
     })
 
     it('should only show the province field when Canada is selected', () => {
-      cy.contains('Country').parent().find('select').select('Canada')
+      cy.contains('Country').parent().parent().find('select').select('Canada')
       cy.get('#field-areaCanada').should('contain.text', 'Province')
       cy.get('#postcode-search').should('not.exist')
     })

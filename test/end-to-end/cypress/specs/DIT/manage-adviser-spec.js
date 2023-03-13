@@ -18,6 +18,7 @@ const addOrReplaceTestCase = ({
       .click()
     cy.get('h1').contains(headline)
     cy.get('form label')
+      .parent()
       .next()
       .next()
       .selectTypeaheadOption(option)
@@ -51,12 +52,18 @@ describe('Manage Lead ITA', () => {
       "Lead adviser information updated.Send Sarah Gates an email to let them know they've been made Lead ITA.",
     replace: true,
   })
+
   it('should not be able to add an advisor who is no longer active', () => {
     cy.visit(urls.companies.detail(company.pk))
     cy.get('#tab-advisers').click()
     cy.get('#lead-advisers a').contains('Replace Lead ITA').click()
-    cy.get('form label').next().next().checkNoTypeaheadOptionsDisplayed('Ava')
+    cy.get('form label')
+      .parent()
+      .next()
+      .next()
+      .checkNoTypeaheadOptionsDisplayed('Ava')
   })
+
   it('should be able to remove an adviser', () => {
     cy.visit(urls.companies.detail(company.pk))
     cy.get('#tab-advisers').click()
