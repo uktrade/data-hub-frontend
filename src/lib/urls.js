@@ -179,6 +179,9 @@ module.exports = {
         country: url('/companies', '/:companyId/exports/history/:countryId'),
       },
     },
+    overview: {
+      index: url('/companies', '/:companyId/overview'),
+    },
     hierarchies: {
       ghq: {
         add: url('/companies', '/:companyId/hierarchies/ghq/:globalHqId/add'),
@@ -524,5 +527,8 @@ module.exports = {
         newInteraction: url('/reminders/settings/companies-new-interactions'),
       },
     },
+  },
+  exportPipeline: {
+    create: url('/export/create'),
   },
 }

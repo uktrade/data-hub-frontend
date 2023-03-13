@@ -14,7 +14,7 @@ import Analytics from '../Analytics'
 import CollectionItem from '../../components/CollectionList/CollectionItem'
 import CollectionSort from '../../components/CollectionList/CollectionSort'
 import RoutedDownloadDataHeader from '../../components/RoutedDownloadDataHeader'
-import RoutedPagination from '../../components/Pagination/RoutedPagination'
+import Pagination from '../../components/Pagination'
 import FilteredCollectionHeader from './FilteredCollectionHeader'
 
 /**
@@ -36,6 +36,11 @@ const getSelectedFilters = (filters) =>
       ([, value]) => value && value.options && value.options.length
     )
   )
+
+const getPageNumber = (qsParams, defaultValue = 1) => {
+  const pageNumber = parseInt(qsParams.page, 10)
+  return isNaN(pageNumber) ? defaultValue : pageNumber
+}
 
 const FilteredCollectionList = ({
   results = [],
@@ -66,7 +71,7 @@ const FilteredCollectionList = ({
     <Route>
       {({ history, location }) => {
         const qsParams = qs.parse(location.search.slice(1))
-        const initialPage = parseInt(qsParams.page, 10)
+        const initialPage = getPageNumber(qsParams)
         if (defaultQueryParams && isEmpty(qsParams)) {
           history.push({
             search: qs.stringify({
@@ -138,7 +143,19 @@ const FilteredCollectionList = ({
                     )
                   }
                 </Task.Status>
-                <RoutedPagination initialPage={initialPage} items={count} />
+                <Pagination
+                  totalPages={totalPages}
+                  activePage={initialPage}
+                  onPageClick={(page, e) => {
+                    e.preventDefault()
+                    history.push({
+                      search: qs.stringify({
+                        ...qsParams,
+                        page,
+                      }),
+                    })
+                  }}
+                />
               </article>
             </GridCol>
           </GridRow>

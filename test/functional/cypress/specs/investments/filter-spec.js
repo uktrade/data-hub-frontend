@@ -5,7 +5,7 @@ import urls from '../../../../../src/lib/urls'
 import { ukRegionFaker, ukRegionListFaker } from '../../fakers/regions'
 import {
   clickCheckboxGroupOption,
-  inputDateValue,
+  inputDateValueWithHint,
   removeChip,
   selectFirstAdvisersTypeaheadOption,
 } from '../../support/actions'
@@ -13,7 +13,7 @@ import {
   assertCheckboxGroupOption,
   assertChipsEmpty,
   assertChipExists,
-  assertDateInput,
+  assertDateInputWithHint,
   assertFieldEmpty,
   assertPayload,
   assertTypeaheadOptionSelected,
@@ -581,12 +581,12 @@ describe('Investments Collections Filter', () => {
         label: `Estimated land date from: ${formattedFromDate}`,
         position: 2,
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: fromElement,
         label: 'Estimated land date from',
         value: fromDate,
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: toElement,
         label: 'Estimated land date to',
         value: toDate,
@@ -602,12 +602,12 @@ describe('Investments Collections Filter', () => {
       cy.get('[data-test="toggle-section-button"]')
         .contains('Land date details')
         .click()
-      inputDateValue({
+      inputDateValueWithHint({
         element: fromElement,
         value: fromDate,
       })
       cy.wait('@apiRequest')
-      inputDateValue({
+      inputDateValueWithHint({
         element: toElement,
         value: toDate,
       })
@@ -623,12 +623,12 @@ describe('Investments Collections Filter', () => {
         label: `Estimated land date from: ${formattedFromDate}`,
         position: 2,
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: fromElement,
         label: 'Estimated land date from',
         value: fromDate,
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: toElement,
         label: 'Estimated land date to',
         value: toDate,
@@ -640,12 +640,12 @@ describe('Investments Collections Filter', () => {
       assertPayload('@apiRequest', minimumPayload)
       assertChipsEmpty()
 
-      assertDateInput({
+      assertDateInputWithHint({
         element: fromElement,
         label: 'Estimated land date from',
         value: '',
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: toElement,
         label: 'Estimated land date to',
         value: '',
@@ -684,12 +684,12 @@ describe('Investments Collections Filter', () => {
         label: `Actual land date from: ${formattedFromDate}`,
         position: 2,
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: fromElement,
         label: 'Actual land date from',
         value: fromDate,
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: toElement,
         label: 'Actual land date to',
         value: toDate,
@@ -705,12 +705,12 @@ describe('Investments Collections Filter', () => {
       cy.get('[data-test="toggle-section-button"]')
         .contains('Land date details')
         .click()
-      inputDateValue({
+      inputDateValueWithHint({
         element: fromElement,
         value: fromDate,
       })
       cy.wait('@apiRequest')
-      inputDateValue({
+      inputDateValueWithHint({
         element: toElement,
         value: toDate,
       })
@@ -726,12 +726,12 @@ describe('Investments Collections Filter', () => {
         label: `Actual land date from: ${formattedFromDate}`,
         position: 2,
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: fromElement,
         label: 'Actual land date from',
         value: fromDate,
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: toElement,
         label: 'Actual land date to',
         value: toDate,
@@ -743,12 +743,12 @@ describe('Investments Collections Filter', () => {
       assertPayload('@apiRequest', minimumPayload)
       assertChipsEmpty()
 
-      assertDateInput({
+      assertDateInputWithHint({
         element: fromElement,
         label: 'Actual land date from',
         value: '',
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: toElement,
         label: 'Actual land date to',
         value: '',

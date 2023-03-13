@@ -254,7 +254,7 @@ describe('Add company form', () => {
     it('should display the selected country', () => {
       cy.get(selectors.companyAdd.form)
         .find('fieldset')
-        .should('have.text', 'CountryPoland Change Country')
+        .contains('CountryPoland Change Country')
     })
 
     it('should display the "Find company" button', () => {
@@ -359,9 +359,11 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.title)
       cy.should('have.text', 'Add company').and('have.prop', 'tagName', 'H1')
       cy.contains('DIT sector')
+        .parent()
         .next()
         .get('select option:selected')
         .should('have.text', '-- Select DIT sector --')
+        .parent()
         .parent()
         .parent()
         .parent()
@@ -678,6 +680,7 @@ describe('Add company form', () => {
 
     it('should render a form with both "Region" and "Sector" selects', () => {
       cy.contains('DIT region')
+        .parent()
         .next()
         .find('select option:selected')
         .should('have.text', 'London')
@@ -685,11 +688,14 @@ describe('Add company form', () => {
         .parent()
         .parent()
         .parent()
+        .parent()
         .next()
         .contains('DIT sector')
+        .parent()
         .next()
         .find('select option:selected')
         .should('have.text', '-- Select DIT sector --')
+        .parent()
         .parent()
         .parent()
         .parent()
@@ -734,6 +740,7 @@ describe('Add company form', () => {
 
     it('should prompt the user to select a "Region"', () => {
       cy.contains('DIT region')
+        .parent()
         .next()
         .find('select option:selected')
         .should('have.text', '-- Select DIT region --')

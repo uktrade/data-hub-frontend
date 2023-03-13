@@ -74,10 +74,11 @@ describe('Settings - approaching estimated land dates', () => {
     })
 
     it('should render a "Investment reminders" legend', () => {
-      cy.get('[data-test="field-reminders"] legend').should(
-        'have.text',
-        'Investment reminders'
-      )
+      cy.get('[data-test="field-reminders"]')
+        .children()
+        .children()
+        .first()
+        .should('have.text', 'Investment reminders')
     })
 
     it('should render hint text', () => {

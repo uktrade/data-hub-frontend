@@ -17,7 +17,7 @@ import urls from '../../../../../src/lib/urls'
 
 import {
   fillAndAssertRelatedTradeAgreements,
-  fillCountry,
+  fillCountryWithLegend,
   fillEventSharedRadio,
   fillAndAssertSharedTeams,
   fillAndAssertProgrammes,
@@ -87,9 +87,12 @@ describe('Event create', () => {
   })
 
   it('should show "No region found" when value not found', () => {
-    fillCountry('United Kingdom')
+    fillCountryWithLegend('United Kingdom')
 
-    cy.get(selectors.ukRegionFieldId).type('Non existant field')
+    cy.get(selectors.ukRegionFieldId)
+      .children()
+      .first()
+      .type('Non existant field')
 
     assertVisible('span', 'No region found')
   })
@@ -121,13 +124,13 @@ describe('Event create', () => {
   })
 
   it('should toggle uk region field', () => {
-    fillCountry('United Kingdom')
+    fillCountryWithLegend('United Kingdom')
     cy.get(selectors.addressCountryFieldId)
       .find('input')
       .should('have.attr', 'value', 'United Kingdom')
     assertVisible(selectors.ukRegionId)
 
-    fillCountry('Uganda')
+    fillCountryWithLegend('Uganda')
     cy.get(selectors.addressCountryFieldId)
       .find('input')
       .should('have.attr', 'value', 'Uganda')
@@ -176,7 +179,7 @@ describe('Event create', () => {
       fillEventSharedRadio(true)
       fillStartDateWith('12', '12', '2021')
       fillEndDateWith('11', '11', '2021')
-      fillCountry('United Kingdom')
+      fillCountryWithLegend('United Kingdom')
 
       clickAddEventButton()
 

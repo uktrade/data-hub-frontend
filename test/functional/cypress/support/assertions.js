@@ -109,6 +109,7 @@ const assertFieldUneditable = ({ element, label, value = null }) =>
     .find('label')
     .should('have.text', label)
     .parent()
+    .parent()
     .then(($el) => value && cy.wrap($el).should('contain', value))
 
 const assertFieldSelect = ({
@@ -218,6 +219,7 @@ const assertFieldRadios = ({ element, label, value, optionsCount }) =>
     .first()
     .should('have.text', label)
     .parent()
+    .parent()
     .find('input')
     .should('have.length', optionsCount)
     .then(
@@ -295,6 +297,34 @@ const assertFieldTypeahead = ({
 const assertFieldSingleTypeahead = (props) =>
   assertFieldTypeahead({ ...props, isMulti: false })
 
+const assertFieldInputWithLegend = ({
+  element,
+  label,
+  hint = undefined,
+  value = undefined,
+}) =>
+  cy
+    .wrap(element)
+    .find('label')
+    .should('have.text', label)
+    .parent()
+    .parent()
+    .next()
+    .then(
+      ($el) =>
+        hint &&
+        cy
+          .wrap($el)
+          .should('have.text', hint || '')
+          .next()
+    )
+
+    .find('input')
+    .then(
+      ($el) =>
+        value && cy.wrap($el).should('have.attr', 'value', String(value) || '')
+    )
+
 const assertFieldInput = ({
   element,
   label,
@@ -305,6 +335,7 @@ const assertFieldInput = ({
     .wrap(element)
     .find('label')
     .should('have.text', label)
+    .parent()
     .next()
     .then(
       ($el) =>
@@ -314,6 +345,7 @@ const assertFieldInput = ({
           .should('have.text', hint || '')
           .next()
     )
+
     .find('input')
     .then(
       ($el) =>
@@ -328,6 +360,7 @@ const assertFieldTextarea = ({ element, label, hint, value }) =>
     .wrap(element)
     .find('label')
     .should('contain', label)
+    .parent()
     .next()
     .then(
       ($el) =>
@@ -337,6 +370,7 @@ const assertFieldTextarea = ({ element, label, hint, value }) =>
           .should('have.text', hint || '')
           .next()
     )
+    .parent()
     .find('textarea')
     .then(($el) => value ?? cy.wrap($el).should('have.text', value || ''))
 
@@ -407,7 +441,7 @@ const assertFieldAddress = ({ element, hint = null, value = {} }) => {
 
   cy.wrap(element)
     .as('field')
-    .get('fieldset')
+    .get('[data-test="field-address"] fieldset')
     .children()
     .each((item, i) => {
       if (addressElements[i]) {
@@ -453,6 +487,19 @@ const assertFormActions = ({ element, buttons }) =>
 
 const assertFormFields = (formElement, specs) =>
   formElement.children().each((element, i) => {
+    if (specs[i]) {
+      const spec = specs[i]
+      if (spec instanceof Function) {
+        spec(element)
+      } else {
+        const { assert, ...params } = spec
+        assert({ element, ...params })
+      }
+    }
+  })
+
+const assertFormFieldsWithLegend = (formElement, specs) =>
+  formElement.parent().each((element, i) => {
     if (specs[i]) {
       const spec = specs[i]
       if (spec instanceof Function) {
@@ -619,6 +666,20 @@ const assertDateInput = ({ element, label, value }) => {
   cy.get(element)
     .find('label')
     .should('contain', label)
+    .parent()
+    .next()
+    .should('have.attr', 'value', value)
+}
+
+/**
+ * Assert that the label and value exist on the date input where a hint is provided
+ */
+const assertDateInputWithHint = ({ element, label, value }) => {
+  cy.get(element)
+    .find('fieldset > legend > label')
+    .should('contain', label)
+    .parent()
+    .next()
     .next()
     .should('have.attr', 'value', value)
 }
@@ -715,6 +776,7 @@ module.exports = {
   assertFieldTypeahead,
   assertFieldSingleTypeahead,
   assertFieldInput,
+  assertFieldInputWithLegend,
   assertFieldTextarea,
   assertFieldSelect,
   assertSelectOptions,
@@ -729,6 +791,7 @@ module.exports = {
   assertFieldDateShort,
   assertFieldHidden,
   assertFormFields,
+  assertFormFieldsWithLegend,
   assertDetails,
   assertLocalHeader,
   assertTabbedLocalNav,
@@ -747,6 +810,7 @@ module.exports = {
   assertNotQueryParams,
   assertPayload,
   assertDateInput,
+  assertDateInputWithHint,
   assertErrorSummary,
   assertVisible,
   assertNotExists,

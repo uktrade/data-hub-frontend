@@ -30,6 +30,7 @@ import UnfilteredLargeCapitalOpportunityCollection from '../apps/investments/cli
 import InvestmentEditHistory from '../apps/investments/client/InvestmentEditHistory'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
+import CompanyOverview from '../apps/companies/apps/company-overview/client/CompanyOverview'
 import EditOneListForm from '../apps/companies/apps/edit-one-list/client/EditOneListForm'
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
 import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory/'
@@ -333,6 +334,12 @@ import { TASK_GET_ESS_INTERACTION_DETAILS } from './modules/Interactions/ESSInte
 import { TASK_GET_COMPANY_DETAIL } from '../client/modules/Companies/CompanyDetails/state'
 import { getCompanyDetails } from '../client/modules/Companies/CompanyDetails/tasks'
 
+import { TASK_GET_EXPORT_DETAIL } from '../client/modules/ExportPipeline/ExportDetails/state'
+import { getExportDetails } from '../client/modules/ExportPipeline/ExportDetails/tasks'
+
+import { TASK_SAVE_EXPORT } from '../client/modules/ExportPipeline/ExportForm/state'
+import { saveExport } from '../client/modules/ExportPipeline/ExportForm/tasks'
+
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
 }
@@ -552,6 +559,8 @@ function App() {
           ...resourceTasks,
           [TASK_GET_ESS_INTERACTION_DETAILS]: getESSInteractionDetails,
           [TASK_GET_COMPANY_DETAIL]: getCompanyDetails,
+          [TASK_GET_EXPORT_DETAIL]: getExportDetails,
+          [TASK_SAVE_EXPORT]: saveExport,
         }}
       >
         <Mount selector="#data-hub-header">
@@ -745,6 +754,9 @@ function App() {
         <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
         <Mount selector="#contact-form">
           {(props) => <ContactForm {...props} id="contact-form" />}
+        </Mount>
+        <Mount selector="#company-overview">
+          {(props) => <CompanyOverview {...props} />}
         </Mount>
         <Mount selector="#company-projects-collection">
           {(props) => <CompanyProjectsCollection {...props} />}

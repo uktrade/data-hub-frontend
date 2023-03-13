@@ -19,7 +19,7 @@ describe('Company Collections - Pagination', () => {
     cy.get('[data-test=pagination').should(
       'have.attr',
       'data-total-pages',
-      2000
+      1000
     )
   })
 

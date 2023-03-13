@@ -59,6 +59,13 @@ const StyledFieldset = styled('fieldset')`
   `}
 `
 
+const StyledFieldsetNoStyling = styled('fieldset')`
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+`
+
 const StyledLegend = styled('legend')`
   box-sizing: border-box;
   display: table;
@@ -91,6 +98,11 @@ const StyledLegend = styled('legend')`
     padding-bottom: 0px;
     font-size: 24px;
   `}
+`
+
+const StyledLegendNoStyle = styled('legend')`
+  padding: 0;
+  margin: 0;
 `
 
 const StyledLabel = styled(Label)`
@@ -162,25 +174,51 @@ const FieldWrapper = ({
     hint={hint}
     {...rest}
   >
-    <FieldInner
-      legend={legend}
-      error={error}
-      showBorder={showBorder}
-      bigLegend={bigLegend}
-      groupId={groupId}
-    >
-      {label && (
-        <StyledLabel error={error} htmlFor={name}>
-          {label}
-        </StyledLabel>
-      )}
-      {hint && (
-        <StyledHint data-test="hint-text" error={error}>
-          {hint}
-        </StyledHint>
-      )}
-      {children}
-    </FieldInner>
+    {!legend ? (
+      <StyledFieldsetNoStyling>
+        <FieldInner
+          legend={legend}
+          error={error}
+          showBorder={showBorder}
+          bigLegend={bigLegend}
+          groupId={groupId}
+        >
+          {label && (
+            <StyledLegendNoStyle>
+              <StyledLabel error={error} htmlFor={name}>
+                {label}
+              </StyledLabel>
+            </StyledLegendNoStyle>
+          )}
+          {hint && (
+            <StyledHint data-test="hint-text" error={error}>
+              {hint}
+            </StyledHint>
+          )}
+          {children}
+        </FieldInner>
+      </StyledFieldsetNoStyling>
+    ) : (
+      <FieldInner
+        legend={legend}
+        error={error}
+        showBorder={showBorder}
+        bigLegend={bigLegend}
+        groupId={groupId}
+      >
+        {label && (
+          <StyledLabel error={error} htmlFor={name}>
+            {label}
+          </StyledLabel>
+        )}
+        {hint && (
+          <StyledHint data-test="hint-text" error={error}>
+            {hint}
+          </StyledHint>
+        )}
+        {children}
+      </FieldInner>
+    )}
   </StyledFormGroup>
 )
 
