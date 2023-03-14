@@ -1,5 +1,9 @@
-const { redisStore } = require('../session-store')
 const uid = require('uid-safe').sync
+
+const { redisStore } = require('../session-store')
+const redisClient = require('../../lib/redis-client')
+
+const client = redisClient.getClient()
 
 describe('Session middleware', () => {
   it('should store the same session value', async () => {
@@ -15,8 +19,8 @@ describe('Session middleware', () => {
     expect(actual).to.deep.equal({ lastModified: 2, ...expectedValue })
   })
 
-  after(() => {
-    redisStore.client.quit()
+  after(async () => {
+    await client.quit()
   })
 })
 
