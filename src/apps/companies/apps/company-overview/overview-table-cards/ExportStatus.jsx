@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link, Table } from 'govuk-react'
 import PropTypes from 'prop-types'
-import GovUkTag from '@govuk-react/tag'
 import styled from 'styled-components'
 
 import { SummaryTable } from '../../../../../client/components'
@@ -34,12 +33,14 @@ const StyledSpan = styled('span')`
 const StyledLink = styled(Link)`
   color: grey;
 `
-const GreenLabel = styled(GovUkTag)`
+const GreenLabel = styled('span')`
   background-color: #cce2d9;
   color: #005b30;
   padding: 4px;
   white-space: pre-line;
   font-size: 14px;
+  text-transform: uppercase;
+  font-weight: bold;
 `
 
 export const SUBSEGMENT = {
@@ -66,7 +67,9 @@ const ExportStatus = ({ company, queryString }) => {
       <SummaryTable.Row heading="Export potential">
         {company.export_potential ? (
           <StyledTD>
-            <GreenLabel>{company.export_potential}</GreenLabel>
+            <div>
+              <GreenLabel>{company.export_potential}</GreenLabel>
+            </div>
           </StyledTD>
         ) : (
           <StyledSpan>Not set</StyledSpan>
@@ -75,7 +78,9 @@ const ExportStatus = ({ company, queryString }) => {
       <SummaryTable.Row heading="Export sub-segment">
         {company.export_sub_segment ? (
           <StyledTD>
-            <GreenLabel>{SUBSEGMENT[company.export_sub_segment]}</GreenLabel>
+            <div>
+              <GreenLabel>{SUBSEGMENT[company.export_sub_segment]}</GreenLabel>
+            </div>
           </StyledTD>
         ) : (
           <StyledSpan>Not set</StyledSpan>
