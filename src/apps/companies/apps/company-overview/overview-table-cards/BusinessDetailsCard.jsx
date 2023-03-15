@@ -31,7 +31,11 @@ const BusinessDetailsCard = ({ company, queryString, companiesHouseLink }) => {
           {!company.company_number ? (
             'Not set'
           ) : (
-            <NewWindowLink href={companiesHouseLink}>
+            <NewWindowLink
+              href={companiesHouseLink}
+              aria-label="Opens on Companies House website"
+              data-test="companies-house-link"
+            >
               {company.company_number}
             </NewWindowLink>
           )}
