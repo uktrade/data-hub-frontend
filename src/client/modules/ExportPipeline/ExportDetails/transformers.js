@@ -1,7 +1,17 @@
+// export const transformNameIdToValueLabel = (value) => {
+//   if (value) {
+//     const { id, name } = value
+//     return {
+//       value: id,
+//       label: name,
+//     }
+//   }
+//   return null
+// }
 const transformExportPipelineDetails = ({
   id,
   owner,
-  team_members,
+  // teamMembers:team_members?.map(transformIdNameToValueLabel),
   contacts,
   destination_country,
   sector,
@@ -12,11 +22,12 @@ const transformExportPipelineDetails = ({
   export_potential,
   notes,
   company,
+  status,
 }) => ({
   id,
   owner: owner.name,
   teamMembers: team_members,
-  contacts: contacts,
+  contacts: contacts.name,
   destination: destination_country.name,
   sector: sector.name,
   exporterExperience: exporter_experience.name,
@@ -26,5 +37,6 @@ const transformExportPipelineDetails = ({
   exportPotential: export_potential,
   notes,
   company: company.name,
+  status,
 })
 export { transformExportPipelineDetails }
