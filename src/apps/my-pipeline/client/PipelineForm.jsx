@@ -10,6 +10,7 @@ import {
 
 import Form from '../../../client/components/Form'
 import Resource from '../../../client/components/Resource'
+import { number } from '../../../client/components/Form/validators'
 
 import { ID as STATE_ID, TASK_GET_PIPELINE_COMPANY_CONTACTS } from './state'
 import { STATUS_VALUES, LIKELIHOOD_VALUES } from './constants'
@@ -21,7 +22,6 @@ const statusOptions = STATUS_VALUES.map(({ value, label }) => ({
 
 const likelihoodOptions = Object.values(LIKELIHOOD_VALUES)
 
-const IS_NUMBER = /^[0-9]*$/
 function PipelineForm({
   analyticsFormName,
   submissionTaskName,
@@ -116,9 +116,7 @@ function PipelineForm({
             spellcheck="false"
             className="govuk-input--width-10"
             validate={(value) =>
-              !value || IS_NUMBER.test(value)
-                ? null
-                : 'Potential export value must be a number'
+              number(value, 'Potential export value must be a number')
             }
           />
           <FieldDate
