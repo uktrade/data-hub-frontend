@@ -1,3 +1,4 @@
 import ExportFormAdd from './ExportFormAdd'
+import ExportFormEdit from './ExportFormEdit'
 
-export { ExportFormAdd }
+export { ExportFormAdd, ExportFormEdit }

@@ -1,11 +1,13 @@
 import { EXPORT_LOADED } from '../../../../client/actions'
 
-export default (state = {}, { type, result }) => {
+const initialState = { exportItem: null }
+
+export default (state = initialState, { type, result }) => {
   switch (type) {
     case EXPORT_LOADED:
       return {
         ...state,
-        ...result,
+        exportItem: result,
       }
     default:
       return state

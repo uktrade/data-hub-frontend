@@ -35,7 +35,7 @@ const getBreadcrumbs = (company) => {
     return [
       ...defaultBreadcrumbs,
       {
-        link: urls.companies.detail(company.id),
+        link: urls.companies.activity.index(company.id),
         text: company.name,
       },
       { text: 'Add export' },
@@ -55,7 +55,7 @@ const ExportFormAdd = ({ company }) => {
       subheading={company?.name}
       pageTitle={DISPLAY_ADD_EXPORT}
       breadcrumbs={getBreadcrumbs(company)}
-      useReactRouter={true}
+      useReactRouter={false}
     >
       <Task.Status
         name={TASK_GET_COMPANY_DETAIL}
