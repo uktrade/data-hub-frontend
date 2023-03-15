@@ -5,6 +5,7 @@ import BusinessDetailsCard from '../overview-table-cards/BusinessDetailsCard'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
 import AccountManagementCard from '../overview-table-cards/AccountManagementCard.jsx'
+import InvestmentStatusCard from '../overview-table-cards/InvestmentStatusCard'
 
 import ExportStatus from '../overview-table-cards/ExportStatus.jsx'
 import InvestmentStatusCard from '../overview-table-cards/InvestmentStatusCard'
@@ -36,6 +37,9 @@ const CompanyOverview = ({ company, companiesHouseLink, investment }) => {
               investment={investment}
               queryString={queryString}
             />
+          </CardContainer>
+          <CardContainer>
+            <InvestmentStatusCard company={company} queryString={queryString} />
           </CardContainer>
         </GridCol>
         <GridCol columnOneHalf={true}>
