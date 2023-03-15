@@ -13,11 +13,16 @@ async function renderOverview(req, res) {
     { text: 'Overview' },
   ]
 
+  const companiesHouseLink = urls.external.companiesHouse(
+    company.company_number
+  )
+
   const props = {
     breadcrumbs,
     company,
     localNavItems: res.locals.localNavItems,
     urls,
+    companiesHouseLink,
   }
 
   res.render('companies/apps/company-overview/views/client-container', {
