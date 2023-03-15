@@ -11,18 +11,20 @@ const transformExportPipelineDetails = ({
   estimated_win_date,
   export_potential,
   notes,
+  company,
 }) => ({
   id,
   owner: owner.name,
   teamMembers: team_members,
-  contacts,
+  contacts: contacts,
   destination: destination_country.name,
   sector: sector.name,
   exporterExperience: exporter_experience.name,
   title,
-  extimatedExportValueAmount: estimated_export_value_amount,
+  estimatedExportValueAmount: estimated_export_value_amount,
   estimatedWinDate: estimated_win_date,
   exportPotential: export_potential,
   notes,
+  company: company.name,
 })
 export { transformExportPipelineDetails }
