@@ -103,6 +103,8 @@ export const INTERACTION_SERVICES = {
   'IST Specific Service': 'IST Service',
   'Proposition Development': 'Proposition Development',
   'Trade Agreement Implementation Activity': 'Implementation',
+  'GREAT - Unicorn Kingdom Campaign - North America (2023)':
+    'GREAT - Unicorn Kingdom Campaign',
 }
 
 export const INTERACTION_SERVICEOTHER = {

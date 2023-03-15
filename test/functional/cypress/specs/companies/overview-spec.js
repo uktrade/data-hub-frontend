@@ -279,4 +279,106 @@ describe('Company overview page', () => {
       })
     }
   )
+
+  context(
+    'when viewing the export status card for a business that has all information added',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
+        )
+      })
+
+      it('the card should contain the export status table including all keys and value', () => {
+        cy.get('[data-test="exportStatusContainer"]')
+          .children()
+          .first()
+          .contains('Export status')
+          .next()
+          .children()
+        cy.get('th')
+          .contains('Export potential')
+          .siblings()
+          .contains('td', 'High')
+        cy.get('th')
+          .contains('Export sub-segment')
+          .siblings()
+          .contains('td', 'Sustain: Nurture & grow')
+        cy.get('th')
+          .contains('Currently exporting to')
+          .siblings()
+          .contains('td', 'Western Sahara')
+        cy.get('th')
+          .contains('Future countries of interest')
+          .siblings()
+          .contains('td', 'Yemen')
+      })
+
+      it('the card should link to the export status overview page', () => {
+        cy.get('[data-test="export-status-page-link"]')
+          .contains('View full export details')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          '/companies/ba8fae21-2895-47cf-90ba-9273c94dab88/exports'
+        )
+        cy.go('back')
+      })
+      it('the card should link to the export history page of the specific country', () => {
+        cy.get('[data-test="export-status-currently-exporting-to-link"]')
+          .contains('Western Sahara')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          '/companies/ba8fae21-2895-47cf-90ba-9273c94dab88/exports/history/36afd8d0-5d95-e211-a939-e4115bead28a'
+        )
+        cy.go('back')
+      })
+      it('the card should link to the future countries of interest', () => {
+        cy.get('[data-test="export-status-country-of-interest-link"]')
+          .contains('Yemen')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          '/companies/ba8fae21-2895-47cf-90ba-9273c94dab88/exports/history/37afd8d0-5d95-e211-a939-e4115bead28a'
+        )
+        cy.go('back')
+      })
+    }
+  )
+  context(
+    'when viewing the Export Status Card for a business that has no information added',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
+        )
+      })
+
+      it('the card should contain the Export Status table with all values set to "Not set"', () => {
+        cy.get('[data-test="exportStatusContainer"]')
+          .children()
+          .first()
+          .contains('Export status')
+          .next()
+          .children()
+        cy.get('th')
+          .contains('Export potential')
+          .siblings()
+          .contains('td', 'Not set')
+        cy.get('th')
+          .contains('Export sub-segment')
+          .siblings()
+          .contains('td', 'Not set')
+        cy.get('th')
+          .contains('Currently exporting to')
+          .siblings()
+          .contains('td', 'Not set')
+        cy.get('th')
+          .contains('Future countries of interest')
+          .siblings()
+          .contains('td', 'Not set')
+      })
+    }
+  )
 })
