@@ -18,6 +18,7 @@ import { spacing } from '@govuk-react/lib'
 
 import FormActions from '../Form/elements/FormActions'
 import SecondaryButton from '../SecondaryButton'
+import { isString } from 'lodash'
 
 const StyledRoot = styled.div(
   {
@@ -44,7 +45,7 @@ const StyledSecondaryButton = styled(SecondaryButton)({
 const Err = ({ errorMessage, retry, dismiss, noun, dismissable = true }) => (
   <StyledRoot data-test="error-dialog">
     <H2 size="MEDIUM">Could not load {noun}</H2>
-    <p>Error: {errorMessage}</p>
+    {isString(errorMessage) && <p>Error: {errorMessage}</p>}
     <FormActions>
       <StyledSecondaryButton onClick={retry}>Retry</StyledSecondaryButton>
       {dismissable && (
