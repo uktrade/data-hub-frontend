@@ -32,6 +32,7 @@ import { idNamesToValueLabels } from '../../../../../client/utils'
 import { FieldOpportunityValueTypeRadios } from '../../../../../client/components/Form/elements/FieldOpportunityValueType'
 import { apiProxyAxios } from '../../../../../client/components/Task/utils'
 import { FORM_LAYOUT } from '../../../../../common/constants'
+import { number } from '../../../../../client/components/Form/validators'
 
 function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
   const {
@@ -49,8 +50,6 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
     promoters,
     otherDitContacts,
   } = opportunity.detailsFields
-
-  const IS_NUMBER = /^[0-9]*$/
 
   return (
     <Main>
@@ -178,9 +177,7 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
                       initialValue={opportunityValue.value}
                       type="text"
                       validate={(value) =>
-                        !value || IS_NUMBER.test(value)
-                          ? null
-                          : 'Value must be a number'
+                        number(value, 'Value must be a number')
                       }
                     />
                   ),

@@ -34,6 +34,7 @@ import {
   TIME_HORIZONS_FIELD_NAME,
 } from '../Details/constants'
 import { FORM_LAYOUT } from '../../../../../common/constants'
+import { number } from '../../../../../client/components/Form/validators'
 
 const StyledFieldCheckboxes = styled(FieldCheckboxes)`
   margin-bottom: 0;
@@ -42,8 +43,6 @@ const StyledFieldCheckboxes = styled(FieldCheckboxes)`
 const StyledP = styled('p')`
   margin-bottom: ${SPACING.SCALE_5};
 `
-
-const IS_NUMBER = /^[0-9]*$/ // Input validation to eliminates input script injection
 
 const OpportunityRequirementsForm = (state) => {
   const { opportunityId, opportunity, metadata, dispatch } = state
@@ -96,9 +95,10 @@ const OpportunityRequirementsForm = (state) => {
                     initialValue={totalInvestmentSought}
                     type="text"
                     validate={(value) =>
-                      !value || IS_NUMBER.test(value)
-                        ? null
-                        : 'Total investment sought value must be a number'
+                      number(
+                        value,
+                        'Total investment sought value must be a number'
+                      )
                     }
                   />
                   <FieldInput
@@ -108,9 +108,10 @@ const OpportunityRequirementsForm = (state) => {
                     initialValue={currentInvestmentSecured}
                     type="text"
                     validate={(value) =>
-                      !value || IS_NUMBER.test(value)
-                        ? null
-                        : 'Investment secured so far value must be a number'
+                      number(
+                        value,
+                        'Investment secured so far value must be a number'
+                      )
                     }
                   />
                 </FormLayout>
