@@ -10,7 +10,6 @@ import { TASK_GET_EXPORT_DETAIL } from '../ExportDetails/state'
 
 import { ID as EXPORT_DETAILS_ID } from '../../ExportPipeline/ExportDetails/state'
 
-import Task from '../../../components/Task'
 import { EXPORT_LOADED } from '../../../actions'
 
 const DISPLAY_EDIT_EXPORT = 'Edit export'
@@ -51,22 +50,19 @@ const ExportFormEdit = ({ exportItem }) => {
       breadcrumbs={getBreadcrumbs(exportItem)}
       useReactRouter={false}
     >
-      <Task.Status
-        name={TASK_GET_EXPORT_DETAIL}
-        id={EXPORT_DETAILS_ID}
-        progressMessage="Loading export details"
-        startOnRender={{
-          payload: exportId,
-          onSuccessDispatch: EXPORT_LOADED,
+      <ExportFormFields
+        analyticsFormName={'editExportForm'}
+        taskProps={{
+          name: TASK_GET_EXPORT_DETAIL,
+          id: EXPORT_DETAILS_ID,
+          progressMessage: 'Loading export details',
+          startOnRender: {
+            payload: exportId,
+            onSuccessDispatch: EXPORT_LOADED,
+          },
         }}
-      >
-        {() => (
-          <ExportFormFields
-            analyticsFormName={'editExportForm'}
-            initialValues={exportItem}
-          />
-        )}
-      </Task.Status>
+        exportItem={exportItem}
+      />
     </DefaultLayout>
   )
 }
