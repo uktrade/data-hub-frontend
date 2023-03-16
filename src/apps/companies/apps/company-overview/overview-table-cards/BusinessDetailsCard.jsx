@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, Table } from 'govuk-react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { SummaryTable } from '../../../../../client/components'
+import { NewWindowLink, SummaryTable } from '../../../../../client/components'
 import { currencyGBP } from '../../../../../client/utils/number-utils'
 
 const StyledSummaryTable = styled(SummaryTable)`
@@ -19,7 +19,7 @@ const StyledLastTableCell = styled(Table.Cell)`
   padding-bottom: 0;
 `
 
-const BusinessDetailsCard = ({ company, queryString }) => {
+const BusinessDetailsCard = ({ company, queryString, companiesHouseLink }) => {
   const StyledAddressList = styled('ul')``
   return (
     <>
@@ -28,7 +28,17 @@ const BusinessDetailsCard = ({ company, queryString }) => {
         data-test="businessDetailsContainer"
       >
         <SummaryTable.Row heading="Companies House">
-          {!company.company_number ? 'Not set' : company.company_number}
+          {!company.company_number ? (
+            'Not set'
+          ) : (
+            <NewWindowLink
+              href={companiesHouseLink}
+              aria-label="Opens on Companies House website"
+              data-test="companies-house-link"
+            >
+              {company.company_number}
+            </NewWindowLink>
+          )}
         </SummaryTable.Row>
 
         <SummaryTable.Row heading="Trading Address">
@@ -90,6 +100,7 @@ const BusinessDetailsCard = ({ company, queryString }) => {
 
 BusinessDetailsCard.propTypes = {
   company: PropTypes.object.isRequired,
+  companiesHouseLink: PropTypes.string.isRequired,
 }
 
 export default BusinessDetailsCard
