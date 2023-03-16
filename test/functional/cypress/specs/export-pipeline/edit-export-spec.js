@@ -16,7 +16,7 @@ describe('Export pipeline edit', () => {
       cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
         body: exportItem,
       }).as('apiRequest')
-      cy.visit(`/export/${exportItem.id}/edit`)
+      cy.visit(urls.exportPipeline.edit(exportItem.id))
     })
 
     it('should render the header', () => {
