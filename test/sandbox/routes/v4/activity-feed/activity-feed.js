@@ -109,7 +109,6 @@ exports.activityFeed = function (req, res) {
       return res.json(dataHubActivities)
     }
   }
-
   var allActivityStreamEventTypes = get(
     req.body,
     "query.bool.must[0].terms['object.type']"
@@ -270,7 +269,22 @@ exports.activityFeed = function (req, res) {
       req.body,
       "query.bool.must[1].terms['object.attributedTo.id'][0]"
     )
-    return res.json(company === VENUS_LTD ? noActivity : dataHubActivities)
+    const filteredSortHits = dataHubActivities.hits.hits
+      .filter((hit) => hit._source.object.startTime)
+      .sort((a, b) =>
+        b._source.object.startTime.localeCompare(a._source.object.startTime)
+      )
+
+    const updatedHits = Object.assign({}, dataHubActivities, {
+      hits: {
+        total: {
+          value: filteredSortHits.length,
+        },
+        hits: filteredSortHits,
+      },
+    })
+
+    return res.json(company === VENUS_LTD ? noActivity : updatedHits)
   }
 
   // External activity

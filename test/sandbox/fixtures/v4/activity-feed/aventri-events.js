@@ -75,7 +75,7 @@ const generateAventriEvent = (
         endTime,
         id: `dit:aventri:Event:${id}`,
         name,
-        published: '2022-01-23T20:09:14',
+        published: new Date().toISOString(),
         startTime,
         type: ['dit:aventri:Event'],
         url: '',

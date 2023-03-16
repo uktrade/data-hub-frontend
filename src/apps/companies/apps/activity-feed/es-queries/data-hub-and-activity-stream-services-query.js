@@ -1,3 +1,5 @@
+const { sortCriteria } = require('./sortCriteria')
+
 const dataHubAndActivityStreamServicesQuery = ({
   from,
   size,
@@ -69,18 +71,7 @@ const dataHubAndActivityStreamServicesQuery = ({
   const dsl = {
     from,
     size,
-    sort: [
-      {
-        'object.published': {
-          order: 'desc',
-        },
-      },
-      {
-        'object.startTime': {
-          order: 'desc',
-        },
-      },
-    ],
+    sort: sortCriteria,
     query: {
       bool: {
         filter: {
