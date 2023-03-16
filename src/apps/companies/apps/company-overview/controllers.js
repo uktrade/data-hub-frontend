@@ -30,6 +30,18 @@ async function renderOverview(req, res) {
   })
 }
 
+async function setCompanyInvestmentProjects(req, res) {
+  const { investment } = res.locals
+
+  const props = {
+    investment,
+  }
+  res.render('companies/apps/company-overview/views/client-container', {
+    props,
+  })
+}
+
 module.exports = {
   renderOverview,
+  setCompanyInvestmentProjects,
 }

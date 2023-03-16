@@ -15,8 +15,11 @@ const CardContainer = styled('div')`
   margin-bottom: 20px;
 `
 
-const CompanyOverview = ({ company, companiesHouseLink }) => {
+const CompanyOverview = ({ company, companiesHouseLink, investment }) => {
   const queryString = `/companies/${company.id}`
+  // console.log('investment: ' + investment)
+  // console.log('company: ' + company)
+
   return (
     <>
       <GridRow>
@@ -29,7 +32,10 @@ const CompanyOverview = ({ company, companiesHouseLink }) => {
             />
           </CardContainer>
           <CardContainer>
-            <InvestmentStatusCard company={company} queryString={queryString} />
+            <InvestmentStatusCard
+              investment={investment}
+              queryString={queryString}
+            />
           </CardContainer>
         </GridCol>
         <GridCol columnOneHalf={true}>
@@ -56,6 +62,7 @@ CompanyOverview.propTypes = {
   company: PropTypes.object.isRequired,
   urls: PropTypes.object.isRequired,
   companiesHouseLink: PropTypes.string.isRequired,
+  investment: PropTypes.object.isRequired,
 }
 
 export default CompanyOverview
