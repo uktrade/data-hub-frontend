@@ -178,7 +178,11 @@ const PersonalisedDashboard = ({
         {() => (
           <GridRow data-test="data-hub-feed">
             <GridCol setWidth="full">
-              <DataHubFeed items={dataHubFeed} feedLimit={1} />
+              <DataHubFeed
+                items={dataHubFeed}
+                feedLimit={1}
+                isPersonalisedDashboard={true}
+              />
             </GridCol>
           </GridRow>
         )}

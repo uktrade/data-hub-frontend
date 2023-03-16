@@ -46,7 +46,6 @@ import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
 import ArchivePipelineItemForm from '../apps/my-pipeline/client/ArchivePipelineItemForm.jsx'
 import UnarchivePipelineItemForm from '../apps/my-pipeline/client/UnarchivePipelineItemForm.jsx'
 import DeletePipelineItemForm from '../apps/my-pipeline/client/DeletePipelineItemForm.jsx'
-import Dashboard from './components/Dashboard'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyLocalHeader from './components/CompanyLocalHeader'
 import CompanyTabbedLocalNavigation from './components/CompanyTabbedLocalNavigation'
@@ -73,6 +72,7 @@ import InteractionDetails from './modules/Interactions/InteractionDetails'
 import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
 import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
+import Dashboard from './modules/Dashboard/Dashboard'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -615,9 +615,6 @@ function App() {
         <Mount selector="#activity-feed-app">
           {(props) => <CompanyActivityFeed {...props} />}
         </Mount>
-        <Mount selector="#company-lists">
-          <Dashboard id="homepage" />
-        </Mount>
         <Mount selector="#dashboard">
           {(props) => (
             <PersonalisedDashboard
@@ -819,6 +816,16 @@ function App() {
         </Mount>
         <Mount selector="#attendee-search">
           {(props) => <AttendeeSearch {...props} />}
+        </Mount>
+        <Mount selector="#dashboard-old">
+          {(props) => (
+            <Dashboard
+              csrfToken={globalProps.csrfToken}
+              flashMessage={props.flashMessage}
+              dashboardTabId="homepage"
+              {...props}
+            />
+          )}
         </Mount>
 
         <Mount selector="#react-app">
