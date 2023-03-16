@@ -644,11 +644,11 @@ app.post('/v4/large-capital-opportunity', (req, res) =>
 )
 
 // company exports
-app.get('/v4/exports', v4Export.getExportItems)
-app.get('/v4/exports/:exportId', v4Export.getExportItem)
-app.post('/v4/exports', v4Export.createExportItem)
-app.patch('/v4/exports/:exportId', v4Export.updateExportItem)
-app.delete('/v4/exports/:exportId', v4Export.deleteExportItem)
+app.get('/v4/export', v4Export.getExportItems)
+app.get('/v4/export/:exportId', v4Export.getExportItem)
+app.post('/v4/export', v4Export.createExportItem)
+app.patch('/v4/export/:exportId', v4Export.updateExportItem)
+app.delete('/v4/export/:exportId', v4Export.deleteExportItem)
 
 app.use((req, res) =>
   res.status(404).json({ message: 'Route' + req.url + ' Not found.' })

@@ -37,13 +37,15 @@ const generateExport = () => {
     modified_by: faker.datatype.uuid(),
   }
 }
-const generateExports = () => {
+const generateExports = (count = 10) => {
   return {
-    count: 10,
+    count: count,
     next: null,
     previous: null,
-    results: [...Array.from({ length: 10 })].map(generateExport),
+    results: [...Array.from({ length: count })].map(generateExport),
   }
 }
 
-module.exports = { generateExports }
+const exportItems = generateExports(20)
+
+module.exports = { exportItems }
