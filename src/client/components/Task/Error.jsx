@@ -57,7 +57,7 @@ const Err = ({ errorMessage, retry, dismiss, noun, dismissable = true }) => (
 
 Err.propTypes = {
   noun: PropTypes.string.isRequired,
-  error: PropTypes.string.isRequired,
+  errorMessage: PropTypes.string.isRequired,
   retry: PropTypes.func.isRequired,
   clear: PropTypes.func.isRequired,
 }
