@@ -39,10 +39,11 @@ const assertButtons = (url) => {
  * Asserts that the add interaction button has the correct URL
  */
 const assertAddInteractionButton = (url) => {
-  cy.get('[data-test="header-add-interaction"]')
-    .click()
-    .should('have.attr', 'href', url)
-  cy.go('back')
+  cy.get('[data-test="header-add-interaction"]').should(
+    'have.attr',
+    'href',
+    url
+  )
 }
 
 /**

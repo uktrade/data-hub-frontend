@@ -41,7 +41,7 @@ describe('Local header for archived company', () => {
       assertCompanyAddress(address)
     })
 
-    it('should click through to the add interaction page for the company', () => {
+    it('should display the correct add interaction button', () => {
       assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
     })
 
@@ -77,7 +77,7 @@ describe('Local header for archived company', () => {
       assertCompanyAddress(address)
     })
 
-    it('should click through to the add interaction page for the company', () => {
+    it('should display the correct add interaction button', () => {
       assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
     })
 
@@ -111,7 +111,7 @@ describe('Local header for archived company', () => {
       assertCompanyAddress(address)
     })
 
-    it('should click through to the add interaction page for the company', () => {
+    it('should display the correct add interaction button', () => {
       assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
     })
 
@@ -147,7 +147,7 @@ describe('Local header for archived company', () => {
       assertCompanyAddress(address)
     })
 
-    it('should click through to the add interaction page for the company', () => {
+    it('should display the correct add interaction button', () => {
       assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
     })
 
@@ -187,7 +187,7 @@ describe('Local header for archived company', () => {
         assertCompanyAddress(address)
       })
 
-      it('should click through to the add interaction page for the company', () => {
+      it('should display the correct add interaction button', () => {
         assertAddInteractionButton(
           `/companies/${company.id}/interactions/create`
         )
@@ -231,7 +231,7 @@ describe('Local header for archived company', () => {
       assertCompanyAddress(address)
     })
 
-    it('should click through to the add interaction page for the company', () => {
+    it('should display the correct add interaction button', () => {
       assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
     })
 
@@ -267,7 +267,7 @@ describe('Local header for archived company', () => {
       assertCompanyAddress(address)
     })
 
-    it('should click through to the add interaction page for the company', () => {
+    it('should display the correct add interaction button', () => {
       assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
     })
 
@@ -305,7 +305,7 @@ describe('Local header for archived company', () => {
       assertCompanyAddress(address)
     })
 
-    it('should click through to the add interaction page for the company', () => {
+    it('should display the correct add interaction button', () => {
       assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
     })
 

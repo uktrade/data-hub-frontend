@@ -41,7 +41,7 @@ describe('Local header for company under dnb investigation', () => {
         assertCompanyAddress(address)
       })
 
-      it('should click through to the add interaction page for the company', () => {
+      it('should display the correct add interaction button', () => {
         assertAddInteractionButton(
           `/companies/${company.id}/interactions/create`
         )
@@ -85,7 +85,7 @@ describe('Local header for company under dnb investigation', () => {
         assertCompanyAddress(address)
       })
 
-      it('should click through to the add interaction page for the company', () => {
+      it('should display the correct add interaction button', () => {
         assertAddInteractionButton(
           `/companies/${company.id}/interactions/create`
         )
@@ -135,7 +135,7 @@ describe('Local header for company under dnb investigation', () => {
         assertCompanyAddress(address)
       })
 
-      it('should click through to the add interaction page for the company', () => {
+      it('should display the correct add interaction button', () => {
         assertAddInteractionButton(
           `/companies/${company.id}/interactions/create`
         )
@@ -185,7 +185,7 @@ describe('Local header for company under dnb investigation', () => {
         assertCompanyAddress(address)
       })
 
-      it('should click through to the add interaction page for the company', () => {
+      it('should display the correct add interaction button', () => {
         assertAddInteractionButton(
           `/companies/${company.id}/interactions/create`
         )
@@ -231,7 +231,7 @@ describe('Local header for company under dnb investigation', () => {
         assertCompanyAddress(address)
       })
 
-      it('should click through to the add interaction page for the company', () => {
+      it('should display the correct add interaction button', () => {
         assertAddInteractionButton(
           `/companies/${company.id}/interactions/create`
         )
@@ -279,7 +279,7 @@ describe('Local header for company under dnb investigation', () => {
       assertCompanyAddress(address)
     })
 
-    it('should click through to the add interaction page for the company', () => {
+    it('should display the correct add interaction button', () => {
       assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
     })
 
@@ -324,7 +324,7 @@ describe('Local header for company under dnb investigation', () => {
         assertCompanyAddress(address)
       })
 
-      it('should click through to the add interaction page for the company', () => {
+      it('should display the correct add interaction button', () => {
         assertAddInteractionButton(
           `/companies/${company.id}/interactions/create`
         )
@@ -372,11 +372,7 @@ describe('Local header for company under dnb investigation', () => {
       assertCompanyAddress(address)
     })
 
-    it('should click through to the add interaction page for the company', () => {
-      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
-    })
-
-    it('should click through to the add interaction page for the company', () => {
+    it('should display the correct add interaction button', () => {
       assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
     })
 
