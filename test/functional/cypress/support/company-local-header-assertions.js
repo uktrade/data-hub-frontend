@@ -36,6 +36,17 @@ const assertButtons = (url) => {
 }
 
 /**
+ * Asserts that the add interaction button has the correct URL
+ */
+const assertAddInteractionButton = (url) => {
+  cy.get('[data-test="header-add-interaction"]').should(
+    'have.attr',
+    'href',
+    url
+  )
+}
+
+/**
  * Asserts that the header breadcrumbs appear correctly
  */
 const assertBreadcrumbs = (companyName, detailsUrl, lastCrumb) => {
@@ -82,6 +93,7 @@ module.exports = {
   assertCompanyAddress,
   assertBadgeText,
   assertButtons,
+  assertAddInteractionButton,
   assertBreadcrumbs,
   assertExportCountryHistoryBreadcrumbs,
   assertOneListTierA,

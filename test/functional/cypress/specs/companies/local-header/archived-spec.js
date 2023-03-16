@@ -10,6 +10,7 @@ const {
   assertExportCountryHistoryBreadcrumbs,
   assertOneListTierA,
   assertCoreTeam,
+  assertAddInteractionButton,
 } = require('../../../support/company-local-header-assertions')
 
 const companyLocalHeader = selectors.companyLocalHeader()
@@ -23,6 +24,7 @@ const advisersUrl = urls.companies.advisers.index(company.id)
 const addRemoveFromListUrl = urls.companies.lists.addRemove(company.id)
 const detailsUrl = urls.companies.detail(company.id)
 const unarchiveUrl = urls.companies.unarchive(company.id)
+const addInteractionUrl = urls.companies.interactions.create(company.id)
 
 describe('Local header for archived company', () => {
   context('when visting an archived company activity page', () => {
@@ -38,6 +40,10 @@ describe('Local header for archived company', () => {
 
     it('should display the company address', () => {
       assertCompanyAddress(address)
+    })
+
+    it('should display the correct add interaction button', () => {
+      assertAddInteractionButton(addInteractionUrl)
     })
 
     it('should display the correct buttons', () => {
@@ -72,6 +78,10 @@ describe('Local header for archived company', () => {
       assertCompanyAddress(address)
     })
 
+    it('should display the correct add interaction button', () => {
+      assertAddInteractionButton(addInteractionUrl)
+    })
+
     it('should display the correct buttons', () => {
       assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/contacts`)
     })
@@ -100,6 +110,10 @@ describe('Local header for archived company', () => {
 
     it('should display the company address', () => {
       assertCompanyAddress(address)
+    })
+
+    it('should display the correct add interaction button', () => {
+      assertAddInteractionButton(addInteractionUrl)
     })
 
     it('should display the correct buttons', () => {
@@ -132,6 +146,10 @@ describe('Local header for archived company', () => {
 
     it('should display the company address', () => {
       assertCompanyAddress(address)
+    })
+
+    it('should display the correct add interaction button', () => {
+      assertAddInteractionButton(addInteractionUrl)
     })
 
     it('should display the correct buttons', () => {
@@ -168,6 +186,10 @@ describe('Local header for archived company', () => {
 
       it('should display the company address', () => {
         assertCompanyAddress(address)
+      })
+
+      it('should display the correct add interaction button', () => {
+        assertAddInteractionButton(addInteractionUrl)
       })
 
       it('should display the correct buttons', () => {
@@ -208,6 +230,10 @@ describe('Local header for archived company', () => {
       assertCompanyAddress(address)
     })
 
+    it('should display the correct add interaction button', () => {
+      assertAddInteractionButton(addInteractionUrl)
+    })
+
     it('should display the correct buttons', () => {
       assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/exports`)
     })
@@ -238,6 +264,10 @@ describe('Local header for archived company', () => {
 
     it('should display the company address', () => {
       assertCompanyAddress(address)
+    })
+
+    it('should display the correct add interaction button', () => {
+      assertAddInteractionButton(addInteractionUrl)
     })
 
     it('should display the correct buttons', () => {
@@ -272,6 +302,10 @@ describe('Local header for archived company', () => {
 
     it('should display the company address', () => {
       assertCompanyAddress(address)
+    })
+
+    it('should display the correct add interaction button', () => {
+      assertAddInteractionButton(addInteractionUrl)
     })
 
     it('should display the correct buttons', () => {
