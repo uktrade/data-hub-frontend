@@ -101,11 +101,11 @@ exports.activityFeed = function (req, res) {
     }
 
     //if the sort by is newest
-    if (req.body.sort[0].published.order === 'desc') {
+    if (req.body.sort._script.order === 'desc') {
       return res.json(contactDataHubAndExternalActivities)
     }
     //if the story by is oldest
-    if (req.body.sort[0].published.order === 'asc') {
+    if (req.body.sort._script.order === 'asc') {
       return res.json(dataHubActivities)
     }
   }
