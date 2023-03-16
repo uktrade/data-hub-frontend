@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import pluralize from 'pluralize'
 import GridCol from '@govuk-react/grid-col'
+import Button from '@govuk-react/button'
 import GridRow from '@govuk-react/grid-row'
 import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
 import Details from '@govuk-react/details'
@@ -35,6 +36,15 @@ const TypeWrapper = styled('div')`
     display: table-row;
   }
 `
+const StyledButtonContainer = styled('div')`
+  width: 100%;
+  display: inline-block;
+`
+
+const StyledButtonLink = styled.a({
+  marginBottom: 10,
+  float: 'right',
+})
 
 const BadgeWrapper = styled('div')`
   @media (min-width: ${BREAKPOINTS.TABLET}) {
@@ -125,6 +135,16 @@ const CompanyLocalHeader = ({
               </StyledAddress>
             </GridCol>
             <GridCol setWith="one-third">
+              <StyledButtonContainer>
+                <Button
+                  as={StyledButtonLink}
+                  href={urls.companies.interactions.create(company.id)}
+                  aria-label={`Add interaction with ${name}`}
+                >
+                  Add interaction
+                </Button>
+              </StyledButtonContainer>
+
               <ConnectedDropdownMenu
                 label="View options"
                 closedLabel="Hide options"
