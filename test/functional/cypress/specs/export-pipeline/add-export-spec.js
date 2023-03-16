@@ -30,7 +30,7 @@ describe('Export pipeline create', () => {
     })
 
     it('should render the error message', () => {
-      cy.get('[data-test="company-load-error"]').should('be.visible')
+      cy.get('[data-test="error-dialog"]').should('be.visible')
     })
   })
 
@@ -46,7 +46,7 @@ describe('Export pipeline create', () => {
       cy.get('[data-test="subheading"]').should('have.text', company.name)
     })
 
-    it('should render the add event breadcrumb', () => {
+    it('should render the add export breadcrumb', () => {
       assertBreadcrumbs({
         Home: urls.dashboard(),
         Companies: urls.companies.index(),

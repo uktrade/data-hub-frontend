@@ -1,8 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { useLocation } from 'react-router-dom'
-import { ERROR_COLOUR } from 'govuk-colours'
-import { H3 } from '@govuk-react/heading'
 
 import Task from '../../../components/Task'
 import urls from '../../../../lib/urls'
@@ -11,7 +9,6 @@ import { DefaultLayout } from '../../../components'
 import { TASK_GET_COMPANY_DETAIL } from '../../Companies/CompanyDetails/state'
 import { state2props } from './state'
 import { ID as COMPANY_DETAILS_ID } from '../../Companies/CompanyDetails/state'
-import { StatusMessage } from '../../../../client/components/'
 import ExportFormFields from './ExportFormFields'
 
 const DISPLAY_ADD_EXPORT = 'Add export'
@@ -20,19 +17,6 @@ function useQuery() {
   const { search } = useLocation()
 
   return React.useMemo(() => new URLSearchParams(search), [search])
-}
-
-function ErrorHandler() {
-  return (
-    <StatusMessage
-      colour={ERROR_COLOUR}
-      aria-labelledby="company-load-error-summary-title"
-      role="alert"
-      data-test="company-load-error"
-    >
-      <H3 id="company-load-error-summary-title">Error loading company</H3>
-    </StatusMessage>
-  )
 }
 
 const getBreadcrumbs = (company) => {
@@ -81,7 +65,6 @@ const ExportFormAdd = ({ company }) => {
           payload: companyId,
           onSuccessDispatch: COMPANY_LOADED,
         }}
-        renderError={ErrorHandler}
       >
         {() => (
           <ExportFormFields
