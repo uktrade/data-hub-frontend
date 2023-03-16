@@ -11,6 +11,7 @@ const {
   assertOneListTierA,
   assertCoreTeam,
   assertArchivePanelNotVisible,
+  assertAddInteractionButton,
 } = require('../../../support/company-local-header-assertions')
 
 const companyLocalHeader = selectors.companyLocalHeader()
@@ -42,6 +43,10 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the company address', () => {
       assertCompanyAddress(address)
+    })
+
+    it('should click through to the add interaction page for the company', () => {
+      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
     })
 
     it('should display the correct buttons', () => {
@@ -79,6 +84,10 @@ describe('Local header for global ultimate company', () => {
       assertCompanyAddress(address)
     })
 
+    it('should click through to the add interaction page for the company', () => {
+      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
+    })
+
     it('should display the correct buttons', () => {
       assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}`)
     })
@@ -108,6 +117,10 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the company address', () => {
       assertCompanyAddress(address)
+    })
+
+    it('should click through to the add interaction page for the company', () => {
+      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
     })
 
     it('should display the correct buttons', () => {
@@ -145,6 +158,10 @@ describe('Local header for global ultimate company', () => {
       assertCompanyAddress(address)
     })
 
+    it('should click through to the add interaction page for the company', () => {
+      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
+    })
+
     it('should display the correct buttons', () => {
       assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/advisers`)
     })
@@ -180,6 +197,12 @@ describe('Local header for global ultimate company', () => {
 
       it('should display the company address', () => {
         assertCompanyAddress(address)
+      })
+
+      it('should click through to the add interaction page for the company', () => {
+        assertAddInteractionButton(
+          `/companies/${company.id}/interactions/create`
+        )
       })
 
       it('should display the correct buttons', () => {
@@ -222,6 +245,12 @@ describe('Local header for global ultimate company', () => {
         assertCompanyAddress(address)
       })
 
+      it('should click through to the add interaction page for the company', () => {
+        assertAddInteractionButton(
+          `/companies/${company.id}/interactions/create`
+        )
+      })
+
       it('should display the correct buttons', () => {
         assertButtons(
           `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/investments/large-capital-profile`
@@ -260,6 +289,10 @@ describe('Local header for global ultimate company', () => {
       assertCompanyAddress(address)
     })
 
+    it('should click through to the add interaction page for the company', () => {
+      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
+    })
+
     it('should display the correct buttons', () => {
       assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/exports`)
     })
@@ -293,6 +326,10 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the company address', () => {
       assertCompanyAddress(address)
+    })
+
+    it('should click through to the add interaction page for the company', () => {
+      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
     })
 
     it('should display the correct buttons', () => {
@@ -330,6 +367,10 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the company address', () => {
       assertCompanyAddress(address)
+    })
+
+    it('should click through to the add interaction page for the company', () => {
+      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
     })
 
     it('should display the correct buttons', () => {

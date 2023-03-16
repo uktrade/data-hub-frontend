@@ -8,6 +8,7 @@ const {
   assertExportCountryHistoryBreadcrumbs,
   assertButtons,
   assertArchivePanelNotVisible,
+  assertAddInteractionButton,
 } = require('../../../support/company-local-header-assertions')
 
 const companyLocalHeader = selectors.companyLocalHeader()
@@ -38,6 +39,12 @@ describe('Local header for company under dnb investigation', () => {
 
       it('should display the company address', () => {
         assertCompanyAddress(address)
+      })
+
+      it('should click through to the add interaction page for the company', () => {
+        assertAddInteractionButton(
+          `/companies/${company.id}/interactions/create`
+        )
       })
 
       it('should display the correct buttons', () => {
@@ -76,6 +83,12 @@ describe('Local header for company under dnb investigation', () => {
 
       it('should display the company address', () => {
         assertCompanyAddress(address)
+      })
+
+      it('should click through to the add interaction page for the company', () => {
+        assertAddInteractionButton(
+          `/companies/${company.id}/interactions/create`
+        )
       })
 
       it('should display the correct buttons', () => {
@@ -122,6 +135,12 @@ describe('Local header for company under dnb investigation', () => {
         assertCompanyAddress(address)
       })
 
+      it('should click through to the add interaction page for the company', () => {
+        assertAddInteractionButton(
+          `/companies/${company.id}/interactions/create`
+        )
+      })
+
       it('should display the correct buttons', () => {
         assertButtons(
           `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/advisers`
@@ -166,6 +185,12 @@ describe('Local header for company under dnb investigation', () => {
         assertCompanyAddress(address)
       })
 
+      it('should click through to the add interaction page for the company', () => {
+        assertAddInteractionButton(
+          `/companies/${company.id}/interactions/create`
+        )
+      })
+
       it('should display the correct buttons', () => {
         assertButtons(
           `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/investments/projects`
@@ -204,6 +229,12 @@ describe('Local header for company under dnb investigation', () => {
 
       it('should display the company address', () => {
         assertCompanyAddress(address)
+      })
+
+      it('should click through to the add interaction page for the company', () => {
+        assertAddInteractionButton(
+          `/companies/${company.id}/interactions/create`
+        )
       })
 
       it('should display the correct buttons', () => {
@@ -248,6 +279,10 @@ describe('Local header for company under dnb investigation', () => {
       assertCompanyAddress(address)
     })
 
+    it('should click through to the add interaction page for the company', () => {
+      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
+    })
+
     it('should display the correct buttons', () => {
       assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/exports`)
     })
@@ -287,6 +322,12 @@ describe('Local header for company under dnb investigation', () => {
 
       it('should display the company address', () => {
         assertCompanyAddress(address)
+      })
+
+      it('should click through to the add interaction page for the company', () => {
+        assertAddInteractionButton(
+          `/companies/${company.id}/interactions/create`
+        )
       })
 
       it('should display the correct buttons', () => {
@@ -329,6 +370,14 @@ describe('Local header for company under dnb investigation', () => {
 
     it('should display the company address', () => {
       assertCompanyAddress(address)
+    })
+
+    it('should click through to the add interaction page for the company', () => {
+      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
+    })
+
+    it('should click through to the add interaction page for the company', () => {
+      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
     })
 
     it('should display the correct buttons', () => {

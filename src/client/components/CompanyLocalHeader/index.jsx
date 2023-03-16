@@ -138,6 +138,7 @@ const CompanyLocalHeader = ({
               <StyledButtonContainer>
                 <Button
                   as={StyledButtonLink}
+                  data-test={'header-add-interaction'}
                   href={urls.companies.interactions.create(company.id)}
                   aria-label={`Add interaction with ${name}`}
                 >
