@@ -9,6 +9,29 @@ const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 
 describe('Export pipeline edit', () => {
   const exportItem = exportItems.results[0]
+
+  context('when adding an export for unknown company id', () => {
+    beforeEach(() => {
+      cy.visit('/export/a/edit')
+    })
+
+    it('should render the header', () => {
+      assertLocalHeader('Edit export')
+      cy.get('[data-test="subheading"]').should('not.exist')
+    })
+
+    it('should render edit event breadcrumb', () => {
+      assertBreadcrumbs({
+        Home: urls.dashboard(),
+        Companies: urls.companies.index(),
+      })
+    })
+
+    it('should render the error message', () => {
+      cy.get('[data-test="error-dialog"]').should('be.visible')
+    })
+  })
+
   context('when adding an export for known company id', () => {
     before(() => {})
 
