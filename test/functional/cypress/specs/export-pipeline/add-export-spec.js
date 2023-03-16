@@ -36,7 +36,7 @@ describe('Export pipeline create', () => {
     it('should render add event breadcrumb', () => {
       assertBreadcrumbs({
         Home: urls.dashboard(),
-        Companies: urls.companies.index(),
+        Companies: urls.companies.activity.index(),
         'Add export': null,
       })
     })
