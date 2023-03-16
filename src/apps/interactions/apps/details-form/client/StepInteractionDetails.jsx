@@ -420,7 +420,22 @@ const StepInteractionDetails = ({
             name="policy_feedback_notes"
             label="Business intelligence"
             required="Enter business intelligence"
-            hint="Enter any comments the company made to you on areas such as issues impacting them or feedback on government policy. This information will be visible to other Data Hub users, the Business Intelligence Unit and may also be shared within DIT."
+            hint={
+              <>
+                Please summarise the information the business shared during this
+                interaction, including sufficient detail to convey the meaning
+                and significance of the topics covered.
+                <br />
+                <br />
+                Where available, include:
+                <br />• Opportunities, risks and/or anything affecting business
+                operations (company, sector or market) or investor sentiment
+                <br />• Quantify impacts and timescales (e.g. costs,
+                number/location of jobs created/lost)
+                <br />• Actions the business has or is proposing to take
+                <br />• Comments, questions or requests of HMG
+              </>
+            }
           />
 
           <FieldHelp
