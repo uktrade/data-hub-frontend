@@ -4,7 +4,7 @@ const myActivityQuery = ({ from, size, types, user, companyIds }) => {
   return {
     from,
     size,
-    sort: sortCriteria,
+    sort: sortCriteria('desc'),
     query: {
       bool: {
         must: [
