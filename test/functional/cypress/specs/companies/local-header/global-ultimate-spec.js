@@ -24,6 +24,7 @@ const advisersUrl = urls.companies.advisers.index(company.id)
 const addRemoveFromListUrl = urls.companies.lists.addRemove(company.id)
 const detailsUrl = urls.companies.detail(company.id)
 const dnbHierarchyUrl = urls.companies.dnbHierarchy.index(company.id)
+const addInteractionUrl = urls.companies.interactions.create(company.id)
 
 describe('Local header for global ultimate company', () => {
   context('when visting a global ultimate company activity page', () => {
@@ -46,7 +47,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct add interaction button', () => {
-      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
+      assertAddInteractionButton(addInteractionUrl)
     })
 
     it('should display the correct buttons', () => {
@@ -85,7 +86,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct add interaction button', () => {
-      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
+      assertAddInteractionButton(addInteractionUrl)
     })
 
     it('should display the correct buttons', () => {
@@ -120,7 +121,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct add interaction button', () => {
-      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
+      assertAddInteractionButton(addInteractionUrl)
     })
 
     it('should display the correct buttons', () => {
@@ -159,7 +160,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct add interaction button', () => {
-      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
+      assertAddInteractionButton(addInteractionUrl)
     })
 
     it('should display the correct buttons', () => {
@@ -200,9 +201,7 @@ describe('Local header for global ultimate company', () => {
       })
 
       it('should display the correct add interaction button', () => {
-        assertAddInteractionButton(
-          `/companies/${company.id}/interactions/create`
-        )
+        assertAddInteractionButton(addInteractionUrl)
       })
 
       it('should display the correct buttons', () => {
@@ -246,9 +245,7 @@ describe('Local header for global ultimate company', () => {
       })
 
       it('should display the correct add interaction button', () => {
-        assertAddInteractionButton(
-          `/companies/${company.id}/interactions/create`
-        )
+        assertAddInteractionButton(addInteractionUrl)
       })
 
       it('should display the correct buttons', () => {
@@ -290,7 +287,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct add interaction button', () => {
-      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
+      assertAddInteractionButton(addInteractionUrl)
     })
 
     it('should display the correct buttons', () => {
@@ -329,7 +326,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct add interaction button', () => {
-      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
+      assertAddInteractionButton(addInteractionUrl)
     })
 
     it('should display the correct buttons', () => {
@@ -370,7 +367,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct add interaction button', () => {
-      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
+      assertAddInteractionButton(addInteractionUrl)
     })
 
     it('should display the correct buttons', () => {

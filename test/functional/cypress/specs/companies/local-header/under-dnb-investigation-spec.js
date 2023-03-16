@@ -18,6 +18,7 @@ const company = fixtures.company.investigationLimited
 
 const addRemoveFromListUrl = urls.companies.lists.addRemove(company.id)
 const detailsUrl = urls.companies.detail(company.id)
+const addInteractionUrl = urls.companies.interactions.create(company.id)
 
 describe('Local header for company under dnb investigation', () => {
   context(
@@ -42,9 +43,7 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the correct add interaction button', () => {
-        assertAddInteractionButton(
-          `/companies/${company.id}/interactions/create`
-        )
+        assertAddInteractionButton(addInteractionUrl)
       })
 
       it('should display the correct buttons', () => {
@@ -86,9 +85,7 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the correct add interaction button', () => {
-        assertAddInteractionButton(
-          `/companies/${company.id}/interactions/create`
-        )
+        assertAddInteractionButton(addInteractionUrl)
       })
 
       it('should display the correct buttons', () => {
@@ -136,9 +133,7 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the correct add interaction button', () => {
-        assertAddInteractionButton(
-          `/companies/${company.id}/interactions/create`
-        )
+        assertAddInteractionButton(addInteractionUrl)
       })
 
       it('should display the correct buttons', () => {
@@ -186,9 +181,7 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the correct add interaction button', () => {
-        assertAddInteractionButton(
-          `/companies/${company.id}/interactions/create`
-        )
+        assertAddInteractionButton(addInteractionUrl)
       })
 
       it('should display the correct buttons', () => {
@@ -232,9 +225,7 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the correct add interaction button', () => {
-        assertAddInteractionButton(
-          `/companies/${company.id}/interactions/create`
-        )
+        assertAddInteractionButton(addInteractionUrl)
       })
 
       it('should display the correct buttons', () => {
@@ -280,7 +271,7 @@ describe('Local header for company under dnb investigation', () => {
     })
 
     it('should display the correct add interaction button', () => {
-      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
+      assertAddInteractionButton(addInteractionUrl)
     })
 
     it('should display the correct buttons', () => {
@@ -325,9 +316,7 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the correct add interaction button', () => {
-        assertAddInteractionButton(
-          `/companies/${company.id}/interactions/create`
-        )
+        assertAddInteractionButton(addInteractionUrl)
       })
 
       it('should display the correct buttons', () => {
@@ -373,7 +362,7 @@ describe('Local header for company under dnb investigation', () => {
     })
 
     it('should display the correct add interaction button', () => {
-      assertAddInteractionButton(`/companies/${company.id}/interactions/create`)
+      assertAddInteractionButton(addInteractionUrl)
     })
 
     it('should display the correct buttons', () => {
