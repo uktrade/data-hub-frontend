@@ -100,7 +100,6 @@ const BusinessDetailsCard = ({ company, queryString, companiesHouseLink }) => {
 
 BusinessDetailsCard.propTypes = {
   company: PropTypes.object.isRequired,
-  urls: PropTypes.object.isRequired,
   companiesHouseLink: PropTypes.string.isRequired,
 }
 
