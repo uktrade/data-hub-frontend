@@ -7,9 +7,7 @@ import { DefaultLayout } from '../../../components'
 import { state2props } from './state'
 import ExportFormFields from './ExportFormFields'
 import { TASK_GET_EXPORT_DETAIL } from '../ExportDetails/state'
-
 import { ID as EXPORT_DETAILS_ID } from '../../ExportPipeline/ExportDetails/state'
-
 import { EXPORT_LOADED } from '../../../actions'
 
 const DISPLAY_EDIT_EXPORT = 'Edit export'
@@ -51,7 +49,7 @@ const ExportFormEdit = ({ exportItem }) => {
       useReactRouter={false}
     >
       <ExportFormFields
-        analyticsFormName={'editExportForm'}
+        analyticsFormName="editExportForm"
         taskProps={{
           name: TASK_GET_EXPORT_DETAIL,
           id: EXPORT_DETAILS_ID,

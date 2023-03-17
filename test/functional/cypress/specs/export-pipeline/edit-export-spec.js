@@ -36,8 +36,6 @@ describe('Export pipeline edit', () => {
   })
 
   context('when adding an export for known company id', () => {
-    before(() => {})
-
     beforeEach(() => {
       cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
         body: exportItem,
