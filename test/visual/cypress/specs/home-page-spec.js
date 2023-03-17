@@ -7,7 +7,7 @@ describe('home page', () => {
 
   it('content', () => {
     cy.viewport(1024, 768)
-    cy.get('.dashboard-section__info-feed-date').hideElement()
+    cy.get('[data-test=data-hub-feed]').hideElement()
     cy.get('[for="company-name"]').should('be.visible')
     cy.get('#main-content').compareSnapshot('homePageContent')
   })
@@ -19,7 +19,7 @@ describe('home page', () => {
 
   it('search bar', () => {
     cy.viewport('ipad-mini')
-    cy.get('#dashboard-local-header')
+    cy.get('[data-test=localHeader]')
       .first()
       .compareSnapshot('homePageSearchBar')
   })
