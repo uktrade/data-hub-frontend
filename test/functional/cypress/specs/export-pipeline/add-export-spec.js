@@ -6,6 +6,9 @@ const {
   assertLocalHeader,
   assertBreadcrumbs,
 } = require('../../support/assertions')
+const {
+  ERROR_MESSAGES,
+} = require('../../../../../src/client/modules/ExportPipeline/ExportForm/constants')
 
 describe('Export pipeline create', () => {
   context('when adding an export for unknown company id', () => {
@@ -68,6 +71,14 @@ describe('Export pipeline create', () => {
     it('the form should redirect to the company page when the cancel button is clicked', () => {
       cy.get('[data-test=cancel-button]').click()
       assertUrl(urls.companies.activity.index(company.id))
+    })
+
+    it('the form should display validation error message for mandatory inputs', () => {
+      cy.get('[data-test=submit-button]').click()
+      cy.get('[data-test="field-title"] > fieldset > div > span').should(
+        'contain.text',
+        ERROR_MESSAGES.title
+      )
     })
   })
 })
