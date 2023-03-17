@@ -8,7 +8,6 @@ import AccountManagementCard from '../overview-table-cards/AccountManagementCard
 import InvestmentStatusCard from '../overview-table-cards/InvestmentStatusCard'
 
 import ExportStatus from '../overview-table-cards/ExportStatus.jsx'
-import InvestmentStatusCard from '../overview-table-cards/InvestmentStatusCard'
 
 const CardContainer = styled('div')`
   border: 1px solid #b1b4b6;
@@ -18,9 +17,6 @@ const CardContainer = styled('div')`
 
 const CompanyOverview = ({ company, companiesHouseLink, investment }) => {
   const queryString = `/companies/${company.id}`
-  // console.log('investment: ' + investment)
-  // console.log('company: ' + company)
-
   return (
     <>
       <GridRow>
@@ -37,9 +33,6 @@ const CompanyOverview = ({ company, companiesHouseLink, investment }) => {
               investment={investment}
               queryString={queryString}
             />
-          </CardContainer>
-          <CardContainer>
-            <InvestmentStatusCard company={company} queryString={queryString} />
           </CardContainer>
         </GridCol>
         <GridCol columnOneHalf={true}>
