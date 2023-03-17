@@ -2,8 +2,6 @@ const axios = require('axios')
 const config = require('../../config')
 const redisClient = require('../../lib/redis-client')
 
-const client = redisClient.get()
-
 module.exports = [
   {
     name: 'api',
@@ -11,17 +9,7 @@ module.exports = [
   },
   {
     name: 'redis',
-    healthCheck: () => {
-      return new Promise((resolve, reject) => {
-        client.ping('OK', (err, result) => {
-          if (err) {
-            return reject(err)
-          }
-
-          return resolve({ statusText: result })
-        })
-      })
-    },
+    healthCheck: () => redisClient.pingServer(),
   },
   {
     name: 'getaddress postcode lookup',

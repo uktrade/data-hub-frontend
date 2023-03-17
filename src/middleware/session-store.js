@@ -1,12 +1,15 @@
+const RedisStore = require('connect-redis').default
 const session = require('express-session')
-const redisConnect = require('connect-redis')
 
-const config = require('../config')
 const redisClient = require('../lib/redis-client')
+const config = require('../config')
+const logger = require('../config/logger')
 
-const RedisStore = redisConnect(session)
+const client = redisClient.getClient()
+client.connect().catch((error) => logger.error(error))
+
 const redisStore = new RedisStore({
-  client: redisClient.get(),
+  client,
   // config ttl defined in milliseconds
   ttl: config.session.ttl / 1000,
   secret: config.session.secret,
