@@ -27,6 +27,7 @@ const ExportFormFields = ({
           }
           submissionTaskName={TASK_SAVE_EXPORT}
           initialValues={exportItem}
+          transformPayload={(values) => ({ exportId: values.id, values })}
         >
           {() => (
             <FieldInput
