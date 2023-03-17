@@ -71,7 +71,7 @@ const dataHubAndActivityStreamServicesQuery = ({
   const dsl = {
     from,
     size,
-    sort: sortCriteria,
+    sort: sortCriteria('desc'),
     query: {
       bool: {
         filter: {

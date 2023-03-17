@@ -1,3 +1,5 @@
+const { sortCriteria } = require('./sortCriteria')
+
 const contactActivityQuery = (
   from,
   size,
@@ -9,6 +11,7 @@ const contactActivityQuery = (
   return {
     from,
     size,
+    sort: sortCriteria(sortOrder),
     query: {
       bool: {
         must: [
@@ -86,14 +89,6 @@ const contactActivityQuery = (
         ],
       },
     },
-    sort: [
-      {
-        published: {
-          order: sortOrder,
-          unmapped_type: 'long',
-        },
-      },
-    ],
   }
 }
 
