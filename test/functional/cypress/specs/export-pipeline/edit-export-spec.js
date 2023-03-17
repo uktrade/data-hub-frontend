@@ -1,4 +1,3 @@
-const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 const { assertUrl } = require('../../support/assertions')
 
@@ -6,26 +5,25 @@ const {
   assertLocalHeader,
   assertBreadcrumbs,
 } = require('../../support/assertions')
+const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 
-describe('Export pipeline create', () => {
+describe('Export pipeline edit', () => {
+  const exportItem = exportItems.results[0]
+
   context('when adding an export for unknown company id', () => {
     beforeEach(() => {
-      cy.intercept('GET', '/api-proxy/v4/company/not_real', {
-        statusCode: 404,
-      }).as('getServerFailure')
-      cy.visit('/export/create?companyId=not_real')
+      cy.visit('/export/a/edit')
     })
 
     it('should render the header', () => {
-      assertLocalHeader('Add export')
+      assertLocalHeader('Edit export')
       cy.get('[data-test="subheading"]').should('not.exist')
     })
 
-    it('should render add event breadcrumb', () => {
+    it('should render edit event breadcrumb', () => {
       assertBreadcrumbs({
         Home: urls.dashboard(),
         Companies: urls.companies.index(),
-        'Add export': null,
       })
     })
 
@@ -35,23 +33,31 @@ describe('Export pipeline create', () => {
   })
 
   context('when adding an export for known company id', () => {
-    const company = fixtures.company.venusLtd
+    before(() => {})
 
     beforeEach(() => {
-      cy.visit(`/export/create?companyId=${company.id}`)
+      cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
+        body: exportItem,
+      }).as('apiRequest')
+      cy.visit(urls.exportPipeline.edit(exportItem.id))
     })
 
     it('should render the header', () => {
-      assertLocalHeader('Add export')
-      cy.get('[data-test="subheading"]').should('have.text', company.name)
+      assertLocalHeader('Edit export')
+      cy.get('[data-test="subheading"]').should(
+        'have.text',
+        exportItem.company.name
+      )
     })
 
-    it('should render the add export breadcrumb', () => {
+    it('should render the edit export breadcrumb', () => {
       assertBreadcrumbs({
         Home: urls.dashboard(),
         Companies: urls.companies.index(),
-        [company.name]: urls.companies.activity.index(company.id),
-        'Add export': null,
+        [exportItem.company.name]: urls.companies.activity.index(
+          exportItem.company.id
+        ),
+        [exportItem.title]: null,
       })
     })
 
@@ -62,12 +68,16 @@ describe('Export pipeline create', () => {
     it('the form should display a cancel link', () => {
       cy.get('[data-test=cancel-button]')
         .should('have.text', 'Cancel')
-        .should('have.attr', 'href', urls.companies.activity.index(company.id))
+        .should(
+          'have.attr',
+          'href',
+          urls.companies.activity.index(exportItem.company.id)
+        )
     })
 
     it('the form should redirect to the company page when the cancel button is clicked', () => {
       cy.get('[data-test=cancel-button]').click()
-      assertUrl(urls.companies.activity.index(company.id))
+      assertUrl(urls.companies.activity.index(exportItem.company.id))
     })
   })
 })
