@@ -106,5 +106,14 @@ describe('Export pipeline edit', () => {
         assertFlashMessage(`Changes saved to '${exportItem.title}'`)
       })
     })
+
+    it('the form should display validation error message for mandatory inputs', () => {
+      cy.get('[data-test="title-input"]').clear()
+      cy.get('[data-test=submit-button]').click()
+      cy.get('[data-test="field-title"] > fieldset > div > span').should(
+        'contain.text',
+        ERROR_MESSAGES.title
+      )
+    })
   })
 })
