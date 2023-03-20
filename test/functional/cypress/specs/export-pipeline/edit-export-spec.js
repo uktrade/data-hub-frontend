@@ -96,7 +96,7 @@ describe('Export pipeline edit', () => {
       it('the form should stay on the current page', () => {
         cy.get('[data-test=submit-button]').click()
 
-        //While build the form do individual checks, can switch to assertPayload once all fields are added
+        //While building the form do individual checks, can switch to assertPayload once all fields are added
         cy.wait('@patchExportItemApiRequest').then(({ request }) => {
           expect(request.body).to.have.property('title', exportItem.title)
         })
