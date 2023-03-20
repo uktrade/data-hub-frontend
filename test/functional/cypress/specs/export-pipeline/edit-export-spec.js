@@ -4,6 +4,7 @@ const { assertUrl } = require('../../support/assertions')
 const {
   assertLocalHeader,
   assertBreadcrumbs,
+  assertFlashMessage,
 } = require('../../support/assertions')
 const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 const {
@@ -39,7 +40,10 @@ describe('Export pipeline edit', () => {
     beforeEach(() => {
       cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
         body: exportItem,
-      }).as('apiRequest')
+      }).as('getExportItemApiRequest')
+      cy.intercept('PATCH', `/api-proxy/v4/export/${exportItem.id}`).as(
+        'patchExportItemApiRequest'
+      )
       cy.visit(urls.exportPipeline.edit(exportItem.id))
     })
 
@@ -69,25 +73,38 @@ describe('Export pipeline edit', () => {
     it('the form should display a cancel link', () => {
       cy.get('[data-test=cancel-button]')
         .should('have.text', 'Cancel')
-        .should(
-          'have.attr',
-          'href',
-          urls.companies.activity.index(exportItem.company.id)
-        )
+        .should('have.attr', 'href', urls.dashboard())
     })
 
-    it('the form should redirect to the company page when the cancel button is clicked', () => {
+    it('the form should redirect to the dashboard page when the cancel button is clicked', () => {
       cy.get('[data-test=cancel-button]').click()
-      assertUrl(urls.companies.activity.index(exportItem.company.id))
+      assertUrl(urls.dashboard())
     })
 
-    it('the form should display validation error message for mandatory inputs', () => {
-      cy.get('[data-test="title-input"]').clear()
-      cy.get('[data-test=submit-button]').click()
-      cy.get('[data-test="field-title"] > fieldset > div > span').should(
-        'contain.text',
-        ERROR_MESSAGES.title
-      )
+    context('when the form contains invalid data and is submitted', () => {
+      it('the form should display validation error message for mandatory inputs', () => {
+        cy.get('[data-test="title-input"]').clear()
+        cy.get('[data-test=submit-button]').click()
+        cy.get('[data-test="field-title"] > fieldset > div > span').should(
+          'contain.text',
+          ERROR_MESSAGES.title
+        )
+      })
+    })
+
+    context('when the form contains valid data and is submitted', () => {
+      it('the form should stay on the current page', () => {
+        cy.get('[data-test=submit-button]').click()
+
+        //While building the form do individual checks, can switch to assertPayload once all fields are added
+        cy.wait('@patchExportItemApiRequest').then(({ request }) => {
+          expect(request.body).to.have.property('title', exportItem.title)
+        })
+
+        assertUrl(urls.exportPipeline.edit(exportItem.id))
+
+        assertFlashMessage(`Changes saved to '${exportItem.title}'`)
+      })
     })
   })
 })

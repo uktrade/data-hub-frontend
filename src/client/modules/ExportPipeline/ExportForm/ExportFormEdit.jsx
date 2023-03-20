@@ -60,6 +60,9 @@ const ExportFormEdit = ({ exportItem }) => {
           },
         }}
         exportItem={exportItem}
+        cancelRedirectUrl={urls.dashboard()}
+        redirectToUrl={urls.exportPipeline.edit(exportId)}
+        flashMessage={({ data }) => `Changes saved to '${data.title}'`}
       />
     </DefaultLayout>
   )

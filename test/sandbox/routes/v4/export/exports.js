@@ -48,4 +48,4 @@ const generateExports = (count = 10) => {
 
 const exportItems = generateExports(20)
 
-module.exports = { exportItems }
+module.exports = { exportItems, generateExport }

@@ -57,7 +57,6 @@ const ExportFormAdd = ({ company }) => {
       useReactRouter={false}
     >
       <ExportFormFields
-        companyId={companyId}
         analyticsFormName="addExportForm"
         taskProps={{
           name: TASK_GET_COMPANY_DETAIL,
@@ -68,6 +67,9 @@ const ExportFormAdd = ({ company }) => {
             onSuccessDispatch: COMPANY_LOADED,
           },
         }}
+        cancelRedirectUrl={urls.companies.activity.index(companyId)}
+        redirectToUrl={urls.dashboard()}
+        flashMessage={({ data }) => `'${data.title}' created`}
       />
     </DefaultLayout>
   )
