@@ -4,6 +4,7 @@ const { assertUrl } = require('../../support/assertions')
 const {
   assertLocalHeader,
   assertBreadcrumbs,
+  assertFlashMessage,
 } = require('../../support/assertions')
 const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 const {
@@ -101,6 +102,8 @@ describe('Export pipeline edit', () => {
         })
 
         assertUrl(urls.exportPipeline.edit(exportItem.id))
+
+        assertFlashMessage(`Changes saved to '${exportItem.title}'`)
       })
     })
   })
