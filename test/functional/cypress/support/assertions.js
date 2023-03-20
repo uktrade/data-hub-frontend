@@ -725,7 +725,7 @@ const assertUrl = (url) => {
  * Assert url is exactly matches the current url
  */
 const assertExactUrl = (url) => {
-  cy.url().should('eq', `http://localhost:3000/${url}`)
+  cy.url().should('eq', `${Cypress.config('baseUrl')}/${url}`)
 }
 
 /**
