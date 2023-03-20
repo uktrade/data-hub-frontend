@@ -90,11 +90,33 @@ describe('Export pipeline create', () => {
 
     context('when the form contains invalid data and is submitted', () => {
       it('the form should display validation error message for mandatory inputs', () => {
+        //clear any default values first
+        cy.get('[data-test="typeahead-input"]').clear()
+
         cy.get('[data-test=submit-button]').click()
         cy.get('[data-test="field-title"] > fieldset > div > span').should(
           'contain.text',
           ERROR_MESSAGES.title
         )
+      })
+    })
+
+    context('when the form contains valid data', () => {
+      it('the form should display with default values set', () => {
+        cy.get(
+          '[data-test="field-owner"] > fieldset > div > div > div > input'
+        ).should('have.value', 'user')
+      })
+
+      context('when the form is submitted', () => {
+        // it('the form should send expected values to the api', () => {
+        //   cy.get('[data-test=submit-button]').click()
+        // })
+
+        it('the form should redirect to the dashboard page and display a success message', () => {
+          cy.get('[data-test=submit-button]').click()
+          assertUrl(urls.dashboard())
+        })
       })
     })
 

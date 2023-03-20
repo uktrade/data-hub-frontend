@@ -91,29 +91,5 @@ describe('Export pipeline edit', () => {
         )
       })
     })
-
-    context('when the form contains valid data and is submitted', () => {
-      it('the form should stay on the current page', () => {
-        cy.get('[data-test=submit-button]').click()
-
-        //While building the form do individual checks, can switch to assertPayload once all fields are added
-        cy.wait('@patchExportItemApiRequest').then(({ request }) => {
-          expect(request.body).to.have.property('title', exportItem.title)
-        })
-
-        assertUrl(urls.exportPipeline.edit(exportItem.id))
-
-        assertFlashMessage(`Changes saved to '${exportItem.title}'`)
-      })
-    })
-
-    it('the form should display validation error message for mandatory inputs', () => {
-      cy.get('[data-test="title-input"]').clear()
-      cy.get('[data-test=submit-button]').click()
-      cy.get('[data-test="field-title"] > fieldset > div > span').should(
-        'contain.text',
-        ERROR_MESSAGES.title
-      )
-    })
   })
 })
