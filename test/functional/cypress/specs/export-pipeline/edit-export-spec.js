@@ -5,6 +5,8 @@ const {
   assertLocalHeader,
   assertBreadcrumbs,
   assertFlashMessage,
+  assertFieldTypeahead,
+  assertFieldInput,
 } = require('../../support/assertions')
 const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 const {
@@ -14,7 +16,7 @@ const {
 describe('Export pipeline edit', () => {
   const exportItem = exportItems.results[0]
 
-  context('when adding an export for unknown company id', () => {
+  context('when editing an export for unknown company id', () => {
     beforeEach(() => {
       cy.visit('/export/a/edit')
     })
@@ -36,7 +38,7 @@ describe('Export pipeline edit', () => {
     })
   })
 
-  context('when adding an export for known company id', () => {
+  context('when editing an export for known company id', () => {
     beforeEach(() => {
       cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
         body: exportItem,
@@ -81,14 +83,58 @@ describe('Export pipeline edit', () => {
       assertUrl(urls.dashboard())
     })
 
+    it('the form should display with the saved values in the form fields', () => {
+      cy.get('[data-test="field-title"]').then((element) => {
+        assertFieldInput({
+          element,
+          label: 'Export title',
+          ignoreHint: true,
+          value: exportItem.title,
+        })
+      })
+      cy.get('[data-test="field-owner"]').then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'Owner',
+          value: exportItem.owner.name,
+          isMulti: false,
+        })
+      })
+    })
+
     context('when the form contains invalid data and is submitted', () => {
       it('the form should display validation error message for mandatory inputs', () => {
+        //clear any default values first
         cy.get('[data-test="title-input"]').clear()
+        cy.get('[data-test="typeahead-input"]').clear()
+
         cy.get('[data-test=submit-button]').click()
+
+        //TODO use asserts instead of manual shoulds
         cy.get('[data-test="field-title"] > fieldset > div > span').should(
           'contain.text',
           ERROR_MESSAGES.title
         )
+        cy.get('[data-test="field-owner"] > fieldset > div > span').should(
+          'contain.text',
+          ERROR_MESSAGES.owner
+        )
+      })
+    })
+
+    context('when the form contains valid data and is submitted', () => {
+      it('the form should stay on the current page', () => {
+        cy.get('[data-test=submit-button]').click()
+
+        //While building the form do individual checks, can switch to assertPayload once all fields are added
+        cy.wait('@patchExportItemApiRequest').then(({ request }) => {
+          expect(request.body).to.have.property('title', exportItem.title)
+          expect(request.body.owner).to.have.property('id', exportItem.owner.id)
+        })
+
+        assertUrl(urls.exportPipeline.edit(exportItem.id))
+
+        assertFlashMessage(`Changes saved to '${exportItem.title}'`)
       })
     })
   })

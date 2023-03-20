@@ -58,9 +58,9 @@ const ExportFormFields = ({
 )
 
 ExportFormFields.propTypes = {
-  exportItem: PropTypes.object,
+  initialValues: PropTypes.object,
   analyticsFormName: PropTypes.string.isRequired,
-  flashMessage: PropTypes.string.isRequired,
+  flashMessage: PropTypes.func.isRequired,
   cancelRedirectUrl: PropTypes.string.isRequired,
   redirectToUrl: PropTypes.string.isRequired,
   taskProps: PropTypes.object,

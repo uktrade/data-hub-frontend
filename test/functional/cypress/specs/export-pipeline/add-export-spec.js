@@ -1,5 +1,12 @@
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
+const {
+  assertUrl,
+  assertExactUrl,
+  assertFlashMessage,
+  assertPayload,
+  assertFieldTypeahead,
+} = require('../../support/assertions')
 
 const {
   assertUrl,
@@ -14,6 +21,9 @@ const {
 const {
   ERROR_MESSAGES,
 } = require('../../../../../src/client/modules/ExportPipeline/ExportForm/constants')
+const {
+  generateExport,
+} = require('../../../../sandbox/routes/v4/export/exports')
 
 const {
   ERROR_MESSAGES,
@@ -88,6 +98,17 @@ describe('Export pipeline create', () => {
       assertUrl(urls.companies.activity.index(company.id))
     })
 
+    it('the form should display with default values set', () => {
+      cy.get('[data-test="field-owner"]').then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'Owner',
+          value: 'DIT Staff',
+          isMulti: false,
+        })
+      })
+    })
+
     context('when the form contains invalid data and is submitted', () => {
       it('the form should display validation error message for mandatory inputs', () => {
         //clear any default values first
@@ -98,25 +119,10 @@ describe('Export pipeline create', () => {
           'contain.text',
           ERROR_MESSAGES.title
         )
-      })
-    })
-
-    context('when the form contains valid data', () => {
-      it('the form should display with default values set', () => {
-        cy.get(
-          '[data-test="field-owner"] > fieldset > div > div > div > input'
-        ).should('have.value', 'user')
-      })
-
-      context('when the form is submitted', () => {
-        // it('the form should send expected values to the api', () => {
-        //   cy.get('[data-test=submit-button]').click()
-        // })
-
-        it('the form should redirect to the dashboard page and display a success message', () => {
-          cy.get('[data-test=submit-button]').click()
-          assertUrl(urls.dashboard())
-        })
+        cy.get('[data-test="field-owner"] > fieldset > div > span').should(
+          'contain.text',
+          ERROR_MESSAGES.owner
+        )
       })
     })
 
@@ -126,10 +132,14 @@ describe('Export pipeline create', () => {
         it('the form should redirect to the dashboard page and display a success message', () => {
           const newExport = generateExport()
 
-          cy.get('[data-test="title-input"]').type(newExport.title)
+          cy.get('[data-test=title-input]').type(newExport.title)
           cy.get('[data-test=submit-button]').click()
 
-          assertPayload('@postExportItemApiRequest', { title: newExport.title })
+          assertPayload('@postExportItemApiRequest', {
+            title: newExport.title,
+            owner: { id: '7d19d407-9aec-4d06-b190-d3f404627f21' },
+            company: { id: company.id },
+          })
 
           assertExactUrl('')
           assertFlashMessage(`'${newExport.title}' created`)

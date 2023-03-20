@@ -286,7 +286,7 @@ const assertFieldTypeahead = ({
     label
       ? expect($typeahead.find('label')).to.contain(label)
       : expect($typeahead.find('label')).to.not.exist
-
+    // cy.log($typeahead.find('input'))
     isMulti
       ? value && expect($typeahead).to.contain(value)
       : value && expect($typeahead.find('input')).to.have.attr('value', value)
@@ -330,6 +330,7 @@ const assertFieldInput = ({
   label,
   hint = undefined,
   value = undefined,
+  ignoreHint = false,
 }) =>
   cy
     .wrap(element)
@@ -345,7 +346,7 @@ const assertFieldInput = ({
           .should('have.text', hint || '')
           .next()
     )
-
+    .then(($el) => ignoreHint && value && cy.wrap($el).next())
     .find('input')
     .then(
       ($el) =>
