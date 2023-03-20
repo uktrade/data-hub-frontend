@@ -722,6 +722,13 @@ const assertUrl = (url) => {
 }
 
 /**
+ * Assert url is contained in current url
+ */
+const assertExactUrl = (url) => {
+  cy.url().should('eq', `http://localhost:3000/${url}`)
+}
+
+/**
  * Assert flash message is contained
  */
 const assertFlashMessage = (message) => {
@@ -822,4 +829,5 @@ module.exports = {
   assertRequestBody,
   assertErrorDialog,
   assertAPIRequest,
+  assertExactUrl,
 }

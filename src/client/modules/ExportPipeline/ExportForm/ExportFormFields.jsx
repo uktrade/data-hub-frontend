@@ -3,15 +3,16 @@ import React from 'react'
 import Form from '../../../components/Form'
 import { FieldInput, FormLayout } from '../../../../client/components'
 import { FORM_LAYOUT } from '../../../../common/constants'
-import urls from '../../../../lib/urls'
 import { TASK_SAVE_EXPORT } from './state'
 import Task from '../../../components/Task'
 import { ERROR_MESSAGES } from './constants'
 
 const ExportFormFields = ({
-  companyId,
   exportItem,
   analyticsFormName,
+  flashMessage,
+  cancelRedirectUrl,
+  redirectToUrl,
   taskProps = {},
 }) => (
   <Task.Status {...taskProps}>
@@ -20,14 +21,12 @@ const ExportFormFields = ({
         <Form
           id="export-form"
           analyticsFormName={analyticsFormName}
-          cancelRedirectTo={() =>
-            urls.companies.activity.index(
-              exportItem ? exportItem.company.id : companyId
-            )
-          }
+          cancelRedirectTo={() => cancelRedirectUrl}
+          redirectTo={() => redirectToUrl}
           submissionTaskName={TASK_SAVE_EXPORT}
           initialValues={exportItem}
           transformPayload={(values) => ({ exportId: values.id, values })}
+          flashMessage={flashMessage}
         >
           {() => (
             <FieldInput

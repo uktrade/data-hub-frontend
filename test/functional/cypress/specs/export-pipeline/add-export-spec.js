@@ -1,14 +1,23 @@
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
-const { assertUrl } = require('../../support/assertions')
 
+const {
+  assertUrl,
+  assertExactUrl,
+  assertFlashMessage,
+  assertPayload,
+} = require('../../support/assertions')
 const {
   assertLocalHeader,
   assertBreadcrumbs,
 } = require('../../support/assertions')
+
 const {
   ERROR_MESSAGES,
 } = require('../../../../../src/client/modules/ExportPipeline/ExportForm/constants')
+const {
+  generateExport,
+} = require('../../../../sandbox/routes/v4/export/exports')
 
 describe('Export pipeline create', () => {
   context('when adding an export for unknown company id', () => {
@@ -41,6 +50,9 @@ describe('Export pipeline create', () => {
     const company = fixtures.company.venusLtd
 
     beforeEach(() => {
+      cy.intercept('POST', `/api-proxy/v4/export`).as(
+        'postExportItemApiRequest'
+      )
       cy.visit(`/export/create?companyId=${company.id}`)
     })
 
@@ -73,12 +85,31 @@ describe('Export pipeline create', () => {
       assertUrl(urls.companies.activity.index(company.id))
     })
 
-    it('the form should display validation error message for mandatory inputs', () => {
-      cy.get('[data-test=submit-button]').click()
-      cy.get('[data-test="field-title"] > fieldset > div > span').should(
-        'contain.text',
-        ERROR_MESSAGES.title
-      )
+    context('when the form contains invalid data and is submitted', () => {
+      it('the form should display validation error message for mandatory inputs', () => {
+        cy.get('[data-test=submit-button]').click()
+        cy.get('[data-test="field-title"] > fieldset > div > span').should(
+          'contain.text',
+          ERROR_MESSAGES.title
+        )
+      })
     })
+
+    context(
+      'when the form contains valid data and the form is submitted',
+      () => {
+        it('the form should redirect to the dashboard page and display a success message', () => {
+          const newExport = generateExport()
+
+          cy.get('[data-test="title-input"]').type(newExport.title)
+          cy.get('[data-test=submit-button]').click()
+
+          assertPayload('@postExportItemApiRequest', { title: newExport.title })
+
+          assertExactUrl('')
+          assertFlashMessage(`'${newExport.title}' created`)
+        })
+      }
+    )
   })
 })
