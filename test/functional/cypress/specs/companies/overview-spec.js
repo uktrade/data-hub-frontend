@@ -3,6 +3,24 @@ const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 
 describe('Company overview page', () => {
+  const addInteractionUrlAllOverview = urls.companies.interactions.create(
+    fixtures.company.allOverviewDetails.id
+  )
+  const addInteractionUrlNoOverview = urls.companies.interactions.create(
+    fixtures.company.noOverviewDetails.id
+  )
+  const allActivityUrlAllOverview = urls.companies.activity.index(
+    fixtures.company.allOverviewDetails.id
+  )
+  const companyBusinessDetailsUrlAllOverview = urls.companies.businessDetails(
+    fixtures.company.allOverviewDetails.id
+  )
+  const companyAdivsersUrlAllOverview = urls.companies.advisers.index(
+    fixtures.company.allOverviewDetails.id
+  )
+  const companyExportsAllOverview = urls.companies.exports.index(
+    fixtures.company.allOverviewDetails.id
+  )
   context(
     'when viewing company overview the tab should display Overview',
     () => {
@@ -69,7 +87,7 @@ describe('Company overview page', () => {
           .click()
         cy.location('pathname').should(
           'eq',
-          '/companies/ba8fae21-2895-47cf-90ba-9273c94dab88/business-details'
+          companyBusinessDetailsUrlAllOverview
         )
         cy.go('back')
       })
@@ -164,10 +182,7 @@ describe('Company overview page', () => {
         cy.get('[data-test="account-management-page-link"]')
           .contains('View full account management')
           .click()
-        cy.location('pathname').should(
-          'eq',
-          '/companies/ba8fae21-2895-47cf-90ba-9273c94dab88/advisers'
-        )
+        cy.location('pathname').should('eq', companyAdivsersUrlAllOverview)
         cy.go('back')
       })
     }
@@ -321,10 +336,7 @@ describe('Company overview page', () => {
         cy.get('[data-test="export-status-page-link"]')
           .contains('View full export details')
           .click()
-        cy.location('pathname').should(
-          'eq',
-          '/companies/ba8fae21-2895-47cf-90ba-9273c94dab88/exports'
-        )
+        cy.location('pathname').should('eq', companyExportsAllOverview)
         cy.go('back')
       })
       it('the card should link to the export history page of the specific country', () => {
@@ -333,7 +345,7 @@ describe('Company overview page', () => {
           .click()
         cy.location('pathname').should(
           'eq',
-          '/companies/ba8fae21-2895-47cf-90ba-9273c94dab88/exports/history/36afd8d0-5d95-e211-a939-e4115bead28a'
+          `${companyExportsAllOverview}/history/36afd8d0-5d95-e211-a939-e4115bead28a`
         )
         cy.go('back')
       })
@@ -343,7 +355,7 @@ describe('Company overview page', () => {
           .click()
         cy.location('pathname').should(
           'eq',
-          '/companies/ba8fae21-2895-47cf-90ba-9273c94dab88/exports/history/37afd8d0-5d95-e211-a939-e4115bead28a'
+          `${companyExportsAllOverview}/history/37afd8d0-5d95-e211-a939-e4115bead28a`
         )
         cy.go('back')
       })
@@ -384,4 +396,244 @@ describe('Company overview page', () => {
       })
     }
   )
+
+  context('when viewing the Recent Activities Card for a business', () => {
+    before(() => {
+      cy.visit(
+        urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
+      )
+    })
+
+    it('the card should contain the Recent activity heading and add interaction link', () => {
+      cy.get('[data-test="Recent activityCardContainer"]')
+        .children()
+        .first()
+        .contains('Recent activity')
+        .children()
+        .contains('Add interaction')
+        .click()
+      cy.location('pathname').should('eq', addInteractionUrlAllOverview)
+      cy.go('back')
+    })
+    it('the card should contain three activities', () => {
+      cy.get('[data-test="Recent activityCardContainer"]')
+        .find('ol')
+        .children()
+        .should('have.length', 3)
+    })
+    it('the card should link to the activity overview page', () => {
+      cy.get('[data-test="Recent activityCardContainer"]')
+        .contains('View all activities')
+        .click()
+      cy.location('pathname').should('eq', allActivityUrlAllOverview)
+      cy.go('back')
+    })
+  })
+
+  context(
+    'when viewing the Recent Activities Card for a business with no activities',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
+        )
+      })
+
+      it('the card should contain the Recent activity heading and add interaction link', () => {
+        cy.get('[data-test="Recent activityCardContainer"]')
+          .children()
+          .first()
+          .contains('Recent activity')
+          .children()
+          .contains('Add interaction')
+          .click()
+        cy.location('pathname').should('eq', addInteractionUrlNoOverview)
+        cy.go('back')
+        cy.get('[data-test="noActivities"]').contains(
+          'There are no activities to show.'
+        )
+      })
+    }
+  )
+
+  context('when viewing the Upcoming Activities Card for a business', () => {
+    before(() => {
+      cy.visit(
+        urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
+      )
+    })
+
+    it('the card should contain the Upcoming activity heading and add interaction link', () => {
+      cy.get('[data-test="Upcoming activityCardContainer"]')
+        .children()
+        .first()
+        .contains('Upcoming activity')
+        .children()
+        .contains('Add interaction')
+        .click()
+      cy.location('pathname').should('eq', addInteractionUrlAllOverview)
+      cy.go('back')
+    })
+    it('the card should contain two activities', () => {
+      cy.get('[data-test="Upcoming activityCardContainer"]')
+        .find('ol')
+        .children()
+        .should('have.length', 2)
+    })
+    it('the card should link to the activity overview page', () => {
+      cy.get('[data-test="Recent activityCardContainer"]')
+        .contains('View all activities')
+        .click()
+      cy.location('pathname').should('eq', allActivityUrlAllOverview)
+      cy.go('back')
+    })
+  })
+
+  context(
+    'when viewing the Upcoming Activities Card for a business with no activities',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
+        )
+      })
+
+      it('the card should contain the upcoming activity heading and add interaction link', () => {
+        cy.get('[data-test="Upcoming activityCardContainer"]')
+          .children()
+          .first()
+          .contains('Upcoming activity')
+          .children()
+          .contains('Add interaction')
+          .click()
+        cy.location('pathname').should('eq', addInteractionUrlNoOverview)
+        cy.go('back')
+        cy.get('[data-test="noActivities"]').contains(
+          'There are no activities to show.'
+        )
+      })
+    }
+  )
+
+  context('when viewing all activity cards types', () => {
+    before(() => {
+      cy.visit(urls.companies.overview.index(fixtures.company.venusLtd.id))
+    })
+
+    it('should display aventri event activity,', () => {
+      cy.get('[data-test="aventri-event-summary"]')
+        .children()
+        .first()
+        .contains('02 Mar 2021 to 04 May 2022')
+        .next()
+        .children()
+        .contains('Aventri Event')
+      cy.get('[data-test="activity-summary-subject"]')
+        .children()
+        .contains('a', 'EITA Test Event 2022')
+    })
+    it('should display exporters record activity,', () => {
+      cy.get('[data-test="hmrc-exporter-activity-summary"]')
+        .children()
+        .first()
+        .contains('01 Oct 2019')
+        .next()
+        .children()
+        .contains('Exporters Record')
+      cy.get('[data-test="activity-summary-subject"]')
+        .contains('Export of goods outside the EU')
+        .next()
+        .contains('HMRC Update')
+    })
+    it('should display company activity,', () => {
+      cy.get('[data-test="companies-house-company-activity"]')
+        .children()
+        .first()
+        .contains('11 Jan 1865')
+        .next()
+        .children()
+        .contains('Company Record')
+      cy.get('[data-test="activity-summary-subject"]')
+        .contains('Company officially incorporated in Companies House')
+        .next()
+        .contains('Companies House Updated')
+    })
+    it('should display accountss record activity,', () => {
+      cy.get('[data-test="companies-house-account-activity-summary"]')
+        .children()
+        .first()
+        .contains('30 Jun 2011')
+        .next()
+        .children()
+        .contains('Accounts Record')
+      cy.get('[data-test="activity-summary-subject"]')
+        .contains('Company accounts made up')
+        .next()
+        .contains('Companies House Updated')
+    })
+    it('should display new order activity,', () => {
+      cy.get('[data-test="omis-activity-summary"]')
+        .children()
+        .first()
+        .contains('25 Mar 2013')
+        .next()
+        .children()
+        .contains('New Order')
+      cy.get('[data-test="activity-summary-subject"]')
+        .children()
+        .contains('a', 'HAM100')
+        .parent()
+        .next()
+        .contains('Export to United States added by Angelica Schuyler')
+    })
+    it('should display outstanding referral,', () => {
+      cy.get('[data-test="referral-summary"]')
+        .children()
+        .first()
+        .contains('21 May 2020')
+        .next()
+        .children()
+        .contains('Outstanding referral')
+      cy.get('[data-test="activity-summary-subject"]')
+        .children()
+        .contains('a', 'Support needs in the Planet')
+        .parent()
+        .next()
+        .contains(
+          'Completed sending adviser John Doe, Planet Consulate General receiving adviser John Taylorme, Planet Embassy'
+        )
+    })
+    it('should display interaction,', () => {
+      cy.get('[data-test="export-support-service-summary"]')
+        .children()
+        .first()
+        .contains('02 Dec 2022')
+        .next()
+        .children()
+        .contains('Interaction')
+      cy.get('[data-test="activity-summary-subject"]')
+        .children()
+        .contains('a', 'Enquiring about Exporting some things')
+        .parent()
+        .next()
+        .contains('Enquirer')
+    })
+    it('should display data hub event,', () => {
+      cy.get('[data-test="data-hub-event-summary"]')
+        .children()
+        .first()
+        .contains('30 May to 14 Jun 2022')
+        .next()
+        .children()
+        .contains('Account management')
+      cy.get('[data-test="activity-summary-subject"]')
+        .children()
+        .contains('a', 'Holiday to the Seaside')
+        .parent()
+        .next()
+        .contains('Joe Bloggs organised Best service')
+    })
+  })
+
+  context('no overview details', () => {})
 })

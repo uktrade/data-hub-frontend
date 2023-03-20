@@ -79,15 +79,16 @@ export default class DirectoryFormsApi extends React.PureComponent {
 
       //Mapping from https://github.com/uktrade/export-support/blob/93fb921e33f0f49c5cecc0b9c18579941a384ad7/export_support/core/forms.py
       return isOverview ? (
-        <ActivityOverviewSummary
-          dataTest="export-support-service-summary"
-          activity={activity}
-          date={format(sentDate)}
-          kind={kind}
-          url={url}
-          subject={subject}
-          summary={`Enquirer ` + formattedContacts()}
-        ></ActivityOverviewSummary>
+        <ActivityCardWrapper dataTest="export-support-service-summary">
+          <ActivityOverviewSummary
+            activity={activity}
+            date={format(sentDate)}
+            kind={kind}
+            url={url}
+            subject={subject}
+            summary={`Enquirer ` + formattedContacts()}
+          ></ActivityOverviewSummary>
+        </ActivityCardWrapper>
       ) : (
         <ActivityCardWrapper dataTest="export-support-service">
           <ActivityCardLabels

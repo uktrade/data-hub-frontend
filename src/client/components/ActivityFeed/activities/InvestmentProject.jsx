@@ -95,15 +95,16 @@ export default class InvestmentProject extends React.PureComponent {
       addedBy,
     ]
     return isOverview ? (
-      <ActivityOverviewSummary
-        dataTest="investment-activity-summary"
-        activity={activity}
-        date={format(published)}
-        kind={kind}
-        url={url}
-        subject={subject}
-        summary={summary}
-      ></ActivityOverviewSummary>
+      <ActivityCardWrapper dataTest="investment-activity-summary">
+        <ActivityOverviewSummary
+          activity={activity}
+          date={format(published)}
+          kind={kind}
+          url={url}
+          subject={subject}
+          summary={summary}
+        ></ActivityOverviewSummary>
+      </ActivityCardWrapper>
     ) : (
       <ActivityCardWrapper dataTest="investment-activity">
         <ActivityCardLabels

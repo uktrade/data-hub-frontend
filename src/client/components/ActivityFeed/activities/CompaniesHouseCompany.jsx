@@ -95,14 +95,15 @@ export default class CompaniesHouseCompany extends React.PureComponent {
     ]
 
     return isOverview ? (
-      <ActivityOverviewSummary
-        dataTest="companies-house-company-activity"
-        activity={activity}
-        date={date}
-        kind="Company Record"
-        subject={subject}
-        summary="Companies House Updated"
-      ></ActivityOverviewSummary>
+      <ActivityCardWrapper dataTest="companies-house-company-activity">
+        <ActivityOverviewSummary
+          activity={activity}
+          date={date}
+          kind="Company Record"
+          subject={subject}
+          summary="Companies House Updated"
+        ></ActivityOverviewSummary>
+      </ActivityCardWrapper>
     ) : (
       <ActivityCardWrapper dataTest="companies-house-company-activity">
         <ActivityCardLabels

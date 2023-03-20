@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import ActivityCardSubject from '../ActivityCardSubject'
-import ActivityCardWrapper from '../ActivityCardWrapper'
 import ActivityCardLabels from '../ActivityCardLabels'
 
 export default class ActivityOverviewSummary extends React.PureComponent {
@@ -30,7 +29,7 @@ export default class ActivityOverviewSummary extends React.PureComponent {
     `
 
     return (
-      <ActivityCardWrapper dataTest="activity-summary">
+      <>
         <Row>
           <LeftCol>{date}</LeftCol>
           <RightCol>
@@ -41,7 +40,7 @@ export default class ActivityOverviewSummary extends React.PureComponent {
           {subject}
         </ActivityCardSubject>
         <Row>{summary}</Row>
-      </ActivityCardWrapper>
+      </>
     )
   }
 }

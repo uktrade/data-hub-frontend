@@ -16,31 +16,38 @@ export default class ActivityFeedPagination extends React.Component {
   static propTypes = {
     onLoadMore: PropTypes.func,
     isLoading: PropTypes.bool,
+    isOverview: PropTypes.bool,
   }
 
   static defaultProps = {
     onLoadMore: () => {},
     isLoading: false,
+    isOverview: false,
   }
 
   render() {
-    const { onLoadMore, isLoading, feedType } = this.props
-
+    const { onLoadMore, isLoading, isOverview, feedType } = this.props
     return (
-      <Pagination>
-        <LoadingBox loading={isLoading} backgroundColorOpacity={1} timeOut={0}>
-          {feedType === FILTER_FEED_TYPE.ALL && (
-            <Button
-              disabled={isLoading}
-              onClick={onLoadMore}
-              buttonColour="#dee0e2"
-              buttonTextColour="#000"
-            >
-              Show more activity
-            </Button>
-          )}
-        </LoadingBox>
-      </Pagination>
+      (!isOverview || isLoading) && (
+        <Pagination>
+          <LoadingBox
+            loading={isLoading}
+            backgroundColorOpacity={1}
+            timeOut={0}
+          >
+            {feedType === FILTER_FEED_TYPE.ALL && (
+              <Button
+                disabled={isLoading}
+                onClick={onLoadMore}
+                buttonColour="#dee0e2"
+                buttonTextColour="#000"
+              >
+                Show more activity
+              </Button>
+            )}
+          </LoadingBox>
+        </Pagination>
+      )
     )
   }
 }

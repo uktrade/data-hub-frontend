@@ -152,7 +152,7 @@ export default class ActivityFeedApp extends React.Component {
         feedType={feedType}
       >
         {isEmptyFeed && !error && (
-          <div data-test="noActivites">There are no activities to show.</div>
+          <div data-test="noActivities">There are no activities to show.</div>
         )}
         {error && <div>Error occurred while loading activities.</div>}
       </ActivityFeed>

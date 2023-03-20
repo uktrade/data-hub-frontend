@@ -49,14 +49,15 @@ export default class HmrcExporter extends React.PureComponent {
     const kind = 'HMRC Update'
 
     return isOverview ? (
-      <ActivityOverviewSummary
-        dataTest="hmrc-exporter-activity-summary"
-        activity={activity}
-        date={date}
-        kind={'Exporters Record'}
-        subject={summary}
-        summary={[kind]}
-      ></ActivityOverviewSummary>
+      <ActivityCardWrapper dataTest="hmrc-exporter-activity-summary">
+        <ActivityOverviewSummary
+          activity={activity}
+          date={date}
+          kind={'Exporters Record'}
+          subject={summary}
+          summary={[kind]}
+        ></ActivityOverviewSummary>
+      </ActivityCardWrapper>
     ) : (
       <ActivityCardWrapper dataTest="hmrc-exporter-activity">
         <ActivityCardLabels

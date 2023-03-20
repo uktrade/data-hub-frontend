@@ -69,15 +69,16 @@ export default class Omis extends React.PureComponent {
     if (adviser) summary.push(' added by ', adviser.name)
 
     return isOverview ? (
-      <ActivityOverviewSummary
-        dataTest="omis-activity-summary"
-        activity={activity}
-        date={date}
-        kind={kind}
-        url={href}
-        subject={subject}
-        summary={summary}
-      ></ActivityOverviewSummary>
+      <ActivityCardWrapper dataTest="omis-activity-summary">
+        <ActivityOverviewSummary
+          activity={activity}
+          date={date}
+          kind={kind}
+          url={href}
+          subject={subject}
+          summary={summary}
+        ></ActivityOverviewSummary>
+      </ActivityCardWrapper>
     ) : (
       <ActivityCardWrapper dataTest="order-activity">
         <ActivityCardLabels theme="Orders (OMIS)" service="Event" kind={kind} />

@@ -11,45 +11,24 @@ const dataHubAndActivityStreamServicesQuery = ({
   contacts,
   feedType = FILTER_FEED_TYPE.ALL,
 }) => {
-  const mustCriteria = [
-    {
-      terms: {
-        'object.type': types,
-      },
-    },
-    {
-      terms: {
-        'object.attributedTo.id': [
-          ...companyIds.map((id) => `dit:DataHubCompany:${id}`),
-        ],
-      },
-    },
-  ]
-
-  if (feedType != FILTER_FEED_TYPE.ALL) {
-    if (feedType != FILTER_FEED_TYPE.UPCOMING) {
-      mustCriteria.push({
-        range: {
-          'object.startTime': {
-            lt: 'now/d',
-          },
-        },
-      })
-    } else {
-      mustCriteria.push({
-        range: {
-          'object.startTime': {
-            gte: 'now/d',
-          },
-        },
-      })
-    }
-  }
-
+  let sortDirection = 'desc'
   const shouldCriteria = [
     {
       bool: {
-        must: mustCriteria,
+        must: [
+          {
+            terms: {
+              'object.type': types,
+            },
+          },
+          {
+            terms: {
+              'object.attributedTo.id': [
+                ...companyIds.map((id) => `dit:DataHubCompany:${id}`),
+              ],
+            },
+          },
+        ],
       },
     },
   ]
@@ -108,10 +87,39 @@ const dataHubAndActivityStreamServicesQuery = ({
       },
     })
   }
+
+  if (feedType != FILTER_FEED_TYPE.ALL) {
+    let now = new Date()
+    let period
+    switch (feedType) {
+      case FILTER_FEED_TYPE.RECENT:
+        period = 'isBefore'
+        break
+      case FILTER_FEED_TYPE.UPCOMING:
+        sortDirection = 'asc'
+        period = 'isAfter'
+        break
+    }
+    const dateFilter = {
+      script: {
+        script: {
+          lang: 'painless',
+          source:
+            "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime." +
+            period +
+            '(now)',
+          params: {
+            now: now.toISOString(),
+          },
+        },
+      },
+    }
+    shouldCriteria.map((criteria) => criteria.bool.must.push(dateFilter))
+  }
   const dsl = {
     from,
     size,
-    sort: sortCriteria('desc'),
+    sort: sortCriteria(sortDirection),
     query: {
       bool: {
         filter: {

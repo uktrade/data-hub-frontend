@@ -64,7 +64,7 @@ export default class Interaction extends React.PureComponent {
 
     const subject = (
       <Link data-test="interaction-subject" href={transformed.interactionUrl}>
-        !!{transformed.subject}
+        {transformed.subject}
       </Link>
     )
 
@@ -117,20 +117,21 @@ export default class Interaction extends React.PureComponent {
       flex: 25%;
     `
     return isOverview ? (
-      <ActivityOverviewSummary
-        dataTest="interaction-activity-summary"
-        activity={activity}
-        date={date}
-        kind={kind}
-        subject={subject}
-        summary={
-          formattedAdvisers() +
-          ` had ` +
-          communicationChannel?.toLowerCase() +
-          ' contact with ' +
-          formattedContacts()
-        }
-      ></ActivityOverviewSummary>
+      <ActivityCardWrapper dataTest="interaction-activity-summary">
+        <ActivityOverviewSummary
+          activity={activity}
+          date={date}
+          kind={kind}
+          subject={subject}
+          summary={
+            formattedAdvisers() +
+            ` had ` +
+            communicationChannel?.toLowerCase() +
+            ' contact with ' +
+            formattedContacts()
+          }
+        ></ActivityOverviewSummary>
+      </ActivityCardWrapper>
     ) : theme || service ? (
       <ActivityCardWrapper dataTest="interaction-activity">
         <ActivityCardLabels theme={theme} service={service} kind={kind} />

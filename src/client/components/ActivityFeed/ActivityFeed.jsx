@@ -162,6 +162,7 @@ export default class ActivityFeed extends React.Component {
             isLoading={isLoading}
             onLoadMore={onLoadMore}
             feedType={feedType}
+            isOverview={isOverview}
           />
         )}
 

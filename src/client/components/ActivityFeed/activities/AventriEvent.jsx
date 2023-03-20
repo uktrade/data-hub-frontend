@@ -83,19 +83,20 @@ export default class AventriEvent extends React.PureComponent {
     const href = `/events/aventri/${aventriEventId}/details`
     const subject = <Link href={href}>{name}</Link>
     return isOverview ? (
-      <ActivityOverviewSummary
-        dataTest="aventry-event-summary"
-        activity={activity}
-        date={date}
-        kind="Aventri Event"
-        url={href}
-        subject={subject}
-        summary={[
-          status,
-          status || unFormattedContacts?.length > 0 ? ' by ' : '',
-          unFormattedContacts,
-        ]}
-      ></ActivityOverviewSummary>
+      <ActivityCardWrapper dataTest="aventri-event-summary">
+        <ActivityOverviewSummary
+          activity={activity}
+          date={date}
+          kind="Aventri Event"
+          url={href}
+          subject={subject}
+          summary={[
+            status,
+            status || unFormattedContacts?.length > 0 ? ' by ' : '',
+            unFormattedContacts,
+          ]}
+        ></ActivityOverviewSummary>
+      </ActivityCardWrapper>
     ) : (
       <ActivityCardWrapper dataTest="aventri-event">
         <ActivityCardLabels service="Event" kind="Aventri Event" />

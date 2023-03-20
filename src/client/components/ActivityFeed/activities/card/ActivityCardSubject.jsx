@@ -23,9 +23,6 @@ const StyledActivitySubject = styled('h3')`
 
 const ActivityCardSubject = ({
   children,
-  // url,
-  // linkDataTest,
-  // isOverview,
   dataTest = 'activity-card-subject',
   margin = { top: 10, bottom: 10 },
 }) => (
@@ -33,21 +30,6 @@ const ActivityCardSubject = ({
     {children}
   </StyledActivitySubject>
 )
-// }) => {
-//   return isOverview ? (
-//     <StyledActivitySubject data-test={dataTest}>
-//       <Link dataTest={linkDataTest} href={url}>
-//         {children}
-//       </Link>
-//     </StyledActivitySubject>
-//   ) : (
-//     <StyledActivitySubjectSquash data-test={dataTest}>
-//       <Link dataTest={linkDataTest} href={url}>
-//         {children}
-//       </Link>
-//     </StyledActivitySubjectSquash>
-//   )
-// }
 
 ActivityCardSubject.propTypes = {
   children: PropTypes.node.isRequired,

@@ -2,7 +2,6 @@ import React from 'react'
 import { Link, Table } from 'govuk-react'
 import PropTypes from 'prop-types'
 import { SummaryTable } from '../../../../../client/components'
-// import { fetchAllActivityFeedEvents } from '../../activity-feed/controllers'
 import { ActivityFeedApp } from '../../../../../client/components'
 import urls from '../../../../../lib/urls'
 import camelCase from 'camelcase'
@@ -19,7 +18,13 @@ const StyledTableRow = styled(Table.Row)`
 `
 const StyledLastTableCell = styled(Table.Cell)`
   border: 0;
-  padding-bottom: 0;
+  padding: 0;
+`
+const ActivityStyledLink = styled(Link)`
+  caption & {
+    font-weight: 400;
+    font-size: 16px;
+  }
 `
 
 const ActivityCard = (props) => {
@@ -33,32 +38,37 @@ const ActivityCard = (props) => {
         caption={
           <>
             {feedTypeText} activity
-            <Link href={`${queryString}/interactions/create`}>
+            <ActivityStyledLink href={`${queryString}/interactions/create`}>
               Add interaction
-            </Link>
+            </ActivityStyledLink>
           </>
         }
         data-test={`${feedTypeText} activityCardContainer`}
       >
-        <Table.Cell colspan={2}>
-          <ActivityFeedApp
-            actions={!company.archived && CompanyActivityFeed.actions}
-            activityTypeFilter={FILTER_KEYS.dataHubActivity}
-            // For testing all activity types
-            // activityTypeFilter={FILTER_KEYS.dataHubAndExternalActivity}
-            activityTypeFilters={FILTER_ITEMS}
-            isGlobalUltimate={company.is_global_ultimate}
-            dnbHierarchyCount={0}
-            apiEndpoint={urls.companies.activity.data(company.id)}
-            companyIsArchived={company.archived}
-            isOverview={true}
-            numberOfItems={numberOfItems}
-            feedType={feedType}
-          />
-        </Table.Cell>
+        <StyledTableRow>
+          <StyledLastTableCell colspan={2}>
+            <ActivityFeedApp
+              actions={!company.archived && CompanyActivityFeed.actions}
+              activityTypeFilter={FILTER_KEYS.dataHubActivity}
+              activityTypeFilters={FILTER_ITEMS}
+              isGlobalUltimate={company.is_global_ultimate}
+              dnbHierarchyCount={0}
+              apiEndpoint={urls.companies.activity.data(company.id)}
+              companyIsArchived={company.archived}
+              isOverview={true}
+              numberOfItems={numberOfItems}
+              feedType={feedType}
+            />
+          </StyledLastTableCell>
+        </StyledTableRow>
         <StyledTableRow>
           <StyledLastTableCell colSpan={2}>
-            <Link href={`${queryString}/activity`}>View all activities</Link>
+            <Link
+              href={`${queryString}/activity`}
+              data-test={'activity-page-link'}
+            >
+              View all activities
+            </Link>
           </StyledLastTableCell>
         </StyledTableRow>
       </StyledSummaryTable>

@@ -99,20 +99,21 @@ export default class Referral extends React.PureComponent {
     const linkedSubject = <Link href={url}>{subject}</Link>
 
     return isOverview ? (
-      <ActivityOverviewSummary
-        dataTest="averntry-event-summary"
-        activity={activity}
-        date={date}
-        kind={badge.text}
-        url={url}
-        subject={linkedSubject}
-        summary={[
-          'Completed sending adviser ',
-          AdviserDetails(sender),
-          ' receiving adviser ',
-          AdviserDetails(recipient),
-        ]}
-      ></ActivityOverviewSummary>
+      <ActivityCardWrapper dataTest={`referral-summary`}>
+        <ActivityOverviewSummary
+          activity={activity}
+          date={date}
+          kind={badge.text}
+          url={url}
+          subject={linkedSubject}
+          summary={[
+            'Completed sending adviser ',
+            AdviserDetails(sender),
+            ' receiving adviser ',
+            AdviserDetails(recipient),
+          ]}
+        ></ActivityOverviewSummary>
+      </ActivityCardWrapper>
     ) : (
       <ActivityCardWrapper dataTest="referral-activity">
         <Row>
