@@ -9,11 +9,13 @@ import { H3 } from '@govuk-react/heading'
 import UnorderedList from '@govuk-react/unordered-list'
 import urls from '../../../lib/urls'
 
-const FeedContainer = styled('div')({
+const FeedContainer = styled.div((props) => ({
   fontSize: FONT_SIZE.SIZE_14,
-  borderTop: `2px solid ${GREY_2}`,
+  borderTop: props.isPersonalisedDashboard
+    ? `2px solid ${GREY_2}`
+    : `4px solid ${GREY_2}`,
   padding: `${SPACING.SCALE_4} 0`,
-})
+}))
 
 const Note = styled('div')({
   display: `inline`,
@@ -26,10 +28,10 @@ const Date = styled('div')({
   fontSize: FONT_SIZE.SIZE_14,
 })
 
-const DataHubFeed = ({ items, feedLimit = 5 }) => {
+const DataHubFeed = ({ items, feedLimit = 5, isPersonalisedDashboard }) => {
   return (
-    <FeedContainer>
-      <H3>What's new</H3>
+    <FeedContainer isPersonalisedDashboard={isPersonalisedDashboard}>
+      <H3>{isPersonalisedDashboard ? "What's new" : 'Data Hub updates'}</H3>
       {!!items.length && (
         <>
           <UnorderedList listStyleType="none">

@@ -21,7 +21,6 @@ var healthcheck = require('./routes/ping.js')
 // TODO: `/metadata/*` endpoints are deprecated and should be removed or on after 17th October 2019
 var metadata = require('./routes/metadata.js')
 var user = require('./routes/whoami.js')
-var helpCentre = require('./routes/helpCentre.js')
 var zendesk = require('./routes/zendesk.js')
 var postcode = require('./routes/postcode.js')
 
@@ -605,10 +604,6 @@ app.post(
 app.get('/whoami', user.whoami)
 app.put('/whoami', user.setWhoami)
 app.post('/whoami', user.resetWhoami)
-
-// Help centre endpoint
-app.get('/help-centre/announcement', helpCentre.announcement)
-app.get('/help-centre/feed', helpCentre.feed)
 
 // Zendesk tickets endpoint
 app.post('/zendesk/tickets', zendesk.tickets)
