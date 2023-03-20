@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import Form from '../../../components/Form'
 import { FieldInput, FormLayout } from '../../../../client/components'
@@ -42,5 +43,14 @@ const ExportFormFields = ({
     )}
   </Task.Status>
 )
+
+ExportFormFields.propTypes = {
+  exportItem: PropTypes.object,
+  analyticsFormName: PropTypes.string.isRequired,
+  flashMessage: PropTypes.string.isRequired,
+  cancelRedirectUrl: PropTypes.string.isRequired,
+  redirectToUrl: PropTypes.string.isRequired,
+  taskProps: PropTypes.object,
+}
 
 export default ExportFormFields
