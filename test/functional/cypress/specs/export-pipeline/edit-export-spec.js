@@ -6,6 +6,9 @@ const {
   assertBreadcrumbs,
 } = require('../../support/assertions')
 const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
+const {
+  ERROR_MESSAGES,
+} = require('../../../../../src/client/modules/ExportPipeline/ExportForm/constants')
 
 describe('Export pipeline edit', () => {
   const exportItem = exportItems.results[0]
@@ -33,8 +36,6 @@ describe('Export pipeline edit', () => {
   })
 
   context('when adding an export for known company id', () => {
-    before(() => {})
-
     beforeEach(() => {
       cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
         body: exportItem,
@@ -78,6 +79,15 @@ describe('Export pipeline edit', () => {
     it('the form should redirect to the company page when the cancel button is clicked', () => {
       cy.get('[data-test=cancel-button]').click()
       assertUrl(urls.companies.activity.index(exportItem.company.id))
+    })
+
+    it('the form should display validation error message for mandatory inputs', () => {
+      cy.get('[data-test="title-input"]').clear()
+      cy.get('[data-test=submit-button]').click()
+      cy.get('[data-test="field-title"] > fieldset > div > span').should(
+        'contain.text',
+        ERROR_MESSAGES.title
+      )
     })
   })
 })

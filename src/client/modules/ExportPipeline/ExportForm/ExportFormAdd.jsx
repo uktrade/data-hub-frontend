@@ -58,7 +58,7 @@ const ExportFormAdd = ({ company }) => {
     >
       <ExportFormFields
         companyId={companyId}
-        analyticsFormName={'addExportForm'}
+        analyticsFormName="addExportForm"
         taskProps={{
           name: TASK_GET_COMPANY_DETAIL,
           id: COMPANY_DETAILS_ID,
