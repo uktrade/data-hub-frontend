@@ -775,6 +775,9 @@ const assertErrorDialog = (taskName, errorMessage) => {
 const assertAPIRequest = (endPointAlias, assertCallback) =>
   cy.wait(`@${endPointAlias}`).then((xhr) => assertCallback(xhr))
 
+const assertFieldError = (element, errorMessage) =>
+  element.find('span').should('contain.text', errorMessage)
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
@@ -831,4 +834,5 @@ module.exports = {
   assertErrorDialog,
   assertAPIRequest,
   assertExactUrl,
+  assertFieldError,
 }
