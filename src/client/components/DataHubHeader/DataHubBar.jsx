@@ -158,7 +158,7 @@ const DataHubBar = ({
   <Layout>
     <RootContainer>
       <DataHubContainer>
-        <VisuallyHidden>Department for International Trade</VisuallyHidden>
+        <VisuallyHidden>Department for Business and Trade</VisuallyHidden>
         <StyledLogoNavLink as="a" href="/">
           Data Hub
         </StyledLogoNavLink>

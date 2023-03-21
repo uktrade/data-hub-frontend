@@ -6,7 +6,7 @@ const urls = require('../../lib/urls')
 module.exports = {
   serviceTitle: 'Data Hub',
   description:
-    'Data Hub is a customer relationship, project management and analytical tool for Department for International Trade.',
+    'Data Hub is a customer relationship, project management and analytical tool for Department for Business and Trade.',
   assign,
   urls,
 

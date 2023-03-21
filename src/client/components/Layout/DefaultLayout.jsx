@@ -26,7 +26,7 @@ const DefaultLayout = ({
 }) => {
   const [showVerticalNav, setShowVerticalNav] = useState(false)
   useEffect(() => {
-    document.title = `${pageTitle} - DIT Data Hub`
+    document.title = `${pageTitle} - DBT Data Hub`
   }, [pageTitle])
   return (
     <>
