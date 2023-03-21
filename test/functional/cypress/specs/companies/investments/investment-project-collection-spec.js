@@ -107,7 +107,7 @@ describe('Company Investments Collection Page', () => {
     it('should render a meta title', () => {
       cy.title().should(
         'eq',
-        'Investments - DnB Corp - Companies - DIT Data Hub'
+        'Investments - DnB Corp - Companies - DBT Data Hub'
       )
     })
 

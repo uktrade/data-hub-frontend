@@ -270,7 +270,7 @@ describe('Company Contacts Collections', () => {
     it('should render a meta title', () => {
       cy.title().should(
         'eq',
-        'Contacts - Archived Ltd - Companies - DIT Data Hub'
+        'Contacts - Archived Ltd - Companies - DBT Data Hub'
       )
     })
 

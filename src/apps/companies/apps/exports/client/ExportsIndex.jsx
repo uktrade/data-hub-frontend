@@ -143,7 +143,7 @@ const ExportsIndex = ({
       <Details summary="What is an Export Win">
         <p>
           Export wins capture the export deals that Department for Business and
-          Trade (BDT) support and quantify their expected export value. If
+          Trade (DBT) support and quantify their expected export value. If
           applicable, they also quantify the non-export and outward direct
           investment (ODI) value, up to a 5-year period. They give a picture of
           DIT support for business.
