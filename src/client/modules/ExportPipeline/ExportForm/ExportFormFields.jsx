@@ -11,7 +11,7 @@ import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT } from './state'
 import Task from '../../../components/Task'
 import { ERROR_MESSAGES } from './constants'
-import { transformAPIValuesForForm } from './transformers'
+import { transformAPIValuesForForm } from '../transformers'
 
 const ExportFormFields = ({
   initialValues,

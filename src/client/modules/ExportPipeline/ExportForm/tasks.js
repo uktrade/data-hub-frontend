@@ -1,5 +1,5 @@
 import { apiProxyAxios } from '../../../../client/components/Task/utils'
-import { transformFormValuesForAPI } from './transformers'
+import { transformFormValuesForAPI } from '../transformers'
 
 export const saveExport = ({ exportId, values }) => {
   const request = exportId ? apiProxyAxios.patch : apiProxyAxios.post
