@@ -8,11 +8,16 @@ const {
   assertFieldTypeahead,
   assertFieldError,
   assertFieldInput,
+  assertTypeaheadValues,
 } = require('../../support/assertions')
 const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 const {
   ERROR_MESSAGES,
 } = require('../../../../../src/client/modules/ExportPipeline/ExportForm/constants')
+const { fillMultiOptionTypeahead } = require('../../support/form-fillers')
+const autoCompleteAdvisers =
+  require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
+const { faker } = require('@faker-js/faker')
 
 describe('Export pipeline edit', () => {
   const exportItem = exportItems.results[0]
@@ -99,6 +104,10 @@ describe('Export pipeline edit', () => {
             isMulti: false,
           })
         })
+        assertTypeaheadValues(
+          '[data-test="field-team_members"]',
+          exportItem.team_members.map((t) => t.name)
+        )
       })
     })
 
@@ -126,6 +135,20 @@ describe('Export pipeline edit', () => {
           ERROR_MESSAGES.owner
         )
       })
+
+      it('the form should display validation error message for too many team members', () => {
+        const advisers = faker.helpers.arrayElements(autoCompleteAdvisers, 6)
+        fillMultiOptionTypeahead(
+          '[data-test=field-team_members]',
+          advisers.map((adviser) => adviser.name)
+        )
+        cy.get('[data-test=submit-button]').click()
+
+        assertFieldError(
+          cy.get('[data-test="field-team_members"]'),
+          ERROR_MESSAGES.team_members
+        )
+      })
     })
 
     context('when the form contains valid data and is submitted', () => {
@@ -136,6 +159,9 @@ describe('Export pipeline edit', () => {
         cy.wait('@patchExportItemApiRequest').then(({ request }) => {
           expect(request.body).to.have.property('title', exportItem.title)
           expect(request.body.owner).to.have.property('id', exportItem.owner.id)
+          expect(request.body.team_members).to.deep.equal(
+            exportItem.team_members.map((x) => ({ id: x.id }))
+          )
         })
 
         assertUrl(urls.exportPipeline.edit(exportItem.id))
