@@ -6,7 +6,7 @@ const {
   assertBreadcrumbs,
   assertFlashMessage,
   assertFieldTypeahead,
-
+  assertFieldError,
   assertFieldInput,
 } = require('../../support/assertions')
 const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')

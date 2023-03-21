@@ -786,7 +786,7 @@ const assertAPIRequest = (endPointAlias, assertCallback) =>
  * @returns
  */
 const assertFieldError = (element, errorMessage) =>
-  element.find('span').should('have.text', errorMessage)
+  element.find('span').eq(1).should('have.text', errorMessage)
 
 module.exports = {
   assertKeyValueTable,
