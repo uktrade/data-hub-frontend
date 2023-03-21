@@ -69,4 +69,31 @@ describe('Dashboard', () => {
         .should('have.text', 'No updates available')
     })
   })
+
+  context('Tabs - Export', () => {
+    before(() => {
+      cy.setUserFeatures(['export-pipeline'])
+      cy.visit('/')
+    })
+
+    after(() => {
+      cy.resetUser()
+    })
+
+    it('should display tabs in the right order', () => {
+      cy.get('[data-test="dashboard-tabs"]')
+        .should('exist')
+        .find('[data-test="tablist"]')
+        .eq(0)
+        .should('exist')
+        .children()
+        .should('have.length', 3)
+        .first()
+        .should('have.text', 'My companies lists')
+        .next()
+        .should('have.text', 'My referrals')
+        .next()
+        .should('have.text', 'Export')
+    })
+  })
 })
