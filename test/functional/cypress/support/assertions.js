@@ -286,7 +286,7 @@ const assertFieldTypeahead = ({
     label
       ? expect($typeahead.find('label')).to.contain(label)
       : expect($typeahead.find('label')).to.not.exist
-    // cy.log($typeahead.find('input'))
+
     isMulti
       ? value && expect($typeahead).to.contain(value)
       : value && expect($typeahead.find('input')).to.have.attr('value', value)
@@ -779,8 +779,14 @@ const assertErrorDialog = (taskName, errorMessage) => {
 const assertAPIRequest = (endPointAlias, assertCallback) =>
   cy.wait(`@${endPointAlias}`).then((xhr) => assertCallback(xhr))
 
+/**
+ * Assert the field element contains the expected error message
+ * @param {*} element the field element that contains the error
+ * @param {*} errorMessage the error message that should be displayed
+ * @returns
+ */
 const assertFieldError = (element, errorMessage) =>
-  element.find('span').should('contain.text', errorMessage)
+  element.find('span').should('have.text', errorMessage)
 
 module.exports = {
   assertKeyValueTable,
