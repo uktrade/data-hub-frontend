@@ -346,11 +346,11 @@ const assertFieldInput = ({
           .should('have.text', hint || '')
           .next()
     )
-    .then(($el) => {
+    .then(
       //in the scenario where we don't need to validate what the hint is, but a hint is still
       //being rendered, skip over the hint without validating it to get to the next element
-      return ignoreHint && value ? cy.wrap($el).next() : undefined
-    })
+      ($el) => (ignoreHint && value ? cy.wrap($el).next() : undefined)
+    )
     .find('input')
     .then(
       ($el) =>
