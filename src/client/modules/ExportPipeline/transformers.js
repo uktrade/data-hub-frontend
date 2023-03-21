@@ -1,4 +1,3 @@
-//TODO
 export const transformFormValuesForAPI = (values) => {
   if (!values) {
     return values
