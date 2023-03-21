@@ -223,6 +223,7 @@ async function renderOverview(req, res) {
   const companiesHouseLink = urls.external.companiesHouse(
     company.company_number
   )
+  // const investmentlistt = getProjects(company.id)
 
   // const project = {
   //   companyId: company.id,
