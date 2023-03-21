@@ -19,7 +19,7 @@
 {# Remove the skipLink from the base template #}
 {% block skipLink %}{% endblock %}
 
-{% set pageTitle = [getPageTitle() if getPageTitle, 'DIT Data Hub'] | removeNilAndEmpty | flatten | join(' - ') %}
+{% set pageTitle = [getPageTitle() if getPageTitle, 'DBT Data Hub'] | removeNilAndEmpty | flatten | join(' - ') %}
 {%- set titleDefault = 'Department for Business and  Trade' -%}
 {%- set htmlClasses = 'no-js' -%}
 

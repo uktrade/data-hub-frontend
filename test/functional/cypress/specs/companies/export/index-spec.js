@@ -62,7 +62,7 @@ describe('Company Export tab', () => {
       })
 
       it('should render a meta title', () => {
-        cy.title().should('eq', 'Export - DnB Corp - Companies - DIT Data Hub')
+        cy.title().should('eq', 'Export - DnB Corp - Companies - DBT Data Hub')
       })
 
       it('should render breadcrumbs', () => {
@@ -135,7 +135,7 @@ describe('Company Export tab', () => {
       it('should render the "What is an Export Win" details', () => {
         cy.contains('What is an Export Win')
         cy.contains(
-          'Export wins capture the export deals that Department of International Trade (DIT)'
+          'Export wins capture the export deals that Department for Business and Trade (DBT)'
         )
       })
 
