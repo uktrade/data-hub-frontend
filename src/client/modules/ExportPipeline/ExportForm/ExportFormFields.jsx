@@ -30,7 +30,9 @@ const ExportFormFields = ({
           cancelRedirectTo={() => cancelRedirectUrl}
           redirectTo={() => redirectToUrl}
           submissionTaskName={TASK_SAVE_EXPORT}
-          initialValues={transformAPIValuesForForm(initialValues)}
+          initialValues={
+            initialValues && transformAPIValuesForForm(initialValues)
+          }
           transformPayload={(values) => ({ exportId: values.id, values })}
           flashMessage={flashMessage}
         >

@@ -1,20 +1,15 @@
-export const transformFormValuesForAPI = (values) => {
-  if (!values) {
-    return values
-  }
-  return { ...values, owner: { id: values.owner?.value } }
-}
+const mapApiToField = ({ id, name }) => ({ value: id, label: name })
 
-const mapApiToField = (value) =>
-  value ? { value: value.id, label: value.name } : {}
+export const transformFormValuesForAPI = ({ id, title, owner }) => ({
+  id,
+  title,
+  owner: {
+    id: owner.value,
+  },
+})
 
-export const transformAPIValuesForForm = (initialValues) => {
-  if (!initialValues) {
-    return initialValues
-  }
-
-  return {
-    ...initialValues,
-    owner: mapApiToField(initialValues.owner),
-  }
-}
+export const transformAPIValuesForForm = ({ id, title, owner }) => ({
+  id,
+  title,
+  owner: mapApiToField(owner),
+})
