@@ -39,8 +39,8 @@ const InvestmentStatusCard = ({ queryString, companyId, ...props }) => {
       >
         {() => (
           <StyledSummaryTable
-            caption="Investment Status"
-            data-test="businessDetailsContainer"
+            caption="Investment status"
+            data-test="investmentsStatusContainer"
           >
             <SummaryTable.Row heading="Total projects won">
               {props.statusList?.won ? props.statusList.won : '0'}
