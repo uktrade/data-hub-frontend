@@ -5,6 +5,9 @@ const {
   assertLocalHeader,
   assertBreadcrumbs,
   assertFlashMessage,
+  assertFieldTypeahead,
+  assertFieldError,
+  assertFieldInput,
 } = require('../../support/assertions')
 const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 const {
@@ -14,8 +17,8 @@ const {
 describe('Export pipeline edit', () => {
   const exportItem = exportItems.results[0]
 
-  context('when adding an export for unknown company id', () => {
-    beforeEach(() => {
+  context('when editing an export for unknown company id', () => {
+    before(() => {
       cy.visit('/export/a/edit')
     })
 
@@ -36,7 +39,9 @@ describe('Export pipeline edit', () => {
     })
   })
 
-  context('when adding an export for known company id', () => {
+  context('when editing an export for known company id', () => {
+    const editPageUrl = urls.exportPipeline.edit(exportItem.id)
+
     beforeEach(() => {
       cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
         body: exportItem,
@@ -44,50 +49,81 @@ describe('Export pipeline edit', () => {
       cy.intercept('PATCH', `/api-proxy/v4/export/${exportItem.id}`).as(
         'patchExportItemApiRequest'
       )
-      cy.visit(urls.exportPipeline.edit(exportItem.id))
+      cy.visit(editPageUrl)
     })
 
-    it('should render the header', () => {
-      assertLocalHeader('Edit export')
-      cy.get('[data-test="subheading"]').should(
-        'have.text',
-        exportItem.company.name
-      )
-    })
+    context('when verifying the page', () => {
+      it('should render the header', () => {
+        assertLocalHeader('Edit export')
+        cy.get('[data-test="subheading"]').should(
+          'have.text',
+          exportItem.company.name
+        )
+      })
 
-    it('should render the edit export breadcrumb', () => {
-      assertBreadcrumbs({
-        Home: urls.dashboard(),
-        Companies: urls.companies.index(),
-        [exportItem.company.name]: urls.companies.activity.index(
-          exportItem.company.id
-        ),
-        [exportItem.title]: null,
+      it('should render the edit export breadcrumb', () => {
+        assertBreadcrumbs({
+          Home: urls.dashboard(),
+          Companies: urls.companies.index(),
+          [exportItem.company.name]: urls.companies.activity.index(
+            exportItem.company.id
+          ),
+          [exportItem.title]: null,
+        })
+      })
+
+      it('should render a form with display a save button', () => {
+        cy.get('[data-test=submit-button]').should('have.text', 'Save')
+      })
+
+      it('should render a form with a cancel link', () => {
+        cy.get('[data-test=cancel-button]')
+          .should('have.text', 'Cancel')
+          .should('have.attr', 'href', urls.dashboard())
+      })
+
+      it('should render a form with saved values in the form fields', () => {
+        cy.get('[data-test="field-title"]').then((element) => {
+          assertFieldInput({
+            element,
+            label: 'Export title',
+            ignoreHint: true,
+            value: exportItem.title,
+          })
+        })
+        cy.get('[data-test="field-owner"]').then((element) => {
+          assertFieldTypeahead({
+            element,
+            label: 'Owner',
+            value: exportItem.owner.name,
+            isMulti: false,
+          })
+        })
       })
     })
 
-    it('the form should display a save button', () => {
-      cy.get('[data-test=submit-button]').should('have.text', 'Save')
-    })
-
-    it('the form should display a cancel link', () => {
-      cy.get('[data-test=cancel-button]')
-        .should('have.text', 'Cancel')
-        .should('have.attr', 'href', urls.dashboard())
-    })
-
-    it('the form should redirect to the dashboard page when the cancel button is clicked', () => {
-      cy.get('[data-test=cancel-button]').click()
-      assertUrl(urls.dashboard())
+    context('when the form cancel button is clicked', () => {
+      it('the form should redirect to the dashboard page', () => {
+        cy.get('[data-test=cancel-button]').click()
+        assertUrl(urls.dashboard())
+      })
     })
 
     context('when the form contains invalid data and is submitted', () => {
       it('the form should display validation error message for mandatory inputs', () => {
+        //clear any default values first
         cy.get('[data-test="title-input"]').clear()
+        cy.get('[data-test="typeahead-input"]').clear()
+
         cy.get('[data-test=submit-button]').click()
-        cy.get('[data-test="field-title"] > fieldset > div > span').should(
-          'contain.text',
+
+        assertFieldError(
+          cy.get('[data-test="field-title"]'),
           ERROR_MESSAGES.title
+        )
+        assertFieldError(
+          cy.get('[data-test="field-owner"]'),
+          ERROR_MESSAGES.owner
         )
       })
     })
@@ -98,7 +134,14 @@ describe('Export pipeline edit', () => {
 
         //While building the form do individual checks, can switch to assertPayload once all fields are added
         cy.wait('@patchExportItemApiRequest').then(({ request }) => {
+          expect(request.body).to.have.property('id', exportItem.id)
+
+          expect(request.body).to.have.property(
+            'company',
+            exportItem.company.id
+          )
           expect(request.body).to.have.property('title', exportItem.title)
+          expect(request.body).to.have.property('owner', exportItem.owner.id)
         })
 
         assertUrl(urls.exportPipeline.edit(exportItem.id))

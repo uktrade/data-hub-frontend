@@ -159,6 +159,7 @@ const parseProps = (domNode) => {
     return {
       modulePermissions: [],
       currentAdviserId: '',
+      currentAdviserName: '',
       activeFeatures: null,
       activeFeatureGroups: null,
     }
@@ -171,12 +172,14 @@ const appWrapper = document.getElementById('react-app')
 const {
   modulePermissions,
   currentAdviserId,
+  currentAdviserName,
   activeFeatures,
   activeFeatureGroups,
 } = parseProps(appWrapper)
 
 const reducer = {
   currentAdviserId: () => currentAdviserId,
+  currentAdviserName: () => currentAdviserName,
   activeFeatures: () => activeFeatures,
   activeFeatureGroups: () => activeFeatureGroups,
   modulePermissions: () => modulePermissions,

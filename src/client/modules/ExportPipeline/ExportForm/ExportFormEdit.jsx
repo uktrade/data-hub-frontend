@@ -59,7 +59,7 @@ const ExportFormEdit = ({ exportItem }) => {
             onSuccessDispatch: EXPORT_LOADED,
           },
         }}
-        exportItem={exportItem}
+        initialValues={exportItem}
         cancelRedirectUrl={urls.dashboard()}
         redirectToUrl={urls.exportPipeline.edit(exportId)}
         flashMessage={({ data }) => `Changes saved to '${data.title}'`}
