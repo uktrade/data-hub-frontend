@@ -87,7 +87,7 @@ const Dashboard = ({
                 ...(hasExportPipeline
                   ? {
                       [urls.exportPipeline.index()]: {
-                        label: 'Export',
+                        label: 'Export list',
                         content: <ExportList />,
                       },
                     }

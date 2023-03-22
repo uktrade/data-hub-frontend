@@ -42,7 +42,7 @@ const DashboardTabs = ({
         ...(hasExportPipeline
           ? {
               [urls.exportPipeline.index()]: {
-                label: 'Export',
+                label: 'Export list',
                 content: <ExportList />,
               },
             }
