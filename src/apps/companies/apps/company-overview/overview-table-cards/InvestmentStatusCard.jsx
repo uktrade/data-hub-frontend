@@ -42,10 +42,6 @@ const InvestmentStatusCard = ({ queryString, companyId, ...props }) => {
             caption="Investment Status"
             data-test="businessDetailsContainer"
           >
-            <SummaryTable.Row heading="Last project won">
-              23 Jan 2021
-            </SummaryTable.Row>
-
             <SummaryTable.Row heading="Total projects won">
               {props.statusList?.won ? props.statusList.won : '0'}
             </SummaryTable.Row>
