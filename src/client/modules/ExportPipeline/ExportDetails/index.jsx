@@ -10,10 +10,9 @@ import styled from 'styled-components'
 import { isEmpty } from 'lodash'
 import { format } from '../../../../client/utils/date'
 
-import { BLACK, GREY_3 } from '../../../utils/colours'
 import { Button } from 'govuk-react'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
-import { transformNameIdToValueLabel } from './transformers'
+import { BLACK, GREY_3 } from '../../../utils/colours'
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
@@ -25,16 +24,42 @@ const StyledLink = styled(Link)`
   padding: 40px;
   padding-top: 40px;
 `
-// const StyledButton = styled(Button)`
-//   margin: 100px;
-//   margin-bottom: 1000px;
-//   border-top: 1000px;
+const StyledButton = styled('button')`
+  margin: 12px;
+`
+
+// const StyledButton = styled('button')`
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   border: 0;
+//   margin: 10px 0 0 10px;
+//   border-radius: 0;
+//   cursor: pointer;
+//   padding: 12px;
+//   overflow: hidden;
+//   box-sizing: border-box;
+//   width: ${({ size }) => `${size}px`};
+//   height: ${({ size }) => `${size}px`};
+//   background-color: ${({ backgroundColour }) => backgroundColour};
 // `
 
-const BadgeText = styled('span')`
-  font-weight: 600;
-  font-size: ${FONT_SIZE.SIZE_16};
-`
+// const StyledButtonLink = styled(ButtonLink)`
+//   font-size: ${FONT_SIZE.SIZE_16};
+//   margin: 0;
+//   display: inline-block;
+//   padding: 0;
+//   width: auto;
+//   border: none;
+//   vertical-align: baseline;
+//   &::before {
+//     display: none;
+//   }
+// `
+// const StyledButtonWrapper = styled('button')`
+//   margin-top: 10px;
+// `
+
 const ExportDetailsForm = ({
   id,
   owner,
@@ -87,12 +112,13 @@ const ExportDetailsForm = ({
                 <SummaryTable.Row heading="Owner">
                   {isEmpty(owner) ? 'Not set' : owner}
                 </SummaryTable.Row>
-                {/* <SummaryTable.Row
+                <SummaryTable.ListRow
                   heading="Team members"
                   emptyValue="Not set"
                   hideWhenEmpty={true}
                   value={teamMembers}
-                ></SummaryTable.Row> */}
+                ></SummaryTable.ListRow>
+
                 <SummaryTable.Row
                   heading="Total estimated export value"
                   hideWhenEmpty={false}
@@ -139,17 +165,17 @@ const ExportDetailsForm = ({
                 <SummaryTable.Row heading="Notes" hideWhenEmpty={false}>
                   {isEmpty(notes) ? 'Not set' : notes}
                 </SummaryTable.Row>
-                <Button
-                  as={Link}
-                  href={urls.exportPipeline.details(exportId)}
-                  marginBottom={SPACING.SCALE_2}
-                  buttonColour={GREY_3}
-                  buttonTextColour={BLACK}
-                  data-test="edit-export-details-button"
-                >
-                  Edit
-                </Button>
-
+                <StyledButton>
+                  <Button
+                    as={Link}
+                    href={urls.exportPipeline.details(exportId)}
+                    buttonColour={GREY_3}
+                    buttonTextColour={BLACK}
+                    data-test="edit-export-details-button"
+                  >
+                    Edit
+                  </Button>
+                </StyledButton>
                 <StyledLink href={urls.exportPipeline.details(exportId)}>
                   Delete
                 </StyledLink>
