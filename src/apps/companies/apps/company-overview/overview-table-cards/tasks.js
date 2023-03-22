@@ -1,8 +1,6 @@
 import { apiProxyAxios } from '../../../../../client/components/Task/utils'
 
-//export const getProjectsWon = ({ limit = 100, page, companyId, ...rest }) => {
-export const getProjectsWon = ({ limit = 100, companyId }) => {
-  // const transformedRest = transformLandDateFilters(rest)
+export const getProjectsWon = ({ limit = 200, companyId }) => {
   return apiProxyAxios
     .post('/v3/search/investment_project', {
       limit,
@@ -11,7 +9,6 @@ export const getProjectsWon = ({ limit = 100, companyId }) => {
       }),
     })
     .then(({ data }) => ({
-      count: data.count,
       results: data.results,
     }))
 }

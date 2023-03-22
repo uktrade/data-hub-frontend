@@ -25,39 +25,7 @@ const StyledLastTableCell = styled(Table.Cell)`
   border: 0;
   padding-bottom: 0;
 `
-let prospectCounter = 0
-let wonCounter = 0
-let verifyWinCounter = 0
-let abandonedCounter = 0
-let activeCounter = 0
-// let latestWon = ''
-// const calculateInvestment = (investmentList) => {
-//   for (let x = 0; x < investmentList.length; x++) {
-//     for (let i = 0; i < investmentList[x].badges.length; i++) {
-//       if (investmentList[x].badges[i].text === 'Prospect') {
-//         prospectCounter++
-//       }
-//       if (investmentList[x].badges[i].text === 'won') {
-//         wonCounter++
-//         if (latestWon.length < 1) {
-//           latestWon = investmentList[x]
-//         }
-//       }
-//       if (investmentList[x].badges[i].text === 'Verify win') {
-//         verifyWinCounter++
-//       }
-//       if (investmentList[x].badges[i].text === 'abandoned') {
-//         abandonedCounter++
-//       }
-//       if (investmentList[x].badges[i].text === 'Active') {
-//         activeCounter++
-//       }
-//     }
-//   }
-// }
-// TODO: add props back to param
-const InvestmentStatusCard = ({ queryString, companyId }) => {
-  // console.log(props)
+const InvestmentStatusCard = ({ queryString, companyId, ...props }) => {
   return (
     <>
       <Task.Status
@@ -79,27 +47,27 @@ const InvestmentStatusCard = ({ queryString, companyId }) => {
             </SummaryTable.Row>
 
             <SummaryTable.Row heading="Total projects won">
-              {wonCounter}
+              {props.statusList?.won ? props.statusList.won : '0'}
             </SummaryTable.Row>
             <SummaryTable.Row heading="Active projects">
-              {activeCounter}
+              {props.stageList?.active ? props.stageList.active : '0'}
             </SummaryTable.Row>
             <SummaryTable.Row heading="Prospect projects">
-              {prospectCounter}
+              {props.stageList?.prospect ? props.stageList.prospect : '0'}
             </SummaryTable.Row>
             <SummaryTable.Row heading="Verify win projects">
-              {verifyWinCounter}
+              {props.stageList?.verifyWin ? props.stageList.verifyWin : '0'}
             </SummaryTable.Row>
-            <SummaryTable.Row heading="Abondoned projects">
-              {abandonedCounter}
+            <SummaryTable.Row heading="Abandoned projects">
+              {props.statusList?.abandoned ? props.statusList.abandoned : '0'}
             </SummaryTable.Row>
             <StyledTableRow>
               <StyledLastTableCell colSpan={2}>
                 <Link
-                  href={`${queryString}/business-details`}
-                  data-test="business-page-link"
+                  href={`${queryString}/investments`}
+                  data-test="investment-page-link"
                 >
-                  View full business details
+                  View full investment details
                 </Link>
               </StyledLastTableCell>
             </StyledTableRow>
