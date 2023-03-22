@@ -15,6 +15,7 @@ module.exports = {
       urls.pipeline.index(),
       urls.pipeline.active(),
       urls.pipeline.won(),
+      urls.exportPipeline.index(),
     ],
     spaBasePath(urls.dashboard.route),
     userFeatures('personalised-dashboard'),

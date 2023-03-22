@@ -61,21 +61,23 @@ const state2props = (state) => {
   const { hasInvestmentProjects } = state[CHECK_FOR_INVESTMENTS_ID]
   const { dataHubFeed } = state[DATA_HUB_FEED_ID]
 
-  const activeFeatureGroups = state.activeFeatureGroups || []
-  const hasInvestmentFeatureGroup = activeFeatureGroups.includes(
+  const hasInvestmentFeatureGroup = state.activeFeatureGroups.includes(
     'investment-notifications'
   )
-  const hasExportFeatureGroup = activeFeatureGroups.includes(
+  const hasExportFeatureGroup = state.activeFeatureGroups.includes(
     'export-notifications'
   )
+
+  const hasExportPipeline = state.activeFeatures.includes('export-pipeline')
 
   return {
     hasInvestmentProjects,
     dataHubFeed,
     remindersCount,
     reminderSummaryCount,
-    hasInvestmentFeatureGroup,
     hasExportFeatureGroup,
+    hasInvestmentFeatureGroup,
+    hasExportPipeline,
   }
 }
 
@@ -87,6 +89,7 @@ const PersonalisedDashboard = ({
   reminderSummaryCount,
   hasInvestmentProjects,
   dataHubFeed,
+  hasExportPipeline,
   hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
 }) => (
@@ -161,6 +164,7 @@ const PersonalisedDashboard = ({
                 <DashboardTabs
                   id={id}
                   adviser={adviser}
+                  hasExportPipeline={hasExportPipeline}
                   hasInvestmentProjects={hasInvestmentProjects}
                 />
               </Main>
