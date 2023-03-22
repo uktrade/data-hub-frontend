@@ -1,5 +1,4 @@
 const urls = require('../../../../lib/urls')
-// const { getProjects } = require('../../../investments/client/projects/tasks')
 
 const investmentList = [
   {
@@ -223,20 +222,6 @@ async function renderOverview(req, res) {
   const companiesHouseLink = urls.external.companiesHouse(
     company.company_number
   )
-  // const investmentlistt = getProjects(company.id)
-
-  // const project = {
-  //   companyId: company.id,
-  //   page: 1,
-  // }
-  // const investmentList = getProjects({ project })
-  // const props = {
-  //   breadcrumbs,
-  //   company,
-  //   localNavItems: res.locals.localNavItems,
-  //   urls,
-  //   companiesHouseLink,
-  // }
 
   res.render('companies/apps/company-overview/views/client-container', {
     props: {
@@ -252,5 +237,4 @@ async function renderOverview(req, res) {
 
 module.exports = {
   renderOverview,
-  // setCompanyInvestmentProjects,
 }
