@@ -136,7 +136,7 @@ describe('Company adviser list controller', () => {
                   name: 'Travis Greene',
                   contact_email: 'travis@travis.com',
                   dit_team: {
-                    name: 'DIT Team',
+                    name: 'DBT Team',
                   },
                 },
               },
@@ -167,7 +167,7 @@ describe('Company adviser list controller', () => {
           it('should set the team name', () => {
             expect(
               middlewareParameters.resMock.render.args[0][1].props.team
-            ).to.equal('DIT Team')
+            ).to.equal('DBT Team')
           })
         }
       )
@@ -188,7 +188,7 @@ describe('Company adviser list controller', () => {
                   name: 'Travis Greene',
                   contact_email: 'travis@travis.com',
                   dit_team: {
-                    name: 'DIT Team',
+                    name: 'DBT Team',
                   },
                 },
               },

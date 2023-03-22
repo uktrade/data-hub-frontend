@@ -156,7 +156,7 @@ describe('Company edit', () => {
           assert: assertRegisteredAddress,
         },
         {
-          label: 'DIT region',
+          label: 'DBT region',
           value: company.uk_region.name,
           optionsCount: 16,
           assert: assertFieldSelect,
@@ -264,7 +264,7 @@ describe('Company edit', () => {
           optionsCount: 5,
         },
         {
-          label: 'DIT sector',
+          label: 'DBT sector',
           value: company.sector.name,
           optionsCount: 256,
           assert: assertFieldSelect,
@@ -365,7 +365,7 @@ describe('Company edit', () => {
           optionsCount: 5,
         },
         {
-          label: 'DIT sector',
+          label: 'DBT sector',
           value: company.sector.name,
           optionsCount: 256,
           assert: assertFieldSelect,
@@ -471,7 +471,7 @@ describe('Company edit', () => {
           assert: assertFieldUneditable,
         },
         {
-          label: 'DIT sector',
+          label: 'DBT sector',
           value: company.sector.name,
           optionsCount: 256,
           assert: assertFieldSelect,

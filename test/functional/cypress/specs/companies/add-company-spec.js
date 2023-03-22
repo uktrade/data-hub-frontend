@@ -358,11 +358,11 @@ describe('Add company form', () => {
     it('should render the "Add company" page with a form to add a sector', () => {
       cy.get(selectors.companyAdd.title)
       cy.should('have.text', 'Add company').and('have.prop', 'tagName', 'H1')
-      cy.contains('DIT sector')
+      cy.contains('DBT sector')
         .parent()
         .next()
         .get('select option:selected')
-        .should('have.text', '-- Select DIT sector --')
+        .should('have.text', '-- Select DBT sector --')
         .parent()
         .parent()
         .parent()
@@ -377,7 +377,7 @@ describe('Add company form', () => {
 
     it('should display an error message when no sector is selected', () => {
       cy.get(selectors.companyAdd.submitButton).click()
-      cy.get(selectors.companyAdd.form).contains('Select DIT sector')
+      cy.get(selectors.companyAdd.form).contains('Select DBT sector')
     })
 
     it('should redirect to the new company activity when a sector is picked', () => {
@@ -538,19 +538,19 @@ describe('Add company form', () => {
 
     it('should render the region and sector fields', () => {
       cy.get(selectors.companyAdd.form).contains('London')
-      cy.get(selectors.companyAdd.form).contains('Select DIT sector')
+      cy.get(selectors.companyAdd.form).contains('Select DBT sector')
     })
 
     it('should show errors when continuing without a region or sector', () => {
       cy.get(selectors.companyAdd.newCompanyRecordForm.region).select(
-        '-- Select DIT region --'
+        '-- Select DBT region --'
       )
       cy.get(selectors.companyAdd.submitButton)
         .click()
         .get(selectors.companyAdd.form)
-        .contains('Select DIT region')
+        .contains('Select DBT region')
         .get(selectors.companyAdd.form)
-        .contains('Select DIT sector')
+        .contains('Select DBT sector')
     })
 
     it('should not continue when the DnB investigation api call fails', () => {
@@ -679,7 +679,7 @@ describe('Add company form', () => {
     })
 
     it('should render a form with both "Region" and "Sector" selects', () => {
-      cy.contains('DIT region')
+      cy.contains('DBT region')
         .parent()
         .next()
         .find('select option:selected')
@@ -690,11 +690,11 @@ describe('Add company form', () => {
         .parent()
         .parent()
         .next()
-        .contains('DIT sector')
+        .contains('DBT sector')
         .parent()
         .next()
         .find('select option:selected')
-        .should('have.text', '-- Select DIT sector --')
+        .should('have.text', '-- Select DBT sector --')
         .parent()
         .parent()
         .parent()
@@ -711,9 +711,9 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.submitButton)
         .click()
         .get(selectors.companyAdd.form)
-        .contains('Select DIT region')
+        .contains('Select DBT region')
         .get(selectors.companyAdd.form)
-        .contains('Select DIT sector')
+        .contains('Select DBT sector')
     })
 
     it('should add a company after defining both region and sector', () => {
@@ -739,11 +739,11 @@ describe('Add company form', () => {
     })
 
     it('should prompt the user to select a "Region"', () => {
-      cy.contains('DIT region')
+      cy.contains('DBT region')
         .parent()
         .next()
         .find('select option:selected')
-        .should('have.text', '-- Select DIT region --')
+        .should('have.text', '-- Select DBT region --')
     })
   })
 
