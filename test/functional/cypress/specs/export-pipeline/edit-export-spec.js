@@ -134,8 +134,14 @@ describe('Export pipeline edit', () => {
 
         //While building the form do individual checks, can switch to assertPayload once all fields are added
         cy.wait('@patchExportItemApiRequest').then(({ request }) => {
+          expect(request.body).to.have.property('id', exportItem.id)
+
+          expect(request.body).to.have.property(
+            'company',
+            exportItem.company.id
+          )
           expect(request.body).to.have.property('title', exportItem.title)
-          expect(request.body.owner).to.have.property('id', exportItem.owner.id)
+          expect(request.body).to.have.property('owner', exportItem.owner.id)
         })
 
         assertUrl(urls.exportPipeline.edit(exportItem.id))

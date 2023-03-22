@@ -8,11 +8,12 @@ describe('transformFormValuesForAPI', () => {
     it('Should return the mapped value when the form field is present', () => {
       expect(
         transformFormValuesForAPI({
+          company: 456,
           id: 1234,
           title: 'title',
           owner: { value: 'b', label: 'c' },
         })
-      ).to.be.deep.equal({ id: 1234, title: 'title', owner: { id: 'b' } })
+      ).to.be.deep.equal({ company: 456, id: 1234, title: 'title', owner: 'b' })
     })
   })
 })
@@ -23,11 +24,13 @@ describe('transformAPIValuesForForm', () => {
       expect(
         transformAPIValuesForForm({
           id: 234,
+          company: { id: 987 },
           title: 'a',
           owner: { id: 'b', name: 'c' },
         })
       ).to.be.deep.equal({
         id: 234,
+        company: 987,
         title: 'a',
         owner: { value: 'b', label: 'c' },
       })

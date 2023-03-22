@@ -1,14 +1,14 @@
 const mapApiToField = ({ id, name }) => ({ value: id, label: name })
 
-export const transformFormValuesForAPI = ({ id, title, owner }) => ({
+export const transformFormValuesForAPI = ({ company, id, title, owner }) => ({
+  company,
   id,
   title,
-  owner: {
-    id: owner.value,
-  },
+  owner: owner.value,
 })
 
-export const transformAPIValuesForForm = ({ id, title, owner }) => ({
+export const transformAPIValuesForForm = ({ company, id, title, owner }) => ({
+  company: company.id,
   id,
   title,
   owner: mapApiToField(owner),
