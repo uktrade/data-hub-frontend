@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 import styled from 'styled-components'
-// import Link from '@govuk-react/link'
 
 import { BLUE } from '../../../../../client/utils/colours'
 
