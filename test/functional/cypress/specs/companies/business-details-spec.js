@@ -94,7 +94,7 @@ const assertAddressContainer = (showEdit) => {
 }
 
 const assertRegionContainerNotVisible = () => {
-  it('should not display the "DIT region" details container', () => {
+  it('should not display the "DBT region" details container', () => {
     cy.get(
       selectors.detailsContainer('regionDetailsContainer').container
     ).should('not.exist')
@@ -102,10 +102,10 @@ const assertRegionContainerNotVisible = () => {
 }
 
 const assertSectorContainer = (showLink, content = ['Retail']) => {
-  it('should display the "DIT sector" details container', () => {
+  it('should display the "DBT sector" details container', () => {
     assertSummaryTable({
       dataTest: 'sectorDetailsContainer',
-      heading: 'DIT sector',
+      heading: 'DBT sector',
       showEditLink: showLink,
       content: content,
     })
@@ -142,10 +142,10 @@ const assertArchiveContainerNotVisible = () => {
 }
 
 const assertRegionContainer = (region) => {
-  it('should display the "DIT region" details container', () => {
+  it('should display the "DBT region" details container', () => {
     assertSummaryTable({
       dataTest: 'regionDetailsContainer',
-      heading: 'DIT region',
+      heading: 'DBT region',
       showEditLink: true,
       content: region,
     })

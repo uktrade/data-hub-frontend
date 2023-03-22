@@ -80,7 +80,7 @@ const BusinessDetailsCard = ({ company, queryString, companiesHouseLink }) => {
             ? 'Not set'
             : company.number_of_employees}
         </SummaryTable.Row>
-        <SummaryTable.Row heading="DIT Sector">
+        <SummaryTable.Row heading="DBT Sector">
           {!company.sector ? 'Not set' : company.sector.name}
         </SummaryTable.Row>
         <StyledTableRow>

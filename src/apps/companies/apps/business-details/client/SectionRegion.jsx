@@ -7,7 +7,7 @@ import { SummaryTable } from '../../../../../client/components/'
 const SectionRegion = ({ businessDetails, isArchived, isBasedInUK, urls }) =>
   isBasedInUK ? (
     <SummaryTable
-      caption="DIT region"
+      caption="DBT region"
       data-test="regionDetailsContainer"
       actions={
         !isArchived && <Link href={`${urls.companyEdit}#uk_region`}>Edit</Link>
