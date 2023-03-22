@@ -529,6 +529,7 @@ module.exports = {
     },
   },
   exportPipeline: {
+    index: url('/export'),
     create: url('/export/create'),
     edit: url('/export', '/:exportId/edit'),
   },
