@@ -60,10 +60,10 @@ const InvestmentStatusCard = ({ queryString, companyId, ...props }) => {
             <StyledTableRow>
               <StyledLastTableCell colSpan={2}>
                 <Link
-                  href={`${queryString}/investments`}
+                  href={`${queryString}/investments/projects`}
                   data-test="investment-page-link"
                 >
-                  View full investment details
+                  View all investments
                 </Link>
               </StyledLastTableCell>
             </StyledTableRow>
