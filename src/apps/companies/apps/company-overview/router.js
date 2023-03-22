@@ -5,5 +5,4 @@ const { renderOverview } = require('./controllers')
 
 router.get(urls.companies.overview.index.route, renderOverview)
 
-//router.get(urls.companies.overview.index.route ,renderOverview)
 module.exports = router
