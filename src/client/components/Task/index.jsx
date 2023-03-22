@@ -242,6 +242,8 @@ Task.Status = ({
         dismissError,
       } = getTask(name, id)
 
+      // console.log(status)
+
       return (
         <>
           {!!startOnRender && (
@@ -259,7 +261,8 @@ Task.Status = ({
               dismissable,
             })}
           <StyledLoadingBox loading={progress && progressOverlay}>
-            {(!status || progressOverlay) && children()}
+            {(!status || progressOverlay) &&
+              children({ status, progress, payload })}
           </StyledLoadingBox>
         </>
       )

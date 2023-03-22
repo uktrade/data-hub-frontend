@@ -8,6 +8,7 @@ export const transformFormValuesForAPI = (values) => {
     team_members: values.team_members?.map((t) => ({
       id: t.value,
     })),
+    estimated_export_value_years: values.estimated_export_value_years,
   }
 }
 
@@ -30,5 +31,6 @@ export const transformAPIValuesForForm = (initialValues) => {
     ...initialValues,
     owner: mapApiValueToField(initialValues.owner),
     team_members: mapApiValueToField(initialValues.team_members),
+    estimated_export_value_years: initialValues.estimated_export_value_years.id,
   }
 }

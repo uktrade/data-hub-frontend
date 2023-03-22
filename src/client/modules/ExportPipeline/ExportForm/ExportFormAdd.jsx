@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { connect } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 
@@ -47,6 +47,7 @@ const getBreadcrumbs = (company) => {
 const ExportFormAdd = ({ company, currentAdviserId, currentAdviserName }) => {
   let query = useQuery()
   const companyId = query.get('companyId')
+  const flashMessage = useCallback(({ data }) => `'${data.title}' created`, [])
 
   return (
     <DefaultLayout
@@ -74,7 +75,7 @@ const ExportFormAdd = ({ company, currentAdviserId, currentAdviserName }) => {
         }}
         cancelRedirectUrl={urls.companies.activity.index(companyId)}
         redirectToUrl={urls.dashboard()}
-        flashMessage={({ data }) => `'${data.title}' created`}
+        flashMessage={flashMessage}
       />
     </DefaultLayout>
   )

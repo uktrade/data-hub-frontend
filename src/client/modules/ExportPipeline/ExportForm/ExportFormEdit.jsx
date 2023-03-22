@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
@@ -40,6 +40,10 @@ const getBreadcrumbs = (exportItem) => {
 
 const ExportFormEdit = ({ exportItem }) => {
   const { exportId } = useParams()
+  const flashMessage = useCallback(
+    ({ data }) => `Changes saved to '${data.title}'`,
+    []
+  )
   return (
     <DefaultLayout
       heading={DISPLAY_EDIT_EXPORT}
@@ -62,7 +66,7 @@ const ExportFormEdit = ({ exportItem }) => {
         initialValues={exportItem}
         cancelRedirectUrl={urls.dashboard()}
         redirectToUrl={urls.exportPipeline.edit(exportId)}
-        flashMessage={({ data }) => `Changes saved to '${data.title}'`}
+        flashMessage={flashMessage}
       />
     </DefaultLayout>
   )
