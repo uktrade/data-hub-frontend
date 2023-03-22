@@ -58,7 +58,7 @@ describe('Send a referral form', () => {
           .next()
           .should(
             'have.text',
-            'Referrals are for when you want to ask another DIT advisor to help out an account you are working on.Read more guidance here (opens in a new window or tab)'
+            'Referrals are for when you want to ask another DBT advisor to help out an account you are working on.Read more guidance here (opens in a new window or tab)'
           )
           .find('a')
           .should(
