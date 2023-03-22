@@ -4,62 +4,47 @@ import {
 } from '../transformers'
 
 describe('transformFormValuesForAPI', () => {
-  context('When values prop is not passed ', () => {
-    it('Should return the same value', () => {
-      expect(transformFormValuesForAPI()).to.be.undefined
-    })
-  })
   context('When a values object is passed as a prop', () => {
     it('Should return the mapped value when the form field is present', () => {
       expect(
         transformFormValuesForAPI({
+          company: 456,
+          id: 1234,
           title: 'title',
           owner: { value: 'b', label: 'c' },
-          team_members: [{ value: 'd', label: 'e' }],
+          team_members: [
+            { value: 'd', label: 'e' },
+            { value: 'f', label: 'g' },
+          ],
         })
       ).to.be.deep.equal({
+        company: 456,
+        id: 1234,
         title: 'title',
-        owner: { id: 'b' },
-        team_members: [{ id: 'd' }],
-      })
-    })
-
-    it('Should return the default value when the api field is missing', () => {
-      expect(transformFormValuesForAPI({ title: 'title' })).to.be.deep.equal({
-        title: 'title',
-        owner: { id: undefined },
-        team_members: undefined,
+        owner: 'b',
+        team_members: ['d', 'f'],
       })
     })
   })
 })
 
-describe('#transformAPIValuesForForm', () => {
-  context('When initialValues prop is not passed ', () => {
-    it('Should return the same value', () => {
-      expect(transformAPIValuesForForm()).to.be.undefined
-    })
-  })
+describe('transformAPIValuesForForm', () => {
   context('When an initialValues object is passed as a prop', () => {
     it('Should return the mapped value when the api field is present', () => {
       expect(
         transformAPIValuesForForm({
-          name: 'a',
+          id: 234,
+          company: { id: 987 },
+          title: 'a',
           owner: { id: 'b', name: 'c' },
           team_members: [{ id: 'd', name: 'e' }],
         })
       ).to.be.deep.equal({
-        name: 'a',
+        id: 234,
+        company: 987,
+        title: 'a',
         owner: { value: 'b', label: 'c' },
         team_members: [{ value: 'd', label: 'e' }],
-      })
-    })
-
-    it('Should return the default value when the api field is missing', () => {
-      expect(transformAPIValuesForForm({ name: 'a' })).to.be.deep.equal({
-        name: 'a',
-        owner: {},
-        team_members: {},
       })
     })
   })

@@ -171,9 +171,9 @@ describe('Export pipeline create', () => {
 
           assertPayload('@postExportItemApiRequest', {
             title: newExport.title,
-            owner: { id: '7d19d407-9aec-4d06-b190-d3f404627f21' },
-            team_members: [{ id: teamMember.id }],
-            company: { id: company.id },
+            owner: '7d19d407-9aec-4d06-b190-d3f404627f21',
+            team_members: [teamMember.id],
+            company: company.id,
           })
 
           assertExactUrl('')
