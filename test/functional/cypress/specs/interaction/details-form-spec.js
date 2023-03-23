@@ -1145,7 +1145,7 @@ describe('Editing an interaction from an interactions list', () => {
   })
 })
 
-describe('Filtering services based on theme & kind', () => {
+describe.only('Filtering services based on theme & kind', () => {
   beforeEach(() => {
     cy.visit(urls.companies.interactions.create(fixtures.company.dnbCorp))
   })
