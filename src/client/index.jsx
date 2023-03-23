@@ -340,6 +340,9 @@ import { getExportDetails } from '../client/modules/ExportPipeline/ExportDetails
 import { TASK_SAVE_EXPORT } from '../client/modules/ExportPipeline/ExportForm/state'
 import { saveExport } from '../client/modules/ExportPipeline/ExportForm/tasks'
 
+import { TASK_GET_EXPORT_PIPELINE_LIST } from '../client/modules/ExportPipeline/ExportList/state.js'
+import { getExportPipelineList } from '../client/modules/ExportPipeline/ExportList/task.js'
+
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
 }
@@ -561,6 +564,7 @@ function App() {
           [TASK_GET_COMPANY_DETAIL]: getCompanyDetails,
           [TASK_GET_EXPORT_DETAIL]: getExportDetails,
           [TASK_SAVE_EXPORT]: saveExport,
+          [TASK_GET_EXPORT_PIPELINE_LIST]: getExportPipelineList,
         }}
       >
         <Mount selector="#data-hub-header">
