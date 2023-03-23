@@ -1,8 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import Task from '../../../components/Task'
 import { EXPORT__PIPELINE_LIST_LOADED } from '../../../actions'
-import { ID, TASK_GET_EXPORT_PIPELINE_LIST } from './state'
+import { ID, TASK_GET_EXPORT_PIPELINE_LIST, state2props } from './state'
 
 const ExportList = (data) => (
   <Task.Status
@@ -21,4 +22,4 @@ const ExportList = (data) => (
   </Task.Status>
 )
 
-export default ExportList
+export default connect(state2props)(ExportList)
