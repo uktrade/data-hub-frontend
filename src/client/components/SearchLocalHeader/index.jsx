@@ -13,13 +13,13 @@ import FlashMessages from '../LocalHeader/FlashMessages'
 const StyledSearchContainer = styled('div')`
   position: relative;
   width: 100%;
+  margin-top: 10px;
 `
 
 const StyledSearchInput = styled(Input)`
   border: 2px solid #0b0c0c;
   width: 100%;
   padding-left: ${SPACING.SCALE_3};
-  margin-top: 10px;
 `
 const StyledMain = styled(Main)`
   padding-top: 40px;
