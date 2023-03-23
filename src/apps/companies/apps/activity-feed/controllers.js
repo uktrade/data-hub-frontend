@@ -75,8 +75,6 @@ async function renderActivityFeed(req, res, next) {
           isGlobalUltimate: company.is_global_ultimate,
           dnbHierarchyCount,
           dnbRelatedCompaniesCount,
-          showMatchingPrompt:
-            !company.duns_number && !company.pending_dnb_investigation,
         }
 
     const props = {
