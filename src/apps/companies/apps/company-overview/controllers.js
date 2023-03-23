@@ -17,16 +17,14 @@ async function renderOverview(req, res) {
     company.company_number
   )
 
-  const props = {
-    breadcrumbs,
-    company,
-    localNavItems: res.locals.localNavItems,
-    urls,
-    companiesHouseLink,
-  }
-
   res.render('companies/apps/company-overview/views/client-container', {
-    props,
+    props: {
+      breadcrumbs,
+      company,
+      localNavItems: res.locals.localNavItems,
+      urls,
+      companiesHouseLink,
+    },
   })
 }
 

@@ -396,6 +396,52 @@ describe('Company overview page', () => {
       })
     }
   )
+  context(
+    'when viewing the investment status card for a business that has all information added',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
+        )
+      })
+
+      it('the card should contain the investment status table including all keys and accurate totals', () => {
+        cy.get('[data-test="investmentsStatusContainer"]')
+          .children()
+          .first()
+          .contains('Investment status')
+          .next()
+          .children()
+        cy.get('th')
+          .contains('Total projects won')
+          .siblings()
+          .contains('td', '0')
+        cy.get('th').contains('Active projects').siblings().contains('td', '4')
+        cy.get('th')
+          .contains('Prospect projects')
+          .siblings()
+          .contains('td', '3')
+        cy.get('th')
+          .contains('Verify win projects')
+          .siblings()
+          .contains('td', '1')
+        cy.get('th')
+          .contains('Abandoned projects')
+          .siblings()
+          .contains('td', '1')
+      })
+      it('the card should link to the investment page', () => {
+        cy.get('[data-test="investment-page-link"]')
+          .contains('View all investments')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          '/companies/ba8fae21-2895-47cf-90ba-9273c94dab88/investments/projects'
+        )
+        cy.go('back')
+      })
+    }
+  )
 
   context('when viewing the Recent Activities Card for a business', () => {
     before(() => {

@@ -5,6 +5,8 @@ import ActivityCard from '../overview-table-cards/ActivityCard'
 import BusinessDetailsCard from '../overview-table-cards/BusinessDetailsCard'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
+import InvestmentStatusCard from '../overview-table-cards/InvestmentStatusCard'
+
 import ExportStatus from '../overview-table-cards/ExportStatus.jsx'
 import { FILTER_FEED_TYPE } from '../../activity-feed/constants'
 
@@ -27,9 +29,19 @@ const CompanyOverview = ({ company, companiesHouseLink }) => {
               companiesHouseLink={companiesHouseLink}
             />
           </CardContainer>
+
           <CardContainer>
             <AccountManagementCard
               company={company}
+              queryString={queryString}
+            />
+          </CardContainer>
+          <CardContainer>
+            <ExportStatus company={company} queryString={queryString} />
+          </CardContainer>
+          <CardContainer>
+            <InvestmentStatusCard
+              companyId={company.id}
               queryString={queryString}
             />
           </CardContainer>
@@ -52,14 +64,6 @@ const CompanyOverview = ({ company, companiesHouseLink }) => {
             />
           </CardContainer>
         </GridCol>
-        <GridCol columnOneHalf={true}></GridCol>
-      </GridRow>
-      <GridRow>
-        <GridCol columnOneHalf={true}>
-          <CardContainer>
-            <ExportStatus company={company} queryString={queryString} />
-          </CardContainer>
-        </GridCol>
       </GridRow>
     </>
   )
@@ -69,6 +73,7 @@ CompanyOverview.propTypes = {
   company: PropTypes.object.isRequired,
   urls: PropTypes.object.isRequired,
   companiesHouseLink: PropTypes.string.isRequired,
+  investment: PropTypes.object.isRequired,
 }
 
 export default CompanyOverview
