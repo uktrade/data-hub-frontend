@@ -330,6 +330,7 @@ const assertFieldInput = ({
   label,
   hint = undefined,
   value = undefined,
+  ignoreHint = false,
 }) =>
   cy
     .wrap(element)
@@ -345,7 +346,11 @@ const assertFieldInput = ({
           .should('have.text', hint || '')
           .next()
     )
-
+    .then(
+      //in the scenario where we don't need to validate what the hint is, but a hint is still
+      //being rendered, skip over the hint without validating it to get to the next element
+      ($el) => (ignoreHint && value ? cy.wrap($el).next() : undefined)
+    )
     .find('input')
     .then(
       ($el) =>
@@ -774,6 +779,15 @@ const assertErrorDialog = (taskName, errorMessage) => {
 const assertAPIRequest = (endPointAlias, assertCallback) =>
   cy.wait(`@${endPointAlias}`).then((xhr) => assertCallback(xhr))
 
+/**
+ * Assert the field element contains the expected error message
+ * @param {*} element the field element that contains the error
+ * @param {*} errorMessage the error message that should be displayed
+ * @returns
+ */
+const assertFieldError = (element, errorMessage) =>
+  element.find('span').eq(1).should('have.text', errorMessage)
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
@@ -830,4 +844,5 @@ module.exports = {
   assertErrorDialog,
   assertAPIRequest,
   assertExactUrl,
+  assertFieldError,
 }

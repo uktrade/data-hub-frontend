@@ -44,7 +44,7 @@ const getBreadcrumbs = (company) => {
   return [...defaultBreadcrumbs, { text: 'Add export' }]
 }
 
-const ExportFormAdd = ({ company }) => {
+const ExportFormAdd = ({ company, currentAdviserId, currentAdviserName }) => {
   let query = useQuery()
   const companyId = query.get('companyId')
 
@@ -66,6 +66,10 @@ const ExportFormAdd = ({ company }) => {
             payload: companyId,
             onSuccessDispatch: COMPANY_LOADED,
           },
+        }}
+        initialValues={{
+          owner: { id: currentAdviserId, name: currentAdviserName },
+          company: { id: companyId },
         }}
         cancelRedirectUrl={urls.companies.activity.index(companyId)}
         redirectToUrl={urls.dashboard()}

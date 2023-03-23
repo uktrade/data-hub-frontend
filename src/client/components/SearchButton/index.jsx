@@ -9,7 +9,7 @@ const StyledButton = styled('button')`
   top: 0;
   right: 0;
   border: 0;
-  margin: 10px 0 0 10px;
+  margin: 0;
   border-radius: 0;
   cursor: pointer;
   padding: 12px;
