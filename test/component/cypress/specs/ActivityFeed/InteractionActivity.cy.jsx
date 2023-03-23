@@ -73,7 +73,7 @@ const interactionThemes = ['export', 'investment', 'trade_agreement', 'other']
 
 const interactionServices = {
   specificDITService:
-    'A Specific DIT Export Service or Funding : Enhanced International Support Services',
+    'A Specific DBT Export Service or Funding : Enhanced International Support Services',
   specificService: 'A Specific Service : Digital Trade Advisers One-to-One',
   accountManagement: 'Account Management : Midlands Engine',
   cop26: 'COP26 : Participation at Glasgow/getting involved with COP26',

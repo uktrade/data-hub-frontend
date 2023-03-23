@@ -30,7 +30,7 @@ describe('Company', () => {
 
     cy.get(selectors.editHistory.change(1).updated)
       .should('contain', todaysDate)
-      .and('contain', 'DBT Staff')
+      .and('contain', 'DIT Staff')
     cy.get(selectors.companyEdit.history).should('contain', '1 change')
   })
 })
@@ -60,7 +60,7 @@ describe('Contact', () => {
     cy.visit(urls.contacts.audit(contactObj.pk))
 
     cy.get('[data-test=collection-item]')
-      .should('contain', 'DBT Staff')
+      .should('contain', 'DIT Staff')
       .and('contain', '2 changes')
       .and('contain', todaysDate)
     cy.get('[data-test=audit-results]').should('contain', '1 result')
@@ -82,7 +82,7 @@ describe('Investment Project', () => {
 
     cy.get(selectors.editHistory.change(1).updated)
       .should('contain', todaysDate)
-      .and('contain', 'DBT Staff')
+      .and('contain', 'DIT Staff')
 
     cy.get(selectors.editHistory.change(1).noChanges).should(
       'have.text',
