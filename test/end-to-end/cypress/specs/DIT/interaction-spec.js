@@ -57,7 +57,7 @@ describe('Interaction', () => {
         .and('contain', 'interaction testing')
         .and(
           'contain',
-          'DBT Staff, UKTI Team East Midlands - International Trade Team'
+          'DIT Staff, UKTI Team East Midlands - International Trade Team'
         )
         .and('contain', 'Export Win')
         .and('contain', today)
@@ -99,7 +99,7 @@ describe('Interaction', () => {
             Notes: 'Conversation with potential client about countries',
             'Date of interaction': today,
             'Adviser(s)':
-              'DBT Staff, UKTI Team East Midlands - International Trade Team',
+              'DIT Staff, UKTI Team East Midlands - International Trade Team',
             'Communication channel': 'Email/Website',
             'Countries currently exporting to': 'France',
             'Future countries of interest': 'Germany',
@@ -211,7 +211,7 @@ describe('Service delivery', () => {
       .and('contain', 'interaction testing')
       .and(
         'contain',
-        'DBT Staff, UKTI Team East Midlands - International Trade Team'
+        'DIT Staff, UKTI Team East Midlands - International Trade Team'
       )
       .and('contain', 'Export Win')
       .and('contain', today)
