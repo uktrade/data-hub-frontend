@@ -61,15 +61,6 @@ const exportDetailsLabels = {
   exportPotential: 'Export potential',
 }
 
-const coreTeamLabels = {
-  region: 'Region',
-  country: 'Country',
-  team: 'Team',
-  location: 'Location',
-  global_account_manager: 'Global Account Manager',
-  adviser_on_core_team: 'Adviser on core team',
-}
-
 const aboutLabels = {
   business_type: 'Business type',
   trading_names: 'Trading names',
@@ -138,7 +129,6 @@ module.exports = {
   accountManagementDisplayLabels,
   exportDetailsLabels,
   address,
-  coreTeamLabels,
   aboutLabels,
   businessHierarchyLabels,
   exportPotentialLabels,
