@@ -87,7 +87,7 @@ describe('ArchivePanel', () => {
           type="interaction"
           archivedBy={archivistWithAlternateKey}
           unarchiveUrl={null}
-          archiveReason={'DIT cancelled'}
+          archiveReason={'DBT cancelled'}
           archiveMessage={'cancelled'}
         />
       )
