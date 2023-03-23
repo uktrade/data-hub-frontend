@@ -28,7 +28,7 @@
   },
   {
       "id": "0b94cd30-e5eb-e311-8a2b-e4115bead28a",
-      "name": "A Specific DIT Export Service or Funding : Overseas Business Network Chargeable Services (OBN)",
+      "name": "A Specific DBT Export Service or Funding : Overseas Business Network Chargeable Services (OBN)",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
@@ -38,7 +38,7 @@
   },
   {
     "id": "380bba2b-3499-e211-a939-e4115bead28a",
-    "name": "A Specific DIT Export Service or Funding : UK Tradeshow Programme (UKTP) – Exhibitor",
+    "name": "A Specific DBT Export Service or Funding : UK Tradeshow Programme (UKTP) – Exhibitor",
     "disabled_on": null,
     "contexts": [
         "export_interaction",
@@ -49,7 +49,7 @@
   },
   {
     "id": "380bba2b-3499-e211-a939-e4115bead28b",
-    "name": "A Specific DIT Export Service or Funding : UK Tradeshow Programme (UKTP) – Attendee-only",
+    "name": "A Specific DBT Export Service or Funding : UK Tradeshow Programme (UKTP) – Attendee-only",
     "disabled_on": null,
     "contexts": [
         "export_interaction",
@@ -57,10 +57,10 @@
         "export_service_delivery"
     ],
     "interaction_questions": []
-}, 
+},
   {
       "id": "482fca2e-3bfa-4c4f-8649-17d292aad87f",
-      "name": "A Specific DIT Export Service or Funding : Global Growth Service: Signed Export Growth Plan Received from Company",
+      "name": "A Specific DBT Export Service or Funding : Global Growth Service: Signed Export Growth Plan Received from Company",
       "disabled_on": null,
       "contexts": [
           "export_service_delivery"
@@ -69,7 +69,7 @@
   },
   {
       "id": "94a2473d-e898-4e1c-a082-ddfde8f297ff",
-      "name": "A Specific DIT Export Service or Funding : European Regional Development Fund (ERDF)",
+      "name": "A Specific DBT Export Service or Funding : European Regional Development Fund (ERDF)",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
@@ -79,7 +79,7 @@
   },
   {
       "id": "d1516466-5e62-4c1a-9831-7b1e7e536514",
-      "name": "A Specific DIT Export Service or Funding : Trade Development Fund (TDF)",
+      "name": "A Specific DBT Export Service or Funding : Trade Development Fund (TDF)",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
@@ -89,7 +89,7 @@
   },
   {
       "id": "d520b92b-3499-e211-a939-e4115bead28a",
-      "name": "A Specific DIT Export Service or Funding : Export Opportunities",
+      "name": "A Specific DBT Export Service or Funding : Export Opportunities",
       "disabled_on": null,
       "contexts": [
           "export_service_delivery"
@@ -98,7 +98,7 @@
   },
   {
       "id": "f56eb92b-3499-e211-a939-e4115bead28a",
-      "name": "A Specific DIT Export Service or Funding : Significant Assistance",
+      "name": "A Specific DBT Export Service or Funding : Significant Assistance",
       "disabled_on": null,
       "contexts": [
           "export_service_delivery"
@@ -107,7 +107,7 @@
   },
   {
       "id": "e64d7719-0bd9-65df-55a9-f08d328bc467",
-      "name": "A Specific DIT Export Service or Funding : Export Academy",
+      "name": "A Specific DBT Export Service or Funding : Export Academy",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
