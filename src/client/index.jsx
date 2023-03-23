@@ -348,6 +348,8 @@ import { getExportDetails } from '../client/modules/ExportPipeline/ExportDetails
 
 import { TASK_SAVE_EXPORT } from '../client/modules/ExportPipeline/ExportForm/state'
 import { saveExport } from '../client/modules/ExportPipeline/ExportForm/tasks'
+import { TASK_DELETE_EXPORT } from '../client/modules/ExportPipeline/ExportDelete/state'
+import { deleteExport } from '../client/modules/ExportPipeline/ExportDelete/tasks'
 
 import { TASK_GET_EXPORT_PIPELINE_LIST } from '../client/modules/ExportPipeline/ExportList/state.js'
 import { getExportPipelineList } from '../client/modules/ExportPipeline/ExportList/task.js'
@@ -576,6 +578,7 @@ function App() {
           [TASK_GET_ESS_INTERACTION_DETAILS]: getESSInteractionDetails,
           [TASK_GET_COMPANY_DETAIL]: getCompanyDetails,
           [TASK_GET_EXPORT_DETAIL]: getExportDetails,
+          [TASK_DELETE_EXPORT]: deleteExport,
           [TASK_SAVE_EXPORT]: saveExport,
           [TASK_GET_EXPORT_PIPELINE_LIST]: getExportPipelineList,
         }}
