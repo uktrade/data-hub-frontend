@@ -74,6 +74,7 @@ import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
 import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
 import Dashboard from './modules/Dashboard/Dashboard'
+import CoreTeam from './modules/Companies/CoreTeam/CoreTeam'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -839,6 +840,9 @@ function App() {
               {...props}
             />
           )}
+        </Mount>
+        <Mount selector="#core-team">
+          {(props) => <CoreTeam {...props} />}
         </Mount>
 
         <Mount selector="#react-app">
