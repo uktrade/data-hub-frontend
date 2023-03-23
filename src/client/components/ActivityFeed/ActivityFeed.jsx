@@ -36,6 +36,7 @@ export default class ActivityFeed extends React.Component {
     isGlobalUltimate: PropTypes.bool,
     dnbHierarchyCount: PropTypes.number,
     companyIsArchived: PropTypes.bool,
+    isOverview: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -120,17 +121,21 @@ export default class ActivityFeed extends React.Component {
       isGlobalUltimate,
       dnbHierarchyCount,
       companyIsArchived,
+      isOverview,
+      feedType,
     } = this.props
 
     const { activityTypeFilters, activityTypeFilter, showDnbHierarchy } =
       this.state
     return (
       <ActivityFeedContainer data-test="activity-feed">
-        <ActivityFeedHeader
-          totalActivities={totalActivities}
-          actions={actions}
-        />
-        {!companyIsArchived && (
+        {!isOverview && (
+          <ActivityFeedHeader
+            totalActivities={totalActivities}
+            actions={actions}
+          />
+        )}
+        {!companyIsArchived && !isOverview && (
           <ActivityFeedFilters
             activityTypeFilters={activityTypeFilters}
             activityTypeFilter={activityTypeFilter}
@@ -140,13 +145,13 @@ export default class ActivityFeed extends React.Component {
             dnbHierarchyCount={dnbHierarchyCount}
           />
         )}
-
         <ActivityFeedCardList>
           {activities.map((activity) => (
             <li key={activity.id}>
               <Activity
                 activity={activity}
                 showDnbHierarchy={showDnbHierarchy}
+                isOverview={isOverview}
               />
             </li>
           ))}
@@ -156,6 +161,8 @@ export default class ActivityFeed extends React.Component {
           <ActivityFeedPagination
             isLoading={isLoading}
             onLoadMore={onLoadMore}
+            feedType={feedType}
+            isOverview={isOverview}
           />
         )}
 

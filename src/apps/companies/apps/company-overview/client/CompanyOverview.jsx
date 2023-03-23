@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import AccountManagementCard from '../overview-table-cards/AccountManagementCard.jsx'
+import ActivityCard from '../overview-table-cards/ActivityCard'
 import BusinessDetailsCard from '../overview-table-cards/BusinessDetailsCard'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
-import AccountManagementCard from '../overview-table-cards/AccountManagementCard.jsx'
 import ExportStatus from '../overview-table-cards/ExportStatus.jsx'
+import { FILTER_FEED_TYPE } from '../../activity-feed/constants'
 
 const CardContainer = styled('div')`
   border: 1px solid #b1b4b6;
@@ -26,8 +27,6 @@ const CompanyOverview = ({ company, companiesHouseLink }) => {
               companiesHouseLink={companiesHouseLink}
             />
           </CardContainer>
-        </GridCol>
-        <GridCol columnOneHalf={true}>
           <CardContainer>
             <AccountManagementCard
               company={company}
@@ -35,6 +34,25 @@ const CompanyOverview = ({ company, companiesHouseLink }) => {
             />
           </CardContainer>
         </GridCol>
+        <GridCol columnOneHalf={true}>
+          <CardContainer>
+            <ActivityCard
+              company={company}
+              queryString={queryString}
+              numberOfItems={3}
+              feedType={FILTER_FEED_TYPE.RECENT}
+            />
+          </CardContainer>
+          <CardContainer>
+            <ActivityCard
+              company={company}
+              queryString={queryString}
+              numberOfItems={2}
+              feedType={FILTER_FEED_TYPE.UPCOMING}
+            />
+          </CardContainer>
+        </GridCol>
+        <GridCol columnOneHalf={true}></GridCol>
       </GridRow>
       <GridRow>
         <GridCol columnOneHalf={true}>

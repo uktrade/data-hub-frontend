@@ -10,6 +10,8 @@ var maxemailEmailSentActivities = require('../../../fixtures/v4/activity-feed/ex
 // Data Hub and external activities
 var dataHubAndExternalActivities = require('../../../fixtures/v4/activity-feed/data-hub-and-external-activities.json')
 var companyActivities = require('../../../fixtures/v4/activity-feed/company-activity-feed-activities.json')
+var companyRecentActivities = require('../../../fixtures/v4/activity-feed/company-recent-activity-feed-activities.json')
+var companyUpcomingActivities = require('../../../fixtures/v4/activity-feed/company-upcoming-activity-feed-activities.json')
 var contactDataHubAndExternalActivities = require('../../../fixtures/v4/activity-feed/contact-data-hub-and-external-activities.json')
 
 // My activities
@@ -67,6 +69,8 @@ const ALL_ACTIVITY_STREAM_EVENTS = ['dit:aventri:Event', 'dit:dataHub:Event']
 const ALL_ACTIVITIES_PER_PAGE = 10
 
 const VENUS_LTD = 'dit:DataHubCompany:0f5216e0-849f-11e6-ae22-56b6b6499611'
+const NO_COMPANY_DETAILS =
+  'dit:DataHubCompany:1111ae21-2895-47cf-90ba-9273c94dab88'
 const BEST_EVER_COMPANY =
   'dit:DataHubCompany:c79ba298-106e-4629-aa12-61ec6e2e47ce'
 
@@ -267,7 +271,7 @@ exports.activityFeed = function (req, res) {
   if (isEqual(dataHubTypes, DATA_HUB_ACTIVITY)) {
     var company = get(
       req.body,
-      "query.bool.must[1].terms['object.attributedTo.id'][0]"
+      "query.bool.filter.bool.should[0].bool.must[1].terms['object.attributedTo.id'][0]"
     )
     const filteredSortHits = dataHubActivities.hits.hits
       .filter((hit) => hit._source.object.startTime)
@@ -275,6 +279,25 @@ exports.activityFeed = function (req, res) {
         b._source.object.startTime.localeCompare(a._source.object.startTime)
       )
 
+    const size = get(req.body, 'size')
+    if (size == 3) {
+      switch (company) {
+        case VENUS_LTD:
+          return res.json(companyActivities)
+          break
+        case NO_COMPANY_DETAILS:
+          return res.json(noActivity)
+          break
+        default:
+          return res.json(companyRecentActivities)
+          break
+      }
+    }
+    if (size == 2) {
+      return res.json(
+        company === NO_COMPANY_DETAILS ? noActivity : companyUpcomingActivities
+      )
+    }
     const updatedHits = Object.assign({}, dataHubActivities, {
       hits: {
         total: {
