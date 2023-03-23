@@ -125,7 +125,7 @@ e2e-tests-da:
 	$(docker-e2e) exec frontend bash -c '$(wait-for-frontend) && npm run test:e2e:da $(cypress-args)'
 
 e2e-tests-dit:
-	@echo "*** Requires the e2e stack with the DIT role, it can be started with 'make start-e2e-dit' ***"
+	@echo "*** Requires the e2e stack with the DBT role, it can be started with 'make start-e2e-dit' ***"
 	$(docker-e2e) exec frontend bash -c '$(wait-for-frontend) && npm run test:e2e:dit $(cypress-args)'
 
 component-tests:
