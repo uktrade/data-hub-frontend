@@ -7,7 +7,7 @@ const AccessDenied = () => (
     pageTitle="Access denied"
   >
     <p>
-      If you think you should have access or need to sign up to a DIT system
+      If you think you should have access or need to sign up to a DBT system
       then <a href="/support">request access</a>.
     </p>
     <p>
