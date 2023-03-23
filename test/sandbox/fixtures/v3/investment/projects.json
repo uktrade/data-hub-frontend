@@ -3215,8 +3215,8 @@
       "project_manager_requested_on": null,
       "project_manager_request_status": null,
       "project_manager": {
-        "name": "DIT Staff",
-        "first_name": "DIT",
+        "name": "DBT Staff",
+        "first_name": "DBT",
         "last_name": "Staff",
         "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
       },
@@ -3416,8 +3416,8 @@
         "id": "5a644146-5298-4741-91f3-d5d7558adf47"
       },
       "project_assurance_adviser": {
-        "name": "DIT Staff",
-        "first_name": "DIT",
+        "name": "DBT Staff",
+        "first_name": "DBT",
         "last_name": "Staff",
         "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
       },
@@ -3502,8 +3502,8 @@
         }
       ],
       "client_relationship_manager": {
-        "name": "DIT Staff",
-        "first_name": "DIT",
+        "name": "DBT Staff",
+        "first_name": "DBT",
         "last_name": "Staff",
         "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
       },
@@ -3707,8 +3707,8 @@
         "id": "602b971d-5df6-e511-888e-e4115bead28a"
       },
       "referral_source_adviser": {
-        "name": "DIT Staff",
-        "first_name": "DIT",
+        "name": "DBT Staff",
+        "first_name": "DBT",
         "last_name": "Staff",
         "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
       },
@@ -3995,8 +3995,8 @@
       "project_manager_requested_on": null,
       "project_manager_request_status": null,
       "project_manager": {
-        "name": "DIT Staff",
-        "first_name": "DIT",
+        "name": "DBT Staff",
+        "first_name": "DBT",
         "last_name": "Staff",
         "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
       },
