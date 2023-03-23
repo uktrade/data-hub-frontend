@@ -89,7 +89,7 @@ describe('Export pipeline create', () => {
           assertFieldTypeahead({
             element,
             label: 'Owner',
-            value: 'DIT Staff',
+            value: 'DBT Staff',
             isMulti: false,
           })
         })
