@@ -41,7 +41,7 @@
                     {
                         "disabled_on": null,
                         "id": "f8186dcb-2504-45a0-87fa-bae2ea0be516",
-                        "name": "DIT or Government Services"
+                        "name": "DBT or Government Services"
                     },
                     {
                         "disabled_on": null,
@@ -199,7 +199,7 @@
     },
     {
         "id": "e7238b26-653c-e711-8a1f-e4115bead28a",
-        "name": "Enquiry or Referral Received : DIT Marketing Campaigns",
+        "name": "Enquiry or Referral Received : DBT Marketing Campaigns",
         "disabled_on": null,
         "contexts": [
             "export_interaction",
@@ -350,7 +350,7 @@
                     {
                         "disabled_on": "2019-07-04T00:00:00Z",
                         "id": "c1a1ab4a-a248-4104-b5a1-caab763ebd8b",
-                        "name": "Someone else in DIT"
+                        "name": "Someone else in DBT"
                     },
                     {
                         "disabled_on": "2019-07-04T00:00:00Z",
@@ -368,7 +368,7 @@
     },
     {
         "id": "273132d7-de50-41a7-a994-ff7d93302092",
-        "name": "Making Export Introductions : Someone else in DIT",
+        "name": "Making Export Introductions : Someone else in DBT",
         "disabled_on": null,
         "contexts": [
             "export_interaction"
@@ -474,7 +474,7 @@
                     {
                         "disabled_on": "2019-07-04T00:00:00Z",
                         "id": "693ef762-dd6b-4f85-8d64-1449ec555003",
-                        "name": "Someone else in DIT"
+                        "name": "Someone else in DBT"
                     },
                     {
                         "disabled_on": "2019-07-04T00:00:00Z",
@@ -487,7 +487,7 @@
     },
     {
         "id": "83834540-88d7-4f7c-a2d3-9af9192ad340",
-        "name": "Making Investment Introductions : Someone else in DIT",
+        "name": "Making Investment Introductions : Someone else in DBT",
         "disabled_on": null,
         "contexts": [
             "investment_interaction"
@@ -552,7 +552,7 @@
                     {
                         "disabled_on": "2019-07-04T00:00:00Z",
                         "id": "99142407-2c92-4924-9d80-6f27259aeb54",
-                        "name": "Someone else in DIT"
+                        "name": "Someone else in DBT"
                     },
                     {
                         "disabled_on": "2019-07-04T00:00:00Z",
@@ -595,7 +595,7 @@
     },
     {
         "id": "d44c334c-0ac7-4151-890e-4a3a5aa47aed",
-        "name": "Making Other Introductions : Someone else in DIT",
+        "name": "Making Other Introductions : Someone else in DBT",
         "disabled_on": null,
         "contexts": [
             "other_interaction",
@@ -643,7 +643,7 @@
                     {
                         "disabled_on": null,
                         "id": "4cff9ba9-ca8c-4777-89db-396066ec9d78",
-                        "name": "DIT or Government Services"
+                        "name": "DBT or Government Services"
                     },
                     {
                         "disabled_on": null,
@@ -695,7 +695,7 @@
                     {
                         "disabled_on": null,
                         "id": "e5f83d7f-f696-4069-b649-a3e295b41046",
-                        "name": "DIT or Government Services"
+                        "name": "DBT or Government Services"
                     },
                     {
                         "disabled_on": null,
@@ -752,7 +752,7 @@
                     {
                         "disabled_on": null,
                         "id": "fe449302-03b0-42b4-a882-1768a7d7c499",
-                        "name": "DIT or Government Services"
+                        "name": "DBT or Government Services"
                     },
                     {
                         "disabled_on": null,
@@ -842,7 +842,7 @@
     },
     {
         "id": "0796b92b-3499-e211-a939-e4115bead28a",
-        "name": "A Specific DIT Export Service or Funding : UK Defence and Security Exports",
+        "name": "A Specific DBT Export Service or Funding : UK Defence and Security Exports",
         "disabled_on": null,
         "contexts": [
             "export_interaction"
@@ -851,7 +851,7 @@
     },
     {
         "id": "0b94cd30-e5eb-e311-8a2b-e4115bead28a",
-        "name": "A Specific DIT Export Service or Funding : Overseas Business Network Chargeable Services (OBN)",
+        "name": "A Specific DBT Export Service or Funding : Overseas Business Network Chargeable Services (OBN)",
         "disabled_on": null,
         "contexts": [
             "export_interaction",
@@ -861,7 +861,7 @@
     },
     {
         "id": "360bba2b-3499-e211-a939-e4115bead28a",
-        "name": "A Specific DIT Export Service or Funding : Overseas Market Introduction Service (OMIS)",
+        "name": "A Specific DBT Export Service or Funding : Overseas Market Introduction Service (OMIS)",
         "disabled_on": null,
         "contexts": [
             "export_interaction"
@@ -870,7 +870,7 @@
     },
     {
         "id": "380bba2b-3499-e211-a939-e4115bead28a",
-        "name": "A Specific DIT Export Service or Funding : UK Tradeshow Programme (UKTP) – Exhibitor",
+        "name": "A Specific DBT Export Service or Funding : UK Tradeshow Programme (UKTP) – Exhibitor",
         "disabled_on": null,
         "contexts": [
             "export_interaction",
@@ -881,7 +881,7 @@
     },
     {
         "id": "380bba2b-3499-e211-a939-e4115bead28b",
-        "name": "A Specific DIT Export Service or Funding : UK Tradeshow Programme (UKTP) – Attendee-only",
+        "name": "A Specific DBT Export Service or Funding : UK Tradeshow Programme (UKTP) – Attendee-only",
         "disabled_on": null,
         "contexts": [
             "export_interaction",
@@ -892,7 +892,7 @@
     },
     {
         "id": "4664f856-166f-4f48-9865-653250f84086",
-        "name": "A Specific DIT Export Service or Funding : Global Growth Service: Diagnostic and Output Report Completed by DIT",
+        "name": "A Specific DBT Export Service or Funding : Global Growth Service: Diagnostic and Output Report Completed by DBT",
         "disabled_on": null,
         "contexts": [
             "export_interaction"
@@ -901,7 +901,7 @@
     },
     {
         "id": "482fca2e-3bfa-4c4f-8649-17d292aad87f",
-        "name": "A Specific DIT Export Service or Funding : Global Growth Service: Signed Export Growth Plan Received from Company",
+        "name": "A Specific DBT Export Service or Funding : Global Growth Service: Signed Export Growth Plan Received from Company",
         "disabled_on": null,
         "contexts": [
             "export_service_delivery"
@@ -910,7 +910,7 @@
     },
     {
         "id": "6a27f71a-6b4b-4e8f-83b8-35615c13fdc8",
-        "name": "A Specific DIT Export Service or Funding : Global Growth Service: Engagement Letter Signed by Company",
+        "name": "A Specific DBT Export Service or Funding : Global Growth Service: Engagement Letter Signed by Company",
         "disabled_on": null,
         "contexts": [
             "export_interaction"
@@ -919,7 +919,7 @@
     },
     {
         "id": "94a2473d-e898-4e1c-a082-ddfde8f297ff",
-        "name": "A Specific DIT Export Service or Funding : European Regional Development Fund (ERDF)",
+        "name": "A Specific DBT Export Service or Funding : European Regional Development Fund (ERDF)",
         "disabled_on": null,
         "contexts": [
             "export_interaction",
@@ -929,7 +929,7 @@
     },
     {
         "id": "bc005d16-48f2-4769-8f63-272226f84dc8",
-        "name": "A Specific DIT Export Service or Funding : Global Growth Service: Project Closed",
+        "name": "A Specific DBT Export Service or Funding : Global Growth Service: Project Closed",
         "disabled_on": null,
         "contexts": [
             "export_interaction"
@@ -938,7 +938,7 @@
     },
     {
         "id": "d1516466-5e62-4c1a-9831-7b1e7e536514",
-        "name": "A Specific DIT Export Service or Funding : Trade Development Fund (TDF)",
+        "name": "A Specific DBT Export Service or Funding : Trade Development Fund (TDF)",
         "disabled_on": null,
         "contexts": [
             "export_interaction",
@@ -948,7 +948,7 @@
     },
     {
         "id": "d520b92b-3499-e211-a939-e4115bead28a",
-        "name": "A Specific DIT Export Service or Funding : Export Opportunities",
+        "name": "A Specific DBT Export Service or Funding : Export Opportunities",
         "disabled_on": null,
         "contexts": [
             "export_service_delivery"
@@ -957,7 +957,7 @@
     },
     {
         "id": "f56eb92b-3499-e211-a939-e4115bead28a",
-        "name": "A Specific DIT Export Service or Funding : Significant Assistance",
+        "name": "A Specific DBT Export Service or Funding : Significant Assistance",
         "disabled_on": null,
         "contexts": [
             "export_service_delivery"
@@ -966,7 +966,7 @@
     },
     {
         "id": "4c434df3-e7c7-4afb-ba79-7f354995600f",
-        "name": "A Specific DIT Export Service or Funding : Field Force Phase 2 call",
+        "name": "A Specific DBT Export Service or Funding : Field Force Phase 2 call",
         "disabled_on": null,
         "contexts": [
             "export_interaction"
@@ -975,7 +975,7 @@
     },
     {
         "id": "e64d7719-0bd9-65df-55a9-f08d328bc467",
-        "name": "A Specific DIT Export Service or Funding : Export Academy",
+        "name": "A Specific DBT Export Service or Funding : Export Academy",
         "disabled_on": null,
         "contexts": [
             "export_interaction",
