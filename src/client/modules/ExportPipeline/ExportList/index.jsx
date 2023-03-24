@@ -5,6 +5,9 @@ import Task from '../../../components/Task'
 import { EXPORT__PIPELINE_LIST_LOADED } from '../../../actions'
 import { ID, TASK_GET_EXPORT_PIPELINE_LIST, state2props } from './state'
 
+import List from './List'
+import ListItemRenderer from './ItemRenderer'
+
 const ExportList = (data) => (
   <Task.Status
     name={TASK_GET_EXPORT_PIPELINE_LIST}
@@ -14,11 +17,7 @@ const ExportList = (data) => (
       onSuccessDispatch: EXPORT__PIPELINE_LIST_LOADED,
     }}
   >
-    {() => (
-      <pre>
-        <code>{JSON.stringify(data.results, null, 2)}</code>
-      </pre>
-    )}
+    {() => <List items={data.results} itemRenderer={ListItemRenderer} />}
   </Task.Status>
 )
 
