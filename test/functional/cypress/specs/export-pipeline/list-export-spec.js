@@ -7,22 +7,47 @@ const assertExportPotentialTag = (element, text) =>
 const assertStatusTag = (element, text) =>
   cy.get(element).find('strong').eq(1).should('have.text', text)
 
+const assertCompanyName = (element, text) => {
+  cy.get(element).find('h2').should('have.text', text)
+}
+
+const assertTitleLink = (element, href, text) => {
+  cy.get(element)
+    .find('a')
+    .should('have.attr', 'href', href)
+    .should('have.text', text)
+}
+
 describe('Export pipeline list', () => {
   const active = exportFaker({
+    id: 1,
     export_potential: 'high',
     status: 'active',
+    company: {
+      name: 'Coca-Cola',
+    },
+    title: 'Export Coca-Cola',
   })
   const won = exportFaker({
+    id: 2,
     export_potential: 'medium',
     status: 'won',
+    company: {
+      name: 'Alphabet',
+    },
+    title: 'Export Alphabet',
   })
   const inactive = exportFaker({
+    id: 3,
     export_potential: 'low',
     status: 'inactive',
+    company: {
+      name: 'Meta',
+    },
+    title: 'Export Meta',
   })
 
   const otherExports = exportListFaker(7)
-
   const exportList = [active, won, inactive, ...otherExports]
 
   before(() => {
@@ -60,5 +85,17 @@ describe('Export pipeline list', () => {
     assertStatusTag('@firstListItem', 'ACTIVE')
     assertStatusTag('@secondListItem', 'WON')
     assertStatusTag('@thirdListItem', 'INACTIVE')
+  })
+
+  it('should display a company name header', () => {
+    assertCompanyName('@firstListItem', 'Coca-Cola')
+    assertCompanyName('@secondListItem', 'Alphabet')
+    assertCompanyName('@thirdListItem', 'Meta')
+  })
+
+  it('should display a link to the export', () => {
+    assertTitleLink('@firstListItem', '/export/1/details', 'Export Coca-Cola')
+    assertTitleLink('@secondListItem', '/export/2/details', 'Export Alphabet')
+    assertTitleLink('@thirdListItem', '/export/3/details', 'Export Meta')
   })
 })
