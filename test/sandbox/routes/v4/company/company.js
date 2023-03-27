@@ -29,6 +29,7 @@ var companyCanadianProvince = require('../../../fixtures/v4/company/company-cana
 var exportWins = require('../../../fixtures/v4/company-export-wins/export-wins.json')
 var exportWinsPage1 = require('../../../fixtures/v4/company-export-wins/export-wins-page-1.json')
 var exportWinsPage2 = require('../../../fixtures/v4/company-export-wins/export-wins-page-2.json')
+var exportWinsNoWins = require('../../../fixtures/v4/company-export-wins/export-wins-no-wins.json')
 var companyCreateInvestigation = require('../../../fixtures/v4/dnb/company-create-investigation.json')
 var companyWithNoGlobalAccountManager = require('../../../fixtures/v4/company/company-with-no-global-account-manager.json')
 var companyWithAllActivities = require('../../../fixtures/v4/company/company-with-all-activities.json')
@@ -211,6 +212,8 @@ exports.exportWins = function (req, res) {
     res.status(502).send('')
   } else if (companyId === companyOneListCorp.id) {
     res.status(404).send('Not found')
+  } else if (companyId === companyNoOverviewDetails.id) {
+    res.json(exportWinsNoWins)
   } else if (companyId === companyMarsExportsLtd.id) {
     if (req.query.offset) {
       return res.json(exportWinsPage2)

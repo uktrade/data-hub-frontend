@@ -24,6 +24,7 @@ const StyledRoot = styled.div(
   {
     color: TEXT_COLOUR,
     background: 'white',
+    wordWrap: 'break-word',
     padding: RESPONSIVE_4.mobile,
     border: `${BORDER_WIDTH_MOBILE} solid ${ERROR_COLOUR}`,
     '&:focus': {
