@@ -460,7 +460,7 @@ describe('Company edit', () => {
         {
           label: 'Annual turnover',
           hint: 'Amount in GBP',
-          value: currencyGBP(company.turnover, {
+          value: currencyGBP(company.turnover_gbp, {
             maximumSignificantDigits: 2,
           }),
           assert: assertFieldUneditable,
