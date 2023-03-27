@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Paragraph from '@govuk-react/paragraph'
 import { H4 } from '@govuk-react/heading'
 import { currencyGBP } from '../../../../../client/utils/number-utils'
-// const { roundToSignificantDigits } = require('../../../../../common/number')
 import {
   FieldInput,
   FieldSelect,
