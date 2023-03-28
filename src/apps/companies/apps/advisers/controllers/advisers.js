@@ -1,8 +1,5 @@
 const { get } = require('lodash')
-const { getOneListGroupCoreTeam } = require('../../../repos')
 const config = require('../../../../../config')
-const { transformCoreTeamToCollection } = require('../../../transformers')
-const { coreTeamLabels } = require('../../../labels')
 const { isItaTierDAccount } = require('../../../../../lib/is-tier-type-company')
 const { authorisedRequest } = require('../../../../../lib/authorised-request')
 const urls = require('../../../../../lib/urls')
@@ -59,33 +56,11 @@ function renderLeadAdvisers(req, res) {
 async function renderCoreTeamAdvisers(req, res, next) {
   try {
     const { company, returnUrl, dnbRelatedCompaniesCount } = res.locals
-    const {
-      global_account_manager: globalAccountManager,
-      adviser_on_core_team: adviserOnCoreTeam,
-      location,
-      team,
-    } = coreTeamLabels
-    const columns = {
-      global_account_manager: {
-        team,
-        location,
-        name: globalAccountManager,
-      },
-      adviser_core_team: {
-        team,
-        location,
-        name: adviserOnCoreTeam,
-      },
-    }
-    const coreTeam = await getOneListGroupCoreTeam(req, company.id).then(
-      transformCoreTeamToCollection
-    )
+    const companyId = company.id
+
     res.render('companies/views/advisers', {
-      coreTeam,
-      columns,
-      oneListEmail: config.oneList.email,
-      companyName: company.name,
       props: {
+        companyId,
         company,
         breadcrumbs: [
           { link: urls.dashboard(), text: 'Home' },
@@ -100,6 +75,7 @@ async function renderCoreTeamAdvisers(req, res, next) {
         dnbRelatedCompaniesCount,
         flashMessages: res.locals.getMessages(),
         localNavItems: res.locals.localNavItems,
+        oneListEmail: config.oneList.email,
       },
     })
   } catch (error) {
