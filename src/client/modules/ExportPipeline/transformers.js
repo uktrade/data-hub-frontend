@@ -1,36 +1,33 @@
-export const transformFormValuesForAPI = (values) => {
-  if (!values) {
-    return values
-  }
-  return {
-    ...values,
-    owner: { id: values.owner?.value },
-    team_members: values.team_members?.map((t) => ({
-      id: t.value,
-    })),
-    estimated_export_value_years: values.estimated_export_value_years,
-  }
-}
+const mapApiToField = ({ id, name }) => ({ value: id, label: name })
 
-const mapApiValueToField = (value) => {
-  if (!value) {
-    return {}
-  }
-  if (Array.isArray(value)) {
-    return value.map((v) => ({ value: v.id, label: v.name }))
-  }
-  return { value: value.id, label: value.name }
-}
+export const transformFormValuesForAPI = ({
+  company,
+  id,
+  title,
+  owner,
+  team_members,
+  estimated_export_value_years,
+}) => ({
+  company,
+  id,
+  title,
+  owner: owner.value,
+  team_members: team_members.map((x) => x.value),
+  estimated_export_value_years: estimated_export_value_years.value,
+})
 
-export const transformAPIValuesForForm = (initialValues) => {
-  if (!initialValues) {
-    return initialValues
-  }
-
-  return {
-    ...initialValues,
-    owner: mapApiValueToField(initialValues.owner),
-    team_members: mapApiValueToField(initialValues.team_members),
-    estimated_export_value_years: initialValues.estimated_export_value_years.id,
-  }
-}
+export const transformAPIValuesForForm = ({
+  company,
+  id,
+  title,
+  owner,
+  team_members,
+  estimated_export_value_years,
+}) => ({
+  company: company.id,
+  id,
+  title,
+  owner: mapApiToField(owner),
+  team_members: team_members.map(mapApiToField),
+  estimated_export_value_years: mapApiToField(estimated_export_value_years),
+})

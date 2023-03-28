@@ -174,7 +174,6 @@
     "@storybook/builder-webpack5": "^6.5.16",
     "@storybook/manager-webpack5": "^6.5.16",
     "@storybook/react": "^6.5.16",
-    "@welldone-software/why-did-you-render": "^7.0.1",
     "babel-loader": "^9.1.2",
     "babel-plugin-istanbul": "6.1.1",
     "chai": "^4.3.7",
