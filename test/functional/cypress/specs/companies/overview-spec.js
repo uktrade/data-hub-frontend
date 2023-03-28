@@ -74,7 +74,7 @@ describe('Company overview page', () => {
           .parent()
           .next()
         cy.get('th').contains('Turnover')
-        cy.get('td').contains('£1,000,000').parent().next()
+        cy.get('td').contains('£720,000').parent().next()
         cy.get('th').contains('Number of Employees')
         cy.get('td').contains('260').parent().next()
         cy.get('th').contains('DBT Sector')
