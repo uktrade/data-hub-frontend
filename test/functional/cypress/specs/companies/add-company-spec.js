@@ -380,7 +380,7 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.form).contains('Select DBT sector')
     })
 
-    it('should redirect to the new company activity when a sector is picked', () => {
+    it('should redirect to the new company overview when a sector is picked', () => {
       cy.get(selectors.companyAdd.sectorSelect)
         .select('Airports')
         .get(selectors.companyAdd.submitButton)
@@ -388,7 +388,7 @@ describe('Add company form', () => {
         .location('pathname')
         .should(
           'eq',
-          urls.companies.activity.index(fixtures.company.someOtherCompany.id)
+          urls.companies.overview.index(fixtures.company.someOtherCompany.id)
         )
       cy.contains('Company added to Data Hub')
     })
@@ -572,10 +572,10 @@ describe('Add company form', () => {
       )
       cy.get(selectors.companyAdd.submitButton).click()
     })
-    it('should redirect to the new company activity', () => {
+    it('should redirect to the new company overview', () => {
       cy.location('pathname').should(
         'eq',
-        `/companies/${fixtures.company.investigationLimited.id}/activity`
+        `/companies/${fixtures.company.investigationLimited.id}/overview`
       )
     })
     it('should display the flash message', () => {
@@ -726,7 +726,7 @@ describe('Add company form', () => {
         .location('pathname')
         .should(
           'eq',
-          `/companies/${fixtures.company.someOtherCompany.id}/activity`
+          `/companies/${fixtures.company.someOtherCompany.id}/overview`
         )
       cy.contains('Company added to Data Hub')
     })

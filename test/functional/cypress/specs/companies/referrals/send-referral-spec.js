@@ -118,7 +118,7 @@ describe('Send a referral form', () => {
         cy.contains('a', 'Cancel').click()
         cy.url().should(
           'contain',
-          urls.companies.activity.index(fixtures.company.withContacts.id)
+          urls.companies.overview.index(fixtures.company.withContacts.id)
         )
       })
     })
@@ -300,7 +300,7 @@ describe('Send a referral form', () => {
         cy.contains('Cancel').click()
         cy.url().should(
           'contain',
-          urls.companies.activity.index(fixtures.company.withContacts.id)
+          urls.companies.overview.index(fixtures.company.withContacts.id)
         )
       })
     }
@@ -323,7 +323,7 @@ describe('Send a referral form', () => {
         cy.contains('button', 'Send referral').click()
         cy.url().should(
           'contain',
-          urls.companies.activity.index(fixtures.company.withContacts.id)
+          urls.companies.overview.index(fixtures.company.withContacts.id)
         )
         cy.get(selectors.companyLocalHeader().flashMessageList).contains(
           'Referral sent'
