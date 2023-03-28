@@ -179,7 +179,7 @@ describe('Edit history transformers', () => {
         changedBy: 'Paul Gain',
         changes: [
           {
-            fieldName: 'DIT sector',
+            fieldName: 'DBT sector',
             oldValue: 'Biotechnology and Pharmaceuticals',
             newValue: 'Airports',
           },
@@ -189,7 +189,7 @@ describe('Edit history transformers', () => {
             newValue: 'Superior editing services',
           },
           {
-            fieldName: 'DIT region',
+            fieldName: 'DBT region',
             oldValue: 'South East',
             newValue: 'London',
           },

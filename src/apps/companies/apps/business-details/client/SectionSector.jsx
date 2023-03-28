@@ -6,7 +6,7 @@ import { SummaryTable } from '../../../../../client/components/'
 
 const SectionSector = ({ businessDetails, isArchived, urls }) => (
   <SummaryTable
-    caption="DIT sector"
+    caption="DBT sector"
     data-test="sectorDetailsContainer"
     actions={
       !isArchived && <Link href={`${urls.companyEdit}#sector`}>Edit</Link>

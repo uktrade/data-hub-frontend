@@ -33,7 +33,7 @@ const StepReferralDetails = ({
   return (
     <>
       <StyledPanel title="When to send a referral">
-        Referrals are for when you want to ask another DIT advisor to help out{' '}
+        Referrals are for when you want to ask another DBT advisor to help out{' '}
         an account you are working on.
         <br />
         <NewWindowLink href="https://data-services-help.trade.gov.uk/data-hub/updates/announcements/improving-collaboration-internal-referrals/">

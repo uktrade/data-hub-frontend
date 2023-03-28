@@ -48,10 +48,10 @@ const CompanyUnmatched = ({
       <>
         <FieldSelect
           name="sector"
-          label="DIT sector"
-          emptyOption="-- Select DIT sector --"
+          label="DBT sector"
+          emptyOption="-- Select DBT sector --"
           options={sectors}
-          required="Select DIT sector"
+          required="Select DBT sector"
         />
         <FieldRadios
           name="headquarter_type"
