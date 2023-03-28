@@ -388,7 +388,7 @@ describe('Add company form', () => {
         .location('pathname')
         .should(
           'eq',
-          urls.companies.activity.index(fixtures.company.someOtherCompany.id)
+          urls.companies.overview.index(fixtures.company.someOtherCompany.id)
         )
       cy.contains('Company added to Data Hub')
     })
@@ -575,7 +575,7 @@ describe('Add company form', () => {
     it('should redirect to the new company activity', () => {
       cy.location('pathname').should(
         'eq',
-        `/companies/${fixtures.company.investigationLimited.id}/activity`
+        `/companies/${fixtures.company.investigationLimited.id}/overview`
       )
     })
     it('should display the flash message', () => {
@@ -726,7 +726,7 @@ describe('Add company form', () => {
         .location('pathname')
         .should(
           'eq',
-          `/companies/${fixtures.company.someOtherCompany.id}/activity`
+          `/companies/${fixtures.company.someOtherCompany.id}/overview`
         )
       cy.contains('Company added to Data Hub')
     })
