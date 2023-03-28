@@ -17,6 +17,10 @@ const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
 })
 
+// function styledSubheading = styled(H5)`
+//   font-size: ${FONT_SIZE.SIZE_10};
+//   font-weight: ${FONT_WEIGHTS.bold};
+// `
 const Container = styled('div')({
   display: 'flex',
   alignItems: 'center',
@@ -29,7 +33,6 @@ const StyledButton = styled(Button)({
 })
 
 const ExportDetailsForm = ({
-  id,
   owner,
   teamMembers,
   contacts,
@@ -57,8 +60,8 @@ const ExportDetailsForm = ({
   ]
   return (
     <DefaultLayout
-      subheading={company}
       heading={`‘${title}’`}
+      subheading={company}
       pageTitle="ExportDetailsForm"
       breadcrumbs={breadcrumbs}
       useReactRouter={true}
