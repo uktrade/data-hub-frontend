@@ -11,6 +11,29 @@ const assertCompanyName = (element, text) => {
   cy.get(element).find('h2').should('have.text', text)
 }
 
+const assertDestination = (element, text) => {
+  cy.get(element).find('dd').eq(0).should('have.text', text)
+}
+
+const assertEstimatedExportAmount = (element, text) => {
+  cy.get(element).find('dd').eq(1).should('have.text', text)
+}
+
+const assertEstimatedWinDate = (element, text) => {
+  cy.get(element).find('dd').eq(2).should('have.text', text)
+}
+
+const assertSector = (element, text) => {
+  cy.get(element).find('dd').eq(3).should('have.text', text)
+}
+
+const assertOwner = (element, text) => {
+  cy.get(element).find('dd').eq(4).should('have.text', text)
+}
+const assertCreatedOnDate = (element, text) => {
+  cy.get(element).find('dd').eq(5).should('have.text', text)
+}
+
 const assertTitleLink = (element, href, text) => {
   cy.get(element)
     .find('a')
@@ -27,6 +50,21 @@ describe('Export pipeline list', () => {
       name: 'Coca-Cola',
     },
     title: 'Export Coca-Cola',
+    destination_country: {
+      name: 'Portugal',
+    },
+    estimated_export_value_amount: '957485',
+    estimated_export_value_years: {
+      name: '5 years',
+    },
+    estimated_win_date: '2023-10-08T11:54:19Z',
+    sector: {
+      name: 'Energy',
+    },
+    owner: {
+      name: 'Benjamin Graham',
+    },
+    created_on: '2023-03-20T09:19:39.998239Z',
   })
   const won = exportFaker({
     id: 2,
@@ -36,6 +74,21 @@ describe('Export pipeline list', () => {
       name: 'Alphabet',
     },
     title: 'Export Alphabet',
+    destination_country: {
+      name: 'Italy',
+    },
+    estimated_export_value_amount: '141851',
+    estimated_export_value_years: {
+      name: 'Not yet known',
+    },
+    estimated_win_date: '2023-05-08T11:54:19Z',
+    sector: {
+      name: 'Mass Transport',
+    },
+    owner: {
+      name: 'Warren Buffet',
+    },
+    created_on: '2023-02-19T09:29:39.998239Z',
   })
   const inactive = exportFaker({
     id: 3,
@@ -45,6 +98,21 @@ describe('Export pipeline list', () => {
       name: 'Meta',
     },
     title: 'Export Meta',
+    destination_country: {
+      name: 'Greece',
+    },
+    estimated_export_value_amount: '858211',
+    estimated_export_value_years: {
+      name: '4 years',
+    },
+    estimated_win_date: '2023-02-08T11:54:19Z',
+    sector: {
+      name: 'Security : Cyber Security',
+    },
+    owner: {
+      name: 'Peter Lynch',
+    },
+    created_on: '2023-01-18T09:39:39.998239Z',
   })
 
   const otherExports = exportListFaker(7)
@@ -97,5 +165,48 @@ describe('Export pipeline list', () => {
     assertTitleLink('@firstListItem', '/export/1/details', 'Export Coca-Cola')
     assertTitleLink('@secondListItem', '/export/2/details', 'Export Alphabet')
     assertTitleLink('@thirdListItem', '/export/3/details', 'Export Meta')
+  })
+
+  it('should display a destination', () => {
+    assertDestination('@firstListItem', 'Portugal')
+    assertDestination('@secondListItem', 'Italy')
+    assertDestination('@thirdListItem', 'Greece')
+  })
+
+  it('should display the total estimated export amount', () => {
+    assertEstimatedExportAmount('@firstListItem', '£957,485 (5 years)')
+    assertEstimatedExportAmount('@secondListItem', '£141,851 (Not yet known)')
+    assertEstimatedExportAmount('@thirdListItem', '£858,211 (4 years)')
+  })
+
+  it('should display an estimated win date', () => {
+    assertEstimatedWinDate('@firstListItem', 'October 2023')
+    assertEstimatedWinDate('@secondListItem', 'May 2023')
+    assertEstimatedWinDate('@thirdListItem', 'February 2023')
+  })
+
+  it('should display a sector', () => {
+    assertSector('@firstListItem', 'Energy')
+    assertSector('@secondListItem', 'Mass Transport')
+    assertSector('@thirdListItem', 'Security : Cyber Security')
+  })
+
+  it('should display an owner', () => {
+    assertOwner('@firstListItem', 'Benjamin Graham')
+    assertOwner('@secondListItem', 'Warren Buffet')
+    assertOwner('@thirdListItem', 'Peter Lynch')
+  })
+
+  it('should display a created on date', () => {
+    assertCreatedOnDate('@firstListItem', '20 Mar 2023, 9:19am')
+    assertCreatedOnDate('@secondListItem', '19 Feb 2023, 9:29am')
+    assertCreatedOnDate('@thirdListItem', '18 Jan 2023, 9:39am')
+  })
+
+  it('should show and hide the content on toggle', () => {
+    cy.get('[data-test="toggle-section-button"]').contains('Show').click()
+    cy.get('[data-test="export-details"]').should('be.visible')
+    cy.get('[data-test="toggle-section-button"]').contains('Hide').click()
+    cy.get('[data-test="export-details"]').should('not.be.visible')
   })
 })
