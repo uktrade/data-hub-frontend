@@ -64,6 +64,7 @@ const BaseToggleSection = ({
   label,
   badge = null,
   open,
+  onOpen,
   isOpen = false,
   children,
   justifyHeaderContent = false,
@@ -76,13 +77,19 @@ const BaseToggleSection = ({
           props.id && `${props.id}-toggle-button-${isOpen ? 'close' : 'open'}`
         }
         data-test="toggle-section-button"
-        onClick={() => open(!isOpen)}
+        onClick={() => {
+          open(!isOpen)
+          onOpen && onOpen(!isOpen)
+        }}
         isOpen={isOpen}
         aria-expanded={isOpen}
       >
         <ToggleButtonIcon
           src={icon}
-          onClick={() => open(!isOpen)}
+          onClick={() => {
+            open(!isOpen)
+            onOpen && onOpen(!isOpen)
+          }}
           isOpen={isOpen}
           alt="Toggle details"
         />
@@ -101,6 +108,7 @@ BaseToggleSection.propTypes = {
   label: PropTypes.string,
   badge: PropTypes.node,
   open: PropTypes.func,
+  onOpen: PropTypes.func,
   isOpen: PropTypes.bool,
   children: PropTypes.node,
   major: PropTypes.bool,

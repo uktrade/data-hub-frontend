@@ -1,17 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Link from '@govuk-react/link'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
-import Tag from '../../../../client/components/Tag'
-import { MID_GREY } from '../../../../client/utils/colours.js'
+import Tag from '../../../components/Tag'
+import { ToggleSection } from '../../../components/ToggleSection'
+import { DARK_GREY, MID_GREY, BLACK } from '../../../../client/utils/colours.js'
+import {
+  formatShortDate,
+  formatMediumDateTime,
+} from '../../../../client/utils/date.js'
+import { currencyGBP } from '../../../../client/utils/number-utils'
 
 const ListItem = styled('li')({
   paddingTop: SPACING.SCALE_4,
-  paddingBottom: SPACING.SCALE_3,
   borderBottom: `1px solid ${MID_GREY}`,
   ['&:first-child']: {
     paddingTop: 0,
+  },
+  ['&:last-child']: {
+    borderBottom: 'none',
   },
 })
 
@@ -28,6 +36,27 @@ const Header = styled('h2')({
   fontWeight: FONT_WEIGHTS.bold,
 })
 
+const StyledDL = styled('dl')({
+  fontSize: FONT_SIZE.SIZE_16,
+})
+
+const lineHeightMixin = {
+  lineHeight: '1.5',
+}
+
+const StyledDT = styled('dt')({
+  color: DARK_GREY,
+  float: 'left',
+  clear: 'left',
+  marginRight: '5px',
+  ...lineHeightMixin,
+})
+
+const StyledDD = styled('dd')({
+  color: BLACK,
+  ...lineHeightMixin,
+})
+
 const statusToColourMap = {
   WON: 'green',
   ACTIVE: 'blue',
@@ -35,6 +64,7 @@ const statusToColourMap = {
 }
 
 const ItemRenderer = (item) => {
+  const [toggleLabel, setToggleLabel] = useState('Show')
   const status = item.status.toUpperCase()
   const exportPotential = item.export_potential.toUpperCase()
   return (
@@ -45,6 +75,31 @@ const ItemRenderer = (item) => {
       </TagContainer>
       <Header>{item.company.name}</Header>
       <Link href={`/export/${item.id}/details`}>{item.title}</Link>
+      <ToggleSection
+        onOpen={(open) =>
+          open ? setToggleLabel('Hide') : setToggleLabel('Show')
+        }
+        label={toggleLabel}
+        id={`${item.id}_toggle`}
+      >
+        <StyledDL data-test="export-details">
+          <StyledDT>Destination:</StyledDT>
+          <StyledDD>{item.destination_country.name}</StyledDD>
+          <StyledDT>Total estimated export value:</StyledDT>
+          <StyledDD>
+            {currencyGBP(item.estimated_export_value_amount)}{' '}
+            <span>({item.estimated_export_value_years.name})</span>
+          </StyledDD>
+          <StyledDT>Estimated date for win:</StyledDT>
+          <StyledDD>{formatShortDate(item.estimated_win_date)}</StyledDD>
+          <StyledDT>Main sector:</StyledDT>
+          <StyledDD>{item.sector.name}</StyledDD>
+          <StyledDT>Owner:</StyledDT>
+          <StyledDD>{item.owner.name}</StyledDD>
+          <StyledDT>Created on:</StyledDT>
+          <StyledDD>{formatMediumDateTime(item.created_on)}</StyledDD>
+        </StyledDL>
+      </ToggleSection>
     </ListItem>
   )
 }
