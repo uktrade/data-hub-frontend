@@ -1,10 +1,11 @@
-import { EXPORT_DETAIL_LOADED } from '../../../../client/actions'
+import { EXPORT_LOADED } from '../../../../client/actions'
 
 const initialState = { exportItem: null }
 
 export default (state = initialState, { type, result }) => {
   switch (type) {
-    case EXPORT_DETAIL_LOADED:
+    case EXPORT_LOADED:
+      console.log('>>>>result', result)
       return {
         ...state,
         exportItem: result,

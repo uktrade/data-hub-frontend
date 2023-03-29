@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import urls from '../../../../lib/urls'
-import { EXPORT_DETAIL_LOADED } from '../../../actions'
+import { EXPORT_LOADED } from '../../../actions'
 import { DefaultLayout, SummaryTable } from '../../../components'
 import Task from '../../../components/Task'
 import { ID, state2props, TASK_GET_EXPORT_DETAIL } from './state'
@@ -17,10 +17,6 @@ const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
 })
 
-// function styledSubheading = styled(H5)`
-//   font-size: ${FONT_SIZE.SIZE_10};
-//   font-weight: ${FONT_WEIGHTS.bold};
-// `
 const Container = styled('div')({
   display: 'flex',
   alignItems: 'center',
@@ -32,21 +28,23 @@ const StyledButton = styled(Button)({
   marginRight: 40,
 })
 
-const ExportDetailsForm = ({
-  owner,
-  teamMembers,
-  contacts,
-  destination,
-  sector,
-  exporterExperience,
-  title,
-  estimatedExportValueAmount,
-  estimatedWinDate,
-  exportPotential,
-  notes,
-  company,
-  status,
-}) => {
+const ExportDetailsForm = ({ exportItem }) => {
+  console.log('>>>>>exportItem', exportItem)
+  const {
+    owner,
+    teamMembers,
+    contacts,
+    destination,
+    sector,
+    exporterExperience,
+    title,
+    estimatedExportValueAmount,
+    estimatedWinDate,
+    exportPotential,
+    notes,
+    company,
+    status,
+  } = exportItem
   const { exportId } = useParams()
   const breadcrumbs = [
     {
@@ -54,7 +52,6 @@ const ExportDetailsForm = ({
       text: 'Home',
     },
     {
-      link: urls.exportPipeline.details(exportId),
       text: title,
     },
   ]
@@ -72,8 +69,9 @@ const ExportDetailsForm = ({
         progressMessage="loading export details"
         startOnRender={{
           payload: exportId,
-          onSuccessDispatch: EXPORT_DETAIL_LOADED,
+          onSuccessDispatch: EXPORT_LOADED,
         }}
+        initialValues={exportItem}
       >
         {() => {
           return (
@@ -135,7 +133,10 @@ const ExportDetailsForm = ({
                     emptyValue="Not set"
                     hideWhenEmpty={false}
                   ></SummaryTable.ListRow>
+                  {/* <H2>Notes</H2>
+                  <p>Lorem ipusum</p> */}
                   <SummaryTable.Row heading="Notes" hideWhenEmpty={false}>
+                    font-size: ${FONT_SIZE.SIZE_10};
                     {isEmpty(notes) ? 'Not set' : notes}
                   </SummaryTable.Row>
                 </StyledSummaryTable>
