@@ -11,19 +11,21 @@ const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 describe('Export Details', () => {
   const exportItem = exportItems.results[0]
   context('when summary table renders', () => {
-    before(() => {
+    beforeEach(() => {
+      cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
+        body: exportItem,
+      }).as('getExportItemApiRequest')
       cy.visit(`/export/${exportItem.id}/details`)
     })
 
-    it('should render edit event breadcrumb', () => {
+    it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: urls.dashboard(),
-        [exportItem.title]: urls.exportPipeline.details(exportItem.id),
-        'Export Test 123': null,
+        [exportItem.title]: null,
       })
     })
 
-    it.only('should display the "Export" details summary table', () => {
+    it('should display the "Export" details summary table', () => {
       assertKeyValueTable({
         dataTest: 'exportTitle',
         heading: 'Export Test 123',
