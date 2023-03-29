@@ -8,6 +8,20 @@ const initialState = {
   isComplete: false,
 }
 
+function getLatestCreatedWon(investmentList) {
+  investmentList.sort(function (a, b) {
+    return new Date(b.created_on) - new Date(a.created_on)
+  })
+  let wonList = investmentList.filter(
+    (wonInvestment) => wonInvestment.status === 'won'
+  )
+  let latestWon
+  if (wonList.length > 0) {
+    latestWon = wonList[0]
+  }
+  return latestWon
+}
+
 export default (state = { initialState }, { type, result }) => {
   if (type === OVERVIEW__COMPANY_INVESTMENT_WON_COUNT) {
     let resultList = []
@@ -37,11 +51,14 @@ export default (state = { initialState }, { type, result }) => {
         (investment) => investment.stage.name === stageNames[i]
       ).length
     }
+    let lastWon = getLatestCreatedWon(resultList)
     return {
       ...state,
       stageList,
       statusList,
       resultList,
+      lastWon,
+      testData: result.testData,
       isComplete: true,
     }
   }

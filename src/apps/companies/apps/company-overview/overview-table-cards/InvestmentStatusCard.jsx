@@ -9,6 +9,7 @@ import {
   companyProjectsState2props,
 } from './state'
 import { OVERVIEW__COMPANY_INVESTMENT_WON_COUNT } from '../../../../../client/actions'
+
 import Task from '../../../../../client/components/Task'
 import { connect } from 'react-redux'
 
@@ -25,6 +26,7 @@ const StyledLastTableCell = styled(Table.Cell)`
   border: 0;
   padding-bottom: 0;
 `
+
 const InvestmentStatusCard = ({ queryString, companyId, ...props }) => {
   return (
     <>
@@ -42,6 +44,10 @@ const InvestmentStatusCard = ({ queryString, companyId, ...props }) => {
             caption="Investment status"
             data-test="investmentsStatusContainer"
           >
+            <SummaryTable.Row heading="Last Project won">
+              {' '}
+              {props.lastWon?.name ? props.lastWon?.name : 'None'}
+            </SummaryTable.Row>
             <SummaryTable.Row heading="Total projects won">
               {props.statusList?.won ? props.statusList.won : '0'}
             </SummaryTable.Row>
