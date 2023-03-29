@@ -15,6 +15,7 @@ This is the process we have identified for dealing with Dependabot PRs that save
 11. If you are satisfied that everything is in order and all the tests have passed, request reviews as normal.
 12. After merging the PR, ensure that the `release-storybook` job has passed and that Storybook is running as expected.
 13. Ensure that the dev/staging deployments have succeeded. If they haven't, notify the TechEx team.
+14. Removed orphan closed PR dependencies every first working day in quarter of the year for those older than 90 days.
 
 ## Additional actions
 
