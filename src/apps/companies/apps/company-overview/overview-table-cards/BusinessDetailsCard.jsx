@@ -67,9 +67,9 @@ const BusinessDetailsCard = ({ company, queryString, companiesHouseLink }) => {
           )}
         </SummaryTable.Row>
         <SummaryTable.Row heading="Turnover">
-          {!company.turnover && !company.turnover_range
+          {!company.turnover_gbp && !company.turnover_range
             ? 'Not set'
-            : company.turnover
+            : company.turnover_gbp
             ? currencyGBP(company.turnover_gbp, {
                 maximumSignificantDigits: 2,
               })
