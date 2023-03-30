@@ -80,7 +80,7 @@ const FieldCurrency = ({
   hint,
   initialValue,
   reduced,
-  boldLabel = true,
+  boldLabel,
   ...rest
 }) => {
   const { value, error, touched, onChange, onBlur } = useField({
