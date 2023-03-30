@@ -90,7 +90,7 @@ export const ANALYTICS_ACCORDION_TYPE = {
 export const INTERACTION_SERVICES = {
   'Account Management': 'Account Management',
   'A Specific Service': 'Specific Service',
-  'A Specific DIT Export Service or Funding': 'Service or Funding',
+  'A Specific DBT Export Service or Funding': 'Service or Funding',
   COP26: 'COP26',
   'Enquiry received': 'Enquiry',
   'Enquiry or Referral Received': 'Enquiry or Referral',
@@ -110,7 +110,7 @@ export const INTERACTION_SERVICES = {
 export const INTERACTION_SERVICEOTHER = {
   'Export Support Service - International Markets':
     'Export Support Service: International',
-  'Global Growth Service: Diagnostic and Output Report Completed by DIT':
+  'Global Growth Service: Diagnostic and Output Report Completed by DBT':
     'Global Growth: Diagnostic and Output Report',
   'Global Growth Service: Engagement Letter Signed by Company':
     'Global Growth: Engagement Letter Signed',
@@ -121,8 +121,8 @@ export const INTERACTION_SERVICEOTHER = {
     'OBN Chargeable Services',
   'Participation at Glasgow/getting involved with COP26':
     'Participation at Glasgow/COP26 involvement',
-  'DIT Middle East & Pakistan Comms & Marketing campaigns':
-    'DIT Middle East & Pakistan Comms & Marketing',
+  'DBT Middle East & Pakistan Comms & Marketing campaigns':
+    'DBT Middle East & Pakistan Comms & Marketing',
   'Commonwealth Games 2022 - BATP Programme': 'Commonwealth Games 2022 – BATP',
   'Commonwealth Games 2022 - GEP Programme': 'Commonwealth Games 2022 – GEP',
   'HPO High Potential Opportunity Investment Enquiry via IIGB':
