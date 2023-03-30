@@ -40,4 +40,33 @@ describe('FieldSelect', () => {
       cy.get('select option:selected').should('have.text', 'label 2')
     })
   })
+
+  context('When fullWidth is true', () => {
+    it('the select component should render with 100% width', () => {
+      cy.mount(
+        <Component
+          options={[
+            { value: 'a', label: 'label 1' },
+            { value: 'b', label: 'label 2' },
+          ]}
+          fullWidth={true}
+        />
+      )
+      cy.get('select ').should('have.css', 'width', '100%')
+    })
+  })
+  context('When fullWidth is false', () => {
+    it('the select component should render with 50% width', () => {
+      cy.mount(
+        <Component
+          options={[
+            { value: 'a', label: 'label 1' },
+            { value: 'b', label: 'label 2' },
+          ]}
+          fullWidth={true}
+        />
+      )
+      cy.get('select ').should('have.css', 'width', '50%')
+    })
+  })
 })
