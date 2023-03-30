@@ -10,6 +10,8 @@ import {
 } from './state'
 import { OVERVIEW__COMPANY_INVESTMENT_WON_COUNT } from '../../../../../client/actions'
 
+const { format } = require('../../../../../client/utils/date')
+
 import Task from '../../../../../client/components/Task'
 import { connect } from 'react-redux'
 
@@ -45,8 +47,23 @@ const InvestmentStatusCard = ({ queryString, companyId, ...props }) => {
             data-test="investmentsStatusContainer"
           >
             <SummaryTable.Row heading="Last Project won">
-              {' '}
-              {props.lastWon?.name ? props.lastWon?.name : 'None'}
+              {props.lastWon?.date ? (
+                <Link
+                  href={`/investments/projects/${props.lastWon.id}`}
+                  data-test="latest-won-project-link"
+                >
+                  {format(props.lastWon?.date)}
+                </Link>
+              ) : (
+                'None'
+              )}
+              {props.lastWon?.name ? (
+                <Link href={`/investments/projects/${props.lastWon.id}`}>
+                  {props.lastWon.name}
+                </Link>
+              ) : (
+                ''
+              )}
             </SummaryTable.Row>
             <SummaryTable.Row heading="Total projects won">
               {props.statusList?.won ? props.statusList.won : '0'}

@@ -9,17 +9,27 @@ const initialState = {
 }
 
 function getLatestCreatedWon(investmentList) {
-  investmentList.sort(function (a, b) {
-    return new Date(b.created_on) - new Date(a.created_on)
-  })
-  let wonList = investmentList.filter(
-    (wonInvestment) => wonInvestment.status === 'won'
-  )
-  let latestWon
-  if (wonList.length > 0) {
-    latestWon = wonList[0]
+  let wonLatestDate = ''
+  let investmentLatest = {}
+  for (let i = 0; i < Object.keys(investmentList).length; i++) {
+    let wonDate = investmentList[i].data.stage_log.filter(
+      (investment) => investment.stage.name === 'Won'
+    )
+    if (wonLatestDate === '') {
+      wonLatestDate = wonDate[0].created_on
+    }
+    if (wonLatestDate !== '') {
+      if (wonLatestDate < wonDate[0].created_on) {
+        wonLatestDate = wonDate[0].created_on
+        investmentLatest = {
+          name: investmentList[i].data.name,
+          id: investmentList[i].data.id,
+          date: wonLatestDate,
+        }
+      }
+    }
   }
-  return latestWon
+  return investmentLatest
 }
 
 export default (state = { initialState }, { type, result }) => {
@@ -29,7 +39,9 @@ export default (state = { initialState }, { type, result }) => {
     let statusList = {}
     let stageListAll = []
     let statusListAll = []
-    result.results.map((investment) => resultList.push(investment))
+    result.investmentProjects.results.map((investment) =>
+      resultList.push(investment)
+    )
     resultList.map((investment) => stageListAll.push(investment.stage.name))
     resultList.map((investment) => statusListAll.push(investment.status))
     let statusNames = statusListAll.filter(
@@ -51,14 +63,13 @@ export default (state = { initialState }, { type, result }) => {
         (investment) => investment.stage.name === stageNames[i]
       ).length
     }
-    let lastWon = getLatestCreatedWon(resultList)
+    let lastWon = getLatestCreatedWon(result.wonData)
     return {
       ...state,
       stageList,
       statusList,
       resultList,
       lastWon,
-      testData: result.testData,
       isComplete: true,
     }
   }

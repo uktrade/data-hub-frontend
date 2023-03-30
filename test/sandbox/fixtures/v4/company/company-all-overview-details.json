@@ -294,5 +294,17 @@
   },
   "vat_number": "",
   "website": "http://all-the-details.com",
-  "pending_dnb_investigation": false
+  "pending_dnb_investigation": false,
+  "investment_types": [
+    {
+      "name": "Direct Investment in Project Equity",
+      "id": "4170d99a-02fc-46ee-8fd4-3fe786717708",
+      "date": "22 May 2020"
+    }
+  ],
+  "lastWon": {
+    "name": "Billy invest",
+    "date": "22 May 2020",
+    "id": "4170d99a-02fc-46ee-8fd4-3fe786717708"
+  }
 }

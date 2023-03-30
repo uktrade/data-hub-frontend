@@ -443,6 +443,23 @@ describe('Company overview page', () => {
     }
   )
 
+  context(
+    'when viewing the investment status card with investment projects',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
+        )
+      })
+
+      it('the card should link to the latest won project', () => {
+        cy.get('[data-test="latest-won-project-link"]')
+          // .contains('View all investments')
+          .click()
+      })
+    }
+  )
+
   context('when viewing the Recent Activities Card for a business', () => {
     before(() => {
       cy.visit(
