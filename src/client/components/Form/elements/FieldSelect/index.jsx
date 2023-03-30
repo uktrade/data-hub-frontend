@@ -1,8 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Select from '@govuk-react/select'
+import Select, { SelectInput } from '@govuk-react/select'
 import { useField } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
+
+import styled from 'styled-components'
+
+const StyledSelect = styled(Select)`
+  ${SelectInput} {
+    ${({ fullWidth }) => fullWidth && `width: 100%;`}
+  }
+`
 
 /**
  * A Select dropdown field for use in forms.
@@ -17,6 +25,7 @@ const FieldSelect = ({
   initialValue,
   options,
   emptyOption,
+  fullWidth,
   ...rest
 }) => {
   const { error, touched, value, onChange, onBlur } = useField({
@@ -27,7 +36,8 @@ const FieldSelect = ({
   })
   return (
     <FieldWrapper {...{ name, label, legend, hint, error }}>
-      <Select
+      <StyledSelect
+        fullWidth={fullWidth}
         name={name}
         onChange={onChange}
         onBlur={onBlur}
@@ -49,7 +59,7 @@ const FieldSelect = ({
             {optionLabel}
           </option>
         ))}
-      </Select>
+      </StyledSelect>
       {options.find((o) => o.value === value)?.children}
     </FieldWrapper>
   )
@@ -100,6 +110,10 @@ FieldSelect.propTypes = {
    * Text to display when no items are selected
    */
   emptyOption: PropTypes.string,
+  /***
+   * Always render this select component in 100% width, the default is 50%
+   */
+  fullWidth: PropTypes.bool,
 }
 
 FieldSelect.defaultProps = {
@@ -111,6 +125,7 @@ FieldSelect.defaultProps = {
   initialValue: '',
   options: [],
   emptyOption: 'Please select',
+  fullWidth: false,
 }
 
 export default FieldSelect

@@ -81,6 +81,7 @@ const ExportFormFields = ({
                       <ResourceOptionsField
                         resource={ExportYearsResource}
                         field={FieldSelect}
+                        fullWidth={true}
                         name="estimated_export_value_years"
                         label="Year(s)"
                         required={ERROR_MESSAGES.estimated_export_value_years}
