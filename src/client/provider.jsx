@@ -73,7 +73,7 @@ import {
 
 import investmentProjectsReducer from '../apps/investments/client/projects/reducer'
 import overviewInvestmentProjectReducer from '../apps/companies/apps/company-overview/overview-table-cards/reducer'
-import overviewExportWinsReducer from '../apps/companies/apps/company-overview/overview-table-cards/reducer2'
+import overviewExportWinsReducer from '../apps/companies/apps/company-overview/overview-table-cards/exportStatusReducer'
 
 import { ID as COMPANIES_ID } from './modules/Companies/CollectionList/state'
 import companiesReducer from './modules/Companies/CollectionList/reducer'
