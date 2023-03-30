@@ -8,7 +8,7 @@ describe('FieldSelect', () => {
   const Component = (props) => (
     <DataHubProvider>
       <Form id="export-form">
-        <FieldSelect id="select-test" {...props} />
+        <FieldSelect name="select-test" {...props} />
       </Form>
     </DataHubProvider>
   )
@@ -52,7 +52,7 @@ describe('FieldSelect', () => {
           fullWidth={true}
         />
       )
-      cy.get('select ').should('have.css', 'width', '100%')
+      cy.get('select').should('have.css', 'width', '100%')
     })
   })
   context('When fullWidth is false', () => {
@@ -63,10 +63,10 @@ describe('FieldSelect', () => {
             { value: 'a', label: 'label 1' },
             { value: 'b', label: 'label 2' },
           ]}
-          fullWidth={true}
+          fullWidth={false}
         />
       )
-      cy.get('select ').should('have.css', 'width', '50%')
+      cy.get('select').should('have.css', 'width', '50%')
     })
   })
 })
