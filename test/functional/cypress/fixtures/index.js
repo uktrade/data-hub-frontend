@@ -62,9 +62,6 @@ module.exports = {
   export: {
     historyWithInteractions: require('../../../sandbox/fixtures/v4/export/history-with-interactions.json'),
   },
-  exportPipeline: {
-    exportPipelineDetails: require('../../../sandbox/fixtures/v4/export/export-details.json'),
-  },
 
   omis: {
     cancelledOrder: require('../../../sandbox/fixtures/v3/omis/cancelled-order.json'),
