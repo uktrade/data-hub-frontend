@@ -62,7 +62,7 @@ storiesOf('Form/Form Elements/Select', module)
           />
           <FieldSelect
             name="testField3"
-            label="Test full widthselect"
+            label="Test full width select"
             hint="Some hint"
             initialValue={'testOptionValue2'}
             emptyOption={'Please select'}
