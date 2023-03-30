@@ -22,7 +22,7 @@ storiesOf('Form/Form Elements/FieldWrapper', module)
       {(form) => (
         <>
           <FieldWrapper
-            label="Text"
+            label="Label with bold font weight"
             name="testField"
             hint="Some hint"
             error={form.errors.testField}
