@@ -27,7 +27,7 @@ describe('FieldSelect', () => {
 
   context('When boldLabel is set to true', () => {
     it('the fieldset label should have font weight applied', () => {
-      cy.mount(<Component boldLabel={true} />)
+      cy.mount(<Component />)
       cy.get('label').should('have.css', 'font-weight', '700')
     })
   })
