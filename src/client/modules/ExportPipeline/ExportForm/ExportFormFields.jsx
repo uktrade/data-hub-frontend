@@ -16,6 +16,8 @@ import { transformAPIValuesForForm } from '../transformers'
 import { validateTeamMembers } from './validation'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import ExportYearsResource from '../../../../client/components/Resource/ExportYears'
+import FieldCurrency from '../../../components/Form/elements/FieldCurrency'
+import { HintText } from 'govuk-react'
 
 const ExportFormFields = ({
   initialValues,
@@ -23,26 +25,31 @@ const ExportFormFields = ({
   flashMessage,
   cancelRedirectUrl,
   redirectToUrl,
-  taskProps,
+  taskProps = {},
+  formDataLoaded = false,
 }) => {
   return (
     <Task.Status {...taskProps}>
       {() => {
+        // console.log(formDataLoaded, initialValues)
         return (
-          <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
-            <Form
-              id="export-form"
-              analyticsFormName={analyticsFormName}
-              cancelRedirectTo={() => cancelRedirectUrl}
-              redirectTo={() => redirectToUrl}
-              submissionTaskName={TASK_SAVE_EXPORT}
-              initialValues={transformAPIValuesForForm(initialValues)}
-              transformPayload={(values) => ({ exportId: values.id, values })}
-              flashMessage={flashMessage}
-            >
-              {({ values }) => {
-                return (
-                  Object.keys(values).length > 0 && (
+          formDataLoaded && (
+            <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
+              <Form
+                id="export-form"
+                analyticsFormName={analyticsFormName}
+                cancelRedirectTo={() => cancelRedirectUrl}
+                redirectTo={() => redirectToUrl}
+                submissionTaskName={TASK_SAVE_EXPORT}
+                initialValues={
+                  initialValues && transformAPIValuesForForm(initialValues)
+                }
+                transformPayload={(values) => ({ exportId: values.id, values })}
+                flashMessage={flashMessage}
+              >
+                {({ values }) => {
+                  // console.log(values.estimated_export_value_years)
+                  return (
                     <>
                       <FieldInput
                         name="title"
@@ -64,19 +71,34 @@ const ExportFormFields = ({
                         isMulti={true}
                         validate={validateTeamMembers}
                       />
+                      <h2 className="src__Label-sc-iqzvxn-0 sc-gWQwFn gTLKhi gRMXAP">
+                        Total estimated export value
+                      </h2>
+                      <HintText>
+                        Select the year span and total value, for example 3
+                        years, £1,000,000
+                      </HintText>
                       <ResourceOptionsField
                         resource={ExportYearsResource}
                         field={FieldSelect}
                         name="estimated_export_value_years"
-                        label="Total estimated export value"
-                        hint="Select the year span and total value, for example 3 years, £1,000,000"
+                        label="Year(s)"
+                        // hint="Select the year span and total value, for example 3 years, £1,000,000"
+                        required={ERROR_MESSAGES.estimated_export_value_years}
+                        initialValue={values.estimated_export_value_years}
+                      />
+                      <FieldCurrency
+                        name="estimated_export_value_amount"
+                        label="Estimated value in GBP"
+                        type="text"
+                        required={ERROR_MESSAGES.estimated_export_value_amount}
                       />
                     </>
                   )
-                )
-              }}
-            </Form>
-          </FormLayout>
+                }}
+              </Form>
+            </FormLayout>
+          )
         )
       }}
     </Task.Status>

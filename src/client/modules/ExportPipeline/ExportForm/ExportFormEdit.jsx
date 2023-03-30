@@ -67,6 +67,7 @@ const ExportFormEdit = ({ exportItem }) => {
         cancelRedirectUrl={urls.dashboard()}
         redirectToUrl={urls.exportPipeline.edit(exportId)}
         flashMessage={flashMessage}
+        formDataLoaded={!!exportItem}
       />
     </DefaultLayout>
   )
