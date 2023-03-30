@@ -107,7 +107,7 @@ const StyledLegendNoStyle = styled('legend')`
 
 const StyledLabel = styled(Label)`
   padding-bottom: ${SPACING.SCALE_1};
-  font-weight: ${FONT_WEIGHTS.bold};
+  ${(props) => props.boldLabel && ` font-weight: ${FONT_WEIGHTS.bold};`}
 `
 
 const StyledHint = styled(HintText)`
@@ -165,6 +165,7 @@ const FieldWrapper = ({
   children,
   reduced,
   groupId,
+  boldLabel = true,
   ...rest
 }) => (
   <StyledFormGroup
@@ -185,7 +186,7 @@ const FieldWrapper = ({
         >
           {label && (
             <StyledLegendNoStyle>
-              <StyledLabel error={error} htmlFor={name}>
+              <StyledLabel boldLabel={boldLabel} error={error} htmlFor={name}>
                 {label}
               </StyledLabel>
             </StyledLegendNoStyle>
@@ -207,7 +208,7 @@ const FieldWrapper = ({
         groupId={groupId}
       >
         {label && (
-          <StyledLabel error={error} htmlFor={name}>
+          <StyledLabel boldLabel={boldLabel} error={error} htmlFor={name}>
             {label}
           </StyledLabel>
         )}
@@ -271,6 +272,10 @@ FieldWrapper.propTypes = {
    * Node for children elements
    */
   children: PropTypes.node,
+  /**
+   * Boolean for rendering the label in bold or not
+   */
+  boldLabel: PropTypes.bool,
 }
 
 FieldWrapper.defaultProps = {
@@ -280,6 +285,7 @@ FieldWrapper.defaultProps = {
   error: null,
   showBorder: false,
   children: null,
+  boldLabel: true,
 }
 
 export default FieldWrapper
