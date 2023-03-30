@@ -6,7 +6,6 @@ const {
 } = require('../../support/assertions')
 
 const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
-// const exportId = exportPipelineDetails.id
 
 describe('Export Details', () => {
   const exportItem = exportItems.results[0]

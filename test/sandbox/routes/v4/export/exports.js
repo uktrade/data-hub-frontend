@@ -12,8 +12,7 @@ const generateExport = () => {
     faker.helpers.arrayElement(exporterExperience)
 
   return {
-    // id: faker.datatype.uuid(),
-    id: '402b4745-96fb-4c9f-aa07-111e09faa8dd',
+    id: faker.datatype.uuid(),
     company: { id: faker.datatype.uuid(), name: faker.company.name() },
     owner: { id: faker.datatype.uuid(), name: faker.name.fullName() },
     team_members: [

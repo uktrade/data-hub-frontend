@@ -9,9 +9,11 @@ import { ID, state2props, TASK_GET_EXPORT_DETAIL } from './state'
 import styled from 'styled-components'
 import { isEmpty } from 'lodash'
 import { format } from '../../../../client/utils/date'
+import { currencyGBP } from '../../../../client/utils/number-utils'
 
 import { Button } from 'govuk-react'
 import { BLACK, GREY_3 } from '../../../utils/colours'
+import { capitalize } from 'lodash'
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
@@ -29,22 +31,6 @@ const StyledButton = styled(Button)({
 })
 
 const ExportDetailsForm = ({ exportItem }) => {
-  console.log('>>>>>exportItem', exportItem)
-  const {
-    owner,
-    teamMembers,
-    contacts,
-    destination,
-    sector,
-    exporterExperience,
-    title,
-    estimatedExportValueAmount,
-    estimatedWinDate,
-    exportPotential,
-    notes,
-    company,
-    status,
-  } = exportItem
   const { exportId } = useParams()
   const breadcrumbs = [
     {
@@ -52,13 +38,13 @@ const ExportDetailsForm = ({ exportItem }) => {
       text: 'Home',
     },
     {
-      text: title,
+      text: exportItem?.title,
     },
   ]
   return (
     <DefaultLayout
-      heading={`‘${title}’`}
-      subheading={company}
+      heading={`${exportItem?.title}`}
+      subheading={exportItem?.company?.name}
       pageTitle="ExportDetailsForm"
       breadcrumbs={breadcrumbs}
       useReactRouter={true}
@@ -75,70 +61,82 @@ const ExportDetailsForm = ({ exportItem }) => {
       >
         {() => {
           return (
-            title && (
+            exportItem?.title && (
               <>
                 <StyledSummaryTable>
-                  <SummaryTable.Row heading="Export title" children={title} />
+                  <SummaryTable.Row
+                    heading="Export title"
+                    children={exportItem?.title}
+                  />
                   <SummaryTable.Row heading="Owner">
-                    {isEmpty(owner) ? 'Not set' : owner}
+                    {isEmpty(exportItem?.owner)
+                      ? 'Not set'
+                      : exportItem?.owner.name}
                   </SummaryTable.Row>
                   <SummaryTable.ListRow
                     heading="Team members"
                     emptyValue="Not set"
                     hideWhenEmpty={true}
-                    value={teamMembers}
+                    value={exportItem?.teamMembers}
                   ></SummaryTable.ListRow>
                   <SummaryTable.Row
                     heading="Total estimated export value"
                     hideWhenEmpty={false}
                   >
-                    {isEmpty(estimatedExportValueAmount)
+                    {isEmpty(exportItem?.estimatedExportValueAmount)
                       ? 'Not set'
-                      : estimatedExportValueAmount}
+                      : `${exportItem.exportYears} / ${currencyGBP(
+                          exportItem.estimatedExportValueAmount
+                        )}`}
                   </SummaryTable.Row>
                   <SummaryTable.Row
                     heading="Estimated date for Win"
                     hideWhenEmpty={false}
                   >
-                    {isEmpty(estimatedWinDate)
+                    {isEmpty(exportItem?.estimatedWinDate)
                       ? 'Not set'
-                      : format(estimatedWinDate, 'MMMM yyyy')}
+                      : format(exportItem?.estimatedWinDate, 'MMMM yyyy')}
                   </SummaryTable.Row>
                   <SummaryTable.Row heading="Status" hideWhenEmpty={false}>
-                    {isEmpty(status) ? 'Not set' : status}
+                    {isEmpty(exportItem?.status)
+                      ? 'Not set'
+                      : capitalize(exportItem?.status)}
                   </SummaryTable.Row>
                   <SummaryTable.Row
                     heading="Export potential"
                     hideWhenEmpty={false}
                   >
-                    {isEmpty(exportPotential) ? 'Not set' : exportPotential}
+                    {isEmpty(exportItem?.exportPotential)
+                      ? 'Not set'
+                      : capitalize(exportItem?.exportPotential)}
                   </SummaryTable.Row>
                   <SummaryTable.Row heading="Destination" hideWhenEmpty={false}>
-                    {isEmpty(destination) ? 'Not set' : destination}
+                    {isEmpty(exportItem?.destinationCountry)
+                      ? 'Not set'
+                      : exportItem?.destinationCountry.name}
                   </SummaryTable.Row>
                   <SummaryTable.Row heading="Main sector" hideWhenEmpty={false}>
-                    {isEmpty(sector) ? 'Not set' : sector}
+                    {isEmpty(exportItem?.sector)
+                      ? 'Not set'
+                      : exportItem?.sector.name}
                   </SummaryTable.Row>
                   <SummaryTable.Row
                     heading="Exporter experience"
                     hideWhenEmpty={false}
                   >
-                    {isEmpty(exporterExperience)
+                    {isEmpty(exportItem.exporterExperience)
                       ? 'Not set'
-                      : exporterExperience}
+                      : exportItem.exporterExperience}
                   </SummaryTable.Row>
                   <SummaryTable.ListRow
                     heading="Company contacts"
-                    value={contacts}
+                    value={exportItem?.contacts}
                     emptyValue="Not set"
                     hideWhenEmpty={false}
                   ></SummaryTable.ListRow>
-                  {/* <H2>Notes</H2>
-                  <p>Lorem ipusum</p> */}
                   <SummaryTable.Row heading="Notes" hideWhenEmpty={false}>
-                    font-size: ${FONT_SIZE.SIZE_10};
-                    {isEmpty(notes) ? 'Not set' : notes}
-                  </SummaryTable.Row>
+                    {isEmpty(exportItem?.notes) ? 'Not set' : exportItem?.notes}
+                  </SummaryTable.Row>{' '}
                 </StyledSummaryTable>
                 <Container>
                   <StyledButton
