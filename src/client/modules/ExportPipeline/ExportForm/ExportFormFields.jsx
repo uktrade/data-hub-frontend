@@ -25,8 +25,8 @@ const ExportFormFields = ({
   flashMessage,
   cancelRedirectUrl,
   redirectToUrl,
-  taskProps = {},
-  formDataLoaded = false,
+  formDataLoaded,
+  taskProps,
 }) => {
   return (
     <Task.Status {...taskProps}>
@@ -83,7 +83,6 @@ const ExportFormFields = ({
                         field={FieldSelect}
                         name="estimated_export_value_years"
                         label="Year(s)"
-                        // hint="Select the year span and total value, for example 3 years, £1,000,000"
                         required={ERROR_MESSAGES.estimated_export_value_years}
                         initialValue={values.estimated_export_value_years}
                       />
@@ -112,6 +111,12 @@ ExportFormFields.propTypes = {
   cancelRedirectUrl: PropTypes.string.isRequired,
   redirectToUrl: PropTypes.string.isRequired,
   taskProps: PropTypes.object,
+  formDataLoaded: PropTypes.bool,
+}
+
+ExportFormFields.defaultProps = {
+  taskProps: {},
+  formDataLoaded: false,
 }
 
 export default ExportFormFields

@@ -21,6 +21,7 @@ import {
 
 import { useField } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
+import { number } from '../../../../../client/components/Form/validators'
 
 const StyledInputWrapper = styled('div')`
   ${(props) =>
@@ -62,12 +63,15 @@ const StyledCurrencyPrefix = styled('div')`
     `}
 `
 
+const StyledCurrencyWrapper = styled('div')`
+  display: flex;
+`
+
 /**
- * A basic input field for numbers and text.
+ * A basic currency field for numbers.
  */
 const FieldCurrency = ({
   name,
-  type,
   validate,
   required,
   label,
@@ -76,6 +80,7 @@ const FieldCurrency = ({
   hint,
   initialValue,
   reduced,
+  boldLabel,
   ...rest
 }) => {
   const { value, error, touched, onChange, onBlur } = useField({
@@ -85,12 +90,10 @@ const FieldCurrency = ({
     initialValue,
   })
   return (
-    <FieldWrapper
-      {...{ name, label, legend, hint, error, reduced, boldLabel: false }}
-    >
+    <FieldWrapper {...{ name, label, legend, hint, error, reduced, boldLabel }}>
       <StyledInputWrapper error={error}>
         {touched && error && <ErrorText>{error}</ErrorText>}
-        <div style={{ display: 'flex' }}>
+        <StyledCurrencyWrapper>
           <StyledCurrencyPrefix
             error={touched && Boolean(error)}
             aria-hidden="true"
@@ -101,27 +104,15 @@ const FieldCurrency = ({
             key={name}
             error={touched && Boolean(error)}
             id={name}
-            type={type}
+            type="text"
             name={name}
             value={value}
             onChange={onChange}
             onBlur={onBlur}
-            // onBlur={(e) => {
-            //   // console.log(e.target.value)
-            //   onBlur(name)
-            // }}
-            // onFocus={(e) => {
-            //   // console.log(e.target)
-            //   // console.log(e.target.getAttribute('data-raw-value'))
-            //   // e.target.value = e.target.getAttribute('data-raw-value')
-            //   // onChange()
-            //   // e.target.value(e.target.getAttribute('data-raw-value'))
-            // }}
             data-test={kebabCase(`${name}-'input'`)}
-            data-raw-value={value}
             {...rest}
           />
-        </div>
+        </StyledCurrencyWrapper>
         {text && <StyledText>{text}</StyledText>}
       </StyledInputWrapper>
     </FieldWrapper>
@@ -133,10 +124,6 @@ FieldCurrency.propTypes = {
    * Text for name attribute value
    */
   name: PropTypes.string.isRequired,
-  /**
-   * Text for type attribute value
-   */
-  type: PropTypes.string.isRequired,
   /**
    * Validate functions for input
    */
@@ -168,16 +155,21 @@ FieldCurrency.propTypes = {
    * Toggles wether the element is a filter or not
    */
   reduced: PropTypes.bool,
+  /**
+   * Boolean for rendering the label in bold or not
+   */
+  boldLabel: PropTypes.bool,
 }
 
 FieldCurrency.defaultProps = {
-  validate: null,
+  validate: (value) => number(value, 'Value must be a number'),
   required: null,
   label: null,
   legend: null,
   hint: null,
   initialValue: '',
   reduced: false,
+  boldLabel: true,
 }
 
 export default FieldCurrency

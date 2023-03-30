@@ -165,7 +165,7 @@ const FieldWrapper = ({
   children,
   reduced,
   groupId,
-  boldLabel = true,
+  boldLabel,
   ...rest
 }) => (
   <StyledFormGroup
