@@ -27,6 +27,7 @@ describe('Investment project transformers', () => {
           'level_of_involvement',
           'specific_programme',
           'estimated_land_date',
+          'likelihood_to_land',
           'actual_land_date',
         ])
       })
@@ -418,6 +419,34 @@ describe('Investment project transformers', () => {
         expect(this.result).to.have.property('estimated_land_date', null)
       })
     })
+
+    context('when a likelihood to land value is provided', () => {
+      beforeEach(() => {
+        const data = assign({}, investmentData, {
+          likelihood_to_land: 'low',
+        })
+
+        this.result = transformInvestmentForView(data)
+      })
+
+      it('should include the likelihood to land value', () => {
+        expect(this.result).to.have.property('likelihood_to_land', 'low')
+      })
+    })
+
+    // context('when an estimated land date is not provided', () => {
+    //   beforeEach(() => {
+    //     const data = assign({}, investmentData, {
+    //       estimated_land_date: null,
+    //     })
+
+    //     this.result = transformInvestmentForView(data)
+    //   })
+
+    //   it('should set the estimated land date as null', () => {
+    //     expect(this.result).to.have.property('estimated_land_date', null)
+    //   })
+    // })
 
     context('when an actual land date is provided', () => {
       beforeEach(() => {

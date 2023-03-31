@@ -5,6 +5,10 @@
   "description": "ACHME hotels wishes to open in a new part of Manchester under-served by its existing hotels",
   "anonymous_description": "International hotel chain looking to expand into England.",
   "estimated_land_date": "2018-05-01",
+  "likelihood_to_land": {
+    "name": "Low",
+    "id": "b3515282-dc36-487a-a5af-320cde165575"
+  },
   "actual_land_date": null,
   "likelihood_of_landing": null,
   "priority": null,
