@@ -131,8 +131,6 @@ function populateExportForm(req, res, next) {
 
 function renderExportEdit(req, res) {
   const { company } = res.locals
-  const exportPotentialValue = exportPotentialLabels[company.export_potential]
-  const exportWinCategoryValue = company.export_experience_category
 
   res
     .breadcrumb(company.name, urls.companies.detail(company.id))
@@ -141,19 +139,6 @@ function renderExportEdit(req, res) {
     .render('companies/apps/exports/views/edit', {
       props: {
         companyId: company.id,
-        companyNumber: company.company_number,
-        exportWinCategoryValue,
-        greatProfile: {
-          name: exportDetailsLabels.greatProfile,
-          value: company.great_profile_status,
-        },
-        exportPotential: {
-          name: exportDetailsLabels.exportPotential,
-          value: exportPotentialValue && exportPotentialValue.text,
-        },
-        exportWinCategories: metadataRepo.exportExperienceCategory.map(
-          transformObjectToOption
-        ),
       },
     })
 }
