@@ -72,7 +72,6 @@ const ExportFormAdd = ({ company, currentAdviserId, currentAdviserName }) => {
           owner: { id: currentAdviserId, name: currentAdviserName },
           company: { id: companyId },
           team_members: [],
-          estimated_export_value_years: {}, //TODO remove this
         }}
         cancelRedirectUrl={urls.companies.activity.index(companyId)}
         redirectToUrl={urls.dashboard()}

@@ -32,6 +32,6 @@ export const transformAPIValuesForForm = ({
   title,
   owner: mapApiToField(owner),
   team_members: team_members.map(mapApiToField),
-  estimated_export_value_years: estimated_export_value_years.id,
+  estimated_export_value_years: estimated_export_value_years?.id,
   estimated_export_value_amount: estimated_export_value_amount,
 })
