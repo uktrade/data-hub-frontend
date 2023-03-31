@@ -9,6 +9,7 @@ const {
   assertFieldError,
   assertFieldInput,
   assertTypeaheadValues,
+  assertFieldDateShort,
 } = require('../../support/assertions')
 const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 const {
@@ -108,6 +109,14 @@ describe('Export pipeline edit', () => {
           '[data-test="field-team_members"]',
           exportItem.team_members.map((t) => t.name)
         )
+        cy.get('[data-test="field-estimated_win_date"]').then((element) => {
+          assertFieldDateShort({
+            element,
+            label: 'Estimated date for win',
+            hint: 'For example 11 2023',
+            value: exportItem.estimated_win_date,
+          })
+        })
       })
     })
 
@@ -123,6 +132,8 @@ describe('Export pipeline edit', () => {
         //clear any default values first
         cy.get('[data-test="title-input"]').clear()
         cy.get('[data-test="typeahead-input"]').clear()
+        cy.get('[data-test="estimated_win_date-month"]').clear()
+        cy.get('[data-test="estimated_win_date-year"]').clear()
 
         cy.get('[data-test=submit-button]').click()
 
@@ -133,6 +144,10 @@ describe('Export pipeline edit', () => {
         assertFieldError(
           cy.get('[data-test="field-owner"]'),
           ERROR_MESSAGES.owner
+        )
+        assertFieldError(
+          cy.get('[data-test="field-estimated_win_date"]'),
+          ERROR_MESSAGES.estimated_win_date.required
         )
       })
 
@@ -147,6 +162,17 @@ describe('Export pipeline edit', () => {
         assertFieldError(
           cy.get('[data-test="field-team_members"]'),
           ERROR_MESSAGES.team_members
+        )
+      })
+
+      it('the form should display validation error message for invalid estimated dates', () => {
+        cy.get('[data-test=estimated_win_date-month]').type('65')
+        cy.get('[data-test=estimated_win_date-year]').type('-54')
+        cy.get('[data-test=submit-button]').click()
+
+        assertFieldError(
+          cy.get('[data-test="field-estimated_win_date"]'),
+          ERROR_MESSAGES.estimated_win_date.invalid
         )
       })
     })
@@ -166,6 +192,12 @@ describe('Export pipeline edit', () => {
           expect(request.body).to.have.property('owner', exportItem.owner.id)
           expect(request.body.team_members).to.deep.equal(
             exportItem.team_members.map((x) => x.id)
+          )
+          expect(request.body).to.have.property(
+            'estimated_win_date',
+            `${exportItem.estimated_win_date.getFullYear()}-${
+              exportItem.estimated_win_date.getMonth() + 1
+            }-01T00:00:00`
           )
         })
 

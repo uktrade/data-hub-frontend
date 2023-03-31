@@ -6,6 +6,7 @@ import {
   FieldInput,
   FormLayout,
   FieldAdvisersTypeahead,
+  FieldDate,
 } from '../../../../client/components'
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT } from './state'
@@ -58,6 +59,14 @@ const ExportFormFields = ({
                 hint="You can add up to 5 team members. Team members can view and edit export functionality"
                 isMulti={true}
                 validate={validateTeamMembers}
+              />
+              <FieldDate
+                name="estimated_win_date"
+                format="short"
+                label="Estimated date for win"
+                hint="For example 11 2023"
+                required={ERROR_MESSAGES.estimated_win_date.required}
+                invalid={ERROR_MESSAGES.estimated_win_date.invalid}
               />
             </>
           )}

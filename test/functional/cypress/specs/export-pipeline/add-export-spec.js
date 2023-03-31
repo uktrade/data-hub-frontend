@@ -133,6 +133,10 @@ describe('Export pipeline create', () => {
           cy.get('[data-test="field-owner"]'),
           ERROR_MESSAGES.owner
         )
+        assertFieldError(
+          cy.get('[data-test="field-estimated_win_date"]'),
+          ERROR_MESSAGES.estimated_win_date.required
+        )
       })
 
       it('the form should display validation error message for too many team members', () => {
@@ -146,6 +150,17 @@ describe('Export pipeline create', () => {
         assertFieldError(
           cy.get('[data-test="field-team_members"]'),
           ERROR_MESSAGES.team_members
+        )
+      })
+
+      it('the form should display validation error message for invalid estimated dates', () => {
+        cy.get('[data-test=estimated_win_date-month]').type('65')
+        cy.get('[data-test=estimated_win_date-year]').type('-54')
+        cy.get('[data-test=submit-button]').click()
+
+        assertFieldError(
+          cy.get('[data-test="field-estimated_win_date"]'),
+          ERROR_MESSAGES.estimated_win_date.invalid
         )
       })
     })
@@ -166,6 +181,8 @@ describe('Export pipeline create', () => {
 
           cy.get('[data-test=title-input]').type(newExport.title)
           fillTypeahead('[data-test=field-team_members]', teamMember.name)
+          cy.get('[data-test=estimated_win_date-month]').type('03')
+          cy.get('[data-test=estimated_win_date-year]').type('2035')
 
           cy.get('[data-test=submit-button]').click()
 
@@ -174,6 +191,7 @@ describe('Export pipeline create', () => {
             owner: '7d19d407-9aec-4d06-b190-d3f404627f21',
             team_members: [teamMember.id],
             company: company.id,
+            estimated_win_date: '2035-03-01T00:00:00',
           })
 
           assertExactUrl('')
