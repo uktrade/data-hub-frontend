@@ -24,7 +24,7 @@ describe('transformFormValuesForAPI', () => {
         title: 'title',
         owner: 'b',
         team_members: ['d', 'f'],
-        estimated_win_date: '2030-6-01-T00:00:00',
+        estimated_win_date: '2030-6-01T00:00:00',
       })
     })
   })
@@ -40,7 +40,7 @@ describe('transformAPIValuesForForm', () => {
           title: 'a',
           owner: { id: 'b', name: 'c' },
           team_members: [{ id: 'd', name: 'e' }],
-          estimated_win_date: '2039-09-24-T03:43:58',
+          estimated_win_date: '2039-09-24T03:43:58',
         })
       ).to.be.deep.equal({
         id: 234,
