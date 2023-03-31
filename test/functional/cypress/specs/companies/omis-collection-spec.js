@@ -87,7 +87,7 @@ describe('Company Orders (OMIS) Collection Page', () => {
   })
 
   it('should render a meta title', () => {
-    cy.title().should('eq', 'Orders - One List Corp - Companies - DIT Data Hub')
+    cy.title().should('eq', 'Orders - One List Corp - Companies - DBT Data Hub')
   })
 
   assertRemoveAllFiltersNotPresent()

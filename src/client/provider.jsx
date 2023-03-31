@@ -66,7 +66,14 @@ import {
   COMPANY_PROJECTS_LIST_ID,
 } from '../apps/investments/client/projects/state'
 
+import {
+  OVERVIEW_COMPANY_EXPORT_WINS_LIST_ID,
+  OVERVIEW_COMPANY_PROJECTS_LIST_ID,
+} from '../apps/companies/apps/company-overview/overview-table-cards/state'
+
 import investmentProjectsReducer from '../apps/investments/client/projects/reducer'
+import overviewInvestmentProjectReducer from '../apps/companies/apps/company-overview/overview-table-cards/reducer'
+import overviewExportWinsReducer from '../apps/companies/apps/company-overview/overview-table-cards/exportStatusReducer'
 
 import { ID as COMPANIES_ID } from './modules/Companies/CollectionList/state'
 import companiesReducer from './modules/Companies/CollectionList/reducer'
@@ -146,6 +153,9 @@ import companyDetailReducer from './modules/Companies/CompanyDetails/reducer'
 import { ID as EXPORT_DETAIL_ID } from './modules/ExportPipeline/ExportDetails/state'
 import exportDetailReducer from './modules/ExportPipeline/ExportDetails/reducer'
 
+import { ID as EXPORT_PIPELINE_LIST_ID } from './modules/ExportPipeline/ExportList/state'
+import exportPipelineListReducer from './modules/ExportPipeline/ExportList/reducer'
+
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
   // The baseURI is set to the <base/> tag by the spaFallbackSpread
@@ -213,6 +223,8 @@ const reducer = {
   [INVESTMENT_PROFILES_ID]: investmentProfileReducer,
   [INVESTMENT_PROJECTS_ID]: investmentProjectsReducer,
   [COMPANY_PROJECTS_LIST_ID]: investmentProjectsReducer,
+  [OVERVIEW_COMPANY_EXPORT_WINS_LIST_ID]: overviewExportWinsReducer,
+  [OVERVIEW_COMPANY_PROJECTS_LIST_ID]: overviewInvestmentProjectReducer,
   [MY_INVESTMENT_PROJECTS_ID]: myInvestmentProjectsReducer,
   [CREATE_INVESTMENT_PROJECT_ID]: createInvestmentProjectsReducer,
   [COMPANY_INVESTMENT_COUNT_ID]: createInvestmentProjectsReducer,
@@ -237,6 +249,7 @@ const reducer = {
   [REMINDERS_ID]: remindersReducer,
   [COMPANY_DETAIL_ID]: companyDetailReducer,
   [EXPORT_DETAIL_ID]: exportDetailReducer,
+  [EXPORT_PIPELINE_LIST_ID]: exportPipelineListReducer,
 }
 
 const preloadedState = {

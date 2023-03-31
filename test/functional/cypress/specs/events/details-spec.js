@@ -130,7 +130,7 @@ describe('Event Details', () => {
           organiser: null,
           start_date: '2016-03-16',
           service: {
-            name: 'A Specific DIT Export Service or Funding : UK Tradeshow Programme (UKTP) – Exhibitor',
+            name: 'A Specific DBT Export Service or Funding : UK Tradeshow Programme (UKTP) – Exhibitor',
             id: '380bba2b-3499-e211-a939-e4115bead28a',
           },
           uk_region: null,
@@ -154,7 +154,7 @@ describe('Event Details', () => {
         'Related programmes': 'Not set',
         'Related Trade Agreements': 'Not set',
         Service:
-          'A Specific DIT Export Service or Funding : UK Tradeshow Programme (UKTP) – Exhibitor',
+          'A Specific DBT Export Service or Funding : UK Tradeshow Programme (UKTP) – Exhibitor',
       })
     })
   })

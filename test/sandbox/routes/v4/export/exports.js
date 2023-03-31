@@ -10,7 +10,6 @@ const generateExport = () => {
     faker.helpers.arrayElement(country)
   const { id: exportExperienceId } =
     faker.helpers.arrayElement(exporterExperience)
-  const { id: estimatedYearsId } = faker.helpers.arrayElement(estimatedYears)
 
   return {
     id: faker.datatype.uuid(),
@@ -27,7 +26,7 @@ const generateExport = () => {
     },
     sector: { id: sectorId, name: sectorName },
     exporter_experience: exportExperienceId,
-    estimated_export_value_years: estimatedYearsId,
+    estimated_export_value_years: faker.helpers.arrayElement(estimatedYears),
     created_on: faker.date.past(),
     modified_on: faker.date.past(),
     title: faker.random.word(),

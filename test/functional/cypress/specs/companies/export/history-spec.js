@@ -74,52 +74,52 @@ describe('Company Export tab - Export countries history', () => {
         checkListItems([
           [
             'Belarus added to countries of no interest',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 11 Feb 2020, 10:47am',
           ],
           [
             'Botswana added to future countries of interest',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 11 Feb 2020, 10:47am',
           ],
           [
             'Georgia added to currently exporting',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 11 Feb 2020, 10:48am',
           ],
           [
             'France added to currently exporting',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 11 Feb 2020, 10:47am',
           ],
           [
             'Fiji added to currently exporting',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 11 Feb 2020, 10:46am',
           ],
           [
             'Argentina added to currently exporting',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 6 Feb 2020, 4:06pm',
           ],
           [
             'Andorra added to currently exporting',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 6 Feb 2020, 4:05pm',
           ],
           [
             'Afghanistan added to future countries of interest',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 6 Feb 2020, 3:42pm',
           ],
           [
             'Andorra removed from future countries of interest',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 6 Feb 2020, 3:41pm',
           ],
           [
             'Angola added to countries of no interest',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 6 Feb 2020, 3:41pm',
           ],
         ])
@@ -144,12 +144,12 @@ describe('Company Export tab - Export countries history', () => {
         checkListItems([
           [
             'Andorra removed from future countries of interest',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 6 Feb 2020, 3:41pm',
           ],
           [
             'Angola added to countries of no interest',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 6 Feb 2020, 3:41pm',
           ],
         ])
@@ -471,7 +471,7 @@ describe('Company Export tab - Export countries history', () => {
 
         cy.contains('Belarus added to countries of no interest')
           .siblings()
-          .should('contain', 'By DIT Staff')
+          .should('contain', 'By DBT Staff')
           .should('contain', 'Date 11 Feb 2020, 10:47am')
       })
     })
@@ -522,12 +522,12 @@ describe('Company Export tab - Export countries history', () => {
       checkListItems([
         [
           'Andorra added to currently exporting',
-          'By DIT Staff',
+          'By DBT Staff',
           'Date 6 Feb 2020, 4:06pm',
         ],
         [
           'Andorra removed from future countries of interest',
-          'By DIT Staff',
+          'By DBT Staff',
           'Date 6 Feb 2020, 3:41pm',
         ],
       ])

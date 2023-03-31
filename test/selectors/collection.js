@@ -6,10 +6,6 @@ module.exports = {
   itemsList: '.c-entity-list__item .c-meta-list',
   itemLink: '.c-entity__title > a',
   error: 'h3',
-  contentTable: (table) => {
-    return `.c-details-container__content > table:nth-child(${table})`
-  },
-  contentHeader: '.govuk-heading-m',
   nav: 'a.c-entity-search__aggregations-link',
   pageSummary: '.c-collection__pagination-summary',
   pageNext: '.c-pagination__label--next',

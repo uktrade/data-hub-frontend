@@ -22,7 +22,7 @@ describe('Company add to pipeline form', () => {
     it('should render a meta title', () => {
       cy.title().should(
         'eq',
-        'Add to your pipeline - Minimally Minimal Ltd - Companies - DIT Data Hub'
+        'Add to your pipeline - Minimally Minimal Ltd - Companies - DBT Data Hub'
       )
     })
 

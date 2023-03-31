@@ -7,7 +7,6 @@ const { companies, contacts } = require('../../../../../src/lib/urls')
 const { assertKeyValueTable } = require('../../support/assertions')
 
 describe('Advisors', () => {
-  const globalManagerTable = 2
   const company = fixtures.company.create.corp()
 
   before(() => {
@@ -17,12 +16,12 @@ describe('Advisors', () => {
   it('should display advisers for a GHQ for a given company', () => {
     cy.visit(companies.advisers.index(company.pk))
 
-    cy.get(selectors.collection.contentHeader).should(
+    cy.get('[data-test=core-team-heading]').should(
       'contain',
       'Advisers on the core team'
     )
 
-    cy.get(selectors.collection.contentTable(globalManagerTable))
+    cy.get('[data-test=global-acc-manager-table]')
       .should('contain', 'IST - Sector Advisory Services')
       .and('contain', 'London')
       .and('contain', 'Travis Greene')

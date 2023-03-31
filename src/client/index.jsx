@@ -52,6 +52,8 @@ import CompanyTabbedLocalNavigation from './components/CompanyTabbedLocalNavigat
 import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/CompanyOrdersCollection'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 import CompanyProjectsCollection from '../apps/investments/client/projects/CompanyProjectsCollection.jsx'
+import InvestmentStatusCard from '../apps/companies/apps/company-overview/overview-table-cards/InvestmentStatusCard'
+import ExportStatus from '../apps/companies/apps/company-overview/overview-table-cards/ExportStatus'
 import InvestmentProjectForm from '../apps/investments/client/projects/create/InvestmentProjectForm'
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
@@ -73,6 +75,7 @@ import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
 import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
 import Dashboard from './modules/Dashboard/Dashboard'
+import CoreTeam from './modules/Companies/CoreTeam/CoreTeam'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -191,6 +194,12 @@ import {
   TASK_GET_INVESTMENTS_PROJECTS_METADATA,
 } from '../apps/investments/client/projects/state'
 import * as investmentProjectTasks from '../apps/investments/client/projects/tasks'
+
+import {
+  TASK_GET_LATEST_EXPORT_WINS,
+  TASK_GET_PROJECT_WON_COUNT,
+} from '../apps/companies/apps/company-overview/overview-table-cards/state'
+import * as overviewInvestmentProjectTasks from '../apps/companies/apps/company-overview/overview-table-cards/tasks'
 
 import {
   TASK_EDIT_PROJECT_TEAM_MEMBERS,
@@ -340,6 +349,9 @@ import { getExportDetails } from '../client/modules/ExportPipeline/ExportDetails
 import { TASK_SAVE_EXPORT } from '../client/modules/ExportPipeline/ExportForm/state'
 import { saveExport } from '../client/modules/ExportPipeline/ExportForm/tasks'
 
+import { TASK_GET_EXPORT_PIPELINE_LIST } from '../client/modules/ExportPipeline/ExportList/state.js'
+import { getExportPipelineList } from '../client/modules/ExportPipeline/ExportList/task.js'
+
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
 }
@@ -448,6 +460,10 @@ function App() {
           [TASK_GET_PROFILES_LIST]:
             investmentProfilesTasks.getLargeCapitalProfiles,
           [TASK_GET_PROJECTS_LIST]: investmentProjectTasks.getProjects,
+          [TASK_GET_PROJECT_WON_COUNT]:
+            overviewInvestmentProjectTasks.getProjectsWon,
+          [TASK_GET_LATEST_EXPORT_WINS]:
+            overviewInvestmentProjectTasks.getLatestExportWins,
           [TASK_CREATE_INVESTMENT_PROJECT]:
             createInvestmentProjectTasks.createInvestmentProject,
           [TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS]:
@@ -561,6 +577,7 @@ function App() {
           [TASK_GET_COMPANY_DETAIL]: getCompanyDetails,
           [TASK_GET_EXPORT_DETAIL]: getExportDetails,
           [TASK_SAVE_EXPORT]: saveExport,
+          [TASK_GET_EXPORT_PIPELINE_LIST]: getExportPipelineList,
         }}
       >
         <Mount selector="#data-hub-header">
@@ -755,6 +772,12 @@ function App() {
         <Mount selector="#company-overview">
           {(props) => <CompanyOverview {...props} />}
         </Mount>
+        <Mount selector="#company-overview-projects-collection">
+          {(props) => <InvestmentStatusCard {...props} />}
+        </Mount>
+        <Mount selector="#company-overview-export-status">
+          {(props) => <ExportStatus {...props} />}
+        </Mount>
         <Mount selector="#company-projects-collection">
           {(props) => <CompanyProjectsCollection {...props} />}
         </Mount>
@@ -826,6 +849,9 @@ function App() {
               {...props}
             />
           )}
+        </Mount>
+        <Mount selector="#core-team">
+          {(props) => <CoreTeam {...props} />}
         </Mount>
 
         <Mount selector="#react-app">

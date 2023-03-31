@@ -11,6 +11,7 @@ const {
   DATA_HUB_AND_AVENTRI_ACTIVITY,
   EVENT_AVENTRI_ATTENDEES_STATUSES,
   EVENT_ATTENDEES_MAPPING,
+  FILTER_FEED_TYPE,
 } = require('./constants')
 
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
@@ -67,14 +68,13 @@ async function renderActivityFeed(req, res, next) {
           company,
           breadcrumbs,
           flashMessages: res.locals.getMessages(),
+          isOverview: false,
           activityTypeFilter: FILTER_KEYS.dataHubActivity,
           activityTypeFilters: FILTER_ITEMS,
           localNavItems: res.locals.localNavItems,
           isGlobalUltimate: company.is_global_ultimate,
           dnbHierarchyCount,
           dnbRelatedCompaniesCount,
-          showMatchingPrompt:
-            !company.duns_number && !company.pending_dnb_investigation,
         }
 
     const props = {
@@ -312,6 +312,7 @@ async function fetchActivityFeedHandler(req, res, next) {
     const {
       from = 0,
       size = config.activityFeed.paginationSize,
+      feedType = FILTER_FEED_TYPE.ALL,
       activityTypeFilter = FILTER_KEYS.dataHubActivity,
       showDnbHierarchy = false,
     } = req.query
@@ -344,6 +345,7 @@ async function fetchActivityFeedHandler(req, res, next) {
       contacts: filteredContacts,
       user,
       aventriEventIds,
+      feedType,
       getEssInteractions,
     })
 

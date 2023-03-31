@@ -4,7 +4,13 @@ import PropTypes from 'prop-types'
 
 import activities from './activities'
 
-function Activity({ activity, showDetails, showDnbHierarchy, filter }) {
+function Activity({
+  activity,
+  showDetails,
+  showDnbHierarchy,
+  filter,
+  isOverview,
+}) {
   const ActivityToRender = find(activities, (a) =>
     a.canRender(activity, filter)
   )
@@ -19,6 +25,7 @@ function Activity({ activity, showDetails, showDnbHierarchy, filter }) {
       filter={filter}
       showDetails={showDetails}
       showDnbHierarchy={showDnbHierarchy}
+      isOverview={isOverview}
     />
   )
 }

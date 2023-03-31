@@ -1,11 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import AccountManagementCard from '../overview-table-cards/AccountManagementCard.jsx'
+import ActivityCard from '../overview-table-cards/ActivityCard'
 import BusinessDetailsCard from '../overview-table-cards/BusinessDetailsCard'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
-import AccountManagementCard from '../overview-table-cards/AccountManagementCard.jsx'
+import InvestmentStatusCard from '../overview-table-cards/InvestmentStatusCard'
+
 import ExportStatus from '../overview-table-cards/ExportStatus.jsx'
+import { FILTER_FEED_TYPE } from '../../activity-feed/constants'
 
 const CardContainer = styled('div')`
   border: 1px solid #b1b4b6;
@@ -26,20 +29,39 @@ const CompanyOverview = ({ company, companiesHouseLink }) => {
               companiesHouseLink={companiesHouseLink}
             />
           </CardContainer>
-        </GridCol>
-        <GridCol columnOneHalf={true}>
+
           <CardContainer>
             <AccountManagementCard
               company={company}
               queryString={queryString}
             />
           </CardContainer>
-        </GridCol>
-      </GridRow>
-      <GridRow>
-        <GridCol columnOneHalf={true}>
           <CardContainer>
             <ExportStatus company={company} queryString={queryString} />
+          </CardContainer>
+          <CardContainer>
+            <InvestmentStatusCard
+              companyId={company.id}
+              queryString={queryString}
+            />
+          </CardContainer>
+        </GridCol>
+        <GridCol columnOneHalf={true}>
+          <CardContainer>
+            <ActivityCard
+              company={company}
+              queryString={queryString}
+              numberOfItems={3}
+              feedType={FILTER_FEED_TYPE.RECENT}
+            />
+          </CardContainer>
+          <CardContainer>
+            <ActivityCard
+              company={company}
+              queryString={queryString}
+              numberOfItems={2}
+              feedType={FILTER_FEED_TYPE.UPCOMING}
+            />
           </CardContainer>
         </GridCol>
       </GridRow>
@@ -51,6 +73,7 @@ CompanyOverview.propTypes = {
   company: PropTypes.object.isRequired,
   urls: PropTypes.object.isRequired,
   companiesHouseLink: PropTypes.string.isRequired,
+  investment: PropTypes.object.isRequired,
 }
 
 export default CompanyOverview

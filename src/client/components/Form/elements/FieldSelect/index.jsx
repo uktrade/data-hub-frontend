@@ -32,7 +32,7 @@ const FieldSelect = ({
         onChange={onChange}
         onBlur={onBlur}
         meta={{ error, touched }}
-        key={value}
+        key={Array.isArray(options) && options.length > 0 ? value : undefined}
         input={{
           id: name,
           defaultValue: value,

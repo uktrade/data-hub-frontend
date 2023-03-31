@@ -12,7 +12,7 @@ describe('user-role middleware', () => {
         user: {
           dit_team: {
             id: '1',
-            name: 'DIT South East - International Trade Team',
+            name: 'DBT South East - International Trade Team',
             role: {
               name: 'International Trade Team',
               id: '2',
@@ -48,7 +48,7 @@ describe('user-role middleware', () => {
           user: {
             dit_team: {
               id: '1',
-              name: 'DIT South East - International Trade Director',
+              name: 'DBT South East - International Trade Director',
               role: {
                 name: 'International Trade Director',
                 id: '2',
@@ -159,7 +159,7 @@ describe('user-role middleware', () => {
         user: {
           dit_team: {
             id: '1',
-            name: 'DIT South East - International Trade Team',
+            name: 'DBT South East - International Trade Team',
             role: {
               name: 'International Trade Team',
               id: '2',
@@ -190,7 +190,7 @@ describe('user-role middleware', () => {
           user: {
             dit_team: {
               id: '1',
-              name: 'DIT South East - International Trade Team',
+              name: 'DBT South East - International Trade Team',
               role: {
                 name: 'International Trade Team',
                 id: '2',

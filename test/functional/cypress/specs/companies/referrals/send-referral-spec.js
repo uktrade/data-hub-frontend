@@ -58,7 +58,7 @@ describe('Send a referral form', () => {
           .next()
           .should(
             'have.text',
-            'Referrals are for when you want to ask another DIT advisor to help out an account you are working on.Read more guidance here (opens in a new window or tab)'
+            'Referrals are for when you want to ask another DBT advisor to help out an account you are working on.Read more guidance here (opens in a new window or tab)'
           )
           .find('a')
           .should(
@@ -118,7 +118,7 @@ describe('Send a referral form', () => {
         cy.contains('a', 'Cancel').click()
         cy.url().should(
           'contain',
-          urls.companies.activity.index(fixtures.company.withContacts.id)
+          urls.companies.overview.index(fixtures.company.withContacts.id)
         )
       })
     })
@@ -300,7 +300,7 @@ describe('Send a referral form', () => {
         cy.contains('Cancel').click()
         cy.url().should(
           'contain',
-          urls.companies.activity.index(fixtures.company.withContacts.id)
+          urls.companies.overview.index(fixtures.company.withContacts.id)
         )
       })
     }
@@ -323,7 +323,7 @@ describe('Send a referral form', () => {
         cy.contains('button', 'Send referral').click()
         cy.url().should(
           'contain',
-          urls.companies.activity.index(fixtures.company.withContacts.id)
+          urls.companies.overview.index(fixtures.company.withContacts.id)
         )
         cy.get(selectors.companyLocalHeader().flashMessageList).contains(
           'Referral sent'

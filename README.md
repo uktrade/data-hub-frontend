@@ -43,7 +43,7 @@ Please view the dedicated [Docker readme](./docs/Docker.md).
 
 **Note for all users** If you wish to run the functional tests against your native frontend, you will need to pass a config flag to point cypress to run against port 3000 - `npm run test:functional:watch --config baseUrl=http://localhost:3000`.
 
-**Note for Civil Servant developers** When running the project natively for the first time on your DIT-issued device you will need to setup ZSH. Instructions for this are available [here](./docs/ZSH%20setup.md)
+**Note for Civil Servant developers** When running the project natively for the first time on your DBT-issued device you will need to setup ZSH. Instructions for this are available [here](./docs/ZSH%20setup.md)
 
 1.  Navigate to the project root.
 

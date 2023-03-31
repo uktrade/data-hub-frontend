@@ -175,6 +175,20 @@ describe('Export pipeline edit', () => {
           ERROR_MESSAGES.estimated_win_date.invalid
         )
       })
+
+      it('the form should display validation error message for too many team members', () => {
+        const advisers = faker.helpers.arrayElements(autoCompleteAdvisers, 6)
+        fillMultiOptionTypeahead(
+          '[data-test=field-team_members]',
+          advisers.map((adviser) => adviser.name)
+        )
+        cy.get('[data-test=submit-button]').click()
+
+        assertFieldError(
+          cy.get('[data-test="field-team_members"]'),
+          ERROR_MESSAGES.team_members
+        )
+      })
     })
 
     context('when the form contains valid data and is submitted', () => {

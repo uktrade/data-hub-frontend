@@ -25,11 +25,11 @@ function CompanyRegionAndSector({ regions, region, sectors, isUK, postcode }) {
             region && (
               <FieldSelect
                 name="uk_region"
-                label="DIT region"
+                label="DBT region"
                 initialValue={region.value}
-                emptyOption="-- Select DIT region --"
+                emptyOption="-- Select DBT region --"
                 options={regions}
-                required="Select DIT region"
+                required="Select DBT region"
               />
             )
           }
@@ -37,10 +37,10 @@ function CompanyRegionAndSector({ regions, region, sectors, isUK, postcode }) {
       )}
       <FieldSelect
         name="sector"
-        label="DIT sector"
-        emptyOption="-- Select DIT sector --"
+        label="DBT sector"
+        emptyOption="-- Select DBT sector --"
         options={sectors}
-        required="Select DIT sector"
+        required="Select DBT sector"
       />
     </Step>
   )

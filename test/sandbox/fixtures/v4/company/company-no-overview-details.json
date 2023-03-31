@@ -29,10 +29,7 @@
   "transferred_by": null,
   "transferred_on": null,
   "transferred_to": null,
-  "turnover_range": {
-    "name": "£33.5M+",
-    "id": "7a4cd12a-6095-e211-a939-e4115bead28a"
-  },
+  "turnover_range": null,
   "turnover": null,
   "turnover_gbp": null,
   "is_turnover_estimated": false,

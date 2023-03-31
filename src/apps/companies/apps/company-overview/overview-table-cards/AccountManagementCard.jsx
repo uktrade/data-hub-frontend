@@ -72,7 +72,7 @@ const AccountManagementCard = ({ company, queryString }) => {
       caption="Account Management"
       data-test="accountManagementContainer"
     >
-      <SummaryTable.Row heading="DIT Region">
+      <SummaryTable.Row heading="DBT Region">
         {company?.uk_region?.name ? (
           <span>{company.uk_region.name}</span>
         ) : (
