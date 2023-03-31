@@ -319,6 +319,7 @@ app.get(
 )
 app.get('/v4/metadata/one-list-tier', v4Metadata.oneListTier)
 app.get('/v4/metadata/trade-agreement', v4Metadata.tradeAgreement)
+app.get('/v4/metadata/export-years', v4Metadata.exportYears)
 
 // Ping
 app.get('/ping.xml', healthcheck.ping)
