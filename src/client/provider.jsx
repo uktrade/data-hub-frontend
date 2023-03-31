@@ -66,10 +66,14 @@ import {
   COMPANY_PROJECTS_LIST_ID,
 } from '../apps/investments/client/projects/state'
 
-import { OVERVIEW_COMPANY_PROJECTS_LIST_ID } from '../apps/companies/apps/company-overview/overview-table-cards/state'
+import {
+  OVERVIEW_COMPANY_EXPORT_WINS_LIST_ID,
+  OVERVIEW_COMPANY_PROJECTS_LIST_ID,
+} from '../apps/companies/apps/company-overview/overview-table-cards/state'
 
 import investmentProjectsReducer from '../apps/investments/client/projects/reducer'
 import overviewInvestmentProjectReducer from '../apps/companies/apps/company-overview/overview-table-cards/reducer'
+import overviewExportWinsReducer from '../apps/companies/apps/company-overview/overview-table-cards/exportStatusReducer'
 
 import { ID as COMPANIES_ID } from './modules/Companies/CollectionList/state'
 import companiesReducer from './modules/Companies/CollectionList/reducer'
@@ -219,6 +223,7 @@ const reducer = {
   [INVESTMENT_PROFILES_ID]: investmentProfileReducer,
   [INVESTMENT_PROJECTS_ID]: investmentProjectsReducer,
   [COMPANY_PROJECTS_LIST_ID]: investmentProjectsReducer,
+  [OVERVIEW_COMPANY_EXPORT_WINS_LIST_ID]: overviewExportWinsReducer,
   [OVERVIEW_COMPANY_PROJECTS_LIST_ID]: overviewInvestmentProjectReducer,
   [MY_INVESTMENT_PROJECTS_ID]: myInvestmentProjectsReducer,
   [CREATE_INVESTMENT_PROJECT_ID]: createInvestmentProjectsReducer,

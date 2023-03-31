@@ -53,6 +53,7 @@ import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/Compa
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 import CompanyProjectsCollection from '../apps/investments/client/projects/CompanyProjectsCollection.jsx'
 import InvestmentStatusCard from '../apps/companies/apps/company-overview/overview-table-cards/InvestmentStatusCard'
+import ExportStatus from '../apps/companies/apps/company-overview/overview-table-cards/ExportStatus'
 import InvestmentProjectForm from '../apps/investments/client/projects/create/InvestmentProjectForm'
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
@@ -194,7 +195,10 @@ import {
 } from '../apps/investments/client/projects/state'
 import * as investmentProjectTasks from '../apps/investments/client/projects/tasks'
 
-import { TASK_GET_PROJECT_WON_COUNT } from '../apps/companies/apps/company-overview/overview-table-cards/state'
+import {
+  TASK_GET_LATEST_EXPORT_WINS,
+  TASK_GET_PROJECT_WON_COUNT,
+} from '../apps/companies/apps/company-overview/overview-table-cards/state'
 import * as overviewInvestmentProjectTasks from '../apps/companies/apps/company-overview/overview-table-cards/tasks'
 
 import {
@@ -458,6 +462,8 @@ function App() {
           [TASK_GET_PROJECTS_LIST]: investmentProjectTasks.getProjects,
           [TASK_GET_PROJECT_WON_COUNT]:
             overviewInvestmentProjectTasks.getProjectsWon,
+          [TASK_GET_LATEST_EXPORT_WINS]:
+            overviewInvestmentProjectTasks.getLatestExportWins,
           [TASK_CREATE_INVESTMENT_PROJECT]:
             createInvestmentProjectTasks.createInvestmentProject,
           [TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS]:
@@ -768,6 +774,9 @@ function App() {
         </Mount>
         <Mount selector="#company-overview-projects-collection">
           {(props) => <InvestmentStatusCard {...props} />}
+        </Mount>
+        <Mount selector="#company-overview-export-status">
+          {(props) => <ExportStatus {...props} />}
         </Mount>
         <Mount selector="#company-projects-collection">
           {(props) => <CompanyProjectsCollection {...props} />}
