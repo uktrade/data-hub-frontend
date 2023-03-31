@@ -19,6 +19,7 @@ import ContactAuditHistory from './ContactAuditHistory'
 import Interaction from './Interaction'
 import Event from './Event'
 import CompanyOneListTeam from './CompanyOneListTeam'
+import ExportYears from './ExportYears'
 
 export default {
   ...Advisers.tasks,
@@ -42,4 +43,5 @@ export default {
   ...Interaction.tasks,
   ...Event.tasks,
   ...CompanyOneListTeam.tasks,
+  ...ExportYears.tasks,
 }
