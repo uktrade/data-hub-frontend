@@ -22,7 +22,6 @@ const convertDateToObject = (date) => {
   const parsedTime = parseISO(date)
   if (isValid(parsedTime)) {
     return {
-      day: `${parsedTime.getDate()}`,
       month: `${parsedTime.getMonth() + 1}`, //getMonth is zero based
       year: `${parsedTime.getFullYear()}`,
     }
