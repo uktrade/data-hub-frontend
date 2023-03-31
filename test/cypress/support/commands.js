@@ -316,3 +316,9 @@ Cypress.Commands.add('setModulePermissions', (permissions) => {
 Cypress.Commands.add('clearSessionStorage', () => {
   cy.window().then((win) => win.sessionStorage.clear())
 })
+
+Cypress.Commands.add('getViewport', () => {
+  cy.document().then((doc) => {
+    return doc.documentElement.getBoundingClientRect()
+  })
+})
