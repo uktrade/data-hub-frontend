@@ -50,7 +50,6 @@ function transformInvestmentValueForView({
   non_fdi_r_and_d_budget,
   id,
   associated_non_fdi_r_and_d_project,
-  likelihood_to_land,
 }) {
   function formatBoolean(boolean, { pos, neg }) {
     if (isNull(boolean)) {
@@ -93,7 +92,6 @@ function transformInvestmentValueForView({
       pos: 'Yes, will create significant export revenue',
       neg: 'No, will not create significant export revenue',
     }),
-    likelihood_to_land: likelihood_to_land,
     average_salary: get(average_salary, 'name'),
     sector_name: get(sector, 'name'),
     account_tier: get(investor_company, 'one_list_group_tier.name'),

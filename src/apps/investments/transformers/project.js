@@ -134,6 +134,7 @@ function transformInvestmentForView({
   specific_programme,
   estimated_land_date,
   actual_land_date,
+  likelihood_to_land,
 } = {}) {
   function transformClientContacts(contacts) {
     return map(contacts, ({ name, id }) => {
@@ -164,6 +165,7 @@ function transformInvestmentForView({
     description,
     anonymous_description,
     investor_type,
+    likelihood_to_land,
     level_of_involvement,
     specific_programme,
     estimated_land_date: !isEmpty(estimated_land_date)
