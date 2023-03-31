@@ -114,6 +114,9 @@ async function populateForm(req, res, next) {
         investmentInvolvement: await getOptions(req, 'investment-involvement', {
           createdOn,
         }),
+        likelihoodToLand: await getOptions(req, 'likelihood-to-land', {
+          createdOn,
+        }),
       },
     })
 
