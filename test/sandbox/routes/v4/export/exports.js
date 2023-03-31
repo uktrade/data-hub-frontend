@@ -15,7 +15,10 @@ const generateExport = () => {
     id: faker.datatype.uuid(),
     company: { id: faker.datatype.uuid(), name: faker.company.name() },
     owner: { id: faker.datatype.uuid(), name: faker.name.fullName() },
-    team_members: [{ id: faker.datatype.uuid(), name: faker.name.fullName() }],
+    team_members: [
+      { id: faker.datatype.uuid(), name: faker.name.fullName() },
+      { id: faker.datatype.uuid(), name: faker.name.fullName() },
+    ],
     contacts: { id: faker.datatype.uuid(), name: faker.name.fullName() },
     destination_country: {
       id: countryId,

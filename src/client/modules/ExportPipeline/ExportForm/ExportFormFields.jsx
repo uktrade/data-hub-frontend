@@ -12,6 +12,7 @@ import { TASK_SAVE_EXPORT } from './state'
 import Task from '../../../components/Task'
 import { ERROR_MESSAGES } from './constants'
 import { transformAPIValuesForForm } from '../transformers'
+import { validateTeamMembers } from './validation'
 
 const ExportFormFields = ({
   initialValues,
@@ -50,6 +51,13 @@ const ExportFormFields = ({
                 label="Owner"
                 hint="When creating the record your name will appear. You can change the name to transfer ownership to someone else"
                 required={ERROR_MESSAGES.owner}
+              />
+              <FieldAdvisersTypeahead
+                name="team_members"
+                label="Team members (optional)"
+                hint="You can add up to 5 team members. Team members can view and edit export functionality"
+                isMulti={true}
+                validate={validateTeamMembers}
               />
             </>
           )}

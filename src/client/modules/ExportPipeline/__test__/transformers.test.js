@@ -12,8 +12,18 @@ describe('transformFormValuesForAPI', () => {
           id: 1234,
           title: 'title',
           owner: { value: 'b', label: 'c' },
+          team_members: [
+            { value: 'd', label: 'e' },
+            { value: 'f', label: 'g' },
+          ],
         })
-      ).to.be.deep.equal({ company: 456, id: 1234, title: 'title', owner: 'b' })
+      ).to.be.deep.equal({
+        company: 456,
+        id: 1234,
+        title: 'title',
+        owner: 'b',
+        team_members: ['d', 'f'],
+      })
     })
   })
 })
@@ -27,12 +37,14 @@ describe('transformAPIValuesForForm', () => {
           company: { id: 987 },
           title: 'a',
           owner: { id: 'b', name: 'c' },
+          team_members: [{ id: 'd', name: 'e' }],
         })
       ).to.be.deep.equal({
         id: 234,
         company: 987,
         title: 'a',
         owner: { value: 'b', label: 'c' },
+        team_members: [{ value: 'd', label: 'e' }],
       })
     })
   })

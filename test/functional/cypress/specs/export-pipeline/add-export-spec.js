@@ -19,6 +19,13 @@ const {
 const {
   generateExport,
 } = require('../../../../sandbox/routes/v4/export/exports')
+const {
+  fillTypeahead,
+  fillMultiOptionTypeahead,
+} = require('../../support/form-fillers')
+const autoCompleteAdvisers =
+  require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
+const { faker } = require('@faker-js/faker')
 
 describe('Export pipeline create', () => {
   context('when adding an export for unknown company id', () => {
@@ -127,6 +134,20 @@ describe('Export pipeline create', () => {
           ERROR_MESSAGES.owner
         )
       })
+
+      it('the form should display validation error message for too many team members', () => {
+        const advisers = faker.helpers.arrayElements(autoCompleteAdvisers, 6)
+        fillMultiOptionTypeahead(
+          '[data-test=field-team_members]',
+          advisers.map((adviser) => adviser.name)
+        )
+        cy.get('[data-test=submit-button]').click()
+
+        assertFieldError(
+          cy.get('[data-test="field-team_members"]'),
+          ERROR_MESSAGES.team_members
+        )
+      })
     })
 
     context(
@@ -141,13 +162,17 @@ describe('Export pipeline create', () => {
 
         it('the form should redirect to the dashboard page and display a success message', () => {
           const newExport = generateExport()
+          const teamMember = faker.helpers.arrayElement(autoCompleteAdvisers)
 
           cy.get('[data-test=title-input]').type(newExport.title)
+          fillTypeahead('[data-test=field-team_members]', teamMember.name)
+
           cy.get('[data-test=submit-button]').click()
 
           assertPayload('@postExportItemApiRequest', {
             title: newExport.title,
             owner: '7d19d407-9aec-4d06-b190-d3f404627f21',
+            team_members: [teamMember.id],
             company: company.id,
           })
 
