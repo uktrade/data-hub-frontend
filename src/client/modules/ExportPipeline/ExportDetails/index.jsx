@@ -45,7 +45,7 @@ const ExportDetailsForm = ({ exportItem }) => {
     <DefaultLayout
       heading={`${exportItem?.title}`}
       subheading={exportItem?.company?.name}
-      pageTitle="ExportDetailsForm"
+      pageTitle="ExportDetails"
       breadcrumbs={breadcrumbs}
       useReactRouter={true}
     >
@@ -61,7 +61,8 @@ const ExportDetailsForm = ({ exportItem }) => {
       >
         {() => {
           return (
-            exportItem?.title && (
+            exportItem &&
+            title && (
               <>
                 <StyledSummaryTable>
                   <SummaryTable.Row
