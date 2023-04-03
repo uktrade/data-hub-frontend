@@ -75,6 +75,7 @@ const ExportFormAdd = ({ company, currentAdviserId, currentAdviserName }) => {
         cancelRedirectUrl={urls.companies.activity.index(companyId)}
         redirectToUrl={urls.dashboard()}
         flashMessage={({ data }) => `'${data.title}' created`}
+        formDataLoaded={!!company}
       />
     </DefaultLayout>
   )
