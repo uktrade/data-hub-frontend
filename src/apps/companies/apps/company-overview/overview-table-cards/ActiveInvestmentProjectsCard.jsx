@@ -3,8 +3,26 @@ import { Link, Table } from 'govuk-react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { SummaryTable } from '../../../../../client/components'
+import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 import { companyProjectsState2props } from './state'
 import { connect } from 'react-redux'
+
+import { BLUE, GREY_2 } from '../../../../../client/utils/colours'
+
+const StyledActiveInvestmentSubject = styled('h3')`
+  font-size: ${FONT_SIZE.SIZE_20};
+  font-weight: ${FONT_WEIGHTS.bold};
+  line-height: ${FONT_SIZE.SIZE_24};
+  margin-top: 10px;
+  margin-bottom: 0;
+  & > a:link,
+  a:visited,
+  a:hover,
+  a:active {
+    text-decoration: none;
+    color: ${BLUE};
+  }
+`
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin: 0;
@@ -14,8 +32,25 @@ const StyledSummaryTable = styled(SummaryTable)`
 `
 const StyledTableRow = styled(Table.Row)`
   border: 0;
+  & > tbody tr {
+    width: 50%;
+  }
 `
+const StyledLastTableRow = styled(Table.Row)`
+  border-bottom: 1px solid ${GREY_2};
+`
+const StyledTableCell = styled(Table.Cell)`
+  border: 0;
+  padding: 0;
+`
+
 const StyledLastTableCell = styled(Table.Cell)`
+  border: 0;
+  padding-top: 0;
+  padding-bottom: 10px;
+`
+
+const StyledCardLastTableCell = styled(Table.Cell)`
   border: 0;
   padding-bottom: 0;
 `
@@ -27,21 +62,26 @@ const ActiveInvestmentList = ({ props }) => {
     i.estimated_land_date = newDate
   }
   allInvestmentResults.sort(
-    (objA, objB) =>
-      Number(objA.estimated_land_date) - Number(objB.estimated_land_date)
+    (dateA, dateB) =>
+      Number(dateA.estimated_land_date) - Number(dateB.estimated_land_date)
   )
   return allInvestmentResults.map((investment) => {
     if (investment.stage.name === 'Active') {
       return (
         <>
           <StyledTableRow>
-            <StyledLastTableCell colSpan={2}>
-              <Link href={`#`} data-test="investment-page-link">
-                {investment.name}
-              </Link>
-            </StyledLastTableCell>
+            <StyledTableCell colSpan={2}>
+              <StyledActiveInvestmentSubject>
+                <Link
+                  href={`/investments/projects/${investment.id}/details`}
+                  data-test="investment-page-link"
+                >
+                  {investment.name}
+                </Link>
+              </StyledActiveInvestmentSubject>
+            </StyledTableCell>
           </StyledTableRow>
-          <StyledTableRow>
+          <StyledLastTableRow>
             <StyledLastTableCell colSpan={1}>
               Estimated land date
             </StyledLastTableCell>
@@ -51,23 +91,9 @@ const ActiveInvestmentList = ({ props }) => {
                 { month: 'long', year: 'numeric' }
               )}
             </StyledLastTableCell>
-          </StyledTableRow>
-          <StyledTableRow>
-            <StyledLastTableCell colSpan={1}>
-              Last interaction date
-            </StyledLastTableCell>
-            <StyledLastTableCell colSpan={1}>Need to sort</StyledLastTableCell>
-          </StyledTableRow>
+          </StyledLastTableRow>
         </>
       )
-      // console.log(
-      //   '//////////',
-      //   investment.name,
-      //   `'Estimated land date' ${investment.estimated_land_date}`,
-      //   `'Last interaction date' ${investment.modified_on}`,
-      //   investment,
-      //   index
-      // )
     }
   })
 }
@@ -83,15 +109,14 @@ const ActiveInvestmentProjectsCard = ({
       caption="Active investment projects"
       data-test="investmentsStatusContainer"
     >
+      {props.stageList?.active ? (
+        <ActiveInvestmentList props={props} />
+      ) : (
+        'No active investments'
+      )}
+
       <StyledTableRow>
-        {props.stageList?.active ? (
-          <ActiveInvestmentList props={props} />
-        ) : (
-          'No active investments'
-        )}
-      </StyledTableRow>
-      <StyledTableRow>
-        <StyledLastTableCell colSpan={2}>
+        <StyledCardLastTableCell colSpan={2}>
           <Link
             href={`${queryString}/investments/projects`}
             data-test="investment-page-link"
@@ -99,7 +124,7 @@ const ActiveInvestmentProjectsCard = ({
             View {props.stageList?.active ? props.stageList.active : '0'} more
             active investments
           </Link>
-        </StyledLastTableCell>
+        </StyledCardLastTableCell>
       </StyledTableRow>
     </StyledSummaryTable>
   )
