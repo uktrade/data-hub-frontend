@@ -122,14 +122,6 @@ function createDnbCompanyInvestigation(req, body) {
   })
 }
 
-function saveCompanyExportDetails(req, companyId, body) {
-  return authorisedRequest(req, {
-    body,
-    url: `${config.apiRoot}/v4/company/${companyId}/export-detail`,
-    method: 'PATCH',
-  })
-}
-
 function linkDataHubCompanyToDnBCompany(req, companyId, dunsNumber) {
   return authorisedRequest(req, {
     body: {
@@ -167,7 +159,6 @@ module.exports = {
   getOneListGroupCoreTeam,
   saveDnbCompany,
   createDnbCompanyInvestigation,
-  saveCompanyExportDetails,
   linkDataHubCompanyToDnBCompany,
   createDnbChangeRequest,
 }
