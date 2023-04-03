@@ -6,6 +6,7 @@ import {
   FieldInput,
   FormLayout,
   FieldAdvisersTypeahead,
+  FieldTypeahead,
 } from '../../../../client/components'
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT } from './state'
@@ -13,6 +14,8 @@ import Task from '../../../components/Task'
 import { ERROR_MESSAGES } from './constants'
 import { transformAPIValuesForForm } from '../transformers'
 import { validateTeamMembers } from './validation'
+import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
+import SectorResource from '../../../../client/components/Resource/Sector'
 
 const ExportFormFields = ({
   initialValues,
@@ -60,6 +63,14 @@ const ExportFormFields = ({
                   hint="You can add up to 5 team members. Team members can view and edit export functionality"
                   isMulti={true}
                   validate={validateTeamMembers}
+                />
+                <ResourceOptionsField
+                  name="sector"
+                  label="Main sector"
+                  hint="This is the main sector the company is exporting to. Additional sectors can be added to notes"
+                  required={ERROR_MESSAGES.sector}
+                  resource={SectorResource}
+                  field={FieldTypeahead}
                 />
               </>
             )}

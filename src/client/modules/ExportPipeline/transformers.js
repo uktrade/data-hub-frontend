@@ -6,12 +6,14 @@ export const transformFormValuesForAPI = ({
   title,
   owner,
   team_members,
+  sector,
 }) => ({
   company,
   id,
   title,
   owner: owner.value,
   team_members: team_members.map((x) => x.value),
+  sector: sector.value,
 })
 
 export const transformAPIValuesForForm = ({
@@ -20,10 +22,12 @@ export const transformAPIValuesForForm = ({
   title,
   owner,
   team_members,
+  sector,
 }) => ({
   company: company.id,
   id,
   title,
   owner: mapApiToField(owner),
   team_members: team_members.map(mapApiToField),
+  sector: sector && mapApiToField(sector),
 })
