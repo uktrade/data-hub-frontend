@@ -21,17 +21,14 @@ const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
 })
 
-const Container = styled('div')({
-  display: 'flex',
-  alignItems: 'center',
-  marginBottom: 30,
-})
-
-// const StyledButton = styled(Button)({
-//   margin: 0,
-//   marginRight: 40,
-// })
-
+const Container = styled('div')`
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 30px;
+  ${Link} {
+    margin: 0px 40px 0px 0px;
+  }
+`
 const getBreadcrumbs = (exportItem) => {
   const defaultBreadcrumbs = [
     {
