@@ -98,6 +98,7 @@ const fetchValuesFromAPI = () =>
     getMetadataOptions(urls.metadata.investmentInvolvement()),
     getMetadataOptions(urls.metadata.investmentSpecificProgramme()),
     getMetadataOptions(urls.metadata.investmentBusinessActivity()),
+    getMetadataOptions(urls.metadata.likelihoodToLand()),
   ]).then(
     ([
       adviser,
@@ -112,6 +113,7 @@ const fetchValuesFromAPI = () =>
       investmentInvolvement,
       investmentSpecificProgramme,
       investmentBusinessActivity,
+      likelihoodToLand,
     ]) => ({
       adviser,
       advisers,
@@ -125,5 +127,6 @@ const fetchValuesFromAPI = () =>
       investmentInvolvement,
       investmentSpecificProgramme,
       investmentBusinessActivity,
+      likelihoodToLand,
     })
   )

@@ -15,6 +15,7 @@ const labels = {
       description: 'Project description',
       anonymous_description: 'Anonymised description',
       estimated_land_date: 'Estimated land date',
+      likelihood_to_land: 'Likelihood to land',
       actual_land_date: 'Actual land date',
       investor_type: 'New or existing investor',
       level_of_involvement: 'Level of involvement',
@@ -36,7 +37,6 @@ const labels = {
       associated_non_fdi_r_and_d_project: 'Non-FDI R&D project',
       new_tech_to_uk: 'New-to-world tech',
       export_revenue: 'Export revenue',
-      likelihood_to_land: 'Likelihood to land',
     },
     edit: {
       government_assistance:
