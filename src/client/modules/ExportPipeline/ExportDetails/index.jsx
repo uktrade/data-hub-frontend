@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import urls from '../../../../lib/urls'
 import { EXPORT_LOADED } from '../../../actions'
 import { DefaultLayout, SummaryTable } from '../../../components'
@@ -11,10 +11,11 @@ import { isEmpty } from 'lodash'
 import { format } from '../../../../client/utils/date'
 import { currencyGBP } from '../../../../client/utils/number-utils'
 
-import { Button } from 'govuk-react'
 import { BLACK, GREY_3 } from '../../../utils/colours'
 import { capitalize } from 'lodash'
 import { transformIdNameToValueLabel } from '../../../transformers'
+import Button from '@govuk-react/button'
+import Link from '@govuk-react/link'
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
@@ -26,10 +27,10 @@ const Container = styled('div')({
   marginBottom: 30,
 })
 
-const StyledButton = styled(Button)({
-  margin: 0,
-  marginRight: 40,
-})
+// const StyledButton = styled(Button)({
+//   margin: 0,
+//   marginRight: 40,
+// })
 
 const getBreadcrumbs = (exportItem) => {
   const defaultBreadcrumbs = [
@@ -150,15 +151,21 @@ const ExportDetailsForm = ({ exportItem }) => {
                   </SummaryTable.Row>{' '}
                 </StyledSummaryTable>
                 <Container>
-                  <StyledButton
-                    href={urls.exportPipeline.details(exportId)}
+                  <Button
+                    as={Link}
+                    href={urls.exportPipeline.edit(exportId)}
                     buttonColour={GREY_3}
                     buttonTextColour={BLACK}
                     data-test="edit-export-details-button"
                   >
                     Edit
-                  </StyledButton>
-                  <Link to={urls.exportPipeline.details(exportId)}>Delete</Link>
+                  </Button>
+                  <Link
+                    href={urls.exportPipeline.delete(exportId)}
+                    data-test="delete-export-details-button"
+                  >
+                    Delete
+                  </Link>
                 </Container>
               </>
             )
