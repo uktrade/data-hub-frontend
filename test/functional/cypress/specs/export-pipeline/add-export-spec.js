@@ -22,6 +22,7 @@ const {
 const {
   fillTypeahead,
   fillMultiOptionTypeahead,
+  clearTypeahead,
 } = require('../../support/form-fillers')
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
@@ -122,6 +123,7 @@ describe('Export pipeline create', () => {
       it('the form should display validation error message for mandatory inputs', () => {
         //clear any default values first
         cy.get('[data-test="typeahead-input"]').clear()
+        clearTypeahead('[data-test=field-destination_country]')
 
         cy.get('[data-test=submit-button]').click()
 
@@ -132,6 +134,11 @@ describe('Export pipeline create', () => {
         assertFieldError(
           cy.get('[data-test="field-owner"]'),
           ERROR_MESSAGES.owner
+        )
+        assertFieldError(
+          cy.get('[data-test="field-destination_country"]'),
+          ERROR_MESSAGES.destination_country,
+          false
         )
       })
 
@@ -166,6 +173,10 @@ describe('Export pipeline create', () => {
 
           cy.get('[data-test=title-input]').type(newExport.title)
           fillTypeahead('[data-test=field-team_members]', teamMember.name)
+          fillTypeahead(
+            '[data-test=field-destination_country]',
+            newExport.destination_country.name
+          )
 
           cy.get('[data-test=submit-button]').click()
 
@@ -174,6 +185,7 @@ describe('Export pipeline create', () => {
             owner: '7d19d407-9aec-4d06-b190-d3f404627f21',
             team_members: [teamMember.id],
             company: company.id,
+            destination_country: newExport.destination_country.id,
           })
 
           assertExactUrl('')
