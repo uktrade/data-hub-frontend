@@ -14,6 +14,7 @@ import {
   ExportFormAdd,
   ExportFormEdit,
 } from './modules/ExportPipeline/ExportForm'
+import ExportFormDelete from './modules/ExportPipeline/ExportDelete'
 
 const routes = {
   companies: [
@@ -111,6 +112,11 @@ const routes = {
       path: '/export/:exportId/edit',
       module: 'datahub:companies',
       component: ExportFormEdit,
+    },
+    {
+      path: '/export/:exportId/delete',
+      module: 'datahub:companies',
+      component: ExportFormDelete,
     },
   ],
 }
