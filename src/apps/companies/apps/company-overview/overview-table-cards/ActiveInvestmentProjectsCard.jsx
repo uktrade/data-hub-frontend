@@ -46,7 +46,10 @@ const ActiveInvestmentList = ({ props }) => {
               Estimated land date
             </StyledLastTableCell>
             <StyledLastTableCell colSpan={1}>
-              {new Date(investment.estimated_land_date).toString()}
+              {new Date(investment.estimated_land_date).toLocaleDateString(
+                'en-GB',
+                { month: 'long', year: 'numeric' }
+              )}
             </StyledLastTableCell>
           </StyledTableRow>
           <StyledTableRow>
