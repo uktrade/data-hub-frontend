@@ -131,7 +131,7 @@ FieldSelect.defaultProps = {
   options: [],
   emptyOption: 'Please select',
   fullWidth: false,
-  boldLabel: false,
+  boldLabel: true,
 }
 
 export default FieldSelect
