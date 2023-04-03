@@ -55,6 +55,7 @@ const ALLOWLIST = [
   '/v4/metadata/administrative-area',
   '/v4/metadata/large-capital-opportunity/opportunity-value-type',
   '/v4/metadata/large-capital-opportunity/opportunity-status',
+  '/v4/metadata/export-years',
 ]
 
 module.exports = (app) => {
