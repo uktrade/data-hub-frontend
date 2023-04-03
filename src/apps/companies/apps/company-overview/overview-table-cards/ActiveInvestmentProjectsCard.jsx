@@ -93,7 +93,7 @@ const ActiveInvestmentList = ({ props }) => {
             <StyledActiveInvestmentSubject>
               <Link
                 href={`/investments/projects/${activeInvestment.id}/details`}
-                data-test="investment-page-link"
+                data-test="active-investment-page-link"
               >
                 {activeInvestment.name}
               </Link>
@@ -101,7 +101,10 @@ const ActiveInvestmentList = ({ props }) => {
           </StyledActiveInvestmentHeadingTableCell>
         </StyledActiveInvestmentTableRow>
         <StyledActiveInvestmentTableBottomRow>
-          <StyledActiveInvestmentHeadingTableCellHeader colSpan={1}>
+          <StyledActiveInvestmentHeadingTableCellHeader
+            colSpan={1}
+            data-test={`estimated-land-date ${activeInvestment.name}`}
+          >
             Estimated land date
           </StyledActiveInvestmentHeadingTableCellHeader>
           <StyledActiveInvestmentTableCell colSpan={1}>
@@ -125,7 +128,7 @@ const ActiveInvestmentProjectsCard = ({
   return (
     <StyledSummaryTable
       caption="Active investment projects"
-      data-test="investmentsStatusContainer"
+      data-test="activeInvestmentProjectsContainer"
     >
       {props.stageList?.active ? (
         <ActiveInvestmentList props={props} />
@@ -142,7 +145,7 @@ const ActiveInvestmentProjectsCard = ({
           {props.stageList?.active ? (
             <Link
               href={`${queryString}/investments/projects`}
-              data-test="investment-page-link"
+              data-test="active-investments-page-link"
             >
               View{' '}
               {props.stageList?.active > 3
@@ -156,7 +159,7 @@ const ActiveInvestmentProjectsCard = ({
           ) : (
             <Link
               href={`${queryString}/investments/projects`}
-              data-test="investment-page-link"
+              data-test="investments-page-link"
             >
               View all investments
             </Link>

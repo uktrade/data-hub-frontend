@@ -68,7 +68,6 @@ const CompanyOverview = ({ company, companiesHouseLink }) => {
             <ActiveInvestmentProjectsCard
               company={company}
               queryString={queryString}
-              numberOfItems={2}
               companyId={company.id}
             />
           </CardContainer>
