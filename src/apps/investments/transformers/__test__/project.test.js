@@ -434,19 +434,19 @@ describe('Investment project transformers', () => {
       })
     })
 
-    // context('when an estimated land date is not provided', () => {
-    //   beforeEach(() => {
-    //     const data = assign({}, investmentData, {
-    //       estimated_land_date: null,
-    //     })
+    context('when a likelihood to land value is not provided', () => {
+      beforeEach(() => {
+        const data = assign({}, investmentData, {
+          likelihood_to_land: null,
+        })
 
-    //     this.result = transformInvestmentForView(data)
-    //   })
+        this.result = transformInvestmentForView(data)
+      })
 
-    //   it('should set the estimated land date as null', () => {
-    //     expect(this.result).to.have.property('estimated_land_date', null)
-    //   })
-    // })
+      it('should set the likelihood to land value as null', () => {
+        expect(this.result).to.have.property('likelihood_to_land', null)
+      })
+    })
 
     context('when an actual land date is provided', () => {
       beforeEach(() => {
