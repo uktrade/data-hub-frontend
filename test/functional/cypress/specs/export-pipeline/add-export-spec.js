@@ -20,8 +20,10 @@ const {
   generateExport,
 } = require('../../../../sandbox/routes/v4/export/exports')
 const {
+  fill,
   fillTypeahead,
   fillMultiOptionTypeahead,
+  fillSelect,
 } = require('../../support/form-fillers')
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
@@ -133,6 +135,15 @@ describe('Export pipeline create', () => {
           cy.get('[data-test="field-owner"]'),
           ERROR_MESSAGES.owner
         )
+        assertFieldError(
+          cy.get('[data-test="field-estimated_export_value_years"]'),
+          ERROR_MESSAGES.estimated_export_value_years
+        )
+        assertFieldError(
+          cy.get('[data-test="field-estimated_export_value_amount"]'),
+          ERROR_MESSAGES.estimated_export_value_amount,
+          false
+        )
       })
 
       it('the form should display validation error message for too many team members', () => {
@@ -164,8 +175,16 @@ describe('Export pipeline create', () => {
           const newExport = generateExport()
           const teamMember = faker.helpers.arrayElement(autoCompleteAdvisers)
 
-          cy.get('[data-test=title-input]').type(newExport.title)
+          fill('[data-test=title-input]', newExport.title)
           fillTypeahead('[data-test=field-team_members]', teamMember.name)
+          fillSelect(
+            '[data-test=field-estimated_export_value_years]',
+            newExport.estimated_export_value_years.id
+          )
+          fill(
+            '[data-test=estimated-export-value-amount-input]',
+            newExport.estimated_export_value_amount
+          )
 
           cy.get('[data-test=submit-button]').click()
 
@@ -174,6 +193,10 @@ describe('Export pipeline create', () => {
             owner: '7d19d407-9aec-4d06-b190-d3f404627f21',
             team_members: [teamMember.id],
             company: company.id,
+            estimated_export_value_years:
+              newExport.estimated_export_value_years.id,
+            estimated_export_value_amount:
+              newExport.estimated_export_value_amount,
           })
 
           assertExactUrl('')

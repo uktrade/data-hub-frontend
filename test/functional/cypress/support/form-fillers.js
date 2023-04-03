@@ -32,6 +32,10 @@ export const fillDate = (dateId, day, month, year) => {
   cy.get(`${dateId}\\.year`).type(year)
 }
 
+export const fillSelect = (selector, value) => {
+  cy.get(selector).find('select').select(value)
+}
+
 //  Click events
 
 export const clickAddAnotherButton = (selector) => {

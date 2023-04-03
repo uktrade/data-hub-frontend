@@ -26,6 +26,7 @@ const FieldSelect = ({
   options,
   emptyOption,
   fullWidth,
+  boldLabel,
   ...rest
 }) => {
   const { error, touched, value, onChange, onBlur } = useField({
@@ -35,7 +36,7 @@ const FieldSelect = ({
     initialValue,
   })
   return (
-    <FieldWrapper {...{ name, label, legend, hint, error }}>
+    <FieldWrapper {...{ name, label, legend, hint, error, boldLabel }}>
       <StyledSelect
         fullWidth={fullWidth}
         name={name}
@@ -114,6 +115,10 @@ FieldSelect.propTypes = {
    * Always render this select component in 100% width, the default is 50%
    */
   fullWidth: PropTypes.bool,
+  /**
+   * Boolean for rendering the label in bold or not
+   */
+  boldLabel: PropTypes.bool,
 }
 
 FieldSelect.defaultProps = {
@@ -126,6 +131,7 @@ FieldSelect.defaultProps = {
   options: [],
   emptyOption: 'Please select',
   fullWidth: false,
+  boldLabel: false,
 }
 
 export default FieldSelect
