@@ -30,71 +30,89 @@ const StyledSummaryTable = styled(SummaryTable)`
     width: 50%;
   }
 `
+
 const StyledTableRow = styled(Table.Row)`
   border: 0;
-  & > tbody tr {
-    width: 50%;
-  }
 `
-const StyledLastTableRow = styled(Table.Row)`
-  border-bottom: 1px solid ${GREY_2};
-`
+
 const StyledTableCell = styled(Table.Cell)`
-  border: 0;
-  padding: 0;
-`
-
-const StyledLastTableCell = styled(Table.Cell)`
-  border: 0;
-  padding-top: 0;
-  padding-bottom: 10px;
-`
-
-const StyledCardLastTableCell = styled(Table.Cell)`
   border: 0;
   padding-bottom: 0;
 `
 
+const StyledActiveInvestmentTableRow = styled(Table.Row)`
+  border: 0;
+`
+
+const StyledActiveInvestmentTableBottomRow = styled(Table.Row)`
+  border-bottom: 1px solid ${GREY_2};
+`
+
+const StyledActiveInvestmentHeadingTableCell = styled(Table.Cell)`
+  border: 0;
+  padding: 0;
+`
+
+const StyledActiveInvestmentHeadingTableCellHeader = styled(Table.CellHeader)`
+  border: 0;
+  padding-top: 10px;
+  font-weight: 400;
+`
+
+const StyledActiveInvestmentTableCell = styled(Table.Cell)`
+  border: 0;
+`
+
+let upcomingActiveInvestments = []
+
 const ActiveInvestmentList = ({ props }) => {
-  const allInvestmentResults = props.resultList
-  for (const i of allInvestmentResults) {
-    let newDate = new Date(i.estimated_land_date)
-    i.estimated_land_date = newDate
+  const allInvestments = props.resultList
+  const allActiveInvestments = []
+  for (const investment of allInvestments) {
+    if (investment.stage.name === 'Active') {
+      let newDate = new Date(investment.estimated_land_date)
+      investment.estimated_land_date = newDate
+      allActiveInvestments.push(investment)
+    }
   }
-  allInvestmentResults.sort(
+  allActiveInvestments.sort(
     (dateA, dateB) =>
       Number(dateA.estimated_land_date) - Number(dateB.estimated_land_date)
   )
-  return allInvestmentResults.map((investment) => {
-    if (investment.stage.name === 'Active') {
-      return (
-        <>
-          <StyledTableRow>
-            <StyledTableCell colSpan={2}>
-              <StyledActiveInvestmentSubject>
-                <Link
-                  href={`/investments/projects/${investment.id}/details`}
-                  data-test="investment-page-link"
-                >
-                  {investment.name}
-                </Link>
-              </StyledActiveInvestmentSubject>
-            </StyledTableCell>
-          </StyledTableRow>
-          <StyledLastTableRow>
-            <StyledLastTableCell colSpan={1}>
-              Estimated land date
-            </StyledLastTableCell>
-            <StyledLastTableCell colSpan={1}>
-              {new Date(investment.estimated_land_date).toLocaleDateString(
-                'en-GB',
-                { month: 'long', year: 'numeric' }
-              )}
-            </StyledLastTableCell>
-          </StyledLastTableRow>
-        </>
-      )
-    }
+  if (allActiveInvestments.length > 3) {
+    upcomingActiveInvestments = allActiveInvestments.slice(0, 3)
+  } else {
+    upcomingActiveInvestments = allActiveInvestments
+    return allActiveInvestments
+  }
+  return upcomingActiveInvestments.map((activeInvestment) => {
+    return (
+      <>
+        <StyledActiveInvestmentTableRow>
+          <StyledActiveInvestmentHeadingTableCell colSpan={2}>
+            <StyledActiveInvestmentSubject>
+              <Link
+                href={`/investments/projects/${activeInvestment.id}/details`}
+                data-test="investment-page-link"
+              >
+                {activeInvestment.name}
+              </Link>
+            </StyledActiveInvestmentSubject>
+          </StyledActiveInvestmentHeadingTableCell>
+        </StyledActiveInvestmentTableRow>
+        <StyledActiveInvestmentTableBottomRow>
+          <StyledActiveInvestmentHeadingTableCellHeader colSpan={1}>
+            Estimated land date
+          </StyledActiveInvestmentHeadingTableCellHeader>
+          <StyledActiveInvestmentTableCell colSpan={1}>
+            {new Date(activeInvestment.estimated_land_date).toLocaleDateString(
+              'en-GB',
+              { month: 'long', year: 'numeric' }
+            )}
+          </StyledActiveInvestmentTableCell>
+        </StyledActiveInvestmentTableBottomRow>
+      </>
+    )
   })
 }
 
@@ -112,19 +130,38 @@ const ActiveInvestmentProjectsCard = ({
       {props.stageList?.active ? (
         <ActiveInvestmentList props={props} />
       ) : (
-        'No active investments'
+        <StyledTableRow>
+          <StyledTableCell colSpan={2}>
+            There are no active investments
+          </StyledTableCell>
+        </StyledTableRow>
       )}
 
       <StyledTableRow>
-        <StyledCardLastTableCell colSpan={2}>
-          <Link
-            href={`${queryString}/investments/projects`}
-            data-test="investment-page-link"
-          >
-            View {props.stageList?.active ? props.stageList.active : '0'} more
-            active investments
-          </Link>
-        </StyledCardLastTableCell>
+        <StyledTableCell colSpan={2}>
+          {props.stageList?.active ? (
+            <Link
+              href={`${queryString}/investments/projects`}
+              data-test="investment-page-link"
+            >
+              View{' '}
+              {props.stageList?.active > 3
+                ? props.stageList.active - upcomingActiveInvestments.length
+                : upcomingActiveInvestments.length}{' '}
+              more active{' '}
+              {props.stageList?.active - upcomingActiveInvestments.length > 1
+                ? 'investments'
+                : 'investment'}
+            </Link>
+          ) : (
+            <Link
+              href={`${queryString}/investments/projects`}
+              data-test="investment-page-link"
+            >
+              View all investments
+            </Link>
+          )}
+        </StyledTableCell>
       </StyledTableRow>
     </StyledSummaryTable>
   )
