@@ -51,7 +51,6 @@ describe('Investment project transformers', () => {
           business_activities: 'No',
           associated_non_fdi_r_and_d_project:
             'Not linked to a non-FDI R&D project',
-          likelihood_to_land: null,
         }
 
         expect(this.actualInvestmentValue).to.deep.equal(
@@ -145,10 +144,6 @@ describe('Investment project transformers', () => {
               },
             ],
           },
-          likelihood_to_land: {
-            name: 'Low',
-            id: 'b3515282-dc36-487a-a5af-320cde165575',
-          },
         }
 
         expect(this.actualInvestmentValue).to.deep.equal(
@@ -233,10 +228,6 @@ describe('Investment project transformers', () => {
                   test: 'remove-associated-link',
                 },
               ],
-            },
-            likelihood_to_land: {
-              name: 'Low',
-              id: 'b3515282-dc36-487a-a5af-320cde165575',
             },
           }
 
