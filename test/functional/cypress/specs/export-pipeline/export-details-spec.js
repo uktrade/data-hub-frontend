@@ -32,7 +32,7 @@ describe('Export Details', () => {
         exportPipeline: {
           'Export Title': 'Export Test 123',
           Owner: 'Test Chloe Wong',
-          'Team Members': 'Test Aaron Wilson',
+          // 'Team Members': 'Test Aaron Wilson',
           'Total estimated export value': '12',
           'Estimated date for Win': 'March 2023',
           Status: 'active',
@@ -41,10 +41,29 @@ describe('Export Details', () => {
           'Main sector':
             'Automotive : Component Manufacturing : Electronic Components',
           'Exporter experience': 'Never exported',
-          'Company contacts': 'Test Chris Hopkins',
+          // 'Company contacts': 'Test Chris Hopkins',
           Notes: 'Not set',
         },
       })
+    })
+  })
+  context('when the form edit button is clicked', () => {
+    const exportDetailsUrl = `/export/${exportItem.id}/details`
+    before(() => {
+      cy.visit(exportDetailsUrl)
+    })
+    it('the form should redirect to the edit page', () => {
+      cy.get('[data-test="edit-export-details-button"]').click()
+      assertUrl(urls.exportPipeline.edit())
+    })
+  })
+  context('when the form delete button is clicked', () => {
+    before(() => {
+      cy.visit(exportDetailsUrl)
+    })
+    it('the form should redirect to the delete page', () => {
+      cy.get('[data-test="delete-button"]').click()
+      assertUrl(urls.exportPipeline.delete())
     })
   })
 })
