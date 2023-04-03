@@ -8,11 +8,8 @@ import urls from '../../../../lib/urls'
 import Form from '../../../components/Form'
 import CompanyResource from '../../../components/Resource/Company'
 import ExportExperienceCategoriesResource from '../../../components/Resource/ExportExperienceCategories'
-import {
-  exportDetailsLabels,
-  exportPotentialLabels,
-} from '../../../../apps/companies/labels'
 import { transformArrayIdNameToValueLabel } from '../../../transformers'
+import { buildGreatProfile, buildExportPotential } from './transformers'
 
 const StyledDt = styled.dt`
   margin-bottom: ${SPACING_POINTS[1]}px;
@@ -20,23 +17,6 @@ const StyledDt = styled.dt`
 const StyledDd = styled.dd`
   margin-bottom: ${SPACING_POINTS[6]}px;
 `
-
-const buildGreatProfile = (greatProfileStatus) => {
-  return {
-    name: exportDetailsLabels.greatProfile,
-    value: greatProfileStatus,
-  }
-}
-
-const buildExportPotential = (company) => {
-  const exportPotentialValue = exportPotentialLabels[company.exportPotential]
-  return exportPotentialValue?.value
-    ? {
-        name: exportDetailsLabels.exportPotential,
-        value: exportPotentialValue && exportPotentialValue.text,
-      }
-    : 'No score given'
-}
 
 export default ({ companyId }) => (
   <CompanyResource id={companyId}>

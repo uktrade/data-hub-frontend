@@ -164,9 +164,6 @@ function renderExportEditCountries(req, res) {
     .render('companies/apps/exports/views/edit-countries', {
       props: {
         companyId: company.id,
-        countryOptions: metadataRepo.countryOptions.map(
-          transformObjectToOption
-        ),
         fields: [
           {
             name: EXPORTING_TO,
