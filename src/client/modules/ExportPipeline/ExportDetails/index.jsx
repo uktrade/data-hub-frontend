@@ -14,6 +14,7 @@ import { currencyGBP } from '../../../../client/utils/number-utils'
 import { Button } from 'govuk-react'
 import { BLACK, GREY_3 } from '../../../utils/colours'
 import { capitalize } from 'lodash'
+import { transformIdNameToValueLabel } from '../../../transformers'
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
@@ -30,24 +31,31 @@ const StyledButton = styled(Button)({
   marginRight: 40,
 })
 
-const ExportDetailsForm = ({ exportItem }) => {
-  const { exportId } = useParams()
-  const breadcrumbs = [
+const getBreadcrumbs = (exportItem) => {
+  const defaultBreadcrumbs = [
     {
       link: urls.dashboard(),
       text: 'Home',
     },
-    {
-      text: exportItem?.title,
-    },
   ]
+
+  if (exportItem) {
+    return [...defaultBreadcrumbs, { text: exportItem.title }]
+  }
+
+  return defaultBreadcrumbs
+}
+
+const ExportDetailsForm = ({ exportItem }) => {
+  const { exportId } = useParams()
+
   return (
     <DefaultLayout
-      heading={`${exportItem?.title}`}
+      heading={exportItem ? exportItem.title : ''}
       subheading={exportItem?.company?.name}
-      pageTitle="ExportDetails"
-      breadcrumbs={breadcrumbs}
-      useReactRouter={true}
+      pageTitle="Export details"
+      breadcrumbs={getBreadcrumbs(exportItem)}
+      useReactRouter={false}
     >
       <Task.Status
         name={TASK_GET_EXPORT_DETAIL}
@@ -57,20 +65,18 @@ const ExportDetailsForm = ({ exportItem }) => {
           payload: exportId,
           onSuccessDispatch: EXPORT_LOADED,
         }}
-        initialValues={exportItem}
       >
         {() => {
           return (
-            exportItem &&
-            title && (
+            exportItem && (
               <>
                 <StyledSummaryTable>
                   <SummaryTable.Row
                     heading="Export title"
-                    children={exportItem?.title}
+                    children={exportItem.title}
                   />
                   <SummaryTable.Row heading="Owner">
-                    {isEmpty(exportItem?.owner)
+                    {isEmpty(exportItem.owner)
                       ? 'Not set'
                       : exportItem?.owner.name}
                   </SummaryTable.Row>
@@ -78,65 +84,69 @@ const ExportDetailsForm = ({ exportItem }) => {
                     heading="Team members"
                     emptyValue="Not set"
                     hideWhenEmpty={true}
-                    value={exportItem?.teamMembers}
+                    value={exportItem.team_members.map(
+                      transformIdNameToValueLabel
+                    )}
                   ></SummaryTable.ListRow>
                   <SummaryTable.Row
                     heading="Total estimated export value"
                     hideWhenEmpty={false}
                   >
-                    {isEmpty(exportItem?.estimatedExportValueAmount)
+                    {isEmpty(exportItem.estimated_export_value_amount)
                       ? 'Not set'
-                      : `${exportItem.exportYears} / ${currencyGBP(
-                          exportItem.estimatedExportValueAmount
+                      : `${
+                          exportItem.estimated_export_value_years?.name
+                        } / ${currencyGBP(
+                          exportItem.estimated_export_value_amount
                         )}`}
                   </SummaryTable.Row>
                   <SummaryTable.Row
                     heading="Estimated date for Win"
                     hideWhenEmpty={false}
                   >
-                    {isEmpty(exportItem?.estimatedWinDate)
+                    {isEmpty(exportItem.estimated_win_date)
                       ? 'Not set'
-                      : format(exportItem?.estimatedWinDate, 'MMMM yyyy')}
+                      : format(exportItem.estimated_win_date, 'MMMM yyyy')}
                   </SummaryTable.Row>
                   <SummaryTable.Row heading="Status" hideWhenEmpty={false}>
-                    {isEmpty(exportItem?.status)
+                    {isEmpty(exportItem.status)
                       ? 'Not set'
-                      : capitalize(exportItem?.status)}
+                      : capitalize(exportItem.status)}
                   </SummaryTable.Row>
                   <SummaryTable.Row
                     heading="Export potential"
                     hideWhenEmpty={false}
                   >
-                    {isEmpty(exportItem?.exportPotential)
+                    {isEmpty(exportItem.export_potential)
                       ? 'Not set'
-                      : capitalize(exportItem?.exportPotential)}
+                      : capitalize(exportItem.export_potential)}
                   </SummaryTable.Row>
                   <SummaryTable.Row heading="Destination" hideWhenEmpty={false}>
-                    {isEmpty(exportItem?.destinationCountry)
+                    {isEmpty(exportItem.destination_country)
                       ? 'Not set'
-                      : exportItem?.destinationCountry.name}
+                      : exportItem.destination_country.name}
                   </SummaryTable.Row>
                   <SummaryTable.Row heading="Main sector" hideWhenEmpty={false}>
-                    {isEmpty(exportItem?.sector)
+                    {isEmpty(exportItem.sector)
                       ? 'Not set'
-                      : exportItem?.sector.name}
+                      : exportItem.sector.name}
                   </SummaryTable.Row>
                   <SummaryTable.Row
                     heading="Exporter experience"
                     hideWhenEmpty={false}
                   >
-                    {isEmpty(exportItem.exporterExperience)
+                    {isEmpty(exportItem.exporter_experience)
                       ? 'Not set'
-                      : exportItem.exporterExperience}
+                      : exportItem.exporter_experience.name}
                   </SummaryTable.Row>
                   <SummaryTable.ListRow
                     heading="Company contacts"
-                    value={exportItem?.contacts}
+                    value={exportItem.contacts.map(transformIdNameToValueLabel)}
                     emptyValue="Not set"
                     hideWhenEmpty={false}
                   ></SummaryTable.ListRow>
                   <SummaryTable.Row heading="Notes" hideWhenEmpty={false}>
-                    {isEmpty(exportItem?.notes) ? 'Not set' : exportItem?.notes}
+                    {isEmpty(exportItem.notes) ? 'Not set' : exportItem.notes}
                   </SummaryTable.Row>{' '}
                 </StyledSummaryTable>
                 <Container>
@@ -148,9 +158,7 @@ const ExportDetailsForm = ({ exportItem }) => {
                   >
                     Edit
                   </StyledButton>
-                  <Link href={urls.exportPipeline.details(exportId)}>
-                    Delete
-                  </Link>
+                  <Link to={urls.exportPipeline.details(exportId)}>Delete</Link>
                 </Container>
               </>
             )

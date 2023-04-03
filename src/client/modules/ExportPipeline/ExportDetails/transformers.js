@@ -1,13 +1,5 @@
-export const transformNameIdToValueLabel = (value) => {
-  if (value) {
-    const { id, name } = value
-    return {
-      value: id,
-      label: name,
-    }
-  }
-  return null
-}
+import { transformIdNameToValueLabel } from '../../../../client/transformers/index'
+
 const transformExportPipelineDetails = ({
   id,
   owner,
@@ -27,8 +19,8 @@ const transformExportPipelineDetails = ({
 }) => ({
   id,
   owner: owner,
-  teamMembers: team_members?.map(transformNameIdToValueLabel),
-  contacts: contacts?.map(transformNameIdToValueLabel),
+  teamMembers: team_members?.map(transformIdNameToValueLabel),
+  contacts: contacts?.map(transformIdNameToValueLabel),
   destinationCountry: destination_country,
   sector: sector,
   exporterExperience: exporter_experience?.name,
