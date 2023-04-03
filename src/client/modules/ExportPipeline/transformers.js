@@ -18,7 +18,12 @@ export const transformFormValuesForAPI = ({
   estimated_win_date: `${estimated_win_date.year}-${estimated_win_date.month}-01T00:00:00`,
 })
 
-const convertDateToObject = (date) => {
+/**
+ *
+ * @param {*} date Convert a date to an object format required by the FieldDate component
+ * @returns an object of the format {month:'', year:''}
+ */
+const convertDateToFieldDateObject = (date) => {
   const parsedTime = parseISO(date)
   if (isValid(parsedTime)) {
     return {
@@ -42,5 +47,5 @@ export const transformAPIValuesForForm = ({
   title,
   owner: mapApiToField(owner),
   team_members: team_members.map(mapApiToField),
-  estimated_win_date: convertDateToObject(estimated_win_date),
+  estimated_win_date: convertDateToFieldDateObject(estimated_win_date),
 })
