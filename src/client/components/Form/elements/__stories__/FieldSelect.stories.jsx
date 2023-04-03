@@ -60,6 +60,19 @@ storiesOf('Form/Form Elements/Select', module)
                 : null
             }
           />
+          <FieldSelect
+            name="testField3"
+            label="Test full width select"
+            hint="Some hint"
+            initialValue={'testOptionValue2'}
+            emptyOption={'Please select'}
+            options={[
+              { label: 'testOptionLabel1', value: 'testOptionValue1' },
+              { label: 'testOptionLabel2', value: 'testOptionValue2' },
+            ]}
+            required="Select one of the options"
+            fullWidth={true}
+          />
           <pre>{JSON.stringify(form, null, 2)}</pre>
         </>
       )}
