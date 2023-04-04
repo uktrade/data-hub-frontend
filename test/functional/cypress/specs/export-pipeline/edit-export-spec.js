@@ -173,7 +173,7 @@ describe('Export pipeline edit', () => {
       it('the form should display validation error message for mandatory inputs', () => {
         //clear any default values first
         cy.get('[data-test="title-input"]').clear()
-        cy.get('[data-test="typeahead-input"]').clear()
+        clearTypeahead('[data-test=field-owner]')
         fillSelect('[data-test=field-estimated_export_value_years]', 0)
         cy.get('[data-test="estimated-export-value-amount-input"]').clear()
         clearTypeahead('[data-test=field-destination_country]')

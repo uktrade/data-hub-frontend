@@ -124,12 +124,10 @@ describe('Export pipeline create', () => {
 
       it('the form should display validation error message for mandatory inputs', () => {
         //clear any default values first
-        cy.get('[data-test="typeahead-input"]').clear()
+        clearTypeahead('[data-test=field-owner]')
         clearTypeahead('[data-test=field-destination_country]')
         clearTypeahead('[data-test=field-sector]')
-
         cy.get('[data-test=submit-button]').click()
-
         assertFieldError(
           cy.get('[data-test="field-title"]'),
           ERROR_MESSAGES.title
