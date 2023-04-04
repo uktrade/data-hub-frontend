@@ -17,6 +17,7 @@ const {
 const {
   fillMultiOptionTypeahead,
   fillSelect,
+  clearTypeahead,
 } = require('../../support/form-fillers')
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
@@ -130,6 +131,14 @@ describe('Export pipeline edit', () => {
             })
           }
         )
+        cy.get('[data-test="field-destination_country"]').then((element) => {
+          assertFieldTypeahead({
+            element,
+            label: 'Destination',
+            value: exportItem.destination_country.name,
+            isMulti: false,
+          })
+        })
       })
     })
 
@@ -147,6 +156,7 @@ describe('Export pipeline edit', () => {
         cy.get('[data-test="typeahead-input"]').clear()
         fillSelect('[data-test=field-estimated_export_value_years]', 0)
         cy.get('[data-test="estimated-export-value-amount-input"]').clear()
+        clearTypeahead('[data-test=field-destination_country]')
 
         cy.get('[data-test=submit-button]').click()
 
@@ -164,7 +174,11 @@ describe('Export pipeline edit', () => {
         )
         assertFieldError(
           cy.get('[data-test="field-estimated_export_value_amount"]'),
-          ERROR_MESSAGES.estimated_export_value_amount,
+          ERROR_MESSAGES.estimated_export_value_amount
+        )
+        assertFieldError(
+          cy.get('[data-test="field-destination_country"]'),
+          ERROR_MESSAGES.destination_country,
           false
         )
       })
@@ -207,6 +221,10 @@ describe('Export pipeline edit', () => {
           expect(request.body).to.have.property(
             'estimated_export_value_amount',
             exportItem.estimated_export_value_amount
+          )
+          expect(request.body).to.have.property(
+            'destination_country',
+            exportItem.destination_country.id
           )
         })
 

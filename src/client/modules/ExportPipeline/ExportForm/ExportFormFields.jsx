@@ -8,6 +8,7 @@ import {
   FieldAdvisersTypeahead,
   FieldSelect,
   FieldCurrency,
+  FieldTypeahead,
 } from '../../../../client/components'
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT } from './state'
@@ -20,6 +21,7 @@ import ExportYearsResource from '../../../../client/components/Resource/ExportYe
 import { HintText } from 'govuk-react'
 import Label from '@govuk-react/label'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
+import CountriesResource from '../../../../client/components/Resource/Countries'
 
 const ExportFormFields = ({
   initialValues,
@@ -95,6 +97,13 @@ const ExportFormFields = ({
                     boldLabel={false}
                   />
                 </div>
+                <ResourceOptionsField
+                  name="destination_country"
+                  label="Destination"
+                  required={ERROR_MESSAGES.destination_country}
+                  resource={CountriesResource}
+                  field={FieldTypeahead}
+                />
               </>
             )}
           </Form>

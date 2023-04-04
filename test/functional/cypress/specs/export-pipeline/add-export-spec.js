@@ -24,6 +24,7 @@ const {
   fillTypeahead,
   fillMultiOptionTypeahead,
   fillSelect,
+  clearTypeahead,
 } = require('../../support/form-fillers')
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
@@ -124,6 +125,7 @@ describe('Export pipeline create', () => {
       it('the form should display validation error message for mandatory inputs', () => {
         //clear any default values first
         cy.get('[data-test="typeahead-input"]').clear()
+        clearTypeahead('[data-test=field-destination_country]')
 
         cy.get('[data-test=submit-button]').click()
 
@@ -141,7 +143,11 @@ describe('Export pipeline create', () => {
         )
         assertFieldError(
           cy.get('[data-test="field-estimated_export_value_amount"]'),
-          ERROR_MESSAGES.estimated_export_value_amount,
+          ERROR_MESSAGES.estimated_export_value_amount
+        )
+        assertFieldError(
+          cy.get('[data-test="field-destination_country"]'),
+          ERROR_MESSAGES.destination_country,
           false
         )
       })
@@ -185,6 +191,10 @@ describe('Export pipeline create', () => {
             '[data-test=estimated-export-value-amount-input]',
             newExport.estimated_export_value_amount
           )
+          fillTypeahead(
+            '[data-test=field-destination_country]',
+            newExport.destination_country.name
+          )
 
           cy.get('[data-test=submit-button]').click()
 
@@ -197,6 +207,7 @@ describe('Export pipeline create', () => {
               newExport.estimated_export_value_years.id,
             estimated_export_value_amount:
               newExport.estimated_export_value_amount,
+            destination_country: newExport.destination_country.id,
           })
 
           assertExactUrl('')
