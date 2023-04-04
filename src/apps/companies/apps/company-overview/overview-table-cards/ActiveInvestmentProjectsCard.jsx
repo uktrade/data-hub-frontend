@@ -150,11 +150,11 @@ const ActiveInvestmentProjectsCard = ({
               {props.stageList?.active === 4 &&
                 `View ${
                   props.stageList.active - upcomingActiveInvestments.length
-                } more investment`}
+                } more active investment`}
               {props.stageList?.active > 4 &&
                 `View ${
                   props.stageList.active - upcomingActiveInvestments.length
-                } more investments`}
+                } more active investments`}
             </Link>
           ) : (
             <Link
