@@ -320,6 +320,7 @@ app.get(
 app.get('/v4/metadata/one-list-tier', v4Metadata.oneListTier)
 app.get('/v4/metadata/trade-agreement', v4Metadata.tradeAgreement)
 app.get('/v4/metadata/export-years', v4Metadata.exportYears)
+app.get('/v4/metadata/export-experience', v4Metadata.exportExperience)
 
 // Ping
 app.get('/ping.xml', healthcheck.ping)
