@@ -6,11 +6,12 @@ import {
   FieldInput,
   FormLayout,
   FieldAdvisersTypeahead,
+  FieldRadios,
 } from '../../../../client/components'
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT } from './state'
 import Task from '../../../components/Task'
-import { ERROR_MESSAGES } from './constants'
+import { ERROR_MESSAGES, SectorOptions } from './constants'
 import { transformAPIValuesForForm } from '../transformers'
 import { validateTeamMembers } from './validation'
 
@@ -60,6 +61,13 @@ const ExportFormFields = ({
                   hint="You can add up to 5 team members. Team members can view and edit export functionality"
                   isMulti={true}
                   validate={validateTeamMembers}
+                />
+                <FieldRadios
+                  name="export_potential"
+                  label="Export potential"
+                  required={ERROR_MESSAGES.export_potential}
+                  field={FieldRadios}
+                  options={SectorOptions}
                 />
               </>
             )}

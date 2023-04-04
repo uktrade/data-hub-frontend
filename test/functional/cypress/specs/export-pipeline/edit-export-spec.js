@@ -1,5 +1,5 @@
 const urls = require('../../../../../src/lib/urls')
-const { assertUrl } = require('../../support/assertions')
+const { assertUrl, assertFieldRadios } = require('../../support/assertions')
 
 const {
   assertLocalHeader,
@@ -18,6 +18,8 @@ const { fillMultiOptionTypeahead } = require('../../support/form-fillers')
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
 const { faker } = require('@faker-js/faker')
+
+import { capitalize } from 'lodash'
 
 describe('Export pipeline edit', () => {
   const exportItem = exportItems.results[0]
@@ -108,6 +110,14 @@ describe('Export pipeline edit', () => {
           '[data-test="field-team_members"]',
           exportItem.team_members.map((t) => t.name)
         )
+        cy.get('[data-test="field-export_potential"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Export potential',
+            optionsCount: 3,
+            value: capitalize(exportItem.export_potential),
+          })
+        })
       })
     })
 
@@ -166,6 +176,10 @@ describe('Export pipeline edit', () => {
           expect(request.body).to.have.property('owner', exportItem.owner.id)
           expect(request.body.team_members).to.deep.equal(
             exportItem.team_members.map((x) => x.id)
+          )
+          expect(request.body).to.have.property(
+            'export_potential',
+            exportItem.export_potential
           )
         })
 

@@ -133,6 +133,10 @@ describe('Export pipeline create', () => {
           cy.get('[data-test="field-owner"]'),
           ERROR_MESSAGES.owner
         )
+        assertFieldError(
+          cy.get('[data-test="field-export_potential"]'),
+          ERROR_MESSAGES.export_potential
+        )
       })
 
       it('the form should display validation error message for too many team members', () => {
@@ -166,6 +170,7 @@ describe('Export pipeline create', () => {
 
           cy.get('[data-test=title-input]').type(newExport.title)
           fillTypeahead('[data-test=field-team_members]', teamMember.name)
+          cy.get('[type="radio"]').check(newExport.export_potential)
 
           cy.get('[data-test=submit-button]').click()
 
@@ -174,6 +179,7 @@ describe('Export pipeline create', () => {
             owner: '7d19d407-9aec-4d06-b190-d3f404627f21',
             team_members: [teamMember.id],
             company: company.id,
+            export_potential: newExport.export_potential,
           })
 
           assertExactUrl('')
