@@ -1,4 +1,7 @@
-const mapApiToField = ({ id, name }) => ({ value: id, label: name })
+import {
+  transformArrayIdNameToValueLabel,
+  transformIdNameToValueLabel,
+} from '../../transformers'
 
 export const transformFormValuesForAPI = ({
   company,
@@ -33,10 +36,10 @@ export const transformAPIValuesForForm = ({
   company: company.id,
   id,
   title,
-  owner: mapApiToField(owner),
-  team_members: team_members.map(mapApiToField),
+  owner: transformIdNameToValueLabel(owner),
+  team_members: transformArrayIdNameToValueLabel(team_members),
   estimated_export_value_years: estimated_export_value_years.id,
   estimated_export_value_amount: estimated_export_value_amount,
   destination_country:
-    destination_country && mapApiToField(destination_country),
+    destination_country && transformIdNameToValueLabel(destination_country),
 })

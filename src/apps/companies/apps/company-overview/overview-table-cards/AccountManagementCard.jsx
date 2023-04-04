@@ -83,9 +83,7 @@ const AccountManagementCard = ({ company, queryString }) => {
         heading={company.isItaTierDAccount ? 'Lead ITA' : 'Account Manager'}
       >
         {company?.one_list_group_global_account_manager?.name ? (
-          <Link
-            href={`/contacts/${company.one_list_group_global_account_manager.id}`}
-          >
+          <Link href={`/companies/${company.id}/advisers`}>
             {company.one_list_group_global_account_manager.name}
           </Link>
         ) : (
