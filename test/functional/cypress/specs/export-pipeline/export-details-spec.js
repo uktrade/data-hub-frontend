@@ -3,6 +3,7 @@ import urls from '../../../../../src/lib/urls'
 const {
   assertBreadcrumbs,
   assertKeyValueTable,
+  assertUrl,
 } = require('../../support/assertions')
 
 const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
@@ -25,42 +26,33 @@ describe('Export Details summary ', () => {
     })
 
     it('should display the "Export" details summary table', () => {
-      assertKeyValueTable({
-        dataTest: 'exportTitle',
-        heading: 'Export Test 123',
-        showEditLink: true,
-        exportPipeline: {
-          'Export Title': 'Export Test 123',
-          Owner: 'Test Chloe Wong',
-          'Team Members': 'Test Aaron Wilson',
-          'Total estimated export value': '12',
-          'Estimated date for Win': 'March 2023',
-          Status: 'active',
-          'Export potential': 'high',
-          Destination: 'Afghanistan',
-          'Main sector':
-            'Automotive : Component Manufacturing : Electronic Components',
-          'Exporter experience': 'Never exported',
-          'Company contacts': 'Test Chris Hopkins',
-          Notes: 'Not set',
-        },
+      assertKeyValueTable('bodyMainContent', {
+        'Export Title': exportItem.title,
+        Owner: exportItem.owner.name,
+        'Team Members': exportItem.team_members,
+        'Total estimated export value':
+          exportItem.estimated_export_value_amount,
+        'Estimated date for Win': exportItem.estimated_win_date,
+        Status: exportItem.status,
+        'Export potential': exportItem.export_potential,
+        Destination: exportItem.destination_country,
+        'Main sector': exportItem.sector,
+        'Exporter experience': exportItem.exporter_experience,
+        'Company contacts': exportItem.contacts,
+        Notes: exportItem.notes,
       })
     })
   })
+
   context('when the form edit button is clicked', () => {
     const exportDetailsUrl = `/export/${exportItem.id}/details`
-    before(() => {
-      cy.visit(exportDetailsUrl)
-    })
-    it.only('the form should redirect to the edit page', () => {
+    it('the form should redirect to the edit page', () => {
       cy.get('[data-test="edit-export-details-button"]').click()
       assertUrl(urls.exportPipeline.edit())
     })
   })
+
   context('when the form delete button is clicked', () => {
-    before(() => {
-      cy.visit(exportDetailsUrl)
-    })
     it('the form should redirect to the delete page', () => {
       cy.get('[data-test="delete-button"]').click()
       assertUrl(urls.exportPipeline.delete())
