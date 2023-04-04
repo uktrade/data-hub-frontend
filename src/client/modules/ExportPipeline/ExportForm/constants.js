@@ -4,9 +4,3 @@ export const ERROR_MESSAGES = {
   team_members: 'You can only add 5 team members',
   export_potential: 'Select an export potential',
 }
-
-export const SectorOptions = [
-  { label: 'High', value: 'high' },
-  { label: 'Medium', value: 'medium' },
-  { label: 'Low', value: 'low' },
-]

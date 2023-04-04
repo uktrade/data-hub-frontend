@@ -11,9 +11,10 @@ import {
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT } from './state'
 import Task from '../../../components/Task'
-import { ERROR_MESSAGES, SectorOptions } from './constants'
+import { ERROR_MESSAGES } from './constants'
 import { transformAPIValuesForForm } from '../transformers'
 import { validateTeamMembers } from './validation'
+import { SECTOR_LABELS } from './labels'
 
 const ExportFormFields = ({
   initialValues,
@@ -67,7 +68,7 @@ const ExportFormFields = ({
                   label="Export potential"
                   required={ERROR_MESSAGES.export_potential}
                   field={FieldRadios}
-                  options={SectorOptions}
+                  options={SECTOR_LABELS}
                 />
               </>
             )}
