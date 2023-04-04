@@ -20,6 +20,7 @@ import Interaction from './Interaction'
 import Event from './Event'
 import CompanyOneListTeam from './CompanyOneListTeam'
 import ExportYears from './ExportYears'
+import ExportExperience from './ExportExperience'
 
 export default {
   ...Advisers.tasks,
@@ -44,4 +45,5 @@ export default {
   ...Event.tasks,
   ...CompanyOneListTeam.tasks,
   ...ExportYears.tasks,
+  ...ExportExperience.tasks,
 }

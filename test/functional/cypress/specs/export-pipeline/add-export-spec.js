@@ -166,6 +166,9 @@ describe('Export pipeline create', () => {
 
           cy.get('[data-test=title-input]').type(newExport.title)
           fillTypeahead('[data-test=field-team_members]', teamMember.name)
+          cy.get('[name="exporter_experience"]').check(
+            newExport.exporter_experience.id
+          )
 
           cy.get('[data-test=submit-button]').click()
 
@@ -174,6 +177,7 @@ describe('Export pipeline create', () => {
             owner: '7d19d407-9aec-4d06-b190-d3f404627f21',
             team_members: [teamMember.id],
             company: company.id,
+            exporter_experience: newExport.exporter_experience.id,
           })
 
           assertExactUrl('')

@@ -1,5 +1,5 @@
 const urls = require('../../../../../src/lib/urls')
-const { assertUrl } = require('../../support/assertions')
+const { assertUrl, assertFieldRadios } = require('../../support/assertions')
 
 const {
   assertLocalHeader,
@@ -108,6 +108,14 @@ describe('Export pipeline edit', () => {
           '[data-test="field-team_members"]',
           exportItem.team_members.map((t) => t.name)
         )
+        cy.get('[data-test="field-exporter_experience"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Exporter experience (optional)',
+            optionsCount: 5,
+            value: exportItem.exporter_experience.name,
+          })
+        })
       })
     })
 
@@ -166,6 +174,10 @@ describe('Export pipeline edit', () => {
           expect(request.body).to.have.property('owner', exportItem.owner.id)
           expect(request.body.team_members).to.deep.equal(
             exportItem.team_members.map((x) => x.id)
+          )
+          expect(request.body).to.have.property(
+            'exporter_experience',
+            exportItem.exporter_experience.id
           )
         })
 

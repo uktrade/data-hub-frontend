@@ -6,6 +6,7 @@ import {
   FieldInput,
   FormLayout,
   FieldAdvisersTypeahead,
+  FieldRadios,
 } from '../../../../client/components'
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT } from './state'
@@ -13,6 +14,8 @@ import Task from '../../../components/Task'
 import { ERROR_MESSAGES } from './constants'
 import { transformAPIValuesForForm } from '../transformers'
 import { validateTeamMembers } from './validation'
+import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
+import ExportExperience from '../../../components/Resource/ExportExperience'
 
 const ExportFormFields = ({
   initialValues,
@@ -60,6 +63,12 @@ const ExportFormFields = ({
                   hint="You can add up to 5 team members. Team members can view and edit export functionality"
                   isMulti={true}
                   validate={validateTeamMembers}
+                />
+                <ResourceOptionsField
+                  resource={ExportExperience}
+                  field={FieldRadios}
+                  name="exporter_experience"
+                  label="Exporter experience (optional)"
                 />
               </>
             )}
