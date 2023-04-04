@@ -83,7 +83,6 @@ const ActiveInvestmentList = ({ props }) => {
     upcomingActiveInvestments = allActiveInvestments.slice(0, 3)
   } else {
     upcomingActiveInvestments = allActiveInvestments
-    return allActiveInvestments
   }
   return upcomingActiveInvestments.map((activeInvestment) => {
     return (
@@ -147,14 +146,15 @@ const ActiveInvestmentProjectsCard = ({
               href={`${queryString}/investments/projects`}
               data-test="active-investments-page-link"
             >
-              View{' '}
-              {props.stageList?.active > 3
-                ? props.stageList.active - upcomingActiveInvestments.length
-                : upcomingActiveInvestments.length}{' '}
-              more active{' '}
-              {props.stageList?.active - upcomingActiveInvestments.length > 1
-                ? 'investments'
-                : 'investment'}
+              {props.stageList?.active <= 3 && 'View all investments'}
+              {props.stageList?.active === 4 &&
+                `View ${
+                  props.stageList.active - upcomingActiveInvestments.length
+                } more investment`}
+              {props.stageList?.active > 4 &&
+                `View ${
+                  props.stageList.active - upcomingActiveInvestments.length
+                } more investments`}
             </Link>
           ) : (
             <Link
