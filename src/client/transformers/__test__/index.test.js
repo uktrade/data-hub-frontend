@@ -30,12 +30,12 @@ describe('transformIdNameToValueLabel', () => {
 
 describe('transformArrayIdNameToValueLabel', () => {
   context('When value is missing', () => {
-    it('should return null', () => {
+    it('should return an empty array', () => {
       expect(transformArrayIdNameToValueLabel()).to.be.empty
     })
   })
   context('When value is not a populated array', () => {
-    it('should return null', () => {
+    it('should return an empty array', () => {
       expect(transformArrayIdNameToValueLabel([])).to.be.empty
     })
   })
