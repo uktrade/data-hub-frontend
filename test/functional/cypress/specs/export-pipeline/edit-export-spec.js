@@ -1,5 +1,5 @@
 const urls = require('../../../../../src/lib/urls')
-const { assertUrl } = require('../../support/assertions')
+const { assertUrl, assertFieldTextarea } = require('../../support/assertions')
 
 const {
   assertLocalHeader,
@@ -120,7 +120,7 @@ describe('Export pipeline edit', () => {
           })
         })
         cy.get('[data-test="field-notes"]').then((element) => {
-          assertFieldInput({
+          assertFieldTextarea({
             element,
             label: 'Notes (optional)',
             hint: 'Add further details about the export, such as additional sectors and country regions',

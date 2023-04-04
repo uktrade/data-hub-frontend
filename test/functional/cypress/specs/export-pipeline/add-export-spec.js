@@ -20,6 +20,7 @@ const {
   generateExport,
 } = require('../../../../sandbox/routes/v4/export/exports')
 const {
+  fill,
   fillTypeahead,
   fillMultiOptionTypeahead,
   clearTypeahead,
@@ -171,12 +172,13 @@ describe('Export pipeline create', () => {
           const newExport = generateExport()
           const teamMember = faker.helpers.arrayElement(autoCompleteAdvisers)
 
-          cy.get('[data-test=title-input]').type(newExport.title)
+          fill('[data-test=title-input]', newExport.title)
           fillTypeahead('[data-test=field-team_members]', teamMember.name)
           fillTypeahead(
             '[data-test=field-destination_country]',
             newExport.destination_country.name
           )
+          fill('[data-test=field-notes]', newExport.notes)
 
           cy.get('[data-test=submit-button]').click()
 
