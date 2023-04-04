@@ -120,7 +120,7 @@ describe('Export pipeline list', () => {
 
   before(() => {
     cy.setUserFeatures(['export-pipeline'])
-    cy.intercept('GET', '/api-proxy/v4/export?limit=10&page=1', {
+    cy.intercept('GET', '/api-proxy/v4/export?limit=10&page=1&offset=0', {
       body: {
         count: exportList.length,
         results: exportList,
