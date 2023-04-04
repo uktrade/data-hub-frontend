@@ -377,7 +377,7 @@ describe('Interaction details', () => {
             Service: 'Providing Investment Advice & Information',
             Notes: 'This is a dummy interaction for testing',
             'Date of interaction': '5 June 2017',
-            'Adviser(s)': 'DIT Staff, Digital Data Hub - Live Service',
+            'Adviser(s)': 'DBT Staff, Digital Data Hub - Live Service',
             'Communication channel': 'Email/Website',
             'Related large capital opportunity': {
               href: investments.opportunities.details(
@@ -446,7 +446,7 @@ describe('Interaction details', () => {
           'Policy areas':
             'Access to Finance, Access to Public Funding (inc. EU funding), Agriculture (Regulation/Support), Announcement Feedback, Government Communications, Health and Social Care (NHS), Imports, Inclusive Economy, Standards, State Aid, Supply Chains and Raw Materials, Tariffs and Trade Policy, COP26 Energy Transitions, including RE100 and EP100, COP26 Finance, including TCFD, COP26 Nature, including supply chains',
           'Business intelligence':
-            'Any comments the company made to you on areas such as issues impacting them or feedback on government policy. This information will be visible to other Data Hub users, the Business Intelligence Unit and may also be shared within DIT.',
+            'Any comments the company made to you on areas such as issues impacting them or feedback on government policy. This information will be visible to other Data Hub users, the Business Intelligence Unit and may also be shared within DBT.',
           'Named trade agreement(s)':
             'EU-UK Trade Co-operation Agreement, Free Trade Agreements: Gulf Cooperation Council (GCC), Test agreement, UK-Iceland, Liechtenstein and Norway Free Trade Agreement, UK-Singapore Digital Economy Agreement',
           'Helped remove an export barrier': 'No',
