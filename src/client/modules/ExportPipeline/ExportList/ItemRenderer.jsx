@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Link from '@govuk-react/link'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
@@ -102,6 +103,27 @@ const ItemRenderer = (item) => {
       </ToggleSection>
     </ListItem>
   )
+}
+
+const shape = PropTypes.shape({
+  name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+}).isRequired
+
+ItemRenderer.propTypes = {
+  item: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    company: shape,
+    owner: shape,
+    destination_country: shape,
+    sector: shape,
+    estimated_export_value_years: shape,
+    created_on: PropTypes.string.isRequired,
+    estimated_export_value_amount: PropTypes.string.isRequired,
+    estimated_win_date: PropTypes.string.isRequired,
+    export_potential: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+  }),
 }
 
 export default ItemRenderer
