@@ -19,6 +19,7 @@ describe('transformFormValuesForAPI', () => {
           estimated_export_value_years: 2,
           estimated_export_value_amount: 676,
           destination_country: { value: 'h', label: 'i' },
+          status: 'won',
           notes: 'large amount of text',
         })
       ).to.be.deep.equal({
@@ -30,6 +31,7 @@ describe('transformFormValuesForAPI', () => {
         estimated_export_value_years: 2,
         estimated_export_value_amount: 676,
         destination_country: 'h',
+        status: 'won',
         notes: 'large amount of text',
       })
     })
@@ -49,6 +51,7 @@ describe('transformAPIValuesForForm', () => {
           estimated_export_value_years: { id: 1, name: '1 year' },
           estimated_export_value_amount: 34,
           destination_country: { id: 'f', name: 'g' },
+          status: 'won',
           notes: 'large amount of text',
         })
       ).to.be.deep.equal({
@@ -60,6 +63,7 @@ describe('transformAPIValuesForForm', () => {
         estimated_export_value_years: 1,
         estimated_export_value_amount: 34,
         destination_country: { value: 'f', label: 'g' },
+        status: 'won',
         notes: 'large amount of text',
       })
     })

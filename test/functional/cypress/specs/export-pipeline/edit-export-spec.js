@@ -3,9 +3,7 @@ const {
   assertUrl,
   assertFieldSelect,
   assertFieldTextarea,
-} = require('../../support/assertions')
-
-const {
+  assertFieldRadios,
   assertLocalHeader,
   assertBreadcrumbs,
   assertFlashMessage,
@@ -26,6 +24,7 @@ const {
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
 const { faker } = require('@faker-js/faker')
+const { capitalize } = require('lodash')
 
 describe('Export pipeline edit', () => {
   const exportItem = exportItems.results[0]
@@ -143,6 +142,14 @@ describe('Export pipeline edit', () => {
             isMulti: false,
           })
         })
+        cy.get('[data-test="field-status"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Export status',
+            optionsCount: 3,
+            value: capitalize(exportItem.status),
+          })
+        })
         cy.get('[data-test="field-notes"]').then((element) => {
           assertFieldTextarea({
             element,
@@ -239,6 +246,7 @@ describe('Export pipeline edit', () => {
             'destination_country',
             exportItem.destination_country.id
           )
+          expect(request.body).to.have.property('status', exportItem.status)
           expect(request.body).to.have.property('notes', exportItem.notes)
         })
 

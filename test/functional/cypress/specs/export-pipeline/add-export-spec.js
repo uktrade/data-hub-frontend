@@ -7,12 +7,10 @@ const {
   assertPayload,
   assertFieldTypeahead,
   assertFieldError,
-} = require('../../support/assertions')
-
-const {
   assertLocalHeader,
   assertBreadcrumbs,
 } = require('../../support/assertions')
+
 const {
   ERROR_MESSAGES,
 } = require('../../../../../src/client/modules/ExportPipeline/ExportForm/constants')
@@ -151,6 +149,10 @@ describe('Export pipeline create', () => {
           ERROR_MESSAGES.destination_country,
           false
         )
+        assertFieldError(
+          cy.get('[data-test="field-status"]'),
+          ERROR_MESSAGES.status
+        )
       })
 
       it('the form should display validation error message for too many team members', () => {
@@ -196,6 +198,7 @@ describe('Export pipeline create', () => {
             '[data-test=field-destination_country]',
             newExport.destination_country.name
           )
+          cy.get('[name="status"]').check(newExport.status)
           fill('[data-test=field-notes]', newExport.notes)
 
           cy.get('[data-test=submit-button]').click()
@@ -210,6 +213,7 @@ describe('Export pipeline create', () => {
             estimated_export_value_amount:
               newExport.estimated_export_value_amount,
             destination_country: newExport.destination_country.id,
+            status: newExport.status,
             notes: newExport.notes,
           })
 

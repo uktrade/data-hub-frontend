@@ -10,6 +10,7 @@ import {
   FieldCurrency,
   FieldTypeahead,
   FieldTextarea,
+  FieldRadios,
 } from '../../../../client/components'
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT } from './state'
@@ -23,6 +24,7 @@ import { HintText } from 'govuk-react'
 import Label from '@govuk-react/label'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
 import CountriesResource from '../../../../client/components/Resource/Countries'
+import { STATUS_LABELS } from './labels'
 
 const ExportFormFields = ({
   initialValues,
@@ -104,6 +106,13 @@ const ExportFormFields = ({
                   required={ERROR_MESSAGES.destination_country}
                   resource={CountriesResource}
                   field={FieldTypeahead}
+                />
+                <FieldRadios
+                  name="status"
+                  label="Export status"
+                  required={ERROR_MESSAGES.status}
+                  field={FieldRadios}
+                  options={STATUS_LABELS}
                 />
                 <FieldTextarea
                   name="notes"
