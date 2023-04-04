@@ -143,7 +143,8 @@ describe('Export pipeline create', () => {
         )
         assertFieldError(
           cy.get('[data-test="field-estimated_export_value_amount"]'),
-          ERROR_MESSAGES.estimated_export_value_amount
+          ERROR_MESSAGES.estimated_export_value_amount,
+          false
         )
         assertFieldError(
           cy.get('[data-test="field-destination_country"]'),
