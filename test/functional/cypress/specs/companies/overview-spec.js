@@ -263,7 +263,7 @@ describe('Company overview page', () => {
         .click()
       cy.location('pathname').should(
         'eq',
-        '/companies/w2c34b41-1d5a-4b4b-7685-7c53ff2868dg/advisers'
+        `/companies/${fixtures.company.oneListTierDita.id}/advisers`
       )
       cy.go('back')
     })
@@ -291,7 +291,7 @@ describe('Company overview page', () => {
           .click()
         cy.location('pathname').should(
           'eq',
-          '/companies/ba8fae21-2895-47cf-90ba-9273c94dab88/advisers'
+          `/companies/${fixtures.company.allOverviewDetails.id}/advisers`
         )
         cy.go('back')
       })
