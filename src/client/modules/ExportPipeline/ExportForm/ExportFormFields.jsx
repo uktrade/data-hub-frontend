@@ -10,6 +10,7 @@ import {
   FieldSelect,
   FieldCurrency,
   FieldTypeahead,
+  FieldTextarea,
 } from '../../../../client/components'
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT } from './state'
@@ -111,6 +112,11 @@ const ExportFormFields = ({
                   field={FieldRadios}
                   name="exporter_experience"
                   label="Exporter experience (optional)"
+                />
+                <FieldTextarea
+                  name="notes"
+                  label="Notes (optional)"
+                  hint="Add further details about the export, such as additional sectors and country regions"
                 />
               </>
             )}

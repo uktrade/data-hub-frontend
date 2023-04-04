@@ -199,6 +199,7 @@ describe('Export pipeline create', () => {
           cy.get('[name="exporter_experience"]').check(
             newExport.exporter_experience.id
           )
+          fill('[data-test=field-notes]', newExport.notes)
 
           cy.get('[data-test=submit-button]').click()
 
@@ -213,6 +214,7 @@ describe('Export pipeline create', () => {
               newExport.estimated_export_value_amount,
             destination_country: newExport.destination_country.id,
             exporter_experience: newExport.exporter_experience.id,
+            notes: newExport.notes,
           })
 
           assertExactUrl('')

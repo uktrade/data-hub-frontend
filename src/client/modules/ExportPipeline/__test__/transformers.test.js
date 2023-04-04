@@ -20,6 +20,7 @@ describe('transformFormValuesForAPI', () => {
           estimated_export_value_amount: 676,
           destination_country: { value: 'h', label: 'i' },
           exporter_experience: 'never',
+          notes: 'large amount of text',
         })
       ).to.be.deep.equal({
         company: 456,
@@ -31,6 +32,7 @@ describe('transformFormValuesForAPI', () => {
         estimated_export_value_amount: 676,
         destination_country: 'h',
         exporter_experience: 'never',
+        notes: 'large amount of text',
       })
     })
   })
@@ -50,6 +52,7 @@ describe('transformAPIValuesForForm', () => {
           estimated_export_value_amount: 34,
           destination_country: { id: 'f', name: 'g' },
           exporter_experience: { id: 'never', name: 'Never' },
+          notes: 'large amount of text',
         })
       ).to.be.deep.equal({
         id: 234,
@@ -61,6 +64,7 @@ describe('transformAPIValuesForForm', () => {
         estimated_export_value_amount: 34,
         destination_country: { value: 'f', label: 'g' },
         exporter_experience: 'never',
+        notes: 'large amount of text',
       })
     })
   })
