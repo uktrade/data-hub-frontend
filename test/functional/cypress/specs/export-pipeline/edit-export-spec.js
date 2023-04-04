@@ -14,7 +14,10 @@ const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 const {
   ERROR_MESSAGES,
 } = require('../../../../../src/client/modules/ExportPipeline/ExportForm/constants')
-const { fillMultiOptionTypeahead } = require('../../support/form-fillers')
+const {
+  fillMultiOptionTypeahead,
+  clearTypeahead,
+} = require('../../support/form-fillers')
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
 const { faker } = require('@faker-js/faker')
@@ -108,6 +111,14 @@ describe('Export pipeline edit', () => {
           '[data-test="field-team_members"]',
           exportItem.team_members.map((t) => t.name)
         )
+        cy.get('[data-test="field-destination_country"]').then((element) => {
+          assertFieldTypeahead({
+            element,
+            label: 'Destination',
+            value: exportItem.destination_country.name,
+            isMulti: false,
+          })
+        })
       })
     })
 
@@ -123,6 +134,7 @@ describe('Export pipeline edit', () => {
         //clear any default values first
         cy.get('[data-test="title-input"]').clear()
         cy.get('[data-test="typeahead-input"]').clear()
+        clearTypeahead('[data-test=field-destination_country]')
 
         cy.get('[data-test=submit-button]').click()
 
@@ -133,6 +145,11 @@ describe('Export pipeline edit', () => {
         assertFieldError(
           cy.get('[data-test="field-owner"]'),
           ERROR_MESSAGES.owner
+        )
+        assertFieldError(
+          cy.get('[data-test="field-destination_country"]'),
+          ERROR_MESSAGES.destination_country,
+          false
         )
       })
 
@@ -166,6 +183,10 @@ describe('Export pipeline edit', () => {
           expect(request.body).to.have.property('owner', exportItem.owner.id)
           expect(request.body.team_members).to.deep.equal(
             exportItem.team_members.map((x) => x.id)
+          )
+          expect(request.body).to.have.property(
+            'destination_country',
+            exportItem.destination_country.id
           )
         })
 

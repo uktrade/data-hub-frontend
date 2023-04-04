@@ -45,3 +45,7 @@ export const clickSaveAndReturnButton = () => {
 export const clickReturnWithoutSavingButton = () => {
   cy.contains('Return without saving').click()
 }
+
+export const clearTypeahead = (selector) => {
+  cy.get(selector).find('input').clear().type('{esc}')
+}
