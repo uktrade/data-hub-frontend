@@ -752,7 +752,9 @@ describe('Company overview page', () => {
           .click()
         cy.location('pathname').should(
           'eq',
-          '/investments/projects/0e686ea4-b8a2-4337-aec4-114d92ad4588/details'
+          `${urls.investments.projects.details(
+            '0e686ea4-b8a2-4337-aec4-114d92ad4588'
+          )}`
         )
         cy.go('back')
         cy.get('[data-test="estimated-land-date New rollercoaster"]')
@@ -764,7 +766,9 @@ describe('Company overview page', () => {
           .click()
         cy.location('pathname').should(
           'eq',
-          '/investments/projects/18750b26-a8c3-41b2-8d3a-fb0b930c2270/details'
+          `${urls.investments.projects.details(
+            '18750b26-a8c3-41b2-8d3a-fb0b930c2270'
+          )}`
         )
         cy.go('back')
         cy.get('[data-test="estimated-land-date New restaurant"]')
@@ -776,7 +780,9 @@ describe('Company overview page', () => {
           .click()
         cy.location('pathname').should(
           'eq',
-          '/investments/projects/3520b973-0e77-46cf-be75-3585f2f6691e/details'
+          `${urls.investments.projects.details(
+            '3520b973-0e77-46cf-be75-3585f2f6691e'
+          )}`
         )
         cy.go('back')
         cy.get('[data-test="estimated-land-date Wig factory"]')
@@ -789,7 +795,9 @@ describe('Company overview page', () => {
           .click()
         cy.location('pathname').should(
           'eq',
-          '/companies/ba8fae21-2895-47cf-90ba-9273c94dab88/investments/projects'
+          `${urls.companies.investments.companyInvestmentProjects(
+            'ba8fae21-2895-47cf-90ba-9273c94dab88'
+          )}`
         )
         cy.go('back')
       })
@@ -824,7 +832,9 @@ describe('Company overview page', () => {
           .click()
         cy.location('pathname').should(
           'eq',
-          '/companies/1111ae21-2895-47cf-90ba-9273c94dab88/investments/projects'
+          `${urls.companies.investments.companyInvestmentProjects(
+            '1111ae21-2895-47cf-90ba-9273c94dab88'
+          )}`
         )
         cy.go('back')
       })
