@@ -47,7 +47,9 @@ export const transformCompany = (companyObject, companyArray) => {
     <SummaryTable.Row
       heading="Company"
       children={
-        <Link href={urls.companies.details(company.id)}>{company.name}</Link>
+        <Link href={urls.companies.overview.index(company.id)}>
+          {company.name}
+        </Link>
       }
     />
   )

@@ -73,7 +73,7 @@ const ContactLocalHeader = ({ contact, writeFlashMessage }) => {
           <GridCol>
             <StyledLink
               data-test="company-link"
-              href={urls.companies.details(contact.company.id)}
+              href={urls.companies.overview.index(contact.company.id)}
             >
               {contact.company.name}
             </StyledLink>

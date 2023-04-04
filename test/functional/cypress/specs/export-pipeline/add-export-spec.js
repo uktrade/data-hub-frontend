@@ -20,8 +20,10 @@ const {
   generateExport,
 } = require('../../../../sandbox/routes/v4/export/exports')
 const {
+  fill,
   fillTypeahead,
   fillMultiOptionTypeahead,
+  fillSelect,
   clearTypeahead,
 } = require('../../support/form-fillers')
 const autoCompleteAdvisers =
@@ -136,9 +138,24 @@ describe('Export pipeline create', () => {
           ERROR_MESSAGES.owner
         )
         assertFieldError(
-          cy.get('[data-test="field-estimated_win_date"]'),
-          ERROR_MESSAGES.estimated_win_date.required
+          cy.get('[data-test="field-estimated_export_value_years"]'),
+          ERROR_MESSAGES.estimated_export_value_years
         )
+        assertFieldError(
+          cy.get('[data-test="field-estimated_export_value_amount"]'),
+          ERROR_MESSAGES.estimated_export_value_amount,
+          false
+        )
+        it('the form should display validation error message for invalid estimated dates', () => {
+          cy.get('[data-test=estimated_win_date-month]').type('65')
+          cy.get('[data-test=estimated_win_date-year]').type('-54')
+          cy.get('[data-test=submit-button]').click()
+
+          assertFieldError(
+            cy.get('[data-test="field-estimated_win_date"]'),
+            ERROR_MESSAGES.estimated_win_date.invalid
+          )
+        })
         assertFieldError(
           cy.get('[data-test="field-destination_country"]'),
           ERROR_MESSAGES.destination_country,
@@ -161,8 +178,8 @@ describe('Export pipeline create', () => {
       })
 
       it('the form should display validation error message for invalid estimated dates', () => {
-        cy.get('[data-test=estimated_win_date-month]').type('65')
-        cy.get('[data-test=estimated_win_date-year]').type('-54')
+        fill('[data-test=estimated_win_date-month]', '65')
+        fill('[data-test=estimated_win_date-year]', '-54')
         cy.get('[data-test=submit-button]').click()
 
         assertFieldError(
@@ -186,14 +203,23 @@ describe('Export pipeline create', () => {
           const newExport = generateExport()
           const teamMember = faker.helpers.arrayElement(autoCompleteAdvisers)
 
-          cy.get('[data-test=title-input]').type(newExport.title)
+          fill('[data-test=title-input]', newExport.title)
           fillTypeahead('[data-test=field-team_members]', teamMember.name)
+          fillSelect(
+            '[data-test=field-estimated_export_value_years]',
+            newExport.estimated_export_value_years.id
+          )
+          fill(
+            '[data-test=estimated-export-value-amount-input]',
+            newExport.estimated_export_value_amount
+          )
           cy.get('[data-test=estimated_win_date-month]').type('03')
           cy.get('[data-test=estimated_win_date-year]').type('2035')
           fillTypeahead(
             '[data-test=field-destination_country]',
             newExport.destination_country.name
           )
+          fill('[data-test=field-notes]', newExport.notes)
 
           cy.get('[data-test=submit-button]').click()
 
@@ -202,8 +228,13 @@ describe('Export pipeline create', () => {
             owner: '7d19d407-9aec-4d06-b190-d3f404627f21',
             team_members: [teamMember.id],
             company: company.id,
+            estimated_export_value_years:
+              newExport.estimated_export_value_years.id,
+            estimated_export_value_amount:
+              newExport.estimated_export_value_amount,
             estimated_win_date: '2035-03-01T00:00:00',
             destination_country: newExport.destination_country.id,
+            notes: newExport.notes,
           })
 
           assertExactUrl('')

@@ -10,16 +10,22 @@ export const transformFormValuesForAPI = ({
   title,
   owner,
   team_members,
+  estimated_export_value_years,
+  estimated_export_value_amount,
   estimated_win_date,
   destination_country,
+  notes,
 }) => ({
   company,
   id,
   title,
   owner: owner.value,
   team_members: team_members.map((x) => x.value),
+  estimated_export_value_years,
+  estimated_export_value_amount,
   estimated_win_date: `${estimated_win_date.year}-${estimated_win_date.month}-01T00:00:00`,
   destination_country: destination_country.value,
+  notes,
 })
 
 export const transformAPIValuesForForm = ({
@@ -28,15 +34,21 @@ export const transformAPIValuesForForm = ({
   title,
   owner,
   team_members,
+  estimated_export_value_years,
+  estimated_export_value_amount,
   estimated_win_date,
   destination_country,
+  notes,
 }) => ({
   company: company.id,
   id,
   title,
   owner: transformIdNameToValueLabel(owner),
   team_members: transformArrayIdNameToValueLabel(team_members),
+  estimated_export_value_years: estimated_export_value_years.id,
+  estimated_export_value_amount: estimated_export_value_amount,
   estimated_win_date: convertDateToFieldDateObject(estimated_win_date),
   destination_country:
     destination_country && transformIdNameToValueLabel(destination_country),
+  notes,
 })
