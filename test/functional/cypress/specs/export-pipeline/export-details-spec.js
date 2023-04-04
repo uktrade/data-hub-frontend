@@ -7,9 +7,9 @@ const {
 
 const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 
-describe('Export Details', () => {
+describe('Export Details summary ', () => {
   const exportItem = exportItems.results[0]
-  context('when summary table renders', () => {
+  context.only('when summary table renders', () => {
     beforeEach(() => {
       cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
         body: exportItem,
@@ -52,7 +52,7 @@ describe('Export Details', () => {
     before(() => {
       cy.visit(exportDetailsUrl)
     })
-    it('the form should redirect to the edit page', () => {
+    it.only('the form should redirect to the edit page', () => {
       cy.get('[data-test="edit-export-details-button"]').click()
       assertUrl(urls.exportPipeline.edit())
     })

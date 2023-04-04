@@ -7,15 +7,15 @@ import { DefaultLayout, SummaryTable } from '../../../components'
 import Task from '../../../components/Task'
 import { ID, state2props, TASK_GET_EXPORT_DETAIL } from './state'
 import styled from 'styled-components'
-import { isEmpty } from 'lodash'
+import { isEmpty, capitalize } from 'lodash'
 import { format } from '../../../../client/utils/date'
 import { currencyGBP } from '../../../../client/utils/number-utils'
 
 import { BLACK, GREY_3 } from '../../../utils/colours'
-import { capitalize } from 'lodash'
 import { transformIdNameToValueLabel } from '../../../transformers'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
+import { BREAKPOINTS } from '@govuk-react/constants'
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
@@ -26,9 +26,13 @@ const Container = styled('div')`
   align-items: baseline;
   margin-bottom: 30px;
   ${Link} {
-    margin: 0px 40px 0px 0px;
+    margin-right: 40px;
+  }
+  @media (max-width: ${BREAKPOINTS.TABLET}) {
+    flex-direction: column;
   }
 `
+
 const getBreadcrumbs = (exportItem) => {
   const defaultBreadcrumbs = [
     {
