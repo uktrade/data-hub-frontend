@@ -115,12 +115,12 @@ describe('Export pipeline list', () => {
     created_on: '2023-01-18T09:39:39.998239Z',
   })
 
-  const otherExports = exportListFaker(7)
+  const otherExports = exportListFaker(8)
   const exportList = [active, won, inactive, ...otherExports]
 
   before(() => {
     cy.setUserFeatures(['export-pipeline'])
-    cy.intercept('GET', '/api-proxy/v4/export', {
+    cy.intercept('GET', '/api-proxy/v4/export?limit=10&page=1&offset=0', {
       body: {
         count: exportList.length,
         results: exportList,
@@ -208,5 +208,12 @@ describe('Export pipeline list', () => {
     cy.get('[data-test="export-details"]').should('be.visible')
     cy.get('[data-test="toggle-section-button"]').contains('Hide').click()
     cy.get('[data-test="export-details"]').should('not.be.visible')
+  })
+
+  it('should show the pagination', () => {
+    cy.get('[data-test="pagination"]').should('be.visible')
+    cy.get('[data-test="page-number-active"]').should('have.text', '1')
+    cy.get('[data-test="page-number"]').and('have.text', 2)
+    cy.get('[data-test="next"]').should('be.visible')
   })
 })

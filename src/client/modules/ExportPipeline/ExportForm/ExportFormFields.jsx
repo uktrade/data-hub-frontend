@@ -7,6 +7,9 @@ import {
   FormLayout,
   FieldAdvisersTypeahead,
   FieldRadios,
+  FieldSelect,
+  FieldCurrency,
+  FieldTypeahead,
 } from '../../../../client/components'
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT } from './state'
@@ -15,6 +18,11 @@ import { ERROR_MESSAGES } from './constants'
 import { transformAPIValuesForForm } from '../transformers'
 import { validateTeamMembers } from './validation'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
+import ExportYearsResource from '../../../../client/components/Resource/ExportYears'
+import { HintText } from 'govuk-react'
+import Label from '@govuk-react/label'
+import { FONT_WEIGHTS } from '@govuk-react/constants'
+import CountriesResource from '../../../../client/components/Resource/Countries'
 import ExportExperience from '../../../components/Resource/ExportExperience'
 
 const ExportFormFields = ({
@@ -63,6 +71,40 @@ const ExportFormFields = ({
                   hint="You can add up to 5 team members. Team members can view and edit export functionality"
                   isMulti={true}
                   validate={validateTeamMembers}
+                />
+                <Label
+                  style={{ fontWeight: FONT_WEIGHTS.bold }}
+                  htmlFor="field-estimated_export"
+                >
+                  Total estimated export value
+                </Label>
+                <HintText>
+                  Select the year span and total value, for example 3 years,
+                  £1,000,000
+                </HintText>
+                <div id="field-estimated_export">
+                  <ResourceOptionsField
+                    resource={ExportYearsResource}
+                    field={FieldSelect}
+                    fullWidth={true}
+                    name="estimated_export_value_years"
+                    label="Year(s)"
+                    required={ERROR_MESSAGES.estimated_export_value_years}
+                    boldLabel={false}
+                  />
+                  <FieldCurrency
+                    name="estimated_export_value_amount"
+                    label="Estimated value in GBP"
+                    required={ERROR_MESSAGES.estimated_export_value_amount}
+                    boldLabel={false}
+                  />
+                </div>
+                <ResourceOptionsField
+                  name="destination_country"
+                  label="Destination"
+                  required={ERROR_MESSAGES.destination_country}
+                  resource={CountriesResource}
+                  field={FieldTypeahead}
                 />
                 <ResourceOptionsField
                   resource={ExportExperience}

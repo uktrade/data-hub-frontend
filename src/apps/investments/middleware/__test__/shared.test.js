@@ -191,7 +191,7 @@ describe('Investment shared middleware', () => {
       })
     })
 
-    context('when DIT team is not provided', () => {
+    context('when DBT team is not provided', () => {
       before(async () => {
         const middleware = createMiddleware(
           {

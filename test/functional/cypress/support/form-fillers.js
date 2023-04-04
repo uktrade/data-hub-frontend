@@ -32,6 +32,10 @@ export const fillDate = (dateId, day, month, year) => {
   cy.get(`${dateId}\\.year`).type(year)
 }
 
+export const fillSelect = (selector, value) => {
+  cy.get(selector).find('select').select(value)
+}
+
 //  Click events
 
 export const clickAddAnotherButton = (selector) => {
@@ -44,4 +48,8 @@ export const clickSaveAndReturnButton = () => {
 
 export const clickReturnWithoutSavingButton = () => {
   cy.contains('Return without saving').click()
+}
+
+export const clearTypeahead = (selector) => {
+  cy.get(selector).find('input').clear().type('{esc}')
 }
