@@ -7,6 +7,7 @@ import {
   FormLayout,
   FieldAdvisersTypeahead,
   FieldTypeahead,
+  FieldTextarea,
 } from '../../../../client/components'
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT } from './state'
@@ -70,6 +71,11 @@ const ExportFormFields = ({
                   required={ERROR_MESSAGES.destination_country}
                   resource={CountriesResource}
                   field={FieldTypeahead}
+                />
+                <FieldTextarea
+                  name="notes"
+                  label="Notes (optional)"
+                  hint="Add further details about the export, such as additional sectors and country regions"
                 />
               </>
             )}

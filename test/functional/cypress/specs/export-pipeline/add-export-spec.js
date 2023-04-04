@@ -186,6 +186,7 @@ describe('Export pipeline create', () => {
             team_members: [teamMember.id],
             company: company.id,
             destination_country: newExport.destination_country.id,
+            notes: newExport.notes,
           })
 
           assertExactUrl('')

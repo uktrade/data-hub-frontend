@@ -119,6 +119,14 @@ describe('Export pipeline edit', () => {
             isMulti: false,
           })
         })
+        cy.get('[data-test="field-notes"]').then((element) => {
+          assertFieldInput({
+            element,
+            label: 'Notes (optional)',
+            hint: 'Add further details about the export, such as additional sectors and country regions',
+            value: exportItem.notes,
+          })
+        })
       })
     })
 
@@ -188,6 +196,7 @@ describe('Export pipeline edit', () => {
             'destination_country',
             exportItem.destination_country.id
           )
+          expect(request.body).to.have.property('notes', exportItem.notes)
         })
 
         assertUrl(urls.exportPipeline.edit(exportItem.id))
