@@ -1,4 +1,4 @@
-import { isValid, parseISO } from 'date-fns'
+import { convertDateToFieldDateObject } from '../../utils/date'
 
 const mapApiToField = ({ id, name }) => ({ value: id, label: name })
 
@@ -17,22 +17,6 @@ export const transformFormValuesForAPI = ({
   team_members: team_members.map((x) => x.value),
   estimated_win_date: `${estimated_win_date.year}-${estimated_win_date.month}-01T00:00:00`,
 })
-
-/**
- *
- * @param {*} date Convert a date to an object format required by the FieldDate component
- * @returns an object of the format {month:'', year:''}
- */
-const convertDateToFieldDateObject = (date) => {
-  const parsedTime = parseISO(date)
-  if (isValid(parsedTime)) {
-    return {
-      month: parsedTime.getMonth() + 1, //getMonth is zero based
-      year: parsedTime.getFullYear(),
-    }
-  }
-  return date
-}
 
 export const transformAPIValuesForForm = ({
   company,

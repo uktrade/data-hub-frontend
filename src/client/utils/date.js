@@ -262,6 +262,22 @@ function formatStartAndEndDate(startDate, endDate) {
   return `${startDateFormatted} to ${endDateFormatted}`
 }
 
+/**
+ * Convert a date to a short object format required by the FieldDate component
+ * @param {*} date a string representing a date or a Date type
+ * @returns an object of the format {month:'', year:''}
+ */
+function convertDateToFieldDateObject(date) {
+  const parsedTime = parseISO(date)
+  if (isValid(parsedTime)) {
+    return {
+      month: parsedTime.getMonth() + 1, //getMonth is zero based
+      year: parsedTime.getFullYear(),
+    }
+  }
+  return date
+}
+
 module.exports = {
   addDays,
   addMonths,
@@ -297,4 +313,5 @@ module.exports = {
   transformValueForAPI,
   createDateFromObject,
   formatStartAndEndDate,
+  convertDateToFieldDateObject,
 }
