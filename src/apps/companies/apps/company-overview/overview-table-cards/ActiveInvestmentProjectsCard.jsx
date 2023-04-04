@@ -6,7 +6,7 @@ import { SummaryTable } from '../../../../../client/components'
 import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 import { companyProjectsState2props } from './state'
 import { connect } from 'react-redux'
-
+import urls from '../../../../../lib/urls'
 import { BLUE, GREY_2 } from '../../../../../client/utils/colours'
 
 const StyledActiveInvestmentSubject = styled('h3')`
@@ -63,27 +63,7 @@ const StyledActiveInvestmentTableCell = styled(Table.Cell)`
   border: 0;
 `
 
-let upcomingActiveInvestments = []
-
-const ActiveInvestmentList = ({ props }) => {
-  const allInvestments = props.resultList
-  const allActiveInvestments = []
-  for (const investment of allInvestments) {
-    if (investment.stage.name === 'Active') {
-      let newDate = new Date(investment.estimated_land_date)
-      investment.estimated_land_date = newDate
-      allActiveInvestments.push(investment)
-    }
-  }
-  allActiveInvestments.sort(
-    (dateA, dateB) =>
-      Number(dateA.estimated_land_date) - Number(dateB.estimated_land_date)
-  )
-  if (allActiveInvestments.length > 3) {
-    upcomingActiveInvestments = allActiveInvestments.slice(0, 3)
-  } else {
-    upcomingActiveInvestments = allActiveInvestments
-  }
+const ActiveInvestmentList = ({ upcomingActiveInvestments }) => {
   return upcomingActiveInvestments.map((activeInvestment) => {
     return (
       <>
@@ -91,7 +71,9 @@ const ActiveInvestmentList = ({ props }) => {
           <StyledActiveInvestmentHeadingTableCell colSpan={2}>
             <StyledActiveInvestmentSubject>
               <Link
-                href={`/investments/projects/${activeInvestment.id}/details`}
+                href={`${urls.investments.projects.details(
+                  activeInvestment.id
+                )}`}
                 data-test="active-investment-page-link"
               >
                 {activeInvestment.name}
@@ -120,17 +102,18 @@ const ActiveInvestmentList = ({ props }) => {
 
 const ActiveInvestmentProjectsCard = ({
   queryString,
-  companyId,
-  company,
-  ...props
+  upcomingActiveInvestments,
+  stageList,
 }) => {
   return (
     <StyledSummaryTable
       caption="Active investment projects"
       data-test="activeInvestmentProjectsContainer"
     >
-      {props.stageList?.active ? (
-        <ActiveInvestmentList props={props} />
+      {stageList?.active ? (
+        <ActiveInvestmentList
+          upcomingActiveInvestments={upcomingActiveInvestments}
+        />
       ) : (
         <StyledTableRow>
           <StyledTableCell colSpan={2}>
@@ -141,19 +124,19 @@ const ActiveInvestmentProjectsCard = ({
 
       <StyledTableRow>
         <StyledTableCell colSpan={2}>
-          {props.stageList?.active ? (
+          {stageList?.active ? (
             <Link
               href={`${queryString}/investments/projects`}
               data-test="active-investments-page-link"
             >
-              {props.stageList?.active <= 3 && 'View all investments'}
-              {props.stageList?.active === 4 &&
+              {stageList?.active <= 3 && 'View all investments'}
+              {stageList?.active === 4 &&
                 `View ${
-                  props.stageList.active - upcomingActiveInvestments.length
+                  stageList.active - upcomingActiveInvestments.length
                 } more active investment`}
-              {props.stageList?.active > 4 &&
+              {stageList?.active > 4 &&
                 `View ${
-                  props.stageList.active - upcomingActiveInvestments.length
+                  stageList.active - upcomingActiveInvestments.length
                 } more active investments`}
             </Link>
           ) : (

@@ -65,11 +65,7 @@ const CompanyOverview = ({ company, companiesHouseLink }) => {
             />
           </CardContainer>
           <CardContainer>
-            <ActiveInvestmentProjectsCard
-              company={company}
-              queryString={queryString}
-              companyId={company.id}
-            />
+            <ActiveInvestmentProjectsCard queryString={queryString} />
           </CardContainer>
         </GridCol>
       </GridRow>
