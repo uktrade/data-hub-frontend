@@ -5,15 +5,8 @@ const companyData = require('../../../../test/unit/data/company.json')
 const companyV4Data = require('../../../../test/unit/data/companies/company-v4.json')
 const myCompanyListData = require('../../../../test/unit/data/companies/my-company-list.json')
 const config = require('../../../config')
-const {
-  generateExportCountries,
-} = require('../../../../test/unit/helpers/generate-export-countries')
 
-const {
-  getDitCompany,
-  saveDnbCompany,
-  saveCompanyExportDetails,
-} = require('../repos')
+const { getDitCompany, saveDnbCompany } = require('../repos')
 
 function makeRepositoryWithAuthRequest(authorisedRequestStub) {
   return proxyquire('../repos', {
@@ -148,30 +141,6 @@ describe('Company repository', () => {
       const actual = await saveDnbCompany(stubRequest, '123')
 
       expect(actual).to.deep.equal({ hello: true })
-    })
-  })
-
-  describe('#saveCompanyExportDetails', () => {
-    it('should respond successfully', async () => {
-      const companyId = companyV4Data.id
-      const { exportCountries } = generateExportCountries()
-      const details = {
-        export_countries: exportCountries,
-      }
-
-      nock(config.apiRoot)
-        .patch(`/v4/company/${companyId}/export-detail`, details)
-        .reply(200, {
-          countries: true,
-        })
-
-      const actual = await saveCompanyExportDetails(
-        stubRequest,
-        companyId,
-        details
-      )
-
-      expect(actual).to.deep.equal({ countries: true })
     })
   })
 })

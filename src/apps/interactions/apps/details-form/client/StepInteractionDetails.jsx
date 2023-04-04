@@ -449,7 +449,7 @@ const StepInteractionDetails = ({
                   the impacts on the company, sector and wider economy?
                 </p>
                 <p>
-                  Did the company make any wider requests of DIT/HMG, including
+                  Did the company make any wider requests of DBT/HMG, including
                   ministerial engagement or policy changes? If so, provide
                   details.
                 </p>

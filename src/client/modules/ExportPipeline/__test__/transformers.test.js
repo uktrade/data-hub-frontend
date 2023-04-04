@@ -16,7 +16,11 @@ describe('transformFormValuesForAPI', () => {
             { value: 'd', label: 'e' },
             { value: 'f', label: 'g' },
           ],
+          estimated_export_value_years: 2,
+          estimated_export_value_amount: 676,
+          destination_country: { value: 'h', label: 'i' },
           sector: { value: 'j', label: 'k' },
+          notes: 'large amount of text',
         })
       ).to.be.deep.equal({
         company: 456,
@@ -24,7 +28,11 @@ describe('transformFormValuesForAPI', () => {
         title: 'title',
         owner: 'b',
         team_members: ['d', 'f'],
+        estimated_export_value_years: 2,
+        estimated_export_value_amount: 676,
+        destination_country: 'h',
         sector: 'j',
+        notes: 'large amount of text',
       })
     })
   })
@@ -40,7 +48,11 @@ describe('transformAPIValuesForForm', () => {
           title: 'a',
           owner: { id: 'b', name: 'c' },
           team_members: [{ id: 'd', name: 'e' }],
+          estimated_export_value_years: { id: 1, name: '1 year' },
+          estimated_export_value_amount: 34,
+          destination_country: { id: 'f', name: 'g' },
           sector: { id: 'h', name: 'i' },
+          notes: 'large amount of text',
         })
       ).to.be.deep.equal({
         id: 234,
@@ -48,7 +60,11 @@ describe('transformAPIValuesForForm', () => {
         title: 'a',
         owner: { value: 'b', label: 'c' },
         team_members: [{ value: 'd', label: 'e' }],
+        estimated_export_value_years: 1,
+        estimated_export_value_amount: 34,
+        destination_country: { value: 'f', label: 'g' },
         sector: { value: 'h', label: 'i' },
+        notes: 'large amount of text',
       })
     })
   })

@@ -21,6 +21,8 @@ import Event from './Event'
 import CompanyOneListTeam from './CompanyOneListTeam'
 import ExportYears from './ExportYears'
 import Sector from './Sector'
+import ExportExperienceCategories from './ExportExperienceCategories'
+import ExportExperience from './ExportExperience'
 
 export default {
   ...Advisers.tasks,
@@ -46,4 +48,6 @@ export default {
   ...CompanyOneListTeam.tasks,
   ...ExportYears.tasks,
   ...Sector.tasks,
+  ...ExportExperienceCategories.tasks,
+  ...ExportExperience.tasks,
 }

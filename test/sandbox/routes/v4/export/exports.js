@@ -8,7 +8,7 @@ const generateExport = () => {
   const { id: sectorId, name: sectorName } = faker.helpers.arrayElement(sector)
   const { id: countryId, name: countryName } =
     faker.helpers.arrayElement(country)
-  const { id: exportExperienceId } =
+  const { id: exportExperienceId, name: exportExperienceName } =
     faker.helpers.arrayElement(exporterExperience)
 
   return {
@@ -25,7 +25,7 @@ const generateExport = () => {
       name: countryName,
     },
     sector: { id: sectorId, name: sectorName },
-    exporter_experience: exportExperienceId,
+    exporter_experience: { id: exportExperienceId, name: exportExperienceName },
     estimated_export_value_years: faker.helpers.arrayElement(estimatedYears),
     created_on: faker.date.past(),
     modified_on: faker.date.past(),
