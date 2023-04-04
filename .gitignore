@@ -87,4 +87,3 @@ yalc.lock
 
 # Ignore gh pages for Storybook
 storybook-static/
-src/apps/companies/apps/company-overview/overview-table-cards/<StyledTableRow>.jsx
