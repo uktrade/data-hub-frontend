@@ -50,11 +50,11 @@ const OpportunityDetailsTable = ({ details }) => {
         value={requiredChecksConducted.label}
       />
       <SummaryTable.TextRow
-        heading="Lead DIT relationship manager"
+        heading="Lead DBT relationship manager"
         value={leadRelationshipManager.label}
       />
       <SummaryTable.ListRow
-        heading="Other DIT contacts"
+        heading="Other DBT contacts"
         value={otherDitContacts}
       />
       <SummaryTable.ListRow heading="Asset classes" value={assetClasses} />

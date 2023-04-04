@@ -1,5 +1,9 @@
 const urls = require('../../../../../src/lib/urls')
-const { assertUrl, assertFieldTextarea } = require('../../support/assertions')
+const {
+  assertUrl,
+  assertFieldSelect,
+  assertFieldTextarea,
+} = require('../../support/assertions')
 
 const {
   assertLocalHeader,
@@ -16,6 +20,7 @@ const {
 } = require('../../../../../src/client/modules/ExportPipeline/ExportForm/constants')
 const {
   fillMultiOptionTypeahead,
+  fillSelect,
   clearTypeahead,
 } = require('../../support/form-fillers')
 const autoCompleteAdvisers =
@@ -111,6 +116,25 @@ describe('Export pipeline edit', () => {
           '[data-test="field-team_members"]',
           exportItem.team_members.map((t) => t.name)
         )
+        cy.get('[data-test="field-estimated_export_value_years"]').then(
+          (element) => {
+            assertFieldSelect({
+              element,
+              label: 'Year(s)',
+              value: exportItem.estimated_export_value_years.name,
+              optionsCount: 7,
+            })
+          }
+        )
+        cy.get('[data-test="field-estimated_export_value_amount"]').then(
+          (element) => {
+            assertFieldInput({
+              element,
+              label: 'Estimated value in GBP',
+              value: exportItem.estimated_export_value_amount,
+            })
+          }
+        )
         cy.get('[data-test="field-destination_country"]').then((element) => {
           assertFieldTypeahead({
             element,
@@ -142,6 +166,8 @@ describe('Export pipeline edit', () => {
         //clear any default values first
         cy.get('[data-test="title-input"]').clear()
         cy.get('[data-test="typeahead-input"]').clear()
+        fillSelect('[data-test=field-estimated_export_value_years]', 0)
+        cy.get('[data-test="estimated-export-value-amount-input"]').clear()
         clearTypeahead('[data-test=field-destination_country]')
 
         cy.get('[data-test=submit-button]').click()
@@ -153,6 +179,15 @@ describe('Export pipeline edit', () => {
         assertFieldError(
           cy.get('[data-test="field-owner"]'),
           ERROR_MESSAGES.owner
+        )
+        assertFieldError(
+          cy.get('[data-test="field-estimated_export_value_years"]'),
+          ERROR_MESSAGES.estimated_export_value_years
+        )
+        assertFieldError(
+          cy.get('[data-test="field-estimated_export_value_amount"]'),
+          ERROR_MESSAGES.estimated_export_value_amount,
+          false
         )
         assertFieldError(
           cy.get('[data-test="field-destination_country"]'),
@@ -191,6 +226,14 @@ describe('Export pipeline edit', () => {
           expect(request.body).to.have.property('owner', exportItem.owner.id)
           expect(request.body.team_members).to.deep.equal(
             exportItem.team_members.map((x) => x.id)
+          )
+          expect(request.body).to.have.property(
+            'estimated_export_value_years',
+            exportItem.estimated_export_value_years.id
+          )
+          expect(request.body).to.have.property(
+            'estimated_export_value_amount',
+            exportItem.estimated_export_value_amount
           )
           expect(request.body).to.have.property(
             'destination_country',
