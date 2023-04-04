@@ -351,8 +351,8 @@ import { saveExport } from '../client/modules/ExportPipeline/ExportForm/tasks'
 import { TASK_DELETE_EXPORT } from '../client/modules/ExportPipeline/ExportDelete/state'
 import { deleteExport } from '../client/modules/ExportPipeline/ExportDelete/tasks'
 
-import { TASK_GET_EXPORT_PIPELINE_LIST } from '../client/modules/ExportPipeline/ExportList/state.js'
-import { getExportPipelineList } from '../client/modules/ExportPipeline/ExportList/task.js'
+import { TASK_GET_EXPORT_PIPELINE_LIST } from '../client/modules/ExportPipeline/ExportList/state'
+import { getExportPipelineList } from '../client/modules/ExportPipeline/ExportList/task'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}

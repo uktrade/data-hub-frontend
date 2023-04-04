@@ -9,7 +9,7 @@ import Pagination from '../../../components/Pagination'
 
 import { EXPORT__PIPELINE_LIST_LOADED } from '../../../actions'
 import { ID, TASK_GET_EXPORT_PIPELINE_LIST, state2props } from './state'
-import { parsePage } from '../../../../client/utils/pagination.js'
+import { parsePage } from '../../../../client/utils/pagination'
 
 import List from './List'
 import ListItemRenderer from './ItemRenderer'
