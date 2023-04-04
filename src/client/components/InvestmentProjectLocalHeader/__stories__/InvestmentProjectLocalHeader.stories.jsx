@@ -153,7 +153,7 @@ storiesOf('InvestmentProjectLocalHeader', module)
       breadcrumbs={breadcrumbs}
     />
   ))
-  .add('Created by: no DIT team', () => (
+  .add('Created by: no DBT team', () => (
     <InvestmentProjectLocalHeader
       investment={{
         ...investment,

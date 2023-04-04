@@ -143,7 +143,7 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
               />
               <FieldAdvisersTypeahead
                 name="leadRelationshipManager"
-                label="Lead DIT relationship manager"
+                label="Lead DBT relationship manager"
                 initialValue={leadRelationshipManager}
                 placeholder="-- Select adviser --"
                 isMulti={false}
@@ -151,7 +151,7 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
               {values.values.leadRelationshipManager && (
                 <FieldAdvisersTypeahead
                   name="otherDitContacts"
-                  label="Other DIT contacts"
+                  label="Other DBT contacts"
                   initialValue={otherDitContacts}
                   placeholder="-- Select adviser --"
                   aria-label="Select an adviser"
