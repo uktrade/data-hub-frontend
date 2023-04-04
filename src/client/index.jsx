@@ -34,8 +34,8 @@ import CompanyOverview from '../apps/companies/apps/company-overview/client/Comp
 import EditOneListForm from '../apps/companies/apps/edit-one-list/client/EditOneListForm'
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
 import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory/'
-import ExportsEdit from '../apps/companies/apps/exports/client/ExportsEdit.jsx'
-import ExportCountriesEdit from '../apps/companies/apps/exports/client/ExportCountriesEdit/'
+import ExportsEdit from './modules/Companies/CompanyExports/ExportsEdit'
+import ExportCountriesEdit from './modules/Companies/CompanyExports/ExportCountriesEdit/'
 import ReferralDetails from '../apps/companies/apps/referrals/details/client/ReferralDetails'
 import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralHelp'
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
@@ -87,8 +87,8 @@ import {
 } from '../apps/companies/apps/referrals/send-referral/client/state'
 import * as referralsSendTasks from '../apps/companies/apps/referrals/send-referral/client/tasks'
 import * as exportWinsTasks from '../apps/companies/apps/exports/client/ExportWins/tasks'
-import { TASK_NAME as EXPORT_COUNTRIES_EDIT_NAME } from '../apps/companies/apps/exports/client/ExportCountriesEdit/state'
-import * as exportCountriesEditTasks from '../apps/companies/apps/exports/client/ExportCountriesEdit/tasks'
+import { TASK_NAME as EXPORT_COUNTRIES_EDIT_NAME } from './modules/Companies/CompanyExports/ExportCountriesEdit/state'
+import * as exportCountriesEditTasks from './modules/Companies/CompanyExports/ExportCountriesEdit/tasks'
 import addCompanyPostcodeToRegionTask, {
   createCompany,
 } from '../apps/companies/apps/add-company/client/tasks'
