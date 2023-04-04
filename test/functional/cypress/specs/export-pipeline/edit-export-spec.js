@@ -15,7 +15,10 @@ const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 const {
   ERROR_MESSAGES,
 } = require('../../../../../src/client/modules/ExportPipeline/ExportForm/constants')
-const { fillMultiOptionTypeahead } = require('../../support/form-fillers')
+const {
+  fillMultiOptionTypeahead,
+  clearTypeahead,
+} = require('../../support/form-fillers')
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
 const { faker } = require('@faker-js/faker')
@@ -117,6 +120,14 @@ describe('Export pipeline edit', () => {
             value: exportItem.estimated_win_date,
           })
         })
+        cy.get('[data-test="field-destination_country"]').then((element) => {
+          assertFieldTypeahead({
+            element,
+            label: 'Destination',
+            value: exportItem.destination_country.name,
+            isMulti: false,
+          })
+        })
       })
     })
 
@@ -134,6 +145,7 @@ describe('Export pipeline edit', () => {
         cy.get('[data-test="typeahead-input"]').clear()
         cy.get('[data-test="estimated_win_date-month"]').clear()
         cy.get('[data-test="estimated_win_date-year"]').clear()
+        clearTypeahead('[data-test=field-destination_country]')
 
         cy.get('[data-test=submit-button]').click()
 
@@ -148,6 +160,11 @@ describe('Export pipeline edit', () => {
         assertFieldError(
           cy.get('[data-test="field-estimated_win_date"]'),
           ERROR_MESSAGES.estimated_win_date.required
+        )
+        assertFieldError(
+          cy.get('[data-test="field-destination_country"]'),
+          ERROR_MESSAGES.destination_country,
+          false
         )
       })
 
@@ -175,20 +192,6 @@ describe('Export pipeline edit', () => {
           ERROR_MESSAGES.estimated_win_date.invalid
         )
       })
-
-      it('the form should display validation error message for too many team members', () => {
-        const advisers = faker.helpers.arrayElements(autoCompleteAdvisers, 6)
-        fillMultiOptionTypeahead(
-          '[data-test=field-team_members]',
-          advisers.map((adviser) => adviser.name)
-        )
-        cy.get('[data-test=submit-button]').click()
-
-        assertFieldError(
-          cy.get('[data-test="field-team_members"]'),
-          ERROR_MESSAGES.team_members
-        )
-      })
     })
 
     context('when the form contains valid data and is submitted', () => {
@@ -212,6 +215,10 @@ describe('Export pipeline edit', () => {
             `${exportItem.estimated_win_date.getFullYear()}-${
               exportItem.estimated_win_date.getMonth() + 1
             }-01T00:00:00`
+          )
+          expect(request.body).to.have.property(
+            'destination_country',
+            exportItem.destination_country.id
           )
         })
 

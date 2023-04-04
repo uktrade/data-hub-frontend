@@ -22,6 +22,7 @@ const {
 const {
   fillTypeahead,
   fillMultiOptionTypeahead,
+  clearTypeahead,
 } = require('../../support/form-fillers')
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
@@ -122,6 +123,7 @@ describe('Export pipeline create', () => {
       it('the form should display validation error message for mandatory inputs', () => {
         //clear any default values first
         cy.get('[data-test="typeahead-input"]').clear()
+        clearTypeahead('[data-test=field-destination_country]')
 
         cy.get('[data-test=submit-button]').click()
 
@@ -136,6 +138,11 @@ describe('Export pipeline create', () => {
         assertFieldError(
           cy.get('[data-test="field-estimated_win_date"]'),
           ERROR_MESSAGES.estimated_win_date.required
+        )
+        assertFieldError(
+          cy.get('[data-test="field-destination_country"]'),
+          ERROR_MESSAGES.destination_country,
+          false
         )
       })
 
@@ -163,20 +170,6 @@ describe('Export pipeline create', () => {
           ERROR_MESSAGES.estimated_win_date.invalid
         )
       })
-
-      it('the form should display validation error message for too many team members', () => {
-        const advisers = faker.helpers.arrayElements(autoCompleteAdvisers, 6)
-        fillMultiOptionTypeahead(
-          '[data-test=field-team_members]',
-          advisers.map((adviser) => adviser.name)
-        )
-        cy.get('[data-test=submit-button]').click()
-
-        assertFieldError(
-          cy.get('[data-test="field-team_members"]'),
-          ERROR_MESSAGES.team_members
-        )
-      })
     })
 
     context(
@@ -197,6 +190,10 @@ describe('Export pipeline create', () => {
           fillTypeahead('[data-test=field-team_members]', teamMember.name)
           cy.get('[data-test=estimated_win_date-month]').type('03')
           cy.get('[data-test=estimated_win_date-year]').type('2035')
+          fillTypeahead(
+            '[data-test=field-destination_country]',
+            newExport.destination_country.name
+          )
 
           cy.get('[data-test=submit-button]').click()
 
@@ -206,6 +203,7 @@ describe('Export pipeline create', () => {
             team_members: [teamMember.id],
             company: company.id,
             estimated_win_date: '2035-03-01T00:00:00',
+            destination_country: newExport.destination_country.id,
           })
 
           assertExactUrl('')

@@ -6,4 +6,5 @@ export const ERROR_MESSAGES = {
     required: 'Enter an estimated date for win',
     invalid: 'Enter a valid date',
   },
+  destination_country: 'Enter a destination',
 }

@@ -7,6 +7,7 @@ import {
   FormLayout,
   FieldAdvisersTypeahead,
   FieldDate,
+  FieldTypeahead,
 } from '../../../../client/components'
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT } from './state'
@@ -14,6 +15,8 @@ import Task from '../../../components/Task'
 import { ERROR_MESSAGES } from './constants'
 import { transformAPIValuesForForm } from '../transformers'
 import { validateTeamMembers } from './validation'
+import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
+import CountriesResource from '../../../../client/components/Resource/Countries'
 
 const ExportFormFields = ({
   initialValues,
@@ -69,6 +72,13 @@ const ExportFormFields = ({
                   hint="For example 11 2023"
                   required={ERROR_MESSAGES.estimated_win_date.required}
                   invalid={ERROR_MESSAGES.estimated_win_date.invalid}
+                />
+                <ResourceOptionsField
+                  name="destination_country"
+                  label="Destination"
+                  required={ERROR_MESSAGES.destination_country}
+                  resource={CountriesResource}
+                  field={FieldTypeahead}
                 />
               </>
             )}

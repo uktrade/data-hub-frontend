@@ -17,6 +17,7 @@ describe('transformFormValuesForAPI', () => {
             { value: 'f', label: 'g' },
           ],
           estimated_win_date: { month: 6, year: 2030 },
+          destination_country: { value: 'h', label: 'i' },
         })
       ).to.be.deep.equal({
         company: 456,
@@ -25,6 +26,7 @@ describe('transformFormValuesForAPI', () => {
         owner: 'b',
         team_members: ['d', 'f'],
         estimated_win_date: '2030-6-01T00:00:00',
+        destination_country: 'h',
       })
     })
   })
@@ -41,6 +43,7 @@ describe('transformAPIValuesForForm', () => {
           owner: { id: 'b', name: 'c' },
           team_members: [{ id: 'd', name: 'e' }],
           estimated_win_date: '2039-09-24T03:43:58',
+          destination_country: { id: 'f', name: 'g' },
         })
       ).to.be.deep.equal({
         id: 234,
@@ -49,6 +52,7 @@ describe('transformAPIValuesForForm', () => {
         owner: { value: 'b', label: 'c' },
         team_members: [{ value: 'd', label: 'e' }],
         estimated_win_date: { month: 9, year: 2039 },
+        destination_country: { value: 'f', label: 'g' },
       })
     })
   })
