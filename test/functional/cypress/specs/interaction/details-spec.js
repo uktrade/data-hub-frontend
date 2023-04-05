@@ -22,7 +22,7 @@ const {
 } = fixtures
 
 const companyObject = {
-  href: companies.details(fixtures.company.venusLtd.id),
+  href: companies.overview.index(fixtures.company.venusLtd.id),
   name: fixtures.company.venusLtd.name,
 }
 

@@ -9,7 +9,7 @@ const archivedContact = require('../../../sandbox/fixtures/v3/contact/contact-ar
 const notPrimaryContact = require('../../../sandbox/fixtures/v3/contact/contact-incomplete-details-uk.json')
 
 const companyName = primaryContact.company.name
-const companyLink = urls.companies.details(primaryContact.company.id)
+const companyLink = urls.companies.overview.index(primaryContact.company.id)
 const contactName = primaryContact.name
 const addInteractionUrl = urls.companies.interactions.create(
   primaryContact.company.id

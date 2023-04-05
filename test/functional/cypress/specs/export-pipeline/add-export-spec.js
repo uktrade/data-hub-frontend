@@ -145,6 +145,16 @@ describe('Export pipeline create', () => {
           ERROR_MESSAGES.estimated_export_value_amount,
           false
         )
+        it('the form should display validation error message for invalid estimated dates', () => {
+          cy.get('[data-test=estimated_win_date-month]').type('65')
+          cy.get('[data-test=estimated_win_date-year]').type('-54')
+          cy.get('[data-test=submit-button]').click()
+
+          assertFieldError(
+            cy.get('[data-test="field-estimated_win_date"]'),
+            ERROR_MESSAGES.estimated_win_date.invalid
+          )
+        })
         assertFieldError(
           cy.get('[data-test="field-destination_country"]'),
           ERROR_MESSAGES.destination_country,
@@ -167,6 +177,17 @@ describe('Export pipeline create', () => {
         assertFieldError(
           cy.get('[data-test="field-team_members"]'),
           ERROR_MESSAGES.team_members
+        )
+      })
+
+      it('the form should display validation error message for invalid estimated dates', () => {
+        fill('[data-test=estimated_win_date-month]', '65')
+        fill('[data-test=estimated_win_date-year]', '-54')
+        cy.get('[data-test=submit-button]').click()
+
+        assertFieldError(
+          cy.get('[data-test="field-estimated_win_date"]'),
+          ERROR_MESSAGES.estimated_win_date.invalid
         )
       })
     })
@@ -195,6 +216,8 @@ describe('Export pipeline create', () => {
             '[data-test=estimated-export-value-amount-input]',
             newExport.estimated_export_value_amount
           )
+          cy.get('[data-test=estimated_win_date-month]').type('03')
+          cy.get('[data-test=estimated_win_date-year]').type('2035')
           fillTypeahead(
             '[data-test=field-destination_country]',
             newExport.destination_country.name
@@ -213,6 +236,7 @@ describe('Export pipeline create', () => {
               newExport.estimated_export_value_years.id,
             estimated_export_value_amount:
               newExport.estimated_export_value_amount,
+            estimated_win_date: '2035-03-01T00:00:00',
             destination_country: newExport.destination_country.id,
             sector: newExport.sector.id,
             notes: newExport.notes,
