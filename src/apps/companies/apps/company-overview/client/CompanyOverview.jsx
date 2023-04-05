@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import AccountManagementCard from '../overview-table-cards/AccountManagementCard.jsx'
 import ActivityCard from '../overview-table-cards/ActivityCard'
 import BusinessDetailsCard from '../overview-table-cards/BusinessDetailsCard'
+import ActiveInvestmentProjectsCard from '../overview-table-cards/ActiveInvestmentProjectsCard.jsx'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
 import InvestmentStatusCard from '../overview-table-cards/InvestmentStatusCard'
@@ -62,6 +63,9 @@ const CompanyOverview = ({ company, companiesHouseLink }) => {
               numberOfItems={2}
               feedType={FILTER_FEED_TYPE.UPCOMING}
             />
+          </CardContainer>
+          <CardContainer>
+            <ActiveInvestmentProjectsCard queryString={queryString} />
           </CardContainer>
         </GridCol>
       </GridRow>
