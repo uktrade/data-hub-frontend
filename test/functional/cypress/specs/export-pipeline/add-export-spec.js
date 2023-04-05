@@ -122,11 +122,10 @@ describe('Export pipeline create', () => {
 
       it('the form should display validation error message for mandatory inputs', () => {
         //clear any default values first
-        cy.get('[data-test="typeahead-input"]').clear()
+        clearTypeahead('[data-test=field-owner]')
         clearTypeahead('[data-test=field-destination_country]')
-
+        clearTypeahead('[data-test=field-sector]')
         cy.get('[data-test=submit-button]').click()
-
         assertFieldError(
           cy.get('[data-test="field-title"]'),
           ERROR_MESSAGES.title
@@ -144,16 +143,6 @@ describe('Export pipeline create', () => {
           ERROR_MESSAGES.estimated_export_value_amount,
           false
         )
-        it('the form should display validation error message for invalid estimated dates', () => {
-          cy.get('[data-test=estimated_win_date-month]').type('65')
-          cy.get('[data-test=estimated_win_date-year]').type('-54')
-          cy.get('[data-test=submit-button]').click()
-
-          assertFieldError(
-            cy.get('[data-test="field-estimated_win_date"]'),
-            ERROR_MESSAGES.estimated_win_date.invalid
-          )
-        })
         assertFieldError(
           cy.get('[data-test="field-destination_country"]'),
           ERROR_MESSAGES.destination_country,
@@ -162,6 +151,10 @@ describe('Export pipeline create', () => {
         assertFieldError(
           cy.get('[data-test="field-status"]'),
           ERROR_MESSAGES.status
+        )
+        assertFieldError(
+          cy.get('[data-test="field-sector"]'),
+          ERROR_MESSAGES.sector
         )
       })
 
@@ -221,7 +214,11 @@ describe('Export pipeline create', () => {
             '[data-test=field-destination_country]',
             newExport.destination_country.name
           )
+          fillTypeahead('[data-test=field-sector]', newExport.sector.name)
           cy.get('[name="status"]').check(newExport.status)
+          cy.get('[name="exporter_experience"]').check(
+            newExport.exporter_experience.id
+          )
           fill('[data-test=field-notes]', newExport.notes)
 
           cy.get('[data-test=submit-button]').click()
@@ -237,7 +234,9 @@ describe('Export pipeline create', () => {
               newExport.estimated_export_value_amount,
             estimated_win_date: '2035-03-01T00:00:00',
             destination_country: newExport.destination_country.id,
+            sector: newExport.sector.id,
             status: newExport.status,
+            exporter_experience: newExport.exporter_experience.id,
             notes: newExport.notes,
           })
 

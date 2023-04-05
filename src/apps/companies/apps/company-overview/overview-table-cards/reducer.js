@@ -15,9 +15,11 @@ export default (state = { initialState }, { type, result }) => {
     let statusList = {}
     let stageListAll = []
     let statusListAll = []
+    let upcomingActiveInvestments = []
     result.results.map((investment) => resultList.push(investment))
     resultList.map((investment) => stageListAll.push(investment.stage.name))
     resultList.map((investment) => statusListAll.push(investment.status))
+
     let statusNames = statusListAll.filter(
       (item, i, ar) => ar.indexOf(item) === i
     )
@@ -37,11 +39,31 @@ export default (state = { initialState }, { type, result }) => {
         (investment) => investment.stage.name === stageNames[i]
       ).length
     }
+
+    const allActiveInvestments = []
+    for (const investment of resultList) {
+      if (investment.stage.name === 'Active') {
+        let newDate = new Date(investment.estimated_land_date)
+        investment.estimated_land_date = newDate
+        allActiveInvestments.push(investment)
+      }
+    }
+    allActiveInvestments.sort(
+      (dateA, dateB) =>
+        Number(dateA.estimated_land_date) - Number(dateB.estimated_land_date)
+    )
+    if (allActiveInvestments.length > 3) {
+      upcomingActiveInvestments = allActiveInvestments.slice(0, 3)
+    } else {
+      upcomingActiveInvestments = allActiveInvestments
+    }
+
     return {
       ...state,
       stageList,
       statusList,
       resultList,
+      upcomingActiveInvestments,
       isComplete: true,
     }
   }

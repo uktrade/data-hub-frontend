@@ -6,12 +6,12 @@ import {
   FieldInput,
   FormLayout,
   FieldAdvisersTypeahead,
+  FieldRadios,
   FieldDate,
   FieldSelect,
   FieldCurrency,
   FieldTypeahead,
   FieldTextarea,
-  FieldRadios,
 } from '../../../../client/components'
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT } from './state'
@@ -20,12 +20,14 @@ import { ERROR_MESSAGES } from './constants'
 import { transformAPIValuesForForm } from '../transformers'
 import { validateTeamMembers } from './validation'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
+import SectorResource from '../../../../client/components/Resource/Sector'
 import ExportYearsResource from '../../../../client/components/Resource/ExportYears'
 import { HintText } from 'govuk-react'
 import Label from '@govuk-react/label'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
 import CountriesResource from '../../../../client/components/Resource/Countries'
 import { STATUS_LABELS } from './labels'
+import ExportExperience from '../../../components/Resource/ExportExperience'
 
 const ExportFormFields = ({
   initialValues,
@@ -117,12 +119,26 @@ const ExportFormFields = ({
                   resource={CountriesResource}
                   field={FieldTypeahead}
                 />
+                <ResourceOptionsField
+                  name="sector"
+                  label="Main sector"
+                  hint="This is the main sector the company is exporting to. Additional sectors can be added to notes"
+                  required={ERROR_MESSAGES.sector}
+                  resource={SectorResource}
+                  field={FieldTypeahead}
+                />
                 <FieldRadios
                   name="status"
                   label="Export status"
                   required={ERROR_MESSAGES.status}
                   field={FieldRadios}
                   options={STATUS_LABELS}
+                />
+                <ResourceOptionsField
+                  resource={ExportExperience}
+                  field={FieldRadios}
+                  name="exporter_experience"
+                  label="Exporter experience (optional)"
                 />
                 <FieldTextarea
                   name="notes"
