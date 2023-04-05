@@ -7,9 +7,6 @@ const {
   assertPayload,
   assertFieldTypeahead,
   assertFieldError,
-} = require('../../support/assertions')
-
-const {
   assertLocalHeader,
   assertBreadcrumbs,
 } = require('../../support/assertions')
@@ -20,8 +17,11 @@ const {
   generateExport,
 } = require('../../../../sandbox/routes/v4/export/exports')
 const {
+  fill,
   fillTypeahead,
   fillMultiOptionTypeahead,
+  fillSelect,
+  clearTypeahead,
 } = require('../../support/form-fillers')
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
@@ -121,10 +121,10 @@ describe('Export pipeline create', () => {
 
       it('the form should display validation error message for mandatory inputs', () => {
         //clear any default values first
-        cy.get('[data-test="typeahead-input"]').clear()
-
+        clearTypeahead('[data-test=field-owner]')
+        clearTypeahead('[data-test=field-destination_country]')
+        clearTypeahead('[data-test=field-sector]')
         cy.get('[data-test=submit-button]').click()
-
         assertFieldError(
           cy.get('[data-test="field-title"]'),
           ERROR_MESSAGES.title
@@ -132,6 +132,24 @@ describe('Export pipeline create', () => {
         assertFieldError(
           cy.get('[data-test="field-owner"]'),
           ERROR_MESSAGES.owner
+        )
+        assertFieldError(
+          cy.get('[data-test="field-estimated_export_value_years"]'),
+          ERROR_MESSAGES.estimated_export_value_years
+        )
+        assertFieldError(
+          cy.get('[data-test="field-estimated_export_value_amount"]'),
+          ERROR_MESSAGES.estimated_export_value_amount,
+          false
+        )
+        assertFieldError(
+          cy.get('[data-test="field-destination_country"]'),
+          ERROR_MESSAGES.destination_country,
+          false
+        )
+        assertFieldError(
+          cy.get('[data-test="field-sector"]'),
+          ERROR_MESSAGES.sector
         )
         assertFieldError(
           cy.get('[data-test="field-export_potential"]'),
@@ -152,6 +170,17 @@ describe('Export pipeline create', () => {
           ERROR_MESSAGES.team_members
         )
       })
+
+      it('the form should display validation error message for invalid estimated dates', () => {
+        fill('[data-test=estimated_win_date-month]', '65')
+        fill('[data-test=estimated_win_date-year]', '-54')
+        cy.get('[data-test=submit-button]').click()
+
+        assertFieldError(
+          cy.get('[data-test="field-estimated_win_date"]'),
+          ERROR_MESSAGES.estimated_win_date.invalid
+        )
+      })
     })
 
     context(
@@ -168,9 +197,25 @@ describe('Export pipeline create', () => {
           const newExport = generateExport()
           const teamMember = faker.helpers.arrayElement(autoCompleteAdvisers)
 
-          cy.get('[data-test=title-input]').type(newExport.title)
+          fill('[data-test=title-input]', newExport.title)
           fillTypeahead('[data-test=field-team_members]', teamMember.name)
-          cy.get('[type="radio"]').check(newExport.export_potential)
+          fillSelect(
+            '[data-test=field-estimated_export_value_years]',
+            newExport.estimated_export_value_years.id
+          )
+          fill(
+            '[data-test=estimated-export-value-amount-input]',
+            newExport.estimated_export_value_amount
+          )
+          cy.get('[data-test=estimated_win_date-month]').type('03')
+          cy.get('[data-test=estimated_win_date-year]').type('2035')
+          fillTypeahead(
+            '[data-test=field-destination_country]',
+            newExport.destination_country.name
+          )
+          fillTypeahead('[data-test=field-sector]', newExport.sector.name)
+          cy.get('[name="export_potential"]').check(newExport.export_potential)
+          fill('[data-test=field-notes]', newExport.notes)
 
           cy.get('[data-test=submit-button]').click()
 
@@ -179,7 +224,15 @@ describe('Export pipeline create', () => {
             owner: '7d19d407-9aec-4d06-b190-d3f404627f21',
             team_members: [teamMember.id],
             company: company.id,
+            estimated_export_value_years:
+              newExport.estimated_export_value_years.id,
+            estimated_export_value_amount:
+              newExport.estimated_export_value_amount,
+            estimated_win_date: '2035-03-01T00:00:00',
+            destination_country: newExport.destination_country.id,
+            sector: newExport.sector.id,
             export_potential: newExport.export_potential,
+            notes: newExport.notes,
           })
 
           assertExactUrl('')

@@ -1,7 +1,9 @@
 const urls = require('../../../../../src/lib/urls')
-const { assertUrl, assertFieldRadios } = require('../../support/assertions')
 
 const {
+  assertUrl,
+  assertFieldSelect,
+  assertFieldTextarea,
   assertLocalHeader,
   assertBreadcrumbs,
   assertFlashMessage,
@@ -9,12 +11,18 @@ const {
   assertFieldError,
   assertFieldInput,
   assertTypeaheadValues,
+  assertFieldDateShort,
+  assertFieldRadios,
 } = require('../../support/assertions')
 const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 const {
   ERROR_MESSAGES,
 } = require('../../../../../src/client/modules/ExportPipeline/ExportForm/constants')
-const { fillMultiOptionTypeahead } = require('../../support/form-fillers')
+const {
+  fillMultiOptionTypeahead,
+  fillSelect,
+  clearTypeahead,
+} = require('../../support/form-fillers')
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
 const { faker } = require('@faker-js/faker')
@@ -110,12 +118,63 @@ describe('Export pipeline edit', () => {
           '[data-test="field-team_members"]',
           exportItem.team_members.map((t) => t.name)
         )
+        cy.get('[data-test="field-estimated_export_value_years"]').then(
+          (element) => {
+            assertFieldSelect({
+              element,
+              label: 'Year(s)',
+              value: exportItem.estimated_export_value_years.name,
+              optionsCount: 7,
+            })
+          }
+        )
+        cy.get('[data-test="field-estimated_export_value_amount"]').then(
+          (element) => {
+            assertFieldInput({
+              element,
+              label: 'Estimated value in GBP',
+              value: exportItem.estimated_export_value_amount,
+            })
+          }
+        )
+        cy.get('[data-test="field-estimated_win_date"]').then((element) => {
+          assertFieldDateShort({
+            element,
+            label: 'Estimated date for win',
+            hint: 'For example 11 2023',
+            value: exportItem.estimated_win_date,
+          })
+        })
+        cy.get('[data-test="field-destination_country"]').then((element) => {
+          assertFieldTypeahead({
+            element,
+            label: 'Destination',
+            value: exportItem.destination_country.name,
+            isMulti: false,
+          })
+        })
+        cy.get('[data-test="field-sector"]').then((element) => {
+          assertFieldTypeahead({
+            element,
+            label: 'Main sector',
+            value: exportItem.sector.name,
+            isMulti: false,
+          })
+        })
         cy.get('[data-test="field-export_potential"]').then((element) => {
           assertFieldRadios({
             element,
             label: 'Export potential',
             optionsCount: 3,
             value: capitalize(exportItem.export_potential),
+          })
+        })
+        cy.get('[data-test="field-notes"]').then((element) => {
+          assertFieldTextarea({
+            element,
+            label: 'Notes (optional)',
+            hint: 'Add further details about the export, such as additional sectors and country regions',
+            value: exportItem.notes,
           })
         })
       })
@@ -132,7 +191,13 @@ describe('Export pipeline edit', () => {
       it('the form should display validation error message for mandatory inputs', () => {
         //clear any default values first
         cy.get('[data-test="title-input"]').clear()
-        cy.get('[data-test="typeahead-input"]').clear()
+        clearTypeahead('[data-test=field-owner]')
+        fillSelect('[data-test=field-estimated_export_value_years]', 0)
+        cy.get('[data-test="estimated-export-value-amount-input"]').clear()
+        cy.get('[data-test="estimated_win_date-month"]').clear()
+        cy.get('[data-test="estimated_win_date-year"]').clear()
+        clearTypeahead('[data-test=field-destination_country]')
+        clearTypeahead('[data-test=field-sector]')
 
         cy.get('[data-test=submit-button]').click()
 
@@ -143,6 +208,28 @@ describe('Export pipeline edit', () => {
         assertFieldError(
           cy.get('[data-test="field-owner"]'),
           ERROR_MESSAGES.owner
+        )
+        assertFieldError(
+          cy.get('[data-test="field-estimated_export_value_years"]'),
+          ERROR_MESSAGES.estimated_export_value_years
+        )
+        assertFieldError(
+          cy.get('[data-test="field-estimated_export_value_amount"]'),
+          ERROR_MESSAGES.estimated_export_value_amount,
+          false
+        )
+        assertFieldError(
+          cy.get('[data-test="field-estimated_win_date"]'),
+          ERROR_MESSAGES.estimated_win_date.required
+        )
+        assertFieldError(
+          cy.get('[data-test="field-destination_country"]'),
+          ERROR_MESSAGES.destination_country,
+          false
+        )
+        assertFieldError(
+          cy.get('[data-test="field-sector"]'),
+          ERROR_MESSAGES.sector
         )
       })
 
@@ -157,6 +244,17 @@ describe('Export pipeline edit', () => {
         assertFieldError(
           cy.get('[data-test="field-team_members"]'),
           ERROR_MESSAGES.team_members
+        )
+      })
+
+      it('the form should display validation error message for invalid estimated dates', () => {
+        cy.get('[data-test=estimated_win_date-month]').type('65')
+        cy.get('[data-test=estimated_win_date-year]').type('-54')
+        cy.get('[data-test=submit-button]').click()
+
+        assertFieldError(
+          cy.get('[data-test="field-estimated_win_date"]'),
+          ERROR_MESSAGES.estimated_win_date.invalid
         )
       })
     })
@@ -178,9 +276,29 @@ describe('Export pipeline edit', () => {
             exportItem.team_members.map((x) => x.id)
           )
           expect(request.body).to.have.property(
+            'estimated_export_value_years',
+            exportItem.estimated_export_value_years.id
+          )
+          expect(request.body).to.have.property(
+            'estimated_export_value_amount',
+            exportItem.estimated_export_value_amount
+          )
+          expect(request.body).to.have.property(
+            'estimated_win_date',
+            `${exportItem.estimated_win_date.getFullYear()}-${
+              exportItem.estimated_win_date.getMonth() + 1
+            }-01T00:00:00`
+          )
+          expect(request.body).to.have.property(
+            'destination_country',
+            exportItem.destination_country.id
+          )
+          expect(request.body).to.have.property('sector', exportItem.sector.id)
+          expect(request.body).to.have.property(
             'export_potential',
             exportItem.export_potential
           )
+          expect(request.body).to.have.property('notes', exportItem.notes)
         })
 
         assertUrl(urls.exportPipeline.edit(exportItem.id))

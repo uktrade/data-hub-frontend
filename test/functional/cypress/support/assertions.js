@@ -783,10 +783,14 @@ const assertAPIRequest = (endPointAlias, assertCallback) =>
  * Assert the field element contains the expected error message
  * @param {*} element the field element that contains the error
  * @param {*} errorMessage the error message that should be displayed
+ * @param {*} hasHint whether this field has a hint
  * @returns
  */
-const assertFieldError = (element, errorMessage) =>
-  element.find('span').eq(1).should('have.text', errorMessage)
+const assertFieldError = (element, errorMessage, hasHint = true) =>
+  element
+    .find('span')
+    .eq(hasHint ? 1 : 0)
+    .should('have.text', errorMessage)
 
 /**
  * Assert the typeahead element contains a chip for each of the values
