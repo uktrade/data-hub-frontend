@@ -26,8 +26,7 @@ const {
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
 const { faker } = require('@faker-js/faker')
-
-import { capitalize } from 'lodash'
+const { capitalize } = require('lodash')
 
 describe('Export pipeline edit', () => {
   const exportItem = exportItems.results[0]

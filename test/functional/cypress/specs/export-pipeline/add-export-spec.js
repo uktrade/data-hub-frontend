@@ -10,6 +10,7 @@ const {
   assertLocalHeader,
   assertBreadcrumbs,
 } = require('../../support/assertions')
+
 const {
   ERROR_MESSAGES,
 } = require('../../../../../src/client/modules/ExportPipeline/ExportForm/constants')
@@ -146,6 +147,10 @@ describe('Export pipeline create', () => {
           cy.get('[data-test="field-destination_country"]'),
           ERROR_MESSAGES.destination_country,
           false
+        )
+        assertFieldError(
+          cy.get('[data-test="field-status"]'),
+          ERROR_MESSAGES.status
         )
         assertFieldError(
           cy.get('[data-test="field-sector"]'),
