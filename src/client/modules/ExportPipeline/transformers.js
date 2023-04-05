@@ -16,6 +16,7 @@ export const transformFormValuesForAPI = ({
   destination_country,
   sector,
   status,
+  export_potential,
   exporter_experience,
   notes,
 }) => ({
@@ -30,6 +31,7 @@ export const transformFormValuesForAPI = ({
   destination_country: destination_country.value,
   sector: sector.value,
   status,
+  export_potential,
   exporter_experience,
   notes,
 })
@@ -46,6 +48,7 @@ export const transformAPIValuesForForm = ({
   destination_country,
   sector,
   status,
+  export_potential,
   exporter_experience,
   notes,
 }) => ({
@@ -61,6 +64,7 @@ export const transformAPIValuesForForm = ({
     destination_country && transformIdNameToValueLabel(destination_country),
   sector: sector && transformIdNameToValueLabel(sector),
   status,
+  export_potential,
   exporter_experience: exporter_experience.id,
   notes,
 })

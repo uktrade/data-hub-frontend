@@ -156,6 +156,14 @@ describe('Export pipeline create', () => {
           cy.get('[data-test="field-sector"]'),
           ERROR_MESSAGES.sector
         )
+        assertFieldError(
+          cy.get('[data-test="field-status"]'),
+          ERROR_MESSAGES.status
+        )
+        assertFieldError(
+          cy.get('[data-test="field-export_potential"]'),
+          ERROR_MESSAGES.export_potential
+        )
       })
 
       it('the form should display validation error message for too many team members', () => {
@@ -208,14 +216,15 @@ describe('Export pipeline create', () => {
             '[data-test=estimated-export-value-amount-input]',
             newExport.estimated_export_value_amount
           )
-          cy.get('[data-test=estimated_win_date-month]').type('03')
-          cy.get('[data-test=estimated_win_date-year]').type('2035')
+          fill('[data-test=estimated_win_date-month]', '03')
+          fill('[data-test=estimated_win_date-year]', '2035')
           fillTypeahead(
             '[data-test=field-destination_country]',
             newExport.destination_country.name
           )
           fillTypeahead('[data-test=field-sector]', newExport.sector.name)
           cy.get('[name="status"]').check(newExport.status)
+          cy.get('[name="export_potential"]').check(newExport.export_potential)
           cy.get('[name="exporter_experience"]').check(
             newExport.exporter_experience.id
           )
@@ -236,6 +245,7 @@ describe('Export pipeline create', () => {
             destination_country: newExport.destination_country.id,
             sector: newExport.sector.id,
             status: newExport.status,
+            export_potential: newExport.export_potential,
             exporter_experience: newExport.exporter_experience.id,
             notes: newExport.notes,
           })

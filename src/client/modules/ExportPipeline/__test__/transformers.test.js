@@ -22,6 +22,7 @@ describe('transformFormValuesForAPI', () => {
           destination_country: { value: 'h', label: 'i' },
           sector: { value: 'j', label: 'k' },
           status: 'won',
+          export_potential: 'high',
           exporter_experience: 'never',
           notes: 'large amount of text',
         })
@@ -37,6 +38,7 @@ describe('transformFormValuesForAPI', () => {
         destination_country: 'h',
         sector: 'j',
         status: 'won',
+        export_potential: 'high',
         exporter_experience: 'never',
         notes: 'large amount of text',
       })
@@ -60,6 +62,7 @@ describe('transformAPIValuesForForm', () => {
           destination_country: { id: 'f', name: 'g' },
           sector: { id: 'h', name: 'i' },
           status: 'won',
+          export_potential: 'high',
           exporter_experience: { id: 'never', name: 'Never' },
           notes: 'large amount of text',
         })
@@ -75,6 +78,7 @@ describe('transformAPIValuesForForm', () => {
         destination_country: { value: 'f', label: 'g' },
         sector: { value: 'h', label: 'i' },
         status: 'won',
+        export_potential: 'high',
         exporter_experience: 'never',
         notes: 'large amount of text',
       })

@@ -1,4 +1,5 @@
 const urls = require('../../../../../src/lib/urls')
+
 const {
   assertUrl,
   assertFieldRadios,
@@ -167,6 +168,14 @@ describe('Export pipeline edit', () => {
             value: capitalize(exportItem.status),
           })
         })
+        cy.get('[data-test="field-export_potential"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Export potential',
+            optionsCount: 3,
+            value: capitalize(exportItem.export_potential),
+          })
+        })
         cy.get('[data-test="field-exporter_experience"]').then((element) => {
           assertFieldRadios({
             element,
@@ -301,6 +310,10 @@ describe('Export pipeline edit', () => {
           )
           expect(request.body).to.have.property('sector', exportItem.sector.id)
           expect(request.body).to.have.property('status', exportItem.status)
+          expect(request.body).to.have.property(
+            'export_potential',
+            exportItem.export_potential
+          )
           expect(request.body).to.have.property(
             'exporter_experience',
             exportItem.exporter_experience.id
