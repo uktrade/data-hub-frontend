@@ -1,18 +1,6 @@
-{% extends "_layouts/template.njk" %}
+{% extends "_layouts/template-no-local-header.njk" %}
 
-{% block local_header %}
-  {{
-    LocalHeader({
-      heading:
-        'These verified business details are already being used to verify another Data Hub record'
-        if props.dnbCompanyIsMatched
-        else 'Verify business details',
-      modifier: 'light-banner'
-    })
-  }}
-{% endblock %}
-
-{% block body_main_content %}
+{% block body %}
   {% component 'react-slot', {
     id: 'match-confirmation',
     props: props
