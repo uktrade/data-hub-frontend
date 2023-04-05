@@ -7,6 +7,7 @@ export const transformFormValuesForAPI = ({
   owner,
   team_members,
   destination_country,
+  exporter_experience,
 }) => ({
   company,
   id,
@@ -14,6 +15,7 @@ export const transformFormValuesForAPI = ({
   owner: owner.value,
   team_members: team_members.map((x) => x.value),
   destination_country: destination_country.value,
+  exporter_experience: exporter_experience.value,
 })
 
 export const transformAPIValuesForForm = ({
@@ -23,6 +25,7 @@ export const transformAPIValuesForForm = ({
   owner,
   team_members,
   destination_country,
+  exporter_experience,
 }) => ({
   company: company.id,
   id,
@@ -31,4 +34,6 @@ export const transformAPIValuesForForm = ({
   team_members: team_members.map(mapApiToField),
   destination_country:
     destination_country && mapApiToField(destination_country),
+  exporter_experience:
+    exporter_experience && mapApiToField(exporter_experience),
 })
