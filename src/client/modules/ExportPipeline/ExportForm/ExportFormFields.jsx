@@ -6,6 +6,7 @@ import {
   FieldInput,
   FormLayout,
   FieldAdvisersTypeahead,
+  FieldRadios,
   FieldDate,
   FieldSelect,
   FieldCurrency,
@@ -25,6 +26,7 @@ import { HintText } from 'govuk-react'
 import Label from '@govuk-react/label'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
 import CountriesResource from '../../../../client/components/Resource/Countries'
+import ExportExperience from '../../../components/Resource/ExportExperience'
 
 const ExportFormFields = ({
   initialValues,
@@ -123,6 +125,12 @@ const ExportFormFields = ({
                   required={ERROR_MESSAGES.sector}
                   resource={SectorResource}
                   field={FieldTypeahead}
+                />
+                <ResourceOptionsField
+                  resource={ExportExperience}
+                  field={FieldRadios}
+                  name="exporter_experience"
+                  label="Exporter experience (optional)"
                 />
                 <FieldTextarea
                   name="notes"

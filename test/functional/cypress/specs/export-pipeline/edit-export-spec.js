@@ -1,6 +1,7 @@
 const urls = require('../../../../../src/lib/urls')
 const {
   assertUrl,
+  assertFieldRadios,
   assertFieldSelect,
   assertFieldTextarea,
 } = require('../../support/assertions')
@@ -160,6 +161,14 @@ describe('Export pipeline edit', () => {
             isMulti: false,
           })
         })
+        cy.get('[data-test="field-exporter_experience"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Exporter experience (optional)',
+            optionsCount: 5,
+            value: exportItem.exporter_experience.name,
+          })
+        })
         cy.get('[data-test="field-notes"]').then((element) => {
           assertFieldTextarea({
             element,
@@ -285,6 +294,10 @@ describe('Export pipeline edit', () => {
             exportItem.destination_country.id
           )
           expect(request.body).to.have.property('sector', exportItem.sector.id)
+          expect(request.body).to.have.property(
+            'exporter_experience',
+            exportItem.exporter_experience.id
+          )
           expect(request.body).to.have.property('notes', exportItem.notes)
         })
 

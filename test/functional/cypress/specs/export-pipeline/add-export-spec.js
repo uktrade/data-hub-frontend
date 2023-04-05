@@ -223,6 +223,9 @@ describe('Export pipeline create', () => {
             newExport.destination_country.name
           )
           fillTypeahead('[data-test=field-sector]', newExport.sector.name)
+          cy.get('[name="exporter_experience"]').check(
+            newExport.exporter_experience.id
+          )
           fill('[data-test=field-notes]', newExport.notes)
 
           cy.get('[data-test=submit-button]').click()
@@ -239,6 +242,7 @@ describe('Export pipeline create', () => {
             estimated_win_date: '2035-03-01T00:00:00',
             destination_country: newExport.destination_country.id,
             sector: newExport.sector.id,
+            exporter_experience: newExport.exporter_experience.id,
             notes: newExport.notes,
           })
 
