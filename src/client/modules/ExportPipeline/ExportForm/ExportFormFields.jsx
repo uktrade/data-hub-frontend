@@ -20,6 +20,7 @@ import { ERROR_MESSAGES } from './constants'
 import { transformAPIValuesForForm } from '../transformers'
 import { validateTeamMembers } from './validation'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
+import SectorResource from '../../../../client/components/Resource/Sector'
 import ExportYearsResource from '../../../../client/components/Resource/ExportYears'
 import { HintText } from 'govuk-react'
 import Label from '@govuk-react/label'
@@ -115,6 +116,14 @@ const ExportFormFields = ({
                   label="Destination"
                   required={ERROR_MESSAGES.destination_country}
                   resource={CountriesResource}
+                  field={FieldTypeahead}
+                />
+                <ResourceOptionsField
+                  name="sector"
+                  label="Main sector"
+                  hint="This is the main sector the company is exporting to. Additional sectors can be added to notes"
+                  required={ERROR_MESSAGES.sector}
+                  resource={SectorResource}
                   field={FieldTypeahead}
                 />
                 <ResourceOptionsField

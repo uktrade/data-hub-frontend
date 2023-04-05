@@ -9,4 +9,5 @@ export const ERROR_MESSAGES = {
     invalid: 'Enter a valid date',
   },
   destination_country: 'Enter a destination',
+  sector: 'Enter a main sector',
 }

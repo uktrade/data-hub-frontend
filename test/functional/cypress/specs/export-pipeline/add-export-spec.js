@@ -124,11 +124,10 @@ describe('Export pipeline create', () => {
 
       it('the form should display validation error message for mandatory inputs', () => {
         //clear any default values first
-        cy.get('[data-test="typeahead-input"]').clear()
+        clearTypeahead('[data-test=field-owner]')
         clearTypeahead('[data-test=field-destination_country]')
-
+        clearTypeahead('[data-test=field-sector]')
         cy.get('[data-test=submit-button]').click()
-
         assertFieldError(
           cy.get('[data-test="field-title"]'),
           ERROR_MESSAGES.title
@@ -160,6 +159,10 @@ describe('Export pipeline create', () => {
           cy.get('[data-test="field-destination_country"]'),
           ERROR_MESSAGES.destination_country,
           false
+        )
+        assertFieldError(
+          cy.get('[data-test="field-sector"]'),
+          ERROR_MESSAGES.sector
         )
       })
 
@@ -219,6 +222,7 @@ describe('Export pipeline create', () => {
             '[data-test=field-destination_country]',
             newExport.destination_country.name
           )
+          fillTypeahead('[data-test=field-sector]', newExport.sector.name)
           cy.get('[name="exporter_experience"]').check(
             newExport.exporter_experience.id
           )
@@ -237,6 +241,7 @@ describe('Export pipeline create', () => {
               newExport.estimated_export_value_amount,
             estimated_win_date: '2035-03-01T00:00:00',
             destination_country: newExport.destination_country.id,
+            sector: newExport.sector.id,
             exporter_experience: newExport.exporter_experience.id,
             notes: newExport.notes,
           })

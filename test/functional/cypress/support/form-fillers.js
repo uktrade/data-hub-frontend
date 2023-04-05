@@ -36,6 +36,10 @@ export const fillSelect = (selector, value) => {
   cy.get(selector).find('select').select(value)
 }
 
+export const clearTypeahead = (selector) => {
+  cy.get(selector).find('input').clear().type('{esc}')
+}
+
 //  Click events
 
 export const clickAddAnotherButton = (selector) => {
@@ -48,8 +52,4 @@ export const clickSaveAndReturnButton = () => {
 
 export const clickReturnWithoutSavingButton = () => {
   cy.contains('Return without saving').click()
-}
-
-export const clearTypeahead = (selector) => {
-  cy.get(selector).find('input').clear().type('{esc}')
 }
