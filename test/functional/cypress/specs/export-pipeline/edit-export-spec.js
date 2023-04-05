@@ -152,6 +152,14 @@ describe('Export pipeline edit', () => {
             isMulti: false,
           })
         })
+        cy.get('[data-test="field-sector"]').then((element) => {
+          assertFieldTypeahead({
+            element,
+            label: 'Main sector',
+            value: exportItem.sector.name,
+            isMulti: false,
+          })
+        })
         cy.get('[data-test="field-notes"]').then((element) => {
           assertFieldTextarea({
             element,
@@ -174,12 +182,13 @@ describe('Export pipeline edit', () => {
       it('the form should display validation error message for mandatory inputs', () => {
         //clear any default values first
         cy.get('[data-test="title-input"]').clear()
-        cy.get('[data-test="typeahead-input"]').clear()
+        clearTypeahead('[data-test=field-owner]')
         fillSelect('[data-test=field-estimated_export_value_years]', 0)
         cy.get('[data-test="estimated-export-value-amount-input"]').clear()
         cy.get('[data-test="estimated_win_date-month"]').clear()
         cy.get('[data-test="estimated_win_date-year"]').clear()
         clearTypeahead('[data-test=field-destination_country]')
+        clearTypeahead('[data-test=field-sector]')
 
         cy.get('[data-test=submit-button]').click()
 
@@ -208,6 +217,10 @@ describe('Export pipeline edit', () => {
           cy.get('[data-test="field-destination_country"]'),
           ERROR_MESSAGES.destination_country,
           false
+        )
+        assertFieldError(
+          cy.get('[data-test="field-sector"]'),
+          ERROR_MESSAGES.sector
         )
       })
 
@@ -271,6 +284,7 @@ describe('Export pipeline edit', () => {
             'destination_country',
             exportItem.destination_country.id
           )
+          expect(request.body).to.have.property('sector', exportItem.sector.id)
           expect(request.body).to.have.property('notes', exportItem.notes)
         })
 
