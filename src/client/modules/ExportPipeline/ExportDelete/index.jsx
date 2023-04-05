@@ -42,7 +42,10 @@ const ExportFormDelete = ({ exportItem }) => {
   return (
     <DefaultLayout
       heading=""
-      subheading={`Are you sure you want to delete the export ${exportItem?.company?.name} — ‘${exportItem?.title}’?`}
+      subheading={
+        exportItem &&
+        `Are you sure you want to delete the export ${exportItem?.company?.name} — ‘${exportItem?.title}’?`
+      }
       pageTitle={DISPLAY_DELETE_EXPORT}
       breadcrumbs={getBreadcrumbs(exportItem)}
     >
