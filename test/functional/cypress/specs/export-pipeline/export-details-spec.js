@@ -54,7 +54,7 @@ describe('Export Details summary ', () => {
     })
   })
 
-  context.only('when the form edit button is clicked', () => {
+  context('when the form edit button is clicked', () => {
     const exportDetailsUrl = `/export/${exportItem.id}/details`
     it('the form should redirect to the edit page', () => {
       cy.get('[data-test="edit-export-details-button"]').click()
