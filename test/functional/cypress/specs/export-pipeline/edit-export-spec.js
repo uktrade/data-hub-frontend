@@ -13,6 +13,7 @@ const {
   assertFieldError,
   assertFieldInput,
   assertTypeaheadValues,
+  assertFieldDateShort,
 } = require('../../support/assertions')
 const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 const {
@@ -135,6 +136,14 @@ describe('Export pipeline edit', () => {
             })
           }
         )
+        cy.get('[data-test="field-estimated_win_date"]').then((element) => {
+          assertFieldDateShort({
+            element,
+            label: 'Estimated date for win',
+            hint: 'For example 11 2023',
+            value: exportItem.estimated_win_date,
+          })
+        })
         cy.get('[data-test="field-destination_country"]').then((element) => {
           assertFieldTypeahead({
             element,
@@ -168,6 +177,8 @@ describe('Export pipeline edit', () => {
         cy.get('[data-test="typeahead-input"]').clear()
         fillSelect('[data-test=field-estimated_export_value_years]', 0)
         cy.get('[data-test="estimated-export-value-amount-input"]').clear()
+        cy.get('[data-test="estimated_win_date-month"]').clear()
+        cy.get('[data-test="estimated_win_date-year"]').clear()
         clearTypeahead('[data-test=field-destination_country]')
 
         cy.get('[data-test=submit-button]').click()
@@ -190,6 +201,10 @@ describe('Export pipeline edit', () => {
           false
         )
         assertFieldError(
+          cy.get('[data-test="field-estimated_win_date"]'),
+          ERROR_MESSAGES.estimated_win_date.required
+        )
+        assertFieldError(
           cy.get('[data-test="field-destination_country"]'),
           ERROR_MESSAGES.destination_country,
           false
@@ -207,6 +222,17 @@ describe('Export pipeline edit', () => {
         assertFieldError(
           cy.get('[data-test="field-team_members"]'),
           ERROR_MESSAGES.team_members
+        )
+      })
+
+      it('the form should display validation error message for invalid estimated dates', () => {
+        cy.get('[data-test=estimated_win_date-month]').type('65')
+        cy.get('[data-test=estimated_win_date-year]').type('-54')
+        cy.get('[data-test=submit-button]').click()
+
+        assertFieldError(
+          cy.get('[data-test="field-estimated_win_date"]'),
+          ERROR_MESSAGES.estimated_win_date.invalid
         )
       })
     })
@@ -234,6 +260,12 @@ describe('Export pipeline edit', () => {
           expect(request.body).to.have.property(
             'estimated_export_value_amount',
             exportItem.estimated_export_value_amount
+          )
+          expect(request.body).to.have.property(
+            'estimated_win_date',
+            `${exportItem.estimated_win_date.getFullYear()}-${
+              exportItem.estimated_win_date.getMonth() + 1
+            }-01T00:00:00`
           )
           expect(request.body).to.have.property(
             'destination_country',
