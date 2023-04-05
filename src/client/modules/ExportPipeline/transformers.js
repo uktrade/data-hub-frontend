@@ -15,6 +15,7 @@ export const transformFormValuesForAPI = ({
   estimated_win_date,
   destination_country,
   sector,
+  status,
   exporter_experience,
   notes,
 }) => ({
@@ -28,6 +29,7 @@ export const transformFormValuesForAPI = ({
   estimated_win_date: `${estimated_win_date.year}-${estimated_win_date.month}-01T00:00:00`,
   destination_country: destination_country.value,
   sector: sector.value,
+  status,
   exporter_experience,
   notes,
 })
@@ -43,6 +45,7 @@ export const transformAPIValuesForForm = ({
   estimated_win_date,
   destination_country,
   sector,
+  status,
   exporter_experience,
   notes,
 }) => ({
@@ -57,6 +60,7 @@ export const transformAPIValuesForForm = ({
   destination_country:
     destination_country && transformIdNameToValueLabel(destination_country),
   sector: sector && transformIdNameToValueLabel(sector),
+  status,
   exporter_experience: exporter_experience.id,
   notes,
 })

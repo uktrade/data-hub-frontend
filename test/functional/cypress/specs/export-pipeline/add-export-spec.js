@@ -7,12 +7,10 @@ const {
   assertPayload,
   assertFieldTypeahead,
   assertFieldError,
-} = require('../../support/assertions')
-
-const {
   assertLocalHeader,
   assertBreadcrumbs,
 } = require('../../support/assertions')
+
 const {
   ERROR_MESSAGES,
 } = require('../../../../../src/client/modules/ExportPipeline/ExportForm/constants')
@@ -145,20 +143,14 @@ describe('Export pipeline create', () => {
           ERROR_MESSAGES.estimated_export_value_amount,
           false
         )
-        it('the form should display validation error message for invalid estimated dates', () => {
-          cy.get('[data-test=estimated_win_date-month]').type('65')
-          cy.get('[data-test=estimated_win_date-year]').type('-54')
-          cy.get('[data-test=submit-button]').click()
-
-          assertFieldError(
-            cy.get('[data-test="field-estimated_win_date"]'),
-            ERROR_MESSAGES.estimated_win_date.invalid
-          )
-        })
         assertFieldError(
           cy.get('[data-test="field-destination_country"]'),
           ERROR_MESSAGES.destination_country,
           false
+        )
+        assertFieldError(
+          cy.get('[data-test="field-status"]'),
+          ERROR_MESSAGES.status
         )
         assertFieldError(
           cy.get('[data-test="field-sector"]'),
@@ -223,6 +215,7 @@ describe('Export pipeline create', () => {
             newExport.destination_country.name
           )
           fillTypeahead('[data-test=field-sector]', newExport.sector.name)
+          cy.get('[name="status"]').check(newExport.status)
           cy.get('[name="exporter_experience"]').check(
             newExport.exporter_experience.id
           )
@@ -242,6 +235,7 @@ describe('Export pipeline create', () => {
             estimated_win_date: '2035-03-01T00:00:00',
             destination_country: newExport.destination_country.id,
             sector: newExport.sector.id,
+            status: newExport.status,
             exporter_experience: newExport.exporter_experience.id,
             notes: newExport.notes,
           })

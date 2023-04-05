@@ -8,6 +8,7 @@ export const ERROR_MESSAGES = {
     required: 'Enter an estimated date for win',
     invalid: 'Enter a valid date',
   },
+  status: 'Select an export status',
   destination_country: 'Enter a destination',
   sector: 'Enter a main sector',
 }
