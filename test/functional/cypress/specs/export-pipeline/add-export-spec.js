@@ -207,14 +207,17 @@ describe('Export pipeline create', () => {
             '[data-test=estimated-export-value-amount-input]',
             newExport.estimated_export_value_amount
           )
-          cy.get('[data-test=estimated_win_date-month]').type('03')
-          cy.get('[data-test=estimated_win_date-year]').type('2035')
+          fill('[data-test=estimated_win_date-month]', '03')
+          fill('[data-test=estimated_win_date-year]', '2035')
           fillTypeahead(
             '[data-test=field-destination_country]',
             newExport.destination_country.name
           )
           fillTypeahead('[data-test=field-sector]', newExport.sector.name)
           cy.get('[name="export_potential"]').check(newExport.export_potential)
+          cy.get('[name="exporter_experience"]').check(
+            newExport.exporter_experience.id
+          )
           fill('[data-test=field-notes]', newExport.notes)
 
           cy.get('[data-test=submit-button]').click()
@@ -232,6 +235,7 @@ describe('Export pipeline create', () => {
             destination_country: newExport.destination_country.id,
             sector: newExport.sector.id,
             export_potential: newExport.export_potential,
+            exporter_experience: newExport.exporter_experience.id,
             notes: newExport.notes,
           })
 

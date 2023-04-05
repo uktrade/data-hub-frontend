@@ -2,6 +2,7 @@ const urls = require('../../../../../src/lib/urls')
 
 const {
   assertUrl,
+  assertFieldRadios,
   assertFieldSelect,
   assertFieldTextarea,
   assertLocalHeader,
@@ -12,7 +13,6 @@ const {
   assertFieldInput,
   assertTypeaheadValues,
   assertFieldDateShort,
-  assertFieldRadios,
 } = require('../../support/assertions')
 const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 const {
@@ -169,6 +169,14 @@ describe('Export pipeline edit', () => {
             value: capitalize(exportItem.export_potential),
           })
         })
+        cy.get('[data-test="field-exporter_experience"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Exporter experience (optional)',
+            optionsCount: 5,
+            value: exportItem.exporter_experience.name,
+          })
+        })
         cy.get('[data-test="field-notes"]').then((element) => {
           assertFieldTextarea({
             element,
@@ -297,6 +305,10 @@ describe('Export pipeline edit', () => {
           expect(request.body).to.have.property(
             'export_potential',
             exportItem.export_potential
+          )
+          expect(request.body).to.have.property(
+            'exporter_experience',
+            exportItem.exporter_experience.id
           )
           expect(request.body).to.have.property('notes', exportItem.notes)
         })

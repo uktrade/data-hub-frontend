@@ -27,6 +27,7 @@ import { HintText } from 'govuk-react'
 import Label from '@govuk-react/label'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
 import CountriesResource from '../../../../client/components/Resource/Countries'
+import ExportExperience from '../../../components/Resource/ExportExperience'
 
 const ExportFormFields = ({
   initialValues,
@@ -132,6 +133,12 @@ const ExportFormFields = ({
                   required={ERROR_MESSAGES.export_potential}
                   field={FieldRadios}
                   options={SECTOR_LABELS}
+                />
+                <ResourceOptionsField
+                  resource={ExportExperience}
+                  field={FieldRadios}
+                  name="exporter_experience"
+                  label="Exporter experience (optional)"
                 />
                 <FieldTextarea
                   name="notes"

@@ -22,6 +22,7 @@ describe('transformFormValuesForAPI', () => {
           destination_country: { value: 'h', label: 'i' },
           sector: { value: 'j', label: 'k' },
           export_potential: 'high',
+          exporter_experience: 'never',
           notes: 'large amount of text',
         })
       ).to.be.deep.equal({
@@ -36,6 +37,7 @@ describe('transformFormValuesForAPI', () => {
         destination_country: 'h',
         sector: 'j',
         export_potential: 'high',
+        exporter_experience: 'never',
         notes: 'large amount of text',
       })
     })
@@ -58,6 +60,7 @@ describe('transformAPIValuesForForm', () => {
           destination_country: { id: 'f', name: 'g' },
           sector: { id: 'h', name: 'i' },
           export_potential: 'high',
+          exporter_experience: { id: 'never', name: 'Never' },
           notes: 'large amount of text',
         })
       ).to.be.deep.equal({
@@ -72,6 +75,7 @@ describe('transformAPIValuesForForm', () => {
         destination_country: { value: 'f', label: 'g' },
         sector: { value: 'h', label: 'i' },
         export_potential: 'high',
+        exporter_experience: 'never',
         notes: 'large amount of text',
       })
     })
