@@ -6,6 +6,7 @@ import {
   FieldInput,
   FormLayout,
   FieldAdvisersTypeahead,
+  FieldDate,
   FieldSelect,
   FieldCurrency,
   FieldTypeahead,
@@ -73,6 +74,7 @@ const ExportFormFields = ({
                   isMulti={true}
                   validate={validateTeamMembers}
                 />
+
                 <Label
                   style={{ fontWeight: FONT_WEIGHTS.bold }}
                   htmlFor="field-estimated_export"
@@ -100,6 +102,14 @@ const ExportFormFields = ({
                     boldLabel={false}
                   />
                 </div>
+                <FieldDate
+                  name="estimated_win_date"
+                  format="short"
+                  label="Estimated date for win"
+                  hint="For example 11 2023"
+                  required={ERROR_MESSAGES.estimated_win_date.required}
+                  invalid={ERROR_MESSAGES.estimated_win_date.invalid}
+                />
                 <ResourceOptionsField
                   name="destination_country"
                   label="Destination"
