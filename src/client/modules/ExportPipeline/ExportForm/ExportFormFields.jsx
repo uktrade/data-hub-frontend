@@ -19,7 +19,7 @@ import Task from '../../../components/Task'
 import { ERROR_MESSAGES } from './constants'
 import { transformAPIValuesForForm } from '../transformers'
 import { validateTeamMembers } from './validation'
-import { SECTOR_LABELS } from './labels'
+import { SECTOR_LABELS, STATUS_LABELS } from './labels'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import SectorResource from '../../../../client/components/Resource/Sector'
 import ExportYearsResource from '../../../../client/components/Resource/ExportYears'
@@ -126,6 +126,13 @@ const ExportFormFields = ({
                   required={ERROR_MESSAGES.sector}
                   resource={SectorResource}
                   field={FieldTypeahead}
+                />
+                <FieldRadios
+                  name="status"
+                  label="Export status"
+                  required={ERROR_MESSAGES.status}
+                  field={FieldRadios}
+                  options={STATUS_LABELS}
                 />
                 <FieldRadios
                   name="export_potential"

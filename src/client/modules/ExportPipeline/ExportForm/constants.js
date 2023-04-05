@@ -10,5 +10,6 @@ export const ERROR_MESSAGES = {
   },
   destination_country: 'Enter a destination',
   sector: 'Enter a main sector',
+  status: 'Select an export status',
   export_potential: 'Select an export potential',
 }

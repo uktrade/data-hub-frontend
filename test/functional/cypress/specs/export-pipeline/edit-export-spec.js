@@ -161,6 +161,14 @@ describe('Export pipeline edit', () => {
             isMulti: false,
           })
         })
+        cy.get('[data-test="field-status"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Export status',
+            optionsCount: 3,
+            value: capitalize(exportItem.status),
+          })
+        })
         cy.get('[data-test="field-export_potential"]').then((element) => {
           assertFieldRadios({
             element,
@@ -302,6 +310,7 @@ describe('Export pipeline edit', () => {
             exportItem.destination_country.id
           )
           expect(request.body).to.have.property('sector', exportItem.sector.id)
+          expect(request.body).to.have.property('status', exportItem.status)
           expect(request.body).to.have.property(
             'export_potential',
             exportItem.export_potential

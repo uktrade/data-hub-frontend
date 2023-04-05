@@ -152,6 +152,10 @@ describe('Export pipeline create', () => {
           ERROR_MESSAGES.sector
         )
         assertFieldError(
+          cy.get('[data-test="field-status"]'),
+          ERROR_MESSAGES.status
+        )
+        assertFieldError(
           cy.get('[data-test="field-export_potential"]'),
           ERROR_MESSAGES.export_potential
         )
@@ -214,6 +218,7 @@ describe('Export pipeline create', () => {
             newExport.destination_country.name
           )
           fillTypeahead('[data-test=field-sector]', newExport.sector.name)
+          cy.get('[name="status"]').check(newExport.status)
           cy.get('[name="export_potential"]').check(newExport.export_potential)
           cy.get('[name="exporter_experience"]').check(
             newExport.exporter_experience.id
@@ -234,6 +239,7 @@ describe('Export pipeline create', () => {
             estimated_win_date: '2035-03-01T00:00:00',
             destination_country: newExport.destination_country.id,
             sector: newExport.sector.id,
+            status: newExport.status,
             export_potential: newExport.export_potential,
             exporter_experience: newExport.exporter_experience.id,
             notes: newExport.notes,
