@@ -13,7 +13,11 @@
 
   {{ subnavigation(company, 'large-capital-profile') }}
 
-  <h2 class="govuk-heading-m">Large capital investor profile</h2>
+  {% component 'react-slot', {
+      id: 'company-large-capital-profile',
+      props: props
+      }
+    %}
 
   {% if profile  %}
     <div class="large-capital-profile">
