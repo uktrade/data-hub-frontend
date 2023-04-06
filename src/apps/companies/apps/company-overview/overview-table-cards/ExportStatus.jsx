@@ -67,7 +67,14 @@ export const SUBSEGMENT = {
   challenge: 'Challenge',
 }
 
-const ExportStatus = ({ activePage, company, queryString, ...props }) => {
+const ExportStatus = ({
+  activePage,
+  company,
+  queryString,
+  exportCountriesInformation,
+  futureInterestCountries,
+  ...props
+}) => {
   return (
     <Task.Status
       name={TASK_GET_LATEST_EXPORT_WINS}

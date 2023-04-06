@@ -17,7 +17,12 @@ const CardContainer = styled('div')`
   margin-bottom: 20px;
 `
 
-const CompanyOverview = ({ company, companiesHouseLink }) => {
+const CompanyOverview = ({
+  company,
+  companiesHouseLink,
+  exportCountriesInformation,
+  futureInterestCountries,
+}) => {
   const queryString = `/companies/${company.id}`
   return (
     <>
@@ -38,7 +43,12 @@ const CompanyOverview = ({ company, companiesHouseLink }) => {
             />
           </CardContainer>
           <CardContainer>
-            <ExportStatus company={company} queryString={queryString} />
+            <ExportStatus
+              company={company}
+              queryString={queryString}
+              exportCountriesInformation={exportCountriesInformation}
+              futureInterestCountries={futureInterestCountries}
+            />
           </CardContainer>
           <CardContainer>
             <InvestmentStatusCard

@@ -1,5 +1,9 @@
 const urls = require('../../../../lib/urls')
 
+const {
+  transformCompanyToExportDetailsView,
+} = require('../exports/transformer')
+
 async function renderOverview(req, res) {
   const { company } = res.locals
 
@@ -17,6 +21,14 @@ async function renderOverview(req, res) {
     company.company_number
   )
 
+  const { exportCountriesInformation } =
+    transformCompanyToExportDetailsView(company)
+
+  const futureInterestCountries = []
+  for (let i in exportCountriesInformation[1].values) {
+    futureInterestCountries.push(i.name)
+  }
+
   res.render('companies/apps/company-overview/views/client-container', {
     props: {
       breadcrumbs,
@@ -24,6 +36,8 @@ async function renderOverview(req, res) {
       localNavItems: res.locals.localNavItems,
       urls,
       companiesHouseLink,
+      exportCountriesInformation,
+      futureInterestCountries,
     },
   })
 }
