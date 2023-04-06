@@ -49,7 +49,7 @@ export const transformAPIValuesForForm = ({
   estimated_export_value_amount: estimated_export_value_amount,
   estimated_win_date: convertDateToFieldDateObject(estimated_win_date),
   destination_country:
-    destination_country && mapApiToField(destination_country),
+    destination_country && transformIdNameToValueLabel(destination_country),
   exporter_experience:
-    exporter_experience && mapApiToField(exporter_experience),
+    exporter_experience && transformIdNameToValueLabel(exporter_experience),
 })
