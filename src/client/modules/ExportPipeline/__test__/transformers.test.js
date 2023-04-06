@@ -17,6 +17,7 @@ describe('transformFormValuesForAPI', () => {
             { value: 'f', label: 'g' },
           ],
           destination_country: { value: 'h', label: 'i' },
+          exporter_experience: { value: 'i', label: 'j' },
         })
       ).to.be.deep.equal({
         company: 456,
@@ -25,6 +26,7 @@ describe('transformFormValuesForAPI', () => {
         owner: 'b',
         team_members: ['d', 'f'],
         destination_country: 'h',
+        exporter_experience: 'i',
       })
     })
   })
@@ -41,6 +43,7 @@ describe('transformAPIValuesForForm', () => {
           owner: { id: 'b', name: 'c' },
           team_members: [{ id: 'd', name: 'e' }],
           destination_country: { id: 'f', name: 'g' },
+          exporter_experience: { id: 'i', name: 'j' },
         })
       ).to.be.deep.equal({
         id: 234,
@@ -49,6 +52,7 @@ describe('transformAPIValuesForForm', () => {
         owner: { value: 'b', label: 'c' },
         team_members: [{ value: 'd', label: 'e' }],
         destination_country: { value: 'f', label: 'g' },
+        exporter_experience: { value: 'i', label: 'j' },
       })
     })
   })

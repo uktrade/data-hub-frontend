@@ -13,7 +13,7 @@ const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 
 describe('Export Details summary ', () => {
   const exportItem = exportItems.results[0]
-  Context('when summary table renders', () => {
+  context('when summary table renders', () => {
     beforeEach(() => {
       cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
         body: exportItem,
@@ -55,16 +55,28 @@ describe('Export Details summary ', () => {
   })
 
   context('when the form edit button is clicked', () => {
+    beforeEach(() => {
+      cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
+        body: exportItem,
+      }).as('getExportItemApiRequest')
+      cy.visit(`/export/${exportItem.id}/details`)
+    })
     it('the form should redirect to the edit page', () => {
       cy.get('[data-test="edit-export-details-button"]').click()
-      assertUrl(urls.exportPipeline.edit())
+      assertUrl(urls.exportPipeline.edit(exportItem.id))
     })
   })
 
   context('when the form delete button is clicked', () => {
+    beforeEach(() => {
+      cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
+        body: exportItem,
+      }).as('getExportItemApiRequest')
+      cy.visit(`/export/${exportItem.id}/details`)
+    })
     it('the form should redirect to the delete page', () => {
-      cy.get('[data-test="delete-button"]').click()
-      assertUrl(urls.exportPipeline.delete())
+      cy.get('[data-test="delete-export-details-button"]').click()
+      assertUrl(urls.exportPipeline.delete(exportItem.id))
     })
   })
 })
