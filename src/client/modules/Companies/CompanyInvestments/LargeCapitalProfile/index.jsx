@@ -10,7 +10,7 @@ import { SummaryTable, ToggleSection } from '../../../../components'
 import LargeInvestorProfileResource from '../../../../components/Resource/LargeInvestorProfile'
 import { RED } from '../../../../utils/colours'
 import ProfileDetailsTable from './ProfileDetailsTable'
-import EditDetailsForm from './EditDetailsForm'
+import EditLargeCapitalInvestorDetails from './EditProfileDetails'
 import ProfileRequirementsTable from './ProfileRequirementsTable'
 import EditRequirementsForm from './EditRequirementsForm'
 import ProfileLocationTable from './ProfileLocationTable'
@@ -79,8 +79,10 @@ const LargeCapitalProfile = ({ companyId }) => {
               <ProfileSection
                 incompleteFields={profile.results[0].incompleteDetailsFields}
                 form={
-                  <EditDetailsForm
+                  <EditLargeCapitalInvestorDetails
+                    profileId={profile.results[0].id}
                     companyId={profile.results[0].investorCompany.id}
+                    investorDetails={profile.results[0]}
                   />
                 }
                 toggleName="Investor details"

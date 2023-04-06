@@ -1,4 +1,4 @@
-import { createDateFromObject } from '../../../../../../client/utils/date'
+import { createDateFromObject } from '../../../../utils/date'
 
 export const validateDateWithinTheLastYear = (value, field, { values }) => {
   if (values && values.date) {
