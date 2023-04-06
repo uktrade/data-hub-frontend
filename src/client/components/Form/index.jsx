@@ -221,6 +221,7 @@ const _Form = ({
                           when={
                             redirectMode === 'hard' && redirectTo && resolved
                           }
+                          ignoreError={true}
                         >
                           <form
                             autoComplete="off"
@@ -322,7 +323,8 @@ const _Form = ({
                                 submissionTask.error &&
                                   analytics('Submission request error', {
                                     error: submissionTask.errorMessage,
-                                  })
+                                  }) &&
+                                  onError(submissionTask.errorMessage.errors)
                               }}
                             />
                             {redirectMode === 'hard' &&

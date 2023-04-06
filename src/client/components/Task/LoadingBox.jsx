@@ -38,10 +38,19 @@ const StyledErrorOverlay = styled.div({
  *   contents
  * </TaskLoadingBox>
  */
-export default ({ name, id, when, children, startOnRender, ...props }) => (
+export default ({
+  name,
+  id,
+  when,
+  children,
+  startOnRender,
+  ignoreError = false,
+  ...props
+}) => (
   <Task>
     {(t) => {
       const task = t(name, id)
+
       return (
         <LoadingBox loading={task.progress || when}>
           <Effect
@@ -49,7 +58,7 @@ export default ({ name, id, when, children, startOnRender, ...props }) => (
             effect={() => startOnRender && task.start(startOnRender)}
           />
           <StyledContentWrapper>
-            {task.error ? (
+            {task.error && !ignoreError ? (
               <>
                 {children}
                 <StyledErrorOverlay>

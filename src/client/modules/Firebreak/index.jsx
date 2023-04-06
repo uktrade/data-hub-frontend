@@ -16,7 +16,12 @@ const FirebreakForm = ({}) => {
         redirectTo={() => ''}
         submissionTaskName={TASK_SAVE_FIREBREAK}
       >
-        {() => <FieldInput name="title" label="Title" type="text" />}
+        {({ errors }) => (
+          <>
+            <span>{JSON.stringify(errors)}</span>
+            <FieldInput name="title" label="Title" type="text" />
+          </>
+        )}
       </Form>
     </DefaultLayout>
   )

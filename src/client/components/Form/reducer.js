@@ -94,12 +94,21 @@ export default (
         touched: action.touched,
       }
     case FORM__ERRORED:
+      const errorsWithAField = Object.keys(action.errors).reduce(
+        (object, key) => {
+          if (Object.keys(state.fields).includes(key)) {
+            object[key] = action.errors[key]
+          }
+          return object
+        },
+        {}
+      )
       return {
         ...state,
-        errors: action.errors,
-        touched: Object.fromEntries(
-          Object.keys(action.errors).map((key) => [key, true])
-        ),
+        errors: errorsWithAField,
+        // touched: Object.fromEntries(
+        //   Object.keys(action.errors).map((key) => [key, true])
+        // ),
       }
     case FORM__FORWARD:
       return {
