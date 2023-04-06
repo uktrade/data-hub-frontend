@@ -47,19 +47,21 @@ const InvestmentStatusCard = ({ queryString, companyId, ...props }) => {
             data-test="investmentsStatusContainer"
           >
             <SummaryTable.Row heading="Last Project won">
-              {props.lastWon?.date ? (
+              {props.summary?.won.last_won_project ? (
                 <Link
-                  href={`/investments/projects/${props.lastWon.id}`}
+                  href={`/investments/projects/${props.summary.won.last_won_project.id}`}
                   data-test="latest-won-project-link"
                 >
-                  {format(props.lastWon?.date)}
+                  {format(props.summary.won.last_won_project.last_changed)}
                 </Link>
               ) : (
                 'None'
               )}
-              {props.lastWon?.name ? (
-                <Link href={`/investments/projects/${props.lastWon.id}`}>
-                  {props.lastWon.name}
+              {props.summary?.won.last_won_project ? (
+                <Link
+                  href={`/investments/projects/${props.summary.won.last_won_project.id}`}
+                >
+                  {props.summary.won.last_won_project.name}
                 </Link>
               ) : (
                 ''

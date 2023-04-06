@@ -8,30 +8,6 @@ const initialState = {
   isComplete: false,
 }
 
-function getLatestCreatedWon(investmentList) {
-  let wonLatestDate = ''
-  let investmentLatest = {}
-  for (let i = 0; i < Object.keys(investmentList).length; i++) {
-    let wonDate = investmentList[i].data.stage_log.filter(
-      (investment) => investment.stage.name === 'Won'
-    )
-    if (wonLatestDate === '') {
-      wonLatestDate = wonDate[0].created_on
-    }
-    if (wonLatestDate !== '') {
-      if (wonLatestDate < wonDate[0].created_on) {
-        wonLatestDate = wonDate[0].created_on
-        investmentLatest = {
-          name: investmentList[i].data.name,
-          id: investmentList[i].data.id,
-          date: wonLatestDate,
-        }
-      }
-    }
-  }
-  return investmentLatest
-}
-
 export default (state = { initialState }, { type, result }) => {
   if (type === OVERVIEW__COMPANY_INVESTMENT_WON_COUNT) {
     let resultList = []
@@ -39,9 +15,7 @@ export default (state = { initialState }, { type, result }) => {
     let statusList = {}
     let stageListAll = []
     let statusListAll = []
-    result.investmentProjects.results.map((investment) =>
-      resultList.push(investment)
-    )
+    result.results.map((investment) => resultList.push(investment))
     resultList.map((investment) => stageListAll.push(investment.stage.name))
     resultList.map((investment) => statusListAll.push(investment.status))
     let statusNames = statusListAll.filter(
@@ -63,13 +37,13 @@ export default (state = { initialState }, { type, result }) => {
         (investment) => investment.stage.name === stageNames[i]
       ).length
     }
-    let lastWon = getLatestCreatedWon(result.wonData)
+    // let lastWon = getLatestCreatedWon(result.wonData)
     return {
       ...state,
       stageList,
       statusList,
       resultList,
-      lastWon,
+      summary: result.summary,
       isComplete: true,
     }
   }
