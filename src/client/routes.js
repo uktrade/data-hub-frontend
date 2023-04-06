@@ -15,6 +15,7 @@ import {
   ExportFormEdit,
 } from './modules/ExportPipeline/ExportForm'
 import ExportFormDelete from './modules/ExportPipeline/ExportDelete'
+import FirebreakForm from './modules/Firebreak'
 
 const routes = {
   companies: [
@@ -117,6 +118,13 @@ const routes = {
       path: '/export/:exportId/delete',
       module: 'datahub:companies',
       component: ExportFormDelete,
+    },
+  ],
+  firebreak: [
+    {
+      path: '/firebreak/api-error',
+      module: 'datahub:companies',
+      component: FirebreakForm,
     },
   ],
 }

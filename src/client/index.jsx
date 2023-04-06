@@ -353,6 +353,8 @@ import { deleteExport } from '../client/modules/ExportPipeline/ExportDelete/task
 
 import { TASK_GET_EXPORT_PIPELINE_LIST } from '../client/modules/ExportPipeline/ExportList/state'
 import { getExportPipelineList } from '../client/modules/ExportPipeline/ExportList/task'
+import { TASK_SAVE_FIREBREAK } from './modules/Firebreak/state'
+import { saveFirebreak } from './modules/Firebreak/tasks'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -581,6 +583,7 @@ function App() {
           [TASK_DELETE_EXPORT]: deleteExport,
           [TASK_SAVE_EXPORT]: saveExport,
           [TASK_GET_EXPORT_PIPELINE_LIST]: getExportPipelineList,
+          [TASK_SAVE_FIREBREAK]: saveFirebreak,
         }}
       >
         <Mount selector="#data-hub-header">

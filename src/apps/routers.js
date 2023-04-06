@@ -28,6 +28,7 @@ const reactRoutes = [
   '/export/create',
   '/export/:exportId/edit',
   '/export/:exportId/delete',
+  '/firebreak/api-error',
 ]
 
 reactRoutes.forEach((path) => {

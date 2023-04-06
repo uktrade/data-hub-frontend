@@ -534,4 +534,7 @@ module.exports = {
     edit: url('/export', '/:exportId/edit'),
     delete: url('/export', '/:exportId/delete'),
   },
+  firebreak: {
+    create: url('/firebreak/api-error'),
+  },
 }
