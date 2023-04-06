@@ -76,6 +76,7 @@ import OrdersReconciliationCollection from './modules/Omis/CollectionList/Orders
 import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
 import Dashboard from './modules/Dashboard/Dashboard'
 import CoreTeam from './modules/Companies/CoreTeam/CoreTeam'
+import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -855,6 +856,9 @@ function App() {
         </Mount>
         <Mount selector="#core-team">
           {(props) => <CoreTeam {...props} />}
+        </Mount>
+        <Mount selector="#company-large-capital-profile">
+          {(props) => <LargeCapitalProfile {...props} />}
         </Mount>
 
         <Mount selector="#react-app">

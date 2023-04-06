@@ -149,6 +149,7 @@ const renderProfile = async (req, res, next) => {
           returnUrl,
           dnbRelatedCompaniesCount,
           localNavItems: res.locals.localNavItems,
+          companyId: company.id,
         },
       }
     )
