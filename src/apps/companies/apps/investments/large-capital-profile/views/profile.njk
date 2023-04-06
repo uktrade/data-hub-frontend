@@ -22,19 +22,6 @@
   {% if profile  %}
     <div class="large-capital-profile">
       {% call details({
-        summaryText: 'Investor details',
-        incompleteFields: profile.investorDetails.incompleteFields,
-        open: profile.editing === sections.INVESTOR_DETAILS
-      }) -%}
-
-        {% if profile.editing === sections.INVESTOR_DETAILS %}
-          {% include "./details-edit.njk" %}
-        {% else %}
-          {% include "./details.njk" %}
-        {% endif %}
-      {%- endcall %}
-
-      {% call details({
         summaryText: 'Investor requirements',
         incompleteFields: profile.investorRequirements.incompleteFields,
         open: profile.editing === sections.INVESTOR_REQUIREMENTS
