@@ -6,7 +6,12 @@ import {
   FieldInput,
   FormLayout,
   FieldAdvisersTypeahead,
+  FieldRadios,
+  FieldDate,
+  FieldSelect,
+  FieldCurrency,
   FieldTypeahead,
+  FieldTextarea,
 } from '../../../../client/components'
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT } from './state'
@@ -14,8 +19,15 @@ import Task from '../../../components/Task'
 import { ERROR_MESSAGES } from './constants'
 import { transformAPIValuesForForm } from '../transformers'
 import { validateTeamMembers } from './validation'
+import { SECTOR_LABELS, STATUS_LABELS } from './labels'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
+import SectorResource from '../../../../client/components/Resource/Sector'
+import ExportYearsResource from '../../../../client/components/Resource/ExportYears'
+import { HintText } from 'govuk-react'
+import Label from '@govuk-react/label'
+import { FONT_WEIGHTS } from '@govuk-react/constants'
 import CountriesResource from '../../../../client/components/Resource/Countries'
+import ExportExperience from '../../../components/Resource/ExportExperience'
 
 const ExportFormFields = ({
   initialValues,
@@ -64,12 +76,81 @@ const ExportFormFields = ({
                   isMulti={true}
                   validate={validateTeamMembers}
                 />
+
+                <Label
+                  style={{ fontWeight: FONT_WEIGHTS.bold }}
+                  htmlFor="field-estimated_export"
+                >
+                  Total estimated export value
+                </Label>
+                <HintText>
+                  Select the year span and total value, for example 3 years,
+                  £1,000,000
+                </HintText>
+                <div id="field-estimated_export">
+                  <ResourceOptionsField
+                    resource={ExportYearsResource}
+                    field={FieldSelect}
+                    fullWidth={true}
+                    name="estimated_export_value_years"
+                    label="Year(s)"
+                    required={ERROR_MESSAGES.estimated_export_value_years}
+                    boldLabel={false}
+                  />
+                  <FieldCurrency
+                    name="estimated_export_value_amount"
+                    label="Estimated value in GBP"
+                    required={ERROR_MESSAGES.estimated_export_value_amount}
+                    boldLabel={false}
+                  />
+                </div>
+                <FieldDate
+                  name="estimated_win_date"
+                  format="short"
+                  label="Estimated date for win"
+                  hint="For example 11 2023"
+                  required={ERROR_MESSAGES.estimated_win_date.required}
+                  invalid={ERROR_MESSAGES.estimated_win_date.invalid}
+                />
                 <ResourceOptionsField
                   name="destination_country"
                   label="Destination"
                   required={ERROR_MESSAGES.destination_country}
                   resource={CountriesResource}
                   field={FieldTypeahead}
+                />
+                <ResourceOptionsField
+                  name="sector"
+                  label="Main sector"
+                  hint="This is the main sector the company is exporting to. Additional sectors can be added to notes"
+                  required={ERROR_MESSAGES.sector}
+                  resource={SectorResource}
+                  field={FieldTypeahead}
+                />
+                <FieldRadios
+                  name="status"
+                  label="Export status"
+                  required={ERROR_MESSAGES.status}
+                  field={FieldRadios}
+                  options={STATUS_LABELS}
+                />
+                <FieldRadios
+                  name="export_potential"
+                  label="Export potential"
+                  required={ERROR_MESSAGES.export_potential}
+                  field={FieldRadios}
+                  options={SECTOR_LABELS}
+                />
+                <ResourceOptionsField
+                  resource={ExportExperience}
+                  field={FieldRadios}
+                  name="exporter_experience"
+                  label="Exporter experience (optional)"
+                />
+                <FieldTextarea
+                  name="notes"
+                  label="Notes (optional)"
+                  hint="Add further details about the export, such as additional sectors and country regions"
                 />
               </>
             )}

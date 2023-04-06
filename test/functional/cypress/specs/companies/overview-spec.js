@@ -2,6 +2,8 @@ const {} = require('../../support/assertions')
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 
+import { exportFaker } from '../../fakers/export'
+
 describe('Company overview page', () => {
   const addInteractionUrlAllOverview = urls.companies.interactions.create(
     fixtures.company.allOverviewDetails.id
@@ -21,6 +23,37 @@ describe('Company overview page', () => {
   const companyExportsAllOverview = urls.companies.exports.index(
     fixtures.company.allOverviewDetails.id
   )
+  const noActiveInvestments = exportFaker({
+    count: 10,
+    results: [],
+    summary: {
+      prospect: {
+        label: 'Prospect',
+        id: '8a320cc9-ae2e-443e-9d26-2f36452c2ced',
+        value: 0,
+      },
+      assign_pm: {
+        label: 'Assign PM',
+        id: 'c9864359-fb1a-4646-a4c1-97d10189fc03',
+        value: 0,
+      },
+      Prospect: {
+        label: 'Prospect',
+        id: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
+        value: 0,
+      },
+      verify_win: {
+        label: 'Verify Win',
+        id: '49b8f6f3-0c50-4150-a965-2c974f3149e3',
+        value: 0,
+      },
+      won: {
+        label: 'Won',
+        id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
+        value: 0,
+      },
+    },
+  })
   context(
     'when viewing company overview the tab should display Overview',
     () => {
@@ -263,7 +296,7 @@ describe('Company overview page', () => {
         .click()
       cy.location('pathname').should(
         'eq',
-        '/contacts/8eefe6b4-2816-4e47-94b5-a13409dcef70/details'
+        `/companies/${fixtures.company.oneListTierDita.id}/advisers`
       )
       cy.go('back')
     })
@@ -291,7 +324,7 @@ describe('Company overview page', () => {
           .click()
         cy.location('pathname').should(
           'eq',
-          '/contacts/926440d6-b519-4b66-b4fd-af1646ae69ba/details'
+          `/companies/${fixtures.company.allOverviewDetails.id}/advisers`
         )
         cy.go('back')
       })
@@ -698,5 +731,113 @@ describe('Company overview page', () => {
     })
   })
 
-  context('no overview details', () => {})
+  context(
+    'when viewing the active investment projects card for a business that has all information added',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
+        )
+      })
+
+      it('the card should contain a message outling three active investments', () => {
+        cy.get('[data-test="activeInvestmentProjectsContainer"]')
+          .children()
+          .first()
+          .contains('Active investment projects')
+          .next()
+          .children()
+          .first()
+          .contains('New rollercoaster')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          `${urls.investments.projects.details(
+            '0e686ea4-b8a2-4337-aec4-114d92ad4588'
+          )}`
+        )
+        cy.go('back')
+        cy.get('[data-test="estimated-land-date New rollercoaster"]')
+          .next()
+          .contains('May 2024')
+          .parent()
+          .next()
+          .contains('New restaurant')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          `${urls.investments.projects.details(
+            '18750b26-a8c3-41b2-8d3a-fb0b930c2270'
+          )}`
+        )
+        cy.go('back')
+        cy.get('[data-test="estimated-land-date New restaurant"]')
+          .next()
+          .contains('October 2025')
+          .parent()
+          .next()
+          .contains('Wig factory')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          `${urls.investments.projects.details(
+            '3520b973-0e77-46cf-be75-3585f2f6691e'
+          )}`
+        )
+        cy.go('back')
+        cy.get('[data-test="estimated-land-date Wig factory"]')
+          .next()
+          .contains('January 2026')
+      })
+      it('the card should link to the investment page', () => {
+        cy.get('[data-test="active-investments-page-link"]')
+          .contains('View 1 more active investment')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          `${urls.companies.investments.companyInvestmentProjects(
+            'ba8fae21-2895-47cf-90ba-9273c94dab88'
+          )}`
+        )
+        cy.go('back')
+      })
+    }
+  )
+
+  context(
+    'when viewing the active investment projects card for a business that has no investment projects',
+    () => {
+      before(() => {
+        cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
+          body: {
+            results: noActiveInvestments,
+          },
+        }).as('apiRequest')
+        cy.visit(
+          urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
+        )
+      })
+      it('the card should contain a message outling there are no active investments', () => {
+        cy.get('[data-test="activeInvestmentProjectsContainer"]')
+          .children()
+          .first()
+          .contains('Active investment projects')
+          .next()
+          .children()
+          .contains('There are no active investments')
+      })
+      it('the card should link to the investment page', () => {
+        cy.get('[data-test="investments-page-link"]')
+          .contains('View all investments')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          `${urls.companies.investments.companyInvestmentProjects(
+            '1111ae21-2895-47cf-90ba-9273c94dab88'
+          )}`
+        )
+        cy.go('back')
+      })
+    }
+  )
 })

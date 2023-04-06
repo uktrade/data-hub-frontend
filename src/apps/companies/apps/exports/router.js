@@ -4,9 +4,7 @@ const setReturnUrl = require('../../middleware/set-return-url')
 
 const {
   renderExports,
-  populateExportForm,
   renderExportEdit,
-  handleEditFormPost,
   renderExportHistory,
   renderExportEditCountries,
 } = require('./controllers')
@@ -16,8 +14,8 @@ router.get(urls.companies.exports.edit.route, renderExportEdit)
 
 router
   .route(urls.companies.exports.editCountries.route)
-  .get(populateExportForm, renderExportEditCountries)
-  .post(populateExportForm, handleEditFormPost, renderExportEditCountries)
+  .get(renderExportEditCountries)
+  .post(renderExportEditCountries)
 
 router.get(
   urls.companies.exports.history.index.route,
