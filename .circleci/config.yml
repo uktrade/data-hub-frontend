@@ -19,8 +19,8 @@ jobs:
           command: |
             export CURRENT_UID=$(id -u)
             export CURRENT_GID=$(id -g)
-            docker build --build-arg CURRENT_GID=$CURRENT_GID --build-arg CURRENT_UID=$CURRENT_UID -t data-hub-frontend-functional:$CIRCLE_SHA1 .
-            docker tag data-hub-frontend-functional:$CIRCLE_SHA1 gcr.io/sre-docker-registry/data-hub-frontend-functional:$CIRCLE_SHA1
+            docker build --build-arg CURRENT_GID=$CURRENT_GID --build-arg CURRENT_UID=$CURRENT_UID -t data-hub-frontend-functional .
+            docker tag data-hub-frontend-functional gcr.io/sre-docker-registry/data-hub-frontend-functional:$CIRCLE_SHA1
             docker push gcr.io/sre-docker-registry/data-hub-frontend-functional:$CIRCLE_SHA1
 
   lint:
@@ -86,7 +86,7 @@ jobs:
     machine:
       image: ubuntu-2004:2022.07.1
       docker_layer_caching: true
-    parallelism: 9
+    parallelism: 1
     resource_class: 2xlarge
     steps:
       - checkout
@@ -242,7 +242,10 @@ commands:
           command: cp sample.env .env
       - run:
           name: << parameters.label >>
-          command: make << parameters.target >>
+          command: |
+            echo ${GCLOUD_SERVICE_KEY} | docker login -u _json_key --password-stdin https://gcr.io/sre-docker-registry
+            make << parameters.target >>
+
   store_cypress_artifacts:
     description: Store Cypress artifacts like screenshots and videos
     steps:
@@ -263,7 +266,10 @@ workflows:
       # - lint: *ignore_ghpages
       # - unit_tests: *ignore_ghpages
       # - unit_client_tests: *ignore_ghpages
-      # - functional_tests: *ignore_ghpages
+      - functional_tests: 
+          <<: *ignore_ghpages
+          requires:
+            - build_docker
       # - a11y_tests: *ignore_ghpages
       # - visual_tests: *ignore_ghpages
       # - visual_component_tests: *ignore_ghpages

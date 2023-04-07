@@ -7,7 +7,7 @@ ENV TZ                     Europe/London
 ENV TERM                   xterm
 ENV LANG                   C.UTF-8
 ENV NODE_ENV               development
-ENV CHROME_VERSION         93.0.4577.63-1
+ENV CHROME_VERSION         112.0.5615.49-1
 
 # Install common dependencies
 RUN apt-get install -y \
@@ -26,51 +26,33 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 RUN apt-get update
 RUN apt-get install -y \
   libgtk2.0-0 \
+  libgtk-3-0 \
+  libgbm-dev \
   libnotify-dev \
   libgconf-2-4 \
   libnss3 \
   libxss1 \
   libasound2 \
   libpng-dev \
+  libxtst6 \
   zlib1g-dev  \
+  xauth \
   xvfb
 
 # Install visual test dependencies
 RUN apt-get install -y imagemagick libgbm1
 
-# Install Chrome (Version 85)
-# See all available versions for download on: http://170.210.201.179/linux/chrome/deb/pool/main/g/google-chrome-stable/
-RUN apt-get install -y xvfb xdg-utils libgtk-3-0 lsb-release libappindicator3-1 fonts-liberation libasound2 libnspr4 libnss3 \
-  && curl http://170.210.201.179/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb -O \
-  && dpkg -i google-chrome-stable_${CHROME_VERSION}_amd64.deb \
-  && rm google-chrome-stable_${CHROME_VERSION}_amd64.deb \
+# Install Chrome (Version 112)
+# See all available versions for download on: https://www.ubuntuupdates.org/package/google_chrome/stable/main/base/google-chrome-stable
+RUN apt-get install -y xvfb xdg-utils libgtk-3-0 lsb-release libappindicator3-1 fonts-liberation libasound2 libnspr4 libnss3 libvulkan1 libu2f-udev \
+  && curl https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb -o google-chrome-stable.deb \
+  && dpkg -i google-chrome-stable.deb \
+  && rm google-chrome-stable.deb \
   && google-chrome --version
 
 # Set timezone
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
   && echo "Timezone: $(date +%z)"
 
-RUN mkdir -p /home/node
-RUN chown -R node: /home/node
-RUN mkdir -p /usr/src/app
-RUN chown -R node: /usr/src/app
-RUN chmod -R 775 /usr/src/app
-
-USER node
-ENV HOME=/home/node
-
-# Install cypress
-ENV PATH=$HOME/.local/bin:$PATH
-ENV NODE_PATH=$HOME/.local/lib/node_modules:$NODE_PATH
-ENV npm_config_prefix=$HOME/.local
-
-COPY --chown=1000:1000 package.json .
-COPY --chown=1000:1000 package-lock.json .
-RUN npm install -g cypress@10.10.0
-RUN cypress verify
-
-RUN cypress cache path
-RUN cypress cache list
-RUN cypress info
-RUN cypress version
-
+# Set the ownership for .local directory
+RUN mkdir -p /home/node/.local && chown -R node:node /home/node/.local

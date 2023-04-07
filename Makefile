@@ -17,8 +17,8 @@ wait-for-storybook = dockerize -wait tcp://localhost:65200 -timeout 5m -wait-ret
 wait-for-redis = dockerize -wait tcp://redis:6379 -timeout 5m
 
 
-ifdef CI
-	start-command = up --build -d
+ifdef CIRCLECI
+	start-command = up --build --force-recreate -d
 	cypress-args = -- --parallel --record --key $(CYPRESS_DASHBOARD_KEY) --ci-build-id $(CIRCLE_BUILD_NUM)
 	log-command = logs --follow
 else
@@ -81,13 +81,13 @@ stop-storybook:
 	$(docker-storybook) down -v --remove-orphans
 
 lint:
-ifdef CI
+ifdef CIRCLECI
 	$(docker-base) build frontend
 endif
 	$(docker-base) run --no-deps --rm frontend bash -c 'mkdir -p reports && npm run lint:js -- --format junit --output-file reports/eslint.xml'
 
 unit-tests:
-ifdef CI
+ifdef CIRCLECI
 	$(docker-base) build frontend
 	$(docker-base) run --rm frontend bash -c '$(wait-for-redis) && npx nyc --reporter=lcov --reporter=json --report-dir=coverage npm run test:unit -- --reporter mocha-junit-reporter'
 else
@@ -95,7 +95,7 @@ else
 endif
 
 unit-client-tests:
-ifdef CI
+ifdef CIRCLECI
 	$(docker-base) build frontend
 endif
 	$(docker-base) run --no-deps --rm frontend bash -c 'npm run test:unit-client -- --reporter mocha-junit-reporter'
@@ -129,7 +129,7 @@ e2e-tests-dit:
 	$(docker-e2e) exec frontend bash -c '$(wait-for-frontend) && npm run test:e2e:dit $(cypress-args)'
 
 component-tests:
-ifdef CI
+ifdef CIRCLECI
 	$(docker-base) build frontend
 endif
 	$(docker-base) run --no-deps --rm frontend bash -c 'npm run test:component'

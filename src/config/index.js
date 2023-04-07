@@ -43,7 +43,7 @@ const config = {
   root,
   buildDir: path.join(root, '.build'),
   env: envVars.NODE_ENV,
-  ci: envVars.CI,
+  ci: envVars.CIRCLECI,
   forceHttps: envVars.FORCE_HTTPS,
   isDev,
   isProd,

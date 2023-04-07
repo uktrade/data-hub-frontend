@@ -48,7 +48,7 @@ const envSchema = Joi.object({
   CACHE_DURATION_SHORT: Joi.number().integer().default(100),
 
   // Set to true for UAT testing, otherwise ignore
-  CI: Joi.bool(),
+  CIRCLECI: Joi.bool(),
 
   // Identifier of a Hawk key required to access the backend metadata endpoints
   DATA_HUB_BACKEND_ACCESS_KEY_ID: Joi.string().required(),
