@@ -52,6 +52,8 @@ var capitalInvestmentValueTypes = require('../../../fixtures/metadata/capital-in
 var capitalInvestmentStatusTypes = require('../../../fixtures/metadata/capital-investment-opportunity-status-types.json')
 var oneListTier = require('../../../fixtures/v4/metadata/one-list-tier.json')
 var tradeAgreement = require('../../../fixtures/v4/metadata/trade-agreement.json')
+var estimatedYears = require('../../../fixtures/v4/export/estimated-years.json')
+var exportExperience = require('../../../fixtures/v4/export/export-experience.json')
 
 exports.likelihoodToLand = function (req, res) {
   res.json(likelihoodToLand)
@@ -272,4 +274,12 @@ exports.oneListTier = function (req, res) {
 
 exports.tradeAgreement = function (req, res) {
   res.json(tradeAgreement)
+}
+
+exports.exportYears = function (req, res) {
+  res.json(estimatedYears)
+}
+
+exports.exportExperience = function (req, res) {
+  res.json(exportExperience)
 }

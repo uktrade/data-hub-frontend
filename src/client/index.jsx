@@ -34,8 +34,8 @@ import CompanyOverview from '../apps/companies/apps/company-overview/client/Comp
 import EditOneListForm from '../apps/companies/apps/edit-one-list/client/EditOneListForm'
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
 import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory/'
-import ExportsEdit from '../apps/companies/apps/exports/client/ExportsEdit.jsx'
-import ExportCountriesEdit from '../apps/companies/apps/exports/client/ExportCountriesEdit/'
+import ExportsEdit from './modules/Companies/CompanyExports/ExportsEdit'
+import ExportCountriesEdit from './modules/Companies/CompanyExports/ExportCountriesEdit/'
 import ReferralDetails from '../apps/companies/apps/referrals/details/client/ReferralDetails'
 import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralHelp'
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
@@ -53,6 +53,7 @@ import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/Compa
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 import CompanyProjectsCollection from '../apps/investments/client/projects/CompanyProjectsCollection.jsx'
 import InvestmentStatusCard from '../apps/companies/apps/company-overview/overview-table-cards/InvestmentStatusCard'
+import ExportStatus from '../apps/companies/apps/company-overview/overview-table-cards/ExportStatus'
 import InvestmentProjectForm from '../apps/investments/client/projects/create/InvestmentProjectForm'
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
@@ -74,6 +75,7 @@ import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
 import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
 import Dashboard from './modules/Dashboard/Dashboard'
+import CoreTeam from './modules/Companies/CoreTeam/CoreTeam'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -85,8 +87,8 @@ import {
 } from '../apps/companies/apps/referrals/send-referral/client/state'
 import * as referralsSendTasks from '../apps/companies/apps/referrals/send-referral/client/tasks'
 import * as exportWinsTasks from '../apps/companies/apps/exports/client/ExportWins/tasks'
-import { TASK_NAME as EXPORT_COUNTRIES_EDIT_NAME } from '../apps/companies/apps/exports/client/ExportCountriesEdit/state'
-import * as exportCountriesEditTasks from '../apps/companies/apps/exports/client/ExportCountriesEdit/tasks'
+import { TASK_NAME as EXPORT_COUNTRIES_EDIT_NAME } from './modules/Companies/CompanyExports/ExportCountriesEdit/state'
+import * as exportCountriesEditTasks from './modules/Companies/CompanyExports/ExportCountriesEdit/tasks'
 import addCompanyPostcodeToRegionTask, {
   createCompany,
 } from '../apps/companies/apps/add-company/client/tasks'
@@ -193,7 +195,10 @@ import {
 } from '../apps/investments/client/projects/state'
 import * as investmentProjectTasks from '../apps/investments/client/projects/tasks'
 
-import { TASK_GET_PROJECT_WON_COUNT } from '../apps/companies/apps/company-overview/overview-table-cards/state'
+import {
+  TASK_GET_LATEST_EXPORT_WINS,
+  TASK_GET_PROJECT_WON_COUNT,
+} from '../apps/companies/apps/company-overview/overview-table-cards/state'
 import * as overviewInvestmentProjectTasks from '../apps/companies/apps/company-overview/overview-table-cards/tasks'
 
 import {
@@ -343,9 +348,11 @@ import { getExportDetails } from '../client/modules/ExportPipeline/ExportDetails
 
 import { TASK_SAVE_EXPORT } from '../client/modules/ExportPipeline/ExportForm/state'
 import { saveExport } from '../client/modules/ExportPipeline/ExportForm/tasks'
+import { TASK_DELETE_EXPORT } from '../client/modules/ExportPipeline/ExportDelete/state'
+import { deleteExport } from '../client/modules/ExportPipeline/ExportDelete/tasks'
 
-import { TASK_GET_EXPORT_PIPELINE_LIST } from '../client/modules/ExportPipeline/ExportList/state.js'
-import { getExportPipelineList } from '../client/modules/ExportPipeline/ExportList/task.js'
+import { TASK_GET_EXPORT_PIPELINE_LIST } from '../client/modules/ExportPipeline/ExportList/state'
+import { getExportPipelineList } from '../client/modules/ExportPipeline/ExportList/task'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -457,6 +464,8 @@ function App() {
           [TASK_GET_PROJECTS_LIST]: investmentProjectTasks.getProjects,
           [TASK_GET_PROJECT_WON_COUNT]:
             overviewInvestmentProjectTasks.getProjectsWon,
+          [TASK_GET_LATEST_EXPORT_WINS]:
+            overviewInvestmentProjectTasks.getLatestExportWins,
           [TASK_CREATE_INVESTMENT_PROJECT]:
             createInvestmentProjectTasks.createInvestmentProject,
           [TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS]:
@@ -569,6 +578,7 @@ function App() {
           [TASK_GET_ESS_INTERACTION_DETAILS]: getESSInteractionDetails,
           [TASK_GET_COMPANY_DETAIL]: getCompanyDetails,
           [TASK_GET_EXPORT_DETAIL]: getExportDetails,
+          [TASK_DELETE_EXPORT]: deleteExport,
           [TASK_SAVE_EXPORT]: saveExport,
           [TASK_GET_EXPORT_PIPELINE_LIST]: getExportPipelineList,
         }}
@@ -768,6 +778,9 @@ function App() {
         <Mount selector="#company-overview-projects-collection">
           {(props) => <InvestmentStatusCard {...props} />}
         </Mount>
+        <Mount selector="#company-overview-export-status">
+          {(props) => <ExportStatus {...props} />}
+        </Mount>
         <Mount selector="#company-projects-collection">
           {(props) => <CompanyProjectsCollection {...props} />}
         </Mount>
@@ -839,6 +852,9 @@ function App() {
               {...props}
             />
           )}
+        </Mount>
+        <Mount selector="#core-team">
+          {(props) => <CoreTeam {...props} />}
         </Mount>
 
         <Mount selector="#react-app">

@@ -68,7 +68,7 @@ const ExportsIndex = ({
         >
           Find Exporters tool
         </Link>
-        . DIT's data science team compared all HMRC export information with the
+        . DBT's data science team compared all HMRC export information with the
         features of all UK companies to find patterns; they then repeatedly
         tested their model against a subset of known-good data to improve it.
         The scores are as follows:
@@ -142,11 +142,11 @@ const ExportsIndex = ({
       </p>
       <Details summary="What is an Export Win">
         <p>
-          Export wins capture the export deals that Department of International
-          Trade (DIT) support and quantify their expected export value. If
+          Export wins capture the export deals that Department for Business and
+          Trade (DBT) support and quantify their expected export value. If
           applicable, they also quantify the non-export and outward direct
           investment (ODI) value, up to a 5-year period. They give a picture of
-          DIT support for business.
+          DBT support for business.
         </p>
         <p>
           The export win metric is currently the only way the department

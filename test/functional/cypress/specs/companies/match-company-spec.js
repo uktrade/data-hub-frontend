@@ -383,7 +383,7 @@ describe('Match a company', () => {
 
         cy.location('pathname').should(
           'eq',
-          urls.companies.activity.index(fixtures.company.venusLtd.id)
+          urls.companies.overview.index(fixtures.company.venusLtd.id)
         )
 
         cy.get(companyLocalHeader.flashMessageList).contains(
@@ -512,7 +512,7 @@ describe('Match a company', () => {
     it('should redirect to the company page', () => {
       cy.location('pathname').should(
         'eq',
-        urls.companies.activity.index(fixtures.company.venusLtd.id)
+        urls.companies.overview.index(fixtures.company.venusLtd.id)
       )
     })
 
@@ -616,7 +616,7 @@ describe('Match a company', () => {
     it('should redirect to the company page', () => {
       cy.location('pathname').should(
         'eq',
-        urls.companies.activity.index(fixtures.company.venusLtd.id)
+        urls.companies.overview.index(fixtures.company.venusLtd.id)
       )
     })
 

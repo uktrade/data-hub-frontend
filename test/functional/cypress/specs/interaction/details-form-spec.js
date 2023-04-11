@@ -98,7 +98,7 @@ const ELEMENT_CONTACT_INFO_DETAILS = {
 }
 const ELEMENT_ADVISER = {
   label: 'Adviser(s)',
-  value: 'DIT Staff',
+  value: 'DBT Staff',
   assert: assertFieldTypeahead,
 }
 const ELEMENT_DETAILS_HEADER = {
@@ -531,7 +531,7 @@ describe('Interaction theme', () => {
 
     it('should save the interaction', () => {
       submitForm(KINDS.INTERACTION, THEMES.EXPORT, {
-        service: 'A Specific DIT Export Service or Funding',
+        service: 'A Specific DBT Export Service or Funding',
         subservice: 'UK Tradeshow Programme (UKTP) – Exhibitor',
       })
 
@@ -647,7 +647,7 @@ describe('Service delivery theme', () => {
 
     it('should save the service delivery', () => {
       submitForm(KINDS.SERVICE_DELIVERY, THEMES.EXPORT, {
-        service: 'A Specific DIT Export Service or Funding',
+        service: 'A Specific DBT Export Service or Funding',
         subservice: 'UK Tradeshow Programme (UKTP) – Exhibitor',
       })
 
@@ -1026,7 +1026,7 @@ describe('Adding an interaction from a referral', () => {
     cy.contains('Continue').click()
 
     submitForm(KINDS.INTERACTION, THEMES.EXPORT, {
-      service: 'A Specific DIT Export Service or Funding',
+      service: 'A Specific DBT Export Service or Funding',
       subservice: 'Export Academy',
       contact: null,
     })
@@ -1155,7 +1155,7 @@ describe('Filtering services based on theme & kind', () => {
       'have.text',
       [
         '-- Select service --',
-        'A Specific DIT Export Service or Funding',
+        'A Specific DBT Export Service or Funding',
         'Account Management',
         'Enquiry or Referral Received',
         'Export Win',
@@ -1171,7 +1171,7 @@ describe('Filtering services based on theme & kind', () => {
       'have.text',
       [
         '-- Select service --',
-        'A Specific DIT Export Service or Funding',
+        'A Specific DBT Export Service or Funding',
         'Account Management',
         'Events',
         'Export Win',

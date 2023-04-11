@@ -288,6 +288,14 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
           data-test="estimated-land-date"
         />
 
+        <FieldTypeahead
+          name="likelihood_to_land"
+          label="Likelihood of landing"
+          options={values.likelihoodToLand}
+          placeholder="Select a likelihood of landing value"
+          data-test="likelihood-to-land"
+        />
+
         <FieldDate
           name="actual_land_date"
           label="Actual land date (optional)"
@@ -345,6 +353,7 @@ InvestmentDetailsStep.propTypes = {
     investmentInvestorType: PropTypes.arrayOf(optionProp),
     investmentInvolvement: PropTypes.arrayOf(optionProp),
     investmentSpecificProgramme: PropTypes.arrayOf(optionProp),
+    likelihoodToLand: PropTypes.arrayOf(optionProp),
   }),
 }
 

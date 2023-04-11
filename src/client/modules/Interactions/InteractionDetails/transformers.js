@@ -8,7 +8,7 @@ import urls from '../../../../lib/urls'
 const groupExportCountries = require('../../../../lib/group-export-countries')
 
 const excludedServiceStrings = [
-  'A Specific DIT Export Service or Funding',
+  'A Specific DBT Export Service or Funding',
   'A Specific Service',
   'Enquiry or Referral Received',
   'Enquiry Received',
@@ -47,7 +47,9 @@ export const transformCompany = (companyObject, companyArray) => {
     <SummaryTable.Row
       heading="Company"
       children={
-        <Link href={urls.companies.details(company.id)}>{company.name}</Link>
+        <Link href={urls.companies.overview.index(company.id)}>
+          {company.name}
+        </Link>
       }
     />
   )

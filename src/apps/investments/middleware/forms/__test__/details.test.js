@@ -25,12 +25,12 @@ const metadataMock = {
     { id: '2', name: 'f2', disabled_on: yesterday },
     { id: '3', name: 'f3', disabled_on: null },
   ],
-  referralSoureMarketingOptions: [
+  referralSourceMarketingOptions: [
     { id: '1', name: 'rsm1', disabled_on: null },
     { id: '2', name: 'rsm2', disabled_on: yesterday },
     { id: '3', name: 'rsm3', disabled_on: null },
   ],
-  referralSoureWebsiteOptions: [
+  referralSourceWebsiteOptions: [
     { id: '1', name: 'rsm1', disabled_on: null },
     { id: '2', name: 'rsm2', disabled_on: yesterday },
     { id: '3', name: 'rsm3', disabled_on: null },
@@ -59,6 +59,11 @@ const metadataMock = {
     { id: '1', name: 'iio1', disabled_on: null },
     { id: '2', name: 'iio2', disabled_on: yesterday },
     { id: '3', name: 'iio3', disabled_on: null },
+  ],
+  likelihoodToLandOptions: [
+    { id: '1', name: 'ltl1', disabled_on: null },
+    { id: '2', name: 'ltl2', disabled_on: yesterday },
+    { id: '3', name: 'ltl3', disabled_on: null },
   ],
 }
 
@@ -296,9 +301,9 @@ describe('investment details middleware', () => {
           .get('/v4/metadata/fdi-type')
           .reply(200, metadataMock.fdiValueOptions)
           .get('/v4/metadata/referral-source-marketing')
-          .reply(200, metadataMock.referralSoureMarketingOptions)
+          .reply(200, metadataMock.referralSourceMarketingOptions)
           .get('/v4/metadata/referral-source-website')
-          .reply(200, metadataMock.referralSoureWebsiteOptions)
+          .reply(200, metadataMock.referralSourceWebsiteOptions)
           .get('/v4/metadata/sector')
           .reply(200, metadataMock.sectorOptions)
           .get('/v4/metadata/investment-business-activity')
@@ -309,6 +314,8 @@ describe('investment details middleware', () => {
           .reply(200, metadataMock.investmentsInvestorTypeOptions)
           .get('/v4/metadata/investment-involvement')
           .reply(200, metadataMock.investmentInvolvementOptions)
+          .get('/v4/metadata/likelihood-to-land')
+          .reply(200, metadataMock.likelihoodToLandOptions)
 
         this.req.params = assign({}, this.req.params, {
           equityCompanyId: uuid(),
@@ -357,9 +364,9 @@ describe('investment details middleware', () => {
           .get('/v4/metadata/fdi-type')
           .reply(200, metadataMock.fdiValueOptions)
           .get('/v4/metadata/referral-source-marketing')
-          .reply(200, metadataMock.referralSoureMarketingOptions)
+          .reply(200, metadataMock.referralSourceMarketingOptions)
           .get('/v4/metadata/referral-source-website')
-          .reply(200, metadataMock.referralSoureWebsiteOptions)
+          .reply(200, metadataMock.referralSourceWebsiteOptions)
           .get('/v4/metadata/sector')
           .reply(200, metadataMock.sectorOptions)
           .get('/v4/metadata/investment-business-activity')
@@ -370,6 +377,8 @@ describe('investment details middleware', () => {
           .reply(200, metadataMock.investmentsInvestorTypeOptions)
           .get('/v4/metadata/investment-involvement')
           .reply(200, metadataMock.investmentInvolvementOptions)
+          .get('/v4/metadata/likelihood-to-land')
+          .reply(200, metadataMock.likelihoodToLandOptions)
 
         this.res.locals = assign({}, this.res.locals, {
           investment: {

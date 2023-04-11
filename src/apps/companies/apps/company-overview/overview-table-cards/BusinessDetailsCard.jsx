@@ -67,10 +67,10 @@ const BusinessDetailsCard = ({ company, queryString, companiesHouseLink }) => {
           )}
         </SummaryTable.Row>
         <SummaryTable.Row heading="Turnover">
-          {!company.company_number || !company.turnover_range
+          {!company.turnover_gbp && !company.turnover_range
             ? 'Not set'
-            : company.turnover
-            ? currencyGBP(company.turnover, {
+            : company.turnover_gbp
+            ? currencyGBP(company.turnover_gbp, {
                 maximumSignificantDigits: 2,
               })
             : company.turnover_range?.name}
@@ -80,7 +80,7 @@ const BusinessDetailsCard = ({ company, queryString, companiesHouseLink }) => {
             ? 'Not set'
             : company.number_of_employees}
         </SummaryTable.Row>
-        <SummaryTable.Row heading="DIT Sector">
+        <SummaryTable.Row heading="DBT Sector">
           {!company.sector ? 'Not set' : company.sector.name}
         </SummaryTable.Row>
         <StyledTableRow>

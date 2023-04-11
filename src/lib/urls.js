@@ -532,5 +532,6 @@ module.exports = {
     index: url('/export'),
     create: url('/export/create'),
     edit: url('/export', '/:exportId/edit'),
+    delete: url('/export', '/:exportId/delete'),
   },
 }

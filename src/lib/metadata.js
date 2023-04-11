@@ -98,6 +98,8 @@ const metadataItems = [
   ['export-experience-category', 'exportExperienceCategory'],
   ['likelihood-to-land', 'likelihoodToLandOptions'],
   ['trade-agreement', 'tradeAgreementOptions'],
+  ['export-years', 'exportYears'],
+  ['export-experience', 'exportExperience'],
 ]
 
 const restrictedServiceKeys = [

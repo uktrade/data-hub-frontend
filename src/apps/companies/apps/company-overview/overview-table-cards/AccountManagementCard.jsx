@@ -72,7 +72,7 @@ const AccountManagementCard = ({ company, queryString }) => {
       caption="Account Management"
       data-test="accountManagementContainer"
     >
-      <SummaryTable.Row heading="DIT Region">
+      <SummaryTable.Row heading="DBT Region">
         {company?.uk_region?.name ? (
           <span>{company.uk_region.name}</span>
         ) : (
@@ -83,9 +83,7 @@ const AccountManagementCard = ({ company, queryString }) => {
         heading={company.isItaTierDAccount ? 'Lead ITA' : 'Account Manager'}
       >
         {company?.one_list_group_global_account_manager?.name ? (
-          <Link
-            href={`/contacts/${company.one_list_group_global_account_manager.id}`}
-          >
+          <Link href={`/companies/${company.id}/advisers`}>
             {company.one_list_group_global_account_manager.name}
           </Link>
         ) : (

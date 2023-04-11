@@ -12,7 +12,7 @@ describe('Lead advisers', () => {
     it('should render a meta title', () => {
       cy.title().should(
         'eq',
-        'Lead adviser - Mars Exports Ltd - Companies - DIT Data Hub'
+        'Lead adviser - Mars Exports Ltd - Companies - DBT Data Hub'
       )
     })
 

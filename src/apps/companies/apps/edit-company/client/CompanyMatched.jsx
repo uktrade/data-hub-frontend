@@ -31,7 +31,7 @@ const CompanyMatched = ({
       data-test="company-matched-annual-turnover"
     >
       {company.turnover
-        ? currencyGBP(company.turnover, {
+        ? currencyGBP(company.turnover_gbp, {
             maximumSignificantDigits: 2,
           })
         : company.turnover_range.name}
@@ -57,10 +57,10 @@ const CompanyMatched = ({
     ) : (
       <FieldSelect
         name="sector"
-        label="DIT sector"
-        emptyOption="-- Select DIT sector --"
+        label="DBT sector"
+        emptyOption="-- Select DBT sector --"
         options={sectors}
-        required="Select DIT sector"
+        required="Select DBT sector"
       />
     )}
 

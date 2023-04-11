@@ -83,8 +83,8 @@ export default {
                   id: '4cd4128b-1bad-4f1e-9146-5d4678c6a018',
                 },
                 adviser: {
-                  name: 'DIT Staff',
-                  firstName: 'DIT',
+                  name: 'DBT Staff',
+                  firstName: 'DBT',
                   lastName: 'Staff',
                   id: '7d19d407-9aec-4d06-b190-d3f404627f21',
                 },

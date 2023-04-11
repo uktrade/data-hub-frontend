@@ -783,10 +783,28 @@ const assertAPIRequest = (endPointAlias, assertCallback) =>
  * Assert the field element contains the expected error message
  * @param {*} element the field element that contains the error
  * @param {*} errorMessage the error message that should be displayed
+ * @param {*} hasHint whether this field has a hint
  * @returns
  */
-const assertFieldError = (element, errorMessage) =>
-  element.find('span').eq(1).should('have.text', errorMessage)
+const assertFieldError = (element, errorMessage, hasHint = true) =>
+  element
+    .find('span')
+    .eq(hasHint ? 1 : 0)
+    .should('have.text', errorMessage)
+
+/**
+ * Assert the typeahead element contains a chip for each of the values
+ * @param {*} selector the selector for the typeahead component
+ * @param {*} values the list of values that should exist in the chips
+ */
+const assertTypeaheadValues = (selector, values) => {
+  const VALUES_ALIAS = 'typeahead-values'
+  cy.get(selector).find('[data-test="typeahead-chip"]').as(VALUES_ALIAS)
+
+  values.forEach((value) => {
+    cy.get('@' + VALUES_ALIAS).contains(value)
+  })
+}
 
 module.exports = {
   assertKeyValueTable,
@@ -845,4 +863,5 @@ module.exports = {
   assertAPIRequest,
   assertExactUrl,
   assertFieldError,
+  assertTypeaheadValues,
 }

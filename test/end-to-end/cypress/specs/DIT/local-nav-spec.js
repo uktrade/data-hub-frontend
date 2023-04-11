@@ -13,13 +13,13 @@ const {
   investments,
 } = require('../../../../../src/lib/urls')
 
-describe('DIT Permission', () => {
+describe('DBT Permission', () => {
   describe('dashboard', () => {
     before(() => {
       cy.visit(dashboard())
     })
 
-    it('should display DIT only header nav links', () => {
+    it('should display DBT only header nav links', () => {
       assertLocalNav(selectors.nav.headerNav, [
         'Companies',
         'Contacts',
@@ -41,7 +41,7 @@ describe('DIT Permission', () => {
       cy.visit(companies.detail(company.pk))
     })
 
-    it('should display DIT only tabs', () => {
+    it('should display DBT only tabs', () => {
       assertLocalReactNav('[data-test="tabbedLocalNavList"]', [
         'Overview',
         'Activity',
@@ -65,7 +65,7 @@ describe('DIT Permission', () => {
       cy.visit(contacts.contact(contact.pk))
     })
 
-    it('should display DIT only side navs', () => {
+    it('should display DBT only side navs', () => {
       assertLocalReactNav('[data-test=local-nav] > ul', [
         'Details',
         'Activity',
@@ -82,7 +82,7 @@ describe('DIT Permission', () => {
       cy.visit(investments.projects.project(investmentProject.pk))
     })
 
-    it('should display DIT only side navs', () => {
+    it('should display DBT only side navs', () => {
       assertLocalNav(selectors.nav.sideNav, [
         'Project details',
         'Project team',
@@ -102,7 +102,7 @@ describe('DIT Permission', () => {
       cy.visit(events.details(event.pk))
     })
 
-    it('should display DIT only side navs', () => {
+    it('should display DBT only side navs', () => {
       const navSelector = '[data-test="event-details-nav-link"]'
       assertLocalNav(navSelector, ['Details', 'Attendee'])
     })

@@ -8,23 +8,25 @@ const generateExport = () => {
   const { id: sectorId, name: sectorName } = faker.helpers.arrayElement(sector)
   const { id: countryId, name: countryName } =
     faker.helpers.arrayElement(country)
-  const { id: exportExperienceId } =
+  const { id: exportExperienceId, name: exportExperienceName } =
     faker.helpers.arrayElement(exporterExperience)
-  const { id: estimatedYearsId } = faker.helpers.arrayElement(estimatedYears)
 
   return {
     id: faker.datatype.uuid(),
     company: { id: faker.datatype.uuid(), name: faker.company.name() },
     owner: { id: faker.datatype.uuid(), name: faker.name.fullName() },
-    team_members: [{ id: faker.datatype.uuid(), name: faker.name.fullName() }],
+    team_members: [
+      { id: faker.datatype.uuid(), name: faker.name.fullName() },
+      { id: faker.datatype.uuid(), name: faker.name.fullName() },
+    ],
     contacts: { id: faker.datatype.uuid(), name: faker.name.fullName() },
     destination_country: {
       id: countryId,
       name: countryName,
     },
     sector: { id: sectorId, name: sectorName },
-    exporter_experience: exportExperienceId,
-    estimated_export_value_years: estimatedYearsId,
+    exporter_experience: { id: exportExperienceId, name: exportExperienceName },
+    estimated_export_value_years: faker.helpers.arrayElement(estimatedYears),
     created_on: faker.date.past(),
     modified_on: faker.date.past(),
     title: faker.random.word(),

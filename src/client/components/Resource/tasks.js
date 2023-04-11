@@ -18,6 +18,11 @@ import Investment from './Investment'
 import ContactAuditHistory from './ContactAuditHistory'
 import Interaction from './Interaction'
 import Event from './Event'
+import CompanyOneListTeam from './CompanyOneListTeam'
+import ExportYears from './ExportYears'
+import Sector from './Sector'
+import ExportExperienceCategories from './ExportExperienceCategories'
+import ExportExperience from './ExportExperience'
 
 export default {
   ...Advisers.tasks,
@@ -40,4 +45,9 @@ export default {
   ...ContactAuditHistory.tasks,
   ...Interaction.tasks,
   ...Event.tasks,
+  ...CompanyOneListTeam.tasks,
+  ...ExportYears.tasks,
+  ...Sector.tasks,
+  ...ExportExperienceCategories.tasks,
+  ...ExportExperience.tasks,
 }
