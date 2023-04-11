@@ -44,7 +44,7 @@ export default ({
   when,
   children,
   startOnRender,
-  ignoreError = false,
+  ignoreError,
   ...props
 }) => (
   <Task>

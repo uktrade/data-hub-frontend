@@ -78,6 +78,7 @@ const _Form = ({
   result,
   resolved,
   errors = {},
+  errorStatus,
   values = {},
   touched = {},
   steps = [],
@@ -214,6 +215,7 @@ const _Form = ({
                   <Task>
                     {(t) => {
                       const submissionTask = t(submissionTaskName, id)
+
                       return (
                         <TaskLoadingBox
                           name={submissionTaskName}
@@ -221,7 +223,7 @@ const _Form = ({
                           when={
                             redirectMode === 'hard' && redirectTo && resolved
                           }
-                          ignoreError={true}
+                          ignoreError={errorStatus == 400}
                         >
                           <form
                             autoComplete="off"
@@ -324,7 +326,9 @@ const _Form = ({
                                   analytics('Submission request error', {
                                     error: submissionTask.errorMessage,
                                   }) &&
-                                  onError(submissionTask.errorMessage.errors)
+                                  onError({
+                                    ...submissionTask.errorMessage,
+                                  })
                               }}
                             />
                             {redirectMode === 'hard' &&
@@ -428,10 +432,11 @@ const dispatchToProps = (dispatch) => ({
       errors,
       touched,
     }),
-  onError: (errors) =>
+  onError: ({ errors, status }) =>
     dispatch({
       type: 'FORM__ERRORED',
       errors,
+      status,
     }),
   goForward: (values) =>
     dispatch({
