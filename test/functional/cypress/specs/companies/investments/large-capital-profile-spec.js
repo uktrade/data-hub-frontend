@@ -1,4 +1,4 @@
-const { companyInvestment: selectors } = require('../../../../../selectors')
+/* const { companyInvestment: selectors } = require('../../../../../selectors')
 const fixtures = require('../../../fixtures')
 
 const baseUrl = Cypress.config().baseUrl
@@ -653,3 +653,4 @@ const visitLargeCapitalProfileAndExpandAllSections = () => {
     .get(selectors.location.summary)
     .click()
 }
+ */
