@@ -23,6 +23,8 @@ import ExportYears from './ExportYears'
 import Sector from './Sector'
 import ExportExperienceCategories from './ExportExperienceCategories'
 import ExportExperience from './ExportExperience'
+import LargeInvestorProfile from './LargeInvestorProfile'
+import InvestorTypes from './InvestorTypes'
 
 export default {
   ...Advisers.tasks,
@@ -50,4 +52,6 @@ export default {
   ...Sector.tasks,
   ...ExportExperienceCategories.tasks,
   ...ExportExperience.tasks,
+  ...LargeInvestorProfile.tasks,
+  ...InvestorTypes.tasks,
 }
