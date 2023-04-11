@@ -15,6 +15,7 @@ import ProfileRequirementsTable from './ProfileRequirementsTable'
 import EditRequirementsForm from './EditRequirementsForm'
 import ProfileLocationTable from './ProfileLocationTable'
 import EditLargeCapitalInvestorLocation from './EditLocationForm'
+import CreateLargeCapitalProfile from './CreateLargeCapitalProfile'
 
 const StyledLabel = styled('label')`
   display: inline-table;
@@ -96,11 +97,7 @@ const LargeCapitalProfile = ({ companyId }) => {
                 incompleteFields={
                   profile.results[0].incompleteRequirementsFields
                 }
-                form={
-                  <EditRequirementsForm
-                    companyId={profile.results[0].investorCompany.id}
-                  />
-                }
+                form={<EditRequirementsForm profile={profile.results[0]} />}
                 toggleName="Investor requirements"
                 id="investor_requirements"
                 isEditing={requirementsFormIsOpen}
@@ -124,7 +121,7 @@ const LargeCapitalProfile = ({ companyId }) => {
               </ProfileSection>
             </>
           ) : (
-            <p>Placeholder for create profile code</p>
+            <CreateLargeCapitalProfile companyId={companyId} />
           )}
         </>
       )}

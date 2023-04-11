@@ -218,7 +218,9 @@ import * as createInvestmentProjectTasks from '../apps/investments/client/projec
 
 import {
   TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS,
+  TASK_SAVE_LARGE_CAPITAL_INVESTOR_REQUIREMENTS,
   TASK_SAVE_LARGE_CAPITAL_INVESTOR_LOCATION,
+  TASK_CREATE_LARGE_CAPITAL_PROFILE,
 } from './modules/Companies/CompanyInvestments/LargeCapitalProfile/state'
 import * as editLargeCapitalProfileTasks from './modules/Companies/CompanyInvestments/LargeCapitalProfile/tasks'
 
@@ -469,8 +471,12 @@ function App() {
             createInvestmentProjectTasks.createInvestmentProject,
           [TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS]:
             editLargeCapitalProfileTasks.updateInvestorDetails,
+          [TASK_SAVE_LARGE_CAPITAL_INVESTOR_REQUIREMENTS]:
+            editLargeCapitalProfileTasks.updateInvestorRequirements,
           [TASK_SAVE_LARGE_CAPITAL_INVESTOR_LOCATION]:
             editLargeCapitalProfileTasks.updateInvestorLocation,
+          [TASK_CREATE_LARGE_CAPITAL_PROFILE]:
+            editLargeCapitalProfileTasks.createInvestorProfile,
           [TASK_GET_INVESTMENT_PROJECT_INITIAL_VALUES]:
             createInvestmentProjectTasks.getInitialFormValues,
           [TASK_SEARCH_COMPANY]: createInvestmentProjectTasks.searchCompany,
