@@ -33,19 +33,6 @@
           {% include "./requirements.njk" %}
         {% endif %}
       {%- endcall %}
-
-      {% call details({
-        summaryText: 'Location',
-        incompleteFields: profile.location.incompleteFields,
-        open: profile.editing === sections.LOCATION}) -%}
-
-        {% if profile.editing === sections.LOCATION %}
-          {% include "./location-edit.njk" %}
-        {% else %}
-          {% include "./location.njk" %}
-        {% endif %}
-      {%- endcall %}
-
     </div>
   {% else %}
     {% call Form({
