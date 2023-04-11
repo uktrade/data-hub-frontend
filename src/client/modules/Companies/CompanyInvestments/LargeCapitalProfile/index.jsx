@@ -14,7 +14,7 @@ import EditLargeCapitalInvestorDetails from './EditProfileDetails'
 import ProfileRequirementsTable from './ProfileRequirementsTable'
 import EditRequirementsForm from './EditRequirementsForm'
 import ProfileLocationTable from './ProfileLocationTable'
-import EditLocationForm from './EditLocationForm'
+import EditLargeCapitalInvestorLocation from './EditLocationForm'
 
 const StyledLabel = styled('label')`
   display: inline-table;
@@ -110,15 +110,17 @@ const LargeCapitalProfile = ({ companyId }) => {
               </ProfileSection>
               <ProfileSection
                 incompleteFields={profile.results[0].incompleteLocationFields}
-                form={<EditLocationForm companyId={companyId} />}
+                form={
+                  <EditLargeCapitalInvestorLocation
+                    profile={profile.results[0]}
+                  />
+                }
                 toggleName="Location"
                 id="location"
                 isEditing={locationFormIsOpen}
                 onEdit={setLocationFormIsOpen}
               >
-                <ProfileLocationTable
-                  companyId={profile.results[0].investorCompany.id}
-                />
+                <ProfileLocationTable profile={profile.results[0]} />
               </ProfileSection>
             </>
           ) : (
@@ -131,7 +133,7 @@ const LargeCapitalProfile = ({ companyId }) => {
 }
 
 LargeCapitalProfile.propTypes = {
-  interactionId: PropTypes.string.isRequired,
+  companyId: PropTypes.string.isRequired,
 }
 
 export default LargeCapitalProfile

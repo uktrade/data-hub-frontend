@@ -7,3 +7,11 @@ export const updateInvestorDetails = (values) => {
     values
   )
 }
+
+export const updateInvestorLocation = (values) => {
+  const { id, investor_company_id } = values
+  return apiProxyAxios.patch(
+    `v4/large-investor-profile/${id}?investor_company_id=${investor_company_id}`,
+    values
+  )
+}
