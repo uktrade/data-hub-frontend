@@ -2,7 +2,7 @@ import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React, { useRef, useEffect } from 'react'
 import { Route, useHistory, useLocation } from 'react-router-dom'
-import { camelCase, isEmpty } from 'lodash'
+import { isEmpty } from 'lodash'
 import qs from 'qs'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
@@ -110,21 +110,6 @@ const _Form = ({
       }
     }
   }, [showStepInUrl, qsParams.step, steps])
-
-  // Update form errors after getting a response from API
-  useEffect(() => {
-    if (result?.errors) {
-      onError(
-        Object.fromEntries(
-          Object.entries(result.errors).map(([k, v]) => [
-            camelCase(k),
-            v.join(', '),
-          ])
-        )
-      )
-      window.scrollTo({ top: 0 })
-    }
-  }, [result])
 
   // TODO: Clean up this mess
   const contextProps = {
