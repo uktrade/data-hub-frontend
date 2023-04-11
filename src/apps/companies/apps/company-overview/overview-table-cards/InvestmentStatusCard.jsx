@@ -28,6 +28,9 @@ const StyledLastTableCell = styled(Table.Cell)`
   border: 0;
   padding-bottom: 0;
 `
+const StyledSpan = styled('span')`
+  color: grey;
+`
 
 const InvestmentStatusCard = ({ queryString, companyId, ...props }) => {
   return (
@@ -47,24 +50,23 @@ const InvestmentStatusCard = ({ queryString, companyId, ...props }) => {
             data-test="investmentsStatusContainer"
           >
             <SummaryTable.Row heading="Last Project won">
-              {props.summary?.won.last_won_project ? (
-                <Link
-                  href={`/investments/projects/${props.summary.won.last_won_project.id}`}
-                  data-test="latest-won-project-link"
-                >
-                  {format(props.summary.won.last_won_project.last_changed)}
-                </Link>
+              {props.summary?.won.last_won_project.id != null ? (
+                <div>
+                  <Link
+                    href={`/investments/projects/${props.summary.won.last_won_project.id}`}
+                    data-test="latest-won-project-link"
+                  >
+                    {format(props.summary.won.last_won_project.last_changed)}
+                  </Link>
+                  <br />
+                  <Link
+                    href={`/investments/projects/${props.summary.won.last_won_project.id}`}
+                  >
+                    {props.summary.won.last_won_project.name}
+                  </Link>
+                </div>
               ) : (
-                'None'
-              )}
-              {props.summary?.won.last_won_project ? (
-                <Link
-                  href={`/investments/projects/${props.summary.won.last_won_project.id}`}
-                >
-                  {props.summary.won.last_won_project.name}
-                </Link>
-              ) : (
-                ''
+                <StyledSpan>None</StyledSpan>
               )}
             </SummaryTable.Row>
             <SummaryTable.Row heading="Total projects won">
