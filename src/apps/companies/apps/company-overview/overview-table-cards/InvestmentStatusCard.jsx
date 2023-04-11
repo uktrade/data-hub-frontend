@@ -50,7 +50,7 @@ const InvestmentStatusCard = ({ queryString, companyId, ...props }) => {
             data-test="investmentsStatusContainer"
           >
             <SummaryTable.Row heading="Last Project won">
-              {props.summary?.won.last_won_project.id != null ? (
+              {props.summary?.won?.last_won_project?.id != null ? (
                 <div>
                   <Link
                     href={`/investments/projects/${props.summary.won.last_won_project.id}`}
