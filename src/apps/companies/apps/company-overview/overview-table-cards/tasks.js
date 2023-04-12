@@ -2,16 +2,17 @@ import { apiProxyAxios } from '../../../../../client/components/Task/utils'
 import axios from 'axios'
 import { NOT_IMPLEMENTED } from '../../exports/client/ExportWins/state'
 
-export const getProjectsWon = ({ limit = 200, companyId }) => {
-  return apiProxyAxios
+export const getProjectsWon = async ({ companyId }) => {
+  return await apiProxyAxios
     .post('/v3/search/investment_project', {
-      limit,
       ...(companyId && {
         investor_company: [companyId],
+        show_summary: true,
       }),
     })
     .then(({ data }) => ({
       results: data.results,
+      summary: data.summary,
     }))
 }
 export const getLatestExportWins = ({ companyId, companyName, activePage }) => {
