@@ -20,6 +20,7 @@ describe('transformFormValuesForAPI', () => {
           estimated_export_value_amount: 676,
           estimated_win_date: { month: 6, year: 2030 },
           destination_country: { value: 'h', label: 'i' },
+          sector: { value: 'j', label: 'k' },
           exporter_experience: { value: 'i', label: 'j' },
         })
       ).to.be.deep.equal({
@@ -32,6 +33,7 @@ describe('transformFormValuesForAPI', () => {
         estimated_export_value_amount: 676,
         estimated_win_date: '2030-6-01T00:00:00',
         destination_country: 'h',
+        sector: 'j',
         exporter_experience: 'i',
       })
     })
@@ -52,6 +54,7 @@ describe('transformAPIValuesForForm', () => {
           estimated_export_value_years: { id: 1, name: '1 year' },
           estimated_export_value_amount: 34,
           destination_country: { id: 'f', name: 'g' },
+          sector: { id: 'h', name: 'i' },
           exporter_experience: { id: 'i', name: 'j' },
         })
       ).to.be.deep.equal({
