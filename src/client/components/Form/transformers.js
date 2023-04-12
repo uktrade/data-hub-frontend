@@ -1,6 +1,7 @@
 const REQUIRED_ERROR = 'This field is required.'
 
 export const mapErrorMessages = (errors) =>
+  errors &&
   Object.entries(errors).reduce((obj, [fieldName, errorMessages]) => {
     const displayFieldName = fieldName.replaceAll('_', ' ')
 

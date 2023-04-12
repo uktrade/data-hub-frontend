@@ -1,6 +1,11 @@
 const { mapErrorMessages } = require('../transformers')
 
 describe('mapErrorMessages', () => {
+  context('when errors is null', () => {
+    it('should return null', () => {
+      expect(mapErrorMessages(null)).to.be.null
+    })
+  })
   context('when field error is null', () => {
     it('should return the field error with a fallback error message', () => {
       expect(
