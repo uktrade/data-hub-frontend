@@ -176,6 +176,10 @@ describe('Export pipeline edit', () => {
             value: capitalize(exportItem.export_potential),
           })
         })
+        assertTypeaheadValues(
+          '[data-test="field-contacts"]',
+          exportItem.contacts.map((t) => t.name)
+        )
         cy.get('[data-test="field-exporter_experience"]').then((element) => {
           assertFieldRadios({
             element,
@@ -246,6 +250,11 @@ describe('Export pipeline edit', () => {
           cy.get('[data-test="field-sector"]'),
           ERROR_MESSAGES.sector
         )
+        assertFieldError(
+          cy.get('[data-test="field-contacts"]'),
+          ERROR_MESSAGES.contacts,
+          false
+        )
       })
 
       it('the form should display validation error message for too many team members', () => {
@@ -313,6 +322,9 @@ describe('Export pipeline edit', () => {
           expect(request.body).to.have.property(
             'export_potential',
             exportItem.export_potential
+          )
+          expect(request.body.contacts).to.deep.equal(
+            exportItem.contacts.map((x) => x.id)
           )
           expect(request.body).to.have.property(
             'exporter_experience',

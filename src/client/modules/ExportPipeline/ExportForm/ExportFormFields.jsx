@@ -12,6 +12,7 @@ import {
   FieldCurrency,
   FieldTypeahead,
   FieldTextarea,
+  ContactInformation,
 } from '../../../../client/components'
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT } from './state'
@@ -28,6 +29,8 @@ import Label from '@govuk-react/label'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
 import CountriesResource from '../../../../client/components/Resource/Countries'
 import ExportExperience from '../../../components/Resource/ExportExperience'
+import CompanyContacts from '../../../components/Resource/CompanyContacts'
+import { transformArrayIdNameToValueLabel } from '../../../transformers'
 
 const ExportFormFields = ({
   initialValues,
@@ -54,106 +57,118 @@ const ExportFormFields = ({
             transformPayload={(values) => ({ exportId: values.id, values })}
             flashMessage={flashMessage}
           >
-            {() => (
-              <>
-                <FieldInput
-                  name="title"
-                  label="Export title"
-                  hint="It helps to give export details in the title, for example product and destination"
-                  type="text"
-                  required={ERROR_MESSAGES.title}
-                />
-                <FieldAdvisersTypeahead
-                  name="owner"
-                  label="Owner"
-                  hint="When creating the record your name will appear. You can change the name to transfer ownership to someone else"
-                  required={ERROR_MESSAGES.owner}
-                />
-                <FieldAdvisersTypeahead
-                  name="team_members"
-                  label="Team members (optional)"
-                  hint="You can add up to 5 team members. Team members can view and edit export functionality"
-                  isMulti={true}
-                  validate={validateTeamMembers}
-                />
+            <>
+              <FieldInput
+                name="title"
+                label="Export title"
+                hint="It helps to give export details in the title, for example product and destination"
+                type="text"
+                required={ERROR_MESSAGES.title}
+              />
+              <FieldAdvisersTypeahead
+                name="owner"
+                label="Owner"
+                hint="When creating the record your name will appear. You can change the name to transfer ownership to someone else"
+                required={ERROR_MESSAGES.owner}
+              />
+              <FieldAdvisersTypeahead
+                name="team_members"
+                label="Team members (optional)"
+                hint="You can add up to 5 team members. Team members can view and edit export functionality"
+                isMulti={true}
+                validate={validateTeamMembers}
+              />
 
-                <Label
-                  style={{ fontWeight: FONT_WEIGHTS.bold }}
-                  htmlFor="field-estimated_export"
-                >
-                  Total estimated export value
-                </Label>
-                <HintText>
-                  Select the year span and total value, for example 3 years,
-                  £1,000,000
-                </HintText>
-                <div id="field-estimated_export">
-                  <ResourceOptionsField
-                    resource={ExportYearsResource}
-                    field={FieldSelect}
-                    fullWidth={true}
-                    name="estimated_export_value_years"
-                    label="Year(s)"
-                    required={ERROR_MESSAGES.estimated_export_value_years}
-                    boldLabel={false}
-                  />
-                  <FieldCurrency
-                    name="estimated_export_value_amount"
-                    label="Estimated value in GBP"
-                    required={ERROR_MESSAGES.estimated_export_value_amount}
-                    boldLabel={false}
-                  />
-                </div>
-                <FieldDate
-                  name="estimated_win_date"
-                  format="short"
-                  label="Estimated date for win"
-                  hint="For example 11 2023"
-                  required={ERROR_MESSAGES.estimated_win_date.required}
-                  invalid={ERROR_MESSAGES.estimated_win_date.invalid}
-                />
+              <Label
+                style={{ fontWeight: FONT_WEIGHTS.bold }}
+                htmlFor="field-estimated_export"
+              >
+                Total estimated export value
+              </Label>
+              <HintText>
+                Select the year span and total value, for example 3 years,
+                £1,000,000
+              </HintText>
+              <div id="field-estimated_export">
                 <ResourceOptionsField
-                  name="destination_country"
-                  label="Destination"
-                  required={ERROR_MESSAGES.destination_country}
-                  resource={CountriesResource}
-                  field={FieldTypeahead}
+                  resource={ExportYearsResource}
+                  field={FieldSelect}
+                  fullWidth={true}
+                  name="estimated_export_value_years"
+                  label="Year(s)"
+                  required={ERROR_MESSAGES.estimated_export_value_years}
+                  boldLabel={false}
                 />
-                <ResourceOptionsField
-                  name="sector"
-                  label="Main sector"
-                  hint="This is the main sector the company is exporting to. Additional sectors can be added to notes"
-                  required={ERROR_MESSAGES.sector}
-                  resource={SectorResource}
-                  field={FieldTypeahead}
+                <FieldCurrency
+                  name="estimated_export_value_amount"
+                  label="Estimated value in GBP"
+                  required={ERROR_MESSAGES.estimated_export_value_amount}
+                  boldLabel={false}
                 />
-                <FieldRadios
-                  name="status"
-                  label="Export status"
-                  required={ERROR_MESSAGES.status}
-                  field={FieldRadios}
-                  options={STATUS_LABELS}
-                />
-                <FieldRadios
-                  name="export_potential"
-                  label="Export potential"
-                  required={ERROR_MESSAGES.export_potential}
-                  field={FieldRadios}
-                  options={SECTOR_LABELS}
-                />
-                <ResourceOptionsField
-                  resource={ExportExperience}
-                  field={FieldRadios}
-                  name="exporter_experience"
-                  label="Exporter experience (optional)"
-                />
-                <FieldTextarea
-                  name="notes"
-                  label="Notes (optional)"
-                  hint="Add further details about the export, such as additional sectors and country regions"
-                />
-              </>
-            )}
+              </div>
+              <FieldDate
+                name="estimated_win_date"
+                format="short"
+                label="Estimated date for win"
+                hint="For example 11 2023"
+                required={ERROR_MESSAGES.estimated_win_date.required}
+                invalid={ERROR_MESSAGES.estimated_win_date.invalid}
+              />
+              <ResourceOptionsField
+                name="destination_country"
+                label="Destination"
+                required={ERROR_MESSAGES.destination_country}
+                resource={CountriesResource}
+                field={FieldTypeahead}
+              />
+              <ResourceOptionsField
+                name="sector"
+                label="Main sector"
+                hint="This is the main sector the company is exporting to. Additional sectors can be added to notes"
+                required={ERROR_MESSAGES.sector}
+                resource={SectorResource}
+                field={FieldTypeahead}
+              />
+              <FieldRadios
+                name="status"
+                label="Export status"
+                required={ERROR_MESSAGES.status}
+                field={FieldRadios}
+                options={STATUS_LABELS}
+              />
+              <FieldRadios
+                name="export_potential"
+                label="Export potential"
+                required={ERROR_MESSAGES.export_potential}
+                field={FieldRadios}
+                options={SECTOR_LABELS}
+              />
+              <ResourceOptionsField
+                id={initialValues.company.id}
+                name="contacts"
+                label="Company contacts"
+                required={ERROR_MESSAGES.contacts}
+                isMulti={true}
+                placeholder="Select contact"
+                resource={CompanyContacts}
+                field={FieldTypeahead}
+                resultToOptions={({ results }) =>
+                  transformArrayIdNameToValueLabel(results)
+                }
+              />
+              <ContactInformation companyId={initialValues.company.id} />
+              <ResourceOptionsField
+                resource={ExportExperience}
+                field={FieldRadios}
+                name="exporter_experience"
+                label="Exporter experience (optional)"
+              />
+              <FieldTextarea
+                name="notes"
+                label="Notes (optional)"
+                hint="Add further details about the export, such as additional sectors and country regions"
+              />
+            </>
           </Form>
         </FormLayout>
       )

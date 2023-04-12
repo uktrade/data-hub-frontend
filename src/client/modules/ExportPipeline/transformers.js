@@ -17,6 +17,7 @@ export const transformFormValuesForAPI = ({
   sector,
   status,
   export_potential,
+  contacts,
   exporter_experience,
   notes,
 }) => ({
@@ -32,6 +33,7 @@ export const transformFormValuesForAPI = ({
   sector: sector.value,
   status,
   export_potential,
+  contacts: contacts.map((x) => x.value),
   exporter_experience,
   notes,
 })
@@ -49,6 +51,7 @@ export const transformAPIValuesForForm = ({
   sector,
   status,
   export_potential,
+  contacts,
   exporter_experience,
   notes,
 }) => ({
@@ -65,6 +68,7 @@ export const transformAPIValuesForForm = ({
   sector: sector && transformIdNameToValueLabel(sector),
   status,
   export_potential,
+  contacts: transformArrayIdNameToValueLabel(contacts),
   exporter_experience: exporter_experience.id,
   notes,
 })

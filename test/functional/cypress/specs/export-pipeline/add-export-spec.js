@@ -26,6 +26,8 @@ const {
 } = require('../../support/form-fillers')
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
+const autoCompleteContacts =
+  require('../../../../sandbox/fixtures/v3/contact/contact.json').results
 const { faker } = require('@faker-js/faker')
 
 describe('Export pipeline create', () => {
@@ -164,6 +166,11 @@ describe('Export pipeline create', () => {
           cy.get('[data-test="field-export_potential"]'),
           ERROR_MESSAGES.export_potential
         )
+        assertFieldError(
+          cy.get('[data-test="field-contacts"]'),
+          ERROR_MESSAGES.contacts,
+          false
+        )
       })
 
       it('the form should display validation error message for too many team members', () => {
@@ -205,6 +212,7 @@ describe('Export pipeline create', () => {
         it('the form should redirect to the dashboard page and display a success message', () => {
           const newExport = generateExport()
           const teamMember = faker.helpers.arrayElement(autoCompleteAdvisers)
+          const contact = faker.helpers.arrayElement(autoCompleteContacts)
 
           fill('[data-test=title-input]', newExport.title)
           fillTypeahead('[data-test=field-team_members]', teamMember.name)
@@ -225,6 +233,7 @@ describe('Export pipeline create', () => {
           fillTypeahead('[data-test=field-sector]', newExport.sector.name)
           cy.get('[name="status"]').check(newExport.status)
           cy.get('[name="export_potential"]').check(newExport.export_potential)
+          fillTypeahead('[data-test=field-contacts]', contact.name)
           cy.get('[name="exporter_experience"]').check(
             newExport.exporter_experience.id
           )
@@ -246,6 +255,7 @@ describe('Export pipeline create', () => {
             sector: newExport.sector.id,
             status: newExport.status,
             export_potential: newExport.export_potential,
+            contacts: [contact.id],
             exporter_experience: newExport.exporter_experience.id,
             notes: newExport.notes,
           })

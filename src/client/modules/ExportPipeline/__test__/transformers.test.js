@@ -23,6 +23,10 @@ describe('transformFormValuesForAPI', () => {
           sector: { value: 'j', label: 'k' },
           status: 'won',
           export_potential: 'high',
+          contacts: [
+            { value: 'l', label: 'm' },
+            { value: 'n', label: 'o' },
+          ],
           exporter_experience: 'never',
           notes: 'large amount of text',
         })
@@ -39,6 +43,7 @@ describe('transformFormValuesForAPI', () => {
         sector: 'j',
         status: 'won',
         export_potential: 'high',
+        contacts: ['l', 'n'],
         exporter_experience: 'never',
         notes: 'large amount of text',
       })
@@ -63,6 +68,7 @@ describe('transformAPIValuesForForm', () => {
           sector: { id: 'h', name: 'i' },
           status: 'won',
           export_potential: 'high',
+          contacts: [{ id: 'j', name: 'k' }],
           exporter_experience: { id: 'never', name: 'Never' },
           notes: 'large amount of text',
         })
@@ -79,6 +85,7 @@ describe('transformAPIValuesForForm', () => {
         sector: { value: 'h', label: 'i' },
         status: 'won',
         export_potential: 'high',
+        contacts: [{ value: 'j', label: 'k' }],
         exporter_experience: 'never',
         notes: 'large amount of text',
       })

@@ -12,4 +12,5 @@ export const ERROR_MESSAGES = {
   sector: 'Enter a main sector',
   status: 'Select an export status',
   export_potential: 'Select an export potential',
+  contacts: 'Select a contact',
 }
