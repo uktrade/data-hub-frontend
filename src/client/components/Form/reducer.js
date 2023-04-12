@@ -15,6 +15,7 @@ import {
   FORM__FIELD_TOUCHED,
   FORM__GO_TO_STEP,
 } from '../../actions'
+import { mapErrorMessages } from './transformers'
 
 export default (
   state = {
@@ -97,7 +98,7 @@ export default (
     case FORM__ERRORED:
       return {
         ...state,
-        errors: action.errors,
+        errors: mapErrorMessages(action.errors),
         touched:
           action.errors &&
           Object.fromEntries(
