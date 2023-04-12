@@ -96,11 +96,7 @@ const LargeCapitalProfile = ({ companyId }) => {
                 incompleteFields={
                   profile.results[0].incompleteRequirementsFields
                 }
-                form={
-                  <EditRequirementsForm
-                    companyId={profile.results[0].investorCompany.id}
-                  />
-                }
+                form={<EditRequirementsForm profile={profile.results[0]} />}
                 toggleName="Investor requirements"
                 id="investor_requirements"
                 isEditing={requirementsFormIsOpen}

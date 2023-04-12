@@ -20,20 +20,7 @@
     %}
 
   {% if profile  %}
-    <div class="large-capital-profile">
-      {% call details({
-        summaryText: 'Investor requirements',
-        incompleteFields: profile.investorRequirements.incompleteFields,
-        open: profile.editing === sections.INVESTOR_REQUIREMENTS
-      }) -%}
 
-        {% if profile.editing === sections.INVESTOR_REQUIREMENTS %}
-          {% include "./requirements-edit.njk" %}
-        {% else %}
-          {% include "./requirements.njk" %}
-        {% endif %}
-      {%- endcall %}
-    </div>
   {% else %}
     {% call Form({
       buttonText: 'Create a profile',
