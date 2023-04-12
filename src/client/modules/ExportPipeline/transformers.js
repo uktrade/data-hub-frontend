@@ -14,6 +14,7 @@ export const transformFormValuesForAPI = ({
   estimated_export_value_amount,
   estimated_win_date,
   destination_country,
+  sector,
   exporter_experience,
 }) => ({
   company,

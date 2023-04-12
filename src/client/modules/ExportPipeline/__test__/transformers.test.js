@@ -64,6 +64,7 @@ describe('transformAPIValuesForForm', () => {
         estimated_export_value_years: 1,
         estimated_export_value_amount: 34,
         destination_country: { value: 'f', label: 'g' },
+        sector: { id: 'h', name: 'i' },
         exporter_experience: { value: 'i', label: 'j' },
       })
     })
