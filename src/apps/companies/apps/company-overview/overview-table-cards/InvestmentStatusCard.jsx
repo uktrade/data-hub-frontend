@@ -32,7 +32,13 @@ const StyledSpan = styled('span')`
   color: grey;
 `
 
-const InvestmentStatusCard = ({ queryString, companyId, ...props }) => {
+const InvestmentStatusCard = ({
+  queryString,
+  companyId,
+  summary,
+  statusList,
+  stageList,
+}) => {
   return (
     <>
       <Task.Status
@@ -50,19 +56,19 @@ const InvestmentStatusCard = ({ queryString, companyId, ...props }) => {
             data-test="investmentsStatusContainer"
           >
             <SummaryTable.Row heading="Last Project won">
-              {props.summary?.won?.last_won_project?.id != null ? (
+              {summary?.won?.last_won_project?.id != null ? (
                 <div>
                   <Link
-                    href={`/investments/projects/${props.summary.won.last_won_project.id}`}
+                    href={`/investments/projects/${summary.won.last_won_project.id}`}
                     data-test="latest-won-project-link"
                   >
-                    {format(props.summary.won.last_won_project.last_changed)}
+                    {format(summary.won.last_won_project.last_changed)}
                   </Link>
                   <br />
                   <Link
-                    href={`/investments/projects/${props.summary.won.last_won_project.id}`}
+                    href={`/investments/projects/${summary.won.last_won_project.id}`}
                   >
-                    {props.summary.won.last_won_project.name}
+                    {summary.won.last_won_project.name}
                   </Link>
                 </div>
               ) : (
@@ -70,19 +76,19 @@ const InvestmentStatusCard = ({ queryString, companyId, ...props }) => {
               )}
             </SummaryTable.Row>
             <SummaryTable.Row heading="Total projects won">
-              {props.statusList?.won ? props.statusList.won : '0'}
+              {statusList?.won ? statusList.won : '0'}
             </SummaryTable.Row>
             <SummaryTable.Row heading="Active projects">
-              {props.stageList?.active ? props.stageList.active : '0'}
+              {stageList?.active ? stageList.active : '0'}
             </SummaryTable.Row>
             <SummaryTable.Row heading="Prospect projects">
-              {props.stageList?.prospect ? props.stageList.prospect : '0'}
+              {stageList?.prospect ? stageList.prospect : '0'}
             </SummaryTable.Row>
             <SummaryTable.Row heading="Verify win projects">
-              {props.stageList?.verifyWin ? props.stageList.verifyWin : '0'}
+              {stageList?.verifyWin ? stageList.verifyWin : '0'}
             </SummaryTable.Row>
             <SummaryTable.Row heading="Abandoned projects">
-              {props.statusList?.abandoned ? props.statusList.abandoned : '0'}
+              {statusList?.abandoned ? statusList.abandoned : '0'}
             </SummaryTable.Row>
             <StyledTableRow>
               <StyledLastTableCell colSpan={2}>
