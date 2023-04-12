@@ -208,7 +208,7 @@ const _Form = ({
                           when={
                             redirectMode === 'hard' && redirectTo && resolved
                           }
-                          ignoreError={errorStatus == 400}
+                          useErrorOverlay={errorStatus !== 400}
                         >
                           <form
                             autoComplete="off"

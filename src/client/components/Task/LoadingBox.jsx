@@ -32,6 +32,7 @@ const StyledErrorOverlay = styled.div({
  * @param {string} props.name - The _task_ name
  * @param {string} props.id - The _task_ id
  * @param {any} props.when - The overlay will also be rendered if this prop is
+ * @param {boolean} props.useErrorOverlay - When an error occurs, handle with an error overlay
  * truthy.
  * @example
  * <TaskLoadingBox name="dummy-task" id="foo" when={taskSucceeded}>
@@ -44,7 +45,7 @@ export default ({
   when,
   children,
   startOnRender,
-  ignoreError,
+  useErrorOverlay = true,
   ...props
 }) => (
   <Task>
@@ -58,7 +59,7 @@ export default ({
             effect={() => startOnRender && task.start(startOnRender)}
           />
           <StyledContentWrapper>
-            {task.error && !ignoreError ? (
+            {task.error && useErrorOverlay ? (
               <>
                 {children}
                 <StyledErrorOverlay>
