@@ -58,6 +58,8 @@ const ALLOWLIST = [
   '/v4/metadata/export-years',
   '/v4/metadata/export-experience-category',
   '/v4/metadata/export-experience',
+  '/v4/metadata/capital-investment/return-rate',
+  '/v4/metadata/capital-investment/equity-percentage',
 ]
 
 module.exports = (app) => {
