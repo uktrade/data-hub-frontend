@@ -53,6 +53,19 @@ const stripHost = (u) => {
   return url.pathname + url.search
 }
 
+const appendParamsToUrl = (origin_url, id, name) => {
+  const url = new URL(origin_url, window.location.origin)
+
+  let inputParams = new URLSearchParams(url.search)
+
+  inputParams.append('new-contact-id', id)
+  inputParams.append('new-contact-name', name)
+
+  url.search = inputParams
+
+  return url.pathname + url.search
+}
+
 const StyledLabel = styled(Label)`
   padding-bottom: ${SPACING.SCALE_5};
   font-weight: ${FONT_WEIGHTS.bold};
@@ -142,14 +155,10 @@ const _ContactForm = ({
             <State>
               {({ referrerUrl, router }) => {
                 const { origin_url } = qs.parse(router.location.search)
-                const redirectTo = ({ name, id }) => {
-                  const encoded = qs.stringify({
-                    'new-contact-name': name,
-                    'new-contact-id': id,
-                  })
 
+                const redirectTo = ({ name, id }) => {
                   return origin_url
-                    ? `${origin_url}?${encoded}`
+                    ? appendParamsToUrl(origin_url, id, name)
                     : urls.contacts.details(id)
                 }
                 return (
