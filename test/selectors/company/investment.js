@@ -5,7 +5,6 @@ module.exports = {
     growthCapitalProfile: '[data-test="bodyMainContent"] li:nth-child(3)',
   },
   subHeading: '[data-test="bodyMainContent"] h2',
-  createAProfile: '[data-test="bodyMainContent"] button',
   investorDetails: {
     incompleteFields: '[data-test=investorDetails] .incomplete-fields',
     summary: '[data-test=investorDetails] summary',
