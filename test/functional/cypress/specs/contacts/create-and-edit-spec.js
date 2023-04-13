@@ -52,9 +52,8 @@ const assertNoMarketingConsent = () =>
     .find('input')
     .should('not.be.checked')
 
+const NEW_CONTACT_ID = '14890695-ce54-4419-88d3-9224754ecbc0'
 describe('Create contact form', () => {
-  const NEW_CONTACT_ID = '14890695-ce54-4419-88d3-9224754ecbc0'
-
   beforeEach(() => {
     cy.visit(`/contacts/create?company=${ZBONCAK_COMPANY_ID}`)
 
@@ -349,3 +348,79 @@ describe('Edit contact', () => {
     })
   })
 })
+
+describe('Contact form routing', () => {
+  context('When no origin url is provided', () => {
+    beforeEach(() => {
+      cy.visit(`/contacts/create?company=${ZBONCAK_COMPANY_ID}`)
+    })
+    it('should redirect to the new contact details page after adding a contact', () => {
+      create_contact()
+
+      cy.location('pathname').should(
+        'eq',
+        `/contacts/${NEW_CONTACT_ID}/details`
+      )
+    })
+  })
+
+  context('When an origin url is provided without any query strings', () => {
+    beforeEach(() => {
+      cy.visit(
+        `/contacts/create?company=${ZBONCAK_COMPANY_ID}&origin_url=companies/${ZBONCAK_COMPANY_ID}/overview`
+      )
+    })
+    it('should redirect to the origin url after adding a contact', () => {
+      create_contact()
+
+      cy.location('pathname').should(
+        'eq',
+        `/companies/${ZBONCAK_COMPANY_ID}/overview`
+      )
+      cy.location('search').should(
+        'eq',
+        `?new-contact-id=${NEW_CONTACT_ID}&new-contact-name=Json+Russel`
+      )
+    })
+  })
+
+  context('When an origin url is provided with query strings', () => {
+    beforeEach(() => {
+      cy.visit(
+        `/contacts/create?company=${ZBONCAK_COMPANY_ID}&origin_url=companies/${ZBONCAK_COMPANY_ID}/overview&origin_search=${btoa(
+          '?a=1&b=2&c=3'
+        )}`
+      )
+    })
+    it('should redirect to the origin url with existing query strings preserved after adding a contact', () => {
+      create_contact()
+
+      cy.location('pathname').should(
+        'eq',
+        `/companies/${ZBONCAK_COMPANY_ID}/overview`
+      )
+      cy.location('search').should(
+        'eq',
+        `?a=1&b=2&c=3&new-contact-id=${NEW_CONTACT_ID}&new-contact-name=Json+Russel`
+      )
+    })
+  })
+})
+
+function create_contact(primaryContact = 'No') {
+  cy.checkRadioGroup('Is this person a primary contact?', primaryContact)
+  cy.checkRadioGroup(
+    'Is this contact’s work address the same as the company address?',
+    'Yes'
+  )
+
+  cy.typeIntoInputs({
+    'First name': 'Andy',
+    'Last name': 'Pipkin',
+    'Job title': 'On dole',
+    'Phone number': '456789',
+    'Email address': 'AndY@nEw.emAIl',
+  })
+
+  cy.clickSubmitButton('Add contact')
+}
