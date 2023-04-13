@@ -8,14 +8,13 @@ import {
   FieldTextarea,
 } from '../../../../components'
 import { FORM_LAYOUT } from '../../../../../common/constants'
-import urls from '../../../../../lib/urls'
-import { TASK_SAVE_LARGE_CAPITAL_INVESTOR_LOCATION } from './state'
-import { transformLocationDetailsToApi } from './transformers'
+import { TASK_UPDATE_LARGE_CAPITAL_PROFILE } from './state'
+import { getReturnLink, transformLocationDetailsToApi } from './transformers'
 import { transformArrayIdNameToValueLabel } from '../../../../transformers'
 import { FieldUKRegionTypeahead } from '../../../../components/Form/elements/UKRegionOptions'
 import CountriesResource from '../../../../components/Resource/Countries'
 
-const EditLargeCapitalInvestorLocation = ({ profile }) => {
+const EditLocationForm = ({ profile }) => {
   const {
     id: profileId,
     investorCompany,
@@ -32,15 +31,11 @@ const EditLargeCapitalInvestorLocation = ({ profile }) => {
             id="edit-large-capital-investor-location"
             analyticsFormName="editLargeCapitalInvestorLocation"
             cancelButtonLabel="Return without saving"
-            cancelRedirectTo={() =>
-              urls.companies.investments.largeCapitalProfile(investorCompany.id)
-            }
+            cancelRedirectTo={() => getReturnLink(investorCompany.id)}
             flashMessage={() => 'Investor location details changes saved'}
             submitButtonLabel="Save and return"
-            submissionTaskName={TASK_SAVE_LARGE_CAPITAL_INVESTOR_LOCATION}
-            redirectTo={() =>
-              urls.companies.investments.largeCapitalProfile(investorCompany.id)
-            }
+            submissionTaskName={TASK_UPDATE_LARGE_CAPITAL_PROFILE}
+            redirectTo={() => getReturnLink(investorCompany.id)}
             transformPayload={(values) =>
               transformLocationDetailsToApi({
                 profileId,
@@ -87,8 +82,8 @@ const EditLargeCapitalInvestorLocation = ({ profile }) => {
   )
 }
 
-EditLargeCapitalInvestorLocation.propTypes = {
+EditLocationForm.propTypes = {
   profile: PropTypes.object.isRequired,
 }
 
-export default EditLargeCapitalInvestorLocation
+export default EditLocationForm

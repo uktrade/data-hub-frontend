@@ -10,11 +10,11 @@ import { SummaryTable, ToggleSection } from '../../../../components'
 import LargeInvestorProfileResource from '../../../../components/Resource/LargeInvestorProfile'
 import { RED } from '../../../../utils/colours'
 import ProfileDetailsTable from './ProfileDetailsTable'
-import EditLargeCapitalInvestorDetails from './EditProfileDetails'
+import EditProfileDetails from './EditProfileDetails'
 import ProfileRequirementsTable from './ProfileRequirementsTable'
 import EditRequirementsForm from './EditRequirementsForm'
 import ProfileLocationTable from './ProfileLocationTable'
-import EditLargeCapitalInvestorLocation from './EditLocationForm'
+import EditLocationForm from './EditLocationForm'
 import CreateLargeCapitalProfile from './CreateLargeCapitalProfile'
 
 const StyledLabel = styled('label')`
@@ -26,13 +26,15 @@ const StyledLabel = styled('label')`
   color: ${RED};
 `
 
-const IncompleteFieldsBadge = (incompleteFieldCount) => {
+const IncompleteFieldsBadge = (incompleteFieldCount, id) => {
   const badgeText =
     incompleteFieldCount === 0
       ? 'Complete'
       : `${pluralize('field', incompleteFieldCount, true)} incomplete`
 
-  return <StyledLabel>{badgeText}</StyledLabel>
+  return (
+    <StyledLabel data-test={`${id}-incomplete-fields`}>{badgeText}</StyledLabel>
+  )
 }
 
 const ProfileSection = ({
@@ -48,14 +50,14 @@ const ProfileSection = ({
     <ToggleSection
       label={toggleName}
       id={`${id}_toggle`}
-      badge={IncompleteFieldsBadge(incompleteFields.length)}
+      badge={IncompleteFieldsBadge(incompleteFields.length, id)}
       justifyHeaderContent={true}
     >
       {isEditing ? (
         <>{form}</>
       ) : (
         <>
-          <SummaryTable>{children}</SummaryTable>
+          <SummaryTable data-test={`${id}-table`}>{children}</SummaryTable>
           <Button onClick={() => onEdit(true)} data-test={`${id}_button`}>
             Edit
           </Button>
@@ -79,13 +81,7 @@ const LargeCapitalProfile = ({ companyId }) => {
               <H2 size={LEVEL_SIZE[3]}>Large capital investor profile</H2>
               <ProfileSection
                 incompleteFields={profile.results[0].incompleteDetailsFields}
-                form={
-                  <EditLargeCapitalInvestorDetails
-                    profileId={profile.results[0].id}
-                    companyId={profile.results[0].investorCompany.id}
-                    investorDetails={profile.results[0]}
-                  />
-                }
+                form={<EditProfileDetails profile={profile.results[0]} />}
                 toggleName="Investor details"
                 id="investor_details"
                 isEditing={detailsFormIsOpen}
@@ -107,11 +103,7 @@ const LargeCapitalProfile = ({ companyId }) => {
               </ProfileSection>
               <ProfileSection
                 incompleteFields={profile.results[0].incompleteLocationFields}
-                form={
-                  <EditLargeCapitalInvestorLocation
-                    profile={profile.results[0]}
-                  />
-                }
+                form={<EditLocationForm profile={profile.results[0]} />}
                 toggleName="Location"
                 id="location"
                 isEditing={locationFormIsOpen}

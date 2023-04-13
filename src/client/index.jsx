@@ -217,12 +217,10 @@ import {
 import * as createInvestmentProjectTasks from '../apps/investments/client/projects/create/tasks'
 
 import {
-  TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS,
-  TASK_SAVE_LARGE_CAPITAL_INVESTOR_REQUIREMENTS,
-  TASK_SAVE_LARGE_CAPITAL_INVESTOR_LOCATION,
   TASK_CREATE_LARGE_CAPITAL_PROFILE,
+  TASK_UPDATE_LARGE_CAPITAL_PROFILE,
 } from './modules/Companies/CompanyInvestments/LargeCapitalProfile/state'
-import * as editLargeCapitalProfileTasks from './modules/Companies/CompanyInvestments/LargeCapitalProfile/tasks'
+import * as largeCapitalProfileTasks from './modules/Companies/CompanyInvestments/LargeCapitalProfile/tasks'
 
 import {
   TASK_SAVE_ORDER_ASSIGNEES,
@@ -469,14 +467,10 @@ function App() {
             overviewInvestmentProjectTasks.getLatestExportWins,
           [TASK_CREATE_INVESTMENT_PROJECT]:
             createInvestmentProjectTasks.createInvestmentProject,
-          [TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS]:
-            editLargeCapitalProfileTasks.updateInvestorDetails,
-          [TASK_SAVE_LARGE_CAPITAL_INVESTOR_REQUIREMENTS]:
-            editLargeCapitalProfileTasks.updateInvestorRequirements,
-          [TASK_SAVE_LARGE_CAPITAL_INVESTOR_LOCATION]:
-            editLargeCapitalProfileTasks.updateInvestorLocation,
           [TASK_CREATE_LARGE_CAPITAL_PROFILE]:
-            editLargeCapitalProfileTasks.createInvestorProfile,
+            largeCapitalProfileTasks.createInvestorProfile,
+          [TASK_UPDATE_LARGE_CAPITAL_PROFILE]:
+            largeCapitalProfileTasks.updateInvestorProfile,
           [TASK_GET_INVESTMENT_PROJECT_INITIAL_VALUES]:
             createInvestmentProjectTasks.getInitialFormValues,
           [TASK_SEARCH_COMPANY]: createInvestmentProjectTasks.searchCompany,

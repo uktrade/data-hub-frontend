@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import urls from '../../../../../lib/urls'
 import {
   FieldCheckboxes,
   FieldRadios,
@@ -11,11 +10,12 @@ import {
 import ResourceOptionsField from '../../../../components/Form/elements/ResourceOptionsField'
 import { transformArrayIdNameToValueLabel } from '../../../../transformers'
 import {
+  getReturnLink,
   transformInitialValuesForCheckbox,
   transformInvestorRequirementsToApi,
 } from './transformers'
 import { FieldAssetClassTypeahead } from '../../../../components/Form/elements/AssetClassOptions'
-import { TASK_SAVE_LARGE_CAPITAL_INVESTOR_REQUIREMENTS } from './state'
+import { TASK_UPDATE_LARGE_CAPITAL_PROFILE } from './state'
 
 import TimeHorizonsResource from '../../../../components/Resource/TimeHorizons'
 import LargeCapitalInvestmentRestrictionsResource from '../../../../components/Resource/LargeCapitalInvestmentRestrictions'
@@ -47,15 +47,11 @@ const EditRequirementsForm = ({ profile }) => {
         id="edit-large-capital-profile-requirements"
         analyticsFormName="editLargeCapitalProfileRequirements"
         cancelButtonLabel="Return without saving"
-        cancelRedirectTo={() =>
-          urls.companies.investments.largeCapitalProfile(investorCompany.id)
-        }
-        flashMessage={() => 'Investor requirements updated'}
+        cancelRedirectTo={() => getReturnLink(investorCompany.id)}
+        flashMessage={() => 'Investor requirement changes saved'}
         submitButtonlabel="Save and return"
-        submissionTaskName={TASK_SAVE_LARGE_CAPITAL_INVESTOR_REQUIREMENTS}
-        redirectTo={() =>
-          urls.companies.investments.largeCapitalProfile(investorCompany.id)
-        }
+        submissionTaskName={TASK_UPDATE_LARGE_CAPITAL_PROFILE}
+        redirectTo={() => getReturnLink(investorCompany.id)}
         transformPayload={(values) =>
           transformInvestorRequirementsToApi({
             profileId,

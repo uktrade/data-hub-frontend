@@ -2,6 +2,7 @@ import {
   transformOption,
   transformDateObjectToDateString,
 } from '../../../../transformers'
+import { companies } from '../../../../../lib/urls'
 
 const checkCurrencyField = (currencyField) =>
   currencyField || currencyField <= 0 ? currencyField : null
@@ -23,6 +24,9 @@ export const transformArrayValueToId = (values = []) =>
 
 export const transformInitialValuesForCheckbox = (values = []) =>
   values.map((value) => value.id)
+
+export const getReturnLink = (companyId) =>
+  companies.investments.largeCapitalProfile(companyId)
 
 export const transformIdForApi = (companyId) => {
   return {
