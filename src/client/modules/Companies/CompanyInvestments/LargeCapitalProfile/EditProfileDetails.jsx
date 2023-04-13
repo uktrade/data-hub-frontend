@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import urls from '../../../../../lib/urls'
 import {
   FieldTypeahead,
   FieldTextarea,
@@ -12,14 +11,14 @@ import {
 } from '../../../../components'
 import InvestorTypesResource from '../../../../components/Resource/InvestorTypes'
 import RequiredChecksConducted from '../../../../components/Resource/RequiredChecksConducted'
-import { transformInvestorDetailsToApi } from './transformers'
+import { getReturnLink, transformInvestorDetailsToApi } from './transformers'
 import {
   transformArrayIdNameToValueLabel,
   transformIdNameToValueLabel,
 } from '../../../../transformers'
 
 import { InvestorCheckDetails } from './InvestorCheckDetails'
-import { TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS } from './state'
+import { TASK_UPDATE_LARGE_CAPITAL_PROFILE } from './state'
 import { FORM_LAYOUT } from '../../../../../common/constants'
 
 const InvestorDescriptionHint = () => (
@@ -68,20 +67,18 @@ const buildInvestorCheckOptions = (
   return transformedOptions
 }
 
-const EditLargeCapitalInvestorDetails = ({
-  profileId,
-  companyId,
-  investorDetails,
-}) => {
+const EditProfileDetails = ({ profile }) => {
   const {
+    id: profileId,
     globalAssetsUnderManagement,
     investableCapital,
+    investorCompany,
     investorDescription,
     investorType,
     requiredChecksConducted,
     requiredChecksConductedOn,
     requiredChecksConductedBy,
-  } = investorDetails
+  } = profile
 
   return (
     <RequiredChecksConducted>
@@ -93,19 +90,15 @@ const EditLargeCapitalInvestorDetails = ({
                 id="edit-large-capital-investor-details"
                 analyticsFormName="editLargeCapitalInvestorDetails"
                 cancelButtonLabel="Return without saving"
-                cancelRedirectTo={() =>
-                  urls.companies.investments.largeCapitalProfile(companyId)
-                }
+                cancelRedirectTo={() => getReturnLink(investorCompany.id)}
                 flashMessage={() => 'Investor details changes saved'}
                 submitButtonLabel="Save and return"
-                submissionTaskName={TASK_SAVE_LARGE_CAPITAL_INVESTOR_DETAILS}
-                redirectTo={() =>
-                  urls.companies.investments.largeCapitalProfile(companyId)
-                }
+                submissionTaskName={TASK_UPDATE_LARGE_CAPITAL_PROFILE}
+                redirectTo={() => getReturnLink(investorCompany.id)}
                 transformPayload={(values) =>
                   transformInvestorDetailsToApi({
                     profileId,
-                    companyId,
+                    companyId: investorCompany.id,
                     values,
                   })
                 }
@@ -168,32 +161,8 @@ const EditLargeCapitalInvestorDetails = ({
   )
 }
 
-const valueTextShape = PropTypes.shape({
-  value: PropTypes.string,
-  text: PropTypes.string,
-})
-
-EditLargeCapitalInvestorDetails.propTypes = {
-  profileId: PropTypes.string.isRequired,
-  companyId: PropTypes.string.isRequired,
-  investorDetails: PropTypes.shape({
-    investorType: valueTextShape,
-    globalAssetsUnderManagement: PropTypes.shape({
-      value: PropTypes.number,
-    }),
-    investableCapital: PropTypes.shape({
-      value: PropTypes.number,
-    }),
-    investorDescription: PropTypes.shape({
-      value: PropTypes.string,
-    }),
-    requiredChecks: PropTypes.shape({
-      cleared: valueTextShape,
-      issuesIdentified: valueTextShape,
-      notRequired: valueTextShape,
-      notYetChecked: valueTextShape,
-    }),
-  }),
+EditProfileDetails.propTypes = {
+  profile: PropTypes.object.isRequired,
 }
 
-export default EditLargeCapitalInvestorDetails
+export default EditProfileDetails

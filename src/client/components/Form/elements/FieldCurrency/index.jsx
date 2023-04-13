@@ -133,7 +133,7 @@ FieldCurrency.propTypes = {
     PropTypes.arrayOf(PropTypes.func),
   ]),
   /**
-   * Text 'required' sets wether the input is required or not
+   * Text 'required' sets whether the input is required or not
    */
   required: PropTypes.string,
   /**
@@ -151,9 +151,9 @@ FieldCurrency.propTypes = {
   /**
    * Sets initial value of the input
    */
-  initialValue: PropTypes.string,
+  initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   /**
-   * Toggles wether the element is a filter or not
+   * Toggles whether the element is a filter or not
    */
   reduced: PropTypes.bool,
   /**
