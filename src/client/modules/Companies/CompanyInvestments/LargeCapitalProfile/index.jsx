@@ -15,6 +15,7 @@ import ProfileRequirementsTable from './ProfileRequirementsTable'
 import EditRequirementsForm from './EditRequirementsForm'
 import ProfileLocationTable from './ProfileLocationTable'
 import EditLargeCapitalInvestorLocation from './EditLocationForm'
+import CreateLargeCapitalProfile from './CreateLargeCapitalProfile'
 
 const StyledLabel = styled('label')`
   display: inline-table;
@@ -120,7 +121,7 @@ const LargeCapitalProfile = ({ companyId }) => {
               </ProfileSection>
             </>
           ) : (
-            <p>Placeholder for create profile code</p>
+            <CreateLargeCapitalProfile companyId={companyId} />
           )}
         </>
       )}

@@ -8,6 +8,9 @@ const checkCurrencyField = (currencyField) =>
 
 const checkIfItemHasValue = (item) => (item ? item : null)
 
+const validateRequiredChecks = (requiredChecks) =>
+  checkIfItemHasValue(requiredChecks) ? requiredChecks : undefined
+
 const getName = (obj) => obj.name
 
 export const transformArray = (arr = []) => arr.map(getName).join(', ')
@@ -20,6 +23,12 @@ export const transformArrayValueToId = (values = []) =>
 
 export const transformInitialValuesForCheckbox = (values = []) =>
   values.map((value) => value.id)
+
+export const transformIdForApi = (companyId) => {
+  return {
+    investor_company: companyId,
+  }
+}
 
 export const transformInvestorDetailsToApi = ({
   profileId,
@@ -45,7 +54,7 @@ export const transformInvestorDetailsToApi = ({
     ),
     investable_capital: checkCurrencyField(investable_capital),
     investor_description: investor_notes,
-    required_checks_conducted: required_checks,
+    required_checks_conducted: validateRequiredChecks(required_checks),
     required_checks_conducted_on: transformDateObjectToDateString(date),
     required_checks_conducted_by: adviser
       ? transformOption(adviser)

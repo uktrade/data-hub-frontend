@@ -18,17 +18,4 @@
       props: props
       }
     %}
-
-  {% if profile  %}
-
-  {% else %}
-    {% call Form({
-      buttonText: 'Create a profile',
-      hiddenFields: { id: company.id },
-      buttonDataAttr: 'createAProfile',
-      action: '/companies/' + company.id + '/investments/large-capital-profile/create'
-    })
-    %}
-    {%- endcall %}
-  {% endif %}
 {% endblock %}
