@@ -137,7 +137,10 @@ at emitErrorNT (node:internal/streams/destroy:151:8)
 at emitErrorCloseNT (node:internal/streams/destroy:116:3)
 at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {"date":"Thu Apr 13 2023 12:14:32 GMT+0100 (British Summer Time)","error":{},"exception":true,"os":{"loadavg":[4.88623046875,4.021484375,5.20703125],"uptime":15060},"process":{"argv":["/Users/marijnkampf/.nvm/versio')
 
-**Solution** When connecting to native/local Data Hub API ensure that in the **API's .env** file the `LOCAL_DEV` variable is set to `True`.
+**Solution** When connecting to native/local Data Hub API ensure that
+
+- in the **API's .env** file the `LOCAL_DEV=True` is set to `True` and
+- in the **Front End's .env** file the `API_ROOT=http://127.0.0.1:8000` uses `127.0.0.1` rather than `localhost`.
 
 ### Running natively against a live environment (dev/staging)
 
