@@ -184,22 +184,7 @@ describe('Create contact form', () => {
   })
 
   it('Should redirect to the new contact page when required fields are filled out', () => {
-    cy.checkRadioGroup('Is this person a primary contact?', 'Yes')
-    cy.checkRadioGroup(
-      'Is this contact’s work address the same as the company address?',
-      'Yes'
-    )
-
-    cy.typeIntoInputs({
-      'First name': 'Andy',
-      'Last name': 'Pipkin',
-      'Job title': 'On dole',
-      'Phone number': '456789',
-      'Email address': 'AndY@nEw.emAIl',
-    })
-
-    cy.clickSubmitButton('Add contact')
-
+    create_contact('Yes')
     cy.location('pathname').should('eq', `/contacts/${NEW_CONTACT_ID}/details`)
   })
 
@@ -350,20 +335,6 @@ describe('Edit contact', () => {
 })
 
 describe('Contact form routing', () => {
-  context('When no origin url is provided', () => {
-    beforeEach(() => {
-      cy.visit(`/contacts/create?company=${ZBONCAK_COMPANY_ID}`)
-    })
-    it('should redirect to the new contact details page after adding a contact', () => {
-      create_contact()
-
-      cy.location('pathname').should(
-        'eq',
-        `/contacts/${NEW_CONTACT_ID}/details`
-      )
-    })
-  })
-
   context('When an origin url is provided without any query strings', () => {
     beforeEach(() => {
       cy.visit(
