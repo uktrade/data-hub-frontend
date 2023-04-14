@@ -417,11 +417,11 @@ const dispatchToProps = (dispatch) => ({
       errors,
       touched,
     }),
-  onError: ({ errors, status }) =>
+  onError: ({ errors, httpStatusCode }) =>
     dispatch({
       type: 'FORM__ERRORED',
       errors,
-      status,
+      httpStatusCode,
     }),
   goForward: (values) =>
     dispatch({

@@ -104,7 +104,7 @@ export default (
           Object.fromEntries(
             Object.keys(action.errors).map((key) => [key, true])
           ),
-        errorStatus: action.status,
+        errorStatus: action.httpStatusCode,
       }
     case FORM__FORWARD:
       return {
