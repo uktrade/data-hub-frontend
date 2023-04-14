@@ -55,7 +55,7 @@ export const transformAPIValuesForForm = ({
   exporter_experience,
   notes,
 }) => ({
-  company: company.id,
+  company: { id: company.id, name: company.name },
   id,
   title,
   owner: transformIdNameToValueLabel(owner),

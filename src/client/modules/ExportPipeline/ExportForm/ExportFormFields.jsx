@@ -18,7 +18,6 @@ import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT, ID as STATE_ID } from './state'
 import Task from '../../../components/Task'
 import { ERROR_MESSAGES } from './constants'
-import { transformAPIValuesForForm } from '../transformers'
 import { validateTeamMembers } from './validation'
 import { SECTOR_LABELS, STATUS_LABELS } from './labels'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
@@ -34,18 +33,16 @@ import { transformArrayIdNameToValueLabel } from '../../../transformers'
 import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../components/ContactForm/state'
 
 const ExportFormFields = ({
-  initialValues,
   analyticsFormName,
   flashMessage,
   cancelRedirectUrl,
   redirectToUrl,
-  formDataLoaded,
-  fromSession,
+  exportItem,
   taskProps = {},
 }) => (
   <Task.Status {...taskProps}>
     {() =>
-      formDataLoaded && (
+      exportItem && (
         <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
           <Form
             id="export-form"
@@ -53,12 +50,7 @@ const ExportFormFields = ({
             cancelRedirectTo={() => cancelRedirectUrl}
             redirectTo={() => redirectToUrl}
             submissionTaskName={TASK_SAVE_EXPORT}
-            initialValues={
-              initialValues &&
-              (fromSession
-                ? initialValues
-                : transformAPIValuesForForm(initialValues))
-            }
+            initialValues={exportItem}
             transformPayload={(values) => ({ exportId: values.id, values })}
             flashMessage={flashMessage}
           >
@@ -150,7 +142,7 @@ const ExportFormFields = ({
                   options={SECTOR_LABELS}
                 />
                 <ResourceOptionsField
-                  id={initialValues.company.id}
+                  id={exportItem.company.id}
                   name="contacts"
                   label="Company contacts"
                   required={ERROR_MESSAGES.contacts}
@@ -170,7 +162,7 @@ const ExportFormFields = ({
                     )
                     return (
                       <ContactInformation
-                        companyId={initialValues.company.id}
+                        companyId={exportItem.company.id}
                         onOpenContactForm={(e) => {
                           e.preventDefault()
                           openContactFormTask.start({
