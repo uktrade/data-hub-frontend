@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { idNamesToValueLabels } from '../../../../utils'
-import Resource from '../../../Resource'
+import Resource from '../../../Resource/Resource'
 
 /**
  * @function ResourceOptionsField
