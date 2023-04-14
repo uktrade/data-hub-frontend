@@ -58,9 +58,9 @@ export const transformAPIValuesForForm = ({
   company: { id: company.id, name: company.name },
   id,
   title,
-  owner: transformIdNameToValueLabel(owner),
+  owner: owner && transformIdNameToValueLabel(owner),
   team_members: transformArrayIdNameToValueLabel(team_members),
-  estimated_export_value_years: estimated_export_value_years.id,
+  estimated_export_value_years: estimated_export_value_years?.id,
   estimated_export_value_amount: estimated_export_value_amount,
   estimated_win_date: convertDateToFieldDateObject(estimated_win_date),
   destination_country:
@@ -69,6 +69,6 @@ export const transformAPIValuesForForm = ({
   status,
   export_potential,
   contacts: transformArrayIdNameToValueLabel(contacts),
-  exporter_experience: exporter_experience.id,
+  exporter_experience: exporter_experience?.id,
   notes,
 })

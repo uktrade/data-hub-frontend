@@ -5,7 +5,7 @@ import { transformAPIValuesForForm } from '../transformers'
 export const ID = 'exportForm'
 export const TASK_SAVE_EXPORT = 'TASK_SAVE_EXPORT'
 
-const appendStorageValues = (exportItem) => {
+const overwriteObjectWithSessionStorageValues = (exportItem) => {
   const valuesFromStorage = JSON.parse(window.sessionStorage.getItem(ID))
   if (valuesFromStorage) {
     return {
@@ -22,19 +22,15 @@ export const state2props = (state) => {
 
   if (exportItem) {
     return {
-      exportItem: appendStorageValues(exportItem),
+      exportItem: overwriteObjectWithSessionStorageValues(exportItem),
     }
   }
 
   if (company) {
     return {
-      exportItem: appendStorageValues({
+      exportItem: overwriteObjectWithSessionStorageValues({
         company,
         owner: { id: state.currentAdviserId, name: state.currentAdviserName },
-        team_members: [],
-        estimated_export_value_years: {},
-        estimated_win_date: {},
-        exporter_experience: {},
       }),
     }
   }
