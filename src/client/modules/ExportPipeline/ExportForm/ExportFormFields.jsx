@@ -30,17 +30,16 @@ import CountriesResource from '../../../../client/components/Resource/Countries'
 import ExportExperience from '../../../components/Resource/ExportExperience'
 
 const ExportFormFields = ({
-  initialValues,
   analyticsFormName,
   flashMessage,
   cancelRedirectUrl,
   redirectToUrl,
-  formDataLoaded,
+  exportItem,
   taskProps = {},
 }) => (
   <Task.Status {...taskProps}>
     {() =>
-      formDataLoaded && (
+      exportItem && (
         <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
           <Form
             id="export-form"
@@ -48,9 +47,7 @@ const ExportFormFields = ({
             cancelRedirectTo={() => cancelRedirectUrl}
             redirectTo={() => redirectToUrl}
             submissionTaskName={TASK_SAVE_EXPORT}
-            initialValues={
-              initialValues && transformAPIValuesForForm(initialValues)
-            }
+            initialValues={exportItem && transformAPIValuesForForm(exportItem)}
             transformPayload={(values) => ({ exportId: values.id, values })}
             flashMessage={flashMessage}
           >
