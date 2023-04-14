@@ -20,16 +20,16 @@ describe('ExportFormFields', () => {
     </DataHubProvider>
   )
 
-  context('When formDataLoaded is false', () => {
+  context('When exportItem is null', () => {
     it('should not render the <Form> component', () => {
-      cy.mount(<Component formDataLoaded={false} />)
+      cy.mount(<Component exportItem={null} />)
       cy.get('form').should('not.exist')
     })
   })
 
-  context('When formDataLoaded is true', () => {
+  context('When exportItem is an object', () => {
     it('should render the <Form> component', () => {
-      cy.mount(<Component formDataLoaded={true} />)
+      cy.mount(<Component exportItem={{ company: 1 }} />)
       cy.get('form').should('exist')
     })
   })
