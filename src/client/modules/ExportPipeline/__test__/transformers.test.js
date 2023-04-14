@@ -108,7 +108,7 @@ describe('transformAPIValuesForForm', () => {
         title: 'a',
         owner: undefined,
         team_members: [],
-        estimated_win_date: undefined,
+        estimated_win_date: { month: '', year: '' },
         estimated_export_value_years: undefined,
         estimated_export_value_amount: 34,
         destination_country: undefined,

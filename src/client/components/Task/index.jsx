@@ -259,7 +259,7 @@ Task.Status = ({
               dismissable,
             })}
           <StyledLoadingBox loading={progress && progressOverlay}>
-            {(!status || progressOverlay) && children(getTask)}
+            {(!status || progressOverlay) && children()}
           </StyledLoadingBox>
         </>
       )

@@ -1,4 +1,4 @@
-import { contactFaker } from '../../fakers/contacts'
+import { contactFaker, contactsListFaker } from '../../fakers/contacts'
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
@@ -28,8 +28,6 @@ const {
 } = require('../../support/form-fillers')
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
-// const autoCompleteContacts =
-//   require('../../../../sandbox/fixtures/v3/contact/contact.json').results
 const { faker } = require('@faker-js/faker')
 
 describe('Export pipeline create', () => {
@@ -205,7 +203,22 @@ describe('Export pipeline create', () => {
       'when the form contains valid data and the form is submitted',
       () => {
         const newContact = contactFaker()
-        // const contacts = contactsListFaker((length = 3))
+        const newExport = generateExport()
+        const contacts = contactsListFaker((length = 3))
+        const add_contact = () => {
+          cy.get('[data-test="add-a-new-contact-link"').click()
+          fill('[data-test=group-field-first_name]', newContact.first_name)
+          fill('[data-test=group-field-last_name]', newContact.last_name)
+          fill('[data-test=job-title-input]', newContact.job_title)
+          fill('[data-test=job-title-input]', newContact.job_title)
+          fill('[data-test=email-input]', newContact.email)
+          cy.get('[name="addressSameAsCompany"]').check('Yes')
+          cy.get('[name="primary"]').check('No')
+          cy.get('[data-test="submit-button"').click()
+          assertFlashMessage(
+            `You have successfully added a new contact ${newContact.name}`
+          )
+        }
 
         before(() => {
           cy.intercept('POST', `/api-proxy/v4/export`).as(
@@ -214,11 +227,15 @@ describe('Export pipeline create', () => {
           cy.intercept('POST', `/api-proxy/v4/contact`, newContact).as(
             'postContactApiRequest'
           )
+          cy.intercept(
+            'GET',
+            `/api-proxy/v4/contact?company_id=${company.id}`,
+            { count: 4, results: [...contacts, newContact] }
+          ).as('getContactApiRequest')
           cy.visit(addPageUrl)
         })
 
         it('the form should redirect to the dashboard page and display a success message', () => {
-          const newExport = generateExport()
           const teamMember = faker.helpers.arrayElement(autoCompleteAdvisers)
 
           fill('[data-test=title-input]', newExport.title)
@@ -240,28 +257,18 @@ describe('Export pipeline create', () => {
           fillTypeahead('[data-test=field-sector]', newExport.sector.name)
           cy.get('[name="status"]').check(newExport.status)
           cy.get('[name="export_potential"]').check(newExport.export_potential)
-          //TODO go to the contacts page, add a new contact then come back
-          add_contact()
 
-          function add_contact() {
-            cy.get('[data-test="add-a-new-contact-link"').click()
-            fill('[data-test=group-field-first_name]', newContact.first_name)
-            fill('[data-test=group-field-last_name]', newContact.last_name)
-            fill('[data-test=job-title-input]', newContact.job_title)
-            fill('[data-test=job-title-input]', newContact.job_title)
-            fill('[data-test=email-input]', newContact.email)
-            cy.get('[name="addressSameAsCompany"]').check('Yes')
-            cy.get('[name="primary"]').check('No')
-            cy.get('[data-test="submit-button"').click()
-            assertFlashMessage(
-              `You have successfully added a new contact ${newContact.name}`
-            )
-          }
-          fillTypeahead('[data-test=field-contacts]', newContact.name)
           cy.get('[name="exporter_experience"]').check(
             newExport.exporter_experience.id
           )
           fill('[data-test=field-notes]', newExport.notes)
+          add_contact()
+
+          fillTypeahead('[data-test=field-contacts]', newContact.name)
+          cy.window()
+            .its('sessionStorage')
+            .invoke('getItem', 'exportForm')
+            .should('exist')
 
           cy.get('[data-test=submit-button]').click()
 
@@ -269,7 +276,7 @@ describe('Export pipeline create', () => {
             title: newExport.title,
             owner: '7d19d407-9aec-4d06-b190-d3f404627f21',
             team_members: [teamMember.id],
-            company: company.id,
+            company: { id: company.id, name: company.name },
             estimated_export_value_years:
               newExport.estimated_export_value_years.id,
             estimated_export_value_amount:
@@ -279,13 +286,18 @@ describe('Export pipeline create', () => {
             sector: newExport.sector.id,
             status: newExport.status,
             export_potential: newExport.export_potential,
-            contacts: [contact.id],
+            contacts: [newContact.id],
             exporter_experience: newExport.exporter_experience.id,
             notes: newExport.notes,
           })
 
           assertExactUrl('')
           assertFlashMessage(`'${newExport.title}' created`)
+
+          cy.window()
+            .its('sessionStorage')
+            .invoke('getItem', 'exportForm')
+            .should('not.exist')
         })
       }
     )

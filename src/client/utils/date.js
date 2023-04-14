@@ -275,7 +275,7 @@ function convertDateToFieldDateObject(date) {
       year: parsedTime.getFullYear(),
     }
   }
-  return date
+  return { month: '', year: '' }
 }
 
 module.exports = {
