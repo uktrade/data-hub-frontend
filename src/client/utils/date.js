@@ -222,14 +222,6 @@ function getDifferenceInWords(date, suffix = true) {
   }
 }
 
-function parseInvestmentDate(dateStr) {
-  return {
-    day: parseInt(formatFns(new Date(dateStr), 'd')),
-    month: parseInt(formatFns(new Date(dateStr), 'M')),
-    year: parseInt(formatFns(new Date(dateStr), 'yyyy')),
-  }
-}
-
 function createDateFromObject({ day, month, year }) {
   const monthIndex = parseInt(month, 10) - 1
   const result = new Date(year, monthIndex, day)
@@ -304,7 +296,6 @@ module.exports = {
   isShortDateValid,
   isUnparsedDateValid,
   parseDateString,
-  parseInvestmentDate,
   subtractDays,
   subtractMonths,
   subtractYears,

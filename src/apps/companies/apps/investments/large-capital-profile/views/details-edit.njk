@@ -1,7 +1,0 @@
-{% block body %}
-  {% set props = {"profileId": profile.id, "investorDetails": profile.investorDetails, "companyId": company.id} %}
-  {% component 'react-slot', {
-    id: 'edit-large-capital-investor-details',
-    props: props
-  } %}
-{% endblock %}
