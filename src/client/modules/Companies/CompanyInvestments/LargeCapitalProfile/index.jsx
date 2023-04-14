@@ -7,7 +7,7 @@ import pluralize from 'pluralize'
 import styled from 'styled-components'
 
 import { SummaryTable, ToggleSection } from '../../../../components'
-import LargeInvestorProfileResource from '../../../../components/Resource/LargeInvestorProfile'
+import { LargeInvestorProfileResource } from '../../../../components/Resource'
 import { RED } from '../../../../utils/colours'
 import ProfileDetailsTable from './ProfileDetailsTable'
 import EditProfileDetails from './EditProfileDetails'

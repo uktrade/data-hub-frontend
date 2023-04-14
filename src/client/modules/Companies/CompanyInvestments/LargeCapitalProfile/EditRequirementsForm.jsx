@@ -7,6 +7,16 @@ import {
   Form,
   Main,
 } from '../../../../components'
+import {
+  ConstructionRisksResource,
+  DealTicketSizesResource,
+  DesiredDealRolesResource,
+  LargeCapitalInvestmentEquityPercentagesResource,
+  LargeCapitalInvestmentRestrictionsResource,
+  LargeCapitalInvestmentReturnRateResource,
+  LargeCapitalInvestmentTypesResource,
+  TimeHorizonsResource,
+} from '../../../../components/Resource'
 import ResourceOptionsField from '../../../../components/Form/elements/ResourceOptionsField'
 import { transformArrayIdNameToValueLabel } from '../../../../transformers'
 import {
@@ -16,15 +26,6 @@ import {
 } from './transformers'
 import { FieldAssetClassTypeahead } from '../../../../components/Form/elements/AssetClassOptions'
 import { TASK_UPDATE_LARGE_CAPITAL_PROFILE } from './state'
-
-import TimeHorizonsResource from '../../../../components/Resource/TimeHorizons'
-import LargeCapitalInvestmentRestrictionsResource from '../../../../components/Resource/LargeCapitalInvestmentRestrictions'
-import ConstructionRisksResource from '../../../../components/Resource/ConstructionRisks'
-import DesiredDealRolesResource from '../../../../components/Resource/DesiredDealRoles'
-import LargeCapitalInvestmentReturnRateResource from '../../../../components/Resource/LargeCapitalInvestmentReturnRate'
-import LargeCapitalInvestmentEquityPercentagesResource from '../../../../components/Resource/LargeCapitalInvestmentEquityPercentages'
-import DealTicketSizesResource from '../../../../components/Resource/DealTicketSizes'
-import LargeCapitalInvestmentTypesResource from '../../../../components/Resource/LargeCapitalInvestmentTypes'
 
 const EditRequirementsForm = ({ profile }) => {
   const {

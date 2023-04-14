@@ -4,7 +4,7 @@ import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import { BLACK, GREY_3 } from '../../../../client/utils/colours'
 
-import ContactResource from '../../../components/Resource/Contact'
+import { ContactResource } from '../../../components/Resource'
 import { SummaryTable } from '../../../components'
 import urls from '../../../../lib/urls'
 import {

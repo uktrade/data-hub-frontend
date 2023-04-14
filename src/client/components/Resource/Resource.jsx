@@ -124,6 +124,9 @@ export default Resource
  *   ...CompanyResource.tasks,
  * }
  *
+ * // And also add it to the ./index.jsx default export
+ * export { default as CompanyResource } from './Company'
+ *
  * // Now you can easily fetch a company with CompanyResource
  * <CompanyResource id={companyId}>
  *   {(camelCasedCompany, rawResponseData) =>

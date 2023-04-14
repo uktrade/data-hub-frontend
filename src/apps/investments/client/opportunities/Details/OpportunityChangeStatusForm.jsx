@@ -6,7 +6,7 @@ import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeade
 
 import { Main } from '../../../../../client/components'
 
-import OpportunityResource from '../../../../../client/components/Resource/Opportunity'
+import { OpportunityResource } from '../../../../../client/components/Resource'
 import FieldOpportunityStatuses from '../../../../../client/components/Form/elements/FieldOpportunityStatuses'
 
 import Form from '../../../../../client/components/Form'

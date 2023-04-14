@@ -8,7 +8,7 @@ import PipelineForm from './PipelineForm'
 import { getPipelineUrl } from './utils'
 import { Main } from '../../../client/components'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
-import PipelineItemResource from '../../../client/components/Resource/PipelineItem'
+import { PipelineItemResource } from '../../../client/components/Resource'
 
 const {
   formatWithoutParsing,

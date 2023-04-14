@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
-import PipelineItemResource from '../../../client/components/Resource/PipelineItem'
+import { PipelineItemResource } from '../../../client/components/Resource'
 
 import urls from '../../../lib/urls'
 import Form from '../../../client/components/Form'

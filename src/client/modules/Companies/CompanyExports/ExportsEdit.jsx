@@ -6,8 +6,10 @@ import { FieldInput, FieldSelect, LocalHeader, Main } from '../../../components'
 import GreatProfile from '../../../../apps/companies/apps/exports/client/GreatProfile'
 import urls from '../../../../lib/urls'
 import Form from '../../../components/Form'
-import CompanyResource from '../../../components/Resource/Company'
-import ExportExperienceCategoriesResource from '../../../components/Resource/ExportExperienceCategories'
+import {
+  CompanyResource,
+  ExportExperienceCategoriesResource,
+} from '../../../components/Resource'
 import { transformArrayIdNameToValueLabel } from '../../../transformers'
 import { buildGreatProfile, buildExportPotential } from './transformers'
 
