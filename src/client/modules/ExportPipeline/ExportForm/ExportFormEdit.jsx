@@ -38,7 +38,7 @@ const getBreadcrumbs = (exportItem) => {
   return defaultBreadcrumbs
 }
 
-const ExportFormEdit = ({ exportItem }) => {
+const ExportFormEdit = ({ exportItem, fromSession }) => {
   const { exportId } = useParams()
   return (
     <DefaultLayout
@@ -64,6 +64,7 @@ const ExportFormEdit = ({ exportItem }) => {
         redirectToUrl={urls.exportPipeline.edit(exportId)}
         flashMessage={({ data }) => `Changes saved to '${data.title}'`}
         formDataLoaded={!!exportItem}
+        fromSession={fromSession}
       />
     </DefaultLayout>
   )

@@ -18,6 +18,7 @@ const ContactInformation = ({ onOpenContactForm, companyId }) => {
         onClick={onOpenContactForm}
         href={urls.contacts.create(companyId, {
           origin_url: window.location.pathname,
+          origin_search: btoa(window.location.search),
         })}
       >
         add a new contact
