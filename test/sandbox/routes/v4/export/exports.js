@@ -5,12 +5,6 @@ const exporterExperience = require('../../../fixtures/v4/export/export-experienc
 const estimatedYears = require('../../../fixtures/v4/export/estimated-years.json')
 
 const generateExport = () => {
-  const { id: sectorId, name: sectorName } = faker.helpers.arrayElement(sector)
-  const { id: countryId, name: countryName } =
-    faker.helpers.arrayElement(country)
-  const { id: exportExperienceId, name: exportExperienceName } =
-    faker.helpers.arrayElement(exporterExperience)
-
   return {
     id: faker.datatype.uuid(),
     company: { id: faker.datatype.uuid(), name: faker.company.name() },
@@ -20,12 +14,9 @@ const generateExport = () => {
       { id: faker.datatype.uuid(), name: faker.name.fullName() },
     ],
     contacts: [{ id: faker.datatype.uuid(), name: faker.name.fullName() }],
-    destination_country: {
-      id: countryId,
-      name: countryName,
-    },
-    sector: { id: sectorId, name: sectorName },
-    exporter_experience: { id: exportExperienceId, name: exportExperienceName },
+    destination_country: faker.helpers.arrayElement(country),
+    sector: faker.helpers.arrayElement(sector),
+    exporter_experience: faker.helpers.arrayElement(exporterExperience),
     estimated_export_value_years: faker.helpers.arrayElement(estimatedYears),
     created_on: faker.date.past(),
     modified_on: faker.date.past(),
@@ -39,6 +30,7 @@ const generateExport = () => {
     modified_by: faker.datatype.uuid(),
   }
 }
+
 const generateExports = (count = 10) => {
   return {
     count: count,
