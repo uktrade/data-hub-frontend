@@ -13,6 +13,7 @@ const {
   assertFieldInput,
   assertTypeaheadValues,
   assertFieldDateShort,
+  assertPayload,
 } = require('../../support/assertions')
 const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 const {
@@ -176,6 +177,10 @@ describe('Export pipeline edit', () => {
             value: capitalize(exportItem.export_potential),
           })
         })
+        assertTypeaheadValues(
+          '[data-test="field-contacts"]',
+          exportItem.contacts.map((t) => t.name)
+        )
         cy.get('[data-test="field-exporter_experience"]').then((element) => {
           assertFieldRadios({
             element,
@@ -275,50 +280,29 @@ describe('Export pipeline edit', () => {
     })
 
     context('when the form contains valid data and is submitted', () => {
-      it('the form should stay on the current page', () => {
+      it('the form should stay on the current page and display flash message', () => {
         cy.get('[data-test=submit-button]').click()
 
-        //While building the form do individual checks, can switch to assertPayload once all fields are added
-        cy.wait('@patchExportItemApiRequest').then(({ request }) => {
-          expect(request.body).to.have.property('id', exportItem.id)
-          expect(request.body).to.have.property(
-            'company',
-            exportItem.company.id
-          )
-          expect(request.body).to.have.property('title', exportItem.title)
-          expect(request.body).to.have.property('owner', exportItem.owner.id)
-          expect(request.body.team_members).to.deep.equal(
-            exportItem.team_members.map((x) => x.id)
-          )
-          expect(request.body).to.have.property(
-            'estimated_export_value_years',
-            exportItem.estimated_export_value_years.id
-          )
-          expect(request.body).to.have.property(
-            'estimated_export_value_amount',
-            exportItem.estimated_export_value_amount
-          )
-          expect(request.body).to.have.property(
-            'estimated_win_date',
-            `${exportItem.estimated_win_date.getFullYear()}-${
-              exportItem.estimated_win_date.getMonth() + 1
-            }-01T00:00:00`
-          )
-          expect(request.body).to.have.property(
-            'destination_country',
-            exportItem.destination_country.id
-          )
-          expect(request.body).to.have.property('sector', exportItem.sector.id)
-          expect(request.body).to.have.property('status', exportItem.status)
-          expect(request.body).to.have.property(
-            'export_potential',
-            exportItem.export_potential
-          )
-          expect(request.body).to.have.property(
-            'exporter_experience',
-            exportItem.exporter_experience.id
-          )
-          expect(request.body).to.have.property('notes', exportItem.notes)
+        assertPayload('@patchExportItemApiRequest', {
+          id: exportItem.id,
+          title: exportItem.title,
+          owner: exportItem.owner.id,
+          team_members: exportItem.team_members.map((x) => x.id),
+          company: { id: exportItem.company.id, name: exportItem.company.name },
+          estimated_export_value_years:
+            exportItem.estimated_export_value_years.id,
+          estimated_export_value_amount:
+            exportItem.estimated_export_value_amount,
+          estimated_win_date: `${exportItem.estimated_win_date.getFullYear()}-${
+            exportItem.estimated_win_date.getMonth() + 1
+          }-01T00:00:00`,
+          destination_country: exportItem.destination_country.id,
+          sector: exportItem.sector.id,
+          status: exportItem.status,
+          export_potential: exportItem.export_potential,
+          contacts: exportItem.contacts.map((x) => x.id),
+          exporter_experience: exportItem.exporter_experience.id,
+          notes: exportItem.notes,
         })
 
         assertUrl(urls.exportPipeline.edit(exportItem.id))

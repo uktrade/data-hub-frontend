@@ -259,7 +259,7 @@ function formatStartAndEndDate(startDate, endDate) {
  * @param {*} date a string representing a date or a Date type
  * @returns an object of the format {month:'', year:''}
  */
-function convertDateToFieldDateObject(date) {
+function convertDateToFieldShortDateObject(date) {
   const parsedTime = parseISO(date)
   if (isValid(parsedTime)) {
     return {
@@ -267,7 +267,7 @@ function convertDateToFieldDateObject(date) {
       year: parsedTime.getFullYear(),
     }
   }
-  return date
+  return { month: '', year: '' }
 }
 
 module.exports = {
@@ -304,5 +304,5 @@ module.exports = {
   transformValueForAPI,
   createDateFromObject,
   formatStartAndEndDate,
-  convertDateToFieldDateObject,
+  convertDateToFieldShortDateObject,
 }

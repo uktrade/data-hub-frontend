@@ -20,7 +20,7 @@ import {
   SectorResource,
 } from '../../../components/Resource'
 import { FORM_LAYOUT } from '../../../../common/constants'
-import { TASK_SAVE_EXPORT } from './state'
+import { TASK_SAVE_EXPORT, ID as STATE_ID } from './state'
 import Task from '../../../components/Task'
 import { ERROR_MESSAGES } from './constants'
 import { transformAPIValuesForForm } from '../transformers'
@@ -30,6 +30,9 @@ import ResourceOptionsField from '../../../components/Form/elements/ResourceOpti
 import { HintText } from 'govuk-react'
 import Label from '@govuk-react/label'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
+import CompanyContacts from '../../../components/Resource/CompanyContacts'
+import { transformArrayIdNameToValueLabel } from '../../../transformers'
+import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../components/ContactForm/state'
 
 const ExportFormFields = ({
   analyticsFormName,
@@ -53,7 +56,7 @@ const ExportFormFields = ({
             transformPayload={(values) => ({ exportId: values.id, values })}
             flashMessage={flashMessage}
           >
-            {() => (
+            {({ values }) => (
               <>
                 <FieldInput
                   name="title"
@@ -140,6 +143,42 @@ const ExportFormFields = ({
                   field={FieldRadios}
                   options={SECTOR_LABELS}
                 />
+                <ResourceOptionsField
+                  id={exportItem.company.id}
+                  name="contacts"
+                  label="Company contacts"
+                  required={ERROR_MESSAGES.contacts}
+                  isMulti={true}
+                  placeholder="Select contact"
+                  resource={CompanyContacts}
+                  field={FieldTypeahead}
+                  resultToOptions={({ results }) =>
+                    transformArrayIdNameToValueLabel(results)
+                  }
+                />
+                <Task>
+                  {(getTask) => {
+                    const openContactFormTask = getTask(
+                      TASK_REDIRECT_TO_CONTACT_FORM,
+                      STATE_ID
+                    )
+                    return (
+                      <ContactInformation
+                        companyId={exportItem.company.id}
+                        onOpenContactForm={(e) => {
+                          e.preventDefault()
+                          openContactFormTask.start({
+                            payload: {
+                              values,
+                              url: e.target.href,
+                              storeId: STATE_ID,
+                            },
+                          })
+                        }}
+                      />
+                    )
+                  }}
+                </Task>
                 <ResourceOptionsField
                   resource={ExportExperienceResource}
                   field={FieldRadios}

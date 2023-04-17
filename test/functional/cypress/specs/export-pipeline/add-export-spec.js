@@ -1,3 +1,5 @@
+import { contactFaker, contactsListFaker } from '../../fakers/contacts'
+
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 const {
@@ -164,6 +166,11 @@ describe('Export pipeline create', () => {
           cy.get('[data-test="field-export_potential"]'),
           ERROR_MESSAGES.export_potential
         )
+        assertFieldError(
+          cy.get('[data-test="field-contacts"]'),
+          ERROR_MESSAGES.contacts,
+          false
+        )
       })
 
       it('the form should display validation error message for too many team members', () => {
@@ -195,15 +202,39 @@ describe('Export pipeline create', () => {
     context(
       'when the form contains valid data and the form is submitted',
       () => {
+        const newContact = contactFaker()
+        const newExport = generateExport()
+        const contacts = contactsListFaker((length = 3))
+        const add_contact = () => {
+          cy.get('[data-test="add-a-new-contact-link"').click()
+          fill('[data-test=group-field-first_name]', newContact.first_name)
+          fill('[data-test=group-field-last_name]', newContact.last_name)
+          fill('[data-test=job-title-input]', newContact.job_title)
+          fill('[data-test=job-title-input]', newContact.job_title)
+          fill('[data-test=email-input]', newContact.email)
+          cy.get('[name="addressSameAsCompany"]').check('Yes')
+          cy.get('[name="primary"]').check('No')
+          cy.get('[data-test="submit-button"').click()
+          assertFlashMessage(
+            `You have successfully added a new contact ${newContact.name}`
+          )
+        }
         before(() => {
           cy.intercept('POST', `/api-proxy/v4/export`).as(
             'postExportItemApiRequest'
           )
+          cy.intercept('POST', `/api-proxy/v4/contact`, newContact).as(
+            'postContactApiRequest'
+          )
+          cy.intercept(
+            'GET',
+            `/api-proxy/v4/contact?company_id=${company.id}`,
+            { count: 4, results: [...contacts, newContact] }
+          ).as('getContactApiRequest')
           cy.visit(addPageUrl)
         })
 
         it('the form should redirect to the dashboard page and display a success message', () => {
-          const newExport = generateExport()
           const teamMember = faker.helpers.arrayElement(autoCompleteAdvisers)
 
           fill('[data-test=title-input]', newExport.title)
@@ -229,6 +260,13 @@ describe('Export pipeline create', () => {
             newExport.exporter_experience.id
           )
           fill('[data-test=field-notes]', newExport.notes)
+          add_contact()
+
+          fillTypeahead('[data-test=field-contacts]', newContact.name)
+          cy.window()
+            .its('sessionStorage')
+            .invoke('getItem', 'exportForm')
+            .should('exist')
 
           cy.get('[data-test=submit-button]').click()
 
@@ -236,7 +274,7 @@ describe('Export pipeline create', () => {
             title: newExport.title,
             owner: '7d19d407-9aec-4d06-b190-d3f404627f21',
             team_members: [teamMember.id],
-            company: company.id,
+            company: { id: company.id, name: company.name },
             estimated_export_value_years:
               newExport.estimated_export_value_years.id,
             estimated_export_value_amount:
@@ -246,12 +284,18 @@ describe('Export pipeline create', () => {
             sector: newExport.sector.id,
             status: newExport.status,
             export_potential: newExport.export_potential,
+            contacts: [newContact.id],
             exporter_experience: newExport.exporter_experience.id,
             notes: newExport.notes,
           })
 
           assertExactUrl('')
           assertFlashMessage(`'${newExport.title}' created`)
+
+          cy.window()
+            .its('sessionStorage')
+            .invoke('getItem', 'exportForm')
+            .should('not.exist')
         })
       }
     )
