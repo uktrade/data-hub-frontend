@@ -21,6 +21,7 @@ export default (
     values: {},
     touched: {},
     errors: {},
+    errorStatus: 0,
     fields: {},
     currentStep: 0,
     steps: [],
@@ -100,6 +101,7 @@ export default (
         touched: Object.fromEntries(
           Object.keys(action.errors).map((key) => [key, true])
         ),
+        errorStatus: action.httpStatusCode,
       }
     case FORM__FORWARD:
       return {
