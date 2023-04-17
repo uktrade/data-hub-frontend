@@ -11,7 +11,7 @@ import multiInstance from '../../utils/multiinstance'
 import ErrorSummary from '../ErrorSummary'
 import Task from '../Task'
 import TaskLoadingBox from '../Task/LoadingBox'
-import Resource from '../Resource'
+import Resource from '../Resource/Resource'
 import Wrap from '../Wrap'
 import Analytics from '../Analytics'
 

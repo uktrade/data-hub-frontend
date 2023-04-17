@@ -12,7 +12,7 @@ import { TASK_UPDATE_LARGE_CAPITAL_PROFILE } from './state'
 import { getReturnLink, transformLocationDetailsToApi } from './transformers'
 import { transformArrayIdNameToValueLabel } from '../../../../transformers'
 import { FieldUKRegionTypeahead } from '../../../../components/Form/elements/UKRegionOptions'
-import CountriesResource from '../../../../components/Resource/Countries'
+import { CountriesResource } from '../../../../components/Resource'
 
 const EditLocationForm = ({ profile }) => {
   const {

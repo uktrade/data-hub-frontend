@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Resource from '../Resource'
+import Resource from '../Resource/Resource'
 import Analytics from '../Analytics'
 import { ID, TASK_GET_USER_FEATURE_FLAGS } from './state'
 

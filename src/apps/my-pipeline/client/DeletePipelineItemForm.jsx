@@ -10,7 +10,7 @@ import { RED } from '../../../client/utils/colours'
 import { Main } from '../../../client/components'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 import Form from '../../../client/components/Form'
-import PipelineItemResource from '../../../client/components/Resource/PipelineItem'
+import { PipelineItemResource } from '../../../client/components/Resource'
 
 import { ID as STATE_ID, TASK_DELETE_PIPELINE_ITEM } from './state'
 import PipelineDetails from './PipelineDetails'

@@ -4,7 +4,7 @@ import qs from 'qs'
 
 import { CollectionList } from '../../../../../client/components'
 import { transformInteractionToListItem } from '../../../../interactions/client/transformers'
-import Interactions from '../../../../../client/components/Resource/Interactions'
+import { InteractionCollectionResource } from '../../../../../client/components/Resource'
 
 const OpportunityInteractions = ({ opportunityId }) => (
   <Route>
@@ -12,7 +12,7 @@ const OpportunityInteractions = ({ opportunityId }) => (
       const parsedQueryString = qs.parse(location.search.slice(1))
       const activePage = parseInt(parsedQueryString.page, 10) || 1
       return (
-        <Interactions
+        <InteractionCollectionResource
           payload={{
             large_capital_opportunity_id: opportunityId,
             limit: 10,
@@ -54,7 +54,7 @@ const OpportunityInteractions = ({ opportunityId }) => (
               />
             )
           }}
-        </Interactions>
+        </InteractionCollectionResource>
       )
     }}
   </Route>

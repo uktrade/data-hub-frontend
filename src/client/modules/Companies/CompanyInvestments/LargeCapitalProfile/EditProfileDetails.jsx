@@ -9,8 +9,10 @@ import {
   FormLayout,
   FieldCurrency,
 } from '../../../../components'
-import InvestorTypesResource from '../../../../components/Resource/InvestorTypes'
-import RequiredChecksConducted from '../../../../components/Resource/RequiredChecksConducted'
+import {
+  InvestorTypesResource,
+  RequiredChecksConductedResource,
+} from '../../../../components/Resource'
 import { getReturnLink, transformInvestorDetailsToApi } from './transformers'
 import {
   transformArrayIdNameToValueLabel,
@@ -81,7 +83,7 @@ const EditProfileDetails = ({ profile }) => {
   } = profile
 
   return (
-    <RequiredChecksConducted>
+    <RequiredChecksConductedResource>
       {(requiredCheckOptions) => (
         <InvestorTypesResource>
           {(investorTypeOptions) => (
@@ -157,7 +159,7 @@ const EditProfileDetails = ({ profile }) => {
           )}
         </InvestorTypesResource>
       )}
-    </RequiredChecksConducted>
+    </RequiredChecksConductedResource>
   )
 }
 

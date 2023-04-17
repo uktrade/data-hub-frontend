@@ -19,8 +19,7 @@ import {
   FormLayout,
 } from '..'
 import LocalHeader from '../LocalHeader/LocalHeader'
-import ContactResource from '../Resource/Contact'
-import CompanyResource from '../Resource/Company'
+import { CompanyResource, ContactResource } from '../Resource'
 import * as validators from '../Form/validators'
 import State from '../State'
 import {

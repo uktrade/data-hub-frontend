@@ -1,6 +1,6 @@
 import React from 'react'
 
-import AssetClassesResource from '../../Resource/AssetClasses'
+import { AssetClassesResource } from '../../Resource'
 import FieldTypeahead from './FieldTypeahead'
 import ResourceOptionsField from './ResourceOptionsField'
 
