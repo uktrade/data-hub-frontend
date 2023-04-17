@@ -8,7 +8,7 @@ import rootSaga from '../../../../src/client/root-saga'
 import tasks from '../../../../src/client/components/Task/reducer'
 import Typeahead from '../../../../src/client/components/Typeahead/Typeahead'
 import FieldAddAnother from '../../../../src/client/components/Form/elements/FieldAddAnother/FieldAddAnother'
-import Resource from '../../../../src/client/components/Resource'
+import Resource from '../../../../src/client/components/Resource/Resource'
 
 const sagaMiddleware = createSagaMiddleware()
 

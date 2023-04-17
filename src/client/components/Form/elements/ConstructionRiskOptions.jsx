@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ConstructionRisksResource from '../../Resource/ConstructionRisks'
+import { ConstructionRisksResource } from '../../Resource'
 import ResourceOptionsField from './ResourceOptionsField'
 import FieldRadios from './FieldRadios'
 

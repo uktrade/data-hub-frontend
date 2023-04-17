@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ContactResource from '../../../components/Resource/Contact'
+import { ContactResource } from '../../../components/Resource'
 import DocumentsSection from '../../../components/DocumentsSection'
 import ContactLayout from '../../../components/Layout/ContactLayout'
 

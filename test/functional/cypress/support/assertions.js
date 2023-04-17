@@ -233,7 +233,7 @@ const assertFieldRadios = ({ element, label, value, optionsCount }) =>
     )
 
 // As part of the accessibility work, a sample of pages have been refactored to use legends instead of labels.
-//  Use this assertion for radios which have legends applied.
+// Use this assertion for radios which have legends applied.
 const assertFieldRadiosWithLegend = ({
   element,
   legend,
@@ -576,6 +576,15 @@ const assertCheckboxGroupNoneSelected = (element) => {
 }
 
 /**
+ * Assert that all of the options in a checkbox group are selected
+ */
+const assertCheckboxGroupAllSelected = (element) => {
+  cy.get(element)
+    .find('input')
+    .each((child) => cy.wrap(child).should('be.checked'))
+}
+
+/**
  * Asserts that a typeahead `element` has the given `legend` and `placeholder`
  */
 const assertTypeaheadHints = ({
@@ -839,6 +848,7 @@ module.exports = {
   assertFormButtons,
   assertCheckboxGroupOption,
   assertCheckboxGroupNoneSelected,
+  assertCheckboxGroupAllSelected,
   assertTypeaheadHints,
   assertSingleTypeaheadOptionSelected,
   assertTypeaheadOptionSelected,

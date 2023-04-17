@@ -222,14 +222,6 @@ function getDifferenceInWords(date, suffix = true) {
   }
 }
 
-function parseInvestmentDate(dateStr) {
-  return {
-    day: parseInt(formatFns(new Date(dateStr), 'd')),
-    month: parseInt(formatFns(new Date(dateStr), 'M')),
-    year: parseInt(formatFns(new Date(dateStr), 'yyyy')),
-  }
-}
-
 function createDateFromObject({ day, month, year }) {
   const monthIndex = parseInt(month, 10) - 1
   const result = new Date(year, monthIndex, day)
@@ -267,7 +259,7 @@ function formatStartAndEndDate(startDate, endDate) {
  * @param {*} date a string representing a date or a Date type
  * @returns an object of the format {month:'', year:''}
  */
-function convertDateToFieldDateObject(date) {
+function convertDateToFieldShortDateObject(date) {
   const parsedTime = parseISO(date)
   if (isValid(parsedTime)) {
     return {
@@ -304,7 +296,6 @@ module.exports = {
   isShortDateValid,
   isUnparsedDateValid,
   parseDateString,
-  parseInvestmentDate,
   subtractDays,
   subtractMonths,
   subtractYears,
@@ -313,5 +304,5 @@ module.exports = {
   transformValueForAPI,
   createDateFromObject,
   formatStartAndEndDate,
-  convertDateToFieldDateObject,
+  convertDateToFieldShortDateObject,
 }

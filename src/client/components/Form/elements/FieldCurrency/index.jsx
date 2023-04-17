@@ -81,6 +81,7 @@ const FieldCurrency = ({
   initialValue,
   reduced,
   boldLabel,
+  currencySymbol = '£',
   ...rest
 }) => {
   const { value, error, touched, onChange, onBlur } = useField({
@@ -98,7 +99,7 @@ const FieldCurrency = ({
             error={touched && Boolean(error)}
             aria-hidden="true"
           >
-            £
+            {currencySymbol}
           </StyledCurrencyPrefix>
           <Input
             key={name}
@@ -132,7 +133,7 @@ FieldCurrency.propTypes = {
     PropTypes.arrayOf(PropTypes.func),
   ]),
   /**
-   * Text 'required' sets wether the input is required or not
+   * Text 'required' sets whether the input is required or not
    */
   required: PropTypes.string,
   /**
@@ -150,15 +151,19 @@ FieldCurrency.propTypes = {
   /**
    * Sets initial value of the input
    */
-  initialValue: PropTypes.string,
+  initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   /**
-   * Toggles wether the element is a filter or not
+   * Toggles whether the element is a filter or not
    */
   reduced: PropTypes.bool,
   /**
    * Boolean for rendering the label in bold or not
    */
   boldLabel: PropTypes.bool,
+  /**
+   * Sets the value for the currency prefix
+   */
+  currencySymbol: PropTypes.string,
 }
 
 FieldCurrency.defaultProps = {

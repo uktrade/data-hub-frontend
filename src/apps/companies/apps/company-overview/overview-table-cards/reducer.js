@@ -63,6 +63,7 @@ export default (state = { initialState }, { type, result }) => {
       stageList,
       statusList,
       resultList,
+      summary: result.summary,
       upcomingActiveInvestments,
       isComplete: true,
     }

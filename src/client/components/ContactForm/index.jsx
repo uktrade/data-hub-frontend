@@ -19,8 +19,7 @@ import {
   FormLayout,
 } from '..'
 import LocalHeader from '../LocalHeader/LocalHeader'
-import ContactResource from '../Resource/Contact'
-import CompanyResource from '../Resource/Company'
+import { CompanyResource, ContactResource } from '../Resource'
 import * as validators from '../Form/validators'
 import State from '../State'
 import {
@@ -158,7 +157,6 @@ const _ContactForm = ({
                 const { origin_url, origin_search } = qs.parse(
                   router.location.search
                 )
-
                 const redirectTo = ({ name, id }) => {
                   return origin_url
                     ? appendParamsToUrl(origin_url, origin_search, id, name)

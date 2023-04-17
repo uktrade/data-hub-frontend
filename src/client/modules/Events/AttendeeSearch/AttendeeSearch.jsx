@@ -32,7 +32,7 @@ import {
 } from '../../../actions'
 import { LABELS } from './constants'
 import urls from '../../../../lib/urls'
-import EventResource from '../../../components/Resource/Event'
+import { EventResource } from '../../../components/Resource'
 
 const StyledPanel = styled(Panel)`
   margin-bottom: ${SPACING.SCALE_3};

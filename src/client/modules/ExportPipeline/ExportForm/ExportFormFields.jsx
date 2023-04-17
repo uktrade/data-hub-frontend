@@ -14,6 +14,13 @@ import {
   FieldTextarea,
   ContactInformation,
 } from '../../../../client/components'
+import {
+  CountriesResource,
+  ExportExperienceResource,
+  ExportYearsResource,
+  SectorResource,
+  CompanyContacts,
+} from '../../../components/Resource'
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT, ID as STATE_ID } from './state'
 import Task from '../../../components/Task'
@@ -21,14 +28,10 @@ import { ERROR_MESSAGES } from './constants'
 import { validateTeamMembers } from './validation'
 import { SECTOR_LABELS, STATUS_LABELS } from './labels'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
-import SectorResource from '../../../../client/components/Resource/Sector'
-import ExportYearsResource from '../../../../client/components/Resource/ExportYears'
 import { HintText } from 'govuk-react'
 import Label from '@govuk-react/label'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
-import CountriesResource from '../../../../client/components/Resource/Countries'
-import ExportExperience from '../../../components/Resource/ExportExperience'
-import CompanyContacts from '../../../components/Resource/CompanyContacts'
+
 import { transformArrayIdNameToValueLabel } from '../../../transformers'
 import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../components/ContactForm/state'
 
@@ -178,7 +181,7 @@ const ExportFormFields = ({
                 </Task>
 
                 <ResourceOptionsField
-                  resource={ExportExperience}
+                  resource={ExportExperienceResource}
                   field={FieldRadios}
                   name="exporter_experience"
                   label="Exporter experience (optional)"

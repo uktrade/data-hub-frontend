@@ -10,16 +10,20 @@ const StyledDetails = styled(Details)`
 `
 
 const ContactInformation = ({ onOpenContactForm, companyId }) => {
+  const redirectUrl = urls.contacts.create(companyId, {
+    origin_url: window.location.pathname,
+    origin_search: btoa(window.location.search),
+  })
   return (
     <>
       If a contact isn't listed{' '}
       <Link
         data-test="add-a-new-contact-link"
-        onClick={onOpenContactForm}
-        href={urls.contacts.create(companyId, {
-          origin_url: window.location.pathname,
-          origin_search: btoa(window.location.search),
-        })}
+        onClick={(e) => {
+          e.preventDefault()
+          onOpenContactForm(e, redirectUrl)
+        }}
+        href={redirectUrl}
       >
         add a new contact
       </Link>

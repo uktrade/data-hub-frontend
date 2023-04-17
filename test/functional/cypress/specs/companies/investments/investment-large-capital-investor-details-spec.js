@@ -50,20 +50,6 @@ describe('View large capital investor details page', () => {
       })
     })
 
-    it('should make sure we are on the investment details', () => {
-      assertAndGetInvestorDetails().find('summary').contains('Investor details')
-    })
-
-    it('should make sure we are on the investment location', () => {
-      assertAndGetInvestorDetails().find('summary').contains('Location')
-    })
-
-    it('should have investor details expanded ready to view data', () => {
-      assertAndGetInvestorDetails()
-        .find('summary')
-        .should('have.attr', 'aria-expanded', 'true')
-    })
-
     it('should have investor type with asset manager value', () => {
       assertInvestorType().then((element) => {
         assertFieldInput({
@@ -124,7 +110,7 @@ describe('View large capital investor details page', () => {
         assertFieldDate({
           element,
           label: 'Date of most recent checks',
-          value: { day: '29', month: '4', year: '2019' },
+          value: { day: '29', month: '04', year: '2019' },
         })
       })
     })
@@ -136,12 +122,6 @@ describe('View large capital investor details page', () => {
           expectedOption: 'Aaron Chan',
         })
       })
-    })
-
-    it('should have location expanded ready to view data', () => {
-      assertAndGetInvestorLocation()
-        .find('summary')
-        .should('have.attr', 'aria-expanded', 'true')
     })
   })
 
@@ -175,7 +155,7 @@ describe('View large capital investor details page', () => {
         investor_type: '80168d31-fa91-494e-9ad5-b9255e01b5da',
         global_assets_under_management: '500',
         investable_capital: '700',
-        notes_on_locations: 'Notes about investment',
+        investor_description: 'Notes about investment',
         required_checks_conducted: '9beab8fc-1094-49b4-97d0-37bc7a9de631',
         required_checks_conducted_on: `${lastMonth.getFullYear()}-${(
           lastMonth.getMonth() + 1
@@ -231,7 +211,7 @@ describe('View large capital investor details page', () => {
         investor_type: '80168d31-fa91-494e-9ad5-b9255e01b5da',
         global_assets_under_management: '500',
         investable_capital: '700',
-        notes_on_locations: 'Notes about investment',
+        investor_description: 'Notes about investment',
         required_checks_conducted: '81fafe5a-ed32-4f46-bdc5-2cafedf828e8',
         required_checks_conducted_on: null,
       }
@@ -276,9 +256,9 @@ describe('View large capital investor details page', () => {
         id: '63010090-ba38-4894-84a7-dc039c84edb3',
         investor_company_id: existingCompany.id,
         investor_type: '80168d31-fa91-494e-9ad5-b9255e01b5da',
-        global_assets_under_management: '1000000',
-        investable_capital: '30000',
-        notes_on_locations: '',
+        global_assets_under_management: 1000000,
+        investable_capital: 30000,
+        investor_description: '',
         required_checks_conducted: '02d6fc9b-fbb9-4621-b247-d86f2487898e',
         required_checks_conducted_on: `${lastMonth.getFullYear()}-${(
           lastMonth.getMonth() + 1
@@ -418,7 +398,7 @@ describe('View large capital investor details page', () => {
 
 context('when cancelling without saving', () => {
   before(() => {
-    gotoEditInvestorLocation(newCompany.id)
+    gotoEditInvestorDetails(newCompany.id)
   })
 
   it('should redirect back to large capital profile', () => {
@@ -464,26 +444,8 @@ function assertInvestorType() {
   return cy.get('[data-test="field-investor_type"]')
 }
 
-function assertAndGetInvestorDetails() {
-  return cy.get('.large-capital-profile')
-}
-
-function assertAndGetInvestorLocation() {
-  return cy.get('.large-capital-profile')
-}
-
-function gotoEditInvestorLocation(companyId) {
-  cy.visit(
-    `${urls.companies.investments.largeCapitalProfile(
-      companyId
-    )}?editing=location`
-  )
-}
-
 function gotoEditInvestorDetails(companyId) {
-  cy.visit(
-    `${urls.companies.investments.largeCapitalProfile(
-      companyId
-    )}?editing=investor-details`
-  )
+  cy.visit(urls.companies.investments.largeCapitalProfile(companyId))
+  cy.get('#investor_details_toggle-toggle-button-open').click()
+  cy.get('[data-test=investor_details_button]').click()
 }

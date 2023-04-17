@@ -2,7 +2,7 @@ import _ from 'lodash'
 import React from 'react'
 
 import FieldRadios from './FieldRadios'
-import OpportunityStatusesResource from '../../Resource/OpportunityStatuses'
+import { OpportunityStatusesResource } from '../../Resource'
 
 // TODO: Refactor with ResourceOptionsField
 const FieldOpportunityStatuses = (props) => (

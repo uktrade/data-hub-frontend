@@ -5,8 +5,10 @@ import { LEVEL_SIZE } from '@govuk-react/constants'
 import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
 
-import CompanyResource from '../../../components/Resource/Company'
-import CompanyOneListTeamResource from '../../../components/Resource/CompanyOneListTeam'
+import {
+  CompanyResource,
+  CompanyOneListTeamResource,
+} from '../../../components/Resource'
 import { transformOneListCoreTeamToCollection } from './transformers'
 import { NewWindowLink } from '../../../components'
 import urls from '../../../../lib/urls'

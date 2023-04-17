@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { idNamesToValueLabels } from '../../../../utils'
-import Resource from '../../../Resource'
+import Resource from '../../../Resource/Resource'
 
 /**
  * @function ResourceOptionsField
@@ -30,7 +30,7 @@ import Resource from '../../../Resource'
  * and should return the tweaked option. Allows you to tweak the optios e.g.
  * to add children or hint to it.
  * @example
- * import CountriesResource from '../Resource/Countries'
+ * import CountriesResource from '../Resource'
  * import FieldSelect from '../Form/elements/FieldSelect'
  *
  * const FieldCountriesSelect = (props) =>

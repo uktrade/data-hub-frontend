@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Main from '../../../../../client/components/Main'
 import { TASK_SAVE_ORDER_ASSIGNEES } from './state'
 import { transformAdvisersForTypeahead } from './transformers'
-import OrderAssigneesResource from '../../../../../client/components/Resource/OrderAssignees'
+import { OrderAssigneesResource } from '../../../../../client/components/Resource'
 import { EditAdvisersLocalHeader, EditAdvisersForm } from './EditAdvisersForm'
 
 const EditAssignees = ({ reference, id, canRemoveAssignees }) => (

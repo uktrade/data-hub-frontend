@@ -1,4 +1,4 @@
-import { createEntityResource } from '.'
+import { createEntityResource } from './Resource'
 
 export default createEntityResource(
   'OrderSubscribers',
