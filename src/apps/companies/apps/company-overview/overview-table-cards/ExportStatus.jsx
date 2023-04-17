@@ -43,6 +43,12 @@ const StyledLink = styled(Link)`
   color: grey;
   margin-right: 5px;
 `
+const StyledViewMoreLink = styled(Link)`
+  font-size: 12px;
+  color: grey;
+  margin-right: 5px;
+`
+
 const GreenLabel = styled('span')`
   background-color: #cce2d9;
   color: #005b30;
@@ -66,6 +72,26 @@ export const SUBSEGMENT = {
   promote_communicate_benefits: 'Promote: communicate benefits',
   promote_change_the_game: 'Promote: change the game',
   challenge: 'Challenge',
+}
+
+const CurrentExportingCountries = ({
+  maximumTenCurrentExportCountries,
+  company,
+}) => {
+  return (
+    <StyledTD>
+      {maximumTenCurrentExportCountries.map((country) => (
+        <div key={country.id}>
+          <StyledLink
+            href={`/companies/${company.id}/exports/history/${country.id}`}
+            data-test="export-status-country-of-interest-link"
+          >
+            {country.name}
+          </StyledLink>
+        </div>
+      ))}
+    </StyledTD>
+  )
 }
 
 const FutureInterestCountries = ({
@@ -93,6 +119,8 @@ const ExportStatus = ({
   company,
   queryString,
   exportCountriesInformation,
+  numberOfCurrentExportCountries,
+  maximumTenCurrentExportCountries,
   numberOfFutureInterestCountries,
   maximumTenFutureInterestCountries,
   ...props
@@ -141,39 +169,44 @@ const ExportStatus = ({
             )}
           </SummaryTable.Row>
           <SummaryTable.Row heading="Currently exporting to">
-            {company.export_to_countries?.length > 0 ? (
-              <StyledTD>
-                {company.export_to_countries.map((country) => (
-                  <span>
-                    <StyledLink
-                      href={`/companies/${company.id}/exports/history/${country.id}`}
-                      data-test="export-status-currently-exporting-to-link"
-                    >
-                      {country.name}
-                    </StyledLink>
-                    &nbsp;
-                  </span>
-                ))}
-              </StyledTD>
+            {numberOfCurrentExportCountries ? (
+              <CurrentExportingCountries
+                maximumTenCurrentExportCountries={
+                  maximumTenCurrentExportCountries
+                }
+                company={company}
+              />
             ) : (
               <StyledSpan>Not set</StyledSpan>
             )}
+            {numberOfCurrentExportCountries > 10 && (
+              <StyledViewMoreLink
+                href={`/companies/${company.id}/exports`}
+                data-test="export-status-currently-exporting-to-link"
+              >
+                {`View ${numberOfCurrentExportCountries - 10} more`}
+              </StyledViewMoreLink>
+            )}
           </SummaryTable.Row>
           <SummaryTable.Row heading="Future countries of interest">
-            <FutureInterestCountries
-              maximumTenFutureInterestCountries={
-                maximumTenFutureInterestCountries
-              }
-              company={company}
-            />
-            <StyledLink
-              href={`/companies/${company.id}/exports`}
-              data-test="export-status-future-exporting-to-link"
-            >
-              {numberOfFutureInterestCountries > 10
-                ? `View ${numberOfFutureInterestCountries - 10} more`
-                : 'View exports'}
-            </StyledLink>
+            {numberOfFutureInterestCountries ? (
+              <FutureInterestCountries
+                maximumTenFutureInterestCountries={
+                  maximumTenFutureInterestCountries
+                }
+                company={company}
+              />
+            ) : (
+              <StyledSpan>Not set</StyledSpan>
+            )}
+            {numberOfFutureInterestCountries > 10 && (
+              <StyledViewMoreLink
+                href={`/companies/${company.id}/exports`}
+                data-test="export-status-future-exporting-to-link"
+              >
+                {`View ${numberOfFutureInterestCountries - 10} more`}
+              </StyledViewMoreLink>
+            )}
           </SummaryTable.Row>
           <SummaryTable.Row heading="Last export win">
             {props.latestExportWin
@@ -185,7 +218,6 @@ const ExportStatus = ({
           <SummaryTable.Row heading="Total exports won">
             {props.count}
           </SummaryTable.Row>
-
           <StyledTableRow>
             <StyledLastTableCell colSpan={2}>
               <Link

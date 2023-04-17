@@ -24,6 +24,12 @@ async function renderOverview(req, res) {
   const { exportCountriesInformation } =
     transformCompanyToExportDetailsView(company)
 
+  const numberOfCurrentExportCountries =
+    exportCountriesInformation[0].values.length
+
+  const maximumTenCurrentExportCountries =
+    exportCountriesInformation[0].values.slice(0, 10)
+
   const numberOfFutureInterestCountries =
     exportCountriesInformation[1].values.length
 
@@ -38,6 +44,8 @@ async function renderOverview(req, res) {
       urls,
       companiesHouseLink,
       exportCountriesInformation,
+      numberOfCurrentExportCountries,
+      maximumTenCurrentExportCountries,
       numberOfFutureInterestCountries,
       maximumTenFutureInterestCountries,
     },

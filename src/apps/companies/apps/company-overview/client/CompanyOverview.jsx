@@ -21,6 +21,8 @@ const CompanyOverview = ({
   company,
   companiesHouseLink,
   exportCountriesInformation,
+  numberOfCurrentExportCountries,
+  maximumTenCurrentExportCountries,
   numberOfFutureInterestCountries,
   maximumTenFutureInterestCountries,
 }) => {
@@ -48,6 +50,10 @@ const CompanyOverview = ({
               company={company}
               queryString={queryString}
               exportCountriesInformation={exportCountriesInformation}
+              numberOfCurrentExportCountries={numberOfCurrentExportCountries}
+              maximumTenCurrentExportCountries={
+                maximumTenCurrentExportCountries
+              }
               numberOfFutureInterestCountries={numberOfFutureInterestCountries}
               maximumTenFutureInterestCountries={
                 maximumTenFutureInterestCountries
