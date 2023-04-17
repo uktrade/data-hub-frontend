@@ -152,7 +152,8 @@ const InteractionDetailsForm = ({
                           {() => (
                             <StepInteractionDetails
                               companyId={companyId}
-                              onOpenContactForm={({ redirectUrl }) => {
+                              onOpenContactForm={({ event, redirectUrl }) => {
+                                event.target.blur()
                                 openContactFormTask.start({
                                   payload: {
                                     values,
