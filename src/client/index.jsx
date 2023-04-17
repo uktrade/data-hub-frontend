@@ -245,7 +245,10 @@ import { TASK_GET_TYPEAHEAD_OPTIONS } from './components/Typeahead/state'
 
 import * as exportsEdit from '../apps/companies/apps/exports/client/tasks'
 
-import { saveContact } from './components/ContactForm/tasks'
+import {
+  saveContact,
+  redirectToContactForm,
+} from './components/ContactForm/tasks'
 import {
   getContacts,
   getContactsMetadata,
@@ -352,6 +355,8 @@ import { deleteExport } from '../client/modules/ExportPipeline/ExportDelete/task
 
 import { TASK_GET_EXPORT_PIPELINE_LIST } from '../client/modules/ExportPipeline/ExportList/state'
 import { getExportPipelineList } from '../client/modules/ExportPipeline/ExportList/task'
+
+import { TASK_REDIRECT_TO_CONTACT_FORM } from './components/ContactForm/state'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -580,6 +585,7 @@ function App() {
           [TASK_DELETE_EXPORT]: deleteExport,
           [TASK_SAVE_EXPORT]: saveExport,
           [TASK_GET_EXPORT_PIPELINE_LIST]: getExportPipelineList,
+          [TASK_REDIRECT_TO_CONTACT_FORM]: redirectToContactForm,
         }}
       >
         <Mount selector="#data-hub-header">
