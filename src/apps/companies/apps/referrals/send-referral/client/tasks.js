@@ -17,15 +17,15 @@ export async function getInitialFormValues() {
   return valuesFromStorage
 }
 
-export function openContactForm({ values, url }) {
-  window.sessionStorage.setItem(
-    STORE_ID,
-    JSON.stringify({
-      ...values,
-    })
-  )
-  window.location.href = url
-}
+// export function openContactForm({ values, url }) {
+//   window.sessionStorage.setItem(
+//     STORE_ID,
+//     JSON.stringify({
+//       ...values,
+//     })
+//   )
+//   window.location.href = url
+// }
 
 export async function saveReferral({ values, companyId }) {
   window.sessionStorage.removeItem(STORE_ID)
