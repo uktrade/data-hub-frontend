@@ -9,7 +9,7 @@ import {
 } from '../../../client/components'
 
 import Form from '../../../client/components/Form'
-import Resource from '../../../client/components/Resource'
+import Resource from '../../../client/components/Resource/Resource'
 import { number } from '../../../client/components/Form/validators'
 
 import { ID as STATE_ID, TASK_GET_PIPELINE_COMPANY_CONTACTS } from './state'

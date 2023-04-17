@@ -19,8 +19,7 @@ import {
   FormLayout,
 } from '..'
 import LocalHeader from '../LocalHeader/LocalHeader'
-import ContactResource from '../Resource/Contact'
-import CompanyResource from '../Resource/Company'
+import { CompanyResource, ContactResource } from '../Resource'
 import * as validators from '../Form/validators'
 import State from '../State'
 import {
@@ -50,6 +49,20 @@ const keysToSnakeCase = (o) => _.mapKeys(o, (v, k) => _.snakeCase(k))
 
 const stripHost = (u) => {
   const url = new URL(u)
+  return url.pathname + url.search
+}
+
+const appendParamsToUrl = (origin_url, origin_search, id, name) => {
+  const url = new URL(origin_url, window.location.origin)
+  let inputParams = new URLSearchParams(
+    origin_search ? atob(origin_search) : ''
+  )
+
+  inputParams.append('new-contact-id', id)
+  inputParams.append('new-contact-name', name)
+
+  url.search = inputParams
+
   return url.pathname + url.search
 }
 
@@ -141,15 +154,12 @@ const _ContactForm = ({
           <Main>
             <State>
               {({ referrerUrl, router }) => {
-                const { origin_url } = qs.parse(router.location.search)
+                const { origin_url, origin_search } = qs.parse(
+                  router.location.search
+                )
                 const redirectTo = ({ name, id }) => {
-                  const encoded = qs.stringify({
-                    'new-contact-name': name,
-                    'new-contact-id': id,
-                  })
-
                   return origin_url
-                    ? `${origin_url}?${encoded}`
+                    ? appendParamsToUrl(origin_url, origin_search, id, name)
                     : urls.contacts.details(id)
                 }
                 return (

@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 
 import { DefaultLayout, RemindersToggleSection } from '../../../components'
 import RemindersSettingsTable from './RemindersSettingsTable'
-import Resource from '../../../components/Resource'
+import Resource from '../../../components/Resource/Resource'
 import urls from '../../../../lib/urls'
 import { state2props } from '../state'
 

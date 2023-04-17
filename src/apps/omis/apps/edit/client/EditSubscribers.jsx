@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Main from '../../../../../client/components/Main'
 import { TASK_SAVE_ORDER_SUBSCRIBERS } from './state'
 import { transformSubscribersForTypeahead } from './transformers'
-import OrderSubscribersResource from '../../../../../client/components/Resource/OrderSubscribers'
+import { OrderSubscribersResource } from '../../../../../client/components/Resource'
 import { EditAdvisersLocalHeader, EditAdvisersForm } from './EditAdvisersForm'
 
 const EditSubscribers = ({ reference, id, canRemoveSubscribers }) => (

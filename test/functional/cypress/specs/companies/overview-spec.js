@@ -463,6 +463,10 @@ describe('Company overview page', () => {
           .next()
           .children()
         cy.get('th')
+          .contains('Last Project won')
+          .siblings()
+          .contains('td', '07 Jun 2022')
+        cy.get('th')
           .contains('Total projects won')
           .siblings()
           .contains('td', '0')
@@ -487,6 +491,28 @@ describe('Company overview page', () => {
         cy.location('pathname').should(
           'eq',
           '/companies/ba8fae21-2895-47cf-90ba-9273c94dab88/investments/projects'
+        )
+        cy.go('back')
+      })
+    }
+  )
+
+  context(
+    'when viewing the investment status card with investment projects',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
+        )
+      })
+
+      it('the card should link to the latest won project', () => {
+        cy.get('[data-test="latest-won-project-link"]')
+          .contains('07 Jun 2022')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          '/investments/projects/945ea6d1-eee3-4f5b-9144-84a75b71b8e6/details'
         )
         cy.go('back')
       })

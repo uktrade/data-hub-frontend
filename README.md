@@ -75,7 +75,8 @@ Use this method if you want to make backend changes or run against an API branch
 5.  The environment variables copied from `sample.env` are set up for running both the frontend and the API using the docker set-up outlined [here](./docs/Docker.md). To run the frontend natively, the following variables will need to be changed to:
 
     ```
-    API_ROOT=http://localhost:8000
+    LOCAL_DEV=True
+    API_ROOT=http://127.0.0.1:8000
     REDIS_HOST=localhost
     REDIS_URL=redis://localhost:6379
     ```

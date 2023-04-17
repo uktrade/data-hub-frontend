@@ -26,7 +26,7 @@ import {
   FieldTypeahead,
   ContactInformation,
 } from '../../../../../client/components'
-import Resource from '../../../../../client/components/Resource'
+import Resource from '../../../../../client/components/Resource/Resource'
 
 import { useFormContext } from '../../../../../client/components/Form/hooks'
 

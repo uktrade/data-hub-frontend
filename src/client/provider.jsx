@@ -133,7 +133,7 @@ import ordersReducer from './modules/Omis/CollectionList/reducer'
 
 import RoutedInput from './components/RoutedInput'
 
-import Resource from './components/Resource'
+import Resource from './components/Resource/Resource'
 
 import { ContactForm } from './components/ContactForm'
 import Form from './components/Form'

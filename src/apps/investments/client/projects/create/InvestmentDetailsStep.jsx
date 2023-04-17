@@ -16,7 +16,7 @@ import {
   ContactInformation,
   FormLayout,
 } from '../../../../../client/components'
-import CompanyContactsResource from '../../../../../client/components/Resource/CompanyContacts'
+import { CompanyContactsResource } from '../../../../../client/components/Resource'
 import { OPTION_NO, OPTIONS_YES_NO } from '../../../../constants'
 import Task from '../../../../../client/components/Task'
 import {

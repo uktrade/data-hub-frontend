@@ -18,7 +18,7 @@ function useQuery() {
   return React.useMemo(() => new URLSearchParams(search), [search])
 }
 
-const getBreadcrumbs = (company) => {
+const getBreadcrumbs = (exportItem) => {
   const defaultBreadcrumbs = [
     {
       link: urls.dashboard(),
@@ -30,12 +30,12 @@ const getBreadcrumbs = (company) => {
     },
   ]
 
-  if (company) {
+  if (exportItem) {
     return [
       ...defaultBreadcrumbs,
       {
-        link: urls.companies.activity.index(company.id),
-        text: company.name,
+        link: urls.companies.activity.index(exportItem.company.id),
+        text: exportItem.company.name,
       },
       { text: 'Add export' },
     ]
@@ -44,16 +44,16 @@ const getBreadcrumbs = (company) => {
   return [...defaultBreadcrumbs, { text: 'Add export' }]
 }
 
-const ExportFormAdd = ({ company, currentAdviserId, currentAdviserName }) => {
+const ExportFormAdd = ({ exportItem }) => {
   let query = useQuery()
   const companyId = query.get('companyId')
 
   return (
     <DefaultLayout
       heading={DISPLAY_ADD_EXPORT}
-      subheading={company?.name}
+      subheading={exportItem?.company?.name}
       pageTitle={DISPLAY_ADD_EXPORT}
-      breadcrumbs={getBreadcrumbs(company)}
+      breadcrumbs={getBreadcrumbs(exportItem)}
       useReactRouter={false}
     >
       <ExportFormFields
@@ -67,18 +67,10 @@ const ExportFormAdd = ({ company, currentAdviserId, currentAdviserName }) => {
             onSuccessDispatch: COMPANY_LOADED,
           },
         }}
-        initialValues={{
-          owner: { id: currentAdviserId, name: currentAdviserName },
-          company: { id: companyId },
-          team_members: [],
-          estimated_export_value_years: {},
-          estimated_win_date: {},
-          exporter_experience: {},
-        }}
+        exportItem={exportItem}
         cancelRedirectUrl={urls.companies.activity.index(companyId)}
         redirectToUrl={urls.dashboard()}
         flashMessage={({ data }) => `'${data.title}' created`}
-        formDataLoaded={!!company}
       />
     </DefaultLayout>
   )

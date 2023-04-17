@@ -14,8 +14,10 @@ import {
   Main,
 } from '../../../../components'
 import { FORM_LAYOUT } from '../../../../../common/constants'
-import CompanyResource from '../../../../components/Resource/Company'
-import CountriesResource from '../../../../components/Resource/Countries'
+import {
+  CompanyResource,
+  CountriesResource,
+} from '../../../../components/Resource'
 import { transformCountriesForTypeahead } from '../transformers'
 import { transformArrayIdNameToValueLabel } from '../../../../transformers'
 

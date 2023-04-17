@@ -531,6 +531,7 @@ module.exports = {
   exportPipeline: {
     index: url('/export'),
     create: url('/export/create'),
+    details: url('/export', '/:exportId/details'),
     edit: url('/export', '/:exportId/edit'),
     delete: url('/export', '/:exportId/delete'),
   },

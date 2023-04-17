@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Button, Details, Link } from 'govuk-react'
 import { BLACK, GREY_3 } from '../../../../client/utils/colours'
 
-import InteractionResource from '../../../components/Resource/Interaction'
+import { InteractionResource } from '../../../components/Resource'
 import InteractionReferralDetails from './InteractionReferralDetails'
 import { NewWindowLink, SummaryTable } from '../../../components'
 import ArchivePanel from '../../../components/ArchivePanel'

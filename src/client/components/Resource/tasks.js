@@ -23,6 +23,15 @@ import ExportYears from './ExportYears'
 import Sector from './Sector'
 import ExportExperienceCategories from './ExportExperienceCategories'
 import ExportExperience from './ExportExperience'
+import LargeInvestorProfile from './LargeInvestorProfile'
+import InvestorTypes from './InvestorTypes'
+import DealTicketSizes from './DealTicketSizes'
+import LargeCapitalInvestmentTypes from './LargeCapitalInvestmentTypes'
+import TimeHorizons from './TimeHorizons'
+import LargeCapitalInvestmentRestrictions from './LargeCapitalInvestmentRestrictions'
+import DesiredDealRoles from './DesiredDealRoles'
+import LargeCapitalInvestmentReturnRate from './LargeCapitalInvestmentReturnRate'
+import LargeCapitalInvestmentEquityPercentages from './LargeCapitalInvestmentEquityPercentages'
 
 export default {
   ...Advisers.tasks,
@@ -50,4 +59,13 @@ export default {
   ...Sector.tasks,
   ...ExportExperienceCategories.tasks,
   ...ExportExperience.tasks,
+  ...LargeInvestorProfile.tasks,
+  ...InvestorTypes.tasks,
+  ...DealTicketSizes.tasks,
+  ...LargeCapitalInvestmentTypes.tasks,
+  ...TimeHorizons.tasks,
+  ...LargeCapitalInvestmentRestrictions.tasks,
+  ...DesiredDealRoles.tasks,
+  ...LargeCapitalInvestmentReturnRate.tasks,
+  ...LargeCapitalInvestmentEquityPercentages.tasks,
 }

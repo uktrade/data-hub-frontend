@@ -1,6 +1,6 @@
 import React from 'react'
 
-import InvestmentResource from '../../../../client/components/Resource/Investment'
+import { InvestmentResource } from '../../../../client/components/Resource'
 import DocumentsSection from '../../../../client/components/DocumentsSection'
 
 const InvestmentDocuments = ({ projectId, archivedDocumentPath }) => {
