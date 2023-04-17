@@ -21,7 +21,7 @@ const ContactInformation = ({ onOpenContactForm, companyId }) => {
         data-test="add-a-new-contact-link"
         onClick={(e) => {
           e.preventDefault()
-          onOpenContactForm(e, redirectUrl)
+          onOpenContactForm({ event: e, redirectUrl })
         }}
         href={redirectUrl}
       >

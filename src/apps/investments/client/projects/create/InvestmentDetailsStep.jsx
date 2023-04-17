@@ -213,7 +213,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
                         isMulti={true}
                       />
                       <ContactInformation
-                        onOpenContactForm={(_e, redirectUrl) => {
+                        onOpenContactForm={({ redirectUrl }) => {
                           openContactFormTask.start({
                             payload: {
                               values,

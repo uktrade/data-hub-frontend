@@ -153,7 +153,7 @@ const InteractionDetailsForm = ({
                           {() => (
                             <StepInteractionDetails
                               companyId={companyId}
-                              onOpenContactForm={(_e, redirectUrl) => {
+                              onOpenContactForm={({ redirectUrl }) => {
                                 openContactFormTask.start({
                                   payload: {
                                     values,
