@@ -165,12 +165,11 @@ const ExportFormFields = ({
                     return (
                       <ContactInformation
                         companyId={exportItem.company.id}
-                        onOpenContactForm={(e) => {
-                          e.preventDefault()
+                        onOpenContactForm={({ redirectUrl }) => {
                           openContactFormTask.start({
                             payload: {
                               values,
-                              url: e.target.href,
+                              url: redirectUrl,
                               storeId: STATE_ID,
                             },
                           })
