@@ -21,7 +21,8 @@ const CompanyOverview = ({
   company,
   companiesHouseLink,
   exportCountriesInformation,
-  futureInterestCountries,
+  numberOfFutureInterestCountries,
+  maximumTenFutureInterestCountries,
 }) => {
   const queryString = `/companies/${company.id}`
   return (
@@ -47,7 +48,10 @@ const CompanyOverview = ({
               company={company}
               queryString={queryString}
               exportCountriesInformation={exportCountriesInformation}
-              futureInterestCountries={futureInterestCountries}
+              numberOfFutureInterestCountries={numberOfFutureInterestCountries}
+              maximumTenFutureInterestCountries={
+                maximumTenFutureInterestCountries
+              }
             />
           </CardContainer>
           <CardContainer>

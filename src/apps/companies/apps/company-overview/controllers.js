@@ -24,10 +24,11 @@ async function renderOverview(req, res) {
   const { exportCountriesInformation } =
     transformCompanyToExportDetailsView(company)
 
-  const futureInterestCountries = []
-  for (let i in exportCountriesInformation[1].values) {
-    futureInterestCountries.push(i.name)
-  }
+  const numberOfFutureInterestCountries =
+    exportCountriesInformation[1].values.length
+
+  const maximumTenFutureInterestCountries =
+    exportCountriesInformation[1].values.slice(0, 10)
 
   res.render('companies/apps/company-overview/views/client-container', {
     props: {
@@ -37,7 +38,8 @@ async function renderOverview(req, res) {
       urls,
       companiesHouseLink,
       exportCountriesInformation,
-      futureInterestCountries,
+      numberOfFutureInterestCountries,
+      maximumTenFutureInterestCountries,
     },
   })
 }

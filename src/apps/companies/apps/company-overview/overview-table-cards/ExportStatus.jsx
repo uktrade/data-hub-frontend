@@ -41,6 +41,7 @@ const StyledSpan = styled('span')`
 
 const StyledLink = styled(Link)`
   color: grey;
+  margin-right: 5px;
 `
 const GreenLabel = styled('span')`
   background-color: #cce2d9;
@@ -67,12 +68,33 @@ export const SUBSEGMENT = {
   challenge: 'Challenge',
 }
 
+const FutureInterestCountries = ({
+  maximumTenFutureInterestCountries,
+  company,
+}) => {
+  return (
+    <StyledTD>
+      {maximumTenFutureInterestCountries.map((country) => (
+        <div key={country.id}>
+          <StyledLink
+            href={`/companies/${company.id}/exports/history/${country.id}`}
+            data-test="export-status-country-of-interest-link"
+          >
+            {country.name}
+          </StyledLink>
+        </div>
+      ))}
+    </StyledTD>
+  )
+}
+
 const ExportStatus = ({
   activePage,
   company,
   queryString,
   exportCountriesInformation,
-  futureInterestCountries,
+  numberOfFutureInterestCountries,
+  maximumTenFutureInterestCountries,
   ...props
 }) => {
   return (
@@ -138,23 +160,20 @@ const ExportStatus = ({
             )}
           </SummaryTable.Row>
           <SummaryTable.Row heading="Future countries of interest">
-            {company.future_interest_countries?.length > 0 ? (
-              <StyledTD>
-                {company.future_interest_countries.map((country) => (
-                  <span>
-                    <StyledLink
-                      href={`/companies/${company.id}/exports/history/${country.id}`}
-                      data-test="export-status-country-of-interest-link"
-                    >
-                      {country.name}
-                    </StyledLink>
-                    &nbsp;
-                  </span>
-                ))}
-              </StyledTD>
-            ) : (
-              <StyledSpan>Not set</StyledSpan>
-            )}
+            <FutureInterestCountries
+              maximumTenFutureInterestCountries={
+                maximumTenFutureInterestCountries
+              }
+              company={company}
+            />
+            <StyledLink
+              href={`/companies/${company.id}/exports`}
+              data-test="export-status-future-exporting-to-link"
+            >
+              {numberOfFutureInterestCountries > 10
+                ? `View ${numberOfFutureInterestCountries - 10} more`
+                : 'View exports'}
+            </StyledLink>
           </SummaryTable.Row>
           <SummaryTable.Row heading="Last export win">
             {props.latestExportWin
