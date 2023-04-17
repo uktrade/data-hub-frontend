@@ -12,7 +12,6 @@ import Form from '../../../../../client/components/Form'
 import {
   ID as STATE_ID,
   TASK_SAVE_INTERACTION,
-  // TASK_OPEN_CONTACT_FORM,
   TASK_GET_INTERACTION_INITIAL_VALUES,
 } from './state'
 import urls from '../../../../../lib/urls'
@@ -191,15 +190,7 @@ InteractionDetailsForm.propTypes = {
   ...StepInteractionDetails.propTypes,
 }
 
-export default connect(
-  ({ values, ...state }) => ({
-    ...state[STATE_ID],
-    values,
-  })
-  // () => ({
-  //   openContactForm: (event) => {
-  //     event.target.blur()
-  //     event.preventDefault()
-  //   },
-  // })
-)(InteractionDetailsForm)
+export default connect(({ values, ...state }) => ({
+  ...state[STATE_ID],
+  values,
+}))(InteractionDetailsForm)

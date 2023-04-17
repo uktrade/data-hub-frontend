@@ -11,11 +11,7 @@ import { companies, dashboard } from '../../../../../../lib/urls'
 import Task from '../../../../../../client/components/Task'
 import Form from '../../../../../../client/components/Form'
 
-import {
-  ID as STATE_ID,
-  // TASK_OPEN_REFERRALS_CONTACT_FORM,
-  TASK_SAVE_REFERRAL,
-} from './state'
+import { ID as STATE_ID, TASK_SAVE_REFERRAL } from './state'
 import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../../../../client/components/ContactForm/state'
 
 const SendReferralForm = ({

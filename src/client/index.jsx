@@ -80,10 +80,7 @@ import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
 import * as exportsHistoryTasks from '../apps/companies/apps/exports/client/ExportsHistory/tasks'
 import referralListTask from './components/ReferralList/tasks'
-import {
-  // TASK_OPEN_REFERRALS_CONTACT_FORM,
-  TASK_SAVE_REFERRAL,
-} from '../apps/companies/apps/referrals/send-referral/client/state'
+import { TASK_SAVE_REFERRAL } from '../apps/companies/apps/referrals/send-referral/client/state'
 import * as referralsSendTasks from '../apps/companies/apps/referrals/send-referral/client/tasks'
 import * as exportWinsTasks from '../apps/companies/apps/exports/client/ExportWins/tasks'
 import { TASK_NAME as EXPORT_COUNTRIES_EDIT_NAME } from './modules/Companies/CompanyExports/ExportCountriesEdit/state'
@@ -112,7 +109,6 @@ import { TASK_POSTCODE_TO_REGION } from '../apps/companies/apps/add-company/clie
 import {
   TASK_GET_ACTIVE_EVENTS,
   TASK_SAVE_INTERACTION,
-  // TASK_OPEN_CONTACT_FORM,
   TASK_GET_INTERACTION_INITIAL_VALUES,
 } from '../apps/interactions/apps/details-form/client/state'
 import * as addInteractionFormTasks from '../apps/interactions/apps/details-form/client/tasks'
@@ -211,7 +207,6 @@ import {
   TASK_SEARCH_COMPANY,
   TASK_CREATE_INVESTMENT_PROJECT,
   TASK_GET_COMPANY_INVESTMENT_COUNT,
-  // TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM,
   TASK_GET_INVESTMENT_PROJECT_INITIAL_VALUES,
 } from '../apps/investments/client/projects/create/state'
 import * as createInvestmentProjectTasks from '../apps/investments/client/projects/create/tasks'
@@ -425,8 +420,6 @@ function App() {
           'Get send referral initial values':
             referralsSendTasks.getInitialFormValues,
           'Save contact': saveContact,
-          // [TASK_OPEN_REFERRALS_CONTACT_FORM]:
-          //   referralsSendTasks.openContactForm,
           [TASK_SAVE_REFERRAL]: referralsSendTasks.saveReferral,
           [TASK_SAVE_ONE_LIST_DETAILS]: editOneListTasks.saveOneListDetails,
           [EXPORT_COUNTRIES_EDIT_NAME]:
@@ -446,7 +439,6 @@ function App() {
           [TASK_SAVE_INTERACTION]: addInteractionFormTasks.saveInteraction,
           [TASK_GET_INTERACTION_INITIAL_VALUES]:
             addInteractionFormTasks.getInitialFormValues,
-          // [TASK_OPEN_CONTACT_FORM]: addInteractionFormTasks.openContactForm,
           [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
           [TASK_SAVE_OPPORTUNITY_DETAILS]:
             investmentOpportunitiesDetailsTasks.saveOpportunityDetails,
@@ -481,8 +473,6 @@ function App() {
           [TASK_SEARCH_COMPANY]: createInvestmentProjectTasks.searchCompany,
           [TASK_GET_COMPANY_INVESTMENT_COUNT]:
             createInvestmentProjectTasks.getCompanyInvestmentsCount,
-          // [TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM]:
-          //   createInvestmentProjectTasks.openContactForm,
           [TASK_GET_COMPANIES_LIST]: getCompanies,
           [TASK_GET_COMPANIES_METADATA]: getCompaniesMetadata,
           [TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME]: getAdviserNames,

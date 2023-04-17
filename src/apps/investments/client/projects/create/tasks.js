@@ -7,14 +7,6 @@ import { apiProxyAxios } from '../../../../../client/components/Task/utils'
 
 const orderInvestmentTypes = ([first, ...rest]) => [...rest, first]
 
-// export const openContactForm = ({ values, url }) => {
-//   window.sessionStorage.setItem(
-//     CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID,
-//     JSON.stringify(values)
-//   )
-//   window.location.href = url
-// }
-
 export const createInvestmentProject = (formValues) =>
   apiProxyAxios.post('/v3/investment', formValues)
 
