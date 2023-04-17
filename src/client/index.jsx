@@ -81,7 +81,7 @@ import * as referralTasks from '../apps/companies/apps/referrals/details/client/
 import * as exportsHistoryTasks from '../apps/companies/apps/exports/client/ExportsHistory/tasks'
 import referralListTask from './components/ReferralList/tasks'
 import {
-  TASK_OPEN_REFERRALS_CONTACT_FORM,
+  // TASK_OPEN_REFERRALS_CONTACT_FORM,
   TASK_SAVE_REFERRAL,
 } from '../apps/companies/apps/referrals/send-referral/client/state'
 import * as referralsSendTasks from '../apps/companies/apps/referrals/send-referral/client/tasks'
@@ -112,7 +112,7 @@ import { TASK_POSTCODE_TO_REGION } from '../apps/companies/apps/add-company/clie
 import {
   TASK_GET_ACTIVE_EVENTS,
   TASK_SAVE_INTERACTION,
-  TASK_OPEN_CONTACT_FORM,
+  // TASK_OPEN_CONTACT_FORM,
   TASK_GET_INTERACTION_INITIAL_VALUES,
 } from '../apps/interactions/apps/details-form/client/state'
 import * as addInteractionFormTasks from '../apps/interactions/apps/details-form/client/tasks'
@@ -211,7 +211,7 @@ import {
   TASK_SEARCH_COMPANY,
   TASK_CREATE_INVESTMENT_PROJECT,
   TASK_GET_COMPANY_INVESTMENT_COUNT,
-  TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM,
+  // TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM,
   TASK_GET_INVESTMENT_PROJECT_INITIAL_VALUES,
 } from '../apps/investments/client/projects/create/state'
 import * as createInvestmentProjectTasks from '../apps/investments/client/projects/create/tasks'
@@ -245,7 +245,10 @@ import { TASK_GET_TYPEAHEAD_OPTIONS } from './components/Typeahead/state'
 
 import * as exportsEdit from '../apps/companies/apps/exports/client/tasks'
 
-import { saveContact } from './components/ContactForm/tasks'
+import {
+  redirectToContactForm,
+  saveContact,
+} from './components/ContactForm/tasks'
 import {
   getContacts,
   getContactsMetadata,
@@ -353,6 +356,8 @@ import { deleteExport } from '../client/modules/ExportPipeline/ExportDelete/task
 import { TASK_GET_EXPORT_PIPELINE_LIST } from '../client/modules/ExportPipeline/ExportList/state'
 import { getExportPipelineList } from '../client/modules/ExportPipeline/ExportList/task'
 
+import { TASK_REDIRECT_TO_CONTACT_FORM } from './components/ContactForm/state'
+
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
 }
@@ -420,8 +425,8 @@ function App() {
           'Get send referral initial values':
             referralsSendTasks.getInitialFormValues,
           'Save contact': saveContact,
-          [TASK_OPEN_REFERRALS_CONTACT_FORM]:
-            referralsSendTasks.openContactForm,
+          // [TASK_OPEN_REFERRALS_CONTACT_FORM]:
+          //   referralsSendTasks.openContactForm,
           [TASK_SAVE_REFERRAL]: referralsSendTasks.saveReferral,
           [TASK_SAVE_ONE_LIST_DETAILS]: editOneListTasks.saveOneListDetails,
           [EXPORT_COUNTRIES_EDIT_NAME]:
@@ -441,7 +446,7 @@ function App() {
           [TASK_SAVE_INTERACTION]: addInteractionFormTasks.saveInteraction,
           [TASK_GET_INTERACTION_INITIAL_VALUES]:
             addInteractionFormTasks.getInitialFormValues,
-          [TASK_OPEN_CONTACT_FORM]: addInteractionFormTasks.openContactForm,
+          // [TASK_OPEN_CONTACT_FORM]: addInteractionFormTasks.openContactForm,
           [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
           [TASK_SAVE_OPPORTUNITY_DETAILS]:
             investmentOpportunitiesDetailsTasks.saveOpportunityDetails,
@@ -476,8 +481,8 @@ function App() {
           [TASK_SEARCH_COMPANY]: createInvestmentProjectTasks.searchCompany,
           [TASK_GET_COMPANY_INVESTMENT_COUNT]:
             createInvestmentProjectTasks.getCompanyInvestmentsCount,
-          [TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM]:
-            createInvestmentProjectTasks.openContactForm,
+          // [TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM]:
+          //   createInvestmentProjectTasks.openContactForm,
           [TASK_GET_COMPANIES_LIST]: getCompanies,
           [TASK_GET_COMPANIES_METADATA]: getCompaniesMetadata,
           [TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME]: getAdviserNames,
@@ -580,6 +585,7 @@ function App() {
           [TASK_DELETE_EXPORT]: deleteExport,
           [TASK_SAVE_EXPORT]: saveExport,
           [TASK_GET_EXPORT_PIPELINE_LIST]: getExportPipelineList,
+          [TASK_REDIRECT_TO_CONTACT_FORM]: redirectToContactForm,
         }}
       >
         <Mount selector="#data-hub-header">

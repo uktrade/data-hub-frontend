@@ -170,10 +170,10 @@ const transformInteractionToValues = (interaction, companyId, investmentId) => {
   }
 }
 
-export function openContactForm({ values, url }) {
-  window.sessionStorage.setItem(STORE_ID, JSON.stringify(values))
-  window.location.href = url
-}
+// export function openContactForm({ values, url }) {
+//   window.sessionStorage.setItem(STORE_ID, JSON.stringify(values))
+//   window.location.href = url
+// }
 
 export async function getInitialFormValues({
   companyId,

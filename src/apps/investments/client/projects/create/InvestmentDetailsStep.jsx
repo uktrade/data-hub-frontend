@@ -21,9 +21,10 @@ import { OPTION_NO, OPTIONS_YES_NO } from '../../../../constants'
 import Task from '../../../../../client/components/Task'
 import {
   CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID,
-  TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM,
+  // TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM,
 } from './state'
 import { FORM_LAYOUT } from '../../../../../common/constants'
+import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../../../client/components/ContactForm/state'
 
 const StyledContainer = styled.div(({ error }) => ({
   paddingLeft: SPACING.SCALE_4,
@@ -191,7 +192,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
         <Task>
           {(getTask) => {
             const openContactFormTask = getTask(
-              TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM,
+              TASK_REDIRECT_TO_CONTACT_FORM,
               CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID
             )
             return (
@@ -212,12 +213,12 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
                         isMulti={true}
                       />
                       <ContactInformation
-                        onOpenContactForm={(e) => {
-                          e.preventDefault()
+                        onOpenContactForm={(_e, redirectUrl) => {
                           openContactFormTask.start({
                             payload: {
                               values,
-                              url: e.target.href,
+                              url: redirectUrl,
+                              storeId: CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID,
                             },
                           })
                         }}
