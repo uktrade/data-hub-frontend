@@ -12,6 +12,7 @@ import {
   FieldCurrency,
   FieldTypeahead,
   FieldTextarea,
+  ContactInformation,
 } from '../../../../client/components'
 import {
   CountriesResource,
