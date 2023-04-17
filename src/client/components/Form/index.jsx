@@ -78,6 +78,7 @@ const _Form = ({
   result,
   resolved,
   errors = {},
+  errorStatus,
   values = {},
   touched = {},
   steps = [],

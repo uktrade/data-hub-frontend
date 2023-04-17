@@ -241,8 +241,8 @@ import { TASK_GET_TYPEAHEAD_OPTIONS } from './components/Typeahead/state'
 import * as exportsEdit from '../apps/companies/apps/exports/client/tasks'
 
 import {
-  redirectToContactForm,
   saveContact,
+  redirectToContactForm,
 } from './components/ContactForm/tasks'
 import {
   getContacts,
