@@ -24,17 +24,22 @@ async function renderOverview(req, res) {
   const { exportCountriesInformation } =
     transformCompanyToExportDetailsView(company)
 
-  const numberOfCurrentExportCountries =
-    exportCountriesInformation[0].values.length
+  const maximumTenCountries = (countries, maxCount) =>
+    countries.slice(0, maxCount)
 
-  const maximumTenCurrentExportCountries =
-    exportCountriesInformation[0].values.slice(0, 10)
+  const numberOfCurrentExportCountries =
+    exportCountriesInformation[0]?.values?.length || 0
+  const maximumTenCurrentExportCountries = maximumTenCountries(
+    exportCountriesInformation[0]?.values || [],
+    10
+  )
 
   const numberOfFutureInterestCountries =
-    exportCountriesInformation[1].values.length
-
-  const maximumTenFutureInterestCountries =
-    exportCountriesInformation[1].values.slice(0, 10)
+    exportCountriesInformation[1]?.values?.length || 0
+  const maximumTenFutureInterestCountries = maximumTenCountries(
+    exportCountriesInformation[1]?.values || [],
+    10
+  )
 
   res.render('companies/apps/company-overview/views/client-container', {
     props: {
