@@ -1,4 +1,5 @@
 const REQUIRED_ERROR = 'This field is required.'
+const BLANK_ERROR = 'This field may not be blank.'
 
 export const mapErrorMessages = (errors) =>
   errors &&
@@ -8,8 +9,8 @@ export const mapErrorMessages = (errors) =>
     if (Array.isArray(errorMessages) && errorMessages.length > 0) {
       obj[fieldName] = errorMessages
         .map((errorMessage) => {
-          if (errorMessage === REQUIRED_ERROR) {
-            return `The ${displayFieldName} field is required.`
+          if (errorMessage === REQUIRED_ERROR || errorMessage == BLANK_ERROR) {
+            return `Enter a ${displayFieldName}`
           }
           return errorMessage
         })
