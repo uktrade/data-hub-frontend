@@ -1,7 +1,7 @@
 import { ID as COMPANY_DETAILS_ID } from '../../../Companies/CompanyDetails/state'
 import { ID as EXPORT_DETAILS_ID } from '../../../ExportPipeline/ExportDetails/state'
 
-import { ID, state2props } from '../state'
+import { overwriteObjectWithSessionStorageValues, state2props } from '../state'
 
 const exportItemSessionStorage = {
   title: 'title sessionStorage',
@@ -47,29 +47,105 @@ const exportItemSessionStorage = {
   id: 'id sessionStorage',
 }
 
-let getItemKey
+const emptySessionState = () => null
+const populatedSessionState = () => JSON.stringify(exportItemSessionStorage)
+let getItem = emptySessionState
 
-describe('state2props', () => {
+describe('overwriteObjectWithSessionStorageValues', () => {
   before(() => {
     global.window = {
       sessionStorage: {
-        getItem: function (key) {
-          if (key === getItemKey) {
-            return JSON.stringify(exportItemSessionStorage)
-          }
-          return null
-        },
+        getItem: (key) => getItem(key),
       },
     }
   })
-  afterEach(() => {
-    getItemKey = undefined
+
+  context(
+    'when sessionState contains values and query string is populated',
+    () => {
+      before(() => (getItem = populatedSessionState))
+      it('should return exportItem with any field in the state overwritten by the same field in the sessionStorage', () => {
+        expect(
+          overwriteObjectWithSessionStorageValues(
+            {
+              company: {
+                id: 2,
+                name: 'b',
+              },
+              team_members: [{ label: 'd', value: 3 }],
+              notes: 'long notes',
+            },
+            new URLSearchParams('?new-contact-name=abc')
+          )
+        ).to.deep.equal(exportItemSessionStorage)
+      })
+    }
+  )
+
+  context('when sessionState is null and query string is populated', () => {
+    beforeEach(() => (getItem = emptySessionState))
+
+    it('should return exportItem with no values overriden from sessionStorage', () => {
+      expect(
+        overwriteObjectWithSessionStorageValues(
+          {
+            company: {
+              id: 2,
+              name: 'b',
+            },
+            title: 'title 123',
+            contacts: [{ name: 'd', id: 3 }],
+          },
+          new URLSearchParams('?new-contact-name=abc')
+        )
+      ).to.deep.include({
+        company: {
+          id: 2,
+          name: 'b',
+        },
+        title: 'title 123',
+        contacts: [{ label: 'd', value: 3 }],
+      })
+    })
   })
 
+  context(
+    'when sessionState contains values and query string is missing',
+    () => {
+      beforeEach(() => (getItem = populatedSessionState))
+
+      it('should return exportItem with no values overriden from sessionStorage', () => {
+        expect(
+          overwriteObjectWithSessionStorageValues(
+            {
+              company: {
+                id: 2,
+                name: 'b',
+              },
+              team_members: [{ name: 'd', id: 3 }],
+            },
+            new URLSearchParams()
+          )
+        ).to.deep.include({
+          company: {
+            id: 2,
+            name: 'b',
+          },
+          team_members: [{ label: 'd', value: 3 }],
+        })
+      })
+    }
+  )
+})
+
+describe('state2props', () => {
   context('when company and exportItem state values are null', () => {
     it('should return exportItem prop as empty object', () => {
       expect(
-        state2props({ [COMPANY_DETAILS_ID]: {}, [EXPORT_DETAILS_ID]: {} })
+        state2props(
+          { [COMPANY_DETAILS_ID]: {}, [EXPORT_DETAILS_ID]: {} },
+          { location: {} }
+        )
       ).to.deep.equal({
         exportItem: null,
       })
@@ -81,15 +157,18 @@ describe('state2props', () => {
     () => {
       let state2propsResult
       beforeEach(() => {
-        state2propsResult = state2props({
-          [COMPANY_DETAILS_ID]: { company: { id: 1, name: 'a' } },
-          [EXPORT_DETAILS_ID]: {},
-          currentAdviserId: 2,
-          currentAdviserName: 'b',
-        }).exportItem
+        state2propsResult = state2props(
+          {
+            [COMPANY_DETAILS_ID]: { company: { id: 1, name: 'a' } },
+            [EXPORT_DETAILS_ID]: {},
+            currentAdviserId: 2,
+            currentAdviserName: 'b',
+          },
+          { location: {} }
+        ).exportItem
       })
 
-      it('should return exportItem prop with company details populated from the company in state and owner set to logged in user', () => {
+      it('should return exportItem prop with company details populated from the company in state', () => {
         expect(state2propsResult).to.deep.include({
           company: { id: 1, name: 'a' },
         })
@@ -104,58 +183,19 @@ describe('state2props', () => {
   )
 
   context('when company and exportItem state values are not null', () => {
-    context('and sessionStorage does not contain any form data', () => {
-      it('should return exportItem prop with company details populated from the exportItem in state', () => {
-        expect(
-          state2props({
+    it('should return exportItem prop with company details populated from the exportItem in state', () => {
+      expect(
+        state2props(
+          {
             [COMPANY_DETAILS_ID]: { company: { id: 1, name: 'a' } },
             [EXPORT_DETAILS_ID]: {
               exportItem: { company: { id: 2, name: 'b' } },
             },
-          }).exportItem
-        ).to.deep.include({
-          company: { id: 2, name: 'b' },
-        })
-      })
-    })
-
-    context('and sessionStorage contains form data', () => {
-      beforeEach(() => {
-        getItemKey = ID
-      })
-
-      it('should return exportItem prop with company details populated from the sessionStorage', () => {
-        expect(
-          state2props({
-            [COMPANY_DETAILS_ID]: { company: { id: 1, name: 'a' } },
-            [EXPORT_DETAILS_ID]: {
-              exportItem: { company: { id: 2, name: 'b' } },
-            },
-          }).exportItem
-        ).to.deep.include({
-          company: {
-            id: 'company.id sessionStorage',
-            name: 'company.name sessionStorage',
           },
-        })
-      })
-
-      it('should return exportItem prop with any field in the state overwritten by the same field in the sessionStorage', () => {
-        expect(
-          state2props({
-            [COMPANY_DETAILS_ID]: { company: { id: 1, name: 'a' } },
-            [EXPORT_DETAILS_ID]: {
-              exportItem: {
-                company: {
-                  id: 2,
-                  name: 'b',
-                  team_members: [{ label: 'd', value: 3 }],
-                  notes: 'long notes',
-                },
-              },
-            },
-          }).exportItem
-        ).to.deep.equal(exportItemSessionStorage)
+          { location: {} }
+        ).exportItem
+      ).to.deep.include({
+        company: { id: 2, name: 'b' },
       })
     })
   })

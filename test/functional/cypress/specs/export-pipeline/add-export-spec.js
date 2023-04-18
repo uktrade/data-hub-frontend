@@ -11,6 +11,7 @@ const {
   assertFieldError,
   assertLocalHeader,
   assertBreadcrumbs,
+  assertFieldEmpty,
 } = require('../../support/assertions')
 
 const {
@@ -65,6 +66,20 @@ describe('Export pipeline create', () => {
   context('when adding an export for known company id', () => {
     const company = fixtures.company.venusLtd
     const addPageUrl = `/export/create?companyId=${company.id}`
+    const newExport = generateExport()
+    const newContact = contactFaker()
+
+    const add_contact_and_return_to_export_form = () => {
+      cy.get('[data-test="add-a-new-contact-link"').click()
+      fill('[data-test=group-field-first_name]', newContact.first_name)
+      fill('[data-test=group-field-last_name]', newContact.last_name)
+      fill('[data-test=job-title-input]', newContact.job_title)
+      fill('[data-test=job-title-input]', newContact.job_title)
+      fill('[data-test=email-input]', newContact.email)
+      cy.get('[name="addressSameAsCompany"]').check('Yes')
+      cy.get('[name="primary"]').check('No')
+      cy.get('[data-test="submit-button"').click()
+    }
 
     context('when verifying the page', () => {
       before(() => {
@@ -119,6 +134,24 @@ describe('Export pipeline create', () => {
       it('the form should redirect to the company page', () => {
         cy.get('[data-test=cancel-button]').click()
         assertUrl(urls.companies.activity.index(company.id))
+      })
+    })
+
+    context('when the form is populated but not submitted', () => {
+      before(() => {
+        cy.visit(addPageUrl)
+      })
+
+      it('leaving and returning to the page should not keep any values', () => {
+        fill('[data-test=title-input]', newExport.title)
+        fill('[data-test=estimated_win_date-month]', '09')
+        fill('[data-test=estimated_win_date-year]', '2029')
+        add_contact_and_return_to_export_form()
+        cy.visit('/')
+        cy.visit(addPageUrl)
+        assertFieldEmpty('[data-test=title-input]')
+        assertFieldEmpty('[data-test=estimated_win_date-month]')
+        assertFieldEmpty('[data-test=estimated_win_date-year]')
       })
     })
 
@@ -207,23 +240,7 @@ describe('Export pipeline create', () => {
     context(
       'when the form contains valid data and the form is submitted',
       () => {
-        const newContact = contactFaker()
-        const newExport = generateExport()
         const contacts = contactsListFaker((length = 3))
-        const add_contact = () => {
-          cy.get('[data-test="add-a-new-contact-link"').click()
-          fill('[data-test=group-field-first_name]', newContact.first_name)
-          fill('[data-test=group-field-last_name]', newContact.last_name)
-          fill('[data-test=job-title-input]', newContact.job_title)
-          fill('[data-test=job-title-input]', newContact.job_title)
-          fill('[data-test=email-input]', newContact.email)
-          cy.get('[name="addressSameAsCompany"]').check('Yes')
-          cy.get('[name="primary"]').check('No')
-          cy.get('[data-test="submit-button"').click()
-          assertFlashMessage(
-            `You have successfully added a new contact ${newContact.name}`
-          )
-        }
 
         before(() => {
           cy.intercept('POST', `/api-proxy/v4/export`).as(
@@ -267,7 +284,10 @@ describe('Export pipeline create', () => {
             newExport.exporter_experience.id
           )
           fill('[data-test=field-notes]', newExport.notes)
-          add_contact()
+          add_contact_and_return_to_export_form()
+          assertFlashMessage(
+            `You have successfully added a new contact ${newContact.name}`
+          )
 
           fillTypeahead('[data-test=field-contacts]', newContact.name)
           cy.window()

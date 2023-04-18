@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, withRouter } from 'react-router-dom'
 
 import urls from '../../../../lib/urls'
 import { DefaultLayout } from '../../../components'
@@ -68,4 +68,4 @@ const ExportFormEdit = ({ exportItem }) => {
   )
 }
 
-export default connect(state2props)(ExportFormEdit)
+export default withRouter(connect(state2props)(ExportFormEdit))
