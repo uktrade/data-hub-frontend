@@ -19,7 +19,7 @@ import {
   ExportExperienceResource,
   ExportYearsResource,
   SectorResource,
-  CompanyContacts,
+  CompanyContactsResource,
 } from '../../../components/Resource'
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT, ID as STATE_ID } from './state'
@@ -151,7 +151,7 @@ const ExportFormFields = ({
                   required={ERROR_MESSAGES.contacts}
                   isMulti={true}
                   placeholder="Select contact"
-                  resource={CompanyContacts}
+                  resource={CompanyContactsResource}
                   field={FieldTypeahead}
                   resultToOptions={({ results }) =>
                     transformArrayIdNameToValueLabel(results)

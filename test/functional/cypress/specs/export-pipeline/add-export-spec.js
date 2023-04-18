@@ -31,6 +31,11 @@ const autoCompleteAdvisers =
 const { faker } = require('@faker-js/faker')
 
 describe('Export pipeline create', () => {
+  before(() => {
+    // Clear the session storage to avoid caching of contact form data in the application sessionStorage
+    Cypress.session.clearCurrentSessionData()
+  })
+
   context('when adding an export for unknown company id', () => {
     before(() => {
       cy.intercept('GET', '/api-proxy/v4/company/not_real', {

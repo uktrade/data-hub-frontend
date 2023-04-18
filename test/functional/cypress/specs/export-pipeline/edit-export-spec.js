@@ -30,6 +30,11 @@ const { faker } = require('@faker-js/faker')
 const { capitalize } = require('lodash')
 
 describe('Export pipeline edit', () => {
+  before(() => {
+    // Clear the session storage to avoid caching of contact form data in the application sessionStorage
+    Cypress.session.clearCurrentSessionData()
+  })
+
   const exportItem = exportItems.results[0]
 
   context('when editing an export for unknown company id', () => {
