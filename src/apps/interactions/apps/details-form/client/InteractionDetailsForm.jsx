@@ -12,12 +12,12 @@ import Form from '../../../../../client/components/Form'
 import {
   ID as STATE_ID,
   TASK_SAVE_INTERACTION,
-  TASK_OPEN_CONTACT_FORM,
   TASK_GET_INTERACTION_INITIAL_VALUES,
 } from './state'
 import urls from '../../../../../lib/urls'
 import { FormLayout } from '../../../../../client/components'
 import { FORM_LAYOUT } from '../../../../../common/constants'
+import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../../../client/components/ContactForm/state'
 
 const getReturnLink = (
   companyId,
@@ -73,7 +73,10 @@ const InteractionDetailsForm = ({
   return (
     <Task>
       {(getTask) => {
-        const openContactFormTask = getTask(TASK_OPEN_CONTACT_FORM, STATE_ID)
+        const openContactFormTask = getTask(
+          TASK_REDIRECT_TO_CONTACT_FORM,
+          STATE_ID
+        )
         const companyIds = [companyId]
         return (
           <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
@@ -149,14 +152,15 @@ const InteractionDetailsForm = ({
                           {() => (
                             <StepInteractionDetails
                               companyId={companyId}
-                              onOpenContactForm={(e) => {
-                                e.preventDefault()
+                              onOpenContactForm={({ event, redirectUrl }) => {
+                                event.target.blur()
                                 openContactFormTask.start({
                                   payload: {
                                     values,
                                     currentStep,
                                     companyId,
-                                    url: e.target.href,
+                                    url: redirectUrl,
+                                    storeId: STATE_ID,
                                   },
                                 })
                               }}
@@ -187,15 +191,7 @@ InteractionDetailsForm.propTypes = {
   ...StepInteractionDetails.propTypes,
 }
 
-export default connect(
-  ({ values, ...state }) => ({
-    ...state[STATE_ID],
-    values,
-  }),
-  () => ({
-    openContactForm: (event) => {
-      event.target.blur()
-      event.preventDefault()
-    },
-  })
-)(InteractionDetailsForm)
+export default connect(({ values, ...state }) => ({
+  ...state[STATE_ID],
+  values,
+}))(InteractionDetailsForm)
