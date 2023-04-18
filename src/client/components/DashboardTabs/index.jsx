@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import NoInvestmentProjects from '../MyInvestmentProjects/NoInvestmentProjects'
 import MyInvestmentProjects from '../MyInvestmentProjects'
 import CompanyLists from '../CompanyLists'
-import Pipeline from '../../components/Pipeline'
 import ExportList from '../../modules/ExportPipeline/ExportList'
 import urls from '../../../lib/urls'
 import TabNav from '../TabNav'
@@ -14,12 +13,7 @@ const StyledDiv = styled('div')`
   padding-top: 16px;
 `
 
-const DashboardTabs = ({
-  id,
-  adviser,
-  hasInvestmentProjects,
-  hasExportPipeline,
-}) => (
+const DashboardTabs = ({ id, adviser, hasInvestmentProjects }) => (
   <StyledDiv data-test="dashboard-tabs">
     <TabNav
       id={`${id}.TabNav`}
@@ -39,19 +33,10 @@ const DashboardTabs = ({
           label: 'Company lists',
           content: <CompanyLists />,
         },
-        ...(hasExportPipeline
-          ? {
-              [urls.exportPipeline.index()]: {
-                label: 'Export list',
-                content: <ExportList />,
-              },
-            }
-          : {
-              [urls.pipeline.index.mountPoint]: {
-                label: 'Pipeline',
-                content: <Pipeline />,
-              },
-            }),
+        [urls.exportPipeline.index()]: {
+          label: 'Export list',
+          content: <ExportList />,
+        },
       }}
     />
   </StyledDiv>
