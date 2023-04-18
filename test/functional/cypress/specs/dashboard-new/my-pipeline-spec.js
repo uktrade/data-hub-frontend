@@ -22,7 +22,7 @@ describe('Dashboard', () => {
         .next()
         .should('have.text', 'Company lists')
         .next()
-        .should('have.text', 'Pipeline')
+        .should('have.text', 'Export list')
     })
   })
 
