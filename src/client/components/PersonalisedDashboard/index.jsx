@@ -68,8 +68,6 @@ const state2props = (state) => {
     'export-notifications'
   )
 
-  const hasExportPipeline = state.activeFeatures.includes('export-pipeline')
-
   return {
     hasInvestmentProjects,
     dataHubFeed,
@@ -77,7 +75,6 @@ const state2props = (state) => {
     reminderSummaryCount,
     hasExportFeatureGroup,
     hasInvestmentFeatureGroup,
-    hasExportPipeline,
   }
 }
 
@@ -89,7 +86,6 @@ const PersonalisedDashboard = ({
   reminderSummaryCount,
   hasInvestmentProjects,
   dataHubFeed,
-  hasExportPipeline,
   hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
 }) => (
@@ -164,7 +160,6 @@ const PersonalisedDashboard = ({
                 <DashboardTabs
                   id={id}
                   adviser={adviser}
-                  hasExportPipeline={hasExportPipeline}
                   hasInvestmentProjects={hasInvestmentProjects}
                 />
               </Main>
