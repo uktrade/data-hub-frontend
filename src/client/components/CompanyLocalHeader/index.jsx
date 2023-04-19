@@ -155,7 +155,7 @@ const CompanyLocalHeader = ({
                 >
                   Add to or remove from lists
                 </DropdownButton>
-                <DropdownButton href={urls.companies.pipelineAdd(company.id)}>
+                <DropdownButton href={urls.exportPipeline.create(company.id)}>
                   Add to my pipeline
                 </DropdownButton>
               </ConnectedDropdownMenu>
