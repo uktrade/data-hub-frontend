@@ -5,7 +5,7 @@ const config = require('../../config')
 const rewire = require('rewire')
 const { StatusCodeError } = require('../errors')
 
-const modulePath = '../axios-hawk-request'
+const modulePath = '../hawk-request'
 
 const testDataHubCredentials = {
   id: 'test-key-id',
