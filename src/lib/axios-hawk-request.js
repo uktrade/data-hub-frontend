@@ -30,13 +30,14 @@ async function hawkRequest(requestOptions, credentials, clientHeaderArtifacts) {
 
   if (!config.isTest) {
     let isValid = false
+    const payload = JSON.stringify(response.data || {})
     try {
       // Authenticate the server's response must use raw response body here
       isValid = Hawk.client.authenticate(
         response,
         credentials,
         clientHeaderArtifacts,
-        { payload: JSON.stringify(response.data || {}) }
+        payload
       )
     } catch (e) {
       const err = new Error('Unable to validate response')
