@@ -95,6 +95,25 @@ const ActiveInvestmentList = ({ upcomingActiveInvestments }) => {
             )}
           </StyledActiveInvestmentTableCell>
         </StyledActiveInvestmentTableBottomRow>
+        <StyledActiveInvestmentTableBottomRow>
+          <StyledActiveInvestmentHeadingTableCellHeader
+            colSpan={1}
+            data-test={`estimated-land-date ${activeInvestment.name}`}
+          >
+            Last interaction date
+          </StyledActiveInvestmentHeadingTableCellHeader>
+          <StyledActiveInvestmentTableCell colSpan={1}>
+            {activeInvestment.latest_interaction
+              ? new Date(
+                  activeInvestment.latest_interaction.date
+                ).toLocaleDateString('en-GB', {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric',
+                })
+              : 'not set'}
+          </StyledActiveInvestmentTableCell>
+        </StyledActiveInvestmentTableBottomRow>
       </>
     )
   })
