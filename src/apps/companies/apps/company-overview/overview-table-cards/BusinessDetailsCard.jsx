@@ -63,7 +63,9 @@ const BusinessDetailsCard = ({ company, queryString, companiesHouseLink }) => {
           {!company.website ? (
             'Not set'
           ) : (
-            <Link href={company.website}>{company.website}</Link>
+            <NewWindowLink href={company.website}>
+              {company.website}
+            </NewWindowLink>
           )}
         </SummaryTable.Row>
         <SummaryTable.Row heading="Turnover">
