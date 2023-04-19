@@ -252,7 +252,7 @@ describe('Export pipeline create', () => {
           cy.intercept(
             'GET',
             `/api-proxy/v4/contact?company_id=${company.id}`,
-            { count: 4, results: [...contacts, newContact] }
+            { count: 4, results: [newContact, ...contacts] }
           ).as('getContactApiRequest')
           cy.visit(addPageUrl)
         })
