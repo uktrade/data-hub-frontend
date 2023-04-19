@@ -31,6 +31,13 @@ const StyledTD = styled('td')`
   border: 0;
 `
 
+const StyledDiv = styled('div')`
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  border: 0;
+`
+
 const StyledLastTableCell = styled(Table.Cell)`
   border: 0;
   padding-bottom: 0;
@@ -79,18 +86,18 @@ const CurrentExportingCountries = ({
   company,
 }) => {
   return (
-    <StyledTD>
+    <StyledDiv data-test="current-export-list">
       {maximumTenCurrentExportCountries.map((country) => (
         <div key={country.id}>
           <StyledLink
             href={`/companies/${company.id}/exports/history/${country.id}`}
-            data-test="export-status-country-of-interest-link"
+            data-test={`current-export-country-link ${country.name}`}
           >
             {country.name}
           </StyledLink>
         </div>
       ))}
-    </StyledTD>
+    </StyledDiv>
   )
 }
 
@@ -99,18 +106,18 @@ const FutureInterestCountries = ({
   company,
 }) => {
   return (
-    <StyledTD>
+    <StyledDiv data-test="future-interest-list">
       {maximumTenFutureInterestCountries.map((country) => (
         <div key={country.id}>
           <StyledLink
             href={`/companies/${company.id}/exports/history/${country.id}`}
-            data-test="export-status-country-of-interest-link"
+            data-test={`export-future-country-of-interest-link ${country.name}`}
           >
             {country.name}
           </StyledLink>
         </div>
       ))}
-    </StyledTD>
+    </StyledDiv>
   )
 }
 

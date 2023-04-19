@@ -355,10 +355,15 @@ describe('Company overview page', () => {
           .contains('Export sub-segment')
           .siblings()
           .contains('td', 'Sustain: Nurture & grow')
-        cy.get('th')
-          .contains('Currently exporting to')
-          .siblings()
-          .contains('td', 'Western Sahara')
+        cy.get('[data-test="current-export-list"]')
+          .children()
+          .should('have.length.of.at.most', 10)
+        cy.get('[data-test="export-status-currently-exporting-to-link"]')
+          .contains('View 2 more')
+          .click()
+        cy.location('pathname').should('eq', companyExportsAllOverview)
+        cy.go('back')
+        cy.get('[data-test="exportStatusContainer"]').children()
         cy.get('th')
           .contains('Last export win')
           .siblings()
@@ -370,7 +375,12 @@ describe('Company overview page', () => {
         cy.get('th')
           .contains('Future countries of interest')
           .siblings()
-          .contains('td', 'Yemen')
+          .contains('td', 'Saint Helena')
+        cy.get('[data-test="export-status-future-exporting-to-link"]')
+          .contains('View 4 more')
+          .click()
+        cy.location('pathname').should('eq', companyExportsAllOverview)
+        cy.go('back')
       })
 
       it('the card should link to the export status overview page', () => {
@@ -381,22 +391,24 @@ describe('Company overview page', () => {
         cy.go('back')
       })
       it('the card should link to the export history page of the specific country', () => {
-        cy.get('[data-test="export-status-currently-exporting-to-link"]')
-          .contains('Western Sahara')
+        cy.get('[data-test="current-export-country-link Algeria"]')
+          .contains('Algeria')
           .click()
         cy.location('pathname').should(
           'eq',
-          `${companyExportsAllOverview}/history/36afd8d0-5d95-e211-a939-e4115bead28a`
+          `${companyExportsAllOverview}/history/955f66a0-5d95-e211-a939-e4115bead28a`
         )
         cy.go('back')
       })
       it('the card should link to the future countries of interest', () => {
-        cy.get('[data-test="export-status-country-of-interest-link"]')
-          .contains('Yemen')
+        cy.get(
+          '[data-test="export-future-country-of-interest-link Saint Helena"]'
+        )
+          .contains('Saint Helena')
           .click()
         cy.location('pathname').should(
           'eq',
-          `${companyExportsAllOverview}/history/37afd8d0-5d95-e211-a939-e4115bead28a`
+          `${companyExportsAllOverview}/history/dec8d80f-efe5-4190-a8e9-c8ccc38e7724`
         )
         cy.go('back')
       })
