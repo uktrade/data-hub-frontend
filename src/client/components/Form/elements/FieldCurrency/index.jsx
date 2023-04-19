@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { kebabCase } from 'lodash'
@@ -22,6 +22,7 @@ import {
 import { useField } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
 import { number } from '../../../../../client/components/Form/validators'
+import { decimal, parseLocaleNumber } from '../../../../utils/number-utils'
 
 const StyledInputWrapper = styled('div')`
   ${(props) =>
@@ -90,6 +91,47 @@ const FieldCurrency = ({
     required,
     initialValue,
   })
+
+  const [displayValue, setDisplayValue] = useState()
+  const [rawValue, setRawValue] = useState(value)
+  const [editing, setEditing] = useState(false)
+
+  useEffect(() => {
+    if (!editing && value) {
+      setDisplayValue(decimal(value))
+    }
+  }, [value])
+
+  /**
+   * Once focus leaves the input, format the entered value if it is a valid number then call the default onBlur
+   */
+  const onBlurWrapper = (e) => {
+    setDisplayValue(isNaN(rawValue) ? rawValue : decimal(rawValue))
+    setEditing(false)
+    onBlur(e)
+  }
+
+  /**
+   * When the value in the input changes, update the data-raw-value then call the default onChange
+   */
+  const onChangeWrapper = (e) => {
+    if (!isNaN(parseLocaleNumber(e.target.value))) {
+      setRawValue(parseLocaleNumber(e.target.value))
+    } else {
+      setRawValue(e.target.value)
+    }
+    setDisplayValue(e.target.value)
+    onChange(e)
+  }
+
+  /**
+   * When the input receives focus, set the input to have a value without any currency formatting
+   */
+  const onFocus = () => {
+    setDisplayValue(rawValue)
+    setEditing(true)
+  }
+
   return (
     <FieldWrapper {...{ name, label, legend, hint, error, reduced, boldLabel }}>
       <StyledInputWrapper error={error}>
@@ -107,10 +149,13 @@ const FieldCurrency = ({
             id={name}
             type="text"
             name={name}
-            value={value}
-            onChange={onChange}
-            onBlur={onBlur}
+            value={displayValue}
+            data-raw-value={rawValue}
+            onChange={onChangeWrapper}
+            onBlur={onBlurWrapper}
+            onFocus={onFocus}
             data-test={kebabCase(`${name}-'input'`)}
+            inputMode="numeric"
             {...rest}
           />
         </StyledCurrencyWrapper>
