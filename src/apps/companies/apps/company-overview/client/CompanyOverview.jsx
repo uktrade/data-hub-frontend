@@ -17,7 +17,14 @@ const CardContainer = styled('div')`
   margin-bottom: 20px;
 `
 
-const CompanyOverview = ({ company, companiesHouseLink }) => {
+const CompanyOverview = ({
+  company,
+  companiesHouseLink,
+  numberOfCurrentExportCountries,
+  maximumTenCurrentExportCountries,
+  numberOfFutureInterestCountries,
+  maximumTenFutureInterestCountries,
+}) => {
   const queryString = `/companies/${company.id}`
   return (
     <>
@@ -38,7 +45,18 @@ const CompanyOverview = ({ company, companiesHouseLink }) => {
             />
           </CardContainer>
           <CardContainer>
-            <ExportStatus company={company} queryString={queryString} />
+            <ExportStatus
+              company={company}
+              queryString={queryString}
+              numberOfCurrentExportCountries={numberOfCurrentExportCountries}
+              maximumTenCurrentExportCountries={
+                maximumTenCurrentExportCountries
+              }
+              numberOfFutureInterestCountries={numberOfFutureInterestCountries}
+              maximumTenFutureInterestCountries={
+                maximumTenFutureInterestCountries
+              }
+            />
           </CardContainer>
           <CardContainer>
             <InvestmentStatusCard
