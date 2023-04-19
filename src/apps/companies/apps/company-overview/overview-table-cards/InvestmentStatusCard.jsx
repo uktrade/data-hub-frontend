@@ -31,7 +31,6 @@ const StyledLastTableCell = styled(Table.Cell)`
 const StyledSpan = styled('span')`
   color: grey;
 `
-
 const InvestmentStatusCard = ({
   queryString,
   companyId,
@@ -76,19 +75,64 @@ const InvestmentStatusCard = ({
               )}
             </SummaryTable.Row>
             <SummaryTable.Row heading="Total projects won">
-              {statusList?.won ? statusList.won : '0'}
+              {statusList?.won ? (
+                <Link
+                  href={`/companies/${companyId}/investments/projects?page=1&sortby=created_on%3Adesc&stage%5B0%5D=945ea6d1-eee3-4f5b-9144-84a75b71b8e6`}
+                  data-test="total-project-won"
+                >
+                  {statusList.won}
+                </Link>
+              ) : (
+                '0'
+              )}
             </SummaryTable.Row>
             <SummaryTable.Row heading="Active projects">
-              {stageList?.active ? stageList.active : '0'}
+              {stageList?.active ? (
+                <Link
+                  href={`/companies/${companyId}/investments/projects?page=1&sortby=created_on%3Adesc&stage%5B0%5D=7606cc19-20da-4b74-aba1-2cec0d753ad8`}
+                  data-test="total-active-projects"
+                >
+                  {stageList.active}
+                </Link>
+              ) : (
+                '0'
+              )}
             </SummaryTable.Row>
             <SummaryTable.Row heading="Prospect projects">
-              {stageList?.prospect ? stageList.prospect : '0'}
+              {stageList?.prospect ? (
+                <Link
+                  href={`/companies/${companyId}/investments/projects?page=1&sortby=created_on%3Adesc&stage%5B0%5D=8a320cc9-ae2e-443e-9d26-2f36452c2ced`}
+                  data-test="total-prospect-projects"
+                >
+                  {stageList.prospect}
+                </Link>
+              ) : (
+                '0'
+              )}
             </SummaryTable.Row>
             <SummaryTable.Row heading="Verify win projects">
-              {stageList?.verifyWin ? stageList.verifyWin : '0'}
+              {stageList?.verifyWin ? (
+                <Link
+                  href={`/companies/${companyId}/investments/projects?page=1&sortby=created_on%3Adesc&stage%5B0%5D=49b8f6f3-0c50-4150-a965-2c974f3149e3`}
+                  data-test="total-verify-win-projects"
+                >
+                  {stageList.verifyWin}
+                </Link>
+              ) : (
+                '0'
+              )}
             </SummaryTable.Row>
             <SummaryTable.Row heading="Abandoned projects">
-              {statusList?.abandoned ? statusList.abandoned : '0'}
+              {statusList?.abandoned ? (
+                <Link
+                  href={`/companies/${companyId}/investments/projects?page=1&sortby=created_on%3Adesc&status%5B0%5D=abandoned`}
+                  data-test="total-abandoned-projects"
+                >
+                  {statusList.abandoned}
+                </Link>
+              ) : (
+                '0'
+              )}
             </SummaryTable.Row>
             <StyledTableRow>
               <StyledLastTableCell colSpan={2}>
