@@ -1,5 +1,5 @@
 const config = require('../config')
-const hawkRequest = require('../lib/hawk-request')
+const hawkRequest = require('../lib/axios-hawk-request')
 const {
   formatHelpCentreAnnouncements,
 } = require('../apps/dashboard/transformers')

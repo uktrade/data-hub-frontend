@@ -2,7 +2,7 @@ const { castArray, sortBy } = require('lodash')
 
 const config = require('../config')
 const { authorisedRequest } = require('../lib/authorised-request')
-const hawkRequest = require('../lib/hawk-request')
+const hawkRequest = require('../lib/axios-hawk-request')
 const { filterDisabledOption } = require('../modules/permissions/filters')
 const { transformObjectToOption } = require('../apps/transformers')
 const redisClient = require('./redis-client')
