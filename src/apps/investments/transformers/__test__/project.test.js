@@ -420,7 +420,7 @@ describe('Investment project transformers', () => {
       })
     })
 
-    context('when a likelihood to land value is provided', () => {
+    context('when a likelihood of landing value is provided', () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
           likelihood_to_land: 'low',
@@ -429,12 +429,12 @@ describe('Investment project transformers', () => {
         this.result = transformInvestmentForView(data)
       })
 
-      it('should include the likelihood to land value', () => {
+      it('should include the likelihood of landing value', () => {
         expect(this.result).to.have.property('likelihood_to_land', 'low')
       })
     })
 
-    context('when a likelihood to land value is not provided', () => {
+    context('when a likelihood of landing value is not provided', () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
           likelihood_to_land: null,
@@ -443,7 +443,7 @@ describe('Investment project transformers', () => {
         this.result = transformInvestmentForView(data)
       })
 
-      it('should set the likelihood to land value as null', () => {
+      it('should set the likelihood of landing value as null', () => {
         expect(this.result).to.have.property('likelihood_to_land', null)
       })
     })

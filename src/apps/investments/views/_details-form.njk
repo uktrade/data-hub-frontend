@@ -302,11 +302,11 @@
 
   {{ MultipleChoiceField({
       name: 'likelihood_to_land',
-      label: 'Likelihood to land',
+      label: 'Likelihood of landing',
       error: form.errors.messages.likelihood_to_land,
       value: form.state.likelihood_to_land,
       options: form.options.likelihoodToLand,
-      initialOption: '-- Select a likelihood to land value --'
+      initialOption: '-- Select a likelihood of landing value --'
     }) }}
 
   {{ DateFieldset({
