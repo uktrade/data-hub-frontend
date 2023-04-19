@@ -29,15 +29,7 @@ describe('ExportFormFields', () => {
 
   context('When exportItem is an object', () => {
     it('should render the <Form> component', () => {
-      cy.mount(
-        <Component
-          exportItem={{
-            company: 1,
-            estimated_export_value_years: {},
-            exporter_experience: {},
-          }}
-        />
-      )
+      cy.mount(<Component exportItem={{ company: 1 }} />)
       cy.get('form').should('exist')
     })
   })

@@ -350,7 +350,6 @@ import { deleteExport } from '../client/modules/ExportPipeline/ExportDelete/task
 
 import { TASK_GET_EXPORT_PIPELINE_LIST } from '../client/modules/ExportPipeline/ExportList/state'
 import { getExportPipelineList } from '../client/modules/ExportPipeline/ExportList/task'
-
 import { TASK_REDIRECT_TO_CONTACT_FORM } from './components/ContactForm/state'
 
 function parseProps(domNode) {

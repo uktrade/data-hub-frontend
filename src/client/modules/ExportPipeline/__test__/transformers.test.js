@@ -23,6 +23,10 @@ describe('transformFormValuesForAPI', () => {
           sector: { value: 'j', label: 'k' },
           status: 'won',
           export_potential: 'high',
+          contacts: [
+            { value: 'l', label: 'm' },
+            { value: 'n', label: 'o' },
+          ],
           exporter_experience: 'never',
           notes: 'large amount of text',
         })
@@ -39,6 +43,7 @@ describe('transformFormValuesForAPI', () => {
         sector: 'j',
         status: 'won',
         export_potential: 'high',
+        contacts: ['l', 'n'],
         exporter_experience: 'never',
         notes: 'large amount of text',
       })
@@ -52,7 +57,7 @@ describe('transformAPIValuesForForm', () => {
       expect(
         transformAPIValuesForForm({
           id: 234,
-          company: { id: 987 },
+          company: { id: 987, name: 'z' },
           title: 'a',
           owner: { id: 'b', name: 'c' },
           team_members: [{ id: 'd', name: 'e' }],
@@ -63,12 +68,13 @@ describe('transformAPIValuesForForm', () => {
           sector: { id: 'h', name: 'i' },
           status: 'won',
           export_potential: 'high',
+          contacts: [{ id: 'j', name: 'k' }],
           exporter_experience: { id: 'never', name: 'Never' },
           notes: 'large amount of text',
         })
       ).to.be.deep.equal({
         id: 234,
-        company: 987,
+        company: { id: 987, name: 'z' },
         title: 'a',
         owner: { value: 'b', label: 'c' },
         team_members: [{ value: 'd', label: 'e' }],
@@ -79,7 +85,38 @@ describe('transformAPIValuesForForm', () => {
         sector: { value: 'h', label: 'i' },
         status: 'won',
         export_potential: 'high',
+        contacts: [{ value: 'j', label: 'k' }],
         exporter_experience: 'never',
+        notes: 'large amount of text',
+      })
+    })
+
+    it('Should return undefined for any missing values', () => {
+      expect(
+        transformAPIValuesForForm({
+          id: 234,
+          company: { id: 987, name: 'z' },
+          title: 'a',
+          estimated_export_value_amount: 34,
+          status: 'won',
+          export_potential: 'high',
+          notes: 'large amount of text',
+        })
+      ).to.be.deep.equal({
+        id: 234,
+        company: { id: 987, name: 'z' },
+        title: 'a',
+        owner: undefined,
+        team_members: [],
+        estimated_win_date: { month: '', year: '' },
+        estimated_export_value_years: undefined,
+        estimated_export_value_amount: 34,
+        destination_country: undefined,
+        sector: undefined,
+        status: 'won',
+        export_potential: 'high',
+        contacts: [],
+        exporter_experience: undefined,
         notes: 'large amount of text',
       })
     })
