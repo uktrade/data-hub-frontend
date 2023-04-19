@@ -1,7 +1,7 @@
 const request = require('../../lib/request')
 const { trim } = require('lodash')
 
-const hawkRequest = require('../../lib/hawk-request')
+const hawkRequest = require('../../lib/axios-hawk-request')
 const config = require('../../config')
 
 function lookupAddress(postcode) {
