@@ -230,7 +230,7 @@ const ProjectsCollection = ({
             data-test="estimated-land-date-before-filter"
           />
           <Filters.CheckboxGroup
-            legend="Likelihood to land"
+            legend="Likelihood of landing"
             name="likelihood_to_land"
             qsParam="likelihood_to_land"
             options={optionMetadata.likelihoodToLandOptions}

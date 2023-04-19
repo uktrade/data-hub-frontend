@@ -6,7 +6,7 @@ export const LABELS = {
   ukRegion: 'UK region',
   projectStatus: 'Status',
   investmentType: 'Investment type',
-  likelihoodToLand: 'Likelihood to land',
+  likelihoodToLand: 'Likelihood of landing 1',
   actualLandDateAfter: 'Actual land date from',
   actualLandDateBefore: 'Actual land date to',
   involvementLevel: 'Involvement level',

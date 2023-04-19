@@ -15,7 +15,7 @@ const labels = {
       description: 'Project description',
       anonymous_description: 'Anonymised description',
       estimated_land_date: 'Estimated land date',
-      likelihood_to_land: 'Likelihood to land',
+      likelihood_to_land: 'Likelihood of landing',
       actual_land_date: 'Actual land date',
       investor_type: 'New or existing investor',
       level_of_involvement: 'Level of involvement',
@@ -60,7 +60,7 @@ const labels = {
       client_cannot_provide_foreign_investment_hint:
         'Foreign equity only, excluding operational and R&D expenditure',
       fdi_value: 'Project value',
-      likelihood_to_land: 'Likelihood to land',
+      likelihood_to_land: 'Likelihood of landing',
     },
   },
   requirementsLabels: {
@@ -157,7 +157,7 @@ const labels = {
       status: 'Status',
       uk_region_location: 'UK Region',
       investor_company_country: 'Country of company origin',
-      likelihood_to_land: 'Likelihood to land',
+      likelihood_to_land: 'Likelihood of landing',
     },
   },
   clientRelationshipManagementLabels: {
