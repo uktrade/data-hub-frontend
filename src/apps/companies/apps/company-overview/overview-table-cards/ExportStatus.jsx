@@ -13,6 +13,7 @@ import {
 import { connect } from 'react-redux'
 import { OVERVIEW__EXPORT_WINS_SUMMARY } from '../../../../../client/actions'
 import { format } from '../../../../../client/utils/date'
+import { kebabCase } from 'lodash'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin: 0;
@@ -47,12 +48,10 @@ const StyledSpan = styled('span')`
 `
 
 const StyledLink = styled(Link)`
-  color: grey;
   margin-right: 5px;
 `
 const StyledViewMoreLink = styled(Link)`
   font-size: 12px;
-  color: grey;
   margin-right: 5px;
 `
 
@@ -81,37 +80,14 @@ export const SUBSEGMENT = {
   challenge: 'Challenge',
 }
 
-const CurrentExportingCountries = ({
-  maximumTenCurrentExportCountries,
-  company,
-}) => {
+const Countries = ({ countries, company, divDataTest, linkDataTest }) => {
   return (
-    <StyledDiv data-test="current-export-list">
-      {maximumTenCurrentExportCountries.map((country) => (
+    <StyledDiv data-test={divDataTest}>
+      {countries.map((country) => (
         <div key={country.id}>
           <StyledLink
             href={`/companies/${company.id}/exports/history/${country.id}`}
-            data-test={`current-export-country-link ${country.name}`}
-          >
-            {country.name}
-          </StyledLink>
-        </div>
-      ))}
-    </StyledDiv>
-  )
-}
-
-const FutureInterestCountries = ({
-  maximumTenFutureInterestCountries,
-  company,
-}) => {
-  return (
-    <StyledDiv data-test="future-interest-list">
-      {maximumTenFutureInterestCountries.map((country) => (
-        <div key={country.id}>
-          <StyledLink
-            href={`/companies/${company.id}/exports/history/${country.id}`}
-            data-test={`export-future-country-of-interest-link ${country.name}`}
+            data-test={`${linkDataTest}-${kebabCase(country.name)}-link`}
           >
             {country.name}
           </StyledLink>
@@ -176,11 +152,11 @@ const ExportStatus = ({
           </SummaryTable.Row>
           <SummaryTable.Row heading="Currently exporting to">
             {numberOfCurrentExportCountries ? (
-              <CurrentExportingCountries
-                maximumTenCurrentExportCountries={
-                  maximumTenCurrentExportCountries
-                }
+              <Countries
                 company={company}
+                countries={maximumTenCurrentExportCountries}
+                divDataTest={'current-export-list'}
+                linkDataTest={'current-export-country'}
               />
             ) : (
               <StyledSpan>Not set</StyledSpan>
@@ -196,16 +172,16 @@ const ExportStatus = ({
           </SummaryTable.Row>
           <SummaryTable.Row heading="Future countries of interest">
             {numberOfFutureInterestCountries ? (
-              <FutureInterestCountries
-                maximumTenFutureInterestCountries={
-                  maximumTenFutureInterestCountries
-                }
+              <Countries
                 company={company}
+                countries={maximumTenFutureInterestCountries}
+                divDataTest={'future-export-list'}
+                linkDataTest={'future-export-country'}
               />
             ) : (
               <StyledSpan>Not set</StyledSpan>
             )}
-            {numberOfFutureInterestCountries > 10 && (
+            {numberOfCurrentExportCountries > 10 && (
               <StyledViewMoreLink
                 href={`/companies/${company.id}/exports`}
                 data-test="export-status-future-exporting-to-link"

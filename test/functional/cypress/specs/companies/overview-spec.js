@@ -391,7 +391,7 @@ describe('Company overview page', () => {
         cy.go('back')
       })
       it('the card should link to the export history page of the specific country', () => {
-        cy.get('[data-test="current-export-country-link Algeria"]')
+        cy.get('[data-test="current-export-country-algeria-link"]')
           .contains('Algeria')
           .click()
         cy.location('pathname').should(
@@ -401,9 +401,7 @@ describe('Company overview page', () => {
         cy.go('back')
       })
       it('the card should link to the future countries of interest', () => {
-        cy.get(
-          '[data-test="export-future-country-of-interest-link Saint Helena"]'
-        )
+        cy.get('[data-test="future-export-country-saint-helena-link"]')
           .contains('Saint Helena')
           .click()
         cy.location('pathname').should(
