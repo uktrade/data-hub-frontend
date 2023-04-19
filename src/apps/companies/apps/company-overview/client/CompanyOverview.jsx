@@ -20,7 +20,6 @@ const CardContainer = styled('div')`
 const CompanyOverview = ({
   company,
   companiesHouseLink,
-  exportCountriesInformation,
   numberOfCurrentExportCountries,
   maximumTenCurrentExportCountries,
   numberOfFutureInterestCountries,
@@ -49,7 +48,6 @@ const CompanyOverview = ({
             <ExportStatus
               company={company}
               queryString={queryString}
-              exportCountriesInformation={exportCountriesInformation}
               numberOfCurrentExportCountries={numberOfCurrentExportCountries}
               maximumTenCurrentExportCountries={
                 maximumTenCurrentExportCountries

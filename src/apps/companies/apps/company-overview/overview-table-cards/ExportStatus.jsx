@@ -125,7 +125,6 @@ const ExportStatus = ({
   activePage,
   company,
   queryString,
-  exportCountriesInformation,
   numberOfCurrentExportCountries,
   maximumTenCurrentExportCountries,
   numberOfFutureInterestCountries,
