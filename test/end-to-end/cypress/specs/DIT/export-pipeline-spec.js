@@ -23,9 +23,10 @@ describe('Export pipeline', () => {
 
     beforeEach(() => {
       cy.intercept('POST', '/api-proxy/v4/export').as('createExport')
-      cy.intercept('GET', '/api-proxy/v4/export?limit=10&page=1&offset=0').as(
-        'listExport'
-      )
+      cy.intercept(
+        'GET',
+        '/api-proxy/v4/export?limit=10&page=1&offset=0&archived=false'
+      ).as('listExport')
     })
 
     it('should successfully create an export', () => {
