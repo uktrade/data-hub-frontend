@@ -34,6 +34,7 @@ const exportFaker = (overrides = {}) => ({
   notes: faker.random.words(25),
   created_by: faker.datatype.uuid(),
   modified_by: faker.datatype.uuid(),
+  archived: false,
   ...overrides,
 })
 
