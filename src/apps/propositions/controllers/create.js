@@ -11,6 +11,8 @@ const formConfigs = {
 }
 
 function renderCreatePage(req, res) {
+  const projectId = get(res.locals, 'investment.id')
+
   const propositionData = transformPropositionResponseToForm(
     res.locals.proposition
   )
@@ -48,6 +50,9 @@ function renderCreatePage(req, res) {
     .title(`Add ${kindName + forEntityName}`)
     .render('propositions/views/create.njk', {
       propositionForm,
+      props: {
+        projectId,
+      },
     })
 }
 
