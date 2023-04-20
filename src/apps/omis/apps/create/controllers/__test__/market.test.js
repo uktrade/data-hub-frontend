@@ -71,9 +71,7 @@ describe('OMIS create market controller', () => {
 
         expect(this.nextSpy).to.be.calledOnce
         expect(errorArgument instanceof Error).to.be.true
-        expect(errorArgument.message).to.equal(
-          `Error: ${this.errorMessageMock}`
-        )
+        expect(errorArgument.message).to.equal(`${this.errorMessageMock}`)
       })
     })
   })
