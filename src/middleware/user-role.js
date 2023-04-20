@@ -16,6 +16,6 @@ module.exports = (req, res, next) => {
   const isComingFromDashboard = req.originalUrl === urls.dashboard()
 
   return isFeatureTesting && isITA && isComingFromDashboard
-    ? res.redirect(urls.pipeline.index())
+    ? res.redirect(urls.exportPipeline.index())
     : next()
 }
