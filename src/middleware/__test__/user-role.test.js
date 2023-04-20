@@ -31,7 +31,7 @@ describe('user-role middleware', () => {
 
     it('should redirect to the dashboard "Pipeline" tab', () => {
       expect(middlewareParameters.resMock.redirect).calledOnceWithExactly(
-        urls.pipeline.index()
+        urls.exportPipeline.index()
       )
       expect(middlewareParameters.nextSpy).not.to.have.been.called
     })
@@ -67,7 +67,7 @@ describe('user-role middleware', () => {
 
       it('should redirect to the dashboard "Pipeline" tab', () => {
         expect(middlewareParameters.resMock.redirect).calledOnceWithExactly(
-          urls.pipeline.index()
+          urls.exportPipeline.index()
         )
         expect(middlewareParameters.nextSpy).not.to.have.been.called
       })

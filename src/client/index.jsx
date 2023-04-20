@@ -38,12 +38,8 @@ import ReferralDetails from '../apps/companies/apps/referrals/details/client/Ref
 import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralHelp'
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
 import InteractionReferralDetails from './modules/Interactions/InteractionDetails/InteractionReferralDetails.jsx'
-import PipelineForm from '../apps/my-pipeline/client'
 import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
 import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
-import ArchivePipelineItemForm from '../apps/my-pipeline/client/ArchivePipelineItemForm.jsx'
-import UnarchivePipelineItemForm from '../apps/my-pipeline/client/UnarchivePipelineItemForm.jsx'
-import DeletePipelineItemForm from '../apps/my-pipeline/client/DeletePipelineItemForm.jsx'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyLocalHeader from './components/CompanyLocalHeader'
 import CompanyTabbedLocalNavigation from './components/CompanyTabbedLocalNavigation'
@@ -90,19 +86,6 @@ import addCompanyPostcodeToRegionTask, {
 } from '../apps/companies/apps/add-company/client/tasks'
 import { TASK_SAVE_ONE_LIST_DETAILS } from '../apps/companies/apps/edit-one-list/client/state'
 import * as editOneListTasks from '../apps/companies/apps/edit-one-list/client/tasks'
-import {
-  TASK_GET_PIPELINE_BY_COMPANY,
-  TASK_ADD_COMPANY_TO_PIPELINE,
-  TASK_GET_PIPELINE_ITEM,
-  TASK_EDIT_PIPELINE_ITEM,
-  TASK_ARCHIVE_PIPELINE_ITEM,
-  TASK_UNARCHIVE_PIPELINE_ITEM,
-  TASK_DELETE_PIPELINE_ITEM,
-  TASK_GET_PIPELINE_COMPANY_CONTACTS,
-} from '../apps/my-pipeline/client/state'
-import * as pipelineTasks from '../apps/my-pipeline/client/tasks'
-import { TASK_GET_PIPELINE_LIST } from './components/Pipeline/state'
-import * as pipelineListTasks from './components/Pipeline/tasks'
 import { TASK_UPDATE_STAGE } from '../apps/investments/views/admin/client/state'
 import * as investmentAdminTasks from '../apps/investments/views/admin/client/tasks'
 import { TASK_POSTCODE_TO_REGION } from '../apps/companies/apps/add-company/client/state'
@@ -423,16 +406,6 @@ function App() {
           [TASK_SAVE_ONE_LIST_DETAILS]: editOneListTasks.saveOneListDetails,
           [EXPORT_COUNTRIES_EDIT_NAME]:
             exportCountriesEditTasks.saveExportCountries,
-          [TASK_GET_PIPELINE_BY_COMPANY]: pipelineTasks.getPipelineByCompany,
-          [TASK_ADD_COMPANY_TO_PIPELINE]: pipelineTasks.addCompanyToPipeline,
-          [TASK_GET_PIPELINE_LIST]: pipelineListTasks.getPipelineList,
-          [TASK_GET_PIPELINE_ITEM]: pipelineTasks.getPipelineItem,
-          [TASK_EDIT_PIPELINE_ITEM]: pipelineTasks.editPipelineItem,
-          [TASK_ARCHIVE_PIPELINE_ITEM]: pipelineTasks.archivePipelineItem,
-          [TASK_UNARCHIVE_PIPELINE_ITEM]: pipelineTasks.unarchivePipelineItem,
-          [TASK_DELETE_PIPELINE_ITEM]: pipelineTasks.deletePipelineItem,
-          [TASK_GET_PIPELINE_COMPANY_CONTACTS]:
-            pipelineTasks.getCompanyContacts,
           [TASK_POSTCODE_TO_REGION]: addCompanyPostcodeToRegionTask,
           [TASK_GET_ACTIVE_EVENTS]: addInteractionFormTasks.fetchActiveEvents,
           [TASK_SAVE_INTERACTION]: addInteractionFormTasks.saveInteraction,
@@ -720,9 +693,6 @@ function App() {
         <Mount selector="#company-export-countries-edit">
           {(props) => <ExportCountriesEdit {...props} />}
         </Mount>
-        <Mount selector="#pipeline-form">
-          {(props) => <PipelineForm {...props} />}
-        </Mount>
         <Mount selector="#company-local-header">
           {(props) => <CompanyLocalHeader {...props} />}
         </Mount>
@@ -734,15 +704,6 @@ function App() {
         </Mount>
         <Mount selector="#flash-messages">
           {(props) => <FlashMessages {...props} />}
-        </Mount>
-        <Mount selector="#archive-pipeline-item-form">
-          {(props) => <ArchivePipelineItemForm {...props} />}
-        </Mount>
-        <Mount selector="#unarchive-pipeline-item-form">
-          {(props) => <UnarchivePipelineItemForm {...props} />}
-        </Mount>
-        <Mount selector="#delete-pipeline-item-form">
-          {(props) => <DeletePipelineItemForm {...props} />}
         </Mount>
         <Mount selector="#footer">{() => <Footer />}</Mount>
         <Mount selector="#investment-projects-collection">
