@@ -129,7 +129,6 @@ module.exports = {
       index: url('/companies', '/:companyId/lists'),
       addRemove: url('/companies', '/:companyId/lists/add-remove'),
     },
-    pipelineAdd: url('/companies', '/:companyId/my-pipeline'),
     orders: url('/companies', '/:companyId/orders'),
     details: url('/companies', '/:companyId/details'),
     archive: url('/companies', '/:companyId/archive'),
@@ -488,15 +487,6 @@ module.exports = {
     },
   },
   support: url('/support'),
-  pipeline: {
-    index: url('/my-pipeline'),
-    active: url('/my-pipeline/active'),
-    won: url('/my-pipeline/won'),
-    edit: url('/my-pipeline', '/:pipelineItemId/edit'),
-    archive: url('/my-pipeline', '/:pipelineItemId/archive'),
-    unarchive: url('/my-pipeline', '/:pipelineItemId/unarchive'),
-    delete: url('/my-pipeline', '/:pipelineItemId/delete'),
-  },
   reminders: {
     index: url('/reminders'),
     investments: {
