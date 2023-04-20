@@ -50,20 +50,25 @@ const StyledActiveInvestmentTableBottomRow = styled(Table.Row)`
 
 const StyledActiveInvestmentHeadingTableCell = styled(Table.Cell)`
   border: 0;
-  padding: 0;
+  padding-top: 0;
 `
 
 const StyledActiveInvestmentHeadingTableCellHeader = styled(Table.CellHeader)`
   border: 0;
-  padding-top: 10px;
+  padding-top: 0px;
   font-weight: 400;
 `
 
 const StyledActiveInvestmentTableCell = styled(Table.Cell)`
   border: 0;
+  padding-top: 0px;
 `
 
-const ActiveInvestmentList = ({ upcomingActiveInvestments }) => {
+const StyledSpan = styled('span')`
+  color: ${GREY_2};
+`
+
+const ActiveInvestmentList = ({ upcomingActiveInvestments, queryString }) => {
   return upcomingActiveInvestments.map((activeInvestment) => {
     return (
       <>
@@ -81,7 +86,7 @@ const ActiveInvestmentList = ({ upcomingActiveInvestments }) => {
             </StyledActiveInvestmentSubject>
           </StyledActiveInvestmentHeadingTableCell>
         </StyledActiveInvestmentTableRow>
-        <StyledActiveInvestmentTableBottomRow>
+        <StyledActiveInvestmentTableRow>
           <StyledActiveInvestmentHeadingTableCellHeader
             colSpan={1}
             data-test={`estimated-land-date ${activeInvestment.name}`}
@@ -94,7 +99,7 @@ const ActiveInvestmentList = ({ upcomingActiveInvestments }) => {
               { month: 'long', year: 'numeric' }
             )}
           </StyledActiveInvestmentTableCell>
-        </StyledActiveInvestmentTableBottomRow>
+        </StyledActiveInvestmentTableRow>
         <StyledActiveInvestmentTableBottomRow>
           <StyledActiveInvestmentHeadingTableCellHeader
             colSpan={1}
@@ -103,15 +108,22 @@ const ActiveInvestmentList = ({ upcomingActiveInvestments }) => {
             Last interaction date
           </StyledActiveInvestmentHeadingTableCellHeader>
           <StyledActiveInvestmentTableCell colSpan={1}>
-            {activeInvestment.latest_interaction
-              ? new Date(
+            {activeInvestment.latest_interaction ? (
+              <Link
+                href={`${queryString}/interactions/${activeInvestment.latest_interaction.id}`}
+                data-test="active-investment-link"
+              >
+                {new Date(
                   activeInvestment.latest_interaction.date
                 ).toLocaleDateString('en-GB', {
                   day: 'numeric',
                   month: 'long',
                   year: 'numeric',
-                })
-              : 'not set'}
+                })}
+              </Link>
+            ) : (
+              <StyledSpan>Not set</StyledSpan>
+            )}
           </StyledActiveInvestmentTableCell>
         </StyledActiveInvestmentTableBottomRow>
       </>
@@ -132,6 +144,7 @@ const ActiveInvestmentProjectsCard = ({
       {stageList?.active ? (
         <ActiveInvestmentList
           upcomingActiveInvestments={upcomingActiveInvestments}
+          queryString={queryString}
         />
       ) : (
         <StyledTableRow>
