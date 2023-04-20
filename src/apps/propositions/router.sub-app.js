@@ -6,7 +6,6 @@ const { renderAbandon } = require('./controllers/abandon')
 const { renderUpload } = require('./controllers/upload')
 
 const {
-  postDetails,
   getDownloadLink,
   getPropositionOptions,
   getPropositionDetails,
@@ -44,7 +43,7 @@ router
 
 router
   .route(['/propositions/create/:kind'])
-  .post(getPropositionOptions, postDetails, renderCreatePage)
+  .post(getPropositionOptions, renderCreatePage)
   .get(getPropositionOptions, renderCreatePage)
 
 router.get('/propositions/:propositionId', renderDetailsPage)

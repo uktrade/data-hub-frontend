@@ -2,32 +2,12 @@ const { assign } = require('lodash')
 const mockProposition = require('../../../../test/unit/data/propositions/proposition.json')
 
 const {
-  transformPropositionResponseToForm,
   transformPropositionToListItem,
   transformPropositionResponseToViewRecord,
   transformPropositionListItemToHaveUrlPrefix,
 } = require('../transformers')
 
 describe('Proposition transformers', () => {
-  describe('#transformPropositionResponseToForm', () => {
-    context('when the source is a proposition', () => {
-      beforeEach(() => {
-        this.transformed = transformPropositionResponseToForm(mockProposition)
-      })
-
-      it('should transform data from proposition response to form', () => {
-        expect(this.transformed).to.deep.equal({
-          id: '7d68565a-fc0e-422c-8ce3-df92cd40a64a',
-          name: 'Game-changing Proposition',
-          scope: 'scope 0',
-          adviser: '14d9f881-4df4-421b-8181-874f9dc83b76',
-          deadline: { day: '20', month: '05', year: '2018' },
-          investment_project: '65e77d82-8ebb-4ee7-b6ac-8c5945c512db',
-        })
-      })
-    })
-  })
-
   describe('#transformPropositionToListItem', () => {
     context('when the source is a proposition', () => {
       beforeEach(() => {
