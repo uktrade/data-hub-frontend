@@ -229,10 +229,6 @@ describe('urls', () => {
       expect(urls.companies.lists.addRemove(companyId)).to.equal(
         `/companies/${companyId}/lists/add-remove`
       )
-
-      expect(urls.companies.pipelineAdd(companyId)).to.equal(
-        `/companies/${companyId}/my-pipeline`
-      )
     })
   })
 
@@ -313,20 +309,6 @@ describe('urls', () => {
       )
       expect(urls.investments.profiles.data()).to.equal(
         '/investments/profiles/data'
-      )
-    })
-  })
-
-  describe('pipeline', () => {
-    const pipelineItemId = faker.datatype.uuid()
-
-    it('should return the correct value', () => {
-      expect(urls.pipeline.index()).to.equal('/my-pipeline')
-      expect(urls.pipeline.index.route).to.equal('/')
-      expect(urls.pipeline.active()).to.equal('/my-pipeline/active')
-      expect(urls.pipeline.won()).to.equal('/my-pipeline/won')
-      expect(urls.pipeline.edit(pipelineItemId)).to.equal(
-        `/my-pipeline/${pipelineItemId}/edit`
       )
     })
   })

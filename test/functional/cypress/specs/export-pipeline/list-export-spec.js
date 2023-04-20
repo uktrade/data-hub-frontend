@@ -125,7 +125,6 @@ describe('Export pipeline list', () => {
   const notArchivedExports = exportList.filter((e) => e.archived == false)
 
   before(() => {
-    cy.setUserFeatures(['export-pipeline'])
     cy.intercept(
       'GET',
       '/api-proxy/v4/export?limit=10&page=1&offset=0&archived=false',
