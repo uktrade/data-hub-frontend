@@ -22,7 +22,6 @@ const ALLOWLIST = [
   '/adviser/:id/',
   '/v4/company/:id/export-win',
   '/v4/company/:id',
-  '/v4/pipeline-item',
   '/v4/company/:id/assign-one-list-tier-and-global-account-manager',
   '/v4/reminder/subscription/estimated-land-date',
   '/v4/reminder/subscription/no-recent-investment-interaction',
