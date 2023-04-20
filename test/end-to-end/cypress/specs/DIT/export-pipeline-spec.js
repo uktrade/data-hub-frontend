@@ -12,7 +12,7 @@ describe('Export pipeline', () => {
     'export pipeline testing'
   )
   const contact = fixtures.contact.create(company.pk)
-  const newExport = exportFaker()
+  const newExport = exportFaker({ destination_country: { name: 'Greece' } })
   let createdExportId
 
   context('Happy path export pipeline item', () => {
