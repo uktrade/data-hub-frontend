@@ -114,18 +114,28 @@ describe('Export pipeline list', () => {
     },
     created_on: '2023-01-18T09:39:39.998239Z',
   })
+  const archived = exportFaker({
+    id: 4,
+    archived: true,
+    title: 'Archived export',
+  })
 
   const otherExports = exportListFaker(8)
-  const exportList = [active, won, inactive, ...otherExports]
+  const exportList = [active, won, inactive, archived, ...otherExports]
+  const notArchivedExports = exportList.filter((e) => e.archived == false)
 
   before(() => {
     cy.setUserFeatures(['export-pipeline'])
-    cy.intercept('GET', '/api-proxy/v4/export?limit=10&page=1&offset=0', {
-      body: {
-        count: exportList.length,
-        results: exportList,
-      },
-    }).as('apiRequest')
+    cy.intercept(
+      'GET',
+      '/api-proxy/v4/export?limit=10&page=1&offset=0&archived=false',
+      {
+        body: {
+          count: notArchivedExports.length,
+          results: notArchivedExports,
+        },
+      }
+    ).as('apiRequest')
     cy.visit(urls.exportPipeline.index())
     cy.wait('@apiRequest')
   })
@@ -140,7 +150,16 @@ describe('Export pipeline list', () => {
 
   it('should display a list of exports', () => {
     cy.get('[data-test="export-list"]').should('have.length', 1)
-    cy.get('[data-test="export-item"]').should('have.length', exportList.length)
+    cy.get('[data-test="export-item"]').should(
+      'have.length',
+      notArchivedExports.length
+    )
+  })
+
+  it('should not show archived items', () => {
+    cy.get(`a[href="${urls.exportPipeline.details(archived.id)}"]`).should(
+      'not.exist'
+    )
   })
 
   it('should display export potential tags', () => {
