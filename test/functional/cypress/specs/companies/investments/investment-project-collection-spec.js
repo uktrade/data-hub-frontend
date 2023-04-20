@@ -112,7 +112,7 @@ describe('Company Investments Collection Page', () => {
     })
 
     assertCompanyCollectionBreadcrumbs(dnbCorp, 'Investment')
-    assertTitle('Filters3 investment projects')
+    assertTitle('3 investment projects')
     assertRemoveAllFiltersNotPresent()
 
     it('should render an "Add investment project" button', () => {

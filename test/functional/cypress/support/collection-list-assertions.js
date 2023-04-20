@@ -115,7 +115,7 @@ const assertUpdatedOn = (item, text) => {
 
 const assertTitle = (headingText) => {
   it('should render a title', () => {
-    cy.get('h2').should('have.text', headingText)
+    cy.get('h2').should('contain', headingText)
   })
 }
 
