@@ -72,7 +72,6 @@ describe('Dashboard', () => {
 
   context('Tabs - Export', () => {
     before(() => {
-      cy.setUserFeatures(['export-pipeline'])
       cy.visit('/')
     })
 
