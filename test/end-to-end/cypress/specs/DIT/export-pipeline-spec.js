@@ -58,6 +58,14 @@ describe('Export pipeline', () => {
       )
     })
 
+    it('should successfully display the new export', () => {
+      cy.visit(exportPipeline.index())
+      cy.wait('@listExport')
+      cy.get(`a[href="${exportPipeline.details(createdExportId)}"]`).should(
+        'exist'
+      )
+    })
+
     it('should successfully edit an export', () => {
       cy.visit(exportPipeline.edit(createdExportId))
       cy.get('[data-test=title-input]').type('edited title')
@@ -70,7 +78,9 @@ describe('Export pipeline', () => {
     it('should successfully delete an export', () => {
       cy.visit(exportPipeline.delete(createdExportId))
       cy.get('[data-test=submit-button]').click()
+    })
 
+    it('should not display the deleted export in the list', () => {
       cy.visit(exportPipeline.index())
       cy.wait('@listExport')
       cy.get(`a[href="${exportPipeline.details(createdExportId)}"]`).should(
