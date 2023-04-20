@@ -17,12 +17,9 @@ async function fetchOptions(req, url) {
   metaData = await hawkRequest(url)
 
   if (!config.isTest) {
-    await client.set(
-      url,
-      JSON.stringify(metaData),
-      'EX',
-      config.cacheDurationLong
-    )
+    await client.set(url, JSON.stringify(metaData), {
+      EX: config.cacheDurationLong,
+    })
   }
 
   return metaData
