@@ -28,7 +28,7 @@ describe('Dashboard', () => {
 
   context('Tabs - Export', () => {
     before(() => {
-      cy.setUserFeatures(['personalised-dashboard', 'export-pipeline'])
+      cy.setUserFeatures(['personalised-dashboard'])
       cy.visit('/')
     })
 
