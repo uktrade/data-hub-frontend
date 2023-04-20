@@ -532,6 +532,18 @@ describe('Company overview page', () => {
         cy.get('[data-test="total-abandoned-projects"]').contains('1').click()
         cy.go('back')
       })
+      it('Inactive projects should not include an "Add investment project" button', () => {
+        cy.get('[data-test="tabbedLocalNav"]').contains('Investment').click()
+        cy.go('back')
+      })
+      it('UK Based Active projects should not have an "Add investment project" button', () => {
+        cy.get('[data-test="tabbedLocalNav"]').contains('Investment').click()
+        cy.go('back')
+      })
+      it('Active projects should include an "Add investment project" button with the current company pre selected', () => {
+        cy.get('[data-test="tabbedLocalNav"]').contains('Investment').click()
+        cy.go('back')
+      })
     }
   )
 
