@@ -62,6 +62,7 @@ const interactionsRouter = require('../interactions/router.sub-app')
 const companyListsRouter = require('../company-lists/router')
 const advisersRouter = require('./apps/advisers/router')
 const referralsRouter = require('./apps/referrals/router')
+const { companyPipelineRouter } = require('../my-pipeline/router')
 
 const {
   setCompanyHierarchyLocalNav,
@@ -145,6 +146,7 @@ router.use(businessDetailsRouter)
 router.use(matchCompanyRouter)
 router.use(exportsRouter)
 router.use(referralsRouter)
+router.use(companyPipelineRouter)
 router.use(companyOverviewRouter)
 
 module.exports = router
