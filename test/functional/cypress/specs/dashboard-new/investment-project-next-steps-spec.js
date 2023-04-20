@@ -6,7 +6,7 @@ describe('Dashboard - Investment project next steps', () => {
     cy.visit('/')
 
     // If the user is an ITA (as in these tests) the UI redirects
-    // the user from / to /my-pipeline. Therefore, we have to select the
+    // the user from / to /export. Therefore, we have to select the
     // "Investment projects" tab before testing
     cy.get('[data-test="tablist"]').contains('Investment projects').click()
   })
