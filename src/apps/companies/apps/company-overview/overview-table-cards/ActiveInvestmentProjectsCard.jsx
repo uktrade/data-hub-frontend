@@ -44,22 +44,40 @@ const StyledActiveInvestmentTableRow = styled(Table.Row)`
   border: 0;
 `
 
-const StyledActiveInvestmentTableBottomRow = styled(Table.Row)`
-  border-bottom: 1px solid ${GREY_2};
-`
-
 const StyledActiveInvestmentHeadingTableCell = styled(Table.Cell)`
   border: 0;
   padding-top: 0;
+  padding-bottom: 10px;
 `
 
 const StyledActiveInvestmentHeadingTableCellHeader = styled(Table.CellHeader)`
   border: 0;
   padding-top: 0px;
+  padding-bottom: 0px;
   font-weight: 400;
 `
 
 const StyledActiveInvestmentTableCell = styled(Table.Cell)`
+  border: 0;
+  padding-top: 0px;
+  padding-bottom: 0px;
+`
+
+const StyledActiveInvestmentTableBottomRow = styled(Table.Row)`
+  border-bottom: 1px solid ${GREY_2};
+  pading-bottom: 50px;
+  magin-bottom: 50px;
+`
+
+const StyledActiveInvestmentHeadingTableBottomCellHeader = styled(
+  Table.CellHeader
+)`
+  border: 0;
+  padding-top: 0px;
+  font-weight: 400;
+`
+
+const StyledActiveInvestmentTableBottomCell = styled(Table.Cell)`
   border: 0;
   padding-top: 0px;
 `
@@ -101,13 +119,13 @@ const ActiveInvestmentList = ({ upcomingActiveInvestments, queryString }) => {
           </StyledActiveInvestmentTableCell>
         </StyledActiveInvestmentTableRow>
         <StyledActiveInvestmentTableBottomRow>
-          <StyledActiveInvestmentHeadingTableCellHeader
+          <StyledActiveInvestmentHeadingTableBottomCellHeader
             colSpan={1}
             data-test={`estimated-land-date ${activeInvestment.name}`}
           >
             Last interaction date
-          </StyledActiveInvestmentHeadingTableCellHeader>
-          <StyledActiveInvestmentTableCell colSpan={1}>
+          </StyledActiveInvestmentHeadingTableBottomCellHeader>
+          <StyledActiveInvestmentTableBottomCell colSpan={1}>
             {activeInvestment.latest_interaction ? (
               <Link
                 href={`${queryString}/interactions/${activeInvestment.latest_interaction.id}`}
@@ -124,7 +142,7 @@ const ActiveInvestmentList = ({ upcomingActiveInvestments, queryString }) => {
             ) : (
               <StyledSpan>Not set</StyledSpan>
             )}
-          </StyledActiveInvestmentTableCell>
+          </StyledActiveInvestmentTableBottomCell>
         </StyledActiveInvestmentTableBottomRow>
       </>
     )
