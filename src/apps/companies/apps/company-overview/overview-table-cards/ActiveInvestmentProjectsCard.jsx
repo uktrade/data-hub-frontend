@@ -8,6 +8,7 @@ import { companyProjectsState2props } from './state'
 import { connect } from 'react-redux'
 import urls from '../../../../../lib/urls'
 import { BLUE, GREY_2 } from '../../../../../client/utils/colours'
+import { kebabCase } from 'lodash'
 
 const StyledActiveInvestmentSubject = styled('h3')`
   font-size: ${FONT_SIZE.SIZE_20};
@@ -97,7 +98,9 @@ const ActiveInvestmentList = ({ upcomingActiveInvestments, queryString }) => {
                 href={`${urls.investments.projects.details(
                   activeInvestment.id
                 )}`}
-                data-test="active-investment-page-link"
+                data-test={`active-investment-page-${kebabCase(
+                  activeInvestment.name
+                )}-link`}
               >
                 {activeInvestment.name}
               </Link>
@@ -107,7 +110,9 @@ const ActiveInvestmentList = ({ upcomingActiveInvestments, queryString }) => {
         <StyledActiveInvestmentTableRow>
           <StyledActiveInvestmentHeadingTableCellHeader
             colSpan={1}
-            data-test={`estimated-land-date ${activeInvestment.name}`}
+            data-test={`estimated-land-date-${kebabCase(
+              activeInvestment.name
+            )}-header`}
           >
             Estimated land date
           </StyledActiveInvestmentHeadingTableCellHeader>
@@ -121,7 +126,9 @@ const ActiveInvestmentList = ({ upcomingActiveInvestments, queryString }) => {
         <StyledActiveInvestmentTableBottomRow>
           <StyledActiveInvestmentHeadingTableBottomCellHeader
             colSpan={1}
-            data-test={`estimated-land-date ${activeInvestment.name}`}
+            data-test={`last-interaction-date-${kebabCase(
+              activeInvestment.name
+            )}-header`}
           >
             Last interaction date
           </StyledActiveInvestmentHeadingTableBottomCellHeader>
@@ -129,7 +136,9 @@ const ActiveInvestmentList = ({ upcomingActiveInvestments, queryString }) => {
             {activeInvestment.latest_interaction ? (
               <Link
                 href={`${queryString}/interactions/${activeInvestment.latest_interaction.id}`}
-                data-test="active-investment-link"
+                data-test={`last-interaction-${kebabCase(
+                  activeInvestment.name
+                )}-link`}
               >
                 {new Date(
                   activeInvestment.latest_interaction.date
