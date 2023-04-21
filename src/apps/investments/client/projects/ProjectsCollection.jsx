@@ -213,7 +213,6 @@ const ProjectsCollection = ({
               </StyledParagraph>
             </StyledDetails>
           </FilterToggleSection>
-
           <FilterToggleSection
             id="ProjectCollection.land-date-details-filters"
             label="Land date details"
