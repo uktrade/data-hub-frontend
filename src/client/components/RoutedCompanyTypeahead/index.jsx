@@ -3,27 +3,30 @@ import PropTypes from 'prop-types'
 import { throttle } from 'lodash'
 
 import RoutedTypeahead from '../RoutedTypeahead'
+// import { transformCompanyToListItem } from '../../../apps/investments/client/projects/transformers'
 
 import Task from '../Task'
 
 import { apiProxyAxios } from '../Task/utils'
-import { transformIdNameToValueLabel } from '../../transformers'
 
 const parseCompanyData = (companies) =>
   companies
     .filter((company) => company.name && company.name.trim().length)
-    .map(transformIdNameToValueLabel)
+    .map(({ id, name }) => ({
+      label: name,
+      value: id,
+    }))
 
 const fetchCompanies = () => {
   return throttle((searchString) => {
     if (searchString.length) {
       return apiProxyAxios
-        .get('/v4/company', {
+        .get('/v4/company/', {
           params: {
             autocomplete: searchString,
           },
         })
-        .then(({ data }) => parseCompanyData(data.results))
+        .then(({ data }) => parseCompanyData(data))
     } else {
       return Promise.resolve([])
     }
