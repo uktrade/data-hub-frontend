@@ -53,7 +53,7 @@ describe('Export pipeline edit', () => {
 
     it('should render edit event breadcrumb', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.exportPipeline.index(),
         Companies: urls.companies.index(),
       })
     })
@@ -87,7 +87,7 @@ describe('Export pipeline edit', () => {
 
       it('should render the edit export breadcrumb', () => {
         assertBreadcrumbs({
-          Home: urls.dashboard(),
+          Home: urls.exportPipeline.index(),
           Companies: urls.companies.index(),
           [exportItem.company.name]: urls.companies.activity.index(
             exportItem.company.id
@@ -317,7 +317,7 @@ describe('Export pipeline edit', () => {
     })
 
     context('when the form contains valid data and is submitted', () => {
-      it('the form should stay on the current page and display flash message', () => {
+      it('the form should redirect to the export details page and display flash message', () => {
         cy.get('[data-test=submit-button]').click()
 
         assertPayload('@patchExportItemApiRequest', {
