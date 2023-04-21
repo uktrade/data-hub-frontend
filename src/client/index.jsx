@@ -74,6 +74,7 @@ import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
 import Dashboard from './modules/Dashboard/Dashboard'
 import CoreTeam from './modules/Companies/CoreTeam/CoreTeam'
 import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
+import CreateProposition from './modules/Investments/Projects/Propositions/CreateProposition'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -349,9 +350,11 @@ import { deleteExport } from '../client/modules/ExportPipeline/ExportDelete/task
 
 import { TASK_GET_EXPORT_PIPELINE_LIST } from '../client/modules/ExportPipeline/ExportList/state'
 import { getExportPipelineList } from '../client/modules/ExportPipeline/ExportList/task'
-
 import { TASK_REDIRECT_TO_CONTACT_FORM } from './components/ContactForm/state'
 import ProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
+
+import { TASK_CREATE_INVESTMENT_PROPOSITION } from './modules/Investments/Projects/Propositions/state'
+import { createInvestmentProposition } from './modules/Investments/Projects/Propositions/tasks'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -576,6 +579,7 @@ function App() {
           [TASK_SAVE_EXPORT]: saveExport,
           [TASK_GET_EXPORT_PIPELINE_LIST]: getExportPipelineList,
           [TASK_REDIRECT_TO_CONTACT_FORM]: redirectToContactForm,
+          [TASK_CREATE_INVESTMENT_PROPOSITION]: createInvestmentProposition,
         }}
       >
         <Mount selector="#data-hub-header">
@@ -847,6 +851,9 @@ function App() {
         </Mount>
         <Mount selector="#company-large-capital-profile">
           {(props) => <LargeCapitalProfile {...props} />}
+        </Mount>
+        <Mount selector="#create-proposition">
+          {(props) => <CreateProposition {...props} />}
         </Mount>
 
         <Mount selector="#react-app">

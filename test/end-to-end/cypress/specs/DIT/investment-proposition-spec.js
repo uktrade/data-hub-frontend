@@ -3,23 +3,34 @@ const selectors = require('../../../../selectors')
 const { investments } = require('../../../../../src/lib/urls')
 const { formatWithoutParsing } = require('../../../../../src/client/utils/date')
 const { DATE_LONG_FORMAT_1 } = require('../../../../../src/common/constants')
+const {
+  selectFirstAdvisersTypeaheadOption,
+} = require('../../../../functional/cypress/support/actions')
+const {
+  assertFlashMessage,
+} = require('../../../../functional/cypress/support/assertions')
 
 const today = new Date()
 
 const createProposition = (data) => {
   cy.get(selectors.entityCollection.addProposition).click()
-  cy.get(selectors.investment.proposition.name).type(data.name)
-  cy.get(selectors.investment.proposition.scope).type(data.scope)
-  cy.get(selectors.investment.proposition.day).type(
+  cy.get('[data-test=proposition-name-input]').type(data.name)
+  cy.get('[data-test=proposition-scope-input]').type(data.scope)
+  cy.get('[data-test=proposition_deadline-day]').type(
     formatWithoutParsing(data.date, 'dd')
   )
-  cy.get(selectors.investment.proposition.month).type(
+  cy.get('[data-test=proposition_deadline-month]').type(
     formatWithoutParsing(data.date, 'MM')
   )
-  cy.get(selectors.investment.proposition.year).type(
+  selectFirstAdvisersTypeaheadOption({
+    element: '[data-test="field-proposition_assignee"]',
+    input: 'DIT Staff',
+    mockAdviserResponse: false,
+  })
+  cy.get('[data-test=proposition_deadline-year]').type(
     formatWithoutParsing(data.date, 'yyyy')
   )
-  cy.get(selectors.investment.proposition.button).click()
+  cy.get('[data-test=submit-button]').click()
 }
 
 describe('Proposition', () => {
@@ -34,14 +45,11 @@ describe('Proposition', () => {
     const data = {
       name: 'Proposition name',
       scope: 'Proposition scope',
+      adviser: 'DIT Staff',
       date: today,
     }
     createProposition(data)
-
-    cy.get(selectors.message.successful).should(
-      'contain',
-      'Proposition created'
-    )
+    assertFlashMessage('Proposition created')
 
     cy.get(selectors.collection.items)
       .should('contain', formatWithoutParsing(today, DATE_LONG_FORMAT_1))
@@ -57,10 +65,7 @@ describe('Proposition', () => {
     }
     createProposition(data)
 
-    cy.get(selectors.message.successful).should(
-      'contain',
-      'Proposition created'
-    )
+    assertFlashMessage('Proposition created')
 
     cy.get(`${selectors.collection.items}:contains("${data.name}")`)
       .find('a:contains("Abandon")')

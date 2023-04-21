@@ -1,6 +1,6 @@
 const config = require('../config')
 const logger = require('../config/logger')
-const hawkRequest = require('../lib/hawk-request')
+const hawkRequest = require('./hawk-request')
 
 let redisClient
 

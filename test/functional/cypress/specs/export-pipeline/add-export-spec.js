@@ -1,3 +1,5 @@
+import { contactFaker, contactsListFaker } from '../../fakers/contacts'
+
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 const {
@@ -9,6 +11,7 @@ const {
   assertFieldError,
   assertLocalHeader,
   assertBreadcrumbs,
+  assertFieldEmpty,
 } = require('../../support/assertions')
 
 const {
@@ -29,6 +32,11 @@ const autoCompleteAdvisers =
 const { faker } = require('@faker-js/faker')
 
 describe('Export pipeline create', () => {
+  before(() => {
+    // Clear the session storage to avoid caching of contact form data in the application sessionStorage
+    Cypress.session.clearCurrentSessionData()
+  })
+
   context('when adding an export for unknown company id', () => {
     before(() => {
       cy.intercept('GET', '/api-proxy/v4/company/not_real', {
@@ -58,6 +66,20 @@ describe('Export pipeline create', () => {
   context('when adding an export for known company id', () => {
     const company = fixtures.company.venusLtd
     const addPageUrl = `/export/create?companyId=${company.id}`
+    const newExport = generateExport()
+    const newContact = contactFaker()
+
+    const add_contact_and_return_to_export_form = () => {
+      cy.get('[data-test="add-a-new-contact-link"').click()
+      fill('[data-test=group-field-first_name]', newContact.first_name)
+      fill('[data-test=group-field-last_name]', newContact.last_name)
+      fill('[data-test=job-title-input]', newContact.job_title)
+      fill('[data-test=job-title-input]', newContact.job_title)
+      fill('[data-test=email-input]', newContact.email)
+      cy.get('[name="addressSameAsCompany"]').check('Yes')
+      cy.get('[name="primary"]').check('No')
+      cy.get('[data-test="submit-button"').click()
+    }
 
     context('when verifying the page', () => {
       before(() => {
@@ -115,6 +137,24 @@ describe('Export pipeline create', () => {
       })
     })
 
+    context('when the form is populated but not submitted', () => {
+      before(() => {
+        cy.visit(addPageUrl)
+      })
+
+      it('leaving and returning to the page should not keep any values', () => {
+        fill('[data-test=title-input]', newExport.title)
+        fill('[data-test=estimated_win_date-month]', '09')
+        fill('[data-test=estimated_win_date-year]', '2029')
+        add_contact_and_return_to_export_form()
+        cy.visit('/')
+        cy.visit(addPageUrl)
+        assertFieldEmpty('[data-test=title-input]')
+        assertFieldEmpty('[data-test=estimated_win_date-month]')
+        assertFieldEmpty('[data-test=estimated_win_date-year]')
+      })
+    })
+
     context('when the form contains invalid data and is submitted', () => {
       before(() => {
         cy.visit(addPageUrl)
@@ -164,6 +204,11 @@ describe('Export pipeline create', () => {
           cy.get('[data-test="field-export_potential"]'),
           ERROR_MESSAGES.export_potential
         )
+        assertFieldError(
+          cy.get('[data-test="field-contacts"]'),
+          ERROR_MESSAGES.contacts,
+          false
+        )
       })
 
       it('the form should display validation error message for too many team members', () => {
@@ -195,15 +240,24 @@ describe('Export pipeline create', () => {
     context(
       'when the form contains valid data and the form is submitted',
       () => {
+        const contacts = contactsListFaker((length = 3))
+
         before(() => {
           cy.intercept('POST', `/api-proxy/v4/export`).as(
             'postExportItemApiRequest'
           )
+          cy.intercept('POST', `/api-proxy/v4/contact`, newContact).as(
+            'postContactApiRequest'
+          )
+          cy.intercept(
+            'GET',
+            `/api-proxy/v4/contact?company_id=${company.id}`,
+            { count: 4, results: [newContact, ...contacts] }
+          ).as('getContactApiRequest')
           cy.visit(addPageUrl)
         })
 
         it('the form should redirect to the dashboard page and display a success message', () => {
-          const newExport = generateExport()
           const teamMember = faker.helpers.arrayElement(autoCompleteAdvisers)
 
           fill('[data-test=title-input]', newExport.title)
@@ -225,10 +279,21 @@ describe('Export pipeline create', () => {
           fillTypeahead('[data-test=field-sector]', newExport.sector.name)
           cy.get('[name="status"]').check(newExport.status)
           cy.get('[name="export_potential"]').check(newExport.export_potential)
+
           cy.get('[name="exporter_experience"]').check(
             newExport.exporter_experience.id
           )
           fill('[data-test=field-notes]', newExport.notes)
+          add_contact_and_return_to_export_form()
+          assertFlashMessage(
+            `You have successfully added a new contact ${newContact.name}`
+          )
+
+          fillTypeahead('[data-test=field-contacts]', newContact.name)
+          cy.window()
+            .its('sessionStorage')
+            .invoke('getItem', 'exportForm')
+            .should('exist')
 
           cy.get('[data-test=submit-button]').click()
 
@@ -236,7 +301,7 @@ describe('Export pipeline create', () => {
             title: newExport.title,
             owner: '7d19d407-9aec-4d06-b190-d3f404627f21',
             team_members: [teamMember.id],
-            company: company.id,
+            company: { id: company.id, name: company.name },
             estimated_export_value_years:
               newExport.estimated_export_value_years.id,
             estimated_export_value_amount:
@@ -246,12 +311,18 @@ describe('Export pipeline create', () => {
             sector: newExport.sector.id,
             status: newExport.status,
             export_potential: newExport.export_potential,
+            contacts: [newContact.id],
             exporter_experience: newExport.exporter_experience.id,
             notes: newExport.notes,
           })
 
           assertExactUrl('')
           assertFlashMessage(`'${newExport.title}' created`)
+
+          cy.window()
+            .its('sessionStorage')
+            .invoke('getItem', 'exportForm')
+            .should('not.exist')
         })
       }
     )

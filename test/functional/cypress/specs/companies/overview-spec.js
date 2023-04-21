@@ -9,6 +9,9 @@ import { exportFaker } from '../../fakers/export'
 const { usCompany } = company
 
 describe('Company overview page', () => {
+  const interactionUrlAllOverview = urls.companies.interactions.index(
+    fixtures.company.allOverviewDetails.id
+  )
   const addInteractionUrlAllOverview = urls.companies.interactions.create(
     fixtures.company.allOverviewDetails.id
   )
@@ -359,10 +362,15 @@ describe('Company overview page', () => {
           .contains('Export sub-segment')
           .siblings()
           .contains('td', 'Sustain: Nurture & grow')
-        cy.get('th')
-          .contains('Currently exporting to')
-          .siblings()
-          .contains('td', 'Western Sahara')
+        cy.get('[data-test="current-export-list"]')
+          .children()
+          .should('have.length.of.at.most', 10)
+        cy.get('[data-test="export-status-currently-exporting-to-link"]')
+          .contains('View 2 more')
+          .click()
+        cy.location('pathname').should('eq', companyExportsAllOverview)
+        cy.go('back')
+        cy.get('[data-test="exportStatusContainer"]').children()
         cy.get('th')
           .contains('Last export win')
           .siblings()
@@ -374,7 +382,12 @@ describe('Company overview page', () => {
         cy.get('th')
           .contains('Future countries of interest')
           .siblings()
-          .contains('td', 'Yemen')
+          .contains('td', 'Saint Helena')
+        cy.get('[data-test="export-status-future-exporting-to-link"]')
+          .contains('View 4 more')
+          .click()
+        cy.location('pathname').should('eq', companyExportsAllOverview)
+        cy.go('back')
       })
 
       it('the card should link to the export status overview page', () => {
@@ -385,22 +398,22 @@ describe('Company overview page', () => {
         cy.go('back')
       })
       it('the card should link to the export history page of the specific country', () => {
-        cy.get('[data-test="export-status-currently-exporting-to-link"]')
-          .contains('Western Sahara')
+        cy.get('[data-test="current-export-country-algeria-link"]')
+          .contains('Algeria')
           .click()
         cy.location('pathname').should(
           'eq',
-          `${companyExportsAllOverview}/history/36afd8d0-5d95-e211-a939-e4115bead28a`
+          `${companyExportsAllOverview}/history/955f66a0-5d95-e211-a939-e4115bead28a`
         )
         cy.go('back')
       })
       it('the card should link to the future countries of interest', () => {
-        cy.get('[data-test="export-status-country-of-interest-link"]')
-          .contains('Yemen')
+        cy.get('[data-test="future-export-country-saint-helena-link"]')
+          .contains('Saint Helena')
           .click()
         cy.location('pathname').should(
           'eq',
-          `${companyExportsAllOverview}/history/37afd8d0-5d95-e211-a939-e4115bead28a`
+          `${companyExportsAllOverview}/history/dec8d80f-efe5-4190-a8e9-c8ccc38e7724`
         )
         cy.go('back')
       })
@@ -831,11 +844,13 @@ describe('Company overview page', () => {
           )}`
         )
         cy.go('back')
-        cy.get('[data-test="estimated-land-date New rollercoaster"]')
+        cy.get('[data-test="estimated-land-date-new-rollercoaster-header"]')
           .next()
           .contains('May 2024')
-          .parent()
+        cy.get('[data-test="last-interaction-date-new-rollercoaster-header"]')
           .next()
+          .contains('Not set')
+        cy.get('[data-test="active-investment-page-new-restaurant-link"]')
           .contains('New restaurant')
           .click()
         cy.location('pathname').should(
@@ -845,11 +860,22 @@ describe('Company overview page', () => {
           )}`
         )
         cy.go('back')
-        cy.get('[data-test="estimated-land-date New restaurant"]')
+        cy.get('[data-test="estimated-land-date-new-restaurant-header"]')
           .next()
           .contains('October 2025')
-          .parent()
+        cy.get('[data-test="last-interaction-date-new-restaurant-header"]')
           .next()
+          .contains('16 March 2021')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          `${interactionUrlAllOverview}/3fd90013-4bcb-4c39-b8df-df264471ea85`
+        )
+        cy.go('back')
+        cy.get('[data-test="estimated-land-date-wig-factory-header"]')
+          .next()
+          .contains('January 2026')
+        cy.get('[data-test="active-investment-page-wig-factory-link"]')
           .contains('Wig factory')
           .click()
         cy.location('pathname').should(
@@ -859,9 +885,15 @@ describe('Company overview page', () => {
           )}`
         )
         cy.go('back')
-        cy.get('[data-test="estimated-land-date Wig factory"]')
+        cy.get('[data-test="last-interaction-date-wig-factory-header"]')
           .next()
-          .contains('January 2026')
+          .contains('16 March 2021')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          `${interactionUrlAllOverview}/3fd90013-4bcb-4c39-b8df-df264471ea85`
+        )
+        cy.go('back')
       })
       it('the card should link to the investment page', () => {
         cy.get('[data-test="active-investments-page-link"]')

@@ -2,7 +2,7 @@ const { castArray, sortBy } = require('lodash')
 
 const config = require('../config')
 const { authorisedRequest } = require('../lib/authorised-request')
-const hawkRequest = require('../lib/hawk-request')
+const hawkRequest = require('./hawk-request')
 const { filterDisabledOption } = require('../modules/permissions/filters')
 const { transformObjectToOption } = require('../apps/transformers')
 const redisClient = require('./redis-client')
@@ -17,12 +17,9 @@ async function fetchOptions(req, url) {
   metaData = await hawkRequest(url)
 
   if (!config.isTest) {
-    await client.set(
-      url,
-      JSON.stringify(metaData),
-      'EX',
-      config.cacheDurationLong
-    )
+    await client.set(url, JSON.stringify(metaData), {
+      EX: config.cacheDurationLong,
+    })
   }
 
   return metaData

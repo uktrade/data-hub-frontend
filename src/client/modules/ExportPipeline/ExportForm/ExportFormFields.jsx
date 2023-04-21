@@ -12,24 +12,28 @@ import {
   FieldCurrency,
   FieldTypeahead,
   FieldTextarea,
+  ContactInformation,
 } from '../../../../client/components'
 import {
   CountriesResource,
   ExportExperienceResource,
   ExportYearsResource,
   SectorResource,
+  CompanyContactsResource,
 } from '../../../components/Resource'
 import { FORM_LAYOUT } from '../../../../common/constants'
-import { TASK_SAVE_EXPORT } from './state'
+import { TASK_SAVE_EXPORT, ID as STATE_ID } from './state'
 import Task from '../../../components/Task'
 import { ERROR_MESSAGES } from './constants'
-import { transformAPIValuesForForm } from '../transformers'
 import { validateTeamMembers } from './validation'
 import { SECTOR_LABELS, STATUS_LABELS } from './labels'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import { HintText } from 'govuk-react'
 import Label from '@govuk-react/label'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
+
+import { transformArrayIdNameToValueLabel } from '../../../transformers'
+import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../components/ContactForm/state'
 
 const ExportFormFields = ({
   analyticsFormName,
@@ -49,11 +53,11 @@ const ExportFormFields = ({
             cancelRedirectTo={() => cancelRedirectUrl}
             redirectTo={() => redirectToUrl}
             submissionTaskName={TASK_SAVE_EXPORT}
-            initialValues={exportItem && transformAPIValuesForForm(exportItem)}
+            initialValues={exportItem}
             transformPayload={(values) => ({ exportId: values.id, values })}
             flashMessage={flashMessage}
           >
-            {() => (
+            {({ values }) => (
               <>
                 <FieldInput
                   name="title"
@@ -140,6 +144,42 @@ const ExportFormFields = ({
                   field={FieldRadios}
                   options={SECTOR_LABELS}
                 />
+                <ResourceOptionsField
+                  id={exportItem.company.id}
+                  name="contacts"
+                  label="Company contacts"
+                  required={ERROR_MESSAGES.contacts}
+                  isMulti={true}
+                  placeholder="Select contact"
+                  resource={CompanyContactsResource}
+                  field={FieldTypeahead}
+                  resultToOptions={({ results }) =>
+                    transformArrayIdNameToValueLabel(results)
+                  }
+                />
+                <Task>
+                  {(getTask) => {
+                    const openContactFormTask = getTask(
+                      TASK_REDIRECT_TO_CONTACT_FORM,
+                      STATE_ID
+                    )
+                    return (
+                      <ContactInformation
+                        companyId={exportItem.company.id}
+                        onOpenContactForm={({ redirectUrl }) => {
+                          openContactFormTask.start({
+                            payload: {
+                              values,
+                              url: redirectUrl,
+                              storeId: STATE_ID,
+                            },
+                          })
+                        }}
+                      />
+                    )
+                  }}
+                </Task>
+
                 <ResourceOptionsField
                   resource={ExportExperienceResource}
                   field={FieldRadios}

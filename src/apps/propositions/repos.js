@@ -22,21 +22,6 @@ function fetchDownloadLink(req, propositionId, investmentId, documentId) {
   )
 }
 
-function saveProposition(req, proposition) {
-  const options = {
-    url: `${config.apiRoot}/v3/investment/${proposition.investment_project}/proposition`,
-    method: 'POST',
-    body: proposition,
-  }
-
-  if (proposition.id) {
-    options.url = `${options.url}/${proposition.id}`
-    options.method = 'PATCH'
-  }
-
-  return authorisedRequest(req, options)
-}
-
 function abandonProposition(req, proposition) {
   const options = {
     url: `${config.apiRoot}/v3/investment/${proposition.investment_project}/proposition/${proposition.id}/abandon`,
@@ -80,5 +65,4 @@ module.exports = {
   fetchProposition,
   fetchPropositionFiles,
   getPropositionsForInvestment,
-  saveProposition,
 }

@@ -13,6 +13,7 @@ import {
 import { connect } from 'react-redux'
 import { OVERVIEW__EXPORT_WINS_SUMMARY } from '../../../../../client/actions'
 import { format } from '../../../../../client/utils/date'
+import { kebabCase } from 'lodash'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin: 0;
@@ -31,6 +32,13 @@ const StyledTD = styled('td')`
   border: 0;
 `
 
+const StyledDiv = styled('div')`
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  border: 0;
+`
+
 const StyledLastTableCell = styled(Table.Cell)`
   border: 0;
   padding-bottom: 0;
@@ -40,8 +48,13 @@ const StyledSpan = styled('span')`
 `
 
 const StyledLink = styled(Link)`
-  color: grey;
+  margin-right: 5px;
 `
+const StyledViewMoreLink = styled(Link)`
+  font-size: 12px;
+  margin-right: 5px;
+`
+
 const GreenLabel = styled('span')`
   background-color: #cce2d9;
   color: #005b30;
@@ -67,7 +80,33 @@ export const SUBSEGMENT = {
   challenge: 'Challenge',
 }
 
-const ExportStatus = ({ activePage, company, queryString, ...props }) => {
+const Countries = ({ countries, company, divDataTest, linkDataTest }) => {
+  return (
+    <StyledDiv data-test={divDataTest}>
+      {countries.map((country) => (
+        <div key={country.id}>
+          <StyledLink
+            href={`/companies/${company.id}/exports/history/${country.id}`}
+            data-test={`${linkDataTest}-${kebabCase(country.name)}-link`}
+          >
+            {country.name}
+          </StyledLink>
+        </div>
+      ))}
+    </StyledDiv>
+  )
+}
+
+const ExportStatus = ({
+  activePage,
+  company,
+  queryString,
+  numberOfCurrentExportCountries,
+  maximumTenCurrentExportCountries,
+  numberOfFutureInterestCountries,
+  maximumTenFutureInterestCountries,
+  ...props
+}) => {
   return (
     <Task.Status
       name={TASK_GET_LATEST_EXPORT_WINS}
@@ -112,41 +151,43 @@ const ExportStatus = ({ activePage, company, queryString, ...props }) => {
             )}
           </SummaryTable.Row>
           <SummaryTable.Row heading="Currently exporting to">
-            {company.export_to_countries?.length > 0 ? (
-              <StyledTD>
-                {company.export_to_countries.map((country) => (
-                  <span>
-                    <StyledLink
-                      href={`/companies/${company.id}/exports/history/${country.id}`}
-                      data-test="export-status-currently-exporting-to-link"
-                    >
-                      {country.name}
-                    </StyledLink>
-                    &nbsp;
-                  </span>
-                ))}
-              </StyledTD>
+            {numberOfCurrentExportCountries ? (
+              <Countries
+                company={company}
+                countries={maximumTenCurrentExportCountries}
+                divDataTest={'current-export-list'}
+                linkDataTest={'current-export-country'}
+              />
             ) : (
               <StyledSpan>Not set</StyledSpan>
             )}
+            {numberOfCurrentExportCountries > 10 && (
+              <StyledViewMoreLink
+                href={`/companies/${company.id}/exports`}
+                data-test="export-status-currently-exporting-to-link"
+              >
+                {`View ${numberOfCurrentExportCountries - 10} more`}
+              </StyledViewMoreLink>
+            )}
           </SummaryTable.Row>
           <SummaryTable.Row heading="Future countries of interest">
-            {company.future_interest_countries?.length > 0 ? (
-              <StyledTD>
-                {company.future_interest_countries.map((country) => (
-                  <span>
-                    <StyledLink
-                      href={`/companies/${company.id}/exports/history/${country.id}`}
-                      data-test="export-status-country-of-interest-link"
-                    >
-                      {country.name}
-                    </StyledLink>
-                    &nbsp;
-                  </span>
-                ))}
-              </StyledTD>
+            {numberOfFutureInterestCountries ? (
+              <Countries
+                company={company}
+                countries={maximumTenFutureInterestCountries}
+                divDataTest={'future-export-list'}
+                linkDataTest={'future-export-country'}
+              />
             ) : (
               <StyledSpan>Not set</StyledSpan>
+            )}
+            {numberOfCurrentExportCountries > 10 && (
+              <StyledViewMoreLink
+                href={`/companies/${company.id}/exports`}
+                data-test="export-status-future-exporting-to-link"
+              >
+                {`View ${numberOfFutureInterestCountries - 10} more`}
+              </StyledViewMoreLink>
             )}
           </SummaryTable.Row>
           <SummaryTable.Row heading="Last export win">
@@ -159,7 +200,6 @@ const ExportStatus = ({ activePage, company, queryString, ...props }) => {
           <SummaryTable.Row heading="Total exports won">
             {props.count}
           </SummaryTable.Row>
-
           <StyledTableRow>
             <StyledLastTableCell colSpan={2}>
               <Link

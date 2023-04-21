@@ -1,42 +1,13 @@
-const { assign, get } = require('lodash')
+const { get } = require('lodash')
 
-const { transformPropositionFormBodyToApiRequest } = require('../transformers')
 const {
   fetchProposition,
   fetchDownloadLink,
   fetchPropositionFiles,
-  saveProposition,
 } = require('../repos')
 const { getAdvisers } = require('../../adviser/repos')
 const { filterActiveAdvisers } = require('../../adviser/filters')
 const { transformObjectToOption } = require('../../transformers')
-
-async function postDetails(req, res, next) {
-  res.locals.requestBody = transformPropositionFormBodyToApiRequest(req.body)
-
-  try {
-    await saveProposition(req, res.locals.requestBody)
-
-    req.flash('success', 'Proposition created')
-
-    if (res.locals.returnLink) {
-      return res.redirect(res.locals.returnLink)
-    }
-
-    return res.redirect(`/propositions`)
-  } catch (error) {
-    if (error.statusCode === 400) {
-      res.locals.form = assign({}, res.locals.form, {
-        errors: {
-          messages: error.error,
-        },
-      })
-      next()
-    } else {
-      next(error)
-    }
-  }
-}
 
 async function getPropositionDetails(req, res, next, propositionId) {
   try {
@@ -97,6 +68,5 @@ async function getDownloadLink(req, res, next) {
 module.exports = {
   getDownloadLink,
   getPropositionDetails,
-  postDetails,
   getPropositionOptions,
 }

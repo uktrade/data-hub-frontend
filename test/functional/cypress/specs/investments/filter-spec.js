@@ -502,7 +502,7 @@ describe('Investments Collections Filter', () => {
     })
   })
 
-  context('Likelihood to land', () => {
+  context('Likelihood of landing', () => {
     const element = '[data-test="likelihood-to-land-filter"]'
     const likelihoodToLandMedium = '683ca57b-bd69-462c-852f-d2177e35b2eb'
     const expectedPayload = {

@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
-const { assign, capitalize, forEach, get, mapKeys, pickBy } = require('lodash')
-const { format, isUnparsedDateValid } = require('../../client/utils/date')
+const { assign, capitalize, forEach, mapKeys, pickBy } = require('lodash')
 
 const { transformDateObjectToDateString } = require('../transformers')
 const {
@@ -9,32 +8,6 @@ const {
 } = require('../documents/transformers')
 const labels = require('./labels')
 const { PROPOSITION_STATE } = require('./constants')
-
-function transformPropositionResponseToForm({
-  id,
-  adviser,
-  name,
-  scope,
-  deadline,
-  investment_project,
-} = {}) {
-  if (!id) return null
-
-  const isValidDate = isUnparsedDateValid(new Date(deadline))
-
-  return {
-    id,
-    name,
-    scope,
-    adviser: get(adviser, 'id'),
-    deadline: {
-      day: isValidDate ? format(deadline, 'dd') : '',
-      month: isValidDate ? format(deadline, 'MM') : '',
-      year: isValidDate ? format(deadline, 'yyyy') : '',
-    },
-    investment_project: get(investment_project, 'id'),
-  }
-}
 
 function transformPropositionToListItem({
   id,
@@ -250,7 +223,6 @@ function transformPropositionListItemToHaveUrlPrefix(urlPrefix) {
 }
 
 module.exports = {
-  transformPropositionResponseToForm,
   transformPropositionToListItem,
   transformPropositionFormBodyToApiRequest,
   transformPropositionResponseToViewRecord,

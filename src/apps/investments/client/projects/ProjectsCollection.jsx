@@ -285,6 +285,53 @@ const ProjectsCollection = ({
               groupId="involvement-level-filter"
             />
           </FilterToggleSection>
+          <FilterToggleSection
+            id="ProjectCollection.land-date-details-filters"
+            label="Land date details"
+            isOpen={false}
+          >
+            <Filters.Date
+              type="month"
+              label="Actual land date from"
+              hint="Date format month as text and year as four digits"
+              name="actual_land_date_after"
+              qsParamName="actual_land_date_after"
+              data-test="actual-land-date-after-filter"
+            />
+            <Filters.Date
+              type="month"
+              label="Actual land date to"
+              hint="Date format month as text and year as four digits"
+              name="actual_land_date_before"
+              qsParamName="actual_land_date_before"
+              data-test="actual-land-date-before-filter"
+            />
+            <Filters.Date
+              type="month"
+              label="Estimated land date from"
+              hint="Date format month as text and year as four digits"
+              name="estimated_land_date_after"
+              qsParamName="estimated_land_date_after"
+              data-test="estimated-land-date-after-filter"
+            />
+            <Filters.Date
+              type="month"
+              label="Estimated land date to"
+              hint="Date format month as text and year as four digits"
+              name="estimated_land_date_before"
+              qsParamName="estimated_land_date_before"
+              data-test="estimated-land-date-before-filter"
+            />
+            <Filters.CheckboxGroup
+              legend="Likelihood of landing"
+              name="likelihood_to_land"
+              qsParam="likelihood_to_land"
+              options={optionMetadata.likelihoodToLandOptions}
+              selectedOptions={selectedFilters.likelihoodToLand.options}
+              data-test="likelihood-to-land-filter"
+              groupId="likelihood-to-land-filter"
+            />
+          </FilterToggleSection>
 
           <FilterToggleSection
             id="ProjectCollection.location-details-filters"

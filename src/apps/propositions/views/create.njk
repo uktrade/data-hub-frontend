@@ -1,5 +1,9 @@
-{% extends "_layouts/template.njk" %}
+{% extends "_layouts/template-no-local-header.njk" %}
 
-{% block body_main_content %}
-  {{ Form(propositionForm) }}
+{% block body %}
+  {% component 'react-slot', {
+        id: 'create-proposition',
+        props: props
+      }
+  %}
 {% endblock %}
