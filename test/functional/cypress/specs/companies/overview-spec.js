@@ -5,6 +5,9 @@ const urls = require('../../../../../src/lib/urls')
 import { exportFaker } from '../../fakers/export'
 
 describe('Company overview page', () => {
+  const interactionUrlAllOverview = urls.companies.interactions.index(
+    fixtures.company.allOverviewDetails.id
+  )
   const addInteractionUrlAllOverview = urls.companies.interactions.create(
     fixtures.company.allOverviewDetails.id
   )
@@ -793,11 +796,13 @@ describe('Company overview page', () => {
           )}`
         )
         cy.go('back')
-        cy.get('[data-test="estimated-land-date New rollercoaster"]')
+        cy.get('[data-test="estimated-land-date-new-rollercoaster-header"]')
           .next()
           .contains('May 2024')
-          .parent()
+        cy.get('[data-test="last-interaction-date-new-rollercoaster-header"]')
           .next()
+          .contains('Not set')
+        cy.get('[data-test="active-investment-page-new-restaurant-link"]')
           .contains('New restaurant')
           .click()
         cy.location('pathname').should(
@@ -807,11 +812,22 @@ describe('Company overview page', () => {
           )}`
         )
         cy.go('back')
-        cy.get('[data-test="estimated-land-date New restaurant"]')
+        cy.get('[data-test="estimated-land-date-new-restaurant-header"]')
           .next()
           .contains('October 2025')
-          .parent()
+        cy.get('[data-test="last-interaction-date-new-restaurant-header"]')
           .next()
+          .contains('16 March 2021')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          `${interactionUrlAllOverview}/3fd90013-4bcb-4c39-b8df-df264471ea85`
+        )
+        cy.go('back')
+        cy.get('[data-test="estimated-land-date-wig-factory-header"]')
+          .next()
+          .contains('January 2026')
+        cy.get('[data-test="active-investment-page-wig-factory-link"]')
           .contains('Wig factory')
           .click()
         cy.location('pathname').should(
@@ -821,9 +837,15 @@ describe('Company overview page', () => {
           )}`
         )
         cy.go('back')
-        cy.get('[data-test="estimated-land-date Wig factory"]')
+        cy.get('[data-test="last-interaction-date-wig-factory-header"]')
           .next()
-          .contains('January 2026')
+          .contains('16 March 2021')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          `${interactionUrlAllOverview}/3fd90013-4bcb-4c39-b8df-df264471ea85`
+        )
+        cy.go('back')
       })
       it('the card should link to the investment page', () => {
         cy.get('[data-test="active-investments-page-link"]')
