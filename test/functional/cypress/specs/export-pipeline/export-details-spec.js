@@ -23,7 +23,7 @@ describe('Export Details summary ', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.exportPipeline.index(),
         [exportItem.title]: null,
       })
     })
