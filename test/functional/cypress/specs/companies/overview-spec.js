@@ -1,8 +1,12 @@
+import { company } from '../../fixtures'
+
 const {} = require('../../support/assertions')
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 
 import { exportFaker } from '../../fakers/export'
+
+const { usCompany } = company
 
 describe('Company overview page', () => {
   const addInteractionUrlAllOverview = urls.companies.interactions.create(
@@ -534,15 +538,31 @@ describe('Company overview page', () => {
       })
       it('Inactive projects should not include an "Add investment project" button', () => {
         cy.get('[data-test="tabbedLocalNav"]').contains('Investment').click()
+        cy.get('add-collection-item-button').should('not.exist')
         cy.go('back')
       })
       it('UK Based Active projects should not have an "Add investment project" button', () => {
         cy.get('[data-test="tabbedLocalNav"]').contains('Investment').click()
+        cy.get('add-collection-item-button').should('not.exist')
         cy.go('back')
       })
-      it('Active projects should include an "Add investment project" button with the current company pre selected', () => {
-        cy.get('[data-test="tabbedLocalNav"]').contains('Investment').click()
-        cy.go('back')
+    }
+  )
+
+  context(
+    'Active projects should include an Add investment project button with the current company pre selected',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.investments.companyInvestmentProjects(usCompany.id)
+        )
+        cy.get('[data-test=add-collection-item-button]').click()
+      })
+      it('should take us to create investment page', () => {
+        cy.location('pathname').should(
+          'eq',
+          `/investments/projects/create/b2c34b41-1d5a-4b4b-9249-7c53ff2868ab`
+        )
       })
     }
   )
