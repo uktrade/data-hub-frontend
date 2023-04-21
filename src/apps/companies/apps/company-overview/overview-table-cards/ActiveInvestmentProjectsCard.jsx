@@ -7,7 +7,13 @@ import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 import { companyProjectsState2props } from './state'
 import { connect } from 'react-redux'
 import urls from '../../../../../lib/urls'
-import { BLUE, GREY_2 } from '../../../../../client/utils/colours'
+import {
+  BLUE,
+  GREEN,
+  RED,
+  GREY_2,
+  ORANGE,
+} from '../../../../../client/utils/colours'
 import { kebabCase } from 'lodash'
 
 const StyledActiveInvestmentSubject = styled('h3')`
@@ -86,6 +92,15 @@ const StyledActiveInvestmentTableBottomCell = styled(Table.Cell)`
 const StyledSpan = styled('span')`
   color: ${GREY_2};
 `
+const LikelihoodToLand = ({ likelihood }) => {
+  if (likelihood === 'High') {
+    return <span style={{ color: `${GREEN}` }}>{`${likelihood} (80%)`}</span>
+  } else if (likelihood === 'Medium') {
+    return <span style={{ color: `${ORANGE}` }}>{`${likelihood} (60%)`}</span>
+  } else {
+    return <span style={{ color: `${RED}` }}>{`${likelihood} (40%)`}</span>
+  }
+}
 
 const ActiveInvestmentList = ({ upcomingActiveInvestments, queryString }) => {
   return upcomingActiveInvestments.map((activeInvestment) => {
@@ -120,6 +135,25 @@ const ActiveInvestmentList = ({ upcomingActiveInvestments, queryString }) => {
             {new Date(activeInvestment.estimated_land_date).toLocaleDateString(
               'en-GB',
               { month: 'long', year: 'numeric' }
+            )}
+          </StyledActiveInvestmentTableCell>
+        </StyledActiveInvestmentTableRow>
+        <StyledActiveInvestmentTableRow>
+          <StyledActiveInvestmentHeadingTableCellHeader
+            colSpan={1}
+            data-test={`likelihood-of-landing-${kebabCase(
+              activeInvestment.name
+            )}-header`}
+          >
+            Likelihood of landing
+          </StyledActiveInvestmentHeadingTableCellHeader>
+          <StyledActiveInvestmentTableCell colSpan={1}>
+            {activeInvestment.likelihood_to_land ? (
+              <LikelihoodToLand
+                likelihood={activeInvestment.likelihood_to_land.name}
+              />
+            ) : (
+              <StyledSpan>Not set</StyledSpan>
             )}
           </StyledActiveInvestmentTableCell>
         </StyledActiveInvestmentTableRow>
