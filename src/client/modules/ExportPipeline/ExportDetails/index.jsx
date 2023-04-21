@@ -36,7 +36,7 @@ const Container = styled('div')`
 const getBreadcrumbs = (exportItem) => {
   const defaultBreadcrumbs = [
     {
-      link: urls.dashboard(),
+      link: urls.exportPipeline.index(),
       text: 'Home',
     },
   ]
