@@ -270,6 +270,8 @@ import {
 
 import { getAdviserNames } from './advisers'
 
+import { getCompanyNames } from './company'
+
 import { getTeamNames } from './teams'
 
 import {
@@ -280,6 +282,7 @@ import {
 import {
   TASK_GET_INTERACTIONS_LIST,
   TASK_GET_INTERACTIONS_ADVISER_NAME,
+  TASK_GET_INTERACTIONS_COMPANY_NAME,
   TASK_GET_INTERACTIONS_METADATA,
   TASK_GET_INTERACTIONS_TEAM_NAME,
 } from './modules/Interactions/CollectionList/state'
@@ -509,6 +512,7 @@ function App() {
           [TASK_GET_CONTACTS_METADATA]: getContactsMetadata,
           [TASK_GET_INTERACTIONS_LIST]: getInteractions,
           [TASK_GET_INTERACTIONS_ADVISER_NAME]: getAdviserNames,
+          [TASK_GET_INTERACTIONS_COMPANY_NAME]: getCompanyNames,
           [TASK_GET_INTERACTIONS_METADATA]: getInteractionsMetadata,
           [TASK_GET_EVENTS_LIST]: getEvents,
           [TASK_GET_EVENTS_METADATA]: getEventsMetadata,

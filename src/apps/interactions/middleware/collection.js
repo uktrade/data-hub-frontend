@@ -64,6 +64,7 @@ function getInteractionsRequestBody(req, res, next) {
     ...QUERY_DATE_FIELDS,
     'sortby',
     'dit_participants__team',
+    'company',
     'service',
     'was_policy_feedback_provided',
     'policy_areas',
