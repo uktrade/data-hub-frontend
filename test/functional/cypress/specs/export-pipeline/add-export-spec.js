@@ -155,6 +155,56 @@ describe('Export pipeline create', () => {
       })
     })
 
+    context('when the currency field has form validation errors', () => {
+      const fieldElement = '[data-test="field-estimated_export_value_amount"]'
+      const currencyInput = '[data-test="estimated-export-value-amount-input"]'
+      const saveButton = '[data-test=submit-button]'
+
+      before(() => {
+        cy.visit(addPageUrl)
+      })
+
+      it('should display an error when the field is empty', () => {
+        cy.get(saveButton).click()
+        assertFieldError(
+          cy.get(fieldElement),
+          ERROR_MESSAGES.estimated_export_value_empty,
+          false
+        )
+      })
+      it('should display an error when the field value is negative', () => {
+        cy.get(currencyInput).type('-5000')
+        cy.get(saveButton).click()
+        assertFieldError(
+          cy.get(fieldElement),
+          ERROR_MESSAGES.estimated_export_value_amount,
+          false
+        )
+      })
+
+      it('should display an error when the field value is greater than 19 digits', () => {
+        cy.get(currencyInput).clear()
+        cy.get(currencyInput).type('12345678912345678912')
+        cy.get(saveButton).click()
+        assertFieldError(
+          cy.get(fieldElement),
+          ERROR_MESSAGES.estimated_export_value_amount,
+          false
+        )
+      })
+
+      it('should display an error when the field value is non numerical', () => {
+        cy.get(currencyInput).clear()
+        cy.get(currencyInput).type('ABC')
+        cy.get(saveButton).click()
+        assertFieldError(
+          cy.get(fieldElement),
+          ERROR_MESSAGES.estimated_export_value_amount,
+          false
+        )
+      })
+    })
+
     context('when the form contains invalid data and is submitted', () => {
       before(() => {
         cy.visit(addPageUrl)
@@ -177,11 +227,6 @@ describe('Export pipeline create', () => {
         assertFieldError(
           cy.get('[data-test="field-estimated_export_value_years"]'),
           ERROR_MESSAGES.estimated_export_value_years
-        )
-        assertFieldError(
-          cy.get('[data-test="field-estimated_export_value_amount"]'),
-          ERROR_MESSAGES.estimated_export_value_amount,
-          false
         )
         assertFieldError(
           cy.get('[data-test="field-destination_country"]'),
