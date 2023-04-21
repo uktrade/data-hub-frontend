@@ -17,7 +17,7 @@ describe('Export pipeline delete', () => {
 
     it('should render edit event breadcrumb', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.exportPipeline.index(),
         Companies: urls.companies.index(),
       })
     })
@@ -50,7 +50,7 @@ describe('Export pipeline delete', () => {
 
       it('should render the delete export breadcrumb', () => {
         assertBreadcrumbs({
-          Home: urls.dashboard(),
+          Home: urls.exportPipeline.index(),
           [exportItem.title]: urls.exportPipeline.edit(exportItem.id),
           ['Are you sure you want to delete...']: null,
         })
@@ -66,26 +66,26 @@ describe('Export pipeline delete', () => {
       it('should render a form with a cancel link', () => {
         cy.get('[data-test=cancel-button]')
           .should('have.text', 'Cancel')
-          .should('have.attr', 'href', urls.dashboard())
+          .should('have.attr', 'href', urls.exportPipeline.index())
       })
     })
 
     context('when the form cancel button is clicked', () => {
-      it('the form should redirect to the dashboard page', () => {
+      it('the form should return to the export tab on the dashboard page', () => {
         cy.get('[data-test=cancel-button]').click()
-        assertUrl(urls.dashboard())
+        assertUrl(urls.exportPipeline.index())
       })
     })
 
     context('when the delete form is submitted', () => {
-      it('the form should return to the dashboard', () => {
+      it('the form should return to the export tab on the dashboard page', () => {
         cy.get('[data-test=submit-button]').click()
 
         cy.wait('@deleteExportItemApiRequest').then(({ request }) => {
           expect(request.url).to.contain(exportItem.id)
         })
 
-        assertUrl(urls.dashboard())
+        assertUrl(urls.exportPipeline.index())
 
         assertFlashMessage(`‘${exportItem.title}’ has been deleted`)
       })

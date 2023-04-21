@@ -15,7 +15,7 @@ const DISPLAY_EDIT_EXPORT = 'Edit export'
 const getBreadcrumbs = (exportItem) => {
   const defaultBreadcrumbs = [
     {
-      link: urls.dashboard(),
+      link: urls.exportPipeline.index(),
       text: 'Home',
     },
     {
