@@ -1,5 +1,9 @@
-{% extends "_layouts/template.njk" %}
+{% extends "_layouts/template-no-local-header.njk" %}
 
-{% block body_main_content %}
-  {{ Form(selectAbandonForm) }}
+{% block body %}
+  {% component 'react-slot', {
+        id: 'abandon-proposition',
+        props: props
+      }
+  %}
 {% endblock %}

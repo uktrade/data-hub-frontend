@@ -72,12 +72,9 @@ describe('Proposition', () => {
       .first()
       .click()
 
-    cy.get(selectors.investment.proposition.details).type('Not useful anymore')
-    cy.get(selectors.investment.proposition.button).click()
+    cy.get('[data-test=field-reason]').type('Not useful anymore')
+    cy.get('[data-test=submit-button]').click()
 
-    cy.get(selectors.message.successful).should(
-      'contain',
-      'Proposition abandoned'
-    )
+    assertFlashMessage('Proposition abandoned')
   })
 })

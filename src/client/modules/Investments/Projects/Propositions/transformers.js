@@ -1,5 +1,8 @@
 import { transformValueForAPI } from '../../../../utils/date'
 
+export const buildPropositionUrl = (propositionId, projectId) =>
+  `v3/investment/${projectId}/proposition/${propositionId}`
+
 export const transformPropositionForAPI = ({ projectId, values }) => {
   const {
     proposition_name,
@@ -17,5 +20,17 @@ export const transformPropositionForAPI = ({ projectId, values }) => {
     deadline_month: proposition_deadline.month,
     deadline_year: proposition_deadline.year,
     deadline: transformValueForAPI(proposition_deadline),
+  }
+}
+
+export const transformAbandonedPropositionForAPI = ({
+  investmentProjectId,
+  propositionId,
+  values,
+}) => {
+  return {
+    propositionId,
+    investmentProjectId,
+    details: values.reason,
   }
 }

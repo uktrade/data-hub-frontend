@@ -32,6 +32,7 @@ import LargeCapitalInvestmentRestrictions from './LargeCapitalInvestmentRestrict
 import DesiredDealRoles from './DesiredDealRoles'
 import LargeCapitalInvestmentReturnRate from './LargeCapitalInvestmentReturnRate'
 import LargeCapitalInvestmentEquityPercentages from './LargeCapitalInvestmentEquityPercentages'
+import Proposition from './Proposition'
 
 export default {
   ...Advisers.tasks,
@@ -68,4 +69,5 @@ export default {
   ...DesiredDealRoles.tasks,
   ...LargeCapitalInvestmentReturnRate.tasks,
   ...LargeCapitalInvestmentEquityPercentages.tasks,
+  ...Proposition.tasks,
 }

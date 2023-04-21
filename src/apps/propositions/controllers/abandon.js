@@ -29,6 +29,10 @@ function renderAbandon(req, res) {
     .title(`Abandon proposition ${proposition.name}`)
     .render('propositions/views/abandon.njk', {
       selectAbandonForm,
+      props: {
+        propositionId,
+        investmentProjectId: investment_project,
+      },
     })
 }
 
