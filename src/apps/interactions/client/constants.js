@@ -3,6 +3,7 @@ export const LABELS = {
   interaction: 'Interaction',
   serviceDelivery: 'Service delivery',
   advisers: 'Adviser',
+  company: 'Company',
   myInteractions: 'My interactions',
   dateAfter: 'From',
   dateBefore: 'To',
