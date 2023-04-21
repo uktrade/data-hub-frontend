@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { isEmpty } from 'lodash'
 
 import Form from '../../../components/Form'
 import {
@@ -24,7 +25,7 @@ import {
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT, ID as STATE_ID } from './state'
 import Task from '../../../components/Task'
-import { ERROR_MESSAGES } from './constants'
+import { ERROR_MESSAGES, POSITIVE_INT_REGEX } from './constants'
 import { validateTeamMembers } from './validation'
 import { SECTOR_LABELS, STATUS_LABELS } from './labels'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
@@ -34,6 +35,8 @@ import { FONT_WEIGHTS } from '@govuk-react/constants'
 
 import { transformArrayIdNameToValueLabel } from '../../../transformers'
 import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../components/ContactForm/state'
+
+export const isPositiveInteger = (value) => POSITIVE_INT_REGEX.test(value)
 
 const ExportFormFields = ({
   analyticsFormName,
@@ -103,8 +106,19 @@ const ExportFormFields = ({
                   <FieldCurrency
                     name="estimated_export_value_amount"
                     label="Estimated value in GBP"
-                    required={ERROR_MESSAGES.estimated_export_value_amount}
                     boldLabel={false}
+                    validate={(value) => {
+                      if (isPositiveInteger(value)) {
+                        const formValue = parseInt(value, 10)
+                        return formValue > 0
+                          ? null
+                          : ERROR_MESSAGES.estimated_export_value_amount
+                      } else if (isEmpty(value)) {
+                        return ERROR_MESSAGES.estimated_export_value_empty
+                      } else {
+                        return ERROR_MESSAGES.estimated_export_value_amount
+                      }
+                    }}
                   />
                 </div>
                 <FieldDate
