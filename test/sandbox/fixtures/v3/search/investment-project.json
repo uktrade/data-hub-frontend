@@ -441,7 +441,7 @@
       },
       "investor_type": null,
       "level_of_involvement": null,
-      "likelihood_to_land": null,
+      "likelihood_to_land": {"name": "High"},
       "project_assurance_adviser": {
         "id": "5a644146-5298-4741-91f3-d5d7558adf47",
         "first_name": "Paula",
@@ -619,7 +619,7 @@
       },
       "investor_type": null,
       "level_of_involvement": null,
-      "likelihood_to_land": null,
+      "likelihood_to_land": {"name": "Medium"},
       "project_assurance_adviser": {
         "id": "5a644146-5298-4741-91f3-d5d7558adf47",
         "first_name": "Paula",
@@ -827,7 +827,7 @@
       },
       "investor_type": null,
       "level_of_involvement": null,
-      "likelihood_to_land": null,
+      "likelihood_to_land": {"name": "Low"},
       "project_assurance_adviser": {
         "id": "5a644146-5298-4741-91f3-d5d7558adf47",
         "first_name": "Paula",

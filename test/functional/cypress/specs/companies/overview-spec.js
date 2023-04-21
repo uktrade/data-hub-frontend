@@ -61,6 +61,9 @@ describe('Company overview page', () => {
       },
     },
   })
+  // const oneActiveInvestmentNoStatus = exportFaker({
+
+  // })
   context(
     'when viewing company overview the tab should display Overview',
     () => {
@@ -850,6 +853,9 @@ describe('Company overview page', () => {
         cy.get('[data-test="last-interaction-date-new-rollercoaster-header"]')
           .next()
           .contains('Not set')
+        cy.get('[data-test="likelihood-of-landing-new-rollercoaster-header"]')
+          .next()
+          .contains('High')
         cy.get('[data-test="active-investment-page-new-restaurant-link"]')
           .contains('New restaurant')
           .click()
@@ -863,6 +869,9 @@ describe('Company overview page', () => {
         cy.get('[data-test="estimated-land-date-new-restaurant-header"]')
           .next()
           .contains('October 2025')
+        cy.get('[data-test="likelihood-of-landing-new-restaurant-header"]')
+          .next()
+          .contains('Medium')
         cy.get('[data-test="last-interaction-date-new-restaurant-header"]')
           .next()
           .contains('16 March 2021')
@@ -875,6 +884,9 @@ describe('Company overview page', () => {
         cy.get('[data-test="estimated-land-date-wig-factory-header"]')
           .next()
           .contains('January 2026')
+        cy.get('[data-test="likelihood-of-landing-wig-factory-header"]')
+          .next()
+          .contains('Low')
         cy.get('[data-test="active-investment-page-wig-factory-link"]')
           .contains('Wig factory')
           .click()
@@ -909,7 +921,46 @@ describe('Company overview page', () => {
       })
     }
   )
-
+  context(
+    'when viewing the active investment projects card for a business that has an investment but no status',
+    () => {
+      before(() => {
+        cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
+          body: {
+            count: 1,
+            results: [
+              {
+                likelihood_to_land: null,
+                stage: {
+                  id: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
+                  name: 'Active',
+                },
+                estimated_land_date: '2025-10-13',
+                latest_interaction: {
+                  date: '2021-03-16T00:00:00+00:00',
+                  subject: 'A project interaction',
+                  id: '3fd90013-4bcb-4c39-b8df-df264471ea85',
+                },
+                name: 'New restaurant',
+              },
+            ],
+          },
+        }).as('apiRequest')
+        cy.visit(
+          urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
+        )
+      })
+      it('the card should contain that the status of the investment is Not set', () => {
+        cy.get('[data-test="activeInvestmentProjectsContainer"]')
+          .children()
+          .first()
+          .contains('Active investment projects')
+        cy.get('[data-test="likelihood-of-landing-new-restaurant-header"]')
+          .next()
+          .contains('Not set')
+      })
+    }
+  )
   context(
     'when viewing the active investment projects card for a business that has no investment projects',
     () => {

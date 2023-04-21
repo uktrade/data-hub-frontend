@@ -94,11 +94,11 @@ const StyledSpan = styled('span')`
 `
 const LikelihoodToLand = ({ likelihood }) => {
   if (likelihood === 'High') {
-    return <span style={{ color: `${GREEN}` }}>{`${likelihood} (80%)`}</span>
+    return <span style={{ color: `${GREEN}` }}>{`${likelihood}`}</span>
   } else if (likelihood === 'Medium') {
-    return <span style={{ color: `${ORANGE}` }}>{`${likelihood} (60%)`}</span>
+    return <span style={{ color: `${ORANGE}` }}>{`${likelihood}`}</span>
   } else {
-    return <span style={{ color: `${RED}` }}>{`${likelihood} (40%)`}</span>
+    return <span style={{ color: `${RED}` }}>{`${likelihood}`}</span>
   }
 }
 
