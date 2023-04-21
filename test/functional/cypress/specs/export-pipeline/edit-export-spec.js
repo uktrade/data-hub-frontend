@@ -99,7 +99,11 @@ describe('Export pipeline edit', () => {
       it('should render a form with a cancel link', () => {
         cy.get('[data-test=cancel-button]')
           .should('have.text', 'Cancel')
-          .should('have.attr', 'href', urls.dashboard())
+          .should(
+            'have.attr',
+            'href',
+            urls.exportPipeline.details(exportItem.id)
+          )
       })
 
       it('should render a form with saved values in the form fields', () => {
@@ -206,9 +210,9 @@ describe('Export pipeline edit', () => {
     })
 
     context('when the form cancel button is clicked', () => {
-      it('the form should redirect to the dashboard page', () => {
+      it('the form should redirect to the details page', () => {
         cy.get('[data-test=cancel-button]').click()
-        assertUrl(urls.dashboard())
+        assertUrl(urls.exportPipeline.details(exportItem.id))
       })
     })
 
@@ -310,7 +314,7 @@ describe('Export pipeline edit', () => {
           notes: exportItem.notes,
         })
 
-        assertUrl(urls.exportPipeline.edit(exportItem.id))
+        assertUrl(urls.exportPipeline.details(exportItem.id))
 
         assertFlashMessage(`Changes saved to '${exportItem.title}'`)
       })
