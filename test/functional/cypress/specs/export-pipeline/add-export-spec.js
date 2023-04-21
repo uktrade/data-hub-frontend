@@ -54,7 +54,7 @@ describe('Export pipeline create', () => {
 
     it('should render add event breadcrumb', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.exportPipeline.index(),
         Companies: urls.companies.index(),
         'Add export': null,
       })
@@ -83,7 +83,7 @@ describe('Export pipeline create', () => {
 
       it('should render the add export breadcrumb', () => {
         assertBreadcrumbs({
-          Home: urls.dashboard(),
+          Home: urls.exportPipeline.index(),
           Companies: urls.companies.index(),
           [company.name]: urls.companies.activity.index(company.id),
           'Add export': null,
@@ -293,7 +293,7 @@ describe('Export pipeline create', () => {
           cy.visit(addPageUrl)
         })
 
-        it('the form should redirect to the dashboard page and display a success message', () => {
+        it('the form should redirect to the export tab on the dashboard page and display a success message', () => {
           const teamMember = faker.helpers.arrayElement(autoCompleteAdvisers)
 
           fill('[data-test=title-input]', newExport.title)
@@ -356,7 +356,7 @@ describe('Export pipeline create', () => {
             notes: newExport.notes,
           })
 
-          assertExactUrl('')
+          assertExactUrl(urls.exportPipeline.index())
           assertFlashMessage(`'${newExport.title}' created`)
 
           cy.window()
