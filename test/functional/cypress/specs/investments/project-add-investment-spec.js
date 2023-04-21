@@ -123,6 +123,10 @@ describe('Adding an investment via "Investments"', () => {
     cy.get('[data-test="add-collection-item-button"]').click()
   })
 
+  it('should take us to create investment page', () => {
+    cy.location('pathname').should('eq', `/investments/projects/create`)
+  })
+
   it('should display "Search for a company as the source of foreign equity"', () => {
     cy.get('label')
       .parent()

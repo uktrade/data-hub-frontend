@@ -1,8 +1,12 @@
+import { company } from '../../fixtures'
+
 const {} = require('../../support/assertions')
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 
 import { exportFaker } from '../../fakers/export'
+
+const { usCompany } = company
 
 describe('Company overview page', () => {
   const interactionUrlAllOverview = urls.companies.interactions.index(
@@ -511,7 +515,7 @@ describe('Company overview page', () => {
   )
 
   context(
-    'when viewing the investment status card with investment projects',
+    'when viewing the investment status card with different stages and statuses of investment projects',
     () => {
       before(() => {
         cy.visit(
@@ -528,6 +532,50 @@ describe('Company overview page', () => {
           '/investments/projects/945ea6d1-eee3-4f5b-9144-84a75b71b8e6/details'
         )
         cy.go('back')
+      })
+      it('the card should link to the active projects', () => {
+        cy.get('[data-test="total-active-projects"]').contains('4').click()
+        cy.go('back')
+      })
+      it('the card should link to the prospect projects', () => {
+        cy.get('[data-test="total-prospect-projects"]').contains('3').click()
+        cy.go('back')
+      })
+      it('the card should link to the verify win projects', () => {
+        cy.get('[data-test="total-verify-win-projects"]').contains('1').click()
+        cy.go('back')
+      })
+      it('the card should link to the abandoned projects', () => {
+        cy.get('[data-test="total-abandoned-projects"]').contains('1').click()
+        cy.go('back')
+      })
+      it('Inactive projects should not include an "Add investment project" button', () => {
+        cy.get('[data-test="tabbedLocalNav"]').contains('Investment').click()
+        cy.get('add-collection-item-button').should('not.exist')
+        cy.go('back')
+      })
+      it('UK Based Active projects should not have an "Add investment project" button', () => {
+        cy.get('[data-test="tabbedLocalNav"]').contains('Investment').click()
+        cy.get('add-collection-item-button').should('not.exist')
+        cy.go('back')
+      })
+    }
+  )
+
+  context(
+    'Active projects should include an Add investment project button with the current company pre selected',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.investments.companyInvestmentProjects(usCompany.id)
+        )
+        cy.get('[data-test=add-collection-item-button]').click()
+      })
+      it('should take us to create investment page', () => {
+        cy.location('pathname').should(
+          'eq',
+          `/investments/projects/create/b2c34b41-1d5a-4b4b-9249-7c53ff2868ab`
+        )
       })
     }
   )

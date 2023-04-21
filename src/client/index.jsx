@@ -49,7 +49,6 @@ import CompanyLocalHeader from './components/CompanyLocalHeader'
 import CompanyTabbedLocalNavigation from './components/CompanyTabbedLocalNavigation'
 import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/CompanyOrdersCollection'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
-import CompanyProjectsCollection from '../apps/investments/client/projects/CompanyProjectsCollection.jsx'
 import InvestmentStatusCard from '../apps/companies/apps/company-overview/overview-table-cards/InvestmentStatusCard'
 import ExportStatus from '../apps/companies/apps/company-overview/overview-table-cards/ExportStatus'
 import InvestmentProjectForm from '../apps/investments/client/projects/create/InvestmentProjectForm'
@@ -352,6 +351,7 @@ import { deleteExport } from '../client/modules/ExportPipeline/ExportDelete/task
 import { TASK_GET_EXPORT_PIPELINE_LIST } from '../client/modules/ExportPipeline/ExportList/state'
 import { getExportPipelineList } from '../client/modules/ExportPipeline/ExportList/task'
 import { TASK_REDIRECT_TO_CONTACT_FORM } from './components/ContactForm/state'
+import ProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 
 import { TASK_CREATE_INVESTMENT_PROPOSITION } from './modules/Investments/Projects/Propositions/state'
 import { createInvestmentProposition } from './modules/Investments/Projects/Propositions/tasks'
@@ -775,7 +775,7 @@ function App() {
           {(props) => <ExportStatus {...props} />}
         </Mount>
         <Mount selector="#company-projects-collection">
-          {(props) => <CompanyProjectsCollection {...props} />}
+          {(props) => <ProjectsCollection {...props} />}
         </Mount>
         <Mount selector="#company-contacts-collection">
           {(props) => <CompaniesContactsCollection {...props} />}
