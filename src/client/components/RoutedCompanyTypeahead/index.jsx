@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { throttle } from 'lodash'
 
 import RoutedTypeahead from '../RoutedTypeahead'
-// import { transformCompanyToListItem } from '../../../apps/investments/client/projects/transformers'
 
 import Task from '../Task'
 
@@ -21,12 +20,12 @@ const fetchCompanies = () => {
   return throttle((searchString) => {
     if (searchString.length) {
       return apiProxyAxios
-        .get('/v4/company/', {
+        .get('/v4/company', {
           params: {
             autocomplete: searchString,
           },
         })
-        .then(({ data }) => parseCompanyData(data))
+        .then(({ data }) => parseCompanyData(data.results))
     } else {
       return Promise.resolve([])
     }
