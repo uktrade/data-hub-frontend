@@ -1,10 +1,4 @@
 module.exports = {
-  abandon: {
-    macroName: 'TextField',
-    type: 'textarea',
-    name: 'details',
-    hint: "Add the reason you're abandoning this proposition",
-  },
   complete: {
     macroName: 'TextField',
     type: 'textarea',

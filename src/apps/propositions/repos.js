@@ -22,16 +22,6 @@ function fetchDownloadLink(req, propositionId, investmentId, documentId) {
   )
 }
 
-function abandonProposition(req, proposition) {
-  const options = {
-    url: `${config.apiRoot}/v3/investment/${proposition.investment_project}/proposition/${proposition.id}/abandon`,
-    method: 'POST',
-    body: proposition,
-  }
-
-  return authorisedRequest(req, options)
-}
-
 function completeProposition(req, res) {
   const options = {
     url: `${config.apiRoot}/v3/investment/${res.locals.investment.id}/proposition/${req.params.propositionId}/complete`,
@@ -59,7 +49,6 @@ function getPropositionsForInvestment(req, investmentId, page) {
 }
 
 module.exports = {
-  abandonProposition,
   completeProposition,
   fetchDownloadLink,
   fetchProposition,

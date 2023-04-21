@@ -10,7 +10,6 @@ const {
   getPropositionOptions,
   getPropositionDetails,
 } = require('./middleware/details')
-const { postAbandon } = require('./middleware/abandon')
 const { postComplete } = require('./middleware/complete')
 const {
   setPropositionDocumentUploadReturnUrl,
@@ -22,7 +21,7 @@ router.param('propositionId', getPropositionDetails)
 
 router
   .route('/propositions/:propositionId/abandon')
-  .post(postAbandon, renderAbandon)
+  .post(renderAbandon)
   .get(renderAbandon)
 
 router.route('/propositions/:propositionId/complete').get(postComplete)

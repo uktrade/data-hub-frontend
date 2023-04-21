@@ -11,7 +11,6 @@ const transformed = {
 describe('Proposition details middleware', () => {
   beforeEach(() => {
     this.fetchPropositionStub = sinon.stub()
-    this.transformPropositionFormBodyToApiRequestStub = sinon.stub()
     this.transformPropositionResponseToViewRecordStub = sinon.stub()
 
     this.middleware = proxyquire('../details', {
@@ -19,10 +18,6 @@ describe('Proposition details middleware', () => {
         fetchProposition: this.fetchPropositionStub.resolves(propositionData),
       },
       '../transformers': {
-        transformPropositionFormBodyToApiRequest:
-          this.transformPropositionFormBodyToApiRequestStub.returns(
-            transformed
-          ),
         transformPropositionResponseToViewRecord:
           this.transformPropositionResponseToViewRecordStub.returns(
             transformed
