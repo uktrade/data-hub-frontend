@@ -7,7 +7,12 @@ import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 import { companyProjectsState2props } from './state'
 import { connect } from 'react-redux'
 import urls from '../../../../../lib/urls'
-import { BLUE, GREY_2, TAG_COLOURS } from '../../../../../client/utils/colours'
+import {
+  BLUE,
+  GREY_1,
+  GREY_2,
+  TAG_COLOURS,
+} from '../../../../../client/utils/colours'
 import { kebabCase } from 'lodash'
 
 const StyledActiveInvestmentSubject = styled('h3')`
@@ -84,7 +89,7 @@ const StyledActiveInvestmentTableBottomCell = styled(Table.Cell)`
 `
 
 const StyledSpan = styled('span')`
-  color: ${GREY_2};
+  color: ${GREY_1};
 `
 const LikelihoodToLand = ({ likelihood }) => {
   if (likelihood === 'High') {
