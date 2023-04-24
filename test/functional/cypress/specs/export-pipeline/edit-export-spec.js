@@ -1,3 +1,6 @@
+import { contactFaker } from '../../fakers/contacts'
+import { addNewContact } from '../../support/actions'
+
 const urls = require('../../../../../src/lib/urls')
 
 const {
@@ -14,6 +17,7 @@ const {
   assertTypeaheadValues,
   assertFieldDateShort,
   assertPayload,
+  assertTypeaheadOptionSelected,
 } = require('../../support/assertions')
 const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 const {
@@ -285,6 +289,30 @@ describe('Export pipeline edit', () => {
           cy.get('[data-test="field-estimated_win_date"]'),
           ERROR_MESSAGES.estimated_win_date.invalid
         )
+      })
+    })
+
+    context('when the a new contact is added', () => {
+      const newContact = contactFaker()
+      before(() => {
+        cy.intercept('POST', `/api-proxy/v4/contact`, newContact).as(
+          'postContactApiRequest'
+        )
+      })
+
+      it('should be added to existing list of contacts', () => {
+        cy.get('[data-test="add-a-new-contact-link"').click()
+        addNewContact(newContact)
+        exportItem.contacts.map((x) =>
+          assertTypeaheadOptionSelected({
+            element: '[data-test=field-contacts]',
+            expectedOption: x.name,
+          })
+        )
+        assertTypeaheadOptionSelected({
+          element: '[data-test=field-contacts]',
+          expectedOption: newContact.name,
+        })
       })
     })
 

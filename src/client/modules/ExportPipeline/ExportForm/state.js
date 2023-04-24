@@ -10,10 +10,21 @@ export const overwriteObjectWithSessionStorageValues = (
   searchParams
 ) => {
   const valuesFromStorage = JSON.parse(window.sessionStorage.getItem(ID))
-  if (valuesFromStorage && searchParams.has('new-contact-name')) {
-    return {
+  const contactLabel = searchParams.get('new-contact-name')
+  const contactValue = searchParams.get('new-contact-id')
+  const newContact =
+    contactLabel && contactValue
+      ? { value: contactValue, label: contactLabel }
+      : null
+
+  if (valuesFromStorage && newContact) {
+    const mergedValues = {
       ...transformAPIValuesForForm(exportItem),
       ...valuesFromStorage,
+    }
+    return {
+      ...mergedValues,
+      contacts: [...mergedValues.contacts, newContact],
     }
   }
   return { ...transformAPIValuesForForm(exportItem) }
