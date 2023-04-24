@@ -5,3 +5,9 @@ export const createInvestmentProposition = (values) =>
     `v3/investment/${values.investment_project}/proposition`,
     values
   )
+
+export const abandonInvestmentProposition = (values) =>
+  apiProxyAxios.post(
+    `v3/investment/${values.investmentProjectId}/proposition/${values.propositionId}/abandon`,
+    values
+  )

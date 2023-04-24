@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 const { assign, capitalize, forEach, mapKeys, pickBy } = require('lodash')
 
-const { transformDateObjectToDateString } = require('../transformers')
 const {
   transformFilesResultsToDetails,
   transformLabelsToShowFiles,
@@ -206,12 +205,6 @@ function transformPropositionResponseToViewRecord({
   )
 }
 
-function transformPropositionFormBodyToApiRequest(props) {
-  return assign({}, props, {
-    deadline: transformDateObjectToDateString('deadline')(props),
-  })
-}
-
 function transformPropositionListItemToHaveUrlPrefix(urlPrefix) {
   return function (item) {
     if (!urlPrefix) return item
@@ -224,7 +217,6 @@ function transformPropositionListItemToHaveUrlPrefix(urlPrefix) {
 
 module.exports = {
   transformPropositionToListItem,
-  transformPropositionFormBodyToApiRequest,
   transformPropositionResponseToViewRecord,
   transformPropositionListItemToHaveUrlPrefix,
 }
