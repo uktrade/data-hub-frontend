@@ -91,35 +91,47 @@ const StyledActiveInvestmentTableBottomCell = styled(Table.Cell)`
 const StyledSpan = styled('span')`
   color: ${GREY_1};
 `
-const LikelihoodToLand = ({ likelihood }) => {
-  if (likelihood === 'High') {
-    return (
-      <strong
-        className="govuk-tag"
-        Style={`background: ${TAG_COLOURS.green.background}; color: ${TAG_COLOURS.green.colour}`}
+
+const EditLink = styled(Link)`
+  float: right;
+`
+
+const LikelihoodToLand = ({ likelihood, investmentId, investmentName }) => {
+  return (
+    <>
+      {likelihood === 'High' && (
+        <strong
+          className="govuk-tag"
+          Style={`background: ${TAG_COLOURS.green.background}; color: ${TAG_COLOURS.green.colour}`}
+        >
+          High
+        </strong>
+      )}
+      {likelihood === 'Medium' && (
+        <strong
+          className="govuk-tag"
+          Style={`background: ${TAG_COLOURS.orange.background}; color: ${TAG_COLOURS.orange.colour}`}
+        >
+          Medium
+        </strong>
+      )}
+      {likelihood === 'Low' && (
+        <strong
+          className="govuk-tag"
+          Style={`background: ${TAG_COLOURS.red.background}; color: ${TAG_COLOURS.red.colour}`}
+        >
+          Low
+        </strong>
+      )}
+
+      <EditLink
+        href={`${urls.investments.projects.editDetails(investmentId)}`}
+        data-test={`active-investment-page-${kebabCase(investmentName)}-link`}
       >
-        High
-      </strong>
-    )
-  } else if (likelihood === 'Medium') {
-    return (
-      <strong
-        className="govuk-tag"
-        Style={`background: ${TAG_COLOURS.orange.background}; color: ${TAG_COLOURS.orange.colour}`}
-      >
-        Medium
-      </strong>
-    )
-  } else {
-    return (
-      <strong
-        className="govuk-tag"
-        Style={`background: ${TAG_COLOURS.red.background}; color: ${TAG_COLOURS.red.colour}`}
-      >
-        Low
-      </strong>
-    )
-  }
+        Edit
+      </EditLink>
+    </>
+  )
 }
 
 const ActiveInvestmentList = ({ upcomingActiveInvestments, queryString }) => {
@@ -170,6 +182,8 @@ const ActiveInvestmentList = ({ upcomingActiveInvestments, queryString }) => {
           <StyledActiveInvestmentTableCell colSpan={1}>
             {activeInvestment.likelihood_to_land ? (
               <LikelihoodToLand
+                investmentId={activeInvestment.id}
+                investmentName={activeInvestment.name}
                 likelihood={activeInvestment.likelihood_to_land.name}
               />
             ) : (
