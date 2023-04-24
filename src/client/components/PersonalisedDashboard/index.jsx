@@ -38,6 +38,7 @@ import {
   CustomContainer,
   DataHubFeed,
 } from '../../components'
+import FlashMessages from '../LocalHeader/FlashMessages'
 
 const SearchBackground = styled('div')`
   background-color: ${BLUE};
@@ -97,6 +98,7 @@ const PersonalisedDashboard = ({
       </SearchContainer>
     </SearchBackground>
     <CustomContainer width="1180">
+      <FlashMessages />
       <Task.Status
         name={TASK_CHECK_FOR_INVESTMENTS}
         id={CHECK_FOR_INVESTMENTS_ID}
