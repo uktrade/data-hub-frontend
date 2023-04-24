@@ -1,3 +1,5 @@
+import { fill } from './form-fillers'
+
 const adviserResult = require('../../../sandbox/fixtures/autocomplete-adviser-list.json')
 
 /**
@@ -178,4 +180,15 @@ export const omisCollectionListRequest = (
   }).as('apiRequest')
   cy.visit(link)
   cy.wait('@apiRequest')
+}
+
+export const addNewContact = (contact) => {
+  fill('[data-test=group-field-first_name]', contact.first_name)
+  fill('[data-test=group-field-last_name]', contact.last_name)
+  fill('[data-test=job-title-input]', contact.job_title)
+  fill('[data-test=job-title-input]', contact.job_title)
+  fill('[data-test=email-input]', contact.email)
+  cy.get('[name="addressSameAsCompany"]').check('Yes')
+  cy.get('[name="primary"]').check('No')
+  cy.get('[data-test="submit-button"').click()
 }
