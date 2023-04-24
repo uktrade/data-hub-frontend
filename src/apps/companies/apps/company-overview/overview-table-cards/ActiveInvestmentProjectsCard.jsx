@@ -7,13 +7,7 @@ import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 import { companyProjectsState2props } from './state'
 import { connect } from 'react-redux'
 import urls from '../../../../../lib/urls'
-import {
-  BLUE,
-  GREEN,
-  RED,
-  GREY_2,
-  ORANGE,
-} from '../../../../../client/utils/colours'
+import { BLUE, GREY_2, TAG_COLOURS } from '../../../../../client/utils/colours'
 import { kebabCase } from 'lodash'
 
 const StyledActiveInvestmentSubject = styled('h3')`
@@ -94,11 +88,32 @@ const StyledSpan = styled('span')`
 `
 const LikelihoodToLand = ({ likelihood }) => {
   if (likelihood === 'High') {
-    return <span style={{ color: `${GREEN}` }}>{`${likelihood}`}</span>
+    return (
+      <strong
+        className="govuk-tag"
+        Style={`background: ${TAG_COLOURS.green.background}; color: ${TAG_COLOURS.green.colour}`}
+      >
+        High
+      </strong>
+    )
   } else if (likelihood === 'Medium') {
-    return <span style={{ color: `${ORANGE}` }}>{`${likelihood}`}</span>
+    return (
+      <strong
+        className="govuk-tag"
+        Style={`background: ${TAG_COLOURS.orange.background}; color: ${TAG_COLOURS.orange.colour}`}
+      >
+        Medium
+      </strong>
+    )
   } else {
-    return <span style={{ color: `${RED}` }}>{`${likelihood}`}</span>
+    return (
+      <strong
+        className="govuk-tag"
+        Style={`background: ${TAG_COLOURS.red.background}; color: ${TAG_COLOURS.red.colour}`}
+      >
+        Low
+      </strong>
+    )
   }
 }
 
