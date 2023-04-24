@@ -7,7 +7,12 @@ import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 import { companyProjectsState2props } from './state'
 import { connect } from 'react-redux'
 import urls from '../../../../../lib/urls'
-import { BLUE, GREY_2 } from '../../../../../client/utils/colours'
+import {
+  BLUE,
+  GREY_1,
+  GREY_2,
+  TAG_COLOURS,
+} from '../../../../../client/utils/colours'
 import { kebabCase } from 'lodash'
 
 const StyledActiveInvestmentSubject = styled('h3')`
@@ -84,8 +89,38 @@ const StyledActiveInvestmentTableBottomCell = styled(Table.Cell)`
 `
 
 const StyledSpan = styled('span')`
-  color: ${GREY_2};
+  color: ${GREY_1};
 `
+const LikelihoodToLand = ({ likelihood }) => {
+  if (likelihood === 'High') {
+    return (
+      <strong
+        className="govuk-tag"
+        Style={`background: ${TAG_COLOURS.green.background}; color: ${TAG_COLOURS.green.colour}`}
+      >
+        High
+      </strong>
+    )
+  } else if (likelihood === 'Medium') {
+    return (
+      <strong
+        className="govuk-tag"
+        Style={`background: ${TAG_COLOURS.orange.background}; color: ${TAG_COLOURS.orange.colour}`}
+      >
+        Medium
+      </strong>
+    )
+  } else {
+    return (
+      <strong
+        className="govuk-tag"
+        Style={`background: ${TAG_COLOURS.red.background}; color: ${TAG_COLOURS.red.colour}`}
+      >
+        Low
+      </strong>
+    )
+  }
+}
 
 const ActiveInvestmentList = ({ upcomingActiveInvestments, queryString }) => {
   return upcomingActiveInvestments.map((activeInvestment) => {
@@ -120,6 +155,25 @@ const ActiveInvestmentList = ({ upcomingActiveInvestments, queryString }) => {
             {new Date(activeInvestment.estimated_land_date).toLocaleDateString(
               'en-GB',
               { month: 'long', year: 'numeric' }
+            )}
+          </StyledActiveInvestmentTableCell>
+        </StyledActiveInvestmentTableRow>
+        <StyledActiveInvestmentTableRow>
+          <StyledActiveInvestmentHeadingTableCellHeader
+            colSpan={1}
+            data-test={`likelihood-of-landing-${kebabCase(
+              activeInvestment.name
+            )}-header`}
+          >
+            Likelihood of landing
+          </StyledActiveInvestmentHeadingTableCellHeader>
+          <StyledActiveInvestmentTableCell colSpan={1}>
+            {activeInvestment.likelihood_to_land ? (
+              <LikelihoodToLand
+                likelihood={activeInvestment.likelihood_to_land.name}
+              />
+            ) : (
+              <StyledSpan>Not set</StyledSpan>
             )}
           </StyledActiveInvestmentTableCell>
         </StyledActiveInvestmentTableRow>
