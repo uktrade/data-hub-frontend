@@ -27,9 +27,9 @@ export const buildSelectedFilters = (
   },
   company: {
     queryParam: 'company',
-    options: selectedCompanies.map(({ company }) => ({
-      label: company?.name,
-      value: company?.id,
+    options: selectedCompanies.map(({ companies }) => ({
+      label: companies.name,
+      value: companies.id,
       categoryLabel: LABELS.company,
     })),
   },
