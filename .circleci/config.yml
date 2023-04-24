@@ -69,9 +69,9 @@ jobs:
   functional_tests:
     machine:
       image: ubuntu-2004:2022.07.1
-      docker_layer_caching: false
+      docker_layer_caching: true
     parallelism: 9
-    resource_class: 2xlarge
+    resource_class: xlarge
     steps:
       - checkout
       - run_make:
@@ -92,7 +92,7 @@ jobs:
   a11y_tests:
     machine:
       image: ubuntu-2004:2022.07.1
-      docker_layer_caching: false
+      docker_layer_caching: true
     resource_class: xlarge
     steps:
       - checkout
@@ -105,7 +105,7 @@ jobs:
   visual_tests:
     machine:
       image: ubuntu-2004:2022.07.1
-      docker_layer_caching: false
+      docker_layer_caching: true
     resource_class: xlarge
     steps:
       - checkout
@@ -120,7 +120,7 @@ jobs:
   visual_component_tests:
     machine:
       image: ubuntu-2004:2022.07.1
-      docker_layer_caching: false
+      docker_layer_caching: true
     resource_class: xlarge
     steps:
       - checkout
@@ -135,7 +135,7 @@ jobs:
   e2e_tests_dit:
     machine:
       image: ubuntu-2004:2022.07.1
-      docker_layer_caching: false
+      docker_layer_caching: true
     parallelism: 3
     resource_class: xlarge
     parameters:
@@ -151,7 +151,7 @@ jobs:
   e2e_tests:
     machine:
       image: ubuntu-2004:2022.07.1
-      docker_layer_caching: false
+      docker_layer_caching: true
     parallelism: 1
     resource_class: xlarge
     parameters:
@@ -167,7 +167,7 @@ jobs:
   component_tests:
     machine:
       image: ubuntu-2004:2022.07.1
-      docker_layer_caching: false
+      docker_layer_caching: true
     steps:
       - checkout
       - run_make:
