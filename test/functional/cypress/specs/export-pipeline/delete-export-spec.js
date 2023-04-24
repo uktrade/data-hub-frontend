@@ -66,14 +66,18 @@ describe('Export pipeline delete', () => {
       it('should render a form with a cancel link', () => {
         cy.get('[data-test=cancel-button]')
           .should('have.text', 'Cancel')
-          .should('have.attr', 'href', urls.exportPipeline.index())
+          .should(
+            'have.attr',
+            'href',
+            urls.exportPipeline.details(exportItem.id)
+          )
       })
     })
 
     context('when the form cancel button is clicked', () => {
       it('the form should return to the export tab on the dashboard page', () => {
         cy.get('[data-test=cancel-button]').click()
-        assertUrl(urls.exportPipeline.index())
+        assertUrl(urls.exportPipeline.details(exportItem.id))
       })
     })
 

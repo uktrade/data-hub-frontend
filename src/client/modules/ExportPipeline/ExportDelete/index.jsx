@@ -63,7 +63,7 @@ const ExportFormDelete = ({ exportItem }) => {
             <Form
               id="export-delete-form"
               analyticsFormName="deleteExportForm"
-              cancelRedirectTo={() => urls.exportPipeline.index()}
+              cancelRedirectTo={() => urls.exportPipeline.details(exportId)}
               redirectTo={() => urls.exportPipeline.index()}
               submissionTaskName={TASK_DELETE_EXPORT}
               initialValues={exportItem}
