@@ -61,9 +61,6 @@ describe('Company overview page', () => {
       },
     },
   })
-  // const oneActiveInvestmentNoStatus = exportFaker({
-
-  // })
   context(
     'when viewing company overview the tab should display Overview',
     () => {
