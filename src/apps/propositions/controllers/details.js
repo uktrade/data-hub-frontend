@@ -13,6 +13,10 @@ function renderDetailsPage(req, res, next) {
       .title(proposition.name)
       .render('propositions/views/details', {
         propositionViewRecord,
+        props: {
+          propositionId: proposition.id,
+          investmentProjectId: proposition.investment_project.id,
+        },
       })
   } catch (error) {
     next(error)

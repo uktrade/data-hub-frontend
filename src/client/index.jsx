@@ -72,6 +72,7 @@ import CoreTeam from './modules/Companies/CoreTeam/CoreTeam'
 import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
 import CreateProposition from './modules/Investments/Projects/Propositions/CreateProposition'
 import AbandonProposition from './modules/Investments/Projects/Propositions/AbandonProposition'
+import PropositionDetails from './modules/Investments/Projects/Propositions/PropositionDetails'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -834,6 +835,9 @@ function App() {
         </Mount>
         <Mount selector="#abandon-proposition">
           {(props) => <AbandonProposition {...props} />}
+        </Mount>
+        <Mount selector="#proposition-details">
+          {(props) => <PropositionDetails {...props} />}
         </Mount>
 
         <Mount selector="#react-app">
