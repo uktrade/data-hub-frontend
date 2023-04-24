@@ -4,5 +4,5 @@ applications:
       - https://github.com/cloudfoundry/nodejs-buildpack.git#v1.8.9
     health-check-type: http
     health-check-http-endpoint: /healthcheck
-    memory: 5G
+    memory: 8G
     disk_quota: 10G
