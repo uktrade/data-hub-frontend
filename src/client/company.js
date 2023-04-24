@@ -10,14 +10,12 @@ export const getCompanyNames = (company) => {
 
   return axios
     .all(
-      companies.map((companyId) =>
-        apiProxyAxios.get(`/v4/company/${companyId}`)
-      )
+      companies.map((company) => apiProxyAxios.get(`/v4/company/${company}`))
     )
     .then(
       axios.spread((...responses) =>
         responses.map(({ data }) => ({
-          companies: data[0],
+          companies: data,
         }))
       )
     )
