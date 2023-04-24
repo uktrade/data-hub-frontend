@@ -126,7 +126,7 @@ const LikelihoodToLand = ({ likelihood, investmentId, investmentName }) => {
 
       <EditLink
         href={`${urls.investments.projects.editDetails(investmentId)}`}
-        data-test={`active-investment-page-${kebabCase(investmentName)}-link`}
+        data-test={`active-investment-edit-${kebabCase(investmentName)}-link`}
       >
         Edit
       </EditLink>

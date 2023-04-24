@@ -853,6 +853,16 @@ describe('Company overview page', () => {
         cy.get('[data-test="likelihood-of-landing-new-rollercoaster-header"]')
           .next()
           .contains('High')
+        cy.get('[data-test="active-investment-edit-new-rollercoaster-link"]')
+          .contains('Edit')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          `${urls.investments.projects.editDetails(
+            '0e686ea4-b8a2-4337-aec4-114d92ad4588'
+          )}`
+        )
+        cy.go('back')
         cy.get('[data-test="active-investment-page-new-restaurant-link"]')
           .contains('New restaurant')
           .click()
@@ -869,6 +879,16 @@ describe('Company overview page', () => {
         cy.get('[data-test="likelihood-of-landing-new-restaurant-header"]')
           .next()
           .contains('Medium')
+        cy.get('[data-test="active-investment-edit-new-restaurant-link"]')
+          .contains('Edit')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          `${urls.investments.projects.editDetails(
+            '18750b26-a8c3-41b2-8d3a-fb0b930c2270'
+          )}`
+        )
+        cy.go('back')
         cy.get('[data-test="last-interaction-date-new-restaurant-header"]')
           .next()
           .contains('16 March 2021')
@@ -884,6 +904,16 @@ describe('Company overview page', () => {
         cy.get('[data-test="likelihood-of-landing-wig-factory-header"]')
           .next()
           .contains('Low')
+        cy.get('[data-test="active-investment-edit-wig-factory-link"]')
+          .contains('Edit')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          `${urls.investments.projects.editDetails(
+            '3520b973-0e77-46cf-be75-3585f2f6691e'
+          )}`
+        )
+        cy.go('back')
         cy.get('[data-test="active-investment-page-wig-factory-link"]')
           .contains('Wig factory')
           .click()
