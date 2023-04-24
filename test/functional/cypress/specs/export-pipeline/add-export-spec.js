@@ -1,4 +1,5 @@
 import { contactFaker, contactsListFaker } from '../../fakers/contacts'
+import { addNewContact } from '../../support/actions'
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
@@ -12,6 +13,7 @@ const {
   assertLocalHeader,
   assertBreadcrumbs,
   assertFieldEmpty,
+  assertTypeaheadOptionSelected,
 } = require('../../support/assertions')
 
 const {
@@ -68,18 +70,6 @@ describe('Export pipeline create', () => {
     const addPageUrl = `/export/create?companyId=${company.id}`
     const newExport = generateExport()
     const newContact = contactFaker()
-
-    const add_contact_and_return_to_export_form = () => {
-      cy.get('[data-test="add-a-new-contact-link"').click()
-      fill('[data-test=group-field-first_name]', newContact.first_name)
-      fill('[data-test=group-field-last_name]', newContact.last_name)
-      fill('[data-test=job-title-input]', newContact.job_title)
-      fill('[data-test=job-title-input]', newContact.job_title)
-      fill('[data-test=email-input]', newContact.email)
-      cy.get('[name="addressSameAsCompany"]').check('Yes')
-      cy.get('[name="primary"]').check('No')
-      cy.get('[data-test="submit-button"').click()
-    }
 
     context('when verifying the page', () => {
       before(() => {
@@ -146,7 +136,8 @@ describe('Export pipeline create', () => {
         fill('[data-test=title-input]', newExport.title)
         fill('[data-test=estimated_win_date-month]', '09')
         fill('[data-test=estimated_win_date-year]', '2029')
-        add_contact_and_return_to_export_form()
+        cy.get('[data-test="add-a-new-contact-link"').click()
+        addNewContact(newContact)
         cy.visit('/')
         cy.visit(addPageUrl)
         assertFieldEmpty('[data-test=title-input]')
@@ -329,12 +320,16 @@ describe('Export pipeline create', () => {
             newExport.exporter_experience.id
           )
           fill('[data-test=field-notes]', newExport.notes)
-          add_contact_and_return_to_export_form()
+          cy.get('[data-test="add-a-new-contact-link"').click()
+          addNewContact(newContact)
           assertFlashMessage(
             `You have successfully added a new contact ${newContact.name}`
           )
+          assertTypeaheadOptionSelected({
+            element: '[data-test=field-contacts]',
+            expectedOption: newContact.name,
+          })
 
-          fillTypeahead('[data-test=field-contacts]', newContact.name)
           cy.window()
             .its('sessionStorage')
             .invoke('getItem', 'exportForm')
