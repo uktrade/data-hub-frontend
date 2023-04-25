@@ -42,7 +42,7 @@
     "test:component:watch": "CYPRESS_coverage=false cypress open --component --browser chrome",
     "coverage": "npx nyc --reporter=html --reporter=json --reporter=text --reporter=lcov --report-dir=coverage npm run test:unit",
     "prune-dev-dependencies": "NPM_CONFIG_PRODUCTION=true npm prune --production",
-    "heroku-postbuild": "npm cache verify && npm rebuild && npm run build && npm run prune-dev-dependencies && npm run modclean",
+    "heroku-postbuild": "npm cache verify && npm rebuild && npm run build && npm run prune-dev-dependencies",
     "lint-staged": "lint-staged",
     "adr-list": "adr list",
     "adr-graph": "adr generate graph",
