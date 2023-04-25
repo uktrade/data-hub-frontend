@@ -7,7 +7,7 @@ import {
   clickCheckboxGroupOption,
   inputDateValueWithHint,
   removeChip,
-  selectFirstAdvisersTypeaheadOption,
+  selectFirstMockedTypeaheadOption,
 } from '../../support/actions'
 import {
   assertCheckboxGroupOption,
@@ -178,7 +178,7 @@ describe('Investments Collections Filter', () => {
       cy.get('[data-test="toggle-section-button"]')
         .contains('Project details')
         .click()
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: advisersFilter,
         input: myAdviser.name,
         mockAdviserResponse: false,

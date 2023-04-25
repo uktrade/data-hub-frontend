@@ -12,7 +12,7 @@ const {
 } = require('../../support/assertions')
 const {
   clickButton,
-  selectFirstAdvisersTypeaheadOption,
+  selectFirstMockedTypeaheadOption,
 } = require('../../support/actions')
 
 const {
@@ -162,7 +162,7 @@ describe('Edit client relationship management page', () => {
     })
 
     it('should allow the editing of the client relationship manager', () => {
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: '[data-test="field-client_relationship_manager"]',
         input: 'Shawn',
       })

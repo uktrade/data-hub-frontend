@@ -3,7 +3,7 @@ const selectors = require('../../../../selectors')
 const { investments } = require('../../../../../src/lib/urls')
 const {
   clickButton,
-  selectFirstAdvisersTypeaheadOption,
+  selectFirstMockedTypeaheadOption,
 } = require('../../../../functional/cypress/support/actions')
 const {
   assertFlashMessage,
@@ -62,7 +62,7 @@ describe('Investment team', () => {
       selector: 'teamMembers',
       header: 'Assign project specialist and team members',
       checkForm: () => {
-        selectFirstAdvisersTypeaheadOption({
+        selectFirstMockedTypeaheadOption({
           element: '[data-test="field-adviser_0"]',
           input: 'Jenny',
           mockAdviserResponse: false,

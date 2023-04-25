@@ -1,59 +1,33 @@
 const adviserResult = require('../../../sandbox/fixtures/autocomplete-adviser-list.json')
-const companyResult = require('../../../sandbox/fixtures/autocomplete-company-list.json')
 
 /**
- * Enter `input` into an advisers typeahead `element` and select the first result
+ * Enter `input` into a typeahead `element` and select the first result.
  *
- * This waits for the adviser api request to complete before selecting the
- * first option, but has a mocked intercepted adviser response to circumvent
+ * Defaults to Typeahead for adviser but can changed to any type by setting
+ * optional url and bodyResult parameters.
+ *
+ * This waits for the [adviser] api request to complete before selecting the
+ * first option, but has a mocked intercepted [adviser] response to circumvent
  * network latency.
  */
-export const selectFirstAdvisersTypeaheadOption = ({
+export const selectFirstMockedTypeaheadOption = ({
   element,
   input,
   mockAdviserResponse = true,
+  url = `/api-proxy/adviser/?*`,
+  bodyResult = adviserResult,
 }) =>
   cy.get(element).within(() => {
     cy.intercept(
-      `/api-proxy/adviser/?*${input.replace(' ', '+')}*`,
+      url + `${input.replace(' ', '+')}*`,
       mockAdviserResponse
         ? {
-            body: adviserResult,
+            body: bodyResult,
           }
         : undefined
     ).as('adviserResults')
     cy.get('input').clear().type(input)
     cy.wait('@adviserResults')
-    cy.get('[data-test="typeahead-menu-option"]').contains(input, {
-      matchCase: false,
-      timeout: 120000,
-    })
-    cy.get('input').type('{downarrow}{enter}{esc}')
-  })
-
-/**
- * Enter `input` into an companies typeahead `element` and select the first result
- *
- * This waits for the company api request to complete before selecting the
- * first option, but has a mocked intercepted company response to circumvent
- * network latency.
- */
-export const selectFirstCompaniesTypeaheadOption = ({
-  element,
-  input,
-  mockCompanyResponse = true,
-}) =>
-  cy.get(element).within(() => {
-    cy.intercept(
-      `/api-proxy/v4/company?*${input.replace(' ', '+')}*`,
-      mockCompanyResponse
-        ? {
-            body: companyResult,
-          }
-        : undefined
-    ).as('companyResults')
-    cy.get('input').clear().type(input)
-    cy.wait('@companyResults')
     cy.get('[data-test="typeahead-menu-option"]').contains(input, {
       matchCase: false,
       timeout: 120000,

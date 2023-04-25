@@ -14,7 +14,7 @@ const {
 } = require('../../support/assertions')
 
 const {
-  selectFirstAdvisersTypeaheadOption,
+  selectFirstMockedTypeaheadOption,
   removeFirstTypeaheadItem,
   clickButton,
   clickCancelLink,
@@ -74,11 +74,11 @@ describe('View edit subscribers page', () => {
         { id: '2c42c516-9898-e211-a939-e4115bead28a' },
         { id: '8242c516-9898-e211-a939-e4115bead28a' },
       ]
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element,
         input: 'shawn',
       })
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element,
         input: 'Blake',
       })

@@ -19,7 +19,7 @@ const {
   clickButton,
   clickRadioGroupOption,
   clickCancelLink,
-  selectFirstAdvisersTypeaheadOption,
+  selectFirstMockedTypeaheadOption,
   selectFirstTypeaheadOption,
   clearAndTypeInput,
   clearAndTypeTextArea,
@@ -188,7 +188,7 @@ describe('View large capital investor details page', () => {
           },
         })
         assertRequiredCheckAdviser().then((adviserElement) =>
-          selectFirstAdvisersTypeaheadOption({
+          selectFirstMockedTypeaheadOption({
             element: adviserElement,
             input: 'shawn',
           })
@@ -371,7 +371,7 @@ describe('View large capital investor details page', () => {
       })
 
       assertRequiredCheckAdviser().then((element) => {
-        selectFirstAdvisersTypeaheadOption({
+        selectFirstMockedTypeaheadOption({
           element,
           input: 'shawn',
         })

@@ -9,7 +9,7 @@ const {
   assertAPIRequest,
 } = require('../../support/assertions')
 const {
-  selectFirstAdvisersTypeaheadOption,
+  selectFirstMockedTypeaheadOption,
   clickButton,
   clickCancelLink,
 } = require('../../support/actions')
@@ -119,7 +119,7 @@ describe('View edit team members page', () => {
           role: '­­Role',
         },
       ]
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: '[data-test="field-adviser_0"]',
         input: 'shawn',
       })
@@ -196,14 +196,14 @@ describe('View edit team members page', () => {
     })
 
     it('should fail for duplicate advisers', () => {
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: '[data-test="field-adviser_0"]',
         input: 'shawn',
       })
       cy.get('[data-test="field-role_0"]').find('input').type('­­Role')
 
       clickButton('Add another team member')
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: '[data-test="field-adviser_1"]',
         input: 'shawn',
       })
