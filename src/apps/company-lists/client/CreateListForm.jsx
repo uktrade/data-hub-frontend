@@ -22,6 +22,7 @@ const CreateListForm = ({
       flashMessage={() => 'Company list created'}
       submitButtonLabel="Create list"
       cancelRedirectTo={() => cancelUrl}
+      cancelButtonLabel="Back"
       transformPayload={(values) => ({
         id,
         values,
@@ -37,7 +38,7 @@ const CreateListForm = ({
           hint={hint}
           validate={(value) =>
             value && value.length > maxLength
-              ? `Enter list name which is no longer than ${maxLength} characters`
+              ? `Enter list name which is no longer than ${maxLength} characters long`
               : null
           }
         />
