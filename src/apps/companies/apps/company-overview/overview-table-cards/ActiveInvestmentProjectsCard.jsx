@@ -2,17 +2,12 @@ import React from 'react'
 import { Link, Table } from 'govuk-react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { SummaryTable } from '../../../../../client/components'
+import urls from '../../../../../lib/urls'
+import { SummaryTable, Tag } from '../../../../../client/components'
 import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 import { companyProjectsState2props } from './state'
 import { connect } from 'react-redux'
-import urls from '../../../../../lib/urls'
-import {
-  BLUE,
-  GREY_1,
-  GREY_2,
-  TAG_COLOURS,
-} from '../../../../../client/utils/colours'
+import { BLUE, GREY_1, GREY_2 } from '../../../../../client/utils/colours'
 import { kebabCase } from 'lodash'
 
 const StyledActiveInvestmentSubject = styled('h3')`
@@ -96,52 +91,19 @@ const EditLink = styled(Link)`
   float: right;
 `
 
-const StyledStatus = styled('strong')`
-  color: ${(props) => props.color};
-  background: ${(props) => props.background};
-`
-
-const LikelihoodToLand = ({ likelihood, investmentId, investmentName }) => {
-  return (
-    <>
-      {likelihood === 'High' && (
-        <StyledStatus
-          className="govuk-tag"
-          background={TAG_COLOURS.green.background}
-          color={TAG_COLOURS.green.colour}
-        >
-          High
-        </StyledStatus>
-      )}
-
-      {likelihood === 'Medium' && (
-        <StyledStatus
-          className="govuk-tag"
-          background={TAG_COLOURS.orange.background}
-          color={TAG_COLOURS.orange.colour}
-        >
-          Medium
-        </StyledStatus>
-      )}
-      {likelihood === 'Low' && (
-        <StyledStatus
-          className="govuk-tag"
-          background={TAG_COLOURS.red.background}
-          color={TAG_COLOURS.red.colour}
-        >
-          Low
-        </StyledStatus>
-      )}
-
-      <EditLink
-        href={`${urls.investments.projects.editDetails(investmentId)}`}
-        data-test={`active-investment-edit-${kebabCase(investmentName)}-link`}
-      >
-        Edit
-      </EditLink>
-    </>
-  )
-}
+const LikelihoodToLand = ({ likelihood, investmentId, investmentName }) => (
+  <>
+    {likelihood === 'High' && <Tag colour="green">High</Tag>}
+    {likelihood === 'Medium' && <Tag colour="orange">Medium</Tag>}
+    {likelihood === 'Low' && <Tag colour="red">Low</Tag>}
+    <EditLink
+      href={`${urls.investments.projects.editDetails(investmentId)}`}
+      data-test={`active-investment-edit-${kebabCase(investmentName)}-link`}
+    >
+      Edit
+    </EditLink>
+  </>
+)
 
 const ActiveInvestmentList = ({ upcomingActiveInvestments, queryString }) => {
   return upcomingActiveInvestments.map((activeInvestment) => {
