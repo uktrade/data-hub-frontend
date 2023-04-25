@@ -22,7 +22,7 @@ async function renderCreateListForm(req, res, next) {
         props: {
           id: company.id,
           name: 'listName',
-          label: 'What do you wat to name your new list?',
+          label: 'What do you want to name your new list?',
           hint: 'This is a name only you see, and can be up to 30 characters long',
           cancelUrl: `/companies/${company.id}/lists/add-remove`,
           maxLength: 30,

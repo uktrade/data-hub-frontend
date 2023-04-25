@@ -27,7 +27,7 @@ describe('Create a company list', () => {
     it('displays the list name', () => {
       cy.get(selectors.companyList.create.label).should(
         'have.text',
-        'What do you wat to name your new list?'
+        'What do you want to name your new list?'
       )
     })
 
