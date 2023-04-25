@@ -483,6 +483,15 @@ describe('Company overview page', () => {
           .contains('Last Project won')
           .siblings()
           .contains('td', '07 Jun 2022')
+        cy.get('[data-test="latest-won-project-link"]').click()
+        cy.location('pathname').should(
+          'eq',
+          urls.investments.projects.details(
+            '945ea6d1-eee3-4f5b-9144-84a75b71b8e6'
+          )
+        )
+        cy.go('back')
+        cy.get('[data-test="investmentsStatusContainer"]')
         cy.get('th')
           .contains('Total projects won')
           .siblings()
