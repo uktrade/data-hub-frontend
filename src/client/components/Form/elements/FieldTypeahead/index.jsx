@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import ErrorText from '@govuk-react/error-text'
@@ -39,8 +39,16 @@ const FieldTypeahead = ({
   hint,
   initialValue,
   options,
+  autoScroll,
   ...props
 }) => {
+  const styledWrapperRef = React.useRef(null)
+  useEffect(() => {
+    if (autoScroll) {
+      styledWrapperRef.current.scrollIntoView()
+    }
+  }, [autoScroll])
+
   const { value, error, touched, onBlur } = useField({
     name,
     validate,
@@ -52,7 +60,7 @@ const FieldTypeahead = ({
 
   return (
     <FieldWrapper {...{ name, label, legend, hint, error }}>
-      <StyledWrapper error={error}>
+      <StyledWrapper error={error} ref={styledWrapperRef}>
         {touched && error && <ErrorText>{error}</ErrorText>}
         <Typeahead
           name={name}
@@ -107,6 +115,10 @@ FieldTypeahead.propTypes = {
     PropTypes.object,
     PropTypes.arrayOf(PropTypes.object),
   ]),
+  /**
+   * Whether the window should auto scroll into view this component
+   */
+  autoScroll: PropTypes.bool,
 }
 
 FieldTypeahead.defaultProps = {
@@ -116,6 +128,7 @@ FieldTypeahead.defaultProps = {
   legend: null,
   hint: null,
   initialValue: null,
+  autoScroll: false,
 }
 
 export default FieldTypeahead
