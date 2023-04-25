@@ -42,6 +42,12 @@ const FieldTypeahead = ({
   autoScroll,
   ...props
 }) => {
+  const styledWrapperRef = React.useRef(null)
+  React.useEffect(() => {
+    if (autoScroll) {
+      styledWrapperRef.current.scrollIntoView()
+    }
+  }, [autoScroll])
   const { value, error, touched, onBlur } = useField({
     name,
     validate,

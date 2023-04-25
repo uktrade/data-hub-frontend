@@ -22,9 +22,11 @@ export const overwriteObjectWithSessionStorageValues = (
       ...transformAPIValuesForForm(exportItem),
       ...valuesFromStorage,
     }
+
     return {
       ...mergedValues,
       contacts: [...mergedValues.contacts, newContact],
+      scrollToContact: true,
     }
   }
   return { ...transformAPIValuesForForm(exportItem) }

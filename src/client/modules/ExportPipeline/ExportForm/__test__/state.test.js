@@ -87,6 +87,7 @@ describe('overwriteObjectWithSessionStorageValues', () => {
             ...exportItemSessionStorage.contacts,
             { label: 'abc', value: '10' },
           ],
+          scrollToContact: true,
         })
       })
     }
