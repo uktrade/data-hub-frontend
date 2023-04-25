@@ -85,7 +85,7 @@ describe('Creating company lists', () => {
       ).to.have.been.calledWith('Company')
       expect(
         global.middlewareParameters.resMock.breadcrumb
-      ).to.have.been.calledWith('Create a list')
+      ).to.have.been.calledWith('Create new list')
     })
 
     it('should render to the view with props', () => {
@@ -96,7 +96,7 @@ describe('Creating company lists', () => {
           id: '1',
           name: 'listName',
           label: 'List name',
-          hint: 'This is a name only you see, and can be up to 30 characters',
+          hint: 'This is a name only you see, and can be up to 30 characters long',
           cancelUrl: `/companies/1/lists/add-remove`,
           maxLength: 30,
         },
