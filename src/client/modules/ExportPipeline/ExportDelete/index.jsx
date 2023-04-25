@@ -27,7 +27,7 @@ const getBreadcrumbs = (exportItem) => {
     return [
       ...defaultBreadcrumbs,
       {
-        link: urls.exportPipeline.edit(exportItem.id),
+        link: urls.exportPipeline.details(exportItem.id),
         text: exportItem.title,
       },
       { text: 'Are you sure you want to delete...' },
