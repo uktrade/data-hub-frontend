@@ -3,7 +3,7 @@ import { Link, Table } from 'govuk-react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { SummaryTable } from '../../../../../client/components'
+import { SummaryTable, Tag } from '../../../../../client/components'
 import Task from '../../../../../client/components/Task'
 import {
   TASK_GET_LATEST_EXPORT_WINS,
@@ -53,16 +53,6 @@ const StyledLink = styled(Link)`
 const StyledViewMoreLink = styled(Link)`
   font-size: 12px;
   margin-right: 5px;
-`
-
-const GreenLabel = styled('span')`
-  background-color: #cce2d9;
-  color: #005b30;
-  padding: 4px;
-  white-space: pre-line;
-  font-size: 14px;
-  text-transform: uppercase;
-  font-weight: bold;
 `
 
 export const SUBSEGMENT = {
@@ -130,7 +120,7 @@ const ExportStatus = ({
             {company.export_potential ? (
               <StyledTD>
                 <div>
-                  <GreenLabel>{company.export_potential}</GreenLabel>
+                  <Tag colour="green">{company.export_potential}</Tag>
                 </div>
               </StyledTD>
             ) : (
@@ -141,9 +131,9 @@ const ExportStatus = ({
             {company.export_sub_segment ? (
               <StyledTD>
                 <div>
-                  <GreenLabel>
+                  <Tag colour="green">
                     {SUBSEGMENT[company.export_sub_segment]}
-                  </GreenLabel>
+                  </Tag>
                 </div>
               </StyledTD>
             ) : (
