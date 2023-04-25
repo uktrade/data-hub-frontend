@@ -96,32 +96,41 @@ const EditLink = styled(Link)`
   float: right;
 `
 
+const StyledStatus = styled('strong')`
+  color: ${(props) => props.color};
+  background: ${(props) => props.background};
+`
+
 const LikelihoodToLand = ({ likelihood, investmentId, investmentName }) => {
   return (
     <>
       {likelihood === 'High' && (
-        <strong
+        <StyledStatus
           className="govuk-tag"
-          Style={`background: ${TAG_COLOURS.green.background}; color: ${TAG_COLOURS.green.colour}`}
+          background={TAG_COLOURS.green.background}
+          color={TAG_COLOURS.green.colour}
         >
           High
-        </strong>
+        </StyledStatus>
       )}
+
       {likelihood === 'Medium' && (
-        <strong
+        <StyledStatus
           className="govuk-tag"
-          Style={`background: ${TAG_COLOURS.orange.background}; color: ${TAG_COLOURS.orange.colour}`}
+          background={TAG_COLOURS.orange.background}
+          color={TAG_COLOURS.orange.colour}
         >
           Medium
-        </strong>
+        </StyledStatus>
       )}
       {likelihood === 'Low' && (
-        <strong
+        <StyledStatus
           className="govuk-tag"
-          Style={`background: ${TAG_COLOURS.red.background}; color: ${TAG_COLOURS.red.colour}`}
+          background={TAG_COLOURS.red.background}
+          color={TAG_COLOURS.red.colour}
         >
           Low
-        </strong>
+        </StyledStatus>
       )}
 
       <EditLink
