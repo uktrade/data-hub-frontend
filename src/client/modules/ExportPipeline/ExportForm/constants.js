@@ -7,7 +7,7 @@ export const ERROR_MESSAGES = {
   estimated_export_value_years: 'Select an estimated years',
   estimated_export_value_empty: 'Enter the estimated value in GBP',
   estimated_export_value_amount:
-    'Enter the estimated value in GBP (max 19 digits)',
+    'The value must not contain letters, be negative or over 19 digits',
   estimated_win_date: {
     required: 'Enter an estimated date for win',
     invalid: 'Enter a valid date',
