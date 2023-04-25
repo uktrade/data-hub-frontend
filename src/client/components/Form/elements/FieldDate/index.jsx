@@ -145,7 +145,7 @@ const FieldDate = ({
                   name={`${name}.day`}
                   data-test={`${dataTest}-day`}
                   error={touched && error}
-                  type="number"
+                  type="text"
                   value={value.day}
                   onChange={(e) => onChange(DAY, e)}
                   onBlur={onBlur}
@@ -159,7 +159,7 @@ const FieldDate = ({
                 name={`${name}.month`}
                 data-test={`${dataTest}-month`}
                 error={touched && error}
-                type="number"
+                type="text"
                 value={value.month}
                 onChange={(e) => onChange(MONTH, e)}
                 onBlur={onBlur}
@@ -172,7 +172,7 @@ const FieldDate = ({
                 name={`${name}.year`}
                 data-test={`${dataTest}-year`}
                 error={touched && error}
-                type="number"
+                type="text"
                 value={value.year}
                 onChange={(e) => onChange(YEAR, e)}
                 onBlur={onBlur}
