@@ -5,8 +5,7 @@ import { interactions } from '../../../../../src/lib/urls'
 import {
   clickCheckboxGroupOption,
   removeChip,
-  selectFirstAdvisersTypeaheadOption,
-  selectFirstCompaniesTypeaheadOption,
+  selectFirstMockedTypeaheadOption,
   inputDateValue,
 } from '../../support/actions'
 
@@ -44,7 +43,7 @@ const minimumPayload = {
 
 const interactionsSearchEndpoint = '/api-proxy/v3/search/interaction'
 const adviserAutocompleteEndpoint = '/api-proxy/adviser/?autocomplete=*'
-const companyAutocompleteEndpoint = '/api-proxy/v4/company/?autocomplete=*'
+const companyAutocompleteEndpoint = '/api-proxy/v4/company?autocomplete=*'
 const serviceMetadataEndpoint = '/api-proxy/v4/metadata/service'
 const policyAreaMetadataEndpoint = '/api-proxy/v4/metadata/policy-area'
 const policyIssueTypeMetadataEndpoint =
@@ -195,10 +194,12 @@ describe('Interactions Collections Filter', () => {
       cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
 
-      selectFirstCompaniesTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: companiesFilter,
         input: company.name,
-        mockCompanyResponse: true,
+        mockCompanyResponse: false,
+        url: `/api-proxy/v4/company?*`,
+        bodyResult: companyResult,
       })
       cy.wait('@companyListApiRequest')
       cy.wait('@companyApiRequest')
