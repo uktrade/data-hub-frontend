@@ -61,7 +61,7 @@ const LocalHeader = ({
     role="region"
   >
     <StyledMain>
-      <BreadcrumbsWrapper>
+      <BreadcrumbsWrapper data-test="breadcrumbs">
         {breadcrumbs?.map((breadcrumb) =>
           breadcrumb.link ? (
             useReactRouter && breadcrumb.text !== 'Home' ? (

@@ -84,7 +84,7 @@ const assertSummaryTable = ({ dataTest, heading, showEditLink, content }) => {
  */
 const assertBreadcrumbs = (specs) => {
   const entries = Object.entries(specs)
-  cy.contains(Object.keys(specs).join(''))
+  cy.get('[data-test=breadcrumbs] > ol')
     .children('li')
     .should('have.length', entries.length)
     .each((x, i) => {
