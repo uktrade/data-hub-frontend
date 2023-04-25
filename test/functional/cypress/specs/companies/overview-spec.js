@@ -516,7 +516,9 @@ describe('Company overview page', () => {
           .click()
         cy.location('pathname').should(
           'eq',
-          '/companies/ba8fae21-2895-47cf-90ba-9273c94dab88/investments/projects'
+          urls.companies.investments.companyInvestmentProjects(
+            'ba8fae21-2895-47cf-90ba-9273c94dab88'
+          )
         )
         cy.go('back')
       })
@@ -538,7 +540,9 @@ describe('Company overview page', () => {
           .click()
         cy.location('pathname').should(
           'eq',
-          '/investments/projects/945ea6d1-eee3-4f5b-9144-84a75b71b8e6/details'
+          urls.investments.projects.details(
+            '945ea6d1-eee3-4f5b-9144-84a75b71b8e6'
+          )
         )
         cy.go('back')
       })
@@ -583,7 +587,9 @@ describe('Company overview page', () => {
       it('should take us to create investment page', () => {
         cy.location('pathname').should(
           'eq',
-          `/investments/projects/create/b2c34b41-1d5a-4b4b-9249-7c53ff2868ab`
+          urls.investments.projects.create(
+            'b2c34b41-1d5a-4b4b-9249-7c53ff2868ab'
+          )
         )
       })
     }
