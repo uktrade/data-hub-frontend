@@ -2,7 +2,7 @@ const urls = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const {
-  selectFirstAdvisersTypeaheadOption,
+  selectFirstMockedTypeaheadOption,
 } = require('../../../../functional/cypress/support/actions')
 
 const formSelectors = selectors.interactionForm
@@ -19,7 +19,7 @@ describe('Referrals', () => {
   })
   context('when adding a referral', () => {
     it('should create a referral for a company', () => {
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: selectors.sendReferral.adviserField,
         input: 'dennis',
         mockAdviserResponse: false,

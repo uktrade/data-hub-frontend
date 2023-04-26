@@ -5,7 +5,7 @@ import {
   clickCheckboxGroupOption,
   inputDateValue,
   removeChip,
-  selectFirstAdvisersTypeaheadOption,
+  selectFirstMockedTypeaheadOption,
 } from '../../support/actions'
 import {
   assertCheckboxGroupOption,
@@ -867,7 +867,7 @@ describe('Companies Collections Filter', () => {
       cy.visit(`/companies?${queryString}`)
       cy.wait('@apiRequest')
 
-      selectFirstAdvisersTypeaheadOption({ element, input: adviserName })
+      selectFirstMockedTypeaheadOption({ element, input: adviserName })
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('one_list_group_global_account_manager', [adviserId])
       assertChipExists({ label: 'Active', position: 1 })

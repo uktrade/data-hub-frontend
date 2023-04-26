@@ -3,34 +3,36 @@ import PropTypes from 'prop-types'
 import { throttle } from 'lodash'
 
 import RoutedTypeahead from '../RoutedTypeahead'
+
 import Task from '../Task'
-import urls from '../../../lib/urls'
+
 import { apiProxyAxios } from '../Task/utils'
 import { transformIdNameToValueLabel } from '../../transformers'
 
-const parseTeamData = (teams) =>
-  teams
-    .filter((team) => team.name && team.name.trim().length)
+const parseCompanyData = (companies) =>
+  companies
+    .filter((company) => company.name && company.name.trim().length)
     .map(transformIdNameToValueLabel)
 
-const fetchTeams = () =>
-  throttle((searchString) => {
+const fetchCompanies = () => {
+  return throttle((searchString) => {
     if (searchString.length) {
       return apiProxyAxios
-        .get(urls.metadata.team(), {
+        .get('/v4/company', {
           params: {
             autocomplete: searchString,
           },
         })
-        .then(({ data }) => parseTeamData(data))
+        .then(({ data }) => parseCompanyData(data.results))
     } else {
       return Promise.resolve([])
     }
   }, 500)
+}
 
-const RoutedTeamsTypeahead = ({
+const RoutedCompanyTypeahead = ({
   taskProps,
-  loadOptions = fetchTeams(),
+  loadOptions = fetchCompanies(),
   ...props
 }) => (
   <Task.Status {...taskProps} progressOverlay={true}>
@@ -44,12 +46,13 @@ const RoutedTeamsTypeahead = ({
   </Task.Status>
 )
 
-RoutedTeamsTypeahead.propTypes = {
+RoutedCompanyTypeahead.propTypes = {
   name: PropTypes.string.isRequired,
+  label: PropTypes.string,
   taskProps: PropTypes.shape({
     name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
   }).isRequired,
 }
 
-export default RoutedTeamsTypeahead
+export default RoutedCompanyTypeahead

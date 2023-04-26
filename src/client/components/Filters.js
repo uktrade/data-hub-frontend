@@ -1,4 +1,5 @@
 import { default as AdvisersTypeahead } from './RoutedAdvisersTypeahead/Filter'
+import { default as CompanyTypeahead } from './RoutedCompanyTypeahead/Filter'
 import { default as CheckboxGroup } from './RoutedCheckboxGroupField'
 import { default as Date } from './RoutedDateField/Filter'
 import { default as Input } from './RoutedInputField/Filter'
@@ -9,6 +10,7 @@ import { default as AventriId } from './RoutedAventriIdField/Filter'
 
 export default {
   AdvisersTypeahead,
+  CompanyTypeahead,
   CheckboxGroup,
   Date,
   Input,

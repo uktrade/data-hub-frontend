@@ -13,6 +13,7 @@ const GLOBAL_NAV_ITEM = {
 const QUERY_FIELDS = [
   'kind',
   'sector_descends',
+  'company',
   'communication_channel',
   'sortby',
   'dit_participants__team',

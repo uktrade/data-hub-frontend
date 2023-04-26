@@ -5,7 +5,7 @@ import { interactions } from '../../../../../src/lib/urls'
 import {
   clickCheckboxGroupOption,
   removeChip,
-  selectFirstAdvisersTypeaheadOption,
+  selectFirstMockedTypeaheadOption,
   inputDateValue,
 } from '../../support/actions'
 
@@ -21,11 +21,12 @@ import {
 } from '../../support/assertions'
 
 import { testTypeahead } from '../../support/tests'
-
 import { serviceFaker } from '../../fakers/services'
 import { policyAreaFaker } from '../../fakers/policy-area'
 import { policyIssueTypeFaker } from '../../fakers/policy-issue-type'
 import { companyOneListgroupTierFaker } from '../../fakers/company-one-list-group-tier'
+
+const companyResult = require('../../../../sandbox/fixtures/autocomplete-company-list.json')
 
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
@@ -42,6 +43,7 @@ const minimumPayload = {
 
 const interactionsSearchEndpoint = '/api-proxy/v3/search/interaction'
 const adviserAutocompleteEndpoint = '/api-proxy/adviser/?autocomplete=*'
+const companyAutocompleteEndpoint = '/api-proxy/v4/company?autocomplete=*'
 const serviceMetadataEndpoint = '/api-proxy/v4/metadata/service'
 const policyAreaMetadataEndpoint = '/api-proxy/v4/metadata/policy-area'
 const policyIssueTypeMetadataEndpoint =
@@ -57,9 +59,18 @@ const myInteractionsFilter = '[data-test="my-interactions-filter"]'
 
 const adviser = {
   id: myAdviserId,
-  name: 'Barry Oling',
+  name: 'Barry Oling6',
 }
 
+const myCompanyId = '0fb3379c-341c-4da4-b825-bf8d47b26baa'
+const myCompanyEndpoint = `/api-proxy/v4/company/${myCompanyId}`
+
+const companiesFilter = '[data-test="company-filter"]'
+
+const company = {
+  id: myCompanyId,
+  name: 'Lambda plc',
+}
 describe('Interactions Collections Filter', () => {
   context('Default Params', () => {
     it('should set the default params', () => {
@@ -145,6 +156,71 @@ describe('Interactions Collections Filter', () => {
     })
   })
 
+  context('Companies', () => {
+    const expectedPayload = {
+      ...minimumPayload,
+      company: [company.id],
+    }
+
+    it('should filter from the url', () => {
+      const queryParams = buildQueryString({
+        company: [company.id],
+      })
+
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.intercept('GET', companyAutocompleteEndpoint, {
+        count: 1,
+        results: [company],
+      }).as('companyListApiRequest')
+      cy.intercept('GET', myCompanyEndpoint, company).as('companyApiRequest')
+      cy.visit(`/interactions?${queryParams}`)
+      assertPayload('@apiRequest', expectedPayload)
+      assertTypeaheadOptionSelected({
+        element: companiesFilter,
+        expectedOption: company.name,
+      })
+      assertChipExists({ label: company.name, position: 1 })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.intercept('GET', companyAutocompleteEndpoint, {
+        count: 1,
+        results: [company],
+      }).as('companyListApiRequest')
+      cy.intercept('GET', myCompanyEndpoint, company).as('companyApiRequest')
+
+      cy.visit(`/interactions?${queryString}`)
+      cy.wait('@apiRequest')
+
+      selectFirstMockedTypeaheadOption({
+        element: companiesFilter,
+        input: company.name,
+        mockCompanyResponse: false,
+        url: `/api-proxy/v4/company?*`,
+        bodyResult: companyResult,
+      })
+      cy.wait('@companyListApiRequest')
+      cy.wait('@companyApiRequest')
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('company', [company.id])
+      assertTypeaheadOptionSelected({
+        element: companiesFilter,
+        expectedOption: company.name,
+      })
+      assertChipExists({
+        label: company.name,
+        position: 1,
+      })
+
+      removeChip(company.id)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(companiesFilter)
+    })
+  })
+
   context('Advisers', () => {
     const expectedPayload = {
       ...minimumPayload,
@@ -192,7 +268,7 @@ describe('Interactions Collections Filter', () => {
       cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
 
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: advisersFilter,
         input: adviser.name,
         mockAdviserResponse: false,

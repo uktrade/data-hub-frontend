@@ -12,7 +12,7 @@ const otherDITContacts = require('../../../../sandbox/fixtures/autocomplete-advi
 const valueType = require('../../../../sandbox/fixtures/metadata/capital-investment-opportunity-value-types.json')
 const assetClasses = require('../../../../sandbox/fixtures/metadata/capital-investment-asset-class-interest.json')
 
-import { selectFirstAdvisersTypeaheadOption } from '../../support/actions'
+import { selectFirstMockedTypeaheadOption } from '../../support/actions'
 import {
   assertTypeaheadOptionSelected,
   assertSingleTypeaheadOptionSelected,
@@ -108,7 +108,7 @@ describe('A capital opportunity with no existing details', () => {
       cy.get('#requiredChecksConductedOn\\.day').type('01')
       cy.get('#requiredChecksConductedOn\\.month').type('01')
       cy.get('#requiredChecksConductedOn\\.year').type('2021')
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: '#field-requiredChecksConductedBy',
         input: requiredChecksConductedBy.results[0].name,
       })
@@ -116,15 +116,15 @@ describe('A capital opportunity with no existing details', () => {
         .next()
         .find('input')
         .check(constructionRisk[0].id)
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: '#field-leadRelationshipManager',
         input: relationshipManager.results[0].name,
       })
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: '#field-otherDitContacts',
         input: otherDITContacts.results[0].name,
       })
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: '#field-otherDitContacts',
         input: otherDITContacts.results[1].name,
       })

@@ -6,7 +6,8 @@ export const buildSelectedFilters = (
   queryParams,
   metadata,
   selectedAdvisers,
-  selectedTeams
+  selectedTeams,
+  selectedCompanies
 ) => ({
   kind: {
     queryParam: 'kind',
@@ -22,6 +23,14 @@ export const buildSelectedFilters = (
       label: advisers.name,
       value: advisers.id,
       categoryLabel: LABELS.advisers,
+    })),
+  },
+  company: {
+    queryParam: 'company',
+    options: selectedCompanies.map(({ companies }) => ({
+      label: companies.name,
+      value: companies.id,
+      categoryLabel: LABELS.company,
     })),
   },
   datesAfter: {

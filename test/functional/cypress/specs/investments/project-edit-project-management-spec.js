@@ -10,7 +10,7 @@ const {
 } = require('../../support/assertions')
 
 const {
-  selectFirstAdvisersTypeaheadOption,
+  selectFirstMockedTypeaheadOption,
   clickButton,
 } = require('../../support/actions')
 
@@ -81,7 +81,7 @@ describe('Edit the management advisers for a project', () => {
           project_assurance_adviser: '2c42c516-9898-e211-a939-e4115bead28a',
           project_manager: null,
         }
-        selectFirstAdvisersTypeaheadOption({
+        selectFirstMockedTypeaheadOption({
           element: '#field-project_assurance_adviser',
           input: 'shawn',
         })
@@ -98,7 +98,7 @@ describe('Edit the management advisers for a project', () => {
           project_assurance_adviser: null,
           project_manager: '2c42c516-9898-e211-a939-e4115bead28a',
         }
-        selectFirstAdvisersTypeaheadOption({
+        selectFirstMockedTypeaheadOption({
           element: '#field-project_manager',
           input: 'shawn',
         })
@@ -116,12 +116,12 @@ describe('Edit the management advisers for a project', () => {
           project_manager: '2c42c516-9898-e211-a939-e4115bead28a',
         }
 
-        selectFirstAdvisersTypeaheadOption({
+        selectFirstMockedTypeaheadOption({
           element: '#field-project_assurance_adviser',
           input: 'blake',
         })
 
-        selectFirstAdvisersTypeaheadOption({
+        selectFirstMockedTypeaheadOption({
           element: '#field-project_manager',
           input: 'shawn',
         })

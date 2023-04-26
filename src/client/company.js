@@ -1,21 +1,22 @@
 import axios from 'axios'
-
 import { apiProxyAxios } from './components/Task/utils'
 import { castArray } from 'lodash'
 
-export const getAdviserNames = (adviser) => {
-  if (!adviser) {
+export const getCompanyNames = (company) => {
+  if (!company) {
     return []
   }
 
-  const advisers = castArray(adviser)
+  const companies = castArray(company)
 
   return axios
-    .all(advisers.map((adviser) => apiProxyAxios.get(`/adviser/${adviser}/`)))
+    .all(
+      companies.map((company) => apiProxyAxios.get(`/v4/company/${company}`))
+    )
     .then(
       axios.spread((...responses) =>
         responses.map(({ data }) => ({
-          advisers: data,
+          companies: data,
         }))
       )
     )

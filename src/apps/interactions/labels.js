@@ -68,6 +68,7 @@ const filters = {
   kind: 'Interaction type',
   communication_channel: 'Communication channel',
   dit_participants__adviser: 'Adviser(s)',
+  company: 'Company',
   date_after: 'From',
   date_before: 'To',
   dit_participants__team: 'Teams',

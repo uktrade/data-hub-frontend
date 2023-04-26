@@ -4,7 +4,7 @@ const { investments } = require('../../../../../src/lib/urls')
 const { formatWithoutParsing } = require('../../../../../src/client/utils/date')
 const { DATE_LONG_FORMAT_1 } = require('../../../../../src/common/constants')
 const {
-  selectFirstAdvisersTypeaheadOption,
+  selectFirstMockedTypeaheadOption,
 } = require('../../../../functional/cypress/support/actions')
 const {
   assertFlashMessage,
@@ -22,7 +22,7 @@ const createProposition = (data) => {
   cy.get('[data-test=proposition_deadline-month]').type(
     formatWithoutParsing(data.date, 'MM')
   )
-  selectFirstAdvisersTypeaheadOption({
+  selectFirstMockedTypeaheadOption({
     element: '[data-test="field-proposition_assignee"]',
     input: 'DIT Staff',
     mockAdviserResponse: false,
