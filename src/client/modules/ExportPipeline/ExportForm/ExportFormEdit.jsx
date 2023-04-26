@@ -18,20 +18,16 @@ const getBreadcrumbs = (exportItem) => {
       link: urls.exportPipeline.index(),
       text: 'Home',
     },
-    {
-      link: urls.companies.index(),
-      text: 'Companies',
-    },
   ]
 
   if (exportItem) {
     return [
       ...defaultBreadcrumbs,
       {
-        link: urls.companies.activity.index(exportItem.company.id),
-        text: exportItem.company.name,
+        link: urls.exportPipeline.details(exportItem.id),
+        text: exportItem.title,
       },
-      { text: exportItem.title },
+      { text: 'Edit export' },
     ]
   }
 
