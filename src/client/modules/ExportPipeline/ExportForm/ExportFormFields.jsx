@@ -78,7 +78,7 @@ const ExportFormFields = ({
                 <FieldAdvisersTypeahead
                   name="team_members"
                   label="Team members (optional)"
-                  hint="You can add up to 5 team members. Team members can view and edit export functionality"
+                  hint="You can add up to 5 team members. Team members can view and edit this export record."
                   isMulti={true}
                   validate={validateTeamMembers}
                 />
@@ -90,7 +90,7 @@ const ExportFormFields = ({
                   Total estimated export value
                 </Label>
                 <HintText>
-                  Select the year span and total value, for example 3 years,
+                  Select the year(s) and the total value. For example 3 years,
                   £1,000,000
                 </HintText>
                 <div id="field-estimated_export">
@@ -139,7 +139,7 @@ const ExportFormFields = ({
                 <ResourceOptionsField
                   name="sector"
                   label="Main sector"
-                  hint="This is the main sector the company is exporting to. Additional sectors can be added to notes"
+                  hint="This is the main sector the company is exporting to. Additional sectors can be added in the notes."
                   required={ERROR_MESSAGES.sector}
                   resource={SectorResource}
                   field={FieldTypeahead}
