@@ -149,6 +149,7 @@ const CompanyLocalHeader = ({
                 label="View options"
                 closedLabel="Hide options"
                 id="local_header"
+                dataTest="local-header-options-dropdown"
               >
                 <DropdownButton
                   href={`/companies/${company.id}/lists/add-remove?returnUrl=${queryString}`}
