@@ -1,13 +1,14 @@
 import axios from 'axios'
 
 import { apiProxyAxios } from './components/Task/utils'
+import { castArray } from 'lodash'
 
 export const getAdviserNames = (adviser) => {
   if (!adviser) {
     return []
   }
 
-  const advisers = Array.isArray(adviser) ? adviser : [adviser]
+  const advisers = castArray(adviser)
 
   return axios
     .all(advisers.map((adviser) => apiProxyAxios.get(`/adviser/${adviser}/`)))

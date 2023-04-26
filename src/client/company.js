@@ -1,12 +1,13 @@
 import axios from 'axios'
 import { apiProxyAxios } from './components/Task/utils'
+import { castArray } from 'lodash'
 
 export const getCompanyNames = (company) => {
   if (!company) {
     return []
   }
 
-  const companies = Array.isArray(company) ? company : [company]
+  const companies = castArray(company)
 
   return axios
     .all(

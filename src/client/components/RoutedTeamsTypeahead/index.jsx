@@ -6,14 +6,12 @@ import RoutedTypeahead from '../RoutedTypeahead'
 import Task from '../Task'
 import urls from '../../../lib/urls'
 import { apiProxyAxios } from '../Task/utils'
+import { transformIdNameToValueLabel } from '../../transformers'
 
 const parseTeamData = (teams) =>
   teams
     .filter((team) => team.name && team.name.trim().length)
-    .map(({ id, name }) => ({
-      label: name,
-      value: id,
-    }))
+    .map(transformIdNameToValueLabel)
 
 const fetchTeams = () =>
   throttle((searchString) => {

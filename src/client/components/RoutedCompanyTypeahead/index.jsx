@@ -7,14 +7,12 @@ import RoutedTypeahead from '../RoutedTypeahead'
 import Task from '../Task'
 
 import { apiProxyAxios } from '../Task/utils'
+import { transformIdNameToValueLabel } from '../../transformers'
 
 const parseCompanyData = (companies) =>
   companies
     .filter((company) => company.name && company.name.trim().length)
-    .map(({ id, name }) => ({
-      label: name,
-      value: id,
-    }))
+    .map(transformIdNameToValueLabel)
 
 const fetchCompanies = () => {
   return throttle((searchString) => {
