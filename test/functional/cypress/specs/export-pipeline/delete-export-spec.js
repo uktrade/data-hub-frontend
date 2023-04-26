@@ -18,7 +18,6 @@ describe('Export pipeline delete', () => {
     it('should render edit event breadcrumb', () => {
       assertBreadcrumbs({
         Home: urls.exportPipeline.index(),
-        Companies: urls.companies.index(),
       })
     })
 
@@ -51,7 +50,7 @@ describe('Export pipeline delete', () => {
       it('should render the delete export breadcrumb', () => {
         assertBreadcrumbs({
           Home: urls.exportPipeline.index(),
-          [exportItem.title]: urls.exportPipeline.edit(exportItem.id),
+          [exportItem.title]: urls.exportPipeline.details(exportItem.id),
           ['Are you sure you want to delete...']: null,
         })
       })
