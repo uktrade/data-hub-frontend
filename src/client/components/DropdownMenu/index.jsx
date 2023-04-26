@@ -97,6 +97,7 @@ const DropdownMenu = ({
   activeIndex,
   onUpdateIndex,
   closeMenu,
+  dataTest,
 }) => {
   const buttonRef = React.useRef(null)
   const childrenGroupRef = React.useRef(null)
@@ -158,6 +159,7 @@ const DropdownMenu = ({
       ref={containerRef}
       onKeyUp={onKeyUp}
       onKeyDown={onKeyDown}
+      data-test={dataTest}
     >
       <DropdownButtonContainer>
         <DropdownToggleButton
