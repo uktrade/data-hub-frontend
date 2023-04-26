@@ -18,11 +18,11 @@ describe('ContactInformation', () => {
       cy.get('[data-test="contact-information-details"]').should('be.visible')
       cy.get('[data-test="contact-information-details"]> Summary').should(
         'contain.text',
-        "Information you'll need to add a contact"
+        'Information needed to add a contact'
       )
       cy.get('[data-test="contact-information-details"]> div').should(
         'contain.text',
-        "You need to give the new contact's:"
+        'You need:'
       )
     })
   })

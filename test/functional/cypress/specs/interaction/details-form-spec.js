@@ -91,9 +91,9 @@ const ELEMENT_ADD_CONTACT_LINK = {
   assert: ({ element }) => cy.wrap(element).contains('add a new contact'),
 }
 const ELEMENT_CONTACT_INFO_DETAILS = {
-  summary: "Information you'll need to add a contact",
+  summary: 'Information needed to add a contact',
   content:
-    "You need to give the new contact's:full namejob titleemail" +
+    'You need:full namejob titleemail' +
     ' addressphone numberwork address if different to the company address',
   assert: assertDetails,
 }
@@ -130,7 +130,7 @@ const ELEMENT_SUMMARY = {
 }
 const ELEMENT_NOTES = {
   label: 'Notes (optional)',
-  hint: 'Use this text box to record any details of the logistics of the interaction eg how meeting(s) came about and where or when they happened. These are for your records. Do not include comments about issues impacting the company or feedback on government policy. Include that information in the business intelligence section.',
+  hint: 'Add details of the interaction, such as how the meeting came about and location. Issues relating to DIT or government objectives should be added to the business intelligence section.',
   assert: assertFieldTextarea,
 }
 // The radios on this page have been refactored to use legends instead of labels, as part of the Accessibility work.

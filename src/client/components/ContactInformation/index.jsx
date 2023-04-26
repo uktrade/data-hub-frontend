@@ -27,13 +27,13 @@ const ContactInformation = ({ onOpenContactForm, companyId }) => {
       >
         add a new contact
       </Link>
-      . After completing the form you'll return to this page without losing
-      data.
+      . You will leave this page to enter the details,once added you will return
+      here.The information you added will have been saved.
       <StyledDetails
-        summary="Information you'll need to add a contact"
+        summary="Information needed to add a contact"
         data-test="contact-information-details"
       >
-        <Paragraph>You need to give the new contact's:</Paragraph>
+        <Paragraph>You need:</Paragraph>
         <UnorderedList listStyleType="bullet">
           <ListItem>full name</ListItem>
           <ListItem>job title</ListItem>

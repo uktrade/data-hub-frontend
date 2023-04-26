@@ -213,19 +213,6 @@ const StepInteractionDetails = ({
     <>
       <H3 as="h2">Service</H3>
 
-      <InsetText>
-        If your contact provided business intelligence (eg issues impacting the
-        company or feedback on government policy), complete the business
-        intelligence section.
-        <br />
-        <br />
-        Read more{' '}
-        <NewWindowLink href={helpUrl(1)}>
-          information and guidance
-        </NewWindowLink>{' '}
-        on this section.
-      </InsetText>
-
       <FieldSelect
         name="service"
         emptyOption="-- Select service --"
@@ -357,21 +344,31 @@ const StepInteractionDetails = ({
         </>
       )}
 
-      <H3 as="h2">Notes</H3>
+      {/* <H3 as="h2">Summary</H3> */}
 
       <FieldInput
         type="text"
-        name="subject"
+        name="summary"
         label="Summary"
-        required="Enter a summary"
+        required="Enter summary"
       />
 
       <FieldTextarea
         type="text"
         name="notes"
         label="Notes (optional)"
-        hint="Use this text box to record any details of the logistics of the interaction eg how meeting(s) came about and where or when they happened. These are for your records. Do not include comments about issues impacting the company or feedback on government policy. Include that information in the business intelligence section."
+        hint="Add details of the interaction, such as how the meeting came about and location. Issues relating to DIT or government objectives should be added to the business intelligence section."
       />
+      <InsetText>
+        Select business intelligence if your contact mentioned issues relating
+        to DIT or government objectives.
+        <br />
+        <br />
+        For more information see{' '}
+        <NewWindowLink href={helpUrl(1)}>
+          record business intelligence in an interaction
+        </NewWindowLink>{' '}
+      </InsetText>
 
       <FieldRadios
         inline={true}
@@ -388,13 +385,6 @@ const StepInteractionDetails = ({
             legend="Policy issue types"
             options={policyIssueTypes}
             required="Select at least one policy issue type"
-          />
-
-          <FieldHelp
-            helpSummary="Help with policy issue types"
-            helpText="A policy type is the broad category/categories that the information fits into."
-            footerUrl={helpUrl(2)}
-            footerUrlDescription="Learn more about policy issue types"
           />
 
           <FieldTypeahead
@@ -415,47 +405,16 @@ const StepInteractionDetails = ({
 
           <FieldTextarea
             name="policy_feedback_notes"
-            label="Business intelligence"
+            label="Business intelligence summary"
             required="Enter business intelligence"
             hint={
               <>
-                Please summarise the information the business shared during this
-                interaction, including sufficient detail to convey the meaning
-                and significance of the topics covered.
-                <br />
-                <br />
-                Where available, include:
-                <br />• Opportunities, risks and/or anything affecting business
-                operations (company, sector or market) or investor sentiment
-                <br />• Quantify impacts and timescales (e.g. costs,
-                number/location of jobs created/lost)
-                <br />• Actions the business has or is proposing to take
-                <br />• Comments, questions or requests of HMG
+                Add brief details of what business intelligence was discussed,
+                such as impacts on the company, sector, economy and any actions
+                taken. This information will be visible to other Data Hub users,
+                the Business Intelligence Unit and DIT.
               </>
             }
-          />
-
-          <FieldHelp
-            helpSummary="Help with business intelligence"
-            helpText={
-              <>
-                Consider these questions when filling out this text box:
-                <p>What business intelligence did the company provide?</p>
-                <p>
-                  Why has the company raised this/these issue(s) and what are
-                  the impacts on the company, sector and wider economy?
-                </p>
-                <p>
-                  Did the company make any wider requests of DBT/HMG, including
-                  ministerial engagement or policy changes? If so, provide
-                  details.
-                </p>
-                Will the company be taking any further actions (eg investment
-                decisions or job creation/losses)? If so, provide details.
-              </>
-            }
-            footerUrl={helpUrl(4)}
-            footerUrlDescription="Learn more about business intelligence"
           />
         </>
       )}
@@ -474,7 +433,7 @@ const StepInteractionDetails = ({
               <FieldTypeahead
                 name={EXPORT_INTEREST_STATUS.EXPORTING_TO}
                 label="Countries currently exporting to"
-                hint="Add all that you discussed"
+                hint="Select all countries discussed"
                 placeholder="-- Search countries --"
                 options={countries}
                 validate={[
@@ -486,7 +445,7 @@ const StepInteractionDetails = ({
               <FieldTypeahead
                 name={EXPORT_INTEREST_STATUS.FUTURE_INTEREST}
                 label="Future countries of interest"
-                hint="Add all that you discussed"
+                hint="Select all countries discussed"
                 placeholder="-- Search countries --"
                 options={countries}
                 validate={[
@@ -498,7 +457,7 @@ const StepInteractionDetails = ({
               <FieldTypeahead
                 name={EXPORT_INTEREST_STATUS.NOT_INTERESTED}
                 label="Countries not interested in"
-                hint="Add all that you discussed"
+                hint="Select all countries discussed"
                 placeholder="-- Search countries --"
                 options={countries}
                 validate={[
