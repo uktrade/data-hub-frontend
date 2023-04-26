@@ -4,7 +4,7 @@ import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
 
 import { GREY_3, TEXT_COLOUR } from '../../../client/utils/colours'
-import { FieldRadios } from '../../../client/components'
+import { CheckboxGroupField } from '../../../client/components'
 
 import Form from '../../../client/components/Form'
 
@@ -20,7 +20,6 @@ const AddRemoveFromListForm = ({
   const initState = companyLists.reduce((obj, { listId, isAdded }) => {
     return { ...obj, [listId]: isAdded }
   }, {})
-
   return (
     <Form
       id="add-remove-from-list"
@@ -34,26 +33,19 @@ const AddRemoveFromListForm = ({
     >
       {() => (
         <>
-          {companyLists.map(({ listId, listName }, index) => (
-            <div key={listId} data-test={`company-${index}`}>
-              <FieldRadios
-                name={listId}
-                legend={`Do you want to add ${companyName} to the ${listName} list?`}
-                options={[
-                  {
-                    label: 'Yes',
-                    value: 'yes',
-                    inline: 'true',
-                  },
-                  {
-                    label: 'No',
-                    value: 'no',
-                    inline: 'true',
-                  },
-                ]}
-              />
-            </div>
-          ))}
+          <div data-test={`group-of-lists`}>
+            <CheckboxGroupField
+              name="company-lists"
+              label={`What list do you want to save ${companyName} to?`}
+              options={companyLists.map(({ isAdded, listName, listId }) => ({
+                label: `${listName}`,
+                value: listId,
+                inline: 'yes',
+                checked: isAdded === 'yes' ? true : false,
+              }))}
+            />
+          </div>
+
           <Button
             as={Link}
             href={createNewListUrl}
