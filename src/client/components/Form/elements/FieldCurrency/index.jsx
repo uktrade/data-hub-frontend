@@ -93,11 +93,12 @@ const FieldCurrency = ({
   })
 
   const [displayValue, setDisplayValue] = useState()
-  const [rawValue, setRawValue] = useState(value)
+  const [rawValue, setRawValue] = useState()
   const [editing, setEditing] = useState(false)
 
   useEffect(() => {
     if (!editing && value) {
+      setRawValue(value)
       setDisplayValue(decimal(value))
     }
   }, [value])

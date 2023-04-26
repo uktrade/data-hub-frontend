@@ -68,9 +68,9 @@ export const indexToOrdinal = (zeroBasedIndex) => {
 }
 
 /**
- * Parse a localized number to a float.
+ * Parse a string that has been formatted to a Number.
  * @param {string} stringNumber - the localized number
- * @param {string} locale - [optional] the locale that the number is represented in. Omit this parameter to use the current locale.
+ * @param {string} locale - [optional] the locale that the number is represented in. Omit this parameter to use the en-GB locale.
  */
 export const parseLocaleNumber = (stringNumber, locale = 'en-GB') => {
   if (!stringNumber.length) {

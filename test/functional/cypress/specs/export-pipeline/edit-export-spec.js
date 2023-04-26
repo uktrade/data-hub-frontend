@@ -1,3 +1,4 @@
+import { decimal } from '../../../../../src/client/utils/number-utils'
 import { contactFaker } from '../../fakers/contacts'
 import { addNewContact } from '../../support/actions'
 
@@ -142,7 +143,7 @@ describe('Export pipeline edit', () => {
             assertFieldInput({
               element,
               label: 'Estimated value in GBP',
-              value: exportItem.estimated_export_value_amount,
+              value: decimal(exportItem.estimated_export_value_amount),
             })
           }
         )

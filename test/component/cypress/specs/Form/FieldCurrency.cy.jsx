@@ -19,6 +19,15 @@ describe('FieldCurrency', () => {
     cy.get('#currency-test').as('currencyInput')
   })
 
+  context('when a default value is provided', () => {
+    it('should set the value raw values to correct values', () => {
+      cy.mount(<Component initialValue={123456} />)
+      cy.get('@currencyInput')
+        .should('have.attr', 'value', decimal('123456'))
+        .should('have.attr', 'data-raw-value', '123456')
+    })
+  })
+
   context('when a non-numerical value is entered', () => {
     it('should not have any formatting applied', () => {
       cy.get('@currencyInput').type('abc').blur()
