@@ -54,7 +54,6 @@ describe('Export pipeline edit', () => {
     it('should render edit event breadcrumb', () => {
       assertBreadcrumbs({
         Home: urls.exportPipeline.index(),
-        Companies: urls.companies.index(),
       })
     })
 
@@ -88,11 +87,8 @@ describe('Export pipeline edit', () => {
       it('should render the edit export breadcrumb', () => {
         assertBreadcrumbs({
           Home: urls.exportPipeline.index(),
-          Companies: urls.companies.index(),
-          [exportItem.company.name]: urls.companies.activity.index(
-            exportItem.company.id
-          ),
-          [exportItem.title]: null,
+          [exportItem.title]: urls.exportPipeline.details(exportItem.id),
+          'Edit export': null,
         })
       })
 
