@@ -55,6 +55,10 @@ const StyledViewMoreLink = styled(Link)`
   margin-right: 5px;
 `
 
+const StyledTag = styled(Tag)`
+  white-space: pre-wrap;
+`
+
 export const SUBSEGMENT = {
   sustain_nurture_and_grow: 'Sustain: Nurture & grow',
   sustain_develop_export_capability: 'Sustain: develop export capability',
@@ -120,7 +124,9 @@ const ExportStatus = ({
             {company.export_potential ? (
               <StyledTD>
                 <div>
-                  <Tag colour="green">{company.export_potential}</Tag>
+                  <StyledTag colour="green">
+                    {company.export_potential}
+                  </StyledTag>
                 </div>
               </StyledTD>
             ) : (
@@ -131,9 +137,9 @@ const ExportStatus = ({
             {company.export_sub_segment ? (
               <StyledTD>
                 <div>
-                  <Tag colour="green">
+                  <StyledTag colour="green">
                     {SUBSEGMENT[company.export_sub_segment]}
-                  </Tag>
+                  </StyledTag>
                 </div>
               </StyledTD>
             ) : (
