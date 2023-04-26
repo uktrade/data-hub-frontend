@@ -56,20 +56,14 @@ const InvestmentStatusCard = ({
           >
             <SummaryTable.Row heading="Last Project won">
               {summary?.won?.last_won_project?.id != null ? (
-                <div>
-                  <Link
-                    href={`/investments/projects/${summary.won.last_won_project.id}`}
-                    data-test="latest-won-project-link"
-                  >
-                    {format(summary.won.last_won_project.last_changed)}
-                  </Link>
-                  <br />
-                  <Link
-                    href={`/investments/projects/${summary.won.last_won_project.id}`}
-                  >
-                    {summary.won.last_won_project.name}
-                  </Link>
-                </div>
+                <Link
+                  href={`/investments/projects/${summary.won.last_won_project.id}`}
+                  data-test="latest-won-project-link"
+                >
+                  {`${format(summary.won.last_won_project.last_changed)} - ${
+                    summary.won.last_won_project.name
+                  }`}
+                </Link>
               ) : (
                 <StyledSpan>None</StyledSpan>
               )}
