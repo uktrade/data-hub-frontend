@@ -65,14 +65,14 @@ const ExportFormFields = ({
                 <FieldInput
                   name="title"
                   label="Export title"
-                  hint="It helps to give export details in the title, for example product and destination"
+                  hint="It helps to give export details in the title, for example product and destination."
                   type="text"
                   required={ERROR_MESSAGES.title}
                 />
                 <FieldAdvisersTypeahead
                   name="owner"
                   label="Owner"
-                  hint="When creating the record your name will appear. You can change the name to transfer ownership to someone else"
+                  hint="When creating the record your name will appear. You can change the name to transfer ownership to someone else."
                   required={ERROR_MESSAGES.owner}
                 />
                 <FieldAdvisersTypeahead
@@ -125,7 +125,7 @@ const ExportFormFields = ({
                   name="estimated_win_date"
                   format="short"
                   label="Estimated date for win"
-                  hint="For example 11 2023"
+                  hint="For example 11 2023."
                   required={ERROR_MESSAGES.estimated_win_date.required}
                   invalid={ERROR_MESSAGES.estimated_win_date.invalid}
                 />
@@ -203,7 +203,7 @@ const ExportFormFields = ({
                 <FieldTextarea
                   name="notes"
                   label="Notes (optional)"
-                  hint="Add further details about the export, such as additional sectors and country regions"
+                  hint="Add further details about the export, such as additional sectors and country regions."
                 />
               </>
             )}
