@@ -14,6 +14,7 @@ const { format } = require('../../../../../client/utils/date')
 
 import Task from '../../../../../client/components/Task'
 import { connect } from 'react-redux'
+import { GREY_1 } from '../../../../../client/utils/colours'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin: 0;
@@ -29,7 +30,7 @@ const StyledLastTableCell = styled(Table.Cell)`
   padding-bottom: 0;
 `
 const StyledSpan = styled('span')`
-  color: grey;
+  color: ${GREY_1};
 `
 const InvestmentStatusCard = ({
   queryString,

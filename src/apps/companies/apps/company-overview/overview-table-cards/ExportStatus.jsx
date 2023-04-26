@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, Table } from 'govuk-react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-
+import { GREY_1 } from '../../../../../client/utils/colours'
 import { SummaryTable, Tag } from '../../../../../client/components'
 import Task from '../../../../../client/components/Task'
 import {
@@ -44,7 +44,7 @@ const StyledLastTableCell = styled(Table.Cell)`
   padding-bottom: 0;
 `
 const StyledSpan = styled('span')`
-  color: grey;
+  color: ${GREY_1};
 `
 
 const StyledLink = styled(Link)`

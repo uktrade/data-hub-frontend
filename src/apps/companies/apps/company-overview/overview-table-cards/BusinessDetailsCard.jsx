@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { NewWindowLink, SummaryTable } from '../../../../../client/components'
 import { currencyGBP } from '../../../../../client/utils/number-utils'
+import { GREY_1 } from '../../../../../client/utils/colours'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin: 0;
@@ -19,6 +20,10 @@ const StyledLastTableCell = styled(Table.Cell)`
   padding-bottom: 0;
 `
 
+const StyledSpan = styled('span')`
+  color: ${GREY_1};
+`
+
 const BusinessDetailsCard = ({ company, queryString, companiesHouseLink }) => {
   const StyledAddressList = styled('ul')``
   return (
@@ -29,7 +34,7 @@ const BusinessDetailsCard = ({ company, queryString, companiesHouseLink }) => {
       >
         <SummaryTable.Row heading="Companies House">
           {!company.company_number ? (
-            'Not set'
+            <StyledSpan>Not set</StyledSpan>
           ) : (
             <NewWindowLink
               href={companiesHouseLink}
@@ -43,7 +48,7 @@ const BusinessDetailsCard = ({ company, queryString, companiesHouseLink }) => {
 
         <SummaryTable.Row heading="Trading Address">
           {!company.address ? (
-            'Not set'
+            <StyledSpan>Not set</StyledSpan>
           ) : (
             <StyledAddressList>
               {company.address?.line_1 && <li>{company.address.line_1}</li>}
@@ -61,7 +66,7 @@ const BusinessDetailsCard = ({ company, queryString, companiesHouseLink }) => {
         </SummaryTable.Row>
         <SummaryTable.Row heading="Website">
           {!company.website ? (
-            'Not set'
+            <StyledSpan>Not set</StyledSpan>
           ) : (
             <NewWindowLink href={company.website}>
               {company.website}
@@ -69,18 +74,22 @@ const BusinessDetailsCard = ({ company, queryString, companiesHouseLink }) => {
           )}
         </SummaryTable.Row>
         <SummaryTable.Row heading="Turnover">
-          {!company.turnover_gbp && !company.turnover_range
-            ? 'Not set'
-            : company.turnover_gbp
-            ? currencyGBP(company.turnover_gbp, {
-                maximumSignificantDigits: 2,
-              })
-            : company.turnover_range?.name}
+          {!company.turnover_gbp && !company.turnover_range ? (
+            <StyledSpan>Not set</StyledSpan>
+          ) : company.turnover_gbp ? (
+            currencyGBP(company.turnover_gbp, {
+              maximumSignificantDigits: 2,
+            })
+          ) : (
+            company.turnover_range?.name
+          )}
         </SummaryTable.Row>
         <SummaryTable.Row heading="Number of Employees">
-          {!company.number_of_employees
-            ? 'Not set'
-            : company.number_of_employees}
+          {!company.number_of_employees ? (
+            <StyledSpan>Not set</StyledSpan>
+          ) : (
+            company.number_of_employees
+          )}
         </SummaryTable.Row>
         <SummaryTable.Row heading="DBT Sector">
           {!company.sector ? 'Not set' : company.sector.name}
