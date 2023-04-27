@@ -206,6 +206,10 @@ const ExportStatusDetails = ({
   )
 }
 
+const unableToLoadExportWinsErrorMessage = {
+  error: 'Unable to load export wins',
+}
+
 const ExportStatus = ({
   activePage,
   company,
@@ -225,8 +229,8 @@ const ExportStatus = ({
         <>
           <ExportStatusDetails
             company={company}
-            exportWinsCount={{ error: 'Unable to load export wins' }}
-            latestExportWins={{ error: 'Unable to load export wins' }}
+            exportWinsCount={unableToLoadExportWinsErrorMessage}
+            latestExportWins={unableToLoadExportWinsErrorMessage}
             numberOfCurrentExportCountries={numberOfCurrentExportCountries}
             numberOfFutureInterestCountries={numberOfFutureInterestCountries}
             maximumTenCurrentExportCountries={maximumTenCurrentExportCountries}
