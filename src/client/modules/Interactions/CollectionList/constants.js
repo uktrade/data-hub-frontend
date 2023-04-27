@@ -4,6 +4,7 @@ export const LABELS = {
   serviceDelivery: 'Service delivery',
   advisers: 'Adviser',
   company: 'Company',
+  subject: 'Subject',
   myInteractions: 'My interactions',
   dateAfter: 'From',
   dateBefore: 'To',

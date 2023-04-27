@@ -1,6 +1,10 @@
 import { KIND_OPTIONS, BUSINESS_INTELLIGENCE_OPTION, LABELS } from './constants'
 
-import { buildOptionsFilter, buildDatesFilter } from '../../../filters'
+import {
+  buildOptionsFilter,
+  buildDatesFilter,
+  buildInputFieldFilter,
+} from '../../../filters'
 
 export const buildSelectedFilters = (
   queryParams,
@@ -32,6 +36,13 @@ export const buildSelectedFilters = (
       value: companies.id,
       categoryLabel: LABELS.company,
     })),
+  },
+  subject: {
+    queryParam: 'subject',
+    options: buildInputFieldFilter({
+      value: queryParams.subject,
+      categoryLabel: LABELS.subject,
+    }),
   },
   datesAfter: {
     queryParam: 'date_after',

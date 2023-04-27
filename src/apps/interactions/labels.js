@@ -69,6 +69,7 @@ const filters = {
   communication_channel: 'Communication channel',
   dit_participants__adviser: 'Adviser(s)',
   company: 'Company',
+  subject: 'Subject',
   date_after: 'From',
   date_before: 'To',
   dit_participants__team: 'Teams',
