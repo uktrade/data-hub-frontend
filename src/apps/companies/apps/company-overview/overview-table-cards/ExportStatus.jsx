@@ -178,7 +178,7 @@ const ExportStatusDetails = ({
           : 'No export wins recorded'}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Total exports won">
-        {props.count}
+        {props.count ? props.count : 0}
       </SummaryTable.Row>
       <StyledTableRow>
         <StyledLastTableCell colSpan={2}>

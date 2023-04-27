@@ -118,6 +118,9 @@ module.exports = {
     callback: url('/oauth/callback'),
     signout: url('/oauth/sign-out'),
   },
+  company: {
+    exportWin: url('/api-proxy/v4/company', '/:companyId/export-win'),
+  },
   companies: {
     index: url('/companies', PRIMARY_LINK_PARAMS.companies),
     create: url('/companies', '/create'),
