@@ -26,7 +26,7 @@ const Container = styled('div')`
   align-items: baseline;
   margin-bottom: 30px;
   ${Link} {
-    margin-right: 40px;
+    margin-right: 20px;
   }
   @media (max-width: ${BREAKPOINTS.TABLET}) {
     flex-direction: column;
