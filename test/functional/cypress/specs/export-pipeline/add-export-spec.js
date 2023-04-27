@@ -210,28 +210,35 @@ describe('Export pipeline create', () => {
           ERROR_MESSAGES.team_members
         )
       })
+      context(
+        'when the estimated dates field has form validation errors',
+        () => {
+          it('the form should display validation error message for invalid estimated dates', () => {
+            fill('[data-test=estimated_win_date-month]', '65')
+            fill('[data-test=estimated_win_date-year]', '-54')
+            cy.get('[data-test=submit-button]').click()
 
-      it('the form should display validation error message for invalid estimated dates', () => {
-        fill('[data-test=estimated_win_date-month]', '65')
-        fill('[data-test=estimated_win_date-year]', '-54')
-        cy.get('[data-test=submit-button]').click()
+            assertFieldError(
+              cy.get('[data-test="field-estimated_win_date"]'),
+              ERROR_MESSAGES.estimated_win_date.invalid
+            )
+          })
 
-        assertFieldError(
-          cy.get('[data-test="field-estimated_win_date"]'),
-          ERROR_MESSAGES.estimated_win_date.invalid
-        )
-      })
+          it('the form should display validation error message 2 digit estimated date', () => {
+            cy.get('[data-test=estimated_win_date-month]').clear()
+            cy.get('[data-test=estimated_win_date-year]').clear()
 
-      it('the form should display validation error message 2 digit estimated date', () => {
-        fill('[data-test=estimated_win_date-month]', '10')
-        fill('[data-test=estimated_win_date-year]', '23')
-        cy.get('[data-test=submit-button]').click()
+            fill('[data-test=estimated_win_date-month]', '10')
+            fill('[data-test=estimated_win_date-year]', '23')
+            cy.get('[data-test=submit-button]').click()
 
-        assertFieldError(
-          cy.get('[data-test="field-estimated_win_date"]'),
-          'Enter a year as 4 digits'
-        )
-      })
+            assertFieldError(
+              cy.get('[data-test="field-estimated_win_date"]'),
+              'Enter a year as 4 digits'
+            )
+          })
+        }
+      )
 
       context('when the currency field has form validation errors', () => {
         const fieldElement = '[data-test="field-estimated_export_value_amount"]'
