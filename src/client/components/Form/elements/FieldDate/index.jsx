@@ -67,6 +67,10 @@ const getValidator =
     if (!isValid && !isDateEmpty) {
       return invalid || 'Enter a valid date'
     }
+
+    if (year.toString().length != 4) {
+      return 'Enter a year as 4 digits'
+    }
   }
 
 const getDefaultInitialValue = (format) => {
@@ -124,7 +128,9 @@ const FieldDate = ({
   return (
     <FieldWrapper {...{ name, label, legend, hint, error, reduced }}>
       <StyledInputWrapper error={error}>
-        {error && <ErrorText>{error}</ErrorText>}
+        {error && (
+          <ErrorText data-test={`field-${name}-error`}>{error}</ErrorText>
+        )}
         {reduced ? (
           <Input
             id={name}
