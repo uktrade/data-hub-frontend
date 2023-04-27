@@ -93,8 +93,8 @@ const Countries = ({ countries, company, divDataTest, linkDataTest }) => {
 
 const ExportStatusDetails = ({
   company,
-  exportWinsCount = 0,
-  latestExportWins = false,
+  count,
+  latestExportWin,
   maximumTenCurrentExportCountries,
   maximumTenFutureInterestCountries,
   numberOfCurrentExportCountries,
@@ -171,22 +171,22 @@ const ExportStatusDetails = ({
         )}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Last export win">
-        {latestExportWins ? (
-          latestExportWins.error ? (
-            <StyledSpan>{latestExportWins.error}</StyledSpan>
+        {latestExportWin ? (
+          latestExportWin.error ? (
+            <StyledSpan>{latestExportWin.error}</StyledSpan>
           ) : (
-            `${format(latestExportWins.date)}, ${latestExportWins.country}`
+            `${format(latestExportWin.date)}, ${latestExportWin.country}`
           )
         ) : (
           'No export wins recorded'
         )}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Total exports won">
-        {exportWinsCount ? (
-          exportWinsCount.error ? (
-            <StyledSpan>{exportWinsCount.error}</StyledSpan>
+        {count ? (
+          count.error ? (
+            <StyledSpan>{count.error}</StyledSpan>
           ) : (
-            exportWinsCount
+            count
           )
         ) : (
           0
@@ -218,7 +218,8 @@ const ExportStatus = ({
   maximumTenCurrentExportCountries,
   numberOfFutureInterestCountries,
   maximumTenFutureInterestCountries,
-  ...props
+  count,
+  latestExportWin,
 }) => {
   return (
     <Task.Status
@@ -229,8 +230,8 @@ const ExportStatus = ({
         <>
           <ExportStatusDetails
             company={company}
-            exportWinsCount={unableToLoadExportWinsErrorMessage}
-            latestExportWins={unableToLoadExportWinsErrorMessage}
+            count={unableToLoadExportWinsErrorMessage}
+            latestExportWin={unableToLoadExportWinsErrorMessage}
             numberOfCurrentExportCountries={numberOfCurrentExportCountries}
             numberOfFutureInterestCountries={numberOfFutureInterestCountries}
             maximumTenCurrentExportCountries={maximumTenCurrentExportCountries}
@@ -253,8 +254,8 @@ const ExportStatus = ({
       {() => (
         <ExportStatusDetails
           company={company}
-          exportWinsCount={props.count}
-          latestExportWins={props.latestExportWin}
+          count={count}
+          latestExportWin={latestExportWin}
           maximumTenCurrentExportCountries={maximumTenCurrentExportCountries}
           maximumTenFutureInterestCountries={maximumTenFutureInterestCountries}
           numberOfCurrentExportCountries={numberOfCurrentExportCountries}
