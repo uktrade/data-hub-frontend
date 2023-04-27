@@ -150,7 +150,7 @@ describe('Export pipeline edit', () => {
           assertFieldDateShort({
             element,
             label: 'Estimated date for win',
-            hint: 'For example 11 2023.',
+            hint: 'For example 06 2023',
             value: exportItem.estimated_win_date,
           })
         })

@@ -125,7 +125,7 @@ const ExportFormFields = ({
                   name="estimated_win_date"
                   format="short"
                   label="Estimated date for win"
-                  hint="For example 11 2023."
+                  hint="For example 06 2023"
                   required={ERROR_MESSAGES.estimated_win_date.required}
                   invalid={ERROR_MESSAGES.estimated_win_date.invalid}
                 />
