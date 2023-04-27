@@ -91,7 +91,7 @@ describe('Export pipeline create', () => {
       })
 
       it('should render a form with display a save button', () => {
-        cy.get('[data-test=submit-button]').should('have.text', 'Save')
+        cy.get('[data-test=submit-button]').should('have.text', 'Add export')
       })
 
       it('should render a form with a cancel link', () => {
