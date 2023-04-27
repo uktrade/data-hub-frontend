@@ -464,6 +464,62 @@ describe('Company overview page', () => {
     }
   )
   context(
+    'when viewing the Export Status Card and an error occurs during the Export Wins lookup',
+    () => {
+      before(() => {
+        cy.intercept(
+          'GET',
+          urls.company.exportWin(fixtures.company.noOverviewDetails.id),
+          {
+            statusCode: 500,
+            body: {
+              detail:
+                "('The Company matching service returned an error status: 401',)",
+            },
+          }
+        )
+        cy.visit(
+          urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
+        )
+      })
+
+      it('the card should contain the Export Status table', () => {
+        cy.get('[data-test="exportStatusContainer"]')
+          .children()
+          .first()
+          .contains('Export status')
+          .next()
+          .children()
+        cy.get('th')
+          .contains('Export potential')
+          .siblings()
+          .contains('td', 'Not set')
+        cy.get('th')
+          .contains('Export sub-segment')
+          .siblings()
+          .contains('td', 'Not set')
+        cy.get('th')
+          .contains('Currently exporting to')
+          .siblings()
+          .contains('td', 'Not set')
+
+        cy.get('th')
+          .contains('Future countries of interest')
+          .siblings()
+          .contains('td', 'Not set')
+        cy.get('th')
+          .contains('Last export win')
+          .siblings()
+          .contains('td', 'Unable to load export wins')
+        cy.get('th')
+          .contains('Total exports won')
+          .siblings()
+          .contains('td', 'Unable to load export wins')
+      })
+    }
+  )
+
+  context(
     'when viewing the investment status card for a business that has all information added',
     () => {
       before(() => {

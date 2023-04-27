@@ -91,6 +91,125 @@ const Countries = ({ countries, company, divDataTest, linkDataTest }) => {
   )
 }
 
+const ExportStatusDetails = ({
+  company,
+  count,
+  latestExportWin,
+  maximumTenCurrentExportCountries,
+  maximumTenFutureInterestCountries,
+  numberOfCurrentExportCountries,
+  numberOfFutureInterestCountries,
+  queryString,
+}) => {
+  return (
+    <StyledSummaryTable
+      caption="Export status"
+      data-test="exportStatusContainer"
+    >
+      <SummaryTable.Row heading="Export potential">
+        {company.export_potential ? (
+          <StyledTD>
+            <div>
+              <StyledTag colour="green">{company.export_potential}</StyledTag>
+            </div>
+          </StyledTD>
+        ) : (
+          <StyledSpan>Not set</StyledSpan>
+        )}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Export sub-segment">
+        {company.export_sub_segment ? (
+          <StyledTD>
+            <div>
+              <StyledTag colour="green">
+                {SUBSEGMENT[company.export_sub_segment]}
+              </StyledTag>
+            </div>
+          </StyledTD>
+        ) : (
+          <StyledSpan>Not set</StyledSpan>
+        )}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Currently exporting to">
+        {numberOfCurrentExportCountries ? (
+          <Countries
+            company={company}
+            countries={maximumTenCurrentExportCountries}
+            divDataTest={'current-export-list'}
+            linkDataTest={'current-export-country'}
+          />
+        ) : (
+          <StyledSpan>Not set</StyledSpan>
+        )}
+        {numberOfCurrentExportCountries > 10 && (
+          <StyledViewMoreLink
+            href={`/companies/${company.id}/exports`}
+            data-test="export-status-currently-exporting-to-link"
+          >
+            {`View ${numberOfCurrentExportCountries - 10} more`}
+          </StyledViewMoreLink>
+        )}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Future countries of interest">
+        {numberOfFutureInterestCountries ? (
+          <Countries
+            company={company}
+            countries={maximumTenFutureInterestCountries}
+            divDataTest={'future-export-list'}
+            linkDataTest={'future-export-country'}
+          />
+        ) : (
+          <StyledSpan>Not set</StyledSpan>
+        )}
+        {numberOfCurrentExportCountries > 10 && (
+          <StyledViewMoreLink
+            href={`/companies/${company.id}/exports`}
+            data-test="export-status-future-exporting-to-link"
+          >
+            {`View ${numberOfFutureInterestCountries - 10} more`}
+          </StyledViewMoreLink>
+        )}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Last export win">
+        {latestExportWin ? (
+          latestExportWin.error ? (
+            <StyledSpan>{latestExportWin.error}</StyledSpan>
+          ) : (
+            `${format(latestExportWin.date)}, ${latestExportWin.country}`
+          )
+        ) : (
+          'No export wins recorded'
+        )}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Total exports won">
+        {count ? (
+          count.error ? (
+            <StyledSpan>{count.error}</StyledSpan>
+          ) : (
+            count
+          )
+        ) : (
+          0
+        )}
+      </SummaryTable.Row>
+      <StyledTableRow>
+        <StyledLastTableCell colSpan={2}>
+          <Link
+            href={`${queryString}/exports`}
+            data-test="export-status-page-link"
+          >
+            View full export details
+          </Link>
+        </StyledLastTableCell>
+      </StyledTableRow>
+    </StyledSummaryTable>
+  )
+}
+
+const unableToLoadExportWinsErrorMessage = {
+  error: 'Unable to load export wins',
+}
+
 const ExportStatus = ({
   activePage,
   company,
@@ -99,13 +218,30 @@ const ExportStatus = ({
   maximumTenCurrentExportCountries,
   numberOfFutureInterestCountries,
   maximumTenFutureInterestCountries,
-  ...props
+  count,
+  latestExportWin,
 }) => {
   return (
     <Task.Status
       name={TASK_GET_LATEST_EXPORT_WINS}
       id={OVERVIEW_COMPANY_EXPORT_WINS_LIST_ID}
       progressMessage="Loading export wins"
+      renderError={() => (
+        <>
+          <ExportStatusDetails
+            company={company}
+            count={unableToLoadExportWinsErrorMessage}
+            latestExportWin={unableToLoadExportWinsErrorMessage}
+            numberOfCurrentExportCountries={numberOfCurrentExportCountries}
+            numberOfFutureInterestCountries={numberOfFutureInterestCountries}
+            maximumTenCurrentExportCountries={maximumTenCurrentExportCountries}
+            maximumTenFutureInterestCountries={
+              maximumTenFutureInterestCountries
+            }
+            queryString={queryString}
+          />
+        </>
+      )}
       startOnRender={{
         payload: {
           companyId: company.id,
@@ -116,97 +252,16 @@ const ExportStatus = ({
       }}
     >
       {() => (
-        <StyledSummaryTable
-          caption="Export status"
-          data-test="exportStatusContainer"
-        >
-          <SummaryTable.Row heading="Export potential">
-            {company.export_potential ? (
-              <StyledTD>
-                <div>
-                  <StyledTag colour="green">
-                    {company.export_potential}
-                  </StyledTag>
-                </div>
-              </StyledTD>
-            ) : (
-              <StyledSpan>Not set</StyledSpan>
-            )}
-          </SummaryTable.Row>
-          <SummaryTable.Row heading="Export sub-segment">
-            {company.export_sub_segment ? (
-              <StyledTD>
-                <div>
-                  <StyledTag colour="green">
-                    {SUBSEGMENT[company.export_sub_segment]}
-                  </StyledTag>
-                </div>
-              </StyledTD>
-            ) : (
-              <StyledSpan>Not set</StyledSpan>
-            )}
-          </SummaryTable.Row>
-          <SummaryTable.Row heading="Currently exporting to">
-            {numberOfCurrentExportCountries ? (
-              <Countries
-                company={company}
-                countries={maximumTenCurrentExportCountries}
-                divDataTest={'current-export-list'}
-                linkDataTest={'current-export-country'}
-              />
-            ) : (
-              <StyledSpan>Not set</StyledSpan>
-            )}
-            {numberOfCurrentExportCountries > 10 && (
-              <StyledViewMoreLink
-                href={`/companies/${company.id}/exports`}
-                data-test="export-status-currently-exporting-to-link"
-              >
-                {`View ${numberOfCurrentExportCountries - 10} more`}
-              </StyledViewMoreLink>
-            )}
-          </SummaryTable.Row>
-          <SummaryTable.Row heading="Future countries of interest">
-            {numberOfFutureInterestCountries ? (
-              <Countries
-                company={company}
-                countries={maximumTenFutureInterestCountries}
-                divDataTest={'future-export-list'}
-                linkDataTest={'future-export-country'}
-              />
-            ) : (
-              <StyledSpan>Not set</StyledSpan>
-            )}
-            {numberOfCurrentExportCountries > 10 && (
-              <StyledViewMoreLink
-                href={`/companies/${company.id}/exports`}
-                data-test="export-status-future-exporting-to-link"
-              >
-                {`View ${numberOfFutureInterestCountries - 10} more`}
-              </StyledViewMoreLink>
-            )}
-          </SummaryTable.Row>
-          <SummaryTable.Row heading="Last export win">
-            {props.latestExportWin
-              ? `${format(props.latestExportWin.date)}, ${
-                  props.latestExportWin.country
-                }`
-              : 'No export wins recorded'}
-          </SummaryTable.Row>
-          <SummaryTable.Row heading="Total exports won">
-            {props.count}
-          </SummaryTable.Row>
-          <StyledTableRow>
-            <StyledLastTableCell colSpan={2}>
-              <Link
-                href={`${queryString}/exports`}
-                data-test="export-status-page-link"
-              >
-                View full export details
-              </Link>
-            </StyledLastTableCell>
-          </StyledTableRow>
-        </StyledSummaryTable>
+        <ExportStatusDetails
+          company={company}
+          count={count}
+          latestExportWin={latestExportWin}
+          maximumTenCurrentExportCountries={maximumTenCurrentExportCountries}
+          maximumTenFutureInterestCountries={maximumTenFutureInterestCountries}
+          numberOfCurrentExportCountries={numberOfCurrentExportCountries}
+          numberOfFutureInterestCountries={numberOfFutureInterestCountries}
+          queryString={queryString}
+        />
       )}
     </Task.Status>
   )
