@@ -24,6 +24,7 @@ const {
   clearAndTypeInput,
   clearAndTypeTextArea,
 } = require('../../../support/actions')
+const { decimal } = require('../../../../../../src/client/utils/number-utils')
 
 const { oneListCorp: existingCompany, lambdaPlc: newCompany } = fixtures.company
 
@@ -66,7 +67,7 @@ describe('View large capital investor details page', () => {
           element,
           label: 'Global assets under management',
           hint: 'Enter value in US dollars',
-          value: '1000000',
+          value: decimal('1000000'),
         })
       })
     })
@@ -77,7 +78,7 @@ describe('View large capital investor details page', () => {
           element,
           label: 'Investable capital',
           hint: 'Enter value in US dollars',
-          value: '30000',
+          value: decimal('30000'),
         })
       })
     })
