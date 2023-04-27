@@ -1,0 +1,45 @@
+version: 0.2
+
+run-as: root
+
+env:
+  shell: bash
+  variables:
+    LOCAL_DEV: True
+    API_ROOT: http://127.0.0.1:8000
+    REDIS_HOST: localhost
+    REDIS_URL: redis://localhost:6379
+  parameter-store:
+    DATA_HUB_BACKEND_ACCESS_KEY_ID: /codebuild/datahub/datahub-fe/test/DATA_HUB_BACKEND_ACCESS_KEY_ID
+    DATA_HUB_BACKEND_SECRET_ACCESS_KEY: /codebuild/datahub/datahub-fe/test/DATA_HUB_BACKEND_SECRET_ACCESS_KEY
+
+
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - codebuild-breakpoint
+      - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+      - bash; . ~/.nvm/nvm.sh; nvm install 18.7.0
+      - npm install -D webpack-cli
+      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &
+      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+      - docker pull redis:6.2.6
+
+
+
+  pre_build:
+    commands:
+      - docker run -d -p 6379:6379 redis:6.2.6
+      - npm run develop
+
+  build:
+    commands:
+      # Insert tests commands here
+      # -
+
+  post_build:
+    commands:
+      # -
