@@ -146,56 +146,6 @@ describe('Export pipeline create', () => {
       })
     })
 
-    context('when the currency field has form validation errors', () => {
-      const fieldElement = '[data-test="field-estimated_export_value_amount"]'
-      const currencyInput = '[data-test="estimated-export-value-amount-input"]'
-      const saveButton = '[data-test=submit-button]'
-
-      before(() => {
-        cy.visit(addPageUrl)
-      })
-
-      it('should display an error when the field is empty', () => {
-        cy.get(saveButton).click()
-        assertFieldError(
-          cy.get(fieldElement),
-          ERROR_MESSAGES.estimated_export_value_empty,
-          false
-        )
-      })
-      it('should display an error when the field value is negative', () => {
-        cy.get(currencyInput).type('-5000')
-        cy.get(saveButton).click()
-        assertFieldError(
-          cy.get(fieldElement),
-          ERROR_MESSAGES.estimated_export_value_amount,
-          false
-        )
-      })
-
-      it('should display an error when the field value is greater than 19 digits', () => {
-        cy.get(currencyInput).clear()
-        cy.get(currencyInput).type('12345678912345678912')
-        cy.get(saveButton).click()
-        assertFieldError(
-          cy.get(fieldElement),
-          ERROR_MESSAGES.estimated_export_value_amount,
-          false
-        )
-      })
-
-      it('should display an error when the field value is non numerical', () => {
-        cy.get(currencyInput).clear()
-        cy.get(currencyInput).type('ABC')
-        cy.get(saveButton).click()
-        assertFieldError(
-          cy.get(fieldElement),
-          ERROR_MESSAGES.estimated_export_value_amount,
-          false
-        )
-      })
-    })
-
     context('when the form contains invalid data and is submitted', () => {
       before(() => {
         cy.visit(addPageUrl)
@@ -260,16 +210,81 @@ describe('Export pipeline create', () => {
           ERROR_MESSAGES.team_members
         )
       })
+      context(
+        'when the estimated dates field has form validation errors',
+        () => {
+          it('the form should display validation error message for invalid estimated dates', () => {
+            fill('[data-test=estimated_win_date-month]', '65')
+            fill('[data-test=estimated_win_date-year]', '-54')
+            cy.get('[data-test=submit-button]').click()
 
-      it('the form should display validation error message for invalid estimated dates', () => {
-        fill('[data-test=estimated_win_date-month]', '65')
-        fill('[data-test=estimated_win_date-year]', '-54')
-        cy.get('[data-test=submit-button]').click()
+            assertFieldError(
+              cy.get('[data-test="field-estimated_win_date"]'),
+              ERROR_MESSAGES.estimated_win_date.invalid
+            )
+          })
 
-        assertFieldError(
-          cy.get('[data-test="field-estimated_win_date"]'),
-          ERROR_MESSAGES.estimated_win_date.invalid
-        )
+          it('the form should display validation error message 2 digit estimated date', () => {
+            cy.get('[data-test=estimated_win_date-month]').clear()
+            cy.get('[data-test=estimated_win_date-year]').clear()
+
+            fill('[data-test=estimated_win_date-month]', '10')
+            fill('[data-test=estimated_win_date-year]', '23')
+            cy.get('[data-test=submit-button]').click()
+
+            assertFieldError(
+              cy.get('[data-test="field-estimated_win_date"]'),
+              'Enter a year as 4 digits'
+            )
+          })
+        }
+      )
+
+      context('when the currency field has form validation errors', () => {
+        const fieldElement = '[data-test="field-estimated_export_value_amount"]'
+        const currencyInput =
+          '[data-test="estimated-export-value-amount-input"]'
+        const saveButton = '[data-test=submit-button]'
+
+        it('should display an error when the field is empty', () => {
+          cy.get(saveButton).click()
+          assertFieldError(
+            cy.get(fieldElement),
+            ERROR_MESSAGES.estimated_export_value_empty,
+            false
+          )
+        })
+        it('should display an error when the field value is negative', () => {
+          cy.get(currencyInput).type('-5000')
+          cy.get(saveButton).click()
+          assertFieldError(
+            cy.get(fieldElement),
+            ERROR_MESSAGES.estimated_export_value_amount,
+            false
+          )
+        })
+
+        it('should display an error when the field value is greater than 19 digits', () => {
+          cy.get(currencyInput).clear()
+          cy.get(currencyInput).type('12345678912345678912')
+          cy.get(saveButton).click()
+          assertFieldError(
+            cy.get(fieldElement),
+            ERROR_MESSAGES.estimated_export_value_amount,
+            false
+          )
+        })
+
+        it('should display an error when the field value is non numerical', () => {
+          cy.get(currencyInput).clear()
+          cy.get(currencyInput).type('ABC')
+          cy.get(saveButton).click()
+          assertFieldError(
+            cy.get(fieldElement),
+            ERROR_MESSAGES.estimated_export_value_amount,
+            false
+          )
+        })
       })
     })
 
