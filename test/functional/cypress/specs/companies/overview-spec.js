@@ -466,7 +466,7 @@ describe('Company overview page', () => {
   context(
     'when viewing the Export Status Card and an error occurs during the Export Wins lookup',
     () => {
-      beforeEach(() => {
+      before(() => {
         cy.intercept(
           'GET',
           urls.company.exportWin(fixtures.company.noOverviewDetails.id),
@@ -510,47 +510,11 @@ describe('Company overview page', () => {
         cy.get('th')
           .contains('Last export win')
           .siblings()
-          .contains('td', 'No export wins recorded')
+          .contains('td', 'Unable to load export wins')
         cy.get('th')
           .contains('Total exports won')
           .siblings()
-          .contains('td', '0')
-      })
-      it('the card should contain the Export Wins error message', () => {
-        cy.get('[data-test="exportStatusContainer"]')
-          .siblings()
-          .contains('Could not load TASK_GET_LATEST_EXPORT_WINS')
-          .siblings()
-          .contains(
-            'Error: We were unable to lookup Export Wins for No Overview Details Inc., please try again later.'
-          )
-      })
-      it('clicking Retry button within error message should show the error message again', () => {
-        cy.get('[data-test="exportStatusContainer"]')
-          .siblings()
-          .children()
-          .last()
-          .children()
-          .first()
-          .contains('Retry')
-          .click()
-        cy.get('h2')
-          .contains('Could not load TASK_GET_LATEST_EXPORT_WINS')
-          .siblings()
-          .last()
-          .contains('Retry')
-          .click()
-      })
-      it('clicking Dismiss button within error message should hide the error message', () => {
-        cy.get('[data-test="exportStatusContainer"]')
-          .siblings()
-          .children()
-          .last()
-          .children()
-          .last()
-          .contains('Dismiss')
-          .click()
-        cy.get('h2').should('not.exist')
+          .contains('td', 'Unable to load export wins')
       })
     }
   )

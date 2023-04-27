@@ -14,7 +14,6 @@ import { connect } from 'react-redux'
 import { OVERVIEW__EXPORT_WINS_SUMMARY } from '../../../../../client/actions'
 import { format } from '../../../../../client/utils/date'
 import { kebabCase } from 'lodash'
-import Err from '../../../../../client/components/Task/Error'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin: 0;
@@ -94,12 +93,13 @@ const Countries = ({ countries, company, divDataTest, linkDataTest }) => {
 
 const ExportStatusDetails = ({
   company,
-  numberOfCurrentExportCountries,
-  numberOfFutureInterestCountries,
+  exportWinsCount = 0,
+  latestExportWins = false,
   maximumTenCurrentExportCountries,
   maximumTenFutureInterestCountries,
+  numberOfCurrentExportCountries,
+  numberOfFutureInterestCountries,
   queryString,
-  ...props
 }) => {
   return (
     <StyledSummaryTable
@@ -171,14 +171,26 @@ const ExportStatusDetails = ({
         )}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Last export win">
-        {props.latestExportWin
-          ? `${format(props.latestExportWin.date)}, ${
-              props.latestExportWin.country
-            }`
-          : 'No export wins recorded'}
+        {latestExportWins ? (
+          latestExportWins.error ? (
+            <StyledSpan>{latestExportWins.error}</StyledSpan>
+          ) : (
+            `${format(latestExportWins.date)}, ${latestExportWins.country}`
+          )
+        ) : (
+          'No export wins recorded'
+        )}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Total exports won">
-        {props.count ? props.count : 0}
+        {exportWinsCount ? (
+          exportWinsCount.error ? (
+            <StyledSpan>{exportWinsCount.error}</StyledSpan>
+          ) : (
+            exportWinsCount
+          )
+        ) : (
+          0
+        )}
       </SummaryTable.Row>
       <StyledTableRow>
         <StyledLastTableCell colSpan={2}>
@@ -202,22 +214,19 @@ const ExportStatus = ({
   maximumTenCurrentExportCountries,
   numberOfFutureInterestCountries,
   maximumTenFutureInterestCountries,
+  ...props
 }) => {
   return (
     <Task.Status
       name={TASK_GET_LATEST_EXPORT_WINS}
       id={OVERVIEW_COMPANY_EXPORT_WINS_LIST_ID}
       progressMessage="Loading export wins"
-      renderError={({
-        errorMessage,
-        retry,
-        dismiss,
-        noun,
-        dismissable = true,
-      }) => (
+      renderError={() => (
         <>
           <ExportStatusDetails
             company={company}
+            exportWinsCount={{ error: 'Unable to load export wins' }}
+            latestExportWins={{ error: 'Unable to load export wins' }}
             numberOfCurrentExportCountries={numberOfCurrentExportCountries}
             numberOfFutureInterestCountries={numberOfFutureInterestCountries}
             maximumTenCurrentExportCountries={maximumTenCurrentExportCountries}
@@ -225,13 +234,6 @@ const ExportStatus = ({
               maximumTenFutureInterestCountries
             }
             queryString={queryString}
-          ></ExportStatusDetails>
-          <Err
-            errorMessage={errorMessage}
-            retry={retry}
-            dismiss={dismiss}
-            noun={noun}
-            dismissable={dismissable}
           />
         </>
       )}
@@ -247,12 +249,14 @@ const ExportStatus = ({
       {() => (
         <ExportStatusDetails
           company={company}
-          numberOfCurrentExportCountries={numberOfCurrentExportCountries}
-          numberOfFutureInterestCountries={numberOfFutureInterestCountries}
+          exportWinsCount={props.count}
+          latestExportWins={props.latestExportWin}
           maximumTenCurrentExportCountries={maximumTenCurrentExportCountries}
           maximumTenFutureInterestCountries={maximumTenFutureInterestCountries}
+          numberOfCurrentExportCountries={numberOfCurrentExportCountries}
+          numberOfFutureInterestCountries={numberOfFutureInterestCountries}
           queryString={queryString}
-        ></ExportStatusDetails>
+        />
       )}
     </Task.Status>
   )
