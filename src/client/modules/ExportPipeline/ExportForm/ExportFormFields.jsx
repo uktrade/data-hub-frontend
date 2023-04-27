@@ -44,6 +44,7 @@ const ExportFormFields = ({
   cancelRedirectUrl,
   redirectToUrl,
   exportItem,
+  formSubmitButtonLabel,
   taskProps = {},
 }) => (
   <Task.Status {...taskProps}>
@@ -59,6 +60,7 @@ const ExportFormFields = ({
             initialValues={exportItem}
             transformPayload={(values) => ({ exportId: values.id, values })}
             flashMessage={flashMessage}
+            submitButtonLabel={formSubmitButtonLabel}
           >
             {({ values }) => (
               <>
@@ -222,10 +224,12 @@ ExportFormFields.propTypes = {
   redirectToUrl: PropTypes.string.isRequired,
   taskProps: PropTypes.object,
   formDataLoaded: PropTypes.bool,
+  formSubmitButtonLabel: PropTypes.string,
 }
 
 ExportFormFields.defaultProps = {
   formDataLoaded: false,
+  formSubmitButtonLabel: 'Save',
 }
 
 export default ExportFormFields
