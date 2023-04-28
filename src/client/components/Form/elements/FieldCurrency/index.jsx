@@ -42,18 +42,18 @@ const StyledCurrencyPrefix = styled('div')`
   border: ${BORDER_WIDTH_FORM_ELEMENT} solid ${BLACK};
   border-right: 0px;
   display: inline-block;
-  height: 40px;
   padding: ${BORDER_WIDTH};
-  min-width: 40px;
+  min-width: 47px;
   box-sizing: border-box;
   text-align: center;
   flex: 0 0 auto;
   cursor: default;
   font-size: ${FONT_SIZE.SIZE_19};
   background-color: ${LIGHT_GREY};
+  line-height: 1.8;
 
   @media (max-width: ${BREAKPOINTS.TABLET}) {
-    line-height: 1.6;
+    line-height: 2.1;
     font-size: ${FONT_SIZE.SIZE_16};
   }
   ${(props) =>
@@ -61,11 +61,17 @@ const StyledCurrencyPrefix = styled('div')`
     `
     border: ${BORDER_WIDTH_FORM_ELEMENT_ERROR} solid ${ERROR_COLOUR};
     border-right: 0px;
+    line-height: 1.6;
     `}
 `
 
 const StyledCurrencyWrapper = styled('div')`
   display: flex;
+  align-items: stretch;
+  height: 47px;
+  > * {
+    height: 100%;
+  }
 `
 
 /**
