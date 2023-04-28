@@ -4,7 +4,7 @@ import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
 
 import { GREY_3, TEXT_COLOUR } from '../../../client/utils/colours'
-import { CheckboxGroupField } from '../../../client/components'
+import { FieldCheckboxes } from '../../../client/components'
 
 import Form from '../../../client/components/Form'
 
@@ -20,12 +20,18 @@ const AddRemoveFromListForm = ({
   const initState = companyLists.reduce((obj, { listId, isAdded }) => {
     return { ...obj, [listId]: isAdded }
   }, {})
+  const isSelected = []
+  for (const key in initState) {
+    if (initState[key] === 'yes') {
+      isSelected.push(key)
+    }
+  }
   return (
     <Form
       id="add-remove-from-list"
       analyticsFormName="addRemoveFromList"
       submissionTaskName="Add or remove from list"
-      initialValues={initState}
+      initialValues={{ 'company-lists': isSelected }}
       transformPayload={(list) => ({ list, token, companyId })}
       flashMessage={() => 'Lists changes for this company have been saved.'}
       redirectTo={() => cancelLinkUrl}
@@ -34,14 +40,12 @@ const AddRemoveFromListForm = ({
       {() => (
         <>
           <div data-test={`group-of-lists`}>
-            <CheckboxGroupField
+            <FieldCheckboxes
               name="company-lists"
               label={`What list do you want to save ${companyName} to?`}
-              options={companyLists.map(({ isAdded, listName, listId }) => ({
+              options={companyLists.map(({ listName, listId }) => ({
                 label: `${listName}`,
                 value: listId,
-                inline: 'yes',
-                checked: isAdded === 'yes' ? true : false,
               }))}
             />
           </div>
