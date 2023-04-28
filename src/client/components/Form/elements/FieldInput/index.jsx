@@ -22,6 +22,9 @@ const StyledInputWrapper = styled('div')`
     margin-right: ${SPACING.SCALE_3};
     padding-left: ${SPACING.SCALE_2};
   `}
+  ${Input} {
+    height: 47px;
+  }
 `
 
 const StyledText = styled('span')({
