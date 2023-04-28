@@ -73,9 +73,7 @@ const EstimatedExport = ({
     return (
       <>
         {currencyGBP(estimated_export_value_amount)}{' '}
-        {estimated_export_value_years && (
-          <span>({estimated_export_value_years.name})</span>
-        )}
+        <span>({estimated_export_value_years.name})</span>
       </>
     )
   }

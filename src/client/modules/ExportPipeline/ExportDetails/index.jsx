@@ -33,6 +33,28 @@ const Container = styled('div')`
   }
 `
 
+const EstimatedExport = ({
+  estimated_export_value_amount,
+  estimated_export_value_years,
+}) => {
+  if (estimated_export_value_amount && estimated_export_value_years) {
+    return (
+      <>
+        {`${estimated_export_value_years.name} / ${currencyGBP(
+          estimated_export_value_amount
+        )}`}
+      </>
+    )
+  }
+  if (estimated_export_value_amount) {
+    return <>{currencyGBP(estimated_export_value_amount)}</>
+  }
+  if (estimated_export_value_years) {
+    return <>{estimated_export_value_years.name}</>
+  }
+  return <span>Not set</span>
+}
+
 const getBreadcrumbs = (exportItem) => {
   const defaultBreadcrumbs = [
     {
@@ -94,13 +116,14 @@ const ExportDetailsForm = ({ exportItem }) => {
                     heading="Total estimated export value"
                     hideWhenEmpty={false}
                   >
-                    {isEmpty(exportItem.estimated_export_value_amount)
-                      ? 'Not set'
-                      : `${
-                          exportItem.estimated_export_value_years?.name
-                        } / ${currencyGBP(
-                          exportItem.estimated_export_value_amount
-                        )}`}
+                    <EstimatedExport
+                      estimated_export_value_amount={
+                        exportItem.estimated_export_value_amount
+                      }
+                      estimated_export_value_years={
+                        exportItem.estimated_export_value_years
+                      }
+                    />
                   </SummaryTable.Row>
                   <SummaryTable.Row
                     heading="Estimated date for Win"
