@@ -71,10 +71,6 @@ const StyledSubserviceWrapper = styled.div`
   align-items: end;
 `
 
-const StyledSubserviceField = styled(FieldSelect)`
-  width: 100%;
-`
-
 const StyledRelatedTradeAgreementsWrapper = styled.div`
   margin-bottom: ${SPACING_POINTS[6]}px;
 `
@@ -132,12 +128,13 @@ const buildServicesHierarchy = (services) =>
     children: s.children.length ? (
       <StyledSubserviceWrapper>
         <StyledSubservicePrefix />
-        <StyledSubserviceField
+        <FieldSelect
           name="service_2nd_level"
           emptyOption="-- Select service --"
           options={s.children}
           required="Select a service"
           aria-label="service second level"
+          fullWidth={true}
         />
       </StyledSubserviceWrapper>
     ) : null,
