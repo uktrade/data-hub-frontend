@@ -13,6 +13,7 @@ import {
 } from '../../../../client/utils/date.js'
 import { currencyGBP } from '../../../../client/utils/number-utils'
 import { get } from 'lodash'
+import { ToggleButton } from '../../../components/ToggleSection/BaseToggleSection'
 
 const ListItem = styled('li')({
   paddingTop: SPACING.SCALE_4,
@@ -59,6 +60,12 @@ const StyledDD = styled('dd')({
   ...lineHeightMixin,
 })
 
+const DashboardToggleSection = styled(ToggleSection)({
+  [ToggleButton]: {
+    fontSize: FONT_SIZE.SIZE_16,
+  },
+})
+
 const statusToColourMap = {
   WON: 'green',
   ACTIVE: 'blue',
@@ -98,7 +105,7 @@ const ItemRenderer = (item) => {
       </TagContainer>
       <Header>{item.company.name}</Header>
       <Link href={`/export/${item.id}/details`}>{item.title}</Link>
-      <ToggleSection
+      <DashboardToggleSection
         onOpen={(open) =>
           open ? setToggleLabel('Hide') : setToggleLabel('Show')
         }
@@ -130,7 +137,7 @@ const ItemRenderer = (item) => {
           <StyledDT>Created on:</StyledDT>
           <StyledDD>{formatMediumDateTime(item.created_on)}</StyledDD>
         </StyledDL>
-      </ToggleSection>
+      </DashboardToggleSection>
     </ListItem>
   )
 }
