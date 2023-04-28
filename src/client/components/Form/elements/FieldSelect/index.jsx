@@ -5,10 +5,30 @@ import { useField } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
 
 import styled from 'styled-components'
+import { BLACK } from '../../../../utils/colours'
 
 const StyledSelect = styled(Select)`
+  position: relative;
+  &::after {
+    border-bottom: 2px solid ${BLACK};
+    border-right: 2px solid ${BLACK};
+    content: '';
+    display: block;
+    height: 12px;
+    pointer-events: none;
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translate(0, -65%) rotate(45deg);
+    width: 12px;
+  }
   ${SelectInput} {
+    height: 47px;
+    padding: 0px 12px;
     ${({ fullWidth }) => fullWidth && `width: 100%;`}
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
   }
 `
 
