@@ -54,9 +54,7 @@ describe('Export pipeline list', () => {
       name: 'Portugal',
     },
     estimated_export_value_amount: '957485',
-    estimated_export_value_years: {
-      name: '5 years',
-    },
+    estimated_export_value_years: null,
     estimated_win_date: '2023-10-08T11:54:19Z',
     sector: {
       name: 'Energy',
@@ -77,7 +75,7 @@ describe('Export pipeline list', () => {
     destination_country: {
       name: 'Italy',
     },
-    estimated_export_value_amount: '141851',
+    estimated_export_value_amount: null,
     estimated_export_value_years: {
       name: 'Not yet known',
     },
@@ -119,9 +117,34 @@ describe('Export pipeline list', () => {
     archived: true,
     title: 'Archived export',
   })
+  const missingMigratedData = exportFaker({
+    id: 5,
+    export_potential: 'low',
+    status: 'inactive',
+    company: {
+      name: 'Sony',
+    },
+    title: 'Missing Migrated Data',
+    destination_country: null,
+    estimated_export_value_amount: null,
+    estimated_export_value_years: null,
+    estimated_win_date: null,
+    sector: null,
+    owner: {
+      name: 'Ron Burgundy',
+    },
+    created_on: '2019-07-19T09:39:39.998239Z',
+  })
 
   const otherExports = exportListFaker(8)
-  const exportList = [active, won, inactive, archived, ...otherExports]
+  const exportList = [
+    active,
+    won,
+    inactive,
+    archived,
+    missingMigratedData,
+    ...otherExports,
+  ]
   const notArchivedExports = exportList.filter((e) => e.archived == false)
 
   before(() => {
@@ -145,6 +168,7 @@ describe('Export pipeline list', () => {
     cy.get('@exportItems').eq(0).as('firstListItem')
     cy.get('@exportItems').eq(1).as('secondListItem')
     cy.get('@exportItems').eq(2).as('thirdListItem')
+    cy.get('@exportItems').eq(3).as('fourthListItem')
   })
 
   it('should display a list of exports', () => {
@@ -165,60 +189,74 @@ describe('Export pipeline list', () => {
     assertExportPotentialTag('@firstListItem', 'HIGH POTENTIAL')
     assertExportPotentialTag('@secondListItem', 'MEDIUM POTENTIAL')
     assertExportPotentialTag('@thirdListItem', 'LOW POTENTIAL')
+    assertExportPotentialTag('@fourthListItem', 'LOW POTENTIAL')
   })
 
   it('should display an export active tag', () => {
     assertStatusTag('@firstListItem', 'ACTIVE')
     assertStatusTag('@secondListItem', 'WON')
     assertStatusTag('@thirdListItem', 'INACTIVE')
+    assertStatusTag('@fourthListItem', 'INACTIVE')
   })
 
   it('should display a company name header', () => {
     assertCompanyName('@firstListItem', 'Coca-Cola')
     assertCompanyName('@secondListItem', 'Alphabet')
     assertCompanyName('@thirdListItem', 'Meta')
+    assertCompanyName('@fourthListItem', 'Sony')
   })
 
   it('should display a link to the export', () => {
     assertTitleLink('@firstListItem', '/export/1/details', 'Export Coca-Cola')
     assertTitleLink('@secondListItem', '/export/2/details', 'Export Alphabet')
     assertTitleLink('@thirdListItem', '/export/3/details', 'Export Meta')
+    assertTitleLink(
+      '@fourthListItem',
+      '/export/5/details',
+      'Missing Migrated Data'
+    )
   })
 
   it('should display a destination', () => {
     assertDestination('@firstListItem', 'Portugal')
     assertDestination('@secondListItem', 'Italy')
     assertDestination('@thirdListItem', 'Greece')
+    assertDestination('@fourthListItem', 'Not set')
   })
 
   it('should display the total estimated export amount', () => {
-    assertEstimatedExportAmount('@firstListItem', '£957,485 (5 years)')
-    assertEstimatedExportAmount('@secondListItem', '£141,851 (Not yet known)')
+    assertEstimatedExportAmount('@firstListItem', '£957,485')
+    assertEstimatedExportAmount('@secondListItem', 'Not yet known')
     assertEstimatedExportAmount('@thirdListItem', '£858,211 (4 years)')
+    assertEstimatedExportAmount('@fourthListItem', 'Not set')
   })
 
   it('should display an estimated win date', () => {
     assertEstimatedWinDate('@firstListItem', 'October 2023')
     assertEstimatedWinDate('@secondListItem', 'May 2023')
     assertEstimatedWinDate('@thirdListItem', 'February 2023')
+    assertEstimatedWinDate('@fourthListItem', 'Not set')
   })
 
   it('should display a sector', () => {
     assertSector('@firstListItem', 'Energy')
     assertSector('@secondListItem', 'Mass Transport')
     assertSector('@thirdListItem', 'Security : Cyber Security')
+    assertSector('@fourthListItem', 'Not set')
   })
 
   it('should display an owner', () => {
     assertOwner('@firstListItem', 'Benjamin Graham')
     assertOwner('@secondListItem', 'Warren Buffet')
     assertOwner('@thirdListItem', 'Peter Lynch')
+    assertOwner('@fourthListItem', 'Ron Burgundy')
   })
 
   it('should display a created on date', () => {
     assertCreatedOnDate('@firstListItem', '20 Mar 2023, 9:19am')
     assertCreatedOnDate('@secondListItem', '19 Feb 2023, 9:29am')
     assertCreatedOnDate('@thirdListItem', '18 Jan 2023, 9:39am')
+    assertCreatedOnDate('@fourthListItem', '19 Jul 2019, 10:39am')
   })
 
   it('should show and hide the content on toggle', () => {
