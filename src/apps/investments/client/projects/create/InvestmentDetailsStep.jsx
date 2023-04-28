@@ -39,10 +39,6 @@ const StyledFieldInput = styled(FieldInput)({
   width: '100%',
 })
 
-const StyledFieldSelect = styled(FieldSelect)({
-  width: '100%',
-})
-
 const findSelectedItem = (items, value) =>
   items ? items.find((type) => type.value === value) : null
 
@@ -78,12 +74,13 @@ const buildReferralSourceHierarchy = (
       ? {
           children: (
             <StyledContainer error={referral_source_activity_marketing}>
-              <StyledFieldSelect
+              <FieldSelect
                 name="referral_source_activity_marketing"
                 label="Choose a marketing type"
                 aria-label="Choose a marketing type"
                 required="You must choose a marketing type"
                 options={referralSourceMarketing}
+                fullWidth={true}
               />
             </StyledContainer>
           ),
@@ -93,12 +90,13 @@ const buildReferralSourceHierarchy = (
       ? {
           children: (
             <StyledContainer error={referral_source_activity_website}>
-              <StyledFieldSelect
+              <FieldSelect
                 name="referral_source_activity_website"
                 label="Choose a website"
                 aria-label="Choose a website"
                 required="You must choose a website"
                 options={referralSourceWebsite}
+                fullWidth={true}
               />
             </StyledContainer>
           ),
@@ -267,13 +265,14 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
           }))}
         />
 
-        <StyledFieldSelect
+        <FieldSelect
           name="referral_source_activity"
           label="Referral source activity"
           emptyOption="Choose a referral source activity"
           options={referralSourceHierarchy}
           required="Choose a referral source activity"
           data-test="referral-source-activity"
+          fullWidth={true}
         />
 
         <FieldDate
