@@ -46,9 +46,12 @@ const StyledLabel = styled(Label)(
   })
 )
 
-const StyledList = styled('div')({
-  display: 'flex',
-})
+const StyledList = styled.div`
+  display: flex;
+  ${Input} {
+    height: 47px;
+  }
+`
 
 const getValidator =
   (required, invalid, format) =>
