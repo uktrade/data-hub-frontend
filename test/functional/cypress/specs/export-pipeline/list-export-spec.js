@@ -54,9 +54,7 @@ describe('Export pipeline list', () => {
       name: 'Portugal',
     },
     estimated_export_value_amount: '957485',
-    estimated_export_value_years: {
-      name: '5 years',
-    },
+    estimated_export_value_years: null,
     estimated_win_date: '2023-10-08T11:54:19Z',
     sector: {
       name: 'Energy',
@@ -77,7 +75,7 @@ describe('Export pipeline list', () => {
     destination_country: {
       name: 'Italy',
     },
-    estimated_export_value_amount: '141851',
+    estimated_export_value_amount: null,
     estimated_export_value_years: {
       name: 'Not yet known',
     },
@@ -227,8 +225,8 @@ describe('Export pipeline list', () => {
   })
 
   it('should display the total estimated export amount', () => {
-    assertEstimatedExportAmount('@firstListItem', '£957,485 (5 years)')
-    assertEstimatedExportAmount('@secondListItem', '£141,851 (Not yet known)')
+    assertEstimatedExportAmount('@firstListItem', '£957,485')
+    assertEstimatedExportAmount('@secondListItem', 'Not yet known')
     assertEstimatedExportAmount('@thirdListItem', '£858,211 (4 years)')
     assertEstimatedExportAmount('@fourthListItem', 'Not set')
   })
