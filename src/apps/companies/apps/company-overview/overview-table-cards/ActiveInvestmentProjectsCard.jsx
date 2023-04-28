@@ -97,7 +97,9 @@ const LikelihoodToLand = ({ likelihood, investmentId, investmentName }) => (
     {likelihood === 'Medium' && <Tag colour="orange">Medium</Tag>}
     {likelihood === 'Low' && <Tag colour="red">Low</Tag>}
     <EditLink
-      href={`${urls.investments.projects.editDetails(investmentId)}`}
+      href={`${urls.investments.projects.editDetails(
+        investmentId
+      )}#field-likelihood_to_land`}
       data-test={`active-investment-edit-${kebabCase(investmentName)}-link`}
     >
       Edit
