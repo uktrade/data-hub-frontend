@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import ErrorText from '@govuk-react/error-text'
@@ -42,13 +42,6 @@ const FieldTypeahead = ({
   autoScroll,
   ...props
 }) => {
-  const styledWrapperRef = React.useRef(null)
-  useEffect(() => {
-    if (autoScroll) {
-      styledWrapperRef.current.scrollIntoView()
-    }
-  }, [autoScroll])
-
   const { value, error, touched, onBlur } = useField({
     name,
     validate,
@@ -59,8 +52,8 @@ const FieldTypeahead = ({
   const { setFieldValue } = useFormContext()
 
   return (
-    <FieldWrapper {...{ name, label, legend, hint, error }}>
-      <StyledWrapper error={error} ref={styledWrapperRef}>
+    <FieldWrapper {...{ name, label, legend, hint, error, autoScroll }}>
+      <StyledWrapper error={error}>
         {touched && error && <ErrorText>{error}</ErrorText>}
         <Typeahead
           name={name}
