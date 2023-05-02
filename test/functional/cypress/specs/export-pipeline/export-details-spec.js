@@ -47,8 +47,8 @@ describe('Export Details summary ', () => {
         'Export potential': capitalize(exportItem.export_potential),
         Destination: exportItem.destination_country.name,
         'Main sector': exportItem.sector.name,
-        'Exporter experience': exportItem.exporter_experience.name,
         'Company contacts': exportItem.contacts.map((obj) => obj.name).join(''),
+        'Exporter experience': exportItem.exporter_experience.name,
         Notes: exportItem.notes,
       })
     })

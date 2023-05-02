@@ -156,6 +156,12 @@ const ExportDetailsForm = ({ exportItem }) => {
                       ? 'Not set'
                       : exportItem.sector.name}
                   </SummaryTable.Row>
+                  <SummaryTable.ListRow
+                    heading="Company contacts"
+                    value={exportItem.contacts.map(transformIdNameToValueLabel)}
+                    emptyValue="Not set"
+                    hideWhenEmpty={false}
+                  />
                   <SummaryTable.Row
                     heading="Exporter experience"
                     hideWhenEmpty={false}
@@ -164,12 +170,6 @@ const ExportDetailsForm = ({ exportItem }) => {
                       ? 'Not set'
                       : exportItem.exporter_experience.name}
                   </SummaryTable.Row>
-                  <SummaryTable.ListRow
-                    heading="Company contacts"
-                    value={exportItem.contacts.map(transformIdNameToValueLabel)}
-                    emptyValue="Not set"
-                    hideWhenEmpty={false}
-                  ></SummaryTable.ListRow>
                   <SummaryTable.Row heading="Notes" hideWhenEmpty={false}>
                     {isEmpty(exportItem.notes) ? 'Not set' : exportItem.notes}
                   </SummaryTable.Row>{' '}
