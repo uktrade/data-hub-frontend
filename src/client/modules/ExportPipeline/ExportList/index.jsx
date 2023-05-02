@@ -13,6 +13,37 @@ import { parsePage } from '../../../../client/utils/pagination'
 
 import List from './List'
 import ListItemRenderer from './ItemRenderer'
+import ContentWithHeading from '../../../components/ContentWithHeading'
+import { UnorderedList, ListItem } from 'govuk-react'
+import styled from 'styled-components'
+import { FONT_SIZE } from '@govuk-react/constants'
+
+const StyledContent = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  rowGap: FONT_SIZE.SIZE_20,
+})
+
+const EmptyState = () => (
+  <div data-test="no-export-items">
+    <ContentWithHeading heading="You have no exports">
+      <StyledContent>
+        <div>
+          Here you can create an export project to track a company's export
+          progress. These will appear on your home page, so you keep track of
+          your exports in one place.
+        </div>
+        <span>To add an export:</span>
+        <div>
+          <UnorderedList listStyleType="bullet">
+            <ListItem>go to the company page and press 'view options'</ListItem>
+            <ListItem>select 'Add export project'</ListItem>
+          </UnorderedList>
+        </div>
+      </StyledContent>
+    </ContentWithHeading>
+  </div>
+)
 
 const ExportList = ({ count, results, itemsPerPage, maxItemsToPaginate }) => {
   const history = useHistory()
@@ -37,20 +68,25 @@ const ExportList = ({ count, results, itemsPerPage, maxItemsToPaginate }) => {
     >
       {() => (
         <>
-          <List items={results} itemRenderer={ListItemRenderer} />
-          <Pagination
-            totalPages={totalPages}
-            activePage={initialPage}
-            onPageClick={(page, e) => {
-              e.preventDefault()
-              history.push({
-                search: qs.stringify({
-                  ...qsParams,
-                  page,
-                }),
-              })
-            }}
-          />
+          {count == 0 && <EmptyState />}
+          {count > 0 && (
+            <>
+              <List items={results} itemRenderer={ListItemRenderer} />
+              <Pagination
+                totalPages={totalPages}
+                activePage={initialPage}
+                onPageClick={(page, e) => {
+                  e.preventDefault()
+                  history.push({
+                    search: qs.stringify({
+                      ...qsParams,
+                      page,
+                    }),
+                  })
+                }}
+              />
+            </>
+          )}
         </>
       )}
     </Task.Status>
