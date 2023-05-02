@@ -22,10 +22,10 @@ describe('Local header options', () => {
         )
     })
 
-    it('should display the add to export list link', () => {
+    it('should display the add export project link', () => {
       cy.get('@links')
         .last()
-        .should('have.text', 'Add to export list')
+        .should('have.text', 'Add export project')
         .should(
           'have.attr',
           'href',
