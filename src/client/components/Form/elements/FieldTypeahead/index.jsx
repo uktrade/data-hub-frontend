@@ -39,6 +39,7 @@ const FieldTypeahead = ({
   hint,
   initialValue,
   options,
+  autoScroll,
   ...props
 }) => {
   const { value, error, touched, onBlur } = useField({
@@ -51,7 +52,7 @@ const FieldTypeahead = ({
   const { setFieldValue } = useFormContext()
 
   return (
-    <FieldWrapper {...{ name, label, legend, hint, error }}>
+    <FieldWrapper {...{ name, label, legend, hint, error, autoScroll }}>
       <StyledWrapper error={error}>
         {touched && error && <ErrorText>{error}</ErrorText>}
         <Typeahead
@@ -107,6 +108,10 @@ FieldTypeahead.propTypes = {
     PropTypes.object,
     PropTypes.arrayOf(PropTypes.object),
   ]),
+  /**
+   * Whether the window should auto scroll into view this component
+   */
+  autoScroll: PropTypes.bool,
 }
 
 FieldTypeahead.defaultProps = {
@@ -116,6 +121,7 @@ FieldTypeahead.defaultProps = {
   legend: null,
   hint: null,
   initialValue: null,
+  autoScroll: false,
 }
 
 export default FieldTypeahead

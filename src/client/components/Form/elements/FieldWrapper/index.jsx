@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import FormGroup from '@govuk-react/form-group'
 import Label from '@govuk-react/label'
@@ -166,17 +166,50 @@ const FieldWrapper = ({
   reduced,
   groupId,
   boldLabel,
+  autoScroll,
   ...rest
-}) => (
-  <StyledFormGroup
-    id={`field-${name}`}
-    data-test={`field-${name}`}
-    reduced={reduced}
-    hint={hint}
-    {...rest}
-  >
-    {!legend ? (
-      <StyledFieldsetNoStyling>
+}) => {
+  const styledWrapperRef = React.useRef(null)
+  useEffect(() => {
+    if (autoScroll) {
+      styledWrapperRef.current.scrollIntoView()
+    }
+  }, [autoScroll])
+
+  return (
+    <StyledFormGroup
+      id={`field-${name}`}
+      data-test={`field-${name}`}
+      reduced={reduced}
+      hint={hint}
+      ref={styledWrapperRef}
+      {...rest}
+    >
+      {!legend ? (
+        <StyledFieldsetNoStyling>
+          <FieldInner
+            legend={legend}
+            error={error}
+            showBorder={showBorder}
+            bigLegend={bigLegend}
+            groupId={groupId}
+          >
+            {label && (
+              <StyledLegendNoStyle>
+                <StyledLabel boldLabel={boldLabel} error={error} htmlFor={name}>
+                  {label}
+                </StyledLabel>
+              </StyledLegendNoStyle>
+            )}
+            {hint && (
+              <StyledHint data-test="hint-text" error={error}>
+                {hint}
+              </StyledHint>
+            )}
+            {children}
+          </FieldInner>
+        </StyledFieldsetNoStyling>
+      ) : (
         <FieldInner
           legend={legend}
           error={error}
@@ -185,11 +218,9 @@ const FieldWrapper = ({
           groupId={groupId}
         >
           {label && (
-            <StyledLegendNoStyle>
-              <StyledLabel boldLabel={boldLabel} error={error} htmlFor={name}>
-                {label}
-              </StyledLabel>
-            </StyledLegendNoStyle>
+            <StyledLabel boldLabel={boldLabel} error={error} htmlFor={name}>
+              {label}
+            </StyledLabel>
           )}
           {hint && (
             <StyledHint data-test="hint-text" error={error}>
@@ -198,30 +229,10 @@ const FieldWrapper = ({
           )}
           {children}
         </FieldInner>
-      </StyledFieldsetNoStyling>
-    ) : (
-      <FieldInner
-        legend={legend}
-        error={error}
-        showBorder={showBorder}
-        bigLegend={bigLegend}
-        groupId={groupId}
-      >
-        {label && (
-          <StyledLabel boldLabel={boldLabel} error={error} htmlFor={name}>
-            {label}
-          </StyledLabel>
-        )}
-        {hint && (
-          <StyledHint data-test="hint-text" error={error}>
-            {hint}
-          </StyledHint>
-        )}
-        {children}
-      </FieldInner>
-    )}
-  </StyledFormGroup>
-)
+      )}
+    </StyledFormGroup>
+  )
+}
 
 FieldInner.propTypes = {
   legend: PropTypes.node,
@@ -276,6 +287,10 @@ FieldWrapper.propTypes = {
    * Boolean for rendering the label in bold or not
    */
   boldLabel: PropTypes.bool,
+  /**
+   * Whether the window should auto scroll into view this component
+   */
+  autoScroll: PropTypes.bool,
 }
 
 FieldWrapper.defaultProps = {
@@ -286,6 +301,7 @@ FieldWrapper.defaultProps = {
   showBorder: false,
   children: null,
   boldLabel: true,
+  autoScroll: false,
 }
 
 export default FieldWrapper
