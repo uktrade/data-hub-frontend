@@ -14,6 +14,7 @@ const QUERY_FIELDS = [
   'kind',
   'sector_descends',
   'company',
+  'subject',
   'communication_channel',
   'sortby',
   'dit_participants__team',
