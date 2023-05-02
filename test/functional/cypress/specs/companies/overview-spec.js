@@ -933,6 +933,10 @@ describe('Company overview page', () => {
             '0e686ea4-b8a2-4337-aec4-114d92ad4588'
           )}`
         )
+        cy.get('#field-likelihood_to_land')
+          .children()
+          .first()
+          .contains('-- Select a likelihood of landing value --')
         cy.go('back')
         cy.get('[data-test="active-investment-page-new-restaurant-link"]')
           .contains('New restaurant')
@@ -959,6 +963,10 @@ describe('Company overview page', () => {
             '18750b26-a8c3-41b2-8d3a-fb0b930c2270'
           )}`
         )
+        cy.get('#field-likelihood_to_land')
+          .children()
+          .first()
+          .contains('-- Select a likelihood of landing value --')
         cy.go('back')
         cy.get('[data-test="last-interaction-date-new-restaurant-header"]')
           .next()
@@ -984,6 +992,10 @@ describe('Company overview page', () => {
             '3520b973-0e77-46cf-be75-3585f2f6691e'
           )}`
         )
+        cy.get('#field-likelihood_to_land')
+          .children()
+          .first()
+          .contains('-- Select a likelihood of landing value --')
         cy.go('back')
         cy.get('[data-test="active-investment-page-wig-factory-link"]')
           .contains('Wig factory')
