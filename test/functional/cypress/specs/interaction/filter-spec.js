@@ -156,6 +156,43 @@ describe('Interactions Collections Filter', () => {
     })
   })
 
+  context('Subject', () => {
+    const element = '[data-test="interaction-subject-filter"]'
+    const subjectQuery = 'amazing'
+    const expectedPayload = {
+      limit: 10,
+      offset: 0,
+      sortby: 'date:desc',
+      subject: subjectQuery,
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({ subject: subjectQuery })
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.visit(`/interactions?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      cy.get(element).should('have.value', subjectQuery)
+      assertChipExists({ label: subjectQuery, position: 1 })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.visit(`/interactions?${queryString}`)
+      cy.wait('@apiRequest')
+
+      cy.get(element).type(`${subjectQuery}{enter}`)
+      assertPayload('@apiRequest', expectedPayload)
+
+      assertQueryParams('subject', subjectQuery)
+      assertChipExists({ label: subjectQuery, position: 1 })
+      removeChip(subjectQuery)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
   context('Companies', () => {
     const expectedPayload = {
       ...minimumPayload,
