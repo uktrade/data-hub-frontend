@@ -157,6 +157,13 @@ const InteractionCollection = ({
             label="Interaction details"
             isOpen={true}
           >
+            <Filters.Input
+              id="EventsCollection.subject"
+              qsParam="subject"
+              name="subject"
+              label={LABELS.subject}
+              data-test="interaction-subject-filter"
+            />
             <Filters.CompanyTypeahead
               taskProps={companyListTask}
               isMulti={true}
