@@ -157,7 +157,7 @@ const CompanyLocalHeader = ({
                   Add to or remove from lists
                 </DropdownButton>
                 <DropdownButton href={urls.exportPipeline.create(company.id)}>
-                  Add to export list
+                  Add export project
                 </DropdownButton>
               </ConnectedDropdownMenu>
             </GridCol>
