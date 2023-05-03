@@ -6,6 +6,7 @@ import Main from '@govuk-react/main'
 import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
 import Button from '@govuk-react/button'
+import SecondaryButton from '../SecondaryButton'
 import Details from '@govuk-react/details'
 import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
 import {
@@ -20,8 +21,6 @@ import Badge from '../../../client/components/Badge'
 import StatusMessage from '../../../client/components/StatusMessage'
 import { addressToString } from '../../../client/utils/addresses'
 import urls from '../../../lib/urls'
-import ConnectedDropdownMenu from '../DropdownMenu/ConnectedDropdownMenu'
-import { DropdownButton } from '../DropdownMenu'
 import NewWindowLink from '../NewWindowLink'
 import ArchivePanel from '../ArchivePanel'
 
@@ -68,6 +67,10 @@ const StyledButtonLink = styled.a({
   float: 'right',
 })
 
+const StyledSecondaryButton = styled(SecondaryButton)({
+  marginBottom: 10,
+  float: 'right',
+})
 const BadgeWrapper = styled('div')`
   @media (min-width: ${BREAKPOINTS.TABLET}) {
     display: table-cell;
@@ -171,21 +174,11 @@ const CompanyLocalHeader = ({
                 </Button>
               </StyledButtonContainer>
 
-              <ConnectedDropdownMenu
-                label="View options"
-                closedLabel="Hide options"
-                id="local_header"
-                dataTest="local-header-options-dropdown"
+              <StyledSecondaryButton
+                href={urls.companies.pipelineAdd(company.id)}
               >
-                <DropdownButton
-                  href={`/companies/${company.id}/lists/add-remove?returnUrl=${queryString}`}
-                >
-                  Add to or remove from lists
-                </DropdownButton>
-                <DropdownButton href={urls.exportPipeline.create(company.id)}>
-                  Add export project
-                </DropdownButton>
-              </ConnectedDropdownMenu>
+                Add export project
+              </StyledSecondaryButton>
             </GridCol>
           </GridRow>
           <StyledList>
