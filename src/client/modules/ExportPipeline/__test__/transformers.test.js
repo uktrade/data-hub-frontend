@@ -1,6 +1,7 @@
 import {
   transformFormValuesForAPI,
   transformAPIValuesForForm,
+  transformOwnerAPIValue,
 } from '../transformers'
 
 describe('transformFormValuesForAPI', () => {
@@ -119,6 +120,30 @@ describe('transformAPIValuesForForm', () => {
         exporter_experience: undefined,
         notes: 'large amount of text',
       })
+    })
+  })
+})
+
+describe('transformOwnerAPIValue', () => {
+  context('When the owner does not belong to a team', () => {
+    const team = [null, { name: null }]
+    team.forEach((team) => {
+      it('Should return the mapped value with just the owner name', () => {
+        expect(
+          transformOwnerAPIValue({ id: 'b', name: 'c', dit_team: team })
+        ).to.deep.equal({
+          value: 'b',
+          label: 'c',
+        })
+      })
+    })
+  })
+
+  context('When the owner belongs to a team', () => {
+    it('Should return the mapped value with the team name appended to the owner name', () => {
+      expect(
+        transformOwnerAPIValue({ id: 'b', name: 'c', dit_team: { name: 'd' } })
+      ).to.deep.equal({ value: 'b', label: 'c, d' })
     })
   })
 })

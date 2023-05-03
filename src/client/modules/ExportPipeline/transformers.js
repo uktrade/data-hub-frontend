@@ -38,6 +38,14 @@ export const transformFormValuesForAPI = ({
   notes,
 })
 
+export const transformOwnerAPIValue = (owner) => {
+  const transformed = transformIdNameToValueLabel(owner)
+  if (owner.dit_team?.name) {
+    transformed.label = `${transformed.label}, ${owner.dit_team.name}`
+  }
+  return transformed
+}
+
 export const transformAPIValuesForForm = ({
   company,
   id,
@@ -58,7 +66,7 @@ export const transformAPIValuesForForm = ({
   company: { id: company.id, name: company.name },
   id,
   title,
-  owner: owner && transformIdNameToValueLabel(owner),
+  owner: owner && transformOwnerAPIValue(owner),
   team_members: transformArrayIdNameToValueLabel(team_members),
   estimated_export_value_years: estimated_export_value_years?.id,
   estimated_export_value_amount: estimated_export_value_amount,
