@@ -10,8 +10,6 @@ const {
   assertUrl,
 } = require('../../support/assertions')
 
-// const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
-
 describe('Export Details summary ', () => {
   const exportItem = exportFaker()
   context('when summary table renders', () => {
