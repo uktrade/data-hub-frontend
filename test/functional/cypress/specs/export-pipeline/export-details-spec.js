@@ -2,6 +2,7 @@ import urls from '../../../../../src/lib/urls'
 import { capitalize } from 'lodash'
 import { currencyGBP } from '../../../../../src/client/utils/number-utils'
 import { format } from '../../../../../src/client/utils/date'
+import { exportFaker } from '../../fakers/export'
 
 const {
   assertBreadcrumbs,
@@ -9,10 +10,10 @@ const {
   assertUrl,
 } = require('../../support/assertions')
 
-const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
+// const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 
 describe('Export Details summary ', () => {
-  const exportItem = exportItems.results[0]
+  const exportItem = exportFaker()
   context('when summary table renders', () => {
     beforeEach(() => {
       cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {

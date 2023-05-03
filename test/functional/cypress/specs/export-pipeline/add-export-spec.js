@@ -307,9 +307,10 @@ describe('Export pipeline create', () => {
         before(() => {
           cy.intercept('GET', `/api-proxy/v4/metadata/country`, countries)
           cy.intercept('GET', `/api-proxy/v4/metadata/sector`, sectors)
-          cy.intercept('POST', `/api-proxy/v4/export`).as(
-            'postExportItemApiRequest'
-          )
+          cy.intercept('POST', `/api-proxy/v4/export`, {
+            id: newExport.id,
+            title: newExport.title,
+          }).as('postExportItemApiRequest')
           cy.intercept('POST', `/api-proxy/v4/contact`, newContact).as(
             'postContactApiRequest'
           )

@@ -79,9 +79,7 @@ describe('Export pipeline edit', () => {
       cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
         body: exportItem,
       }).as('getExportItemApiRequest')
-      cy.intercept('PATCH', `/api-proxy/v4/export/${exportItem.id}`).as(
-        'patchExportItemApiRequest'
-      )
+
       cy.visit(editPageUrl)
     })
 
@@ -323,6 +321,11 @@ describe('Export pipeline edit', () => {
     })
 
     context('when the form contains valid data and is submitted', () => {
+      before(() => {
+        cy.intercept('PATCH', `/api-proxy/v4/export/${exportItem.id}`, {
+          title: exportItem.title,
+        }).as('patchExportItemApiRequest')
+      })
       it('the form should redirect to the export details page and display flash message', () => {
         cy.get('[data-test=submit-button]').click()
 
