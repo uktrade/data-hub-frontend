@@ -68,8 +68,9 @@ const ExportList = ({ count, results, itemsPerPage, maxItemsToPaginate }) => {
     >
       {() => (
         <>
-          {count == 0 && <EmptyState />}
-          {count > 0 && (
+          {count === 0 ? (
+            <EmptyState />
+          ) : (
             <>
               <List items={results} itemRenderer={ListItemRenderer} />
               <Pagination
