@@ -48,6 +48,7 @@ const getInteractionsMetadata = () =>
 const getInteractions = ({
   limit = 10,
   page = 1,
+  subject,
   kind,
   dit_participants__adviser,
   company,
@@ -66,6 +67,7 @@ const getInteractions = ({
     .post('/v3/search/interaction', {
       limit,
       offset: getPageOffset({ limit, page }),
+      subject,
       kind,
       dit_participants__adviser,
       company,
