@@ -20,7 +20,8 @@ const StyledSelect = styled(Select)`
     position: absolute;
     right: 16px;
     ${({ fullWidth }) => (fullWidth ? `right: 2%;` : `right: 52%;`)}
-    top: 50%;
+    ${({ meta }) => (meta.error ? 'top: 72%;' : 'top: 50%;')}
+
     transform: translate(0, -65%) rotate(45deg);
     width: 12px;
     @media (max-width: ${BREAKPOINTS.TABLET}) {
