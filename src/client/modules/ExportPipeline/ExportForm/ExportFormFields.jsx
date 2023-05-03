@@ -172,6 +172,7 @@ const ExportFormFields = ({
                   resultToOptions={({ results }) =>
                     transformArrayIdNameToValueLabel(results)
                   }
+                  autoScroll={values.scrollToContact}
                 />
                 <Task>
                   {(getTask) => {
