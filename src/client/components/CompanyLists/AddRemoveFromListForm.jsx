@@ -26,13 +26,26 @@ const AddRemoveFromListForm = ({
       isSelected.push(key)
     }
   }
+  const checkboxDataTransform = (list) => {
+    const cleanedList = {}
+    for (let listItem in initState) {
+      cleanedList[`${listItem}`] = 'no'
+    }
+    if (list.userCompanyLists) {
+      for (let selectedItem in list.userCompanyLists) {
+        cleanedList[`${list.userCompanyLists[selectedItem]}`] = 'yes'
+      }
+    }
+    list = cleanedList
+    return { list, token, companyId }
+  }
   return (
     <Form
       id="add-remove-from-list"
       analyticsFormName="addRemoveFromList"
       submissionTaskName="Add or remove from list"
-      initialValues={{ 'company-lists': isSelected }}
-      transformPayload={(list) => ({ list, token, companyId })}
+      initialValues={{ userCompanyLists: isSelected }}
+      transformPayload={checkboxDataTransform}
       flashMessage={() => 'Lists changes for this company have been saved.'}
       redirectTo={() => cancelLinkUrl}
       cancelRedirectTo={() => cancelLinkUrl}
@@ -41,11 +54,12 @@ const AddRemoveFromListForm = ({
         <>
           <div data-test={`group-of-lists`}>
             <FieldCheckboxes
-              name="company-lists"
+              name="userCompanyLists"
               label={`What list do you want to save ${companyName} to?`}
               options={companyLists.map(({ listName, listId }) => ({
                 label: `${listName}`,
                 value: listId,
+                key: listId,
               }))}
             />
           </div>
