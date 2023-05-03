@@ -21,7 +21,7 @@ function useQuery() {
 const getBreadcrumbs = (exportItem) => {
   const defaultBreadcrumbs = [
     {
-      link: urls.dashboard(),
+      link: urls.exportPipeline.index(),
       text: 'Home',
     },
     {
@@ -69,8 +69,9 @@ const ExportFormAdd = ({ exportItem }) => {
         }}
         exportItem={exportItem}
         cancelRedirectUrl={urls.companies.activity.index(companyId)}
-        redirectToUrl={urls.dashboard()}
+        redirectToUrl={urls.exportPipeline.index()}
         flashMessage={({ data }) => `'${data.title}' created`}
+        formSubmitButtonLabel="Add export"
       />
     </DefaultLayout>
   )

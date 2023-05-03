@@ -149,14 +149,15 @@ const CompanyLocalHeader = ({
                 label="View options"
                 closedLabel="Hide options"
                 id="local_header"
+                dataTest="local-header-options-dropdown"
               >
                 <DropdownButton
                   href={`/companies/${company.id}/lists/add-remove?returnUrl=${queryString}`}
                 >
                   Add to or remove from lists
                 </DropdownButton>
-                <DropdownButton href={urls.companies.pipelineAdd(company.id)}>
-                  Add to my pipeline
+                <DropdownButton href={urls.exportPipeline.create(company.id)}>
+                  Add export project
                 </DropdownButton>
               </ConnectedDropdownMenu>
             </GridCol>

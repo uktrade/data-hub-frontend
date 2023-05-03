@@ -1,3 +1,5 @@
+import { exportFaker } from '../../fakers/export'
+
 const urls = require('../../../../../src/lib/urls')
 const { assertUrl } = require('../../support/assertions')
 
@@ -5,10 +7,9 @@ const {
   assertBreadcrumbs,
   assertFlashMessage,
 } = require('../../support/assertions')
-const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 
 describe('Export pipeline delete', () => {
-  const exportItem = exportItems.results[0]
+  const exportItem = exportFaker()
 
   context('when deleting an export for unknown export id', () => {
     before(() => {
@@ -17,8 +18,7 @@ describe('Export pipeline delete', () => {
 
     it('should render edit event breadcrumb', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
-        Companies: urls.companies.index(),
+        Home: urls.exportPipeline.index(),
       })
     })
 
@@ -30,13 +30,10 @@ describe('Export pipeline delete', () => {
   context('when deleting an export for known export id', () => {
     const deletePageUrl = urls.exportPipeline.delete(exportItem.id)
 
-    beforeEach(() => {
+    before(() => {
       cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
         body: exportItem,
-      }).as('getExportItemApiRequest')
-      cy.intercept('DELETE', `/api-proxy/v4/export/${exportItem.id}`).as(
-        'deleteExportItemApiRequest'
-      )
+      })
       cy.visit(deletePageUrl)
     })
 
@@ -50,8 +47,8 @@ describe('Export pipeline delete', () => {
 
       it('should render the delete export breadcrumb', () => {
         assertBreadcrumbs({
-          Home: urls.dashboard(),
-          [exportItem.title]: urls.exportPipeline.edit(exportItem.id),
+          Home: urls.exportPipeline.index(),
+          [exportItem.title]: urls.exportPipeline.details(exportItem.id),
           ['Are you sure you want to delete...']: null,
         })
       })
@@ -66,26 +63,40 @@ describe('Export pipeline delete', () => {
       it('should render a form with a cancel link', () => {
         cy.get('[data-test=cancel-button]')
           .should('have.text', 'Cancel')
-          .should('have.attr', 'href', urls.dashboard())
+          .should(
+            'have.attr',
+            'href',
+            urls.exportPipeline.details(exportItem.id)
+          )
       })
     })
 
     context('when the form cancel button is clicked', () => {
-      it('the form should redirect to the dashboard page', () => {
+      it('the form should return to the export tab on the dashboard page', () => {
         cy.get('[data-test=cancel-button]').click()
-        assertUrl(urls.dashboard())
+        assertUrl(urls.exportPipeline.details(exportItem.id))
       })
     })
 
     context('when the delete form is submitted', () => {
-      it('the form should return to the dashboard', () => {
+      before(() => {
+        cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
+          body: exportItem,
+        })
+        cy.intercept('DELETE', `/api-proxy/v4/export/${exportItem.id}`, {}).as(
+          'deleteExportItemApiRequest'
+        )
+        cy.visit(deletePageUrl)
+      })
+
+      it('the form should return to the export tab on the dashboard page', () => {
         cy.get('[data-test=submit-button]').click()
 
         cy.wait('@deleteExportItemApiRequest').then(({ request }) => {
           expect(request.url).to.contain(exportItem.id)
         })
 
-        assertUrl(urls.dashboard())
+        assertUrl(urls.exportPipeline.index())
 
         assertFlashMessage(`‘${exportItem.title}’ has been deleted`)
       })

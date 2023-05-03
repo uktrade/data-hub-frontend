@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { isEmpty } from 'lodash'
 
 import Form from '../../../components/Form'
 import {
@@ -24,7 +25,7 @@ import {
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_SAVE_EXPORT, ID as STATE_ID } from './state'
 import Task from '../../../components/Task'
-import { ERROR_MESSAGES } from './constants'
+import { ERROR_MESSAGES, POSITIVE_INT_REGEX } from './constants'
 import { validateTeamMembers } from './validation'
 import { SECTOR_LABELS, STATUS_LABELS } from './labels'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
@@ -35,12 +36,15 @@ import { FONT_WEIGHTS } from '@govuk-react/constants'
 import { transformArrayIdNameToValueLabel } from '../../../transformers'
 import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../components/ContactForm/state'
 
+export const isPositiveInteger = (value) => POSITIVE_INT_REGEX.test(value)
+
 const ExportFormFields = ({
   analyticsFormName,
   flashMessage,
   cancelRedirectUrl,
   redirectToUrl,
   exportItem,
+  formSubmitButtonLabel,
   taskProps = {},
 }) => (
   <Task.Status {...taskProps}>
@@ -56,26 +60,27 @@ const ExportFormFields = ({
             initialValues={exportItem}
             transformPayload={(values) => ({ exportId: values.id, values })}
             flashMessage={flashMessage}
+            submitButtonLabel={formSubmitButtonLabel}
           >
             {({ values }) => (
               <>
                 <FieldInput
                   name="title"
                   label="Export title"
-                  hint="It helps to give export details in the title, for example product and destination"
+                  hint="It helps to give export details in the title, for example product and destination."
                   type="text"
                   required={ERROR_MESSAGES.title}
                 />
                 <FieldAdvisersTypeahead
                   name="owner"
                   label="Owner"
-                  hint="When creating the record your name will appear. You can change the name to transfer ownership to someone else"
+                  hint="When creating the record your name will appear. You can change the name to transfer ownership to someone else."
                   required={ERROR_MESSAGES.owner}
                 />
                 <FieldAdvisersTypeahead
                   name="team_members"
                   label="Team members (optional)"
-                  hint="You can add up to 5 team members. Team members can view and edit export functionality"
+                  hint="You can add up to 5 team members. Team members can view and edit this export record."
                   isMulti={true}
                   validate={validateTeamMembers}
                 />
@@ -87,7 +92,7 @@ const ExportFormFields = ({
                   Total estimated export value
                 </Label>
                 <HintText>
-                  Select the year span and total value, for example 3 years,
+                  Select the year(s) and the total value. For example 3 years,
                   £1,000,000
                 </HintText>
                 <div id="field-estimated_export">
@@ -103,15 +108,26 @@ const ExportFormFields = ({
                   <FieldCurrency
                     name="estimated_export_value_amount"
                     label="Estimated value in GBP"
-                    required={ERROR_MESSAGES.estimated_export_value_amount}
                     boldLabel={false}
+                    validate={(value) => {
+                      if (isPositiveInteger(value)) {
+                        const formValue = parseInt(value, 10)
+                        return formValue > 0
+                          ? null
+                          : ERROR_MESSAGES.estimated_export_value_amount
+                      } else if (isEmpty(value)) {
+                        return ERROR_MESSAGES.estimated_export_value_empty
+                      } else {
+                        return ERROR_MESSAGES.estimated_export_value_amount
+                      }
+                    }}
                   />
                 </div>
                 <FieldDate
                   name="estimated_win_date"
                   format="short"
                   label="Estimated date for win"
-                  hint="For example 11 2023"
+                  hint="For example 06 2023"
                   required={ERROR_MESSAGES.estimated_win_date.required}
                   invalid={ERROR_MESSAGES.estimated_win_date.invalid}
                 />
@@ -125,7 +141,7 @@ const ExportFormFields = ({
                 <ResourceOptionsField
                   name="sector"
                   label="Main sector"
-                  hint="This is the main sector the company is exporting to. Additional sectors can be added to notes"
+                  hint="This is the main sector the company is exporting to. Additional sectors can be added in the notes."
                   required={ERROR_MESSAGES.sector}
                   resource={SectorResource}
                   field={FieldTypeahead}
@@ -156,6 +172,7 @@ const ExportFormFields = ({
                   resultToOptions={({ results }) =>
                     transformArrayIdNameToValueLabel(results)
                   }
+                  autoScroll={values.scrollToContact}
                 />
                 <Task>
                   {(getTask) => {
@@ -189,7 +206,7 @@ const ExportFormFields = ({
                 <FieldTextarea
                   name="notes"
                   label="Notes (optional)"
-                  hint="Add further details about the export, such as additional sectors and country regions"
+                  hint="Add further details about the export, such as additional sectors and country regions."
                 />
               </>
             )}
@@ -208,10 +225,12 @@ ExportFormFields.propTypes = {
   redirectToUrl: PropTypes.string.isRequired,
   taskProps: PropTypes.object,
   formDataLoaded: PropTypes.bool,
+  formSubmitButtonLabel: PropTypes.string,
 }
 
 ExportFormFields.defaultProps = {
   formDataLoaded: false,
+  formSubmitButtonLabel: 'Save',
 }
 
 export default ExportFormFields

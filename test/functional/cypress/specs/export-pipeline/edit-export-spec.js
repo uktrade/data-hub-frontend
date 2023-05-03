@@ -1,3 +1,11 @@
+import { decimal } from '../../../../../src/client/utils/number-utils'
+import { addNewContact } from '../../support/actions'
+
+import { contactFaker } from '../../fakers/contacts'
+import { exportFaker } from '../../fakers/export'
+import { sectorListFaker } from '../../fakers/sectors'
+import { countryListFaker } from '../../fakers/countries'
+
 const urls = require('../../../../../src/lib/urls')
 
 const {
@@ -14,8 +22,8 @@ const {
   assertTypeaheadValues,
   assertFieldDateShort,
   assertPayload,
+  assertTypeaheadOptionSelected,
 } = require('../../support/assertions')
-const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 const {
   ERROR_MESSAGES,
 } = require('../../../../../src/client/modules/ExportPipeline/ExportForm/constants')
@@ -35,8 +43,6 @@ describe('Export pipeline edit', () => {
     Cypress.session.clearCurrentSessionData()
   })
 
-  const exportItem = exportItems.results[0]
-
   context('when editing an export for unknown company id', () => {
     before(() => {
       cy.visit('/export/a/edit')
@@ -49,8 +55,7 @@ describe('Export pipeline edit', () => {
 
     it('should render edit event breadcrumb', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
-        Companies: urls.companies.index(),
+        Home: urls.exportPipeline.index(),
       })
     })
 
@@ -60,15 +65,21 @@ describe('Export pipeline edit', () => {
   })
 
   context('when editing an export for known company id', () => {
+    const sectors = sectorListFaker(3)
+    const countries = countryListFaker(3)
+    const exportItem = exportFaker({
+      sector: sectors[0],
+      destination_country: countries[0],
+    })
     const editPageUrl = urls.exportPipeline.edit(exportItem.id)
 
     beforeEach(() => {
+      cy.intercept('GET', `/api-proxy/v4/metadata/country`, countries)
+      cy.intercept('GET', `/api-proxy/v4/metadata/sector`, sectors)
       cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
         body: exportItem,
       }).as('getExportItemApiRequest')
-      cy.intercept('PATCH', `/api-proxy/v4/export/${exportItem.id}`).as(
-        'patchExportItemApiRequest'
-      )
+
       cy.visit(editPageUrl)
     })
 
@@ -83,12 +94,9 @@ describe('Export pipeline edit', () => {
 
       it('should render the edit export breadcrumb', () => {
         assertBreadcrumbs({
-          Home: urls.dashboard(),
-          Companies: urls.companies.index(),
-          [exportItem.company.name]: urls.companies.activity.index(
-            exportItem.company.id
-          ),
-          [exportItem.title]: null,
+          Home: urls.exportPipeline.index(),
+          [exportItem.title]: urls.exportPipeline.details(exportItem.id),
+          'Edit export': null,
         })
       })
 
@@ -99,7 +107,11 @@ describe('Export pipeline edit', () => {
       it('should render a form with a cancel link', () => {
         cy.get('[data-test=cancel-button]')
           .should('have.text', 'Cancel')
-          .should('have.attr', 'href', urls.dashboard())
+          .should(
+            'have.attr',
+            'href',
+            urls.exportPipeline.details(exportItem.id)
+          )
       })
 
       it('should render a form with saved values in the form fields', () => {
@@ -138,7 +150,7 @@ describe('Export pipeline edit', () => {
             assertFieldInput({
               element,
               label: 'Estimated value in GBP',
-              value: exportItem.estimated_export_value_amount,
+              value: decimal(exportItem.estimated_export_value_amount),
             })
           }
         )
@@ -146,7 +158,7 @@ describe('Export pipeline edit', () => {
           assertFieldDateShort({
             element,
             label: 'Estimated date for win',
-            hint: 'For example 11 2023',
+            hint: 'For example 06 2023',
             value: exportItem.estimated_win_date,
           })
         })
@@ -198,7 +210,7 @@ describe('Export pipeline edit', () => {
           assertFieldTextarea({
             element,
             label: 'Notes (optional)',
-            hint: 'Add further details about the export, such as additional sectors and country regions',
+            hint: 'Add further details about the export, such as additional sectors and country regions.',
             value: exportItem.notes,
           })
         })
@@ -206,9 +218,9 @@ describe('Export pipeline edit', () => {
     })
 
     context('when the form cancel button is clicked', () => {
-      it('the form should redirect to the dashboard page', () => {
+      it('the form should redirect to the details page', () => {
         cy.get('[data-test=cancel-button]').click()
-        assertUrl(urls.dashboard())
+        assertUrl(urls.exportPipeline.details(exportItem.id))
       })
     })
 
@@ -240,7 +252,7 @@ describe('Export pipeline edit', () => {
         )
         assertFieldError(
           cy.get('[data-test="field-estimated_export_value_amount"]'),
-          ERROR_MESSAGES.estimated_export_value_amount,
+          ERROR_MESSAGES.estimated_export_value_empty,
           false
         )
         assertFieldError(
@@ -284,8 +296,37 @@ describe('Export pipeline edit', () => {
       })
     })
 
+    context('when the a new contact is added', () => {
+      const newContact = contactFaker()
+      before(() => {
+        cy.intercept('POST', `/api-proxy/v4/contact`, newContact).as(
+          'postContactApiRequest'
+        )
+      })
+
+      it('should be added to existing list of contacts', () => {
+        cy.get('[data-test="add-a-new-contact-link"').click()
+        addNewContact(newContact)
+        exportItem.contacts.map((x) =>
+          assertTypeaheadOptionSelected({
+            element: '[data-test=field-contacts]',
+            expectedOption: x.name,
+          })
+        )
+        assertTypeaheadOptionSelected({
+          element: '[data-test=field-contacts]',
+          expectedOption: newContact.name,
+        })
+      })
+    })
+
     context('when the form contains valid data and is submitted', () => {
-      it('the form should stay on the current page and display flash message', () => {
+      before(() => {
+        cy.intercept('PATCH', `/api-proxy/v4/export/${exportItem.id}`, {
+          title: exportItem.title,
+        }).as('patchExportItemApiRequest')
+      })
+      it('the form should redirect to the export details page and display flash message', () => {
         cy.get('[data-test=submit-button]').click()
 
         assertPayload('@patchExportItemApiRequest', {
@@ -310,7 +351,7 @@ describe('Export pipeline edit', () => {
           notes: exportItem.notes,
         })
 
-        assertUrl(urls.exportPipeline.edit(exportItem.id))
+        assertUrl(urls.exportPipeline.details(exportItem.id))
 
         assertFlashMessage(`Changes saved to '${exportItem.title}'`)
       })

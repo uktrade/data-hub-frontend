@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { kebabCase } from 'lodash'
@@ -22,6 +22,7 @@ import {
 import { useField } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
 import { number } from '../../../../../client/components/Form/validators'
+import { decimal, parseLocaleNumber } from '../../../../utils/number-utils'
 
 const StyledInputWrapper = styled('div')`
   ${(props) =>
@@ -41,18 +42,18 @@ const StyledCurrencyPrefix = styled('div')`
   border: ${BORDER_WIDTH_FORM_ELEMENT} solid ${BLACK};
   border-right: 0px;
   display: inline-block;
-  height: 40px;
   padding: ${BORDER_WIDTH};
-  min-width: 40px;
+  min-width: 47px;
   box-sizing: border-box;
   text-align: center;
   flex: 0 0 auto;
   cursor: default;
   font-size: ${FONT_SIZE.SIZE_19};
   background-color: ${LIGHT_GREY};
+  line-height: 1.8;
 
   @media (max-width: ${BREAKPOINTS.TABLET}) {
-    line-height: 1.6;
+    line-height: 2.1;
     font-size: ${FONT_SIZE.SIZE_16};
   }
   ${(props) =>
@@ -60,11 +61,17 @@ const StyledCurrencyPrefix = styled('div')`
     `
     border: ${BORDER_WIDTH_FORM_ELEMENT_ERROR} solid ${ERROR_COLOUR};
     border-right: 0px;
+    line-height: 1.6;
     `}
 `
 
 const StyledCurrencyWrapper = styled('div')`
   display: flex;
+  align-items: stretch;
+  height: 47px;
+  > * {
+    height: 100%;
+  }
 `
 
 /**
@@ -90,6 +97,48 @@ const FieldCurrency = ({
     required,
     initialValue,
   })
+
+  const [displayValue, setDisplayValue] = useState()
+  const [rawValue, setRawValue] = useState()
+  const [editing, setEditing] = useState(false)
+
+  useEffect(() => {
+    if (!editing && value) {
+      setRawValue(value)
+      setDisplayValue(decimal(value))
+    }
+  }, [value])
+
+  /**
+   * Once focus leaves the input, format the entered value if it is a valid number then call the default onBlur
+   */
+  const onBlurWrapper = (e) => {
+    setDisplayValue(isNaN(rawValue) ? rawValue : decimal(rawValue))
+    setEditing(false)
+    onBlur(e)
+  }
+
+  /**
+   * When the value in the input changes, update the data-raw-value then call the default onChange
+   */
+  const onChangeWrapper = (e) => {
+    if (!isNaN(parseLocaleNumber(e.target.value))) {
+      setRawValue(parseLocaleNumber(e.target.value))
+    } else {
+      setRawValue(e.target.value)
+    }
+    setDisplayValue(e.target.value)
+    onChange(e)
+  }
+
+  /**
+   * When the input receives focus, set the input to have a value without any currency formatting
+   */
+  const onFocus = () => {
+    setDisplayValue(rawValue)
+    setEditing(true)
+  }
+
   return (
     <FieldWrapper {...{ name, label, legend, hint, error, reduced, boldLabel }}>
       <StyledInputWrapper error={error}>
@@ -107,10 +156,13 @@ const FieldCurrency = ({
             id={name}
             type="text"
             name={name}
-            value={value}
-            onChange={onChange}
-            onBlur={onBlur}
+            value={displayValue}
+            data-raw-value={rawValue}
+            onChange={onChangeWrapper}
+            onBlur={onBlurWrapper}
+            onFocus={onFocus}
             data-test={kebabCase(`${name}-'input'`)}
+            inputMode="numeric"
             {...rest}
           />
         </StyledCurrencyWrapper>

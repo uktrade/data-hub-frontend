@@ -64,7 +64,7 @@ describe('overwriteObjectWithSessionStorageValues', () => {
     'when sessionState contains values and query string is populated',
     () => {
       before(() => (getItem = populatedSessionState))
-      it('should return exportItem with any field in the state overwritten by the same field in the sessionStorage', () => {
+      it('should return exportItem with any field in the state overwritten by the same field in the sessionStorage and the new contact in the list of contacts', () => {
         expect(
           overwriteObjectWithSessionStorageValues(
             {
@@ -73,11 +73,22 @@ describe('overwriteObjectWithSessionStorageValues', () => {
                 name: 'b',
               },
               team_members: [{ label: 'd', value: 3 }],
+              contact: [
+                { label: 'contact 1', value: 1 },
+                { label: 'contact 2', value: 2 },
+              ],
               notes: 'long notes',
             },
-            new URLSearchParams('?new-contact-name=abc')
+            new URLSearchParams('?new-contact-name=abc&new-contact-id=10')
           )
-        ).to.deep.equal(exportItemSessionStorage)
+        ).to.deep.equal({
+          ...exportItemSessionStorage,
+          contacts: [
+            ...exportItemSessionStorage.contacts,
+            { label: 'abc', value: '10' },
+          ],
+          scrollToContact: true,
+        })
       })
     }
   )
@@ -96,7 +107,7 @@ describe('overwriteObjectWithSessionStorageValues', () => {
             title: 'title 123',
             contacts: [{ name: 'd', id: 3 }],
           },
-          new URLSearchParams('?new-contact-name=abc')
+          new URLSearchParams('?new-contact-name=abc&new-contact-id=1')
         )
       ).to.deep.include({
         company: {

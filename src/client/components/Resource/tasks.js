@@ -11,7 +11,6 @@ import CapitalInvestmentRequiredChecksConducted from './RequiredChecksConducted'
 import ConstructionRisks from './ConstructionRisks'
 import AssetClasses from './AssetClasses'
 import OpportunityValueType from './OpportunityValueType'
-import PipelineItem from './PipelineItem'
 import OrderAssignees from './OrderAssignees'
 import OrderSubscribers from './OrderSubscribers'
 import Investment from './Investment'
@@ -48,7 +47,6 @@ export default {
   ...ConstructionRisks.tasks,
   ...AssetClasses.tasks,
   ...OpportunityValueType.tasks,
-  ...PipelineItem.tasks,
   ...OrderAssignees.tasks,
   ...OrderSubscribers.tasks,
   ...Investment.tasks,

@@ -16,7 +16,6 @@ import { GREY_2 } from '../../utils/colours'
 import urls from '../../../lib/urls'
 import CompanyLists from '../../components/CompanyLists'
 import ReferralList from '../../components/ReferralList'
-import Pipeline from '../../components/Pipeline'
 import ExportList from '../../modules/ExportPipeline/ExportList'
 import TabNav from '../../components/TabNav'
 
@@ -28,9 +27,7 @@ const StyledDiv = styled('div')`
 
 const state2props = (state) => {
   const { dataHubFeed } = state[DATA_HUB_FEED_ID]
-  const hasExportPipeline = state.activeFeatures.includes('export-pipeline')
-
-  return { dataHubFeed, hasExportPipeline }
+  return { dataHubFeed }
 }
 
 const Dashboard = ({
@@ -39,7 +36,6 @@ const Dashboard = ({
   dashboardTabId,
   userPermissions,
   dataHubFeed,
-  hasExportPipeline,
 }) => {
   const canViewDashboardTabs = userPermissions.includes(
     'company_list.view_companylist'
@@ -84,19 +80,10 @@ const Dashboard = ({
                     <ReferralList id={`${dashboardTabId}:ReferralList`} />
                   ),
                 },
-                ...(hasExportPipeline
-                  ? {
-                      [urls.exportPipeline.index()]: {
-                        label: 'Export list',
-                        content: <ExportList />,
-                      },
-                    }
-                  : {
-                      [urls.pipeline.index.mountPoint]: {
-                        label: 'My pipeline',
-                        content: <Pipeline />,
-                      },
-                    }),
+                [urls.exportPipeline.index()]: {
+                  label: 'Export list',
+                  content: <ExportList />,
+                },
               }}
             />
           </StyledDiv>

@@ -18,7 +18,7 @@ const DISPLAY_DELETE_EXPORT = 'Delete export'
 const getBreadcrumbs = (exportItem) => {
   const defaultBreadcrumbs = [
     {
-      link: urls.dashboard(),
+      link: urls.exportPipeline.index(),
       text: 'Home',
     },
   ]
@@ -27,7 +27,7 @@ const getBreadcrumbs = (exportItem) => {
     return [
       ...defaultBreadcrumbs,
       {
-        link: urls.exportPipeline.edit(exportItem.id),
+        link: urls.exportPipeline.details(exportItem.id),
         text: exportItem.title,
       },
       { text: 'Are you sure you want to delete...' },
@@ -63,8 +63,8 @@ const ExportFormDelete = ({ exportItem }) => {
             <Form
               id="export-delete-form"
               analyticsFormName="deleteExportForm"
-              cancelRedirectTo={() => urls.dashboard()}
-              redirectTo={() => urls.dashboard()}
+              cancelRedirectTo={() => urls.exportPipeline.details(exportId)}
+              redirectTo={() => urls.exportPipeline.index()}
               submissionTaskName={TASK_DELETE_EXPORT}
               initialValues={exportItem}
               transformPayload={(values) => ({ exportId: values.id, values })}

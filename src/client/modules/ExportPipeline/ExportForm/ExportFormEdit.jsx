@@ -15,12 +15,8 @@ const DISPLAY_EDIT_EXPORT = 'Edit export'
 const getBreadcrumbs = (exportItem) => {
   const defaultBreadcrumbs = [
     {
-      link: urls.dashboard(),
+      link: urls.exportPipeline.index(),
       text: 'Home',
-    },
-    {
-      link: urls.companies.index(),
-      text: 'Companies',
     },
   ]
 
@@ -28,10 +24,10 @@ const getBreadcrumbs = (exportItem) => {
     return [
       ...defaultBreadcrumbs,
       {
-        link: urls.companies.activity.index(exportItem.company.id),
-        text: exportItem.company.name,
+        link: urls.exportPipeline.details(exportItem.id),
+        text: exportItem.title,
       },
-      { text: exportItem.title },
+      { text: 'Edit export' },
     ]
   }
 
@@ -60,8 +56,8 @@ const ExportFormEdit = ({ exportItem }) => {
           },
         }}
         exportItem={exportItem}
-        cancelRedirectUrl={urls.dashboard()}
-        redirectToUrl={urls.exportPipeline.edit(exportId)}
+        cancelRedirectUrl={urls.exportPipeline.details(exportId)}
+        redirectToUrl={urls.exportPipeline.details(exportId)}
         flashMessage={({ data }) => `Changes saved to '${data.title}'`}
       />
     </DefaultLayout>

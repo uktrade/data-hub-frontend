@@ -38,6 +38,7 @@ import {
   CustomContainer,
   DataHubFeed,
 } from '../../components'
+import FlashMessages from '../LocalHeader/FlashMessages'
 
 const SearchBackground = styled('div')`
   background-color: ${BLUE};
@@ -68,8 +69,6 @@ const state2props = (state) => {
     'export-notifications'
   )
 
-  const hasExportPipeline = state.activeFeatures.includes('export-pipeline')
-
   return {
     hasInvestmentProjects,
     dataHubFeed,
@@ -77,7 +76,6 @@ const state2props = (state) => {
     reminderSummaryCount,
     hasExportFeatureGroup,
     hasInvestmentFeatureGroup,
-    hasExportPipeline,
   }
 }
 
@@ -89,7 +87,6 @@ const PersonalisedDashboard = ({
   reminderSummaryCount,
   hasInvestmentProjects,
   dataHubFeed,
-  hasExportPipeline,
   hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
 }) => (
@@ -101,6 +98,7 @@ const PersonalisedDashboard = ({
       </SearchContainer>
     </SearchBackground>
     <CustomContainer width="1180">
+      <FlashMessages />
       <Task.Status
         name={TASK_CHECK_FOR_INVESTMENTS}
         id={CHECK_FOR_INVESTMENTS_ID}
@@ -164,7 +162,6 @@ const PersonalisedDashboard = ({
                 <DashboardTabs
                   id={id}
                   adviser={adviser}
-                  hasExportPipeline={hasExportPipeline}
                   hasInvestmentProjects={hasInvestmentProjects}
                 />
               </Main>

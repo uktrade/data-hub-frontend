@@ -26,17 +26,39 @@ const Container = styled('div')`
   align-items: baseline;
   margin-bottom: 30px;
   ${Link} {
-    margin-right: 40px;
+    margin-right: 20px;
   }
   @media (max-width: ${BREAKPOINTS.TABLET}) {
     flex-direction: column;
   }
 `
 
+const EstimatedExport = ({
+  estimated_export_value_amount,
+  estimated_export_value_years,
+}) => {
+  if (estimated_export_value_amount && estimated_export_value_years) {
+    return (
+      <>
+        {`${estimated_export_value_years.name} / ${currencyGBP(
+          estimated_export_value_amount
+        )}`}
+      </>
+    )
+  }
+  if (estimated_export_value_amount) {
+    return <>{currencyGBP(estimated_export_value_amount)}</>
+  }
+  if (estimated_export_value_years) {
+    return <>{estimated_export_value_years.name}</>
+  }
+  return <span>Not set</span>
+}
+
 const getBreadcrumbs = (exportItem) => {
   const defaultBreadcrumbs = [
     {
-      link: urls.dashboard(),
+      link: urls.exportPipeline.index(),
       text: 'Home',
     },
   ]
@@ -94,13 +116,14 @@ const ExportDetailsForm = ({ exportItem }) => {
                     heading="Total estimated export value"
                     hideWhenEmpty={false}
                   >
-                    {isEmpty(exportItem.estimated_export_value_amount)
-                      ? 'Not set'
-                      : `${
-                          exportItem.estimated_export_value_years?.name
-                        } / ${currencyGBP(
-                          exportItem.estimated_export_value_amount
-                        )}`}
+                    <EstimatedExport
+                      estimated_export_value_amount={
+                        exportItem.estimated_export_value_amount
+                      }
+                      estimated_export_value_years={
+                        exportItem.estimated_export_value_years
+                      }
+                    />
                   </SummaryTable.Row>
                   <SummaryTable.Row
                     heading="Estimated date for Win"
@@ -133,6 +156,12 @@ const ExportDetailsForm = ({ exportItem }) => {
                       ? 'Not set'
                       : exportItem.sector.name}
                   </SummaryTable.Row>
+                  <SummaryTable.ListRow
+                    heading="Company contacts"
+                    value={exportItem.contacts.map(transformIdNameToValueLabel)}
+                    emptyValue="Not set"
+                    hideWhenEmpty={false}
+                  />
                   <SummaryTable.Row
                     heading="Exporter experience"
                     hideWhenEmpty={false}
@@ -141,12 +170,6 @@ const ExportDetailsForm = ({ exportItem }) => {
                       ? 'Not set'
                       : exportItem.exporter_experience.name}
                   </SummaryTable.Row>
-                  <SummaryTable.ListRow
-                    heading="Company contacts"
-                    value={exportItem.contacts.map(transformIdNameToValueLabel)}
-                    emptyValue="Not set"
-                    hideWhenEmpty={false}
-                  ></SummaryTable.ListRow>
                   <SummaryTable.Row heading="Notes" hideWhenEmpty={false}>
                     {isEmpty(exportItem.notes) ? 'Not set' : exportItem.notes}
                   </SummaryTable.Row>{' '}

@@ -22,13 +22,13 @@ describe('Dashboard', () => {
         .next()
         .should('have.text', 'Company lists')
         .next()
-        .should('have.text', 'Pipeline')
+        .should('have.text', 'Export list')
     })
   })
 
   context('Tabs - Export', () => {
     before(() => {
-      cy.setUserFeatures(['personalised-dashboard', 'export-pipeline'])
+      cy.setUserFeatures(['personalised-dashboard'])
       cy.visit('/')
     })
 

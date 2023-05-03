@@ -46,9 +46,12 @@ const StyledLabel = styled(Label)(
   })
 )
 
-const StyledList = styled('div')({
-  display: 'flex',
-})
+const StyledList = styled.div`
+  display: flex;
+  ${Input} {
+    height: 47px;
+  }
+`
 
 const getValidator =
   (required, invalid, format) =>
@@ -66,6 +69,10 @@ const getValidator =
 
     if (!isValid && !isDateEmpty) {
       return invalid || 'Enter a valid date'
+    }
+
+    if (year.toString().length != 4) {
+      return 'Enter a year as 4 digits'
     }
   }
 
@@ -124,7 +131,9 @@ const FieldDate = ({
   return (
     <FieldWrapper {...{ name, label, legend, hint, error, reduced }}>
       <StyledInputWrapper error={error}>
-        {error && <ErrorText>{error}</ErrorText>}
+        {error && (
+          <ErrorText data-test={`field-${name}-error`}>{error}</ErrorText>
+        )}
         {reduced ? (
           <Input
             id={name}
@@ -145,7 +154,7 @@ const FieldDate = ({
                   name={`${name}.day`}
                   data-test={`${dataTest}-day`}
                   error={touched && error}
-                  type="number"
+                  type="text"
                   value={value.day}
                   onChange={(e) => onChange(DAY, e)}
                   onBlur={onBlur}
@@ -159,7 +168,7 @@ const FieldDate = ({
                 name={`${name}.month`}
                 data-test={`${dataTest}-month`}
                 error={touched && error}
-                type="number"
+                type="text"
                 value={value.month}
                 onChange={(e) => onChange(MONTH, e)}
                 onBlur={onBlur}
@@ -172,7 +181,7 @@ const FieldDate = ({
                 name={`${name}.year`}
                 data-test={`${dataTest}-year`}
                 error={touched && error}
-                type="number"
+                type="text"
                 value={value.year}
                 onChange={(e) => onChange(YEAR, e)}
                 onBlur={onBlur}

@@ -55,11 +55,9 @@ var v4SearchCompanyWithCountry = require('./routes/v4/search/company/autocomplet
 var v4SearchLargeInvestorProfiles = require('./routes/v4/search/large-investor-profile/results.js')
 var v4SearchExports = require('./routes/v4/search/export')
 var v4referralList = require('./routes/v4/referrals/list.js')
-var v4pipelineItem = require('./routes/v4/pipeline-item/index.js')
 var v4Proposition = require('./routes/v4/proposition/proposition.js')
 var v4Reminders = require('./routes/v4/reminders/index.js')
 var v4Reminder = require('./routes/v4/reminder/reminder.js')
-var v4Export = require('./routes/v4/export/index.js')
 
 // Datahub API 3rd party dependencies
 var consentService = require('./routes/api/consentService.js')
@@ -610,27 +608,6 @@ app.post('/whoami', user.resetWhoami)
 // Zendesk tickets endpoint
 app.post('/zendesk/tickets', zendesk.tickets)
 
-// Pipeline endpoint
-app.get('/v4/pipeline-item', v4pipelineItem.getPipelineItems)
-app.post('/v4/pipeline-item', v4pipelineItem.createUpdatePipelineItem)
-app.patch(
-  '/v4/pipeline-item/:pipelineItemId',
-  v4pipelineItem.createUpdatePipelineItem
-)
-app.get('/v4/pipeline-item/:pipelineItemId', v4pipelineItem.getPipelineItem)
-app.post(
-  '/v4/pipeline-item/:pipelineItemId/archive',
-  v4pipelineItem.archivePipelineItem
-)
-app.post(
-  '/v4/pipeline-item/:pipelineItemId/unarchive',
-  v4pipelineItem.unarchivePipelineItem
-)
-app.delete(
-  '/v4/pipeline-item/:pipelineItemId',
-  v4pipelineItem.deletePipelineItem
-)
-
 app.post('/api/v1/person', consentService.person)
 app.get('/api/v1/person/bulk_lookup', consentService.bulkPerson)
 
@@ -639,13 +616,6 @@ app.post('/companies/search', dnbService.companiesSearch)
 app.post('/v4/large-capital-opportunity', (req, res) =>
   res.json({ id: 'new-large-capital-uk-opportunity-id' })
 )
-
-// company exports
-app.get('/v4/export', v4Export.getExportItems)
-app.get('/v4/export/:exportId', v4Export.getExportItem)
-app.post('/v4/export', v4Export.createExportItem)
-app.patch('/v4/export/:exportId', v4Export.updateExportItem)
-app.delete('/v4/export/:exportId', v4Export.deleteExportItem)
 
 app.use((req, res) =>
   res.status(404).json({ message: 'Route' + req.url + ' Not found.' })

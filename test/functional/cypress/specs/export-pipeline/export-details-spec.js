@@ -2,6 +2,7 @@ import urls from '../../../../../src/lib/urls'
 import { capitalize } from 'lodash'
 import { currencyGBP } from '../../../../../src/client/utils/number-utils'
 import { format } from '../../../../../src/client/utils/date'
+import { exportFaker } from '../../fakers/export'
 
 const {
   assertBreadcrumbs,
@@ -9,10 +10,8 @@ const {
   assertUrl,
 } = require('../../support/assertions')
 
-const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
-
 describe('Export Details summary ', () => {
-  const exportItem = exportItems.results[0]
+  const exportItem = exportFaker()
   context('when summary table renders', () => {
     beforeEach(() => {
       cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
@@ -23,7 +22,7 @@ describe('Export Details summary ', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.exportPipeline.index(),
         [exportItem.title]: null,
       })
     })
@@ -47,8 +46,8 @@ describe('Export Details summary ', () => {
         'Export potential': capitalize(exportItem.export_potential),
         Destination: exportItem.destination_country.name,
         'Main sector': exportItem.sector.name,
-        'Exporter experience': exportItem.exporter_experience.name,
         'Company contacts': exportItem.contacts.map((obj) => obj.name).join(''),
+        'Exporter experience': exportItem.exporter_experience.name,
         Notes: exportItem.notes,
       })
     })

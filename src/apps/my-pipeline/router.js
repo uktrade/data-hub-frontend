@@ -1,23 +1,22 @@
 const { Router } = require('express')
-const urls = require('../../lib/urls')
 
-const { renderAddToPipeline } = require('./controllers/add')
-const { renderEditPipeline } = require('./controllers/edit')
-const { renderArchivePipelineItem } = require('./controllers/archive')
-const { renderUnarchivePipelineItem } = require('./controllers/unarchive')
-const { renderDeletePipelineItem } = require('./controllers/delete')
-
-const companyPipelineRouter = Router()
 const myPipelineRouter = Router()
+const companyPipelineRouter = Router()
 
-companyPipelineRouter.get(urls.companies.pipelineAdd.route, renderAddToPipeline)
+// Redirect /my-pipeline to /export
+myPipelineRouter.get('/', (req, res) => res.redirect('/export'))
 
-myPipelineRouter.get(urls.pipeline.edit.route, renderEditPipeline)
-myPipelineRouter.get(urls.pipeline.archive.route, renderArchivePipelineItem)
-myPipelineRouter.get(urls.pipeline.unarchive.route, renderUnarchivePipelineItem)
-myPipelineRouter.get(urls.pipeline.delete.route, renderDeletePipelineItem)
+// Redirect /my-pipeline/:status to /export
+myPipelineRouter.get('/:status', (req, res) => res.redirect('/export'))
+
+// Redirect
+// From: /companies/<company-id>/my-pipeline
+// To:   /export/create?companyId=<company-id>
+companyPipelineRouter.get('/:companyId/my-pipeline', (req, res) =>
+  res.redirect(`/export/create?companyId=${req.params.companyId}`)
+)
 
 module.exports = {
-  companyPipelineRouter,
   myPipelineRouter,
+  companyPipelineRouter,
 }

@@ -43,12 +43,6 @@ import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/
 import * as addCompanyState from '../apps/companies/apps/add-company/client/state'
 import addCompanyPostcodeToRegionReducer from '../apps/companies/apps/add-company/client/reducer'
 
-import { ID as ADD_TO_PIPELINE_ID } from '../apps/my-pipeline/client/state'
-import addToPipelineReducer from '../apps/my-pipeline/client/reducer'
-
-import { ID as PIPELINE_LIST_ID } from './components/Pipeline/state'
-import pipelineListReducer from './components/Pipeline/reducer'
-
 import { ID as INVESTMENT_OPPORTUNITIES_LIST_ID } from '../apps/investments/client/opportunities/List/state'
 import investmentOpportunitiesListReducer from '../apps/investments/client/opportunities/List/reducer'
 
@@ -203,8 +197,6 @@ const reducer = {
   [REFERRALS_SEND_ID]: referralsSendReducer,
   [EXPORTS_WINS_ID]: exportWinsReducer,
   [addCompanyState.ID]: addCompanyPostcodeToRegionReducer,
-  [ADD_TO_PIPELINE_ID]: addToPipelineReducer,
-  [PIPELINE_LIST_ID]: pipelineListReducer,
   ...TabNav.reducerSpread,
   ...ReferralList.reducerSpread,
   ...DropdownMenu.reducerSpread,
