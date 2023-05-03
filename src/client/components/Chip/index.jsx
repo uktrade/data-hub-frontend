@@ -19,7 +19,7 @@ const StyledButton = styled('button')`
     display: table-cell;
     font-size: ${FONT_SIZE.SIZE_16};
   }
-  span:first-child {
+  span:delete-option {
     text-transform: ${({ onClick }) => onClick && `uppercase`};
     padding-right: ${({ onClick }) => onClick && `8px`};
     font-weight: ${({ onClick }) => onClick && FONT_WEIGHTS.bold};
@@ -30,13 +30,14 @@ const StyledButton = styled('button')`
  * Chips are compact elements that represent an input, attribute, or action.
  * A Chip could be used to display a list of selected filters in a collection list.
  */
-const Chip = ({ children, value, onClick = null }) => (
+const Chip = ({ children, value, onClick = null, deleteOption = true }) => (
   <StyledButton
+    style={this.props.style}
     onClick={onClick}
     data-value={value}
     aria-label={`remove filter ${children}`}
   >
-    {onClick && <span>✕</span>}
+    {onClick && deleteOption && <span class="delete-option">✕</span>}
     <span>{children}</span>
   </StyledButton>
 )

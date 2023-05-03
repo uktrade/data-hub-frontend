@@ -8,7 +8,12 @@ import GridRow from '@govuk-react/grid-row'
 import Button from '@govuk-react/button'
 import Details from '@govuk-react/details'
 import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
-import { GREY_3, PURPLE, BLACK } from '../../../client/utils/colours'
+import {
+  GREY_3,
+  PURPLE,
+  BLACK,
+  GREY_3_LEGACY,
+} from '../../../client/utils/colours'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 import LocalHeaderHeading from '../../../client/components/LocalHeader/LocalHeaderHeading'
 import Badge from '../../../client/components/Badge'
@@ -38,6 +43,24 @@ const TypeWrapper = styled('div')`
 const StyledButtonContainer = styled('div')`
   width: 100%;
   display: inline-block;
+`
+
+const StyledList = styled('div')`
+  padding-bottom: 10px;
+`
+
+const StyledChip = styled('chip')`
+  display: inline-table;
+  padding: 8px;
+  background-color: ${GREY_3};
+  border-bottom: 5px solid ${GREY_3_LEGACY};
+  vertical-align: middle;
+  cursor: pointer;
+  span {
+    pointer-events: none;
+    display: table-cell;
+    font-size: ${FONT_SIZE.SIZE_16};
+  }
 `
 
 const StyledButtonLink = styled.a({
@@ -120,6 +143,9 @@ const CompanyLocalHeader = ({
   returnUrl,
 }) => {
   const queryString = returnUrl ? `${returnUrl}` : `/companies/${company.id}`
+  const handleClick = () => {
+    window.location.href = `/companies/${company.id}/lists/add-remove?returnUrl=${queryString}`
+  }
   return (
     company && (
       <>
@@ -162,6 +188,11 @@ const CompanyLocalHeader = ({
               </ConnectedDropdownMenu>
             </GridCol>
           </GridRow>
+          <StyledList>
+            <StyledChip value="pear" onClick={handleClick} deleteOption={false}>
+              + Add to list
+            </StyledChip>
+          </StyledList>
           {(company.isUltimate || company.isGlobalHQ) && (
             <TypeWrapper>
               <BadgeWrapper>
