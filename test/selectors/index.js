@@ -16,7 +16,6 @@ exports.companySubsidiariesLink = require('./company/subsidiaries-link')
 exports.companySubsidiaries = require('./company/subsidiaries')
 exports.companyAddToListButton = require('./company/add-to-list')
 exports.companyCreateListButton = require('./company')
-exports.companyAddRemoveFromLists = require('./company-lists/add-remove')
 exports.companyLeadAdviser = require('../selectors/company/lead-adviser')
 
 exports.referralDetails = require('../selectors/referrals/referral-details')
