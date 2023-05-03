@@ -1,7 +1,10 @@
 import { contactFaker, contactsListFaker } from '../../fakers/contacts'
+import { exportFaker } from '../../fakers/export'
+import { companyFaker } from '../../fakers/companies'
 import { addNewContact } from '../../support/actions'
+import { sectorListFaker } from '../../fakers/sectors'
+import { countryListFaker } from '../../fakers/countries'
 
-const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 const {
   assertUrl,
@@ -19,9 +22,7 @@ const {
 const {
   ERROR_MESSAGES,
 } = require('../../../../../src/client/modules/ExportPipeline/ExportForm/constants')
-const {
-  generateExport,
-} = require('../../../../sandbox/routes/v4/export/exports')
+
 const {
   fill,
   fillTypeahead,
@@ -66,14 +67,24 @@ describe('Export pipeline create', () => {
   })
 
   context('when adding an export for known company id', () => {
-    const company = fixtures.company.venusLtd
+    const company = companyFaker()
     const addPageUrl = `/export/create?companyId=${company.id}`
-    const newExport = generateExport()
+    const sectors = sectorListFaker(3)
+    const countries = countryListFaker(3)
+    const newExport = exportFaker({
+      sector: sectors[0],
+      destination_country: countries[0],
+    })
     const newContact = contactFaker()
-
+    function mockApiAndVisitPage() {
+      cy.intercept('GET', `/api-proxy/v4/company/${company.id}`, company).as(
+        'getCompanyApiRequest'
+      )
+      cy.visit(addPageUrl)
+    }
     context('when verifying the page', () => {
       before(() => {
-        cy.visit(addPageUrl)
+        mockApiAndVisitPage()
       })
 
       it('should render the header', () => {
@@ -118,7 +129,7 @@ describe('Export pipeline create', () => {
 
     context('when the form cancel button is clicked', () => {
       before(() => {
-        cy.visit(addPageUrl)
+        mockApiAndVisitPage()
       })
 
       it('the form should redirect to the company page', () => {
@@ -129,7 +140,7 @@ describe('Export pipeline create', () => {
 
     context('when the form is populated but not submitted', () => {
       before(() => {
-        cy.visit(addPageUrl)
+        mockApiAndVisitPage()
       })
 
       it('leaving and returning to the page should not keep any values', () => {
@@ -148,7 +159,7 @@ describe('Export pipeline create', () => {
 
     context('when the form contains invalid data and is submitted', () => {
       before(() => {
-        cy.visit(addPageUrl)
+        mockApiAndVisitPage()
       })
 
       it('the form should display validation error message for mandatory inputs', () => {
@@ -294,9 +305,12 @@ describe('Export pipeline create', () => {
         const contacts = contactsListFaker((length = 3))
 
         before(() => {
-          cy.intercept('POST', `/api-proxy/v4/export`).as(
-            'postExportItemApiRequest'
-          )
+          cy.intercept('GET', `/api-proxy/v4/metadata/country`, countries)
+          cy.intercept('GET', `/api-proxy/v4/metadata/sector`, sectors)
+          cy.intercept('POST', `/api-proxy/v4/export`, {
+            id: newExport.id,
+            title: newExport.title,
+          }).as('postExportItemApiRequest')
           cy.intercept('POST', `/api-proxy/v4/contact`, newContact).as(
             'postContactApiRequest'
           )
@@ -305,7 +319,8 @@ describe('Export pipeline create', () => {
             `/api-proxy/v4/contact?company_id=${company.id}`,
             { count: 4, results: [newContact, ...contacts] }
           ).as('getContactApiRequest')
-          cy.visit(addPageUrl)
+
+          mockApiAndVisitPage()
         })
 
         it('the form should redirect to the export tab on the dashboard page and display a success message', () => {

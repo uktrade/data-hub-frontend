@@ -3,8 +3,9 @@ import { faker } from '@faker-js/faker'
 import { listFaker } from './utils'
 import { sectorFaker } from './sectors'
 import { contactFaker } from './contacts'
+import { countryFaker } from './countries'
 
-import { ESTIMATED_EXPORT_VALUE_YEARS } from './constants'
+import { ESTIMATED_EXPORT_VALUE_YEARS, EXPORTER_EXPERIENCE } from './constants'
 
 const exportFaker = (overrides = {}) => ({
   id: faker.datatype.uuid(),
@@ -15,12 +16,9 @@ const exportFaker = (overrides = {}) => ({
   owner: contactFaker(),
   team_members: [contactFaker()],
   contacts: [contactFaker()],
-  destination_country: {
-    id: faker.datatype.uuid(),
-    name: faker.address.country(),
-  },
+  destination_country: countryFaker(),
   sector: sectorFaker(),
-  exporter_experience: faker.datatype.uuid(),
+  exporter_experience: faker.helpers.arrayElement(EXPORTER_EXPERIENCE),
   estimated_export_value_years: faker.helpers.arrayElement(
     ESTIMATED_EXPORT_VALUE_YEARS
   ),

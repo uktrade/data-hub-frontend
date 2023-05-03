@@ -1,6 +1,10 @@
 import { decimal } from '../../../../../src/client/utils/number-utils'
-import { contactFaker } from '../../fakers/contacts'
 import { addNewContact } from '../../support/actions'
+
+import { contactFaker } from '../../fakers/contacts'
+import { exportFaker } from '../../fakers/export'
+import { sectorListFaker } from '../../fakers/sectors'
+import { countryListFaker } from '../../fakers/countries'
 
 const urls = require('../../../../../src/lib/urls')
 
@@ -20,7 +24,6 @@ const {
   assertPayload,
   assertTypeaheadOptionSelected,
 } = require('../../support/assertions')
-const { exportItems } = require('../../../../sandbox/routes/v4/export/exports')
 const {
   ERROR_MESSAGES,
 } = require('../../../../../src/client/modules/ExportPipeline/ExportForm/constants')
@@ -39,8 +42,6 @@ describe('Export pipeline edit', () => {
     // Clear the session storage to avoid caching of contact form data in the application sessionStorage
     Cypress.session.clearCurrentSessionData()
   })
-
-  const exportItem = exportItems.results[0]
 
   context('when editing an export for unknown company id', () => {
     before(() => {
@@ -64,15 +65,21 @@ describe('Export pipeline edit', () => {
   })
 
   context('when editing an export for known company id', () => {
+    const sectors = sectorListFaker(3)
+    const countries = countryListFaker(3)
+    const exportItem = exportFaker({
+      sector: sectors[0],
+      destination_country: countries[0],
+    })
     const editPageUrl = urls.exportPipeline.edit(exportItem.id)
 
     beforeEach(() => {
+      cy.intercept('GET', `/api-proxy/v4/metadata/country`, countries)
+      cy.intercept('GET', `/api-proxy/v4/metadata/sector`, sectors)
       cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
         body: exportItem,
       }).as('getExportItemApiRequest')
-      cy.intercept('PATCH', `/api-proxy/v4/export/${exportItem.id}`).as(
-        'patchExportItemApiRequest'
-      )
+
       cy.visit(editPageUrl)
     })
 
@@ -314,6 +321,11 @@ describe('Export pipeline edit', () => {
     })
 
     context('when the form contains valid data and is submitted', () => {
+      before(() => {
+        cy.intercept('PATCH', `/api-proxy/v4/export/${exportItem.id}`, {
+          title: exportItem.title,
+        }).as('patchExportItemApiRequest')
+      })
       it('the form should redirect to the export details page and display flash message', () => {
         cy.get('[data-test=submit-button]').click()
 
