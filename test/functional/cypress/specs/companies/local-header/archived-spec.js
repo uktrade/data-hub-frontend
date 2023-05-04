@@ -5,7 +5,8 @@ const {
   assertCompanyName,
   assertCompanyAddress,
   assertBadgeText,
-  assertButtons,
+  assertChip,
+  assertExportProjectButton,
   assertBreadcrumbs,
   assertExportCountryHistoryBreadcrumbs,
   assertOneListTierA,
@@ -25,6 +26,7 @@ const addRemoveFromListUrl = urls.companies.lists.addRemove(company.id)
 const detailsUrl = urls.companies.detail(company.id)
 const unarchiveUrl = urls.companies.unarchive(company.id)
 const addInteractionUrl = urls.companies.interactions.create(company.id)
+const exportProjectUrl = urls.exportPipeline.create(company.id)
 
 describe('Local header for archived company', () => {
   context('when visting an archived company activity page', () => {
@@ -46,8 +48,12 @@ describe('Local header for archived company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the correct buttons', () => {
-      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}`)
+    it('should display the add to list chip', () => {
+      assertChip(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the add export project button', () => {
+      assertExportProjectButton(exportProjectUrl)
     })
 
     it('should display a "Global HQ" badge', () => {
@@ -82,8 +88,12 @@ describe('Local header for archived company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the correct buttons', () => {
-      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/contacts`)
+    it('should display the add to list chip', () => {
+      assertChip(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the add export project button', () => {
+      assertExportProjectButton(exportProjectUrl)
     })
 
     it('should display a "Global HQ" badge', () => {
@@ -116,8 +126,12 @@ describe('Local header for archived company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the correct buttons', () => {
-      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/advisers`)
+    it('should display the add to list chip', () => {
+      assertChip(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the add export project button', () => {
+      assertExportProjectButton(exportProjectUrl)
     })
 
     it('should display a "Global HQ" badge', () => {
@@ -152,10 +166,12 @@ describe('Local header for archived company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the correct buttons', () => {
-      assertButtons(
-        `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/investments/projects`
-      )
+    it('should display the add to list chip', () => {
+      assertChip(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the add export project button', () => {
+      assertExportProjectButton(exportProjectUrl)
     })
 
     it('should display a "Global HQ" badge', () => {
@@ -192,14 +208,12 @@ describe('Local header for archived company', () => {
         assertAddInteractionButton(addInteractionUrl)
       })
 
-      it('should display the correct buttons', () => {
-        assertButtons(
-          `${urls.companies.lists.addRemove(
-            company.id
-          )}?returnUrl=${urls.companies.detail(
-            company.id
-          )}/investments/large-capital-profile`
-        )
+      it('should display the add to list chip', () => {
+        assertChip(addRemoveFromListUrl, detailsUrl)
+      })
+
+      it('should display the add export project button', () => {
+        assertExportProjectButton(exportProjectUrl)
       })
 
       it('should display a "Global HQ" badge', () => {
@@ -234,8 +248,12 @@ describe('Local header for archived company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the correct buttons', () => {
-      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/exports`)
+    it('should display the add to list chip', () => {
+      assertChip(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the add export project button', () => {
+      assertExportProjectButton(exportProjectUrl)
     })
 
     it('should display a "Global HQ" badge', () => {
@@ -270,10 +288,12 @@ describe('Local header for archived company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the correct buttons', () => {
-      assertButtons(
-        `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/exports/history`
-      )
+    it('should display the add to list chip', () => {
+      assertChip(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the add export project button', () => {
+      assertExportProjectButton(exportProjectUrl)
     })
 
     it('should display a "Global HQ" badge', () => {
@@ -308,8 +328,12 @@ describe('Local header for archived company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the correct buttons', () => {
-      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/orders`)
+    it('should display the add to list chip', () => {
+      assertChip(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the add export project button', () => {
+      assertExportProjectButton(exportProjectUrl)
     })
 
     it('should display a "Global HQ" badge', () => {

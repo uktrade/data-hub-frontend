@@ -1,19 +1,26 @@
 const fixtures = require('../../fixtures')
 const { testBreadcrumbs } = require('../../support/assertions')
 const urls = require('../../../../../src/lib/urls')
+const {
+  assertChip,
+} = require('../../../cypress/support/company-local-header-assertions')
 
 const listA = '70513f19-0df6-4c8d-bef1-f11b65641ae4'
 const listB = '75e14e32-292e-4d1b-a361-992d548251f7'
 const listC = 'a87af6bc-e117-47c7-ad3d-35f9900bbd0e'
+
+const addRemoveFromListUrl = urls.companies.lists.addRemove(
+  fixtures.company.lambdaPlc.id
+)
+const detailsUrl = urls.companies.detail(fixtures.company.lambdaPlc.id)
 
 describe('Adding and removing a company to a list', () => {
   context('when viewing the companies page with company lists created', () => {
     before(() => {
       cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/activity`)
     })
-    it('displays a button to add or remove from a list', () => {
-      cy.contains('View options').click()
-      cy.contains('Add to or remove from lists')
+    it('should display the add to list chip', () => {
+      assertChip(addRemoveFromListUrl, detailsUrl)
     })
   })
   context('when viewing the add/remove from lists form', () => {

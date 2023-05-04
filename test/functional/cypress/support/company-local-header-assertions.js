@@ -28,14 +28,6 @@ const assertBadgeText = (badgeText) => {
 }
 
 /**
- * Asserts that the add/remove from list button has the correct URL
- */
-const assertButtons = (url) => {
-  cy.contains('View options').click()
-  cy.contains('Add to or remove from lists').should('have.attr', 'href', url)
-}
-
-/**
  * Asserts that the add to list chip has the correct URL
  */
 const assertChip = (addRemoveFromListUrl, detailsUrl) => {
@@ -112,7 +104,6 @@ module.exports = {
   assertCompanyName,
   assertCompanyAddress,
   assertBadgeText,
-  assertButtons,
   assertChip,
   assertExportProjectButton,
   assertAddInteractionButton,
