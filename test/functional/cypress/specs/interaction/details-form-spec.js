@@ -1,6 +1,7 @@
 const { reduce, isEqual } = require('lodash')
 
 import {
+  assertFieldError,
   assertFieldInput,
   assertFieldRadiosWithLegend,
   assertFieldSelect,
@@ -1257,6 +1258,40 @@ describe('Editing an interaction without a theme', () => {
     cy.get('[data-test="status-message"]').should(
       'have.text',
       'Interaction updated'
+    )
+  })
+})
+
+describe('Interaction landing page error checking', () => {
+  beforeEach(() => {
+    cy.visit(urls.companies.interactions.create(company.id))
+  })
+  it('should display an error when no interaction types are selected', () => {
+    cy.contains('button', 'Continue').click()
+
+    assertFieldError(
+      cy.get('[data-test="field-theme"]'),
+      'Select interaction type'
+    )
+  })
+
+  it('should display an error when no export interaction types are selected', () => {
+    cy.contains('label', 'Export').click()
+    cy.contains('button', 'Continue').click()
+
+    assertFieldError(
+      cy.get('[data-test="field-kind"]'),
+      'Select interaction type'
+    )
+  })
+
+  it('should display an error when no other interaction types are selected', () => {
+    cy.contains('label', 'Other').click()
+    cy.contains('button', 'Continue').click()
+
+    assertFieldError(
+      cy.get('[data-test="field-kind"]'),
+      'Select interaction type'
     )
   })
 })
