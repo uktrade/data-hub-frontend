@@ -362,8 +362,8 @@ const StepInteractionDetails = ({
       <FieldInput
         type="text"
         name="subject"
-        label="Subject"
-        required="Enter a subject"
+        label="Summary"
+        required="Enter a summary"
       />
 
       <FieldTextarea
