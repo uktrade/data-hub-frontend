@@ -12,6 +12,7 @@ const GLOBAL_NAV_ITEM = {
 
 const QUERY_FIELDS = [
   'kind',
+  'activity',
   'sector_descends',
   'company',
   'subject',
@@ -52,6 +53,11 @@ const THEMES = {
   OTHER: 'other',
 }
 
+const ACTIVITY = {
+  DATA_HUB: 'data_hub',
+  EXTERNAL: 'external',
+}
+
 const KINDS = {
   INTERACTION: 'interaction',
   SERVICE_DELIVERY: 'service_delivery',
@@ -80,5 +86,6 @@ module.exports = {
   INTERACTION_STATUS,
   THEMES,
   KINDS,
+  ACTIVITY,
   SERVICE_CONTEXTS,
 }
