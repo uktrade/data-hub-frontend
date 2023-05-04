@@ -57,6 +57,7 @@ async function getInteractionCollectionForEntity(req, res, next) {
 function getInteractionsRequestBody(req, res, next) {
   const searchBody = pick(req.query, [
     'kind',
+    'activity',
     'sector_descends',
     'communication_channel',
     'company_one_list_group_tier',
