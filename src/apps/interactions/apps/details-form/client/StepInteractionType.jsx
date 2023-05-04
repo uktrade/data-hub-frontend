@@ -37,7 +37,7 @@ const StepInteractionType = () => {
       <FieldRadios
         label="What would you like to record?"
         name="kind"
-        required="Select what you would like to record"
+        required="Select interaction type"
         options={[
           {
             label: 'A standard interaction',
@@ -73,7 +73,7 @@ const StepInteractionType = () => {
       <FieldRadios
         label="What would you like to record?"
         name="kind"
-        required="Select what you would like to record"
+        required="Select interaction type"
         onChange={getOnChangeHandler('kind', setFieldValue)}
         options={[
           {
@@ -116,7 +116,7 @@ const StepInteractionType = () => {
       <FieldRadios
         name="theme"
         label="What is this regarding?"
-        required="Select what you would like to record"
+        required="Select interaction type"
         options={configuredFieldRadiosOptions}
       />
     </>
