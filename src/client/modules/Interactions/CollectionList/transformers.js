@@ -31,6 +31,7 @@ const getbadgeLabel = (type, hasFeedback = false) => {
   const badges = {
     interaction: LABELS.interaction,
     service_delivery: LABELS.serviceDelivery,
+    new_investment_project: LABELS.newInvestmentProject,
   }
   return [
     {

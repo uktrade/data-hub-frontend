@@ -5,6 +5,7 @@ export const LABELS = {
   external: 'External',
   interaction: 'Interaction',
   serviceDelivery: 'Service delivery',
+  newInvestmentProject: 'New investment project',
   advisers: 'Adviser',
   company: 'Company',
   subject: 'Subject',
@@ -23,6 +24,7 @@ export const LABELS = {
 export const KIND_OPTIONS = [
   { label: LABELS.interaction, value: 'interaction' },
   { label: LABELS.serviceDelivery, value: 'service_delivery' },
+  { label: LABELS.newInvestmentProject, value: 'new_investment_project' },
 ]
 
 export const ACTIVITY_OPTIONS = [
