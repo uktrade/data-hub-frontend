@@ -36,8 +36,8 @@ const EmptyState = () => (
         <span>To add an export:</span>
         <div>
           <UnorderedList listStyleType="bullet">
-            <ListItem>go to the company page and press 'view options'</ListItem>
-            <ListItem>select 'Add export project'</ListItem>
+            <ListItem>go to the company page</ListItem>
+            <ListItem>select 'Add export project' button</ListItem>
           </UnorderedList>
         </div>
       </StyledContent>
