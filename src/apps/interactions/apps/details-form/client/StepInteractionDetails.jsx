@@ -275,7 +275,7 @@ const StepInteractionDetails = ({
           inline={true}
           name="has_related_trade_agreements"
           legend="Does this interaction relate to a named trade agreement?"
-          required="Answer if this interaction relates to a named trade agreement"
+          required="Select if this relates to a named trade agreement"
           options={OPTIONS_YES_NO}
         />
 
@@ -339,7 +339,7 @@ const StepInteractionDetails = ({
             name="is_event"
             legend="Is this an event?"
             options={OPTIONS_YES_NO}
-            required="Answer if this was an event"
+            required="Select if this was an event"
           />
           {values.is_event === OPTION_YES && (
             <Resource name={TASK_GET_ACTIVE_EVENTS} id={ID}>
@@ -378,7 +378,7 @@ const StepInteractionDetails = ({
         name="was_policy_feedback_provided"
         legend="Did the contact provide business intelligence?"
         options={OPTIONS_YES_NO}
-        required="Answer if the contact provided business intelligence"
+        required="Select if the contact provided business intelligence"
       />
 
       {values.was_policy_feedback_provided === OPTION_YES && (
@@ -466,7 +466,7 @@ const StepInteractionDetails = ({
             inline={true}
             name="were_countries_discussed"
             legend="Were any countries discussed?"
-            required="Answer if any countries were discussed"
+            required="Select if any countries were discussed"
             options={OPTIONS_YES_NO}
           />
           {values.were_countries_discussed === OPTION_YES && (

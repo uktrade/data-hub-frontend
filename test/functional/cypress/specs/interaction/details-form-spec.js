@@ -518,12 +518,12 @@ describe('Interaction theme', () => {
           'have.text',
           [
             'Select a service',
-            'Answer if this interaction relates to a named trade agreement',
+            'Select if this relates to a named trade agreement',
             'Select at least one contact',
             'Select a communication channel',
             'Enter a subject',
-            'Answer if the contact provided business intelligence',
-            'Answer if any countries were discussed',
+            'Select if the contact provided business intelligence',
+            'Select if any countries were discussed',
             'Select if the interaction helped remove an export barrier',
           ].join('')
         )
@@ -634,12 +634,12 @@ describe('Service delivery theme', () => {
           'have.text',
           [
             'Select a service',
-            'Answer if this interaction relates to a named trade agreement',
+            'Select if this relates to a named trade agreement',
             'Select at least one contact',
-            'Answer if this was an event',
+            'Select if this was an event',
             'Enter a subject',
-            'Answer if the contact provided business intelligence',
-            'Answer if any countries were discussed',
+            'Select if the contact provided business intelligence',
+            'Select if any countries were discussed',
             'Select if the interaction helped remove an export barrier',
           ].join('')
         )
@@ -734,11 +734,11 @@ describe('Investment theme', () => {
           'have.text',
           [
             'Select a service',
-            'Answer if this interaction relates to a named trade agreement',
+            'Select if this relates to a named trade agreement',
             'Select at least one contact',
             'Select a communication channel',
             'Enter a subject',
-            'Answer if the contact provided business intelligence',
+            'Select if the contact provided business intelligence',
             'Answer if this interaction relates to a large capital opportunity',
           ].join('')
         )
@@ -854,12 +854,12 @@ describe('Trade Agreement theme', () => {
           'have.text',
           [
             'Select a service',
-            'Answer if this interaction relates to a named trade agreement',
+            'Select if this relates to a named trade agreement',
             'Select at least one contact',
             'Select a communication channel',
             'Enter a subject',
-            'Answer if the contact provided business intelligence',
-            'Answer if any countries were discussed',
+            'Select if the contact provided business intelligence',
+            'Select if any countries were discussed',
           ].join('')
         )
     })
