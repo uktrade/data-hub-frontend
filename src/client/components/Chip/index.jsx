@@ -19,7 +19,7 @@ const StyledButton = styled('button')`
     display: table-cell;
     font-size: ${FONT_SIZE.SIZE_16};
   }
-  span:delete-option {
+  span.delete-option {
     text-transform: ${({ onClick }) => onClick && `uppercase`};
     padding-right: ${({ onClick }) => onClick && `8px`};
     font-weight: ${({ onClick }) => onClick && FONT_WEIGHTS.bold};
@@ -32,12 +32,11 @@ const StyledButton = styled('button')`
  */
 const Chip = ({ children, value, onClick = null, deleteOption = true }) => (
   <StyledButton
-    style={this.props.style}
     onClick={onClick}
     data-value={value}
     aria-label={`remove filter ${children}`}
   >
-    {onClick && deleteOption && <span class="delete-option">✕</span>}
+    {onClick && deleteOption && <span className="delete-option">✕</span>}
     <span>{children}</span>
   </StyledButton>
 )
@@ -46,6 +45,7 @@ Chip.propTypes = {
   children: PropTypes.node.isRequired,
   value: PropTypes.string.isRequired,
   onClick: PropTypes.func,
+  deleteOption: PropTypes.bool,
 }
 
 export default Chip

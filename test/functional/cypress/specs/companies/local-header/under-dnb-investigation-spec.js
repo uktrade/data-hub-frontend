@@ -6,7 +6,8 @@ const {
   assertCompanyAddress,
   assertBreadcrumbs,
   assertExportCountryHistoryBreadcrumbs,
-  assertButtons,
+  assertChip,
+  assertExportProjectButton,
   assertArchivePanelNotVisible,
   assertAddInteractionButton,
 } = require('../../../support/company-local-header-assertions')
@@ -19,6 +20,7 @@ const company = fixtures.company.investigationLimited
 const addRemoveFromListUrl = urls.companies.lists.addRemove(company.id)
 const detailsUrl = urls.companies.detail(company.id)
 const addInteractionUrl = urls.companies.interactions.create(company.id)
+const exportProjectUrl = urls.exportPipeline.create(company.id)
 
 describe('Local header for company under dnb investigation', () => {
   context(
@@ -46,8 +48,12 @@ describe('Local header for company under dnb investigation', () => {
         assertAddInteractionButton(addInteractionUrl)
       })
 
-      it('should display the correct buttons', () => {
-        assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}`)
+      it('should display the add to list chip', () => {
+        assertChip(addRemoveFromListUrl, detailsUrl)
+      })
+
+      it('should display the add export project button', () => {
+        assertExportProjectButton(exportProjectUrl)
       })
 
       it('should not display "What does this mean?" details', () => {
@@ -88,10 +94,12 @@ describe('Local header for company under dnb investigation', () => {
         assertAddInteractionButton(addInteractionUrl)
       })
 
-      it('should display the correct buttons', () => {
-        assertButtons(
-          `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/contacts`
-        )
+      it('should display the add to list chip', () => {
+        assertChip(addRemoveFromListUrl, detailsUrl)
+      })
+
+      it('should display the add export project button', () => {
+        assertExportProjectButton(exportProjectUrl)
       })
 
       it('should display a badge', () => {
@@ -136,10 +144,12 @@ describe('Local header for company under dnb investigation', () => {
         assertAddInteractionButton(addInteractionUrl)
       })
 
-      it('should display the correct buttons', () => {
-        assertButtons(
-          `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/advisers`
-        )
+      it('should display the add to list chip', () => {
+        assertChip(addRemoveFromListUrl, detailsUrl)
+      })
+
+      it('should display the add export project button', () => {
+        assertExportProjectButton(exportProjectUrl)
       })
 
       it('should not display a badge', () => {
@@ -184,10 +194,12 @@ describe('Local header for company under dnb investigation', () => {
         assertAddInteractionButton(addInteractionUrl)
       })
 
-      it('should display the correct buttons', () => {
-        assertButtons(
-          `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/investments/projects`
-        )
+      it('should display the add to list chip', () => {
+        assertChip(addRemoveFromListUrl, detailsUrl)
+      })
+
+      it('should display the add export project button', () => {
+        assertExportProjectButton(exportProjectUrl)
       })
 
       it('should not display "What does this mean?" details', () => {
@@ -228,10 +240,12 @@ describe('Local header for company under dnb investigation', () => {
         assertAddInteractionButton(addInteractionUrl)
       })
 
-      it('should display the correct buttons', () => {
-        assertButtons(
-          `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/investments/large-capital-profile`
-        )
+      it('should display the add to list chip', () => {
+        assertChip(addRemoveFromListUrl, detailsUrl)
+      })
+
+      it('should display the add export project button', () => {
+        assertExportProjectButton(exportProjectUrl)
       })
 
       it('should not display a badge', () => {
@@ -274,8 +288,12 @@ describe('Local header for company under dnb investigation', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the correct buttons', () => {
-      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/exports`)
+    it('should display the add to list chip', () => {
+      assertChip(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the add export project button', () => {
+      assertExportProjectButton(exportProjectUrl)
     })
 
     it('should not display a badge', () => {
@@ -319,10 +337,12 @@ describe('Local header for company under dnb investigation', () => {
         assertAddInteractionButton(addInteractionUrl)
       })
 
-      it('should display the correct buttons', () => {
-        assertButtons(
-          `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/exports/history`
-        )
+      it('should display the add to list chip', () => {
+        assertChip(addRemoveFromListUrl, detailsUrl)
+      })
+
+      it('should display the add export project button', () => {
+        assertExportProjectButton(exportProjectUrl)
       })
 
       it('should display a badge', () => {
@@ -365,8 +385,12 @@ describe('Local header for company under dnb investigation', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the correct buttons', () => {
-      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/orders`)
+    it('should display the add to list chip', () => {
+      assertChip(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the add export project button', () => {
+      assertExportProjectButton(exportProjectUrl)
     })
 
     it('should not display "What does this mean?" details', () => {
