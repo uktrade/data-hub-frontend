@@ -175,14 +175,18 @@ const CompanyLocalHeader = ({
               </StyledButtonContainer>
 
               <StyledSecondaryButton
-                href={urls.companies.pipelineAdd(company.id)}
+                href={urls.exportPipeline.create(company.id)}
               >
                 Add export project
               </StyledSecondaryButton>
             </GridCol>
           </GridRow>
           <StyledList>
-            <StyledChip value="pear" onClick={handleClick} deleteOption={false}>
+            <StyledChip
+              data-test={'add-to-list-chip'}
+              onClick={handleClick}
+              deleteOption={false}
+            >
               + Add to list
             </StyledChip>
           </StyledList>
