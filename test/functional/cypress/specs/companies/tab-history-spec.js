@@ -18,8 +18,7 @@ const testTab = (tabText) => {
   const tab = lookUp[tabText]
   it(`should return to the tab ${tabText}`, () => {
     cy.get(`#${tab}`).contains(tabText).click()
-    cy.contains('View options').click()
-    cy.contains('Add to or remove from lists').click()
+    cy.get('[data-test="add-to-list-chip"]').contains('+ Add to list').click()
     cy.get(cancelLink).click()
 
     cy.get(`#${tab}`).contains(tabText)
