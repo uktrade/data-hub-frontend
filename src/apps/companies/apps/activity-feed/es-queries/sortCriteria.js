@@ -8,8 +8,8 @@ const sortCriteria = (sortOrder) => {
         // have a startTime set. The sort order needs to reflect their startTime (i.e. when the event is happening)
         // in the list of activities, as opposed to when that activity was created.
         source:
-          "doc.containsKey('object.startTime') ? doc['object.startTime'].value.toInstant().toEpochMilli() " +
-          ": doc['published'].value.toInstant().toEpochMilli()",
+          "if (doc['object.startTime'].size() > 0) return doc['object.startTime'].value" +
+          ".toInstant().toEpochMilli(); return doc['published'].value.toInstant().toEpochMilli();",
       },
       order: sortOrder,
     },
