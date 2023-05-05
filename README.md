@@ -51,7 +51,7 @@ Please view the dedicated [Docker readme](./docs/Docker.md).
 
     ```bash
     brew install nvm
-    nvm use 18.7.0
+    nvm use 18.15.0
     ```
 
 3.  Install node packages:
