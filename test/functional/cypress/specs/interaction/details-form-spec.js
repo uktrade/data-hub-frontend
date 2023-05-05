@@ -124,8 +124,8 @@ const ELEMENT_NOTES_HEADER = {
   text: 'Notes',
   assert: assertHeader,
 }
-const ELEMENT_SUBJECT = {
-  label: 'Subject',
+const ELEMENT_SUMMARY = {
+  label: 'Summary',
   assert: assertFieldInput,
 }
 const ELEMENT_NOTES = {
@@ -187,7 +187,7 @@ const COMMON_REQUEST_BODY = {
   contacts: ['9b1138ab-ec7b-497f-b8c3-27fed21694ef'],
   dit_participants: [{ adviser: '7d19d407-9aec-4d06-b190-d3f404627f21' }],
   date: `${TODAY_YEAR}-${TODAY_MONTH}-${TODAY_DAY}`,
-  subject: 'Some subject',
+  subject: 'Some summary',
   notes: 'Some notes',
   was_policy_feedback_provided: 'yes',
   policy_issue_types: ['688ac22e-89d4-4d1f-bf0b-013588bf63a7'],
@@ -246,11 +246,11 @@ function fillCommonFields({
       .should('contain', contact)
   }
 
-  cy.contains(ELEMENT_SUBJECT.label)
+  cy.contains(ELEMENT_SUMMARY.label)
     .parent()
     .next()
     .find('input')
-    .type('Some subject')
+    .type('Some summary')
 
   cy.contains(ELEMENT_NOTES.label)
     .parent()
@@ -492,7 +492,7 @@ describe('Interaction theme', () => {
         ELEMENT_DATE,
         ELEMENT_COMMUNICATION_CHANNEL,
         ELEMENT_NOTES_HEADER,
-        ELEMENT_SUBJECT,
+        ELEMENT_SUMMARY,
         ELEMENT_NOTES,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
@@ -519,12 +519,12 @@ describe('Interaction theme', () => {
           'have.text',
           [
             'Select a service',
-            'Answer if this interaction relates to a named trade agreement',
+            'Select if this relates to a named trade agreement',
             'Select at least one contact',
             'Select a communication channel',
-            'Enter a subject',
-            'Answer if the contact provided business intelligence',
-            'Answer if any countries were discussed',
+            'Enter a summary',
+            'Select if the contact provided business intelligence',
+            'Select if any countries were discussed',
             'Select if the interaction helped remove an export barrier',
           ].join('')
         )
@@ -574,20 +574,20 @@ describe('Interaction theme', () => {
 
     it('should persist form fields after navigating back', () => {
       cy.url().should('include', '?step=interaction_details')
-      cy.contains(ELEMENT_SUBJECT.label)
+      cy.contains(ELEMENT_SUMMARY.label)
         .parent()
         .next()
         .find('input')
-        .type('Persisting subject')
+        .type('Persisting summary')
       cy.go('back')
       cy.url().should('include', '?step=interaction_type')
       cy.contains('button', 'Continue').click()
       cy.url().should('include', '?step=interaction_details')
-      cy.contains(ELEMENT_SUBJECT.label)
+      cy.contains(ELEMENT_SUMMARY.label)
         .parent()
         .next()
         .find('input')
-        .should('have.attr', 'value', 'Persisting subject')
+        .should('have.attr', 'value', 'Persisting summary')
     })
   })
 })
@@ -618,7 +618,7 @@ describe('Service delivery theme', () => {
         ELEMENT_DATE,
         ELEMENT_IS_EVENT,
         ELEMENT_NOTES_HEADER,
-        ELEMENT_SUBJECT,
+        ELEMENT_SUMMARY,
         ELEMENT_NOTES,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
@@ -635,12 +635,12 @@ describe('Service delivery theme', () => {
           'have.text',
           [
             'Select a service',
-            'Answer if this interaction relates to a named trade agreement',
+            'Select if this relates to a named trade agreement',
             'Select at least one contact',
-            'Answer if this was an event',
-            'Enter a subject',
-            'Answer if the contact provided business intelligence',
-            'Answer if any countries were discussed',
+            'Select if this was an event',
+            'Enter a summary',
+            'Select if the contact provided business intelligence',
+            'Select if any countries were discussed',
             'Select if the interaction helped remove an export barrier',
           ].join('')
         )
@@ -719,7 +719,7 @@ describe('Investment theme', () => {
         ELEMENT_DATE,
         ELEMENT_COMMUNICATION_CHANNEL,
         ELEMENT_NOTES_HEADER,
-        ELEMENT_SUBJECT,
+        ELEMENT_SUMMARY,
         ELEMENT_NOTES,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_RELATED_OPPORTUNITY,
@@ -735,11 +735,11 @@ describe('Investment theme', () => {
           'have.text',
           [
             'Select a service',
-            'Answer if this interaction relates to a named trade agreement',
+            'Select if this relates to a named trade agreement',
             'Select at least one contact',
             'Select a communication channel',
-            'Enter a subject',
-            'Answer if the contact provided business intelligence',
+            'Enter a summary',
+            'Select if the contact provided business intelligence',
             'Answer if this interaction relates to a large capital opportunity',
           ].join('')
         )
@@ -839,7 +839,7 @@ describe('Trade Agreement theme', () => {
         ELEMENT_DATE,
         ELEMENT_COMMUNICATION_CHANNEL,
         ELEMENT_NOTES_HEADER,
-        ELEMENT_SUBJECT,
+        ELEMENT_SUMMARY,
         ELEMENT_NOTES,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
@@ -855,12 +855,12 @@ describe('Trade Agreement theme', () => {
           'have.text',
           [
             'Select a service',
-            'Answer if this interaction relates to a named trade agreement',
+            'Select if this relates to a named trade agreement',
             'Select at least one contact',
             'Select a communication channel',
-            'Enter a subject',
-            'Answer if the contact provided business intelligence',
-            'Answer if any countries were discussed',
+            'Enter a summary',
+            'Select if the contact provided business intelligence',
+            'Select if any countries were discussed',
           ].join('')
         )
     })
@@ -966,7 +966,7 @@ describe('Contact loop', () => {
     })
 
     it('should redirect the user back to the interaction form after the contact is added', () => {
-      cy.contains(ELEMENT_SUBJECT.label)
+      cy.contains(ELEMENT_SUMMARY.label)
         .parent()
         .next()
         .find('input')
@@ -1000,7 +1000,7 @@ describe('Contact loop', () => {
 
       cy.url().should('include', urls.companies.interactions.create(company.id))
 
-      cy.contains(ELEMENT_SUBJECT.label)
+      cy.contains(ELEMENT_SUMMARY.label)
         .parent()
         .next()
         .find('input')
@@ -1249,7 +1249,7 @@ describe('Editing an interaction without a theme', () => {
     cy.get('#field-subject').then((element) =>
       assertFieldInput({
         element,
-        label: 'Subject',
+        label: 'Summary',
         value: interactionWithoutTheme.subject,
       })
     )
