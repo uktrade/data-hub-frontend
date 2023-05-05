@@ -341,7 +341,7 @@ describe('Export pipeline edit', () => {
             exportItem.estimated_export_value_amount,
           estimated_win_date: `${exportItem.estimated_win_date.getFullYear()}-${
             exportItem.estimated_win_date.getMonth() + 1
-          }-01T00:00:00`,
+          }-01`,
           destination_country: exportItem.destination_country.id,
           sector: exportItem.sector.id,
           status: exportItem.status,

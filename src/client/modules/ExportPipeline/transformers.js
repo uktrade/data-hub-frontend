@@ -28,7 +28,7 @@ export const transformFormValuesForAPI = ({
   team_members: team_members.map((x) => x.value),
   estimated_export_value_years,
   estimated_export_value_amount,
-  estimated_win_date: `${estimated_win_date.year}-${estimated_win_date.month}-01T00:00:00`,
+  estimated_win_date: `${estimated_win_date.year}-${estimated_win_date.month}-01`,
   destination_country: destination_country.value,
   sector: sector.value,
   status,

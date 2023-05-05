@@ -78,7 +78,7 @@ describe('Export pipeline list', () => {
       },
       estimated_export_value_amount: '957485',
       estimated_export_value_years: null,
-      estimated_win_date: '2023-10-08T11:54:19Z',
+      estimated_win_date: '2023-10-08',
       sector: {
         name: 'Energy',
       },
@@ -102,7 +102,7 @@ describe('Export pipeline list', () => {
       estimated_export_value_years: {
         name: 'Not yet known',
       },
-      estimated_win_date: '2023-05-08T11:54:19Z',
+      estimated_win_date: '2023-05-08',
       sector: {
         name: 'Mass Transport',
       },
@@ -126,7 +126,7 @@ describe('Export pipeline list', () => {
       estimated_export_value_years: {
         name: '4 years',
       },
-      estimated_win_date: '2023-02-08T11:54:19Z',
+      estimated_win_date: '2023-02-08',
       sector: {
         name: 'Security : Cyber Security',
       },
