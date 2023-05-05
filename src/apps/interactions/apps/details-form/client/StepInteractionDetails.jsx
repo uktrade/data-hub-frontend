@@ -283,7 +283,7 @@ const StepInteractionDetails = ({
           <FieldTypeahead
             name="related_trade_agreements"
             label="Related named trade agreement(s)"
-            placeholder="-- Search trade agreements --"
+            placeholder="-- Select trade agreements --"
             required="Select at least one Trade Agreement"
             options={relatedTradeAgreements}
             aria-label="Select a trade agreement"
@@ -526,7 +526,7 @@ const StepInteractionDetails = ({
               isMulti={false}
               label="Related large capital opportunity"
               name="large_capital_opportunity"
-              placeholder="-- Search opportunities --"
+              placeholder="-- Select opportunity --"
               aria-label="Select an opportunity"
               required="Select a related large capital opportunity"
               loadOptions={throttle(
