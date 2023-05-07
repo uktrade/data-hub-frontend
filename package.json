@@ -111,7 +111,7 @@
     "govuk-react": "^0.10.5",
     "hawk": "^9.0.1",
     "history": "^4.10.1",
-    "hmpo-form-wizard": "^12.1.0",
+    "hmpo-form-wizard": "^13.0.0",
     "http-proxy-middleware": "^2.0.4",
     "image-webpack-loader": "^8.1.0",
     "joi": "^17.9.2",
