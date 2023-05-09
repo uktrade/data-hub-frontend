@@ -7,6 +7,7 @@ import {
   assertFieldSelect,
   testBreadcrumbs,
 } from '../../support/assertions'
+import { fillSelect } from '../../support/form-fillers'
 
 const urls = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures')
@@ -208,15 +209,10 @@ function fillCommonFields({
   subservice = null,
   contact = 'Johnny Cakeman',
 }) {
-  cy.contains('Service').next().next().find('select').select(service)
+  fillSelect('[data-test=field-service]', service)
 
   if (subservice) {
-    cy.contains('Service')
-      .next()
-      .next()
-      .find('select')
-      .last()
-      .select(subservice)
+    fillSelect('[data-test=field-service_2nd_level]', subservice)
   }
 
   cy.contains(ELEMENT_RELATED_TRADE_AGREEMENT.legend)
@@ -482,6 +478,7 @@ describe('Interaction theme', () => {
         ELEMENT_SERVICE_HEADER,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
+        ELEMENT_SERVICE,
         ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
@@ -608,6 +605,7 @@ describe('Service delivery theme', () => {
         ELEMENT_SERVICE_HEADER,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
+        ELEMENT_SERVICE,
         ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
@@ -708,6 +706,7 @@ describe('Investment theme', () => {
       assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
+        ELEMENT_SERVICE,
         ELEMENT_SERVICE,
         ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
@@ -828,6 +827,7 @@ describe('Trade Agreement theme', () => {
       assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
+        ELEMENT_SERVICE,
         ELEMENT_SERVICE,
         ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,

@@ -1,5 +1,5 @@
 import React from 'react'
-import _ from 'lodash'
+import _, { get, isEmpty, pick } from 'lodash'
 import qs from 'qs'
 import { H3 } from '@govuk-react/heading'
 import InsetText from '@govuk-react/inset-text'
@@ -65,10 +65,13 @@ const StyledSubservicePrefix = styled.div`
   }
 `
 
-const StyledSubserviceWrapper = styled.div`
-  margin: ${SPACING_POINTS[3]}px 0 0 ${SPACING_POINTS[3]}px;
-  display: flex;
-  align-items: end;
+const StyledSubserviceWrapper = styled('div')`
+  margin-top: -20px;
+  margin-left: 15px;
+  align-items: center;
+  div:nth-of-type(2) {
+    width: 100%;
+  }
 `
 
 const StyledRelatedTradeAgreementsWrapper = styled.div`
@@ -123,22 +126,7 @@ const buildServicesHierarchy = (services) =>
         [parentLabel]: parent,
       }
     }, {})
-  ).map((s) => ({
-    ...s,
-    children: s.children.length ? (
-      <StyledSubserviceWrapper>
-        <StyledSubservicePrefix />
-        <FieldSelect
-          name="service_2nd_level"
-          emptyOption="-- Select service --"
-          options={s.children}
-          required="Select a service"
-          aria-label="service second level"
-          fullWidth={true}
-        />
-      </StyledSubserviceWrapper>
-    ) : null,
-  }))
+  )
 
 const validateRequiredCountries = (countries, field, { values }) =>
   !EXPORT_INTEREST_STATUS_VALUES.some((status) => values[status])
@@ -175,6 +163,15 @@ const exportBarrierIdToHintMap = {
   [exportBarrierTypes.OTHER]: '',
 }
 
+const getSecondTierServices = (service, services) =>
+  service
+    ? get(
+        services.filter((s) => s.label === service),
+        '[0].children',
+        []
+      )
+    : []
+
 const StepInteractionDetails = ({
   companyId,
   contacts,
@@ -197,9 +194,30 @@ const StepInteractionDetails = ({
   const servicesHierarchy = buildServicesHierarchy(
     services.filter((s) => s.contexts.includes(serviceContext))
   )
+
   const selectedServiceId = values.service_2nd_level || values.service
   const selectedService = services.find((s) => s.value === selectedServiceId)
+
   const isServiceDelivery = values.kind === KINDS.SERVICE_DELIVERY
+  const topLevelServices = servicesHierarchy.map((s) =>
+    pick(s, ['label', 'value'])
+  )
+
+  const secondTierServices = getSecondTierServices(
+    values.service,
+    servicesHierarchy
+  )
+
+  const validateSecondTierServices = (
+    second_level_service_value,
+    _field,
+    { values }
+  ) =>
+    values.service &&
+    getSecondTierServices(values.service, servicesHierarchy).length > 0 &&
+    isEmpty(second_level_service_value)
+      ? 'Select a service'
+      : null
 
   const helpUrl = (position) =>
     urls.external.helpCentre.policyFeedback() +
@@ -229,10 +247,26 @@ const StepInteractionDetails = ({
       <FieldSelect
         name="service"
         emptyOption="-- Select service --"
-        options={servicesHierarchy}
+        options={topLevelServices}
         required="Select a service"
         aria-label="service"
       />
+      <StyledSubserviceWrapper
+        style={{
+          display:
+            values.service && secondTierServices.length > 0 ? 'flex' : 'none',
+        }}
+      >
+        <StyledSubservicePrefix />
+        <FieldSelect
+          name="service_2nd_level"
+          emptyOption="-- Select service --"
+          options={secondTierServices}
+          validate={validateSecondTierServices}
+          aria-label="service second level"
+          fullWidth={true}
+        />
+      </StyledSubserviceWrapper>
 
       {selectedService?.interaction_questions?.map((question) => (
         <FieldRadios
