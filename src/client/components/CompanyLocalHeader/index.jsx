@@ -173,19 +173,17 @@ const CompanyLocalHeader = ({
                 >
                   Add interaction
                 </Button>
+                <Button
+                  as={StyledButtonLink}
+                  data-test={'header-add-export-project'}
+                  href={urls.exportPipeline.create(company.id)}
+                  aria-label={`Add export project`}
+                  buttonColour={GREY_3}
+                  buttonTextColour={TEXT_COLOUR}
+                >
+                  Add export project
+                </Button>
               </StyledButtonContainer>
-
-              <Button
-                href={urls.exportPipeline.create(company.id)}
-                buttonColour={GREY_3}
-                buttonTextColour={TEXT_COLOUR}
-              ></Button>
-
-              {/* <StyledSecondaryButton
-                href={urls.exportPipeline.create(company.id)}
-              >
-                Add export project
-              </StyledSecondaryButton> */}
             </GridCol>
           </GridRow>
           <StyledList>
