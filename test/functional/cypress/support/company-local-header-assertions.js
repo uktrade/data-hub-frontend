@@ -34,8 +34,8 @@ const assertAddButton = (addRemoveFromListUrl, detailsUrl) => {
   cy.get('[data-test="add-to-list-button"]').contains('+ Add to list')
   cy.get('[data-test="add-to-list-button"]').click()
   cy.location().should((loc) => {
-    expect(loc.pathname).to.eq(`${addRemoveFromListUrl}`)
-    expect(loc.search).contains(`${detailsUrl}`)
+    expect(loc.pathname).to.eq(addRemoveFromListUrl)
+    expect(loc.search).contains(detailsUrl)
   })
   cy.go('back')
 }

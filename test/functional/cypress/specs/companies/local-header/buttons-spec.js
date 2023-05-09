@@ -24,7 +24,6 @@ describe('Local header buttons', () => {
       cy.location().should((loc) => {
         expect(loc.pathname + loc.search).to.eq(exportProjectUrl)
       })
-      cy.go('back')
     })
 
     it('should display the correct add interaction button', () => {
@@ -36,7 +35,6 @@ describe('Local header buttons', () => {
       cy.location().should((loc) => {
         expect(loc.pathname).to.eq(addInteractionUrl)
       })
-      cy.go('back')
     })
   })
 })
