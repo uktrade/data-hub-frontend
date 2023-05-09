@@ -6,7 +6,7 @@ import Main from '@govuk-react/main'
 import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
 import Button from '@govuk-react/button'
-import SecondaryButton from '../SecondaryButton'
+// import SecondaryButton from '../SecondaryButton'
 import Details from '@govuk-react/details'
 import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
 import {
@@ -14,6 +14,7 @@ import {
   PURPLE,
   BLACK,
   GREY_3_LEGACY,
+  TEXT_COLOUR,
 } from '../../../client/utils/colours'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 import LocalHeaderHeading from '../../../client/components/LocalHeader/LocalHeaderHeading'
@@ -67,10 +68,10 @@ const StyledButtonLink = styled.a({
   float: 'right',
 })
 
-const StyledSecondaryButton = styled(SecondaryButton)({
-  marginBottom: 10,
-  float: 'right',
-})
+// const StyledSecondaryButton = styled(SecondaryButton)({
+//   marginBottom: 10,
+//   float: 'right',
+// })
 const BadgeWrapper = styled('div')`
   @media (min-width: ${BREAKPOINTS.TABLET}) {
     display: table-cell;
@@ -174,11 +175,17 @@ const CompanyLocalHeader = ({
                 </Button>
               </StyledButtonContainer>
 
-              <StyledSecondaryButton
+              <Button
+                href={urls.exportPipeline.create(company.id)}
+                buttonColour={GREY_3}
+                buttonTextColour={TEXT_COLOUR}
+              ></Button>
+
+              {/* <StyledSecondaryButton
                 href={urls.exportPipeline.create(company.id)}
               >
                 Add export project
-              </StyledSecondaryButton>
+              </StyledSecondaryButton> */}
             </GridCol>
           </GridRow>
           <StyledList>
