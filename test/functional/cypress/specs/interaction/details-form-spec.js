@@ -1,6 +1,7 @@
 const { reduce, isEqual } = require('lodash')
 
 import {
+  assertErrorSummary,
   assertFieldError,
   assertFieldInput,
   assertFieldRadiosWithLegend,
@@ -508,23 +509,29 @@ describe('Interaction theme', () => {
         .should('have.text', 'Johnny Cakeman')
     })
 
+    const interaction_error_messages = [
+      'Select a service',
+      'Select if this relates to a named trade agreement',
+      'Select at least one contact',
+      'Select a communication channel',
+      'Enter a summary',
+      'Select if the contact provided business intelligence',
+      'Select if any countries were discussed',
+      'Select if the interaction helped remove an export barrier',
+    ]
+
     it('should validate the form', () => {
       cy.contains('button', 'Add interaction').click()
-      cy.contains('h2', 'There is a problem')
-        .next()
-        .should(
-          'have.text',
-          [
-            'Select a service',
-            'Select if this relates to a named trade agreement',
-            'Select at least one contact',
-            'Select a communication channel',
-            'Enter a summary',
-            'Select if the contact provided business intelligence',
-            'Select if any countries were discussed',
-            'Select if the interaction helped remove an export barrier',
-          ].join('')
-        )
+      assertErrorSummary(interaction_error_messages)
+    })
+
+    it('should validate the second tier service form field', () => {
+      fillSelect(
+        '[data-test=field-service]',
+        'A Specific DBT Export Service or Funding'
+      )
+      cy.contains('button', 'Add interaction').click()
+      assertErrorSummary(interaction_error_messages)
     })
 
     it('should save the interaction', () => {
@@ -625,23 +632,29 @@ describe('Service delivery theme', () => {
       ])
     })
 
+    const service_delivery_errors = [
+      'Select a service',
+      'Select if this relates to a named trade agreement',
+      'Select at least one contact',
+      'Select if this was an event',
+      'Enter a summary',
+      'Select if the contact provided business intelligence',
+      'Select if any countries were discussed',
+      'Select if the interaction helped remove an export barrier',
+    ]
+
     it('should validate the form', () => {
       cy.contains('button', 'Add interaction').click()
-      cy.contains('h2', 'There is a problem')
-        .next()
-        .should(
-          'have.text',
-          [
-            'Select a service',
-            'Select if this relates to a named trade agreement',
-            'Select at least one contact',
-            'Select if this was an event',
-            'Enter a summary',
-            'Select if the contact provided business intelligence',
-            'Select if any countries were discussed',
-            'Select if the interaction helped remove an export barrier',
-          ].join('')
-        )
+      assertErrorSummary(service_delivery_errors)
+    })
+
+    it('should validate the second tier service form field', () => {
+      fillSelect(
+        '[data-test=field-service]',
+        'A Specific DBT Export Service or Funding'
+      )
+      cy.contains('button', 'Add interaction').click()
+      assertErrorSummary(service_delivery_errors)
     })
 
     it('should save the service delivery', () => {
@@ -726,22 +739,25 @@ describe('Investment theme', () => {
       ])
     })
 
+    const investment_error_messages = [
+      'Select a service',
+      'Select if this relates to a named trade agreement',
+      'Select at least one contact',
+      'Select a communication channel',
+      'Enter a summary',
+      'Select if the contact provided business intelligence',
+      'Answer if this interaction relates to a large capital opportunity',
+    ]
+
     it('should validate the form', () => {
       cy.contains('button', 'Add interaction').click()
-      cy.contains('h2', 'There is a problem')
-        .next()
-        .should(
-          'have.text',
-          [
-            'Select a service',
-            'Select if this relates to a named trade agreement',
-            'Select at least one contact',
-            'Select a communication channel',
-            'Enter a summary',
-            'Select if the contact provided business intelligence',
-            'Answer if this interaction relates to a large capital opportunity',
-          ].join('')
-        )
+      assertErrorSummary(investment_error_messages)
+    })
+
+    it('should validate the second tier service form field', () => {
+      fillSelect('[data-test=field-service]', 'Enquiry received')
+      cy.contains('button', 'Add interaction').click()
+      assertErrorSummary(investment_error_messages)
     })
 
     it('should save the interaction', () => {
@@ -847,22 +863,25 @@ describe('Trade Agreement theme', () => {
       ])
     })
 
+    const trade_agreement_error_messages = [
+      'Select a service',
+      'Select if this relates to a named trade agreement',
+      'Select at least one contact',
+      'Select a communication channel',
+      'Enter a summary',
+      'Select if the contact provided business intelligence',
+      'Select if any countries were discussed',
+    ]
+
     it('should validate the form', () => {
       cy.contains('button', 'Add interaction').click()
-      cy.contains('h2', 'There is a problem')
-        .next()
-        .should(
-          'have.text',
-          [
-            'Select a service',
-            'Select if this relates to a named trade agreement',
-            'Select at least one contact',
-            'Select a communication channel',
-            'Enter a summary',
-            'Select if the contact provided business intelligence',
-            'Select if any countries were discussed',
-          ].join('')
-        )
+      assertErrorSummary(trade_agreement_error_messages)
+    })
+
+    it('should validate the second tier service form field', () => {
+      fillSelect('[data-test=field-service]', 'A Specific Service')
+      cy.contains('button', 'Add interaction').click()
+      assertErrorSummary(trade_agreement_error_messages)
     })
 
     it('should save the interaction for a specific service', () => {
