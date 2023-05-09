@@ -2,7 +2,7 @@ const fixtures = require('../../fixtures')
 const { testBreadcrumbs } = require('../../support/assertions')
 const urls = require('../../../../../src/lib/urls')
 const {
-  assertChip,
+  assertAddButton,
 } = require('../../../cypress/support/company-local-header-assertions')
 
 const listA = '70513f19-0df6-4c8d-bef1-f11b65641ae4'
@@ -19,8 +19,8 @@ describe('Adding and removing a company to a list', () => {
     before(() => {
       cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/activity`)
     })
-    it('should display the add to list chip', () => {
-      assertChip(addRemoveFromListUrl, detailsUrl)
+    it('should display the add to list button', () => {
+      assertAddButton(addRemoveFromListUrl, detailsUrl)
     })
   })
   context('when viewing the add/remove from lists form', () => {

@@ -6,7 +6,7 @@ const {
   assertCompanyAddress,
   assertBreadcrumbs,
   assertExportCountryHistoryBreadcrumbs,
-  assertChip,
+  assertAddButton,
   assertExportProjectButton,
   assertArchivePanelNotVisible,
   assertAddInteractionButton,
@@ -48,8 +48,8 @@ describe('Local header for company under dnb investigation', () => {
         assertAddInteractionButton(addInteractionUrl)
       })
 
-      it('should display the add to list chip', () => {
-        assertChip(addRemoveFromListUrl, detailsUrl)
+      it('should display the add to list button', () => {
+        assertAddButton(addRemoveFromListUrl, detailsUrl)
       })
 
       it('should display the add export project button', () => {
@@ -94,8 +94,8 @@ describe('Local header for company under dnb investigation', () => {
         assertAddInteractionButton(addInteractionUrl)
       })
 
-      it('should display the add to list chip', () => {
-        assertChip(addRemoveFromListUrl, detailsUrl)
+      it('should display the add to list button', () => {
+        assertAddButton(addRemoveFromListUrl, detailsUrl)
       })
 
       it('should display the add export project button', () => {
@@ -144,8 +144,8 @@ describe('Local header for company under dnb investigation', () => {
         assertAddInteractionButton(addInteractionUrl)
       })
 
-      it('should display the add to list chip', () => {
-        assertChip(addRemoveFromListUrl, detailsUrl)
+      it('should display the add to list button', () => {
+        assertAddButton(addRemoveFromListUrl, detailsUrl)
       })
 
       it('should display the add export project button', () => {
@@ -194,8 +194,8 @@ describe('Local header for company under dnb investigation', () => {
         assertAddInteractionButton(addInteractionUrl)
       })
 
-      it('should display the add to list chip', () => {
-        assertChip(addRemoveFromListUrl, detailsUrl)
+      it('should display the add to list button', () => {
+        assertAddButton(addRemoveFromListUrl, detailsUrl)
       })
 
       it('should display the add export project button', () => {
@@ -240,8 +240,8 @@ describe('Local header for company under dnb investigation', () => {
         assertAddInteractionButton(addInteractionUrl)
       })
 
-      it('should display the add to list chip', () => {
-        assertChip(addRemoveFromListUrl, detailsUrl)
+      it('should display the add to list button', () => {
+        assertAddButton(addRemoveFromListUrl, detailsUrl)
       })
 
       it('should display the add export project button', () => {
@@ -288,8 +288,8 @@ describe('Local header for company under dnb investigation', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the add to list chip', () => {
-      assertChip(addRemoveFromListUrl, detailsUrl)
+    it('should display the add to list button', () => {
+      assertAddButton(addRemoveFromListUrl, detailsUrl)
     })
 
     it('should display the add export project button', () => {
@@ -337,8 +337,8 @@ describe('Local header for company under dnb investigation', () => {
         assertAddInteractionButton(addInteractionUrl)
       })
 
-      it('should display the add to list chip', () => {
-        assertChip(addRemoveFromListUrl, detailsUrl)
+      it('should display the add to list button', () => {
+        assertAddButton(addRemoveFromListUrl, detailsUrl)
       })
 
       it('should display the add export project button', () => {
@@ -385,8 +385,8 @@ describe('Local header for company under dnb investigation', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the add to list chip', () => {
-      assertChip(addRemoveFromListUrl, detailsUrl)
+    it('should display the add to list button', () => {
+      assertAddButton(addRemoveFromListUrl, detailsUrl)
     })
 
     it('should display the add export project button', () => {

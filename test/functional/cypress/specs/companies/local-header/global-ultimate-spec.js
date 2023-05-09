@@ -5,7 +5,7 @@ const {
   assertCompanyName,
   assertCompanyAddress,
   assertBadgeText,
-  assertChip,
+  assertAddButton,
   assertExportProjectButton,
   assertBreadcrumbs,
   assertExportCountryHistoryBreadcrumbs,
@@ -52,8 +52,8 @@ describe('Local header for global ultimate company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the add to list chip', () => {
-      assertChip(addRemoveFromListUrl, detailsUrl)
+    it('should display the add to list button', () => {
+      assertAddButton(addRemoveFromListUrl, detailsUrl)
     })
 
     it('should display the add export project button', () => {
@@ -95,8 +95,8 @@ describe('Local header for global ultimate company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the add to list chip', () => {
-      assertChip(addRemoveFromListUrl, detailsUrl)
+    it('should display the add to list button', () => {
+      assertAddButton(addRemoveFromListUrl, detailsUrl)
     })
 
     it('should display the add export project button', () => {
@@ -134,8 +134,8 @@ describe('Local header for global ultimate company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the add to list chip', () => {
-      assertChip(addRemoveFromListUrl, detailsUrl)
+    it('should display the add to list button', () => {
+      assertAddButton(addRemoveFromListUrl, detailsUrl)
     })
 
     it('should display the add export project button', () => {
@@ -177,8 +177,8 @@ describe('Local header for global ultimate company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the add to list chip', () => {
-      assertChip(addRemoveFromListUrl, detailsUrl)
+    it('should display the add to list button', () => {
+      assertAddButton(addRemoveFromListUrl, detailsUrl)
     })
 
     it('should display the add export project button', () => {
@@ -222,8 +222,8 @@ describe('Local header for global ultimate company', () => {
         assertAddInteractionButton(addInteractionUrl)
       })
 
-      it('should display the add to list chip', () => {
-        assertChip(addRemoveFromListUrl, detailsUrl)
+      it('should display the add to list button', () => {
+        assertAddButton(addRemoveFromListUrl, detailsUrl)
       })
 
       it('should display the add export project button', () => {
@@ -268,8 +268,8 @@ describe('Local header for global ultimate company', () => {
         assertAddInteractionButton(addInteractionUrl)
       })
 
-      it('should display the add to list chip', () => {
-        assertChip(addRemoveFromListUrl, detailsUrl)
+      it('should display the add to list button', () => {
+        assertAddButton(addRemoveFromListUrl, detailsUrl)
       })
 
       it('should display the add export project button', () => {
@@ -312,8 +312,8 @@ describe('Local header for global ultimate company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the add to list chip', () => {
-      assertChip(addRemoveFromListUrl, detailsUrl)
+    it('should display the add to list button', () => {
+      assertAddButton(addRemoveFromListUrl, detailsUrl)
     })
 
     it('should display the add export project button', () => {
@@ -355,8 +355,8 @@ describe('Local header for global ultimate company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the add to list chip', () => {
-      assertChip(addRemoveFromListUrl, detailsUrl)
+    it('should display the add to list button', () => {
+      assertAddButton(addRemoveFromListUrl, detailsUrl)
     })
 
     it('should display the add export project button', () => {
@@ -398,8 +398,8 @@ describe('Local header for global ultimate company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the add to list chip', () => {
-      assertChip(addRemoveFromListUrl, detailsUrl)
+    it('should display the add to list button', () => {
+      assertAddButton(addRemoveFromListUrl, detailsUrl)
     })
 
     it('should display the add export project button', () => {

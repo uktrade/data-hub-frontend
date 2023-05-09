@@ -28,11 +28,11 @@ const assertBadgeText = (badgeText) => {
 }
 
 /**
- * Asserts that the add to list chip has the correct URL
+ * Asserts that the add to list button has the correct URL
  */
-const assertChip = (addRemoveFromListUrl, detailsUrl) => {
-  cy.get('[data-test="add-to-list-chip"]').contains('+ Add to list')
-  cy.get('[data-test="add-to-list-chip"]').click()
+const assertAddButton = (addRemoveFromListUrl, detailsUrl) => {
+  cy.get('[data-test="add-to-list-button"]').contains('+ Add to list')
+  cy.get('[data-test="add-to-list-button"]').click()
   cy.location().should((loc) => {
     expect(loc.pathname).to.eq(`${addRemoveFromListUrl}`)
     expect(loc.search).contains(`${detailsUrl}`)
@@ -104,7 +104,7 @@ module.exports = {
   assertCompanyName,
   assertCompanyAddress,
   assertBadgeText,
-  assertChip,
+  assertAddButton,
   assertExportProjectButton,
   assertAddInteractionButton,
   assertBreadcrumbs,

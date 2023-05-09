@@ -6,7 +6,6 @@ import Main from '@govuk-react/main'
 import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
 import Button from '@govuk-react/button'
-// import SecondaryButton from '../SecondaryButton'
 import Details from '@govuk-react/details'
 import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
 import {
@@ -49,10 +48,11 @@ const StyledList = styled('div')`
   padding-bottom: 10px;
 `
 
-const StyledChip = styled('chip')`
+const StyledAddButton = styled('button')`
   display: inline-table;
   padding: 8px;
   background-color: ${GREY_3};
+  border: none;
   border-bottom: 5px solid ${GREY_3_LEGACY};
   vertical-align: middle;
   cursor: pointer;
@@ -68,10 +68,6 @@ const StyledButtonLink = styled.a({
   float: 'right',
 })
 
-// const StyledSecondaryButton = styled(SecondaryButton)({
-//   marginBottom: 10,
-//   float: 'right',
-// })
 const BadgeWrapper = styled('div')`
   @media (min-width: ${BREAKPOINTS.TABLET}) {
     display: table-cell;
@@ -187,13 +183,12 @@ const CompanyLocalHeader = ({
             </GridCol>
           </GridRow>
           <StyledList>
-            <StyledChip
-              data-test={'add-to-list-chip'}
+            <StyledAddButton
+              data-test={'add-to-list-button'}
               onClick={handleClick}
-              deleteOption={false}
             >
               + Add to list
-            </StyledChip>
+            </StyledAddButton>
           </StyledList>
           {(company.isUltimate || company.isGlobalHQ) && (
             <TypeWrapper>
