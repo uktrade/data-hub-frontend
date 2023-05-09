@@ -21,12 +21,22 @@ describe('Local header buttons', () => {
 
     it('should click the add export project link', () => {
       cy.get('[data-test=header-add-export-project]').click()
-      cy.location('pathname').should('eq', exportProjectUrl)
+      cy.location().should((loc) => {
+        expect(loc.pathname + loc.search).to.eq(exportProjectUrl)
+      })
       cy.go('back')
     })
 
     it('should display the correct add interaction button', () => {
       assertAddInteractionButton(addInteractionUrl)
+    })
+
+    it('should click the add interaction button', () => {
+      cy.get('[data-test="header-add-interaction"]').click()
+      cy.location().should((loc) => {
+        expect(loc.pathname).to.eq(addInteractionUrl)
+      })
+      cy.go('back')
     })
   })
 })
