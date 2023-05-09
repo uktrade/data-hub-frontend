@@ -120,14 +120,6 @@ const ELEMENT_COMMUNICATION_CHANNEL = {
   placeholder: '-- Select communication channel --',
   assert: assertFieldTypeahead,
 }
-const ELEMENT_NOTES_HEADER = {
-  text: 'Notes',
-  assert: assertHeader,
-}
-const ELEMENT_SUMMARY = {
-  label: 'Summary',
-  assert: assertFieldInput,
-}
 const ELEMENT_NOTES = {
   label: 'Notes (optional)',
   hint: 'Add details of the interaction, such as how the meeting came about and location. Issues relating to DIT or government objectives should be added to the business intelligence section.',
@@ -245,12 +237,6 @@ function fillCommonFields({
       .selectTypeaheadOption(contact)
       .should('contain', contact)
   }
-
-  cy.contains(ELEMENT_SUMMARY.label)
-    .parent()
-    .next()
-    .find('input')
-    .type('Some summary')
 
   cy.contains(ELEMENT_NOTES.label)
     .parent()
@@ -491,8 +477,7 @@ describe('Interaction theme', () => {
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
         ELEMENT_COMMUNICATION_CHANNEL,
-        ELEMENT_NOTES_HEADER,
-        ELEMENT_SUMMARY,
+        // ELEMENT_NOTES_HEADER,
         ELEMENT_NOTES,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
@@ -574,20 +559,10 @@ describe('Interaction theme', () => {
 
     it('should persist form fields after navigating back', () => {
       cy.url().should('include', '?step=interaction_details')
-      cy.contains(ELEMENT_SUMMARY.label)
-        .parent()
-        .next()
-        .find('input')
-        .type('Persisting summary')
       cy.go('back')
       cy.url().should('include', '?step=interaction_type')
       cy.contains('button', 'Continue').click()
       cy.url().should('include', '?step=interaction_details')
-      cy.contains(ELEMENT_SUMMARY.label)
-        .parent()
-        .next()
-        .find('input')
-        .should('have.attr', 'value', 'Persisting summary')
     })
   })
 })
@@ -617,8 +592,7 @@ describe('Service delivery theme', () => {
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
         ELEMENT_IS_EVENT,
-        ELEMENT_NOTES_HEADER,
-        ELEMENT_SUMMARY,
+        // ELEMENT_NOTES_HEADER,
         ELEMENT_NOTES,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
@@ -718,8 +692,7 @@ describe('Investment theme', () => {
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
         ELEMENT_COMMUNICATION_CHANNEL,
-        ELEMENT_NOTES_HEADER,
-        ELEMENT_SUMMARY,
+        // ELEMENT_NOTES_HEADER,
         ELEMENT_NOTES,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_RELATED_OPPORTUNITY,
@@ -838,8 +811,7 @@ describe('Trade Agreement theme', () => {
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
         ELEMENT_COMMUNICATION_CHANNEL,
-        ELEMENT_NOTES_HEADER,
-        ELEMENT_SUMMARY,
+        // ELEMENT_NOTES_HEADER,
         ELEMENT_NOTES,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
@@ -966,12 +938,6 @@ describe('Contact loop', () => {
     })
 
     it('should redirect the user back to the interaction form after the contact is added', () => {
-      cy.contains(ELEMENT_SUMMARY.label)
-        .parent()
-        .next()
-        .find('input')
-        .type('Test if values is restored')
-
       cy.contains('a', 'add a new contact').click()
 
       cy.contains('a', 'Cancel').should(
@@ -999,12 +965,6 @@ describe('Contact loop', () => {
       cy.contains('button', 'Add contact').click()
 
       cy.url().should('include', urls.companies.interactions.create(company.id))
-
-      cy.contains(ELEMENT_SUMMARY.label)
-        .parent()
-        .next()
-        .find('input')
-        .should('have.attr', 'value', 'Test if values is restored')
 
       // We are not expecting John Doe here, because the mocked sandbox response
       // returns Json Russel
