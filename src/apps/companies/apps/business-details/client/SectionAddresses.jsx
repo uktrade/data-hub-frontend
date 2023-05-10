@@ -16,10 +16,11 @@ const Address = ({ address, isRegistered }) => {
       return <li>{address.area.name}</li>
     }
   }
+  const addressType = isRegistered ? 'Registered' : 'Trading'
   return (
     <Table.Cell>
-      {isRegistered ? <Badge>Registered</Badge> : <Badge>Trading</Badge>}
-      <StyledAddressList>
+      {<Badge>${addressType}</Badge>}
+      <StyledAddressList data-test={`addresses${addressType}`}>
         {address.line_1 && <li>{address.line_1}</li>}
         {address.line_2 && <li>{address.line_2}</li>}
         {address.town && <li>{address.town}</li>}
@@ -58,14 +59,14 @@ const SectionAddresses = ({
     }
   >
     <Table.Row>
-      <Address address={businessDetails.address} />
-
       {businessDetails.registered_address && (
         <Address
           address={businessDetails.registered_address}
           isRegistered={true}
         />
       )}
+
+      <Address address={businessDetails.address} />
     </Table.Row>
   </SummaryTable>
 )

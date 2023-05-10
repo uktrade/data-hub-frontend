@@ -15,15 +15,13 @@ const HIERARCHY_STRINGS = {
 }
 
 const assertAddress = ({ address, registeredAddress }) => {
-  const addressSelector1 =
-    '[data-test="addressesDetailsContainer"] td:nth-child(1)'
-  const addressSelector2 =
-    '[data-test="addressesDetailsContainer"] td:nth-child(2)'
+  const trading = '[data-test="addressesTrading"]'
+  const registered = '[data-test="addressesRegistered"]'
 
   if (address) {
-    cy.get(addressSelector1).contains('Registered').should('not.exist')
+    cy.get(trading).parent().contains('Trading').should('exist')
     address.map((line, index) => {
-      cy.get(addressSelector1)
+      cy.get(trading)
         .find(`li:nth-child(${index + 1})`)
         .should('have.text', line)
     })
@@ -32,14 +30,14 @@ const assertAddress = ({ address, registeredAddress }) => {
   }
 
   if (registeredAddress) {
-    cy.get(addressSelector2).contains('Registered').should('exist')
+    cy.get(registered).parent().contains('Registered').should('exist')
     registeredAddress.map((line, index) => {
-      cy.get(addressSelector2)
+      cy.get(registered)
         .find(`li:nth-child(${index + 1})`)
         .should('have.text', line)
     })
   } else if (registeredAddress === null) {
-    cy.get(addressSelector2).should('not.exist')
+    cy.get(registered).should('not.exist')
   }
 }
 
