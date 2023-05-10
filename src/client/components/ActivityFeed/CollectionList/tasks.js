@@ -14,7 +14,7 @@ const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 const sortServiceOptions = (options) =>
   options.sort((a, b) => (a.label > b.label ? 1 : b.label > a.label ? -1 : 0))
 
-const getInteractionsMetadata = () =>
+const getCompanyActivitiesMetadata = () =>
   Promise.all([
     getMetadataOptions(urls.metadata.service(), {
       filterDisabled: false,
@@ -45,7 +45,7 @@ const getInteractionsMetadata = () =>
     )
     .catch(handleError)
 
-const getInteractions = ({
+const getCompanyActivities = ({
   limit = 10,
   page = 1,
   subject,
@@ -64,7 +64,7 @@ const getInteractions = ({
   dit_participants__team,
 }) =>
   apiProxyAxios
-    .post('/v3/search/interaction', {
+    .post(`{/companies/${company.id}/activity/data}`, {
       limit,
       offset: getPageOffset({ limit, page }),
       subject,
@@ -84,4 +84,4 @@ const getInteractions = ({
     })
     .then(({ data }) => transformResponseToCollection(data))
 
-export { getInteractions, getInteractionsMetadata }
+export { getCompanyActivities, getCompanyActivitiesMetadata }

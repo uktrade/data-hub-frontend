@@ -1,6 +1,10 @@
 import { omitBy, isEmpty } from 'lodash'
 import qs from 'qs'
 
+export const TASK_GET_COMPANY_ACTIVITY = 'TASK_GET_COMPANY_ACTIVITY'
+export const TASK_GET_COMPANY_ACTIVITY_METADATA =
+  'TASK_GET_COMPANY_ACTIVITY_METADATA'
+
 export const TASK_GET_INTERACTIONS_LIST = 'TASK_GET_INTERACTIONS_LIST'
 export const TASK_GET_INTERACTIONS_ADVISER_NAME =
   'TASK_GET_INTERACTIONS_ADVISER_NAME'
@@ -9,7 +13,7 @@ export const TASK_GET_INTERACTIONS_TEAM_NAME = 'TASK_GET_INTERACTIONS_TEAM_NAME'
 export const TASK_GET_INTERACTIONS_COMPANY_NAME =
   'TASK_GET_INTERACTIONS_COMPANY_NAME'
 
-export const ID = 'interactionsList'
+export const ID = 'companyActivityList'
 
 import { buildSelectedFilters } from './filters'
 import { SORT_OPTIONS } from './constants'

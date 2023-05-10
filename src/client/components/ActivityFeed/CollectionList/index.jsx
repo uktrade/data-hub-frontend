@@ -30,10 +30,12 @@ import {
 import {
   ID,
   state2props,
-  TASK_GET_INTERACTIONS_LIST,
+  TASK_GET_COMPANY_ACTIVITY,
+  TASK_GET_COMPANY_ACTIVITY_METADATA,
+  // TASK_GET_INTERACTIONS_LIST,
   TASK_GET_INTERACTIONS_ADVISER_NAME,
   TASK_GET_INTERACTIONS_COMPANY_NAME,
-  TASK_GET_INTERACTIONS_METADATA,
+  // TASK_GET_INTERACTIONS_METADATA,
   TASK_GET_INTERACTIONS_TEAM_NAME,
 } from './state'
 
@@ -53,7 +55,7 @@ const CompanyActivityCollection = ({
   ...props
 }) => {
   const collectionListTask = {
-    name: TASK_GET_INTERACTIONS_LIST,
+    name: TASK_GET_COMPANY_ACTIVITY,
     id: ID,
     progressMessage: 'Loading interactions',
     renderProgress: listSkeletonPlaceholder(),
@@ -80,7 +82,7 @@ const CompanyActivityCollection = ({
   }
 
   const collectionListMetadataTask = {
-    name: TASK_GET_INTERACTIONS_METADATA,
+    name: TASK_GET_COMPANY_ACTIVITY_METADATA,
     id: ID,
     progressMessage: 'Loading filters',
     renderProgress: () => (
@@ -120,7 +122,7 @@ const CompanyActivityCollection = ({
   return (
     <FilteredCollectionList
       {...props}
-      collectionName="[company activities]"
+      collectionName="[company activities"
       sortOptions={optionMetadata.sortOptions}
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}
