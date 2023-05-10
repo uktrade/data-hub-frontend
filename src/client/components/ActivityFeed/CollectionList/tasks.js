@@ -50,6 +50,7 @@ const getCompanyActivities = ({
   page = 1,
   subject,
   kind,
+  activity,
   dit_participants__adviser,
   company,
   service,
@@ -64,11 +65,12 @@ const getCompanyActivities = ({
   dit_participants__team,
 }) =>
   apiProxyAxios
-    .post(`{/companies/${company.id}/activity/data}`, {
+    .post('/v3/search/interaction', {
       limit,
       offset: getPageOffset({ limit, page }),
       subject,
       kind,
+      activity,
       dit_participants__adviser,
       company,
       sortby,
