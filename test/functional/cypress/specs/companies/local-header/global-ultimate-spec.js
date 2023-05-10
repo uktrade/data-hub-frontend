@@ -5,7 +5,8 @@ const {
   assertCompanyName,
   assertCompanyAddress,
   assertBadgeText,
-  assertButtons,
+  assertAddButton,
+  assertExportProjectButton,
   assertBreadcrumbs,
   assertExportCountryHistoryBreadcrumbs,
   assertOneListTierA,
@@ -25,6 +26,7 @@ const addRemoveFromListUrl = urls.companies.lists.addRemove(company.id)
 const detailsUrl = urls.companies.detail(company.id)
 const dnbHierarchyUrl = urls.companies.dnbHierarchy.index(company.id)
 const addInteractionUrl = urls.companies.interactions.create(company.id)
+const exportProjectUrl = urls.exportPipeline.create(company.id)
 
 describe('Local header for global ultimate company', () => {
   context('when visting a global ultimate company activity page', () => {
@@ -50,8 +52,12 @@ describe('Local header for global ultimate company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the correct buttons', () => {
-      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}`)
+    it('should display the add to list button', () => {
+      assertAddButton(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the add export project button', () => {
+      assertExportProjectButton(exportProjectUrl)
     })
 
     it('should display an "Ultimate HQ" badge', () => {
@@ -89,8 +95,12 @@ describe('Local header for global ultimate company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the correct buttons', () => {
-      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}`)
+    it('should display the add to list button', () => {
+      assertAddButton(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the add export project button', () => {
+      assertExportProjectButton(exportProjectUrl)
     })
 
     it('should display an "Ultimate HQ" badge', () => {
@@ -124,8 +134,12 @@ describe('Local header for global ultimate company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the correct buttons', () => {
-      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/contacts`)
+    it('should display the add to list button', () => {
+      assertAddButton(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the add export project button', () => {
+      assertExportProjectButton(exportProjectUrl)
     })
 
     it('should display an "Ultimate HQ" badge', () => {
@@ -163,8 +177,12 @@ describe('Local header for global ultimate company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the correct buttons', () => {
-      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/advisers`)
+    it('should display the add to list button', () => {
+      assertAddButton(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the add export project button', () => {
+      assertExportProjectButton(exportProjectUrl)
     })
 
     it('should display an "Ultimate HQ" badge', () => {
@@ -204,10 +222,12 @@ describe('Local header for global ultimate company', () => {
         assertAddInteractionButton(addInteractionUrl)
       })
 
-      it('should display the correct buttons', () => {
-        assertButtons(
-          `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/investments/projects`
-        )
+      it('should display the add to list button', () => {
+        assertAddButton(addRemoveFromListUrl, detailsUrl)
+      })
+
+      it('should display the add export project button', () => {
+        assertExportProjectButton(exportProjectUrl)
       })
 
       it('should display an "Ultimate HQ" badge', () => {
@@ -248,10 +268,12 @@ describe('Local header for global ultimate company', () => {
         assertAddInteractionButton(addInteractionUrl)
       })
 
-      it('should display the correct buttons', () => {
-        assertButtons(
-          `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/investments/large-capital-profile`
-        )
+      it('should display the add to list button', () => {
+        assertAddButton(addRemoveFromListUrl, detailsUrl)
+      })
+
+      it('should display the add export project button', () => {
+        assertExportProjectButton(exportProjectUrl)
       })
 
       it('should display an "Ultimate HQ" badge', () => {
@@ -290,8 +312,12 @@ describe('Local header for global ultimate company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the correct buttons', () => {
-      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/exports`)
+    it('should display the add to list button', () => {
+      assertAddButton(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the add export project button', () => {
+      assertExportProjectButton(exportProjectUrl)
     })
 
     it('should display an "Ultimate HQ" badge', () => {
@@ -329,10 +355,12 @@ describe('Local header for global ultimate company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the correct buttons', () => {
-      assertButtons(
-        `${addRemoveFromListUrl}?returnUrl=${detailsUrl}/exports/history`
-      )
+    it('should display the add to list button', () => {
+      assertAddButton(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the add export project button', () => {
+      assertExportProjectButton(exportProjectUrl)
     })
 
     it('should display an "Ultimate HQ" badge', () => {
@@ -370,8 +398,12 @@ describe('Local header for global ultimate company', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
-    it('should display the correct buttons', () => {
-      assertButtons(`${addRemoveFromListUrl}?returnUrl=${detailsUrl}/orders`)
+    it('should display the add to list button', () => {
+      assertAddButton(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the add export project button', () => {
+      assertExportProjectButton(exportProjectUrl)
     })
 
     it('should display an "Ultimate HQ" badge', () => {

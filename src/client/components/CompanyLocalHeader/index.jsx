@@ -8,15 +8,19 @@ import GridRow from '@govuk-react/grid-row'
 import Button from '@govuk-react/button'
 import Details from '@govuk-react/details'
 import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
-import { GREY_3, PURPLE, BLACK } from '../../../client/utils/colours'
+import {
+  GREY_3,
+  PURPLE,
+  BLACK,
+  GREY_3_LEGACY,
+  TEXT_COLOUR,
+} from '../../../client/utils/colours'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 import LocalHeaderHeading from '../../../client/components/LocalHeader/LocalHeaderHeading'
 import Badge from '../../../client/components/Badge'
 import StatusMessage from '../../../client/components/StatusMessage'
 import { addressToString } from '../../../client/utils/addresses'
 import urls from '../../../lib/urls'
-import ConnectedDropdownMenu from '../DropdownMenu/ConnectedDropdownMenu'
-import { DropdownButton } from '../DropdownMenu'
 import NewWindowLink from '../NewWindowLink'
 import ArchivePanel from '../ArchivePanel'
 
@@ -38,6 +42,25 @@ const TypeWrapper = styled('div')`
 const StyledButtonContainer = styled('div')`
   width: 100%;
   display: inline-block;
+`
+
+const StyledList = styled('div')`
+  padding-bottom: 10px;
+`
+
+const StyledAddButton = styled('button')`
+  display: inline-table;
+  padding: 8px;
+  background-color: ${GREY_3};
+  border: none;
+  border-bottom: 5px solid ${GREY_3_LEGACY};
+  vertical-align: middle;
+  cursor: pointer;
+  span {
+    pointer-events: none;
+    display: table-cell;
+    font-size: ${FONT_SIZE.SIZE_16};
+  }
 `
 
 const StyledButtonLink = styled.a({
@@ -120,6 +143,9 @@ const CompanyLocalHeader = ({
   returnUrl,
 }) => {
   const queryString = returnUrl ? `${returnUrl}` : `/companies/${company.id}`
+  const handleClick = () => {
+    window.location.href = `/companies/${company.id}/lists/add-remove?returnUrl=${queryString}`
+  }
   return (
     company && (
       <>
@@ -143,25 +169,27 @@ const CompanyLocalHeader = ({
                 >
                   Add interaction
                 </Button>
-              </StyledButtonContainer>
-
-              <ConnectedDropdownMenu
-                label="View options"
-                closedLabel="Hide options"
-                id="local_header"
-                dataTest="local-header-options-dropdown"
-              >
-                <DropdownButton
-                  href={`/companies/${company.id}/lists/add-remove?returnUrl=${queryString}`}
+                <Button
+                  as={StyledButtonLink}
+                  data-test={'header-add-export-project'}
+                  href={urls.exportPipeline.create(company.id)}
+                  aria-label={`Add export project`}
+                  buttonColour={GREY_3}
+                  buttonTextColour={TEXT_COLOUR}
                 >
-                  Add to or remove from lists
-                </DropdownButton>
-                <DropdownButton href={urls.exportPipeline.create(company.id)}>
                   Add export project
-                </DropdownButton>
-              </ConnectedDropdownMenu>
+                </Button>
+              </StyledButtonContainer>
             </GridCol>
           </GridRow>
+          <StyledList>
+            <StyledAddButton
+              data-test={'add-to-list-button'}
+              onClick={handleClick}
+            >
+              + Add to list
+            </StyledAddButton>
+          </StyledList>
           {(company.isUltimate || company.isGlobalHQ) && (
             <TypeWrapper>
               <BadgeWrapper>

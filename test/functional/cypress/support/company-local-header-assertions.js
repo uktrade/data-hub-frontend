@@ -28,11 +28,23 @@ const assertBadgeText = (badgeText) => {
 }
 
 /**
- * Asserts that the add/remove from list button has the correct URL
+ * Asserts that the add to list button has the correct URL
  */
-const assertButtons = (url) => {
-  cy.contains('View options').click()
-  cy.contains('Add to or remove from lists').should('have.attr', 'href', url)
+const assertAddButton = (addRemoveFromListUrl, detailsUrl) => {
+  cy.get('[data-test="add-to-list-button"]').contains('+ Add to list')
+  cy.get('[data-test="add-to-list-button"]').click()
+  cy.location().should((loc) => {
+    expect(loc.pathname).to.eq(addRemoveFromListUrl)
+    expect(loc.search).contains(detailsUrl)
+  })
+  cy.go('back')
+}
+
+/**
+ * Asserts that the add export project button has the correct URL
+ */
+const assertExportProjectButton = (url) => {
+  cy.contains('Add export project').should('have.attr', 'href', url)
 }
 
 /**
@@ -92,7 +104,8 @@ module.exports = {
   assertCompanyName,
   assertCompanyAddress,
   assertBadgeText,
-  assertButtons,
+  assertAddButton,
+  assertExportProjectButton,
   assertAddInteractionButton,
   assertBreadcrumbs,
   assertExportCountryHistoryBreadcrumbs,
