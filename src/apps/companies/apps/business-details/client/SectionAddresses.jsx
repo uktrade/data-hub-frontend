@@ -7,7 +7,7 @@ import { Badge, SummaryTable } from '../../../../../client/components/'
 import { SPACING_POINTS } from '@govuk-react/constants'
 
 const StyledAddressList = styled('ul')`
-  ${({ isRegistered }) => isRegistered && `margin-top: ${SPACING_POINTS[2]}px;`}
+  margin-top: ${SPACING_POINTS[2]}px;
 `
 
 const Address = ({ address, isRegistered }) => {
@@ -18,8 +18,8 @@ const Address = ({ address, isRegistered }) => {
   }
   return (
     <Table.Cell>
-      {isRegistered && <Badge>Registered</Badge>}
-      <StyledAddressList isRegistered={isRegistered}>
+      {isRegistered ? <Badge>Registered</Badge> : <Badge>Trading</Badge>}
+      <StyledAddressList>
         {address.line_1 && <li>{address.line_1}</li>}
         {address.line_2 && <li>{address.line_2}</li>}
         {address.town && <li>{address.town}</li>}
