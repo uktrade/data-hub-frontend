@@ -19,7 +19,7 @@ const Address = ({ address, isRegistered }) => {
   const addressType = isRegistered ? 'Registered' : 'Trading'
   return (
     <Table.Cell>
-      {<Badge>${addressType}</Badge>}
+      {<Badge>{addressType}</Badge>}
       <StyledAddressList data-test={`addresses${addressType}`}>
         {address.line_1 && <li>{address.line_1}</li>}
         {address.line_2 && <li>{address.line_2}</li>}
