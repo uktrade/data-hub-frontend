@@ -266,8 +266,11 @@ import {
   TASK_GET_CONTACTS_METADATA,
 } from './modules/Contacts/CollectionList/state'
 import {
-  TASK_GET_COMPANY_ACTIVITY,
-  TASK_GET_COMPANY_ACTIVITY_METADATA,
+  TASK_GET_COMPANY_ACTIVITIES_LIST,
+  TASK_GET_COMPANY_ACTIVITIES_METADATA,
+  TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME,
+  TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME,
+  TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME,
 } from './components/ActivityFeed/CollectionList/state'
 
 import {
@@ -508,8 +511,11 @@ function App() {
           [TASK_GET_INTERACTIONS_ADVISER_NAME]: getAdviserNames,
           [TASK_GET_INTERACTIONS_COMPANY_NAME]: getCompanyNames,
           [TASK_GET_INTERACTIONS_METADATA]: getInteractionsMetadata,
-          [TASK_GET_COMPANY_ACTIVITY]: getCompanyActivities,
-          [TASK_GET_COMPANY_ACTIVITY_METADATA]: getCompanyActivitiesMetadata,
+          [TASK_GET_COMPANY_ACTIVITIES_LIST]: getCompanyActivities,
+          [TASK_GET_COMPANY_ACTIVITIES_METADATA]: getCompanyActivitiesMetadata,
+          [TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME]: getAdviserNames,
+          [TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME]: getCompanyNames,
+          [TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME]: getTeamNames,
           [TASK_GET_EVENTS_LIST]: getEvents,
           [TASK_GET_EVENTS_METADATA]: getEventsMetadata,
           [TASK_GET_ALL_ACTIVITY_FEED_EVENTS]: getAllActivityFeedEvents,
@@ -643,7 +649,12 @@ function App() {
           )}
         </Mount>
         <Mount selector="#activity-feed-app">
-          {(props) => <CompanyActivityCollection {...props} />}
+          {(props) => (
+            <CompanyActivityCollection
+              companyInteractionsTab={true}
+              {...props}
+            />
+          )}
         </Mount>
         <Mount selector="#dashboard">
           {(props) => (

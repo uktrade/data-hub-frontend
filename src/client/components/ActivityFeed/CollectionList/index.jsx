@@ -4,11 +4,11 @@ import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
 
 import {
-  INTERACTIONS__LOADED,
-  INTERACTIONS_SELECTED_ADVISERS,
-  INTERACTIONS_SELECTED_COMPANIES,
-  INTERACTIONS__METADATA_LOADED,
-  INTERACTIONS_SELECTED_TEAMS,
+  COMPANY_ACTIVITIES__LOADED,
+  COMPANY_ACTIVITIES_SELECTED_ADVISERS,
+  COMPANY_ACTIVITIES_SELECTED_COMPANIES,
+  COMPANY_ACTIVITIES__METADATA_LOADED,
+  COMPANY_ACTIVITIES_SELECTED_TEAMS,
 } from '../../../actions'
 
 import { LABELS, KIND_OPTIONS, BUSINESS_INTELLIGENCE_OPTION } from './constants'
@@ -30,13 +30,11 @@ import {
 import {
   ID,
   state2props,
-  TASK_GET_COMPANY_ACTIVITY,
-  TASK_GET_COMPANY_ACTIVITY_METADATA,
-  // TASK_GET_INTERACTIONS_LIST,
-  TASK_GET_INTERACTIONS_ADVISER_NAME,
-  TASK_GET_INTERACTIONS_COMPANY_NAME,
-  // TASK_GET_INTERACTIONS_METADATA,
-  TASK_GET_INTERACTIONS_TEAM_NAME,
+  TASK_GET_COMPANY_ACTIVITIES_LIST,
+  TASK_GET_COMPANY_ACTIVITIES_METADATA,
+  TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME,
+  TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME,
+  TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME,
 } from './state'
 
 import { sanitizeFilter } from '../../../../client/filters'
@@ -55,34 +53,34 @@ const CompanyActivityCollection = ({
   ...props
 }) => {
   const collectionListTask = {
-    name: TASK_GET_COMPANY_ACTIVITY,
+    name: TASK_GET_COMPANY_ACTIVITIES_LIST,
     id: ID,
     progressMessage: 'Loading interactions',
     renderProgress: listSkeletonPlaceholder(),
     startOnRender: {
       payload,
-      onSuccessDispatch: INTERACTIONS__LOADED,
+      onSuccessDispatch: COMPANY_ACTIVITIES__LOADED,
     },
   }
   const companyListTask = {
-    name: TASK_GET_INTERACTIONS_COMPANY_NAME,
+    name: TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME,
     id: ID,
     startOnRender: {
       payload: payload.company,
-      onSuccessDispatch: INTERACTIONS_SELECTED_COMPANIES,
+      onSuccessDispatch: COMPANY_ACTIVITIES_SELECTED_COMPANIES,
     },
   }
   const adviserListTask = {
-    name: TASK_GET_INTERACTIONS_ADVISER_NAME,
+    name: TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME,
     id: ID,
     startOnRender: {
       payload: payload.dit_participants__adviser,
-      onSuccessDispatch: INTERACTIONS_SELECTED_ADVISERS,
+      onSuccessDispatch: COMPANY_ACTIVITIES_SELECTED_ADVISERS,
     },
   }
 
   const collectionListMetadataTask = {
-    name: TASK_GET_COMPANY_ACTIVITY_METADATA,
+    name: TASK_GET_COMPANY_ACTIVITIES_METADATA,
     id: ID,
     progressMessage: 'Loading filters',
     renderProgress: () => (
@@ -97,7 +95,7 @@ const CompanyActivityCollection = ({
       </>
     ),
     startOnRender: {
-      onSuccessDispatch: INTERACTIONS__METADATA_LOADED,
+      onSuccessDispatch: COMPANY_ACTIVITIES__METADATA_LOADED,
     },
   }
 
@@ -111,23 +109,23 @@ const CompanyActivityCollection = ({
   }
 
   const teamListTask = {
-    name: TASK_GET_INTERACTIONS_TEAM_NAME,
+    name: TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME,
     id: ID,
     startOnRender: {
       payload: payload.dit_participants__team,
-      onSuccessDispatch: INTERACTIONS_SELECTED_TEAMS,
+      onSuccessDispatch: COMPANY_ACTIVITIES_SELECTED_TEAMS,
     },
   }
 
   return (
     <FilteredCollectionList
       {...props}
-      collectionName="[company activities"
+      collectionName="company activities"
       sortOptions={optionMetadata.sortOptions}
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}
       baseDownloadLink="/interactions/export"
-      entityName="interaction"
+      entityName="companyActivities"
       sanitizeFiltersForAnalytics={({ advisers, teams }) => ({
         ...sanitizeFilter(advisers),
         ...sanitizeFilter(teams),
