@@ -12,7 +12,9 @@ import { default as DataHubHeaderWrapper } from './components/DataHubHeader/Wrap
 import Provider from './provider'
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
 import InteractionDetailsForm from '../apps/interactions/apps/details-form/client/InteractionDetailsForm'
-import InteractionCollection from '../client/modules/Interactions/CollectionList'
+// import CompanyActivityFeed from '../apps/companies/apps/activity-feed/client/CompanyActivityFeed'
+import CompanyActivityCollection from './components/ActivityFeed/CollectionList'
+// import CompanyActivityCollection from '../apps/companies/apps/activity-feed/client/'
 import EditCompanyForm from '../apps/companies/apps/edit-company/client/EditCompanyForm'
 import CompanyEditHistory from '../apps/companies/apps/edit-history/client/CompanyEditHistory'
 import FindCompany from '../apps/companies/apps/match-company/client/FindCompany'
@@ -633,9 +635,7 @@ function App() {
           )}
         </Mount>
         <Mount selector="#activity-feed-app">
-          {(props) => (
-            <InteractionCollection companyInteractionsTab={true} {...props} />
-          )}
+          {(props) => <CompanyActivityCollection {...props} />}
         </Mount>
         <Mount selector="#dashboard">
           {(props) => (
