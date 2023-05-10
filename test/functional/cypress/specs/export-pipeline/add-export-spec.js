@@ -376,7 +376,7 @@ describe('Export pipeline create', () => {
               newExport.estimated_export_value_years.id,
             estimated_export_value_amount:
               newExport.estimated_export_value_amount,
-            estimated_win_date: '2035-03-01T00:00:00',
+            estimated_win_date: '2035-03-01',
             destination_country: newExport.destination_country.id,
             sector: newExport.sector.id,
             status: newExport.status,
