@@ -18,7 +18,6 @@ import {
   NewWindowLink,
   FieldCheckboxes,
   FieldDate,
-  FieldHelp,
   FieldInput,
   FieldRadios,
   FieldSelect,
@@ -421,13 +420,6 @@ const StepInteractionDetails = ({
             required="Select at least one policy issue type"
           />
 
-          <FieldHelp
-            helpSummary="Help with policy issue types"
-            helpText="A policy type is the broad category/categories that the information fits into."
-            footerUrl={helpUrl(2)}
-            footerUrlDescription="Learn more about policy issue types"
-          />
-
           <FieldTypeahead
             isMulti={true}
             name="policy_areas"
@@ -435,13 +427,6 @@ const StepInteractionDetails = ({
             placeholder="-- Select policy area --"
             options={policyAreas}
             required="Select at least one policy area"
-          />
-
-          <FieldHelp
-            helpSummary="Help with Policy areas"
-            helpText="A policy area is the specific area that the information fits into. Completing this enables the correct team(s) to find the information and input into their reports to support businesses and ministers effectively."
-            footerUrl={helpUrl(3)}
-            footerUrlDescription="Learn more about policy areas"
           />
 
           <FieldTextarea
@@ -464,29 +449,6 @@ const StepInteractionDetails = ({
                 <br />• Comments, questions or requests of HMG
               </>
             }
-          />
-
-          <FieldHelp
-            helpSummary="Help with business intelligence"
-            helpText={
-              <>
-                Consider these questions when filling out this text box:
-                <p>What business intelligence did the company provide?</p>
-                <p>
-                  Why has the company raised this/these issue(s) and what are
-                  the impacts on the company, sector and wider economy?
-                </p>
-                <p>
-                  Did the company make any wider requests of DBT/HMG, including
-                  ministerial engagement or policy changes? If so, provide
-                  details.
-                </p>
-                Will the company be taking any further actions (eg investment
-                decisions or job creation/losses)? If so, provide details.
-              </>
-            }
-            footerUrl={helpUrl(4)}
-            footerUrlDescription="Learn more about business intelligence"
           />
         </>
       )}
