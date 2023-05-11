@@ -461,7 +461,7 @@ const StepInteractionDetails = ({
               <FieldTypeahead
                 name={EXPORT_INTEREST_STATUS.EXPORTING_TO}
                 label="Countries currently exporting to"
-                hint="Add all that you discussed"
+                hint="Select all countries discussed"
                 placeholder="-- Search countries --"
                 options={countries}
                 validate={[
@@ -473,7 +473,7 @@ const StepInteractionDetails = ({
               <FieldTypeahead
                 name={EXPORT_INTEREST_STATUS.FUTURE_INTEREST}
                 label="Future countries of interest"
-                hint="Add all that you discussed"
+                hint="Select all countries discussed"
                 placeholder="-- Search countries --"
                 options={countries}
                 validate={[
@@ -485,7 +485,7 @@ const StepInteractionDetails = ({
               <FieldTypeahead
                 name={EXPORT_INTEREST_STATUS.NOT_INTERESTED}
                 label="Countries not interested in"
-                hint="Add all that you discussed"
+                hint="Select all countries discussed"
                 placeholder="-- Search countries --"
                 options={countries}
                 validate={[
