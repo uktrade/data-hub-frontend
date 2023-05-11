@@ -50,7 +50,7 @@ export const transformCompanyActivityToListItem = ({
   companies,
   id,
   contacts,
-  kind,
+  activityType,
   was_policy_feedback_provided,
 } = {}) => ({
   id,
@@ -76,7 +76,7 @@ export const transformCompanyActivityToListItem = ({
     },
   ].filter(({ value }) => Boolean(value)),
   headingUrl: urls.interactions.detail(id),
-  badges: getbadgeLabel(kind, was_policy_feedback_provided),
+  badges: getbadgeLabel(activityType, was_policy_feedback_provided),
   headingText: subject,
 })
 
