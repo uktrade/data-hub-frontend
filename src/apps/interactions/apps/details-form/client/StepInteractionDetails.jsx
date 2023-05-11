@@ -230,20 +230,6 @@ const StepInteractionDetails = ({
   return (
     <>
       <H3 as="h2">Service</H3>
-
-      <InsetText>
-        If your contact provided business intelligence (eg issues impacting the
-        company or feedback on government policy), complete the business
-        intelligence section.
-        <br />
-        <br />
-        Read more{' '}
-        <NewWindowLink href={helpUrl(1)}>
-          information and guidance
-        </NewWindowLink>{' '}
-        on this section.
-      </InsetText>
-
       <FieldSelect
         name="service"
         emptyOption="-- Select service --"
@@ -406,6 +392,17 @@ const StepInteractionDetails = ({
         label="Notes (optional)"
         hint="Use this text box to record any details of the logistics of the interaction eg how meeting(s) came about and where or when they happened. These are for your records. Do not include comments about issues impacting the company or feedback on government policy. Include that information in the business intelligence section."
       />
+
+      <InsetText>
+        Select business intelligence if your contact mentioned issues relating
+        to DBT or government objectives.
+        <br />
+        <br />
+        For more information see{' '}
+        <NewWindowLink href={helpUrl(1)}>
+          record business intelligence in an interaction
+        </NewWindowLink>{' '}
+      </InsetText>
 
       <FieldRadios
         inline={true}

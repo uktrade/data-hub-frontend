@@ -45,7 +45,7 @@ const ELEMENT_BUSINESS_INTELLIGENCE_INFO = {
     cy
       .wrap(element)
       .contains(
-        'If your contact provided business intelligence (eg issues impacting the company or feedback on government policy), complete the business intelligence section.'
+        'Select business intelligence if your contact mentioned issues relating to DBT or government objectives.'
       ),
 }
 
@@ -477,7 +477,6 @@ describe('Interaction theme', () => {
     it('should render all form fields', () => {
       assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
-        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
         ELEMENT_SERVICE,
         ELEMENT_RELATED_TRADE_AGREEMENT,
@@ -492,6 +491,7 @@ describe('Interaction theme', () => {
         ELEMENT_NOTES_HEADER,
         ELEMENT_SUMMARY,
         ELEMENT_NOTES,
+        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
         ELEMENT_EXPORT_BARRIER,
@@ -610,7 +610,6 @@ describe('Service delivery theme', () => {
     it('should render all form fields', () => {
       assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
-        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
         ELEMENT_SERVICE,
         ELEMENT_RELATED_TRADE_AGREEMENT,
@@ -625,6 +624,7 @@ describe('Service delivery theme', () => {
         ELEMENT_NOTES_HEADER,
         ELEMENT_SUMMARY,
         ELEMENT_NOTES,
+        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
         ELEMENT_EXPORT_BARRIER,
@@ -718,7 +718,6 @@ describe('Investment theme', () => {
     it('should render all form fields', () => {
       assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
-        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
         ELEMENT_SERVICE,
         ELEMENT_RELATED_TRADE_AGREEMENT,
@@ -733,6 +732,7 @@ describe('Investment theme', () => {
         ELEMENT_NOTES_HEADER,
         ELEMENT_SUMMARY,
         ELEMENT_NOTES,
+        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_RELATED_OPPORTUNITY,
         ELEMENT_STEP2_BUTTONS,
@@ -842,7 +842,6 @@ describe('Trade Agreement theme', () => {
     it('should render all form fields', () => {
       assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
-        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
         ELEMENT_SERVICE,
         ELEMENT_RELATED_TRADE_AGREEMENT,
@@ -857,6 +856,7 @@ describe('Trade Agreement theme', () => {
         ELEMENT_NOTES_HEADER,
         ELEMENT_SUMMARY,
         ELEMENT_NOTES,
+        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
         ELEMENT_STEP2_BUTTONS,
