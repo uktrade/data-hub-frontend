@@ -6,7 +6,6 @@ import {
 } from './transformers'
 
 import { getMetadataOptions } from '../../../metadata'
-import { getPageOffset } from '../../../utils/pagination'
 import axios from 'axios'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
@@ -46,7 +45,7 @@ const getCompanyActivitiesMetadata = () =>
     .catch(handleError)
 
 const getCompanyActivities = ({
-  limit = 10,
+  size = 10,
   page = 1,
   subject,
   kind,
@@ -66,23 +65,25 @@ const getCompanyActivities = ({
 }) =>
   axios
     .get(`/companies/${company?.id}/activity/data`, {
-      limit,
-      offset: getPageOffset({ limit, page }),
-      subject,
-      kind,
-      activity,
-      dit_participants__adviser,
-      company,
-      sortby,
-      date_before,
-      date_after,
-      service,
-      sector_descends,
-      was_policy_feedback_provided,
-      policy_areas,
-      policy_issue_types,
-      company_one_list_group_tier,
-      dit_participants__team,
+      params: {
+        size,
+        from: parseInt(size * (page - 1), 0),
+        subject,
+        kind,
+        activity,
+        dit_participants__adviser,
+        company,
+        sortby,
+        date_before,
+        date_after,
+        service,
+        sector_descends,
+        was_policy_feedback_provided,
+        policy_areas,
+        policy_issue_types,
+        company_one_list_group_tier,
+        dit_participants__team,
+      },
     })
     .then(({ data }) => transformResponseToCollection(data))
 
