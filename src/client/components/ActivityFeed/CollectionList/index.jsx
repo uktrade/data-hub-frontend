@@ -47,6 +47,7 @@ const StyledCheckboxGroup = styled(Filters.CheckboxGroup)`
 
 const CompanyActivityCollection = ({
   payload,
+  company,
   optionMetadata,
   selectedFilters,
   currentAdviserId,
@@ -58,7 +59,10 @@ const CompanyActivityCollection = ({
     progressMessage: 'Loading interactions',
     renderProgress: listSkeletonPlaceholder(),
     startOnRender: {
-      payload,
+      payload: {
+        ...payload,
+        company: company,
+      },
       onSuccessDispatch: COMPANY_ACTIVITIES__LOADED,
     },
   }

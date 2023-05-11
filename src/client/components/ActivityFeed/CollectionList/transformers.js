@@ -42,7 +42,7 @@ const getbadgeLabel = (type, hasFeedback = false) => {
   ].filter(Boolean)
 }
 
-export const transformInteractionToListItem = ({
+export const transformCompanyActivityToListItem = ({
   date,
   subject,
   dit_participants,
@@ -78,9 +78,12 @@ export const transformInteractionToListItem = ({
   headingText: subject,
 })
 
-export const transformResponseToCollection = ({ count, results = [] }) => ({
+export const transformResponseToCollection = ({
   count,
-  results: results.map(transformInteractionToListItem),
+  activities: results = [],
+}) => ({
+  count,
+  results: results.map(transformCompanyActivityToListItem),
 })
 
 export const transformWasPolicyfeedBackProvidedToApi = (

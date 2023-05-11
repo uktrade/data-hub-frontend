@@ -7,7 +7,7 @@ import {
 
 import { getMetadataOptions } from '../../../metadata'
 import { getPageOffset } from '../../../utils/pagination'
-import { apiProxyAxios } from '../../../components/Task/utils'
+import axios from 'axios'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 
@@ -64,8 +64,8 @@ const getCompanyActivities = ({
   company_one_list_group_tier,
   dit_participants__team,
 }) =>
-  apiProxyAxios
-    .post('/v3/search/interaction', {
+  axios
+    .get(`/companies/${company?.id}/activity/data`, {
       limit,
       offset: getPageOffset({ limit, page }),
       subject,
