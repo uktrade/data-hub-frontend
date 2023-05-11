@@ -93,9 +93,9 @@ const ELEMENT_ADD_CONTACT_LINK = {
   assert: ({ element }) => cy.wrap(element).contains('add a new contact'),
 }
 const ELEMENT_CONTACT_INFO_DETAILS = {
-  summary: "Information you'll need to add a contact",
+  summary: 'Information need to add a new contact',
   content:
-    "You need to give the new contact's:full namejob titleemail" +
+    'You need:full namejob titleemail' +
     ' addressphone numberwork address if different to the company address',
   assert: assertDetails,
 }
