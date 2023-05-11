@@ -11,7 +11,11 @@ import {
   COMPANY_ACTIVITIES_SELECTED_TEAMS,
 } from '../../../actions'
 
-import { LABELS, KIND_OPTIONS, BUSINESS_INTELLIGENCE_OPTION } from './constants'
+import {
+  LABELS,
+  ACTIVITY_TYPE_OPTIONS,
+  BUSINESS_INTELLIGENCE_OPTION,
+} from './constants'
 
 import {
   CollectionFilters,
@@ -145,12 +149,12 @@ const CompanyActivityCollection = ({
           data-test="my-interactions-filter"
         />
         <StyledCheckboxGroup
-          legend={LABELS.kind}
-          name="kind"
-          qsParam="kind"
-          options={KIND_OPTIONS}
-          selectedOptions={selectedFilters.kind.options}
-          data-test="status-filter"
+          legend={LABELS.activityType}
+          name="activityType"
+          qsParam="activityType"
+          options={ACTIVITY_TYPE_OPTIONS}
+          selectedOptions={selectedFilters.activityType.options}
+          data-test="activity-type-filter"
         />
         <FilterToggleSection
           id="CompanyActivityCollection.interaction-details-filters"

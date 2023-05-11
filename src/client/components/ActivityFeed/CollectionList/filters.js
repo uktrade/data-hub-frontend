@@ -1,4 +1,8 @@
-import { KIND_OPTIONS, BUSINESS_INTELLIGENCE_OPTION, LABELS } from './constants'
+import {
+  ACTIVITY_TYPE_OPTIONS,
+  BUSINESS_INTELLIGENCE_OPTION,
+  LABELS,
+} from './constants'
 
 import {
   buildOptionsFilter,
@@ -13,12 +17,12 @@ export const buildSelectedFilters = (
   selectedTeams,
   selectedCompanies
 ) => ({
-  kind: {
-    queryParam: 'kind',
+  activityType: {
+    queryParam: 'activityTypeFilter',
     options: buildOptionsFilter({
-      options: KIND_OPTIONS,
-      value: queryParams.kind,
-      categoryLabel: LABELS.kind,
+      options: ACTIVITY_TYPE_OPTIONS,
+      value: queryParams.activityType,
+      categoryLabel: LABELS.activityType,
     }),
   },
   advisers: {
