@@ -375,9 +375,6 @@ const StepInteractionDetails = ({
           )}
         </>
       )}
-
-      <H3 as="h2">Notes</H3>
-
       <FieldInput
         type="text"
         name="subject"
@@ -389,7 +386,7 @@ const StepInteractionDetails = ({
         type="text"
         name="notes"
         label="Notes (optional)"
-        hint="Use this text box to record any details of the logistics of the interaction eg how meeting(s) came about and where or when they happened. These are for your records. Do not include comments about issues impacting the company or feedback on government policy. Include that information in the business intelligence section."
+        hint="Add details of the interaction, such as how the meeting came about and location. Issues relating to DBT or government objectives should be added to the business intelligence section."
       />
 
       <InsetText>

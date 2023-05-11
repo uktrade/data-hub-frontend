@@ -122,17 +122,13 @@ const ELEMENT_COMMUNICATION_CHANNEL = {
   placeholder: '-- Select communication channel --',
   assert: assertFieldTypeahead,
 }
-const ELEMENT_NOTES_HEADER = {
-  text: 'Notes',
-  assert: assertHeader,
-}
 const ELEMENT_SUMMARY = {
   label: 'Summary',
   assert: assertFieldInput,
 }
 const ELEMENT_NOTES = {
   label: 'Notes (optional)',
-  hint: 'Use this text box to record any details of the logistics of the interaction eg how meeting(s) came about and where or when they happened. These are for your records. Do not include comments about issues impacting the company or feedback on government policy. Include that information in the business intelligence section.',
+  hint: 'Add details of the interaction, such as how the meeting came about and location. Issues relating to DBT or government objectives should be added to the business intelligence section.',
   assert: assertFieldTextarea,
 }
 // The radios on this page have been refactored to use legends instead of labels, as part of the Accessibility work.
@@ -488,7 +484,6 @@ describe('Interaction theme', () => {
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
         ELEMENT_COMMUNICATION_CHANNEL,
-        ELEMENT_NOTES_HEADER,
         ELEMENT_SUMMARY,
         ELEMENT_NOTES,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
@@ -621,7 +616,6 @@ describe('Service delivery theme', () => {
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
         ELEMENT_IS_EVENT,
-        ELEMENT_NOTES_HEADER,
         ELEMENT_SUMMARY,
         ELEMENT_NOTES,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
@@ -729,7 +723,6 @@ describe('Investment theme', () => {
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
         ELEMENT_COMMUNICATION_CHANNEL,
-        ELEMENT_NOTES_HEADER,
         ELEMENT_SUMMARY,
         ELEMENT_NOTES,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
@@ -853,7 +846,6 @@ describe('Trade Agreement theme', () => {
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
         ELEMENT_COMMUNICATION_CHANNEL,
-        ELEMENT_NOTES_HEADER,
         ELEMENT_SUMMARY,
         ELEMENT_NOTES,
         ELEMENT_BUSINESS_INTELLIGENCE_INFO,
