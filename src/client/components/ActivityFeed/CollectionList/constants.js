@@ -1,5 +1,5 @@
 export const LABELS = {
-  kind: 'Interaction type',
+  kind: 'Activity types',
   interaction: 'Interaction',
   serviceDelivery: 'Service delivery',
   advisers: 'Adviser',
@@ -15,11 +15,15 @@ export const LABELS = {
   policyAreas: 'Policy areas',
   policyIssueType: 'Policy issue type',
   companyOneListGroupTier: 'Company One List group tier',
+  allDataHubActivity: 'All Data Hub activity',
+  myActivity: 'My activity',
+  allExternalActivity: 'All external activity',
 }
 
 export const KIND_OPTIONS = [
-  { label: LABELS.interaction, value: 'interaction' },
-  { label: LABELS.serviceDelivery, value: 'service_delivery' },
+  { label: LABELS.allDataHubActivity, value: 'all_data_hub_activity' },
+  { label: LABELS.myActivity, value: 'my_activity' },
+  { label: LABELS.allExternalActivity, value: 'all_external_activity' },
 ]
 
 export const BUSINESS_INTELLIGENCE_OPTION = [

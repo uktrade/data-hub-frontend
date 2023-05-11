@@ -72,7 +72,6 @@ const getCompanyActivities = ({
         kind,
         activity,
         dit_participants__adviser,
-        company,
         sortby,
         date_before,
         date_after,
