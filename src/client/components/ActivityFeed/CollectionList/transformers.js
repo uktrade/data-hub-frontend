@@ -43,7 +43,7 @@ const getbadgeLabel = (type, hasFeedback = false) => {
 }
 
 export const transformCompanyActivityToListItem = ({
-  date,
+  object,
   subject,
   dit_participants,
   service,
@@ -55,7 +55,9 @@ export const transformCompanyActivityToListItem = ({
 } = {}) => ({
   id,
   metadata: [
-    { label: 'Date', value: format(date, 'dd MMMM yyyy') },
+    { label: 'Name', value: object?.name },
+    { label: 'Subject', value: object['dit:subject'] },
+    { label: 'Date', value: format(object.startTime, 'dd MMMM yyyy') },
     {
       label: 'Contact(s)',
       value: contacts && formatContacts(contacts),
@@ -79,7 +81,7 @@ export const transformCompanyActivityToListItem = ({
 })
 
 export const transformResponseToCollection = ({
-  count,
+  total: count,
   activities: results = [],
 }) => ({
   count,
