@@ -19,7 +19,7 @@ wait-for-redis = dockerize -wait tcp://redis:6379 -timeout 5m
 
 ifdef CI
 	start-command = up --build --force-recreate -d
-	cypress-args = -- --parallel --record --key $(CYPRESS_DASHBOARD_KEY) --ci-build-id $(CODEBUILD_BUILD_NUMBER)
+	cypress-args = -- --parallel --record --key $(CYPRESS_DASHBOARD_KEY) --ci-build-id $(CODEBUILD_INITIATOR)
 	log-command = logs --follow
 else
 	start-command = up --build --force-recreate
