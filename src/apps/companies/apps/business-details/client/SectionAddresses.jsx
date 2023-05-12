@@ -47,29 +47,36 @@ const SectionAddresses = ({
   isDnbCompany,
   isArchived,
   urls,
-}) => (
-  <SummaryTable
-    caption="Addresses"
-    data-test="addressesDetailsContainer"
-    actions={
-      !isDnbCompany &&
-      !isArchived && (
-        <Link href={`${urls.companyEdit}#field-address`}>Edit</Link>
-      )
-    }
-  >
-    <Table.Row>
-      {businessDetails.registered_address && (
-        <Address
-          address={businessDetails.registered_address}
-          isRegistered={true}
-        />
-      )}
+}) => {
+  const hasOnlyOneAddress = businessDetails.registered_address == null
 
-      <Address address={businessDetails.address} />
-    </Table.Row>
-  </SummaryTable>
-)
+  return (
+    <SummaryTable
+      caption="Addresses"
+      data-test="addressesDetailsContainer"
+      actions={
+        !isDnbCompany &&
+        !isArchived && (
+          <Link href={`${urls.companyEdit}#field-address`}>Edit</Link>
+        )
+      }
+    >
+      <Table.Row>
+        {!hasOnlyOneAddress && (
+          <Address
+            address={businessDetails.registered_address}
+            isRegistered={true}
+          />
+        )}
+
+        <Address
+          address={businessDetails.address}
+          isRegistered={hasOnlyOneAddress}
+        />
+      </Table.Row>
+    </SummaryTable>
+  )
+}
 
 SectionAddresses.propTypes = {
   businessDetails: PropTypes.object.isRequired,

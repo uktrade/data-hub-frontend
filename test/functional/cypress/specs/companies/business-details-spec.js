@@ -14,31 +14,36 @@ const HIERARCHY_STRINGS = {
     'This hierarchy information is manually recorded (linked) by Data Hub users. This means it can be different from the Dun & Bradstreet hierarchy, which in the future will replace this manually recorded information.',
 }
 
-const assertAddress = ({ address, registeredAddress }) => {
-  const trading = '[data-test="addressesTrading"]'
-  const registered = '[data-test="addressesRegistered"]'
+const assertAddresses = ({ address, registeredAddress }) => {
+  if (registeredAddress == null) {
+    registeredAddress = address
+    address = null
+  }
 
+  assertAddress(address, 'Trading')
+  assertAddress(registeredAddress, 'Registered')
+}
+
+function assertAddress(address, type) {
+  const selector = `[data-test="addresses${type}"]`
   if (address) {
-    cy.get(trading).parent().contains('Trading').should('exist')
+    cy.get(selector).parent().contains(type).should('exist')
     address.map((line, index) => {
-      cy.get(trading)
+      cy.get(selector)
         .find(`li:nth-child(${index + 1})`)
         .should('have.text', line)
     })
   } else if (address === null) {
-    cy.get(addressSelector1).should('not.exist')
+    cy.get(selector).should('not.exist')
   }
+}
 
-  if (registeredAddress) {
-    cy.get(registered).parent().contains('Registered').should('exist')
-    registeredAddress.map((line, index) => {
-      cy.get(registered)
-        .find(`li:nth-child(${index + 1})`)
-        .should('have.text', line)
-    })
-  } else if (registeredAddress === null) {
-    cy.get(registered).should('not.exist')
-  }
+const assertAddressDefaultsToRegistered = () => {
+  cy.get(`[data-test="addressesRegistered"]`)
+    .parent()
+    .contains('Registered')
+    .should('exist')
+  cy.get(`[data-test="addressesTrading"]`).should('not.exist')
 }
 
 const assertBusinessDetailsBreadcrumbs = (company) => {
@@ -81,7 +86,7 @@ const assertUnarchiveLinkNotVisible = () => {
   })
 }
 
-const assertAddressContainer = (showEdit) => {
+const assertAddressesContainer = (showEdit) => {
   it('should display the "Addresses" details container', () => {
     assertSummaryTable({
       dataTest: 'addressesDetailsContainer',
@@ -217,10 +222,10 @@ describe('Companies business details', () => {
         })
       })
 
-      assertAddressContainer(false)
+      assertAddressesContainer(false)
 
       it('should display the address', () => {
-        assertAddress({
+        assertAddresses({
           address: ["12 St George's Road", 'Paris', '75001', 'France'],
           registeredAddress: [
             "12 St George's Road",
@@ -263,7 +268,7 @@ describe('Companies business details', () => {
       })
 
       it('should display the state in the address', () => {
-        assertAddress({
+        assertAddresses({
           address: [
             '12 First Street',
             'New York',
@@ -293,7 +298,7 @@ describe('Companies business details', () => {
       })
 
       it('should display province in the address', () => {
-        assertAddress({
+        assertAddresses({
           address: [
             '12 Second Street',
             'Ottawa',
@@ -349,10 +354,10 @@ describe('Companies business details', () => {
         })
       })
 
-      assertAddressContainer(true)
+      assertAddressesContainer(true)
 
       it('should display the address', () => {
-        assertAddress({
+        assertAddresses({
           address: ['66 Marcham Road', 'Bordley', 'BD23 8RZ', 'United Kingdom'],
           registeredAddress: [
             '66 Marcham Road',
@@ -421,10 +426,10 @@ describe('Companies business details', () => {
         })
       })
 
-      assertAddressContainer(false)
+      assertAddressesContainer(false)
 
       it('should display the address', () => {
-        assertAddress({
+        assertAddresses({
           address: ['1 Main Road', 'Rome', '001122', 'Italy'],
           registeredAddress: ['1 Main Road', 'Rome', '001122', 'Italy'],
         })
@@ -518,10 +523,10 @@ describe('Companies business details', () => {
         })
       })
 
-      assertAddressContainer(false)
+      assertAddressesContainer(false)
 
       it('should display the address', () => {
-        assertAddress({
+        assertAddresses({
           address: ['16 Getabergsvagen', 'Geta', '22340', 'Malta'],
           registeredAddress: ['16 Getabergsvagen', 'Geta', '22340', 'Malta'],
         })
@@ -574,10 +579,10 @@ describe('Companies business details', () => {
         })
       })
 
-      assertAddressContainer(true)
+      assertAddressesContainer(true)
 
       it('should display the address', () => {
-        assertAddress({
+        assertAddresses({
           address: ['United Kingdom'],
           registeredAddress: null,
         })
@@ -598,6 +603,23 @@ describe('Companies business details', () => {
       })
       assertCDMSContainerNotVisible()
       assertArchiveContainerVisible()
+    }
+  )
+
+  context(
+    'when viewing business details for a company that has the address only',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.businessDetails(
+            fixtures.company.minimallyMinimalLtd.id
+          )
+        )
+      })
+
+      it('should label address as registered address', () => {
+        assertAddressDefaultsToRegistered()
+      })
     }
   )
 })
