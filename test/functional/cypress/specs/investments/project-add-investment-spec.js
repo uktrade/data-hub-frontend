@@ -295,7 +295,7 @@ describe('Investment Detail Step Form Content', () => {
   it('should display the add a new contact details', () => {
     cy.get('[data-test="contact-information-details"]').should(
       'contain',
-      "Information you'll need to add a contact"
+      'Information needed to add a new contact'
     )
   })
 

@@ -30,7 +30,7 @@ const ContactInformation = ({ onOpenContactForm, companyId }) => {
       . You will leave this page to enter details, once added you will return
       here. The information you added will have been saved.
       <StyledDetails
-        summary="Information need to add a new contact"
+        summary="Information needed to add a new contact"
         data-test="contact-information-details"
       >
         <Paragraph>You need:</Paragraph>
