@@ -10,6 +10,27 @@ env:
     CYPRESS_DASHBOARD_KEY: /codebuild/datahub/datahub-fe/test/CYPRESS_DASHBOARD_KEY
     POSTCODE_KEY: /codebuild/datahub/datahub-fe/test/POSTCODE_KEY
 
+batch:
+   fast-fail: true
+   build-matrix:
+      static:
+         ignore-failure: false
+         env:
+            privileged-mode: true
+      dynamic:
+         env:
+            variables:
+               WORKERS:
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 5
+                  - 6
+                  - 7
+                  - 8
+                  - 9
+
 phases:
   pre_build:
     commands:
