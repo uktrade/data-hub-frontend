@@ -63,6 +63,10 @@ const getValidator =
 
     const isDateEmpty = isLong ? !day && !month && !year : !month && !year
 
+    if (isDateEmpty && !required) {
+      return null
+    }
+
     if (required && isDateEmpty) {
       return required
     }
