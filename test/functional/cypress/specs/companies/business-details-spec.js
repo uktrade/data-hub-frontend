@@ -86,7 +86,7 @@ const assertUnarchiveLinkNotVisible = () => {
   })
 }
 
-const assertAddressesContainer = (showEdit) => {
+const assertAddressContainer = (showEdit) => {
   it('should display the "Addresses" details container', () => {
     assertSummaryTable({
       dataTest: 'addressesDetailsContainer',
@@ -222,7 +222,7 @@ describe('Companies business details', () => {
         })
       })
 
-      assertAddressesContainer(false)
+      assertAddressContainer(false)
 
       it('should display the address', () => {
         assertAddresses({
@@ -354,7 +354,7 @@ describe('Companies business details', () => {
         })
       })
 
-      assertAddressesContainer(true)
+      assertAddressContainer(true)
 
       it('should display the address', () => {
         assertAddresses({
@@ -426,7 +426,7 @@ describe('Companies business details', () => {
         })
       })
 
-      assertAddressesContainer(false)
+      assertAddressContainer(false)
 
       it('should display the address', () => {
         assertAddresses({
@@ -523,7 +523,7 @@ describe('Companies business details', () => {
         })
       })
 
-      assertAddressesContainer(false)
+      assertAddressContainer(false)
 
       it('should display the address', () => {
         assertAddresses({
@@ -579,7 +579,7 @@ describe('Companies business details', () => {
         })
       })
 
-      assertAddressesContainer(true)
+      assertAddressContainer(true)
 
       it('should display the address', () => {
         assertAddresses({
