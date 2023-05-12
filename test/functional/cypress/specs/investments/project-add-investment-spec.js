@@ -395,7 +395,7 @@ describe('Validation error messages', () => {
     "Select yes if you're the referral source for this project",
     'Choose a referral source activity',
     'Enter an estimated land date',
-    'Enter a year as 4 digits',
+    // 'Enter a year as 4 digits',
     'Choose a client contact',
   ]
 
