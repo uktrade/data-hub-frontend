@@ -8,9 +8,9 @@ import {
 } from '../../../client/utils/colours'
 import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 import { connect } from 'react-redux'
-import { state2props } from '../CompanyLists/state'
 import Task from '../Task'
-import { COMPANY_LISTS__LISTS_LOADED } from '../../actions'
+import { COMPANY_LISTS__COMPANY_IN_LOADED } from '../../actions'
+import { ID, TASK_GET_LISTS_COMPANY_IS_IN, state2props } from './state'
 
 const StyledCompanyListButton = styled('button')`
   display: inline-table;
@@ -38,31 +38,31 @@ const StyledAddButton = styled(StyledCompanyListButton)`
   border-bottom: 3px solid ${GREY_3_LEGACY};
 `
 
-export const LocalHeaderCompanyLists = ({ lists, company, returnUrl }) => {
+export const LocalHeaderCompanyLists = ({ results, company, returnUrl }) => {
   const queryString = returnUrl ? `${returnUrl}` : `/companies/${company.id}`
   const handleClickAddRemove = () => {
     window.location.href = `/companies/${company.id}/lists/add-remove?returnUrl=${queryString}`
   }
   return (
     <Task.Status
-      name="Company lists"
-      id={company.id}
-      progressMessage="loading companies"
+      name={TASK_GET_LISTS_COMPANY_IS_IN}
+      id={ID}
+      progressMessage="Loading my lists"
       startOnRender={{
-        payload: company.id,
-        onSuccessDispatch: COMPANY_LISTS__LISTS_LOADED,
+        payload: { id: company.id },
+        onSuccessDispatch: COMPANY_LISTS__COMPANY_IN_LOADED,
       }}
     >
       {() =>
-        lists && (
+        results && (
           <>
-            {Object.keys(lists).map((list) => (
+            {Object.keys(results).map((list) => (
               <StyledCompanyListItemButton
                 key={list}
                 data-test={'list-item-button-'}
                 onClick={handleClickAddRemove}
               >
-                {lists[list].name} <span>x</span>
+                {results[list].name} <span>x</span>
               </StyledCompanyListItemButton>
             ))}
             <StyledAddButton

@@ -150,6 +150,9 @@ import exportDetailReducer from './modules/ExportPipeline/ExportDetails/reducer'
 import { ID as EXPORT_PIPELINE_LIST_ID } from './modules/ExportPipeline/ExportList/state'
 import exportPipelineListReducer from './modules/ExportPipeline/ExportList/reducer'
 
+import { ID as COMPANY_LISTS_IN_ID } from './components/CompanyLocalHeader/state'
+import companyListsInReducer from './components/CompanyLocalHeader/reducer'
+
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
   // The baseURI is set to the <base/> tag by the spaFallbackSpread
@@ -242,6 +245,7 @@ const reducer = {
   [COMPANY_DETAIL_ID]: companyDetailReducer,
   [EXPORT_DETAIL_ID]: exportDetailReducer,
   [EXPORT_PIPELINE_LIST_ID]: exportPipelineListReducer,
+  [COMPANY_LISTS_IN_ID]: companyListsInReducer,
 }
 
 const preloadedState = {
