@@ -22,19 +22,24 @@ const StyledCompanyListItemButton = styled('button')`
   }
 `
 
-export const LocalHeaderCompanyLists = ({ list }) => (
+export const LocalHeaderCompanyLists = ({ lists }) => (
   <Task.Status
     name="Company lists"
     id="local-header"
     progressMessage="Loading my companies lists"
     startOnRender={{ onSuccessDispatch: COMPANY_LISTS__LISTS_LOADED }}
   >
-    {() => (
-      <>
-        <StyledCompanyListItemButton>{list}</StyledCompanyListItemButton>
-        <h1>Here i am</h1>
-      </>
-    )}
+    {() =>
+      lists && (
+        <>
+          {Object.keys(lists).map((key) => (
+            <StyledCompanyListItemButton key={key}>
+              {lists[key].name}
+            </StyledCompanyListItemButton>
+          ))}
+        </>
+      )
+    }
   </Task.Status>
 )
 

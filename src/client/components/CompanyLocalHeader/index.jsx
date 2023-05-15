@@ -184,6 +184,7 @@ const CompanyLocalHeader = ({
             </GridCol>
           </GridRow>
           <StyledList>
+            <LocalHeaderCompanyLists />
             <StyledAddButton
               data-test={'add-to-list-button'}
               onClick={handleClick}
@@ -191,7 +192,6 @@ const CompanyLocalHeader = ({
               + Add to list
             </StyledAddButton>
           </StyledList>
-          <LocalHeaderCompanyLists />
           {(company.isUltimate || company.isGlobalHQ) && (
             <TypeWrapper>
               <BadgeWrapper>
