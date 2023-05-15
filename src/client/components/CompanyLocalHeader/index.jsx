@@ -12,7 +12,6 @@ import {
   GREY_3,
   PURPLE,
   BLACK,
-  GREY_3_LEGACY,
   TEXT_COLOUR,
 } from '../../../client/utils/colours'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
@@ -47,21 +46,6 @@ const StyledButtonContainer = styled('div')`
 
 const StyledList = styled('div')`
   padding-bottom: 10px;
-`
-
-const StyledAddButton = styled('button')`
-  display: inline-table;
-  padding: 8px;
-  background-color: ${GREY_3};
-  border: none;
-  border-bottom: 5px solid ${GREY_3_LEGACY};
-  vertical-align: middle;
-  cursor: pointer;
-  span {
-    pointer-events: none;
-    display: table-cell;
-    font-size: ${FONT_SIZE.SIZE_16};
-  }
 `
 
 const StyledButtonLink = styled.a({
@@ -141,12 +125,7 @@ const CompanyLocalHeader = ({
   flashMessages,
   company,
   dnbRelatedCompaniesCount,
-  returnUrl,
 }) => {
-  const queryString = returnUrl ? `${returnUrl}` : `/companies/${company.id}`
-  const handleClick = () => {
-    window.location.href = `/companies/${company.id}/lists/add-remove?returnUrl=${queryString}`
-  }
   return (
     company && (
       <>
@@ -184,13 +163,7 @@ const CompanyLocalHeader = ({
             </GridCol>
           </GridRow>
           <StyledList>
-            <LocalHeaderCompanyLists />
-            <StyledAddButton
-              data-test={'add-to-list-button'}
-              onClick={handleClick}
-            >
-              + Add to list
-            </StyledAddButton>
+            <LocalHeaderCompanyLists company={company} />
           </StyledList>
           {(company.isUltimate || company.isGlobalHQ) && (
             <TypeWrapper>
