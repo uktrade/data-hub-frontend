@@ -14,7 +14,7 @@ import basicExampleReadme from './basic-example.md'
 import softRedirectExampleReadme from './soft-redirect.md'
 import ResourceOptionsField from '../elements/ResourceOptionsField'
 
-import Resource from '../../Resource'
+import Resource from '../../Resource/Resource'
 
 const DummyResource = (props) => <Resource {...props} name="Load options" />
 
