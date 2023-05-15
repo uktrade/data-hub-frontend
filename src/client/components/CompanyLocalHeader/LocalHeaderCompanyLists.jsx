@@ -6,7 +6,7 @@ import {
   GREY_3_LEGACY,
   LIGHT_BLUE_25,
 } from '../../../client/utils/colours'
-import { FONT_SIZE } from '@govuk-react/constants'
+import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 import { connect } from 'react-redux'
 import { state2props } from '../CompanyLists/state'
 import Task from '../Task'
@@ -14,7 +14,7 @@ import { COMPANY_LISTS__LISTS_LOADED } from '../../actions'
 
 const StyledCompanyListButton = styled('button')`
   display: inline-table;
-  padding: 8px;
+  padding: 4px 8px 4px 8px;
   border: none;
   vertical-align: middle;
   cursor: pointer;
@@ -27,39 +27,47 @@ const StyledCompanyListButton = styled('button')`
 `
 
 const StyledCompanyListItemButton = styled(StyledCompanyListButton)`
-  colour: ${DARK_BLUE_LEGACY};
   background-color: ${LIGHT_BLUE_25};
-  border-bottom: 5px solid ${DARK_BLUE_LEGACY};
+  color: ${DARK_BLUE_LEGACY};
+  border-bottom: 3px solid ${DARK_BLUE_LEGACY};
+  font-weight: ${FONT_WEIGHTS.bold};
 `
 
 const StyledAddButton = styled(StyledCompanyListButton)`
   background-color: ${GREY_3};
-  border-bottom: 5px solid ${GREY_3_LEGACY};
+  border-bottom: 3px solid ${GREY_3_LEGACY};
 `
 
 export const LocalHeaderCompanyLists = ({ lists, company, returnUrl }) => {
   const queryString = returnUrl ? `${returnUrl}` : `/companies/${company.id}`
-  const handleClick = () => {
+  const handleClickAddRemove = () => {
     window.location.href = `/companies/${company.id}/lists/add-remove?returnUrl=${queryString}`
   }
   return (
     <Task.Status
       name="Company lists"
-      id="local-header"
-      progressMessage="Loading my companies lists"
-      startOnRender={{ onSuccessDispatch: COMPANY_LISTS__LISTS_LOADED }}
+      id={company.id}
+      progressMessage="loading companies"
+      startOnRender={{
+        payload: company.id,
+        onSuccessDispatch: COMPANY_LISTS__LISTS_LOADED,
+      }}
     >
       {() =>
         lists && (
           <>
             {Object.keys(lists).map((list) => (
-              <StyledCompanyListItemButton key={list}>
+              <StyledCompanyListItemButton
+                key={list}
+                data-test={'list-item-button-'}
+                onClick={handleClickAddRemove}
+              >
                 {lists[list].name} <span>x</span>
               </StyledCompanyListItemButton>
             ))}
             <StyledAddButton
               data-test={'add-to-list-button'}
-              onClick={handleClick}
+              onClick={handleClickAddRemove}
             >
               <span>+</span> Add to list
             </StyledAddButton>
