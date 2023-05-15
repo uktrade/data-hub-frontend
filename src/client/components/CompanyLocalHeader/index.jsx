@@ -17,6 +17,7 @@ import {
 } from '../../../client/utils/colours'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 import LocalHeaderHeading from '../../../client/components/LocalHeader/LocalHeaderHeading'
+import LocalHeaderCompanyLists from './LocalHeaderCompanyLists'
 import Badge from '../../../client/components/Badge'
 import StatusMessage from '../../../client/components/StatusMessage'
 import { addressToString } from '../../../client/utils/addresses'
@@ -190,6 +191,7 @@ const CompanyLocalHeader = ({
               + Add to list
             </StyledAddButton>
           </StyledList>
+          <LocalHeaderCompanyLists />
           {(company.isUltimate || company.isGlobalHQ) && (
             <TypeWrapper>
               <BadgeWrapper>
