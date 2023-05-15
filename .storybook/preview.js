@@ -1,9 +1,6 @@
 import React from 'react'
-import { addDecorator, configure, addParameters } from '@storybook/react'
 import { FONT_SIZE, FONT_STACK, MEDIA_QUERIES } from '@govuk-react/constants'
 import { createGlobalStyle } from 'styled-components'
-
-const req = require.context('../src', true, /.*\.stories\.(js|jsx)$/)
 
 import '../src/client/components'
 import DataHubProvider from '../src/client/provider'
@@ -22,7 +19,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-addDecorator((s) => (
+export const decorators = [((s) => (
   <>
     <GlobalStyle />
     <DataHubProvider
@@ -36,6 +33,4 @@ addDecorator((s) => (
       {s()}
     </DataHubProvider>
   </>
-))
-
-configure(req, module)
+))]
