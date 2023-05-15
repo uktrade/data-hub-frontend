@@ -50,7 +50,7 @@
   "investment_project": null,
   "net_company_receipt": null,
   "service": {
-      "name": "Account Management",
+      "name": "Account management",
       "id": "sv1"
   },
   "service_answers": {

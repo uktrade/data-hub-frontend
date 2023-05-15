@@ -623,7 +623,7 @@ describe('Company overview page', () => {
         cy.get('add-collection-item-button').should('not.exist')
         cy.go('back')
       })
-      it('UK Based Active projects should not have an "Add investment project" button', () => {
+      it('UK based Active projects should not have an "Add investment project" button', () => {
         cy.get('[data-test="tabbedLocalNav"]').contains('Investment').click()
         cy.get('add-collection-item-button').should('not.exist')
         cy.go('back')

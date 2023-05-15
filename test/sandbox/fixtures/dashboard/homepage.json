@@ -39,7 +39,7 @@
         ],
         "service":{
            "id":"f56eb92b-3499-e211-a939-e4115bead28a",
-           "name":"Significant Assistance (PIMS)"
+           "name":"Significant assistance (PIMS)"
         },
         "service_delivery_status":null,
         "company_sector":{
@@ -101,7 +101,7 @@
         ],
         "service":{
            "id":"42c71892-f9f7-e511-888e-e4115bead28a",
-           "name":"Investment - IST Visit (IST use only)"
+           "name":"Investment - IST visit (IST use only)"
         },
         "service_delivery_status":null,
         "company_sector":{

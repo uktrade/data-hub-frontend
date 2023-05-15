@@ -12,7 +12,7 @@ describe('Global transformers', () => {
           ])
           expect(actual).to.deep.equal([
             {
-              label: 'Account Management',
+              label: 'Account management',
               value: 'sv1',
               interactionQuestions: [],
               secondaryOptions: [],
@@ -28,14 +28,14 @@ describe('Global transformers', () => {
         ])
         expect(actual).to.deep.equal([
           {
-            label: 'Providing Export Advice & Information',
-            value: 'Providing Export Advice & Information',
+            label: 'Export advice and information',
+            value: 'Export advice and information',
             interactionQuestions: [],
             secondaryOptions: [
               {
                 label: 'Advice & information',
                 value: 'sv2',
-                parent: 'Providing Export Advice & Information',
+                parent: 'Export advice and information',
                 interactionQuestions: [
                   {
                     label: 'What did you give advice about?',
@@ -77,7 +77,7 @@ describe('Global transformers', () => {
         ])
         expect(actual).to.deep.equal([
           {
-            label: 'Account Management',
+            label: 'Account management',
             value: 'sv1',
             interactionQuestions: [],
             secondaryOptions: [],
@@ -110,7 +110,7 @@ describe('Global transformers', () => {
                 value: 'sv3-q1',
               },
             ],
-            label: 'Making Introductions (Export)',
+            label: 'Export introductions',
             secondaryOptions: [],
             value: 'sv3',
           },

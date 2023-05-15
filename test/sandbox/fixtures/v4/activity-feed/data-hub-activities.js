@@ -86,7 +86,7 @@ const generateInteraction = () => ({
       ],
       'dit:archived': false,
       'dit:service': {
-        name: 'Making Export Introductions : Someone else in DBT',
+        name: 'Export introductions : Someone else in DBT',
       },
       'dit:status': 'draft',
       'dit:subject': 'Meeting between Brendan Smith and Tyson Morar',

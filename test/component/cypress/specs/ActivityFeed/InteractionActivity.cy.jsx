@@ -73,29 +73,28 @@ const interactionThemes = ['export', 'investment', 'trade_agreement', 'other']
 
 const interactionServices = {
   specificDITService:
-    'A Specific DBT Export Service or Funding : Enhanced International Support Services',
-  specificService: 'A Specific Service : Digital Trade Advisers One-to-One',
-  accountManagement: 'Account Management : Midlands Engine',
+    'DBT export service or funding : Enhanced International Support Services',
+  specificService: 'Specific service : Digital Trade Advisers one-to-one',
+  accountManagement: 'Account management : Midlands Engine',
   cop26: 'COP26 : Participation at Glasgow/getting involved with COP26',
   enquiry:
-    'Enquiry received : HPO High Potential Opportunity Investment Enquiry via IST Target Company',
-  enquiryOrReferral: 'Enquiry or Referral Received : Combined Authorities',
-  event: 'Events : Outward Mission',
-  exportWin: 'Export Win',
+    'Enquiry received : HPO High Potential Opportunity investment enquiry from IST target company',
+  enquiryOrReferral: 'Enquiry or referral : Combined authorities',
+  event: 'Events : Outward mission',
+  exportWin: 'Export win',
   gis2021: 'Global Investment Summit (2021)',
-  istAftercare: 'Investment - IST Aftercare Offered (IST use only)',
-  investmentServices: 'Investment - Services',
-  investmentEnquiry: 'Investment Enquiry – Assigned to HQ (IST use only)',
+  istAftercare: 'Investment - IST aftercare offered (IST use only)',
+  investmentServices: 'Investment - services',
+  investmentEnquiry: 'Investment enquiry - assigned to HQ (IST use only)',
   istSpecificService:
-    'IST Specific Service : Abandoned - No Investor Response (ERU Use)',
-  propDevelopment: 'Proposition Development',
+    'IST service : Abandoned - no investor response (ERU Use)',
+  propDevelopment: 'Proposition development',
   tradeAgreementImplementation:
-    'Trade Agreement Implementation Activity : Civil Society meetings',
-  exportIntros: 'Making Export Introductions : Another Government Department',
-  investmentIntros:
-    'Making Investment Introductions : Another Government Department',
-  exportAI: 'Providing Export Advice & Information',
-  investmentAI: 'Providing Investment Advice & Information',
+    'Trade agreement implementation activity : Civil society meetings',
+  exportIntros: 'Export introductions : Other government department',
+  investmentIntros: 'Investment introductions : Other government department',
+  exportAI: 'Export advice and information',
+  investmentAI: 'Investment advice and information',
 }
 
 // The notes render with a single space at the end
@@ -562,11 +561,11 @@ describe('Interaction activity card', () => {
   })
 
   context('When the interaction has a different service', () => {
-    context('When the service is A Specific Service', () => {
+    context('When the service is Specific service', () => {
       assertService(interactionServices.specificService)
     })
 
-    context('When the service is Account Management', () => {
+    context('When the service is Account management', () => {
       assertService(interactionServices.accountManagement)
     })
 
@@ -574,7 +573,7 @@ describe('Interaction activity card', () => {
       assertService(interactionServices.cop26)
     })
 
-    context('When the service is a recieved enquiry', () => {
+    context('When the service is a received enquiry', () => {
       assertService(interactionServices.enquiry)
     })
 
@@ -586,7 +585,7 @@ describe('Interaction activity card', () => {
       assertService(interactionServices.event)
     })
 
-    context('When the service is an Export Win', () => {
+    context('When the service is an Export win', () => {
       assertService(interactionServices.exportWin)
     })
 
@@ -606,27 +605,27 @@ describe('Interaction activity card', () => {
       assertService(interactionServices.investmentEnquiry)
     })
 
-    context('When the service is an IST Specific Service', () => {
+    context('When the service is an IST service', () => {
       assertService(interactionServices.istSpecificService)
     })
 
-    context('When the service is Proposition Development', () => {
+    context('When the service is Proposition development', () => {
       assertService(interactionServices.propDevelopment)
     })
 
     context(
-      'When the service is a Trade Agreement Implementation Activity',
+      'When the service is a Trade agreement implementation activity',
       () => {
         assertService(interactionServices.tradeAgreementImplementation)
       }
     )
 
     context('When the service is Making Introductions', () => {
-      context('When the service is Making Export Introductions', () => {
+      context('When the service is Export introductions', () => {
         assertService(interactionServices.exportIntros)
       })
 
-      context('When the service is Making Investment Introductions', () => {
+      context('When the service is Investment introductions', () => {
         assertService(interactionServices.investmentIntros)
       })
     })

@@ -33,7 +33,7 @@ export const fillDate = (dateId, day, month, year) => {
 }
 
 export const fillSelect = (selector, value) => {
-  cy.get(selector).find('select').select(value)
+  cy.get(selector).find('select').should('not.be.disabled').select(value)
 }
 
 export const clearTypeahead = (selector) => {
