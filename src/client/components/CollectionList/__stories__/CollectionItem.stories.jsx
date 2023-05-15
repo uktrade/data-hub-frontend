@@ -1,28 +1,42 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 
 import CollectionItem from '../CollectionItem'
-
 import capitalProfileItem from '../__fixtures__/capitalProfileItem.json'
 import interactionItem from '../__fixtures__/interactionItem.json'
 
-const collectionStories = storiesOf('Collection', module)
+export default {
+  title: 'Collection',
 
-collectionStories.addParameters({ component: CollectionItem })
+  parameters: {
+    component: CollectionItem,
+  },
+}
 
-collectionStories.add('Capital Profile item', () => (
+export const CapitalProfileItem = () => (
   <CollectionItem {...capitalProfileItem} />
-))
+)
 
-collectionStories.add('Interaction item', () => (
+CapitalProfileItem.story = {
+  name: 'Capital Profile item',
+}
+
+export const InteractionItem = () => (
   <CollectionItem {...interactionItem} type="interaction" />
-))
+)
 
-collectionStories.add('Item without link', () => (
+InteractionItem.story = {
+  name: 'Interaction item',
+}
+
+export const ItemWithoutLink = () => (
   <CollectionItem
     headingText={capitalProfileItem.headingText}
     subheading={capitalProfileItem.subheading}
     badges={capitalProfileItem.badges}
     metadata={capitalProfileItem.metadata}
   />
-))
+)
+
+ItemWithoutLink.story = {
+  name: 'Item without link',
+}

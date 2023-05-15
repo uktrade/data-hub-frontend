@@ -1,5 +1,4 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 
 import TabNav from '../../TabNav'
 import Contact from '../Contact'
@@ -8,7 +7,11 @@ import Resource from '../Resource'
 
 const Json = ({ children }) => <pre>{JSON.stringify(children, null, 2)}</pre>
 
-storiesOf('Resource', module).add('Default', () => (
+export default {
+  title: 'Resource',
+}
+
+export const Default = () => (
   <TabNav
     id="resource-example"
     label="Resource examples"
@@ -48,4 +51,4 @@ storiesOf('Resource', module).add('Default', () => (
       },
     ]}
   />
-))
+)

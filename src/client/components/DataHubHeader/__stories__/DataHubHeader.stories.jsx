@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { storiesOf } from '@storybook/react'
 
 import DataHubHeader from '../index'
+
+export default {
+  title: 'DataHubHeader',
+}
 
 const Dashboard = () => <h5>Dashboard</h5>
 const Companies = () => <h5>Companies</h5>
@@ -13,7 +16,7 @@ const Investments = () => <h5>Investments</h5>
 const Orders = () => <h5>Orders(OMIS)</h5>
 const Support = () => <h5>Support</h5>
 
-const App = () => {
+export const DataHubHeaderStory = () => {
   const [showVerticalNav, setShowVerticalNav] = useState(false)
   return (
     <Router>
@@ -35,4 +38,6 @@ const App = () => {
   )
 }
 
-storiesOf('DataHubHeader', module).add('Data Hub Header', () => <App />)
+DataHubHeaderStory.story = {
+  name: 'DataHubHeader',
+}

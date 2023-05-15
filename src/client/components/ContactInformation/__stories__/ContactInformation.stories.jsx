@@ -1,9 +1,15 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
+
 import ContactInformation from 'ContactInformation'
 
-const stories = storiesOf('ContactInformation', module)
+export default {
+  title: 'ContactInformation',
 
-stories.add('Default', () => (
+  parameters: {
+    component: ContactInformation,
+  },
+}
+
+export const Default = () => (
   <ContactInformation onOpenContactForm="hello" companyId="123ABC" />
-))
+)

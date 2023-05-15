@@ -1,9 +1,14 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 
 import DateField from 'DateField'
 
-const dateFieldStories = storiesOf('DateField', module)
+export default {
+  title: 'DateField',
+
+  parameters: {
+    component: DateField,
+  },
+}
 
 const BasicDateField = () => {
   return (
@@ -27,7 +32,9 @@ const AlertChangeDateField = () => {
   )
 }
 
-dateFieldStories
-  .addParameters({ component: DateField })
-  .add('Basic', () => <BasicDateField />)
-  .add('Callback on Change', () => <AlertChangeDateField />)
+export const Basic = () => <BasicDateField />
+export const CallbackOnChange = () => <AlertChangeDateField />
+
+CallbackOnChange.story = {
+  name: 'Callback on Change',
+}
