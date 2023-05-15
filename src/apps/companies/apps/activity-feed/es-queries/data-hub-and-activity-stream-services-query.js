@@ -4,8 +4,9 @@ const {
   DATA_HUB_ACTIVITY,
   DATA_HUB_AND_AVENTRI_ACTIVITY,
   EXTERNAL_ACTIVITY,
+  FILTER_KEYS,
 } = require('../constants')
-
+// const dataHubActivityQuery = require('./data-hub-activity-query')
 const dataHubAndActivityStreamServicesQuery = ({
   from,
   size,
@@ -14,28 +15,29 @@ const dataHubAndActivityStreamServicesQuery = ({
   aventriEventIds,
   getEssInteractions,
   contacts,
+  dit_participants__adviser,
   feedType = FILTER_FEED_TYPE.ALL,
 }) => {
   let sortDirection = 'desc'
   let shouldCriteria = []
   let types = []
 
-  if (activityTypeFilter.includes('allDataHubActivity')) {
+  if (activityTypeFilter.includes(FILTER_KEYS.dataHubActivity)) {
     types = [...types, ...DATA_HUB_AND_AVENTRI_ACTIVITY]
   }
-  if (activityTypeFilter.includes('allExternalActivity')) {
+  if (activityTypeFilter.includes(FILTER_KEYS.externalActivity)) {
     types = [...types, ...EXTERNAL_ACTIVITY]
   }
-  if (activityTypeFilter.includes('myActivity')) {
+  if (activityTypeFilter.includes(FILTER_KEYS.myActivity)) {
     types = [...types, ...DATA_HUB_ACTIVITY]
   }
-
+  // console.log(activityTypeFilter)
+  // console.log(types)
   if (
-    activityTypeFilter.includes('allDataHubActivity') ||
-    activityTypeFilter.includes('allExternalActivity')
+    activityTypeFilter.includes(FILTER_KEYS.dataHubActivity) ||
+    activityTypeFilter.includes(FILTER_KEYS.externalActivity)
   ) {
-    // const shouldCriteria = [
-    shouldCriteria.push({
+    let criteria = {
       bool: {
         must: [
           {
@@ -52,10 +54,18 @@ const dataHubAndActivityStreamServicesQuery = ({
           },
         ],
       },
-    })
+    }
+    if (dit_participants__adviser.length) {
+      criteria.bool.must.push({
+        term: {
+          'object.attributedTo.id': `dit:DataHubAdviser:${dit_participants__adviser}`,
+        },
+      })
+    }
+    shouldCriteria.push(criteria)
   }
-  if (activityTypeFilter.includes('allExternalActivity')) {
-    shouldCriteria.push({
+  if (activityTypeFilter.includes(FILTER_KEYS.externalActivity)) {
+    let criteria = {
       bool: {
         must: [
           {
@@ -87,7 +97,15 @@ const dataHubAndActivityStreamServicesQuery = ({
           },
         ],
       },
-    })
+    }
+    if (dit_participants__adviser.length) {
+      criteria.bool.must.push({
+        term: {
+          'object.attributedTo.id': `dit:DataHubAdviser:${dit_participants__adviser}`,
+        },
+      })
+    }
+    shouldCriteria.push(criteria)
   }
 
   if (feedType != FILTER_FEED_TYPE.ALL) {
@@ -106,8 +124,10 @@ const dataHubAndActivityStreamServicesQuery = ({
     //   },
     // })
   }
+  // console.log('aventriEventIds')
+  // console.log(aventriEventIds)
   if (aventriEventIds?.length) {
-    shouldCriteria.push({
+    let criteria = {
       bool: {
         must: [
           {
@@ -122,10 +142,18 @@ const dataHubAndActivityStreamServicesQuery = ({
           },
         ],
       },
-    })
+    }
+    if (dit_participants__adviser.length) {
+      criteria.bool.must.push({
+        term: {
+          'object.attributedTo.id': `dit:DataHubAdviser:${dit_participants__adviser}`,
+        },
+      })
+    }
+    shouldCriteria.push(criteria)
   }
   if (getEssInteractions) {
-    shouldCriteria.push({
+    let criteria = {
       bool: {
         must: [
           {
@@ -143,7 +171,15 @@ const dataHubAndActivityStreamServicesQuery = ({
           },
         ],
       },
-    })
+    }
+    if (dit_participants__adviser.length) {
+      criteria.bool.must.push({
+        term: {
+          'object.attributedTo.id': `dit:DataHubAdviser:${dit_participants__adviser}`,
+        },
+      })
+    }
+    shouldCriteria.push(criteria)
   }
 
   if (feedType != FILTER_FEED_TYPE.ALL) {

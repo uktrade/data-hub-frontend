@@ -42,6 +42,7 @@ import {
 } from './state'
 
 import { sanitizeFilter } from '../../../../client/filters'
+// import { FILTER_ITEMS } from '../../../../apps/companies/apps/activity-feed/constants'
 
 const StyledCheckboxGroup = styled(Filters.CheckboxGroup)`
   /* This just tightens up the gap for when a single checkbox option group
@@ -132,7 +133,6 @@ const CompanyActivityCollection = ({
       sortOptions={optionMetadata.sortOptions}
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}
-      baseDownloadLink="/interactions/export"
       entityName="companyActivities"
       sanitizeFiltersForAnalytics={({ advisers, teams }) => ({
         ...sanitizeFilter(advisers),

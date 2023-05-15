@@ -64,7 +64,7 @@ async function renderActivityFeed(req, res, next) {
           breadcrumbs,
           flashMessages: res.locals.getMessages(),
           isOverview: false,
-          activityTypeFilter: FILTER_KEYS.dataHubActivity,
+          activityTypeFilter: [FILTER_KEYS.dataHubActivity],
           activityTypeFilters: FILTER_ITEMS,
           localNavItems: res.locals.localNavItems,
           isGlobalUltimate: company.is_global_ultimate,
@@ -83,18 +83,20 @@ async function renderActivityFeed(req, res, next) {
   }
 }
 
+function isDataHubFilter(activityTypeFilter) {
+  return activityTypeFilter.includes(FILTER_KEYS.dataHubActivity)
+}
+
 function isExternalFilter(activityTypeFilter) {
-  return (
-    activityTypeFilter === FILTER_KEYS.externalActivity ||
-    activityTypeFilter === FILTER_KEYS.dataHubAndExternalActivity
-  )
+  return activityTypeFilter.includes(FILTER_KEYS.externalActivity)
+}
+
+function isMyActivityFilter(activityTypeFilter) {
+  return activityTypeFilter.includes(FILTER_KEYS.myActivity)
 }
 
 function isEssFilter(activityTypeFilter) {
-  return (
-    activityTypeFilter === FILTER_KEYS.dataHubActivity ||
-    activityTypeFilter === FILTER_KEYS.dataHubAndExternalActivity
-  )
+  return activityTypeFilter.includes(FILTER_KEYS.dataHubActivity)
 }
 
 function getContactFromEmailAddress(emailAddress, contacts) {
@@ -283,11 +285,13 @@ const isAventriAttendee = (attendee) =>
 async function fetchActivityFeedHandler(req, res, next) {
   try {
     const { company, user } = res.locals
+    // console.log(req.query)
     const {
       from = 0,
       size = config.activityFeed.paginationSize,
       feedType = FILTER_FEED_TYPE.ALL,
       activityTypeFilter = FILTER_KEYS.dataHubActivity,
+      dit_participants__adviser = [],
       showDnbHierarchy = false,
     } = req.query
 
@@ -317,12 +321,14 @@ async function fetchActivityFeedHandler(req, res, next) {
       size,
       companyIds: [company.id, ...dnbHierarchyIds],
       contacts: filteredContacts,
+      dit_participants__adviser,
       user,
       aventriEventIds,
       feedType,
       getEssInteractions,
       activityTypeFilter,
     })
+    // console.log(JSON.stringify(query))
 
     const results = await fetchActivityFeed(req, query)
 
@@ -688,6 +694,9 @@ module.exports = {
   getAventriRegistrationStatusCounts,
   fetchESSDetails,
   isEssActivity,
+  isDataHubFilter,
+  isExternalFilter,
+  isMyActivityFilter,
   augmentEssActivity,
   filterContactListOnEmail,
 }
