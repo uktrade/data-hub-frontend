@@ -18,7 +18,7 @@ describe('Dashboard reminders', () => {
     investment_project: {
       name: 'University buildings',
       project_code: 'DHP-00007004',
-      id: faker.datatype.uuid(),
+      id: faker.string.uuid(),
     },
     deadline: tomorrow,
   })

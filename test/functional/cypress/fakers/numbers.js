@@ -10,7 +10,7 @@ const zeroPadNumber = (number, length) => `${number}`.padStart(length, '0')
  */
 const numberStringFaker = (length) =>
   zeroPadNumber(
-    faker.datatype.number({ max: parseInt(''.padStart(length, '9')) }),
+    faker.number.int({ max: parseInt(''.padStart(length, '9')) }),
     length
   )
 

@@ -4,7 +4,7 @@ const urls = require('../urls')
 describe('urls', () => {
   describe('external', () => {
     it('should have the correct urls', () => {
-      const companyNumber = faker.random.alphaNumeric(8)
+      const companyNumber = faker.string.alphanumeric(8)
       expect(urls.external.greatProfile(companyNumber)).to.equal(
         `https://www.great.gov.uk/international/trade/suppliers/${companyNumber}`
       )
@@ -36,8 +36,8 @@ describe('urls', () => {
     let countryId
 
     beforeEach(() => {
-      companyId = faker.datatype.uuid()
-      countryId = faker.datatype.uuid()
+      companyId = faker.string.uuid()
+      countryId = faker.string.uuid()
     })
     it('should return the correct values', () => {
       expect(urls.companies.index.mountPoint).to.equal('/companies')
@@ -163,7 +163,7 @@ describe('urls', () => {
         urls.companies.investments.largeCapitalProfile(companyId)
       ).to.equal(`/companies/${companyId}/investments/large-capital-profile`)
 
-      const globalHqId = faker.datatype.uuid()
+      const globalHqId = faker.string.uuid()
       expect(
         urls.companies.hierarchies.ghq.add(companyId, globalHqId)
       ).to.equal(`/companies/${companyId}/hierarchies/ghq/${globalHqId}/add`)
@@ -183,7 +183,7 @@ describe('urls', () => {
         '/:companyId/hierarchies/ghq/remove'
       )
 
-      const interactionId = faker.datatype.uuid()
+      const interactionId = faker.string.uuid()
       expect(urls.companies.interactions.create.route).to.equal(
         '/:companyId/interactions/create'
       )
@@ -199,7 +199,7 @@ describe('urls', () => {
       )
       expect(urls.companies.orders.route).to.equal('/:companyId/orders')
 
-      const referralId = faker.datatype.uuid()
+      const referralId = faker.string.uuid()
       expect(urls.companies.referrals.send(companyId)).to.equal(
         `/companies/${companyId}/referrals/send`
       )
@@ -242,7 +242,7 @@ describe('urls', () => {
         '/contacts?archived[0]=false&sortby=modified_on:desc&page=1'
       )
 
-      const contactId = faker.datatype.uuid()
+      const contactId = faker.string.uuid()
       expect(urls.contacts.interactions.create(contactId)).to.equal(
         `/contacts/${contactId}/interactions/create`
       )

@@ -8,9 +8,9 @@ import { countryFaker } from './countries'
 import { ESTIMATED_EXPORT_VALUE_YEARS, EXPORTER_EXPERIENCE } from './constants'
 
 const exportFaker = (overrides = {}) => ({
-  id: faker.datatype.uuid(),
+  id: faker.string.uuid(),
   company: {
-    id: faker.datatype.uuid(),
+    id: faker.string.uuid(),
     name: faker.company.name(),
   },
   owner: contactFaker(),
@@ -24,14 +24,14 @@ const exportFaker = (overrides = {}) => ({
   ),
   created_on: faker.date.past(),
   modified_on: faker.date.past(),
-  title: faker.random.word(),
-  estimated_export_value_amount: faker.random.numeric(6),
+  title: faker.word.sample(),
+  estimated_export_value_amount: faker.string.numeric(6),
   estimated_win_date: faker.date.future(),
   export_potential: faker.helpers.arrayElement(['high', 'medium', 'low']),
   status: faker.helpers.arrayElement(['active', 'won', 'inactive']),
-  notes: faker.random.words(25),
-  created_by: faker.datatype.uuid(),
-  modified_by: faker.datatype.uuid(),
+  notes: faker.word.words(25),
+  created_by: faker.string.uuid(),
+  modified_by: faker.string.uuid(),
   archived: false,
   ...overrides,
 })

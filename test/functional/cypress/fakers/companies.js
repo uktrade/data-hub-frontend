@@ -14,7 +14,7 @@ import { listFaker } from './utils'
  */
 const companyFaker = (overrides = {}) => ({
   ...jsf.generate(apiSchema.components.schemas.Company),
-  id: faker.datatype.uuid(),
+  id: faker.string.uuid(),
   address: addressFaker(),
   registered_address: addressFaker(),
   ...overrides,

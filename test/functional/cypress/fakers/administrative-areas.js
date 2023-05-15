@@ -3,13 +3,13 @@ import { faker } from '@faker-js/faker'
 import { listFaker } from './utils'
 
 export const administrativeAreaFaker = () => ({
-  id: faker.datatype.uuid(),
-  name: faker.address.state(),
+  id: faker.string.uuid(),
+  name: faker.location.state(),
   country: {
-    name: faker.address.country(),
-    id: faker.datatype.uuid(),
+    name: faker.location.country(),
+    id: faker.string.uuid(),
   },
-  area_code: faker.address.stateAbbr(),
+  area_code: faker.location.stateAbbr(),
   disabled_on: null,
 })
 

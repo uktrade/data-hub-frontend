@@ -14,17 +14,17 @@ describe('Dashboard - Investment details', () => {
       name: 'Aerospace : Aircraft Design',
     },
     investor_company: {
-      id: faker.datatype.uuid(),
+      id: faker.string.uuid(),
       name: 'Foo Bar Baz',
     },
     latest_interaction: {
-      id: faker.datatype.uuid(),
+      id: faker.string.uuid(),
       date: new Date(),
       displayDate: todayFormatted,
       subject: 'A project interaction',
     },
     country_investment_originates_from: {
-      id: faker.datatype.uuid(),
+      id: faker.string.uuid(),
       name: 'Italy',
     },
   })

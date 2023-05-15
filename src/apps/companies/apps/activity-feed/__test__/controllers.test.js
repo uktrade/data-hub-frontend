@@ -1204,8 +1204,8 @@ describe('Activity feed controllers', () => {
           [
             {
               email: email,
-              name: faker.name.fullName(),
-              id: faker.random.numeric(),
+              name: faker.person.fullName(),
+              id: faker.string.numeric(),
             },
           ]
         )
@@ -1238,8 +1238,8 @@ describe('Activity feed controllers', () => {
           [
             {
               email: email,
-              name: faker.name.fullName(),
-              id: faker.random.numeric(),
+              name: faker.person.fullName(),
+              id: faker.string.numeric(),
             },
           ]
         )
@@ -1279,8 +1279,8 @@ describe('Activity feed controllers', () => {
           emails.map((x) => {
             return {
               email: x,
-              name: faker.name.fullName(),
-              id: faker.random.numeric(),
+              name: faker.person.fullName(),
+              id: faker.string.numeric(),
             }
           })
         )
@@ -1297,7 +1297,7 @@ describe('Activity feed controllers', () => {
         faker.internet.email(),
         faker.internet.email(),
       ]
-      const eventId = faker.random.numeric()
+      const eventId = faker.string.numeric()
 
       fetchActivityFeedStub.resolves(
         generateEventResponse(
@@ -1321,8 +1321,8 @@ describe('Activity feed controllers', () => {
           emails.map((x) => {
             return {
               email: x,
-              name: faker.name.fullName(),
-              id: faker.random.numeric(),
+              name: faker.person.fullName(),
+              id: faker.string.numeric(),
             }
           })
         )

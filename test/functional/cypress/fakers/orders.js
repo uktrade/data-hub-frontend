@@ -30,12 +30,12 @@ const references = [
 
 const orderFaker = (overrides = {}) => ({
   ...jsf.generate(apiSchema.components.schemas.Order),
-  id: faker.datatype.uuid(),
+  id: faker.string.uuid(),
   reference: faker.helpers.arrayElement(references),
   company: {
-    id: faker.datatype.uuid(),
-    name: faker.company.companyName(),
-    trading_names: [faker.company.companyName(), faker.company.companyName()],
+    id: faker.string.uuid(),
+    name: faker.company.name(),
+    trading_names: [faker.company.name(), faker.company.name()],
   },
   contact: {
     ...userFaker(),

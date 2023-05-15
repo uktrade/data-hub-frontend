@@ -186,7 +186,7 @@ describe('transformCompanyToExportDetailsView', () => {
   )
 
   describe('great profile', () => {
-    const companiesHouseNumber = faker.random.alphaNumeric(8)
+    const companiesHouseNumber = faker.string.alphanumeric(8)
 
     function createRecord(props) {
       return transformCompanyToExportDetailsView({

@@ -16,13 +16,13 @@ import { investmentProjectCodeFaker } from './investment-projects'
  */
 const propositionFaker = (overrides = {}) => ({
   ...jsf.generate(apiSchema.components.schemas.Proposition),
-  id: faker.datatype.uuid(),
-  name: startCase(faker.random.words()),
+  id: faker.string.uuid(),
+  name: startCase(faker.word.words()),
   deadline: relativeDateFaker({ minDays: -100, maxDays: 365 }),
   investment_project: {
-    name: startCase(faker.random.words()),
+    name: startCase(faker.word.words()),
     project_code: investmentProjectCodeFaker(),
-    id: faker.datatype.uuid(),
+    id: faker.string.uuid(),
   },
   ...overrides,
 })
