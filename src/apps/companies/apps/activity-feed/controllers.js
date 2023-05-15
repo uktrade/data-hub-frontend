@@ -1,14 +1,11 @@
 const {
   FILTER_ITEMS,
   FILTER_KEYS,
-  DATA_HUB_ACTIVITY,
-  EXTERNAL_ACTIVITY,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
   CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS,
   EVENT_ACTIVITY_SORT_OPTIONS,
   EVENT_ATTENDEES_SORT_OPTIONS,
   EVENT_ALL_ACTIVITY,
-  DATA_HUB_AND_AVENTRI_ACTIVITY,
   EVENT_AVENTRI_ATTENDEES_STATUSES,
   EVENT_ATTENDEES_MAPPING,
   FILTER_FEED_TYPE,
@@ -22,8 +19,6 @@ const { fetchActivityFeed, fetchMatchingDataHubContact } = require('./repos')
 const config = require('../../../../config')
 
 const {
-  myActivityQuery,
-  externalActivityQuery,
   maxemailCampaignQuery,
   maxemailEmailSentQuery,
   aventriAttendeeForCompanyQuery,
@@ -85,27 +80,6 @@ async function renderActivityFeed(req, res, next) {
     res.render('companies/apps/activity-feed/views/client-container', { props })
   } catch (error) {
     next(error)
-  }
-}
-
-function getQueries(options) {
-  return {
-    [FILTER_KEYS.myActivity]: myActivityQuery({
-      ...options,
-      types: DATA_HUB_ACTIVITY,
-    }),
-    [FILTER_KEYS.dataHubActivity]: dataHubAndActivityStreamServicesQuery({
-      ...options,
-      types: DATA_HUB_AND_AVENTRI_ACTIVITY,
-    }),
-    [FILTER_KEYS.externalActivity]: externalActivityQuery({
-      ...options,
-      types: EXTERNAL_ACTIVITY,
-    }),
-    [FILTER_KEYS.dataHubAndExternalActivity]: externalActivityQuery({
-      ...options,
-      types: DATA_HUB_AND_EXTERNAL_ACTIVITY,
-    }),
   }
 }
 
@@ -338,7 +312,7 @@ async function fetchActivityFeedHandler(req, res, next) {
 
     // Get Ess Activities
     const getEssInteractions = isEssFilter(activityTypeFilter)
-    const queries = getQueries({
+    const query = dataHubAndActivityStreamServicesQuery({
       from,
       size,
       companyIds: [company.id, ...dnbHierarchyIds],
@@ -347,12 +321,10 @@ async function fetchActivityFeedHandler(req, res, next) {
       aventriEventIds,
       feedType,
       getEssInteractions,
+      activityTypeFilter,
     })
 
-    const results = await fetchActivityFeed(
-      req,
-      queries[activityTypeFilter] || queries[FILTER_KEYS.dataHubActivity]
-    )
+    const results = await fetchActivityFeed(req, query)
 
     let activities = results.hits.hits.map((hit) => hit._source)
     let total = results.hits.total.value

@@ -69,7 +69,7 @@ const getCompanyActivities = ({
         size,
         from: parseInt(size * (page - 1), 0),
         subject,
-        activityTypeFilter: activityType[0],
+        activityTypeFilter: activityType,
         activity,
         dit_participants__adviser,
         sortby,
