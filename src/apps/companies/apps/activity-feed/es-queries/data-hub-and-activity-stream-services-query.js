@@ -1,10 +1,15 @@
 const { sortCriteria } = require('./sortCriteria')
-const { FILTER_FEED_TYPE } = require('../constants')
+const {
+  FILTER_FEED_TYPE,
+  DATA_HUB_ACTIVITY,
+  DATA_HUB_AND_AVENTRI_ACTIVITY,
+  EXTERNAL_ACTIVITY,
+} = require('../constants')
 
 const dataHubAndActivityStreamServicesQuery = ({
   from,
   size,
-  types,
+  activityTypeFilter,
   companyIds,
   aventriEventIds,
   getEssInteractions,
@@ -12,8 +17,25 @@ const dataHubAndActivityStreamServicesQuery = ({
   feedType = FILTER_FEED_TYPE.ALL,
 }) => {
   let sortDirection = 'desc'
-  const shouldCriteria = [
-    {
+  let shouldCriteria = []
+  let types = []
+
+  if (activityTypeFilter.includes('allDataHubActivity')) {
+    types = [...types, ...DATA_HUB_AND_AVENTRI_ACTIVITY]
+  }
+  if (activityTypeFilter.includes('allExternalActivity')) {
+    types = [...types, ...EXTERNAL_ACTIVITY]
+  }
+  if (activityTypeFilter.includes('myActivity')) {
+    types = [...types, ...DATA_HUB_ACTIVITY]
+  }
+
+  if (
+    activityTypeFilter.includes('allDataHubActivity') ||
+    activityTypeFilter.includes('allExternalActivity')
+  ) {
+    // const shouldCriteria = [
+    shouldCriteria.push({
       bool: {
         must: [
           {
@@ -30,8 +52,44 @@ const dataHubAndActivityStreamServicesQuery = ({
           },
         ],
       },
-    },
-  ]
+    })
+  }
+  if (activityTypeFilter.includes('allExternalActivity')) {
+    shouldCriteria.push({
+      bool: {
+        must: [
+          {
+            term: {
+              // Great.gov.uk forms
+              'object.type': 'dit:directoryFormsApi:Submission',
+            },
+          },
+          {
+            term: {
+              // JSON format (Note: there two other formats HTML and Text)
+              'object.attributedTo.type':
+                'dit:directoryFormsApi:SubmissionAction:gov-notify-email',
+            },
+          },
+          {
+            term: {
+              // For now, we only care about `Export enquiry` forms
+              'object.url': '/contact/export-advice/comment/',
+            },
+          },
+          {
+            // Match a Data Hub company contact to the user filling out the form at Great.gov.uk
+            terms: {
+              'actor.dit:emailAddress': [
+                ...contacts.map((contact) => contact.email),
+              ],
+            },
+          },
+        ],
+      },
+    })
+  }
+
   if (feedType != FILTER_FEED_TYPE.ALL) {
     // TODO Fix
     // shouldCriteria.push({
@@ -116,6 +174,7 @@ const dataHubAndActivityStreamServicesQuery = ({
     }
     shouldCriteria.map((criteria) => criteria.bool.must.push(dateFilter))
   }
+
   const dsl = {
     from,
     size,
@@ -130,6 +189,7 @@ const dataHubAndActivityStreamServicesQuery = ({
       },
     },
   }
+
   return dsl
 }
 
