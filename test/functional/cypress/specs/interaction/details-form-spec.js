@@ -45,7 +45,7 @@ const ELEMENT_BUSINESS_INTELLIGENCE_INFO = {
     cy
       .wrap(element)
       .contains(
-        'If your contact provided business intelligence (eg issues impacting the company or feedback on government policy), complete the business intelligence section.'
+        'Select business intelligence if your contact mentioned issues relating to DBT or government objectives.'
       ),
 }
 
@@ -93,9 +93,9 @@ const ELEMENT_ADD_CONTACT_LINK = {
   assert: ({ element }) => cy.wrap(element).contains('add a new contact'),
 }
 const ELEMENT_CONTACT_INFO_DETAILS = {
-  summary: "Information you'll need to add a contact",
+  summary: 'Information needed to add a new contact',
   content:
-    "You need to give the new contact's:full namejob titleemail" +
+    'You need:full namejob titleemail' +
     ' addressphone numberwork address if different to the company address',
   assert: assertDetails,
 }
@@ -122,17 +122,13 @@ const ELEMENT_COMMUNICATION_CHANNEL = {
   placeholder: '-- Select communication channel --',
   assert: assertFieldTypeahead,
 }
-const ELEMENT_NOTES_HEADER = {
-  text: 'Notes',
-  assert: assertHeader,
-}
 const ELEMENT_SUMMARY = {
   label: 'Summary',
   assert: assertFieldInput,
 }
 const ELEMENT_NOTES = {
   label: 'Notes (optional)',
-  hint: 'Use this text box to record any details of the logistics of the interaction eg how meeting(s) came about and where or when they happened. These are for your records. Do not include comments about issues impacting the company or feedback on government policy. Include that information in the business intelligence section.',
+  hint: 'Add details of the interaction, such as how the meeting came about and location. Issues relating to DBT or government objectives should be added to the business intelligence section.',
   assert: assertFieldTextarea,
 }
 // The radios on this page have been refactored to use legends instead of labels, as part of the Accessibility work.
@@ -477,7 +473,6 @@ describe('Interaction theme', () => {
     it('should render all form fields', () => {
       assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
-        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
         ELEMENT_SERVICE,
         ELEMENT_RELATED_TRADE_AGREEMENT,
@@ -489,9 +484,9 @@ describe('Interaction theme', () => {
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
         ELEMENT_COMMUNICATION_CHANNEL,
-        ELEMENT_NOTES_HEADER,
         ELEMENT_SUMMARY,
         ELEMENT_NOTES,
+        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
         ELEMENT_EXPORT_BARRIER,
@@ -610,7 +605,6 @@ describe('Service delivery theme', () => {
     it('should render all form fields', () => {
       assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
-        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
         ELEMENT_SERVICE,
         ELEMENT_RELATED_TRADE_AGREEMENT,
@@ -622,9 +616,9 @@ describe('Service delivery theme', () => {
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
         ELEMENT_IS_EVENT,
-        ELEMENT_NOTES_HEADER,
         ELEMENT_SUMMARY,
         ELEMENT_NOTES,
+        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
         ELEMENT_EXPORT_BARRIER,
@@ -718,7 +712,6 @@ describe('Investment theme', () => {
     it('should render all form fields', () => {
       assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
-        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
         ELEMENT_SERVICE,
         ELEMENT_RELATED_TRADE_AGREEMENT,
@@ -730,9 +723,9 @@ describe('Investment theme', () => {
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
         ELEMENT_COMMUNICATION_CHANNEL,
-        ELEMENT_NOTES_HEADER,
         ELEMENT_SUMMARY,
         ELEMENT_NOTES,
+        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_RELATED_OPPORTUNITY,
         ELEMENT_STEP2_BUTTONS,
@@ -842,7 +835,6 @@ describe('Trade Agreement theme', () => {
     it('should render all form fields', () => {
       assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
-        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
         ELEMENT_SERVICE,
         ELEMENT_RELATED_TRADE_AGREEMENT,
@@ -854,9 +846,9 @@ describe('Trade Agreement theme', () => {
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
         ELEMENT_COMMUNICATION_CHANNEL,
-        ELEMENT_NOTES_HEADER,
         ELEMENT_SUMMARY,
         ELEMENT_NOTES,
+        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
         ELEMENT_STEP2_BUTTONS,
