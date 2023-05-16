@@ -19,7 +19,7 @@ const DashboardTabs = ({ id, adviser, hasInvestmentProjects }) => (
       id={`${id}.TabNav`}
       label="Dashboard"
       routed={true}
-      keepQueryParams={true}
+      keepQueryParams={false}
       tabs={{
         [urls.dashboard()]: {
           label: 'Investment projects',

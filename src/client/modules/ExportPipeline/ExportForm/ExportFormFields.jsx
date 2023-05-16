@@ -1,4 +1,7 @@
 import React from 'react'
+import { FONT_WEIGHTS } from '@govuk-react/constants'
+import Label from '@govuk-react/label'
+import { HintText } from 'govuk-react'
 import PropTypes from 'prop-types'
 import { isEmpty } from 'lodash'
 
@@ -22,19 +25,19 @@ import {
   SectorResource,
   CompanyContactsResource,
 } from '../../../components/Resource'
-import { FORM_LAYOUT } from '../../../../common/constants'
-import { TASK_SAVE_EXPORT, ID as STATE_ID } from './state'
-import Task from '../../../components/Task'
-import { ERROR_MESSAGES, POSITIVE_INT_REGEX } from './constants'
-import { validateTeamMembers } from './validation'
-import { SECTOR_LABELS, STATUS_LABELS } from './labels'
+
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
-import { HintText } from 'govuk-react'
-import Label from '@govuk-react/label'
-import { FONT_WEIGHTS } from '@govuk-react/constants'
+import Task from '../../../components/Task'
+
+import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../components/ContactForm/state'
+import { TASK_SAVE_EXPORT, ID as STATE_ID } from './state'
 
 import { transformArrayIdNameToValueLabel } from '../../../transformers'
-import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../components/ContactForm/state'
+import { validateTeamMembers } from './validation'
+
+import { STATUS_OPTIONS, EXPORT_POTENTIAL_OPTIONS } from '../constants'
+import { ERROR_MESSAGES, POSITIVE_INT_REGEX } from './constants'
+import { FORM_LAYOUT } from '../../../../common/constants'
 
 export const isPositiveInteger = (value) => POSITIVE_INT_REGEX.test(value)
 
@@ -151,14 +154,14 @@ const ExportFormFields = ({
                   label="Export status"
                   required={ERROR_MESSAGES.status}
                   field={FieldRadios}
-                  options={STATUS_LABELS}
+                  options={STATUS_OPTIONS}
                 />
                 <FieldRadios
                   name="export_potential"
                   label="Export potential"
                   required={ERROR_MESSAGES.export_potential}
                   field={FieldRadios}
-                  options={SECTOR_LABELS}
+                  options={EXPORT_POTENTIAL_OPTIONS}
                 />
                 <ResourceOptionsField
                   id={exportItem.company.id}
