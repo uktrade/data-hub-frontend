@@ -41,6 +41,19 @@ const assertAddButton = (addRemoveFromListUrl, detailsUrl) => {
 }
 
 /**
+ * Asserts that the company list item button has the correct URL
+ */
+const assertCompanyListItemButton = (addRemoveFromListUrl, detailsUrl) => {
+  cy.get('[data-test="list-item-list-c-button"]').contains('List C')
+  cy.get('[data-test="list-item-list-c-button"]').click()
+  cy.location().should((loc) => {
+    expect(loc.pathname).to.eq(addRemoveFromListUrl)
+    expect(loc.search).contains(detailsUrl)
+  })
+  cy.go('back')
+}
+
+/**
  * Asserts that the add export project button has the correct URL
  */
 const assertExportProjectButton = (url) => {
@@ -112,4 +125,5 @@ module.exports = {
   assertOneListTierA,
   assertCoreTeam,
   assertArchivePanelNotVisible,
+  assertCompanyListItemButton,
 }

@@ -20,6 +20,7 @@ const StyledCompanyListButton = styled('button')`
   vertical-align: middle;
   cursor: pointer;
   margin-right: 10px;
+  font-size: ${FONT_SIZE.SIZE_14};
   span {
     pointer-events: none;
     display: inline-block;
