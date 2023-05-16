@@ -1,10 +1,6 @@
 const { get } = require('lodash')
 
-const {
-  fetchProposition,
-  fetchDownloadLink,
-  fetchPropositionFiles,
-} = require('../repos')
+const { fetchProposition, fetchDownloadLink } = require('../repos')
 const { getAdvisers } = require('../../adviser/repos')
 const { filterActiveAdvisers } = require('../../adviser/filters')
 const { transformObjectToOption } = require('../../transformers')
@@ -13,11 +9,6 @@ async function getPropositionDetails(req, res, next, propositionId) {
   try {
     const { investment } = res.locals
     res.locals.proposition = await fetchProposition(
-      req,
-      propositionId,
-      investment.id
-    )
-    res.locals.proposition.files = await fetchPropositionFiles(
       req,
       propositionId,
       investment.id
