@@ -46,8 +46,8 @@ const StepInteractionType = () => {
             onChange: getOnChangeHandler('kind', setFieldValue),
           },
           {
-            label: 'A service that you have provided',
-            hint: 'For example, a significant assist or an event',
+            label: 'A service you have provided',
+            hint: 'For example, a significant assist or event',
             value: KINDS.SERVICE_DELIVERY,
             onChange: getOnChangeHandler('kind', setFieldValue),
           },
@@ -83,8 +83,8 @@ const StepInteractionType = () => {
             onChange: getOnChangeHandler('kind', setFieldValue),
           },
           {
-            label: 'A service that you have provided',
-            hint: 'For example, a significant assist or an event',
+            label: 'A service you have provided',
+            hint: 'For example, a significant assist or event',
             value: KINDS.SERVICE_DELIVERY,
             onChange: getOnChangeHandler('kind', setFieldValue),
           },
@@ -102,15 +102,15 @@ const StepInteractionType = () => {
   return (
     <>
       <InsetText data-test="trade-agreement-guide">
-        Select ‘Trade agreement’ if your interaction was set up to focus on, or
-        contributes to, implementing a trade agreement.
+        Select 'trade agreement' if your interaction deals with a named trade
+        agreement.
         <br />
         <br />
-        Read more{' '}
+        For more information see{' '}
         <NewWindowLink href={urls.external.helpCentre.tradeagreementGuidance()}>
-          information and guidance
-        </NewWindowLink>{' '}
-        on this section.
+          recording trade agreement activity
+        </NewWindowLink>
+        .{' '}
       </InsetText>
 
       <FieldRadios

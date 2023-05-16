@@ -445,13 +445,13 @@ describe('Interaction theme', () => {
     it('should permanently show a description about when to select trade agreement', () => {
       cy.get('div [data-test="trade-agreement-guide"]').should(
         'contain',
-        `Select ‘Trade agreement’ if your interaction was set up to focus on, or contributes to, implementing a trade agreement.Read more information and guidance (opens in a new window or tab) on this section.`
+        `Select 'trade agreement' if your interaction deals with a named trade agreement.For more information see recording trade agreement activity (opens in a new window or tab).`
       )
     })
 
     it('should always have a see more guidance link', () => {
       cy.get('div [data-test="trade-agreement-guide"]>a')
-        .should('contain', 'information and guidance')
+        .should('contain', 'recording trade agreement activity')
         .should(
           'have.attr',
           'href',
@@ -598,7 +598,7 @@ describe('Service delivery theme', () => {
       cy.visit(urls.companies.interactions.create(company.id))
 
       cy.contains('label', 'Export').click()
-      cy.contains('label', 'A service that you have provided').click()
+      cy.contains('label', 'A service you have provided').click()
       cy.contains('button', 'Continue').click()
     })
 
@@ -1178,7 +1178,7 @@ describe('Filtering services based on theme & kind', () => {
   })
 
   it('should show filtered services for Export => Service delivery', () => {
-    selectInteractionType('Export', 'A service that you have provided')
+    selectInteractionType('Export', 'A service you have provided')
     cy.get('#field-service').should(
       'have.text',
       [
@@ -1239,7 +1239,7 @@ describe('Filtering services based on theme & kind', () => {
   })
 
   it('should show filtered services for Other => Service delivery', () => {
-    selectInteractionType('Other', 'A service that you have provided')
+    selectInteractionType('Other', 'A service you have provided')
 
     cy.get('#field-service').should(
       'have.text',

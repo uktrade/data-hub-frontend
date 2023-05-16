@@ -180,7 +180,7 @@ describe('Service delivery', () => {
 
   beforeEach(() => {
     cy.visit(companies.interactions.create(company.pk))
-    selectInteractionType('Export', 'A service that you have provided')
+    selectInteractionType('Export', 'A service you have provided')
   })
 
   it('should create the service delivery', () => {
