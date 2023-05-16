@@ -15,7 +15,7 @@ describe('Local header buttons', () => {
       cy.visit(urls.companies.activity.index(companyId))
     })
 
-    it('should display the add export project link', () => {
+    it('should have the add export project link', () => {
       assertExportProjectButton(exportProjectUrl)
     })
 
@@ -27,11 +27,11 @@ describe('Local header buttons', () => {
     })
   })
 
-  context('when the add export project button is clicked', () => {
+  context('when the add interaction button is clicked', () => {
     beforeEach(() => {
       cy.visit(urls.companies.activity.index(companyId))
     })
-    it('should display the correct add interaction button', () => {
+    it('should have the correct add interaction link', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
 
@@ -42,23 +42,31 @@ describe('Local header buttons', () => {
       })
     })
   })
-  context(
-    'when a company is not in a company list no list items are displayed',
-    () => {
-      beforeEach(() => {
-        cy.intercept(
-          'GET',
-          `/api-proxy/v4/company-list?items__company_id=${companyId}`,
-          {
-            body: { count: 0, next: null, previous: null, results: [] },
-          }
-        ).as('apiRequest')
-        cy.visit(urls.companies.activity.index(companyId))
-      })
 
-      it('should not display any additional list items', () => {
-        cy.get('[data-test="list-item-list-a-button"]').should('not.exist')
-      })
-    }
-  )
+  context('when a company is in several company lists', () => {
+    beforeEach(() => {
+      cy.visit(urls.companies.activity.index(companyId))
+    })
+
+    it('should display list items', () => {
+      cy.get('[data-test^="list-item"]').should('exist')
+    })
+  })
+
+  context('when a company is not in any company lists', () => {
+    beforeEach(() => {
+      cy.intercept(
+        'GET',
+        `/api-proxy/v4/company-list?items__company_id=${companyId}`,
+        {
+          body: { count: 0, next: null, previous: null, results: [] },
+        }
+      ).as('apiRequest')
+      cy.visit(urls.companies.activity.index(companyId))
+    })
+
+    it('should not display any list items', () => {
+      cy.get('[data-test^="list-item"]').should('not.exist')
+    })
+  })
 })
