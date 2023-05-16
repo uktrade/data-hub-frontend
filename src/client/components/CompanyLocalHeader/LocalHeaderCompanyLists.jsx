@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 import Task from '../Task'
 import { COMPANY_LISTS__COMPANY_IN_LOADED } from '../../actions'
 import { ID, TASK_GET_LISTS_COMPANY_IS_IN, state2props } from './state'
+import { kebabCase } from 'lodash'
 
 const StyledCompanyListButton = styled('button')`
   display: inline-table;
@@ -59,7 +60,7 @@ export const LocalHeaderCompanyLists = ({ results, company, returnUrl }) => {
             {Object.keys(results).map((list) => (
               <StyledCompanyListItemButton
                 key={list}
-                data-test={'list-item-button-'}
+                data-test={`list-item-${kebabCase(results[list].name)}-button`}
                 onClick={handleClickAddRemove}
               >
                 {results[list].name} <span>x</span>
