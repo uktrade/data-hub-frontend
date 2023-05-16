@@ -16,7 +16,7 @@ function createExpected(countries) {
 function createCountry(name, status) {
   return {
     country: {
-      id: faker.datatype.uuid(),
+      id: faker.string.uuid(),
       name,
     },
     status,

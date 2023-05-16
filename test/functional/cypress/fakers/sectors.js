@@ -10,7 +10,7 @@ const sectors = [
 
 export const sectorFaker = () => ({
   ancestors: [],
-  id: faker.datatype.uuid(),
+  id: faker.string.uuid(),
   name: faker.helpers.arrayElement(sectors),
 })
 

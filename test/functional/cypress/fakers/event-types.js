@@ -6,7 +6,7 @@ import { listFaker } from './utils'
  * Generate fake data for an event type.
  */
 const eventTypeFaker = (overrides = {}) => ({
-  id: faker.datatype.uuid(),
+  id: faker.string.uuid(),
   name: faker.lorem.words(),
   disabled_on: null,
   ...overrides,

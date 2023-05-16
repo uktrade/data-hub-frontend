@@ -12,7 +12,7 @@ const countries = [
 ]
 
 export const countryFaker = () => ({
-  id: faker.datatype.uuid(),
+  id: faker.string.uuid(),
   name: faker.helpers.arrayElement(countries),
 })
 

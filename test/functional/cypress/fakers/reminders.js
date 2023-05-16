@@ -5,22 +5,22 @@ import { investmentProjectCodeFaker } from './investment-projects'
 import { listFaker } from './utils'
 
 export const nestedAdviserFaker = (overrides = {}) => ({
-  name: faker.name.fullName(),
+  name: faker.person.fullName(),
   dit_team: {
-    name: `${faker.address.country()} Team`,
+    name: `${faker.location.country()} Team`,
   },
   ...overrides,
 })
 
 export const nestedProjectFaker = (overrides = {}) => ({
-  id: faker.datatype.uuid(),
+  id: faker.string.uuid(),
   name: faker.lorem.words(),
   project_code: investmentProjectCodeFaker(),
   ...overrides,
 })
 
 export const nestedCompanyFaker = (overrides = {}) => ({
-  id: faker.datatype.uuid(),
+  id: faker.string.uuid(),
   name: faker.company.name(),
   ...overrides,
 })
@@ -29,12 +29,12 @@ export const nestedInteractionFaker = (overrides = {}) => ({
   created_by: nestedAdviserFaker(),
   date: relativeDateFaker({ minDays: -365, maxDays: 0 }),
   kind: faker.helpers.arrayElement(['interaction', 'service_delivery']),
-  subject: faker.datatype.string(),
+  subject: faker.string.sample(),
   ...overrides,
 })
 
 export const reminderFaker = (overrides = {}) => ({
-  id: faker.datatype.uuid(),
+  id: faker.string.uuid(),
   created_on: relativeDateFaker({ minDays: -365, maxDays: 0 }),
   event: faker.lorem.words(),
   project: nestedProjectFaker(),
@@ -48,7 +48,7 @@ export const reminderListFaker = (
 ) => listFaker({ fakerFunction: reminderFakerFunction, length, overrides })
 
 export const exportReminderFaker = (overrides = {}) => ({
-  id: faker.datatype.uuid(),
+  id: faker.string.uuid(),
   created_on: relativeDateFaker({ minDays: -365, maxDays: 0 }),
   last_interaction_date: relativeDateFaker({ minDays: -365, maxDays: 0 }),
   event: faker.lorem.words(),

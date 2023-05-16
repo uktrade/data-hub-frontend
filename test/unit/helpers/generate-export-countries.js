@@ -4,8 +4,8 @@ const { EXPORT_INTEREST_STATUS } = require('../../../src/apps/constants')
 
 function generateCountries(length) {
   return Array.from({ length }).map(() => ({
-    id: faker.datatype.uuid(),
-    name: faker.address.country(),
+    id: faker.string.uuid(),
+    name: faker.location.country(),
   }))
 }
 
