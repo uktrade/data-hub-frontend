@@ -1,5 +1,4 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 
 import LocalHeaderDetails from '../index'
 import LocalHeader from '../../LocalHeader/LocalHeader'
@@ -11,13 +10,19 @@ const items = [
   { label: 'Job', value: 'A job' },
 ]
 
-storiesOf('LocalHeader/LocalHeaderDetails', module)
-  .addParameters({ component: LocalHeaderDetails })
-  .add('Default', () => (
-    <LocalHeader
-      breadcrumbs={[{ link: '/', text: 'Home' }, { text: 'Example' }]}
-      heading="Example"
-    >
-      <LocalHeaderDetails items={items} />
-    </LocalHeader>
-  ))
+export default {
+  title: 'LocalHeader/LocalHeaderDetails',
+
+  parameters: {
+    component: LocalHeaderDetails,
+  },
+}
+
+export const Default = () => (
+  <LocalHeader
+    breadcrumbs={[{ link: '/', text: 'Home' }, { text: 'Example' }]}
+    heading="Example"
+  >
+    <LocalHeaderDetails items={items} />
+  </LocalHeader>
+)

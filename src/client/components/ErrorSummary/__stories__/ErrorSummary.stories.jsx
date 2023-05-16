@@ -1,5 +1,4 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 
 import ErrorSummary from 'ErrorSummary'
 
@@ -14,12 +13,20 @@ export const errors = [
   },
 ]
 
-storiesOf('ErrorSummary', module)
-  .addParameters({ component: ErrorSummary })
-  .add('Default', () => (
-    <ErrorSummary
-      heading="Message to alert the user to a problem goes here"
-      description="Optional description of the errors and how to correct them"
-      errors={errors}
-    />
-  ))
+export default {
+  title: 'ErrorSummary',
+
+  parameters: {
+    component: ErrorSummary,
+  },
+
+  excludeStories: ['errors'],
+}
+
+export const Default = () => (
+  <ErrorSummary
+    heading="Message to alert the user to a problem goes here"
+    description="Optional description of the errors and how to correct them"
+    errors={errors}
+  />
+)

@@ -80,8 +80,9 @@ module.exports = (env) => ({
       https: false,
       stream: false,
       zlib: false,
+      url: require.resolve('url/'),
     },
-    extensions: ['*', '.js', '.jsx', '.json'],
+    extensions: ['.*', '.js', '.jsx', '.json'],
     alias: {
       'govuk-colours': path.resolve(__dirname, 'src/client/utils/colours.js'),
     },

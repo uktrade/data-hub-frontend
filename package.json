@@ -7,8 +7,8 @@
     "url": "https://github.com/uktrade/data-hub-frontend"
   },
   "scripts": {
-    "storybook": "start-storybook",
-    "storybook:build": "rimraf storybook-static && build-storybook --quiet",
+    "storybook": "storybook dev",
+    "storybook:build": "rimraf storybook-static && storybook build --quiet",
     "storybook:release": "npm run storybook:build && cp -R ./.circleci ./storybook-static/.circleci && git-directory-deploy --directory storybook-static --branch gh-pages",
     "clean": "del .build cypress-coverage",
     "start": "node --use-strict src/server.js",
@@ -47,7 +47,7 @@
     "adr-list": "adr list",
     "adr-graph": "adr generate graph",
     "adr-toc": "adr generate toc",
-    "dependabot:update-storybook": "npm install --save-dev @storybook/addon-a11y@latest @storybook/addon-essentials@latest @storybook/addons@latest @storybook/builder-webpack5@latest @storybook/manager-webpack5@latest @storybook/react@latest",
+    "dependabot:update-storybook": "npm install --save-dev @storybook/addon-a11y@latest @storybook/addon-essentials@latest @storybook/addons@latest @storybook/react@latest @storybook/react-webpack5@latest storybook@latest",
     "dependabot:update-sentry": "npm install @sentry/browser@latest @sentry/node@latest @sentry/react@latest @sentry/tracing@latest"
   },
   "nyc": {
@@ -149,6 +149,7 @@
     "sniffr": "^1.2.0",
     "style-loader": "^3.3.2",
     "styled-components": "^5.3.10",
+    "url": "^0.11.0",
     "uuid": "^9.0.0",
     "winston": "^3.8.2"
   },
@@ -165,12 +166,11 @@
     "@babel/runtime": "^7.21.5",
     "@cypress/code-coverage": "^3.10.4",
     "@faker-js/faker": "^8.0.0",
-    "@storybook/addon-a11y": "^6.5.16",
-    "@storybook/addon-essentials": "^6.5.16",
-    "@storybook/addons": "^6.5.16",
-    "@storybook/builder-webpack5": "^6.5.16",
-    "@storybook/manager-webpack5": "^6.5.16",
-    "@storybook/react": "^6.5.16",
+    "@storybook/addon-a11y": "^7.0.12",
+    "@storybook/addon-essentials": "^7.0.12",
+    "@storybook/addons": "^7.0.12",
+    "@storybook/react": "^7.0.12",
+    "@storybook/react-webpack5": "^7.0.12",
     "babel-loader": "^9.1.2",
     "babel-plugin-istanbul": "6.1.1",
     "chai": "^4.3.7",
@@ -209,6 +209,7 @@
     "rewire": "^6.0.0",
     "sinon": "^15.0.4",
     "sinon-chai": "^3.7.0",
+    "storybook": "^7.0.12",
     "supertest": "^6.3.3",
     "webpack": "^5.81.0",
     "webpack-assets-manifest": "^5.1.0",
