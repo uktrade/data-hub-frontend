@@ -176,7 +176,6 @@ const StepInteractionDetails = ({
   contacts,
   services,
   serviceDeliveryStatuses,
-  policyAreas,
   policyIssueTypes,
   communicationChannels,
   countries,
@@ -417,15 +416,12 @@ const StepInteractionDetails = ({
             required="Select at least one policy issue type"
           />
 
-          <FieldTypeahead
-            isMulti={true}
-            name="policy_areas"
-            label="Policy areas"
-            placeholder="-- Select policy area --"
-            options={policyAreas}
-            required="Select at least one policy area"
+          <FieldHelp
+            helpSummary="Help with policy issue types"
+            helpText="A policy type is the broad category/categories that the information fits into."
+            footerUrl={helpUrl(2)}
+            footerUrlDescription="Learn more about policy issue types"
           />
-
           <FieldTextarea
             name="policy_feedback_notes"
             label="Business intelligence summary"

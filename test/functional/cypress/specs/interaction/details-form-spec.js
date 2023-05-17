@@ -151,9 +151,6 @@ const ELEMENT_EXPORT_BARRIER_HOW = {
 const ELEMENT_POLICY_ISSUE_TYPES = {
   label: 'Policy issue types',
 }
-const ELEMENT_POLICY_AREAS = {
-  label: 'Policy areas',
-}
 const ELEMENT_POLICY_FEEDBACK_NOTES = {
   label: 'Business intelligence',
 }
@@ -258,12 +255,6 @@ function fillCommonFields({
     .next()
     .contains('Domestic')
     .click()
-
-  cy.contains(ELEMENT_POLICY_AREAS.label)
-    .parent()
-    .next()
-    .selectTypeaheadOption('State Aid')
-    .should('contain', 'State Aid')
 
   cy.contains(ELEMENT_POLICY_FEEDBACK_NOTES.label)
     .parent()

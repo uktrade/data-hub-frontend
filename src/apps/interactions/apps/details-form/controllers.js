@@ -21,7 +21,6 @@ async function renderInteractionDetailsForm(req, res, next) {
     const [
       services,
       serviceDeliveryStatuses,
-      policyAreas,
       policyIssueTypes,
       communicationChannels,
       countries,
@@ -32,7 +31,6 @@ async function renderInteractionDetailsForm(req, res, next) {
         transformer: transformServiceToOption,
       }),
       getOptions(req, 'service-delivery-status', { sorted: false }),
-      getOptions(req, 'policy-area'),
       getOptions(req, 'policy-issue-type'),
       getOptions(req, 'communication-channel'),
       getOptions(req, 'country'),
@@ -57,7 +55,6 @@ async function renderInteractionDetailsForm(req, res, next) {
             .map(transformContactToOption),
           services,
           serviceDeliveryStatuses,
-          policyAreas,
           policyIssueTypes,
           communicationChannels,
           countries,
