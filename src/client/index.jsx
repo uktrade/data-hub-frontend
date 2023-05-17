@@ -340,6 +340,9 @@ import { getExportPipelineList } from '../client/modules/ExportPipeline/ExportLi
 import { TASK_REDIRECT_TO_CONTACT_FORM } from './components/ContactForm/state'
 import ProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 
+import { getListsCompanyIsIn } from './components/CompanyLocalHeader/task'
+import { TASK_GET_LISTS_COMPANY_IS_IN } from './components/CompanyLocalHeader/state'
+
 import {
   TASK_CREATE_INVESTMENT_PROPOSITION,
   TASK_ABANDON_INVESTMENT_PROPOSITION,
@@ -565,6 +568,7 @@ function App() {
           [TASK_REDIRECT_TO_CONTACT_FORM]: redirectToContactForm,
           [TASK_CREATE_INVESTMENT_PROPOSITION]: createInvestmentProposition,
           [TASK_ABANDON_INVESTMENT_PROPOSITION]: abandonInvestmentProposition,
+          [TASK_GET_LISTS_COMPANY_IS_IN]: getListsCompanyIsIn,
         }}
       >
         <Mount selector="#data-hub-header">

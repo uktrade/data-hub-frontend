@@ -13,6 +13,7 @@ const {
   assertCoreTeam,
   assertArchivePanelNotVisible,
   assertAddInteractionButton,
+  assertCompanyListItemButton,
 } = require('../../../support/company-local-header-assertions')
 
 const companyLocalHeader = selectors.companyLocalHeader()
@@ -54,6 +55,10 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the add to list button', () => {
       assertAddButton(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display company list item buttons', () => {
+      assertCompanyListItemButton(addRemoveFromListUrl, detailsUrl)
     })
 
     it('should display the add export project button', () => {
@@ -99,6 +104,10 @@ describe('Local header for global ultimate company', () => {
       assertAddButton(addRemoveFromListUrl, detailsUrl)
     })
 
+    it('should display company list item buttons', () => {
+      assertCompanyListItemButton(addRemoveFromListUrl, detailsUrl)
+    })
+
     it('should display the add export project button', () => {
       assertExportProjectButton(exportProjectUrl)
     })
@@ -136,6 +145,10 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the add to list button', () => {
       assertAddButton(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display company list item buttons', () => {
+      assertCompanyListItemButton(addRemoveFromListUrl, detailsUrl)
     })
 
     it('should display the add export project button', () => {
@@ -181,6 +194,10 @@ describe('Local header for global ultimate company', () => {
       assertAddButton(addRemoveFromListUrl, detailsUrl)
     })
 
+    it('should display company list item buttons', () => {
+      assertCompanyListItemButton(addRemoveFromListUrl, detailsUrl)
+    })
+
     it('should display the add export project button', () => {
       assertExportProjectButton(exportProjectUrl)
     })
@@ -224,6 +241,10 @@ describe('Local header for global ultimate company', () => {
 
       it('should display the add to list button', () => {
         assertAddButton(addRemoveFromListUrl, detailsUrl)
+      })
+
+      it('should display company list item buttons', () => {
+        assertCompanyListItemButton(addRemoveFromListUrl, detailsUrl)
       })
 
       it('should display the add export project button', () => {
@@ -272,6 +293,10 @@ describe('Local header for global ultimate company', () => {
         assertAddButton(addRemoveFromListUrl, detailsUrl)
       })
 
+      it('should display company list item buttons', () => {
+        assertCompanyListItemButton(addRemoveFromListUrl, detailsUrl)
+      })
+
       it('should display the add export project button', () => {
         assertExportProjectButton(exportProjectUrl)
       })
@@ -314,6 +339,10 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the add to list button', () => {
       assertAddButton(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display company list item buttons', () => {
+      assertCompanyListItemButton(addRemoveFromListUrl, detailsUrl)
     })
 
     it('should display the add export project button', () => {
@@ -359,6 +388,10 @@ describe('Local header for global ultimate company', () => {
       assertAddButton(addRemoveFromListUrl, detailsUrl)
     })
 
+    it('should display company list item buttons', () => {
+      assertCompanyListItemButton(addRemoveFromListUrl, detailsUrl)
+    })
+
     it('should display the add export project button', () => {
       assertExportProjectButton(exportProjectUrl)
     })
@@ -400,6 +433,10 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the add to list button', () => {
       assertAddButton(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display company list item buttons', () => {
+      assertCompanyListItemButton(addRemoveFromListUrl, detailsUrl)
     })
 
     it('should display the add export project button', () => {
